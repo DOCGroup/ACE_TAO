@@ -1,3 +1,14 @@
+Sat May 26 17:41:37 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * performance-tests/DII_Latency/run_test.pl:
+        * performance-tests/DSI_Latency/run_test.pl:
+        * performance-tests/Deferred_Latency/run_test.pl:
+        * performance-tests/Single_Threaded_Latency/run_test.pl:
+        * performance-tests/Thread_Pool_Latency/run_test.pl:
+
+        Bumped up the timeouts on these tests as they seem to be timing
+        out on Tru64 before the test could be completed.
+
 Sat May 26 17:12:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/README:
@@ -15,19 +26,19 @@ Sat May 26 17:12:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Sat May 26 16:45:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
 
-	The previous changelog should have been mentioned
-	examples/PluggableUDP/tests/SimplePerformance/run_test.pl and not
-	examples/PluggableUDP/run_test.pl. Added the new file with correct
-	permissions.
+        The previous changelog should have been mentioned
+        examples/PluggableUDP/tests/SimplePerformance/run_test.pl and not
+        examples/PluggableUDP/run_test.pl. Added the new file with correct
+        permissions.
 
 Sat May 26 16:42:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* examples/PluggableUDP/run_test.pl:
+        * examples/PluggableUDP/run_test.pl:
 
-	Removed the file from the repository as it was checked in without
-	execute permissions.
+        Removed the file from the repository as it was checked in without
+        execute permissions.
 
 Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -43,89 +54,89 @@ Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/Active_Object_Map.i
-	  (bind_using_system_id_returning_system_id and
-	  find_system_id_using_user_id):
+        * tao/PortableServer/Active_Object_Map.i
+          (bind_using_system_id_returning_system_id and
+          find_system_id_using_user_id):
 
-	  If we are not using any active maps, we can employ a shortcut
-	  where we can skip the creation of
-	  TAO_Active_Object_Map::Map_Entry and the inserting into the user
-	  id map.  This should not be a problem because the insertion into
-	  the user id map was not useful because the servant field was
-	  zero.
+          If we are not using any active maps, we can employ a shortcut
+          where we can skip the creation of
+          TAO_Active_Object_Map::Map_Entry and the inserting into the user
+          id map.  This should not be a problem because the insertion into
+          the user id map was not useful because the servant field was
+          zero.
 
-	* tao/PortableServer/Active_Object_Map.cpp: Added a flag
-	  <using_active_maps_> to see if we are using active maps in this
-	  implementation of the active object map.
+        * tao/PortableServer/Active_Object_Map.cpp: Added a flag
+          <using_active_maps_> to see if we are using active maps in this
+          implementation of the active object map.
 
-	  The motivation of the above changes are described here:
+          The motivation of the above changes are described here:
 
-	  With the RETAIN policy, POA::create_reference and
-	  POA::create_reference_with_id consume resources when creating
-	  references.  This can lead to scalibility problems on the server
-	  specially if the server creates many references that end up not
-	  being used.
+          With the RETAIN policy, POA::create_reference and
+          POA::create_reference_with_id consume resources when creating
+          references.  This can lead to scalibility problems on the server
+          specially if the server creates many references that end up not
+          being used.
 
-	  The POA::create_reference* methods create a instance of
-	  TAO_Active_Object_Map::Map_Entry and bind it to the user id map.
-	  The binding in the user id map is really not useful because the
-	  servant field is zero.
+          The POA::create_reference* methods create a instance of
+          TAO_Active_Object_Map::Map_Entry and bind it to the user id map.
+          The binding in the user id map is really not useful because the
+          servant field is zero.
 
-	  The solution is to recognize when the servant is zero, create a
-	  key without creating an instance of
-	  TAO_Active_Object_Map::Map_Entry and without occupying a slot in
-	  any of the tables.  The tables will get populated when the
-	  servant is available (either through the POA::activate methods
-	  or through the Servant Activators).
+          The solution is to recognize when the servant is zero, create a
+          key without creating an instance of
+          TAO_Active_Object_Map::Map_Entry and without occupying a slot in
+          any of the tables.  The tables will get populated when the
+          servant is available (either through the POA::activate methods
+          or through the Servant Activators).
 
-	  Creating a fake key that is usable in the future should be easy
-	  with the hash and linear maps.  However, it will not be possible
-	  with the active map since the key encodes the information of the
-	  slot that is being occupied.
+          Creating a fake key that is usable in the future should be easy
+          with the hash and linear maps.  However, it will not be possible
+          with the active map since the key encodes the information of the
+          slot that is being occupied.
 
-	  The change was to check if we are using active maps - active
-	  maps are used when we either have system ids and reactivation is
-	  not allowed or when using hints.  If we are not using active
-	  maps, we short cut the POA::create_reference* methods such that
-	  no map entry is created and nothing is added to the user id map.
-	  With POA::create_reference, we ask the linear or hash map to
-	  create us a key which we use as the system id; with
-	  POA::create_reference_with_id, we use the user id as the system
-	  id.
-
-Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* tao/PortableServer/ImplRepo_i.cpp (ServerObject_i): Moved the
-	  ServerObject_i from POA.cpp to ImplRepo_i.h and ImplRepo_i.cpp.
-	  Enhanced the ServerObject_i so that it remembers which POA it is
-	  registered with.
-
-	* tao/PortableServer/POA.cpp (destroy_i): Changed the deactivation
-	  of <server_object> such that we do not have to access the Root
-	  POA in order to deactivate it.  We use the POA in the
-	  <server_object> itself.  Also improved the memory management for
-	  <server_object>.  This change should fix bug 924.  Also, the
-	  ImplRepo tests should no longer crash.  Thanks to Greg Hall
-	  <greg.j.hall@boeing.com> for reporting this problem.
-
-	* tao/PortableServer/Makefile
-	* tao/PortableServer/Makefile.bor
-	* tao/PortableServer/TAO_PortableServer.dsp
-	* tao/PortableServer/TAO_PortableServer_Static.dsp
-
-	  Added new files.
+          The change was to check if we are using active maps - active
+          maps are used when we either have system ids and reactivation is
+          not allowed or when using hints.  If we are not using active
+          maps, we short cut the POA::create_reference* methods such that
+          no map entry is created and nothing is added to the user id map.
+          With POA::create_reference, we ask the linear or hash map to
+          create us a key which we use as the system id; with
+          POA::create_reference_with_id, we use the user id as the system
+          id.
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/PortableServer.pidl:
-	* tao/PortableServer/POA.h:
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/ImplRepo_i.cpp (ServerObject_i): Moved the
+          ServerObject_i from POA.cpp to ImplRepo_i.h and ImplRepo_i.cpp.
+          Enhanced the ServerObject_i so that it remembers which POA it is
+          registered with.
 
-	  Added readonly attribute id which was recently introduced by
-	  the PortableInterceptor spec
-	  (http://cgi.omg.org/cgi-bin/doc?ptc/01-03-04.pdf).  This
-	  returns the unique id of the POA in the process in which it
-	  is created. It is for use by portable interceptors.
+        * tao/PortableServer/POA.cpp (destroy_i): Changed the deactivation
+          of <server_object> such that we do not have to access the Root
+          POA in order to deactivate it.  We use the POA in the
+          <server_object> itself.  Also improved the memory management for
+          <server_object>.  This change should fix bug 924.  Also, the
+          ImplRepo tests should no longer crash.  Thanks to Greg Hall
+          <greg.j.hall@boeing.com> for reporting this problem.
+
+        * tao/PortableServer/Makefile
+        * tao/PortableServer/Makefile.bor
+        * tao/PortableServer/TAO_PortableServer.dsp
+        * tao/PortableServer/TAO_PortableServer_Static.dsp
+
+          Added new files.
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.cpp:
+
+          Added readonly attribute id which was recently introduced by
+          the PortableInterceptor spec
+          (http://cgi.omg.org/cgi-bin/doc?ptc/01-03-04.pdf).  This
+          returns the unique id of the POA in the process in which it
+          is created. It is for use by portable interceptors.
 
           This id is guaranteed unique for the life span of the POA in
           the process. For persistent POAs, this means that if a POA
@@ -133,52 +144,52 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           POA, these POAs are identical and, therefore, have the same
           id. For transient POAs, each POA is unique.
 
-	* tao/PortableServer/POA.cpp (create_object_key): Refactored code
-	  to reuse the now cached POA id instead of recalculating the POA
-	  id every time.
+        * tao/PortableServer/POA.cpp (create_object_key): Refactored code
+          to reuse the now cached POA id instead of recalculating the POA
+          id every time.
 
-	* examples/POA/NewPOA/NewPOA.cpp: Extended test to print out POA
-	  id in addition to the POA name.
-
-Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* tao/PortableServer/POA.cpp (check_poa_manager_state): Minor code
-	  for exception when POA Manager is in holding state should be 1
-	  instead of 0.  Same for the discarding and inactive states.
-
-	* tao/Exception.cpp (_info):
-	* tao/corbafwd.h (TAO_POA_INACTIVE): Added new constant.
+        * examples/POA/NewPOA/NewPOA.cpp: Extended test to print out POA
+          id in addition to the POA name.
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (~TAO_ORB_Core): Added the deletion of the stub
-	  factory to avoid a memory leak.
+        * tao/PortableServer/POA.cpp (check_poa_manager_state): Minor code
+          for exception when POA Manager is in holding state should be 1
+          instead of 0.  Same for the discarding and inactive states.
+
+        * tao/Exception.cpp (_info):
+        * tao/corbafwd.h (TAO_POA_INACTIVE): Added new constant.
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Leader_Followers/run_test.pl:
-
-	  - Renamed st_directive and tp_directive to
-	  select_reactor_directive and tpool_reactor_directive
-	  respectively since these names are more indicative of what is
-	  going on.
-
-	  - Removed mt_conffile and st_conffile variables.
-
-	  - Changed "-ORBreactortype select_st" to "-ORBreactortype
-	  select_mt".
-
-	  - Moved the "-ORBsvcconfdirective" argument to the directive
-	  variable to make easier to read.
+        * tao/ORB_Core.cpp (~TAO_ORB_Core): Added the deletion of the stub
+          factory to avoid a memory leak.
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/POA/Create_Reference/create_reference.dsp:
-	  Removed the linking of the Strategies library from this project.
+        * tests/Leader_Followers/run_test.pl:
+
+          - Renamed st_directive and tp_directive to
+          select_reactor_directive and tpool_reactor_directive
+          respectively since these names are more indicative of what is
+          going on.
+
+          - Removed mt_conffile and st_conffile variables.
+
+          - Changed "-ORBreactortype select_st" to "-ORBreactortype
+          select_mt".
+
+          - Moved the "-ORBsvcconfdirective" argument to the directive
+          variable to make easier to read.
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * performance-tests/POA/Create_Reference/create_reference.dsp:
+          Removed the linking of the Strategies library from this project.
 
 Fri May 25 17:38:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
           Modified the error messages so that they would be highlighted by
           the scoreboard error parser.  It turns out that this test has been
           failing on Win32, but it wasn't noticed since the error messages didn't
@@ -186,7 +197,7 @@ Fri May 25 17:38:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Note: The failure was due to a wrong parameter being passed to the
           server application and not due to a bug in RT CORBA.
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
           Fixed the wrong priority flag.  The flag is used to specify a bad
           priority value that will cause the RT POA to throw an exception.  It
           turns out that the value (3) was in one of the priority bands, so the
@@ -195,59 +206,59 @@ Fri May 25 17:38:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Fri May 25 15:56:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,h}:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{cpp,h}:
-	* tao/IIOP_Acceptor.{cpp,h}:
-	* tao/Pluggable.h:
-	* tao/PortableServer/Default_Acceptor_Filter.cpp:
-	* tao/PortableServer/RT_Acceptor_Filters.cpp:
-	* tao/Strategies/SHMIOP_Acceptor.{cpp,h}:
-	* tao/Strategies/UIOP_Acceptor.{cpp,h}:
-	  Added share_profile flag to TAO_Acceptor::create_mprofile
-	  and removed TAO_Acceptor::create_endpoint_for_mprofile.
-	  Thanks to Paul Calabrese <calabrese_p@ociweb.com> for
-	  suggesting the modification to simplify the interface.
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,h}:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{cpp,h}:
+        * tao/IIOP_Acceptor.{cpp,h}:
+        * tao/Pluggable.h:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * tao/PortableServer/RT_Acceptor_Filters.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.{cpp,h}:
+        * tao/Strategies/UIOP_Acceptor.{cpp,h}:
+          Added share_profile flag to TAO_Acceptor::create_mprofile
+          and removed TAO_Acceptor::create_endpoint_for_mprofile.
+          Thanks to Paul Calabrese <calabrese_p@ociweb.com> for
+          suggesting the modification to simplify the interface.
 
 Fri May 25 15:31:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Leader_Followers/run_test.pl: Changed this to use
- 	-ORBSvcConfDirective rather than specifying a configuration file.
-  	Also changed to use Advanced_Resource_Factory service name rather
- 	than Resource_Factory, now that -ORBReactorType moved into the
- 	Advanced_Resource_Factory.
+        * tests/Leader_Followers/run_test.pl: Changed this to use
+        -ORBSvcConfDirective rather than specifying a configuration file.
+        Also changed to use Advanced_Resource_Factory service name rather
+        than Resource_Factory, now that -ORBReactorType moved into the
+        Advanced_Resource_Factory.
 
-	* tests/Leader_Followers/multi_threaded_event_loop.conf: Removed
-	this file as it's no longer necessary or used...see above.
+        * tests/Leader_Followers/multi_threaded_event_loop.conf: Removed
+        this file as it's no longer necessary or used...see above.
 
 Fri May 25 12:04:02 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/Security/Send_File/client_nopasswd.conf:
-	* orbsvcs/examples/Security/Send_File/server_nopasswd.conf:
-	  Updated to use client_key and server_key certificates as the
-	  private keys.
+        * orbsvcs/examples/Security/Send_File/client_nopasswd.conf:
+        * orbsvcs/examples/Security/Send_File/server_nopasswd.conf:
+          Updated to use client_key and server_key certificates as the
+          private keys.
 
-	* orbsvcs/examples/Security/Send_File/server_cert.pem:
-	* orbsvcs/examples/Security/Send_File/server_key.pem:
-	* orbsvcs/examples/Security/Send_File/client_cert.pem:
-	* orbsvcs/examples/Security/Send_File/client_key.pem:
-	* orbsvcs/examples/Security/Send_File/cacert.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+        * orbsvcs/examples/Security/Send_File/server_cert.pem:
+        * orbsvcs/examples/Security/Send_File/server_key.pem:
+        * orbsvcs/examples/Security/Send_File/client_cert.pem:
+        * orbsvcs/examples/Security/Send_File/client_key.pem:
+        * orbsvcs/examples/Security/Send_File/cacert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
 
- 	  The previous certificates expired. So, used the ones in
-	  $ACE_ROOT/TAO/orbsvcs/tests/Security/SecurityLevel1
+          The previous certificates expired. So, used the ones in
+          $ACE_ROOT/TAO/orbsvcs/tests/Security/SecurityLevel1
 
 Fri May 25 13:32:55 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* TAO_IDL/include/idl_global.h: Moved template instantiations into
-	utl_global.cpp.  The instantiations in the header files caused
-	problems on, at the very least, Linux builds using g++.
+        * TAO_IDL/include/idl_global.h: Moved template instantiations into
+        utl_global.cpp.  The instantiations in the header files caused
+        problems on, at the very least, Linux builds using g++.
 
-	* TAO_IDL/util/utl_global.cpp: Added template instantiations that
-	were originally in idl_global.h.
+        * TAO_IDL/util/utl_global.cpp: Added template instantiations that
+        were originally in idl_global.h.
 
 Fri May 25 10:52:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -279,109 +290,109 @@ Fri May 25 08:47:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri May 25 06:02:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/tutorials/Quoter/RT_Event_Service: Added some fixes to
-	  ensure that we don't delete the tie member too quickly.  Thanks
- 	  to Dayisi <dayisi@163.com> for reporting this.
+        * docs/tutorials/Quoter/RT_Event_Service: Added some fixes to
+          ensure that we don't delete the tie member too quickly.  Thanks
+          to Dayisi <dayisi@163.com> for reporting this.
 
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp (close):
-	  Fixed a bug where we don't wait for our own thread to quit.
-  	  Thanks to Dayisi <dayisi@163.com> for reporting this.
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp (close):
+          Fixed a bug where we don't wait for our own thread to quit.
+          Thanks to Dayisi <dayisi@163.com> for reporting this.
 
 Thu May 24 23:34:52 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptor.pidl:
 
-	  There is no need to fully qualify the CORBA::Object type.
-	  "Object" is enough.  This change was necessary since its forward
-	  declaration in orb.idl was removed.  This fixes problems when
-	  compiling `tao/PortableInterceptor.pidl'.
+          There is no need to fully qualify the CORBA::Object type.
+          "Object" is enough.  This change was necessary since its forward
+          declaration in orb.idl was removed.  This fixes problems when
+          compiling `tao/PortableInterceptor.pidl'.
 
 Thu May 24 21:47:00 2001  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}: replaced
-	  DEPENDENCY_SET_MAP with its full expansion in both the declaration
-	  and definition of TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY,
-	  ACE_LOCK>::map_dependency_i to work around a compiler error
-	  in g++/gcc 2.95.1 for VxWorks cross-compilation build.
+          DEPENDENCY_SET_MAP with its full expansion in both the declaration
+          and definition of TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY,
+          ACE_LOCK>::map_dependency_i to work around a compiler error
+          in g++/gcc 2.95.1 for VxWorks cross-compilation build.
 
 Thu May 24 16:57:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/LocalObject.h (hash):
+        * tao/LocalObject.h (hash):
 
-	  Updated documentation for this method.
+          Updated documentation for this method.
 
 Thu May 24 16:34:37 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Removed the TAO_INVOCATION_CONNECT_MINOR_CODE location minor
-	  code.  There is already an OMG assigned minor code used for the
-	  same type of problem.
+          Removed the TAO_INVOCATION_CONNECT_MINOR_CODE location minor
+          code.  There is already an OMG assigned minor code used for the
+          same type of problem.
 
-	* tao/orb.idl:
+        * tao/orb.idl:
 
-	  Added the CORBA::ParameterMode enumeration to this IDL file.
-	  For some reason it was never defined.
+          Added the CORBA::ParameterMode enumeration to this IDL file.
+          For some reason it was never defined.
 
-	* tao/Exception.cpp:
+        * tao/Exception.cpp:
 
-	  Updated CORBA::SystemException minor code descriptions.
+          Updated CORBA::SystemException minor code descriptions.
 
-	* tao/ClientRequestInfo.cpp:
-	* tao/IORInfo.cpp (add_ior_component_to_profile):
-	* tao/Object_Ref_Table.cpp (register_initial_reference):
-	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
+        * tao/ClientRequestInfo.cpp:
+        * tao/IORInfo.cpp (add_ior_component_to_profile):
+        * tao/Object_Ref_Table.cpp (register_initial_reference):
+        * tao/PolicyFactory_Registry.cpp (register_policy_factory):
 
-	  Updated all exception minor codes.  They were changed in the
-	  latest Portable Interceptor draft spec.
+          Updated all exception minor codes.  They were changed in the
+          latest Portable Interceptor draft spec.
 
-	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):
-	* tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
+        * tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):
+        * tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
 
-	  Removed all uses of the TAO_INVOCATION_CONNECT_MINOR_CODE
-	  location minor code.  Use the OMG assigned minor code (2)
-	  instead.
+          Removed all uses of the TAO_INVOCATION_CONNECT_MINOR_CODE
+          location minor code.  Use the OMG assigned minor code (2)
+          instead.
 
-	* tao/Invocation.cpp (invoke):
+        * tao/Invocation.cpp (invoke):
 
-	  Added the OMG assigned minor code to the thrown CORBA::UNKNOWN
-	  system exception.  This exception is thrown when an unknown user
-	  exception occurs during an invocation.
+          Added the OMG assigned minor code to the thrown CORBA::UNKNOWN
+          system exception.  This exception is thrown when an unknown user
+          exception occurs during an invocation.
 
-	* tao/LocalObject.cpp (_create_request, _request):
+        * tao/LocalObject.cpp (_create_request, _request):
 
-	  Added OMG assigned minor codes to the thrown CORBA::NO_IMPLEMENT
-	  exceptions.
+          Added OMG assigned minor codes to the thrown CORBA::NO_IMPLEMENT
+          exceptions.
 
-	  (_get_interface):
+          (_get_interface):
 
-	  According to the CCM spec, this method should throw a
-	  CORBA::NO_IMPLEMENT exception when invoked on a local object.
+          According to the CCM spec, this method should throw a
+          CORBA::NO_IMPLEMENT exception when invoked on a local object.
 
-	* tao/LocalObject.h:
+        * tao/LocalObject.h:
 
-	  Doxygenated this header.
+          Doxygenated this header.
 
-	  (_key):
+          (_key):
 
-	  Removed unnecessary default CORBA::Environment argument.
+          Removed unnecessary default CORBA::Environment argument.
 
-	* tao/LocalObject.i:
+        * tao/LocalObject.i:
 
-	  Cosmetic updates.
+          Cosmetic updates.
 
-	* tao/ORB.cpp (object_to_string):
+        * tao/ORB.cpp (object_to_string):
 
-	  Throw a CORBA::MARSHAL exception if the given object to
-	  stringify is a locality constrained object.
+          Throw a CORBA::MARSHAL exception if the given object to
+          stringify is a locality constrained object.
 
-	  When creating a URL IOR, do not use the profile currently in
-	  use.  Use the very first one in the profile list associated with
-	  the given object.
+          When creating a URL IOR, do not use the profile currently in
+          use.  Use the very first one in the profile list associated with
+          the given object.
 
-	* tao/Object.h (_key):
+        * tao/Object.h (_key):
 
-	  Removed unneccessary default CORBA::Environment argument.
+          Removed unneccessary default CORBA::Environment argument.
 
 Thu May 24 18:31:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -741,8 +752,8 @@ Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
         * orbsvcs/orbsvcs/AV/Transport.cpp:
 
           Provided a mechanism to modify QoS when there is a change in
- 	  QoS. Also added the QoS negotiator mechanism as a means of
- 	  notifying change in QoS.
+          QoS. Also added the QoS negotiator mechanism as a means of
+          notifying change in QoS.
 
         * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
         * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
@@ -751,33 +762,33 @@ Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 Tue May 22 15:34:20 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
-	* tao/tests/Big_Oneways/Session.{h,cpp}:
-	* tao/tests/AMI_Buffering/test_i.{h,cpp}:
-	* tao/examples/Logging/Logger_i.{h,cpp}:
-	* tao/examples/Buffered_Oneways/test_i.{h,cpp}:
-	* tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
-	  Fixed compile errors in Forte update 1.
+        * tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
+        * tao/tests/Big_Oneways/Session.{h,cpp}:
+        * tao/tests/AMI_Buffering/test_i.{h,cpp}:
+        * tao/examples/Logging/Logger_i.{h,cpp}:
+        * tao/examples/Buffered_Oneways/test_i.{h,cpp}:
+        * tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
+          Fixed compile errors in Forte update 1.
 
 Tue May 22 21:21:10 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: When the IFR and Name
-	  Service initialize the multicast server they check if the
- 	  ORBMulticastDiscoveryEndpoint option was specified and use that
- 	  address instead of the default one, however, the Trading Service
- 	  did not. It just uses the hard coded default no matter
- 	  what. This meant we can't programmatically change the multicast
- 	  endpoint.  The fix was to add the little bit of code in the Name
- 	  Service and IFR implementation to
- 	  TAO_Trading_Loader::init_multicast_server() that checks for the
- 	  multicast endpoint.  Thanks to Mike Pyle
- 	  <mike.pyle@burning-glass.com> for this fix.
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: When the IFR and Name
+          Service initialize the multicast server they check if the
+          ORBMulticastDiscoveryEndpoint option was specified and use that
+          address instead of the default one, however, the Trading Service
+          did not. It just uses the hard coded default no matter
+          what. This meant we can't programmatically change the multicast
+          endpoint.  The fix was to add the little bit of code in the Name
+          Service and IFR implementation to
+          TAO_Trading_Loader::init_multicast_server() that checks for the
+          multicast endpoint.  Thanks to Mike Pyle
+          <mike.pyle@burning-glass.com> for this fix.
 
 Mon May 21 18:43:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/QtTests: Fixed the Makefile so that it handles the
-	  PLATFORM_QT_* flags correctly.  Thanks to Hans Utz
- 	  <hans.utz@informatik.uni-ulm.de> for reporting this.
+        * tests/QtTests: Fixed the Makefile so that it handles the
+          PLATFORM_QT_* flags correctly.  Thanks to Hans Utz
+          <hans.utz@informatik.uni-ulm.de> for reporting this.
 
 Mon May 21 23:22:20 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -877,14 +888,14 @@ Sat May 19 17:00:00 2001  Ossama Othman  <ossama@uci.edu>
 
 Sat May 19 17:17:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
-	* docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
-	* orbsvcs/Notify_Service/README,
-	* tests/Param_Test/anyop.cpp (main),
-  	* tests/Param_Test/manipulation.cpp: Fixed all uses of
-	  "iioploc://" with "corbaloc:iiop:" to conform to the CORBA INS
- 	  standard consistently.  Thanks to Craig Rodrigues for suggesting
- 	  this.
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
+        * docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
+        * orbsvcs/Notify_Service/README,
+        * tests/Param_Test/anyop.cpp (main),
+        * tests/Param_Test/manipulation.cpp: Fixed all uses of
+          "iioploc://" with "corbaloc:iiop:" to conform to the CORBA INS
+          standard consistently.  Thanks to Craig Rodrigues for suggesting
+          this.
 
 Sat May 19 11:02:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
