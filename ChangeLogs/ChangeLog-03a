@@ -1,3 +1,8 @@
+Thu Aug 29 05:53:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/post_completions.cpp:
+          Fixed compile error
+
 Wed Aug 28 23:30:31 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU: Remove addition of SSL
@@ -69,7 +74,7 @@ Wed Aug 28 06:18:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
         * ace: Removed the config-sunos5.8-sunc++-5.4.h file since these
 	  changes should go in the config-sunos5.8.h file rather than
 	  a special file.  Thanks to Steve Huston for noticing this.
-    
+
 	* include/makeincludes: Removed the platform_sunos5_sunc++5.4.GNU
 	  file since it's no different from the platform_sunos5_sunc++.GNU
 	  file.  Thanks to Steve Huston for noticing this.
