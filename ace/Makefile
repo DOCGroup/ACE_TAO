@@ -539,6 +539,7 @@ Svc_Conf_y.cpp: Svc_Conf.y
               -e "s/YY/ACE_YY/g" \
               -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
           cp /tmp/$@ $@; \
+          patch < ../etc/Svc_Conf_y.cpp.diff; \
 	  echo '// $$'\I\d'$$' > Svc_Conf_Tokens.h; \
 	  cat Svc_Conf.tab.h >> Svc_Conf_Tokens.h; \
           $(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig; \
