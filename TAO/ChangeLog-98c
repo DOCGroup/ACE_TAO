@@ -1,3 +1,9 @@
+1998-10-11  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.h : change the order of
+	data member declarations to match initialization order in
+	constructors in .cpp file.
+
 1998-10-10  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h, cpp}: Updated
