@@ -22,7 +22,7 @@
 #if !defined (ACE_STDCPP_H)
 #define ACE_STDCPP_H
 
-#include "ace/config.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
