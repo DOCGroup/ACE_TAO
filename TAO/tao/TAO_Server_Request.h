@@ -88,6 +88,11 @@ public:
                      TAO_ORB_Core *orb_core,
                      int &parse_error);
 
+  /// Constructor used by thru-POA collocated invocation path.
+  TAO_ServerRequest (TAO_ORB_Core * orb_core,
+                     TAO_Operation_Details const & details,
+                     CORBA::Object_ptr target);
+
   /// Destructor.
   virtual ~TAO_ServerRequest (void);
 
