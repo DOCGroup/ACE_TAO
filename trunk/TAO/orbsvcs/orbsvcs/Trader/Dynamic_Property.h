@@ -20,7 +20,7 @@
 
 #include "Trader.h"
 
-class TAO_DP_Evaluation_Handler
+class TAO_ORBSVCS_Export TAO_DP_Evaluation_Handler
 {
 public:
 
@@ -31,7 +31,7 @@ public:
   
 };
 
-class TAO_DP_Dispatcher :
+class TAO_ORBSVCS_Export TAO_DP_Dispatcher :
   public POA_CosTradingDynamic::DynamicPropEval
 // = TITLE
 //   This class exhibits one strategy for handling many dynamic

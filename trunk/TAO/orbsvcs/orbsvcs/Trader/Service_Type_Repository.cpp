@@ -22,8 +22,8 @@ TAO_Service_Type_Repository::
 TAO_Service_Type_Repository (ACE_Lock* lock)
   : lock_ (lock)
 {
-  incarnation_.low = 0;
-  incarnation_.high = 0;
+  this->incarnation_.low = 0;
+  this->incarnation_.high = 0;
 
   // If a lock wasn't provided, let's assume the user doesn't want any
   // kind of lock at all.
@@ -45,7 +45,7 @@ incarnation (CORBA::Environment& _env)
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   TAO_READ_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, inc_num);
-  return incarnation_;
+  return this->incarnation_;
 }
 
 

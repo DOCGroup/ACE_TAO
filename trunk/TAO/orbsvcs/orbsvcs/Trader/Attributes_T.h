@@ -20,7 +20,7 @@
 #include "Attributes.h"
 
 template <class IF>
-class TAO_ORBSVCS_Export TAO_Trader_Components : public virtual IF
+class TAO_Trader_Components : public virtual IF
 {
 public:
 
@@ -58,7 +58,7 @@ private:
 };
 
 template <class IF>
-class TAO_ORBSVCS_Export TAO_Support_Attributes : public virtual IF
+class TAO_Support_Attributes : public virtual IF
 {
 public:
 
@@ -84,7 +84,7 @@ private:
 };
 
 template <class IF>
-class TAO_ORBSVCS_Export TAO_Import_Attributes : public virtual IF
+class TAO_Import_Attributes : public virtual IF
 {
 public:
 
@@ -142,7 +142,7 @@ private:
 };
 
 template <class IF>
-class TAO_ORBSVCS_Export TAO_Link_Attributes : public virtual IF
+class TAO_Link_Attributes : public virtual IF
 {
 public:
 

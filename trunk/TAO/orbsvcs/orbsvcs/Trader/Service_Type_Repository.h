@@ -20,7 +20,7 @@
 
 #include "Trader.h"
 
-class TAO_Service_Type_Repository :
+class TAO_ORBSVCS_Export TAO_Service_Type_Repository :
   public POA_CosTradingRepos::ServiceTypeRepository
   //
   // = TITLE
