@@ -457,13 +457,9 @@ TAO_PSDL_Interface_Visitor::print_class_for_interface (void)
   ps_sh->incr_indent (0);
 
   *ps_sh << "public:";  ps_sh->nl ();
-  *ps_sh << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-    ;
+
   *ps_sh << "typedef " << this->interface_name_ << "_ptr _ptr_type;";  ps_sh->nl ();
   *ps_sh << "typedef " << this->interface_name_ << "_var _var_type;";  ps_sh->nl ();
-  *ps_sh << "#endif /* ! __GNUC__ || g++ >= 2.8 */";  ps_sh->nl ();
-
-
 
   *ps_sh << "static int _tao_class_id;";  ps_sh->nl ();
 

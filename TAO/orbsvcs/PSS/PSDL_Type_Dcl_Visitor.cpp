@@ -211,9 +211,7 @@ TAO_PSDL_Type_Dcl_Visitor::print_for_sequence_typedefs (ACE_CString identifier_t
   *ps_sh << "~" << identifier.c_str () << " (void);";   ps_sh->nl ();
   *ps_sh << "static void _tao_any_destructor (void*);";   ps_sh->nl ();
   ps_sh->nl ();
-  *ps_sh << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)";   ps_sh->nl ();
   *ps_sh << "typedef " << identifier.c_str () << "_var _var_type;";   ps_sh->nl ();
-  *ps_sh << "#endif /* ! __GNUC__ || g++ >= 2.8 */";   ps_sh->nl ();
   ps_sh->nl ();
   ps_sh->nl ();
   *ps_sh << "};";   ps_sh->nl ();
@@ -253,7 +251,7 @@ TAO_PSDL_Type_Dcl_Visitor::print_for_sequence_typedefs (ACE_CString identifier_t
 
   ps_sh->nl ();
   ps_sh->nl ();
-  
+
   *ps_sh << "// in, inout, out, _retn ";   ps_sh->nl ();
   *ps_sh << "const " << identifier.c_str () << " &in (void) const;";   ps_sh->nl ();
   *ps_sh << identifier.c_str () << " &inout (void);";   ps_sh->nl ();
@@ -265,7 +263,7 @@ TAO_PSDL_Type_Dcl_Visitor::print_for_sequence_typedefs (ACE_CString identifier_t
 
   ps_sh->nl ();
   ps_sh->nl ();
-  
+
   *ps_sh << "private:";
 
   ps_sh->incr_indent (0);
@@ -277,7 +275,7 @@ TAO_PSDL_Type_Dcl_Visitor::print_for_sequence_typedefs (ACE_CString identifier_t
   ps_sh->nl ();
   ps_sh->nl ();
   ps_sh->nl ();
-  
+
   *ps_sh << "#endif /* end #if !defined */";   ps_sh->nl ();
   ps_sh->nl ();
   ps_sh->nl ();
