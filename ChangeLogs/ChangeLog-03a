@@ -1,3 +1,12 @@
+Tue Sep 25 13:00:37 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Obstack.h: Fixed a typo when declaring ACE_Obstack
+	  exportable.  I mistakenly used the underlying
+	  ACE_EXPORT_SINGLETON_DECLARATION macro directly.
+	  ACE_SINGLETON_DECLARATION is the right macro to use here.
+          Thanks to Martin Krumpolec <krumpolec@asset.sk> for reporting
+	  the bug.
+
 Tue Sep 25 09:12:28 2001  Andrew Finnell  <Andrew.Finnell@esecurityinc.com>
 
 	* ace/SSL/SSL_SOCK_Stream.i (recv_i):

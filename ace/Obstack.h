@@ -22,7 +22,7 @@
 
 typedef ACE_Obstack_T<char> ACE_Obstack;
 
-ACE_EXPORT_SINGLETON_DECLARATION (ACE_Obstack_T <char>;)
+ACE_SINGLETON_DECLARATION (ACE_Obstack_T <char>;)
 
 #include "ace/post.h"
 #endif /* ACE_OBSTACK_H */
