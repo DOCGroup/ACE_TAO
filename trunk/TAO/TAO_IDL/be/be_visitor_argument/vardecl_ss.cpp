@@ -315,7 +315,10 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << "char *" << arg->local_name () << ";\n";
+      *os << "CORBA::String_var _tao_var_"
+	  << arg->local_name () << ";" << be_nl;
+      *os << "char *&" << arg->local_name () << " = _tao_var_"
+          << arg->local_name () << ".out ();" << be_nl;
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
