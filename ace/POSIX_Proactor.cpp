@@ -736,19 +736,17 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
   if (aiocb_list_ == 0)  // already deleted
     return 0;
 
-  // try to cancel all uncomlpeted operarion
-  // POSIX systems may have hidden system threads
-  // that still can work with our aiocb's!
-  for (size_t ai = 0; ai < aiocb_list_max_size_; ai++)
-    {
-      if (this->aiocb_list_[ai] != 0)  // active operation
-        this->cancel_aiocb (result_list_[ai]);
-    }
+  size_t ai;
 
+  // Try to cancel all uncomlpeted operarion POSIX systems may have
+  // hidden system threads that still can work with our aiocb's!
+  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+    if (this->aiocb_list_[ai] != 0)  // active operation
+      this->cancel_aiocb (result_list_[ai]);
 
   int num_pending = 0;
 
-  for (size_t ai = 0; ai < aiocb_list_max_size_; ai++)
+  for (ai = 0; ai < aiocb_list_max_size_; ai++)
     {
       if (this->aiocb_list_[ai] == 0 ) //  not active operation
         continue;
