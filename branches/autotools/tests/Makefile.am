@@ -457,13 +457,11 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 
 ## Automake recognized target.  Appends these rules to the "all"
 ## target.
-all-local: bin
+all-local:
 	@for p in $(noinst_SCRIPTS) $(noinst_DATA); do \
 	  test -f $$p \
 	  || $(LN_S) $(top_srcdir)/tests/$$p $$p; done
-
-bin:
-	@$(LN_S) $(top_srcdir)/bin $@
+	@touch tests-link-stamp
 
 ## Clean up template repositories, etc.
 clean-local:
@@ -471,6 +469,11 @@ clean-local:
 	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
 
 ## Clean up files and directories created by this Makefile.
+##   @todo Remove "bin" from the below list of files to remove.  It
+##         exists simply to clean up existing workspaces that may
+##         still have that link.  Also remove the "-f" option once
+##         "bin" is removed since it won't be needed after doing so.
 distclean-local:
-	-rm -f bin $(noinst_SCRIPTS) $(noinst_DATA)
+	-test -f tests-link-stamp \
+	   && rm -f $(noinst_SCRIPTS) $(noinst_DATA) tests-link-stamp bin
 	-rm -rf log

@@ -62,6 +62,11 @@ confexec_DATA = aceConf.sh
 ## needed anyway.
 ACE_EXTRA_DIST = ChangeLogs bin docs m4
 
+## Automake recognized target.  Appends these rules to the "all"
+## target.
+all-local:
+	@test -d bin || ($(LN_S) $(top_srcdir)/bin bin && touch ace-bin-stamp)
+
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.
 clean-local:
@@ -80,3 +85,7 @@ dist-hook:
 	list=`find $(distdir) -type d -name CVS -print`; for p in $$list; do \
           rm -rf $$p; \
         done
+
+## Clean up files and directories created by this Makefile.
+distclean-local:
+	-test -f ace-bin-stamp && rm bin ace-bin-stamp
