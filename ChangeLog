@@ -9,19 +9,19 @@ Thu May 10 08:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * tests/Registry/Makefile.bor
         * tests/Synch/Makefile.bor
 
-        Added or updated the above BCB makefiles so that the tests are
-        build with BCB
+          Added or updated the above BCB makefiles so that the tests are
+	  build with BCB 
 
 Wed May  9 23:19:30 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
 	* ace/CDR_Streams.h:
 	* ace/CDR_Streams.cpp:
 	* ace/CDR_Streams.i:
-	* ace/CDR_Base.h:
-	  Changed the WChar implementation to suit GIOP 1.2.
+	* ace/CDR_Base.h: Changed the WChar implementation to suit GIOP
+	  1.2. 
 
-	* tests/CDR_Test.cpp:
-	  Added test for wchar.
-
+	* tests/CDR_Test.cpp:Added test for wchar. 
+	
 	  Thanks to Bala (bala@cs.wustl.edu) for helping me out.
 
 Wed May  9 16:06:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
