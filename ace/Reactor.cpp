@@ -3,7 +3,7 @@
 #include "ace/Reactor.h"
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
-#if !defined (ACE_HAS_WINCE)
+//#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
 #  endif /* !ACE_LACKS_ACE_SVCCONF */
@@ -11,7 +11,7 @@
 #    include "ace/WFMO_Reactor.h"
 #    include "ace/Msg_WFMO_Reactor.h"
 #  endif /* ACE_WIN32 */
-#endif /* ! ACE_HAS_WINCE */
+//#endif /* ! ACE_HAS_WINCE */
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Object_Manager.h"
