@@ -115,7 +115,7 @@ private:
 // XXX shouldn't have a default minor code, at least for code that's
 // inside the ORB.  All minor codes should be symbolically catalogued.
 
-//extern ACE_Svc_Export CORBA::TypeCode_ptr		_tc_CORBA_ ## name ; \
+//extern ACE_Svc_Export CORBA::TypeCode_ptr		_tc_CORBA_ ## name ;
 // this line was after #define and is commented as this has been moved into
 // class CORBA
 
