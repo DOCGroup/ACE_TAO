@@ -7,6 +7,7 @@
 
 #include "HA_Proactive_Status.h"
 #include "ace/Log_Msg.h"
+#include "ace/Message_Block.h"
 #include "ace/Proactor.h"
 #include "ace/os_include/arpa/os_inet.h"
 
