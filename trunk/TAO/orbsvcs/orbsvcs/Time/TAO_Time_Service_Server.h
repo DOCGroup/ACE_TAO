@@ -37,7 +37,7 @@ class TAO_ORBSVCS_Export TAO_Time_Service_Server : public POA_CosTime::TimeServi
 
 public:
   // = Initialization and termination methods.
-  TAO_Time_Service_Server (void);
+  TAO_Time_Service_Server (int shutdown);
   // Constructor.
 
   ~TAO_Time_Service_Server (void);
@@ -66,6 +66,10 @@ public:
 					 TimeBase::TimeT upper,
 					 CORBA::Environment &env);
   // This creates a new TIO with the given parameters.
+
+  int shutdown_;
+  // Used if the server is used with IR. If set the orb is shutdown after
+  // every method invocation.
 };
 
 #endif /* TAO_TIME_SERVICE_SERVER_H */
