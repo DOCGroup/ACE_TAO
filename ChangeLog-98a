@@ -8,6 +8,10 @@ Mon Feb 09 14:52:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added #include <stdfileio.h> with GreenHills/Chorus.
 
+        * netsvcs/clients/Naming/Client/Client_Test.cpp (handle_input):
+          get input from stdin, not ACE_STDIN.  Thanks to Jack Erickson
+          <JErickson@exchange.ml.com> for reporting this.
+
 Sun Feb  8 15:33:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU:
