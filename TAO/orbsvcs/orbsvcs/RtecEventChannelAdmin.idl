@@ -192,7 +192,7 @@ module RtecEventChannelAdmin
     /// Resume the reception of events.
     void resume_connection ();
 
-#if 0
+/*
       //@{
       void checkpoint (in RtecEventComm::SequenceNumber last_received)
         raises (Invalid_Checkpoint);
@@ -201,7 +201,7 @@ module RtecEventChannelAdmin
       void resend_by_date (in RtecEventComm::Time last_timestamp)
         raises (Invalid_Resend_Request);
       //@}
-#endif /* 0 */
+*/
     };
 
   /**
