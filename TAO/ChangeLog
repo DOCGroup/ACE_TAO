@@ -1,3 +1,25 @@
+Mon Nov  4 13:44:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression: A new regression test for BUG
+	  1020. This is a simple test which was failing with 1.2.1. The
+	  test has Multi-threaded client communicating with a
+	  Multi-threaded server. The client is crashed to see whether the
+	  server crashes.
+
+	* tests/Bug_1020_Basic_Regression/client.cpp:
+	* tests/Bug_1020_Basic_Regression/Client_Task.cpp:
+	* tests/Bug_1020_Basic_Regression/Client_Task.h:
+	* tests/Bug_1020_Basic_Regression/Echo_Caller.cpp:
+	* tests/Bug_1020_Basic_Regression/Echo_Caller.h:
+	* tests/Bug_1020_Basic_Regression/Echo.cpp:
+	* tests/Bug_1020_Basic_Regression/Echo.h:
+	* tests/Bug_1020_Basic_Regression/Makefile:
+        * tests/Bug_1020_Basic_Regression/server.cpp:
+	* tests/Bug_1020_Basic_Regression/Server_Task.cpp:
+	* tests/Bug_1020_Basic_Regression/Server_Task.h:
+	* tests/Bug_1020_Basic_Regression/Test.idl: New files added for
+	  this test.
+
 Mon Nov  4 12:24:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h: Added a
