@@ -728,10 +728,7 @@ TAO_Lookup<TRADER>
 	link_interface->describe_link (starting_trader[0], TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      CosTrading::PolicySeq_var in_policies =
-	policies.policies_to_pass (link_info->def_pass_on_follow_rule,
-				   0,
-				   admin_interface);
+      CosTrading::PolicySeq_var in_policies = policies.policies_to_forward ();
 
       // Perform forwarding query.
       link_info->target->query (type,
