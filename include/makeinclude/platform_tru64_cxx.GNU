@@ -15,7 +15,7 @@ ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
 
   ifndef ACE_DU_SUBVERSION
-    ACE_DU_SUBVERSION := $(shell /usr/sbin/sizer v-)
+    ACE_DU_SUBVERSION := $(shell /usr/sbin/sizer -v)
   endif # ! ACE_DU_SUBVERSION
 
   ifeq (4.0F,$(findstring 4.0F,$(ACE_DU_SUBVERSION)))
