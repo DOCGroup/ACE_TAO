@@ -302,7 +302,16 @@ POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_ThreadPolicy (this, stub);
+
+  PortableServer::ThreadPolicy *retval = 
+    PortableServer::ThreadPolicy::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_ThreadPolicy (this, 
+                                                                    stub),
+                  PortableServer::ThreadPolicy::_nil ());
+
+  return retval;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -588,7 +597,16 @@ POA_PortableServer::LifespanPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_LifespanPolicy (this, stub);
+
+  PortableServer::LifespanPolicy *retval = 
+    PortableServer::LifespanPolicy::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_LifespanPolicy (this, 
+                                                                      stub),
+                  PortableServer::LifespanPolicy::_nil ());
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -873,7 +891,18 @@ POA_PortableServer::IdUniquenessPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy (this, stub);
+
+  PortableServer::IdUniquenessPolicy *retval = 
+    PortableServer::IdUniquenessPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_IdUniquenessPolicy (this, 
+                                                              stub),
+      PortableServer::IdUniquenessPolicy::_nil ()
+    );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -1157,7 +1186,18 @@ POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy (this, stub);
+
+  PortableServer::IdAssignmentPolicy *retval = 
+    PortableServer::IdAssignmentPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_IdAssignmentPolicy (this, 
+                                                              stub),
+      PortableServer::IdAssignmentPolicy::_nil ()
+    );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -1443,7 +1483,18 @@ POA_PortableServer::ImplicitActivationPolicy::_this (CORBA_Environment &ACE_TRY_
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (this, stub);
+
+  PortableServer::ImplicitActivationPolicy *retval = 
+    PortableServer::ImplicitActivationPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (this, 
+                                                                    stub),
+      PortableServer::ImplicitActivationPolicy::_nil ()
+    );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -1727,7 +1778,18 @@ POA_PortableServer::ServantRetentionPolicy::_this (CORBA_Environment &ACE_TRY_EN
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy (this, stub);
+
+  PortableServer::ServantRetentionPolicy *retval = 
+    PortableServer::ServantRetentionPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_ServantRetentionPolicy (this, 
+                                                                  stub),
+      PortableServer::ServantRetentionPolicy::_nil ()
+    );
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -2011,7 +2073,18 @@ POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &ACE_TRY_E
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy (this, stub);
+
+  PortableServer::RequestProcessingPolicy *retval = 
+    PortableServer::RequestProcessingPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableServer::_tao_collocated_RequestProcessingPolicy (this, 
+                                                                   stub),
+      PortableServer::RequestProcessingPolicy::_nil ()
+    );
+
+  return retval;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -2133,7 +2206,16 @@ POA_PortableServer::_tao_collocated_POAManager:: get_state(CORBA::Environment &A
 PortableServer::POAManager*
 POA_PortableServer::POAManager::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_POAManager (this, 0);
+  PortableServer::POAManager *retval = 
+    PortableServer::POAManager::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_POAManager (this,
+                                                                  0),
+                  PortableServer::POAManager::_nil ());
+
+
+  return retval;
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -2215,7 +2297,16 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::unknown_ada
 PortableServer::AdapterActivator*
 POA_PortableServer::AdapterActivator::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_AdapterActivator (this, 0);
+  PortableServer::AdapterActivator *retval = 
+    PortableServer::AdapterActivator::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_AdapterActivator (this,
+                                                                        0),
+                  PortableServer::AdapterActivator::_nil ());
+
+
+  return retval;
 }
 
 // skeleton constructor
@@ -2282,7 +2373,16 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantManager::_is_a (
 PortableServer::ServantManager*
 POA_PortableServer::ServantManager::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_ServantManager (this, 0);
+  PortableServer::ServantManager *retval = 
+    PortableServer::ServantManager::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_ServantManager (this,
+                                                                      0),
+                  PortableServer::ServantManager::_nil ());
+
+
+  return retval;
 }
 
 // skeleton constructor
@@ -2385,7 +2485,16 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
 PortableServer::ServantActivator*
 POA_PortableServer::ServantActivator::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_ServantActivator (this, 0);
+  PortableServer::ServantActivator *retval = 
+    PortableServer::ServantActivator::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_ServantActivator (this,
+                                                                        0),
+                  PortableServer::ServantActivator::_nil ());
+
+
+  return retval;
 }
 
 // skeleton constructor
@@ -2492,7 +2601,16 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
 PortableServer::ServantLocator*
 POA_PortableServer::ServantLocator::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_ServantLocator (this, 0);
+  PortableServer::ServantLocator *retval = 
+    PortableServer::ServantLocator::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_ServantLocator (this,
+                                                                      0),
+                  PortableServer::ServantLocator::_nil ());
+
+
+  return retval;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -2897,7 +3015,16 @@ CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::id_to_reference (
 PortableServer::POA*
 POA_PortableServer::POA::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_POA (this, 0);
+  PortableServer::POA *retval = 
+    PortableServer::POA::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_POA (this,
+                                                           0),
+                  PortableServer::POA::_nil ());
+
+
+  return retval;
 }
 
 // skeleton constructor
@@ -2986,5 +3113,14 @@ PortableServer::ObjectId * POA_PortableServer::_tao_collocated_Current::get_obje
 PortableServer::Current*
 POA_PortableServer::Current::_this (CORBA_Environment &)
 {
-  return new POA_PortableServer::_tao_collocated_Current (this, 0);
+  PortableServer::Current *retval = 
+    PortableServer::Current::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_PortableServer::_tao_collocated_Current (this,
+                                                               0),
+                  PortableServer::Current::_nil ());
+
+
+  return retval;
 }

@@ -209,7 +209,8 @@ ACE_INLINE
 PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (const PortableServer::_tao_seq_Octet_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new PortableServer::_tao_seq_Octet(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             PortableServer::_tao_seq_Octet (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -234,7 +235,9 @@ PortableServer::_tao_seq_Octet_var::operator= (const PortableServer::_tao_seq_Oc
   if (this != &p)
     {
       delete this->ptr_;
-      this->ptr_ = new PortableServer::_tao_seq_Octet (*p.ptr_);
+      ACE_NEW_RETURN (this->ptr_, 
+                      PortableServer::_tao_seq_Octet (*p.ptr_), 
+		      *this);
     }
   return *this;
 }

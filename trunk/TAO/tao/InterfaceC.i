@@ -400,7 +400,8 @@ ACE_INLINE
 CORBA_Contained::Description_var::Description_var (const CORBA_Contained::Description_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_Contained::Description(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_Contained::Description(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -425,7 +426,9 @@ CORBA_Contained::Description_var::operator= (const CORBA_Contained::Description_
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_Contained::Description (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_Contained::Description (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -562,7 +565,9 @@ CORBA_Contained::Description_out::operator-> (void)
   {
     CORBA::InterfaceDef **buf = 0;
     
-    ACE_NEW_RETURN (buf, CORBA::InterfaceDef*[nelems], 0);
+    ACE_NEW_RETURN (buf, 
+                    CORBA::InterfaceDef*[nelems], 
+		    0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
       buf[i] = CORBA::InterfaceDef::_nil ();
@@ -721,7 +726,8 @@ ACE_INLINE
 CORBA_InterfaceDefSeq_var::CORBA_InterfaceDefSeq_var (const CORBA_InterfaceDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA::InterfaceDefSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA::InterfaceDefSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -746,7 +752,9 @@ CORBA_InterfaceDefSeq_var::operator= (const CORBA::InterfaceDefSeq_var &p) // de
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA::InterfaceDefSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA::InterfaceDefSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -898,7 +906,9 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   {
     CORBA::ValueDef **buf = 0;
     
-    ACE_NEW_RETURN (buf, CORBA::ValueDef*[nelems], 0);
+    ACE_NEW_RETURN (buf, 
+                    CORBA::ValueDef*[nelems], 
+		    0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
       buf[i] = CORBA::ValueDef::_nil ();
@@ -1057,7 +1067,8 @@ ACE_INLINE
 CORBA_ValueDefSeq_var::CORBA_ValueDefSeq_var (const CORBA::ValueDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA::ValueDefSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA::ValueDefSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -1082,7 +1093,9 @@ CORBA_ValueDefSeq_var::operator= (const CORBA::ValueDefSeq_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA::ValueDefSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA::ValueDefSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -1234,7 +1247,9 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
   {
     CORBA::Contained **buf = 0;
     
-    ACE_NEW_RETURN (buf, CORBA::Contained*[nelems], 0);
+    ACE_NEW_RETURN (buf, 
+                    CORBA::Contained*[nelems], 
+		    0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
       buf[i] = CORBA::Contained::_nil ();
@@ -1393,7 +1408,8 @@ ACE_INLINE
 CORBA_ContainedSeq_var::CORBA_ContainedSeq_var (const CORBA_ContainedSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ContainedSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ContainedSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -1418,7 +1434,9 @@ CORBA_ContainedSeq_var::operator= (const CORBA_ContainedSeq_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ContainedSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ContainedSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -1577,7 +1595,8 @@ ACE_INLINE
 CORBA_StructMember_var::CORBA_StructMember_var (const CORBA_StructMember_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA::StructMember(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA::StructMember(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -1602,7 +1621,9 @@ CORBA_StructMember_var::operator= (const CORBA_StructMember_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA::StructMember (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA::StructMember (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -1739,7 +1760,11 @@ CORBA_StructMember_out::operator-> (void)
   _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_StructMember[size];
+    CORBA_StructMember *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_StructMember[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (CORBA_StructMember *buffer)
@@ -1916,7 +1941,8 @@ ACE_INLINE
 CORBA_StructMemberSeq_var::CORBA_StructMemberSeq_var (const CORBA_StructMemberSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_StructMemberSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_StructMemberSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -1941,7 +1967,9 @@ CORBA_StructMemberSeq_var::operator= (const CORBA_StructMemberSeq_var &p) // dee
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_StructMemberSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_StructMemberSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -2100,7 +2128,8 @@ ACE_INLINE
 CORBA_Initializer_var::CORBA_Initializer_var (const CORBA_Initializer_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_Initializer(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_Initializer(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2125,7 +2154,9 @@ CORBA_Initializer_var::operator= (const CORBA_Initializer_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_Initializer (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_Initializer (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -2262,7 +2293,11 @@ CORBA_Initializer_out::operator-> (void)
   _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_Initializer[size];
+    CORBA_Initializer *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_Initializer[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (CORBA_Initializer *buffer)
@@ -2439,7 +2474,8 @@ ACE_INLINE
 CORBA_InitializerSeq_var::CORBA_InitializerSeq_var (const CORBA_InitializerSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_InitializerSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_InitializerSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2464,7 +2500,9 @@ CORBA_InitializerSeq_var::operator= (const CORBA_InitializerSeq_var &p) // deep 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_InitializerSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_InitializerSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -2623,7 +2661,8 @@ ACE_INLINE
 CORBA_UnionMember_var::CORBA_UnionMember_var (const CORBA_UnionMember_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_UnionMember(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_UnionMember(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2648,7 +2687,9 @@ CORBA_UnionMember_var::operator= (const CORBA_UnionMember_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_UnionMember (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_UnionMember (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -2785,7 +2826,11 @@ CORBA_UnionMember_out::operator-> (void)
   _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_UnionMember[size];
+    CORBA_UnionMember *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_UnionMember[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (CORBA_UnionMember *buffer)
@@ -2962,7 +3007,8 @@ ACE_INLINE
 CORBA_UnionMemberSeq_var::CORBA_UnionMemberSeq_var (const CORBA_UnionMemberSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_UnionMemberSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_UnionMemberSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2987,7 +3033,9 @@ CORBA_UnionMemberSeq_var::operator= (const CORBA_UnionMemberSeq_var &p) // deep 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_UnionMemberSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_UnionMemberSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -3150,7 +3198,8 @@ ACE_INLINE
 CORBA_EnumMemberSeq_var::CORBA_EnumMemberSeq_var (const CORBA_EnumMemberSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_EnumMemberSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_EnumMemberSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -3175,7 +3224,9 @@ CORBA_EnumMemberSeq_var::operator= (const CORBA_EnumMemberSeq_var &p) // deep co
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_EnumMemberSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_EnumMemberSeq (*p.ptr_), 
+	            *this);
   }
   return *this;
 }
@@ -3521,7 +3572,8 @@ ACE_INLINE
 CORBA_Container::Description_var::Description_var (const CORBA_Container::Description_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_Container::Description(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_Container::Description(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -3546,7 +3598,9 @@ CORBA_Container::Description_var::operator= (const CORBA_Container::Description_
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_Container::Description (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_Container::Description (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -3683,7 +3737,11 @@ CORBA_Container::Description_out::operator-> (void)
   CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_Container::Description[size];
+    CORBA_Container::Description *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_Container::Description[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (CORBA_Container::Description *buffer)
@@ -3860,7 +3918,8 @@ ACE_INLINE
 CORBA_Container::DescriptionSeq_var::DescriptionSeq_var (const CORBA_Container::DescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_Container::DescriptionSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_Container::DescriptionSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -3885,7 +3944,9 @@ CORBA_Container::DescriptionSeq_var::operator= (const CORBA_Container::Descripti
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_Container::DescriptionSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_Container::DescriptionSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -4605,7 +4666,8 @@ ACE_INLINE
 CORBA_ModuleDescription_var::CORBA_ModuleDescription_var (const CORBA_ModuleDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ModuleDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ModuleDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -4630,7 +4692,9 @@ CORBA_ModuleDescription_var::operator= (const CORBA_ModuleDescription_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ModuleDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ModuleDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -4961,7 +5025,8 @@ ACE_INLINE
 CORBA_ConstantDescription_var::CORBA_ConstantDescription_var (const CORBA_ConstantDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ConstantDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ConstantDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -4986,7 +5051,9 @@ CORBA_ConstantDescription_var::operator= (const CORBA_ConstantDescription_var &p
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ConstantDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ConstantDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -5317,7 +5384,8 @@ ACE_INLINE
 CORBA_TypeDescription_var::CORBA_TypeDescription_var (const CORBA_TypeDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_TypeDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_TypeDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -5342,7 +5410,9 @@ CORBA_TypeDescription_var::operator= (const CORBA_TypeDescription_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_TypeDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_TypeDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -7543,7 +7613,8 @@ ACE_INLINE
 CORBA_ExceptionDescription_var::CORBA_ExceptionDescription_var (const CORBA_ExceptionDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ExceptionDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ExceptionDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -7568,7 +7639,9 @@ CORBA_ExceptionDescription_var::operator= (const CORBA_ExceptionDescription_var 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ExceptionDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ExceptionDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -7899,7 +7972,8 @@ ACE_INLINE
 CORBA_AttributeDescription_var::CORBA_AttributeDescription_var (const CORBA_AttributeDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_AttributeDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_AttributeDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -7924,7 +7998,9 @@ CORBA_AttributeDescription_var::operator= (const CORBA_AttributeDescription_var 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_AttributeDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_AttributeDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -8068,7 +8144,8 @@ ACE_INLINE
 CORBA_ParameterDescription_var::CORBA_ParameterDescription_var (const CORBA_ParameterDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ParameterDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ParameterDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -8093,7 +8170,9 @@ CORBA_ParameterDescription_var::operator= (const CORBA_ParameterDescription_var 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ParameterDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ParameterDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -8230,7 +8309,11 @@ CORBA_ParameterDescription_out::operator-> (void)
   _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_ParameterDescription[size];
+    CORBA_ParameterDescription *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_ParameterDescription[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (CORBA_ParameterDescription *buffer)
@@ -8407,7 +8490,8 @@ ACE_INLINE
 CORBA_ParDescriptionSeq_var::CORBA_ParDescriptionSeq_var (const CORBA_ParDescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ParDescriptionSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ParDescriptionSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -8432,7 +8516,9 @@ CORBA_ParDescriptionSeq_var::operator= (const CORBA_ParDescriptionSeq_var &p) //
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ParDescriptionSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ParDescriptionSeq (*p.ptr_),
+	            *this);
   }
   return *this;
 }
@@ -8595,7 +8681,8 @@ ACE_INLINE
 CORBA_ContextIdSeq_var::CORBA_ContextIdSeq_var (const CORBA_ContextIdSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ContextIdSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ContextIdSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -8620,7 +8707,9 @@ CORBA_ContextIdSeq_var::operator= (const CORBA_ContextIdSeq_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ContextIdSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ContextIdSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -8931,7 +9020,8 @@ ACE_INLINE
 CORBA_ExceptionDefSeq_var::CORBA_ExceptionDefSeq_var (const CORBA_ExceptionDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ExceptionDefSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ExceptionDefSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -8956,7 +9046,9 @@ CORBA_ExceptionDefSeq_var::operator= (const CORBA_ExceptionDefSeq_var &p) // dee
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ExceptionDefSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ExceptionDefSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -9108,7 +9200,11 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_ExceptionDescription[size];
+    CORBA_ExceptionDescription *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_ExceptionDescription[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (CORBA_ExceptionDescription *buffer)
@@ -9285,7 +9381,8 @@ ACE_INLINE
 CORBA_ExcDescriptionSeq_var::CORBA_ExcDescriptionSeq_var (const CORBA_ExcDescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ExcDescriptionSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ExcDescriptionSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -9310,7 +9407,9 @@ CORBA_ExcDescriptionSeq_var::operator= (const CORBA_ExcDescriptionSeq_var &p) //
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ExcDescriptionSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ExcDescriptionSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -9656,7 +9755,8 @@ ACE_INLINE
 CORBA_OperationDescription_var::CORBA_OperationDescription_var (const CORBA_OperationDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_OperationDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_OperationDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -9681,7 +9781,9 @@ CORBA_OperationDescription_var::operator= (const CORBA_OperationDescription_var 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_OperationDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_OperationDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -9829,7 +9931,8 @@ ACE_INLINE
 CORBA_RepositoryIdSeq_var::CORBA_RepositoryIdSeq_var (const CORBA_RepositoryIdSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_RepositoryIdSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_RepositoryIdSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -9854,7 +9957,9 @@ CORBA_RepositoryIdSeq_var::operator= (const CORBA_RepositoryIdSeq_var &p) // dee
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_RepositoryIdSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_RepositoryIdSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -10006,7 +10111,11 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_OperationDescription[size];
+    CORBA_OperationDescription *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_OperationDescription[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (CORBA_OperationDescription *buffer)
@@ -10183,7 +10292,8 @@ ACE_INLINE
 CORBA_OpDescriptionSeq_var::CORBA_OpDescriptionSeq_var (const CORBA_OpDescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_OpDescriptionSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_OpDescriptionSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -10208,7 +10318,9 @@ CORBA_OpDescriptionSeq_var::operator= (const CORBA_OpDescriptionSeq_var &p) // d
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_OpDescriptionSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_OpDescriptionSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -10360,7 +10472,11 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_AttributeDescription[size];
+    CORBA_AttributeDescription *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_AttributeDescription[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (CORBA_AttributeDescription *buffer)
@@ -10537,7 +10653,8 @@ ACE_INLINE
 CORBA_AttrDescriptionSeq_var::CORBA_AttrDescriptionSeq_var (const CORBA_AttrDescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_AttrDescriptionSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_AttrDescriptionSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -10562,7 +10679,9 @@ CORBA_AttrDescriptionSeq_var::operator= (const CORBA_AttrDescriptionSeq_var &p) 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_AttrDescriptionSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_AttrDescriptionSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -10908,7 +11027,8 @@ ACE_INLINE
 CORBA_InterfaceDef::FullInterfaceDescription_var::FullInterfaceDescription_var (const CORBA_InterfaceDef::FullInterfaceDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_InterfaceDef::FullInterfaceDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_InterfaceDef::FullInterfaceDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -10933,7 +11053,9 @@ CORBA_InterfaceDef::FullInterfaceDescription_var::operator= (const CORBA_Interfa
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_InterfaceDef::FullInterfaceDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_InterfaceDef::FullInterfaceDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -11077,7 +11199,8 @@ ACE_INLINE
 CORBA_InterfaceDescription_var::CORBA_InterfaceDescription_var (const CORBA_InterfaceDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_InterfaceDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_InterfaceDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -11102,7 +11225,9 @@ CORBA_InterfaceDescription_var::operator= (const CORBA_InterfaceDescription_var 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_InterfaceDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_InterfaceDescription (*p.ptr_),
+		    *this);
   }
   return *this;
 }
@@ -11246,7 +11371,8 @@ ACE_INLINE
 CORBA_ValueMember_var::CORBA_ValueMember_var (const CORBA_ValueMember_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ValueMember(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ValueMember(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -11271,7 +11397,9 @@ CORBA_ValueMember_var::operator= (const CORBA_ValueMember_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ValueMember (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ValueMember (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -11408,7 +11536,11 @@ CORBA_ValueMember_out::operator-> (void)
   _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    return new CORBA_ValueMember[size];
+    CORBA_ValueMember *retval = 0;
+    ACE_NEW_RETURN (retval,
+                    CORBA_ValueMember[size],
+		    0);
+    return retval;
   }
   
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (CORBA_ValueMember *buffer)
@@ -11585,7 +11717,8 @@ ACE_INLINE
 CORBA_ValueMemberSeq_var::CORBA_ValueMemberSeq_var (const CORBA_ValueMemberSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ValueMemberSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ValueMemberSeq(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -11610,7 +11743,9 @@ CORBA_ValueMemberSeq_var::operator= (const CORBA_ValueMemberSeq_var &p) // deep 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ValueMemberSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ValueMemberSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -12143,7 +12278,8 @@ ACE_INLINE
 CORBA_ValueDef::FullValueDescription_var::FullValueDescription_var (const CORBA_ValueDef::FullValueDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ValueDef::FullValueDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ValueDef::FullValueDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -12168,7 +12304,9 @@ CORBA_ValueDef::FullValueDescription_var::operator= (const CORBA_ValueDef::FullV
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ValueDef::FullValueDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ValueDef::FullValueDescription (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -12312,7 +12450,8 @@ ACE_INLINE
 CORBA_ValueDescription_var::CORBA_ValueDescription_var (const CORBA_ValueDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA_ValueDescription(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             CORBA_ValueDescription(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -12337,7 +12476,9 @@ CORBA_ValueDescription_var::operator= (const CORBA_ValueDescription_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA_ValueDescription (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    CORBA_ValueDescription (*p.ptr_),
+		    *this);
   }
   return *this;
 }

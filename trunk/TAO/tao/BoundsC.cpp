@@ -58,14 +58,22 @@ void CORBA_Bounds::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_Bounds::_alloc (void)
 {
-  return new CORBA_Bounds;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_Bounds,
+                  0);
+
+  return retval;
 }
 
 
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem) // copying
 {
-  CORBA::Bounds *_tao_any_val = new CORBA::Bounds (_tao_elem);
+  CORBA::Bounds *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           CORBA::Bounds (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {

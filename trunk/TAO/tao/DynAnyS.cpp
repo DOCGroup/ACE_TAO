@@ -575,8 +575,14 @@ POA_CORBA::DynAny::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynAny (this, 
-                                                stub);
+  CORBA_DynAny *retval = CORBA_DynAny::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DynAny (this, 
+                                                     stub),
+                  CORBA_DynAny::_nil ());
+
+  return retval;
 }
 
 // constructor
@@ -724,8 +730,14 @@ POA_CORBA::DynEnum::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynEnum (this,
-                                                 stub);
+  CORBA_DynEnum *retval = CORBA_DynEnum::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DynEnum (this, 
+                                                      stub),
+                  CORBA_DynEnum::_nil ());
+
+  return retval;
 }
 
 // constructor
@@ -867,8 +879,14 @@ POA_CORBA::DynStruct::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynStruct (this,
-                                                   stub);
+  CORBA_DynStruct *retval = CORBA_DynStruct::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DynStruct (this, 
+                                                        stub),
+                  CORBA_DynStruct::_nil ());
+
+  return retval;
 }
 
 // constructor
@@ -1049,8 +1067,14 @@ POA_CORBA::DynUnion::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynUnion (this,
-                                                  stub);
+  CORBA_DynUnion *retval = CORBA_DynUnion::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DynUnion (this, 
+                                                       stub),
+                  CORBA_DynUnion::_nil ());
+
+  return retval;
 }
 
 // constructor
@@ -1192,8 +1216,14 @@ POA_CORBA::DynSequence::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynSequence (this,
-                                                     stub);
+  CORBA_DynSequence *retval = CORBA_DynSequence::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DynSequence (this, 
+                                                          stub),
+                  CORBA_DynSequence::_nil ());
+
+  return retval;
 }
 
 // constructor
@@ -1312,8 +1342,14 @@ POA_CORBA::DynArray::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynArray (this,
-                                                  stub);
+  CORBA_DynArray *retval = CORBA_DynArray::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_CORBA::_tao_collocated_DynArray (this, 
+                                                       stub),
+                  CORBA_DynArray::_nil ());
+
+  return retval;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -196,10 +196,21 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:Messaging/RebindPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RebindPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RebindPolicy(
-      ACE_reinterpret_cast(POA_Messaging::RebindPolicy_ptr, servant),
-      stub
+
+  Messaging::RebindPolicy_ptr retval = 
+    Messaging::RebindPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RebindPolicy (
+          ACE_reinterpret_cast (POA_Messaging::RebindPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RebindPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RebindPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -263,10 +274,21 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:Messaging/SyncScopePolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::SyncScopePolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_SyncScopePolicy(
-      ACE_reinterpret_cast(POA_Messaging::SyncScopePolicy_ptr, servant),
-      stub
+
+  Messaging::SyncScopePolicy_ptr retval = 
+    Messaging::SyncScopePolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_SyncScopePolicy (
+          ACE_reinterpret_cast (POA_Messaging::SyncScopePolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::SyncScopePolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::SyncScopePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -358,10 +380,21 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_unchecke
     servant = obj->_servant()->_downcast ("IDL:Messaging/RequestPriorityPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestPriorityPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RequestPriorityPolicy(
-      ACE_reinterpret_cast(POA_Messaging::RequestPriorityPolicy_ptr, servant),
-      stub
+
+  Messaging::RequestPriorityPolicy_ptr retval = 
+    Messaging::RequestPriorityPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RequestPriorityPolicy (
+          ACE_reinterpret_cast (POA_Messaging::RequestPriorityPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RequestPriorityPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RequestPriorityPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -425,10 +458,21 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_unchecked_na
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyPriorityPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyPriorityPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_ReplyPriorityPolicy(
-      ACE_reinterpret_cast(POA_Messaging::ReplyPriorityPolicy_ptr, servant),
-      stub
+
+  Messaging::ReplyPriorityPolicy_ptr retval = 
+    Messaging::ReplyPriorityPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_ReplyPriorityPolicy (
+          ACE_reinterpret_cast (POA_Messaging::ReplyPriorityPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::ReplyPriorityPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::ReplyPriorityPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -492,10 +536,21 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_unchec
     servant = obj->_servant()->_downcast ("IDL:Messaging/RequestStartTimePolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestStartTimePolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RequestStartTimePolicy(
-      ACE_reinterpret_cast(POA_Messaging::RequestStartTimePolicy_ptr, servant),
-      stub
+
+  Messaging::RequestStartTimePolicy_ptr retval = 
+    Messaging::RequestStartTimePolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RequestStartTimePolicy (
+          ACE_reinterpret_cast (POA_Messaging::RequestStartTimePolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RequestStartTimePolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RequestStartTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -559,10 +614,21 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_unchecked_
     servant = obj->_servant()->_downcast ("IDL:Messaging/RequestEndTimePolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestEndTimePolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RequestEndTimePolicy(
-      ACE_reinterpret_cast(POA_Messaging::RequestEndTimePolicy_ptr, servant),
-      stub
+
+  Messaging::RequestEndTimePolicy_ptr retval = 
+    Messaging::RequestEndTimePolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RequestEndTimePolicy (
+          ACE_reinterpret_cast (POA_Messaging::RequestEndTimePolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RequestEndTimePolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RequestEndTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -626,10 +692,21 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_unchecked_
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyStartTimePolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyStartTimePolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_ReplyStartTimePolicy(
-      ACE_reinterpret_cast(POA_Messaging::ReplyStartTimePolicy_ptr, servant),
-      stub
+
+  Messaging::ReplyStartTimePolicy_ptr retval = 
+    Messaging::ReplyStartTimePolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_ReplyStartTimePolicy (
+          ACE_reinterpret_cast (POA_Messaging::ReplyStartTimePolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::ReplyStartTimePolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::ReplyStartTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -693,10 +770,21 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_unchecked_narr
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyEndTimePolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyEndTimePolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_ReplyEndTimePolicy(
-      ACE_reinterpret_cast(POA_Messaging::ReplyEndTimePolicy_ptr, servant),
-      stub
+
+  Messaging::ReplyEndTimePolicy_ptr retval = 
+    Messaging::ReplyEndTimePolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_ReplyEndTimePolicy (
+          ACE_reinterpret_cast (POA_Messaging::ReplyEndTimePolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::ReplyEndTimePolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::ReplyEndTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -760,10 +848,21 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
     servant = obj->_servant()->_downcast ("IDL:Messaging/RelativeRequestTimeoutPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RelativeRequestTimeoutPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy(
-      ACE_reinterpret_cast(POA_Messaging::RelativeRequestTimeoutPolicy_ptr, servant),
-      stub
+
+  Messaging::RelativeRequestTimeoutPolicy_ptr retval = 
+    Messaging::RelativeRequestTimeoutPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy (
+          ACE_reinterpret_cast (POA_Messaging::RelativeRequestTimeoutPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RelativeRequestTimeoutPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RelativeRequestTimeoutPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -828,10 +927,21 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
     servant = obj->_servant()->_downcast ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RelativeRoundtripTimeoutPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy(
-      ACE_reinterpret_cast(POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr, servant),
-      stub
+
+  Messaging::RelativeRoundtripTimeoutPolicy_ptr retval = 
+    Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy (
+          ACE_reinterpret_cast (POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RelativeRoundtripTimeoutPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RelativeRoundtripTimeoutPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -923,10 +1033,21 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:Messaging/RoutingPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RoutingPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_RoutingPolicy(
-      ACE_reinterpret_cast(POA_Messaging::RoutingPolicy_ptr, servant),
-      stub
+
+  Messaging::RoutingPolicy_ptr retval = 
+    Messaging::RoutingPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_RoutingPolicy (
+          ACE_reinterpret_cast (POA_Messaging::RoutingPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::RoutingPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::RoutingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -990,10 +1111,21 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:Messaging/MaxHopsPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::MaxHopsPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_MaxHopsPolicy(
-      ACE_reinterpret_cast(POA_Messaging::MaxHopsPolicy_ptr, servant),
-      stub
+
+  Messaging::MaxHopsPolicy_ptr retval = 
+    Messaging::MaxHopsPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_MaxHopsPolicy (
+          ACE_reinterpret_cast (POA_Messaging::MaxHopsPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::MaxHopsPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::MaxHopsPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -1057,10 +1189,21 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:Messaging/QueueOrderPolicy:1.0");
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::QueueOrderPolicy::_nil ());
-  return new POA_Messaging::_tao_collocated_QueueOrderPolicy(
-      ACE_reinterpret_cast(POA_Messaging::QueueOrderPolicy_ptr, servant),
-      stub
+
+  Messaging::QueueOrderPolicy_ptr retval = 
+    Messaging::QueueOrderPolicy::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_QueueOrderPolicy (
+          ACE_reinterpret_cast (POA_Messaging::QueueOrderPolicy_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::QueueOrderPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::QueueOrderPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -1308,11 +1451,31 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyHandler:1.0");
   if (servant == 0)
-    return new Messaging::ReplyHandler(stub);
-  return new POA_Messaging::_tao_collocated_ReplyHandler(
-      ACE_reinterpret_cast(POA_Messaging::ReplyHandler_ptr, servant),
-      stub
+    {
+      Messaging::ReplyHandler_ptr rval = 
+        Messaging::ReplyHandler::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      Messaging::ReplyHandler (stub),
+                      Messaging::ReplyHandler::_nil ());
+
+      return rval;
+    }
+
+  Messaging::ReplyHandler_ptr retval = 
+    Messaging::ReplyHandler::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_ReplyHandler (
+          ACE_reinterpret_cast (POA_Messaging::ReplyHandler_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::ReplyHandler::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -1374,11 +1537,30 @@ Messaging::Poller_ptr Messaging::Poller::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/Poller:1.0");
   if (servant == 0)
-    return new Messaging::Poller(stub);
-  return new POA_Messaging::_tao_collocated_Poller(
-      ACE_reinterpret_cast(POA_Messaging::Poller_ptr, servant),
-      stub
+    {
+      Messaging::Poller_ptr rval = Messaging::Poller::_nil ();
+
+      ACE_NEW_RETURN (rval,
+                      Messaging::Poller (stub),
+                      Messaging::Poller::_nil ());
+
+      return rval;
+    }
+
+  Messaging::Poller_ptr retval = 
+    Messaging::Poller::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_Messaging::_tao_collocated_Poller (
+          ACE_reinterpret_cast (POA_Messaging::Poller_ptr, 
+                                servant),
+          stub
+        ),
+      Messaging::Poller::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Object_ptr Messaging::Poller::operation_target (

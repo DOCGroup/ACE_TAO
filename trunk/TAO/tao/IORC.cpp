@@ -38,10 +38,21 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
       || (servant = obj->_servant ()->_downcast ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0")) == 0)
       // This can only be colocated
       ACE_THROW_RETURN (CORBA::MARSHAL (), TAO_IOP::TAO_IOR_Manipulation::_nil ());
-  return new POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation(
-        ACE_reinterpret_cast(POA_TAO_IOP::TAO_IOR_Manipulation_ptr, servant),
-        0
-      );
+
+  TAO_IOP::TAO_IOR_Manipulation_ptr retval =
+    TAO_IOP::TAO_IOR_Manipulation::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (
+          ACE_reinterpret_cast (POA_TAO_IOP::TAO_IOR_Manipulation_ptr, 
+                                servant),
+          0
+        ),
+      TAO_IOP::TAO_IOR_Manipulation::_nil ()
+    );
+
+  return retval;
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
@@ -97,7 +108,13 @@ void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc (void)
 {
-  return new TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+                  0);
+
+  return retval;
 }
 
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_EmptyProfileList[] =
@@ -155,7 +172,13 @@ void TAO_IOP::TAO_IOR_Manipulation::NotFound::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::NotFound::_alloc (void)
 {
-  return new TAO_IOP::TAO_IOR_Manipulation::NotFound;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  TAO_IOP::TAO_IOR_Manipulation::NotFound,
+                  0);
+
+  return retval;
 }
 
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_NotFound[] =
@@ -213,7 +236,13 @@ void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Duplicate::_alloc (void)
 {
-  return new TAO_IOP::TAO_IOR_Manipulation::Duplicate;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  TAO_IOP::TAO_IOR_Manipulation::Duplicate,
+                  0);
+
+  return retval;
 }
 
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_Duplicate[] =
@@ -271,7 +300,13 @@ void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_alloc (void)
 {
-  return new TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR,
+                  0);
+
+  return retval;
 }
 
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_Invalid_IOR[] =
