@@ -1,3 +1,16 @@
+Fri Nov 14 11:07:46 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+	  Adopted the use of CIAO::debug_level according to the
+	  guidelines.
+
+	* performance-tests/Benchmark/RoundTripClient/run_test.pl:
+	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+	  Added code to "guess" the CIAO_ROOT if it is not defined.
+	  CIAO_ROOT is not required in the document to be defined in
+	  general.
+
 Fri Nov 14 10:20:18 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
