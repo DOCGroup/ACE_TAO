@@ -285,11 +285,15 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_timeout (
       // magic cookie during ACE_Connector::connect().  This gives the
       // SVC_HANDLER an opportunity to take corrective action (e.g.,
       // wait a few milliseconds and try to reconnect again.
-      if (sh->handle_timeout (tv, ast->arg ()) == -1)
-        sh->handle_close (sh->get_handle (), ACE_Event_Handler::TIMER_MASK);
+      int result = sh->handle_timeout (tv, ast->arg ());
 
-      // Matches the creation time refcount for AST, which is 1
+      // Matches the creation time refcount for AST, which is 1.
       this->decr_ast_refcount (ast);
+
+      if (result == -1)
+        sh->handle_close (sh->get_handle (),
+                          ACE_Event_Handler::TIMER_MASK);
+
       return 0;
     }
 }
