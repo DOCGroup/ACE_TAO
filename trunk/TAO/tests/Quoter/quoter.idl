@@ -1,4 +1,18 @@
 // $Id$
+// ============================================================================
+//
+// = FILENAME
+//    quoter.idl
+//
+// = DESCRIPTION
+//    Quoter example uses the POA and CosLifeCycle interfaces
+//
+// = AUTHOR
+//    Darrell Brunsch (brunsch@cs.wustl.edu)
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+
+#include "../../orbsvcs/orbsvcs/CosLifeCycle.idl"
 
 module Stock
 {
@@ -27,4 +41,15 @@ module Stock
     // Returns a new Quoter selected by name e.g., "Dow Jones,"
     // "Reuters,", etc
   };
+
+
+  interface QuoterFactoryFinder : CosLifeCycle::FactoryFinder
+  {
+    // = TITLE 
+    //   Wrapper for the CosLifeCycle FactoryFinder
+    //
+    // inherits: 
+    // Factories find_factories(in Key factory_key) raises(NoFactory);
+  };
 };
+
