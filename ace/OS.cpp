@@ -309,7 +309,11 @@ ACE_OS::uname (struct utsname *name)
     TCHAR processor[bufsize] = __TEXT ("Unknown");
     TCHAR subtype[bufsize] = __TEXT ("Unknown");
 
+#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0500 && __BORLANDC__ < 0x0530)
+#define PROCARCH(x) x.s.wProcessorArchitecture
+#else
 #define PROCARCH(x) x.wProcessorArchitecture
+#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0500 &&  __BORLANDC__ < 0x0530) */
 
     switch (PROCARCH(sinfo))
     {
