@@ -4712,6 +4712,10 @@ public:
 
   static int fgetc (FILE* fp);
   static void clearerr (FILE* fp);
+
+#if defined (ungetc)
+#undef ungetc
+#endif /* ungetc */
   static int ungetc (int c, FILE* fp);
 
 #if defined (ACE_HAS_WCHAR)
