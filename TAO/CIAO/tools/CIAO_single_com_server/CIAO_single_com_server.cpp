@@ -76,7 +76,8 @@ int breakdown (char *source,
 
 void
 install_homes (CIAO::Session_Container &container,
-               CORBA::ORB_ptr orb
+               CORBA::ORB_ptr orb,
+               CIAO::HomeRegistrar_ptr hr
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
   if (component_list_ == 0)
@@ -127,14 +128,12 @@ install_homes (CIAO::Session_Container &container,
             continue;
 
           // Register with the HomeFinder now.
-          CORBA::String_var str = orb->object_to_string (home.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
+          hr->register_home (items[4],
+                             items[5],
+                             items[6],
+                             home.in ()
+                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK
-
-            write_IOR (str.in ());
-
-          ACE_DEBUG ((LM_INFO, "%s\n", str.in ()));
-
         }
     }
   ACE_OS::fclose (config_file);
@@ -180,7 +179,27 @@ main (int argc, char *argv[])
         return -1;
 
       PortableServer::Servant hr_svt = new CIAO::HomeRegistrar_Impl (ns);
+      PortableServer::ObjectId_var hr_oid
+        = poa->activate_object (hr_svt
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
+      obj = poa->id_to_reference (hr_oid
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CIAO::HomeRegistrar_var home_registrar =
+        CIAO::HomeRegistrar::_narrow (obj
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (home_registrar))
+        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire HomeRegistrar interface\n"), -1);
+
+      CORBA::String_var str = orb->object_to_string (home_registrar.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
+      write_IOR (str.in ());
+      ACE_DEBUG ((LM_INFO, "HomeFinder IOR: %s\n", str.in ()));
 
       // Start Deployment part
 
@@ -189,7 +208,7 @@ main (int argc, char *argv[])
 
       // install component
 
-      install_homes (container, orb ACE_ENV_ARG_PARAMETER);
+      install_homes (container, orb, home_registrar ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // End Deployment part
