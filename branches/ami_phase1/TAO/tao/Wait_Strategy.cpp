@@ -202,8 +202,6 @@ TAO_Wait_On_Leader_Follower::wait (void)
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                     orb_core->leader_follower_lock (), -1);
   
-  // = Follower code.
-
   // Check if there is a leader, but the leader is not us
   if (orb_core->leader_available () && !orb_core->I_am_the_leader_thread ())
     {
