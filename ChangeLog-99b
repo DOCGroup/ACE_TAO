@@ -1,3 +1,25 @@
+Tue Aug 03 18:30:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+	
+	* ace/Strategies.h (ACE_Connection_Recycling_Strategy):
+	  Added a new pure virtual method <marked_as_closed_i> which
+	  will provide a non-locking implementation of the
+	  <mark_as_closed> method.
+
+	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy): 
+	  Made <mark_as_closed_i> public.
+
+	* ace/Caching_Utility_T.{h,cpp}
+	  (ACE_Refcounted_Recyclable_Caching_Utility):
+	  Added this class which caters to purging of refcounted and
+	  recyclable handlers.
+
+	* ace/Cleanup_Strategy_T.{h,cpp}:
+	  (ACE_Refcounted_Recyclable_Cleanup_Strategy):
+	  Added this class which caters to the cleanup of handlers which
+	  are refcounted and recyclable. Heres where the necessity of
+	  making the non-locking version of <marked_as_closed> public
+	  arose in the first place.
+
 Tue Aug 03 16:58:08 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* ace/ATM_Acceptor.{h,cpp}:

@@ -760,6 +760,11 @@ public:
   virtual int mark_as_closed (const void *recycling_act);
   // Mark as closed.
 
+  virtual int mark_as_closed_i (const void *recycling_act);
+  // Mark as closed (non-locking version). This method needs to be public
+  // as it is used in the cleanup of handlers where teh locked version causes 
+  // a deadlock.
+
   virtual int cleanup_hint (const void *recycling_act);
   // Cleanup hint.
 
@@ -817,9 +822,6 @@ protected:
                                ACE_Recyclable_State new_state);
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
   // Get/Set <recycle_state> (non-locking version).
-
-  virtual int mark_as_closed_i (const void *recycling_act);
-  // Mark as closed (non-locking version).
 
   virtual int cleanup_hint_i (const void *recycling_act);
   // Cleanup hint.
