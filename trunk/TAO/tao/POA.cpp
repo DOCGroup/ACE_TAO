@@ -836,7 +836,9 @@ TAO_POA::check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completio
       // This thread cannot currently be in an upcall.
       if (poa_current_impl != 0)
         {
-          ACE_THROW (CORBA::BAD_INV_ORDER ());
+          // CORBA 2.3 specifies which minor code corresponds to this
+          // particular problem.
+          ACE_THROW (CORBA::BAD_INV_ORDER (3, CORBA::COMPLETED_NO));
         }
     }
 }
