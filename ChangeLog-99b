@@ -1,3 +1,8 @@
+Sat Apr  3 19:41:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): Disabled support for higher baudrate
+	  for non-NT platforms.
+
 Sat Apr  3 19:37:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/TTY_IO.cpp (control): Added support for more modem speeds.
@@ -6,13 +11,13 @@ Sat Apr  3 19:37:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sat Apr  3 17:02:48 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/*: Regenerated all the HTML to get the hyperlinks 
-	into the various headers.  I'm sure somebody will let me know if I 
+	* docs/tutorials/*: Regenerated all the HTML to get the hyperlinks
+	into the various headers.  I'm sure somebody will let me know if I
 	munged it all.
 
 	* docs/tutorials/(019|020|021) : Finally made myself sit down and
 	add Kirthika's last abstracts.
-	
+
 Sat Apr  3 15:27:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile.am
@@ -21,7 +26,7 @@ Sat Apr  3 15:27:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* netsvcs/clients/Tokens/manual/Makefile.am
 	* netsvcs/lib/Makefile.am
 	* tests/Makefile.am
-	
+
 	  Added targets to clean up files and directories created during
 	  compilation.  Automake will setup the `clean-local' targets to
 	  run automatically whenever a `make clean' is done.
