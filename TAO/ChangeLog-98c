@@ -1,61 +1,67 @@
+Fri Nov 13 15:09:58 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc):
+          on VxWorks, kill own task when done, to avoid memPartFree during
+          ORB cleanup.
+
 Fri Nov 13 12:41:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: 
-	  Fixed problems in CDR extraction operator for Octet sequences
-	  (compiled marshaling).
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Fixed problems in CDR extraction operator for Octet sequences
+          (compiled marshaling).
 
-	* performance-tests/Thruput/TAO/run_client: 
-	* performance-tests/Thruput/TAO/run_test: 
-	  Fixed some problems in the debugging messages.
+        * performance-tests/Thruput/TAO/run_client:
+        * performance-tests/Thruput/TAO/run_test:
+          Fixed some problems in the debugging messages.
 
-	* performance-tests/Thruput/TAO/server.cpp: 
-	  The IOR file was created only if debugging was also enabled!
+        * performance-tests/Thruput/TAO/server.cpp:
+          The IOR file was created only if debugging was also enabled!
 
-	* performance-tests/Thruput/TAO/utils.cpp: 
-	* performance-tests/Thruput/TAO/client.cpp: 
-	  Fixed minor formating problems in the output.
+        * performance-tests/Thruput/TAO/utils.cpp:
+        * performance-tests/Thruput/TAO/client.cpp:
+          Fixed minor formating problems in the output.
 
 1998-11-13  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* examples/Simple/chat/README: added explaination
-	about how the IOR is used to locate the chat server.
+        * examples/Simple/chat/README: added explaination
+        about how the IOR is used to locate the chat server.
 
-	* examples/Event_Comm/Event_Comm_i.h (Notifier): added
-	a missing comment to ShutdownCallback::close.
+        * examples/Event_Comm/Event_Comm_i.h (Notifier): added
+        a missing comment to ShutdownCallback::close.
 
 Fri Nov 13 11:51:21 1998  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Modified to reuse code a
-	  little better
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: Modified to reuse code a
+          little better
 
 Thu Nov 12 23:21:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h: Native exceptions seem to be working fine.  I
- 	  have restored the TAO_HAS_EXCEPTIONS option in the configuration
- 	  file.  Thanks to Tom Ziomek <tomz@cc.comm.mot.com> for bringing
- 	  this to our attention.
+        * tao/orbconf.h: Native exceptions seem to be working fine.  I
+          have restored the TAO_HAS_EXCEPTIONS option in the configuration
+          file.  Thanks to Tom Ziomek <tomz@cc.comm.mot.com> for bringing
+          this to our attention.
 
 Thu Nov 12 17:30:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp
- 	  orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp
- 	  orbsvcs/tests/EC_Mcast/EC_Mcast.{cpp, h}
- 	  orbsvcs/tests/EC_Multiple/EC_Multiple.{cpp, h}
- 	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
- 	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
- 	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h
- 	  orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp
- 	  orbsvcs/tests/Event_Latency/Event_Latency.cpp: Fixed stray
- 	  compiler errors caused by RtecSceduler IDL portability changes.
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp
+          orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp
+          orbsvcs/tests/EC_Mcast/EC_Mcast.{cpp, h}
+          orbsvcs/tests/EC_Multiple/EC_Multiple.{cpp, h}
+          orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
+          orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
+          orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h
+          orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp
+          orbsvcs/tests/Event_Latency/Event_Latency.cpp: Fixed stray
+          compiler errors caused by RtecSceduler IDL portability changes.
 
 Thu Nov 12 14:21:41 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Logger/README: Made a few edits to reflect added
-	  tests for the twoway methods and included sample output
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Added tests for new
-	  twoway methods log2() and logv2().
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Changed formating of messages
-	  for log2() and logv2 ().
+        * orbsvcs/tests/Logger/README: Made a few edits to reflect added
+          tests for the twoway methods and included sample output
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp: Added tests for new
+          twoway methods log2() and logv2().
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: Changed formating of messages
+          for log2() and logv2 ().
 
 Thu Nov 12 14:03:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -73,8 +79,8 @@ Thu Nov 12 14:03:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h}
           orbsvcs/orbsvcs/Sched/Scheduler.h
           orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}:
-	  Changed RtecScheduler type names to remove non-portable IDL
-	  declarations like "Priority priority;" where identifiers only
+          Changed RtecScheduler type names to remove non-portable IDL
+          declarations like "Priority priority;" where identifiers only
           differ by case.  Thanks to Martin Renner (Martin.Renner@pp-ulm.de)
           for pointing out the problem and the appropriate snippet of the
           CORBA spec.
