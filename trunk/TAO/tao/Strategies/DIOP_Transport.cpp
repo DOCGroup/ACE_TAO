@@ -247,16 +247,16 @@ int
 TAO_DIOP_Transport::send_request (TAO_Stub *stub,
                                   TAO_ORB_Core *orb_core,
                                   TAO_OutputCDR &stream,
-                                  int two_way,
+                                  int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
-                                  two_way) == -1)
+                                  message_semantics) == -1)
     return -1;
 
   if (this->send_message (stream,
                           stub,
-                          two_way,
+                          message_semantics,
                           max_wait_time) == -1)
 
     return -1;
