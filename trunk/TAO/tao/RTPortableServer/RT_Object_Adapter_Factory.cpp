@@ -14,9 +14,6 @@ ACE_RCSID (TAO_RTPortableServer,
 
 TAO_RT_Object_Adapter_Factory::TAO_RT_Object_Adapter_Factory (void)
 {
-  // Set the name of the collocation resolver to be RT_Collocation_Resolver.
-  TAO_ORB_Core::set_collocation_resolver ("RT_Collocation_Resolver");
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Collocation_Resolver);
 }
 
 TAO_Adapter*
@@ -25,6 +22,10 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
   // Setup the POA_Current object in the ORB
   CORBA::Object_var current = new TAO_POA_Current;
   orb_core->poa_current (current.in ());
+
+  // Set the name of the collocation resolver to be RT_Collocation_Resolver.
+  TAO_ORB_Core::set_collocation_resolver ("RT_Collocation_Resolver");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Collocation_Resolver);
 
   TAO_Object_Adapter *object_adapter = 0;
   ACE_NEW_RETURN (object_adapter,
