@@ -155,10 +155,6 @@ SOURCE=.\SSLIOP\SSLIOP_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_PrincipalAuthenticator.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SSLIOP\SSLIOP_Profile.cpp
 # End Source File
 # Begin Source File
@@ -176,6 +172,10 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Util.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Vault.cpp
 # End Source File
 # Begin Source File
 
@@ -255,10 +255,6 @@ SOURCE=.\SSLIOP\SSLIOP_ORBInitializer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_PrincipalAuthenticator.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\SSLIOP\SSLIOP_Profile.h
 # End Source File
 # Begin Source File
@@ -276,6 +272,10 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Util.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Vault.h
 # End Source File
 # Begin Source File
 
