@@ -92,9 +92,14 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
   CosNaming::NamingContext_var naming_context_;
   // Naming context
 
- private:
   ACE_Process_Options *process_options_;
   // Name and arguments for the process to be created
+
+  char host_[MAXHOSTNAMELEN];
+  // name of this host used for resolving unique names.
+  
+  pid_t pid_;
+  // My child's process id.
 };  
 
 

@@ -9,7 +9,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
   : public TAO_AV_Endpoint_Strategy
 // = DESCRIPTION
-//    Reactive strategy base clas
+//    Reactive strategy base class
 {
  protected:
   TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager);
@@ -171,6 +171,12 @@ public:
 
   T_MediaCtrl *media_ctrl_;
   // Media controller
+  
+  pid_t pid_;
+  // pid of this process 
+
+  char host_[MAXHOSTNAMELEN];
+  // Name of the host.
 };
 
 // ----------------------------------------------------------------------
