@@ -1,65 +1,65 @@
 Sun Apr  4 18:19:05 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	
-	  Changed ANSI C++ cast test to fail on warnings.  Currently,
-	  only g++ and Sun C++ warning/error conversion is supported.
+        * configure.in:
 
-	  Moved the ACE_SET_COMPILER_FLAGS macro after the AC_ARG_ENABLE
-	  and AC_ARG_WITH calls so that user settings can influence what
-	  compiler flags get set.
+          Changed ANSI C++ cast test to fail on warnings.  Currently,
+          only g++ and Sun C++ warning/error conversion is supported.
 
-	  Removed some M4 comments (`dnl') that were inside of the
-	  template specialization test header block.  The test was failing
-	  since `dnl' was being quoted by M4 and actually placed inside
-	  the test program source during test source compilation.  Also
-	  corrected a typo in the same test.
+          Moved the ACE_SET_COMPILER_FLAGS macro after the AC_ARG_ENABLE
+          and AC_ARG_WITH calls so that user settings can influence what
+          compiler flags get set.
 
-	  Changed test for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION so
-	  that it attempts to link instead of just compile.  Hopefully
-	  this will make the test "tougher."
+          Removed some M4 comments (`dnl') that were inside of the
+          template specialization test header block.  The test was failing
+          since `dnl' was being quoted by M4 and actually placed inside
+          the test program source during test source compilation.  Also
+          corrected a typo in the same test.
 
-	* m4/compiler.m4:
+          Changed test for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION so
+          that it attempts to link instead of just compile.  Hopefully
+          this will make the test "tougher."
 
-	  Added `-features=castop' compiler flag and completed support for
- 	  `-features=rtti' via `--enable-rtti'.  These flags only work for
-	  Sun C++ 4.2.  Added support for the `-noex' Sun C++ compiler flag
-	  when the user disables exception handling.
+        * m4/compiler.m4:
 
-	* m4/platform.m4: Minor comment updates.
-	
+          Added `-features=castop' compiler flag and completed support for
+          `-features=rtti' via `--enable-rtti'.  These flags only work for
+          Sun C++ 4.2.  Added support for the `-noex' Sun C++ compiler flag
+          when the user disables exception handling.
+
+        * m4/platform.m4: Minor comment updates.
+
 Sat Apr  3 19:41:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control): Disabled support for higher baudrate
-	  for non-NT platforms.
+        * ace/TTY_IO.cpp (control): Disabled support for higher baudrate
+          for non-NT platforms.
 
 Sat Apr  3 19:37:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control): Added support for more modem speeds.
-  	  Thanks to Valery Arkhangorodsky <avalery@geocities.com> for
- 	  reporting this.
+        * ace/TTY_IO.cpp (control): Added support for more modem speeds.
+          Thanks to Valery Arkhangorodsky <avalery@geocities.com> for
+          reporting this.
 
 Sat Apr  3 17:02:48 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/*: Regenerated all the HTML to get the hyperlinks
-	into the various headers.  I'm sure somebody will let me know if I
-	munged it all.
+        * docs/tutorials/*: Regenerated all the HTML to get the hyperlinks
+        into the various headers.  I'm sure somebody will let me know if I
+        munged it all.
 
-	* docs/tutorials/(019|020|021) : Finally made myself sit down and
-	add Kirthika's last abstracts.
+        * docs/tutorials/(019|020|021) : Finally made myself sit down and
+        add Kirthika's last abstracts.
 
 Sat Apr  3 15:27:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile.am
-	* ace/Makefile.am
-	* netsvcs/clients/Naming/Client/Makefile.am
-	* netsvcs/clients/Tokens/manual/Makefile.am
-	* netsvcs/lib/Makefile.am
-	* tests/Makefile.am
+        * Makefile.am
+        * ace/Makefile.am
+        * netsvcs/clients/Naming/Client/Makefile.am
+        * netsvcs/clients/Tokens/manual/Makefile.am
+        * netsvcs/lib/Makefile.am
+        * tests/Makefile.am
 
-	  Added targets to clean up files and directories created during
-	  compilation.  Automake will setup the `clean-local' targets to
-	  run automatically whenever a `make clean' is done.
+          Added targets to clean up files and directories created during
+          compilation.  Automake will setup the `clean-local' targets to
+          run automatically whenever a `make clean' is done.
 
 Fri Apr 02 23:25:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -67,7 +67,9 @@ Fri Apr 02 23:25:11 1999  David L. Levine  <levine@cs.wustl.edu>
           Nanbor for suggesting this.
 
         * ace/OS.cpp: removed use of ACE_Array for with WIN32 and
-          TSS_EMULATION.
+          TSS_EMULATION.  In doing this, fixed an off-by-one error:
+          ACE_TSS_Cleanup::remove () would try to remove key value
+          "n" from an ACE_Array of size "n".
 
 Fri Apr  2 19:19:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
