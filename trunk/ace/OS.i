@@ -3043,6 +3043,13 @@ ACE_OS::malloc (size_t nbytes)
 }
 
 ACE_INLINE void *
+ACE_OS::calloc (size_t elements, size_t sizeof_elements)
+{
+  // ACE_TRACE ("ACE_OS::calloc");
+  return ::calloc (elements, sizeof_elements);
+}
+
+ACE_INLINE void *
 ACE_OS::realloc (void *ptr, size_t nbytes)
 {
   // ACE_TRACE ("ACE_OS::realloc");
@@ -6790,7 +6797,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
 #else
-  *s |= (1 << (signum-1)) ;
+  *s |= (1 << (signum - 1)) ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
 }
@@ -6801,7 +6808,7 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
 #else
-  *s &= ~(1 << (signum-1)) ;
+  *s &= ~(1 << (signum - 1)) ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
 }

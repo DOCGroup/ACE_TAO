@@ -2739,6 +2739,7 @@ public:
 
   // = A set of wrappers for memory managment.
   static void *sbrk (int brk);
+  static void *calloc (size_t elements, size_t sizeof_elements);
   static void *malloc (size_t);
   static void *realloc (void *, size_t);
   static void free (void *);

@@ -2,16 +2,16 @@
 
 CC		= cxx
 CXX		= $(CC)
-CFLAGS		+= $(DCFLAGS) -non_shared
+CFLAGS		+= $(DCFLAGS) -ptr ptrepository
 CCFLAGS		+= $(CFLAGS) -x cxx -w0
 DCFLAGS		+= -g -threads
-#DLD		= ld -non_shared
 DLD		= ld -shared -expect_unresolved '*'
 LD		= $(CXX)
 LIBS		+= -lpthreads -lmach -lsys5 -lxti -ltli -lcxx -lexc -lc
 PIC		= -pic
 ARFLAGS		= ruv
 RANLIB		= ranlib
-SOFLAGS		= -shared -assert 
+SOFLAGS		= -shared 
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 		  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o -lcxx -ltask -lexc -lc
+
