@@ -1,3 +1,10 @@
+Wed Apr 30 10:42:04 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Added the full path of the input file to the error output in the
+          parse_file() method.
+
 Wed Apr 30 16:08:13 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * ace/ace_lib.dsp:
