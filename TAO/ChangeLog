@@ -1,3 +1,9 @@
+Wed Mar 31 18:19:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* docs/releasenotes/ftcorba_services.html:
+
+	  Fixed fuzz warnings.
+
 Wed Mar 31 17:56:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Advanced/ch_12/icp.h:
