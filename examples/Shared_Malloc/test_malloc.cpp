@@ -169,6 +169,7 @@ main (int argc, char *argv[])
 {
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   Options::instance ()->parse_args (argc, argv);
 
