@@ -7,7 +7,8 @@
 
 <H1 ALIGN=CENTER>Release Information</H1>
 
-<H3 ALIGN=CENTER>Version 0.8b ?which?</H3>
+<H3 ALIGN=CENTER>Version 0.8b</H3>
+<H3 ALIGN=CENTER>30-September-1997</H3>
 
 <H2><HR ALIGN=LEFT>Roadmap</H2>
 
@@ -27,12 +28,18 @@
 <BLOCKQUOTE>
   <P>Current status:</P>
   <UL>
+    <LI>There is a bug in the ORB-per-thread concurrency model caused by its
+    use of the ACE Service Configurator.  The bug is understood,
+    and a patch being readied and should be released no later than week's end.
     <LI>Provides dynamically linked wholesale strategy assignment using the
     ACE Service Configurator framework.
     <LI>Supports several concurrency models out of the box: Reactive, Thread-per-connection,
     and ORB-per-thread. Others can be easily crafted.
     <LI>The ORB-per-thread model is not well integrated with the other concurrency
     models; it must be selected at <EM>compile time</EM> rather than run time.
+    In order to use it, one must add <CODE>-DTAO_HAS_TSS_ORBCORE</CODE> to the compile
+    line in both the library (<code>$(TAO_ROOT)/tao</code>) and the application
+    (<em>e.g.</em>, <code>$(TAO_ROOT)/tests/multiCubit</code>).
   </UL>
   <P>Future work:</P>
   <UL>
@@ -113,27 +120,27 @@
   <P>The TAO test application is meant to serve as a starting point for real-time
   tests on the TAO system. It comprises the following parts:</P>
   <UL>
-    <LI><EM>Server.</EM> The servant component creates multiple CORBA objects
-    (servants), each with different real-time priorities. This priority is
-    implemented by using real-time thread support provided by the operating
-    system. Thus, requests sent to a high-priority servant are handled by a
-    high-priority real-time thread, and those sent to a lower priority servant
-    are handled by correspondingly lower priority threads.
-    <LI><EM>Client.</EM> The client component binds to the servant objects,
-    and sends a stream of CORBA requests to the servants. It measures the response
-    time, i.e. the time taken for the request to complete successfully. In
-    particular, it measures the time taken for requests sent to the high priority
-    servant to complete. The volume of lower priority requests is configurable.
-    The client is thus able to measure the performance of the high-priority
-    servant in the presence of competition from several lower-priority servants.
-    <LI>Clearly, if the ORB endsystem handles the priorities of the various
-    requests correctly, increasing the volume of lower priority requests should
-    not affect the performance seen by the higher priority requests. The application
-    thus serves as a tool to measure and confirm this behavior.
+    <LI><EM>Server.</EM> The server creates multiple CORBA objects (servants),
+    each with different real-time priorities. This priority is implemented
+    by using real-time thread support provided by the operating system. Thus,
+    requests sent to a high-priority servant are handled by a high-priority
+    real-time thread, and those sent to a lower priority servant are handled
+    by correspondingly lower priority threads.
+    <LI><EM>Client.</EM> The client component binds to the servants, and sends
+    a stream of CORBA requests to the servants. It measures the response time,
+    i.e. the time taken for the request to complete successfully. In particular,
+    it measures the time taken for requests sent to the high priority servant
+    to complete. The volume of lower priority requests is configurable. The
+    client is thus able to measure the performance of the high-priority servant
+    in the presence of competition from several lower-priority servants.
   </UL>
+  <P>Clearly, if the ORB endsystem handles the priorities of the various
+  requests correctly, increasing the volume of lower priority requests should
+  not affect the performance seen by the higher priority requests. The application
+  thus serves as a tool to measure and confirm this behavior.</P>
   <P>Future work:</P>
   <UL>
-    <LI>Study the impact of scheduling &amp; concurrency strategies on performance.
+    <LI>Study the impacts of scheduling &amp; concurrency strategies on performance.
     <LI>Evolve into a testbed for discovering sources of performance non-determinism
     &amp; priority inversion.
   </UL>
