@@ -3,6 +3,9 @@ Wed Apr 29 12:25:05 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-lynxos.h: added ACE_POLL_IS_BROKEN so that
           ACE_OS::sleep () uses select () instead of poll ().
 
+        * tests/Map_Manager_Test.cpp: added a size_t loop index that's
+          used to avoid signed/unsigned comparisons.
+
 Tue Apr 28 23:08:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Hash_Map_Manager.cpp: Bugs fixed.
