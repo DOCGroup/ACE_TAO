@@ -332,9 +332,9 @@ namespace POA_CORBA
     
     static void
     _get_policy_type_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -343,9 +343,9 @@ namespace POA_CORBA
     
     static void
     copy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -354,9 +354,9 @@ namespace POA_CORBA
     
     static void
     destroy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
@@ -445,7 +445,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2127
+    // be\be_interface.cpp:2130
     
     static void
     copy (
@@ -459,7 +459,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2127
+    // be\be_interface.cpp:2130
     
     static void
     destroy (
