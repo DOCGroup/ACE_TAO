@@ -19,6 +19,20 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #   include "ace/WIN32_Proactor.h"
 #endif /* ACE_HAS_AIO_CALLS */
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Proactor_Cleanup (void *instance, void *arg)
+{
+  ACE_Proactor::cleanup (instance, arg);
+}
+#endif
+
+void
+ACE_Proactor::cleanup (void *, void *)
+{
+  ACE_Proactor::close_singleton ();
+}
+
 // Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
@@ -299,7 +313,23 @@ ACE_Proactor::instance (size_t /* threads */)
           ACE_NEW_RETURN (ACE_Proactor::proactor_,
                           ACE_Proactor,
                           0);
+
           ACE_Proactor::delete_proactor_ = 1;
+
+          // Register with the Object_Manager so that the wrapper to
+          // delete the proactor will be called when Object_Manager is
+          // being terminated.
+
+#if defined ACE_HAS_SIG_C_FUNC
+          ACE_Object_Manager::at_exit (ACE_Proactor::proactor_,
+                                       ACE_Proactor_cleanup,
+                                       0);
+#else
+          ACE_Object_Manager::at_exit (ACE_Proactor::proactor_,
+                                       ACE_Proactor::cleanup,
+                                       0);
+#endif /* ACE_HAS_SIG_C_FUNC */
+
         }
     }
   return ACE_Proactor::proactor_;
@@ -318,6 +348,20 @@ ACE_Proactor::instance (ACE_Proactor *r)
   // We can't safely delete it since we don't know who created it!
   ACE_Proactor::delete_proactor_ = 0;
 
+  // Register with the Object_Manager so that the wrapper to
+  // delete the proactor will be called when Object_Manager is
+  // being terminated.
+  
+#if defined ACE_HAS_SIG_C_FUNC
+  ACE_Object_Manager::at_exit (ACE_Proactor::proactor_,
+                               ACE_Proactor_cleanup,
+                               0);
+#else
+  ACE_Object_Manager::at_exit (ACE_Proactor::proactor_,
+                               ACE_Proactor::cleanup,
+                               0);
+#endif /* ACE_HAS_SIG_C_FUNC */
+  
   ACE_Proactor::proactor_ = r;
   return t;
 }
@@ -326,7 +370,7 @@ void
 ACE_Proactor::close_singleton (void)
 {
   ACE_TRACE ("ACE_Proactor::close_singleton");
-
+  
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Static_Object_Lock::instance ()));
 

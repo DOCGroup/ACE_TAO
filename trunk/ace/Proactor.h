@@ -165,6 +165,10 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton.
 
+  static void cleanup (void *instance, void *arg);
+  // Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  // singleton.
+  
   // = Proactor event loop management methods.
 
   static int run_event_loop (void);
