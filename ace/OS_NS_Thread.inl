@@ -611,16 +611,16 @@ ACE_OS::event_destroy (ACE_event_t *event)
 
 ACE_INLINE int
 ACE_OS::mutex_init (ACE_mutex_t *m,
-                    int type,
+                    int lock_scope,
                     const char *name,
                     ACE_mutexattr_t *attributes,
-                    LPSECURITY_ATTRIBUTES sa)
+                    LPSECURITY_ATTRIBUTES sa,
+                    int lock_type)
 {
   // ACE_OS_TRACE ("ACE_OS::mutex_init");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
 
   pthread_mutexattr_t l_attributes;
@@ -648,43 +648,48 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
     }
 
+  if (result == 0 && lock_scope != 0)
+    {
+#   if defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
+#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+      ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes,
+                                                        lock_scope),
+                        result);
+#     endif /* _POSIX_THREAD_PROCESS_SHARED && !ACE_LACKS_MUTEXATTR_PSHARED */
+#   else /* Pthreads draft 6 */
+#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+      if (::pthread_mutexattr_setpshared (attributes, lock_scope) != 0)
+        result = -1;
+#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
+#   endif /* ACE_HAS_PTHREADS_DRAFT7 || ACE_HAS_PTHREADS_STD */
+    }
+
+  if (result == 0 && lock_type != 0)
+    {
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
+      if (::pthread_mutexattr_setkind_np (attributes, lock_type) != 0)
+        result = -1;
+#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
+#   elif defined (ACE_HAS_RECURSIVE_MUTEXES)
+      ACE_ADAPT_RETVAL (::pthread_mutexattr_settype (attributes, lock_type),
+                        result);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+    }
+
   if (result == 0)
     {
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
-      if (
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-          ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-          ::pthread_mutex_init (m, *attributes) == 0)
+      if (::pthread_mutex_init (m, *attributes) == 0)
 #   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-      if (
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-           ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes, type),
-                             result) == 0 &&
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETTYPE)
-           ACE_ADAPT_RETVAL (::pthread_mutexattr_settype(attributes, type), result) == 0 &&
-#     endif /* ACE_HAS_PTHREADS_MUTEXATTR_SETTYPE */
-           ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
+      if (ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
 #   else
-        if (
-#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-            ::pthread_mutexattr_setpshared (attributes, type) == 0 &&
-#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-            ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-            ::pthread_mutex_init (m, attributes) == 0)
+      if (::pthread_mutex_init (m, attributes) == 0)
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
         result = 0;
       else
         result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
     }
-
-#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED)) \
-       || ((defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)) && !defined (_POSIX_THREAD_PROCESS_SHARED))
-  ACE_UNUSED_ARG (type);
-#   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 
   // Only do the deletions if the <attributes> parameter wasn't
   // originally set.
@@ -699,11 +704,13 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, attributes),
+  ACE_UNUSED_ARG (lock_type);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init
+                                           (m, lock_scope, attributes),
                                        ace_result_),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
-  m->type_ = type;
+  m->type_ = lock_scope;
 
   switch (type)
     {
@@ -728,9 +735,10 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         }
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        type,
+                                        lock_scope,
                                         name,
-                                        attributes);
+                                        attributes,
+                                        lock_type);
     default:
       errno = EINVAL;
       return -1;
@@ -738,9 +746,10 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   /* NOTREACHED */
 
 # elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (lock_scope);
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
+  ACE_UNUSED_ARG (lock_type);
 #   if defined (ACE_PSOS_HAS_MUTEX)
 
     u_long flags = MU_LOCAL;
@@ -796,15 +805,17 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
+  ACE_UNUSED_ARG (lock_type);
 
-  return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
+  return (*m = ::semMCreate (lock_scope)) == 0 ? -1 : 0;
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (lock_scope);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
+  ACE_UNUSED_ARG (lock_type);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
@@ -1269,13 +1280,14 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::mutex_init (ACE_mutex_t *m,
-                    int type,
+                    int lock_scope,
                     const wchar_t *name,
                     ACE_mutexattr_t *attributes,
-                    LPSECURITY_ATTRIBUTES sa)
+                    LPSECURITY_ATTRIBUTES sa,
+                    int lock_type)
 {
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
-  m->type_ = type;
+  m->type_ = lock_scope;
 
   switch (type)
     {
@@ -1289,18 +1301,22 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         return 0;
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        type,
+                                        lock_scope,
                                         name,
-                                        attributes);
+                                        attributes,
+                                        sa,
+                                        lock_type);
     }
 
   errno = EINVAL;
   return -1;
 #else /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
   return ACE_OS::mutex_init (m,
-                             type, ACE_Wide_To_Ascii (name).char_rep (),
+                             lock_scope,
+                             ACE_Wide_To_Ascii (name).char_rep (),
                              attributes,
-                             sa);
+                             sa,
+                             lock_type);
 #endif /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -1879,13 +1895,13 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
 {
   ACE_UNUSED_ARG (sa);
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
-#if defined (ACE_HAS_NONRECURSIVE_MUTEXES)
+#  if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#    if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   return ACE_OS::thread_mutex_init (m, PTHREAD_MUTEX_RECURSIVE, name, arg);
-#else
-   return ACE_OS::thread_mutex_init (m, 0, name, arg);
-#endif
-#else
+#    else
+  return ACE_OS::thread_mutex_init (m, 0, name, arg);
+#    endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
+#  else
   if (ACE_OS::thread_mutex_init (&m->nesting_mutex_, 0, name, arg) == -1)
     return -1;
   else if (ACE_OS::cond_init (&m->lock_available_,
@@ -1899,7 +1915,7 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
       m->owner_id_ = ACE_OS::NULL_thread;
       return 0;
     }
-#endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#  endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (name);
@@ -4371,31 +4387,30 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
 
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
-                           int type,
+                           int lock_type,
                            const char *name,
                            ACE_mutexattr_t *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ::InitializeCriticalSection (m);
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_UNUSED_ARG (type);
   // Force the use of USYNC_THREAD!
-  return ACE_OS::mutex_init (m, type, name, arg);
+  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 # elif defined (VXWORKS) || defined (ACE_PSOS)
-  return mutex_init (m, type, name, arg);
+  return mutex_init (m, lock_type, name, arg);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
 
 #else
   ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
@@ -4406,23 +4421,22 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
-                           int type,
+                           int lock_type,
                            const wchar_t *name,
                            ACE_mutexattr_t *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ::InitializeCriticalSection (m);
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_UNUSED_ARG (type);
   // Force the use of USYNC_THREAD!
-  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
+  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, lock_type);
 
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, type, name, arg);
@@ -4431,7 +4445,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 
 #else
   ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
