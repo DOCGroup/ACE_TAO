@@ -8,12 +8,12 @@ int
 Timer_Service_1::init (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "in Timer_Service::init, argv[0] = %s, argc == %d\n", 
+	      ASYS_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"), 
 	      argv[0], argc));
 
   // Printout the <argv> values for sanity's sake.
   for (int i = 0; i < argc; i++)
-    ACE_DEBUG ((LM_DEBUG, "argv[%d] = %s\n", i, argv[i]));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("argv[%d] = %s\n"), i, argv[i]));
 
   int interval = Timer_Service_1::TIMEOUT;
 
@@ -64,8 +64,8 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
                                  const void *)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%x) in Timer_Service::handle_timeout sec = %d, usec = %d"
-	      " cur_timeouts = %d, max_timeouts = %d\n",
+	      ASYS_TEXT ("(%x) in Timer_Service::handle_timeout sec = %d, usec = %d")
+	      ASYS_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
 	      tv.sec (),
               tv.usec (),
@@ -85,7 +85,7 @@ int
 Timer_Service_1::handle_close (ACE_HANDLE,
                                ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "closing down the timer test\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("closing down the timer test\n")));
 
   ACE_Reactor::end_event_loop();
   return 0;
@@ -93,7 +93,7 @@ Timer_Service_1::handle_close (ACE_HANDLE,
 
 // Define the object that describes the service.
 ACE_STATIC_SVC_DEFINE (Timer_Service_1,
-		       "Timer_Service_1",
+		       ASYS_TEXT ("Timer_Service_1"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (Timer_Service_1),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
