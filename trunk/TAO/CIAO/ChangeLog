@@ -1,3 +1,29 @@
+Tue May 13 23:26:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP_svnt.cpp:
+	* examples/handcrafted/BasicSP/BasicSP_svnt.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplayE.idl:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplayEI.idl:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.cpp:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+	* examples/handcrafted/BasicSP/EC/EC.idl: Hand code the BMDevice
+	  and BMDisplay component in the Boeing OEP scenario. 
+
 Mon May 12 16:53:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/BasicSP.idl: 
@@ -849,7 +875,7 @@ Tue Mar 18 12:03:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* examples/handcrafted/Hello/hello_servants.cpp:
 	* examples/handcrafted/Hello/hello_servants.h: Renamed various
 	  "_ciao_deactivate*" operations to "ciao_passivate*" to be more
-	  consistent with the CCM opertions.
+	  consistent with the CC* opertions.
 
 	* docs/templates/CIAO_Glue_Session_Template.cpp:
 	* docs/templates/CIAO_Glue_Session_Template.h:
