@@ -1971,8 +1971,8 @@ enum_type :
 	  if (s != NULL) {
 	    e = idl_global->gen()->create_enum(n,
                                                p,
-                                               s->local (),
-                                               s->abstract ());
+                                               s->is_local (),
+                                               s->is_abstract ());
 	    /*
 	     * Add it to its defining scope
 	     */
