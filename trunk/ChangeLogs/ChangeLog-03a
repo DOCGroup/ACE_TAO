@@ -1,3 +1,55 @@
+Thu Sep  7 16:15:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.h:
+	* ace/OS.cpp:
+	  Break out the dependency between the ACE_Thread_Manager and the
+	  OS layer.  The OS layer used ACE_Thread_Adapter to create
+	  threads, this class depends on ACE_Thread_Manager, but on the
+	  path used by the OS layer the class does not use Thread_Manager
+	  at all.  The solution was to create a base class
+	  (ACE_Base_Thread_Adapter) and a specialized version used in the
+	  OS layer (ACE_OS_Thread_Adapter).
+
+	* ace/Makefile:
+	* ace/Makefile.am:
+	* ace/Makefile.bor:
+	  Update the Makefile and the dependencies.
+
+	* ace/Base_Thread_Adapter.h:
+	* ace/Base_Thread_Adapter.inl:
+	* ace/Base_Thread_Adapter.cpp:
+	  Abstract base class for ACE_Thread_Adapter.  Applications
+	  continue to use ACE_Thread_Adapter, but the OS layer uses the
+	  base class (or OS_Thread_Adapter).  This way we decouple the OS
+	  layer from the ACE_Thread_Manager class.
+
+	* ace/config-all.h:
+	  Move the definition of ACE_THR_FUNC and ACE_THR_C_FUNC out here.
+
+	* ace/OS_Thread_Adapter.h:
+	* ace/OS_Thread_Adapter.inl:
+	* ace/OS_Thread_Adapter.cpp:
+	  Implement a version of ACE_Base_Thread_Adapter that does not use
+	  the Thread_Manager at all.
+
+	* ace/Thread_Adapter.h:
+	* ace/Thread_Adapter.inl:
+	* ace/Thread_Adapter.cpp:
+	  Removed the common code to Base_Thread_Adapter.*
+
+	* ace/Thread.h:
+	  Include "ace/Thread_Adapter.h" directly because the OS layer
+	  does not include it anymore.
+
+	* ace/Thread_Hook.h:
+	* ace/Thread_Hook.cpp:
+	  This class does not need to #include Thread_Manager.h
+
+	* ace/Log_Msg.h:
+	* ace/Log_Msg.cpp:
+	  Add another hook to make the ACE_OS_Thread_Descriptor available
+	  to the OS layer when running MFC builds.
+
 Thu Sep  7 12:07:14 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/autoconf_compile (LOGBASE):

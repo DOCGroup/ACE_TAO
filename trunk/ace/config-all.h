@@ -510,6 +510,8 @@ typedef void (*ACE_CLOSE_LOG_MSG_HOOK) (void);
 
 typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
 
+typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) (void);
+
 // ============================================================================
 // Fundamental types
 // ============================================================================
@@ -527,6 +529,21 @@ typedef ACE_HANDLE ACE_SOCKET;
 # define ACE_INVALID_HANDLE -1
 
 #endif /* ACE_WIN32 */
+
+typedef void *(*ACE_THR_FUNC)(void *);
+
+extern "C"
+{
+# if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+// needed to handle task entry point type inconsistencies in pSOS+
+typedef void (*PSOS_TASK_ENTRY_POINT)();
+typedef void (*ACE_THR_C_FUNC)(void *);
+# else
+typedef void *(*ACE_THR_C_FUNC)(void *);
+# endif /* VXWORKS */
+}
 
 // ============================================================================
 // Miscellaneous macros

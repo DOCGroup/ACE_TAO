@@ -13,8 +13,8 @@
 //
 // ============================================================================
 
-#ifndef ACE_THREAD_ADAPTER_H
-#define ACE_THREAD_ADAPTER_H
+#ifndef ACE_OS_THREAD_ADAPTER_H
+#define ACE_OS_THREAD_ADAPTER_H
 #include "ace/pre.h"
 
 #include "ace/Base_Thread_Adapter.h"
@@ -23,11 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Forward decl.
-class ACE_Thread_Manager;
-class ACE_Thread_Descriptor;
+#include "ace/OS_Export.h"
 
-class ACE_Export ACE_Thread_Adapter : public ACE_Base_Thread_Adapter
+class ACE_OS_Export ACE_OS_Thread_Adapter : public ACE_Base_Thread_Adapter
 {
   // = TITLE
   //     Converts a C++ function into a function <ace_thread_adapter>
@@ -43,16 +41,14 @@ class ACE_Export ACE_Thread_Adapter : public ACE_Base_Thread_Adapter
   //     the thread that calls <invoke> on this object.  Therefore,
   //     the <invoke> method is responsible for deleting itself.
 public:
-  ACE_Thread_Adapter (ACE_THR_FUNC user_func,
-                      void *arg,
-                      ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
-                      ACE_Thread_Manager *thr_mgr = 0,
-                      ACE_Thread_Descriptor *td = 0
+  ACE_OS_Thread_Adapter (ACE_THR_FUNC user_func,
+                         void *arg,
+                         ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                      , ACE_SEH_EXCEPT_HANDLER selector = 0,
-                      ACE_SEH_EXCEPT_HANDLER handler = 0
+                         , ACE_SEH_EXCEPT_HANDLER selector = 0
+                         , ACE_SEH_EXCEPT_HANDLER handler = 0
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                      );
+                         );
   // Constructor.
 
   virtual void *invoke (void);
@@ -60,17 +56,11 @@ public:
   // <this>, thereby rendering the object useless after the call
   // returns.
 
-  ACE_Thread_Manager *thr_mgr (void);
-  // Accessor for the optional <Thread_Manager>.
-
 private:
-  ~ACE_Thread_Adapter (void);
+  ~ACE_OS_Thread_Adapter (void);
   // Ensure that this object must be allocated on the heap.
 
 private:
-  ACE_Thread_Manager *thr_mgr_;
-  // Optional thread manager.
-
   friend class ACE_Thread_Adapter_Has_Private_Destructor;
   // Friend declaration to avoid compiler warning:  only defines a private
   // destructor and has no friends.
@@ -81,7 +71,7 @@ private:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/Thread_Adapter.inl"
+#   include "ace/OS_Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

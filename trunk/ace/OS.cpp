@@ -2,8 +2,7 @@
 
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
-#include "ace/Thread_Adapter.h"
-#include "ace/Thread_Exit.h"
+#include "ace/OS_Thread_Adapter.h"
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
@@ -2313,7 +2312,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       // main) thread.  We don't have TSS emulation; if there's native
       // TSS, it should call its destructors when the main thread
       // exits.
-      ACE_Thread_Adapter::close_log_msg ();
+      ACE_Base_Thread_Adapter::close_log_msg ();
 #endif /* ! ACE_HAS_TSS_EMULATION  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
@@ -2411,80 +2410,6 @@ ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
   object->cleanup (param);
 }
 
-// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
-// be an extern "C" to make certain compilers happy...
-
-#if defined (ACE_PSOS)
-extern "C" void ace_thread_adapter (unsigned long args)
-{
-  ACE_OS_TRACE ("ace_thread_adapter");
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  // As early as we can in the execution of the new thread, allocate
-  // its local TS storage.  Allocate it on the stack, to save dynamic
-  // allocation/dealloction.
-  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
-  ACE_TSS_Emulation::tss_open (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
-  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
-
-  // Invoke the user-supplied function with the args.
-  thread_args->invoke ();
-}
-#else /* ! defined (ACE_PSOS) */
-extern "C" void * ace_thread_adapter (void *args)
-{
-  ACE_OS_TRACE ("ace_thread_adapter");
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  // As early as we can in the execution of the new thread, allocate
-  // its local TS storage.  Allocate it on the stack, to save dynamic
-  // allocation/dealloction.
-  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
-  ACE_TSS_Emulation::tss_open (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
-  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
-
-  // Invoke the user-supplied function with the args.
-  void *status = thread_args->invoke ();
-
-  return status;
-}
-#endif /* ACE_PSOS */
-
-
-ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
-                                        void *arg,
-                                        ACE_THR_C_FUNC entry_point,
-                                        ACE_Thread_Manager *tm,
-                                        ACE_Thread_Descriptor *td
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                                        , ACE_SEH_EXCEPT_HANDLER selector,
-                                        ACE_SEH_EXCEPT_HANDLER handler
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                                        )
-  : user_func_ (user_func),
-    arg_ (arg),
-    entry_point_ (entry_point),
-    thr_mgr_ (tm),
-    // An ACE_Thread_Descriptor really is an ACE_OS_Thread_Descriptor.
-    // But without #including ace/Thread_Manager.h, we don't know that.
-    thr_desc_ (ACE_reinterpret_cast (ACE_OS_Thread_Descriptor *,td)),
-    log_msg_attributes_ (0)
-{
-  ACE_OS_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
-
-  if (ACE_Thread_Adapter::init_log_msg_hook_ != 0)
-    (*ACE_Thread_Adapter::init_log_msg_hook_) (this->log_msg_attributes_
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                                               , selector
-                                               , handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                                               );
-}
-
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
                     void *args,
@@ -2494,7 +2419,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                     long priority,
                     void *stack,
                     size_t stacksize,
-                    ACE_Thread_Adapter *thread_adapter)
+                    ACE_Base_Thread_Adapter *thread_adapter)
 {
   ACE_OS_TRACE ("ACE_OS::thr_create");
 
@@ -2515,12 +2440,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
 #if defined (ACE_HAS_PACE)
-  ACE_Thread_Adapter *thread_args;
+  ACE_Base_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
   {
     ACE_NEW_RETURN (thread_args,
-                    ACE_Thread_Adapter (func, args,
-                                        (ACE_THR_C_FUNC) ace_thread_adapter),
+                    ACE_OS_Thread_Adapter (func, args,
+                                           (ACE_THR_C_FUNC) ace_thread_adapter),
                     -1);
   }
   else
@@ -2828,22 +2753,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #else /* ACE_HAS_PACE */
 
-  ACE_Thread_Adapter *thread_args;
+  ACE_Base_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
 
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
-                    ACE_Thread_Adapter (func, args,
-                                        (ACE_THR_C_FUNC) ace_thread_adapter,
-                                        0,
-                                        0,
-                                        ACE_OS_Object_Manager::seh_except_selector(),
-                                        ACE_OS_Object_Manager::seh_except_handler()),
+                    ACE_OS_Thread_Adapter (func, args,
+                                           (ACE_THR_C_FUNC) ace_thread_adapter,
+                                           ACE_OS_Object_Manager::seh_except_selector(),
+                                           ACE_OS_Object_Manager::seh_except_handler()),
                     -1);
 # else
     ACE_NEW_RETURN (thread_args,
-                    ACE_Thread_Adapter (func, args,
-                                        (ACE_THR_C_FUNC) ace_thread_adapter),
+                    ACE_OS_Thread_Adapter (func, args,
+                                           (ACE_THR_C_FUNC) ace_thread_adapter),
                     -1);
 
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
@@ -3678,8 +3601,7 @@ ACE_OS::thr_exit (void *status)
     // An ACE_Thread_Descriptor really is an ACE_OS_Thread_Descriptor.
     // But without #including ace/Thread_Manager.h, we don't know that.
     ACE_OS_Thread_Descriptor *td =
-      ACE_reinterpret_cast (ACE_OS_Thread_Descriptor *,
-                            ACE_Log_Msg::instance ()->thr_desc ());
+      ACE_Base_Thread_Adapter::thr_desc_log_msg ();
     if (td)
       using_afx = ACE_BIT_ENABLED (td->flags (), THR_USE_AFX);
 #     endif /* ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
@@ -4838,7 +4760,7 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
 
 #if !defined (ACE_HAS_MINIMAL_ACE_OS)
   if (pid == 0)
-    ACE_Thread_Adapter::sync_log_msg (program_name);
+    ACE_Base_Thread_Adapter::sync_log_msg (program_name);
 #endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
   return pid;
@@ -6801,12 +6723,6 @@ ACE_OS_Object_Manager::fini (void)
 #   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
-
-      // @@ Shouldn't this be done in the ACE_Thread_Exit cleanup
-      // function?
-      ACE_Thread_Exit::is_constructed_ = 0;
-      // All TSS objects have been destroyed.  Reset this flag so
-      // ACE_Thread_Exit singleton can be created again.
     }
 
   delete default_mask_;

@@ -81,6 +81,8 @@ option
                         source type (cpp) "OS_String.cpp"
                         source type (cpp) "OS_TLI.cpp"
                         source type (cpp) "Thread_Hook.cpp"
+                        source type (cpp) "Base_Thread_Adapter.cpp"
+                        source type (cpp) "OS_Thread_Adapter.cpp"
                         source type (cpp) "Thread_Adapter.cpp"
                         source type (cpp) "Thread_Exit.cpp"
                         source type (cpp) "Thread_Control.cpp"
