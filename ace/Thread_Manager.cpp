@@ -231,7 +231,7 @@ ACE_Thread_Manager::close_singleton (void)
                      *ACE_Static_Object_Lock::instance ()));
 
 #if defined (ACE_WIN32)
-  this->wait_on_exit (0);
+  ACE_Thread_Manager::thr_mgr_->wait_on_exit (0);
 #endif /* ACE_WIN32 */
 
   if (ACE_Thread_Manager::delete_thr_mgr_)
