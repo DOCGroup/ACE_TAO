@@ -36,7 +36,7 @@ ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
 endif # RTEvent
 
 PSRC=$(addsuffix .cpp,$(BIN2)) Schedule.cpp
-LDLIBS = -lECTests -lTAO_RTEvent -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 

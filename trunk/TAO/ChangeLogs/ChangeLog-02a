@@ -1,10 +1,58 @@
+Fri Oct 27 15:54:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/Performance/Latency.h:
+        * orbsvcs/tests/Event/Performance/Latency.cpp:
+        * orbsvcs/tests/Event/Performance/Latency.dsp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.dsp:
+        * orbsvcs/tests/Event/Performance/latency.conf:
+          New performance benchmark to measure throughput to a remote
+          event service.
+          This version uses reliable oneways to improve the predictability
+          of the test over the network.
+
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/Basic/Makefile:
+          When using the old event channel we must link the naming service
+          library too.
+
+        * performance-tests/Makefile:
+        * performance-tests/Callback/Makefile:
+        * performance-tests/Callback/Callback.dsw:
+        * performance-tests/Callback/README:
+        * performance-tests/Callback/run_test.pl:
+        * performance-tests/Callback/callback.idl:
+        * performance-tests/Callback/Callback_i.h:
+        * performance-tests/Callback/Callback_i.inl:
+        * performance-tests/Callback/Callback_i.cpp:
+        * performance-tests/Callback/Server_i.h:
+        * performance-tests/Callback/Server_i.inl:
+        * performance-tests/Callback/Server_i.cpp:
+        * performance-tests/Callback/client.cpp:
+        * performance-tests/Callback/client.dsp:
+        * performance-tests/Callback/server.cpp:
+        * performance-tests/Callback/server.dsp:
+        * performance-tests/Callback/svc.conf:
+          New benchmark for distributed callbacks.  Mostly used as a
+          baseline performance benchmark for the event services.
+
+        * performance-tests/Latency/st_client.cpp:
+          Use the new ACE_Sample_History class
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Implement new options to dump the IOR and process ID to some
+          file.
+
 Fri Oct 27 15:49:55 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Object.cpp (_set_policy_overrides): 
-	  Made the function exception safe by placing the TAO_Stub into
-	  the auto_ptr since it is dynamically allocated.
-	  Thanks to Ossama.
-	
+        * tao/Object.cpp (_set_policy_overrides):
+          Made the function exception safe by placing the TAO_Stub into
+          the auto_ptr since it is dynamically allocated.
+          Thanks to Ossama.
+
 Fri Oct 27 11:42:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
