@@ -4,12 +4,13 @@ Sat Oct 10 16:28:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* ace/Synch.i: 
 	* ace/Synch.cpp: 
 	  The ACE_Process_Mutex class was allocating one of its members
-	  from the heap, thus it could not be placed in shared memory.
-	  The problem was that the member required the creation of a
-	  unique name if the user did not provide one; making the buffer
-	  for this unique name a member of ACE_Process_Mutex allowed us to
-	  initialize the lock_ member while still allocating it as a
-	  member of the class.
+ 	  from the heap, thus it could not be placed in shared memory.
+  	  The problem was that the member required the creation of a
+ 	  unique name if the user did not provide one; making the buffer
+ 	  for this unique name a member of ACE_Process_Mutex allowed us to
+ 	  initialize the lock_ member while still allocating it as a
+ 	  member of the class.  Thanks to Bob McWhirter
+ 	  <bob@netwrench.com> for helping to track this down.
 
 Sat Oct 10 12:45:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
