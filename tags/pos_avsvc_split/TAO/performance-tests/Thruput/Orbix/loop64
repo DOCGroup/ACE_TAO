@@ -1,0 +1,24 @@
+# All ATM tests: 64k socket Queue Size
+#
+# shorts
+run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 s 
+sleep 2
+# longs
+run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 l 
+sleep 2
+# octets
+run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 o
+sleep 2
+# doubles
+run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 d 
+sleep 2
+# chars
+run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 c 
+sleep 2
+# structures
+run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 S 
+sleep 2
+# Composite Structs
+#run_test 67108864 1024 encip1-merengue.cs.wustl.edu ./results/LOOPBACK/orbix.atm.64 C 
+#sleep 2
+#

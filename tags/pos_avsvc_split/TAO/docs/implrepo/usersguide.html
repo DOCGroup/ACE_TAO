@@ -1,0 +1,128 @@
+<html>
+<!-- $Id$ -->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Implementation Repository User's Guide</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<hr>
+
+<h3>Implementation Repository User's Guide</h3>
+
+<p>In order for a server to make use of the Implementation Repository, it must communicate
+with the IR to keep it up to date on such things as the server's running status. These
+actions are currently encapsulated in the IR_Helper class that is located in the orbsvcs
+library.</p>
+
+<hr>
+
+<h4>How is the IR used?</h4>
+
+<p>The main steps for the lifetime of a server that uses the IR are generally the
+following:
+
+<ol>
+  <li>Register name and startup commands with the IR using <b>tao_ir<br>
+    </b><em>Example:<code> </em>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior add plane -c
+    &quot;airplane_server -i -ORBImplRepoServiceIOR file://implrepo.ior&quot;</code></li>
+  <li>Start the server once to generate an IR-ified IOR</li>
+  <li>Start clients and pass them the above IOR</li>
+  <li>Clients will use the IOR, which will automatically go through the IR</li>
+  <li>The IR will start the server if it is not already running</li>
+  <li>At any time when the server is not currently in use by a client, it can be shut down
+    using <strong>tao_ir<br>
+    </strong><em>Example:</em><code> tao_ir -ORBImplRepoServiceIOR file://implrepo.ior shutdown plane</code></li>
+  <li>After the server isn't needed anymore, it can be removed from the IR database using <strong>tao_ir<br>
+    </strong><em>Example:<code> </em>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior remove plane</code></li>
+</ol>
+
+<hr>
+
+<h4>So what does the server need to do? </h4>
+
+<p>The server will need to do the following things in order to work correctly with the IR.
+
+<ol>
+  <li>Create an ImplementationRepository::ServerObject</li>
+  <li>Change the IOR given to clients to use the host/port of the Implementation Repository</li>
+  <li>Notify the IR when the server is starting up</li>
+  <li>Notify the IR when the server is shutting down</li>
+</ol>
+
+<p>The details of how to do this can be found in the IR_Helper class, which has methods to
+perform these actions.</p>
+
+<hr>
+
+<h4>The IR_Helper class</h4>
+
+<p>The IR_Helper class is a class intended for use by the server to communicate with the
+IR. It does some of the work by keeping a reference to the IR and a ServerObject and
+hiding much of the work of registration in methods. </p>
+
+<p>Following is the public interface for IR_Helper
+
+<ul>
+  <li><code>IR_Helper (const char *server_name, PortableServer::POA_ptr poa, CORBA::ORB_ptr
+    orb, int debug = 0);<br>
+    <br>
+    </code>To contruct, you must pass in a server_name (which must be the same as the name of
+    the POA where the objects reside) and pointers to the ORB and POA. The debug flag,
+    if set to a value higher than zero, will cause the class to output messages using
+    ACE_DEBUG.<br>
+    <br>
+    The constructor creates a ServerObject and registers it with the Implementation
+    Repository. It receives a reference to the IR via the ORB, so the ORB must be passed
+    the information via the command line (since multicast is not fully operational yet)..
+     <code><br>
+    </code></li>
+  <li><code>void notify_startup ();<br>
+    </code><br>
+    This should be called right before ORB::run(). This passes the IR running
+    information, such as host/port of the server.<br>
+  </li>
+  <li><code>void notify_shutdown ();<br>
+    </code><br>
+    This should be called right after ORB::run(). This tells the IR to remove any
+    running information about the server.<br>
+  </li>
+  <li><code>int register_server (const char *comm_line, const char *environment =
+    &quot;&quot;, const char *working_dir = &quot;&quot;);<br>
+    </code><br>
+    Instead of using <strong>tao_ir</strong>, a server could perform its own registration.
+     Note: the Environment is not fully supported yet.<br>
+  </li>
+  <li><code>void change_object (CORBA::Object_ptr obj);</code><br>
+    <br>
+    This method will take an Object_ptr and convert it to an IR-ified Object_ptr. When
+    an IOR is created from this Object_ptr, it will contain the host/port of the IR instead.</li>
+</ul>
+
+<hr>
+
+<h4>To use, or not to use the IR</h4>
+
+<p>If you look at the two tests, they use -i flags to determine how to use the IR. The -i
+flag turns on the use of the Implementation Repository. This allows the server to be
+tested without the IR, to help track down problems.. </p>
+
+<hr>
+
+<h4>The Future</h4>
+
+<p>What does the future hold for the IR? In addition to supporting the &quot;not
+fully supported yet&quot; items listed above, the functionality of IR_Helper will be moved
+into TAO's POA and ORB. This will help make the use of the IR in a server easier,
+since less changes will have to be made to the server code itself. </p>
+
+<hr>
+
+<p>Last update to this document: $Date$</p>
+
+<p>Back to <a href="index.html">Implementation Repository</a></p>
+</body>
+</html>

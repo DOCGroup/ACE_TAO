@@ -1,0 +1,8 @@
+// $Id$
+#include "CosPropertyService.idl"
+
+interface MMDevice_Exporter : CosPropertyService::PropertySet
+{
+        Object get_audio_mmdevice ();
+        Object get_video_mmdevice ();
+};

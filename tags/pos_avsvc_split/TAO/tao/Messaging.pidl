@@ -1,0 +1,203 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Policy.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in Messaging{C,S,S_T}.{h,i,cpp}
+//   The code is then hand-crafted to compile it inside the ORB, avoid
+//   cyclic dependencies and enforce the locality constraints on
+//   certain objects.
+//
+// ================================================================
+
+#pragma prefix "omg.org"
+
+#include "TimeBase.pidl"
+#include "IOP.pidl"
+#include "Policy.pidl"
+#include "Pollable.pidl"
+
+module Messaging
+{
+  //
+  // Messaging Quality of Service
+  //
+
+  typedef short RebindMode;
+  const RebindMode TRANSPARENT  = 0;
+  const RebindMode NO_REBIND    = 1;
+  const RebindMode NO_RECONNECT = 2;
+
+  typedef short SyncScope;
+  const SyncScope SYNC_NONE           = 0;
+  const SyncScope SYNC_WITH_TRANSPORT = 1;
+  const SyncScope SYNC_WITH_SERVER    = 2;
+  const SyncScope SYNC_WITH_TARGET    = 3;
+
+  typedef short RoutingType;
+  const RoutingType ROUTE_NONE              = 0;
+  const RoutingType ROUTE_FORWARD           = 1;
+  const RoutingType ROUTE_STORE_AND_FORWARD = 2;
+
+  typedef TimeBase::TimeT Timeout;
+
+  typedef short Priority;
+
+  typedef unsigned short Ordering;
+  const Ordering ORDER_ANY      = 0x01;
+  const Ordering ORDER_TEMPORAL = 0x02;
+  const Ordering ORDER_PRIORITY = 0x04;
+  const Ordering ORDER_DEADLINE = 0x08;
+
+  //
+  // Locally-Constrained Policy Objects
+  //
+
+  // Rebind Policy (default = TRANSPARENT)
+  const CORBA::PolicyType REBIND_POLICY_TYPE = 23;
+  interface RebindPolicy : CORBA::Policy {
+    readonly attribute RebindMode rebind_mode;
+  };
+
+  // Synchronization Policy (default = WITH_TRANSPORT)
+  const CORBA::PolicyType SYNC_SCOPE_POLICY_TYPE = 24;
+  interface SyncScopePolicy : CORBA::Policy {
+    readonly attribute SyncScope synchronization;
+  };
+
+  // Priority Policies
+  const CORBA::PolicyType REQUEST_PRIORITY_POLICY_TYPE = 25;
+  struct PriorityRange {
+    Priority min;
+    Priority max;
+  };
+  interface RequestPriorityPolicy : CORBA::Policy {
+    readonly attribute PriorityRange priority_range;
+  };
+  const CORBA::PolicyType REPLY_PRIORITY_POLICY_TYPE = 26;
+  interface ReplyPriorityPolicy : CORBA::Policy {
+    readonly attribute PriorityRange priority_range;
+  };
+
+  // Timeout Policies
+  const CORBA::PolicyType REQUEST_START_TIME_POLICY_TYPE = 27;
+  interface RequestStartTimePolicy : CORBA::Policy {
+    readonly attribute TimeBase::UtcT start_time;
+  };
+  const CORBA::PolicyType REQUEST_END_TIME_POLICY_TYPE = 28;
+  interface RequestEndTimePolicy : CORBA::Policy {
+    readonly attribute TimeBase::UtcT end_time;
+  };
+
+  const CORBA::PolicyType REPLY_START_TIME_POLICY_TYPE = 29;
+  interface ReplyStartTimePolicy : CORBA::Policy {
+    readonly attribute TimeBase::UtcT start_time;
+  };
+  const CORBA::PolicyType REPLY_END_TIME_POLICY_TYPE = 30;
+  interface ReplyEndTimePolicy : CORBA::Policy {
+    readonly attribute TimeBase::UtcT end_time;
+  };
+
+  const CORBA::PolicyType RELATIVE_REQ_TIMEOUT_POLICY_TYPE = 31;
+  interface RelativeRequestTimeoutPolicy : CORBA::Policy {
+    readonly attribute TimeBase::TimeT relative_expiry;
+  };
+
+  const CORBA::PolicyType RELATIVE_RT_TIMEOUT_POLICY_TYPE = 32;
+  interface RelativeRoundtripTimeoutPolicy : CORBA::Policy {
+    readonly attribute TimeBase::TimeT relative_expiry;
+  };
+
+  const CORBA::PolicyType ROUTING_POLICY_TYPE = 33;
+  struct RoutingTypeRange {
+    RoutingType min;
+    RoutingType max;
+  };
+  interface RoutingPolicy : CORBA::Policy {
+    readonly attribute RoutingTypeRange routing_range;
+  };
+
+  const CORBA::PolicyType MAX_HOPS_POLICY_TYPE = 34;
+  interface MaxHopsPolicy : CORBA::Policy {
+    readonly attribute unsigned short max_hops;
+  };
+
+  // Router Delivery-ordering Policy (default = ORDER_TEMPORAL)
+  const CORBA::PolicyType QUEUE_ORDER_POLICY_TYPE = 35;
+  interface QueueOrderPolicy : CORBA::Policy {
+    readonly attribute Ordering allowed_orders;
+  };
+
+  //
+  // Propagation of QoS Policies
+  //
+
+  struct PolicyValue {
+    CORBA::PolicyType ptype;
+    sequence<octet>   pvalue;
+  };
+  typedef sequence<PolicyValue> PolicyValueSeq;
+
+  const IOP::ComponentId TAG_POLICIES      = 2;
+  const IOP::ServiceId INVOCATION_POLICIES = 2;
+
+  //
+  // Exception Delivery in the Callback Model
+  //
+#if defined(NO_VALUE)
+  struct ExceptionHolder {
+    boolean         is_system_exception;
+    boolean         byte_order;
+    sequence<octet> marshaled_exception;
+  };
+#else
+  value ExceptionHolder {
+    boolean         is_system_exception;
+    boolean         byte_order;
+    sequence<octet> marshaled_exception;
+  };
+#endif
+
+  //
+  // Base interface for the Callback model
+  //
+
+  interface ReplyHandler { };
+
+  //
+  // Base value for the Polling model
+  //
+
+#if defined(NO_VALUE)
+  interface Poller : CORBA::Pollable {
+    readonly attribute Object  operation_target;
+    readonly attribute string  operation_name;
+
+    attribute ReplyHandler     associated_handler;
+    readonly attribute boolean is_from_poller;
+
+    readonly attribute Object  target;
+    readonly attribute string  op_name;
+  };
+#else
+  value Poller supports CORBA::Pollable {
+    readonly attribute Object  operation_target;
+    readonly attribute string  operation_name;
+
+    attribute ReplyHandler     associated_handler;
+    readonly attribute boolean is_from_poller;
+
+    Object                     target;
+    string                     op_name;
+  };
+#endif
+};
+
+#pragma prefix ""
