@@ -18,14 +18,17 @@ CFG=Naming_Service - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Naming_Service - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Naming_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Naming_Service - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "Naming_Service - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Naming_Service - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Naming_Service - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Naming_Service - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Console Application")
+!MESSAGE "Naming_Service - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -71,7 +74,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I ".." /I "..\.." /I "..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /I "..\.." /I "..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -81,8 +84,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# SUBTRACT LINK32 /incremental:no
+# ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Debug"
 
@@ -302,6 +304,7 @@ DEP_CPP_NAMIN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -402,15 +405,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\orbsvcs\IOR_Multicast.h"\
-	"..\orbsvcs\Naming\CosNaming_i.h"\
-	"..\orbsvcs\Naming\Entries.h"\
-	"..\orbsvcs\Naming\Naming_Utils.h"\
-	"..\orbsvcs\orbsvcs_export.h"\
-	".\Naming_Service.h"\
-	
-NODEP_CPP_NAMIN=\
-	"..\..\..\ace\sys_conf.h"\
 	"..\orbsvcs\CosNamingC.h"\
 	"..\orbsvcs\CosNamingC.i"\
 	"..\orbsvcs\CosNamingS.h"\
@@ -418,6 +412,12 @@ NODEP_CPP_NAMIN=\
 	"..\orbsvcs\CosNamingS_T.cpp"\
 	"..\orbsvcs\CosNamingS_T.h"\
 	"..\orbsvcs\CosNamingS_T.i"\
+	"..\orbsvcs\IOR_Multicast.h"\
+	"..\orbsvcs\Naming\CosNaming_i.h"\
+	"..\orbsvcs\Naming\Entries.h"\
+	"..\orbsvcs\Naming\Naming_Utils.h"\
+	"..\orbsvcs\orbsvcs_export.h"\
+	".\Naming_Service.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
