@@ -511,7 +511,8 @@ public:
   // Set the total amount of space in the message.  Returns 0 if
   // successful, else -1.
 
-  virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0) const;
+  virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0,
+                                 int copy_data = 1) const;
   // Return an exact "deep copy" of the message, i.e., create fresh
   // new copies of all the Data_Blocks and continuations.
   // Notice that Data_Blocks can act as "Prototypes", i.e. derived
