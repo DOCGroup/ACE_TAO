@@ -1,3 +1,9 @@
+Sun Dec 14 10:09:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+	  Another reversion from PMB changes.
+
 Sun Dec 14 09:56:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.cpp:
