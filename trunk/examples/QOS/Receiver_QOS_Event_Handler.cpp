@@ -10,28 +10,29 @@
 //    Receiver_QOS_Event_Handler.cpp
 //
 // = AUTHOR
-//    Vishal Kachroo
+//    Vishal Kachroo <vishal@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "Receiver_QOS_Event_Handler.h"
 
 // Constructor.
-ACE_QOS_Event_Handler::ACE_QOS_Event_Handler ()
-{}
+ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (void)
+{
+}
 
 ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast)
+  : dgram_mcast_ (dgram_mcast)
 {
-  this->dgram_mcast_ = dgram_mcast;
 }
 
 // Destructor.
-ACE_QOS_Event_Handler::~ACE_QOS_Event_Handler ()
+ACE_QOS_Event_Handler::~ACE_QOS_Event_Handler (void)
 {
 }
 
-// Return the handle of the Dgram_Mcast. This method is 
-// called internally by the reactor.
+// Return the handle of the Dgram_Mcast. This method is called
+// internally by the reactor.
 
 ACE_HANDLE
 ACE_QOS_Event_Handler::get_handle (void) const
@@ -50,31 +51,34 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
 }
 
 // Called when there is a READ activity on the dgram_mcast handle.
+
 int
 ACE_QOS_Event_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[128];
+  char buf[BUFSIZ];
 	
-  const int iovcnt = 1;
-  iovec iov[iovcnt];
-  iov[0].iov_base = buf;
-  iov[0].iov_len = 128;
+  iovec iov;
+  iov.iov_base = buf;
+  iov.iov_len = BUFSIZ;
 	
-  ACE_OS::memset (iov[0].iov_base, 0, 128);
+  ACE_OS::memset (iov.iov_base,
+                  0,
+                  BUFSIZ);
 
   ACE_DEBUG ((LM_DEBUG,
               "Inside handle_input () of ACE_Read_Handler ()\n"));
 
   // Receive message from multicast group.
-  ssize_t retcode =
-    this->dgram_mcast_.recv (iov, 1, this->remote_addr_);
+  ssize_t result =
+    this->dgram_mcast_.recv (&iov,
+                             1,
+                             this->remote_addr_);
 
-  if (retcode != -1)
+  if (result != -1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Message Received %s",
-                  iov[0].iov_base));
-
+                  iov.iov_base));
       return 0;
     }
   else
