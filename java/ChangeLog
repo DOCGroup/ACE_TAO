@@ -55,7 +55,7 @@ Wed Aug 18 13:35:46 1999  Everett Anderson  <eea1@cs.wustl.edu>
         * src/TimerQueue.java: Now when createInternalThread is specified
           in the constructor, it is set to be a daemon thread.  Thus, if a
           TimerQueue thread is the only one executing, the VM exits.
-        
+
 Wed Jul 14 11:27:47 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
         * src/StrategyAcceptor.java, AcceptStrategy.java
@@ -77,9 +77,9 @@ Fri Jul 09 11:08:32 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
 Thu Jul 08 14:54:36 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
-        * src/Condition.java, TimedWait.java, EventHandler.java, 
+        * src/Condition.java, TimedWait.java, EventHandler.java,
           MessageQueue.java, ServiceObject.java, SvcHandler.java,
-          Task.java, Mutex.java, Semaphore.java, Token.java, 
+          Task.java, Mutex.java, Semaphore.java, Token.java,
           TimerQueue.java
 
           Changed the semantics of Condition, TimedWait, MessageQueue,
@@ -98,8 +98,8 @@ Thu Jul 08 14:54:36 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
 Thu Jul 08 11:20:17 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
-        * src/TimeValue.java: Added relativeTimeOfDay(offsets) 
-          methods which return TimeValues.  These should help people 
+        * src/TimeValue.java: Added relativeTimeOfDay(offsets)
+          methods which return TimeValues.  These should help people
           since many classes will be changed to use
           absolute TimeValues shortly to correspond to ACE's versions.
 
@@ -115,15 +115,15 @@ Wed Jul 07 22:42:27 1999  Everett Anderson  <eea1@cs.wustl.edu>
 Wed Jul 07 21:54:35 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
         * src/TimedWait.java: Fixed the semantics of
-          timedWait(TimeValue tv).  Now when tv represents zero, it has 
+          timedWait(TimeValue tv).  Now when tv represents zero, it has
           polling semantics, checking the condition once and returning
           on success or throwing a TimeoutException on failure.  Before,
           it blocked until notified.  (Also affects synch mechanisms)
-        
+
 Wed May 20 14:37:48 CDT 1998  Everett Anderson <eea1@cs.wustl.edu>
 
 Reset the ChangeLog file for future users.  If anyone wants more complete
-file by file changes, they can be provided with the CVS log command.  
+file by file changes, they can be provided with the CVS log command.
 
 Updated the JACE page at http://www.cs.wustl.edu/~eea1/JACE.html to reflect
 the Version 1.4.4 changes, which included:
