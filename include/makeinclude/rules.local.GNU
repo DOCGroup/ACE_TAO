@@ -38,10 +38,17 @@ ifdef TEMPLATE_REPOSITORY
 CLEANUP_DIRS += $(TEMPLATE_REPOSITORY)
 endif
 
+ifneq ($(mingw32),1)
 makefile_name.local:
 	@echo
 	@echo Makefile: $(shell pwd)/$(MAKEFILE)
 	@echo
+else
+makefile_name.local:
+	@echo
+	@echo Makefile: $(call PWD)/$(MAKEFILE)
+	@echo
+endif
 
 all.local: makefile_name.local $(split_target) build.objdirs build.local install.local
 
@@ -253,6 +260,7 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
+ifneq ($(mingw32),1)
 	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
@@ -265,6 +273,20 @@ $(INSMAN)/mann/% :
 			$(LN_S) $(shell pwd)/$(@F) $@; \
 		fi ; \
 	fi
+else
+	@if test $(call PWD) != $(@D) -o -n "$(SOVERSION)" ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
+			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(call PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			echo "Installing $(@F) -> $(@D)" ; \
+			$(RM) $@; \
+			$(LN_S) $(call PWD)/$(@F) $@; \
+		fi ; \
+	fi
+endif
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \
