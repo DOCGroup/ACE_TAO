@@ -34,16 +34,12 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
   root_node_name = XMLString::transcode
     (this->doc_->getDocumentElement ()->getNodeName ());
 
-  ACE_DEBUG ((LM_DEBUG, "root node name is %s \n", root_node_name.c_str ()));
 
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
-
-      ACE_DEBUG ((LM_DEBUG, "node name is %s\n", 
-                  XMLString::transcode (node_name)));
 
       if (node_name == XStr
           (ACE_TEXT ("Deployment:ComponentImplementationDescription")))
@@ -94,8 +90,6 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
       else
         {
           // ??? How did we get here ???
-      ACE_DEBUG ((LM_DEBUG, "node name is %s\n", 
-                  XMLString::transcode (node_name)));
           ACE_THROW (CORBA::INTERNAL());
         }
     }

@@ -21,11 +21,11 @@ namespace Deployment
   public:
     Dump_Obj(const char* caption) {
       ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
-      indent_.append("  ");
+      indent_.append("   ");
     }
 
     ~Dump_Obj() {
-      indent_.erase(indent_.size() - 2, 2);
+      indent_.erase(indent_.size() - 3, 3);
     }
 
     static const char* indent() {
@@ -175,8 +175,7 @@ namespace Deployment
   {
     Dump_Obj dump_obj("AssemblyConnectionDescription");
 
-    ACE_DEBUG ((LM_DEBUG, "  name: %s\n", acd.name.in ()));
-
+    dump ("name", acd.name);
     ACE_DEBUG ((LM_DEBUG, "  deployRequirement: \n"));
     for (CORBA::ULong i = 0;
          i < acd.deployRequirement.length ();
@@ -233,9 +232,8 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ComponentPackageDescription &comppkgdesc)
   {
     Dump_Obj dump_obj("ComponentPackageDescription");
-
-    ACE_DEBUG ((LM_DEBUG, "  label: %s\n", comppkgdesc.label.in ()));
-    ACE_DEBUG ((LM_DEBUG, "  UUID: %s\n", comppkgdesc.UUID.in ()));
+    dump ("label", comppkgdesc.label);
+    dump ("UUID", comppkgdesc.UUID);
 
     ACE_DEBUG ((LM_DEBUG, "  configProperty: \n"));
     for (CORBA::ULong i = 0;
@@ -273,7 +271,7 @@ namespace Deployment
 
     dump ("name", compportdesc.name);
     dump ("specificType", compportdesc.specificType);
-    dump ("supportedType", compportdesc.supportedType);
+    //dump ("supportedType", compportdesc.supportedType);
     dump ("provider", compportdesc.provider);
     dump ("exclusiveProvider", compportdesc.exclusiveProvider);
     dump ("exclusiveUser", compportdesc.exclusiveUser);
@@ -468,11 +466,6 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ComponentPackageReference &)
   {
     Dump_Obj dump_obj("ComponentPackageReference");
-  }
-
-  void DnC_Dump::dump (const ::Deployment::ComponentImplementationDescription &)
-  {
-    Dump_Obj dump_obj("ComponentImplementationDescription");
   }
 
   void DnC_Dump::dump (const ::Deployment::SubcomponentInstantiationDescription &)
@@ -684,8 +677,10 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::NamedImplementationArtifact &nia)
   {
     Dump_Obj dump_obj("NamedImplementationArtifact");
-    ACE_DEBUG ((LM_DEBUG, "name: %s \n", nia.name.in ()));
-    ACE_DEBUG ((LM_DEBUG, "referencedArtifact: \n"));
+    ACE_DEBUG ((LM_DEBUG, "%sName: %s \n", Dump_Obj::indent(), nia.name.in ()));
+    ACE_DEBUG ((LM_DEBUG, "%sReferencedArtifact: \n", Dump_Obj::indent()));
+    //ACE_DEBUG ((LM_DEBUG, "name: %s \n", nia.name.in ()));
+    //ACE_DEBUG ((LM_DEBUG, "referencedArtifact: \n"));
     DnC_Dump::dump (nia.referencedArtifact);  // ImplementationArtifactDescription
   }
 
@@ -696,7 +691,7 @@ namespace Deployment
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
     dump ("specificType", cid.specificType);
-    dump ("supportedType", cid.supportedType);
+    //dump_sequence ("supportedType", cid.supportedType);
     dump ("idlFile", cid.idlFile);
     dump_sequence ("configProperty", cid.configProperty);
     dump_sequence ("port", cid.port);
@@ -873,9 +868,10 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ImplementationArtifactDescription &iad)
   {
     Dump_Obj dump_obj("ImplementationArtifactDescription");
-    ACE_DEBUG ((LM_DEBUG, "label: %s", iad.label.in ()));
-    ACE_DEBUG ((LM_DEBUG, "UUID: %s", iad.UUID.in ()));
-    //    ACE_DEBUG ((LM_DEBUG, "location: %s", iad.location.in ()));
+    ACE_DEBUG ((LM_DEBUG, "%sLabel: %s \n", Dump_Obj::indent(), 
+                iad.label.in ()));
+    ACE_DEBUG ((LM_DEBUG, "%sUUID: %s \n", Dump_Obj::indent(), 
+                iad.UUID.in ()));
     DnC_Dump::dump_sequence ("execParameter", iad.execParameter); // Property seq.
     DnC_Dump::dump_sequence ("infoProperty", iad.infoProperty); // Property seq.
     DnC_Dump::dump_sequence ("deployRequirement", iad.deployRequirement); // Requirement seq.
@@ -895,6 +891,86 @@ namespace Deployment
   void DnC_Dump::dump(const Deployment::ResourceUsageKind&)
   {
     Dump_Obj dump_obj("ResourceUsageKind");
+  }
+
+  void DnC_Dump::dump (
+        const ::Deployment::ComponentImplementationDescription &cid)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "========================================================\n"));
+    Dump_Obj dump_obj("      COMPONENT IMPLEMENTATION DESCRIPTION ");
+    ACE_DEBUG ((LM_DEBUG,
+                "===================================-====================\n"));
+    ACE_DEBUG ((LM_DEBUG, "\nUUID: %s \n", cid.UUID.in ()));
+    ACE_DEBUG ((LM_DEBUG, "Label: %s \n", cid.label.in ()));
+    ACE_DEBUG ((LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
+    dump (cid.implements);
+    for (CORBA::ULong i = 0; i < cid.assemblyImpl.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nAssemblyDescription %d: \n", i + 1));
+        for (CORBA::ULong j = 0; j < cid.assemblyImpl[i].instance.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Instance: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        cid.assemblyImpl[i].instance[j].name.in ()));
+            for (CORBA::ULong k = 0; 
+                 k < cid.assemblyImpl[i].instance[j].
+                     package.length ();
+                 ++k)
+              {
+                ACE_DEBUG ((LM_DEBUG, "     Package: %d: \n", k + 1));
+                ACE_DEBUG ((LM_DEBUG, "       UUID: %s \n", 
+                  cid.assemblyImpl[i].instance[j].package[k].UUID.in ()));
+                ACE_DEBUG ((LM_DEBUG, "       Label: %s \n", 
+                  cid.assemblyImpl[i].instance[j].package[k].label.in ()));
+                ACE_DEBUG ((LM_DEBUG, "       Realizes:\n"));
+                dump (cid.assemblyImpl[i].instance[j].package[k].realizes);
+                dump (cid.assemblyImpl[i].instance[j].package[k]);
+              }
+          }
+        for (CORBA::ULong j = 0; j < cid.assemblyImpl[i].connection.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Connection: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        cid.assemblyImpl[i].connection[j].name.in ()));
+            for (CORBA::ULong k = 0; 
+                 k < cid.assemblyImpl[i].connection[j].
+                     internalEndpoint.length ();
+                 ++k)
+              {
+                ACE_DEBUG ((LM_DEBUG, "     Endpoint: %d: \n", k + 1));
+                ACE_DEBUG ((LM_DEBUG, "       Portname: %s \n",
+                            cid.assemblyImpl[i].connection[j].
+                            internalEndpoint[k].portName.in ()));
+                int value = cid.assemblyImpl[i].connection[j].
+                            internalEndpoint[k].instanceRef;
+                ACE_DEBUG ((LM_DEBUG, "       Instance: %s \n",
+                        cid.assemblyImpl[i].instance[value].name.in ()));
+              }
+          }
+        for (CORBA::ULong j = 0; 
+             j < cid.assemblyImpl[i].externalProperty.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     ExternalProperty: %d: \n", j + 1));
+          }
+      }
+    for (CORBA::ULong i = 0; i < cid.monolithicImpl.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nMonolithicImplDescription %d: \n", i + 1));
+        for (CORBA::ULong j = 0; 
+             j < cid.monolithicImpl[i].primaryArtifact.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Artifact: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        cid.monolithicImpl[i].primaryArtifact[j].name.in ()));
+            dump (cid.monolithicImpl[i].primaryArtifact[j].
+                  referencedArtifact);
+          }
+      }
   }
 
   void DnC_Dump::dump(const Deployment::DeploymentPlan &plan)
