@@ -1,6 +1,6 @@
 /* C code produced by gperf version 2.5 (GNU C++ version) */
 /* Command-line: ../src/gperf -p -j1 -g -o -t -N is_reserved_word -k1,3,$  */
-/* Command-line: gperf -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
+/* Command-line: gperf -a -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
 struct resword { char *name; short token; enum rid rid; };
 
 #define TOTAL_KEYWORDS 51
@@ -14,9 +14,7 @@ struct resword { char *name; short token; enum rid rid; };
 inline
 #endif
 static unsigned int
-hash (str, len)
-     register char *str;
-     register int unsigned len;
+hash (char *str, unsigned int len)
 {
   static unsigned char asso_values[] =
     {
@@ -34,7 +32,7 @@ hash (str, len)
      26, 30, 31, 83, 15,  1,  0, 28, 13,  4,
      83, 83,  5, 83, 83, 83, 83, 83,
     };
-  register int hval = len;
+  int hval = len;
 
   switch (hval)
     {
@@ -53,9 +51,7 @@ hash (str, len)
 inline
 #endif
 struct resword *
-is_reserved_word (str, len)
-     register char *str;
-     register unsigned int len;
+is_reserved_word (char *str, unsigned int len)
 {
   static struct resword wordlist[] =
     {
@@ -126,11 +122,11 @@ is_reserved_word (str, len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register int key = hash (str, len);
+      int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= 0)
         {
-          register char *s = wordlist[key].name;
+          char *s = wordlist[key].name;
 
           if (*s == *str && !strcmp (str + 1, s + 1))
             return &wordlist[key];

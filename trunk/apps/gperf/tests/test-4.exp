@@ -1,6 +1,6 @@
 /* C code produced by gperf version 2.5 (GNU C++ version) */
 /* Command-line: ../src/gperf -D -p -t  */
-/* Command-line: gperf -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
+/* Command-line: gperf -a -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
 struct resword { char *name; short token; enum rid rid; };
 
 #define TOTAL_KEYWORDS 51
@@ -11,9 +11,7 @@ struct resword { char *name; short token; enum rid rid; };
 /* maximum key range = 79, duplicates = 2 */
 
 static unsigned int
-hash (str, len)
-     register char *str;
-     register int unsigned len;
+hash (char *str, unsigned int len)
 {
   static unsigned char asso_values[] =
     {
@@ -35,9 +33,7 @@ hash (str, len)
 }
 
 struct resword *
-in_word_set (str, len)
-     register char *str;
-     register unsigned int len;
+in_word_set (char *str, unsigned int len)
 {
   static struct resword wordlist[] =
     {
@@ -107,15 +103,15 @@ in_word_set (str, len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register int key = hash (str, len);
+      int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= 0)
         {
-          register int index = lookup[key];
+          int index = lookup[key];
 
           if (index >= 0 && index < MAX_HASH_VALUE)
             {
-              register char *s = wordlist[index].name;
+              char *s = wordlist[index].name;
 
               if (*s == *str && !strcmp (str + 1, s + 1))
                 return &wordlist[index];
@@ -124,9 +120,9 @@ in_word_set (str, len)
             return 0;
           else
             {
-              register int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
-              register struct resword *base = &wordlist[-lookup[offset]];
-              register struct resword *ptr = base + -lookup[offset + 1];
+              int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              struct resword *base = &wordlist[-lookup[offset]];
+              struct resword *ptr = base + -lookup[offset + 1];
 
               while (--ptr >= base)
                 if (*str == *ptr->name && !strcmp (str + 1, ptr->name + 1))
