@@ -503,6 +503,9 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
       CORBA::TypeCode_ptr default_tc = 0;
       CORBA::Boolean discrim_matched = CORBA::B_FALSE;
 
+      TAO_Base_Union *base_union = (TAO_Base_Union *)data;
+      void *member_val;
+
       // encode the discriminator value
       CORBA::TypeCode::traverse_status retval =
         stream->encode (discrim_tc, data, data2, env);
@@ -619,9 +622,12 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                       default_tc = member_tc;
                                     }
                                   if (discrim_matched)
-                                    // marshal according to the matched typecode
-                                    return stream->encode (member_tc, data,
-                                                           data2, env);
+                                    {
+                                      member_val = base_union->_access (0);
+                                      // marshal according to the matched typecode
+                                      return stream->encode (member_tc, member_val,
+                                                             data2, env);
+                                    }
                                 }
                               else // error getting member type
                                 {
@@ -640,7 +646,10 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                         } // end of while
                       // we are here only if there was no match
                       if (default_tc)
-                        return stream->encode (default_tc, data, data2, env);
+                        {
+                          member_val = base_union->_access (0);
+                          return stream->encode (default_tc, member_val, data2, env);
+                        }
                       else
                         {
                           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));

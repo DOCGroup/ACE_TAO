@@ -73,7 +73,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
           << node->name () << "::~" << node->local_name () << " (void)" << be_nl
           << "{" << be_idt_nl
           << "// finalize" << be_nl
-          << "this->reset (this->disc_, 1);" << be_uidt_nl
+          << "this->_reset (this->disc_, 1);" << be_uidt_nl
           << "}\n\n";
 
       // the discriminant type may have to be defined here if it was an enum
