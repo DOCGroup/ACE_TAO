@@ -12,7 +12,7 @@ require Process;
 $SV = Process::Create ("server$Process::EXE_EXT", " ");
 
 sleep(10);
-$status  = system ("client$Process::EXE_EXT  -x -b 100 -o vishal");
+$status  = system ("client$Process::EXE_EXT  -x -b 100 -y Vishal -z Kachroo");
 #sleep($ACE::sleeptime);
 
 $SV->Kill (); $SV->Wait ();
