@@ -1,7 +1,6 @@
 Tue May 18 11:43:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	Changes with working Wait_On_Read strategy with the new
-	architecture.
+	Got <Wait_On_Read strategy> to work with the new architecture. 
 
 	* tao/IIOP_Reply_Dispatcher.h: 
 	* tao/IIOP_Reply_Dispatcher.cpp: Implementation for
@@ -14,6 +13,36 @@ Tue May 18 11:43:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* tao/IIOP_Wait_Strategy.h: 
 	* tao/IIOP_Wait_Strategy.cpp: Implementations for the three
 	different Wait strategies. 
+
+	<Transport> object creates Request Multiplexing Strategy <RMS>
+	object and <Wait Strategy> object.
+
+ 	After this, Invocation class intializes the <RMS> object with the
+	<CDR> stream it has to use to read the input (reply). Right now,
+	since we deal only with the Synchronous Method Invocation (SMI)
+	model, the <GIOP_Twoway_Invocation> class gives the pointer to the
+	preallocated <CDR> stream that it owns, to the <RMS> object. 
+
+	Invocation is made and then Invocation calls <wait_for_reply> on
+	the <Transport> object. <Transport> object calls <wait> on the
+	<Wait Strategy> object. 
+
+	Right now the <Wait Strategy> is hard coded to be only <Wait On
+	Read> and the <RMS> is hard coded to be only
+	<Exclusive_RMS>. Since we want to block on read in the
+	<Wait_On_Read> strategy, the <GIOP::recv_request> call now taked
+	additional parameter whether to block for the whole reply or
+	not. Non-blocking case is not yet tested fully. 
+
+	Remember the <handle_client_input> of the <Transport> object does
+	all the reading of the reply and also calls back the
+	<Reply_Dispatcher>. Right now in the <Exclusive RMS> case, we use
+	only the <Syncronous Reply Dispatcher>. <dispatch_reply> on this
+	object does nothing. It just stores all the information related to
+	the reply (reply status ...etc). The invocation object demarshalls
+	the reply CDR (which it gave to the Transport earlier) on the stack.
+
+
 
 Mon May 10 23:13:05 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
