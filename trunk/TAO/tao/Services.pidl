@@ -31,16 +31,17 @@ module CORBA
   typedef unsigned short ServiceType;
   typedef unsigned long ServiceOption;
   typedef unsigned long ServiceDetailType;
+  typedef OctetSeq ServiceDetailData;
+  typedef sequence<ServiceOption> ServiceOptionSeq;
 
   const ServiceType Security = 1;
 
   struct ServiceDetail
   {
     ServiceDetailType service_detail_type;
-    OctetSeq service_detail;
+    ServiceDetailData service_detail;
   };
 
-  typedef sequence<ServiceOption> ServiceOptionSeq;
   typedef sequence<ServiceDetail> ServiceDetailSeq;
 
   struct ServiceInformation
