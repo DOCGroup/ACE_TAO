@@ -98,7 +98,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "TAO_" << node->flat_name () 
       << "_Default_Proxy_Factory *proxy_factory_;" << be_nl
       << "int delete_proxy_factory_;" << be_nl
-      << "ACE_Recursive_Thread_Mutex lock_;"<<be_nl
+      << "ACE_SYNCH_RECURSIVE_MUTEX lock_;"<<be_nl
       << "};\n\n";
   
   os->indent ();
