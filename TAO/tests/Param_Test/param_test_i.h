@@ -56,6 +56,20 @@ public:
                Param_Test::StrSeq_out s3,
                CORBA::Environment &env);
   // test for string sequence
+
+  virtual Param_Test::Var_Struct *
+  test_var_struct (const Param_Test::Var_Struct &s1,
+                   Param_Test::Var_Struct &s2,
+                   Param_Test::Var_Struct_out s3,
+                   CORBA::Environment &env);
+  // test for variable structs
+
+  virtual Param_Test::Nested_Struct *
+  test_nested_struct (const Param_Test::Nested_Struct &s1,
+                      Param_Test::Nested_Struct &s2,
+                      Param_Test::Nested_Struct_out s3,
+                      CORBA::Environment &env);
+  // test for nested structs
 };
 
 #endif /* PARAM_TEST_I_H */

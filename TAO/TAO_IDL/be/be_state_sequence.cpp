@@ -127,13 +127,27 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
               if ((type->node_type () == AST_Decl::NT_interface)
                   || (type->node_type () == AST_Decl::NT_interface_fwd))
                 {
-                  *os << "ACE_NESTED_CLASS (" << seq->local_name () <<
-                    ", TAO_ObjRefMngType)";
+                  if (scope)
+                    {
+                      *os << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+                        seq->local_name () << "::TAO_ObjRefMngType) ";
+                    }
+                  else
+                    {
+                      *os << seq->local_name () << "::TAO_ObjRefMngType ";
+                    }
                 }
               else // must be a string
                 {
-                  *os << "ACE_NESTED_CLASS (" << seq->local_name () <<
-                    ", TAO_StrMngType)";
+                  if (scope)
+                    {
+                      *os << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+                        seq->local_name () << "::TAO_StrMngType) ";
+                    }
+                  else
+                    {
+                      *os << seq->local_name () << "::TAO_StrMngType ";
+                    }
                 }
             }
             break;
@@ -143,11 +157,11 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
               if ((type->node_type () == AST_Decl::NT_interface)
                   || (type->node_type () == AST_Decl::NT_interface_fwd))
                 {
-                  *os << seq->name () << "::TAO_ObjRefMngType";
+                  *os << seq->name () << "::TAO_ObjRefMngType ";
                 }
               else // must be a string
                 {
-                  *os << seq->name () << "::TAO_StrMngType";
+                  *os << seq->name () << "::TAO_StrMngType ";
                 }
             }
             break;
@@ -241,14 +255,21 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH: // managed type returned by
                 // operator []
                 {
-                  *os << "ACE_NESTED_CLASS (" << seq->local_name () <<
-                    ", TAO_ObjRefMngType)";
+                  if (scope)
+                    {
+                      *os << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+                        seq->local_name () << "::TAO_ObjRefMngType ) ";
+                    }
+                  else
+                    {
+                      *os << seq->local_name () << "::TAO_ObjRefMngType ";
+                    }
                 }
                 break;
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
                 {
-                  *os << seq->name () << "::TAO_ObjRefMngType";
+                  *os << seq->name () << "::TAO_ObjRefMngType ";
                 }
                 break;
               default:
@@ -272,13 +293,13 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
               case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
-                *os << bt->nested_type_name (scope, "");
+                *os << bt->nested_type_name (scope, " &");
                 break;
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
               case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
               case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
-                *os << bt->name ();
+                *os << bt->name () << " &";
                 break;
               default:
                 {
@@ -306,13 +327,13 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
-            *os << bt->nested_type_name (scope, "");
+            *os << bt->nested_type_name (scope, " &");
             break;
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
-            *os << bt->name ();
+            *os << bt->name () << " &";
             break;
           default:
             {
@@ -366,13 +387,13 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
-            *os << bt->nested_type_name (scope, "");
+            *os << bt->nested_type_name (scope, " &");
             break;
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
-            *os << bt->name ();
+            *os << bt->name () << " &";
             break;
           default:
             {

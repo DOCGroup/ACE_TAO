@@ -278,10 +278,10 @@ CORBA_NVList::add_item_consume (char *name,
 
 // add a value. If necessary, increment the list
 CORBA::NamedValue_ptr
-CORBA_NVList::add_value_consume (char *name,
-                                 CORBA::Any *value,
-                                 CORBA::Flags flags,
-                                 CORBA::Environment &env)
+CORBA_NVList::add_value_consume (char * /*name*/,
+                                 CORBA::Any */*value*/,
+                                 CORBA::Flags /*flags*/,
+                                 CORBA::Environment &/*env*/)
 {
   // not implemented because we need to see how we can consume the value
   // One soln is to make the any_ member of NamedValue to be a Any_ptr or
@@ -292,7 +292,7 @@ CORBA_NVList::add_value_consume (char *name,
 
 //CORBA::Status
 void
-CORBA_NVList::remove (CORBA::ULong n, CORBA::Environment &env)
+CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 {
   // not implemented
   // XXXASG - TODO

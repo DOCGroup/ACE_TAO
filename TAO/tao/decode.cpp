@@ -1125,7 +1125,6 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_objref:
                     case CORBA::tk_string:
                     case CORBA::tk_wstring:
-                      ACE_OS::memset ((char*)data+16, 0, 4);
                     case CORBA::tk_any:
                     case CORBA::tk_TypeCode:
                     case CORBA::tk_Principal:

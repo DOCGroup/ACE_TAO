@@ -1,4 +1,4 @@
-// $Id:
+// $Id
 
 // ============================================================================
 //
@@ -179,6 +179,32 @@ Driver::run (void)
         delete client;
       }
       break;
+    case Options::TEST_VAR_STRUCT:
+      {
+        Param_Test_Client<Test_Var_Struct> *client = new
+          Param_Test_Client<Test_Var_Struct> (this->orb_ptr_,
+                                              this->objref_,
+                                              new Test_Var_Struct);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_NESTED_STRUCT:
+      {
+        Param_Test_Client<Test_Nested_Struct> *client = new
+          Param_Test_Client<Test_Nested_Struct> (this->orb_ptr_,
+                                                 this->objref_,
+                                                 new Test_Nested_Struct);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     default:
       break;
     }
@@ -191,10 +217,14 @@ template class Param_Test_Client<Test_Short>;
 template class Param_Test_Client<Test_Unbounded_String>;
 template class Param_Test_Client<Test_Fixed_Struct>;
 template class Param_Test_Client<Test_String_Sequence>;
+template class Param_Test_Client<Test_Var_Struct>;
+template class Param_Test_Client<Test_Nested_Struct>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>
 #pragma instantiate Param_Test_Client<Test_String_Sequence>
+#pragma instantiate Param_Test_Client<Test_Var_Struct>
+#pragma instantiate Param_Test_Client<Test_Nested_Struct>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
