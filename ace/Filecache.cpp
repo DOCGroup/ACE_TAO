@@ -421,7 +421,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (void)
   : tempname_ (0),
     mmap_ (),
     handle_ (0),
-    stat_ (),
+    // stat_ (),
     size_ (0),
     action_ (0),
     error_ (0),
