@@ -31,6 +31,14 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+
+  if (this->gen_member_typecodes (node) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO::be_visitor_value_typecode::visit_valuetype - "
+                       "Unable to generate valuetype/eventtype field "
+                       "TypeCodes.\n"),
+                      -1);
+
   size_t const count =
     node->data_members_count (AST_Field::vis_PUBLIC)
     + node->data_members_count (AST_Field::vis_PRIVATE);
@@ -139,6 +147,40 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   return
     this->gen_typecode_ptr (be_type::narrow_from_decl (node));
+}
+
+int
+TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
+{
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      AST_Decl * const d = si.item ();
+
+      if (!d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_value_typecode::gen_member_typecodes - "
+                             "bad node in this scope\n"),
+                            0);
+        }
+
+      AST_Field * const field = AST_Field::narrow_from_decl (d);
+
+      if (!field
+          || field->visibility () == AST_Field::vis_NA)
+        {
+          continue;
+        }
+
+      be_type * const member_type =
+        be_type::narrow_from_decl (field->field_type ());
+
+      member_type->accept (this);
+    }
+
+  return 0;
 }
 
 int

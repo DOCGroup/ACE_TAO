@@ -46,6 +46,9 @@ namespace TAO
 
   private:
 
+    /// Generate structure field TypeCode declarations, if necessary.
+    int gen_member_typecodes (AST_Structure * node);
+
     /// Generate structure field related TypeCode code.
     int visit_members (AST_Structure * node);
 
