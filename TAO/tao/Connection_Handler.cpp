@@ -17,7 +17,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
    transport_ (0),
    tss_resources_ (orb_core->get_tss_resources ())
-  //,   is_registered_ (0)
 {
 }
 
@@ -125,9 +124,13 @@ TAO_Connection_Handler::svc_i (void)
 void
 TAO_Connection_Handler::transport (TAO_Transport* transport)
 {
-  if (this->transport_ != 0) {
-    this->transport_->connection_handler_closing ();
-  }
+  // @@ Maybe this is not the place to increase reference counts. This
+  // method can be easily  pass of as a set method. Need to look at a
+  // cleaner method of doing this - NB
+  if (this->transport_ != 0)
+    {
+      this->transport_->connection_handler_closing ();
+    }
 
   this->transport_ = TAO_Transport::_duplicate (transport);
 }
