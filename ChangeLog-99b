@@ -1,3 +1,8 @@
+Wed Jun 16 20:47:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/Process_Win32.pm:
+	  The wait time for a process seems to be in milliseconds.
+
 Wed Jun 16 20:03:41 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.cpp: Qualify dllist_ with 'this->' to get the
