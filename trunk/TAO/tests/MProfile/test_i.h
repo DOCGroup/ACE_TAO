@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//   TAO/tests/MT_Client
+//   TAO/tests/Mprofile
 //
 // = FILENAME
 //   test_i.h
@@ -13,8 +13,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_MT_CLIENT_TEST_I_H
-#define TAO_MT_CLIENT_TEST_I_H
+#ifndef TAO_MPROFILE_TEST_I_H
+#define TAO_MPROFILE_TEST_I_H
 
 #include "testS.h"
 
@@ -27,8 +27,7 @@ class Simple_Server_i : public POA_Simple_Server
   //   Implements the Simple_Server interface in test.idl
   //
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb,
-                   PortableServer::POA_ptr poa);
+  Simple_Server_i (CORBA::ORB_ptr orb);
   // ctor
 
   Simple_Server_i (void);
@@ -36,17 +35,13 @@ public:
 
   // = The Simple_Server methods.
   void remote_call (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));  
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
 private:
   CORBA::ORB_var orb_;
-  PortableServer::POA_ptr poa_;
 };
 
-#endif /* TAO_MT_CLIENT_TEST_I_H */
+#endif /* TAO_MPROFILE_TEST_I_H */

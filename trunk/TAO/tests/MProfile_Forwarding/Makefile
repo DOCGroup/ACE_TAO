@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO 
 
 IDLFILES = testC testS
-BIN = server Manager client
+BIN_UNCHECKED = server Manager client
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i Servant_Locator)
 
@@ -33,6 +33,11 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN=$(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

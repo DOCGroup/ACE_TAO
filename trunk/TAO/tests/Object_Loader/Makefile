@@ -56,7 +56,7 @@ driver: $(addprefix $(VDIR),$(DRIVER_OBJS))
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), Test$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

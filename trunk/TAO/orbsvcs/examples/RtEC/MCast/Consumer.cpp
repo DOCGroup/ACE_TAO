@@ -21,7 +21,7 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
 
   RtecEventComm::PushConsumer_var me =
     this->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Simple subscription, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
@@ -59,18 +59,18 @@ Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_ENDTRY;
   this->proxy_ = RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
-  
+
   // Deactivate this object
   PortableServer::POA_var poa =
     this->_default_POA (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   // Get the Object Id used for the servant..
   PortableServer::ObjectId_var oid =
     poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   // Deactivate the object
   poa->deactivate_object (oid.in (), ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
 
 void
