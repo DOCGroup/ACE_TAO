@@ -209,7 +209,17 @@ test_log_msg_features (const char *program)
     ACE_ERROR ((LM_ERROR,
                 "op_status and errnum failed!\n"));
 
-  // Exercise many different combinations of STDERR and OSTREAM.
+  const char *badname = "badname";
+
+  if (ACE_OS::open (badname,
+                    O_RDONLY) == ACE_INVALID_HANDLE)
+    ACE_ERROR ((LM_ERROR,
+                "%n: (%x), can't open %s%r\n",
+                10000,
+                badname,
+                cleanup));
+
+  // Exercise many different combinations of OSTREAM.
 
   ACE_DEBUG ((LM_INFO,
               ASYS_TEXT ("%10f, %*s%s = %d\n"),
@@ -257,16 +267,6 @@ test_log_msg_features (const char *program)
               "",
               "world",
               10000 * counter++));
-
-  const char *badname = "badname";
-
-  if (ACE_OS::open (badname,
-                    O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_DEBUG ((LM_DEBUG,
-                "%n: (%x), %p%r\n",
-                10000,
-                badname,
-                cleanup));
 
   static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 

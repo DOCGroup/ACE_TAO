@@ -1,5 +1,9 @@
 Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Log_Msg_Test.cpp (test_log_msg_features): Changed the
+	  use of %p to prevent an error message from being printed that'll
+ 	  confuse the run_tests script.
+
 	* Just added the 700th non-DOC group individual who has contributed
 	  to ACE+TAO over the years.  In the last year, we've gone from
  	  400 to 700 contributors, which is great!
