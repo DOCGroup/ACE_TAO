@@ -19,6 +19,8 @@
 //
 // ============================================================================
 
+#include <orb.idl>
+
 interface Coffee
 {
   struct Desc
@@ -187,7 +189,9 @@ interface Param_Test
   Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
 
   // test typecodes
-  TypeCode test_typecode (in TypeCode t1, inout TypeCode t2, out TypeCode t3);
+  CORBA::TypeCode test_typecode (in CORBA::TypeCode t1, 
+                                 inout CORBA::TypeCode t2, 
+                                 out CORBA::TypeCode t3);
 
   // Anys. We try to pump in all kinds of data types thru these Anys
   any test_any (in any a1, inout any a2, out any a3);
