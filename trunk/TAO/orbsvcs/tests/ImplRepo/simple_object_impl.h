@@ -23,13 +23,13 @@
 #include "Simple_ObjectS.h"
 
 // Forward declarations.
-class Simple_Impl;
+class Simple_i;
 
 // Typedefs.
-typedef Simple_Impl *Simple_Impl_ptr;
-typedef Simple_Impl_ptr Simple_Impl_ref;
+typedef Simple_i *Simple_i_ptr;
+typedef Simple_i_ptr Simple_i_ref;
 
-class Simple_Impl: public POA_simple_object
+class Simple_i: public POA_simple_object
 {
   // = TITLE
   //    Simple Object Implementation
@@ -38,10 +38,10 @@ class Simple_Impl: public POA_simple_object
   //    Implementation of a simple object that has two methods, one that 
   //    returns the cube of a long, another that shuts down the server.
 public:
-  Simple_Impl (const char *obj_name = 0);
+  Simple_i (const char *obj_name = 0);
   // Constructor
 
-  ~Simple_Impl (void);
+  ~Simple_i (void);
   // Destructor
 
   virtual CORBA::Long simple_method (CORBA::Long l,

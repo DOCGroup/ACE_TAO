@@ -571,7 +571,7 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CORBA::ULong return_value = 0, max_value = 0;
-  const TAO_Import_Attributes_Impl& import_attrs =
+  const TAO_Import_Attributes_i& import_attrs =
     this->trader_.import_attributes ();
 
   // Discover the default values for each of the possible cardinality
@@ -646,7 +646,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
 {
   CORBA::Boolean def_value = CORBA::B_TRUE,
     return_value = CORBA::B_TRUE;
-  const TAO_Support_Attributes_Impl& support_attrs =
+  const TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
 
   switch (pol)

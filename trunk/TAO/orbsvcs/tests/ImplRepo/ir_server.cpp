@@ -7,7 +7,7 @@ ACE_RCSID(ImplRepo, ir_server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  IR_ImplRepo_Impl server;
+  IR_iRepo_i server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tImplementation Repository\n\n"));
   TAO_TRY

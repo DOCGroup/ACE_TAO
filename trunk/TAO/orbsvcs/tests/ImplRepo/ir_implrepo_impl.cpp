@@ -7,14 +7,14 @@
 
 ACE_RCSID(ImplRepo, ir_implrepo_impl, "$Id$")
 
-IR_ImplRepo_Impl::IR_ImplRepo_Impl (void)
+IR_iRepo_i::IR_iRepo_i (void)
   : ior_output_file_ (0),
     server_key_ (0),
     server_impl_ (0) 
 {
 }
 
-void IR_ImplRepo_Impl::start (const char *server)
+void IR_iRepo_i::start (const char *server)
 {
   if (ACE_OS::strcmp (server, "Simple_Server") == 0)
     {
@@ -31,7 +31,7 @@ void IR_ImplRepo_Impl::start (const char *server)
     }
 }
 
-void IR_ImplRepo_Impl::server_is_running (const char *server,
+void IR_iRepo_i::server_is_running (const char *server,
                                           const Implementation_Repository::INET_Addr &addr,
                                           CORBA::Environment &_tao_environment)
 {
@@ -53,7 +53,7 @@ void IR_ImplRepo_Impl::server_is_running (const char *server,
 // Reads the Server factory ior from a file
 
 int
-IR_ImplRepo_Impl::read_ior (char *filename)
+IR_iRepo_i::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
@@ -76,7 +76,7 @@ IR_ImplRepo_Impl::read_ior (char *filename)
 }
 
 int
-IR_ImplRepo_Impl::parse_args (void)
+IR_iRepo_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:o:");
   int c;
@@ -114,7 +114,7 @@ IR_ImplRepo_Impl::parse_args (void)
 }
 
 int
-IR_ImplRepo_Impl::init (int argc, char** argv, CORBA::Environment& env)
+IR_iRepo_i::init (int argc, char** argv, CORBA::Environment& env)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -131,7 +131,7 @@ IR_ImplRepo_Impl::init (int argc, char** argv, CORBA::Environment& env)
   if (retval != 0)
     return retval;
 
-  this->server_impl_ = new IR_Simple_Impl (this->orb_manager_.orb (),
+  this->server_impl_ = new IR_Simple_i (this->orb_manager_.orb (),
                                            this->orb_manager_.child_poa (),
                                            this);
 
@@ -164,14 +164,14 @@ IR_ImplRepo_Impl::init (int argc, char** argv, CORBA::Environment& env)
 }
 
 int
-IR_ImplRepo_Impl::run (CORBA::Environment& env)
+IR_iRepo_i::run (CORBA::Environment& env)
 {
   if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "IR_Server_Impl::run"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "IR_Server_i::run"), -1);
   return 0;
 }
 
-IR_ImplRepo_Impl::~IR_ImplRepo_Impl (void)
+IR_iRepo_i::~IR_iRepo_i (void)
 {
   if (this->server_impl_ != 0)
     delete server_impl_;
@@ -179,9 +179,9 @@ IR_ImplRepo_Impl::~IR_ImplRepo_Impl (void)
 
 
 // Constructor
-IR_Simple_Impl::IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
+IR_Simple_i::IR_Simple_i (CORBA::ORB_ptr orb_ptr,
                                 PortableServer::POA_ptr poa_ptr,
-                                IR_ImplRepo_Impl *ir_impl)
+                                IR_iRepo_i *ir_impl)
   : ir_impl_ (ir_impl),
     orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
     poa_var_ (PortableServer::POA::_duplicate (poa_ptr)),
@@ -191,26 +191,26 @@ IR_Simple_Impl::IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
 
 // Destructor
 
-IR_Simple_Impl::~IR_Simple_Impl (void)
+IR_Simple_i::~IR_Simple_i (void)
 {
 }
 
 // Cube a long
 
 CORBA::Long
-IR_Simple_Impl::simple_method (CORBA::Long l, CORBA::Environment &env)
+IR_Simple_i::simple_method (CORBA::Long l, CORBA::Environment &env)
 {
   return this->forward (env);
 }
 
 // Shutdown.
 
-void IR_Simple_Impl::shutdown (CORBA::Environment &env)
+void IR_Simple_i::shutdown (CORBA::Environment &env)
 {
   this->forward (env);
 }
 
-int IR_Simple_Impl::forward (CORBA::Environment &env)
+int IR_Simple_i::forward (CORBA::Environment &env)
 {
   this->ir_impl_->start ("Simple_Server");
 
@@ -250,7 +250,7 @@ int IR_Simple_Impl::forward (CORBA::Environment &env)
     }
 }
 
-void IR_Simple_Impl::forward_to (CORBA::Object_ptr forward_to_ptr)
+void IR_Simple_i::forward_to (CORBA::Object_ptr forward_to_ptr)
 {
   this->forward_to_var_ = CORBA::Object::_duplicate (forward_to_ptr);
 }

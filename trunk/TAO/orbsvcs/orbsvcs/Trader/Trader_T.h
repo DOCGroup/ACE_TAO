@@ -97,7 +97,7 @@ class TAO_Trader_Components : public virtual IF
 {
 public:
 
-  TAO_Trader_Components (const TAO_Trading_Components_Impl& comps);
+  TAO_Trader_Components (const TAO_Trading_Components_i& comps);
   
   // = CosTrading::TraderComponents methods. 
   virtual CosTrading::Lookup_ptr lookup_if (CORBA::Environment& env)
@@ -127,7 +127,7 @@ public:
 
 private:
   
-  const TAO_Trading_Components_Impl& comps_;
+  const TAO_Trading_Components_i& comps_;
 };
 
 template <class IF>
@@ -135,7 +135,7 @@ class TAO_Support_Attributes : public virtual IF
 {
 public:
 
-  TAO_Support_Attributes (const TAO_Support_Attributes_Impl& attrs);
+  TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs);
 
   // = CosTrading::SupportAttributes methods.
   
@@ -153,7 +153,7 @@ public:
   
 private:
 
-  const TAO_Support_Attributes_Impl& attrs_;
+  const TAO_Support_Attributes_i& attrs_;
 };
 
 template <class IF>
@@ -161,7 +161,7 @@ class TAO_Import_Attributes : public virtual IF
 {
 public:
 
-  TAO_Import_Attributes (const TAO_Import_Attributes_Impl& attrs);
+  TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs);
 
   // = CosTrading::ImportAttributes methods.
   
@@ -211,7 +211,7 @@ public:
   
 private:
 
-  const TAO_Import_Attributes_Impl& attrs_;
+  const TAO_Import_Attributes_i& attrs_;
 };
 
 template <class IF>
@@ -219,7 +219,7 @@ class TAO_Link_Attributes : public virtual IF
 {
 public:
 
-  TAO_Link_Attributes (const TAO_Link_Attributes_Impl& attrs);
+  TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
 
   // = CosTrading::LinkAttributes methods
   virtual CosTrading::FollowOption max_link_follow_policy (CORBA::Environment &env)
@@ -227,7 +227,7 @@ public:
     
 private:
 
-  const TAO_Link_Attributes_Impl& attrs_;
+  const TAO_Link_Attributes_i& attrs_;
 };
 
   // *************************************************************

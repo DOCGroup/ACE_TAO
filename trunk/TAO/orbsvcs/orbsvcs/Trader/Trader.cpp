@@ -37,49 +37,49 @@ TAO_Trader_Base::~TAO_Trader_Base (void)
 {
 }
 
-TAO_Import_Attributes_Impl &
+TAO_Import_Attributes_i &
 TAO_Trader_Base::import_attributes (void)
 {
   return this->import_attributes_;
 }
 
-const TAO_Import_Attributes_Impl &
+const TAO_Import_Attributes_i &
 TAO_Trader_Base::import_attributes (void) const
 {
   return this->import_attributes_;
 }
 
-TAO_Support_Attributes_Impl &
+TAO_Support_Attributes_i &
 TAO_Trader_Base::support_attributes (void)
 {
   return this->support_attributes_;
 }
 
-const TAO_Support_Attributes_Impl &
+const TAO_Support_Attributes_i &
 TAO_Trader_Base::support_attributes (void) const
 {
   return this->support_attributes_;
 }
 
-TAO_Link_Attributes_Impl &
+TAO_Link_Attributes_i &
 TAO_Trader_Base::link_attributes (void)
 {
   return this->link_attributes_;
 }
 
-const TAO_Link_Attributes_Impl &
+const TAO_Link_Attributes_i &
 TAO_Trader_Base::link_attributes (void) const
 {
   return this->link_attributes_;
 }
 
-TAO_Trading_Components_Impl &
+TAO_Trading_Components_i &
 TAO_Trader_Base::trading_components (void)
 {
   return this->trading_components_;
 }
 
-const TAO_Trading_Components_Impl &
+const TAO_Trading_Components_i &
 TAO_Trader_Base::trading_components (void) const
 {
   return this->trading_components_;
@@ -114,8 +114,8 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   // Attribute Classes
   // *************************************************************
 
-TAO_Support_Attributes_Impl::
-TAO_Support_Attributes_Impl (TAO_Lockable &locker)
+TAO_Support_Attributes_i::
+TAO_Support_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
     supports_modifiable_properties_ (CORBA::B_TRUE),
     supports_dynamic_properties_ (CORBA::B_TRUE),
@@ -125,12 +125,12 @@ TAO_Support_Attributes_Impl (TAO_Lockable &locker)
 {
 }
 
-TAO_Support_Attributes_Impl::~TAO_Support_Attributes_Impl (void)
+TAO_Support_Attributes_i::~TAO_Support_Attributes_i (void)
 {
 }
 
 CORBA::Boolean
-TAO_Support_Attributes_Impl::supports_modifiable_properties (void) const
+TAO_Support_Attributes_i::supports_modifiable_properties (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CORBA::B_FALSE);
@@ -138,7 +138,7 @@ TAO_Support_Attributes_Impl::supports_modifiable_properties (void) const
 }
 
 void
-TAO_Support_Attributes_Impl::
+TAO_Support_Attributes_i::
 supports_modifiable_properties (CORBA::Boolean new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
@@ -146,7 +146,7 @@ supports_modifiable_properties (CORBA::Boolean new_value)
 }
 
 CORBA::Boolean
-TAO_Support_Attributes_Impl::supports_dynamic_properties (void) const
+TAO_Support_Attributes_i::supports_dynamic_properties (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CORBA::B_FALSE);
@@ -155,7 +155,7 @@ TAO_Support_Attributes_Impl::supports_dynamic_properties (void) const
 }
 
 void
-TAO_Support_Attributes_Impl::
+TAO_Support_Attributes_i::
 supports_dynamic_properties (CORBA::Boolean new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
@@ -163,7 +163,7 @@ supports_dynamic_properties (CORBA::Boolean new_value)
 }
 
 CORBA::Boolean
-TAO_Support_Attributes_Impl::supports_proxy_offers (void) const
+TAO_Support_Attributes_i::supports_proxy_offers (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CORBA::B_FALSE);
@@ -172,7 +172,7 @@ TAO_Support_Attributes_Impl::supports_proxy_offers (void) const
 }
 
 void
-TAO_Support_Attributes_Impl::
+TAO_Support_Attributes_i::
 supports_proxy_offers (CORBA::Boolean new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
@@ -180,7 +180,7 @@ supports_proxy_offers (CORBA::Boolean new_value)
 }
 
 CosTrading::TypeRepository_ptr
-TAO_Support_Attributes_Impl::type_repos (void) const
+TAO_Support_Attributes_i::type_repos (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::TypeRepository::_nil ());
@@ -188,7 +188,7 @@ TAO_Support_Attributes_Impl::type_repos (void) const
 }
 
 void
-TAO_Support_Attributes_Impl::
+TAO_Support_Attributes_i::
 type_repos (CosTrading::TypeRepository_ptr new_value)
 {
   CORBA::Environment _env;
@@ -200,14 +200,14 @@ type_repos (CosTrading::TypeRepository_ptr new_value)
 }
 
 CosTradingRepos::ServiceTypeRepository_ptr
-TAO_Support_Attributes_Impl::service_type_repos (void) const
+TAO_Support_Attributes_i::service_type_repos (void) const
 {
   return this->service_type_repos_.ptr ();
 }
 
 
-TAO_Import_Attributes_Impl::
-TAO_Import_Attributes_Impl (TAO_Lockable &locker)
+TAO_Import_Attributes_i::
+TAO_Import_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
     def_search_card_ (10),
     max_search_card_ (100),
@@ -224,19 +224,19 @@ TAO_Import_Attributes_Impl (TAO_Lockable &locker)
 }
 
 
-TAO_Import_Attributes_Impl::~TAO_Import_Attributes_Impl (void)
+TAO_Import_Attributes_i::~TAO_Import_Attributes_i (void)
 {
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::def_search_card (void) const
+TAO_Import_Attributes_i::def_search_card (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 10);
   return this->def_search_card_;
 }
 
 void
-TAO_Import_Attributes_Impl::def_search_card (CORBA::ULong new_value)
+TAO_Import_Attributes_i::def_search_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
@@ -247,14 +247,14 @@ TAO_Import_Attributes_Impl::def_search_card (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::max_search_card (void) const
+TAO_Import_Attributes_i::max_search_card (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 10);
   return this->max_search_card_;
 }
 
 void
-TAO_Import_Attributes_Impl::max_search_card (CORBA::ULong new_value)
+TAO_Import_Attributes_i::max_search_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
@@ -265,14 +265,14 @@ TAO_Import_Attributes_Impl::max_search_card (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::def_match_card (void) const
+TAO_Import_Attributes_i::def_match_card (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 10);
   return this->def_match_card_;
 }
 
 void
-TAO_Import_Attributes_Impl::def_match_card (CORBA::ULong new_value)
+TAO_Import_Attributes_i::def_match_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
@@ -283,14 +283,14 @@ TAO_Import_Attributes_Impl::def_match_card (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::max_match_card (void) const
+TAO_Import_Attributes_i::max_match_card (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 10);
   return this->max_match_card_;
 }
 
 void
-TAO_Import_Attributes_Impl::max_match_card (CORBA::ULong new_value)
+TAO_Import_Attributes_i::max_match_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->max_match_card_ = new_value;
@@ -300,14 +300,14 @@ TAO_Import_Attributes_Impl::max_match_card (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::def_return_card (void) const
+TAO_Import_Attributes_i::def_return_card (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 10);
   return this->def_return_card_;
 }
 
 void
-TAO_Import_Attributes_Impl::def_return_card (CORBA::ULong new_value)
+TAO_Import_Attributes_i::def_return_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
@@ -318,14 +318,14 @@ TAO_Import_Attributes_Impl::def_return_card (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::max_return_card (void) const
+TAO_Import_Attributes_i::max_return_card (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 10);
   return this->max_return_card_;
 }
 
 void
-TAO_Import_Attributes_Impl::max_return_card (CORBA::ULong new_value)
+TAO_Import_Attributes_i::max_return_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->max_return_card_ = new_value;
@@ -335,28 +335,28 @@ TAO_Import_Attributes_Impl::max_return_card (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::max_list (void) const
+TAO_Import_Attributes_i::max_list (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 0);
   return this->max_list_;
 }
 
 void
-TAO_Import_Attributes_Impl::max_list (CORBA::ULong new_value)
+TAO_Import_Attributes_i::max_list (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->max_list_ = new_value;
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::def_hop_count (void) const
+TAO_Import_Attributes_i::def_hop_count (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 0);
   return this->def_hop_count_;
 }
 
 void
-TAO_Import_Attributes_Impl::def_hop_count (CORBA::ULong new_value)
+TAO_Import_Attributes_i::def_hop_count (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
@@ -367,14 +367,14 @@ TAO_Import_Attributes_Impl::def_hop_count (CORBA::ULong new_value)
 }
 
 CORBA::ULong
-TAO_Import_Attributes_Impl::max_hop_count (void) const
+TAO_Import_Attributes_i::max_hop_count (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), 0);
   return this->max_hop_count_;
 }
 
 void
-TAO_Import_Attributes_Impl::max_hop_count (CORBA::ULong new_value)
+TAO_Import_Attributes_i::max_hop_count (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->max_hop_count_ = new_value;
@@ -384,14 +384,14 @@ TAO_Import_Attributes_Impl::max_hop_count (CORBA::ULong new_value)
 }
 
 CosTrading::FollowOption
-TAO_Import_Attributes_Impl::def_follow_policy (void) const
+TAO_Import_Attributes_i::def_follow_policy (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), CosTrading::local_only);
   return this->def_follow_policy_;
 }
 
 void
-TAO_Import_Attributes_Impl::def_follow_policy (CosTrading::FollowOption new_value)
+TAO_Import_Attributes_i::def_follow_policy (CosTrading::FollowOption new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
@@ -402,14 +402,14 @@ TAO_Import_Attributes_Impl::def_follow_policy (CosTrading::FollowOption new_valu
 }
 
 CosTrading::FollowOption
-TAO_Import_Attributes_Impl::max_follow_policy (void) const
+TAO_Import_Attributes_i::max_follow_policy (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (), CosTrading::local_only);
   return this->max_follow_policy_;
 }
 
 void
-TAO_Import_Attributes_Impl::max_follow_policy (CosTrading::FollowOption new_value)
+TAO_Import_Attributes_i::max_follow_policy (CosTrading::FollowOption new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->max_follow_policy_ = new_value;
@@ -419,7 +419,7 @@ TAO_Import_Attributes_Impl::max_follow_policy (CosTrading::FollowOption new_valu
 }
 
 
-TAO_Trading_Components_Impl::TAO_Trading_Components_Impl (TAO_Lockable &locker)
+TAO_Trading_Components_i::TAO_Trading_Components_i (TAO_Lockable &locker)
   : locker_ (locker),
     lookup_ (CosTrading::Lookup::_nil ()),
     register_ (CosTrading::Register::_nil ()),
@@ -429,12 +429,12 @@ TAO_Trading_Components_Impl::TAO_Trading_Components_Impl (TAO_Lockable &locker)
 {
 }
 
-TAO_Trading_Components_Impl::~TAO_Trading_Components_Impl (void)
+TAO_Trading_Components_i::~TAO_Trading_Components_i (void)
 {
 }
 
 CosTrading::Lookup_ptr
-TAO_Trading_Components_Impl::lookup_if (void) const
+TAO_Trading_Components_i::lookup_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Lookup::_nil ());
@@ -442,14 +442,14 @@ TAO_Trading_Components_Impl::lookup_if (void) const
 }
 
 void
-TAO_Trading_Components_Impl::lookup_if (CosTrading::Lookup_ptr new_value)
+TAO_Trading_Components_i::lookup_if (CosTrading::Lookup_ptr new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->lookup_ = new_value;
 }
 
 CosTrading::Register_ptr
-TAO_Trading_Components_Impl::register_if (void) const
+TAO_Trading_Components_i::register_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Register::_nil ());
@@ -457,14 +457,14 @@ TAO_Trading_Components_Impl::register_if (void) const
 }
 
 void
-TAO_Trading_Components_Impl::register_if (CosTrading::Register_ptr new_value)
+TAO_Trading_Components_i::register_if (CosTrading::Register_ptr new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->register_ = new_value;
 }
 
 CosTrading::Link_ptr
-TAO_Trading_Components_Impl::link_if (void) const
+TAO_Trading_Components_i::link_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Link::_nil ());
@@ -472,14 +472,14 @@ TAO_Trading_Components_Impl::link_if (void) const
 }
 
 void
-TAO_Trading_Components_Impl::link_if (CosTrading::Link_ptr new_value)
+TAO_Trading_Components_i::link_if (CosTrading::Link_ptr new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->link_ = new_value;
 }
 
 CosTrading::Proxy_ptr
-TAO_Trading_Components_Impl::proxy_if (void) const
+TAO_Trading_Components_i::proxy_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Proxy::_nil ());
@@ -487,14 +487,14 @@ TAO_Trading_Components_Impl::proxy_if (void) const
 }
 
 void
-TAO_Trading_Components_Impl::proxy_if (CosTrading::Proxy_ptr new_value)
+TAO_Trading_Components_i::proxy_if (CosTrading::Proxy_ptr new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->proxy_ = new_value;
 }
 
 CosTrading::Admin_ptr
-TAO_Trading_Components_Impl::admin_if (void) const
+TAO_Trading_Components_i::admin_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Admin::_nil ());
@@ -502,25 +502,25 @@ TAO_Trading_Components_Impl::admin_if (void) const
 }
 
 void
-TAO_Trading_Components_Impl::admin_if (CosTrading::Admin_ptr new_value)
+TAO_Trading_Components_i::admin_if (CosTrading::Admin_ptr new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->admin_ = new_value;
 }
 
 
-TAO_Link_Attributes_Impl::TAO_Link_Attributes_Impl (TAO_Lockable &locker)
+TAO_Link_Attributes_i::TAO_Link_Attributes_i (TAO_Lockable &locker)
   :locker_ (locker),
    max_link_follow_policy_ (CosTrading::local_only)
 {
 }
 
-TAO_Link_Attributes_Impl::~TAO_Link_Attributes_Impl (void)
+TAO_Link_Attributes_i::~TAO_Link_Attributes_i (void)
 {
 }
 
 CosTrading::FollowOption
-TAO_Link_Attributes_Impl::max_link_follow_policy (void) const
+TAO_Link_Attributes_i::max_link_follow_policy (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::local_only);
@@ -528,7 +528,7 @@ TAO_Link_Attributes_Impl::max_link_follow_policy (void) const
 }
 
 void
-TAO_Link_Attributes_Impl::max_link_follow_policy (CosTrading::FollowOption new_value)
+TAO_Link_Attributes_i::max_link_follow_policy (CosTrading::FollowOption new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->max_link_follow_policy_ = new_value;
@@ -695,9 +695,9 @@ TAO_Trader_Factory::manufacture_trader (void)
                       0);
     }
 
-  TAO_Import_Attributes_Impl import_attributes =
+  TAO_Import_Attributes_i import_attributes =
     return_value->import_attributes ();
-  TAO_Support_Attributes_Impl support_attributes =
+  TAO_Support_Attributes_i support_attributes =
     return_value->support_attributes ();
 
   import_attributes.def_search_card (this->def_search_card_);

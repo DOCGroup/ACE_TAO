@@ -6,7 +6,7 @@
 ACE_RCSID(ImplRepo, ir_simple_object_impl, "$Id$")
 
 // Constructor
-IR_Simple_Impl::IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
+IR_Simple_i::IR_Simple_i (CORBA::ORB_ptr orb_ptr,
                                 PortableServer::POA_ptr poa_ptr,
                                 CORBA::Object_ptr forward_to_ptr)
   : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
@@ -19,14 +19,14 @@ IR_Simple_Impl::IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
 
 // Destructor
 
-IR_Simple_Impl::~IR_Simple_Impl (void)
+IR_Simple_i::~IR_Simple_i (void)
 {
 }
 
 // Cube a long
 
 CORBA::Long
-IR_Simple_Impl::simple_method (CORBA::Long l, CORBA::Environment &env)
+IR_Simple_i::simple_method (CORBA::Long l, CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->forward_to_var_.in ()))
     {
@@ -66,11 +66,11 @@ IR_Simple_Impl::simple_method (CORBA::Long l, CORBA::Environment &env)
 
 // Shutdown.
 
-void IR_Simple_Impl::shutdown (CORBA::Environment &env)
+void IR_Simple_i::shutdown (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
-  ACE_DEBUG ((LM_DEBUG, "%s\n", "IR_Simple_Impl is shutting down"));
+  ACE_DEBUG ((LM_DEBUG, "%s\n", "IR_Simple_i is shutting down"));
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
