@@ -1,3 +1,8 @@
+Sun May 24 22:04:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Fixed some mistakes in previous change.
+
 Sat May 23 21:50:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h: 
