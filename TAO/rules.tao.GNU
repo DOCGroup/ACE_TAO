@@ -248,9 +248,9 @@ endif # use_flick = 1
 # minor and beta) to run, but applications with dependencies on libraries
 # with different minor or major or beta versions to fail.
 #
-TAO_MAJOR_VERSION := $(shell echo `perl -ne  'if (/TAO version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${TAO_ROOT}/VERSION`)
-TAO_MINOR_VERSION := $(shell echo `perl -ne  'if (/TAO version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${TAO_ROOT}/VERSION`)
-TAO_BETA_VERSION := $(shell echo `perl -ne  'if (/TAO version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${TAO_ROOT}/VERSION`)
+TAO_MAJOR_VERSION := $(shell echo `perl -ne  'if (/TAO_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${TAO_ROOT}/tao/Version.h`)
+TAO_MINOR_VERSION := $(shell echo `perl -ne  'if (/TAO_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${TAO_ROOT}/tao/Version.h`)
+TAO_BETA_VERSION := $(shell echo `perl -ne  'if (/TAO_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${TAO_ROOT}/tao/Version.h`)
 
 # Version number of the libraries
 #
