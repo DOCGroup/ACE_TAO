@@ -3,6 +3,24 @@
 
 // Malloc_T.i
 
+template <class T, class LOCK> void *
+ACE_Cached_Allocator<T, LOCK>::malloc (size_t nbytes)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > sizeof (T))
+    return NULL;
+
+  // addr() call is really not absolutely necessary because of the way
+  // ACE_Cached_Mem_Pool_Node_T's internal structure arranged.
+  return this->free_list_.remove ()->addr ();
+}
+
+template <class T, class LOCK> void
+ACE_Cached_Allocator<T, LOCK>::free (void * ptr)
+{
+  this->free_list_.add ((ACE_Cached_Mem_Pool_Node_T<T> *) ptr) ;
+}
+
 template <class MALLOC> ACE_INLINE void *
 ACE_Allocator_Adapter<MALLOC>::malloc (size_t nbytes)
 { 

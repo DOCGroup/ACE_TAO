@@ -11,6 +11,25 @@
 #include "ace/Malloc_T.i"
 #endif /* __ACE_INLINE__ */
 
+template <class T, class LOCK>
+ACE_Cached_Allocator<T, LOCK>::ACE_Cached_Allocator (size_t n_chunks)
+  : pool_ (0)
+{
+  ACE_NEW (this->pool_, T[n_chunks]);
+  // ERRNO could be lost because this is within ctor
+  
+  for (size_t c = 0 ; c < n_chunks ; c++)
+    this->free_list_.add (new (&this->pool_ [c]) ACE_Cached_Mem_Pool_Node_T<T>);
+  // put into free list using placement contructor, no real memory
+  // allocation in the above new
+}
+
+template <class T, class LOCK>
+ACE_Cached_Allocator<T, LOCK>::~ACE_Cached_Allocator (void)
+{
+  delete[] this->pool_;
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Malloc)
 
 template <class MALLOC>

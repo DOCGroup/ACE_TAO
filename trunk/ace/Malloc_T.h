@@ -20,6 +20,60 @@
 #include "ace/ACE.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
+#include "ace/Free_List.h"
+
+template <class T>
+class ACE_Cached_Mem_Pool_Node_T
+  // = TITLE
+  //    ACE_Cached_Mem_Pool_Node_T keeps unused memory within free
+  //    list Free list structure is kept within the memory being kept.
+  //    The length of a piece of unused memory must be greater than
+  //    sizeof (void*).  This makes sense because we'll waste even
+  //    more memory if we keep them in a separate data structure.
+  //    This class should really be placed within the next class
+  //    ACE_Cached_Allocator.  But, if you have read enough ACE
+  //    code, you know why this can't be done.
+{
+public:
+  T *addr (void) { return &this->obj_; }
+  // return the address of free memory
+
+  ACE_Cached_Mem_Pool_Node_T<T> *get_next (void) { return this->next_; }
+  // get the next Mem_Pool_Node
+
+  void  set_next (ACE_Cached_Mem_Pool_Node_T<T> * ptr) { this->next_ = ptr; }
+  // set the next Mem_Pool_Node 
+
+private:
+  union
+  {
+    T obj_;
+    ACE_Cached_Mem_Pool_Node_T<T> *next_;
+  } ;
+};
+
+template <class T, class LOCK>
+class ACE_Cached_Allocator : public ACE_New_Allocator
+{
+public:
+  ACE_Cached_Allocator (size_t n_chunks);
+  // Create a cached memory poll with <n_chunks> chunks 
+  // each with sizeof (TYPE) size.  
+
+  ~ACE_Cached_Allocator (void);
+  // clear things up
+
+  void* malloc (size_t);
+  // get a chunk of memory
+
+  void free (void *);
+  // return a chunk of memory
+
+private:
+  T *pool_;
+
+  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node_T<T>, LOCK> free_list_ (ACE_Locked_Free_List::ACE_PURE_FREE_LIST);
+};
 
 template <class MALLOC>
 class ACE_Allocator_Adapter : public ACE_Allocator
