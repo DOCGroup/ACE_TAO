@@ -878,15 +878,6 @@ enum MCAST_SERVICEID
 #define TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT "5000"
 #endif /* TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT */
 
-// By default SMART_PROXIES is disabled.
-# if !defined (TAO_HAS_SMART_PROXIES)
-#    define TAO_HAS_SMART_PROXIES 0
-#endif /*TAO_HAS_SMART_PROXIES*/
-
-// SMART PROXIES support is disabled by default.
-// To explicitly enable SMART_PROXIES support uncomment the following
-// #define TAO_HAS_SMART_PROXIES 1
-
 // This is the version of the FT_CORBA spec that TAO supports. The
 // exact use of this version has not been emphasised. But TAO would
 // get TaggedComponents for a group with version number. So, for the

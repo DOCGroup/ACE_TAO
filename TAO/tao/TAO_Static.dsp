@@ -675,10 +675,6 @@ SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Smart_Proxies.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
@@ -1260,10 +1256,6 @@ SOURCE=.\Services.i
 # Begin Source File
 
 SOURCE=.\Single_Reactor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Smart_Proxies.i
 # End Source File
 # Begin Source File
 
@@ -1908,10 +1900,6 @@ SOURCE=.\Single_Reactor.cpp
 # Begin Source File
 
 SOURCE=.\skip.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 

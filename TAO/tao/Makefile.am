@@ -125,7 +125,6 @@ ORB_CORE_FILES = \
   DynamicC.cpp \
   OctetSeqC.cpp \
   StringSeqC.cpp \
-  Smart_Proxies.cpp \
   ORB_Core.cpp \
   ORB_Table.cpp \
   Leader_Follower.cpp \
@@ -324,7 +323,6 @@ HEADER_FILES = \
   DynamicC.h \
   OctetSeqC.h \
   StringSeqC.h \
-  Smart_Proxies.h \
   ORB_Core.h \
   ORB_Table.h \
   Object.h \

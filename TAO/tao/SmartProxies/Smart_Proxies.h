@@ -23,23 +23,24 @@
 #define TAO_SMARTPROXIES_H
 #include "ace/pre.h"
 
+#include "smartproxies_export.h"
 #include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export TAO_Smart_Proxy_Base 
+class TAO_SmartProxies_Export TAO_Smart_Proxy_Base 
 {
   // = TITLE
-  //   TAO_Smart_Proxy_Base
+  //    TAO_Smart_Proxy_Base
   //
   // = DESCRIPTION
-  //   A base class for all TAO_IDL generated smart proxy base classes
-  //   Contains the _var pointer to the real proxy
+  //    A base class for all TAO_IDL generated smart proxy base classes
+  //    Contains the _var pointer to the real proxy
 	
 public:
-  virtual ~TAO_Smart_Proxy_Base(void);
+  virtual ~TAO_Smart_Proxy_Base (void);
   // Destructor
   
 protected:
@@ -52,7 +53,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "tao/Smart_Proxies.i"
+#include "Smart_Proxies.inl"
 #endif /* defined INLINE */
 
 #include "ace/post.h"

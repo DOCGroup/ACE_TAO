@@ -43,6 +43,8 @@
 #endif /* _MSC_VER */
 
 // Forward declarations of some data types are needed.
+enum IR_DefinitionKind;
+
 class IR_Contained;
 class IR_Contained_var;
 class IR_Contained_out;
@@ -318,9 +320,15 @@ class IR_AttributeDef_var;
 class IR_AttributeDef_out;
 typedef IR_AttributeDef *IR_AttributeDef_ptr;
 
+enum IR_AttributeMode;
+
 struct IR_AttributeDescription;
 class IR_AttributeDescription_var;
 class IR_AttributeDescription_out;
+
+enum IR_PrimitiveKind;
+
+enum IR_ParameterMode;
 
 struct IR_ParameterDescription;
 class IR_ParameterDescription_var;
@@ -338,6 +346,8 @@ class IR_OperationDef;
 class IR_OperationDef_var;
 class IR_OperationDef_out;
 typedef IR_OperationDef *IR_OperationDef_ptr;
+
+enum IR_OperationMode;
 
 struct IR_OperationDescription;
 class IR_OperationDescription_var;
@@ -450,45 +460,10 @@ TAO_NAMESPACE  IR
   typedef CORBA::String_out ContextIdentifier_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ContextIdentifier;
 
-  enum DefinitionKind
-    {
-        dk_none,
-        dk_all,
-        dk_Attribute,
-        dk_Constant,
-        dk_Exception,
-        dk_Interface,
-        dk_Module,
-        dk_Operation,
-        dk_Typedef,
-        dk_Alias,
-        dk_Struct,
-        dk_Union,
-        dk_Enum,
-        dk_Primitive,
-        dk_String,
-        dk_Sequence,
-        dk_Array,
-        dk_Repository,
-        dk_Wstring,
-        dk_Fixed,
-        dk_Value,
-        dk_ValueBox,
-        dk_ValueMember,
-        dk_Native,
-        dk_Component,
-        dk_Home,
-        dk_Factory,
-        dk_Finder,
-        dk_PrimaryKey,
-        dk_Emits,
-        dk_Publishes,
-        dk_Consumes,
-        dk_Provides,
-        dk_Uses
-    };
-  typedef DefinitionKind &DefinitionKind_out;
+  typedef IR_DefinitionKind DefinitionKind;
+  typedef IR_DefinitionKind &DefinitionKind_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DefinitionKind;
+
 
   typedef IR_Contained Contained;
   typedef IR_Contained *Contained_ptr;
@@ -819,12 +794,8 @@ TAO_NAMESPACE  IR
   typedef IR_ExcDescriptionSeq_out ExcDescriptionSeq_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExcDescriptionSeq;
 
-  enum AttributeMode
-  {
-    ATTR_NORMAL,
-    ATTR_READONLY
-  };
-  typedef AttributeMode &AttributeMode_out;
+  typedef IR_AttributeMode AttributeMode;
+  typedef IR_AttributeMode &AttributeMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeMode;
 
   typedef IR_AttributeDef AttributeDef;
@@ -838,49 +809,12 @@ TAO_NAMESPACE  IR
   typedef IR_AttributeDescription_out AttributeDescription_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeDescription;
 
-  enum PrimitiveKind
-  {
-    pk_null,
-    pk_void,
-    pk_short,
-    pk_long,
-    pk_ushort,
-    pk_ulong,
-    pk_float,
-    pk_double,
-    pk_boolean,
-    pk_char,
-    pk_octet,
-    pk_any,
-    pk_TypeCode,
-    pk_Principal,
-    pk_string,
-    pk_objref,
-    pk_longlong,
-    pk_ulonglong,
-    pk_longdouble,
-    pk_wchar,
-    pk_wstring,
-    pk_value_base
-  };
-  typedef PrimitiveKind &PrimitiveKind_out;
+  typedef IR_PrimitiveKind PrimitiveKind;
+  typedef IR_PrimitiveKind &PrimitiveKind_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimitiveKind;
 
-  enum OperationMode
-  {
-    OP_NORMAL,
-    OP_ONEWAY
-  };
-  typedef OperationMode &OperationMode_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationMode;
-
-  enum ParameterMode
-  {
-    PARAM_IN,
-    PARAM_OUT,
-    PARAM_INOUT
-  };
-  typedef ParameterMode &ParameterMode_out;
+  typedef IR_ParameterMode ParameterMode;
+  typedef IR_ParameterMode &ParameterMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
 
   typedef IR_ParameterDescription ParameterDescription;
@@ -903,6 +837,10 @@ TAO_NAMESPACE  IR
   typedef IR_OperationDef_var OperationDef_var;
   typedef IR_OperationDef_out OperationDef_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationDef;
+
+  typedef IR_OperationMode OperationMode;
+  typedef IR_OperationMode &OperationMode_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationMode;
 
   typedef IR_OperationDescription OperationDescription;
   typedef IR_OperationDescription_var OperationDescription_var;

@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_PortableServer.lib TAO_SmartProxies.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\SmartProxies" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Smart_Proxies server - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_PortableServerd.lib TAO_SmartProxiesd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\SmartProxies" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -124,7 +124,7 @@ InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -Gsp $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -163,7 +163,7 @@ InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -Gsp $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

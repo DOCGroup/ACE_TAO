@@ -1,4 +1,4 @@
-/* -*- C++ -*- Smart_Proxies.i */
+/* -*- C++ -*- */
 // $Id$
 
 ACE_INLINE

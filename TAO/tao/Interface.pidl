@@ -1,12 +1,9 @@
 //$Id$
 
 #pragma prefix "omg.org"
+
 module IR 
 {
-  typedef CORBA::Identifier Identifier;
-  typedef CORBA::ScopedName ScopedName;
-  typedef CORBA::RepositoryId RepositoryId;
-
   enum DefinitionKind 
   {
     dk_none, 
@@ -44,6 +41,28 @@ module IR
     dk_Provides, 
     dk_Uses
   };
+};
+
+module CORBA
+{
+  interface IRObject 
+  {
+    // read interface
+    readonly attribute IR::DefinitionKind def_kind;
+    // write interface
+    void destroy ();
+  };
+
+  typedef short Visibility;
+  const Visibility PRIVATE_MEMBER = 0;
+  const Visibility PUBLIC_MEMBER = 1;
+};
+
+module IR
+{
+  typedef string Identifier;
+  typedef string ScopedName;
+  typedef string RepositoryId;
 
   typedef string VersionSpec;
 
@@ -217,7 +236,7 @@ module IR
         in VersionSpec version,
         in InterfaceDefSeq base_interfaces,
         in boolean is_abstract,
-	in boolean is_local
+        in boolean is_local
       );
     ValueDef create_value (
         in RepositoryId id,
@@ -868,183 +887,4 @@ module IR
     boolean is_basic;
   };
 };
-
-module CORBA 
-{
-  typedef string Identifier;
-  typedef string ScopedName;
-  typedef string RepositoryId;
-
-  interface IRObject 
-  {
-    // read interface
-    readonly attribute DefinitionKind def_kind;
-    // write interface
-    void destroy ();
-  };
-
-// This just gets put in corbafwd.h.
-#if 0
-  enum TCKind 
-  { // PIDL
-    tk_null, tk_void,
-    tk_short, tk_long, tk_ushort, tk_ulong,
-    tk_float, tk_double, tk_boolean, tk_char,
-    tk_octet, tk_any, tk_TypeCode, tk_Principal, tk_objref,
-    tk_struct, tk_union, tk_enum, tk_string,
-    tk_sequence, tk_array, tk_alias, tk_except,
-    tk_longlong, tk_ulonglong, tk_longdouble,
-    tk_wchar, tk_wstring, tk_fixed,
-    tk_value, tk_value_box,
-    tk_native,
-    tk_abstract_interface,
-    tk_component, tk_home
-  };
-#endif /* 0 */
-
-  typedef short ValueModifier; // PIDL
-  const ValueModifier VM_NONE = 0;
-  const ValueModifier VM_CUSTOM = 1;
-  const ValueModifier VM_ABSTRACT = 2;
-  const ValueModifier VM_TRUNCATABLE = 3;
-  typedef short Visibility;
-  const Visibility PRIVATE_MEMBER = 0;
-  const Visibility PUBLIC_MEMBER = 1;
-
-// Not generated.
-#if 0
-  interface TypeCode 
-  { // PIDL
-    exception Bounds {};
-    exception BadKind {};
-    // for all TypeCode kinds
-    boolean equal (in TypeCode tc);
-    boolean equivalent(in TypeCode tc);
-    TypeCode get_compact_typecode();
-    TCKind kind ();
-    // for tk_objref, tk_struct, tk_union, tk_enum, tk_alias,
-    // tk_value, tk_value_box, tk_native, tk_abstract_interface,
-    // tk_except, tk_component, tk_home
-    RepositoryId id () raises (BadKind);
-    // for tk_objref, tk_struct, tk_union, tk_enum, tk_alias,
-    // tk_value, tk_value_box, tk_native, tk_abstract_interface
-    // tk_except, tk_component, tk_home
-    Identifier name () raises (BadKind);
-    // for tk_struct, tk_union, tk_enum, tk_value,
-    // and tk_except
-    unsigned long member_count () raises (BadKind);
-    Identifier member_name (in unsigned long index)
-      raises (BadKind, Bounds);
-    // for tk_struct, tk_union, tk_value, and tk_except
-    TypeCode member_type (in unsigned long index)
-      raises (BadKind, Bounds);
-    // for tk_union
-    any member_label (in unsigned long index)
-      raises (BadKind, Bounds);
-    TypeCode discriminator_type () raises (BadKind);
-    long default_index () raises (BadKind);
-    // for tk_string, tk_sequence, and tk_array
-    unsigned long length () raises (BadKind);
-    // for tk_sequence, tk_array, tk_value_box, and tk_alias
-    TypeCode content_type () raises (BadKind);
-    // for tk_fixed
-    unsigned short fixed_digits() raises (BadKind);
-    short fixed_scale() raises (BadKind);
-    // for tk_value
-    Visibility member_visibility(in unsigned long index)
-      raises(BadKind, Bounds);
-    ValueModifier type_modifier() raises(BadKind);
-    TypeCode concrete_base_type() raises(BadKind);
-  };
-#endif /* 0 */
-
-  // The TypeCode related part of interface ORB moved to
-  // the TypeCodeFactory interface.
-  // A reference to this interface can be obtained from
-  // resolve_initial_references with argument "TypeCodeFactory".
-  local interface TypeCodeFactory 
-  { // PIDL
-    TypeCode create_struct_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in StructMemberSeq members
-      );
-    TypeCode create_union_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in TypeCode discriminator_type,
-        in UnionMemberSeq members
-      );
-    TypeCode create_enum_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in EnumMemberSeq members
-      );
-    TypeCode create_alias_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in TypeCode original_type
-      );
-    TypeCode create_exception_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in StructMemberSeq members
-      );
-    TypeCode create_interface_tc (
-        in RepositoryId id,
-        in Identifier name
-      );
-    TypeCode create_string_tc (
-        in unsigned long bound
-      );
-    TypeCode create_wstring_tc (
-        in unsigned long bound
-      );
-    TypeCode create_fixed_tc (
-        in unsigned short digits,
-        in unsigned short scale
-      );
-    TypeCode create_sequence_tc (
-        in unsigned long bound,
-        in TypeCode element_type
-      );
-    TypeCode create_array_tc (
-        in unsigned long length,
-        in TypeCode element_type
-      );
-    TypeCode create_value_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in ValueModifier type_modifier,
-        in TypeCode concrete_base,
-        in ValueMemberSeq members
-      );
-    TypeCode create_value_box_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in TypeCode boxed_type
-      );
-    TypeCode create_native_tc (
-        in RepositoryId id,
-        in Identifier name
-      );
-    TypeCode create_recursive_tc (
-        in RepositoryId id
-      );
-    TypeCode create_abstract_interface_tc (
-        in RepositoryId id,
-        in Identifier name
-      );
-    TypeCode create_component_tc (
-        in RepositoryId id,
-        in Identifier name
-      );
-    TypeCode create_home_tc (
-        in RepositoryId id,
-        in Identifier name
-      );
-  };
-};
-
-#pragma prefix ""
 

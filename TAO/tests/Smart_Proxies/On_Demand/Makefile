@@ -12,8 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS  = -lTAO_PortableServer -lTAO
-ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
+LDLIBS  = -lTAO_PortableServer -lTAO_SmartProxies -lTAO
+ACE_SHLIBS = -lTAO_PortableServer -lTAO_SmartProxies -lTAO -lACE
 
 LIBNAME = libSmart_Test_Factory
 SHLIB_UNCHECKED   = $(LIBNAME).$(SOEXT)

@@ -87,7 +87,7 @@ private:
   CORBA::ORB_var orb_;
   // Storage of the ORB reference.
 
-  IR::Repository_var repo_;
+  IR_Repository_var repo_;
   // Storage of the IFR reference.
 };
 
