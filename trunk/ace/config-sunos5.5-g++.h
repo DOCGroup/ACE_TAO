@@ -56,9 +56,6 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
-// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-#define ACE_HAS_REENTRANT_FUNCTIONS
-
 // Denotes that GNU has cstring.h as standard
 // which redefines memchr()
 #define ACE_HAS_GNU_CSTRING_H
@@ -143,7 +140,7 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
-/* Turn off the following seven defines if you want to disable threading. */
+/* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 #define ACE_MT_SAFE 1
@@ -164,6 +161,11 @@
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
+
+/* end threading defines */
 
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 

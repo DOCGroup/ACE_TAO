@@ -1,3 +1,11 @@
+Wed Feb 25 21:41:50 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/poa.cpp,
+          tao/default_server.cpp: Fixed TAO by conditionally
+	  compiling the code that relies on the recursive mutexes
+	  and mutexes.  Thanks to Jim Penny <jpenny@universal-fasteners.com>
+	  for reporting this.
+
 Wed Feb 25 18:03:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 

@@ -37,45 +37,54 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
 ACE_Lock *
 TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
 {
-  ACE_Lock *thelock = 0;
+  ACE_Lock *the_lock = 0;
 
   switch (this->poa_lock_type_)
     {
     case TAO_THREAD_LOCK:
-      ACE_NEW_RETURN (thelock,
+#if defined (ACE_HAS_THREADS)
+      ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
                       0);
+#else
+      ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_THREADS */
       break;
     case TAO_NULL_LOCK:
-      ACE_NEW_RETURN (thelock,
+      ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Null_Mutex> (),
                       0);
       break;
     }
   
-  return thelock;// Just to make sure we return something
+  return the_lock;// Just to make sure we return something
 }
 
 ACE_Lock *
 TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
 {
-  ACE_Lock *thelock = 0;
+  ACE_Lock *the_lock = 0;
 
   switch (this->poa_mgr_lock_type_)
     {
     case TAO_THREAD_LOCK:
-      ACE_NEW_RETURN (thelock,
+#if defined (ACE_HAS_THREADS)
+      ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Thread_Mutex> (),
                       0);
       break;
+#else
+      ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_THREADS */
     case TAO_NULL_LOCK:
-      ACE_NEW_RETURN (thelock,
+      ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Null_Mutex> (),
                       0);
       break;
     }
   
-  return thelock;// Just to make sure we return something
+  // Just to make sure we return something.
+  return the_lock;
 }
 
 TAO_Object_Table_Impl *

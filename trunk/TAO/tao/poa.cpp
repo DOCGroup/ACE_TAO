@@ -3443,8 +3443,10 @@ template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Thread_Policy>;
 template class ACE_Lock_Adapter<ACE_Null_Mutex>;
+#if defined (ACE_HAS_THREADS)
 template class ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>;
 template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+#endif /* ACE_HAS_THREADS */
 template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
 template class ACE_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
@@ -3478,8 +3480,10 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Thread_Policy>
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
+#if defined (ACE_HAS_THREADS)
 #pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
 #pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+#endif /* ACE_HAS_THREADS */
 #pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>

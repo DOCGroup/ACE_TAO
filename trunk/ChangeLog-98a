@@ -1,4 +1,8 @@
-Wed Feb 25 18:49:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Wed Feb 25 21:41:36 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-sunos5.*.h: Moved the ACE_HAS_REENTRANT_FUNCTIONS
+ 	  into the section of #defines that should be commented out if
+ 	  we're not building a multi-threaded library.
 
 	* ace/Service_Config.cpp (open): Tightened up the comparison of
  	  the key with the ACE_DEFAULT_LOGGER_KEY to use string equality
