@@ -1,3 +1,15 @@
+Wed Mar 10 12:36:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Added code generator instantiations to handle multiple nested
+          modules.
+          
+        * CIDLC/cidlc.cpp:
+        
+          Fixed typo in usage message.
+
 Tue Mar  9 23:18:22 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tools/static_configurator/Static_Assembly_Parser.cpp: 
