@@ -292,7 +292,8 @@ public:
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the ReplicaLocator).
-  int init (PortableServer::POA_ptr root_poa);
+  void init (PortableServer::POA_ptr root_poa,
+             CORBA::Environment &ACE_TRY_ENV);
 
 private:
 

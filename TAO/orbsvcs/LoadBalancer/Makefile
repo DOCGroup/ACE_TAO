@@ -326,7 +326,12 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ReplicaInfo.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_PropertyManager.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_GenericFactory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ObjectGroupManager.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ObjectGroupManager.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Map.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Hash.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Hash.inl \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Equal_To.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Equal_To.inl
 
 .obj/LoadBalancer_Service.o .obj/LoadBalancer_Service.so .shobj/LoadBalancer_Service.o .shobj/LoadBalancer_Service.so: LoadBalancer_Service.cpp LoadBalancer.h \
  $(TAO_ROOT)/tao/ORB.h \
