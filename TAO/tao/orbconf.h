@@ -240,6 +240,7 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #define TAO_ENV_SINGLE_ARG_PARAMETER          ACE_ENV_SINGLE_ARG_PARAMETER
 #define TAO_ENV_ARG_NOT_USED                  ACE_ENV_ARG_NOT_USED
 #define TAO_ENV_RAISE(ex)                     ACE_ENV_RAISE(ex)
+#define TAO_ENV_DECLARE_NEW_ENV               ACE_DECLARE_NEW_CORBA_ENV
 //-------- end deprecated -------------------------------------------------
 
 // BC++ seems to have a different convention for detecting Win32 than

@@ -1,3 +1,8 @@
+Wed Jan 30 11:19:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Added backwards compatible macro define for TAO_ENV_DECLARE_NEW_ENV
+
 Wed Jan 30 07:39:09 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp
@@ -14,7 +19,7 @@ Tue Jan 29 17:13:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
           between the '#' and the 'pragma'. When the trailing '\n' of
           the pragma string is removed later on, it must be shifted
           this many places to the left, to skip over the characters
-          that have now become garbage. Thanks to Ossama Othman 
+          that have now become garbage. Thanks to Ossama Othman
           <ossama@doc.ece.uci.edu> for providing the KCC preprocessor
           output that showed the source of the problem.
 
