@@ -1,3 +1,21 @@
+Wed Jan  8 11:03:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+          Added explicit template instantiations used in the 
+          insertion/extraction operators.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+          Added code generation for explicit template instantiation
+          of template classes used in the Any operators.
+
 Wed Jan  8 10:53:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.cpp:

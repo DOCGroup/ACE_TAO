@@ -1118,3 +1118,118 @@ TAO::Any_Any_Impl::free_value (void)
 }
 
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO::Any_Special_Basic_Impl_T<
+      CORBA::Boolean, 
+      CORBA::Any::from_boolean,
+      CORBA::Any::to_boolean
+    >;
+
+template class TAO::Any_Special_Basic_Impl_T<
+      CORBA::Octet, 
+      CORBA::Any::from_octet,
+      CORBA::Any::to_octet
+    >;
+
+template class TAO::Any_Special_Basic_Impl_T<
+      char, 
+      CORBA::Any::from_char,
+      CORBA::Any::to_char
+    >;
+
+template class TAO::Any_Special_Basic_Impl_T<
+      CORBA::WChar, 
+      CORBA::Any::from_wchar,
+      CORBA::Any::to_wchar
+    >;
+
+template class TAO::Any_Special_Impl_T<
+      char, 
+      CORBA::Any::from_string,
+      CORBA::Any::to_string
+    >;
+
+template class TAO::Any_Special_Impl_T<
+      CORBA::WChar, 
+      CORBA::Any::from_wstring,
+      CORBA::Any::to_wstring
+    >;
+
+template class TAO::Any_Basic_Impl_T<CORBA::Short>;
+template class TAO::Any_Basic_Impl_T<CORBA::UShort>;
+template class TAO::Any_Basic_Impl_T<CORBA::Long>;
+template class TAO::Any_Basic_Impl_T<CORBA::ULong>;
+template class TAO::Any_Basic_Impl_T<CORBA::LongLong>;
+template class TAO::Any_Basic_Impl_T<CORBA::ULongLong>;
+template class TAO::Any_Basic_Impl_T<CORBA::Float>;
+template class TAO::Any_Basic_Impl_T<CORBA::Double>;
+template class TAO::Any_Dual_Impl_T<CORBA::Any>;
+template class TAO::Any_Impl_T<CORBA::TypeCode>;
+template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
+template class TAO::Any_Impl_T<CORBA::Any>;
+template class TAO::Any_Impl_T<char>;
+template class TAO::Any_Impl_T<CORBA::WChar>;
+template class TAO::Any_Impl_T<CORBA::Object>;
+template class TAO::Any_Impl_T<CORBA::AbstractBase>;
+template class TAO::Any_Impl_T<CORBA::ValueBase>;
+template class TAO::Any_Impl_T<CORBA::Any>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO::Any_Special_Basic_Impl_T<
+      CORBA::Boolean, 
+      CORBA::Any::from_boolean,
+      CORBA::Any::to_boolean
+    >
+
+#pragma instantiate TAO::Any_Special_Basic_Impl_T<
+      CORBA::Octet, 
+      CORBA::Any::from_octet,
+      CORBA::Any::to_octet
+    >
+
+#pragma instantiate TAO::Any_Special_Basic_Impl_T<
+      char, 
+      CORBA::Any::from_char,
+      CORBA::Any::to_char
+    >
+
+#pragma instantiate TAO::Any_Special_Basic_Impl_T<
+      CORBA::WChar, 
+      CORBA::Any::from_wchar,
+      CORBA::Any::to_wchar
+    >
+
+#pragma instantiate TAO::Any_Special_Impl_T<
+      char, 
+      CORBA::Any::from_string,
+      CORBA::Any::to_string
+    >
+
+#pragma instantiate TAO::Any_Special_Impl_T<
+      CORBA::WChar, 
+      CORBA::Any::from_wstring,
+      CORBA::Any::to_wstring
+    >
+
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Short>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::UShort>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Long>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::ULong>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::LongLong>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::ULongLong>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Float>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Double>
+#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Any>
+#pragma instantiate TAO::Any_Impl_T<CORBA::TypeCode>
+#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
+#pragma instantiate TAO::Any_Impl_T<CORBA::Any>
+#pragma instantiate TAO::Any_Impl_T<char>
+#pragma instantiate TAO::Any_Impl_T<CORBA::WChar>
+#pragma instantiate TAO::Any_Impl_T<CORBA::Object>
+#pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
+#pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
+#pragma instantiate TAO::Any_Impl_T<CORBA::Any>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
