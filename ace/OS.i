@@ -3355,13 +3355,15 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+#if 0
   int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     result = -1; // -1 means didn't get the mutex.
   else if (rw->ref_count_ != 1)
     {
-      // There were other readers, so we'll have to bail out.
+      // There were other readers, so we'll have to bail out without
+      // becoming upgrading to the write lock.
       errno = EBUSY;
       result = -1;
     }
@@ -3370,8 +3372,12 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
     // ourselves ahead of all other waiting writers.
     rw->ref_count_ = -1;
 
-  if (result != -1)
+  if (result != -1 || errno == EBUSY)
     ACE_OS::mutex_unlock (&rw->lock_);
+#else
+  errno = EBUSY;
+  return -1;
+#endif /* 0 */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
