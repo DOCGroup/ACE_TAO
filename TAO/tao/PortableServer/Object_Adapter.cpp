@@ -15,6 +15,7 @@
 // -- TAO Include --
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
+#include "tao/TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -1086,7 +1087,7 @@ TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (
   TAO_POA *&poa
   ACE_ENV_ARG_DECL)
 {
-  int result = 
+  int result =
     this->object_adapter_->persistent_poa_name_map_->find (system_name,
 							   poa);
   if (result != 0)

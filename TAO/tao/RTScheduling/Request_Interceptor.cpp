@@ -3,9 +3,15 @@
 #include "Request_Interceptor.h"
 #include "Current.h"
 #include "Distributable_Thread.h"
-#include "tao/ORB_Core.h"
+#include "tao/TSS_Resources.h"
 
-IOP::ServiceId
+
+ACE_RCSID (RTScheduling,
+           Request_Interceptor,
+           "$Id$")
+
+
+const IOP::ServiceId
 Client_Interceptor::SchedulingInfo = 30;
 
 Client_Interceptor::Client_Interceptor (void)
@@ -169,7 +175,9 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   if (current != 0)
     {
 
-      CORBA::Any_var ex = ri->received_exception ();
+      CORBA::Any_var ex =
+        ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
       CORBA::TypeCode_var type = ex->type ();
       const char * id = type->id ();
 
@@ -187,6 +195,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 	  // Perform the necessary cleanup as the
 	  // thread was cancelled.
 	  current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
 	}
       else
 	{
@@ -212,7 +221,7 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
 
   current = ACE_static_cast (TAO_RTScheduler_Current_i *,
-				  tss->rtscheduler_current_impl_);
+                             tss->rtscheduler_current_impl_);
   if (current != 0)
     current->scheduler ()->receive_other (ri);
 
@@ -231,7 +240,7 @@ Client_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-IOP::ServiceId
+const IOP::ServiceId
 Server_Interceptor::SchedulingInfo = 30;
 
 Server_Interceptor::Server_Interceptor (TAO_RTScheduler_Current_ptr current)

@@ -21,13 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ORB.h"
-#include "Environment.h"
-#include "Policy_Manager.h"
+//#include "ORB.h"
 #include "Resource_Factory.h"
 #include "params.h"
-#include "TAO_Singleton_Manager.h"
-#include "TAO_Singleton.h"
 #include "Adapter.h"
 #include "PolicyFactory_Registry.h"
 #include "Parser_Registry.h"
@@ -80,6 +76,9 @@ class TAO_Endpoint_Selector_Factory;
 class TAO_Service_Context;
 class TAO_POA_PortableGroup_Hooks;
 class TAO_Request_Dispatcher;
+class TAO_Policy_Set;
+class TAO_Policy_Manager;
+class TAO_Policy_Current;
 
 class TAO_Codeset_Manager;
 class TAO_IORInterceptor_List;
@@ -101,6 +100,11 @@ class TAO_ClientRequestInfo;
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
+
+namespace CORBA
+{
+  class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
+}
 
 // ****************************************************************
 
@@ -1099,7 +1103,7 @@ protected:
    *
    * Pointer to the ORB.
    */
-  CORBA::ORB_var orb_;
+  CORBA::ORB_ptr orb_;
 
   /// Object reference to the root POA.  It will eventually be the
   /// object reference returned by calls to
@@ -1427,85 +1431,11 @@ private:
 
 // ****************************************************************
 
-/**
- * @class TAO_TSS_Resources
- *
- * @brief The TSS resoures shared by all the ORBs
- *
- * This class is used by TAO to store the resources that are
- * thread-specific but are *not* ORB specific. The members are public
- * because only the ORB Core is expected to access them.
- */
-class TAO_Export TAO_TSS_Resources
-{
-public:
-
-  /// Constructor
-  TAO_TSS_Resources (void);
-
-  /// Destructor
-  ~TAO_TSS_Resources (void);
-
-private:
-
-  /// Do not copy TSS resources
-  //@{
-  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Resources(const TAO_TSS_Resources&))
-  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_TSS_Resources&))
-  //@}
-
-public:
-
-  /**
-   * Points to structure containing state for the current upcall
-   * context in this thread.  Note that it does not come from the
-   * resource factory because it must always be held in
-   * thread-specific storage.  For now, since TAO_ORB_Core instances
-   * are TSS singletons, we simply ride along and don't allocate
-   * occupy another TSS slot since there are some platforms where
-   * those are precious commodities (e.g., NT).
-   */
-  void *poa_current_impl_;
-
-  void *rtscheduler_current_impl_;
-
-  void *rtscheduler_previous_current_impl_;
-
-  /// The default environment for the thread.
-  CORBA::Environment *default_environment_;
-
-  /// If the user (or library) provides no environment the ORB_Core
-  /// still holds one.
-  CORBA::Environment tss_environment_;
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-  /// The initial PolicyCurrent for this thread. Should be a TSS
-  /// resource.
-  TAO_Policy_Current_Impl initial_policy_current_;
-
-  /// This pointer is reset by the POA on each upcall.
-  TAO_Policy_Current_Impl *policy_current_;
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-};
-
-/**
- * @todo TAO_TSS_RESOURCES singleton typedef should go away.
- */
-typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
-        TAO_TSS_RESOURCES;
-
-TAO_SINGLETON_DECLARE (TAO_TSS_Singleton,
-                       TAO_TSS_Resources,
-                       TAO_SYNCH_MUTEX)
-
-// ****************************************************************
-
 /// Obtain an instance of the first ORB core registered in the ORB
 /// table.
-TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
+
+// ****************************************************************
 
 #if defined (__ACE_INLINE__)
 # include "ORB_Core.i"

@@ -20,6 +20,8 @@
 #include "Sync_Strategies.h"
 #include "Buffering_Constraint_Policy.h"
 #include "debug.h"
+#include "Policy_Set.h"
+#include "Policy_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 

@@ -4,11 +4,13 @@
 #include "Direct_Object_Proxy_Impl.h"
 #include "ThruPOA_Object_Proxy_Impl.h"
 
+#include "tao/ORB_Core.h"
 #include "tao/Remote_Object_Proxy_Impl.h"
 
 
-ACE_RCSID (tao, TAO_Strategized_Object_Proxy_Broker, "$Id$")
-
+ACE_RCSID (PortableServer,
+           TAO_Strategized_Object_Proxy_Broker,
+           "$Id$")
 
 
 TAO_Strategized_Object_Proxy_Broker *

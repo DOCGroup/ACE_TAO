@@ -4,7 +4,7 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/ORB_Core.h"
+#include "tao/TSS_Resources.h"
 #include "tao/Environment.h"
 #include "tao/Buffering_Constraint_Policy.h"
 
