@@ -188,7 +188,7 @@ GIOP::send_message (CDR &stream,
 
       if (writelen == -1) 
 	{
-	  ACE_DEBUG ((LM_ERROR, "(%P|%t) OutgoingMessage::writebuf() %p\n"));
+	  ACE_DEBUG ((LM_ERROR, "(%P|%t) OutgoingMessage::writebuf() $p\n"));
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault\n", connection));
 	  ACE_OS::closesocket (connection);
 	  connection = ACE_INVALID_HANDLE;
@@ -677,12 +677,9 @@ GIOP::Invocation::start (CORBA_Environment &env)
     
   // Establish the connection and get back a Client_Connection_Handler
   if (con->connect (handler_, server_addr) == -1)
-    {
-      // @@ Need to figure out which exception to set...this one is
-      // pretty vague.
+    // @@ Need to figure out which exception to set...this one is
+    // pretty vague.
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_NO));
-      return;
-    }
 
   // Use the ACE_SOCK_Stream from the Client_Connection_Handler for
   // communication inplace of the endpoint used below.
