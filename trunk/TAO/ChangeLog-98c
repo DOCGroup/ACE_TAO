@@ -37,6 +37,11 @@ Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
           of impl->tasks () to RtecScheduler::handle_t to avoid signed/
           unsigned comparison.  Also, added a bunch of ACE_UNUSED_ARG (env)'s.
 
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (EC_Proxy::push,
+          Test_ECP::push): changed type of loop index "i" to u_int to
+          avoid signed/unsigned comparison.  Also, added an
+          ACE_UNUSED_ARG (env).
+
 Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/iiopobj.h,stub.h (operator =): added return type to avoid
