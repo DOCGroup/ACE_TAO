@@ -89,7 +89,7 @@ ACE_RCSID (util,
 #undef INCREMENT
 #define INCREMENT 64
 
-static long seen_once[INCREMENT] = {0};
+static long *pSeenOnce= 0;
 
 IDL_GlobalData::dsf::dsf (void)
   : interface_seen_ (0),
@@ -570,7 +570,7 @@ IDL_GlobalData::seen_include_file_before (char *n)
 
       if (ACE_OS::strcmp (tmp, incl) == 0)
         {
-          return seen_once[i]++;
+          return ++pSeenOnce[i];
         }
     }
 
@@ -581,13 +581,11 @@ IDL_GlobalData::seen_include_file_before (char *n)
 void
 IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
-  UTL_String **o_include_file_names;
-  unsigned long o_n_alloced_file_names;
-  unsigned long i;
-
   // Check if we need to store it at all or whether we've seen it already.
   if (this->seen_include_file_before (n->get_string ()))
     {
+      n->destroy ();
+      delete n; // Don't keep filenames we don't store!
       return;
     }
 
@@ -600,26 +598,32 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
           this->pd_n_alloced_file_names = INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
+          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
         }
       else
         {
-          o_include_file_names = this->pd_include_file_names;
-          o_n_alloced_file_names = this->pd_n_alloced_file_names;
+          UTL_String    **o_include_file_names=   this->pd_include_file_names;
+          unsigned long   o_n_alloced_file_names= this->pd_n_alloced_file_names;
+          long           *o_pSeenOnce=            pSeenOnce;
+
           this->pd_n_alloced_file_names += INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
+          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
 
-          for (i = 0; i < o_n_alloced_file_names; ++i)
+          for (unsigned long i = 0; i < o_n_alloced_file_names; ++i)
             {
               this->pd_include_file_names[i] = o_include_file_names[i];
+              pSeenOnce[i]= o_pSeenOnce[i];
             }
 
           delete [] o_include_file_names;
+          delete [] o_pSeenOnce;
         }
     }
 
   // Store it.
-  seen_once[this->pd_n_include_file_names] = 1;
+  pSeenOnce[this->pd_n_include_file_names] = 1;
   this->pd_include_file_names[this->pd_n_include_file_names++] = n;
 }
 
@@ -763,6 +767,8 @@ IDL_GlobalData::validate_included_idl_files (void)
                       continue;
                     }
 
+                  ACE_OS::fclose (test);
+
                   // This file name is valid.
                   valid_file = 1;
                   ++n_found;
@@ -801,6 +807,8 @@ IDL_GlobalData::validate_included_idl_files (void)
                             {
                               continue;
                             }
+
+                          ACE_OS::fclose (test);
 
                           // This file name is valid.
                           valid_file = 1;
