@@ -1,3 +1,8 @@
+Fri Nov  1 07:35:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Added the new
+	  MProfile_Connection_Timeout test to the daily regression tests. 
+
 Thu Oct 31 19:15:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/Attributes.h: Added the missing inclusion of
