@@ -147,6 +147,12 @@ libACE_OS_la_SOURCES = \
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
+  ACE_Init.cpp \
+  ACE_Flag_Manip.cpp \
+  ACE_Handle_Ops.cpp \
+  ACE_Lib_Find.cpp \
+  ACE_Sock_Connect.cpp \
+  Malloc_Instantiations.cpp \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
   ARGV.cpp \
@@ -304,6 +310,7 @@ libACE_Svcconf_la_SOURCES = \
   Service_Object.cpp \
   Service_Repository.cpp \
   Service_Types.cpp \
+  Service_Templates.cpp \
   Shared_Object.cpp \
   Svc_Conf_l.cpp \
   Svc_Conf_y.cpp
@@ -319,6 +326,8 @@ libACE_Streams_la_SOURCES = \
 libACE_Memory_la_SOURCES = \
   Based_Pointer_Repository.cpp \
   Malloc.cpp \
+  PI_Malloc.cpp \
+  Malloc_Allocator.cpp \
   Mem_Map.cpp \
   Memory_Pool.cpp \
   Obstack.cpp \
@@ -473,6 +482,11 @@ TEMPLATE_FILES = \
 
 HEADER_FILES = \
   ACE.h \
+  ACE_Init.h \
+  ACE_Flag_Manip.h \
+  ACE_Handle_Ops.h \
+  ACE_Lib_Find.h \
+  ACE_Sock_Connect.h \
   ACE_export.h \
   ARGV.h \
   ATM_Acceptor.h \
@@ -577,6 +591,8 @@ HEADER_FILES = \
   MEM_SAP.h \
   MEM_Stream.h \
   Malloc.h \
+  PI_Malloc.h \
+  Malloc_Allocator.h \
   Malloc_Base.h \
   Malloc_T.h \
   Managed_Object.h \
@@ -665,6 +681,7 @@ HEADER_FILES = \
   Service_Object.h \
   Service_Repository.h \
   Service_Types.h \
+  Service_Templates.h \
   Shared_Memory.h \
   Shared_Memory_MM.h \
   Shared_Memory_SV.h \
