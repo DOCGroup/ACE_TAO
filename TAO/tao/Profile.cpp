@@ -4,7 +4,7 @@
 #include "Profile.h"
 #include "Object_KeyC.h"
 
-#include "MessagingC.h"
+#include "Messaging_PolicyValueC.h"
 #include "Stub.h"
 #include "debug.h"
 #include "tao/target_specification.h"

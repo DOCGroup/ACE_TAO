@@ -1,7 +1,7 @@
 // $Id$
 
 #include "TestC.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/TAOC.h"
 #include "ace/Get_Opt.h"
 

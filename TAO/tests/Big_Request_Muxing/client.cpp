@@ -2,7 +2,7 @@
 
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 
 ACE_RCSID(Muxing, client, "$Id$")
 

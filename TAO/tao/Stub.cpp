@@ -20,7 +20,6 @@
 #include "Client_Strategy_Factory.h"
 #include "Sync_Strategies.h"
 #include "Buffering_Constraint_Policy.h"
-#include "Messaging_Policy_i.h"
 #include "debug.h"
 
 #include "ace/Auto_Ptr.h"

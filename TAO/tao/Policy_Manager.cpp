@@ -8,7 +8,6 @@
 #include "tao/ORB_Core.h"
 
 #include "tao/Buffering_Constraint_Policy.h"
-#include "tao/Messaging_Policy_i.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Manager.i"

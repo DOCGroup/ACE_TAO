@@ -18,7 +18,6 @@
 #include "Endpoint.h"
 #include "Base_Transport_Property.h"
 
-#include "Messaging_Policy_i.h"
 #include "GIOP_Utils.h"
 #include "ORB_Core.h"
 #include "Pluggable_Messaging_Utils.h"

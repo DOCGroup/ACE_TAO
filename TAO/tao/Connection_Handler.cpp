@@ -5,7 +5,6 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Object.h"
-#include "tao/Messaging_Policy_i.h"
 #include "Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)

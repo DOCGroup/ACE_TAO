@@ -6,7 +6,7 @@
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h" // @@ MSVC 6 bug
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
