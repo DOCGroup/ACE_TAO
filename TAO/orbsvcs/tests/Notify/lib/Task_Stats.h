@@ -59,7 +59,7 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   static double diff_sec (ACE_UINT64 before, ACE_UINT64 after);
 
   /// Useful helper to calculate diff in usec.
-  static ACE_UINT32 diff_usec (ACE_UINT64 before, ACE_hrtime_t after);
+  static ACE_UINT32 diff_usec (ACE_UINT64 before, ACE_UINT64 after);
 
   /// Set the base time value.
   void base_time (ACE_hrtime_t time);
