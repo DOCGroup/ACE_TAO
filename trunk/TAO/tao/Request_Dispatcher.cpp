@@ -22,6 +22,5 @@ TAO_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                            request,
                                            forward_to
                                            TAO_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
-
