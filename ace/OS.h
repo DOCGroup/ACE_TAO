@@ -19,7 +19,7 @@
 #include "ace/config-all.h"
 
 #if defined (ACE_HAS_VIRTUAL_TIME)
-#include <sys/times.h>
+#include /**/ <sys/times.h>
 #endif /*ACE_HAS_VIRTUAL_TIME*/
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
