@@ -1,3 +1,41 @@
+Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * tao/ORB.cpp:  Changed resolve_implrepo_service () to work 
+          correctly with the ACE CORBA macros.
+
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Generic_Factory.cpp:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Quoter/client.cpp:
+        * examples/Quoter/server.cpp:
+        * examples/Simple/time/Time_Client_i.cpp: 
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp: 
+          Fixed some bugs with using old print_exception method instead of 
+          ACE_PRINT_EXCEPTION.
+
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp: Removed the
+          clearing of the ACE_TRY_ENV in get_planes ().
+
+        * examples/Quoter/client.h:  Made sure the ORB_var member variable
+          appears before any other var's in the Quoter_Client class.
+
+        * tao/TAO.dsp:
+        * TAO_IDL/tao_idl.dsp:
+        * tao/TAO_Static.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Manually cleaned up these projects and fixed them so they should
+          work on NT Alpha again.
+
+        * TAOACE.dsw:
+          Fixed dependencies.
+
+        * orbsvcs/orbsvcs/IR_Helper.cpp:
+        * orbsvcs/orbsvcs/IR_Helper.h:
+          Changed the constructor to take in a const char * instead of a char *
+          so literals can be passed in without warnings.
+
 Tue Jun 29 19:48:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/OBV/Simple_util.cpp:
