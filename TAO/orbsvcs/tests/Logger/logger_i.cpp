@@ -1,13 +1,12 @@
 // $Id$
 
-#include "ace/streams.h"
 #include "ace/ACE.h"
 #include "orbsvcs/LoggerC.h"
 #include "logger_i.h"
 
-Logger_ptr 
+Logger_ptr
 Logger_Factory_i::make_logger (const char* name,
-			       CORBA::Environment &_env) 
+                               CORBA::Environment &_env)
 {
   Logger_i *l = new Logger_i (name);
   return l->_this (_env);
@@ -27,7 +26,7 @@ Logger_i::~Logger_i (void)
   ACE_OS::free (this->name_);
 }
 
-void 
+void
 Logger_i::log (const char* message, CORBA::Environment &_env)
 {
 }
