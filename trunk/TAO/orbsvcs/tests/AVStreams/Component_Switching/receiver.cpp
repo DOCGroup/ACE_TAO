@@ -4,16 +4,60 @@
 #include "ace/Get_Opt.h"
 
 static FILE *output_file = 0;
-// File handle of the file into which received data is written.
+/// File handle of the file into which received data is written.
 
+Connection_Manager *connection_manager;
 int
 Receiver_StreamEndPoint::get_callback (const char *,
                                        TAO_AV_Callback *&callback)
 {
-  // Return the receiver application callback to the AVStreams for
-  // future upcalls.
+  /// Return the receiver application callback to the AVStreams for
+  /// future upcalls.
   callback = &this->callback_;
   return 0;
+}
+
+CORBA::Boolean 
+Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec,
+						      CORBA::Environment &)
+{
+  ACE_DEBUG ((LM_DEBUG,
+	      "In Handle Conection Requested \n"));	     
+  
+  for (CORBA::ULong i = 0;
+       i < flowspec.length ();
+       i++)
+    {
+      TAO_Forward_FlowSpec_Entry entry;
+      entry.parse (flowspec[i].in ());
+      
+      ACE_DEBUG ((LM_DEBUG,
+		  "Handle Conection Requested flowname %s \n",
+		  entry.flowname ()));	     
+      
+      ACE_CString flowname (entry.flowname ());
+        
+      int result =
+	connection_manager->streamctrls ().find (flowname);
+      
+      /// If the flowname is found.
+      if (result == 0)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "\nDistributer switching senders handle connection requested\n\n"));
+	  
+	  ///Destroy old stream with the same flowname.
+	  
+	  connection_manager->destroy (flowname);
+	  
+	}
+      
+      /// Store the related streamctrl.
+      connection_manager->add_streamctrl (flowname.c_str (),
+					 this);
+      
+    }
+  return 1;
+  
 }
 
 Receiver_Callback::Receiver_Callback (void)
@@ -26,24 +70,24 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
                                   const ACE_Addr &)
 {
-  //
-  // Upcall from the AVStreams when there is data to be received from
-  // the sender.
-  //
+  ///
+  /// Upcall from the AVStreams when there is data to be received from
+  /// the sender.
+  ///
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
   while (frame != 0)
     {
-      // Write the received data to the file.
-      size_t result =
+      /// Write the received data to the file.
+      int result =
         ACE_OS::fwrite (frame->rd_ptr (),
                         frame->length (),
                         1,
                         output_file);
 
-      if (result == frame->length ())
+      if (result == (signed) frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -71,25 +115,27 @@ Receiver::init (int,
                 char **,
                 CORBA::Environment &ACE_TRY_ENV)
 {
-  // Initialize the endpoint strategy with the orb and poa.
+  /// Initialize the endpoint strategy with the orb and poa.
   int result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
     return result;
 
-  // Initialize the connection manager.
+  /// Initialize the connection manager.
   result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
     return result;
 
-  // Register the receiver mmdevice object with the ORB
+  connection_manager = &this->connection_manager_;
+  
+  /// Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
                   -1);
 
-  // Servant Reference Counting to manage lifetime
+  /// Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
     this->mmdevice_;
 
@@ -97,14 +143,14 @@ Receiver::init (int,
     this->mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Bind to sender.
+  /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->receiver_name_,
                                             mmdevice.in (),
                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Connect to the sender.
+  /// Connect to the sender.
   this->connection_manager_.connect_to_sender (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -115,7 +161,7 @@ int
 Receiver::parse_args (int argc,
                       char **argv)
 {
-  // Parse the command line arguments
+  /// Parse the command line arguments
   ACE_Get_Opt opts (argc,
                     argv,
                     "f:s:r:");
@@ -157,7 +203,7 @@ main (int argc,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Initialize the ORB first.
+      /// Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
@@ -170,7 +216,7 @@ main (int argc,
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Get the POA_var object from Object_var.
+      /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in (),
                                       ACE_TRY_ENV);
@@ -183,7 +229,7 @@ main (int argc,
       mgr->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Initialize the AVStreams components.
+      /// Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in (),
                                       ACE_TRY_ENV);
@@ -196,7 +242,7 @@ main (int argc,
       if (result == -1)
         return -1;
 
-      // Make sure we have a valid <output_file>
+      /// Make sure we have a valid <output_file>
       output_file =
         ACE_OS::fopen (receiver.output_file_name ().c_str (),
                        "w");
@@ -222,7 +268,7 @@ main (int argc,
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Hack for now....
+      /// Hack for now....
       ACE_OS::sleep (1);
 
       orb->destroy (ACE_TRY_ENV);
