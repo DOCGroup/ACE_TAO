@@ -1,0 +1,28 @@
+// $Id$ 
+project(RobotAssembly_stub): ciao_client_dnc {
+
+  sharedname = RobotAssembly_stub
+  idlflags += -Wb,stub_export_macro=ROBOTASSEMBLY_STUB_Export -Wb,stub_export_include=RobotAssembly_stub_export.h -Wb,skel_export_macro=ROBOTASSEMBLY_SVNT_Export -Wb,skel_export_include=RobotAssembly_svnt_export.h
+  dynamicflags   = ROBOTASSEMBLY_STUB_BUILD_DLL
+
+  IDL_Files {
+    Robot_Base.idl
+  }
+
+  Source_Files {
+    Robot_BaseC.cpp
+  }
+}
+
+project(RobotAssembly_svnt) : ciao_server_dnc {
+  after +=  ROBOTASSEMBLY_stub
+  sharedname = RobotAssembly_svnt
+  libs    += RobotAssembly_stub
+
+  idlflags  += -Wb,export_macro=ROBOTASSEMBLY_SVNT_Export -Wb,export_include=ROBOTASSEMBLY_SVNT_export.h
+  dynamicflags = ROBOTASSEMBLY_SVNT_BUILD_DLL
+
+  Source_Files {
+    Robot_BaseS.cpp
+  }
+}
