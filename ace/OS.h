@@ -26,11 +26,6 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_UINT64_FORMAT_SPECIFIER)
-// At least for Win32 - MSVC compiler (ver. 5)
-#define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
-#endif /* ACE_UINT64_FORMAT_SPECIFIER */
-
 // Get OS.h to compile on some of the platforms without DIR info yet.
 # if !defined (ACE_HAS_DIRENT)
     typedef int DIR;
@@ -5876,7 +5871,7 @@ private:
 #   else
     // I know this works for HP aC++... if <stdexcept> is used, it
     // introduces other stuff that breaks things, like <memory>, which
-    // screws up auto_ptr. 
+    // screws up auto_ptr.
 #     include /**/ <new>
 #     define ACE_bad_alloc bad_alloc
 #   endif /* __SUNPRO_CC */
