@@ -1,3 +1,8 @@
+Thu May 25 11:09:24 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Smart_Proxies/client.cpp
+          Corrected the 'i' option in the parse_args function.
+
 Wed May 24 20:48:51 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile: 
