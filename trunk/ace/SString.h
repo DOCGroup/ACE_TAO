@@ -142,7 +142,7 @@ class ACE_Export ACE_SString
   //   ACE_Allocator with a persistable memory pool
 {
 public:
-  ACE_SString (ACE_Allocator *allocator = 0);
+  ACE_SString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
   ACE_SString (const char *s, ACE_Allocator *alloc = 0);
