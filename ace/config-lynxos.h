@@ -12,7 +12,13 @@
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
+
+# if __GNUC_MINOR__ == 7
+    // The g++ that's distributed with LynxOS 3.0.0 needs this.
+#   undef ACE_HAS_TEMPLATE_SPECIALIZATION
+# endif /* __GNUC_MINOR__ == 7 */
 #endif /* __GNUG__ */
+
 
 #define ACE_HAS_STRING_CLASS
 
