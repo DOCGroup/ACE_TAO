@@ -39,7 +39,6 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/Synch.h"
 
-//class TAO_UIOP_Client_Connection_Handler;
 
 // TAO UIOP_Profile concrete Profile definitions
 class TAO_Strategies_Export TAO_UIOP_Profile : public TAO_Profile

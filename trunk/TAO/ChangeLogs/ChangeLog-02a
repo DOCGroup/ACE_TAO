@@ -1,3 +1,16 @@
+Wed Feb 14 13:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Profile.h: 
+	* tao/IIOP_Endpoint.h:
+	* tao/IIOP_Endpoint.i:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Endpoint.h:
+	* tao/Strategies/UIOP_Endpoint.i:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.i: Removed the references to the
+	  obsolete Client_Connection_Handlers. 
+
 Wed Feb 14 09:50:18 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/IIOP_Acceptor.cpp:
