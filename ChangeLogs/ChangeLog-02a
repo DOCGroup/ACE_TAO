@@ -1,3 +1,13 @@
+Wed May  9 14:03:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): Use the new ACE_VMIN and ACE_VTIME
+	  macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+ 	  suggesting this.	
+
+	* ace/OS.h: Added support for the new ACE_VMIN and ACE_VTIME 
+	  macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de>
+	  for suggesting this.
+
 Wed May  9 14:25:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Darren Griffith <darren.griffith@esecurityinc.com>
@@ -53,6 +63,22 @@ Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+<<<<<<< ChangeLog
+        * ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
+          match those in standard POSIX.  Thanks to Gonzalo Diethelm
+          <Gonzalo.Diethelm@sonda.com> for reporting this.
+  
+Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+        * ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
+          users to control whether wide character strings use the "L"
+          prefix via their config.h files.  Thanks to Albert Wijnja for
+          this fix.
+
+        * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
+          <ACE_HANDLE> so this will work properly on Win32 platforms.
+          Thanks to Johnny Willemsen for reporting the problem.
+=======
 	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
 	  users to control whether wide character strings use the "L"
  	  prefix via their config.h files.  Thanks to Albert Wijnja for
@@ -61,6 +87,7 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* examples/Misc/test_read_buffer.cpp (main): Changed <int> to
 	  <ACE_HANDLE> so this will work properly on Win32 platforms.
 	  Thanks to Johnny Willemsen for reporting the problem.
+>>>>>>> 4.1974
 
         * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
           Thanks to Johnny Willemsen for reporting the problem.  
