@@ -15,6 +15,8 @@ TAO_Pluggable_Reply_Params::TAO_Pluggable_Reply_Params (
                               ACE_CDR::DEFAULT_BUFSIZE
                             ),
                 TAO_ENCAP_BYTE_ORDER,
+                TAO_DEF_GIOP_MAJOR,
+                TAO_DEF_GIOP_MINOR,
                 orb_core)
 {
 }

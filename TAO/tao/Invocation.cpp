@@ -116,6 +116,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                 TAO_DEF_GIOP_MAJOR,
+                 TAO_DEF_GIOP_MINOR,
                  orb_core->to_iso8859 (),
                  orb_core->to_unicode ()),
     orb_core_ (orb_core),
@@ -258,6 +260,10 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
       const TAO_GIOP_Message_Version& version = this->profile_->version ();
       result = this->transport_->messaging_init (version.major,
                                                      version.minor);
+
+      // Set the giop version of the out stream
+      this->out_stream_.set_version (version.major, version.minor);
+
       if (result == -1)
         {
           if (TAO_debug_level > 0)
@@ -875,7 +881,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       // If we couldn't find the right exception, report it as
       // CORBA::UNKNOWN.
 
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_OMG_VMCID | 1,
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
@@ -956,7 +962,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
       // This kind of exception shouldn't happen with oneways,
       // but if it does, we turn it into a CORBA::UNKNOWN exception.
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_OMG_VMCID | 1,
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
@@ -1021,7 +1027,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
         // This kind of exception shouldn't happen with oneways,
         // but if it does, we turn it into a CORBA::UNKNOWN exception.
-        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_OMG_VMCID | 1,
+        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_YES),
                           TAO_INVOKE_EXCEPTION);
       }
