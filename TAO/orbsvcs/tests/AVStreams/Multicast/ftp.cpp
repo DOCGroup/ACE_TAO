@@ -40,7 +40,7 @@ FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manag
 
 void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
-                                  void *&arg)
+                                  void *&)
 {
   ACE_Time_Value *timeout;
   ACE_NEW (timeout,
@@ -49,7 +49,7 @@ FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
 }
 
 int
-FTP_Client_Callback::handle_timeout (void *arg)
+FTP_Client_Callback::handle_timeout (void *)
 {
   ACE_Message_Block mb (BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
@@ -92,7 +92,7 @@ FTP_Client_Callback::handle_timeout (void *arg)
 }
 
 int
-FTP_Client_StreamEndPoint::get_callback (const char *flowname,
+FTP_Client_StreamEndPoint::get_callback (const char *,
                                          TAO_AV_Callback *&callback)
 {
 //   ACE_Time_Value timeout (2);
@@ -219,6 +219,7 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
   return 0;
 }
 
+int
 Client::parse_args (int argc,
                     char **argv)
 {
