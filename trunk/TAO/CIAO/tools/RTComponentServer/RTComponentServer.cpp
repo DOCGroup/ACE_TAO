@@ -126,7 +126,7 @@ main (int argc, char **argv)
 
       // Make sure we can support multiple priorities that are required
       // for this test.
-      check_supported_priorities (orb.in());
+      // check_supported_priorities (orb.in());
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
