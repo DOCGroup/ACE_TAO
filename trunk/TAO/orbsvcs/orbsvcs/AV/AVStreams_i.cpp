@@ -16,6 +16,7 @@
 // ============================================================================
 
 #include "AVStreams_i.h"
+#include "orbsvcs/Trader/Trader.h"
 
 ACE_RCSID(AV, AVStreams_i, "$Id$")
 
@@ -1715,15 +1716,15 @@ TAO_FDev::destroy (AVStreams::FlowEndPoint_ptr the_ep,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class  ACE_Hash_Map_Entry <TAO_String_Hash_Key,CORBA::Object_ptr>;
 template class  ACE_Hash_Map_Manager <TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
-template class  ACE_Hash_Map_Entry <TAO_String_Hash_key,CORBA::Object_ptr>;
-template class  ACE_Hash_Map_Iterator_Base<TAO_String_Hash_key,CORBA::Object_ptr,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_key,CORBA::Object_ptr,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_key,CORBA::Object_ptr,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
+template class  ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Entry <TAO_String_Hash_Key,CORBA::Object_ptr>
 #pragma instantiate ACE_Hash_Map_Manager <TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry <TAO_String_Hash_key,CORBA::Object_ptr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_key,CORBA::Object_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_key,CORBA::Object_ptr,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_key,CORBA::Object_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
