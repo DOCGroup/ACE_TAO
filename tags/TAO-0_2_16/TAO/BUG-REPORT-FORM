@@ -1,0 +1,39 @@
+[Please use the form below to submit bug reports, problem
+ reports, etc., to the TAO developers and interested users.
+ Send to ace-users@cs.wustl.edu.
+
+ Replace/remove all the explanatory text in brackets before mailing.
+
+ PLEASE make your Subject: line as descriptive as possible.
+ Subjects like "TAO bug" or "bug report" are not helpful!
+ Also, do _not_ include the word "help" in the Subject!]
+
+8<----------8<----------8<----------8<----------8<----------8<----------8<----
+
+To: ace-users@cs.wustl.edu
+Subject: [area]: [synopsis]
+
+    TAO VERSION: 0.2.16
+    ACE VERSION: 4.5.44
+
+    HOST MACHINE and OPERATING SYSTEM:
+    TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
+    COMPILER NAME AND VERSION:
+
+    AREA/CLASS/EXAMPLE AFFECTED:
+[what example failed?  What module failed to compile?]
+
+    SYNOPSIS:
+[Brief description of the problem]
+
+    DESCRIPTION:
+[Detailed description of problem.  Don't just say "<blah>
+doesn't work, here's a fix," explain what your program does
+to get to the <blah> state. ]
+
+    REPEAT BY:
+[What you did to get the error; include test program or session
+transcript if at all possible.  ]
+
+    SAMPLE FIX/WORKAROUND:
+[If available ]
