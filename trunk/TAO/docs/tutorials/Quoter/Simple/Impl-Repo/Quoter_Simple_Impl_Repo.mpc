@@ -1,4 +1,5 @@
 project(*client) : taoexe, portableserver, rtevent, naming  {
+  lib += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
   requires += exceptions
@@ -9,6 +10,7 @@ project(*client) : taoexe, portableserver, rtevent, naming  {
 }
 
 project(*server) : taoexe, portableserver, rtevent, naming {
+  lib += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
   requires += exceptions
