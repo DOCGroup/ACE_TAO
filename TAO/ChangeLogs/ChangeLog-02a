@@ -50,6 +50,10 @@ Fri May 12 12:13:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Addition of varbase.h and some missing generated .i files to the
 	  projects.
 
+	  This closes out [BUGID:562]. Thanks to Carlos for his help. And
+	  thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for reporting
+	  this bug.
+
 Fri May 12 09:17:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Param_Test/any.cpp:
