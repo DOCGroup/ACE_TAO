@@ -1,3 +1,12 @@
+Sat Apr 29 16:15:29 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/autoconf_compile:
+	* bin/autoconf_compile_wrapper:
+
+	  The ACE+autoconf counterparts to the auto_compile* scripts.
+	  These scripts are used to run automatic builds of the ACE's
+	  autoconf support.
+
 Sat Apr 29 15:59:53 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (HEADER_FILES):
