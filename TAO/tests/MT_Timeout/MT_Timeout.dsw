@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AMI_Test_Client"=..\AMI\AMI_Test_Client.dsp - Package Owner=<4>
+Project: "MT Timeout Client"=.\MT_Timeout_Client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,19 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT Timeout Client"=".\MT Timeout Client.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "MT Timeout Server"=".\MT Timeout Server.dsp" - Package Owner=<4>
+Project: "MT Timeout Server"=.\MT_Timeout_Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
