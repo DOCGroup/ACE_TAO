@@ -1,3 +1,11 @@
+Fri May 23 06:17:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp: Left
+	  overs from the previous checkin.
+
 Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  This checkin is for fixing a problem with thread-per-connection
