@@ -1,3 +1,9 @@
+Thu Apr 25 03:34:43 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/MT_Reactor_Upcall_Test.cpp: Changed the test such that the
+	  end of the test is indicated by a shutdown message rather than
+	  an explicit message count.
+
 Wed Apr 24 23:39:00 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor: Updated file names to match
