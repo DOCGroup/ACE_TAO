@@ -25,7 +25,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
 #if (TAO_HAS_RT_CORBA == 1)
 
   // Obtains correct selector if TAO::Client_Priority_Policy is
-  // enabled. 
+  // enabled.
   this->check_client_priority_policy (invocation,
                                       ACE_TRY_ENV);
   ACE_CHECK;
@@ -46,7 +46,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
     // Priority model not set.
     {
      // Bands without priority model do not make sense.
-      if (invocation->endpoint_selection_state_.bands_policy_ 
+      if (invocation->endpoint_selection_state_.bands_policy_
           != 0)
         ACE_THROW (CORBA::INV_POLICY ());
 
@@ -60,9 +60,9 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
             invocation->orb_core_->protocol_endpoint_selector ();
         }
       return;
-    }    
+    }
 
-  if (priority_policy->get_priority_model () 
+  if (priority_policy->get_priority_model ()
       == RTCORBA::CLIENT_PROPAGATED)
     // CLIENT_PROPAGATED priority model.
     {
@@ -71,7 +71,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
           (invocation->endpoint_selection_state_.client_priority_)
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1,
-                                           CORBA::COMPLETED_NO));      
+                                           CORBA::COMPLETED_NO));
       if (invocation->endpoint_selection_state_.client_protocol_policy_
           == 0)
         invocation->endpoint_selector_ =
@@ -81,7 +81,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
           invocation->orb_core_->priority_protocol_selector ();
     }
   else
-    { 
+    {
       // SERVER_DECLARED priority model.
       if (invocation->endpoint_selection_state_.client_protocol_policy_
           == 0)
@@ -96,13 +96,13 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
   if (invocation->endpoint_selection_state_.bands_policy_)
     {
       CORBA::Short p;
-      
+
       if (priority_policy->get_priority_model ()
           == RTCORBA::CLIENT_PROPAGATED)
         p = invocation->endpoint_selection_state_.client_priority_;
       else
         p = priority_policy->server_priority ();
-      
+
       if (!this->is_in_bands_range (
               invocation->endpoint_selection_state_.bands_policy_, p))
         ACE_THROW (CORBA::INV_POLICY ());
@@ -124,10 +124,10 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
                               CORBA::Environment &ACE_TRY_ENV)
 {
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-  
+
   TAO_Client_Priority_Policy *policy =
     invocation->stub_->client_priority ();
-  
+
   // Automatically release the policy
   CORBA::Object_var auto_release = policy;
 
@@ -157,22 +157,22 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
           // Initialize endpoint selection state.
           if (mode == TAO::USE_PRIORITY_RANGE)
             {
-              invocation->endpoint_selection_state_.min_priority_ = 
+              invocation->endpoint_selection_state_.min_priority_ =
                 priority_spec.min_priority;
-              invocation->endpoint_selection_state_.max_priority_ = 
+              invocation->endpoint_selection_state_.max_priority_ =
                 priority_spec.max_priority;
             }
           else
             // mode == TAO::USE_THREAD_PRIORITY
             {
               CORBA::Short priority;
-              if (invocation->orb_core_->get_thread_priority (priority) 
+              if (invocation->orb_core_->get_thread_priority (priority)
                   == -1)
                 ACE_THROW (CORBA::DATA_CONVERSION (1,
                                                    CORBA::COMPLETED_NO));
-              invocation->endpoint_selection_state_.min_priority_ = 
+              invocation->endpoint_selection_state_.min_priority_ =
                 priority;
-              invocation->endpoint_selection_state_.max_priority_ = 
+              invocation->endpoint_selection_state_.max_priority_ =
                 priority;
             }
         }
@@ -196,17 +196,17 @@ init_state (TAO_GIOP_Invocation *invocation,
 
   invocation->endpoint_selection_state_.priority_model_policy_ =
     invocation->stub_->exposed_priority_model ();
-  
-  invocation->endpoint_selection_state_.client_protocol_policy_ = 
+
+  invocation->endpoint_selection_state_.client_protocol_policy_ =
     invocation->stub_->effective_client_protocol (ACE_TRY_ENV);
   ACE_CHECK;
-      
+
   invocation->endpoint_selection_state_.private_connection_ =
     invocation->stub_->private_connection ();
-  
-  invocation->endpoint_selection_state_.bands_policy_ = 
+
+  invocation->endpoint_selection_state_.bands_policy_ =
     invocation->stub_->effective_priority_banded_connection (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
 
 
@@ -217,10 +217,10 @@ TAO_Endpoint_Selector_Factory::is_in_bands_range
 {
   int in_range = 0;
   RTCORBA::PriorityBands &bands = bands_policy->priority_bands_rep ();
-  
+
   if (bands.length () == 0)
     return 1;
-  
+
   for (CORBA::ULong i = 0; i < bands.length (); ++i)
     if (bands[i].low <= priority
         && bands[i].high >= priority)
@@ -240,7 +240,7 @@ TAO_Endpoint_Selection_State::~TAO_Endpoint_Selection_State (void)
   CORBA::release (this->priority_model_policy_);
   CORBA::release (this->client_protocol_policy_);
   CORBA::release (this->bands_policy_);
-  CORBA::release (this->private_connection_);  
+  CORBA::release (this->private_connection_);
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -339,8 +339,8 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
     {
       // Profile contains just one endpoint.  This happens when:
       //    a) we are talking to a nonTAO server (which doesn't have
-      //       the concept of multiple endpoints per profile) 
-      //    or 
+      //       the concept of multiple endpoints per profile)
+      //    or
       //    b) we have TAO server with a non-lane threadpool, in which
       //    case there is only one acceptor
       // In both cases we should use the endpoint regardless of its priority.
@@ -355,7 +355,7 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
            endp != 0;
            endp = endp->next ())
         {
-          if (endp->priority () 
+          if (endp->priority ()
               == invocation->endpoint_selection_state_.client_priority_)
             {
               endpoint = endp;
@@ -363,7 +363,7 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
             }
         }
 
-      if (endpoint =! 0)
+      if (endpoint != 0)
         {
           // Found an Endpoint with correct priority.
           invocation->endpoint_ = endpoint;
@@ -415,11 +415,11 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
                                                  *invocation,
                                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  RTCORBA::ProtocolList & protocols = 
+  RTCORBA::ProtocolList & protocols =
     invocation->endpoint_selection_state_.
     client_protocol_policy_->protocols_rep ();
 
-  CORBA::ULong protocol_index = 
+  CORBA::ULong protocol_index =
     invocation->endpoint_selection_state_.client_protocol_index_;
 
   if (protocols.length () == protocol_index)
@@ -432,29 +432,29 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
       else
         // At least one satisfactory endpoint was found, but
         // connection could not be established.
-        ACE_THROW (CORBA::COMM_FAILURE ());        
+        ACE_THROW (CORBA::COMM_FAILURE ());
     }
 
   // Find a Profile for the next protocol we would like to try.
   TAO_Profile *profile = 0;
   TAO_MProfile& mprofile = invocation->stub_->base_profiles ();
-  
+
   for (TAO_PHandle i = 0;
        i < mprofile.profile_count ();
        ++i)
     {
       TAO_Profile *pf = mprofile.get_profile (i);
-      if (pf->tag () 
+      if (pf->tag ()
           == protocols[protocol_index].protocol_type)
         {
           profile = pf;
           break;
         }
     }
-  
+
   if (profile == 0)
     {
-      // If no Profile for the protocol of interest were found, 
+      // If no Profile for the protocol of interest were found,
       // try another protocol.
       invocation->endpoint_selection_state_.client_protocol_index_++;
       this->select_endpoint (invocation, ACE_TRY_ENV);
@@ -469,8 +469,7 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
 
 void
 TAO_Protocol_Endpoint_Selector::endpoint (TAO_GIOP_Invocation *invocation,
-                                          CORBA::Environment
-                                          &ACE_TRY_ENV)
+                                          CORBA::Environment& /*ACE_TRY_ENV*/)
 {
   invocation->endpoint_selection_state_.valid_endpoint_found_ = 1;
   invocation->endpoint_ = invocation->profile_->endpoint ();
@@ -491,14 +490,14 @@ TAO_Protocol_Endpoint_Selector::next (TAO_GIOP_Invocation
 void
 TAO_Protocol_Endpoint_Selector::forward (TAO_GIOP_Invocation
                                         *invocation,
-                                        const TAO_MProfile &mprofile,
+                                         const TAO_MProfile& /* mprofile */,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
   // Location forwarding is currently not supported when using
   // RTCORBA::ClientProtocolPolicy.  With the current profile
   // management scheme being broken, it would be a pain to support here.
   // @@ Add support for location forwarding once profile management is
-  // redesigned. 
+  // redesigned.
 
   // Currently location forward replies are ignored.  When we receive
   // a location forward reply, we act as if the profile we used
@@ -531,8 +530,8 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
                                                       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_MProfile& mprofile = invocation->stub_->base_profiles ();
-  invocation->endpoint_ = 0;  
-  CORBA::ULong profile_index = 
+  invocation->endpoint_ = 0;
+  CORBA::ULong profile_index =
     invocation->endpoint_selection_state_.client_protocol_index_;
 
     if (mprofile.profile_count () == profile_index)
@@ -544,7 +543,7 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
       else
         // At least one satisfactory endpoint was found, but
         // connection could not be established.
-        ACE_THROW (CORBA::COMM_FAILURE ());        
+        ACE_THROW (CORBA::COMM_FAILURE ());
     }
 
     CORBA::Short max =
@@ -557,7 +556,7 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
        ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
-      
+
       // Check if this profile contains any endpoints of the
       // right priority.
       for (TAO_Endpoint *endp = profile->endpoint ();
@@ -569,16 +568,16 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
             {
               invocation->profile_ = profile;
               invocation->endpoint_ = endp;
-              invocation->endpoint_selection_state_.valid_endpoint_found_ = 1; 
+              invocation->endpoint_selection_state_.valid_endpoint_found_ = 1;
               invocation->endpoint_selection_state_.client_protocol_index_ = i;
               break;
             }
         }
-      
+
       if (invocation->endpoint_ != 0)
         break;
     }
-  
+
   // We were not able to find profile with the endpoint of the
   // right priority.
   if (invocation->endpoint_ == 0)
@@ -588,7 +587,7 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
     else
       // At least one satisfactory endpoint was found, but
       // connection could not be established.
-      ACE_THROW (CORBA::COMM_FAILURE ());        
+      ACE_THROW (CORBA::COMM_FAILURE ());
 }
 
 void
@@ -606,7 +605,7 @@ TAO_Client_Priority_Policy_Selector::next (TAO_GIOP_Invocation
 void
 TAO_Client_Priority_Policy_Selector::forward (TAO_GIOP_Invocation
                                               *invocation,
-                                              const TAO_MProfile &mprofile,
+                                              const TAO_MProfile & /* mprofile */,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Location forwarding is not supported when using
@@ -643,8 +642,8 @@ TAO_Priority_Protocol_Selector::endpoint (TAO_GIOP_Invocation *invocation,
     {
       // Profile contains just one endpoint.  This happens when:
       //    a) we are talking to a nonTAO server (which doesn't have
-      //       the concept of multiple endpoints per profile) 
-      //    or 
+      //       the concept of multiple endpoints per profile)
+      //    or
       //    b) we have TAO server with a non-lane threadpool, in which
       //    case there is only one acceptor
       // In both cases we should use the endpoint regardless of its priority.
@@ -660,7 +659,7 @@ TAO_Priority_Protocol_Selector::endpoint (TAO_GIOP_Invocation *invocation,
            endp != 0;
            endp = endp->next ())
         {
-          if (endp->priority () 
+          if (endp->priority ()
               == invocation->endpoint_selection_state_.client_priority_)
             {
               endpoint = endp;
@@ -668,7 +667,7 @@ TAO_Priority_Protocol_Selector::endpoint (TAO_GIOP_Invocation *invocation,
             }
         }
 
-      if (endpoint =! 0)
+      if (endpoint != 0)
         {
           // Found an Endpoint with correct priority.
           invocation->endpoint_selection_state_.valid_endpoint_found_ = 1;

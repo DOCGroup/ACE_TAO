@@ -1,3 +1,9 @@
+Thu Oct 12 15:14:09 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation_Endpoint_Selectors.cpp:
+
+	  Fixed unused variables and other warnings/typos.
+
 Thu Oct 12 15:12:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* All the Makefiles have been updated.
