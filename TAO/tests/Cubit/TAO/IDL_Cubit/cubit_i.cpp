@@ -63,9 +63,8 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 
       // Keys matched.
       if (!ACE_OS::strcmp (obj_str, key))
-        {
-          cubit = Cubit::_duplicate (this->my_cubit_ [i]);
-        }
+        cubit = Cubit::_duplicate (this->my_cubit_ [i]);
+
       CORBA::string_free (obj_str); // need to do this
     }
   return cubit;
