@@ -114,8 +114,15 @@ public:
     If somebody doesn't like us, the will close() us.  Actually, if our open() method
     returns -1, the Acceptor&lt;> will invoke close() on us for cleanup.
    */
-  int close (u_long)
+  virtual int close (u_long _flags = 0)
   {
+    /*
+      The ACE_Svc_Handler baseclass requires the _flags parameter.  We don't
+      use it here though, so we mark it as UNUSED.  You can accomplish the
+      same thing with a signature like handle_input's below.
+     */
+    ACE_UNUSED_ARG(_flags);
+
     /*
       Clean up and go away.
      */

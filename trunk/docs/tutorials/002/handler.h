@@ -36,7 +36,7 @@ public:
   /*
     The Acceptor<> template will open() us when there is a new client connection.
    */
-  int open (void *)
+  virtual int open (void *)
   {
     ACE_INET_Addr addr;
 
@@ -76,7 +76,7 @@ public:
     into a destructor, we put it here and request that everyone call destroy()
     instead of 'delete'.
    */
-  void destroy (void)
+  virtual void destroy (void)
   {
     /*
       Remove ourselves from the reactor
@@ -103,8 +103,15 @@ public:
     If somebody doesn't like us, the will close() us.  Actually, if our open() method
     returns -1, the Acceptor<> will invoke close() on us for cleanup.
    */
-  int close (u_long)
+  virtual int close (u_long _flags = 0)
   {
+    /*
+      The ACE_Svc_Handler baseclass requires the _flags parameter.  We don't
+      use it here though, so we mark it as UNUSED.  You can accomplish the
+      same thing with a signature like handle_input's below.
+		 */
+		ACE_UNUSED_ARG(_flags);
+
     /*
       Clean up and go away.
      */
@@ -117,7 +124,7 @@ protected:
   /*
     Respond to input just like Tutorial 1.
    */
-  int handle_input (ACE_HANDLE)
+  virtual int handle_input (ACE_HANDLE)
   {
     char buf[128];
     memset (buf, 0, sizeof (buf));
@@ -140,7 +147,7 @@ protected:
     after 'this' in the schedule_timer() call.  You can pass in anything there that you can
     cast to a void*.
    */
-  int handle_timeout (const ACE_Time_Value & tv, const void *arg)
+  virtual int handle_timeout (const ACE_Time_Value & tv, const void *arg)
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling timeout from this = %u\n", this));
     return 0;
@@ -149,7 +156,7 @@ protected:
   /*
     Clean ourselves up when handle_input() (or handle_timer()) returns -1
    */
-  int handle_close(ACE_HANDLE, ACE_Reactor_Mask _mask)
+  virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask _mask)
   {
     this->destroy();
     return 0;
