@@ -28,7 +28,7 @@
 
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
 // At least for Win32 - MSVC compiler (ver. 5)
-#define ACE_UINT64_FORMAT_SPECIFIER "%I64d"
+#define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
 
 // Get OS.h to compile on some of the platforms without DIR info yet.
