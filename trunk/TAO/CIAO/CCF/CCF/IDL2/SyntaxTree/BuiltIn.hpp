@@ -19,23 +19,22 @@ namespace CCF
       //
       //
       //
-      class BuiltInTypeDef : public virtual TypeDef
+      class BuiltInTypeDecl : public virtual TypeDecl
       {
       protected:
         virtual
-        ~BuiltInTypeDef () throw () {}
+        ~BuiltInTypeDecl () throw () {}
 
-        BuiltInTypeDef ()
+        BuiltInTypeDecl ()
         {
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
       public:
-        virtual std::string
-        declaration_class ()
+        virtual bool
+        complete () const
         {
-          return "built-in type";
+          return true;
         }
 
       public:
@@ -44,27 +43,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<BuiltInTypeDef>
-      BuiltInTypeDefPtr;
+      StrictPtr<BuiltInTypeDecl>
+      BuiltInTypeDeclPtr;
 
 
       //
       //
       //
-      class Object : public virtual BuiltInTypeDef
+      class ObjectDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Object () throw () {}
+        ~ObjectDecl () throw () {}
 
-        Object (ScopePtr const& scope)
+        ObjectDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("Object"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Object (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        ObjectDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -76,7 +75,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Object (name, order, scope));
+          return TypeDeclPtr (new ObjectDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -94,27 +93,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Object>
-      ObjectPtr;
+      StrictPtr<ObjectDecl>
+      ObjectDeclPtr;
 
 
       //
       //
       //
-      class ValueBase : public virtual BuiltInTypeDef
+      class ValueBaseDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~ValueBase () throw () {}
+        ~ValueBaseDecl () throw () {}
 
-        ValueBase (ScopePtr const& scope)
+        ValueBaseDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("ValueBase"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        ValueBase (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        ValueBaseDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -126,7 +125,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new ValueBase (name, order, scope));
+          return TypeDeclPtr (new ValueBaseDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -144,27 +143,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<ValueBase>
-      ValueBasePtr;
+      StrictPtr<ValueBaseDecl>
+      ValueBaseDeclPtr;
 
 
       //
       //
       //
-      class Any : public virtual BuiltInTypeDef
+      class AnyDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Any () throw () {}
+        ~AnyDecl () throw () {}
 
-        Any (ScopePtr const& scope)
+        AnyDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("any"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Any (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        AnyDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -176,7 +175,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Any (name, order, scope));
+          return TypeDeclPtr (new AnyDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -194,27 +193,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Any>
-      AnyPtr;
+      StrictPtr<AnyDecl>
+      AnyDeclPtr;
 
 
       //
       //
       //
-      class Boolean : public virtual BuiltInTypeDef
+      class BooleanDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Boolean () throw () {}
+        ~BooleanDecl () throw () {}
 
-        Boolean (ScopePtr const& scope)
+        BooleanDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("boolean"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Boolean (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        BooleanDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -226,7 +225,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Boolean (name, order, scope));
+          return TypeDeclPtr (new BooleanDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -244,27 +243,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Boolean>
-      BooleanPtr;
+      StrictPtr<BooleanDecl>
+      BooleanDeclPtr;
 
 
       //
       //
       //
-      class Char : public virtual BuiltInTypeDef
+      class CharDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Char () throw () {}
+        ~CharDecl () throw () {}
 
-        Char (ScopePtr const& scope)
+        CharDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("char"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Char (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        CharDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -276,7 +275,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Char (name, order, scope));
+          return TypeDeclPtr (new CharDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -294,27 +293,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Char>
-      CharPtr;
+      StrictPtr<CharDecl>
+      CharDeclPtr;
 
 
       //
       //
       //
-      class Double : public virtual BuiltInTypeDef
+      class DoubleDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Double () throw () {}
+        ~DoubleDecl () throw () {}
 
-        Double (ScopePtr const& scope)
+        DoubleDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("double"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Double (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        DoubleDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -326,7 +325,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Double (name, order, scope));
+          return TypeDeclPtr (new DoubleDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -344,27 +343,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Double>
-      DoublePtr;
+      StrictPtr<DoubleDecl>
+      DoubleDeclPtr;
 
 
       //
       //
       //
-      class Float : public virtual BuiltInTypeDef
+      class FloatDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Float () throw () {}
+        ~FloatDecl () throw () {}
 
-        Float (ScopePtr const& scope)
+        FloatDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("float"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Float (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        FloatDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -376,7 +375,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Float (name, order, scope));
+          return TypeDeclPtr (new FloatDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -394,27 +393,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Float>
-      FloatPtr;
+      StrictPtr<FloatDecl>
+      FloatDeclPtr;
 
 
       //
       //
       //
-      class Long : public virtual BuiltInTypeDef
+      class LongDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Long () throw () {}
+        ~LongDecl () throw () {}
 
-        Long (ScopePtr const& scope)
+        LongDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("long"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Long (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        LongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -426,7 +425,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Long (name, order, scope));
+          return TypeDeclPtr (new LongDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -444,27 +443,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Long>
-      LongPtr;
+      StrictPtr<LongDecl>
+      LongDeclPtr;
 
 
       //
       //
       //
-      class LongDouble : public virtual BuiltInTypeDef
+      class LongDoubleDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~LongDouble () throw () {}
+        ~LongDoubleDecl () throw () {}
 
-        LongDouble (ScopePtr const& scope)
+        LongDoubleDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("long double"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        LongDouble (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        LongDoubleDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -476,7 +475,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new LongDouble (name, order, scope));
+          return TypeDeclPtr (new LongDoubleDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -494,27 +493,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<LongDouble>
-      LongDoublePtr;
+      StrictPtr<LongDoubleDecl>
+      LongDoubleDeclPtr;
 
 
       //
       //
       //
-      class LongLong : public virtual BuiltInTypeDef
+      class LongLongDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~LongLong () throw () {}
+        ~LongLongDecl () throw () {}
 
-        LongLong (ScopePtr const& scope)
+        LongLongDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("long long"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        LongLong (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        LongLongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -526,7 +525,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new LongLong (name, order, scope));
+          return TypeDeclPtr (new LongLongDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -544,27 +543,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<LongLong>
-      LongLongPtr;
+      StrictPtr<LongLongDecl>
+      LongLongDeclPtr;
 
 
       //
       //
       //
-      class Octet : public virtual BuiltInTypeDef
+      class OctetDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Octet () throw () {}
+        ~OctetDecl () throw () {}
 
-        Octet (ScopePtr const& scope)
+        OctetDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("octet"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Octet (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        OctetDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -576,7 +575,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Octet (name, order, scope));
+          return TypeDeclPtr (new OctetDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -594,27 +593,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Octet>
-      OctetPtr;
+      StrictPtr<OctetDecl>
+      OctetDeclPtr;
 
 
       //
       //
       //
-      class Short : public virtual BuiltInTypeDef
+      class ShortDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Short () throw () {}
+        ~ShortDecl () throw () {}
 
-        Short (ScopePtr const& scope)
+        ShortDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("short"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Short (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        ShortDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -626,7 +625,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Short (name, order, scope));
+          return TypeDeclPtr (new ShortDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -644,27 +643,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Short>
-      ShortPtr;
+      StrictPtr<ShortDecl>
+      ShortDeclPtr;
 
 
       //
       //
       //
-      class String : public virtual BuiltInTypeDef
+      class StringDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~String () throw () {}
+        ~StringDecl () throw () {}
 
-        String (ScopePtr const& scope)
+        StringDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("string"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        String (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        StringDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -676,7 +675,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new String (name, order, scope));
+          return TypeDeclPtr (new StringDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -694,27 +693,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<String>
-      StringPtr;
+      StrictPtr<StringDecl>
+      StringDeclPtr;
 
 
       //
       //
       //
-      class UnsignedLong : public virtual BuiltInTypeDef
+      class UnsignedLongDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~UnsignedLong () throw () {}
+        ~UnsignedLongDecl () throw () {}
 
-        UnsignedLong (ScopePtr const& scope)
+        UnsignedLongDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("unsigned long"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        UnsignedLong (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        UnsignedLongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -726,7 +725,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new UnsignedLong (name, order, scope));
+          return TypeDeclPtr (new UnsignedLongDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -744,27 +743,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<UnsignedLong>
-      UnsignedLongPtr;
+      StrictPtr<UnsignedLongDecl>
+      UnsignedLongDeclPtr;
 
 
       //
       //
       //
-      class UnsignedLongLong : public virtual BuiltInTypeDef
+      class UnsignedLongLongDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~UnsignedLongLong () throw () {}
+        ~UnsignedLongLongDecl () throw () {}
 
-        UnsignedLongLong (ScopePtr const& scope)
+        UnsignedLongLongDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("unsigned long long"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        UnsignedLongLong (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        UnsignedLongLongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -776,7 +775,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new UnsignedLongLong (name, order, scope));
+          return TypeDeclPtr (new UnsignedLongLongDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -794,27 +793,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<UnsignedLongLong>
-      UnsignedLongLongPtr;
+      StrictPtr<UnsignedLongLongDecl>
+      UnsignedLongLongDeclPtr;
 
 
       //
       //
       //
-      class UnsignedShort : public virtual BuiltInTypeDef
+      class UnsignedShortDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~UnsignedShort () throw () {}
+        ~UnsignedShortDecl () throw () {}
 
-        UnsignedShort (ScopePtr const& scope)
+        UnsignedShortDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("unsigned short"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        UnsignedShort (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        UnsignedShortDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -826,7 +825,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new UnsignedShort (name, order, scope));
+          return TypeDeclPtr (new UnsignedShortDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -844,27 +843,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<UnsignedShort>
-      UnsignedShortPtr;
+      StrictPtr<UnsignedShortDecl>
+      UnsignedShortDeclPtr;
 
 
       //
       //
       //
-      class Void : public virtual BuiltInTypeDef
+      class VoidDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Void () throw () {}
+        ~VoidDecl () throw () {}
 
-        Void (ScopePtr const& scope)
+        VoidDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("void"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Void (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        VoidDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -876,7 +875,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Void (name, order, scope));
+          return TypeDeclPtr (new VoidDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -894,27 +893,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Void>
-      VoidPtr;
+      StrictPtr<VoidDecl>
+      VoidDeclPtr;
 
 
       //
       //
       //
-      class Wchar : public virtual BuiltInTypeDef
+      class WcharDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Wchar () throw () {}
+        ~WcharDecl () throw () {}
 
-        Wchar (ScopePtr const& scope)
+        WcharDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("wchar"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Wchar (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        WcharDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -926,7 +925,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Wchar (name, order, scope));
+          return TypeDeclPtr (new WcharDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -944,27 +943,27 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Wchar>
-      WcharPtr;
+      StrictPtr<WcharDecl>
+      WcharDeclPtr;
 
 
       //
       //
       //
-      class Wstring : public virtual BuiltInTypeDef
+      class WstringDecl : public virtual BuiltInTypeDecl
       {
       public:
         virtual
-        ~Wstring () throw () {}
+        ~WstringDecl () throw () {}
 
-        Wstring (ScopePtr const& scope)
+        WstringDecl (ScopePtr const& scope)
             : Declaration (SimpleName ("wstring"), scope)
         {
           type_info (static_type_info ());
         }
 
       protected:
-        Wstring (SimpleName const& name, Order const& order, ScopePtr const& scope)
+        WstringDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
             : Declaration (name, order, scope)
         {
           type_info (static_type_info ());
@@ -976,7 +975,7 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope)
         {
-          return TypeDeclPtr (new Wstring (name, order, scope));
+          return TypeDeclPtr (new WstringDecl (name, order, scope));
         }
 
         // Runtime declaration type information.
@@ -994,8 +993,8 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<Wstring>
-      WstringPtr;
+      StrictPtr<WstringDecl>
+      WstringDeclPtr;
     }
   }
 }

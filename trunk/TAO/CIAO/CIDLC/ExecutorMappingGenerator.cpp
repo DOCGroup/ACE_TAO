@@ -283,7 +283,7 @@ namespace
   //
   //
   //
-  class TypeNameEmitter : public Traversal::BuiltInTypeDef,
+  class TypeNameEmitter : public Traversal::BuiltInTypeDecl,
                           public Traversal::TypeDecl
   {
   public:
@@ -293,7 +293,7 @@ namespace
     }
 
     virtual void
-    traverse (BuiltInTypeDefPtr const& t)
+    traverse (BuiltInTypeDeclPtr const& t)
     {
       os << t->name ().simple ();
     }
@@ -924,8 +924,8 @@ generate (CommandLine const& cl,
     }
   }
 
-  std::ostream& os = ofs.is_open () 
-    ? static_cast<std::ostream&> (ofs) 
+  std::ostream& os = ofs.is_open ()
+    ? static_cast<std::ostream&> (ofs)
     : static_cast<std::ostream&> (std::cout);
 
   // Set auto-indentation for os

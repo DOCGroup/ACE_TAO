@@ -67,7 +67,7 @@ namespace CCF
       }
 
       TypeDeclPtr TypedefDecl::
-      underlying_type ()
+      underlying_type () const
       {
         // Try to return TypeDef if there is one, otherwise TypeDecl.
         //
@@ -111,13 +111,6 @@ namespace CCF
           name ().simple (),
           order (),
           scope ());
-      }
-
-
-      bool TypedefDecl::
-      defined () const
-      {
-        return is_a (TypeDef::static_type_info ());
       }
 
       namespace

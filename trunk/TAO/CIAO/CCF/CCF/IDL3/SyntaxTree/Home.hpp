@@ -15,7 +15,8 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      // Import nodes from IDL2
+      // Import nodes from IDL2.
+      //
       using namespace IDL2::SyntaxTree;
 
       // According to the spec Home cannot be forward-declared. Did they
@@ -95,7 +96,7 @@ namespace CCF
                           supports_,
                           manages_));
         }
-        
+
       private:
         void
         copy_supports_list (ScopedNameSet const& supports)
@@ -139,6 +140,13 @@ namespace CCF
           return manages_.resolve ();
         }
 
+      public:
+        virtual bool
+        complete () const
+        {
+          return true;
+        }
+        
         // Runtime declaration type information
       public:
         virtual std::string

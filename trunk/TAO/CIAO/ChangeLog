@@ -1,3 +1,45 @@
+Thu Oct 16 12:07:01 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp.m4:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.m4:
+	* CCF/CCF/IDL2/SyntaxTree/Elements.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Interface.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/ValueType.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
+	* CCF/CCF/IDL2/Traversal/BuiltIn.hpp:
+	* CCF/CCF/IDL2/Traversal/BuiltIn.hpp.m4:
+	* CCF/CCF/IDL2/Traversal/Elements.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Component.cpp:
+	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Home.hpp:
+	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp: Added the
+	  SyntaxTree::ForwardDeclarableTypeDecl base class and moved
+	  there {virtual bool defined () const;}. Added
+	  {virtual bool complete () const;} to TypeDecl to reflect type
+	  completeness. Also changed some type names for consistency.
+
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Minor changes to
+	  reflect above.
+
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+	* CIDLC/TypeNameEmitter.cpp:
+	* CIDLC/TypeNameEmitter.hpp:
+	* CIDLC/cidlc.cpp: Minor changes to reflect above.
+
 Wed Oct 15 15:43:13 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:

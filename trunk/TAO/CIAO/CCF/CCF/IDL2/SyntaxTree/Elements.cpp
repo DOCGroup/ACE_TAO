@@ -404,7 +404,9 @@ namespace CCF
         type_decl_init_ ()
         {
           TypeInfo ti (typeid (TypeDecl));
-          ti.add_base (Access::PUBLIC, true, Declaration::static_type_info ());
+          ti.add_base (
+            Access::PUBLIC, true, Declaration::static_type_info ());
+
           return ti;
         }
 
@@ -413,6 +415,28 @@ namespace CCF
 
       TypeInfo const& TypeDecl::
       static_type_info () { return type_decl_; }
+
+      // ForwardDeclarableTypeDecl
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        forward_declarable_type_decl_init_ ()
+        {
+          TypeInfo ti (typeid (TypeDecl));
+          ti.add_base (
+            Access::PUBLIC, true, TypeDecl::static_type_info ());
+
+          return ti;
+        }
+
+        TypeInfo forward_declarable_type_decl_ (
+          forward_declarable_type_decl_init_ ());
+      }
+
+      TypeInfo const& ForwardDeclarableTypeDecl::
+      static_type_info () { return forward_declarable_type_decl_; }
 
 
       // TypeForwardDecl
@@ -424,7 +448,11 @@ namespace CCF
         type_forward_decl_init_ ()
         {
           TypeInfo ti (typeid (TypeForwardDecl));
-          ti.add_base (Access::PUBLIC, true, TypeDecl::static_type_info ());
+
+          ti.add_base (Access::PUBLIC,
+                       true,
+                       ForwardDeclarableTypeDecl::static_type_info ());
+
           return ti;
         }
 
@@ -444,7 +472,9 @@ namespace CCF
         type_def_init_ ()
         {
           TypeInfo ti (typeid (TypeDef));
-          ti.add_base (Access::PUBLIC, true, TypeDecl::static_type_info ());
+          ti.add_base (Access::PUBLIC,
+                       true,
+                       ForwardDeclarableTypeDecl::static_type_info ());
           return ti;
         }
 

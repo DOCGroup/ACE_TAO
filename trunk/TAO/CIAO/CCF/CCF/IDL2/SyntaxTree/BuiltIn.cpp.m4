@@ -7,7 +7,7 @@ divert(-1)
 include(`BuiltIn.m4')
 
 define(`built_in_type',
-  `built_in_type_impl(`make_class_name(`$1')', `make_var_name(`$1')')')dnl
+  `built_in_type_impl(`make_class_name(`$1')', `make_var_name(`$1')')')
 
 
 define(`built_in_type_impl', `
@@ -23,7 +23,7 @@ define(`built_in_type_impl', `
           TypeInfo ti (typeid ($1));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
@@ -55,24 +55,24 @@ namespace CCF
     namespace SyntaxTree
     {
 
-      // BuiltInTypeDef
+      // BuiltInTypeDecl
       //
       //
       namespace
       {
         TypeInfo
-        built_in_type_def_init_ ()
+        built_in_type_decl_init_ ()
         {
-          TypeInfo ti (typeid (BuiltInTypeDef));
-          ti.add_base (Access::PUBLIC, true, TypeDef::static_type_info ());
+          TypeInfo ti (typeid (BuiltInTypeDecl));
+          ti.add_base (Access::PUBLIC, true, TypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo built_in_type_def_ (built_in_type_def_init_ ());
+        TypeInfo built_in_type_decl_ (built_in_type_decl_init_ ());
       }
 
-      TypeInfo const& BuiltInTypeDef::
-      static_type_info () { return built_in_type_def_; }
+      TypeInfo const& BuiltInTypeDecl::
+      static_type_info () { return built_in_type_decl_; }
 dnl
 built_in_type(`object')
 built_in_type(`value base')

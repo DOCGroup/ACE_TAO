@@ -21,109 +21,109 @@ ReturnTypeNameEmitter::ReturnTypeNameEmitter (ostream& os_)
 }
 
 void
-ReturnTypeNameEmitter::traverse (VoidPtr const&)
+ReturnTypeNameEmitter::traverse (VoidDeclPtr const&)
 {
   os << "void";
 }
 
 void
-ReturnTypeNameEmitter::traverse (BooleanPtr const&)
+ReturnTypeNameEmitter::traverse (BooleanDeclPtr const&)
 {
   os << "::CORBA::Boolean";
 }
 
 void
-ReturnTypeNameEmitter::traverse (OctetPtr const&)
+ReturnTypeNameEmitter::traverse (OctetDeclPtr const&)
 {
   os << "::CORBA::Octet";
 }
 
 void
-ReturnTypeNameEmitter::traverse (CharPtr const&)
+ReturnTypeNameEmitter::traverse (CharDeclPtr const&)
 {
   os << "::CORBA::Char";
 }
 
 void
-ReturnTypeNameEmitter::traverse (WcharPtr const&)
+ReturnTypeNameEmitter::traverse (WcharDeclPtr const&)
 {
   os << "::CORBA::WChar";
 }
 
 void
-ReturnTypeNameEmitter::traverse (ShortPtr const&)
+ReturnTypeNameEmitter::traverse (ShortDeclPtr const&)
 {
   os << "::CORBA::Short";
 }
 
 void
-ReturnTypeNameEmitter::traverse (UnsignedShortPtr const&)
+ReturnTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
 {
   os << "::CORBA::UShort";
 }
 
 void
-ReturnTypeNameEmitter::traverse (LongPtr const&)
+ReturnTypeNameEmitter::traverse (LongDeclPtr const&)
 {
   os << "::CORBA::Long";
 }
 
 void
-ReturnTypeNameEmitter::traverse (UnsignedLongPtr const&)
+ReturnTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
 {
   os << "::CORBA::ULong";
 }
 
 void
-ReturnTypeNameEmitter::traverse (LongLongPtr const&)
+ReturnTypeNameEmitter::traverse (LongLongDeclPtr const&)
 {
   os << "::CORBA::LongLong";
 }
 
 void
-ReturnTypeNameEmitter::traverse (UnsignedLongLongPtr const&)
+ReturnTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
 {
   os << "::CORBA::ULongLong";
 }
 
 void
-ReturnTypeNameEmitter::traverse (FloatPtr const&)
+ReturnTypeNameEmitter::traverse (FloatDeclPtr const&)
 {
   os << "::CORBA::Float";
 }
 
 void
-ReturnTypeNameEmitter::traverse (DoublePtr const&)
+ReturnTypeNameEmitter::traverse (DoubleDeclPtr const&)
 {
   os << "::CORBA::Double";
 }
 
 void
-ReturnTypeNameEmitter::traverse (StringPtr const&)
+ReturnTypeNameEmitter::traverse (StringDeclPtr const&)
 {
   os << "char *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (WstringPtr const&)
+ReturnTypeNameEmitter::traverse (WstringDeclPtr const&)
 {
   os << "::CORBA::WChar *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (ObjectPtr const&)
+ReturnTypeNameEmitter::traverse (ObjectDeclPtr const&)
 {
   os << "::CORBA::Object_ptr";
 }
 
 void
-ReturnTypeNameEmitter::traverse (ValueBasePtr const&)
+ReturnTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
 {
   os << "::CORBA::ValueBase *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (AnyPtr const&)
+ReturnTypeNameEmitter::traverse (AnyDeclPtr const&)
 {
   os << "::CORBA::Any *";
 }
@@ -142,103 +142,103 @@ INArgTypeNameEmitter::INArgTypeNameEmitter (ostream& os_)
 }
 
 void
-INArgTypeNameEmitter::traverse (BooleanPtr const&)
+INArgTypeNameEmitter::traverse (BooleanDeclPtr const&)
 {
   os << "::CORBA::Boolean";
 }
 
 void
-INArgTypeNameEmitter::traverse (OctetPtr const&)
+INArgTypeNameEmitter::traverse (OctetDeclPtr const&)
 {
   os << "::CORBA::Octet";
 }
 
 void
-INArgTypeNameEmitter::traverse (CharPtr const&)
+INArgTypeNameEmitter::traverse (CharDeclPtr const&)
 {
   os << "::CORBA::Char";
 }
 
 void
-INArgTypeNameEmitter::traverse (WcharPtr const&)
+INArgTypeNameEmitter::traverse (WcharDeclPtr const&)
 {
   os << "::CORBA::WChar";
 }
 
 void
-INArgTypeNameEmitter::traverse (ShortPtr const&)
+INArgTypeNameEmitter::traverse (ShortDeclPtr const&)
 {
   os << "::CORBA::Short";
 }
 
 void
-INArgTypeNameEmitter::traverse (UnsignedShortPtr const&)
+INArgTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
 {
   os << "::CORBA::UShort";
 }
 
 void
-INArgTypeNameEmitter::traverse (LongPtr const&)
+INArgTypeNameEmitter::traverse (LongDeclPtr const&)
 {
   os << "::CORBA::Long";
 }
 
 void
-INArgTypeNameEmitter::traverse (UnsignedLongPtr const&)
+INArgTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
 {
   os << "::CORBA::ULong";
 }
 
 void
-INArgTypeNameEmitter::traverse (LongLongPtr const&)
+INArgTypeNameEmitter::traverse (LongLongDeclPtr const&)
 {
   os << "::CORBA::LongLong";
 }
 
 void
-INArgTypeNameEmitter::traverse (UnsignedLongLongPtr const&)
+INArgTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
 {
   os << "::CORBA::ULongLong";
 }
 
 void
-INArgTypeNameEmitter::traverse (FloatPtr const&)
+INArgTypeNameEmitter::traverse (FloatDeclPtr const&)
 {
   os << "::CORBA::Float";
 }
 
 void
-INArgTypeNameEmitter::traverse (DoublePtr const&)
+INArgTypeNameEmitter::traverse (DoubleDeclPtr const&)
 {
   os << "::CORBA::Double";
 }
 
 void
-INArgTypeNameEmitter::traverse (StringPtr const&)
+INArgTypeNameEmitter::traverse (StringDeclPtr const&)
 {
   os << "const char *";
 }
 
 void
-INArgTypeNameEmitter::traverse (WstringPtr const&)
+INArgTypeNameEmitter::traverse (WstringDeclPtr const&)
 {
   os << "const ::CORBA::WChar *";
 }
 
 void
-INArgTypeNameEmitter::traverse (ObjectPtr const&)
+INArgTypeNameEmitter::traverse (ObjectDeclPtr const&)
 {
   os << "::CORBA::Object_ptr";
 }
 
 void
-INArgTypeNameEmitter::traverse (ValueBasePtr const&)
+INArgTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
 {
   os << "::CORBA::ValueBase *";
 }
 
 void
-INArgTypeNameEmitter::traverse (AnyPtr const&)
+INArgTypeNameEmitter::traverse (AnyDeclPtr const&)
 {
   os << "const ::CORBA::Any &";
 }
@@ -251,103 +251,103 @@ INOUTArgTypeNameEmitter::INOUTArgTypeNameEmitter (ostream& os_)
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (BooleanPtr const&)
+INOUTArgTypeNameEmitter::traverse (BooleanDeclPtr const&)
 {
   os << "::CORBA::Boolean &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (OctetPtr const&)
+INOUTArgTypeNameEmitter::traverse (OctetDeclPtr const&)
 {
   os << "::CORBA::Octet &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (CharPtr const&)
+INOUTArgTypeNameEmitter::traverse (CharDeclPtr const&)
 {
   os << "::CORBA::Char &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (WcharPtr const&)
+INOUTArgTypeNameEmitter::traverse (WcharDeclPtr const&)
 {
   os << "::CORBA::WChar &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (ShortPtr const&)
+INOUTArgTypeNameEmitter::traverse (ShortDeclPtr const&)
 {
   os << "::CORBA::Short &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (UnsignedShortPtr const&)
+INOUTArgTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
 {
   os << "::CORBA::UShort &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (LongPtr const&)
+INOUTArgTypeNameEmitter::traverse (LongDeclPtr const&)
 {
   os << "::CORBA::Long &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (UnsignedLongPtr const&)
+INOUTArgTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
 {
   os << "::CORBA::ULong &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (LongLongPtr const&)
+INOUTArgTypeNameEmitter::traverse (LongLongDeclPtr const&)
 {
   os << "::CORBA::LongLong &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (UnsignedLongLongPtr const&)
+INOUTArgTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
 {
   os << "::CORBA::ULongLong &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (FloatPtr const&)
+INOUTArgTypeNameEmitter::traverse (FloatDeclPtr const&)
 {
   os << "::CORBA::Float &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (DoublePtr const&)
+INOUTArgTypeNameEmitter::traverse (DoubleDeclPtr const&)
 {
   os << "::CORBA::Double &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (StringPtr const&)
+INOUTArgTypeNameEmitter::traverse (StringDeclPtr const&)
 {
   os << "char *&";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (WstringPtr const&)
+INOUTArgTypeNameEmitter::traverse (WstringDeclPtr const&)
 {
   os << "::CORBA::WChar *&";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (ObjectPtr const&)
+INOUTArgTypeNameEmitter::traverse (ObjectDeclPtr const&)
 {
   os << "::CORBA::Object_ptr &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (ValueBasePtr const&)
+INOUTArgTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
 {
   os << "::CORBA::ValueBase *&";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (AnyPtr const&)
+INOUTArgTypeNameEmitter::traverse (AnyDeclPtr const&)
 {
   os << "::CORBA::Any &";
 }
@@ -360,105 +360,103 @@ OUTArgTypeNameEmitter::OUTArgTypeNameEmitter (ostream& os_)
 }
 
 void
-OUTArgTypeNameEmitter::traverse (BooleanPtr const&)
+OUTArgTypeNameEmitter::traverse (BooleanDeclPtr const&)
 {
   os << "::CORBA::Boolean_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (OctetPtr const&)
+OUTArgTypeNameEmitter::traverse (OctetDeclPtr const&)
 {
   os << "::CORBA::Octet_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (CharPtr const&)
+OUTArgTypeNameEmitter::traverse (CharDeclPtr const&)
 {
   os << "::CORBA::Char_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (WcharPtr const&)
+OUTArgTypeNameEmitter::traverse (WcharDeclPtr const&)
 {
   os << "::CORBA::WChar_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (ShortPtr const&)
+OUTArgTypeNameEmitter::traverse (ShortDeclPtr const&)
 {
   os << "::CORBA::Short_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (UnsignedShortPtr const&)
+OUTArgTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
 {
   os << "::CORBA::UShort_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (LongPtr const&)
+OUTArgTypeNameEmitter::traverse (LongDeclPtr const&)
 {
   os << "::CORBA::Long_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (UnsignedLongPtr const&)
+OUTArgTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
 {
   os << "::CORBA::ULong_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (LongLongPtr const&)
+OUTArgTypeNameEmitter::traverse (LongLongDeclPtr const&)
 {
   os << "::CORBA::LongLong_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (UnsignedLongLongPtr const&)
+OUTArgTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
 {
   os << "::CORBA::ULongLong_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (FloatPtr const&)
+OUTArgTypeNameEmitter::traverse (FloatDeclPtr const&)
 {
   os << "::CORBA::Float_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (DoublePtr const&)
+OUTArgTypeNameEmitter::traverse (DoubleDeclPtr const&)
 {
   os << "::CORBA::Double_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (StringPtr const&)
+OUTArgTypeNameEmitter::traverse (StringDeclPtr const&)
 {
   os << "::CORBA::String_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (WstringPtr const&)
+OUTArgTypeNameEmitter::traverse (WstringDeclPtr const&)
 {
   os << "::CORBA::WString_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (ObjectPtr const&)
+OUTArgTypeNameEmitter::traverse (ObjectDeclPtr const&)
 {
   os << "::CORBA::Object_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (ValueBasePtr const&)
+OUTArgTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
 {
   os << "::CORBA::ValueBase_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (AnyPtr const&)
+OUTArgTypeNameEmitter::traverse (AnyDeclPtr const&)
 {
   os << "::CORBA::Any_out";
 }
-
-

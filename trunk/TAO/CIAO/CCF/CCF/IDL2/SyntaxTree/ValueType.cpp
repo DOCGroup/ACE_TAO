@@ -22,7 +22,9 @@ namespace CCF
         value_decl_init_ ()
         {
           TypeInfo ti (typeid (ValueTypeDecl));
-          ti.add_base (Access::PUBLIC, true, TypeDecl::static_type_info ());
+          ti.add_base (Access::PUBLIC,
+                       true,
+                       ForwardDeclarableTypeDecl::static_type_info ());
           return ti;
         }
 
@@ -45,7 +47,7 @@ namespace CCF
           ti.add_base (Access::PUBLIC,
                        true,
                        ValueTypeDecl::static_type_info ());
-          
+
           ti.add_base (Access::PUBLIC,
                        true,
                        TypeForwardDecl::static_type_info ());
