@@ -1,7 +1,29 @@
+Sat Jan 10 01:36:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SString: Made the following changes to make the ACE string
+ 	  class look more like the STL string class:
+	
+	  - Added npos to all classes.
+	  
+	  - Added non-const reference operator[].
+
+	  - Changed operator= and operator+= to return *this.
+	  
+	  - Added STL like find and rfind routines
+
+	  - Made the three classes be a similar as possible.
+
+	  - Changed the implementation of strstr to use the C library
+ 	    strstr function.
+
+	  - Added constructors from single characters.
+
+	  - Made substring a const method.
+	
 Fri Jan  9 19:11:39 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tests/Map_Manager_Test.cpp (test_hash_map_manager): Added
-	  ACE_UNUSED_ARG to eliminate warnings.
+ 	  ACE_UNUSED_ARG to eliminate warnings.
 
 	* ace/Hash_Map_Manager.cpp (rbegin): Added more static cast to
 	  eliminate warning messages.
