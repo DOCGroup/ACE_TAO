@@ -1,3 +1,12 @@
+Tue Feb 17 03:31:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp (open): 
+
+	  The address explicitly specified by the application was
+	  incorrectly passed as 0.0.0.0 to the acceptor. This was due to
+	  an erroneous setting of the address within the
+	  TAO_AV_SCTP_SEQ_Acceptor::open method which was fixed.
+
 Mon Feb 16 14:31:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/libs/UCS4_UTF16/Makefile:
