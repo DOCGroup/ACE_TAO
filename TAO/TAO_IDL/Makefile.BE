@@ -165,9 +165,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_array.h \
- include/ast_concrete_type.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_array.h include/ast_concrete_type.h \
+ be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -291,9 +291,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_argument.h include/ast_field.h \
- be_include/be_visitor.h
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_argument.h include/ast_field.h be_include/be_visitor.h
 
 .obj/be_attribute.o .obj/be_attribute.so .shobj/be_attribute.o .shobj/be_attribute.so: be/be_attribute.cpp be_include/be_attribute.h \
  include/ast_attribute.h include/ast_field.h include/ast_decl.h \
@@ -328,9 +327,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h be_include/be_decl.h \
- be_include/be_operation_strategy.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ be_include/be_decl.h be_include/be_operation_strategy.h \
+ be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -406,8 +405,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -536,8 +535,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_interface_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_interface_fwd.h \
  include/ast_component_fwd.h be_include/be_visitor.h
 
 .obj/be_constant.o .obj/be_constant.so .shobj/be_constant.o .shobj/be_constant.so: be/be_constant.cpp be_include/be_constant.h \
@@ -572,8 +571,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_constant.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_constant.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -726,8 +725,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -837,8 +836,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_enum_val.h include/ast_constant.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_enum_val.h include/ast_constant.h \
  include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -992,8 +991,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1216,8 +1215,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1326,10 +1325,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_field.h be_include/be_visitor.h \
- be_include/be_type.h include/ast_type.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_field.h be_include/be_visitor.h be_include/be_type.h \
+ include/ast_type.h $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
@@ -1522,8 +1520,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1651,8 +1649,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1961,8 +1959,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_interface_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_interface_fwd.h \
  be_include/be_visitor.h
 
 .obj/be_valuetype.o .obj/be_valuetype.so .shobj/be_valuetype.o .shobj/be_valuetype.so: be/be_valuetype.cpp be_include/be_valuetype.h \
@@ -1998,8 +1996,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2130,8 +2128,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_interface_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_interface_fwd.h \
  include/ast_valuetype_fwd.h be_include/be_visitor.h \
  include/ast_interface.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2245,8 +2243,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2356,9 +2354,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_native.h \
- be_include/be_visitor.h
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_native.h be_include/be_visitor.h
 
 .obj/be_operation.o .obj/be_operation.so .shobj/be_operation.o .shobj/be_operation.so: be/be_operation.cpp be_include/be_operation.h \
  be_include/be_scope.h include/utl_scope.h include/ast_decl.h \
@@ -2393,8 +2390,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2595,8 +2592,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_predefined_type.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_predefined_type.h \
  include/ast_concrete_type.h be_include/be_visitor.h \
  include/utl_identifier.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2648,9 +2645,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h be_include/be_scope.h include/utl_scope.h \
- include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2761,8 +2757,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2895,10 +2891,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_string.h \
- include/ast_concrete_type.h be_include/be_visitor.h \
- include/utl_identifier.h
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_string.h include/ast_concrete_type.h \
+ be_include/be_visitor.h include/utl_identifier.h
 
 .obj/be_structure.o .obj/be_structure.so .shobj/be_structure.o .shobj/be_structure.so: be/be_structure.cpp be_include/be_structure.h \
  be_include/be_scope.h include/utl_scope.h include/ast_decl.h \
@@ -2933,8 +2928,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -3065,8 +3060,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_structure_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_structure_fwd.h \
  be_include/be_visitor.h
 
 .obj/be_type.o .obj/be_type.so .shobj/be_type.o .shobj/be_type.so: be/be_type.cpp be_include/be_type.h be_include/be_decl.h \
@@ -3101,9 +3096,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h be_include/be_scope.h \
- include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -3227,9 +3222,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_typedef.h \
- be_include/be_visitor.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_typedef.h be_include/be_visitor.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -3267,9 +3261,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h be_include/be_scope.h \
- include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -3400,9 +3394,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_union_fwd.h \
- be_include/be_visitor.h
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_union_fwd.h be_include/be_visitor.h
 
 .obj/be_union_branch.o .obj/be_union_branch.so .shobj/be_union_branch.o .shobj/be_union_branch.so: be/be_union_branch.cpp be_include/be_union_branch.h \
  be_include/be_decl.h include/ast_decl.h include/utl_scoped_name.h \
@@ -3436,10 +3429,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_union_branch.h include/ast_field.h \
- be_include/be_union.h be_include/be_type.h include/ast_type.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_union_branch.h include/ast_field.h be_include/be_union.h \
+ be_include/be_type.h include/ast_type.h be_include/be_scope.h \
+ include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -3551,8 +3544,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- be_include/be_visitor.h
+ $(ACE_ROOT)/ace/OS.i be_include/be_visitor.h
 
 .obj/be_generator.o .obj/be_generator.so .shobj/be_generator.o .shobj/be_generator.so: be/be_generator.cpp be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h \
@@ -3587,8 +3579,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4101,8 +4093,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  include/global_extern.h include/TAO_IDL_FE_Export.h \
- include/idl_global.h \
- $(ACE_ROOT)/ace/SString.h \
+ include/idl_global.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -4324,9 +4315,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h be_include/be_scope.h include/utl_scope.h \
- include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4461,8 +4451,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4678,8 +4668,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h be_include/be_visitor_factory.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ be_include/be_visitor_factory.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -5235,8 +5225,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -5393,9 +5383,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h be_include/be_decl.h \
- be_include/be_operation_strategy.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ be_include/be_decl.h be_include/be_operation_strategy.h \
+ be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -5727,8 +5717,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_constant.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_constant.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -5905,12 +5895,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_argument.h include/ast_field.h \
- be_include/be_array.h be_include/be_type.h include/ast_type.h \
- include/ast_array.h include/ast_concrete_type.h \
- be_include/be_attribute.h include/ast_attribute.h \
- be_include/be_operation_strategy.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_argument.h include/ast_field.h be_include/be_array.h \
+ be_include/be_type.h include/ast_type.h include/ast_array.h \
+ include/ast_concrete_type.h be_include/be_attribute.h \
+ include/ast_attribute.h be_include/be_operation_strategy.h \
+ be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -6180,8 +6170,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -6366,9 +6356,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_field.h be_include/be_exception.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_field.h be_include/be_exception.h be_include/be_scope.h \
+ include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -6575,12 +6565,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h be_include/be_field.h \
- include/ast_field.h be_include/be_array.h include/ast_array.h \
- include/ast_concrete_type.h be_include/be_typedef.h \
- include/ast_typedef.h be_include/be_enum.h be_include/be_scope.h \
- include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h be_include/be_field.h include/ast_field.h \
+ be_include/be_array.h include/ast_array.h include/ast_concrete_type.h \
+ be_include/be_typedef.h include/ast_typedef.h be_include/be_enum.h \
+ be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -6653,8 +6642,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_enum.h be_include/be_interface.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_enum.h \
+ be_include/be_interface.h be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -6846,10 +6835,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_argument.h include/ast_field.h \
- be_include/be_interface.h be_include/be_scope.h include/utl_scope.h \
- include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_argument.h include/ast_field.h be_include/be_interface.h \
+ be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -7220,8 +7208,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_interface_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_interface_fwd.h \
  be_include/be_interface.h be_include/be_scope.h include/utl_scope.h \
  include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -7363,12 +7351,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_argument.h include/ast_field.h \
- be_include/be_array.h be_include/be_type.h include/ast_type.h \
- include/ast_array.h include/ast_concrete_type.h \
- be_include/be_attribute.h include/ast_attribute.h \
- be_include/be_operation_strategy.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_argument.h include/ast_field.h be_include/be_array.h \
+ be_include/be_type.h include/ast_type.h include/ast_array.h \
+ include/ast_concrete_type.h be_include/be_attribute.h \
+ include/ast_attribute.h be_include/be_operation_strategy.h \
+ be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -7770,8 +7758,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -7913,8 +7901,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -8247,12 +8235,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_argument.h include/ast_field.h \
- be_include/be_array.h be_include/be_type.h include/ast_type.h \
- include/ast_array.h include/ast_concrete_type.h \
- be_include/be_attribute.h include/ast_attribute.h \
- be_include/be_operation_strategy.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_argument.h include/ast_field.h be_include/be_array.h \
+ be_include/be_type.h include/ast_type.h include/ast_array.h \
+ include/ast_concrete_type.h be_include/be_attribute.h \
+ include/ast_attribute.h be_include/be_operation_strategy.h \
+ be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -8503,8 +8491,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_constant.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_constant.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -8850,9 +8838,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_argument.h include/ast_field.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_argument.h include/ast_field.h be_include/be_scope.h \
+ include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -8977,10 +8965,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_array.h \
- include/ast_concrete_type.h be_include/be_enum.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_array.h include/ast_concrete_type.h \
+ be_include/be_enum.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -9161,9 +9149,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_field.h be_include/be_structure.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_field.h be_include/be_structure.h be_include/be_scope.h \
+ include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -9349,8 +9337,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_structure_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_structure_fwd.h \
  be_include/be_visitor_structure_fwd.h be_include/be_visitor_decl.h \
  be_include/be_visitor.h be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -9438,10 +9426,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_array.h \
- include/ast_concrete_type.h be_include/be_enum.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_array.h include/ast_concrete_type.h \
+ be_include/be_enum.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -9628,10 +9616,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_array.h \
- include/ast_concrete_type.h be_include/be_enum.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_array.h include/ast_concrete_type.h \
+ be_include/be_enum.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -9844,8 +9832,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -10037,8 +10025,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_union_fwd.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_union_fwd.h \
  be_include/be_visitor_union_fwd.h be_include/be_visitor_decl.h \
  be_include/be_visitor.h be_include/be_codegen.h \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -10126,10 +10114,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/idl_narrow.h include/ast_type.h include/ast_array.h \
- include/ast_concrete_type.h be_include/be_enum.h \
- be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/OS.i include/idl_narrow.h \
+ include/ast_type.h include/ast_array.h include/ast_concrete_type.h \
+ be_include/be_enum.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -10403,6 +10391,43 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  be_include/TAO_IDL_BE_Export.h be_include/be_visitor_scope.h \
  include/idl_bool.h be_include/be_stream_factory.h \
- be_include/be_visitor_factory.h
+ be_include/be_visitor_factory.h include/ast_interface.h \
+ include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
+ include/utl_idlist.h include/TAO_IDL_FE_Export.h include/utl_list.h \
+ include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ include/ast_typedef.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
