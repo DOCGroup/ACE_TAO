@@ -1,0 +1,138 @@
+$Id$
+#include <Components.idl>
+
+module RobotAssembly
+{
+
+  enum ProductionOrderType { 
+	ProduceWhenReady, ProduceWhenConfirmed, ProductionConfirmation, ProductionAmended
+  };
+
+  enum StatusType { palletInPlace, palletProcessed, accepted, cancelled, complete, failed, ready, rejected, unacknowledged };
+
+  enum DisplayRequest {
+	DisplayWorkOrder,
+	DisplayWorkUpdate,
+	ReadytoProduce,
+	DisplayWorkProductionComplete,
+	DisplaySwitchProductionRobotRequest,
+	DisplayRadioFrequencyNeeded,
+	DisplayClearAreaPrompt,
+	DisplayProductionResumed
+  };
+
+  enum ProcessingOrderType {
+	Idle, BeginProcessingPallet, StopProcessingPallet, ResumeProduction, AbandonProduction
+  };
+  
+  enum MoveRequestType {
+	BuiltInTestMessage, GetPalletProductToProcess, MovePalletToFinishingArea
+  };
+
+  enum DiscreteValue {low, high};
+
+  enum Discretes {palletPresent, palletReleaseSwitch, assemblyAreaIntrusion };
+
+  struct WorkOrder {
+	ProductionOrderType Order;
+	unsigned long OrderNumber;
+	unsigned long ProductNumber;
+	long Priority;
+	long Quantity;
+  };
+
+  struct ProductionStatusType {
+     unsigned long OrderNumber;
+	 unsigned long ProductNumber;
+	 StatusType Status;
+	 long RequestedProduction;
+	 long ActualProduction;
+  };
+
+  struct MovePalletRequestType {
+	MoveRequestType MoveRequest;
+	unsigned long OrderNumber;
+	unsigned long ProductNumber;
+	long JobPriority;
+  };
+
+// 1e
+  eventtype ProductionWorkOrder  {
+	public WorkOrder Order;
+  };
+//2e, 6e, 9e
+  eventtype DisplayWork {
+      public DisplayRequest Display;
+      public WorkOrder Order;
+      public StatusType Status;
+   };
+
+// 3e, 12e
+  eventtype  ProductionStatus {
+	  public  StatusType Status;
+	  public WorkOrder Order;
+  };
+
+// 4e, 10e
+  eventtype MovePalletRequest {
+  	  public  MoveRequestType MoveRequest;
+	  public WorkOrder Order;
+  };
+
+
+// 7e
+  eventtype ProcessPallet {
+	  public ProcessingOrderType ProcessingOrder;
+	  public WorkOrder Order;
+  };
+
+
+// 8e
+  eventtype PalletProcessingStatus {
+    public StatusType Status;
+	public WorkOrder Order;
+  };
+
+// 5e, 11e
+  eventtype PalletStatusResponse {
+    public StatusType Status;
+	public WorkOrder Order;
+  };
+
+  interface MWIController
+  {
+    void SendOrder( in WorkOrder testOrder);  
+	ProductionStatusType GetOrderStatus();
+	string getHost();
+    void SendStringTest (in string testString);
+  };
+
+  interface  WorkOrderResponses {
+     void AcceptWorkOrderResponse(in WorkOrder Order, in StatusType Status);
+	 void SetTimeResponse(in WorkOrder Order, in StatusType Status);
+	 void AcceptFinalProductResponse(in WorkOrder Order, in StatusType Status);     
+  };
+
+  interface  HMIController {
+    string TextToDisplay();
+    void  KeyResponse( in short key);
+    string getHost();
+  };
+
+ interface  PCMController {
+    void SetDiscrete( in Discretes discrete);
+    DiscreteValue GetDiscreteStatus( in Discretes discrete);
+    MovePalletRequestType GetOrderStatus();
+    void SetPalletStatus();
+    string getHost();
+  };
+
+  interface RMController {
+    void SetProcessingStatus(in ProcessingOrderType Status);
+    ProcessingOrderType GetProcessingStatus();
+    string getHost();
+  };
+
+};
+
+
