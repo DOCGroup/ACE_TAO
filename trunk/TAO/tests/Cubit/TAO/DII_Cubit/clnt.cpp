@@ -12,9 +12,6 @@
 
 inline int func (unsigned i) { return i - 117; }
 
-extern void
-print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
-
 // Global variables
 static const char *TAO_arg_ior = 0;
 static u_int loop_count = 1;
@@ -79,7 +76,7 @@ cube_union_stub (u_int i,
 
   if (env.exception () != 0) 
     {
-      print_exception (env.exception (), "from cube_union");
+      env.print_exception ("from cube_union");
       error_count++;
     } 
   else 
@@ -112,7 +109,7 @@ cube_union_stub (u_int i,
 
   if (env.exception () != 0) 
     {
-      print_exception (env.exception (), "from cube_union");
+      env.print_exception ("from cube_union");
       error_count++;
     } 
   else 
@@ -150,8 +147,8 @@ cube_union_dii (u_int &call_count,
   if (env.exception () != 0) 
     {
       error_count++;
-      
-      print_exception (env.exception (), "cube_union_dii request create");
+
+      env.print_exception ("cube_union_dii request create");
       return;
     }
 
@@ -170,7 +167,7 @@ cube_union_dii (u_int &call_count,
   if (env.exception () != 0) 
     {
       error_count++;
-      print_exception (env.exception (), "cube_union_dii request arg add");
+      env.print_exception ("cube_union_dii request arg add");
       CORBA::release (req);
       return;
     }
@@ -180,7 +177,7 @@ cube_union_dii (u_int &call_count,
   if (env.exception () != 0) 
     {
       error_count++;
-      print_exception (env.exception (), "cube_union_dii result type");
+      env.print_exception ("cube_union_dii result type");
       CORBA::release (req);
       return;
     }
@@ -192,7 +189,7 @@ cube_union_dii (u_int &call_count,
   if (req->env ()->exception () != 0) 
     {
       error_count++;
-      print_exception (req->env ()->exception (),"cube_union_dii invoke");
+      req->env ()->print_exception ("cube_union_dii invoke");
       CORBA::release (req);
       return;
     }
@@ -235,7 +232,7 @@ main (int argc, char *argv[])
 
   if (env.exception () != 0)
     {
-      print_exception (env.exception (), "ORB initialization");
+      env.print_exception ("ORB initialization");
       return 1;
     }
 
@@ -255,7 +252,7 @@ main (int argc, char *argv[])
 
   if (env.exception () != 0)
     {
-      print_exception (env.exception (), "string2object");
+      env.print_exception ("string2object");
       return 1;
     }
 
@@ -299,7 +296,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0)
         {
-          print_exception (env.exception (), "from cube_octet");
+          env.print_exception ("from cube_octet");
           error_count++;
         }
       else
@@ -324,8 +321,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0)
         {
-          print_exception (env.exception (),
-			   "from cube_short");
+          env.print_exception ("from cube_short");
           error_count++;
         }
       else
@@ -353,7 +349,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0)
         {
-          print_exception (env.exception (), "from cube_long");
+          env.print_exception ("from cube_long");
           error_count++;
         }
       else
@@ -382,7 +378,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0)
         {
-          print_exception (env.exception (), "from cube_struct");
+          env.print_exception ("from cube_struct");
           error_count++;
         }
       else
@@ -439,7 +435,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0) 
 	{
-	  print_exception (env.exception (), "DII request create");
+          env.print_exception ("DII request create");
 	  break;
 	}
 
@@ -456,7 +452,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0) 
 	{
-	  print_exception (env.exception (), "DII request arg add");
+          env.print_exception ("DII request arg add");
 	  CORBA::release (req);
 	  break;
 	}
@@ -465,7 +461,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0) 
 	{
-	  print_exception (env.exception (), "DII request result type");
+          env.print_exception ("DII request result type");
 	  CORBA::release (req);
 	  break;
 	}
@@ -476,7 +472,7 @@ main (int argc, char *argv[])
 
       if (req->env ()->exception () != 0) 
 	{
-	  print_exception (req->env ()->exception (), "DII invoke");
+          req->env ()->print_exception ("DII invoke");
 	  CORBA::release (req);
 	  break;
 	}
