@@ -48,7 +48,6 @@
     </processcollocation>
 
 
-    <processcollocation>
       <homeplacement id="a_CAOCHome">
         <componentfileref idref="com-CAOC"/>
           <componentinstantiation id="a_CAOC">
@@ -90,8 +89,7 @@
           <componentinstantiation id="a_UCAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>UCAVGSHost</destination>
-    </processcollocation>               
+             
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
   </partitioning>
