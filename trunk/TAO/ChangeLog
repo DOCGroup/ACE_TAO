@@ -1,3 +1,11 @@
+Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}:
+	  TAO_ECG_UDP_Receiver member request_map_ may be accessed
+	  concurrently. Added a mutex, request_map_protector_.
+	  Thanks to Andreas Koehler <andreas.koehler@sysde.eads.net>
+	  for tracking down the bug and providing the fix.
+
 Sun Oct 27 09:04:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Event_Forwarder.idl:
