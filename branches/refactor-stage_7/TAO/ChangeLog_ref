@@ -1,3 +1,10 @@
+Thu Sep  4 09:20:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+          Added files to project that were bumped in the merge.
+
 Wed Sep  3 19:17:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/OBV_Constants.h:
