@@ -50,7 +50,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
   oid.tid=sched_param->tid;
   oid.task_id=sched_param->task_id;
   oid.guid=guid;
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -72,7 +72,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
 
@@ -87,7 +87,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   ACE_Time_Value yield_count_down_time (yield_interval);
   ACE_Countdown_Time yield_count_down (&yield_count_down_time);
-  
+
   timer.start ();
   int j=0;
   while (compute_count_down_time > ACE_Time_Value::zero)
@@ -95,14 +95,14 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
       ACE::is_prime (prime_number,
 		     2,
 		     prime_number / 2);
-      
+
       ++j;
 
 #ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0) 
+      if (j%1000 == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
-            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration)); 
+          ACE_DEBUG ((LM_DEBUG,
+            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration));
         }
 #endif
       if (j%1000 == 0)
@@ -110,7 +110,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 //          ACE_Time_Value run_time = ACE_OS::gettimeofday ();
 //          task_stats_.sample (ACE_UINT64 (run_time.msec ()), guid);
         }
-      
+
       compute_count_down.update ();
 
       if (enable_yield_)
@@ -118,12 +118,12 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
           yield_count_down.update ();
           if (yield_count_down_time <= ACE_Time_Value::zero)
             {
-              CORBA::Policy_var sched_param_policy = 
+              CORBA::Policy_var sched_param_policy =
                 CORBA::Policy::_duplicate (current_->
                                            scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
-              
+
               const char * name = 0;
-              
+
               CORBA::Policy_ptr implicit_sched_param = 0;
               current_->update_scheduling_segment (name,
                                                    sched_param_policy.in (),
@@ -137,13 +137,13 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
 	      "Request processing in thread %t done, "
-	      "prio = %d, load = %d, elapsed time = %umsec\n", 
+	      "prio = %d, load = %d, elapsed time = %umsec\n",
 	      prio, exec_duration, elapsed_time.msec () ));
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
-  
+  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+
 }
 
 void

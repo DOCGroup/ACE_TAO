@@ -293,13 +293,13 @@ main (int argc, char* argv[])
   TAO_EC_Kokyu_Factory::init_svcs ();
 
   //@BT
-  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",tv.msec()));
 #ifdef ACE_HAS_DSUI
   //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
-  //  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 0, 0, NULL);
+  //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+  DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -378,10 +378,10 @@ main (int argc, char* argv[])
 
 #ifdef ACE_HAS_DSUI
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
+      DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
 #ifdef ACE_HAS_DSUI

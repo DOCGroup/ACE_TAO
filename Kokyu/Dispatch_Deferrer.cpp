@@ -97,7 +97,7 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem, ACE_Time_Value last_rel
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
   Object_ID oid = qitem->command()->getID();
-  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, 0, sizeof(Object_ID), (char*)&oid);
 #endif // ACE_HAS_DSUI
 
   return 0;
@@ -138,7 +138,7 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
   //time between release and enqueue into dispatch queue because
   //of RG
   Object_ID oid = qitem->command()->getID();
-  DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, 0, sizeof(Object_ID), (char*)&oid);
 #endif // ACE_HAS_DSUI
 
   this->task_->enqueue_i(qitem);

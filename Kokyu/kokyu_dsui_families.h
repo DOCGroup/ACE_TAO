@@ -1,4 +1,4 @@
-/* $Id$*/
+// $Id$
 // Automatically generated header file "kokyu_dsui_families.h"  by dsui-parse.py 
 #ifndef _kokyu_DSUI_FAMILIES_H
 #define _kokyu_DSUI_FAMILIES_H
@@ -89,67 +89,70 @@
  * "DSRT Direct Dispatcher Events"
  */
 #define DSRT_DIRECT_DISPATCH_FAM 6
-#define NUM_EVENTS_DSRT_DIRECT_DISPATCH 2
+#define NUM_EVENTS_DSRT_DIRECT_DISPATCH 5
 #define NUM_COUNTERS_DSRT_DIRECT_DISPATCH 0
 #define NUM_HISTOGRAMS_DSRT_DIRECT_DISPATCH 0
 
 #define SCHEDULE_ENTER 0
 #define SCHEDULE_EXIT 1
+#define RG_EVENT_RELEASED 2
+#define RG_EVENT_DELAYED_RELEASED 3
+#define NONRG_EVENT_RELEASED 4
 
 
 
 
 #ifdef CONFIG_DSTREAM_DISP_TASK
-#define DSUI_EVENT_LOG_DISP_TASK_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_DISP_TASK_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(DISP_TASK_FAM, (event) ) ) \
             dsui_event_log( DISP_TASK_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_DISP_TASK_FAM( event, tag , len, data )
+#define DSTRM_EVENT_DISP_TASK_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_DSRT_DISPATCH_IMPL
-#define DSUI_EVENT_LOG_DSRT_DISPATCH_IMPL_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_DSRT_DISPATCH_IMPL_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(DSRT_DISPATCH_IMPL_FAM, (event) ) ) \
             dsui_event_log( DSRT_DISPATCH_IMPL_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_DSRT_DISPATCH_IMPL_FAM( event, tag , len, data )
+#define DSTRM_EVENT_DSRT_DISPATCH_IMPL_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_DISP_DEFERRER
-#define DSUI_EVENT_LOG_DISP_DEFERRER_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_DISP_DEFERRER_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(DISP_DEFERRER_FAM, (event) ) ) \
             dsui_event_log( DISP_DEFERRER_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_DISP_DEFERRER_FAM( event, tag , len, data )
+#define DSTRM_EVENT_DISP_DEFERRER_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_DSRT_CV_DISPATCH
-#define DSUI_EVENT_LOG_DSRT_CV_DISPATCH_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_DSRT_CV_DISPATCH_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(DSRT_CV_DISPATCH_FAM, (event) ) ) \
             dsui_event_log( DSRT_CV_DISPATCH_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_DSRT_CV_DISPATCH_FAM( event, tag , len, data )
+#define DSTRM_EVENT_DSRT_CV_DISPATCH_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_DSRT_DISPATCH
-#define DSUI_EVENT_LOG_DSRT_DISPATCH_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_DSRT_DISPATCH_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(DSRT_DISPATCH_FAM, (event) ) ) \
             dsui_event_log( DSRT_DISPATCH_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_DSRT_DISPATCH_FAM( event, tag , len, data )
+#define DSTRM_EVENT_DSRT_DISPATCH_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_DSRT_DIRECT_DISPATCH
-#define DSUI_EVENT_LOG_DSRT_DIRECT_DISPATCH_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_DSRT_DIRECT_DISPATCH_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(DSRT_DIRECT_DISPATCH_FAM, (event) ) ) \
             dsui_event_log( DSRT_DIRECT_DISPATCH_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_DSRT_DIRECT_DISPATCH_FAM( event, tag , len, data )
+#define DSTRM_EVENT_DSRT_DIRECT_DISPATCH_FAM( event, tag , len, data )
 #endif
 #endif /* _DSUI_FAMILIES_H */

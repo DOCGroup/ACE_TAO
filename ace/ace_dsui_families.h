@@ -1,4 +1,4 @@
-/* $Id$*/
+// $Id$
 // Automatically generated header file "ace_dsui_families.h"  by dsui-parse.py 
 #ifndef _ace_DSUI_FAMILIES_H
 #define _ace_DSUI_FAMILIES_H
@@ -35,11 +35,11 @@
 
 
 #ifdef CONFIG_DSTREAM_MSG_QUEUE
-#define DSUI_EVENT_LOG_MSG_QUEUE_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_MSG_QUEUE_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(MSG_QUEUE_FAM, (event) ) ) \
             dsui_event_log( MSG_QUEUE_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_MSG_QUEUE_FAM( event, tag , len, data )
+#define DSTRM_EVENT_MSG_QUEUE_FAM( event, tag , len, data )
 #endif
 #endif /* _DSUI_FAMILIES_H */

@@ -1,9 +1,9 @@
 // $Id$
-// Automatically generated header file "federated_dsui_families.h"  by dsui-parse.py 
-#ifndef _federated_DSUI_FAMILIES_H
-#define _federated_DSUI_FAMILIES_H
+// Automatically generated header file "ft_dsui_families.h"  by dsui-parse.py 
+#ifndef _ft_DSUI_FAMILIES_H
+#define _ft_DSUI_FAMILIES_H
 
-#define federated_NUM_FAMILIES 3
+#define ft_NUM_FAMILIES 3
 
 /* DSUI Family: TEST_ONE
  * "Description"
@@ -22,8 +22,8 @@
 /* DSUI Family: WORKER_GROUP
  * "Description"
  */
-#define WORKER_GROUP_FAM 3
-#define NUM_EVENTS_WORKER_GROUP 5
+#define WORKER_GROUP_FAM 2
+#define NUM_EVENTS_WORKER_GROUP 9
 #define NUM_COUNTERS_WORKER_GROUP 0
 #define NUM_HISTOGRAMS_WORKER_GROUP 0
 
@@ -32,14 +32,18 @@
 #define BEGIN_SCHED_SEGMENT 2
 #define END_SCHED_SEGMENT 3
 #define WORKER_STARTED 4
+#define UPDATE_SCHED_SEGMENT_BEGIN 5
+#define UPDATE_SCHED_SEGMENT_END 6
+#define RUNNING_SUBTASK 7
+#define FINISHING_SUBTASK 8
 
 
 
 /* DSUI Family: MAIN_GROUP
  * "Description"
  */
-#define MAIN_GROUP_FAM 2
-#define NUM_EVENTS_MAIN_GROUP 8
+#define MAIN_GROUP_FAM 3
+#define NUM_EVENTS_MAIN_GROUP 9
 #define NUM_COUNTERS_MAIN_GROUP 0
 #define NUM_HISTOGRAMS_MAIN_GROUP 0
 
@@ -51,6 +55,7 @@
 #define AFTER_SERVER_SHUTDOWN 5
 #define STOP 6
 #define WORKER_ACTIVATED 7
+#define WORKER_WAIT_DONE 8
 
 
 

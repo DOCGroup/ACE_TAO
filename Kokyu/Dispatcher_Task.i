@@ -66,13 +66,13 @@ Dispatcher_Task::enqueue_i (Dispatch_Queue_Item *qitem)
 #endif //KOKYU_HAS_RELEASE_GUARD
 
 #if defined (ACE_HAS_DSUI)
-  DSUI_EVENT_LOG (DISP_TASK_FAM, BEFORE_PUTQ_CALL, 0, 0, NULL)
+  DSTRM_EVENT (DISP_TASK_FAM, BEFORE_PUTQ_CALL, 0, 0, NULL)
 #endif // ACE_HAS_DSUI
 
   this->putq (qitem);
 
 #if defined (ACE_HAS_DSUI)
-  DSUI_EVENT_LOG (DISP_TASK_FAM, AFTER_PUTQ_CALL, 0, 0, NULL)
+  DSTRM_EVENT (DISP_TASK_FAM, AFTER_PUTQ_CALL, 0, 0, NULL)
 #endif // ACE_HAS_DSUI
 
   //@BT INSTRUMENT with event ID: EVENT_ENQUEUED Measure time from

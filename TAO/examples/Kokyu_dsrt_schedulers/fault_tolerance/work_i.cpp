@@ -50,7 +50,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration, CORBA::Long need_ft A
   oid.tid=sched_param->tid;
   oid.task_id=sched_param->task_id;
   oid.guid=guid;
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -161,7 +161,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration, CORBA::Long need_ft A
 	      "Request processing in thread %t done, "
 	      "prio = %d, load = %d, elapsed time = %umsec\n", 
 	      prio, exec_duration, elapsed_time.msec () ));
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
   
 }
 

@@ -198,7 +198,7 @@ main (int argc, char *argv[])
   non_dsui_timer.start();
 
   /* MEASURE: Program start time */
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,0,0,NULL);
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
@@ -301,7 +301,7 @@ main (int argc, char *argv[])
                                          sched_scope), -1);
 
 	  /* MEASURE: Scheduler start time */
-	  DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_STARTED, 0, 0, NULL);
+	  DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_STARTED, 0, 0, NULL);
 
           manager->rtscheduler (scheduler);
 
@@ -402,7 +402,7 @@ main (int argc, char *argv[])
       /* MEASURE: Wait for worker thread done in main thread */
       // char* msg = "(%t): wait for worker threads done in main thread\n";
       // Get thread id
-      // DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_WAIT_DONE, 1, strlen(msg), msg);
+      // DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_WAIT_DONE, 1, strlen(msg), msg);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t): wait for worker threads done in main thread\n"));
@@ -432,13 +432,13 @@ main (int argc, char *argv[])
           /* MEASURE: Call to shutdown server */
           // char* msg = "(%t): wait for worker threads done in main thread\n";
           // Get thread id
-          DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
+          DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
 
           server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           /* MEASURE: After call to server shutdown */
-          DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
+          DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
           ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
 
@@ -452,7 +452,7 @@ main (int argc, char *argv[])
       scheduler->shutdown ();
 
       /* MEASURE: Scheduler stop time */
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
+      DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
     }
   ACE_CATCHANY
@@ -464,7 +464,7 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   /* MEASURE: Program stop time */
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 0, 0, NULL);
+  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0, 0, NULL);
 
   non_dsui_timer.stop();
   ACE_hrtime_t dsui_ovhd_time;
@@ -504,7 +504,7 @@ Worker::svc (void)
   /* MEASURE: Worker start time */
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
   oid.task_id = m_id;
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   const char * name = 0;
@@ -559,7 +559,7 @@ Worker::svc (void)
 
       /* MEASURE: Start of scheduling segment */
       oid.task_id = sched_param.task_id;
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
       //      ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));
 
       scheduler_current_->begin_scheduling_segment (name,
@@ -569,7 +569,7 @@ Worker::svc (void)
       ACE_CHECK_RETURN (-1);
 
       /* MEASURE: End of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
       //      ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
@@ -589,13 +589,13 @@ Worker::svc (void)
 
           //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
           implicit_sched_param = sched_param_policy;
-          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, 0, sizeof(Object_ID), (char*)&oid);
+          DSTRM_EVENT (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, 0, sizeof(Object_ID), (char*)&oid);
           scheduler_current_->update_scheduling_segment(name,
                                                         sched_param_policy.in (),
                                                         implicit_sched_param.in ()
                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&oid);
+          DSTRM_EVENT (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&oid);
         }
 
       //  TAO_debug_level = 1;
@@ -607,7 +607,7 @@ Worker::svc (void)
 
       timeval tv;
 
-      DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       tv.tv_sec = server_load_-1;
       tv.tv_usec = 800000;
@@ -621,10 +621,10 @@ Worker::svc (void)
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
 #endif
-      DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       sched_param.deadline = sched_param.deadline + left_work*10000000;
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
       server_->test_method (left_work ACE_ENV_ARG_PARAMETER);
 
       ACE_CHECK_RETURN (-1);
@@ -633,7 +633,7 @@ Worker::svc (void)
         oneway call done on the client side.
       */
       /* MEASURE: One way call done */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
 
       scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
                                                       Kokyu::BLOCK);
@@ -703,7 +703,7 @@ Worker_c::svc (void)
   /* MEASURE: Worker start time */
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
   oid.task_id = m_id;
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   const char * name = 0;
@@ -756,7 +756,7 @@ Worker_c::svc (void)
       implicit_sched_param = sched_param_policy;
 
       /* MEASURE: Start of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
       scheduler_current_->begin_scheduling_segment (name,
                                                     sched_param_policy.in (),
@@ -765,7 +765,7 @@ Worker_c::svc (void)
       ACE_CHECK_RETURN (-1);
 
       /* MEASURE: End of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
     }
 
   ACE_Time_Value start_t, repair_t;
@@ -785,13 +785,13 @@ Worker_c::svc (void)
           sched_param.tid = oid.tid;
           sched_param.pid = oid.pid;
 
-          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, 0, sizeof(Object_ID), (char*)&oid);
+          DSTRM_EVENT (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, 0, sizeof(Object_ID), (char*)&oid);
           scheduler_current_->update_scheduling_segment(name,
                                                         sched_param_policy.in (),
                                                         implicit_sched_param.in ()
                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&oid);
+          DSTRM_EVENT (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&oid);
         }
 
       if (i==0)
@@ -805,11 +805,11 @@ Worker_c::svc (void)
       tv.tv_sec = server_load_;
       tv.tv_usec = 0;
 
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, RUNNING_SUBTASK, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, RUNNING_SUBTASK, 0, sizeof(Object_ID), (char*)&oid);
 
       CPULoad::run(tv);
 
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, FINISHING_SUBTASK, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (WORKER_GROUP_FAM, FINISHING_SUBTASK, 0, sizeof(Object_ID), (char*)&oid);
 
       scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
                                                       Kokyu::BLOCK);

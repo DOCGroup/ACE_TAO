@@ -26,7 +26,7 @@ int EC_Event_Limit::handle_timeout (const ACE_Time_Value &, const void *)
     {
       ACE_DEBUG((LM_DEBUG, "*************** STOP! *************\n"));
 #ifdef ACE_HAS_DSUI
-      DSUI_EVENT_LOG (TIMEOUT_FAM, TIMEOUT_EVENT, 0, 0, NULL);
+      DSTRM_EVENT (TIMEOUT_FAM, TIMEOUT_EVENT, 0, 0, NULL);
       delete m_ds_ptr;
       m_ds_ptr = 0;
 #endif //ACE_HAS_DSUI
