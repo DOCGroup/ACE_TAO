@@ -18,53 +18,52 @@
 #define ACE_TIMER_QUEUE_T_H
 
 #include "ace/Time_Value.h"
-#include "ace/Synch.h"
 
 // Forward declarations.
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Queue_T;
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_List_T;
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_List_Iterator_T;
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Heap_T;
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Heap_Iterator_T;
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Wheel_T;
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Wheel_Iterator_T;
 
 // This should be nested within the ACE_Timer_Queue class but some C++
 // compilers still don't like this...
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Node_T
   // = TITLE
   //     Maintains the state associated with a Timer entry.
 {
   // = The use of friends should be replaced with accessors...
-  friend class ACE_Timer_Queue_T<TYPE, FUNCTOR>;
-  friend class ACE_Timer_List_T<TYPE, FUNCTOR>;
-  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>;
-  friend class ACE_Timer_Heap_T<TYPE, FUNCTOR>;
-  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR>;
-  friend class ACE_Timer_Wheel_T<TYPE, FUNCTOR>;
-  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR>;
+  friend class ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>;
+  friend class ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>;
+  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>;
+  friend class ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>;
+  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, LOCK>;
+  friend class ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>;
+  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK>;
 
   // = Initialization methods.
   ACE_Timer_Node_T (const TYPE &type, 
 		    const void *a, 
 		    const ACE_Time_Value &t, 
 		    const ACE_Time_Value &i, 
-		    ACE_Timer_Node_T<TYPE, FUNCTOR> *n, 
+		    ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *n, 
 		    long timer_id);
   // Constructor.
 
@@ -72,8 +71,8 @@ class ACE_Timer_Node_T
 		    const void *a, 
 		    const ACE_Time_Value &t, 
 		    const ACE_Time_Value &i, 
-		    ACE_Timer_Node_T<TYPE, FUNCTOR> *p,
-                    ACE_Timer_Node_T<TYPE, FUNCTOR> *n, 
+		    ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *p,
+                    ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *n, 
 		    long timer_id);
   // Constructor for the doubly linked list version.
 
@@ -94,10 +93,10 @@ class ACE_Timer_Node_T
   // If this is a periodic timer this holds the time until the next
   // timeout.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR> *prev_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *prev_;
   // Pointer to previous timer.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR> *next_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *next_;
   // Pointer to next timer.
   
   long timer_id_;
@@ -110,7 +109,7 @@ class ACE_Timer_Node_T
   // Dump the state of an TYPE.
 };
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Queue_Iterator_T
   // = TITLE
   //     Generic interfae for iterating over a subclass of
@@ -128,7 +127,7 @@ public:
   virtual ~ACE_Timer_Queue_Iterator_T (void);
   // Destructor.
 
-  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node,
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *&timer_node,
 		    const ACE_Time_Value &cur_time) = 0;
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -136,7 +135,7 @@ public:
   // seen, else 1.
 };
 
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Queue_T
   // = TITLE 
   //      Provides an interface to timers.
@@ -147,7 +146,7 @@ class ACE_Timer_Queue_T
   //      and <ACE_Timer_Heap>.
 {
 public: 
-  typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> ITERATOR;
+  typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> ITERATOR;
   // Type of Iterator
 
   // = Initialization and termination methods.
@@ -227,10 +226,8 @@ public:
   void timer_skew (const ACE_Time_Value &skew);
   const ACE_Time_Value &timer_skew (void) const;
 
-#if defined (ACE_MT_SAFE)
-  ACE_Recursive_Thread_Mutex &lock (void); 
+  LOCK &lock (void); 
   // Synchronization variable used by the queue
-#endif /* ACE_MT_SAFE */
 
   FUNCTOR &upcall_functor (void);
   // Accessor to the upcall functor
@@ -249,22 +246,20 @@ protected:
   // This method will call the <functor> with the <type>, <act> and
   // <time>
 
-  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *) = 0;
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *) = 0;
   // Reschedule an "interval" <ACE_Timer_Node>.
 
   virtual ITERATOR &iter (void) = 0;
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void) = 0;
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *alloc_node (void) = 0;
   // Factory method that allocates a new node.
 
-  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *) = 0;
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *) = 0;
   // Factory method that frees a previously allocated node.
 
-#if defined (ACE_MT_SAFE)
-  ACE_Recursive_Thread_Mutex lock_; 
-  // Synchronization variable for the MT_SAFE <ACE_Timer_Queue>.
-#endif /* ACE_MT_SAFE */
+  LOCK lock_; 
+  // Synchronization variable for <ACE_Timer_Queue>.
 
   ACE_Time_Value (*gettimeofday_)(void);
   // Pointer to function that returns the current time of day.
@@ -283,8 +278,8 @@ private:
   // Adjusts for timer skew in various clocks.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR> &);
-  void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR> &);
+  ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> &);
+  void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> &);
 };
 
 #if defined (__ACE_INLINE__)

@@ -49,19 +49,21 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
   // Access needed to: proactor ()
 
 public:
-  typedef ACE_Timer_Queue_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> TIMER_QUEUE;
+  typedef ACE_Timer_Queue_T<ACE_Handler *, 
+                            ACE_Proactor_Handle_Timeout_Upcall, 
+                            ACE_SYNCH_RECURSIVE_MUTEX> TIMER_QUEUE;
     
   ACE_Proactor_Handle_Timeout_Upcall (void);
   // Constructor
 
-  int operator () (TIMER_QUEUE &timer_queue,
-		   ACE_Handler *handler,
-		   const void *arg,
-		   const ACE_Time_Value &cur_time);
+  int timeout (TIMER_QUEUE &timer_queue,
+	       ACE_Handler *handler,
+	       const void *arg,
+	       const ACE_Time_Value &cur_time);
   // This method is called when the timer expires
     
-  int operator () (TIMER_QUEUE &timer_queue,
-		   ACE_Handler *handler);
+  int cancellation (TIMER_QUEUE &timer_queue,
+		    ACE_Handler *handler);
   // This method is called when the timer is canceled
 
 protected:
@@ -96,17 +98,33 @@ public:
   // for the Proactor (add to the ease of use of these template
   // classes).
 
-  typedef ACE_Timer_Queue_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Queue;
-  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Queue_Iterator;
+  typedef ACE_Timer_Queue_T<ACE_Handler *, 
+                            ACE_Proactor_Handle_Timeout_Upcall, 
+                            ACE_SYNCH_RECURSIVE_MUTEX> Timer_Queue;
+  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *, 
+                                     ACE_Proactor_Handle_Timeout_Upcall, 
+                                     ACE_SYNCH_RECURSIVE_MUTEX> Timer_Queue_Iterator;
 
-  typedef ACE_Timer_List_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_List;
-  typedef ACE_Timer_List_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_List_Iterator;
+  typedef ACE_Timer_List_T<ACE_Handler *, 
+                           ACE_Proactor_Handle_Timeout_Upcall, 
+                           ACE_SYNCH_RECURSIVE_MUTEX> Timer_List;
+  typedef ACE_Timer_List_Iterator_T<ACE_Handler *, 
+                                    ACE_Proactor_Handle_Timeout_Upcall, 
+                                    ACE_SYNCH_RECURSIVE_MUTEX> Timer_List_Iterator;
 
-  typedef ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Heap;
-  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Heap_Iterator;
+  typedef ACE_Timer_Heap_T<ACE_Handler *, 
+                            ACE_Proactor_Handle_Timeout_Upcall, 
+                            ACE_SYNCH_RECURSIVE_MUTEX> Timer_Heap;
+  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *, 
+                                    ACE_Proactor_Handle_Timeout_Upcall, 
+                                    ACE_SYNCH_RECURSIVE_MUTEX> Timer_Heap_Iterator;
 
-  typedef ACE_Timer_Wheel_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Wheel;
-  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Wheel_Iterator;
+  typedef ACE_Timer_Wheel_T<ACE_Handler *, 
+                            ACE_Proactor_Handle_Timeout_Upcall, 
+                            ACE_SYNCH_RECURSIVE_MUTEX> Timer_Wheel;
+  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *, 
+                                     ACE_Proactor_Handle_Timeout_Upcall, 
+                                     ACE_SYNCH_RECURSIVE_MUTEX> Timer_Wheel_Iterator;
 
   ACE_Proactor (size_t number_of_threads = 0, 
 		Timer_Queue *tq = 0,
