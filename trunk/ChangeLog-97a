@@ -1,3 +1,17 @@
+Wed May  7 23:51:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Changed the use of ACE_Unbounded_Set to
+ 	  ACE_Unbounded_Stack in order to get the appropriate semantics
+ 	  for TSS cleanup on NT.
+
+	* ace/Containers: Enhanced the ACE_Unbounded_Stack class so
+	  that it supports insert()/remove()/find() methods.  These
+	  rather unorthodox methods are useful for implementing the
+	  TSS semantics required by OS.cpp.
+
+	* ace/Containers: Revised all the interfaces for the various
+ 	  containers so that they all have the same "look and feel."
+
 Thu May 08 00:10:00 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/Process.*: This is the first pass at the new ACE_Process
@@ -5,8 +19,8 @@ Thu May 08 00:10:00 1997    <harrison@samba.cs.wustl.edu>
  	  ported to Solaris, we'll replace the current ACE_Process with
  	  ACE_ProcessEx.
 
-	* examples/OS/Process/process.cpp: Added some examples for the new
-	  ACE_ProcessEx.
+	* examples/OS/Process/process.cpp: Added some examples for the
+	  new ACE_ProcessEx.
 
 Wed May 07 21:58:29 1997    <irfan@TWOSTEP>
 
