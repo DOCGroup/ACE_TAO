@@ -1,3 +1,11 @@
+Sun Dec 06 08:32:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers_T.cpp,Local_Name_Space_T.cpp,
+          Name_Request_Reply.cpp,Service_Config.cpp,Service_Manager.cpp,
+          Svc_Conf.y,Svc_Conf_Tokens.h,Svc_Conf_y.cpp,
+          Time_Request_Reply.cpp,Trace.cpp:
+          use ACE_NLOGGING instead of ACE_NDEBUG.
+
 Sat Dec 05 21:45:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers_T.cpp,Local_Name_Space_T.cpp,
