@@ -56,18 +56,34 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                    bool &has_timeout,
                                    ACE_Time_Value &time_value)
 {
-  CORBA::Policy_var policy =
-    (stub == 0
-     ? orb_core->get_cached_policy_including_current (TAO_CACHED_POLICY_CONNECTION_TIMEOUT)
-     : stub->get_cached_policy (TAO_CACHED_POLICY_CONNECTION_TIMEOUT));
 
-  if (CORBA::is_nil (policy.in ()))
-    {
-      has_timeout = 0;
-      return;
-    }
   ACE_TRY_NEW_ENV
     {
+      CORBA::Policy_var policy = 0;
+
+      if (stub == 0)
+        {
+          policy =
+            orb_core->get_cached_policy_including_current (
+              TAO_CACHED_POLICY_CONNECTION_TIMEOUT
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          policy =
+            stub->get_cached_policy (
+              TAO_CACHED_POLICY_CONNECTION_TIMEOUT
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (CORBA::is_nil (policy.in ()))
+        {
+          has_timeout = 0;
+          return;
+        }
+
       TAO::ConnectionTimeoutPolicy_var p =
         TAO::ConnectionTimeoutPolicy::_narrow (
           policy.in ()

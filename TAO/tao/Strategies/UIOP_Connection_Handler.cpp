@@ -83,12 +83,32 @@ TAO_UIOP_Connection_Handler::open (void*)
     this->orb_core ()->get_protocols_hooks ();
 
   // @@ fix me
-  int client = 0;
+  bool client = 0;
 
-  if (client)
-    tph->client_protocol_properties_at_orb_level (protocol_properties);
-  else
-    tph->server_protocol_properties_at_orb_level (protocol_properties);
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,

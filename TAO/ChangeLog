@@ -1,3 +1,22 @@
+Sat Oct  2 03:24:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTPortableServer/RT_POA.cpp:
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SCIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+
+	  Calls to get_cached_policy, client_protocol_properties_at_orb_level, 
+	  and server_protocol_properties_at_orb_level need environmnet
+	  variables to be passed. This should fix a bunch of compilation
+	  errors in builds with exceptions disabled. 
+
 Sat Oct  2 01:33:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Protocols/sender.cpp:
