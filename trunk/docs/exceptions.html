@@ -99,9 +99,12 @@ try macros.
 
   <li><P><em>Catching exceptions:</em><br>
       Use <code>ACE_TRY</code> to catch exceptions if there's an
-      <code>ACE_TRY_ENV</code> available.  Otherwise, use
-      <code>ACE_TRY_NEW_ENV</code> which will defines a new
-      <code>ACE_TRY_ENV</code> within it's scope.  If there are
+      <code>ACE_TRY_ENV</code> available.  Otherwise, you should use
+      <code>ACE_DECLARE_NEW_CORBA_ENV</code> to create one at
+      <em>proper</em> scope.  The use of
+      <code>ACE_TRY_NEW_ENV</code> is considered depricated because it
+      can't deal with the case when you have multiple <code>TRY</code>
+      blocks in the scope of <code>ACE_TRY_NEW_ENV</code>.  If there are
       more than one try blocks in a function, use <code>ACE_TRY_EX</code>
       for all subsequence try blocks to avoid name clashing of labels.
       </p>
@@ -177,7 +180,8 @@ macros discussed here.
 <ul>Examples on using ACE try macros:
   <li><p>
       <pre>
-      ACE_TRY  // use ACE_TRY_NEW_ENV if there isn't an ACE_TRY_ENV already defined
+      ACE_TRY  // Use ACE_DECLARE_NEW_CORBA_ENV to create ACE_TRY_ENV
+               // if you got undefined symbol warning here.
         {
           some_operation (arg1, arg2, ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -208,11 +212,10 @@ macros discussed here.
       </p>
   </li>
 
-  <li><p><code>ACE_TRY</code> and also declares a label (so do
-      <code>ACE_TRY_NEW_ENV</code>.  To avoid defining the
-      same label multiple times within a function, use
-      <code>ACE_TRY_EX</code> with different labels for different try
-      blocks instead.  For example,<br>
+  <li><p><code>ACE_TRY</code> and also declares a label for internal
+      use.  To avoid defining the same label multiple times within a
+      function, use <code>ACE_TRY_EX</code> with different labels for
+      different try blocks instead.  For example,<br>
 
       <pre>
       ACE_TRY_EX (block_1)
@@ -366,7 +369,8 @@ by no mean complete.
   </li>
 
   <li><P>Replace <code>TAO_TRY</code> <code>TAO_TRY_VAR</code> with
-      <code>ACE_TRY</code> or <code>ACE_TRY_NEW_ENV</code>.</p>
+      <code>ACE_TRY</code>.  Added
+      <code>ACE_DECLARE_NEW_CORBA_ENV</code> if necessary.</p>
   </li>
 
   <li><p>Replace <code>TAO_TRY_EX</code> <code>TAO_TRY_VAR_EX</code>
