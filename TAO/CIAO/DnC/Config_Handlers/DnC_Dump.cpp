@@ -24,8 +24,8 @@ namespace Deployment
     CORBA::ULong size = str_seq.length ();
     for (CORBA::ULong i = 0; i < size; ++i)
       {
-	ACE_DEBUG ((LM_DEBUG, "%s%s ",
-		    str_seq[i].in ()), (i < size) ? ", " : "\n");
+        ACE_DEBUG ((LM_DEBUG, "%s%s ",
+                    str_seq[i].in (), (i < size) ? ", " : "\n"));
       }
   }
 
@@ -36,7 +36,7 @@ namespace Deployment
 
     for (CORBA::ULong i = 0; i < seq.length (); ++i)
       {
-	ACE_DEBUG ((LM_DEBUG, "  %s %d: \n", caption, i));
+        ACE_DEBUG ((LM_DEBUG, "  %s %d: \n", caption, i));
         DnC_Dump::dump (seq[i]);
       }
   }
@@ -46,37 +46,37 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::AssemblyConnectionDescription &acd)
   {
     ACE_DEBUG ((LM_DEBUG, "AssemblyConnectionDescription: \n"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", acd.name.in ()));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  deployRequirement: \n"));
     for (CORBA::ULong i = 0;
-          i < acd.deployRequirement.length ();
-          ++i)
+         i < acd.deployRequirement.length ();
+         ++i)
       {
         DnC_Dump::dump (acd.deployRequirement[i]);
       }
 
     ACE_DEBUG ((LM_DEBUG, "  externalEndpoint: \n"));
     for (CORBA::ULong i = 0;
-          i < acd.externalEndpoint.length ();
-          ++i)
+         i < acd.externalEndpoint.length ();
+         ++i)
       {
         DnC_Dump::dump (acd.externalEndpoint[i]);
       }
 
     ACE_DEBUG ((LM_DEBUG, "  internalEndpoint: \n"));
     for (CORBA::ULong i = 0;
-          i < acd.internalEndpoint.length ();
-          ++i)
+         i < acd.internalEndpoint.length ();
+         ++i)
       {
         DnC_Dump::dump (acd.internalEndpoint[i]);
       }
 
     ACE_DEBUG ((LM_DEBUG, "  externalReference: \n"));
     for (CORBA::ULong i = 0;
-          i < acd.externalReference.length ();
-          ++i)
+         i < acd.externalReference.length ();
+         ++i)
       {
         DnC_Dump::dump (acd.externalReference[i]);
       }
@@ -87,14 +87,14 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::AssemblyPropertyMapping &apm)
   {
     ACE_DEBUG ((LM_DEBUG, "AssemblyPropertyMapping: \n"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", apm.name.in ()));
     ACE_DEBUG ((LM_DEBUG, "  externalName: %s\n", apm.externalName.in ()));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  delegatesTo: \n"));
     for (CORBA::ULong i = 0;
-          i < apm.delegatesTo.length ();
-          ++i)
+         i < apm.delegatesTo.length ();
+         ++i)
       {
         DnC_Dump::dump (apm.delegatesTo[i]); // SubcomponentPropertyReference
       }
@@ -105,22 +105,22 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ComponentPackageDescription &comppkgdesc)
   {
     ACE_DEBUG ((LM_DEBUG, "ComponentPackageDescription: \n"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  label: %s\n", comppkgdesc.label.in ()));
     ACE_DEBUG ((LM_DEBUG, "  UUID: %s\n", comppkgdesc.UUID.in ()));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  configProperty: \n"));
     for (CORBA::ULong i = 0;
-          i < comppkgdesc.configProperty.length ();
-          ++i)
+         i < comppkgdesc.configProperty.length ();
+         ++i)
       {
         DnC_Dump::dump (comppkgdesc.configProperty[i]); // Property
       }
 
     ACE_DEBUG ((LM_DEBUG, "  infoProperty: \n"));
     for (CORBA::ULong i = 0;
-          i < comppkgdesc.infoProperty.length ();
-          ++i)
+         i < comppkgdesc.infoProperty.length ();
+         ++i)
       {
         DnC_Dump::dump (comppkgdesc.infoProperty[i]); // Property
       }
@@ -130,8 +130,8 @@ namespace Deployment
 
     ACE_DEBUG ((LM_DEBUG, "  implementation: \n"));
     for (CORBA::ULong i = 0;
-          i < comppkgdesc.implementation.length ();
-          ++i)
+         i < comppkgdesc.implementation.length ();
+         ++i)
       {
         DnC_Dump::dump (comppkgdesc.implementation[i]); // PackagedComponentImplementation
       }
@@ -142,14 +142,14 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ComponentPortDescription &compportdesc)
   {
     ACE_DEBUG ((LM_DEBUG, "ComponentPortDescription: \n"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", compportdesc.name.in ()));
     ACE_DEBUG ((LM_DEBUG, "  specificType: %s\n", compportdesc.specificType.in ()));
 
-   ACE_DEBUG ((LM_DEBUG, "  supportedType: \n"));
+    ACE_DEBUG ((LM_DEBUG, "  supportedType: \n"));
     for (CORBA::ULong i = 0;
-          i < compportdesc.supportedType.length ();
-          ++i)
+         i < compportdesc.supportedType.length ();
+         ++i)
       {
         ACE_DEBUG ((LM_DEBUG, "%s\n", compportdesc.supportedType[i].in ()));
       }
@@ -164,9 +164,9 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ComponentPropertyDescription &comppropdesc)
   {
-    ACE_DEBUG ((LM_DEBUG, "ComponentPropertyDescription: \n"));  
+    ACE_DEBUG ((LM_DEBUG, "ComponentPropertyDescription: \n"));
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", comppropdesc.name.in ()));
-    ACE_DEBUG ((LM_DEBUG, "  type: %s\n", TCKind_Names::get_name(comppropdesc.type));
+    ACE_DEBUG ((LM_DEBUG, "  type: %s\n", TCKind_Names::get_name(comppropdesc.type.in()->kind())));
   }
 
   // MonolithicImplementationDescription
@@ -174,27 +174,27 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::MonolithicImplementationDescription &mid)
   {
     ACE_DEBUG ((LM_DEBUG, "MonolithicImplementationDescription: \n"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  execParameter: \n"));
     for (CORBA::ULong i = 0;
-          i < mid.execParameter.length ();
-          ++i)
+         i < mid.execParameter.length ();
+         ++i)
       {
         DnC_Dump::dump (mid.execParameter[i]);
       }
 
     ACE_DEBUG ((LM_DEBUG, "  deployRequirement: \n"));
     for (CORBA::ULong i = 0;
-          i < mid.deployRequirement.length ();
-          ++i)
+         i < mid.deployRequirement.length ();
+         ++i)
       {
         DnC_Dump::dump (mid.deployRequirement[i]);
       }
 
     ACE_DEBUG ((LM_DEBUG, "  primaryArtifact: \n"));
     for (CORBA::ULong i = 0;
-          i < mid.primaryArtifact.length ();
-          ++i)
+         i < mid.primaryArtifact.length ();
+         ++i)
       {
         DnC_Dump::dump (mid.primaryArtifact[i]); // NamedImplementationArtifact
       }
@@ -204,46 +204,46 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::PackageConfiguration &pc)
   {
-    ACE_DEBUG ((LM_DEBUG, "PackageConfiguration: \n"));  
+    ACE_DEBUG ((LM_DEBUG, "PackageConfiguration: \n"));
     ACE_DEBUG ((LM_DEBUG, "  label: %s\n", pc.label.in ()));
     ACE_DEBUG ((LM_DEBUG, "  UUID: %s\n", pc.UUID.in ()));
 
     ACE_DEBUG ((LM_DEBUG, "  specializedConfig: \n"));
     for (CORBA::ULong i = 0;
-          i < pc.specializedConfigRef.length ();
-          ++i)
+         i < pc.specializedConfigRef.length ();
+         ++i)
       {
         ACE_DEBUG ((LM_DEBUG, "%i\n", pc.specializedConfigRef[i]));
       }
 
     ACE_DEBUG ((LM_DEBUG, "  configProperty: \n"));
     for (CORBA::ULong i = 0;
-          i < pc.configProperty.length ();
-          ++i)
+         i < pc.configProperty.length ();
+         ++i)
       {
         DnC_Dump::dump (pc.configProperty[i]); // Property
       }
 
     ACE_DEBUG ((LM_DEBUG, "  selectRequirement: \n"));
     for (CORBA::ULong i = 0;
-          i < pc.selectRequirement.length ();
-          ++i)
+         i < pc.selectRequirement.length ();
+         ++i)
       {
         DnC_Dump::dump (pc.selectRequirement[i]); // Requirement
       }
 
     ACE_DEBUG ((LM_DEBUG, "  reference: \n"));
     for (CORBA::ULong i = 0;
-          i < pc.reference.length ();
-          ++i)
+         i < pc.reference.length ();
+         ++i)
       {
         DnC_Dump::dump (pc.reference[i]); // ComponentPackageReference
       }
 
     ACE_DEBUG ((LM_DEBUG, "  basePackage: \n"));
     for (CORBA::ULong i = 0;
-          i < pc.basePackage.length ();
-          ++i)
+         i < pc.basePackage.length ();
+         ++i)
       {
         DnC_Dump::dump (pc.basePackage[i]); // ComponentPackageDescription
       }
@@ -253,7 +253,7 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::PackagedComponentImplementation &pci)
   {
-    ACE_DEBUG ((LM_DEBUG, "PackagedComponentImplementation: \n"));  
+    ACE_DEBUG ((LM_DEBUG, "PackagedComponentImplementation: \n"));
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", pci.name.in ()));
 
     ACE_DEBUG ((LM_DEBUG, "  referencedImplementation: \n"));
@@ -265,13 +265,13 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::SubcomponentPortEndpoint &spe)
   {
     ACE_DEBUG ((LM_DEBUG, "SubcomponentPortEndpoint: \n"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  portName: %s\n", spe.portName.in ()));
-    
+
     ACE_DEBUG ((LM_DEBUG, "  instance: \n"));
     for (CORBA::ULong i = 0;
-          i < spe.instance.length ();
-          ++i)
+         i < spe.instance.length ();
+         ++i)
       {
         DnC_Dump::dump (spe.instance[i]); // SubcomponentInstantiationDescription
       }
@@ -282,23 +282,23 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "Requirement:    \n"));
     ACE_DEBUG ((LM_DEBUG, "resourceType: %s \n", req.resourceType.in ()));
     for (::CORBA::ULong i = 0; i < req.property.length (); i ++)
-     DnC_Dump::dump (req.property [i]);
+      DnC_Dump::dump (req.property [i]);
     ACE_DEBUG ((LM_DEBUG, "name: %s \n", req.name.in ()));
   }
 
-  void DnC_Dump::dump (const ::Deployment::ComponentExternalPortEndpoint &cepe)
+  void DnC_Dump::dump (const ::Deployment::ComponentExternalPortEndpoint &)
   {
   }
 
-  void DnC_Dump::dump (const ::Deployment::ComponentPackageReference &cpr)
+  void DnC_Dump::dump (const ::Deployment::ComponentPackageReference &)
   {
   }
 
-  void DnC_Dump::dump (const ::Deployment::ComponentImplementationDescription &cid)
+  void DnC_Dump::dump (const ::Deployment::ComponentImplementationDescription &)
   {
   }
 
-  void DnC_Dump::dump (const ::Deployment::SubcomponentInstantiationDescription &sid)
+  void DnC_Dump::dump (const ::Deployment::SubcomponentInstantiationDescription &)
   {
   }
 
@@ -306,16 +306,16 @@ namespace Deployment
   {
     ::CORBA::TypeCode * type = any.type ();
     switch (type->kind ())
-    {
+      {
       case CORBA::tk_short:
         {
           CORBA::Short temp;
           if (! (any >>= temp))
-          {
-            ACE_DEBUG ((LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
                                   encoded different type"));
-            ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
         }
         break;
@@ -331,176 +331,176 @@ namespace Deployment
         {
           CORBA::Long temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %l \n", temp));
         }
         break;
 
       case CORBA::tk_ushort:
-       {
+        {
           CORBA::UShort temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
                                    encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %u \n", temp));
         }
         break;
 
       case CORBA::tk_ulong:
-       {
+        {
           CORBA::ULong temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %u \n", temp));
         }
         break;
 
       case CORBA::tk_float:
-       {
+        {
           CORBA::Float temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %f \n", temp));
         }
         break;
       case CORBA::tk_double:
-       {
+        {
           CORBA::Double temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %f \n", temp));
         }
         break;
       case CORBA::tk_boolean:
-       {
+        {
           CORBA::Boolean temp;
           if (! (any >>= CORBA::Any::to_boolean (temp)))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
 
           if (temp)
             ACE_DEBUG ((LM_DEBUG, "Any value: True \n"));
-          else 
+          else
             ACE_DEBUG ((LM_DEBUG, "Any value: False \n"));
         }
         break;
 
       case CORBA::tk_char:
-       {
+        {
           CORBA::Char temp;
           if (! (any >>= CORBA::Any::to_char (temp)))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
         }
         break;
 
       case CORBA::tk_octet:
-       {
+        {
           CORBA::Octet temp;
           if (! (any >>= CORBA::Any::to_octet (temp)))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
         }
         break;
 
       case CORBA::tk_string:
-       {
+        {
           const char * temp = 0;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
         }
         break;
       case CORBA::tk_longlong:
-       {
+        {
           CORBA::LongLong temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %l \n", temp));
         }
         break;
 
       case CORBA::tk_longdouble:
-       {
+        {
           CORBA::LongDouble temp;
           if (! (any >>= temp))
-           {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-           }
+              ACE_THROW (CORBA::INTERNAL ());
+            }
           ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
         }
 
         break;
       case CORBA::tk_wchar:
-       {
-         CORBA::WChar temp;
-         if (! (any >>= CORBA::Any::to_wchar (temp)))
-         {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
+        {
+          CORBA::WChar temp;
+          if (! (any >>= CORBA::Any::to_wchar (temp)))
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-         }
-         ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
-       }
-       break;
+              ACE_THROW (CORBA::INTERNAL ());
+            }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
+        }
+        break;
 
       case CORBA::tk_wstring:
-       {
-         const CORBA::WChar * temp;
-         if (! (any >>= temp))
-         {
-             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
+        {
+          const CORBA::WChar * temp;
+          if (! (any >>= temp))
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
                                     encoded with different type"));
-             ACE_THROW (CORBA::INTERNAL ());
-         }
-         ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
-       }
-       break;
+              ACE_THROW (CORBA::INTERNAL ());
+            }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
+        }
+        break;
 
       default:
         ACE_DEBUG ((LM_DEBUG, "Unknown type encoded in Any\n"));
-        ACE_THROW (CORBA::INTERNAL ());  
-    }
+        ACE_THROW (CORBA::INTERNAL ());
+      }
   }
 
   void DnC_Dump::dump (const ::Deployment::Property &property)
@@ -516,7 +516,8 @@ namespace Deployment
   {
     ACE_DEBUG ((LM_DEBUG, "NamedImplementationArtifact: \n"));
     ACE_DEBUG ((LM_DEBUG, "name: %s \n", nia.name.in ()));
-    DnC_Dump::dump_sequence ("referencedArtifact", nia.referencedArtifact);
+    ACE_DEBUG ((LM_DEBUG, "referencedArtifact: \n"));
+    DnC_Dump::dump (nia.referencedArtifact);  // ImplementationArtifactDescription
   }
 
   void DnC_Dump::dump (const ::Deployment::ComponentInterfaceDescription &cid)
@@ -533,7 +534,7 @@ namespace Deployment
     DnC_Dump::dump_sequence ("property", cid.property); // ComponentPropertyDescription seq.
   }
 
-  void DnC_Dump::dump (const ::Deployment::SubcomponentPropertyReference &scpr)
+  void DnC_Dump::dump (const ::Deployment::SubcomponentPropertyReference &)
   {
   }
 
@@ -556,7 +557,7 @@ namespace Deployment
                  k < domain.node[i].resource[j].resourceType.length (); ++k)
               {
                 ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                   domain.node[i].resource[j].resourceType[k].in ()));
+                            domain.node[i].resource[j].resourceType[k].in ()));
               }
           }
 
@@ -594,11 +595,11 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "         Name: %s \n",
                         domain.interconnect[i].resource[j].name.in ()));
             for (CORBA::ULong k = 0;
-              k < domain.interconnect[i].resource[j].resourceType.length ();
-              ++k)
+                 k < domain.interconnect[i].resource[j].resourceType.length ();
+                 ++k)
               {
                 ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                 domain.interconnect[i].resource[j].resourceType[k].in ()));
+                            domain.interconnect[i].resource[j].resourceType[k].in ()));
               }
           }
 
@@ -640,7 +641,7 @@ namespace Deployment
                  ++k)
               {
                 ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-                  domain.bridge[i].resource[j].resourceType[k].in ()));
+                            domain.bridge[i].resource[j].resourceType[k].in ()));
               }
           }
 
@@ -663,7 +664,7 @@ namespace Deployment
              k < domain.sharedResource[i].resourceType.length (); ++k)
           {
             ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n",
-              domain.sharedResource[i].resourceType[k].in ()));
+                        domain.sharedResource[i].resourceType[k].in ()));
           }
 
         for (CORBA::ULong j = 0;
@@ -689,20 +690,20 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "name: %s", capability.name.in ()));
     DnC_Dump::dump ("resourceType", capability.resourceType); // string sequence
     DnC_Dump::dump_sequence ("property", capability.property); // SatisfierProperty sequence
-   }
+  }
 
-  void DnC_Dump::dump (const ::Deployment::ImplementationArtifactDescriptor &iad)
+  void DnC_Dump::dump (const ::Deployment::ImplementationArtifactDescription &iad)
   {
     ACE_DEBUG ((LM_DEBUG, "label: %s", iad.label.in ()));
     ACE_DEBUG ((LM_DEBUG, "UUID: %s", iad.UUID.in ()));
-    ACE_DEBUG ((LM_debug, "location: %s", iad.location.in ()));
+    ACE_DEBUG ((LM_DEBUG, "location: %s", iad.location.in ()));
     DnC_Dump::dump_sequence ("execParameter", iad.execParameter); // Property seq.
     DnC_Dump::dump_sequence ("infoProperty", iad.infoProperty); // Property seq.
     DnC_Dump::dump_sequence ("deployRequirement", iad.deployRequirement); // Requirement seq.
     DnC_Dump::dump_sequence ("dependsOn", iad.dependsOn); // NamedImplementationArtifact seq.
   }
 
-  void DnC_Dump::dump (const ::Deployment::ImplementationRequiremenet &ir)
+  void DnC_Dump::dump (const ::Deployment::ImplementationRequirement &ir)
   {
     DnC_Dump::dump ("resourcePort", ir.resourcePort); // string sequence
     DnC_Dump::dump ("componentPort", ir.componentPort); // string sequence
@@ -711,6 +712,14 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "name: %s", ir.name.in ()));
   }
 
- }
+  void DnC_Dump::dump(const Deployment::SatisfierProperty&)
+  {
+  }
+
+  void DnC_Dump::dump(const Deployment::ResourceUsageKind&)
+  {
+  }
+
+}
 
 #endif /* DNC_DUMP_C */

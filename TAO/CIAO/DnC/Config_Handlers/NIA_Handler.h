@@ -43,48 +43,47 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
-  {
-
-    class NIA_Handler
     {
-    public:
 
-      /// constructor
-      NIA_Handler (DOMDocument* doc, unsigned long filter_);
+      class NIA_Handler
+        {
+        public:
 
-      /// constructor
-      NIA_Handler (DOMNodeIterator* iter, bool release = false);
+          /// constructor
+          NIA_Handler (DOMDocument* doc, unsigned long filter_);
 
-      /// destructor
-      ~NIA_Handler();
+          /// constructor
+          NIA_Handler (DOMNodeIterator* iter, bool release = false);
 
-      /// Process the package configuration
-      void static 
-	process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
+          /// destructor
+          ~NIA_Handler();
 
-    protected:
+          /// Process the package configuration
+          void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
 
-      /// Process the name attribute
-      void process_name (const XMLCh* name, ::Deployment::NamedImplementationArtifact &nia);
+        protected:
 
-    private:
+          /// Process the name attribute
+          void process_name (const XMLCh* name, ::Deployment::NamedImplementationArtifact &nia);
 
-      DOMDocument* doc_;
+        private:
 
-      DOMNode* root_;
+          DOMDocument* doc_;
 
-      unsigned long filter_;
+          DOMNode* root_;
 
-      DOMNodeIterator* iter_;
+          unsigned long filter_;
 
-      bool release_;
+          DOMNodeIterator* iter_;
 
-    };
+          bool release_;
 
-  }
+        };
+
+    }
 
 }
 

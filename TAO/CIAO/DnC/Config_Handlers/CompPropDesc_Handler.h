@@ -43,7 +43,7 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
   {
@@ -62,9 +62,8 @@ namespace CIAO
       ~CompPropDesc_Handler();
 
       /// Process the package configuration
-      void static
-	process_ComponentPropertyDescription (::Deployment::ComponentPropertyDescription &comppropdesc);
-      
+      void process_ComponentPropertyDescription (::Deployment::ComponentPropertyDescription &comppropdesc);
+
     protected:
       /// Process the label attribute
       void process_name (const XMLCh* name, ::Deployment::ComponentPropertyDescription &comppropdesc);

@@ -43,54 +43,53 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
-  {
-
-    class IAD_Handler
     {
-    public:
 
-      /// constructor
-      IAD_Handler (DOMDocument* doc, unsigned long filter_);
+      class IAD_Handler
+        {
+        public:
 
-      /// constructor
-      IAD_Handler (DOMNodeIterator* iter, bool release = false);
+          /// constructor
+          IAD_Handler (DOMDocument* doc, unsigned long filter_);
 
-      /// destructor
-      ~IAD_Handler();
+          /// constructor
+          IAD_Handler (DOMNodeIterator* iter, bool release = false);
 
-      /// Process the component package description
-      void static
-	process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
+          /// destructor
+          ~IAD_Handler();
 
-    protected:
+          /// Process the component package description
+          void process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
 
-      /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::ImplementationArtifactDescription &iad);
+        protected:
 
-      /// Process the UUID attribute
-      void process_UUID (const XMLCh* UUID, ::Deployment::ImplementationArtifactDescription &iad);
+          /// Process the label attribute
+          void process_label (const XMLCh* label, ::Deployment::ImplementationArtifactDescription &iad);
 
-      /// Process the location attribute
-      void process_location (const XMLCh* location, ::Deployment::ImplementationArtifactDescription &iad);
+          /// Process the UUID attribute
+          void process_UUID (const XMLCh* UUID, ::Deployment::ImplementationArtifactDescription &iad);
 
-    private:
+          /// Process the location attribute
+          void process_location (const XMLCh* location, ::Deployment::ImplementationArtifactDescription &iad);
 
-      DOMDocument* doc_;
+        private:
 
-      DOMNode* root_;
+          DOMDocument* doc_;
 
-      unsigned long filter_;
+          DOMNode* root_;
 
-      DOMNodeIterator* iter_;
+          unsigned long filter_;
 
-      bool release_;
+          DOMNodeIterator* iter_;
+
+          bool release_;
+
+        };
 
     };
-
-  };
 
 };
 
