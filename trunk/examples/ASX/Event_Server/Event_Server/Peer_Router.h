@@ -90,6 +90,10 @@ private:
 
   ~Peer_Router_Context (void);
   // Private to ensure dynamic allocation.
+
+  friend class Friend_Of_Peer_Router_Context;
+  // declare a friend class to avoid compiler warnings because the
+  // destructor is private.
 };
 
 class Peer_Router : public ACE_Task<ACE_SYNCH>
