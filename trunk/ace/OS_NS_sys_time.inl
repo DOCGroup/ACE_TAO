@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/os_include/sys/os_time.h"
+#include "ace/os_include/os_errno.h"
 
 ACE_INLINE ACE_Time_Value
 ACE_OS::gettimeofday (void)
@@ -69,4 +70,3 @@ ACE_OS::gettimeofday (void)
     return ACE_Time_Value (tv);
 #endif // !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
 }
-

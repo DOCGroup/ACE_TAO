@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_types.h"
-#include "ace/os_include/sys/os_select.h"
 
 #if !defined (ACE_LACKS_SYS_TIME_H)
 #  include /**/ <sys/time.h>

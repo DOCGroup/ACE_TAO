@@ -412,12 +412,14 @@ public:
 #  if defined (__GLIBC__) && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2))
 
      // glibc 2.2.x or better has pthread_mutex_timedlock()
-#    define ACE_HAS_MUTEX_TIMEOUTS
+#    ifndef ACE_HAS_MUTEX_TIMEOUTS
+#      define ACE_HAS_MUTEX_TIMEOUTS
+#    endif  /* ACE_HAS_MUTEX_TIMEOUTS */
 
-     // Use new pthread_attr_setstack
-#    if defined (__USE_XOPEN2K)
+     // Use new pthread_attr_setstack if XPG6 support is enabled.
+#    if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) >= 600
 #      define ACE_HAS_PTHREAD_SETSTACK
-#    endif /* __USE_XOPEN2K */
+#    endif /* (_XOPEN_SOURCE - 0) >= 600 */
 
 #    if !defined (_XOPEN_SOURCE) \
      || (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) < 600)

@@ -1,3 +1,33 @@
+Tue Nov  4 09:15:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_stdlib.inl:
+	* ace/OS_NS_sys_time.inl:
+	* ace/OS_NS_sys_uio.inl:
+	* ace/OS_NS_sys_utsname.inl:
+
+	  Include "ace/os_include/os_errno.h".  The ACE_OSCALL macros used
+	  in these files use the global errno variable.
+
+	* ace/os_include/os_pthread.h:
+
+	  Don't define ACE_HAS_MUTEX_TIMEOUTS if it has been previously
+	  defined.  Fixes a warning for configurations that explicitly
+	  define ACE_HAS_MUTEX_TIMEOUTS.
+
+	  Do not directly check the GNU libc-specific "__USE_XOPEN2K"
+	  XPG6 feature test macro.  The correct/portable way to check for
+	  XPG6 features is to check if _XOPEN_SOURCE >= 600.
+
+	* ace/os_include/sys/os_time.h:
+
+	  No need to include "ace/os_include/sys/os_select.h".
+
+	* ace/os_include/sys/os_types.h:
+
+	  Check if ACE_SIZEOF_LONG macro is defined prior to checking if
+	  it is defined to a specific value.  Addresses warnings in some
+	  g++ configurations.
+
 Tue Nov  4 16:48:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Barrier.cpp:
