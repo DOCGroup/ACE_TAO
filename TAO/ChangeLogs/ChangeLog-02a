@@ -1,3 +1,26 @@
+Thu Mar 09 18:25:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
+	* TAO/orbsvcs/orbsvcs/AV/AV_export.h:
+	* TAO/orbsvcs/orbsvcs/AV/sfp.h:
+	* TAO/orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+	* TAO/orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+	* TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+	* TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+	* TAO/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+	* TAO/orbsvcs/orbsvcs/AV/Transport.h:
+	
+	 These files were using the  #if !defined (WHATEVER) as multiple
+	 inclusion guard instead of  #ifndef WHATEVER. Thanks to Paul 
+	 Calabrese <calabrese_p@ociweb.com> for reporting that.
+
+	* TAO/orbsvcs/orbsvcs/AV/TCP.h:
+	* TAO/orbsvcs/orbsvcs/Event/Debug_Macros.h:
+	* TAO/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h:
+
+	While this file were missing multiple inclusion guard. Thanks to 
+	Paul Calabrese <calabrese_p@ociweb.com> for reporting that.
+	
 Thu Mar 09 16:22:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Servant_Base.cpp (_create_stub): Awesome detective work by
