@@ -3,6 +3,9 @@
 //
 // utility template class
 //
+#if !defined(TAO_SEQUENCE_H)
+#  define TAO_SEQUENCE_H
+
 template <class T>
 struct CORBA_SEQUENCE {
 #if	SIZEOF_LONG == 4
@@ -23,3 +26,5 @@ struct CORBA_SEQUENCE {
 };
 
 typedef CORBA_SEQUENCE <CORBA_Octet>	CORBA_OctetSeq;
+
+#endif

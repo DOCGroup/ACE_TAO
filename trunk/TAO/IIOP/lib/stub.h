@@ -15,8 +15,10 @@
 // not specified by OMG, and may differ between different ORBs.  This
 // one has the particular advantage that stubs can be quite small.
 //
-#ifndef	_STUB_HH
-#define	_STUB_HH
+#if !defined(TAO_STUB_H)
+#  define TAO_STUB_H
+
+#  include "ace/OS.h"
 
 //
 // Descriptions of parameters.
@@ -100,8 +102,8 @@ struct calldata {
 //typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Environment &);
 
 struct skel_entry {	// table of these per implementation
-    const calldata		*op_descriptor;
-    skeleton			impl_skeleton;
+    const calldata *op_descriptor;
+    TAO_Skeleton    impl_skeleton;
 };
 
 
@@ -118,7 +120,7 @@ struct skel_entry {	// table of these per implementation
 //
 extern const IID IID_STUB_Object;
 
-class _EXPCLASS STUB_Object : public IUnknown
+class ACE_Svc_Export STUB_Object : public IUnknown
 {
   public:
     //

@@ -14,6 +14,10 @@
 #if !defined(CORBA_OBJECT_H)
 #  define CORBA_OBJECT_H
 
+#  include "ace/OS.h"
+
+#  include "request.h"
+
 void				CORBA_release (CORBA_Object_ptr obj);
 CORBA_Boolean			CORBA_is_nil (CORBA_Object_ptr obj);
 
@@ -38,7 +42,7 @@ public:
   virtual ~TAO_Operation_Table();
 };
 
-class _EXPCLASS CORBA_Object : public IUnknown
+class ACE_Svc_Export CORBA_Object : public IUnknown
 {
 public:
   static CORBA_Object_ptr	_duplicate (CORBA_Object_ptr obj);
@@ -98,7 +102,7 @@ public:
 
   virtual int find(const CORBA_String &opname, TAO_Skeleton &skelfunc);
 
-  virtual int bind(const CORBA_String &opname, const TAO_Skeleton skel_ptr)
+  virtual int bind(const CORBA_String &opname, const TAO_Skeleton skel_ptr);
   // Register a CORBA IDL operation name
   // TAO extension that retrieves the name (key) assigned to the object.
     

@@ -13,7 +13,8 @@
 #if !defined (TAO_BOA_H)
 #  define TAO_BOA_H
 
-#  include <ace/SOCK_Stream.h>
+#  include "ace/SOCK_Stream.h"
+
 #  include "orb.h"
 #  include "corbacom.h"
 

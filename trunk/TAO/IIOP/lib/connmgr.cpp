@@ -32,31 +32,31 @@
 #endif
 #include	<string.h>
 
-#include <ace/OS.h>
+#include "ace/OS.h"
 
 #if defined (unix)
-#	include	<netdb.h>
-#	include	<unistd.h>
-#	include	<sys/types.h>
-#	include	<sys/socket.h>
-#	include	<sys/time.h>
-#	include	<netinet/in.h>
+#  include <netdb.h>
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include <sys/socket.h>
+#  include <sys/time.h>
+#  include <netinet/in.h>
 #elif defined (VXWORKS)
-#	include	<unistd.h>
-#	include	<sys/types.h>
-#	include	<sys/socket.h>
-#	include	<time.h>
-#	include	<netinet/in.h>
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include <sys/socket.h>
+#  include <time.h>
+#  include <netinet/in.h>
 #else	// unix
-#	include	<winsock.h>
+#  include <winsock.h>
 #endif	// unix
 
-#include	"orb.h"
-#include	"stub.h"
+#include "orb.h"
+#include "stub.h"
 
-#include	"connmgr.h"
-#include	"thread.h"
-#include	"debug.h"
+#include "connmgr.h"
+#include "thread.h"
+#include "debug.h"
 
 
 //

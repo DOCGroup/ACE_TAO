@@ -43,7 +43,7 @@
 #include	<stdlib.h>
 #include	<string.h>
 
-#include <ace/SOCK_Stream.h>
+#include "ace/SOCK_Stream.h"
 
 #if	(unix) || defined (VXWORKS)
 #	include	<sys/types.h>

@@ -10,17 +10,19 @@
 // implementation details, but right now it is.
 //
 
-#ifndef SVRRQST_HDR
-#  define SVRRQST_HDR
+#if !defined(TAO_SVRRQST_H)
+#  define TAO_SVRRQST_H
 
-#include    "cdr.h"
+#  include "ace/OS.h"
+
+#  include "cdr.h"
 
 void                              CORBA_release (CORBA_ServerRequest_ptr req);
 CORBA_Boolean                     CORBA_is_nil (CORBA_ServerRequest_ptr req);
 
 extern const IID                  IID_CORBA_ServerRequest;
 
-class _EXPCLASS CORBA_ServerRequest : public IUnknown
+class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
 {
   public:
     //
@@ -77,7 +79,7 @@ class _EXPCLASS CORBA_ServerRequest : public IUnknown
 
 extern const IID                  IID_IIOP_ServerRequest;
 
-class _EXPCLASS IIOP_ServerRequest : public CORBA_ServerRequest
+class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
 {
 public:
   //

@@ -21,7 +21,7 @@
 #ifndef	_ORB_CONFIG_HH
 #define	_ORB_CONFIG_HH
 
-#include <ace/OS.h>
+#include "ace/OS.h"
 
 //
 // BC++ seems to have a different convention for detecting Win32 than VC++.
@@ -165,7 +165,6 @@ typedef	unsigned long pid_t;
 // from shared libraries?  Hmmm...)
 //
 #if	defined (unix) || !defined (__BORLANDC__)
-#	define	_EXPCLASS
 #	define	_EXPFUNC
 #	define	_EXPDATA
 #endif

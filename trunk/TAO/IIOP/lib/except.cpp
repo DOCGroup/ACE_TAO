@@ -8,21 +8,22 @@
 // on all of these data structures.
 //
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<stdio.h>
-#include <ace/Log_Msg.h>
+#include <assert.h>
+#include <limits.h>
+#include <string.h>
+#include <stdio.h>
 
-#include	<orb.h>
+#include "ace/Log_Msg.h"
 
-#include	"cdr.h"
-#include	"debug.h"
+#include <orb.h>
 
-#include	<initguid.h>
+#include "cdr.h"
+#include "debug.h"
 
-#if	defined (HAVE_WIDEC_H)
-#		include <widec.h>
+#include <initguid.h>
+
+#if defined (HAVE_WIDEC_H)
+#  include <widec.h>
 #endif
 
 

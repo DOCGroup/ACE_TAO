@@ -16,11 +16,11 @@
 #if !defined(TAO_OPERATION_TABLE_H)
 #define TAO_OPERATION_TABLE_H
 
-#include <ace/ACE.h>
-#include <ace/Synch.h>
-#include <ace/Hash_Map_Manager.h>
-#include <ace/SString.h>
-#include <ace/Singleton.h>
+#include "ace/ACE.h"
+#include "ace/Synch.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
+#include "ace/Singleton.h"
 
 #include "orb.h"
 

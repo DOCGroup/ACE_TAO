@@ -12,7 +12,7 @@
 #ifndef ACE_ROA_H
 #  define ACE_ROA_H
 
-#  include <ace/INET_Addr.h>
+#  include "ace/INET_Addr.h"
 
 #  if defined(__IIOP_BUILD)
 #    include "boa.h"
@@ -71,7 +71,7 @@ public:
   CORBA_Principal_ptr get_client_principal(CORBA_Environment& env);
 #endif
 
-  virtual int handle_message (Dispatch_Context& context,
+  virtual int handle_message (TAO_Dispatch_Context& context,
                               CORBA_Environment& env);
   // Reads incoming GIOP messages, dispatches them, and sends back any
   // required replies.  Returns 1 for success, 0==EOF, -1==error.

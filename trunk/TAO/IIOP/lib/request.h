@@ -6,8 +6,12 @@
 // Header file for Win32 C/C++/COM interface to CORBA's Dynamic
 // Invocation Interface "Request" type.
 //
-#if !defined(ACE_ROA_REQUEST_H)
-#  define ACE_ROA_REQUEST_H
+#if !defined(TAO_REQUEST_H)
+#  define TAO_REQUEST_H
+
+#  include "ace/OS.h"
+
+#  include "sequence.h"
 
 void                     CORBA_release (CORBA_Request_ptr req);
 CORBA_Boolean            CORBA_is_nil (CORBA_Request_ptr req);
@@ -17,7 +21,7 @@ typedef CORBA_ExceptionList *CORBA_ExceptionList_ptr;
 
 extern const IID         IID_CORBA_Request;
 
-class _EXPCLASS CORBA_Request : public IUnknown
+class ACE_Svc_Export CORBA_Request : public IUnknown
 {
 public:
   //

@@ -68,10 +68,10 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
   // 3. dispatch that request and return any required reply and errors
 
   CORBA_Environment env;
-  Dispatch_Context ctx;
+  TAO_Dispatch_Context ctx;
 
-  ctx.oa = params_->oa();
-  ctx.endpoint = peer();
+  ctx.oa_ = params_->oa();
+  ctx.endpoint_ = peer();
 
   // CJCXXX Knowledge of these will move into the OA so they don't
   // have to be copied every time.  Also, these should be set in the
@@ -79,9 +79,9 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
   // be a different upcall and forwarder for every object (or is it
   // for every TYPE of object?).  I need to rename "context" so that
   // it has a more meaningful name.
-  ctx.skeleton = params_->upcall();
-  ctx.context = params_->context();
-  ctx.check_forward = params_->forwarder();
+  ctx.skeleton_ = params_->upcall();
+  ctx.context_ = params_->context();
+  ctx.check_forward_ = params_->forwarder();
 
   int ret;
 

@@ -9,7 +9,7 @@ ACE_INLINE
 CORBA_ORB_ptr
 ROA::orb() const
 {
-  return _orb;
+  return orb_;
 }
 
 ACE_INLINE
