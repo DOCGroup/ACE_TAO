@@ -434,7 +434,7 @@ main (int argc, char **argv)
         ACE_OS::fprintf (output_file,
                          "%s",
                          ior.in ());
-      ACE_ASSERT (result == ACE_OS::strlen (ior));
+      ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
       ACE_UNUSED_ARG (result);
 
       ACE_OS::fclose (output_file);
