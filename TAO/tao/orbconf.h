@@ -37,31 +37,6 @@
 #define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
-// Users should override this stuff if they don't want to use the
-// default ACE Socket wrappers.  This makes it possible to change
-// TAO's transport mechanism wholesale by making a few minor changes
-// to the ACE config.h file.
-#if !defined (TAO_SOCK_STREAM)
-#define TAO_SOCK_STREAM ACE_SOCK_STREAM
-#define TAO_SOCK_Stream ACE_SOCK_Stream
-#endif /* TAO_SOCK_STREAM */
-
-#if !defined (TAO_SOCK_ACCEPTOR)
-#define TAO_SOCK_ACCEPTOR ACE_SOCK_ACCEPTOR
-#endif /* TAO_SOCK_ACCEPTOR */
-
-#if !defined (TAO_LSOCK_ACCEPTOR)
-#define TAO_LSOCK_ACCEPTOR ACE_LSOCK_ACCEPTOR
-#endif /* TAO_SOCK_ACCEPTOR */
-
-#if !defined (TAO_SOCK_CONNECTOR)
-#define TAO_SOCK_CONNECTOR ACE_SOCK_CONNECTOR
-#endif /* TAO_SOCK_CONNECTOR */
-
-#if !defined (TAO_LSOCK_CONNECTOR)
-#define TAO_LSOCK_CONNECTOR ACE_LSOCK_CONNECTOR
-#endif /* TAO_SOCK_CONNECTOR */
-
 //#define POA_NO_TIMESTAMP
 //
 // Define this if you don't want POA timestamps in the IOR.  Remember,
