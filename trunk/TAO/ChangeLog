@@ -1,3 +1,8 @@
+Mon Nov 29 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+          Replaced cout with ACE_ERROR
+
 Sun Nov 28 18:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
