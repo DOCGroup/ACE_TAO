@@ -58,7 +58,7 @@ namespace TAO
     ACE_CATCHANY
       {
         // Swallow the exception
-        return 0;
+        return T::_nil ();
       }
     ACE_ENDTRY;
     ACE_CHECK_RETURN (proxy);
@@ -77,23 +77,27 @@ namespace TAO
         return T::_nil ();
       }
 
+    if (obj->_is_local ())
+      {
+        return T::_duplicate (dynamic_cast<T *> (obj));
+      }
+
     T_ptr proxy = Narrow_Utils<T>::lazy_evaluation (obj);
 
     if (!CORBA::is_nil (proxy))
       {
         return proxy;
       }
-
+      
     TAO_Stub* stub = obj->_stubobj ();
 
-    if (stub != 0)
+    if (stub == 0)
       {
-        stub->_incr_refcnt ();
+        // If we're here, we have been passed a bogus objref.
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (), T::_nil ());
       }
-    else
-      {
-        return T::_duplicate (dynamic_cast<T *> (obj));
-      }
+
+    stub->_incr_refcnt ();
 
     bool collocated =
       !CORBA::is_nil (stub->servant_orb_var ().ptr ())
