@@ -97,7 +97,7 @@ ACE_Timeprobe<ACE_LOCK>::reset (void)
 }
 
 template <class ACE_LOCK> ACE_Unbounded_Set<ACE_Event_Descriptions> &
-ACE_Timeprobe<ACE_LOCK>::event_descriptions (void) 
+ACE_Timeprobe<ACE_LOCK>::event_descriptions (void)
 {
   return this->event_descriptions_;
 }
@@ -126,13 +126,13 @@ ACE_Timeprobe<ACE_LOCK>::lock (void)
   return this->lock_;
 }
 
-template <class ACE_LOCK> u_long 
+template <class ACE_LOCK> u_long
 ACE_Timeprobe<ACE_LOCK>::max_size (void)
 {
   return this->max_size_;
 }
 
-template <class ACE_LOCK> u_long 
+template <class ACE_LOCK> u_long
 ACE_Timeprobe<ACE_LOCK>::current_size (void)
 {
   return this->current_size_;
@@ -180,19 +180,26 @@ ACE_Timeprobe<ACE_LOCK>::print_times (void)
               this->timeprobes_[0].thread_,
               "START"));
 
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   for (u_long i = 1; i < this->current_size_; i++)
     {
       ACE_hrtime_t time_difference =
         this->timeprobes_[i].time_ - this->timeprobes_[i-1].time_;
 
       ACE_UINT32 elapsed_time_in_micro_seconds =
-        (ACE_UINT32) (time_difference / ACE_High_Res_Timer::global_scale_factor ());
+        (ACE_UINT32) (time_difference / gsf);
+      ACE_UINT32 remainder =
+        (ACE_UINT32) (time_difference % gsf);
+      // Convert to the fractional part in microseconds, with 3 digits
+      // of precision (hence the 1000).
+      ACE_UINT32 fractional = remainder * 1000 / gsf;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %13u\n",
+                  "%-50.50s %8.8x %10u.%03.3u\n",
                   this->find_description_i (i),
                   this->timeprobes_[i].thread_,
-                  (unsigned int) elapsed_time_in_micro_seconds));
+                  (unsigned int) elapsed_time_in_micro_seconds,
+                  (unsigned int) fractional));
     }
 }
 
