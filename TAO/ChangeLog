@@ -2,7 +2,10 @@ Thu Oct 17 10:47:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
 
-	  Do not compile when 'interceptors' or 'ami' is turned off. 
+	  First check whether the CosLoadBalancing library was built. This
+	  check was made at a wrong place. Added yet another check that
+	  makes sure that compilation is not started when 'interceptors'
+	  and/or 'ami' is turned off. 
 	
 Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
