@@ -1,3 +1,12 @@
+Mon Sep 20 12:53:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+	  Added a check for recursiveness to private_equal_struct
+	  and private_equal_union. These were going into infinite
+	  recursion when extracting one of these types from an Any.
+	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
+	  for reporting this problem with recursive unions.
+
 Mon Sep 20 10:55:48 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* TAO-INSTALL.html,
