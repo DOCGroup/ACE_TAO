@@ -41,7 +41,7 @@ namespace CIAO
   public:
     /// Constructor
     NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-				 PortableServer::POA_ptr p);
+                                 PortableServer::POA_ptr p);
 
       // @@ (OO) Since this class is reference counted, please make this
       //         destructor protected to enforce proper memory managment
@@ -59,19 +59,19 @@ namespace CIAO
     //@@ The return type is NodeApplication_ptr actually.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
-	            Deployment::Connections_out providedReference,
-				 CORBA::Boolean start
-		        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                    Deployment::Connections_out providedReference,
+                                 CORBA::Boolean start
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		              Deployment::ResourceNotAvailable,
-		              Deployment::StartError,
-		              Deployment::InvalidProperty));
+                              Deployment::ResourceNotAvailable,
+                              Deployment::StartError,
+                              Deployment::InvalidProperty));
 
     //@@ Destroy the whole applicaton.
     virtual void destroyApplication (Deployment::Application_ptr
-		                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		              Deployment::StopError));
+                              Deployment::StopError));
 
     /**
      * Initialize the NodeApplicationManager.  The currently implementation
@@ -98,12 +98,12 @@ namespace CIAO
      **/
     virtual Deployment::NodeApplicationManager_ptr
     init (const char *nodeapp_location,
-	  const CORBA::ULong delay,
-	  const Deployment::DeploymentPlan & plan,
-	  const PortableServer::POA_ptr callback_poa
-	  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+          const CORBA::ULong delay,
+          const Deployment::DeploymentPlan & plan,
+          const PortableServer::POA_ptr callback_poa
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::InvalidProperty));
+                       Deployment::InvalidProperty));
 
     //@@ Note: This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nadeapp_manager (void);
@@ -112,27 +112,27 @@ namespace CIAO
     // Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options
-			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::StartError,
-		       Deployment::InvalidProperty));
+                       Deployment::StartError,
+                       Deployment::InvalidProperty));
 
     // Helper function to get the connection.
     virtual Deployment::Connections *
     create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::ResourceNotAvailable,
-		       Deployment::StartError,
-		       Deployment::InvalidProperty));
+                       Deployment::ResourceNotAvailable,
+                       Deployment::StartError,
+                       Deployment::InvalidProperty));
 
     /**
      * Find the configurations in the plan and prepare them to pass to the
      * NodeApplication, from command line probably.
      */
     void parse_config_value (ACE_CString & str
-			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::InvalidProperty));
+                       Deployment::InvalidProperty));
 
   protected:
     // location of the Nodeapplication

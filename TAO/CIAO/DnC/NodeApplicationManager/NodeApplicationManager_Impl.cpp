@@ -19,7 +19,7 @@ init (const char *nodeapp_location,
       const PortableServer::POA_ptr callback_poa
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::InvalidProperty))
+                   Deployment::InvalidProperty))
 {
   ACE_TRY
   {
@@ -41,16 +41,16 @@ init (const char *nodeapp_location,
     // Activate the ourself.
     PortableServer::ObjectId_var oid
       = this->poa_->activate_object (this
-				     ACE_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
-							 ACE_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // And cache the object reference.
     this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
-								 ACE_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     //return this object reference
@@ -70,9 +70,9 @@ init (const char *nodeapp_location,
 void
 CIAO::NodeApplicationManager_Impl::
 parse_config_value (ACE_CString & str
-		    ACE_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::InvalidProperty))
+                   Deployment::InvalidProperty))
 {
   // @@ (OO) An unused argument in C++ is marked by removing the
   //         parameter name.  We only use ACE_UNUSED_ARG() when there
@@ -101,17 +101,17 @@ parse_config_value (ACE_CString & str
 Deployment::NodeApplication_ptr
 CIAO::NodeApplicationManager_Impl::
 create_node_application (const ACE_CString & options
-			 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::StartError,
-		   Deployment::InvalidProperty))
+                   Deployment::StartError,
+                   Deployment::InvalidProperty))
 {
   Deployment::NodeApplication_var retval;
   Deployment::Properties_var prop;
 
   ACE_NEW_THROW_EX (prop,
-		    Deployment::Properties,
-		    CORBA::INTERNAL ());
+                    Deployment::Properties,
+                    CORBA::INTERNAL ());
   // @@ (OO) You should be returning
   //         Deployment::NodeApplication::_nil() here, not
   //         CORBA::_nil().
@@ -121,9 +121,9 @@ create_node_application (const ACE_CString & options
   CIAO::NodeApplication_Callback_Impl * callback_servant = 0;
   ACE_NEW_THROW_EX (callback_servant,
                     CIAO::NodeApplication_Callback_Impl (this->orb_.in (),
-							      this->callback_poa_.in (),
-							      this->objref_.in (),
-							      prop.in ()),
+                                                              this->callback_poa_.in (),
+                                                              this->objref_.in (),
+                                                              prop.in ()),
                     CORBA::INTERNAL ());
   // @@ (OO) You should be returning
   //         Deployment::NodeApplication::_nil() here, not
@@ -151,7 +151,7 @@ create_node_application (const ACE_CString & options
 
       CIAO::NodeApplication_Callback_var cb =
         CIAO::NodeApplication_Callback::_narrow (cb_obj.in ()
-						 ACE_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var cb_ior =
@@ -161,10 +161,10 @@ create_node_application (const ACE_CString & options
 
       // spawn the new NodeApplication.
       p_options.command_line ("%s -k %s"
-			      "%s",
-			      this->nodeapp_path_.c_str (),
-			      cb_ior.in (),
-			      options.c_str ());
+                              "%s",
+                              this->nodeapp_path_.c_str (),
+                              cb_ior.in (),
+                              options.c_str ());
 
       p_options.avoid_zombies (1);
 
@@ -244,9 +244,9 @@ Deployment::Connections *
 CIAO::NodeApplicationManager_Impl::
 create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::ResourceNotAvailable,
-		   Deployment::StartError,
-		   Deployment::InvalidProperty))
+                   Deployment::ResourceNotAvailable,
+                   Deployment::StartError,
+                   Deployment::InvalidProperty))
 {
   Deployment::Connections_var retv;
 
@@ -358,13 +358,13 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 Deployment::Application_ptr
 CIAO::NodeApplicationManager_Impl::
 startLaunch (const Deployment::Properties & configProperty,
-	     Deployment::Connections_out providedReference,
-	     CORBA::Boolean start
-	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             Deployment::Connections_out providedReference,
+             CORBA::Boolean start
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::ResourceNotAvailable,
-		   Deployment::StartError,
-		   Deployment::InvalidProperty))
+                   Deployment::ResourceNotAvailable,
+                   Deployment::StartError,
+                   Deployment::InvalidProperty))
 {
   // @@ (OO) An unused argument in C++ is marked by removing the
   //         parameter name.  We only use ACE_UNUSED_ARG() when there
@@ -423,11 +423,11 @@ startLaunch (const Deployment::Properties & configProperty,
     for (CORBA::ULong i = 0; i < infos.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
-		  infos[i].component_instance_name.in (),
-		  infos[i].executor_dll.in (),
-		  infos[i].executor_entrypt.in (),
-		  infos[i].servant_dll.in (),
-		  infos[i].servant_entrypt.in () ));
+                  infos[i].component_instance_name.in (),
+                  infos[i].executor_dll.in (),
+                  infos[i].executor_entrypt.in (),
+                  infos[i].servant_dll.in (),
+                  infos[i].servant_entrypt.in () ));
     }
   }
 
@@ -448,8 +448,8 @@ startLaunch (const Deployment::Properties & configProperty,
   {
     //Since we know the type ahead of time...narrow is omitted here.
     if (this->component_map_.
-	bind (comp_info[len].component_instance_name.in(),
-	      Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
+        bind (comp_info[len].component_instance_name.in(),
+              Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
       ACE_THROW_RETURN (Deployment::StartError (), 0);
   }
 
@@ -478,9 +478,9 @@ startLaunch (const Deployment::Properties & configProperty,
 void
 CIAO::NodeApplicationManager_Impl::
 destroyApplication (Deployment::Application_ptr app
-		    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException
-		   , Deployment::StopError))
+                   , Deployment::StopError))
 {
   // @@ (OO) An unused argument in C++ is marked by removing the
   //         parameter name.  We only use ACE_UNUSED_ARG() when there

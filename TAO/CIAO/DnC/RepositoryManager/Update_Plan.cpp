@@ -24,7 +24,7 @@ void traverse_package (Deployment::PackageConfiguration* &pc,
   //         statement is executed during each loop iteration.  To
   //         improve performance execute it only once outside the
   //         for-loop.
-  
+
   // traverse the package configuration structure to get to the
   // BasePackage which consists of assemblies.
   //
@@ -149,7 +149,7 @@ void traverse_interface (Deployment::SubcomponentInstantiationDescription
   for (CORBA::ULong m = 0; m < instance.package.length (); ++m)
     {
       Deployment::ComponentPackageDescription
-	package = instance.package[m];
+        package = instance.package[m];
 
       Deployment::ComponentInterfaceDescription
         cid = package.realizes;
@@ -169,7 +169,7 @@ void traverse_interface (Deployment::SubcomponentInstantiationDescription
 void traverse_assembly_instance (Deployment::
                                  SubcomponentInstantiationDescription
                                  &instance,
-			         Deployment::DeploymentPlan &plan, int l,
+                                 Deployment::DeploymentPlan &plan, int l,
                                  REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
   // Each instance has a package.
@@ -182,30 +182,30 @@ void traverse_assembly_instance (Deployment::
   for (CORBA::ULong m = 0; m < instance.package.length (); ++m)
     {
       Deployment::ComponentPackageDescription
-	package = instance.package[m];
+        package = instance.package[m];
 
       for (CORBA::ULong n = 0; n < package.implementation.length (); ++n)
-	{
-	  Deployment::PackagedComponentImplementation
-	    impl = package.implementation[n];
-	  CORBA::ULong impl_length (plan.implementation.length ());
-	  plan.implementation.length (impl_length + 1);
-	  plan.implementation[impl_length].name = plan.instance[l].name;
-	  plan.instance[l].implementationRef = impl_length;
+        {
+          Deployment::PackagedComponentImplementation
+            impl = package.implementation[n];
+          CORBA::ULong impl_length (plan.implementation.length ());
+          plan.implementation.length (impl_length + 1);
+          plan.implementation[impl_length].name = plan.instance[l].name;
+          plan.instance[l].implementationRef = impl_length;
 
-	  for (CORBA::ULong p = 0;
+          for (CORBA::ULong p = 0;
                p < impl.referencedImplementation.monolithicImpl.length (); ++p)
-	    {
-	      Deployment::MonolithicImplementationDescription
-		mid = impl.referencedImplementation.monolithicImpl[p];
+            {
+              Deployment::MonolithicImplementationDescription
+                mid = impl.referencedImplementation.monolithicImpl[p];
 
               update_artifacts (mid, plan, plan.instance[l],
                                 ref_map, primary_ref_map, art_ref_map,
                                 plan.implementation[impl_length]);
-	    }
+            }
           update_impl_config_property (impl, plan.implementation[impl_length],
                                        plan.instance[l]);
-	}
+        }
     }
 }
 
