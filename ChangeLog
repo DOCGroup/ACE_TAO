@@ -1,3 +1,15 @@
+Tue Nov 18 00:04:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/all_in_one.GNU:
+          Fixed variable tests and changed the order variables are added
+          to BUILD, i.e., put the libraries first, then the bins.  This
+          insures the libs are built first if a Makefile builds both libs
+          and executables.
+
+        * netsvcs/clients/Naming/Client/Makefile:
+          Removed the special BIN target with a dependency on SHLIB, since
+          this is now handled automagically by the above rule.
+
 Mon Nov 17 17:09:37 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Mem_Map.i (map): Disable the use of MAP_FIXED on Linux
