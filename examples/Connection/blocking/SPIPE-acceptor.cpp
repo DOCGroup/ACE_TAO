@@ -25,11 +25,14 @@ Svc_Handler::~Svc_Handler (void)
 int
 Svc_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "client connected on handle %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "client connected on handle %d\n",
 	      this->peer ().get_handle ()));
-  if (this->ar_.open (*this, this->peer ().get_handle ()) == -1)
+  if (this->ar_.open (*this,
+                      this->peer ().get_handle ()) == -1)
     return -1;
-  return this->ar_.read (this->mb_, this->mb_.size ());
+  return this->ar_.read (this->mb_,
+                         this->mb_.size ());
 }
 
 void
@@ -40,10 +43,15 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       result.message_block ().rd_ptr ()[result.message_block ().length ()] = '\0';
 
       // Print out the message received from the server.
-      ACE_DEBUG ((LM_DEBUG, "(%t) message size %d.\n", result.message_block ().length ()));
-      ACE_DEBUG ((LM_DEBUG, "%s", result.message_block ().rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) message size %d.\n",
+                  result.message_block ().length ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s",
+                  result.message_block ().rd_ptr ()));
 
-      this->ar_.read (this->mb_, this->mb_.size ());
+      this->ar_.read (this->mb_,
+                      this->mb_.size ());
     }
   else
     ACE_Proactor::end_event_loop();
@@ -63,18 +71,24 @@ IPC_Server::~IPC_Server (void)
 int
 IPC_Server::init (int argc, char *argv[])
 {
-  if (this->parse_args (argc, argv) == -1)
+  if (this->parse_args (argc,
+                        argv) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "Opening %s\n", ACE_MULTIBYTE_STRING (rendezvous_)));
+  ACE_DEBUG ((LM_DEBUG,
+              "Opening %s\n",
+              ACE_MULTIBYTE_STRING (rendezvous_)));
 
   // Initialize named pipe listener.
   if (this->open (ACE_SPIPE_Addr (rendezvous_)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"), 1);
 
   // Register to receive shutdowns.
   else if (ACE_Reactor::instance ()->register_handler
-      (SIGINT, &this->done_handler_) == -1)
+      (SIGINT,
+       &this->done_handler_) == -1)
     return -1;
   else
     return 0;
@@ -144,7 +158,10 @@ IPC_Server::svc (void)
       // its open() method (note no automatic restart if errno ==
       // EINTR).
       if (this->accept (&sh, 0) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "accept"),
+                          1);
 
       // SH's destructor closes the stream implicitly but the
       // listening endpoint stays open.
@@ -153,17 +170,22 @@ IPC_Server::svc (void)
 	  // Run single-threaded.
 	  if (n_threads_ <= 1)
 	    run_reactor_event_loop (0);
-	  else if (ACE_Thread_Manager::instance ()->spawn_n (n_threads_,
-							     run_reactor_event_loop,
-							     0,
-							     THR_NEW_LWP) == -1)
+	  else if (ACE_Thread_Manager::instance ()->spawn_n 
+                   (n_threads_,
+                    run_reactor_event_loop,
+                    0,
+                    THR_NEW_LWP) == -1)
 	    {
-	      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+	      ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%p\n",
+                                 "spawn_n"),
+                                1);
 
 	      ACE_Thread_Manager::instance ()->wait ();
 	    }
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
+	  ACE_DEBUG ((LM_DEBUG, 
+                      "(%t) main thread exiting.\n"));
 	}
     }
 
@@ -172,7 +194,6 @@ IPC_Server::svc (void)
 }
 
 #endif /* SPIPE_ACCEPTOR_C */
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Concurrency_Strategy<Svc_Handler>;

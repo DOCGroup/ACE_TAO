@@ -1,3 +1,8 @@
+Fri Sep 24 08:59:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Connection/blocking/SPIPE-{acceptor,connector}.cpp: 
+	  Reformatted some of the code.
+
 Fri Sep 24 08:27:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.*,Synch.cpp: reverted changes of:
