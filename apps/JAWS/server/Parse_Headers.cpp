@@ -27,33 +27,40 @@ Headers::parse_header_line (char * const header_line)
   int offset = 1;
 
   ptr = ACE_OS::strchr (header_line, '\n');
+
   if (ptr > header_line && ptr[-1] == '\r')
-    ptr--, offset++;
-  if (ptr == header_line) {
-    this->done_ = 1;
-    return;
-  }
+    {
+      ptr--;
+      offset++;
+    }
+
+  if (ptr == header_line) 
+    {
+      this->done_ = 1;
+      return;
+    }
+
   *ptr = '\0';
   ptr += offset;
 
   char *value;
   char *header = ACE_OS::strtok_r (buf, ":", &value);
 
-  if (header != NULL && this->map_.mapped (header)) {
-    while (isspace (*value)) value++;
-    this->map_[header] = value;
-  }
+  if (header != NULL && this->map_.mapped (header)) 
+    {
+      while (isspace (*value))
+	value++;
 
-  // write back the unused portion of the input
-  ACE_OS::memmove(header_line, ptr, strlen(ptr)+1);
+      this->map_[header] = value;
+    }
+
+  // Write back the unused portion of the input.
+  ACE_OS::memmove (header_line, ptr, strlen(ptr) + 1);
 }
 
 int
-Headers::complete_header_line (char * const header_line)
+Headers::complete_header_line (char *const header_line)
 {
-  char *ptr;
-  int offset;
-
   // Algorithm -- 
   // Scan for end of line marker.
   // If the next character is linear white space, then unfold the header.
@@ -64,32 +71,41 @@ Headers::complete_header_line (char * const header_line)
   // return 0 if no end of line marker
   // return 1 if complete header line
 
-  ptr = header_line;
-  if (! this->end_of_line (ptr, offset)) return 0;
+  char *ptr = header_line;
+  int offset;
 
-  if (ptr == header_line) {
-    ACE_OS::memmove (ptr, ptr+offset, strlen(ptr+offset) + 1);
-    this->done_ = 1;
-    ACE_DEBUG ((LM_DEBUG, "  (%t) no more headers\n"));
+  if (!this->end_of_line (ptr, offset)) 
     return 0;
-  }
 
-  do {
-    switch (ptr[offset]) {
-    case ' ':
-    case '\t':
-      ACE_OS::memmove (ptr, ptr+offset, strlen(ptr+offset) + 1);
-      break;
-
-    case '\n':
-    case '\r':
-      return 1;
-
-    default:
-      if (isalpha (ptr[offset])) return 1;
-      else return -1;
+  if (ptr == header_line) 
+    {
+      ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
+      this->done_ = 1;
+      ACE_DEBUG ((LM_DEBUG, "  (%t) no more headers\n"));
+      return 0;
     }
-  } while (this->end_of_line (ptr, offset));
+
+  do 
+    {
+      switch (ptr[offset]) 
+	{
+	case ' ':
+	case '\t':
+	  ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
+	  break;
+
+	case '\n':
+	case '\r':
+	  return 1;
+
+	default:
+	  if (isalpha (ptr[offset])) 
+	    return 1;
+	  else 
+	    return -1;
+	}
+    } 
+  while (this->end_of_line (ptr, offset) != 0);
 
   return 0;
 }
@@ -116,19 +132,20 @@ int
 Headers::end_of_line (char * &line, int &offset) const
 {
   const char *old_line = line;
-  char *ptr;
+  char *ptr = ACE_OS::strchr (old_line, '\n');
 
-  if ((ptr = ACE_OS::strchr (old_line, '\n')) == NULL) return 0;
+  if (pt == NULL)
+    return 0;
 
   line = ptr;
   offset = 1;
 
-  if (line > old_line) {
-    if (line[-1] == '\r') {
+  if (line > old_line
+      && line[-1] == '\r')
+    {
       line--;
       offset = 2;
     }
-  }
 
   return 1;
 }
@@ -136,7 +153,8 @@ Headers::end_of_line (char * &line, int &offset) const
 
 // Implementation of class Headers_Map
 
-Headers_Map::Headers_Map (void) : num_headers_(0)
+Headers_Map::Headers_Map (void) 
+  : num_headers_(0)
 {
 }
 
@@ -144,19 +162,22 @@ Headers_Map::~Headers_Map (void)
 {
 }
 
-Headers_Map::Map_Item::Map_Item () : header_(0), value_(0), no_value_("")
+Headers_Map::Map_Item::Map_Item (void) 
+  : header_(0),
+    value_(0),
+    no_value_("")
 {
 }
 
-Headers_Map::Map_Item::~Map_Item ()
+Headers_Map::Map_Item::~Map_Item (void)
 {
-  ACE_OS::free ((void *)this->header_);
-  ACE_OS::free ((void *)this->value_);
+  ACE_OS::free ((void *) this->header_);
+  ACE_OS::free ((void *) this->value_);
 }
 
 Headers_Map::Map_Item::operator const char * (void) const
 {
-  return (this->value_ == NULL) ? this->no_value_ : this->value_;
+  return this->value_ == NULL ? this->no_value_ : this->value_;
 }
 
 Headers_Map::Map_Item &
@@ -219,35 +240,41 @@ Headers_Map::mapped (const char * const header) const
 Headers_Map::Map_Item *
 Headers_Map::find (const char * const header) const
 {
-  Headers_Map * const mutable_this = (Headers_Map *)this;
+  Headers_Map *const mutable_this = (Headers_Map *) this;
 
   mutable_this->garbage.header_ = header;
-  Headers_Map::Map_Item *mi_ptr =
-    (Headers_Map::Map_Item *)
-    ::bsearch (&this->garbage, this->map_, this->num_headers_,
-               sizeof(Headers_Map::Map_Item), Headers_Map::compare);
-  mutable_this->garbage.header_ = 0;
+  Headers_Map::Map_Item *mi_ptr = (Headers_Map::Map_Item *)
+    ::bsearch (&this->garbage,
+	       this->map_,
+	       this->num_headers_,
+               sizeof (Headers_Map::Map_Item),
+	       Headers_Map::compare);
 
+  mutable_this->garbage.header_ = 0;
   return mi_ptr;
 }
 
 Headers_Map::Map_Item *
-Headers_Map::place (const char * const header)
+Headers_Map::place (const char *const header)
 {
   this->map_[this->num_headers_++].header_ = ACE_OS::strdup(header);
-  ::qsort(this->map_, this->num_headers_, sizeof(Headers_Map::Map_Item),
-          Headers_Map::compare);
+  ::qsort (this->map_,
+	   this->num_headers_,
+	   sizeof (Headers_Map::Map_Item),
+	   Headers_Map::compare);
 
   return this->find (header);
 }
 
 int
-Headers_Map::compare (const void *item1, const void *item2)
+Headers_Map::compare (const void *item1,
+		      const void *item2)
 {
   Headers_Map::Map_Item *a, *b;
 
-  a = (Headers_Map::Map_Item *)item1;
-  b = (Headers_Map::Map_Item *)item2;
+  a = (Headers_Map::Map_Item *) item1;
+  b = (Headers_Map::Map_Item *) item2;
 
-  return ACE_OS::strcasecmp(a->header_, b->header_);
+  return ACE_OS::strcasecmp (a->header_,
+			     b->header_);
 }

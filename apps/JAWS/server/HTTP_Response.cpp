@@ -1,19 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    apps
-// 
-// = FILENAME
-//    HTTP_Response
-//
-// = AUTHOR
-//    James Hu
-// 
-// ============================================================================
-
-
 #include "ace/Process.h"
 #include "ace/Mem_Map.h"
 
@@ -127,9 +113,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 
   if (this->request_.version () == 0
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
-    {
-      buf = buf2;
-    }
+    buf = buf2;
   else
     {
       length +=
@@ -165,7 +149,6 @@ HTTP_Response::normal_response (void)
                                this->HTTP_HEADER_LENGTH,
                                this->HTTP_TRAILER, 
                                this->HTTP_TRAILER_LENGTH);
-
       break;
 
     case HTTP_Request::HEAD :
@@ -201,11 +184,14 @@ HTTP_Response::normal_response (void)
       else
         {
           ACE_Mem_Map mmapfile;
-          const char * hvv = hv + 6;
-          char * buf = new char [ACE_OS::strlen (hv)];
-          char * auth
+	  // James, please document where the value 6 comes from (up above too).
+          const char *hvv = hv + 6;
+          char *buf = new char [ACE_OS::strlen (hv)];
+          char *auth
             = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
-          if (mmapfile.map ("jaws.auth") != -1 && auth != 0
+
+          if (mmapfile.map ("jaws.auth") != -1 
+	      && auth != 0
               && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
             this->io_.receive_file (this->request_.path (),
                                     this->request_.data (),
@@ -231,15 +217,11 @@ HTTP_Response::cgi_response (void)
   ACE_Process_Options cgi_options;
 
   if (this->request_.cgi_args ())
-    {
-      cgi_options.command_line ("%s %s",
-                                this->request_.path (),
-                                this->request_.cgi_args ());
-    }
+    cgi_options.command_line ("%s %s",
+			      this->request_.path (),
+			      this->request_.cgi_args ());
   else
-    {
-      cgi_options.command_line ("%s", this->request_.path ());
-    }
+    cgi_options.command_line ("%s", this->request_.path ());
 
   // Build environment variables
   cgi_options.setenv ("SERVER_SOFTWARE", "%s", "JAWS/1.0");
@@ -256,49 +238,50 @@ HTTP_Response::cgi_response (void)
 
   if (this->request_.path_info ())
     {
-      cgi_options.setenv ("PATH_INFO", "%s", this->request_.path_info ());
-      cgi_options.setenv ("PATH_TRANSLATED", "%s/%s",
+      cgi_options.setenv ("PATH_INFO", "%s",
+			  this->request_.path_info ());
+      cgi_options.setenv ("PATH_TRANSLATED",
+			  "%s/%s",
                           HTTP_Config::instance ()->document_root (),
                           this->request_.path_info ());
     }
 
-  cgi_options.setenv ("SCRIPT_NAME", "%s", this->request_.uri ());
+  cgi_options.setenv ("SCRIPT_NAME",
+		      "%s",
+		      this->request_.uri ());
 
   if (this->request_.query_string ())
-    cgi_options.setenv ("QUERY_STRING", "%s", this->request_.query_string ());
+    cgi_options.setenv ("QUERY_STRING",
+			"%s",
+			this->request_.query_string ());
 
   if (this->request_.cgi_env ())
-    {
-      int i = 0;
-      while (this->request_.cgi_env ()[i])
-        {
-          cgi_options.setenv (this->request_.cgi_env ()[i],
-                              "%s", this->request_.cgi_env ()[i+1]);
-          i += 2;
-        }
-    }
+    for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
+      cgi_options.setenv (this->request_.cgi_env ()[i],
+			  "%s",
+			  this->request_.cgi_env ()[i+1]);
 
   char buf[BUFSIZ];
   char *p, *q;
   ACE_OS::strcpy (buf, "HTTP_");
   p = q = buf + ACE_OS::strlen (buf);
 
-  for (int i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
+  for (size_t i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
     {
       int j = 0;
-      char c;
-      while ((c = this->request_.header_strings (i)[j++]) != '\0')
-        {
-          if (isalpha (c))
-            *q++ = toupper (c);
-          else if (c == '-')
-            *q++ = '_';
-          else
-            *q++ = c;
-        }
+
+      for (char c; (c = this->request_.header_strings (i)[j++]) != '\0'; )
+	if (isalpha (c))
+	  *q++ = toupper (c);
+	else if (c == '-')
+	  *q++ = '_';
+	else
+	  *q++ = c;
+
       *q = '\0';
 
       const char *hv = this->request_.header_values (i);
+
       if (hv && *hv)
         cgi_options.setenv (buf, "%s", hv);
       q = p;
@@ -314,7 +297,7 @@ HTTP_Response::cgi_response (void)
   //  ACE::send (this->io_.handle (),
   //  this->HTTP_HEADER, this->HTTP_HEADER_LENGTH);
 
-  // Exec the cgi program
+  // Exec the CGI program.
   ACE_Process cgi_process;
   cgi_process.spawn (cgi_options);
   //  cgi_process.wait ();
@@ -326,8 +309,8 @@ HTTP_Response::build_headers (void)
   // At this point, we should really determine the type of request
   // this is, and build the appropriate header.
 
-  // Let's assume this is HTML for now.
-  // Unless the request is CGI, then do not include content-* headers.
+  // Let's assume this is HTML for now.  Unless the request is CGI,
+  // then do not include content-* headers.
 
   if (this->request_.version () == 0
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
@@ -348,23 +331,20 @@ HTTP_Response::build_headers (void)
                         this->request_.status (),
                         this->request_.status_string ());
 
+      // James, please document where the 40 comes from.
       char date[40];
       const char *date_ptr = HTTP_Helper::HTTP_date (date, sizeof(date)-1);
 
       if (date_ptr != 0)
-        {
-          HTTP_HEADER_LENGTH +=
-            ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH,
+	HTTP_HEADER_LENGTH +=
+	  ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH,
                             "Date: %s\r\n", date_ptr);
-        }
 
       if (! this->request_.cgi ())
-        {
-          HTTP_HEADER_LENGTH +=
-            ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
-                            "Content-type: %s\r\n\r\n",
-                            "text/html");
-        }
+	HTTP_HEADER_LENGTH +=
+	  ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
+			  "Content-type: %s\r\n\r\n",
+			  "text/html");
     }
 
   HTTP_TRAILER = "";
