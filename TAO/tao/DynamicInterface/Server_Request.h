@@ -116,6 +116,10 @@ public:
   void _tao_reply_byte_order (int byte_order);
   // Set the byte order of the outgoing CDR stream.
 
+  void gateway_exception_reply (ACE_CString &raw_exception);
+  // Returns a user exception through a TAO gateway without
+  // knowing its type.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;
 #endif /* __GNUC__ */
@@ -145,6 +149,9 @@ private:
 
   TAO_ServerRequest &orb_server_request_;
   // Request from the ORB.
+
+  int sent_gateway_exception_;
+  // Have we sent a user exception obtained from a gateway?
 };
 
 #if defined (__ACE_INLINE__)

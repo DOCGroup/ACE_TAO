@@ -50,6 +50,7 @@ public:
                            CORBA::ULong opname_len,
                            CORBA::Boolean argument_flag,
                            TAO_ORB_Core *orb_core,
+                           CORBA::Request_ptr host,
                            int byte_order = TAO_ENCAP_BYTE_ORDER);
   // Constructor.
 
@@ -59,6 +60,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
+
+private:
+  CORBA::Request_ptr host_;
+  // Back pointer to the DII request that created us.
 };
 
 class TAO_DynamicInterface_Export TAO_GIOP_DII_Deferred_Invocation

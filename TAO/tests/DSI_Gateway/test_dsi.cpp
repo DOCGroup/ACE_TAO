@@ -2,6 +2,7 @@
 
 #include "test_dsi.h"
 #include "tao/DynamicInterface/Request.h"
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_dsi.i"
@@ -45,9 +46,24 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   // Outgoing request must have the same byte order as the incoming one.
   target_request->_tao_byte_order (request->_tao_incoming_byte_order ());
 
-  // Updates the byte order state, if necessary.
-  target_request->invoke (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_TRY
+    {
+      // Updates the byte order state, if necessary.
+      target_request->invoke (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::UNKNOWN, ex)
+    {
+      ACE_UNUSED_ARG (ex);
+
+      // Outgoing reply must have the same byte order as the incoming one.
+      request->_tao_reply_byte_order (target_request->_tao_byte_order ());
+
+      request->gateway_exception_reply (target_request->raw_user_exception ());
+
+      return;
+    }
+  ACE_ENDTRY;
 
   // Outgoing reply must have the same byte order as the incoming one.
   request->_tao_reply_byte_order (target_request->_tao_byte_order ());

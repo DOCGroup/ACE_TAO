@@ -147,6 +147,13 @@ public:
   void _tao_byte_order (int byte_order);
   // Set the byte order member.
 
+  void raw_user_exception (TAO_InputCDR &cdr);
+  // Hold on to a user exception in case we are part of
+  // a TAO gateway.
+
+  ACE_CString &raw_user_exception (void);
+  // Accessor for the input stream containing the exception.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Request_ptr _ptr_type;
   typedef CORBA_Request_var _var_type;
@@ -221,6 +228,10 @@ private:
 
   int byte_order_;
   // Can be reset by a gateway when passing along a request.
+
+  ACE_CString raw_user_exception_;
+  // Stores user exception as a CDR stream when this request is
+  // used in a TAO gateway.
 };
 
 typedef CORBA_Request* CORBA_Request_ptr;

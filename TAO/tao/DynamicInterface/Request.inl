@@ -147,6 +147,20 @@ CORBA_Request::_tao_byte_order (int byte_order)
   this->byte_order_ = byte_order;
 }
 
+ACE_INLINE void
+CORBA_Request::raw_user_exception (TAO_InputCDR &cdr)
+{
+  this->raw_user_exception_.set (cdr.start ()->rd_ptr (),
+                                 cdr.start ()->length (),
+                                 1);
+}
+
+ACE_INLINE ACE_CString &
+CORBA_Request::raw_user_exception (void)
+{
+  return this->raw_user_exception_;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_Request_var
 // *************************************************************

@@ -9,13 +9,15 @@ TAO_GIOP_DII_Invocation::TAO_GIOP_DII_Invocation (TAO_Stub *data,
                                                   CORBA::ULong opname_len,
                                                   CORBA::Boolean argument_flag,
                                                   TAO_ORB_Core *orb_core,
+                                                  CORBA::Request_ptr host,
                                                   int byte_order)
   : TAO_GIOP_Twoway_Invocation (data,
                                 operation,
                                 opname_len,
                                 argument_flag,
                                 orb_core,
-                                byte_order)
+                                byte_order),
+    host_ (host)
 {
 }
 
