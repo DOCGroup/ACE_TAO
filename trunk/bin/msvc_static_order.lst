@@ -32,6 +32,7 @@ TAO/orbsvcs/orbsvcs/CosNaming.dsp
 TAO/orbsvcs/orbsvcs/CosProperty.dsp
 TAO/orbsvcs/orbsvcs/CosTrading.dsp
 TAO/orbsvcs/orbsvcs/AV.dsp
+TAO/orbsvcs/orbsvcs/ETCL.dsp
 TAO/orbsvcs/orbsvcs/RTEvent.dsp
 TAO/orbsvcs/orbsvcs/RTSched.dsp
 TAO/orbsvcs/orbsvcs/RTSchedEvent.dsp
