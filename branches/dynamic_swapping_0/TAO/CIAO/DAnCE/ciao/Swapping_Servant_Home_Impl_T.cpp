@@ -75,6 +75,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
+    ACE_DEBUG ((LM_DEBUG, "i am being called to remove the component\n"));
     COMP_VAR _ciao_comp = COMP::_narrow (comp
                                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -86,6 +87,8 @@ namespace CIAO
 
     _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "i am being called to passivate the components\n"));
 
     this->_ciao_passivate_component (_ciao_comp.in ()
                                      ACE_ENV_ARG_PARAMETER);
@@ -188,7 +191,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::Object_var hobj =
-      this->container_->get_objref (this
+      this->container_->get_home_objref (this
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
