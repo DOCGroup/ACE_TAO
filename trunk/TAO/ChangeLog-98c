@@ -3,10 +3,12 @@ Thu Jul  2 14:28:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO_IDL/be/be_array.cpp: We were generating incorrect code for
 	the out () and _retn () methods of the Array_var class.
 
+	* TAO_IDL/be_include/be.h" Missing #include for Process.h added.
+
+	* TAO_IDL/Makefile: Ran make depend
+	
 	* tests/Param_Test/README: Added description for the array tests.
 
-	* TAO_IDL/be_include/be.h" Missing #include for Process.h added.
-	
 Thu Jul  2 12:36:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Trader[_T].{h,cpp}:
