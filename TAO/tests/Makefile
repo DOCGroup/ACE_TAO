@@ -35,6 +35,7 @@ DIRS  = CDR \
         OBV \
         IORManipulation \
         Connection_Purging \
+        Server_Connection_Purging \
         ORB_init \
         ORB_destroy \
 	Objref_Sequence_Test \
