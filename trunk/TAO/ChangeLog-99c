@@ -1,3 +1,10 @@
+Mon Jul 19 16:17:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/union.idl:
+	  Added another test example to the file. Thanks to
+	  Roger Egbers <regbers@isrglobal.com> for sending in
+	  the example that the addition was adapted from.
+
 Mon Jul 19 15:59:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_decl.h:
