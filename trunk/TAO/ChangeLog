@@ -1,3 +1,9 @@
+Wed Jun 18 17:10:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	* orbsvcs/orbsvcs/RTEvent.bor: Added CRC.cpp for compilation in
+	  various builds.
+
 Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/CRC.h:
