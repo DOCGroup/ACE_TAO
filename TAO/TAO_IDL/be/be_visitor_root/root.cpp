@@ -822,8 +822,8 @@ be_visitor_root::visit_valuetype_fwd (be_valuetype_fwd *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-        case TAO_CodeGen::TAO_ROOT_IS:
-        case TAO_CodeGen::TAO_ROOT_IH:
+    case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_IH:
                 return 0; // nothing to be done
     default:
       {

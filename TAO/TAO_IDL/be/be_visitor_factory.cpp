@@ -221,6 +221,13 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_VALUETYPE_CI:
       return new be_visitor_valuetype_ci (new_ctx);
 
+#if 0
+    case TAO_CodeGen::TAO_VALUETYPE_FWD_CH:
+      return new be_visitor_valuetype_fwd_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_FWD_CI:
+      return new be_visitor_valuetype_fwd_ci (new_ctx);
+#endif /* 0 */
+
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
       return new be_visitor_valuetype_obv_ch (new_ctx);
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
