@@ -21,7 +21,6 @@
 #define TAO_PLUGGABLE_H
 
 #include "tao/corbafwd.h"
-#include "tao/Typecode.h"
 
 // Forward declarations.
 class ACE_Addr;

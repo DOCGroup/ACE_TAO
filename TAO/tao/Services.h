@@ -6,7 +6,7 @@
 //    TAO
 //
 // = FILENAME
-//    Serveice_Detail.h
+//    Service_Detail.h
 //
 // = DESCRIPTION
 //
@@ -15,15 +15,12 @@
 //
 // ============================================================================
 
-#ifndef SERVICE_H
-#define SERVICE_H
+#ifndef TAO_SERVICES_H
+#define TAO_SERVICES_H
 
-#include "tao/corba.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
@@ -39,13 +36,8 @@ struct TAO_Export CORBA_ServiceDetail
   // _tao_seq_Octet
   // *************************************************************
   
-  class  _tao_seq_Octet : public
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-    {
+  class  _tao_seq_Octet : public TAO_Unbounded_Sequence<CORBA::Octet>
+  {
     public:
       _tao_seq_Octet (void); // default ctor
       _tao_seq_Octet (CORBA::ULong max); // uses max size
@@ -546,4 +538,5 @@ CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_S
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
-#endif /* Sevices */
+
+#endif /* TAO_SERVICES_H */

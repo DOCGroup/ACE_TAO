@@ -23,6 +23,7 @@
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
+#include "tao/Services.h"
 
 typedef enum
 {
@@ -263,27 +264,28 @@ public:
   // but not necessarily locally.
 
   virtual CORBA::String object_to_string (
-              CORBA::Object_ptr obj,
-              CORBA_Environment &ACE_TRY_ENV =
-                CORBA::default_environment ());
+                                          CORBA::Object_ptr obj,
+                                          CORBA_Environment &ACE_TRY_ENV =
+                                          CORBA::default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
+  
 #ifdef TAO_HAS_VALUETYPE
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory_ptr register_value_factory (
-                            const char *repository_id,
-                            CORBA::ValueFactory_ptr factory,
-                            CORBA_Environment &ACE_TRY_ENV =
-                                CORBA::default_environment () );
+                                                  const char *repository_id,
+                                                  CORBA::ValueFactory_ptr factory,
+                                                  CORBA_Environment &ACE_TRY_ENV =
+                                                  CORBA::default_environment () );
   void unregister_value_factory (const char * repository_id,
                                  CORBA_Environment &ACE_TRY_ENV =
-                                     CORBA::default_environment () );
+                                 CORBA::default_environment () );
   CORBA::ValueFactory_ptr lookup_value_factory (const char *repository_id,
-           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment () );
+                                                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -299,7 +301,7 @@ public:
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &new_list,
                     CORBA_Environment &ACE_TRY_ENV =
-                      CORBA::default_environment ());
+                    CORBA::default_environment ());
 
   // The following are not implemented and just throw
   // CORBA::NO_IMPLEMENT.
@@ -323,6 +325,11 @@ public:
   void create_environment (CORBA::Environment_ptr &new_env,
                            CORBA_Environment &ACE_TRY_ENV =
                              CORBA::default_environment ());
+
+  CORBA::Boolean get_service_information (CORBA::ServiceType service_type, 
+                                          CORBA::ServiceInformation_out service_information,
+                                          CORBA::Environment &ACE_TRY_ENV =
+                                          CORBA::default_environment ());
 
   void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq req,
                                       CORBA_Environment &ACE_TRY_ENV =
