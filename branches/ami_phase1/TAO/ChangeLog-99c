@@ -1,3 +1,30 @@
+Tue Jun  1 18:13:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	* tao/Connect.cpp:
+	  Improved debug messages for connection closing.
+
+	* tao/IIOP_Transport.cpp:
+	* tao/Wait_Strategy.cpp:
+	  Commented out fine-grained debug messages
+
+	* tao/Invocation.cpp:
+	  The wait_for_reply() call was in a while() loop.  Under some
+	  circumstances the while loop would not be entered, this race
+	  condition was causing all kinds of evil crashes and failures.
+	  The loop was not really needed because the wait_for_reply() call 
+	  can handle the case where the data has already arrived.
+
+	* tests/NestedUpcall/Reactor/mt_client.cpp:
+	  Fixed ORB and POA initialization
+
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	* tests/NestedUpcall/Reactor/README:
+	* tests/NestedUpcall/Reactor/svc.mt.conf:
+	  Added a new configuration file for the mt_client test.
+	  Documented the new mt_client test in the README file, added the
+	  test to the run_test.pl file
+
 Tue Jun  1 13:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Wait_Strategy.cpp:

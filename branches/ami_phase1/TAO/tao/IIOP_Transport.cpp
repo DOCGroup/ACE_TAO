@@ -327,7 +327,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   //    (i.e. the stack was unrolled on the thread waiting for this
   //     event), since this is only needed for *true* asynchronous
   //     messaging.
-  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - dispatching reply <%x>\n", this));
+  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - dispatching reply <%x>\n", this));
   if (this->rms_->dispatch_reply (request_id,
                                   reply_status,
                                   version,
