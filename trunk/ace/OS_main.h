@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   OS_NS_main.h
+ *  @file   OS_main.h
  *
  *  $Id$
  *
@@ -199,5 +199,7 @@ ace_main_i
 #     endif /* ACE_WIN32 && UNICODE */
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+
+# include /**/ "ace/post.h"
 
 #endif /* ACE_OS_MAIN_H */
