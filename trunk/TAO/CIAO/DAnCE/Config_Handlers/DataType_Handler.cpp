@@ -1,19 +1,19 @@
 //$Id$
 
 #include "DataType_Handler.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 namespace CIAO{
-    
+
   namespace Config_Handlers{
-    
+
     DataType_Handler::DataType_Handler (void)
     {
     }
     DataType_Handler::~DataType_Handler (void)
     {
     }
-    
+
     ///This method takes a <CIAO::Config_Handlers::DataType>
     ///and returns the corresponding CORBA::TypeCode.
     void
@@ -21,9 +21,9 @@ namespace CIAO{
                                 CORBA::TypeCode_ptr& type,
                                 const DataType& desc)
     {
-      
+
         TCKind kind (desc.kind ());
-        
+
         if (kind == TCKind::tk_null)
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
         else if (kind == TCKind::tk_short)
@@ -60,20 +60,20 @@ namespace CIAO{
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
         else if (kind == TCKind::tk_TypeCode)
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
-          
+
     //   This case used to be supported...is it not in the schema?
     //    else if (kind == TCKind::tk_Object)
     //      type = CORBA::TypeCode::_duplicate (CORBA::_tc_Object);*/
-      
+
     }
 
-    DataType 
+    DataType
     DataType_Handler::data_type (
                       const CORBA::TypeCode_ptr&  src)
     {
-       
+
         DataType type;
- 
+
         if (src->kind () == ::CORBA::tk_null)
           type.kind (TCKind::tk_null);
         else if (src->kind () == CORBA::tk_short)
@@ -111,8 +111,8 @@ namespace CIAO{
         else if (src->kind () == CORBA::tk_TypeCode)
           type.kind (TCKind::tk_TypeCode);
 
-        return type;        
+        return type;
     }
-    
+
   }
 }
