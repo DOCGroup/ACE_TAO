@@ -1,3 +1,9 @@
+Thu Jul 03 16:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp (init_endpoint):
+          Changed the way endpoint is allocated from the heap to resolve BCB
+          warning about a temporary used.
+
 Thu Jul 03 11:47:44 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/examples/Notify/Lanes/Makefile:
@@ -71,17 +77,17 @@ Wed Jul 02 22:10:59 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  renamed to <initialize>.
 
 	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
-	  
+
 	  Initialized the member pointer <barrier_> in the constructor.
 	  The pointer is "delete"ed in the destructor. If it is left
 	  uninitialized, we will get an exception when the
-	  Activation_Manager is destroyed without calling the	
-	  <activate_suppliers> method (where <barrier_> is initialized).	
-	
+	  Activation_Manager is destroyed without calling the
+	  <activate_suppliers> method (where <barrier_> is initialized).
+
 	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
-	  
+
 	  Corrected a comment on line 141.
-	
+
 	* orbsvcs/tests/Notify/lib/Driver.cpp:
 
 	  Added a wait for the <worker_> thread manager before exit.
@@ -146,42 +152,42 @@ Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/TAO_RTScheduler.dsp:	
+	* tao/RTScheduling/TAO_RTScheduler.dsp:
 
 	  Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
 	  to run time type identifcation problem.
-		
+
 
 Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Distributable_Thread.cpp:
-	* tao/RTScheduling/Request_Interceptor.cpp:		
+	* tao/RTScheduling/Request_Interceptor.cpp:
 	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Current.cpp: 
+	* tao/RTScheduling/Current.cpp:
 
 	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
 	  Template and RH73 GCC32 NoInterceptorsNoExceptions builds. Used
 	  ACE_ENV_ARG_DECL_NOT_USED instead of ACE_ENV_ARG_DECL in
 	  methods, in the corresponding .cpp files, that did not use the
 	  env argument, to fix unused parameter errors and warnings.
-	  
+
 Tue Jul 1 00:27:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Current.cpp: 
-	 
+	* tao/RTScheduling/Current.cpp:
+
 	  Fixed compile errors in Debian SingleThreaded and RH73 GCC32
 	  NoInterceptorsNoExceptions. The error was caused due to the
 	  missing env argument parameter in the
 	  TAO_RTScheduler_Current::lookup (...) method. This prevented the
 	  RTScheduler Initializer from creating an instance of the current
 	  object.
-	
+
 Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Request_Interceptor.h:		
+	* tao/RTScheduling/Request_Interceptor.h:
 	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Current.cpp: 
-	  
+	* tao/RTScheduling/Current.cpp:
+
 	  Fixed compile errors and warnings in Debian SingleThreaded build
 	  caused by the usage of ACE_Thread_Mutex. This was replaced with
 	  TAO_SYNCH_MUTEX.
@@ -190,11 +196,11 @@ Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Distributable_Thread.h:
 	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Current.cpp: 
+	* tao/RTScheduling/Current.cpp:
 	* tao/RTScheduling/Request_Interceptor.cpp:
-	* tao/RTScheduling/Request_Interceptor.h:	
+	* tao/RTScheduling/Request_Interceptor.h:
 	* tao/RTScheduling/RTScheduler_Initializer.cpp:
-	
+
 	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
 	  Template build caused by missing return statements in functions
 	  returning non-void. Also moved the creation of an instance of
