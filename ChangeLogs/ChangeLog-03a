@@ -1,3 +1,7 @@
+Wed Oct 16 15:35:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/SPIPE_Test.cpp: Fixed compile error.
+
 Wed Oct 16 14:02:27 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
 
 	* ace/RB_Tree.cpp:
