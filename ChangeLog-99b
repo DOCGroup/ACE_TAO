@@ -1,10 +1,11 @@
 Sun Jan 24 16:17:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* OS.h:
-	* config-g++-common.h:
-	* config-osf1-4.0.h:
-	* config-psos-diab.h:
-	* config-psos-tm.h: Replace ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+	* ace/README:
+	* ace/OS.h:
+	* ace/config-g++-common.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-psos-diab.h:
+	* ace/config-psos-tm.h: Replace ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
 	  with ACE_HAS_WORKING_EXPLITCIT_TEMPLATE_DESTRUCTOR to reflect
 	  the true problem.  Thanks to Ossama for suggesting the name.
 
