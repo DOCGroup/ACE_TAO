@@ -29,28 +29,20 @@
     </CENTER>
 
     <UL>
-      <LI>Object references inside structures or sequences are not
-	decoded properly, the problem starts because the interpreter
-	expects a CORBA::Object_ptr, but the real type is a T_var;
-	virtual inheritance adds the last ingredient to the poison.
-	<BR>[STATUS] A possible solution is to use a T_manager_var that
-	has two fields a Object_ptr and a T_ptr....
+      <LI>Normalize the compiled marshalling interface: the IDL
+	compiler is going to generate a different interface than the
+	code I showed in the EC_Custom_Marshal example; we need to
+	make all the code consistent so users have easy access to it.
       </LI>
 
       <LI>Add compiled marshalling
 	<BR>[STATUS] Andy is working on this.
       </LI>
 
-      <LI>Normalize the compiled marshalling interface: the IDL
-	compiler is going to generate a different interface than the
-	code I showed in the EC_Custom_Marshal example; we need to
-	make all the code consistent so users have easy access to it.
-      </LI>
-      
       <LI>Add the _raise() method to the exceptions...
       </LI>
 
-      <LI>Support C++ exceptions in the IDL compiler.
+      <LI>Support native C++ exceptions.
 	This entails several subtasks:
 	<UL>
 	  <LI>Support the alternative mapping with an environment
@@ -87,6 +79,23 @@
 	</UL>
       </LI>
 
+      <LI>Add support for multiple Profiles in the ORB (completing the
+	IIOP 1.0 support)
+      </LI>
+
+      <LI>Support IIOP 1.1 in the ORB
+      </LI>
+
+      <LI>Support IIOP 1.2 in the ORB
+      </LI>
+
+      <LI>Support GIOP 1.1 in the ORB (fragments)
+      </LI>
+
+      <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
+	preserve end-to-end QoS.
+      </LI>
+      
       <LI>Use active demuxing in the POA
       </LI>
 
@@ -191,10 +200,6 @@
 	ACE_DEBUG output destination in all TAO applications
       </LI>
       
-      <LI>Add support for multiple Profiles in the ORB (completing the
-	IIOP 1.0 support)
-      </LI>
-
       <LI>Purify, purify, purify the EC
       </LI>
 
@@ -202,13 +207,6 @@
       </LI>
 
       <LI>Support several calls to ORB_init() on the same thread.
-      </LI>
-
-      <LI>Support IIOP 1.1 in the ORB
-      </LI>
-
-      <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
-	preserve end-to-end QoS.
       </LI>
 
       <LI>Call ORB_init() in the EC threads?
@@ -433,6 +431,19 @@
     </CENTER>
 
     <UL>
+      <LI>Object references inside structures or sequences are not
+	decoded properly, the problem starts because the interpreter
+	expects a CORBA::Object_ptr, but the real type is a T_var;
+	virtual inheritance adds the last ingredient to the poison.
+	<BR>[STATUS] A possible solution is to use a T_manager_var that
+	has two fields a Object_ptr and a T_ptr....
+	<BR>[DONE] The solution was to use TAO_Object_Field_T<T>, that
+	  behaves like the _var classes, but extends them to provide
+	  virtual methods to _upcast() and _downcast() to and from
+	  CORBA_Object_ptr.
+	  Similar methods were added to sequences of objects.
+      </LI>
+
       <LI>Add options to the IDL compiler to set the suffixes.
 	<BR>[DONE] Alex finished this.
       </LI>
