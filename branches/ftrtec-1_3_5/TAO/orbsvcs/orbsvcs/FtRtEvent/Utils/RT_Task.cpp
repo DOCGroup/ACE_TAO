@@ -3,8 +3,6 @@
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 
-#define ENABLE_RT_CLASS 0
-
 namespace {
   bool enable_rt_class;
 };
