@@ -1,3 +1,12 @@
+Mon Jan  3 20:33:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp: Fixes for KAI that
+	  missed the last round and fixes that were needed after the last
+	  round. 
+	
 Mon Jan  3 15:08:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/Trading_Service.cpp:
