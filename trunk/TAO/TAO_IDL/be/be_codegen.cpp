@@ -1552,7 +1552,7 @@ TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 
   if (str != 0)
     {
-      *stream << str << be_nl << be_nl;
+      *stream << "#" << str << be_nl << be_nl;
     }
 }
 
