@@ -50,8 +50,8 @@ Client_Options::Client_Options (int &argc, char *argv[])
       else if (option (arg_shifter, "-n", nthreads)) {}
       else if (option (arg_shifter, "-h", high_priority_period)) {}
       else if (option (arg_shifter, "-l", low_priority_period)) {}
-      else if (option (arg_shifter, "-w", high_priority_workload)) {}
-      else if (option (arg_shifter, "-v", low_priority_workload)) {}
+      else if (option (arg_shifter, "-w", low_priority_workload)) {}
+      else if (option (arg_shifter, "-v", high_priority_workload)) {}
       else if (option (arg_shifter, "-c", low_priority_consumers)) {}
 
       else if (boolean_option (arg_shifter, "-d", dump_history)) {}

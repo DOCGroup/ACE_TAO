@@ -11,6 +11,7 @@
 DIRS  = \
   lib \
   RTCORBA_Baseline \
+  RTCORBA_Callback \
   Roundtrip \
   Federated_Roundtrip \
   Colocated_Roundtrip

@@ -6,6 +6,8 @@
 #include "RIR_Narrow.h"
 #include "RTEC_Initializer.h"
 #include "RTServer_Setup.h"
+#include "ORB_Task.h"
+#include "ORB_Task_Activator.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
@@ -96,6 +98,12 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       PortableServer::POA_var ec_poa (rtserver_setup.poa ());
+
+      ORB_Task orb_task (orb);
+      ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
+                                             rt_class.thr_sched_class (),
+                                             nthreads,
+                                             &orb_task);
 
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
