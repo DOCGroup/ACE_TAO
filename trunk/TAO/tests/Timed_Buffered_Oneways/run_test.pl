@@ -22,7 +22,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ", "-x");
 
-$client = $CL->TimedWait (60);
+$client = $CL->TimedWait (200);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
