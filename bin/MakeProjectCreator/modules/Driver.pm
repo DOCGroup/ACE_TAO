@@ -324,7 +324,8 @@ sub run {
             ($file eq '' ? 'default input' : $file) . "\n";
       print 'Start Time: ' . scalar(localtime(time())) . "\n";
       if (!$generator->generate($file)) {
-        print STDERR "ERROR: Unable to process: $file\n";
+        print STDERR "ERROR: Unable to process: " .
+                     ($file eq '' ? 'default input' : $file) . "\n";
         $status++;
         last;
       }
