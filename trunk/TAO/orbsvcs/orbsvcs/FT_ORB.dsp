@@ -194,6 +194,10 @@ SOURCE=.\FaultTolerance\FT_PolicyFactory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ServerRequest_Interceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_Service_Activate.cpp
 # End Source File
 # Begin Source File
@@ -239,6 +243,10 @@ SOURCE=.\FaultTolerance\FT_Policy_i.h
 # Begin Source File
 
 SOURCE=.\FaultTolerance\FT_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ServerRequest_Interceptor.h
 # End Source File
 # Begin Source File
 
