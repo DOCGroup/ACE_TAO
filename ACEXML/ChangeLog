@@ -1,3 +1,9 @@
+Fri May 30 13:50:11 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * common/ZipCharStream.h: Removed broken logic to undefine macro
+          version of read. We don't want read to be a macro in ACEXML.
+          Present because of brokenness in ZZIPLIB.
+
 Fri May 30 13:36:39 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
         * parser/parser/Parser.cpp (parse_ignoresect): Fixed a couple of
