@@ -564,8 +564,6 @@ pkginclude_HEADERS = \
         Hash_Purgable_Map_Manager_T.i \
         High_Res_Timer.h \
         High_Res_Timer.i \
-        INET6_Addr.h \
-        INET6_Addr.i \
         INET_Addr.h \
         INET_Addr.i \
         IOStream.h \
