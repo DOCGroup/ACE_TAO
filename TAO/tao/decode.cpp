@@ -118,7 +118,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   CORBA::Any *any = (CORBA::Any *) data;
 
   // Typecode of the element that makes the Any.
-  CORBA::TypeCode_ptr elem_tc;
+  CORBA::TypeCode_var elem_tc;
 
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
@@ -129,7 +129,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
 
   // Decode the typecode description for the element.
   if ((retval = stream->decode (CORBA::_tc_TypeCode,
-                                &elem_tc,
+                                &elem_tc.out (),
                                 0,
                                 env))
       == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -166,7 +166,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
       TAO_InputCDR temp (*stream);
 
       begin = stream->rd_ptr ();
-      retval = temp.skip (elem_tc, env);
+      retval = temp.skip (elem_tc.in (), env);
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
           end = temp.rd_ptr ();
@@ -176,7 +176,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
                           CORBA::TypeCode::TRAVERSE_STOP);
           TAO_OutputCDR out (cdr);
 
-          retval = out.append (elem_tc, stream, env);
+          retval = out.append (elem_tc.in (), stream, env);
           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
               ACE_Message_Block::release (any->cdr_);
@@ -186,14 +186,13 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
                 return CORBA::TypeCode::TRAVERSE_STOP;
               any->cdr_ = cdr;
               any->value_ = 0;
-              any->type_ = elem_tc;
+              any->type_ = elem_tc._retn ();
               any->any_owns_data_ = 1;
             }
         }
     }
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      CORBA::release (elem_tc);
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Any::decode detected error");
     }
@@ -1139,6 +1138,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       TAO_Unbounded_Sequence<CORBA::Octet>* seq2 =
                         ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
                       seq2->replace (bounds, stream->start ());
+		      seq2->mb ()->wr_ptr (seq->mb ()->rd_ptr () + bounds);
                       stream->skip_bytes (bounds);
                       return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }

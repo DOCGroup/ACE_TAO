@@ -1,3 +1,12 @@
+Tue Sep  8 17:28:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/decode.cpp: 
+	* tao/Sequence.i: 
+	  The correct way to set the length of the Message_Block inside a
+	  decoded octet sequences is to do it on the decoding code, using
+	  the ::replace() method brings all kind of problems a
+	  crashes. Especially if the 
+
 Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Turn on Service_Config debugging only
