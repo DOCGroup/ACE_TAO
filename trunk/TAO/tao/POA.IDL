@@ -1,3 +1,5 @@
+// $Id$
+
 // POA related IDL from "ORB Portability Joint Submission", orbos/97-04-14,
 //    Section 3.4
 //
@@ -134,15 +136,15 @@ module PortableServer
       exception AdapterInactive{};
 
       void activate()
-	raises(AdapterInactive);
+        raises(AdapterInactive);
       void hold_requests(in boolean wait_for_completion)
-	raises(AdapterInactive);
+        raises(AdapterInactive);
       void discard_requests(in boolean wait_for_completion)
-	raises(AdapterInactive);
+        raises(AdapterInactive);
       // ****change**** begin take out semi-colon after parameter list in 97-04-14
-      void deactivate(	in boolean etherealize_objects,
-			in boolean wait_for_completion)
-	raises(AdapterInactive);
+      void deactivate(  in boolean etherealize_objects,
+                        in boolean wait_for_completion)
+        raises(AdapterInactive);
       // ****change**** end   take out semi-colon after parameter list in 97-04-14
     };
 
@@ -168,34 +170,34 @@ module PortableServer
 
   interface ServantActivator : ServantManager {
     Servant incarnate (
-		       in ObjectId 	oid,
-		       in POA 	adapter )
+                       in ObjectId      oid,
+                       in POA   adapter )
       raises (ForwardRequest);
 
     void etherealize (
-		      in ObjectId 	oid,
-		      in POA 	adapter,
-		      in Servant 	serv,
-		      in boolean	cleanup_in_progress,
-		      in boolean 	remaining_activations );
+                      in ObjectId       oid,
+                      in POA    adapter,
+                      in Servant        serv,
+                      in boolean        cleanup_in_progress,
+                      in boolean        remaining_activations );
   };
 
   interface ServantLocator : ServantManager {
-    native 	Cookie;
+    native      Cookie;
 
     Servant preinvoke(
-		      in ObjectId	oid,
-		      in POA	adapter,
-		      in Identifier	operation,
-		      out Cookie	the_cookie )
+                      in ObjectId       oid,
+                      in POA    adapter,
+                      in Identifier     operation,
+                      out Cookie        the_cookie )
       raises (ForwardRequest);
 
     void postinvoke(
-		    in ObjectId 	oid,
-		    in POA 	adapter,
-		    in Identifier 	operation,
-		    in Cookie 	the_cookie,
-		    in Servant	the_servant	);
+                    in ObjectId         oid,
+                    in POA      adapter,
+                    in Identifier       operation,
+                    in Cookie   the_cookie,
+                    in Servant  the_servant     );
   };
 
 
@@ -226,15 +228,15 @@ module PortableServer
       //--------------------------------------------------
 
       POA create_POA(in string adapter_name,
-		     in POAManager a_POAManager,
-		     in CORBA::PolicyList policies)
-	raises (AdapterAlreadyExists, InvalidPolicy);
+                     in POAManager a_POAManager,
+                     in CORBA::PolicyList policies)
+        raises (AdapterAlreadyExists, InvalidPolicy);
 
       POA find_POA(in string adapter_name,  in boolean activate_it)
-	raises (AdapterNonExistent);
+        raises (AdapterNonExistent);
 
-      void destroy(	in boolean etherealize_objects,
-			in boolean wait_for_completion);
+      void destroy(     in boolean etherealize_objects,
+                        in boolean wait_for_completion);
 
       // **************************************************
       //
@@ -242,24 +244,24 @@ module PortableServer
       //
       // **************************************************
       ThreadPolicy
-	create_thread_policy(in ThreadPolicyValue value);
+        create_thread_policy(in ThreadPolicyValue value);
       LifespanPolicy
-	create_lifespan_policy(in LifespanPolicyValue value);
+        create_lifespan_policy(in LifespanPolicyValue value);
       IdUniquenessPolicy
-	create_id_uniqueness_policy
-	(in IdUniquenessPolicyValue value);
+        create_id_uniqueness_policy
+        (in IdUniquenessPolicyValue value);
       IdAssignmentPolicy
-	create_id_assignment_policy
-	(in IdAssignmentPolicyValue value);
+        create_id_assignment_policy
+        (in IdAssignmentPolicyValue value);
       ImplicitActivationPolicy
-	create_implicit_activation_policy
-	(in ImplicitActivationPolicyValue value);
+        create_implicit_activation_policy
+        (in ImplicitActivationPolicyValue value);
       ServantRetentionPolicy
-	create_servant_retention_policy
-	(in ServantRetentionPolicyValue value);
+        create_servant_retention_policy
+        (in ServantRetentionPolicyValue value);
       RequestProcessingPolicy
-	create_request_processing_policy
-	(in RequestProcessingPolicyValue value);
+        create_request_processing_policy
+        (in RequestProcessingPolicyValue value);
 
       //--------------------------------------------------
       //
@@ -280,10 +282,10 @@ module PortableServer
       //--------------------------------------------------
 
       ServantManager get_servant_manager()
-	raises (WrongPolicy);
+        raises (WrongPolicy);
 
       void set_servant_manager( in ServantManager imgr)
-	raises (WrongPolicy);
+        raises (WrongPolicy);
 
       //--------------------------------------------------
       //
@@ -292,10 +294,10 @@ module PortableServer
       //--------------------------------------------------
 
       Servant get_servant()
-	raises (NoServant, WrongPolicy);
+        raises (NoServant, WrongPolicy);
 
-      void set_servant(	in Servant p_servant)
-	raises (WrongPolicy);
+      void set_servant( in Servant p_servant)
+        raises (WrongPolicy);
 
       // **************************************************
       //
@@ -304,16 +306,16 @@ module PortableServer
       // **************************************************
 
       ObjectId activate_object( in Servant p_servant )
-	raises (ServantAlreadyActive, WrongPolicy);
+        raises (ServantAlreadyActive, WrongPolicy);
 
       void activate_object_with_id(
-				   in ObjectId id,
-				   in Servant p_servant)
-	raises (ServantAlreadyActive, ObjectAlreadyActive,
-		WrongPolicy);
+                                   in ObjectId id,
+                                   in Servant p_servant)
+        raises (ServantAlreadyActive, ObjectAlreadyActive,
+                WrongPolicy);
 
       void deactivate_object(in ObjectId oid)
-	raises (ObjectNotActive, WrongPolicy);
+        raises (ObjectNotActive, WrongPolicy);
 
       // **************************************************
       //
@@ -322,13 +324,13 @@ module PortableServer
       // **************************************************
 
       Object create_reference (
-			       in RepositoryId intf )
-	raises (WrongPolicy);
+                               in RepositoryId intf )
+        raises (WrongPolicy);
 
       Object create_reference_with_id (
-				       in ObjectId oid,
-				       in RepositoryId intf )
-	raises (WrongPolicy);
+                                       in ObjectId oid,
+                                       in RepositoryId intf )
+        raises (WrongPolicy);
 
 
       //--------------------------------------------------
@@ -338,22 +340,22 @@ module PortableServer
       //--------------------------------------------------
 
       ObjectId servant_to_id(in Servant p_servant)
-	raises (ServantNotActive, WrongPolicy);
+        raises (ServantNotActive, WrongPolicy);
 
       Object servant_to_reference(in Servant p_servant)
-	raises (ServantNotActive, WrongPolicy);
+        raises (ServantNotActive, WrongPolicy);
 
       Servant reference_to_servant(in Object reference)
-	raises (ObjectNotActive, WrongAdapter, WrongPolicy);
+        raises (ObjectNotActive, WrongAdapter, WrongPolicy);
 
       ObjectId reference_to_id(in Object reference)
-	raises (WrongAdapter, WrongPolicy);
+        raises (WrongAdapter, WrongPolicy);
 
       Servant id_to_servant(in ObjectId oid)
-	raises (ObjectNotActive, WrongPolicy);
+        raises (ObjectNotActive, WrongPolicy);
 
       Object id_to_reference(in ObjectId oid)
-	raises (ObjectNotActive, WrongPolicy);
+        raises (ObjectNotActive, WrongPolicy);
 
     };
 
