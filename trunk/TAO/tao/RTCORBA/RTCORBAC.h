@@ -26,14 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_RTCORBAC_H_
 #define _TAO_IDL_ORIG_RTCORBAC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #ifndef TAO_RTCORBA_SAFE_INCLUDE
 #error "You should not include RTCORBAC.h directly, use RTCORBA.h"
@@ -45,8 +46,9 @@
 
 #include "rtcorba_export.h"
 #include "rtcorba_typedefs.h"
-#include "tao/Encodable.h"
+#include "tao/ORB.h"
 #include "tao/TimeBaseC.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Sequence_T.h"
@@ -54,6 +56,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+#include "tao/Encodable.h"
 #include "tao/PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -79,13 +82,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -95,109 +98,109 @@ namespace TAO
 
 namespace RTCORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-
+  
   typedef CORBA::Short NativePriority;
   typedef CORBA::Short_out NativePriority_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NativePriority;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-
+  
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Priority;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const RTCORBA::Priority minPriority = 0;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const RTCORBA::Priority maxPriority = 32767;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-
+  
   typedef CORBA::Long NetworkPriority;
   typedef CORBA::Long_out NetworkPriority_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NetworkPriority;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-
+  
   typedef CORBA::ULong ThreadpoolId;
   typedef CORBA::ULong_out ThreadpoolId_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolId;
-
+  
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-
+  
   struct ThreadpoolLane;
-
+  
   typedef
     TAO_Fixed_Var_T<
         ThreadpoolLane
       >
     ThreadpoolLane_var;
-
+  
   typedef
     ThreadpoolLane &
     ThreadpoolLane_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-
+  
   struct TAO_RTCORBA_Export ThreadpoolLane
   {
     typedef ThreadpoolLane_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     RTCORBA::Priority lane_priority;
     CORBA::ULong static_threads;
     CORBA::ULong dynamic_threads;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolLane;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CH_)
 #define _RTCORBA_THREADPOOLLANES_CH_
-
+  
   class ThreadpoolLanes;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         ThreadpoolLanes,
         ThreadpoolLane
       >
     ThreadpoolLanes_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         ThreadpoolLanes,
@@ -205,7 +208,7 @@ namespace RTCORBA
         ThreadpoolLane
       >
     ThreadpoolLanes_out;
-
+  
   class TAO_RTCORBA_Export ThreadpoolLanes
     : public
         TAO_Unbounded_Sequence<
@@ -218,60 +221,60 @@ namespace RTCORBA
     ThreadpoolLanes (
         CORBA::ULong max,
         CORBA::ULong length,
-        ThreadpoolLane* buffer,
+        ThreadpoolLane* buffer, 
         CORBA::Boolean release = 0
       );
     ThreadpoolLanes (const ThreadpoolLanes &);
     ~ThreadpoolLanes (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef ThreadpoolLanes_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolLanes;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType PRIORITY_MODEL_POLICY_TYPE = 40U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum PriorityModel
   {
     CLIENT_PROPAGATED,
     SERVER_DECLARED
   };
-
+  
   typedef PriorityModel &PriorityModel_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityModel;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY__VAR_OUT_CH_)
 #define _RTCORBA_PRIORITYMODELPOLICY__VAR_OUT_CH_
-
+  
   class PriorityModelPolicy;
   typedef PriorityModelPolicy *PriorityModelPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         PriorityModelPolicy
       >
     PriorityModelPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         PriorityModelPolicy
@@ -279,131 +282,131 @@ namespace RTCORBA
     PriorityModelPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY_CH_)
 #define _RTCORBA_PRIORITYMODELPOLICY_CH_
-
+  
   class TAO_RTCORBA_Export PriorityModelPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef PriorityModelPolicy_ptr _ptr_type;
     typedef PriorityModelPolicy_var _var_type;
-
+    
     // The static operations.
     static PriorityModelPolicy_ptr _duplicate (PriorityModelPolicy_ptr obj);
-
+    
     static PriorityModelPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PriorityModelPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PriorityModelPolicy_ptr _nil (void)
     {
       return (PriorityModelPolicy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::PriorityModel priority_model (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual RTCORBA::Priority server_priority (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     PriorityModelPolicy (void);
-
+    
     virtual ~PriorityModelPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     PriorityModelPolicy (const PriorityModelPolicy &);
-
+    
     void operator= (const PriorityModelPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityModelPolicy;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType THREADPOOL_POLICY_TYPE = 41U;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_THREADPOOLPOLICY__VAR_OUT_CH_)
 #define _RTCORBA_THREADPOOLPOLICY__VAR_OUT_CH_
-
+  
   class ThreadpoolPolicy;
   typedef ThreadpoolPolicy *ThreadpoolPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ThreadpoolPolicy
       >
     ThreadpoolPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ThreadpoolPolicy
@@ -411,116 +414,116 @@ namespace RTCORBA
     ThreadpoolPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_THREADPOOLPOLICY_CH_)
 #define _RTCORBA_THREADPOOLPOLICY_CH_
-
+  
   class TAO_RTCORBA_Export ThreadpoolPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ThreadpoolPolicy_ptr _ptr_type;
     typedef ThreadpoolPolicy_var _var_type;
-
+    
     // The static operations.
     static ThreadpoolPolicy_ptr _duplicate (ThreadpoolPolicy_ptr obj);
-
+    
     static ThreadpoolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ThreadpoolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ThreadpoolPolicy_ptr _nil (void)
     {
       return (ThreadpoolPolicy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual RTCORBA::ThreadpoolId threadpool (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ThreadpoolPolicy (void);
-
+    
     virtual ~ThreadpoolPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ThreadpoolPolicy (const ThreadpoolPolicy &);
-
+    
     void operator= (const ThreadpoolPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolPolicy;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__VAR_OUT_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES__VAR_OUT_CH_
-
+  
   class ProtocolProperties;
   typedef ProtocolProperties *ProtocolProperties_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ProtocolProperties
       >
     ProtocolProperties_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ProtocolProperties
@@ -528,13 +531,13 @@ namespace RTCORBA
     ProtocolProperties_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES_CH_
-
+  
   class TAO_RTCORBA_Export ProtocolProperties
     : public virtual CORBA::Object
     , public virtual TAO_Encodable
@@ -542,112 +545,112 @@ namespace RTCORBA
   public:
     typedef ProtocolProperties_ptr _ptr_type;
     typedef ProtocolProperties_var _var_type;
-
+    
     // The static operations.
     static ProtocolProperties_ptr _duplicate (ProtocolProperties_ptr obj);
-
+    
     static ProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ProtocolProperties_ptr _nil (void)
     {
       return (ProtocolProperties_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
     // CDR Encoder/Decoder methods. (handcrafted)
     virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
     virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   protected:
     // Abstract or local interface only.
     ProtocolProperties (void);
-
+    
     virtual ~ProtocolProperties (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ProtocolProperties (const ProtocolProperties &);
-
+    
     void operator= (const ProtocolProperties &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProtocolProperties;
-
+  
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-
+  
   struct Protocol;
-
+  
   typedef
     TAO_Var_Var_T<
         Protocol
       >
     Protocol_var;
-
+  
   typedef
     TAO_Out_T<
         Protocol,
         Protocol_var
       >
     Protocol_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-
+  
   struct TAO_RTCORBA_Export Protocol
   {
     typedef Protocol_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     IOP::ProfileId protocol_type;
     RTCORBA::ProtocolProperties_var orb_protocol_properties;
     RTCORBA::ProtocolProperties_var transport_protocol_properties;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Protocol;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_RTCORBA_PROTOCOLLIST_CH_)
 #define _RTCORBA_PROTOCOLLIST_CH_
-
+  
   class ProtocolList;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         ProtocolList,
         Protocol
       >
     ProtocolList_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         ProtocolList,
@@ -655,7 +658,7 @@ namespace RTCORBA
         Protocol
       >
     ProtocolList_out;
-
+  
   class TAO_RTCORBA_Export ProtocolList
     : public
         TAO_Unbounded_Sequence<
@@ -668,44 +671,44 @@ namespace RTCORBA
     ProtocolList (
         CORBA::ULong max,
         CORBA::ULong length,
-        Protocol* buffer,
+        Protocol* buffer, 
         CORBA::Boolean release = 0
       );
     ProtocolList (const ProtocolList &);
     ~ProtocolList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef ProtocolList_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProtocolList;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType SERVER_PROTOCOL_POLICY_TYPE = 42U;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY__VAR_OUT_CH_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY__VAR_OUT_CH_
-
+  
   class ServerProtocolPolicy;
   typedef ServerProtocolPolicy *ServerProtocolPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServerProtocolPolicy
       >
     ServerProtocolPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServerProtocolPolicy
@@ -713,121 +716,121 @@ namespace RTCORBA
     ServerProtocolPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY_CH_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY_CH_
-
+  
   class TAO_RTCORBA_Export ServerProtocolPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ServerProtocolPolicy_ptr _ptr_type;
     typedef ServerProtocolPolicy_var _var_type;
-
+    
     // The static operations.
     static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
-
+    
     static ServerProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerProtocolPolicy_ptr _nil (void)
     {
       return (ServerProtocolPolicy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::ProtocolList * protocols (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ServerProtocolPolicy (void);
-
+    
     virtual ~ServerProtocolPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ServerProtocolPolicy (const ServerProtocolPolicy &);
-
+    
     void operator= (const ServerProtocolPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerProtocolPolicy;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType CLIENT_PROTOCOL_POLICY_TYPE = 43U;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY__VAR_OUT_CH_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY__VAR_OUT_CH_
-
+  
   class ClientProtocolPolicy;
   typedef ClientProtocolPolicy *ClientProtocolPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ClientProtocolPolicy
       >
     ClientProtocolPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ClientProtocolPolicy
@@ -835,121 +838,121 @@ namespace RTCORBA
     ClientProtocolPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY_CH_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY_CH_
-
+  
   class TAO_RTCORBA_Export ClientProtocolPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ClientProtocolPolicy_ptr _ptr_type;
     typedef ClientProtocolPolicy_var _var_type;
-
+    
     // The static operations.
     static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
-
+    
     static ClientProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientProtocolPolicy_ptr _nil (void)
     {
       return (ClientProtocolPolicy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::ProtocolList * protocols (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ClientProtocolPolicy (void);
-
+    
     virtual ~ClientProtocolPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ClientProtocolPolicy (const ClientProtocolPolicy &);
-
+    
     void operator= (const ClientProtocolPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ClientProtocolPolicy;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType PRIVATE_CONNECTION_POLICY_TYPE = 44U;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY__VAR_OUT_CH_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY__VAR_OUT_CH_
-
+  
   class PrivateConnectionPolicy;
   typedef PrivateConnectionPolicy *PrivateConnectionPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         PrivateConnectionPolicy
       >
     PrivateConnectionPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         PrivateConnectionPolicy
@@ -957,106 +960,106 @@ namespace RTCORBA
     PrivateConnectionPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY_CH_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY_CH_
-
+  
   class TAO_RTCORBA_Export PrivateConnectionPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef PrivateConnectionPolicy_ptr _ptr_type;
     typedef PrivateConnectionPolicy_var _var_type;
-
+    
     // The static operations.
     static PrivateConnectionPolicy_ptr _duplicate (PrivateConnectionPolicy_ptr obj);
-
+    
     static PrivateConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PrivateConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PrivateConnectionPolicy_ptr _nil (void)
     {
       return (PrivateConnectionPolicy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     PrivateConnectionPolicy (void);
-
+    
     virtual ~PrivateConnectionPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     PrivateConnectionPolicy (const PrivateConnectionPolicy &);
-
+    
     void operator= (const PrivateConnectionPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PrivateConnectionPolicy;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES__VAR_OUT_CH_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES__VAR_OUT_CH_
-
+  
   class TCPProtocolProperties;
   typedef TCPProtocolProperties *TCPProtocolProperties_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         TCPProtocolProperties
       >
     TCPProtocolProperties_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         TCPProtocolProperties
@@ -1064,212 +1067,212 @@ namespace RTCORBA
     TCPProtocolProperties_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES_CH_
-
+  
   class TAO_RTCORBA_Export TCPProtocolProperties
-    : public virtual RTCORBA::ProtocolProperties
+    : public virtual ::RTCORBA::ProtocolProperties
   {
   public:
     typedef TCPProtocolProperties_ptr _ptr_type;
     typedef TCPProtocolProperties_var _var_type;
-
+    
     // The static operations.
     static TCPProtocolProperties_ptr _duplicate (TCPProtocolProperties_ptr obj);
-
+    
     static TCPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static TCPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static TCPProtocolProperties_ptr _nil (void)
     {
       return (TCPProtocolProperties_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Long send_buffer_size (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_buffer_size (
-        CORBA::Long send_buffer_size
+        ::CORBA::Long send_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Long recv_buffer_size (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void recv_buffer_size (
-        CORBA::Long recv_buffer_size
+        ::CORBA::Long recv_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean keep_alive (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void keep_alive (
-        CORBA::Boolean keep_alive
+        ::CORBA::Boolean keep_alive
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean dont_route (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void dont_route (
-        CORBA::Boolean dont_route
+        ::CORBA::Boolean dont_route
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean no_delay (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void no_delay (
-        CORBA::Boolean no_delay
+        ::CORBA::Boolean no_delay
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean enable_network_priority (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void enable_network_priority (
-        CORBA::Boolean enable_network_priority
+        ::CORBA::Boolean enable_network_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     TCPProtocolProperties (void);
-
+    
     virtual ~TCPProtocolProperties (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     TCPProtocolProperties (const TCPProtocolProperties &);
-
+    
     void operator= (const TCPProtocolProperties &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TCPProtocolProperties;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES__VAR_OUT_CH_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES__VAR_OUT_CH_
-
+  
   class GIOPProtocolProperties;
   typedef GIOPProtocolProperties *GIOPProtocolProperties_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         GIOPProtocolProperties
       >
     GIOPProtocolProperties_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         GIOPProtocolProperties
@@ -1277,86 +1280,86 @@ namespace RTCORBA
     GIOPProtocolProperties_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES_CH_
-
+  
   class TAO_RTCORBA_Export GIOPProtocolProperties
-    : public virtual RTCORBA::ProtocolProperties
+    : public virtual ::RTCORBA::ProtocolProperties
   {
   public:
     typedef GIOPProtocolProperties_ptr _ptr_type;
     typedef GIOPProtocolProperties_var _var_type;
-
+    
     // The static operations.
     static GIOPProtocolProperties_ptr _duplicate (GIOPProtocolProperties_ptr obj);
-
+    
     static GIOPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static GIOPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static GIOPProtocolProperties_ptr _nil (void)
     {
       return (GIOPProtocolProperties_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     GIOPProtocolProperties (void);
-
+    
     virtual ~GIOPProtocolProperties (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     GIOPProtocolProperties (const GIOPProtocolProperties &);
-
+    
     void operator= (const GIOPProtocolProperties &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_GIOPProtocolProperties;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__VAR_OUT_CH_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__VAR_OUT_CH_
-
+  
   class UnixDomainProtocolProperties;
   typedef UnixDomainProtocolProperties *UnixDomainProtocolProperties_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         UnixDomainProtocolProperties
       >
     UnixDomainProtocolProperties_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         UnixDomainProtocolProperties
@@ -1364,128 +1367,128 @@ namespace RTCORBA
     UnixDomainProtocolProperties_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_
-
+  
   class TAO_RTCORBA_Export UnixDomainProtocolProperties
-    : public virtual RTCORBA::ProtocolProperties
+    : public virtual ::RTCORBA::ProtocolProperties
   {
   public:
     typedef UnixDomainProtocolProperties_ptr _ptr_type;
     typedef UnixDomainProtocolProperties_var _var_type;
-
+    
     // The static operations.
     static UnixDomainProtocolProperties_ptr _duplicate (UnixDomainProtocolProperties_ptr obj);
-
+    
     static UnixDomainProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static UnixDomainProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static UnixDomainProtocolProperties_ptr _nil (void)
     {
       return (UnixDomainProtocolProperties_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Long send_buffer_size (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_buffer_size (
-        CORBA::Long send_buffer_size
+        ::CORBA::Long send_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Long recv_buffer_size (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void recv_buffer_size (
-        CORBA::Long recv_buffer_size
+        ::CORBA::Long recv_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     UnixDomainProtocolProperties (void);
-
+    
     virtual ~UnixDomainProtocolProperties (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     UnixDomainProtocolProperties (const UnixDomainProtocolProperties &);
-
+    
     void operator= (const UnixDomainProtocolProperties &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UnixDomainProtocolProperties;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__VAR_OUT_CH_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__VAR_OUT_CH_
-
+  
   class SharedMemoryProtocolProperties;
   typedef SharedMemoryProtocolProperties *SharedMemoryProtocolProperties_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         SharedMemoryProtocolProperties
       >
     SharedMemoryProtocolProperties_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         SharedMemoryProtocolProperties
@@ -1493,74 +1496,74 @@ namespace RTCORBA
     SharedMemoryProtocolProperties_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_
-
+  
   class TAO_RTCORBA_Export SharedMemoryProtocolProperties
-    : public virtual RTCORBA::ProtocolProperties
+    : public virtual ::RTCORBA::ProtocolProperties
   {
   public:
     typedef SharedMemoryProtocolProperties_ptr _ptr_type;
     typedef SharedMemoryProtocolProperties_var _var_type;
-
+    
     // The static operations.
     static SharedMemoryProtocolProperties_ptr _duplicate (SharedMemoryProtocolProperties_ptr obj);
-
+    
     static SharedMemoryProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static SharedMemoryProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static SharedMemoryProtocolProperties_ptr _nil (void)
     {
       return (SharedMemoryProtocolProperties_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Long preallocate_buffer_size (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void preallocate_buffer_size (
-        CORBA::Long preallocate_buffer_size
+        ::CORBA::Long preallocate_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * mmap_filename (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void mmap_filename (
         const char * mmap_filename
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1568,20 +1571,20 @@ namespace RTCORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * mmap_lockname (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void mmap_lockname (
         const char * mmap_lockname
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1589,85 +1592,85 @@ namespace RTCORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     SharedMemoryProtocolProperties (void);
-
+    
     virtual ~SharedMemoryProtocolProperties (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     SharedMemoryProtocolProperties (const SharedMemoryProtocolProperties &);
-
+    
     void operator= (const SharedMemoryProtocolProperties &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SharedMemoryProtocolProperties;
-
+  
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-
+  
   struct PriorityBand;
-
+  
   typedef
     TAO_Fixed_Var_T<
         PriorityBand
       >
     PriorityBand_var;
-
+  
   typedef
     PriorityBand &
     PriorityBand_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-
+  
   struct TAO_RTCORBA_Export PriorityBand
   {
     typedef PriorityBand_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     RTCORBA::Priority low;
     RTCORBA::Priority high;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBand;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_RTCORBA_PRIORITYBANDS_CH_)
 #define _RTCORBA_PRIORITYBANDS_CH_
-
+  
   class PriorityBands;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         PriorityBands,
         PriorityBand
       >
     PriorityBands_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         PriorityBands,
@@ -1675,7 +1678,7 @@ namespace RTCORBA
         PriorityBand
       >
     PriorityBands_out;
-
+  
   class TAO_RTCORBA_Export PriorityBands
     : public
         TAO_Unbounded_Sequence<
@@ -1688,44 +1691,44 @@ namespace RTCORBA
     PriorityBands (
         CORBA::ULong max,
         CORBA::ULong length,
-        PriorityBand* buffer,
+        PriorityBand* buffer, 
         CORBA::Boolean release = 0
       );
     PriorityBands (const PriorityBands &);
     ~PriorityBands (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef PriorityBands_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBands;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType PRIORITY_BANDED_CONNECTION_POLICY_TYPE = 45U;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__VAR_OUT_CH_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__VAR_OUT_CH_
-
+  
   class PriorityBandedConnectionPolicy;
   typedef PriorityBandedConnectionPolicy *PriorityBandedConnectionPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         PriorityBandedConnectionPolicy
       >
     PriorityBandedConnectionPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         PriorityBandedConnectionPolicy
@@ -1733,116 +1736,116 @@ namespace RTCORBA
     PriorityBandedConnectionPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_
-
+  
   class TAO_RTCORBA_Export PriorityBandedConnectionPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef PriorityBandedConnectionPolicy_ptr _ptr_type;
     typedef PriorityBandedConnectionPolicy_var _var_type;
-
+    
     // The static operations.
     static PriorityBandedConnectionPolicy_ptr _duplicate (PriorityBandedConnectionPolicy_ptr obj);
-
+    
     static PriorityBandedConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PriorityBandedConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PriorityBandedConnectionPolicy_ptr _nil (void)
     {
       return (PriorityBandedConnectionPolicy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::PriorityBands * priority_bands (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     PriorityBandedConnectionPolicy (void);
-
+    
     virtual ~PriorityBandedConnectionPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     PriorityBandedConnectionPolicy (const PriorityBandedConnectionPolicy &);
-
+    
     void operator= (const PriorityBandedConnectionPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBandedConnectionPolicy;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_CURRENT__VAR_OUT_CH_)
 #define _RTCORBA_CURRENT__VAR_OUT_CH_
-
+  
   class Current;
   typedef Current *Current_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         Current
       >
     Current_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Current
@@ -1850,107 +1853,107 @@ namespace RTCORBA
     Current_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_CURRENT_CH_)
 #define _RTCORBA_CURRENT_CH_
-
+  
   class TAO_RTCORBA_Export Current
-    : public virtual CORBA::Current
+    : public virtual ::CORBA::Current
   {
   public:
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
-
+    
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
-
+    
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Current_ptr _nil (void)
     {
       return (Current_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual RTCORBA::Priority the_priority (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void the_priority (
-        RTCORBA::Priority the_priority
+        ::RTCORBA::Priority the_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     Current (void);
-
+    
     virtual ~Current (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     Current (const Current &);
-
+    
     void operator= (const Current &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_MUTEX__VAR_OUT_CH_)
 #define _RTCORBA_MUTEX__VAR_OUT_CH_
-
+  
   class Mutex;
   typedef Mutex *Mutex_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         Mutex
       >
     Mutex_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Mutex
@@ -1958,117 +1961,117 @@ namespace RTCORBA
     Mutex_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_MUTEX_CH_)
 #define _RTCORBA_MUTEX_CH_
-
+  
   class TAO_RTCORBA_Export Mutex
     : public virtual CORBA::Object
   {
   public:
     typedef Mutex_ptr _ptr_type;
     typedef Mutex_var _var_type;
-
+    
     // The static operations.
     static Mutex_ptr _duplicate (Mutex_ptr obj);
-
+    
     static Mutex_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Mutex_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Mutex_ptr _nil (void)
     {
       return (Mutex_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void lock (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void unlock (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean try_lock (
-        TimeBase::TimeT max_wait
+        ::TimeBase::TimeT max_wait
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     Mutex (void);
-
+    
     virtual ~Mutex (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     Mutex (const Mutex &);
-
+    
     void operator= (const Mutex &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Mutex;
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTCORBA_RTORB__VAR_OUT_CH_)
 #define _RTCORBA_RTORB__VAR_OUT_CH_
-
+  
   class RTORB;
   typedef RTORB *RTORB_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         RTORB
       >
     RTORB_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         RTORB
@@ -2076,79 +2079,79 @@ namespace RTCORBA
     RTORB_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTCORBA_RTORB_CH_)
 #define _RTCORBA_RTORB_CH_
-
+  
   class TAO_RTCORBA_Export RTORB
     : public virtual CORBA::Object
   {
   public:
     typedef RTORB_ptr _ptr_type;
     typedef RTORB_var _var_type;
-
+    
     // The static operations.
     static RTORB_ptr _duplicate (RTORB_ptr obj);
-
+    
     static RTORB_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RTORB_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RTORB_ptr _nil (void)
     {
       return (RTORB_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::Mutex_ptr create_mutex (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy_mutex (
-        RTCORBA::Mutex_ptr the_mutex
+        ::RTCORBA::Mutex_ptr the_mutex
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_RTCORBA_RTORB_MUTEXNOTFOUND_CH_)
 #define _RTCORBA_RTORB_MUTEXNOTFOUND_CH_
-
+    
     class TAO_RTCORBA_Export MutexNotFound : public CORBA::UserException
     {
     public:
-
+      
       MutexNotFound (void);
       MutexNotFound (const MutexNotFound &);
       ~MutexNotFound (void);
 
       MutexNotFound &operator= (const MutexNotFound &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static MutexNotFound *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -2160,83 +2163,83 @@ namespace RTCORBA
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_MutexNotFound;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::Mutex_ptr create_named_mutex (
         const char * name,
-        CORBA::Boolean_out created_flag
+        ::CORBA::Boolean_out created_flag
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::Mutex_ptr open_named_mutex (
         const char * name
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTCORBA::RTORB::MutexNotFound
+        CORBA::SystemException,
+        ::RTCORBA::RTORB::MutexNotFound
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::TCPProtocolProperties_ptr create_tcp_protocol_properties (
-        CORBA::Long send_buffer_size,
-        CORBA::Long recv_buffer_size,
-        CORBA::Boolean keep_alive,
-        CORBA::Boolean dont_route,
-        CORBA::Boolean no_delay,
-        CORBA::Boolean enable_network_priority
+        ::CORBA::Long send_buffer_size,
+        ::CORBA::Long recv_buffer_size,
+        ::CORBA::Boolean keep_alive,
+        ::CORBA::Boolean dont_route,
+        ::CORBA::Boolean no_delay,
+        ::CORBA::Boolean enable_network_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_RTCORBA_RTORB_INVALIDTHREADPOOL_CH_)
 #define _RTCORBA_RTORB_INVALIDTHREADPOOL_CH_
-
+    
     class TAO_RTCORBA_Export InvalidThreadpool : public CORBA::UserException
     {
     public:
-
+      
       InvalidThreadpool (void);
       InvalidThreadpool (const InvalidThreadpool &);
       ~InvalidThreadpool (void);
 
       InvalidThreadpool &operator= (const InvalidThreadpool &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static InvalidThreadpool *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -2248,165 +2251,165 @@ namespace RTCORBA
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_InvalidThreadpool;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual RTCORBA::ThreadpoolId create_threadpool (
-        CORBA::ULong stacksize,
-        CORBA::ULong static_threads,
-        CORBA::ULong dynamic_threads,
-        RTCORBA::Priority default_priority,
-        CORBA::Boolean allow_request_buffering,
-        CORBA::ULong max_buffered_requests,
-        CORBA::ULong max_request_buffer_size
+        ::CORBA::ULong stacksize,
+        ::CORBA::ULong static_threads,
+        ::CORBA::ULong dynamic_threads,
+        ::RTCORBA::Priority default_priority,
+        ::CORBA::Boolean allow_request_buffering,
+        ::CORBA::ULong max_buffered_requests,
+        ::CORBA::ULong max_request_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual RTCORBA::ThreadpoolId create_threadpool_with_lanes (
-        CORBA::ULong stacksize,
-        const RTCORBA::ThreadpoolLanes & lanes,
-        CORBA::Boolean allow_borrowing,
-        CORBA::Boolean allow_request_buffering,
-        CORBA::ULong max_buffered_requests,
-        CORBA::ULong max_request_buffer_size
+        ::CORBA::ULong stacksize,
+        const ::RTCORBA::ThreadpoolLanes & lanes,
+        ::CORBA::Boolean allow_borrowing,
+        ::CORBA::Boolean allow_request_buffering,
+        ::CORBA::ULong max_buffered_requests,
+        ::CORBA::ULong max_request_buffer_size
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy_threadpool (
-        RTCORBA::ThreadpoolId threadpool
+        ::RTCORBA::ThreadpoolId threadpool
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTCORBA::RTORB::InvalidThreadpool
+        CORBA::SystemException,
+        ::RTCORBA::RTORB::InvalidThreadpool
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::PriorityModelPolicy_ptr create_priority_model_policy (
-        RTCORBA::PriorityModel priority_model,
-        RTCORBA::Priority server_priority
+        ::RTCORBA::PriorityModel priority_model,
+        ::RTCORBA::Priority server_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::ThreadpoolPolicy_ptr create_threadpool_policy (
-        RTCORBA::ThreadpoolId threadpool
+        ::RTCORBA::ThreadpoolId threadpool
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::PriorityBandedConnectionPolicy_ptr create_priority_banded_connection_policy (
-        const RTCORBA::PriorityBands & priority_bands
+        const ::RTCORBA::PriorityBands & priority_bands
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::ServerProtocolPolicy_ptr create_server_protocol_policy (
-        const RTCORBA::ProtocolList & protocols
+        const ::RTCORBA::ProtocolList & protocols
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::ClientProtocolPolicy_ptr create_client_protocol_policy (
-        const RTCORBA::ProtocolList & protocols
+        const ::RTCORBA::ProtocolList & protocols
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     RTORB (void);
-
+    
     virtual ~RTORB (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     RTORB (const RTORB &);
-
+    
     void operator= (const RTORB &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RTORB;
 
 // TAO_IDL - Generated from
@@ -2423,19 +2426,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY__TRAITS_CH_)
 #define _RTCORBA_PRIORITYMODELPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PriorityModelPolicy>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::PriorityModelPolicy>
   {
-    static RTCORBA::PriorityModelPolicy_ptr duplicate (
-        RTCORBA::PriorityModelPolicy_ptr
+    static ::RTCORBA::PriorityModelPolicy_ptr duplicate (
+        ::RTCORBA::PriorityModelPolicy_ptr
       );
     static void release (
-        RTCORBA::PriorityModelPolicy_ptr
+        ::RTCORBA::PriorityModelPolicy_ptr
       );
-    static RTCORBA::PriorityModelPolicy_ptr nil (void);
+    static ::RTCORBA::PriorityModelPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::PriorityModelPolicy_ptr p,
+        ::RTCORBA::PriorityModelPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2444,19 +2447,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_THREADPOOLPOLICY__TRAITS_CH_)
 #define _RTCORBA_THREADPOOLPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ThreadpoolPolicy>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ThreadpoolPolicy>
   {
-    static RTCORBA::ThreadpoolPolicy_ptr duplicate (
-        RTCORBA::ThreadpoolPolicy_ptr
+    static ::RTCORBA::ThreadpoolPolicy_ptr duplicate (
+        ::RTCORBA::ThreadpoolPolicy_ptr
       );
     static void release (
-        RTCORBA::ThreadpoolPolicy_ptr
+        ::RTCORBA::ThreadpoolPolicy_ptr
       );
-    static RTCORBA::ThreadpoolPolicy_ptr nil (void);
+    static ::RTCORBA::ThreadpoolPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::ThreadpoolPolicy_ptr p,
+        ::RTCORBA::ThreadpoolPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2465,19 +2468,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ProtocolProperties>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ProtocolProperties>
   {
-    static RTCORBA::ProtocolProperties_ptr duplicate (
-        RTCORBA::ProtocolProperties_ptr
+    static ::RTCORBA::ProtocolProperties_ptr duplicate (
+        ::RTCORBA::ProtocolProperties_ptr
       );
     static void release (
-        RTCORBA::ProtocolProperties_ptr
+        ::RTCORBA::ProtocolProperties_ptr
       );
-    static RTCORBA::ProtocolProperties_ptr nil (void);
+    static ::RTCORBA::ProtocolProperties_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::ProtocolProperties_ptr p,
+        ::RTCORBA::ProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2486,19 +2489,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY__TRAITS_CH_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ServerProtocolPolicy>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ServerProtocolPolicy>
   {
-    static RTCORBA::ServerProtocolPolicy_ptr duplicate (
-        RTCORBA::ServerProtocolPolicy_ptr
+    static ::RTCORBA::ServerProtocolPolicy_ptr duplicate (
+        ::RTCORBA::ServerProtocolPolicy_ptr
       );
     static void release (
-        RTCORBA::ServerProtocolPolicy_ptr
+        ::RTCORBA::ServerProtocolPolicy_ptr
       );
-    static RTCORBA::ServerProtocolPolicy_ptr nil (void);
+    static ::RTCORBA::ServerProtocolPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::ServerProtocolPolicy_ptr p,
+        ::RTCORBA::ServerProtocolPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2507,19 +2510,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY__TRAITS_CH_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ClientProtocolPolicy>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ClientProtocolPolicy>
   {
-    static RTCORBA::ClientProtocolPolicy_ptr duplicate (
-        RTCORBA::ClientProtocolPolicy_ptr
+    static ::RTCORBA::ClientProtocolPolicy_ptr duplicate (
+        ::RTCORBA::ClientProtocolPolicy_ptr
       );
     static void release (
-        RTCORBA::ClientProtocolPolicy_ptr
+        ::RTCORBA::ClientProtocolPolicy_ptr
       );
-    static RTCORBA::ClientProtocolPolicy_ptr nil (void);
+    static ::RTCORBA::ClientProtocolPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::ClientProtocolPolicy_ptr p,
+        ::RTCORBA::ClientProtocolPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2528,19 +2531,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY__TRAITS_CH_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PrivateConnectionPolicy>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::PrivateConnectionPolicy>
   {
-    static RTCORBA::PrivateConnectionPolicy_ptr duplicate (
-        RTCORBA::PrivateConnectionPolicy_ptr
+    static ::RTCORBA::PrivateConnectionPolicy_ptr duplicate (
+        ::RTCORBA::PrivateConnectionPolicy_ptr
       );
     static void release (
-        RTCORBA::PrivateConnectionPolicy_ptr
+        ::RTCORBA::PrivateConnectionPolicy_ptr
       );
-    static RTCORBA::PrivateConnectionPolicy_ptr nil (void);
+    static ::RTCORBA::PrivateConnectionPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::PrivateConnectionPolicy_ptr p,
+        ::RTCORBA::PrivateConnectionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2549,19 +2552,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::TCPProtocolProperties>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::TCPProtocolProperties>
   {
-    static RTCORBA::TCPProtocolProperties_ptr duplicate (
-        RTCORBA::TCPProtocolProperties_ptr
+    static ::RTCORBA::TCPProtocolProperties_ptr duplicate (
+        ::RTCORBA::TCPProtocolProperties_ptr
       );
     static void release (
-        RTCORBA::TCPProtocolProperties_ptr
+        ::RTCORBA::TCPProtocolProperties_ptr
       );
-    static RTCORBA::TCPProtocolProperties_ptr nil (void);
+    static ::RTCORBA::TCPProtocolProperties_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::TCPProtocolProperties_ptr p,
+        ::RTCORBA::TCPProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2570,19 +2573,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::GIOPProtocolProperties>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::GIOPProtocolProperties>
   {
-    static RTCORBA::GIOPProtocolProperties_ptr duplicate (
-        RTCORBA::GIOPProtocolProperties_ptr
+    static ::RTCORBA::GIOPProtocolProperties_ptr duplicate (
+        ::RTCORBA::GIOPProtocolProperties_ptr
       );
     static void release (
-        RTCORBA::GIOPProtocolProperties_ptr
+        ::RTCORBA::GIOPProtocolProperties_ptr
       );
-    static RTCORBA::GIOPProtocolProperties_ptr nil (void);
+    static ::RTCORBA::GIOPProtocolProperties_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::GIOPProtocolProperties_ptr p,
+        ::RTCORBA::GIOPProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2591,19 +2594,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::UnixDomainProtocolProperties>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::UnixDomainProtocolProperties>
   {
-    static RTCORBA::UnixDomainProtocolProperties_ptr duplicate (
-        RTCORBA::UnixDomainProtocolProperties_ptr
+    static ::RTCORBA::UnixDomainProtocolProperties_ptr duplicate (
+        ::RTCORBA::UnixDomainProtocolProperties_ptr
       );
     static void release (
-        RTCORBA::UnixDomainProtocolProperties_ptr
+        ::RTCORBA::UnixDomainProtocolProperties_ptr
       );
-    static RTCORBA::UnixDomainProtocolProperties_ptr nil (void);
+    static ::RTCORBA::UnixDomainProtocolProperties_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::UnixDomainProtocolProperties_ptr p,
+        ::RTCORBA::UnixDomainProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2612,19 +2615,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::SharedMemoryProtocolProperties>
   {
-    static RTCORBA::SharedMemoryProtocolProperties_ptr duplicate (
-        RTCORBA::SharedMemoryProtocolProperties_ptr
+    static ::RTCORBA::SharedMemoryProtocolProperties_ptr duplicate (
+        ::RTCORBA::SharedMemoryProtocolProperties_ptr
       );
     static void release (
-        RTCORBA::SharedMemoryProtocolProperties_ptr
+        ::RTCORBA::SharedMemoryProtocolProperties_ptr
       );
-    static RTCORBA::SharedMemoryProtocolProperties_ptr nil (void);
+    static ::RTCORBA::SharedMemoryProtocolProperties_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::SharedMemoryProtocolProperties_ptr p,
+        ::RTCORBA::SharedMemoryProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2633,19 +2636,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__TRAITS_CH_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::PriorityBandedConnectionPolicy>
   {
-    static RTCORBA::PriorityBandedConnectionPolicy_ptr duplicate (
-        RTCORBA::PriorityBandedConnectionPolicy_ptr
+    static ::RTCORBA::PriorityBandedConnectionPolicy_ptr duplicate (
+        ::RTCORBA::PriorityBandedConnectionPolicy_ptr
       );
     static void release (
-        RTCORBA::PriorityBandedConnectionPolicy_ptr
+        ::RTCORBA::PriorityBandedConnectionPolicy_ptr
       );
-    static RTCORBA::PriorityBandedConnectionPolicy_ptr nil (void);
+    static ::RTCORBA::PriorityBandedConnectionPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::PriorityBandedConnectionPolicy_ptr p,
+        ::RTCORBA::PriorityBandedConnectionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2654,19 +2657,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_CURRENT__TRAITS_CH_)
 #define _RTCORBA_CURRENT__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::Current>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::Current>
   {
-    static RTCORBA::Current_ptr duplicate (
-        RTCORBA::Current_ptr
+    static ::RTCORBA::Current_ptr duplicate (
+        ::RTCORBA::Current_ptr
       );
     static void release (
-        RTCORBA::Current_ptr
+        ::RTCORBA::Current_ptr
       );
-    static RTCORBA::Current_ptr nil (void);
+    static ::RTCORBA::Current_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::Current_ptr p,
+        ::RTCORBA::Current_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2675,19 +2678,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_MUTEX__TRAITS_CH_)
 #define _RTCORBA_MUTEX__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::Mutex>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::Mutex>
   {
-    static RTCORBA::Mutex_ptr duplicate (
-        RTCORBA::Mutex_ptr
+    static ::RTCORBA::Mutex_ptr duplicate (
+        ::RTCORBA::Mutex_ptr
       );
     static void release (
-        RTCORBA::Mutex_ptr
+        ::RTCORBA::Mutex_ptr
       );
-    static RTCORBA::Mutex_ptr nil (void);
+    static ::RTCORBA::Mutex_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::Mutex_ptr p,
+        ::RTCORBA::Mutex_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2696,19 +2699,19 @@ namespace TAO
 
 #if !defined (_RTCORBA_RTORB__TRAITS_CH_)
 #define _RTCORBA_RTORB__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::RTORB>
+  struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::RTORB>
   {
-    static RTCORBA::RTORB_ptr duplicate (
-        RTCORBA::RTORB_ptr
+    static ::RTCORBA::RTORB_ptr duplicate (
+        ::RTCORBA::RTORB_ptr
       );
     static void release (
-        RTCORBA::RTORB_ptr
+        ::RTCORBA::RTORB_ptr
       );
-    static RTCORBA::RTORB_ptr nil (void);
+    static ::RTCORBA::RTORB_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTCORBA::RTORB_ptr p,
+        ::RTCORBA::RTORB_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2937,10 +2940,10 @@ TAO_RTCORBA_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:964
 
 #if defined (__ACE_INLINE__)
-#include "RTCORBAC.i"
+#include "RTCORBAC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -2954,3 +2957,5 @@ TAO_RTCORBA_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
+
