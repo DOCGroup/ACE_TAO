@@ -1,3 +1,18 @@
+Fri Sep 17 12:05:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	* tao/Sequence_T.cpp:
+	  Added use of brute casts in operators [] and = for
+	  array sequences, contingent on SunCC version earlier
+	  than 5.0.
+
+	* tests/Param_Test/complex_any.cpp:
+	* tests/Param_Test/ubwstring.cpp:
+	* tests/Param_Test/bdwstring.cpp:
+	* tests/Param_Test/ub_wstr_seq.cpp:
+	* tests/Param_Test/bd_wstr_seq.cpp:
+	  Added missing ACE_RCSID lines to these files.
+
 Thu Sep 16 18:31:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include.idl_narrow.h:
