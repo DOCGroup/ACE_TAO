@@ -4,6 +4,9 @@
 
 #include "ace/SString.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/UserException.inl"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            UserException,
