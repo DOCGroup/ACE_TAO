@@ -1,3 +1,25 @@
+Wed Jan  7 13:09:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.inl:
+	* ace/OS_NS_Thread.h:
+
+	  The following	 checkin "Mon Jan  5 11:02:55 2004  Douglas
+	  C. Schmidt  <schmidt@ace.cs.wustl.edu>" actually broke
+	  ACE_Auto_Event. The idea behind the said checkin was to do a
+	  check whether a proper event occured during event_wait (),
+	  insted of a spurious wakeup call. This was achieved by checking
+	  the value of is_signaled_. This works great for manual
+	  events. For auto events, we don't set the variable value if we
+	  have waiting threads. This makes the threads calling
+	  Auto_Event.wait () to wait for ever. 
+
+	  We now have another special boolean variable added to
+	  ACE_event_t class which keeps track whether an auto event was
+	  signalled during the signal () call. Thanks to Dr. Schmidt for
+	  giving this idea. We need to revisit this later after x.4 and
+	  use inheritance and polymorphism to encapsulate these behvioral
+	  differences. Doing now could break backward compatibility.  
+
 Wed Jan  7 13:03:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
