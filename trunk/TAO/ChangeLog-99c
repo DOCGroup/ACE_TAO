@@ -1,3 +1,10 @@
+Mon Sep 27 15:48:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface_strategy.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	  The HP/aCC compiler frowns at text after a #endif, it actually
+	  gives an error in that case.
+
 Mon Sep 27 15:43:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ast/ast_enum.cpp:
