@@ -4,6 +4,11 @@ Wed Dec 18 15:24:13 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 	  0.  This is the only way that CreateIoCompletionPort works first
 	  time in.  ACE_INVALID_HANDLE makes it break.
 
+	* (ACE_Proactor): Added a call to CreateIoCompletionPort in the
+	  constructor so that GetQueuedCompletionStatus can be called
+	  before ACE_Proactor::initiate is called.  This is necessary if
+	  an application is using the Proactor as a timer mechanism only.
+
 Tue Dec 18 7:58:07 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Proactor.i (get_handle): Changed this to return
