@@ -25,10 +25,10 @@ public:
 
   TAO_Simple_Dynamic_Property (const T& dp);
 
-  virtual CORBA::Any* evalDP (const char* name,
-                              CORBA::TypeCode_ptr returned_type,
-                              const CORBA::Any& extra_info,
-                              CORBA::Environment& _env)
+  virtual CORBA::Any* evalDP (const char* /* name */,
+                              CORBA::TypeCode_ptr /* returned_type */,
+                              const CORBA::Any& /* extra_info */,
+                              CORBA::Environment &)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 private:

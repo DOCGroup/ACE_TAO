@@ -251,7 +251,7 @@ public:
     request_ (request),
     dispatching_module_ (dispatching_module) { }
 
-  virtual int execute (void* arg = 0)
+  virtual int execute (void* /* arg = 0 */)
     {
       TAO_TRY
         {
@@ -1646,7 +1646,7 @@ ACE_ES_Consumer_Correlation::~ACE_ES_Consumer_Correlation (void)
 }
 
 void
-ACE_ES_Consumer_Correlation::disconnect_push_supplier (CORBA::Environment &TAO_IN_ENV)
+ACE_ES_Consumer_Correlation::disconnect_push_supplier (CORBA::Environment &)
 {
   connected_ = 0;
 }
@@ -2149,7 +2149,7 @@ ACE_ES_Consumer_Rep::~ACE_ES_Consumer_Rep (void)
 }
 
 int
-ACE_ES_Consumer_Rep::execute (void* arg)
+ACE_ES_Consumer_Rep::execute (void* /* arg */)
 {
   ACE_ERROR ((LM_ERROR, "Warning!  ACE_ES_Consumer_Rep::execute called.\n"));
   return -1;
@@ -2158,7 +2158,7 @@ ACE_ES_Consumer_Rep::execute (void* arg)
 // ************************************************************
 
 int
-ACE_ES_Consumer_Rep_Timeout::execute (void* arg)
+ACE_ES_Consumer_Rep_Timeout::execute (void* /* arg */)
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_REP_TIMEOUT_EXECUTE);
   if (this->receiving_events ())

@@ -72,7 +72,7 @@ Server_i::parse_args (void)
 // with it.
 
 int
-Server_i::init_naming_service (CORBA::Environment& env)
+Server_i::init_naming_service (CORBA::Environment &)
 {
 
   TAO_TRY
@@ -335,7 +335,7 @@ Server_i::register_server (void)
 int
 Server_i::init (int argc,
                 char *argv[],
-                CORBA::Environment &env)
+                CORBA::Environment &)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -394,7 +394,7 @@ Server_i::init (int argc,
 // Initialize the IR Helper and run the event loop for ORB.
 
 int
-Server_i::run (CORBA::Environment &env)
+Server_i::run (CORBA::Environment &)
 {
   TAO_TRY
     {

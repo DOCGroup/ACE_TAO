@@ -142,7 +142,7 @@ Life_Cycle_Service_Server::init (int argc,
 
 
 int
-Life_Cycle_Service_Server::run (CORBA::Environment& env)
+Life_Cycle_Service_Server::run (CORBA::Environment &)
 {
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

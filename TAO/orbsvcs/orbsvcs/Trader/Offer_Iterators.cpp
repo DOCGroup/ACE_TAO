@@ -31,7 +31,7 @@ TAO_Offer_Iterator::~TAO_Offer_Iterator (void)
 }
 
 void 
-TAO_Offer_Iterator::destroy (CORBA::Environment& env)
+TAO_Offer_Iterator::destroy (CORBA::Environment &)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
@@ -81,7 +81,7 @@ TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 }
 
 CORBA::ULong 
-TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& TAO_IN_ENV) 
+TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment &) 
   TAO_THROW_SPEC((CORBA::SystemException, 
 		 CosTrading::UnknownMaxLeft))
 {
@@ -91,7 +91,7 @@ TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& TAO_IN_ENV)
 CORBA::Boolean 
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n, 
                                        CosTrading::OfferSeq_out offers,
-				       CORBA::Environment& TAO_IN_ENV) 
+				                               CORBA::Environment &) 
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
@@ -279,7 +279,7 @@ TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 }
 
 CORBA::ULong
-TAO_Offer_Id_Iterator::max_left (CORBA::Environment& env)
+TAO_Offer_Id_Iterator::max_left (CORBA::Environment &)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::UnknownMaxLeft))
 {
@@ -287,7 +287,7 @@ TAO_Offer_Id_Iterator::max_left (CORBA::Environment& env)
 }
 
 void
-TAO_Offer_Id_Iterator::destroy (CORBA::Environment& TAO_IN_ENV)
+TAO_Offer_Id_Iterator::destroy (CORBA::Environment &)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
@@ -316,8 +316,8 @@ TAO_Offer_Id_Iterator::destroy (CORBA::Environment& TAO_IN_ENV)
 
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
-			       CosTrading::OfferIdSeq_out _ids,
-			       CORBA::Environment& TAO_IN_ENV)
+			                         CosTrading::OfferIdSeq_out _ids,
+			                         CORBA::Environment &)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.

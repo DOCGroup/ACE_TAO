@@ -33,12 +33,12 @@ public:
 
   char * getFilter (CORBA::Environment &_tao_environment);
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation (CORBA::Environment &_tao_environment)
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation (CORBA::Environment &)
     {
       return 0;
     }
 
-  char * getPreferences (CORBA::Environment &_tao_environment)
+  char * getPreferences (CORBA::Environment &)
     {
       return 0;
     }

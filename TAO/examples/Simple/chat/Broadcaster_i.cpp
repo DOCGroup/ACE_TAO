@@ -116,7 +116,7 @@ Broadcaster_i::remove (Receiver_ptr receiver,
 void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text,
-                    CORBA::Environment &TAO_TRY_ENV)
+                    CORBA::Environment &T)
 {
   TAO_TRY
     {
@@ -152,7 +152,7 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
 void
 Broadcaster_i::broadcast (const char *text,
-                          CORBA::Environment &TAO_TRY_ENV)
+                          CORBA::Environment &)
 {
   // Broadcast the message to all registered clients.
 

@@ -1277,7 +1277,7 @@ TAO_PropertySetDef::~TAO_PropertySetDef (void)
 // Return the sequence that is there in side.
 void
 TAO_PropertySetDef::get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types,
-                                                CORBA::Environment &TAO_IN_ENV)
+                                                CORBA::Environment &)
 {
   // Copy contents of the sequence.
   ACE_NEW (property_types,
@@ -1286,7 +1286,7 @@ TAO_PropertySetDef::get_allowed_property_types (CosPropertyService::PropertyType
 
 void
 TAO_PropertySetDef::get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs,
-                                            CORBA::Environment &TAO_IN_ENV)
+                                            CORBA::Environment &)
 {
   // We have all the names, get the values and the modes from the Hash
   // Table and return.
@@ -1531,7 +1531,7 @@ TAO_PropertySetDef::get_property_mode (const char *property_name,
 CORBA::Boolean
 TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames &property_names,
                                         CosPropertyService::PropertyModes_out property_modes,
-                                        CORBA::Environment &TAO_IN_ENV)
+                                        CORBA::Environment &)
 {
   // Get the length of names sequence.
   size_t sequence_length = property_names.length ();
@@ -1790,7 +1790,7 @@ TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator (void)
 // one exists.
 
 void
-TAO_PropertyNamesIterator::reset (CORBA::Environment &TAO_IN_ENV)
+TAO_PropertyNamesIterator::reset (CORBA::Environment &)
 {
   this->iterator_ = this->iterator_.map ().begin ();
 }
@@ -1802,7 +1802,7 @@ TAO_PropertyNamesIterator::reset (CORBA::Environment &TAO_IN_ENV)
 
 CORBA::Boolean
 TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
-                                     CORBA::Environment &TAO_IN_ENV)
+                                     CORBA::Environment &)
 {
   CosProperty_Hash_Entry_ptr entry_ptr;
 
@@ -1820,7 +1820,7 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
 CORBA::Boolean
 TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
                                    CosPropertyService::PropertyNames_out property_names,
-                                   CORBA::Environment &TAO_IN_ENV)
+                                   CORBA::Environment &)
 {
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
@@ -1846,7 +1846,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertyNamesIterator::destroy (CORBA::Environment &TAO_IN_ENV)
+TAO_PropertyNamesIterator::destroy (CORBA::Environment &)
 {
 }
 
@@ -1860,14 +1860,14 @@ TAO_PropertiesIterator::~TAO_PropertiesIterator (void)
 }
 
 void
-TAO_PropertiesIterator::reset (CORBA::Environment &TAO_IN_ENV)
+TAO_PropertiesIterator::reset (CORBA::Environment &)
 {
   this->iterator_ = this->iterator_.map ().begin ();
 }
 
 CORBA::Boolean
 TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
-                                  CORBA::Environment &TAO_IN_ENV)
+                                  CORBA::Environment &)
 {
   CosProperty_Hash_Entry_ptr entry_ptr;
 
@@ -1889,7 +1889,7 @@ TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
 CORBA::Boolean
 TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
                                 CosPropertyService::Properties_out nproperties,
-                                CORBA::Environment &TAO_IN_ENV)
+                                CORBA::Environment &)
 {
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
@@ -1920,7 +1920,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertiesIterator::destroy (CORBA::Environment &TAO_IN_ENV)
+TAO_PropertiesIterator::destroy (CORBA::Environment &)
 {
 }
 

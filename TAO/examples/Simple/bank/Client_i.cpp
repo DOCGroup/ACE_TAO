@@ -114,7 +114,7 @@ Client_i::parse_args (void)
 void
 Client_i::deposit (Bank::Account_ptr server,
                    CORBA::Float deposit_amount,
-                   CORBA::Environment &env)
+                   CORBA::Environment &)
 {
   server->deposit (deposit_amount,
                    this->env_);
@@ -166,7 +166,7 @@ Client_i::close (Bank::Account_ptr account,
 // the same IOR.
 
 void
-Client_i::test_for_same_name (CORBA::Environment &env)
+Client_i::test_for_same_name (CORBA::Environment &)
 {
   this->server1_ = this->open (this->account_holder_name1_,
                                this->initial_balance_,
@@ -185,7 +185,7 @@ Client_i::test_for_same_name (CORBA::Environment &env)
 // This method tests if opening an account with different names
 // returns a different IOR.
 void
-Client_i::test_for_different_name (CORBA::Environment &env)
+Client_i::test_for_different_name (CORBA::Environment &)
 {
   this->server1_ = this->open (this->account_holder_name1_,
                                this->initial_balance_,
@@ -205,7 +205,7 @@ Client_i::test_for_different_name (CORBA::Environment &env)
 // This method tests the Overdraft exception.
 
 void
-Client_i::test_for_overdraft (CORBA::Environment &env)
+Client_i::test_for_overdraft (CORBA::Environment &)
 {
   this->server1_ = this->open (this->account_holder_name1_,
                                this->initial_balance_,

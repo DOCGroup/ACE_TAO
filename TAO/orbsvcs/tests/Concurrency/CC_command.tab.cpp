@@ -220,7 +220,11 @@ int ace_cc_yyindent;
 #endif /* ACE_CC_YYDEBUG_INDENT */
 #ifndef ACE_CC_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void ACE_CC_YYDEBUG_REDUCE(int ace_cc_yynew_state, int ace_cc_yyrule_num, char *ace_cc_yyrule_string, int ace_cc_yynew_indent, int ace_cc_yyrhs_count)
+void ACE_CC_YYDEBUG_REDUCE(int /* ace_cc_yynew_state */, 
+                           int /* ace_cc_yyrule_num */, 
+                           char *ace_cc_yyrule_string, 
+                           int ace_cc_yynew_indent, 
+                           int ace_cc_yyrhs_count)
 #else
 ACE_CC_YYDEBUG_REDUCE(ace_cc_yynew_state, ace_cc_yyrule_num, ace_cc_yyrule_string, ace_cc_yynew_indent, ace_cc_yyrhs_count)
 int ace_cc_yynew_state;
@@ -250,7 +254,10 @@ int ace_cc_yyrhs_count;
 #endif /* ACE_CC_YYDEBUG_REDUCE */
 #ifndef ACE_CC_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void ACE_CC_YYDEBUG_SHIFT_LEXEME(int ace_cc_yyold_state, int ace_cc_yynew_state, char *ace_cc_yytoken_string, int ace_cc_yynew_indent)
+void ACE_CC_YYDEBUG_SHIFT_LEXEME(int /* ace_cc_yyold_state */, 
+                                 int /* ace_cc_yynew_state */, 
+                                 char *ace_cc_yytoken_string, 
+                                 int ace_cc_yynew_indent)
 #else
 ACE_CC_YYDEBUG_SHIFT_LEXEME(ace_cc_yyold_state, ace_cc_yynew_state, ace_cc_yytoken_string, ace_cc_yynew_indent)
 int ace_cc_yyold_state;
@@ -265,7 +272,10 @@ int ace_cc_yynew_indent;
 #endif /*  ACE_CC_YYDEBUG_SHIFT_LEXEME */
 #ifndef ACE_CC_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void ACE_CC_YYDEBUG_LOOK_AHEAD(int ace_cc_yynew_state, int ace_cc_yytoken_num, char *ace_cc_yytoken_string, int ace_cc_yyindent)
+void ACE_CC_YYDEBUG_LOOK_AHEAD(int /* ace_cc_yynew_state */, 
+                               int ace_cc_yytoken_num, 
+                               char *ace_cc_yytoken_string, 
+                               int ace_cc_yyindent)
 #else
 ACE_CC_YYDEBUG_LOOK_AHEAD(ace_cc_yynew_state, ace_cc_yytoken_num, ace_cc_yytoken_string, ace_cc_yyindent)
 int ace_cc_yynew_state;
@@ -282,7 +292,7 @@ int ace_cc_yyindent;
 #endif /* ACE_CC_YYDEBUG_LOOK_AHEAD */
 #ifndef ACE_CC_YYDEBUG_DISCARD_STATE
 #ifdef __cplusplus
-void ACE_CC_YYDEBUG_DISCARD_STATE(int ace_cc_yynew_state, int ace_cc_yyindent)
+void ACE_CC_YYDEBUG_DISCARD_STATE(int /* ace_cc_yynew_state */, int ace_cc_yyindent)
 #else
 ACE_CC_YYDEBUG_DISCARD_STATE(ace_cc_yynew_state, ace_cc_yyindent)
 int ace_cc_yynew_state;
@@ -310,7 +320,10 @@ int ace_cc_yyindent;
 #endif /* ACE_CC_YYDEBUG_DISCARD_STATE */
 #ifndef ACE_CC_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void ACE_CC_YYDEBUG_DISCARD_TOKEN(int ace_cc_yynew_state, int ace_cc_yytoken_num, char *ace_cc_yytoken_string, int ace_cc_yyindent)
+void ACE_CC_YYDEBUG_DISCARD_TOKEN(int /* ace_cc_yynew_state */, 
+                                  int /* ace_cc_yytoken_num */, 
+                                  char *ace_cc_yytoken_string, 
+                                  int ace_cc_yyindent)
 #else
 ACE_CC_YYDEBUG_DISCARD_TOKEN(ace_cc_yynew_state, ace_cc_yytoken_num, ace_cc_yytoken_string, ace_cc_yyindent)
 int ace_cc_yynew_state;
@@ -325,7 +338,9 @@ int ace_cc_yyindent;
 #endif /* ACE_CC_YYDEBUG_DISCARD_TOKEN */
 #ifndef ACE_CC_YYDEBUG_SHIFT_ERROR_LEXEME
 #ifdef __cplusplus
-void ACE_CC_YYDEBUG_SHIFT_ERROR_LEXEME(int ace_cc_yyold_state, int ace_cc_yynew_state, int ace_cc_yyindent)
+void ACE_CC_YYDEBUG_SHIFT_ERROR_LEXEME(int /* ace_cc_yyold_state */, 
+                                       int /* ace_cc_yynew_state */, 
+                                       int ace_cc_yyindent)
 #else
 ACE_CC_YYDEBUG_SHIFT_ERROR_LEXEME(ace_cc_yyold_state, ace_cc_yynew_state, ace_cc_yyindent)
 int ace_cc_yyold_state;

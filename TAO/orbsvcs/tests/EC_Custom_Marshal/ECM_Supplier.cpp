@@ -188,7 +188,7 @@ ECMS_Driver::run (int argc, char* argv[])
 
 int
 ECMS_Driver::supplier_task (Test_Supplier *supplier,
-                       void* cookie)
+                       void* /* cookie */)
 {
   TAO_TRY
     {
@@ -522,7 +522,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
+Test_Supplier::disconnect_push_supplier (CORBA::Environment &)
 {
 }
 

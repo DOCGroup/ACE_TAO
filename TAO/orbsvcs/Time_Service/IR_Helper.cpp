@@ -96,7 +96,7 @@ int
 IR_Helper::register_server (const char *comm_line,
                             const char *environment,
                             const char *working_dir,
-                            CORBA_Environment &_env)
+                            CORBA_Environment &)
 {
   TAO_TRY
     {
@@ -202,7 +202,7 @@ IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
 
 
 void
-IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &_env)
+IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &)
 {
   if ( obj 
     && obj->_stubobj () 

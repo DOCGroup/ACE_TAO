@@ -51,8 +51,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-TAO_Service_Type_Repository::
-incarnation (CORBA::Environment& TAO_IN_ENV)
+TAO_Service_Type_Repository::incarnation (CORBA::Environment &)
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   if (this->lock_->acquire_read () == -1)
@@ -570,7 +569,7 @@ update_type_map (const char* name,
                  const char * if_name,
                  const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
                  const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
-                 Prop_Map& prop_map,
+                 Prop_Map &,
                  Service_Type_Map& super_map)
 {
   // update entries for all supertypes to include this type as a subtype.
