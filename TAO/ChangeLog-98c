@@ -1,5 +1,12 @@
 Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Logger/ior_multicast.cpp:
+	* orbsvcs/tests/Logger/ior_multicast.h: Removed unneeded
+ 	ior_multicast.* source files from the logger example.  It now uses
+ 	the resolve_initial_references() to use the naming service for its
+ 	advertisement.
+
 	* orbsvcs/lib/Makefile (realclean): Updated with realclean & clean
  	rules to delete CosNamingS.* and CosNamingC.*
 
