@@ -26,6 +26,7 @@ CFG=IDL_Cubit Server - Win32 Release
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -94,6 +95,14 @@ SOURCE=.\Cubit_Client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cubit_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cubit_Server.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cubitC.cpp
 # End Source File
 # Begin Source File
@@ -102,11 +111,11 @@ SOURCE=.\cubitS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server.cpp
+SOURCE=.\RTI_IO.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cubit_Server.cpp
+SOURCE=.\server.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -118,15 +127,15 @@ SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cubit_Server.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cubitC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\cubitS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Cubit_Server.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
