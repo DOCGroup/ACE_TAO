@@ -1,10 +1,23 @@
+Sun Apr 04 04:45:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/POA/Forwarding/run_test.pl: Changed to use
+	  ACE::waitforfile to ensure proper startup of servers and the
+	  client.  Also made sure the temporary ior files get removed
+	  after each test cycle so ACE::waitforfile works properly.
+
+	* examples/POA/Forwarding/MyFooServant.cpp (forward): The prefix
+	  for I/R id has changed from 'IDL:' to 'IDL:omg.org/'.
+
+	* tao/Forwarding_Servant.cpp (invoke): We do own the exception in
+	  Any.
+
 Sun Apr  4 01:59:48 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/sfp/client.cpp : 
-	* orbsvcs/tests/AVStreams/sfp/server.cpp : 	
+	* orbsvcs/tests/AVStreams/sfp/client.cpp :
+	* orbsvcs/tests/AVStreams/sfp/server.cpp :
 	  Added code to test the fragmentation/reassembly features using a
 	  -f option.
-		
+
 	* orbsvcs/orbsvcs/AV/sfp.h: Defined new classes for sfp
 	  fragmentation and reassembly.
 
@@ -19,14 +32,14 @@ Sun Apr  4 01:59:48 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 Sun Apr  4 00:33:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Forwarding/client.cpp (do_calls): 
+	* examples/POA/Forwarding/client.cpp (do_calls):
 	* examples/POA/Forwarding/Servant_Locator.cpp:
 	* examples/POA/Forwarding/MyFooServant.cpp:
 	Made some aesthetic changes and the way exception is thrown.
-	
+
 Sat Apr  3 23:55:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp (destroy_entry): 
+	* examples/POA/DSI/Database_i.cpp (destroy_entry):
 	Made some changes to the way exceptions are thrown
 
 Fri Apr 02 23:25:47 1999  David L. Levine  <levine@cs.wustl.edu>
