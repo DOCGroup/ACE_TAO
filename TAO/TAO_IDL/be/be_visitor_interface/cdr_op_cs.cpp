@@ -39,46 +39,13 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   // No CDR operations for local interfaces.
   // already generated and/or we are imported. Don't do anything.
   if (node->cli_stub_cdr_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || node->is_local ())
     {
       return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Since we don't generate CDR stream operators for types that
-  // explicitly contain a local interface (at some level), we 
-  // must override these Any template class methods to avoid
-  // calling the non-existent operators. The zero return value
-  // will eventually cause CORBA::MARSHAL to be raised if this
-  // type is inserted into an Any and then marshaled.
-  if (node->is_local ())
-    {
-      if (be_global->any_support ())
-        {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-          *os << "template<>" << be_nl
-              << "CORBA::Boolean" << be_nl
-              << "TAO::Any_Impl_T<" << node->name ()
-              << ">::marshal_value (TAO_OutputCDR &)" << be_nl
-              << "{" << be_idt_nl
-              << "return 0;" << be_uidt_nl
-              << "}";
-
-          *os << be_nl << be_nl
-              << "template<>" << be_nl
-              << "CORBA::Boolean" << be_nl
-              << "TAO::Any_Impl_T<" << node->name () 
-              << ">::demarshal_value (TAO_InputCDR &)" << be_nl
-              << "{" << be_idt_nl
-              << "return 0;" << be_uidt_nl
-              << "}";
-            }
-
-      return 0;
-    }
 
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
