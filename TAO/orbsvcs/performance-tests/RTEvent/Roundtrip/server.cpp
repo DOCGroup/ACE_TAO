@@ -95,11 +95,10 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var ec_poa (root_poa);
-      if (use_rt_corba != 0)
-        {
-          ec_poa = rtserver_setup.poa ();
-        }
+      PortableServer::POA_var ec_poa (rtserver_setup.poa ());
+
+      ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
+
       Servant_var<TAO_EC_Event_Channel> ec_impl (
               RTEC_Initializer::create (ec_poa.in (),
                                         ec_poa.in (),

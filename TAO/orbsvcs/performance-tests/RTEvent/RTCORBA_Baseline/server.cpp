@@ -90,11 +90,7 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var the_poa = root_poa;
-      if (use_rt_corba)
-        {
-          the_poa = rtserver_setup.poa ();
-        }
+      PortableServer::POA_var the_poa (rtserver_setup.poa ());
 
       Servant_var<Roundtrip> roundtrip (new Roundtrip (orb));
 

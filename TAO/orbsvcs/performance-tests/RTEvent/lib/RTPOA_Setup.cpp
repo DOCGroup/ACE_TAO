@@ -41,7 +41,7 @@ RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
   const CORBA::Boolean allow_request_buffering = 0;
   const CORBA::ULong max_buffered_requests   = 0; // dummy value
   const CORBA::ULong max_request_buffer_size = 0; // dummy value
-  
+
   RTCORBA::ThreadpoolId pool_id =
     rtorb->create_threadpool_with_lanes (stacksize,
                                          lanes,
