@@ -4,7 +4,7 @@
 //   tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Sc helloE.idl
 
 #include "ciao/CCM_Container.idl"
-#include "Hello.idl"
+#include "hello.idl"
 
 local interface CCM_Hello : Hello
 {

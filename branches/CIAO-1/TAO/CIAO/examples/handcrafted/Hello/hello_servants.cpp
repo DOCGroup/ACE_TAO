@@ -506,13 +506,13 @@ CORBA::Object_ptr
 CIAO_HelloWorld_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 {
   ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (this->context_);
+      ::Components::SessionContext::_narrow (this->context_.in ());
 
   if (! CORBA::is_nil(sc.in ()))
     return sc->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   ::Components::EntityContext_var ec =
-      ::Components::EntityContext::_narrow (this->context_);
+      ::Components::EntityContext::_narrow (this->context_.in ());
 
   if (! CORBA::is_nil(ec.in ()))
     return ec->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -646,7 +646,7 @@ CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
     this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CCM_HelloWorld_var hw = CCM_HelloWorld::_narrow (com
+  CCM_HelloWorld_var hw = CCM_HelloWorld::_narrow (com.in ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 

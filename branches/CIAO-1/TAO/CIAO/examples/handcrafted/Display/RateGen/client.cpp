@@ -26,7 +26,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       HUDisplay::RateGenHome_var home
-        = HUDisplay::RateGenHome::_narrow (obj
+        = HUDisplay::RateGenHome::_narrow (obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -95,7 +95,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Try removing a ComponentServer\n"));
-      comserv->remove_container (container
+      comserv->remove_container (container.in ()
                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

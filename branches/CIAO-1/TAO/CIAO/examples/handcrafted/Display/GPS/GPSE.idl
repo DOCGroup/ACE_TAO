@@ -17,7 +17,7 @@
                                 // For various definitions of container
                                 // internal/callback interfaces
 #include "GPS.idl"  // Original component IDL definition
-#include "..\HUDisplayE.idl"
+#include "../HUDisplayE.idl"
 
 module HUDisplay {
 

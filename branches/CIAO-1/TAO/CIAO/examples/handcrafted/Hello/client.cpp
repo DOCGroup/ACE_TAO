@@ -9,7 +9,8 @@ invoke (CORBA::Object_ptr obj,
         ACE_ENV_ARG_DECL)
 {
   // Narrow
-  HelloHome_var hh = HelloHome::_narrow (obj ACE_ENV_ARG_PARAMETER);
+  HelloHome_var hh = HelloHome::_narrow (obj
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1); ;
 
   if  (CORBA::is_nil (hh.in ()))
@@ -27,7 +28,7 @@ invoke (CORBA::Object_ptr obj,
 
   ACE_DEBUG ((LM_INFO, "%s\n", hi.in ()));
 
-  hh->remove_component (hw
+  hh->remove_component (hw.in ()
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -62,7 +63,8 @@ main (int argc, char *argv[])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      invoke (obj, "Frodo Baggins using 'find_home_by_name'"
+      invoke (obj.in (),
+              "Frodo Baggins using 'find_home_by_name'"
               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -71,7 +73,8 @@ main (int argc, char *argv[])
          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      invoke (obj, "Samwise Gamgee using 'find_home_by_home_type'"
+      invoke (obj.in (),
+              "Samwise Gamgee using 'find_home_by_home_type'"
               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -80,7 +83,8 @@ main (int argc, char *argv[])
          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      invoke (obj, "Meriadoc Brandybuck using 'find_home_by_component_type'"
+      invoke (obj.in (),
+              "Meriadoc Brandybuck using 'find_home_by_component_type'"
               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -89,7 +93,8 @@ main (int argc, char *argv[])
         = orb->string_to_object ("file://hello.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      invoke (obj, "Meriadoc Brandybuck using 'file://hello.ior'"
+      invoke (obj.in (),
+              "Meriadoc Brandybuck using 'file://hello.ior'"
               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif

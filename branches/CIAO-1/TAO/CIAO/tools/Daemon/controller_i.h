@@ -13,7 +13,7 @@
 #define CIAO_CONTROLLER_I_H
 #include "ace/pre.h"
 
-#include "daemonC.h"
+#include "DaemonC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

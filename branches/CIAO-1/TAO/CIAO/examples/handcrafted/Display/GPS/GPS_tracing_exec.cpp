@@ -28,7 +28,7 @@ MyImpl::GPS_tracing_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick_ptr ev
+MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick_ptr
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -124,7 +124,7 @@ MyImpl::GPSHome_tracing_exec_i::~GPSHome_tracing_exec_i ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::GPSHome_tracing_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+                   Components::CCMException))
 {
   return new MyImpl::GPS_tracing_exec_i;
 }

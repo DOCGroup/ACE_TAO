@@ -133,9 +133,9 @@ main (int argc, char *argv[])
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ::Components::Deployment::AssemblyFactory_var assembly_factory_obj =
-        ::Components::Deployment::AssemblyFactory::_narrow (obj
-                                                            ACE_ENV_ARG_PARAMETER);
+      Components::Deployment::AssemblyFactory_var assembly_factory_obj =
+        Components::Deployment::AssemblyFactory::_narrow (obj.in ()
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (assembly_factory_obj.in ()))
@@ -184,7 +184,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CIAO::Assembly_Service_var service_obj =
-        CIAO::Assembly_Service::_narrow (obj
+        CIAO::Assembly_Service::_narrow (obj.in ()
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -201,6 +201,11 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
 
+  if (build_result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "Failed to install all homes or instantiate all components\n"));
+      ACE_THROW (Components::CreateFailure ());
+    }
   // Setting connections
 
   CIAO::Assembly_Spec::CONNECTION_QUEUE::ITERATOR

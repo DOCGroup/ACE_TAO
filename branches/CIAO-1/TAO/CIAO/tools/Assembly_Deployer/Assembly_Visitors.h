@@ -128,7 +128,7 @@ namespace CIAO
 }
 
 #if defined (__ACE_INLINE__)
-# include "Assembly_Visitor.inl"
+# include "Assembly_Visitors.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

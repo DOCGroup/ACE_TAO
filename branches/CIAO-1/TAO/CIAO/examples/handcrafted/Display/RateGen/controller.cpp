@@ -79,7 +79,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       HUDisplay::RateGen_var pulser
-        = HUDisplay::RateGen::_narrow (obj
+        = HUDisplay::RateGen::_narrow (obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

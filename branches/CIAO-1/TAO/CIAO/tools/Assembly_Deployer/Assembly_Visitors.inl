@@ -1,5 +1,6 @@
 // $Id$
 
+ACE_INLINE
 CIAO::Assembly_Builder_Visitor::Assembly_Builder_Visitor (CORBA::ORB_ptr o,
                                                           Assembly_Context &context,
                                                           CIAO::ID_IMPL_MAP &idmap,

@@ -7,9 +7,9 @@
 #endif /* __ACE_INLINE__ */
 
 void
-CIAO::Assembly_Handler::characters (const ACEXML_Char *cdata,
-                                   int start,
-                                   int len
+CIAO::Assembly_Handler::characters (const ACEXML_Char *,
+                                   int ,
+                                   int 
                                    ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
@@ -252,6 +252,9 @@ CIAO::Comp_File_Handler::startElement (const ACEXML_Char *namespaceURI,
                                        ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_UNUSED_ARG (namespaceURI);
+  ACE_UNUSED_ARG (localName);
+
   ACE_TRACE ("CIAO::Comp_File_Handler::startElement");
   ++this->element_count_;
 
@@ -441,6 +444,9 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
                                           ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_UNUSED_ARG (namespaceURI);
+  ACE_UNUSED_ARG (localName);
+
   // We are assuming we have a working ACEXML validator.
 
   ACE_TRACE ("CIAO::Partitioning_Handler::startElement");
@@ -764,6 +770,9 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
                                          ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_UNUSED_ARG (namespaceURI);
+  ACE_UNUSED_ARG (localName);
+
   ACE_TRACE ("CIAO::Connections_Handler::startElement");
   ++this->element_count_;
 

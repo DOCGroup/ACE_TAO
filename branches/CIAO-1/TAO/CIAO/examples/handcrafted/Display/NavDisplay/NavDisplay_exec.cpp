@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CIAO_Common.h"
+#include "CIAO_common.h"
 #include "NavDisplay_exec.h"
 
 /// Default constructor.
@@ -20,6 +20,8 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ev);
+
   // Refresh position
   HUDisplay::position_var loc
     = this->context_->get_connection_GPSLocation (ACE_ENV_ARG_PARAMETER);
@@ -113,7 +115,7 @@ MyImpl::NavDisplayHome_exec_impl::~NavDisplayHome_exec_impl ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::NavDisplayHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+                   Components::CCMException))
 {
   return new MyImpl::NavDisplay_exec_impl;
 }

@@ -29,9 +29,9 @@ project(NavDisplay_svnt) : ciao_server {
   }
 
   Source_Files {
-    NavDisplay_svnt.cpp
-    NavDisplayS.cpp
     NavDisplayEC.cpp
+    NavDisplayS.cpp
+    NavDisplay_svnt.cpp
   }
 }
 

@@ -30,9 +30,9 @@ project(GPS_svnt) : ciao_server {
   }
 
   Source_Files {
-    GPS_svnt.cpp
-    GPSS.cpp
     GPSEC.cpp
+    GPSS.cpp
+    GPS_svnt.cpp
   }
 }
 

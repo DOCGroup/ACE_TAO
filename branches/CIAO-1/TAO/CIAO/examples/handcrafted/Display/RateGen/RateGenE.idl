@@ -49,13 +49,13 @@ module HUDisplay
   : Components::HomeExecutorBase
   {
     Components::EnterpriseComponent new_RateGen (in long hertz)
-      raises (Components::CreateFailure);
+      raises (Components::CCMException);
   };
 
   local interface CCM_RateGenHomeImplicit
   {
     Components::EnterpriseComponent create ()
-      raises (Components::CreateFailure);
+      raises (Components::CCMException);
   };
 
   local interface CCM_RateGenHome

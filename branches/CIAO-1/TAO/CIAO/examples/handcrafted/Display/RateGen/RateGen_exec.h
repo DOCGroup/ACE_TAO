@@ -162,14 +162,14 @@ namespace MyImpl
     new_RateGen (CORBA::Long hertz
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CreateFailure));
+                       Components::CCMException));
 
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CreateFailure));
+                       Components::CCMException));
   };
 
 }
