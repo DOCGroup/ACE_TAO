@@ -111,7 +111,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
     
-    virtual CORBA::TypeCode_ptr _type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
   // TAO_IDL - Generated from
@@ -149,7 +149,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::WrongTransac
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WrongTransaction &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "WrongTransactionC.inl"

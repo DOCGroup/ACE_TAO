@@ -46,6 +46,7 @@
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/TypeCode.h"
+#include "tao/TypeCode_Constants.h"
 #include "tao/Any.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/VarOut_T.h"
@@ -189,7 +190,7 @@ namespace IOP
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -239,7 +240,7 @@ namespace IOP
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -289,7 +290,7 @@ namespace IOP
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -527,7 +528,7 @@ namespace IOP
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -696,7 +697,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::Encoding &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encoding &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "IOP_CodecC.inl"

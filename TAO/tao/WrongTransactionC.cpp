@@ -31,7 +31,10 @@
 
 #include "WrongTransactionC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
@@ -152,49 +155,9 @@ void CORBA::WrongTransaction::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr CORBA::WrongTransaction::_type (void) const
+CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
 {
   return ::CORBA::_tc_WrongTransaction;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_CORBA_WrongTransaction[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5772), 
-  ACE_NTOHL (0x6f6e6754), 
-  ACE_NTOHL (0x72616e73), 
-  ACE_NTOHL (0x61637469), 
-  ACE_NTOHL (0x6f6e3a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/WrongTransaction:1.0
-    17,
-  ACE_NTOHL (0x57726f6e), 
-  ACE_NTOHL (0x67547261), 
-  ACE_NTOHL (0x6e736163), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x0),  // name = WrongTransaction
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_WrongTransaction (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_WrongTransaction),
-    (char *) &_oc_CORBA_WrongTransaction,
-    0,
-    0
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_WrongTransaction =
-    &_tc_TAO_tc_CORBA_WrongTransaction;
 }
 
 // TAO_IDL - Generated from
@@ -218,7 +181,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -43,6 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
+#include "tao/TypeCode_Constants.h"
 #include "tao/Any.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"

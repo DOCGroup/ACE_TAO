@@ -406,7 +406,7 @@ namespace CORBA
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:230
+// be\be_visitor_root/root.cpp:139
 
 extern TAO_Export
 TAO::Collocation_Proxy_Broker *
@@ -522,7 +522,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "DomainC.inl"

@@ -52,21 +52,20 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_cs.cpp:51
 
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::TCKind &_tao_enumval)
+CORBA::Boolean operator<< (TAO_OutputCDR & strm, CORBA::TCKind _tao_enumerator)
 {
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
+  return strm << static_cast<CORBA::ULong> (_tao_enumerator);
 }
 
-CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
+CORBA::Boolean operator>> (TAO_InputCDR & strm, CORBA::TCKind & _tao_enumerator)
 {
   CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  CORBA::Boolean const _tao_success = strm >> _tao_temp;
   
-  if (_tao_result == 1)
+  if (_tao_success)
     {
-      _tao_enumval = static_cast<CORBA::TCKind> (_tao_temp);
+      _tao_enumerator = static_cast<CORBA::TCKind> (_tao_temp);
     }
   
-  return _tao_result;
+  return _tao_success;
 }

@@ -51,19 +51,6 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
-
-void 
-CORBA::ServiceDetail::_tao_any_destructor (
-    void *_tao_void_pointer
-  )
-{
-  ServiceDetail *_tao_tmp_pointer =
-    static_cast<ServiceDetail *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-// TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEOPTIONSEQ_CS_)
@@ -115,6 +102,19 @@ void CORBA::ServiceOptionSeq::_tao_any_destructor (
 }
 
 #endif /* end #if !defined */
+
+// TAO_IDL - Generated from 
+// be\be_visitor_structure/structure_cs.cpp:68
+
+void 
+CORBA::ServiceDetail::_tao_any_destructor (
+    void *_tao_void_pointer
+  )
+{
+  ServiceDetail *_tao_tmp_pointer =
+    static_cast<ServiceDetail *> (_tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
@@ -170,7 +170,7 @@ void CORBA::ServiceDetailSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 CORBA::ServiceInformation::_tao_any_destructor (
@@ -180,29 +180,6 @@ CORBA::ServiceInformation::_tao_any_destructor (
   ServiceInformation *_tao_tmp_pointer =
     static_cast<ServiceInformation *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/cdr_op_cs.cpp:61
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA::ServiceDetail &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.service_detail_type) &&
-    (strm << _tao_aggregate.service_detail);
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    CORBA::ServiceDetail &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.service_detail_type) &&
-    (strm >> _tao_aggregate.service_detail);
 }
 
 // TAO_IDL - Generated from
@@ -262,6 +239,29 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ServiceOptionSeq_CPP_ */
+
+// TAO_IDL - Generated from
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA::ServiceDetail &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.service_detail_type) &&
+    (strm << _tao_aggregate.service_detail);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    CORBA::ServiceDetail &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.service_detail_type) &&
+    (strm >> _tao_aggregate.service_detail);
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_cs.cpp:96
@@ -359,25 +359,9 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO_Var_Var_T<
-        CORBA::ServiceDetail
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        CORBA::ServiceDetail
-      >;
-
-  template class
-    TAO_Out_T<
-        CORBA::ServiceDetail,
-        CORBA::ServiceDetail_var
-      >;
 
   template class
     TAO_FixedSeq_Var_T<
@@ -396,6 +380,22 @@ CORBA::Boolean operator>> (
         CORBA::ServiceOptionSeq,
         CORBA::ServiceOptionSeq_var,
         CORBA::ServiceOption
+      >;
+
+  template class
+    TAO_Var_Var_T<
+        CORBA::ServiceDetail
+      >;
+
+  template class
+    TAO_Var_Base_T<
+        CORBA::ServiceDetail
+      >;
+
+  template class
+    TAO_Out_T<
+        CORBA::ServiceDetail,
+        CORBA::ServiceDetail_var
       >;
 
   template class
@@ -446,22 +446,6 @@ CORBA::Boolean operator>> (
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
-    TAO_Var_Var_T< \
-        CORBA::ServiceDetail \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        CORBA::ServiceDetail \
-      >
-
-# pragma instantiate \
-    TAO_Out_T< \
-        CORBA::ServiceDetail, \
-        CORBA::ServiceDetail_var \
-      >
-
-# pragma instantiate \
     TAO_FixedSeq_Var_T< \
         CORBA::ServiceOptionSeq, \
         CORBA::ServiceOption \
@@ -478,6 +462,22 @@ CORBA::Boolean operator>> (
         CORBA::ServiceOptionSeq, \
         CORBA::ServiceOptionSeq_var, \
         CORBA::ServiceOption \
+      >
+
+# pragma instantiate \
+    TAO_Var_Var_T< \
+        CORBA::ServiceDetail \
+      >
+
+# pragma instantiate \
+    TAO_Var_Base_T< \
+        CORBA::ServiceDetail \
+      >
+
+# pragma instantiate \
+    TAO_Out_T< \
+        CORBA::ServiceDetail, \
+        CORBA::ServiceDetail_var \
       >
 
 # pragma instantiate \

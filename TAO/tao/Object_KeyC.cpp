@@ -337,7 +337,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
