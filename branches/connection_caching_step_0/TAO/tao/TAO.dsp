@@ -385,6 +385,25 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -442,6 +461,25 @@ SOURCE=.\Buffering_Constraint_Policy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -481,6 +519,25 @@ SOURCE=.\Client_Priority_Policy.cpp
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3461,6 +3518,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -3473,6 +3534,10 @@ SOURCE=.\Buffering_Constraint_Policy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
@@ -3482,6 +3547,10 @@ SOURCE=.\Client_Priority_Policy.h
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.h
 # End Source File
 # Begin Source File
 
@@ -4141,6 +4210,10 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -4153,11 +4226,19 @@ SOURCE=.\Buffering_Constraint_Policy.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.i
 # End Source File
 # Begin Source File
 

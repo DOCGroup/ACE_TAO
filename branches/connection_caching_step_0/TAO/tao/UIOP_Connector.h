@@ -42,7 +42,7 @@
 #endif /* __GNUC__ */
 
 // Necessary to do this so that the set of classes used in ACE
-// for TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY = 1 option is 
+// for TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY = 1 option is
 // the same as those used for ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
@@ -82,7 +82,7 @@ public:
 private:
   TAO_ORB_Core* orb_core_;
   // The ORB
-  
+
   void *arg_;
   // Some info/state to be passed to the service handler we create.
 
@@ -110,7 +110,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_Endpoint *endpoint,
+  int connect (TAO_Base_Connection_Property *prop,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);
@@ -224,7 +224,7 @@ private:
 
   CORBA::Boolean lite_flag_;
   // Do we need to use a GIOP_Lite for sending messages?
-  
+
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.
@@ -236,7 +236,7 @@ private:
 
   TAO_UIOP_Handler_Base::UIOP_Properties uiop_properties_;
   // UIOP configuration properties for all connections established by
-  // this connector. 
+  // this connector.
 };
 
 # endif  /* TAO_HAS_UIOP == 1 */

@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 
 #include "tao/target_specification.h"
+#include "tao/Base_Connection_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
@@ -252,7 +253,8 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : tag_(tag)
+  : orb_core_ (0),
+    tag_(tag)
 {
 }
 
@@ -427,6 +429,40 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   return 0;  // Success
+}
+
+
+int
+TAO_Connector::find_handler (TAO_Base_Connection_Property *prop,
+                             TAO_Connection_Handler *handler)
+{
+  // Compose the ExternId
+  TAO_Cache_ExtId ext_id (prop);
+  TAO_Cache_IntId int_id;
+
+  int retval =
+    this->orb_core ()->connection_cache ().find (ext_id,
+                                                 int_id);
+
+  if (retval == 0)
+    handler = int_id.handler ();
+
+  return retval;
+}
+
+int
+TAO_Connector::add_handler (TAO_Base_Connection_Property *prop,
+                             TAO_Connection_Handler *handler)
+{
+  // Compose the ExternId & Intid
+  TAO_Cache_ExtId ext_id (prop);
+  TAO_Cache_IntId int_id  (handler);
+
+  int retval =
+    this->orb_core ()->connection_cache ().bind (ext_id,
+                                                 int_id);
+
+  return retval;
 }
 
 // ****************************************************************

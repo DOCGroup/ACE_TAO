@@ -78,6 +78,18 @@ public:
   virtual int addr_to_string (char *buffer, size_t length);
   virtual void reset_hint (void);
 
+  virtual TAO_Endpoint *duplicate (void);
+  // Makes a copy of <this>
+
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  // endpoints are equivalent iff their port and host are the same.
+
+  CORBA::ULong hash (void);
+  // Return a hash value for this object.
+
+  // Allocates memory and returns a copy of <this>
+
   // = IIOP_Endpoint-specific methods.
 
   const ACE_INET_Addr &object_addr (void) const;
@@ -100,14 +112,8 @@ public:
   TAO_IIOP_Client_Connection_Handler *&hint (void);
   // Access to our <hint_>.
 
-  CORBA::Boolean is_equivalent (const TAO_IIOP_Endpoint *other_endpoint);
-  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  // endpoints are equivalent iff their port and host are the same.
-
-  CORBA::ULong hash (void);
-  // Return a hash value for this object.
-
 private:
+
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
   // Helper method for setting INET_Addr.

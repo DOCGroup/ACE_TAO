@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Connection_Cache_Manager.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -70,6 +72,34 @@ public:
   virtual ~TAO_Connection_Handler (void);
   // Destructor
 
+  int cache (void);
+  // Add to cache.
+
+  void recycle_state (ACE_Recyclable_State new_state);
+
+  ACE_Recyclable_State recycle_state (void);
+  // Get/Set <recycle_state>.
+
+  void cache_map_entry (
+      TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *entry);
+
+  TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+  // Ste/Get the Cache Map entry
+
+
+  //  virtual int mark_as_closed (const void *recycling_act);
+  // Mark as closed.
+
+  //virtual int mark_as_closed_i (const void *recycling_act);
+  // Mark as closed.(non-locking version)
+
+  //virtual int cleanup_hint (const void *recycling_act,
+  //                          void **act_holder = 0) = 0;
+  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
+
+  int make_idle (void);
+  // Make ourselves ready for use
+
 protected:
 
   void remove_handle (ACE_HANDLE handle);
@@ -107,11 +137,18 @@ protected:
   // Service_Handler.
 
 private:
+
   TAO_ORB_Core *orb_core_;
   // Pointer to the TAO_ORB_Core
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
+
+  TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
+  // The cache map entry -- where we are in the Connection Cache
+
+  ACE_Recyclable_State recycle_state_;
+  // The state of the handle
 };
 
 #if defined (__ACE_INLINE__)

@@ -41,12 +41,12 @@
 #endif /* __GNUC__ */
 
 // Necessary to do this so that the set of classes used in ACE
-// for TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY = 1 option is 
+// for TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY = 1 option is
 // the same as those used for ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #endif /*TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1*/
- 
+
 #include "ace/Cached_Connect_Strategy_T.h"
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
@@ -77,7 +77,7 @@ public:
 private:
   TAO_ORB_Core* orb_core_;
   // The ORB
-  
+
   CORBA::Boolean lite_flag_;
   // Are we using lite?
 };
@@ -103,7 +103,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_Endpoint *endpoint,
+  int connect (TAO_Base_Connection_Property *prop,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);

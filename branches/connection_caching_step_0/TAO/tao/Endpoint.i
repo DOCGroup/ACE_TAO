@@ -2,9 +2,10 @@
 // $Id$
 
 ACE_INLINE
-TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag)
+TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
+                            CORBA::Short priority)
   : tag_ (tag),
-    priority_ (0)
+    priority_ (priority)
 {
 }
 
@@ -21,7 +22,7 @@ TAO_Endpoint::priority (void) const
 }
 
 ACE_INLINE void
-TAO_Endpoint::priority (CORBA::Short p) 
+TAO_Endpoint::priority (CORBA::Short p)
 {
   this->priority_ = p;
 }

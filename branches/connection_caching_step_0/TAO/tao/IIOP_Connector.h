@@ -91,7 +91,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_Endpoint *endpoint,
+  int connect (TAO_Base_Connection_Property *prop,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);
@@ -129,9 +129,6 @@ public:
           TAO_IIOP_BASE_CONNECTOR;
 
 protected:
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
-
   TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
   // TCP configuration properties to be used for all
   // connections established by this connector.

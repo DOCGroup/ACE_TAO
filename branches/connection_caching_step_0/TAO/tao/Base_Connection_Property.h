@@ -18,6 +18,23 @@
 #define TAO_BASE_CONNECTION_PROPERTY_H
 #include "ace/pre.h"
 
+#include "tao/TAO_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+#include "tao/corbafwd.h"
+
+class TAO_Endpoint;
+
 class TAO_Export TAO_Base_Connection_Property
 {
   // = TITLE
@@ -56,6 +73,9 @@ public:
   virtual TAO_Base_Connection_Property *duplicate (void);
   // This call allocates and copies the contents of this class and
   // returns the pointer
+
+  TAO_Endpoint *endpoint (void);
+  // Return the underlying endpoint oject
 
   void operator= (const TAO_Base_Connection_Property &rhs);
   // Assignment operator (does copy memory).

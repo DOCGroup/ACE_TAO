@@ -59,4 +59,33 @@ TAO_UIOP_Endpoint::next (void)
   return this->next_;
 }
 
+TAO_Endpoint *
+TAO_UIOP_Endpoint::duplicate (void)
+{
+  TAO_UIOP_Endpoint *endpoint = 0;
+  ACE_NEW_RETURN (endpoint,
+                  TAO_UIOP_Endpoint (this->object_addr_),
+                  0);
+
+  return endpoint;
+}
+
+CORBA::Boolean
+TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+{
+  TAO_UIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_UIOP_Endpoint *,
+                                                  other_endpoint);
+  if (endpoint == 0)
+    return 0;
+
+  return
+    ACE_OS::strcmp (this->rendezvous_point (),
+                    endpoint->rendezvous_point ()) == 0;
+}
+
+CORBA::ULong
+TAO_UIOP_Endpoint::hash (void)
+{
+  return ACE::hash_pjw (this->rendezvous_point ());
+}
 #endif  /* TAO_HAS_UIOP == 1 */

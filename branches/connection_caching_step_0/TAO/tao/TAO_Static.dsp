@@ -123,6 +123,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -135,6 +139,10 @@ SOURCE=.\Buffering_Constraint_Policy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
@@ -144,6 +152,14 @@ SOURCE=.\Client_Priority_Policy.h
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -807,6 +823,10 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -819,11 +839,23 @@ SOURCE=.\Buffering_Constraint_Policy.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
 
@@ -1295,6 +1327,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 # End Source File
 # Begin Source File
@@ -1307,6 +1343,10 @@ SOURCE=.\Buffering_Constraint_Policy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
@@ -1316,6 +1356,14 @@ SOURCE=.\Client_Priority_Policy.cpp
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
