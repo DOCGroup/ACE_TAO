@@ -294,12 +294,10 @@ private:
 
 class ACE_Export ACE_Select_Reactor : public ACE_Reactor_Impl
   // = TITLE
-  //
   //     An object oriented event demultiplexor and event handler
   //     dispatcher.
   //     
   // = DESCRIPTION
-  //
   //     The ACE_Select_Reactor is an object-oriented event
   //     demultiplexor and event handler dispatcher.  The sources of
   //     events that the ACE_Select_Reactor waits for and dispatches
