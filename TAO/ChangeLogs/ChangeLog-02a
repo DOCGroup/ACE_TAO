@@ -1,3 +1,18 @@
+Tue Sep 25 11:32:39 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer): 
+
+	  Last night I removed:
+
+	  ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)
+	  
+	  but forgot to add the replacement:
+
+	  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
+
+	  This caused all apps using the Advanced_Resource_Factory to
+	  fail.
+
 Tue Sep 25 00:17:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* auto_run_tests.lst: The following tests were removed from the
