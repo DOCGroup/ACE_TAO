@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #----------------------------------------------------------------------------
-# 
+#
 # Please see the README file in this directory to get a complete listing
 # of all the platform compilation macros that may be defined to port ACE.
 
@@ -19,7 +19,7 @@
 #	CCFLAGS		C++ compilation flags
 #	DCFLAGS		C compilation flags for debugging
 #	DCCFLAGS	C++ compilation flags for debugging
-#	DEFFLAGS	C++ preprocessor flag for defining symbols 
+#	DEFFLAGS	C++ preprocessor flag for defining symbols
 #	DLD		Name of dynamic linker
 #	LD		Name of linker
 #	IDL		Name of the CORBA IDL compiler
@@ -47,7 +47,7 @@
 #	WRAPPER_ROOT	Pathname for the root of the build tree
 #
 #----------------------------------------------------------------------------
-#	Platform-dependent macro definitions 
+#	Platform-dependent macro definitions
 #       (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
@@ -58,11 +58,11 @@ include $(WRAPPER_ROOT)/include/makeinclude/platform_macros.GNU
 #----------------------------------------------------------------------------
 
 CPPFLAGS	+= $(DEFFLAGS) $(INCLDIRS)
-DCFLAGS		+= -g 
-DCCFLAGS	+= -g 
+DCFLAGS		+= -g
+DCCFLAGS	+= -g
 IDL		= idl
 IDLFLAGS	= -s S.cpp -c C.cpp
-INCLDIRS	+= -I$(WRAPPER_ROOT) -I.
+INCLDIRS	+= -I. -I$(WRAPPER_ROOT)
 INSBIN		= $(WRAPPER_ROOT)/bin
 INSINC		= $(WRAPPER_ROOT)/ace
 INSLIB		= $(WRAPPER_ROOT)/ace
@@ -100,7 +100,7 @@ YACC		= yacc
 #----------------------------------------------------------------------------
 
 ifdef debug
-CFLAGS 	+= $(DCFLAGS) 
+CFLAGS 	+= $(DCFLAGS)
 CCFLAGS	+= $(DCCFLAGS)
 
 else
@@ -110,12 +110,12 @@ CCFLAGS	+= $(PCCFLAGS)
 
 else
 ifdef optimize
-CFLAGS  += $(OCFLAGS) #-DNDEBUG 
+CFLAGS  += $(OCFLAGS) #-DNDEBUG
 CCFLAGS += $(OCCFLAGS) #-DNDEBUG
 
 else # default settings
-CFLAGS  += $(DCFLAGS) #-DNDEBUG 
-CCFLAGS += $(DCCFLAGS) #-DNDEBUG 
+CFLAGS  += $(DCFLAGS) #-DNDEBUG
+CCFLAGS += $(DCCFLAGS) #-DNDEBUG
 endif # optimize
 endif # profile
 endif # debug
