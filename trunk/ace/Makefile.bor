@@ -10,6 +10,12 @@ DIRS =  SSL \
 
 OBJFILES = \
 	$(OBJDIR)\ACE.obj \
+	$(OBJDIR)\ACE_Init.obj \
+	$(OBJDIR)\ACE_Flag_Manip.obj \
+	$(OBJDIR)\ACE_Handle_Ops.obj \
+	$(OBJDIR)\ACE_Lib_Find.obj \
+	$(OBJDIR)\ACE_Sock_Connect.obj \
+	$(OBJDIR)\Malloc_Instantiations.obj \
 	$(OBJDIR)\Activation_Queue.obj \
 	$(OBJDIR)\Active_Map_Manager.obj \
 	$(OBJDIR)\Addr.obj \
@@ -76,6 +82,8 @@ OBJFILES = \
 	$(OBJDIR)\LSOCK_Dgram.obj \
 	$(OBJDIR)\LSOCK_Stream.obj \
 	$(OBJDIR)\Malloc.obj \
+	$(OBJDIR)\PI_Malloc.obj \
+	$(OBJDIR)\Malloc_Allcator.obj \
 	$(OBJDIR)\Map.obj \
 	$(OBJDIR)\MEM_Acceptor.obj \
 	$(OBJDIR)\MEM_Addr.obj \
@@ -134,6 +142,7 @@ OBJFILES = \
 	$(OBJDIR)\Service_Object.obj \
 	$(OBJDIR)\Service_Repository.obj \
 	$(OBJDIR)\Service_Types.obj \
+	$(OBJDIR)\Service_Templates.obj \
 	$(OBJDIR)\Shared_Memory.obj \
 	$(OBJDIR)\Shared_Memory_MM.obj \
 	$(OBJDIR)\Shared_Memory_SV.obj \
