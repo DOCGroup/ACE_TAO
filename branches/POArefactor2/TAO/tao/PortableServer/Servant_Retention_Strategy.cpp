@@ -281,6 +281,7 @@ namespace TAO
           find_user_id_using_system_id (system_id,
                                         user_id.out()) != 0)
         {
+          // @johnny Shouldn't this be ObjectNotActive?
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
         }
@@ -467,9 +468,9 @@ namespace TAO
                                                       ACE_ENV_ARG_PARAMETER);
         }
       else
-        // If the Object Id value is not active in the POA, an
-        // ObjectNotActive exception is raised.
         {
+          // If the Object Id value is not active in the POA, an
+          // ObjectNotActive exception is raised.
           ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
                             CORBA::Object::_nil ());
         }
@@ -738,6 +739,35 @@ namespace TAO
        */
       // todo
     }
+
+    CORBA::Object_ptr
+    Retain_Servant_Retention_Strategy::servant_to_reference (PortableServer::Servant servant
+                            ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableServer::POA::ServantNotActive,
+                      PortableServer::POA::WrongPolicy))
+    {
+      // todo
+      /**
+       * 1. If the POA has both the RETAIN and the UNIQUE_ID policy and the
+       * specified servant is active, an object reference encapsulating the
+       * information used to activate the servant is returned.
+       *
+       * If the POA has both the RETAIN and the IMPLICIT_ACTIVATION policy and
+       * either the POA has the MULTIPLE_ID policy or the specified servant is
+       * not active the servant is activated using a POA-generated Object Id
+       * and the Interface Id associated with the servant, and a corresponding
+       * object reference is returned.
+       *
+       * If the operation was invoked in the context of executing a request
+       * on the specified servant, the reference associated with the current
+       * invocation is returned.
+       */
+
+      /**
+       * Otherwise, the ServantNotActive exception is raised.
+       */
+    }
   }
 }
 
@@ -811,6 +841,9 @@ namespace TAO
                          PortableServer::POA::WrongPolicy))
     {
       // @todo Johnny, this must be changed, we only want to call something to request_processing_strategy
+
+      // @todo, in case we don't have default servant but request processing is set , we should give another exception,
+      // an object not active should not be given
 
       // When request processing is default servant then we should use that
       PortableServer::Servant servant = 0;
@@ -968,7 +1001,24 @@ namespace TAO
        */
     }
 
+    CORBA::Object_ptr
+    Non_Retain_Servant_Retention_Strategy::servant_to_reference (PortableServer::Servant servant
+                            ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableServer::POA::ServantNotActive,
+                      PortableServer::POA::WrongPolicy))
+    {
+      // todo
+      /**
+       * If the operation was invoked in the context of executing a request
+       * on the specified servant, the reference associated with the current
+       * invocation is returned.
+       */
 
+      /**
+       * Otherwise, the ServantNotActive exception is raised.
+       */
+    }
   }
 }
 

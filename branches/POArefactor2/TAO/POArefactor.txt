@@ -1,3 +1,10 @@
+Thu Oct 28 10:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Retention_Strategy.{cpp,h}:
+          Added servant_to_reference as empty methods with just the text from
+          the spec. The POA should call this strategy first, this then has to
+          do some more, but all relationships are not clear yet.
+
 Thu Oct 28 10:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Retention_Strategy.{cpp,h}:
