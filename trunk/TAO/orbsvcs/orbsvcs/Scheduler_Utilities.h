@@ -1,6 +1,16 @@
+/* -*- C++ -*- */
+// $Id$
+
 // ============================================================================
 //
-// $Id$
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Scheduler_Utilities.h
+//
+// = AUTHOR
+//     Chris Gill <cdgill@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -17,17 +27,17 @@
 #include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export ACE_RT_Info : public RtecScheduler::RT_Info
+{
   // = TITLE
   //   Offers a convenient C++ interface to the IDL RT_Info structure.
   //
   // = DESCRIPTION
   //   For performance reasons the RT_Info data is represented as an
   //   IDL structure, this permits sending complete RT_Info's from the
-  //   client to the server.
-  //   Unfortunately this precludes the usage of member functions and
-  //   constructors, this class serves as a helper to implement those
-  //   without loosing the performance on IDL.
-{
+  //   client to the server.  Unfortunately this precludes the usage
+  //   of member functions and constructors, this class serves as a
+  //   helper to implement those without loosing the performance on
+  //   IDL.
 public:
   ACE_RT_Info (const char* entry_point,
                RtecScheduler::Time worst_time,
