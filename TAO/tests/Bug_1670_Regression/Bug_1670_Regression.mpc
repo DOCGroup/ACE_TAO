@@ -9,6 +9,7 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoserver {
+  exename = client
   idlflags += -Gv -GH
   Source_Files {
     client.cpp
