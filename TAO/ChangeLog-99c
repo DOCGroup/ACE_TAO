@@ -1,3 +1,11 @@
+Wed May 12 19:40:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Object.{h,cpp}:
+	  Changed the name of the second create_request function
+	  to be identical to the name of the first. The spec
+	  clearly indicates in some places that it is to be
+	  called 'create_request2', but that's wrong.
+
 Wed May 12 19:22:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corba.h:
