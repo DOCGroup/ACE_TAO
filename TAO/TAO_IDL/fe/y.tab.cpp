@@ -970,7 +970,7 @@ int tao_yyindent;
 #endif /* TAO_YYDEBUG_INDENT */
 #ifndef TAO_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void TAO_YYDEBUG_REDUCE(int tao_yynew_state, int tao_yyrule_num, const char *tao_yyrule_string, int tao_yynew_indent, int tao_yyrhs_count)
+void TAO_YYDEBUG_REDUCE(int, int, const char *tao_yyrule_string, int tao_yynew_indent, int tao_yyrhs_count)
 #else
 TAO_YYDEBUG_REDUCE(tao_yynew_state, tao_yyrule_num, tao_yyrule_string, tao_yynew_indent, tao_yyrhs_count)
 int tao_yynew_state;
@@ -1000,7 +1000,7 @@ int tao_yyrhs_count;
 #endif /* TAO_YYDEBUG_REDUCE */
 #ifndef TAO_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void TAO_YYDEBUG_SHIFT_LEXEME(int tao_yyold_state, int tao_yynew_state, const char *tao_yytoken_string, int tao_yynew_indent)
+void TAO_YYDEBUG_SHIFT_LEXEME(int, int, const char *tao_yytoken_string, int tao_yynew_indent)
 #else
 TAO_YYDEBUG_SHIFT_LEXEME(tao_yyold_state, tao_yynew_state, tao_yytoken_string, tao_yynew_indent)
 int tao_yyold_state;
@@ -1015,7 +1015,7 @@ int tao_yynew_indent;
 #endif /*  TAO_YYDEBUG_SHIFT_LEXEME */
 #ifndef TAO_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void TAO_YYDEBUG_LOOK_AHEAD(int tao_yynew_state, int tao_yytoken_num, const char *tao_yytoken_string, int tao_yyindent)
+void TAO_YYDEBUG_LOOK_AHEAD(int, int tao_yytoken_num, const char *tao_yytoken_string, int tao_yyindent)
 #else
 TAO_YYDEBUG_LOOK_AHEAD(tao_yynew_state, tao_yytoken_num, tao_yytoken_string, tao_yyindent)
 int tao_yynew_state;
@@ -1032,7 +1032,7 @@ int tao_yyindent;
 #endif /* TAO_YYDEBUG_LOOK_AHEAD */
 #ifndef TAO_YYDEBUG_DISCARD_STATE
 #ifdef __cplusplus
-void TAO_YYDEBUG_DISCARD_STATE(int tao_yynew_state, int tao_yyindent)
+void TAO_YYDEBUG_DISCARD_STATE(int, int tao_yyindent)
 #else
 TAO_YYDEBUG_DISCARD_STATE(tao_yynew_state, tao_yyindent)
 int tao_yynew_state;
@@ -1060,7 +1060,7 @@ int tao_yyindent;
 #endif /* TAO_YYDEBUG_DISCARD_STATE */
 #ifndef TAO_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void TAO_YYDEBUG_DISCARD_TOKEN(int tao_yynew_state, int tao_yytoken_num, const char *tao_yytoken_string, int tao_yyindent)
+void TAO_YYDEBUG_DISCARD_TOKEN(int, int, const char *tao_yytoken_string, int tao_yyindent)
 #else
 TAO_YYDEBUG_DISCARD_TOKEN(tao_yynew_state, tao_yytoken_num, tao_yytoken_string, tao_yyindent)
 int tao_yynew_state;
@@ -1075,7 +1075,7 @@ int tao_yyindent;
 #endif /* TAO_YYDEBUG_DISCARD_TOKEN */
 #ifndef TAO_YYDEBUG_SHIFT_ERROR_LEXEME
 #ifdef __cplusplus
-void TAO_YYDEBUG_SHIFT_ERROR_LEXEME(int tao_yyold_state, int tao_yynew_state, int tao_yyindent)
+void TAO_YYDEBUG_SHIFT_ERROR_LEXEME(int, int, int tao_yyindent)
 #else
 TAO_YYDEBUG_SHIFT_ERROR_LEXEME(tao_yyold_state, tao_yynew_state, tao_yyindent)
 int tao_yyold_state;
