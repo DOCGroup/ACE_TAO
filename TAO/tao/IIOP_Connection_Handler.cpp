@@ -25,8 +25,7 @@ ACE_RCSID (tao,
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
-    tcp_properties_ (0)
+    TAO_Connection_Handler (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -42,8 +41,8 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
                                                           void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Properties *, arg))
+    tcp_properties_ (*(ACE_static_cast
+                     (TAO_IIOP_Properties *, arg)))
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
@@ -63,15 +62,15 @@ int
 TAO_IIOP_Connection_Handler::open (void*)
 {
   if (this->set_socket_option (this->peer (),
-                               this->tcp_properties_->send_buffer_size,
-                               this->tcp_properties_->recv_buffer_size) == -1)
+                               this->tcp_properties_.send_buffer_size,
+                               this->tcp_properties_.recv_buffer_size) == -1)
     return -1;
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
 
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &tcp_properties_->no_delay,
+                                (void *) &tcp_properties_.no_delay,
                                 sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
@@ -408,6 +407,78 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
     }
 
   return retval;
+}
+
+void
+TAO_IIOP_Connection_Handler::update_protocol_properties (int send_buffer_size,
+							 int recv_buffer_size,
+							 int no_delay,
+							 int enable_network_priority)
+{
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+		"TAO_IIOP_Connection_Handler::update_protocol_properties \n enable_network_priority = %d\n",
+		enable_network_priority));
+  
+  if (this->tcp_properties_.send_buffer_size != send_buffer_size)
+    this->tcp_properties_.send_buffer_size = send_buffer_size;
+  
+  if (this->tcp_properties_.recv_buffer_size != recv_buffer_size)
+    this->tcp_properties_.recv_buffer_size = recv_buffer_size;
+  
+  if (this->tcp_properties_.no_delay != no_delay)
+    this->tcp_properties_.no_delay = no_delay;
+  
+  if (this->tcp_properties_.enable_network_priority != enable_network_priority)
+    this->tcp_properties_.enable_network_priority = enable_network_priority;
+
+}
+
+int
+TAO_IIOP_Connection_Handler::enable_network_priority (void)
+{
+  return this->tcp_properties_.enable_network_priority;
+}
+
+int 
+TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
+{
+  int tos;
+  if (this->enable_network_priority ())
+    {
+      TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (tph != 0)
+	{
+	  CORBA::Long codepoint =
+	    tph->get_dscp_codepoint ();
+	  
+
+	  tos = (int)(codepoint ) << 2;
+	}
+    }
+  else
+    {
+      tos = IPDSFIELD_DSCP_DEFAULT << 2;
+    }
+
+  if (tos != this->dscp_codepoint_)
+    {
+      int ret = this->peer ().set_option(IPPROTO_IP, IP_TOS, (int *)&tos , (int)sizeof(tos));
+      
+      if (ret < 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Failed to set Diffserv codepoint - try running as superuser\n"));
+
+      if(TAO_debug_level)
+	{
+	  ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d %x\n", ret, tos));
+	}
+      this->dscp_codepoint_ = tos;
+    }
+  
+  return 0;
 }
 
 
