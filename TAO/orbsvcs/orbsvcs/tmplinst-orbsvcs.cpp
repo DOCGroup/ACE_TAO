@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecEventCommC.h"
