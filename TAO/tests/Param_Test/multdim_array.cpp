@@ -4,13 +4,13 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    fixed_array.cpp
+//    multidim_array.cpp
 //
 // = DESCRIPTION
 //    tests multidimensional fixed size arrays
 //
 // = AUTHORS
-//      Aniruddha Gokhale
+//      Bala
 //
 // ============================================================================
 

@@ -1,3 +1,16 @@
+Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Param_Test/multdim_array.cpp: 
+	* tests/Param_Test/multdim_array.h
+	* tests/Param_Test/Makefile
+	* tests/Param_Test/driver.cpp
+	* tests/Param_Test/options.cpp
+	* tests/Param_Test/param_test.idl
+	* tests/Param_Test/param_test_i.cpp
+	* tests/Param_Test/param_test_i.h
+	* tests/Param_Test/tests.h
+	Added a new test case for multi-dimensional array checking.
+
 Sat Apr 10 14:26:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/POA.cpp: Removed #POA_NO_TIMESTAMP according to Irfan's
