@@ -1,3 +1,9 @@
+Fri Jan 16 11:25:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/APG/Svc_Config/HASTATUS_export.h
+          Added check for ACE_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Fri Jan 16 09:57:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/DLL_Test.bor:
