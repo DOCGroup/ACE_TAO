@@ -38,7 +38,7 @@ CFG=Timeprobe_Test - Win32 Debug
  "Reactor_Exceptions_Test - Win32 Debug" && "$(CFG)" !=\
  "Priority_Task_Test - Win32 Debug" && "$(CFG)" !=\
  "Sigset_Ops_Test - Win32 Debug" && "$(CFG)" !=\
- "MsgQueue_Notifications_Test - Win32 Debug" && "$(CFG)" !=\
+ "Message_Queue_Notifications_Test.cpp - Win32 Debug" && "$(CFG)" !=\
  "Enum_Interfaces_Test - Win32 Debug" && "$(CFG)" !=\
  "Hash_Map_Manager_Test - Win32 Debug" && "$(CFG)" !=\
  "Semaphore_Test - Win32 Debug" && "$(CFG)" != "Atomic_Op_Test - Win32 Debug" &&\
@@ -132,7 +132,7 @@ CFG=Timeprobe_Test - Win32 Debug
  "Win32 (x86) Console Application")
 !MESSAGE "Sigset_Ops_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "MsgQueue_Notifications_Test - Win32 Debug" (based on\
+!MESSAGE "Message_Queue_Notifications_Test.cpp - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "Enum_Interfaces_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
@@ -2519,30 +2519,30 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
-!ELSEIF  "$(CFG)" == "MsgQueue_Notifications_Test - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "MsgQueue_Notifications_Test\Debug"
-# PROP BASE Intermediate_Dir "MsgQueue_Notifications_Test\Debug"
-# PROP BASE Target_Dir "MsgQueue_Notifications_Test"
+# PROP BASE Output_Dir "Message_Queue_Notifications_Test.cpp\Debug"
+# PROP BASE Intermediate_Dir "Message_Queue_Notifications_Test.cpp\Debug"
+# PROP BASE Target_Dir "Message_Queue_Notifications_Test.cpp"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
-# PROP Target_Dir "MsgQueue_Notifications_Test"
+# PROP Target_Dir "Message_Queue_Notifications_Test.cpp"
 OUTDIR=.\.
 INTDIR=.\Debug
 
-ALL : "$(OUTDIR)\MsgQueue_Notifications_Test.exe"
+ALL : "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.exe"
 
 CLEAN : 
-	-@erase "$(INTDIR)\MsgQueue_Notifications_Test.obj"
+	-@erase "$(INTDIR)\Message_Queue_Notifications_Test.cpp.obj"
 	-@erase "$(INTDIR)\vc40.idb"
 	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(OUTDIR)\MsgQueue_Notifications_Test.exe"
-	-@erase "$(OUTDIR)\MsgQueue_Notifications_Test.ilk"
-	-@erase "$(OUTDIR)\MsgQueue_Notifications_Test.pdb"
+	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.exe"
+	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.ilk"
+	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -2562,19 +2562,19 @@ CPP_SBRS=.\.
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/MsgQueue_Notifications_Test.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Message_Queue_Notifications_Test.cpp.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
 LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)/MsgQueue_Notifications_Test.pdb" /debug /machine:I386\
- /out:"$(OUTDIR)/MsgQueue_Notifications_Test.exe" 
+ /pdb:"$(OUTDIR)/Message_Queue_Notifications_Test.cpp.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Message_Queue_Notifications_Test.cpp.exe" 
 LINK32_OBJS= \
-	"$(INTDIR)\MsgQueue_Notifications_Test.obj"
+	"$(INTDIR)\Message_Queue_Notifications_Test.cpp.obj"
 
-"$(OUTDIR)\MsgQueue_Notifications_Test.exe" : "$(OUTDIR)" $(DEF_FILE)\
+"$(OUTDIR)\Message_Queue_Notifications_Test.cpp.exe" : "$(OUTDIR)" $(DEF_FILE)\
  $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
@@ -7486,11 +7486,11 @@ DEP_CPP_SIGSE=\
 ################################################################################
 # Begin Target
 
-# Name "MsgQueue_Notifications_Test - Win32 Debug"
+# Name "Message_Queue_Notifications_Test.cpp - Win32 Debug"
 ################################################################################
 # Begin Source File
 
-SOURCE=.\MsgQueue_Notifications_Test.cpp
+SOURCE=.\Message_Queue_Notifications_Test.cpp.cpp
 DEP_CPP_MSGQU=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
@@ -7610,7 +7610,7 @@ DEP_CPP_MSGQU=\
 	"..\tests/test_config.h"\
 	
 
-"$(INTDIR)\MsgQueue_Notifications_Test.obj" : $(SOURCE) $(DEP_CPP_MSGQU)\
+"$(INTDIR)\Message_Queue_Notifications_Test.cpp.obj" : $(SOURCE) $(DEP_CPP_MSGQU)\
  "$(INTDIR)"
 
 

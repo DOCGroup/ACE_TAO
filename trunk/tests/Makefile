@@ -29,7 +29,7 @@ BIN =   Aio_Platform_Test \
 	MT_SOCK_Test \
 	Message_Block_Test \
 	Message_Queue_Test \
-	MsgQueue_Notifications_Test \
+	Message_Queue_Notifications_Test.cpp \
 	Naming_Test \
 	Notify_Performance_Test \
 	Process_Mutex_Test \
@@ -1099,8 +1099,8 @@ endif
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Message_Queue.i
-.obj/MsgQueue_Notifications_Test.o .obj/MsgQueue_Notifications_Test.so .shobj/MsgQueue_Notifications_Test.o .shobj/MsgQueue_Notifications_Test.so: \
- MsgQueue_Notifications_Test.cpp test_config.h \
+.obj/Message_Queue_Notifications_Test.cpp.o .obj/Message_Queue_Notifications_Test.cpp.so .shobj/Message_Queue_Notifications_Test.cpp.o .shobj/Message_Queue_Notifications_Test.cpp.so: \
+ Message_Queue_Notifications_Test.cpp.cpp test_config.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
