@@ -22,7 +22,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM) && defined (ACE_USES_OLD_IOSTREAMS)
+// This is a temporary restriction - ACE_IOStream is only enabled if the
+// compiler does not supply the standard C++ library (and standard iostreams)
+// or, if it does, the platform is explicitly set to use old iostreams
+// by its config.h file.
+// This restriction is recorded in Bugzilla entry 857.
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
+#  if !defined (ACE_USES_OLD_IOSTREAMS) && !defined (ACE_LACKS_ACE_IOSTREAM)
+#    define ACE_LACKS_ACE_IOSTREAM
+#  endif /* !ACE_USES_OLD_IOSTREAMS && !ACE_LACKS_ACE_IOSTREAM */
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #include "ace/streams.h"
 
