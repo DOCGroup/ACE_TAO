@@ -73,14 +73,13 @@ TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
                                         other_endpoint);
 
-  TAO_UIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                                                  endpt);
+  TAO_UIOP_Endpoint *endpoint = dynamic_cast<TAO_UIOP_Endpoint *> (endpt);
+
   if (endpoint == 0)
     return 0;
 
-  return
-    ACE_OS::strcmp (this->rendezvous_point (),
-                    endpoint->rendezvous_point ()) == 0;
+  return ACE_OS::strcmp (this->rendezvous_point (),
+                         endpoint->rendezvous_point ()) == 0;
 }
 
 CORBA::ULong

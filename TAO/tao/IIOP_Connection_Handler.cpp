@@ -165,7 +165,7 @@ TAO_IIOP_Connection_Handler::close_connection (void)
 int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  int result =
+  const int result =
     this->handle_input_eh (h, this);
 
   if (result == -1)
@@ -180,7 +180,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  const int result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -254,9 +254,9 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  CORBA::ULong len = listen_list.length ();
+  const CORBA::ULong len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,
@@ -366,10 +366,10 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
 
   if (tos != this->dscp_codepoint_)
     {
-      int ret = this->peer ().set_option (IPPROTO_IP,
-                                          IP_TOS,
-                                          (int *) &tos ,
-                                          (int) sizeof (tos));
+      const int ret = this->peer ().set_option (IPPROTO_IP,
+                                                IP_TOS,
+                                                (int *) &tos ,
+                                                (int) sizeof (tos));
 
       if (TAO_debug_level)
         {

@@ -41,7 +41,7 @@ ACE_Allocator *TAO_Exceptions::global_allocator_;
 
 // Flag that denotes that the TAO TypeCode constants have been
 // initialized.
-int TAO_Exceptions::initialized_ = 0;
+bool TAO_Exceptions::initialized_ = false;
 
 // TAO specific typecode.
 extern CORBA::TypeCode_ptr TC_completion_status;
@@ -658,7 +658,7 @@ CORBA::SystemException::_info (void) const
     }
   else if (VMCID == CORBA::OMGVMCID)
     {
-      CORBA::ULong minor_code = this->minor () & 0xFFFU;
+      const CORBA::ULong minor_code = this->minor () & 0xFFFU;
 
       const char *minor_description = 0;
 
@@ -1169,7 +1169,7 @@ static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 static const CORBA::ULong array_sz =
     (sizeof (type_code_array) / sizeof (CORBA::TypeCode_ptr)) - 1;
 
-static const char *repo_id_array [] = {
+static const char *repo_id_array[] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
                   (char *) "IDL:omg.org/CORBA/" #name ":1.0",
       STANDARD_EXCEPTION_LIST
@@ -1193,7 +1193,7 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
 
   // Not thread safe.  Caller must provide synchronization.
 
-  if (TAO_Exceptions::initialized_ != 0)
+  if (TAO_Exceptions::initialized_)
     {
       return;
     }
@@ -1202,9 +1202,9 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW (TAO_Exceptions::global_allocator_,
            ACE_New_Allocator);
 
-  char *name_array [] = {
+  static const char *name_array[] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-                        (char *) # name,
+                        # name,
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
       0
@@ -1223,7 +1223,7 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException
                                               ACE_ENV_ARG_PARAMETER);
 
-  TAO_Exceptions::initialized_ = 1;
+  TAO_Exceptions::initialized_ = true;
 }
 
 #undef TAO_TC_BUF_LEN

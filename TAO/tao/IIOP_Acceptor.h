@@ -162,7 +162,7 @@ protected:
    * at the port specified in each element of addrs_) for an available
    * port.  This is specified via the "portspan=" option to the endpoint.
    */
-  u_short port_span_;
+  unsigned short port_span_;
 
   /**
    * Cache the information about the endpoints serviced by this
@@ -173,14 +173,14 @@ protected:
    */
   char **hosts_;
 
-  /// The number of host names cached in the hosts_ array (equivalent
-  /// to the number of endpoints opened by this Acceptor).
-  CORBA::ULong endpoint_count_;
-
   /**
    * Override the hostname used in the ORBEndPoint.
    */
   char *hostname_in_ior_;
+
+  /// The number of host names cached in the hosts_ array (equivalent
+  /// to the number of endpoints opened by this Acceptor).
+  CORBA::ULong endpoint_count_;
 
   /**
    * The GIOP version for this endpoint
@@ -197,7 +197,7 @@ protected:
   TAO_IIOP_Properties tcp_properties_;
 
   /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
+  const bool lite_flag_;
 
 private:
 

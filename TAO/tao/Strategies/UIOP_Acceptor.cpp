@@ -55,7 +55,7 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
     accept_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    unlink_on_close_ (1),
+    unlink_on_close_ (true),
     lite_flag_ (flag)
 {
 }
@@ -148,8 +148,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_UIOP_PROFILE)
       {
-        uiop_profile = ACE_dynamic_cast (TAO_UIOP_Profile *,
-                                         pfile);
+        uiop_profile = dynamic_cast<TAO_UIOP_Profile *> (pfile);
         break;
       }
     }
@@ -185,7 +184,7 @@ int
 TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_UIOP_Endpoint *endp =
-    ACE_dynamic_cast (const TAO_UIOP_Endpoint *, endpoint);
+    dynamic_cast<const TAO_UIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -209,7 +208,7 @@ TAO_UIOP_Acceptor::close (void)
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == 0)
         (void) ACE_OS::unlink (addr.get_path_name ());
 
-      this->unlink_on_close_ = 0;
+      this->unlink_on_close_ = false;
     }
 
   return this->base_acceptor_.close ();
@@ -232,10 +231,8 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -256,18 +253,15 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (this->init_uiop_properties () != 0)
     return -1;
 
-  if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+  if (major >= 0 && minor >= 0)
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
 
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
 
-  ACE_Auto_String_Free tempname (ACE_OS::tempnam (0,
-                                                  "TAO"));
+  ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
 
   if (tempname.get () == 0)
     return -1;
@@ -307,7 +301,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
       // Don't unlink an existing rendezvous point since it may be in
       // use by another UIOP server/client.
       if (errno == EADDRINUSE)
-        this->unlink_on_close_ = 0;
+        this->unlink_on_close_ = false;
 
       return -1;
     }
@@ -357,7 +351,7 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
 
   addr.set (rendezvous);
 
-  size_t length = ACE_OS::strlen (addr.get_path_name ());
+  const size_t length = ACE_OS::strlen (addr.get_path_name ());
 
   // Check if rendezvous point was truncated by ACE_UNIX_Addr since
   // most UNIX domain socket rendezvous points can only be less than
@@ -384,33 +378,34 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char*> (profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-    CORBA::Octet major, minor;
+  CORBA::Octet major, minor;
 
-  // Read the version. We just read it here. We don't*do any*
+  // Read the version. We just read it here. We don't *do any*
   // processing.
-  if (!(cdr.read_octet (major)
-        && cdr.read_octet (minor)))
-  {
-    if (TAO_debug_level > 0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
-                    major,
-                    minor));
-      }
-    return -1;
-  }
+  if (!(cdr.read_octet (major) && cdr.read_octet (minor)))
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                      major,
+                      minor));
+        }
 
-  char *rendezvous = 0;
+      return -1;
+    }
+
+  char * rendezvous = 0;
 
   // Get rendezvous_point
   if (cdr.read_string (rendezvous) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
+      ACE_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
+
       return -1;
     }
 
@@ -436,9 +431,9 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
   ACE_CString options (str);
 
-  size_t len = options.length ();
+  const size_t len = options.length ();
 
-  const char option_delimiter = '&';
+  static const char option_delimiter = '&';
 
   // Count the number of options.
 
@@ -449,7 +444,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -480,9 +475,9 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           ACE_CString opt =
             options.substring (begin, end);
 
-          int slot = opt.find ("=");
+          const int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) UIOP option <%s> is "
@@ -490,7 +485,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                                opt.c_str ()),
                               -1);
 
-          ACE_CString name = opt.substring (0, slot);
+          const ACE_CString name (opt.substring (0, slot));
           ACE_CString value = opt.substring (slot + 1);
 
           if (name.length () == 0)
@@ -543,7 +538,7 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
 
   if (tph != 0)
     {
-      const char protocol [] = "uiop";
+      static const char protocol[] = "uiop";
       const char *protocol_type = protocol;
 
       int hook_result =

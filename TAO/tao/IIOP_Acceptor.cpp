@@ -17,9 +17,9 @@
 #include "ace/os_include/os_netdb.h"
 
 
-ACE_RCSID(tao,
-          IIOP_Acceptor,
-          "$Id$")
+ACE_RCSID (tao,
+           IIOP_Acceptor,
+           "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -55,8 +55,8 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     addrs_ (0),
     port_span_ (1),
     hosts_ (0),
-    endpoint_count_ (0),
     hostname_in_ior_ (0),
+    endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     lite_flag_ (flag),
@@ -114,7 +114,7 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                        CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  int count = mprofile.profile_count ();
+  const int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -171,8 +171,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == IOP::TAG_INTERNET_IOP)
         {
-          iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
-                                           pfile);
+          iiop_profile = dynamic_cast<TAO_IIOP_Profile *> (pfile);
           break;
         }
     }
@@ -189,6 +188,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                         this->version_,
                                         this->orb_core_),
                       -1);
+
       iiop_profile->endpoint ()->priority (priority);
 
       if (mprofile.give_profile (iiop_profile) == -1)
@@ -234,7 +234,7 @@ int
 TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_IIOP_Endpoint *endp =
-    ACE_dynamic_cast (const TAO_IIOP_Endpoint *, endpoint);
+    dynamic_cast<const TAO_IIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -290,10 +290,8 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -320,7 +318,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Now reset the port and set the host.
       if (addr.set (addr.get_port_number (),
-                    ACE_static_cast (ACE_UINT32, INADDR_ANY),
+                    static_cast<ACE_UINT32> (INADDR_ANY),
                     1) != 0)
         return -1;
       else
@@ -343,7 +341,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
         return -1;
 
       // Extract out just the host part of the address.
-      size_t len = port_separator_loc - address;
+      const size_t len = port_separator_loc - address;
       ACE_OS::memcpy (tmp_host, address, len);
       tmp_host[len] = '\0';
 
@@ -417,11 +415,9 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                         -1);
     }
 
-  if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+  if (major >= 0 && minor >= 0)
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -436,8 +432,8 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE_INET_Addr addr;
 
-  if (addr.set (ACE_static_cast(u_short, 0),
-                ACE_static_cast(ACE_UINT32, INADDR_ANY),
+  if (addr.set (static_cast<unsigned short> (0),
+                static_cast<ACE_UINT32> (INADDR_ANY),
                 1) != 0)
     return -1;
 
@@ -463,7 +459,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                   TAO_IIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
 
-  u_short requested_port = addr.get_port_number ();
+  unsigned short requested_port = addr.get_port_number ();
   if (requested_port == 0)
     {
       // don't care, i.e., let the OS choose an ephemeral port
@@ -485,7 +481,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
     {
       ACE_INET_Addr a(addr);
 
-      int found_a_port = 0;
+      bool found_a_port = false;
       ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
       if (last_port > ACE_MAX_DEFAULT_PORT)
         {
@@ -507,7 +503,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_) != -1)
             {
-              found_a_port = 1;
+              found_a_port = true;
               break;
             }
         }
@@ -544,7 +540,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  u_short port = address.get_port_number ();
+  unsigned short port = address.get_port_number ();
   for (CORBA::ULong j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
@@ -652,8 +648,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   ACE_INET_Addr *if_addrs = 0;
   size_t if_cnt = 0;
 
-  if (ACE::get_ip_interfaces (if_cnt,
-                              if_addrs) != 0
+  if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0
       && errno != ENOTSUP)
     {
       // In the case where errno == ENOTSUP, if_cnt and if_addrs will
@@ -683,7 +678,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
-      lo_cnt++;
+      ++lo_cnt;
 
   // The instantiation for this template is in
   // tao/IIOP_Connector.cpp.
@@ -693,9 +688,9 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
-    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt - lo_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE_INET_Addr[this->endpoint_count_],
@@ -717,7 +712,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          if_addrs[i].get_ip_address () == INADDR_LOOPBACK)
         continue;
 
       if (this->hostname_in_ior_ != 0)
@@ -747,7 +742,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
         return -1;
 
-      host_cnt++;
+      ++host_cnt;
     }
 
   return 0;
@@ -767,7 +762,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char*> (profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -824,11 +819,11 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
 
-  ACE_CString options (str);
+  const ACE_CString options (str);
 
-  size_t len = options.length ();
+  const size_t len = options.length ();
 
-  const char option_delimiter = '&';
+  static const char option_delimiter = '&';
 
   // Count the number of options.
 
@@ -839,7 +834,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -859,8 +854,9 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = ACE_static_cast (CORBA::ULong, len)
-                           - begin;  // Handle last endpoint differently
+        end = static_cast<CORBA::ULong> (len) - begin;  // Handle last
+                                                        // endpoint
+                                                        // differently.
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -868,20 +864,20 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          const ACE_CString opt = options.substring (begin, end);
 
-          int slot = opt.find ("=");
+          const int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR ( opt.c_str ())),
+                               ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
                               -1);
 
-          ACE_CString name = opt.substring (0, slot);
-          ACE_CString value = opt.substring (slot + 1);
+          const ACE_CString name = opt.substring (0, slot);
+          const ACE_CString value = opt.substring (slot + 1);
 
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -898,7 +894,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "portspan")
             {
-              int range = ACE_static_cast (int, ACE_OS::atoi (value.c_str ()));
+              int range = static_cast<int> (ACE_OS::atoi (value.c_str ()));
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -908,7 +904,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                                    ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()), ACE_MAX_DEFAULT_PORT),
                                   -1);
 
-              this->port_span_ = ACE_static_cast (u_short, range);
+              this->port_span_ = static_cast<unsigned short> (range);
             }
           else if (name == "hostname_in_ior")
             {
@@ -921,6 +917,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
+
   return 0;
 }
 
@@ -957,10 +954,10 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
 
   if (tph != 0)
     {
-      const char protocol [] = "iiop";
+      static const char protocol[] = "iiop";
       const char *protocol_type = protocol;
 
-      int hook_return =
+      const int hook_return =
         tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
