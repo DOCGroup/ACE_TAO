@@ -1,3 +1,10 @@
+Sat Apr 21 16:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/tests/Performace/UDP_PerformanceClient.cpp:
+        * examples/PluggableUDP/tests/Performace/UDP_i.cpp:
+	  
+	  Fixed the test output.
+	
 Sat Apr 21 05:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
