@@ -1,3 +1,7 @@
+Fri Jun 22 18:35:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS_TLI.inl: Fixed a compile error in win 32.
+
 Fri Jun 22 18:06:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Added a solaris 8 build to the
