@@ -1,0 +1,6 @@
+//$Id$
+
+project(*CompilerElements) {
+  staticname = CompilerElements
+  includes += ../..
+}
