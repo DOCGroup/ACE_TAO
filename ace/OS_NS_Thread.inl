@@ -3702,8 +3702,7 @@ ACE_OS::thr_getprio (ACE_hthread_t id, int &priority, int &policy)
 
   priority = ::GetThreadPriority (id);
 
-  DWORD priority_class = ::GetPriorityClass (id);
-
+  DWORD priority_class = ::GetPriorityClass (::GetCurrentProcess());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
 
