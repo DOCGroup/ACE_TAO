@@ -79,7 +79,6 @@ namespace CIAO
     this->container_->uninstall_component ( ccmobjref.in (),
                                             oid.out ()
                                             ACE_ENV_ARG_PARAMETER);
-    ACE_DEBUG ((LM_DEBUG, "uninstalled the component\n"));
     this->home_servant_->update_component_map (oid);
   }
 

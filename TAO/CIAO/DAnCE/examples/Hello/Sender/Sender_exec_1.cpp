@@ -7,7 +7,7 @@ char*
 Sender_Impl::Message_Impl_1::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Sender sending out message. \n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender 1 sending out message. \n"));
   return CORBA::string_dup (component_.message_.in ());
 }
 
@@ -44,7 +44,7 @@ Sender_Impl::Sender_exec_1_i::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Hello::TimeOut_var event = new OBV_Hello::TimeOut;
-  ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender 1 initiates the process.\n"));
   this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
 }
 

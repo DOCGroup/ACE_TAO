@@ -7,7 +7,7 @@ char*
 Sender_Impl::Message_Impl_2::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Sender sending out message. \n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender 2 sending out message. \n"));
   return CORBA::string_dup (component_.message_.in ());
 }
 
