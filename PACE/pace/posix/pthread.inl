@@ -188,7 +188,7 @@ pace_pthread_cond_signal (pace_pthread_cond_t * cond)
 
 PACE_INLINE
 int
-pace_pace_pthread_cond_timedwait (pthread_cond_t * cond,
+pace_pthread_cond_timedwait (pthread_cond_t * cond,
                              pace_pthread_mutex_t * mutex,
                              const struct timespec * abstime)
 {
