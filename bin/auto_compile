@@ -342,42 +342,6 @@ if ($dont_update == 0) {
 chdir($MODULE)
     || mydie "cannot chdir to $MODULE";
 
-open (CHLOG, "ChangeLog")
-  ||  mydie "cannot open Changelog";
-$_ = <CHLOG>;
-chop;
-print LOG "ACE ChangeLogTag:", $_, "\n";
-close (CHLOG);
-
-if ($dont_build_tao == 0) {
-  open (CHLOG, "TAO/ChangeLog")
-    ||  mydie "cannot open TAO/Changelog";
-  $_ = <CHLOG>;
-  chop;
-  print LOG "TAO ChangeLogTag:", $_, "\n";
-  close (CHLOG);
-}
-
-print LOG "================ ace/config.h ================\n";
-open (CONFIG, "build/$BUILD/ace/config.h")
-  || mydie "cannot open ace/config.h";
-while (<CONFIG>) {
-  chop;
-  print LOG $_, "\n";
-}
-close (CONFIG);
-print LOG "================ ace/config.h ================\n";
-
-print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
-open (CONFIG, "build/$BUILD/include/makeinclude/platform_macros.GNU")
-  || mydie "cannot open include/makeinclude/platform_macros.GNU" if ($makefile_suffix eq "");
-while (<CONFIG>) {
-  chop;
-  print LOG $_, "\n";
-}
-close (CONFIG);
-print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
-
 $date = localtime;
 print LOG "$CMD: starting clone at ", $date, "\n";
 open(CLONE, "perl bin/create_ace_build -a -v $BUILD 2>&1 |")
@@ -579,6 +543,47 @@ if ($post_realclean) {
     print LOG "$CMD: =============================================\n\n";
   }
 }
+
+print LOG "#################### Config\n";
+
+chdir($MODULE)
+    || mydie "cannot chdir to $MODULE";
+
+open (CHLOG, "ChangeLog")
+  ||  mydie "cannot open Changelog";
+$_ = <CHLOG>;
+chop;
+print LOG "ACE ChangeLogTag:", $_, "\n";
+close (CHLOG);
+
+if ($dont_build_tao == 0) {
+  open (CHLOG, "TAO/ChangeLog")
+    ||  mydie "cannot open TAO/Changelog";
+  $_ = <CHLOG>;
+  chop;
+  print LOG "TAO ChangeLogTag:", $_, "\n";
+  close (CHLOG);
+}
+
+print LOG "================ ace/config.h ================\n";
+open (CONFIG, "build/$BUILD/ace/config.h")
+  || mydie "cannot open ace/config.h";
+while (<CONFIG>) {
+  chop;
+  print LOG $_, "\n";
+}
+close (CONFIG);
+print LOG "================ ace/config.h ================\n";
+
+print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
+open (CONFIG, "build/$BUILD/include/makeinclude/platform_macros.GNU")
+  || mydie "cannot open include/makeinclude/platform_macros.GNU" if ($makefile_suffix eq "");
+while (<CONFIG>) {
+  chop;
+  print LOG $_, "\n";
+}
+close (CONFIG);
+print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
 
 report_errors @failures;
 

@@ -1,3 +1,9 @@
+Sun Aug 19 15:36:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Add new 'Config' section at the end of the build, useful for the
+          next generation scoreboard.
+
 Sun Aug 19 13:25:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/footprint_stats.sh:
