@@ -48,7 +48,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   X *p_;
 };
 
@@ -95,7 +95,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   X *p_;
 };
 
@@ -109,7 +109,7 @@ public:
   // = Initialization and termination methods.
   auto_array_ptr (X *p = 0);
 
-  X *operator-> ();
+  X *operator-> () const;
 };
 
 #if defined (__ACE_INLINE__)
