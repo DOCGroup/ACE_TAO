@@ -20,7 +20,6 @@ CFG=Svc_Handler_Test - Win32 PharLap ETS Debug
 !MESSAGE 
 !MESSAGE "Svc_Handler_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Svc_Handler_Test - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "Svc_Handler_Test - Win32 PharLap ETS Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -83,43 +82,12 @@ LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 
-!ELSEIF  "$(CFG)" == "Svc_Handler_Test - Win32 PharLap ETS Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Svc_Handler_Test\PharLap ETS Debug"
-# PROP BASE Intermediate_Dir "Svc_Handler_Test\PharLap ETS Debug"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir "Svc_Handler_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "."
-# PROP Intermediate_Dir ".\ETS_LIB\Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir "Svc_Handler_Test"
-CPP=cl.exe
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D ACE_HAS_DLL=0 /FD /c
-# SUBTRACT CPP /YX
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\ace"
-# ADD LINK32 acesd.lib /nologo /subsystem:console /debug /machine:I386 /out:"./Svc_Handler_Test_ETS.exe" /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
-# SUBTRACT LINK32 /pdb:none
-
 !ENDIF 
 
 # Begin Target
 
 # Name "Svc_Handler_Test - Win32 Debug"
 # Name "Svc_Handler_Test - Win32 Alpha Debug"
-# Name "Svc_Handler_Test - Win32 PharLap ETS Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -237,8 +205,6 @@ DEP_CPP_SVC_H=\
 NODEP_CPP_SVC_H=\
 	"..\ace\stdcpp.h"\
 	
-
-!ELSEIF  "$(CFG)" == "Svc_Handler_Test - Win32 PharLap ETS Debug"
 
 !ENDIF 
 

@@ -1,3 +1,177 @@
+Wed Apr 19 10:11:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Atomic_Op_Test.dsp:
+        * tests/Auto_IncDec_Test.dsp:
+        * tests/Barrier_Test.dsp:
+        * tests/Basic_Types_Test.dsp:
+        * tests/Buffer_Stream_Test.dsp:
+        * tests/CDR_File_Test.dsp:
+        * tests/CDR_Test.dsp:
+        * tests/Cache_Map_Manager_Test.dsp:
+        * tests/Cached_Accept_Conn_Test.dsp:
+        * tests/Cached_Conn_Test.dsp:
+        * tests/Capabilities_Test.dsp:
+        * tests/Collection_Test.dsp:
+        * tests/Conn_Test.dsp:
+        * tests/DLList_Test.dsp:
+        * tests/Dynamic_Priority_Test.dsp:
+        * tests/Enum_Interfaces_Test.dsp:
+        * tests/Env_Value_Test.dsp:
+        * tests/Future_Set_Test.dsp:
+        * tests/Future_Test.dsp:
+        * tests/Handle_Set_Test.dsp:
+        * tests/Hash_Map_Bucket_Iterator_Test.dsp:
+        * tests/Hash_Map_Manager_Test.dsp:
+        * tests/High_Res_Timer_Test.dsp:
+        * tests/IOStream_Test.dsp:
+        * tests/Lazy_Map_Manager_Test.dsp:
+        * tests/MM_Shared_Memory_Test.dsp:
+        * tests/MT_Reactor_Timer_Test.dsp:
+        * tests/MT_SOCK_Test.dsp:
+        * tests/Malloc_Test.dsp:
+        * tests/Map_Manager_Test.dsp:
+        * tests/Map_Test.dsp:
+        * tests/Mem_Map_Test.dsp:
+        * tests/Message_Block_Test.dsp:
+        * tests/Message_Queue_Notifications_Test.dsp:
+        * tests/Message_Queue_Test.dsp:
+        * tests/Naming_Test.dsp:
+        * tests/New_Fail_Test.dsp:
+        * tests/Notify_Performance_Test.dsp:
+        * tests/Object_Manager_Test.dsp:
+        * tests/OrdMultiSet_Test.dsp:
+        * tests/Pipe_Test.dsp:
+        * tests/Priority_Buffer_Test.dsp:
+        * tests/Priority_Reactor_Test.dsp:
+        * tests/Priority_Task_Test.dsp:
+        * tests/Process_Manager_Test.dsp:
+        * tests/Process_Mutex_Test.dsp:
+        * tests/Process_Strategy_Test.dsp:
+        * tests/RB_Tree_Test.dsp:
+        * tests/Reactor_Exceptions_Test.dsp:
+        * tests/Reactor_Notify_Test.dsp:
+        * tests/Reactor_Performance_Test.dsp:
+        * tests/Reactor_Timer_Test.dsp:
+        * tests/Reactors_Test.dsp:
+        * tests/Reader_Writer_Test.dsp:
+        * tests/Recursive_Mutex_Test.dsp:
+        * tests/Reverse_Lock_Test.dsp:
+        * tests/SOCK_Connector_Test.dsp:
+        * tests/SOCK_Send_Recv_Test.dsp:
+        * tests/SOCK_Test.dsp:
+        * tests/SPIPE_Test.dsp:
+        * tests/SString_Test.dsp:
+        * tests/SV_Shared_Memory_Test.dsp:
+        * tests/Semaphore_Test.dsp:
+        * tests/Service_Config_Test.dsp:
+        * tests/Sigset_Ops_Test.dsp:
+        * tests/Simple_Message_Block_Test.dsp:
+        * tests/Svc_Handler_Test.dsp:
+        * tests/TSS_Test.dsp:
+        * tests/Task_Test.dsp:
+        * tests/Thread_Manager_Test.dsp:
+        * tests/Thread_Mutex_Test.dsp:
+        * tests/Thread_Pool_Reactor_Test.dsp:
+        * tests/Thread_Pool_Test.dsp:
+        * tests/Time_Service_Test.dsp:
+        * tests/Time_Value_Test.dsp:
+        * tests/Timeprobe_Test.dsp:
+        * tests/Timer_Queue_Test.dsp:
+        * tests/Tokens_Test.dsp:
+        * tests/UPIPE_SAP_Test.dsp:
+        * tests/Upgradable_RW_Test.dsp:
+        * tests/pharlap/Atomic_Op_Test.dsp: (added)
+        * tests/pharlap/Auto_IncDec_Test.dsp: (added)
+        * tests/pharlap/Barrier_Test.dsp: (added)
+        * tests/pharlap/Basic_Types_Test.dsp: (added)
+        * tests/pharlap/Buffer_Stream_Test.dsp: (added)
+        * tests/pharlap/CDR_File_Test.dsp: (added)
+        * tests/pharlap/CDR_Test.dsp: (added)
+        * tests/pharlap/Cache_Map_Manager_Test.dsp: (added)
+        * tests/pharlap/Cached_Accept_Conn_Test.dsp: (added)
+        * tests/pharlap/Cached_Conn_Test.dsp: (added)
+        * tests/pharlap/Capabilities_Test.dsp: (added)
+        * tests/pharlap/Collection_Test.dsp: (added)
+        * tests/pharlap/Conn_Test.dsp: (added)
+        * tests/pharlap/DLList_Test.dsp: (added)
+        * tests/pharlap/Dynamic_Priority_Test.dsp: (added)
+        * tests/pharlap/Enum_Interfaces_Test.dsp: (added)
+        * tests/pharlap/Env_Value_Test.dsp: (added)
+        * tests/pharlap/Future_Set_Test.dsp: (added)
+        * tests/pharlap/Future_Test.dsp: (added)
+        * tests/pharlap/Handle_Set_Test.dsp: (added)
+        * tests/pharlap/Hash_Map_Bucket_Iterator_Test.dsp: (added)
+        * tests/pharlap/Hash_Map_Manager_Test.dsp: (added)
+        * tests/pharlap/High_Res_Timer_Test.dsp: (added)
+        * tests/pharlap/IOStream_Test.dsp: (added)
+        * tests/pharlap/Lazy_Map_Manager_Test.dsp: (added)
+        * tests/pharlap/MM_Shared_Memory_Test.dsp: (added)
+        * tests/pharlap/MT_Reactor_Timer_Test.dsp: (added)
+        * tests/pharlap/MT_SOCK_Test.dsp: (added)
+        * tests/pharlap/Malloc_Test.dsp: (added)
+        * tests/pharlap/Map_Manager_Test.dsp: (added)
+        * tests/pharlap/Map_Test.dsp: (added)
+        * tests/pharlap/Mem_Map_Test.dsp: (added)
+        * tests/pharlap/Message_Block_Test.dsp: (added)
+        * tests/pharlap/Message_Queue_Notifications_Test.dsp: (added)
+        * tests/pharlap/Message_Queue_Test.dsp: (added)
+        * tests/pharlap/Naming_Test.dsp: (added)
+        * tests/pharlap/New_Fail_Test.dsp: (added)
+        * tests/pharlap/Notify_Performance_Test.dsp: (added)
+        * tests/pharlap/Object_Manager_Test.dsp: (added)
+        * tests/pharlap/OrdMultiSet_Test.dsp: (added)
+        * tests/pharlap/Pipe_Test.dsp: (added)
+        * tests/pharlap/Priority_Buffer_Test.dsp: (added)
+        * tests/pharlap/Priority_Reactor_Test.dsp: (added)
+        * tests/pharlap/Priority_Task_Test.dsp: (added)
+        * tests/pharlap/Process_Manager_Test.dsp: (added)
+        * tests/pharlap/Process_Mutex_Test.dsp: (added)
+        * tests/pharlap/Process_Strategy_Test.dsp: (added)
+        * tests/pharlap/RB_Tree_Test.dsp: (added)
+        * tests/pharlap/Reactor_Exceptions_Test.dsp: (added)
+        * tests/pharlap/Reactor_Notify_Test.dsp: (added)
+        * tests/pharlap/Reactor_Performance_Test.dsp: (added)
+        * tests/pharlap/Reactor_Timer_Test.dsp: (added)
+        * tests/pharlap/Reactors_Test.dsp: (added)
+        * tests/pharlap/Reader_Writer_Test.dsp: (added)
+        * tests/pharlap/Recursive_Mutex_Test.dsp: (added)
+        * tests/pharlap/Reverse_Lock_Test.dsp: (added)
+        * tests/pharlap/SOCK_Connector_Test.dsp: (added)
+        * tests/pharlap/SOCK_Send_Recv_Test.dsp: (added)
+        * tests/pharlap/SOCK_Test.dsp: (added)
+        * tests/pharlap/SPIPE_Test.dsp: (added)
+        * tests/pharlap/SString_Test.dsp: (added)
+        * tests/pharlap/SV_Shared_Memory_Test.dsp: (added)
+        * tests/pharlap/Semaphore_Test.dsp: (added)
+        * tests/pharlap/Service_Config_Test.dsp: (added)
+        * tests/pharlap/Sigset_Ops_Test.dsp: (added)
+        * tests/pharlap/Simple_Message_Block_Test.dsp: (added)
+        * tests/pharlap/Svc_Handler_Test.dsp: (added)
+        * tests/pharlap/TSS_Test.dsp: (added)
+        * tests/pharlap/Task_Test.dsp: (added)
+        * tests/pharlap/Thread_Manager_Test.dsp: (added)
+        * tests/pharlap/Thread_Mutex_Test.dsp: (added)
+        * tests/pharlap/Thread_Pool_Reactor_Test.dsp: (added)
+        * tests/pharlap/Thread_Pool_Test.dsp: (added)
+        * tests/pharlap/Time_Service_Test.dsp: (added)
+        * tests/pharlap/Time_Value_Test.dsp: (added)
+        * tests/pharlap/Timeprobe_Test.dsp: (added)
+        * tests/pharlap/Timer_Queue_Test.dsp: (added)
+        * tests/pharlap/Tokens_Test.dsp: (added)
+        * tests/pharlap/UPIPE_SAP_Test.dsp: (added)
+        * tests/pharlap/Upgradable_RW_Test.dsp: (added)
+        * tests/pharlap/pharlap_tests.dsw: (added)
+
+          Moved all the pharlap configurations to their own dsp files in
+          their own subdirectory.  This was done so those of us who don't
+          have pharlap can load tests.dsw and do a select all in the Build
+          All window and only get the relavant builds.
+
+        * tests/run_pharlap_tests.bat: (removed)
+        * tests/pharlap/run_pharlap_tests.bat: (added)
+
+          Moved this file to the pharlap directory also.
+
 Wed Apr 19 10:03:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/SOCK_Stream.i:
