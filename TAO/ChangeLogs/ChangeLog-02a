@@ -1,3 +1,31 @@
+Tue Apr 10 11:03:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/README:
+        * tests/Reliable_Oneways/README:
+        * tests/Reliable_Oneways/Makefile:
+        * tests/Reliable_Oneways/Makefile.bor:
+        * tests/Reliable_Oneways/client.bor:
+        * tests/Reliable_Oneways/server.bor:
+        * tests/Reliable_Oneways/run_test.pl:
+        * tests/Reliable_Oneways/run_sync_none.pl:
+        * tests/Reliable_Oneways/run_sync_with_server.pl:
+        * tests/Reliable_Oneways/run_sync_with_target.pl:
+        * tests/Reliable_Oneways/run_sync_with_transport.pl:
+        * tests/Reliable_Oneways/Test.idl:
+        * tests/Reliable_Oneways/Oneway_Receiver.h:
+        * tests/Reliable_Oneways/Oneway_Receiver.cpp:
+        * tests/Reliable_Oneways/Shutdown_Helper.h:
+        * tests/Reliable_Oneways/Shutdown_Helper.cpp:
+        * tests/Reliable_Oneways/client.cpp:
+        * tests/Reliable_Oneways/server.cpp:
+          New regression test for reliable oneways.  It is based on the
+          fact that different SyncScope policies can detect only some
+          errors, and not others.
+          The test is not very reliable for SYNC_NONE and SYNC_TRANSPORT,
+          but it is a good start.
+
 Tue Apr 10 10:53:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/MT_Timeout/client.cpp:
@@ -8,121 +36,121 @@ Tue Apr 10 10:53:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Apr 10 10:45:26 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.i (send_request, receive_reply,
-	  receive_other, receive_exception,
-	  receive_request_service_contexts, receive_request, send_reply,
-	  send_other, send_exception):
+        * tao/PortableInterceptor.i (send_request, receive_reply,
+          receive_other, receive_exception,
+          receive_request_service_contexts, receive_request, send_reply,
+          send_other, send_exception):
 
-	  Moved these interception points to the
-	  `PortableInterceptor.cpp'.  They were too big to be inlined, so
-	  there was no point in leaving them in this inline source file.
+          Moved these interception points to the
+          `PortableInterceptor.cpp'.  They were too big to be inlined, so
+          there was no point in leaving them in this inline source file.
 
-	  (receive_exception, send_exception):
+          (receive_exception, send_exception):
 
-	  Fixed problem where the remaining interceptors in the flow stack
-	  were not invoked if an exception was thrown from either of these
-	  interception points.
+          Fixed problem where the remaining interceptors in the flow stack
+          were not invoked if an exception was thrown from either of these
+          interception points.
 
-	* tao/IIOP_Transport.cpp (get_listen_point):
+        * tao/IIOP_Transport.cpp (get_listen_point):
 
-	  Use CORBA::String_var to improve exception safety, and simplify
-	  the code.
+          Use CORBA::String_var to improve exception safety, and simplify
+          the code.
 
-	  Improved performance of this method by comparing the numerical
-	  forms of the IP addresses for equality rather than the
-	  stringified IP addresses or hostnames.  This saves the cost of a
-	  strcmp().
+          Improved performance of this method by comparing the numerical
+          forms of the IP addresses for equality rather than the
+          stringified IP addresses or hostnames.  This saves the cost of a
+          strcmp().
 
-	  Another performance improvement: don't bother creating a
-	  temporary IIOP::ListenPoint and then copying it to the
-	  IIOP::ListenPointList.  Just use the one that was already
-	  created in the IIOP::ListenPointList.
+          Another performance improvement: don't bother creating a
+          temporary IIOP::ListenPoint and then copying it to the
+          IIOP::ListenPointList.  Just use the one that was already
+          created in the IIOP::ListenPointList.
 
-	  Fixed busted code that casted away the const-ness of the
-	  pointer to the INET_Addr array in the IIOP_Acceptor so that it
-	  could be used as a temporary (modifiable!) variable.  Since a
-	  temporary INET_Addr was needed, just create one rather than
-	  butchering what is supposed to be an immutable set of
-	  INET_Addrs.
+          Fixed busted code that casted away the const-ness of the
+          pointer to the INET_Addr array in the IIOP_Acceptor so that it
+          could be used as a temporary (modifiable!) variable.  Since a
+          temporary INET_Addr was needed, just create one rather than
+          butchering what is supposed to be an immutable set of
+          INET_Addrs.
 
-	  (send):
+          (send):
 
-	  Use the peer's send_n() method instead of ACE::send_n().  This
-	  is makes it clearer to pluggable protocol implementors that
-	  ACE::send_n() should not always be used to when implementing
-	  this method.  For example, SSLIOP doesn't use ACE::send_n()
-	  since the data being sent must be encrypted.
+          Use the peer's send_n() method instead of ACE::send_n().  This
+          is makes it clearer to pluggable protocol implementors that
+          ACE::send_n() should not always be used to when implementing
+          this method.  For example, SSLIOP doesn't use ACE::send_n()
+          since the data being sent must be encrypted.
 
-	* tao/Invocation.h:
-	* tao/Invocation.cpp (generate_request_id):
+        * tao/Invocation.h:
+        * tao/Invocation.cpp (generate_request_id):
 
-	  New method for generating request IDs.  It generates a request
-	  ID based on the address of the TAO_GIOP_Invocation object.  The
-	  address is guaranteed to be unique within the process.  This
-	  makes it possible to generate a request ID without acquiring a
-	  lock, which in turn allows to remove a lock from the critical
-	  path.  Neat, huh? :-)  Things are slightly more complicated on
-	  platforms with 64-bit addresses.  On those platforms, we do some
-	  bit manipulation and extract a 32-bit value from that address.
-	  If all else fails, we fall back on the traditional request ID
-	  generator that increments a CORBA::ULong atomically (i.e. by
-	  acquiring a lock).  [Bug 826]
+          New method for generating request IDs.  It generates a request
+          ID based on the address of the TAO_GIOP_Invocation object.  The
+          address is guaranteed to be unique within the process.  This
+          makes it possible to generate a request ID without acquiring a
+          lock, which in turn allows to remove a lock from the critical
+          path.  Neat, huh? :-)  Things are slightly more complicated on
+          platforms with 64-bit addresses.  On those platforms, we do some
+          bit manipulation and extract a 32-bit value from that address.
+          If all else fails, we fall back on the traditional request ID
+          generator that increments a CORBA::ULong atomically (i.e. by
+          acquiring a lock).  [Bug 826]
 
-	  (start):
+          (start):
 
-	  Obtain a request ID from the new generate_request_id() method.
+          Obtain a request ID from the new generate_request_id() method.
 
-	* tao/operation_details.h:
+        * tao/operation_details.h:
 
-	  Cosmetic update.
+          Cosmetic update.
 
-	* tao/operation_details.i (modify_request_id):
+        * tao/operation_details.i (modify_request_id):
 
-	  Do not adjust even-ness or odd-ness of the request ID by first
-	  multiplying by two.  It is not safe to do that since the request
-	  ID may have been based on the address of the TAO_GIOP_Invocation
-	  object (due to the above changes).  In fact, it wasn't really
-	  safe to multiply by two before the request ID optimization since
-	  doing so may actually cause another outstanding request ID to be
-	  re-used.  Simply incrementing by one when appropriate is safer.
+          Do not adjust even-ness or odd-ness of the request ID by first
+          multiplying by two.  It is not safe to do that since the request
+          ID may have been based on the address of the TAO_GIOP_Invocation
+          object (due to the above changes).  In fact, it wasn't really
+          safe to multiply by two before the request ID optimization since
+          doing so may actually cause another outstanding request ID to be
+          re-used.  Simply incrementing by one when appropriate is safer.
 
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.cpp (generate_request_id):
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.cpp (generate_request_id):
 
-	  Generate a request ID based on the address of the
-	  TAO_Asynch_Reply_Dispatcher object.  This is basically the same
-	  optimization used in TAO_GIOP_Invocation.  However, in the case
-	  of AMI we need to used the TAO_Asynch_Reply_Dispatcher object
-	  since it exists for the duration of the request, whereas the
-	  Invocation object doesn't.
+          Generate a request ID based on the address of the
+          TAO_Asynch_Reply_Dispatcher object.  This is basically the same
+          optimization used in TAO_GIOP_Invocation.  However, in the case
+          of AMI we need to used the TAO_Asynch_Reply_Dispatcher object
+          since it exists for the duration of the request, whereas the
+          Invocation object doesn't.
 
-	* tao/Sequence.i (length):
+        * tao/Sequence.i (length):
 
-	  Optimized unbounded sequence growth.  The internal buffer (hence
-	  the maximum) now generally grows to twice the amount of the
-	  previous maximum unless the desired length is larger than that
-	  (doubled) value.  The number of allocations and copies for large
-	  numbers of small sequence length increases has been reduced
-	  significantly by this optimization.  For example, 8 sequence
-	  length increases of 1 previously caused 8 allocations to occur
-	  and 28 copies.  The new scheme reduces those numbers to 4
-	  allocations and 7 copies.  This change should make insertion
-	  constant on the average (similar to an STL vector).  [Bug 757]
+          Optimized unbounded sequence growth.  The internal buffer (hence
+          the maximum) now generally grows to twice the amount of the
+          previous maximum unless the desired length is larger than that
+          (doubled) value.  The number of allocations and copies for large
+          numbers of small sequence length increases has been reduced
+          significantly by this optimization.  For example, 8 sequence
+          length increases of 1 previously caused 8 allocations to occur
+          and 28 copies.  The new scheme reduces those numbers to 4
+          allocations and 7 copies.  This change should make insertion
+          constant on the average (similar to an STL vector).  [Bug 757]
 
-	* tao/PortableServer/ServerRequestInfo.cpp (request_id):
+        * tao/PortableServer/ServerRequestInfo.cpp (request_id):
 
-	  Generate a request ID based on the address of the
-	  TAO_ServerRequest object.  The request ID generated by this
-	  method need not be the same as the GIOP request ID sent with the
-	  request.  It just needs to be unique within a given process.
-	  This is the same trick used in the TAO_GIOP_Invocation object
-	  described above.  [Bug 826]
+          Generate a request ID based on the address of the
+          TAO_ServerRequest object.  The request ID generated by this
+          method need not be the same as the GIOP request ID sent with the
+          request.  It just needs to be unique within a given process.
+          This is the same trick used in the TAO_GIOP_Invocation object
+          described above.  [Bug 826]
 
-	* tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.dsw:
-	* tests/BiDirectional_NestedUpcall/client.dsp:
-	* tests/BiDirectional_NestedUpcall/server.dsp:
+        * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.dsw:
+        * tests/BiDirectional_NestedUpcall/client.dsp:
+        * tests/BiDirectional_NestedUpcall/server.dsp:
 
-	  Added these missing MSVC C++ project files.
+          Added these missing MSVC C++ project files.
 
 Tue Apr 10 12:13:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
