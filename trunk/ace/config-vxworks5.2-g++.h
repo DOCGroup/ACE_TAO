@@ -11,15 +11,15 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#define ACE_LACKS_SYSV_MSG_H
+#define ACE_LACKS_COND_T
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_KEY_T
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_MEMORY_H
-#define ACE_LACKS_SYS_NERR
-#define ACE_LACKS_COND_T
 #define ACE_LACKS_RWLOCK_T
+#define ACE_LACKS_STRCASECMP
+#define ACE_LACKS_SYSV_MSG_H
+#define ACE_LACKS_SYS_NERR
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CHARPTR_SOCKOPT
@@ -67,13 +67,6 @@
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
-// vxWorks.h must be included before time.h, and key_t must be
-// defined early also:  these are here
-// because Time_Value.h #includes ace/config.h, but not ace/OS.h
-typedef int key_t;
-#include /**/ <vxWorks.h>
-
 
 #endif /* ACE_CONFIG_H */
 
