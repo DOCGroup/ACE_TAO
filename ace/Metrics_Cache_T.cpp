@@ -64,7 +64,7 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
                        const char *name,
                        u_long size)
   : 
-	ACE_Timeprobe<ACE_LOCK, ALLOCATOR> (size),
+	ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
 		id_ (id),
     name_ (0)
 {
@@ -157,9 +157,6 @@ template <class ACE_LOCK, class ALLOCATOR> void
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::
 flush_ACE_Metrics_Timeprobe ()
 {
-#if defined (VXWORKS)
-  // TBD - implement this
-#endif
 }
 
 
@@ -232,9 +229,6 @@ template <class ACE_LOCK, class ALLOCATOR> void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::
 flush_ACE_Metrics_Cache ()
 {
-#if defined (VXWORKS)
-  // TBD - implement this
-#endif
 }
 
 

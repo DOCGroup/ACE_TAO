@@ -56,12 +56,12 @@
  * that multiple tables do not share the same event id range.
  */
 template <class ACE_LOCK, class ALLOCATOR>
-class ACE_Timeprobe
+class ACE_Timeprobe_Ex
 {
 public:
 
   /// Self
-  typedef ACE_Timeprobe<ACE_LOCK, ALLOCATOR>
+  typedef ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
           SELF;
 
   /// We can hold multiple event description tables.
@@ -69,13 +69,13 @@ public:
           EVENT_DESCRIPTIONS;
 
   /// Create Timeprobes with <size> slots
-  ACE_Timeprobe (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
+  ACE_Timeprobe_Ex (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   /// Create Timeprobes with <size> slots
-  ACE_Timeprobe (ALLOCATOR *allocator,
+  ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
   /// Destructor.
-  ~ACE_Timeprobe (void);
+  ~ACE_Timeprobe_Ex (void);
 
   /// Record a time. <event> is used to describe this time probe.
   void timeprobe (u_long event);
@@ -99,7 +99,7 @@ public:
   void increase_size (u_long size);
 
   /// Not implemented (stupid MSVC won't let it be protected).
-  ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
+  ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &);
 
   // = (Somewhat private) Accessors
 
@@ -160,6 +160,18 @@ protected:
 
 private:
    ALLOCATOR *   allocator_;
+};
+
+template <class ACE_LOCK>
+class ACE_Timeprobe : public ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator>
+{
+public:
+  // Initialize a ACE_Timeprobe with default size
+  ACE_Timeprobe (ACE_Allocator *allocator = 0);
+
+  /// Create Timeprobes with <size> slots
+  ACE_Timeprobe (ACE_Allocator *allocator = 0,
+                 u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 };
 
 /**
