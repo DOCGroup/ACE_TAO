@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "DLL_Test_Impl.h"
+#include "ace/OS_Errno.h"
 #include "ace/svc_export.h"
 
 ACE_RCSID (tests,
@@ -48,7 +49,7 @@ get_hello (void)
   ACE_NEW_RETURN (hello,
                   Hello_Impl,
                   NULL);
-
+                  
   return hello;
 }
 
