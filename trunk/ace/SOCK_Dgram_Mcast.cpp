@@ -142,7 +142,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               continue;
             if (this->subscribe (mcast_addr,
                                  reuse_addr,
-                                 if_addrs[if_cnt].get_host_addr(),
+                                 ACE_TEXT_CHAR_TO_TCHAR 
+                                   (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
                                  protocol) == 0)
               ++nr_subscribed;
@@ -273,7 +274,8 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
               continue;
             if (this->unsubscribe (mcast_addr,
-                                   if_addrs[if_cnt].get_host_addr(),
+                                   ACE_TEXT_CHAR_TO_TCHAR 
+                                     (if_addrs[if_cnt].get_host_addr()),
                                    protocol_family,
                                    protocol) == 0)
               ++nr_unsubscribed;

@@ -43,11 +43,11 @@ public:
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
   ACE_INET_Addr (u_short port_number,
-                 const ACE_TCHAR host_name[]);
+                 const char host_name[]);
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
-  ACE_EXPLICIT ACE_INET_Addr (const ACE_TCHAR address[]);
+  ACE_EXPLICIT ACE_INET_Addr (const char address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -60,18 +60,33 @@ public:
   // <ip_addr>.  This method assumes that <port_number> and <ip_addr>
   // are in host byte order.
 
-  ACE_INET_Addr (const ACE_TCHAR port_name[],
-		 const ACE_TCHAR host_name[],
-                 const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
+  ACE_INET_Addr (const char port_name[],
+		 const char host_name[],
+                 const char protocol[] = "tcp");
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
-  ACE_INET_Addr (const ACE_TCHAR port_name[],
+  ACE_INET_Addr (const char port_name[],
 		 ACE_UINT32 ip_addr,
-                 const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
+                 const char protocol[] = "tcp");
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, an Internet <ip_addr>, and the <protocol>.  This
   // method assumes that <ip_addr> is in host byte order.
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_INET_Addr (u_short port_number,
+                 const wchar_t host_name[]);
+
+  ACE_EXPLICIT ACE_INET_Addr (const wchar_t address[]);
+
+  ACE_INET_Addr (const wchar_t port_name[],
+		 const wchar_t host_name[],
+                 const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+
+  ACE_INET_Addr (const wchar_t port_name[],
+		 ACE_UINT32 ip_addr,
+                 const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+#endif /* ACE_HAS_WCHAR */
 
   ~ACE_INET_Addr (void);
   // Default dtor.
@@ -84,7 +99,7 @@ public:
   // Initializes from another <ACE_INET_Addr>.
 
   int set (u_short port_number,
-	   const ACE_TCHAR host_name[],
+	   const char host_name[],
            int encode = 1);
   // Initializes an <ACE_INET_Addr> from a <port_number> and the
   // remote <host_name>.  If <encode> is enabled then <port_number> is
@@ -100,20 +115,20 @@ public:
   // they are assumed to be in network byte order already and are
   // passed straight through.
 
-  int set (const ACE_TCHAR port_name[],
-	   const ACE_TCHAR host_name[],
-           const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
+  int set (const char port_name[],
+	   const char host_name[],
+           const char protocol[] = "tcp");
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
-  int set (const ACE_TCHAR port_name[],
+  int set (const char port_name[],
 	   ACE_UINT32 ip_addr,
-           const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
+           const char protocol[] = "tcp");
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
   // <ip_addr> is already in network byte order.
 
-  int set (const ACE_TCHAR addr[]);
+  int set (const char addr[]);
   // Initializes an <ACE_INET_Addr> from the <addr>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -123,6 +138,22 @@ public:
   int set (const sockaddr_in *,
 	   int len);
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
+
+#if defined (ACE_HAS_WCHAR)
+  int set (u_short port_number,
+	   const wchar_t host_name[],
+           int encode = 1);
+
+  int set (const wchar_t port_name[],
+	   const wchar_t host_name[],
+           const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+
+  int set (const wchar_t port_name[],
+	   ACE_UINT32 ip_addr,
+           const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+
+  int set (const wchar_t addr[]);
+#endif /* ACE_HAS_WCHAR */
 
   virtual void *get_addr (void) const;
   // Return a pointer to the underlying network address.
@@ -140,7 +171,7 @@ public:
   // "tango.cs.wustl.edu:1234").  Returns -1 if the <size> of the
   // <buffer> is too small, else 0.
 
-  virtual int string_to_addr (const ACE_TCHAR address[]);
+  virtual int string_to_addr (const char address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
   // "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
@@ -148,6 +179,13 @@ public:
   // "ip-number:port-name" (e.g., "128.252.166.57:telnet").  If there
   // is no ':' in the <address> it is assumed to be a port number,
   // with the IP address being INADDR_ANY.
+
+#if defined (ACE_HAS_WCHAR)
+  /*
+  virtual int string_to_addr (const char address[]);
+  */
+#endif /* ACE_HAS_WCHAR */
+
 
   void set_port_number (u_short,
 			int encode = 1);
@@ -159,18 +197,23 @@ public:
   u_short get_port_number (void) const;
   // Return the port number, converting it into host byte order.
 
-  int get_host_name (ACE_TCHAR hostname[],
+  int get_host_name (char hostname[],
                      size_t hostnamelen) const;
   // Return the character representation of the name of the host,
   // storing it in the <hostname> (which is assumed to be
   // <hostnamelen> bytes long).  This version is reentrant.
 
-  const ACE_TCHAR *get_host_name (void) const;
+#if defined (ACE_HAS_WCHAR)
+  int get_host_name (wchar_t hostname[],
+                     size_t hostnamelen) const;
+#endif /* ACE_HAS_WCHAR */
+
+  const char *get_host_name (void) const;
   // Return the character representation of the hostname (this version
   // is non-reentrant since it returns a pointer to a static data
   // area).
 
-  const ACE_TCHAR *get_host_addr (void) const;
+  const char *get_host_addr (void) const;
   // Return the "dotted decimal" Internet address.
 
   ACE_UINT32 get_ip_address (void) const;
