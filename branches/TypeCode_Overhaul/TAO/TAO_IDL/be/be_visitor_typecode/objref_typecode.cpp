@@ -2,28 +2,26 @@
 
 //=============================================================================
 /**
- *  @file  alias_typecode.cpp
+ *  @file  objref_typecode.cpp
  *
  *  $Id$
  *
- *  Alias (typedef) TypeCode generation visitor.
+ *  Object reference TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
 
-TAO::be_visitor_alias_typecode::be_visitor_alias_typecode (
+TAO::be_visitor_objref_typecode::be_visitor_objref_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
 {
 }
 
 int
-TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
+TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
-
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl
@@ -32,13 +30,12 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 
   // Generate the TypeCode instantiation.
   os
-    << "static TAO::TypeCode::Alias<char const *," << be_nl
-    << "                            TAO::Null_RefCount_Policy> const"
+    << "static TAO::TypeCode::Objref<char const *," << be_nl
+    << "                             TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "\"" << node->repoID () << "\"," << be_nl
-    << "\"" << node->original_local_name () << "\"," << be_nl
-    << "&" << base->tc_name () << ");" << be_uidt_nl
+    << "\"" << node->original_local_name () << "\");" << be_uidt_nl
     << be_uidt_nl;
 
   return this->gen_typecode_ptr (node);

@@ -29,6 +29,8 @@
 #include "be_visitor_typecode/typecode_defn.h"
 
 #include "be_visitor_typecode/alias_typecode.h"
+#include "be_visitor_typecode/objref_typecode.h"
+#include "be_visitor_typecode/struct_typecode.h"
 
 
 #endif /* TAO_BE_VISITOR_TYPECODE_H */

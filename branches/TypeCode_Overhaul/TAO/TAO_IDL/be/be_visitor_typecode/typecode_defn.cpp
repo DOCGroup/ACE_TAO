@@ -77,69 +77,69 @@ be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
   this->queue_reset (this->compute_queue_);
 }
 
-int
-be_visitor_typecode_defn::visit_members (AST_Structure *node)
-{
-  this->elem_number_ = 0;
-  AST_Field **member_ptr = 0;
-  size_t count = node->nfields ();
-  be_decl *enclosing = be_decl::narrow_from_decl (node);
+// int
+// be_visitor_typecode_defn::visit_members (AST_Structure *node)
+// {
+//   this->elem_number_ = 0;
+//   AST_Field **member_ptr = 0;
+//   size_t count = node->nfields ();
+//   be_decl *enclosing = be_decl::narrow_from_decl (node);
 
-  for (size_t i = 0; i < count; ++i)
-    {
-      node->field (member_ptr, i);
+//   for (size_t i = 0; i < count; ++i)
+//     {
+//       node->field (member_ptr, i);
 
-      be_decl *bd = be_decl::narrow_from_decl (*member_ptr);
+//       be_decl *bd = be_decl::narrow_from_decl (*member_ptr);
 
-      // Set the node to be visited.
-      this->ctx_->node (bd);
+//       // Set the node to be visited.
+//       this->ctx_->node (bd);
 
-      // Reset this with every iteration - it might be changed
-      // when it comes around again.
-      this->ctx_->scope (enclosing);
+//       // Reset this with every iteration - it might be changed
+//       // when it comes around again.
+//       this->ctx_->scope (enclosing);
 
-      this->elem_number_++;
+//       this->elem_number_++;
 
-      // Do any pre processing using the next item info.
-      if (this->pre_process (bd) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_typecode_defn::visit_members - "
-              "pre processing failed\n"
-            ),
-            -1
-          );
-        }
+//       // Do any pre processing using the next item info.
+//       if (this->pre_process (bd) == -1)
+//         {
+//           ACE_ERROR_RETURN ((
+//               LM_ERROR,
+//               "(%N:%l) be_visitor_typecode_defn::visit_members - "
+//               "pre processing failed\n"
+//             ),
+//             -1
+//           );
+//         }
 
-      // Send the visitor.
-      if (bd == 0 || bd->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_typecode_defn::visit_members - "
-              "codegen for scope failed\n"
-            ),
-            -1
-          );
+//       // Send the visitor.
+//       if (bd == 0 || bd->accept (this) == -1)
+//         {
+//           ACE_ERROR_RETURN ((
+//               LM_ERROR,
+//               "(%N:%l) be_visitor_typecode_defn::visit_members - "
+//               "codegen for scope failed\n"
+//             ),
+//             -1
+//           );
 
-        }
+//         }
 
-      // Do any post processing using this item info.
-      if (this->post_process (bd) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_typecode_defn::visit_members - "
-              "post processing failed\n"
-            ),
-            -1
-          );
-        }
-    }
+//       // Do any post processing using this item info.
+//       if (this->post_process (bd) == -1)
+//         {
+//           ACE_ERROR_RETURN ((
+//               LM_ERROR,
+//               "(%N:%l) be_visitor_typecode_defn::visit_members - "
+//               "post processing failed\n"
+//             ),
+//             -1
+//           );
+//         }
+//     }
 
-  return 0;
-}
+//   return 0;
+// }
 
 int
 be_visitor_typecode_defn::visit_members (be_valuetype *node)
@@ -337,9 +337,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
     case AST_Decl::NT_except:
       *os << "CORBA::tk_except";
       break;
-    case AST_Decl::NT_interface:
-      *os << "CORBA::tk_objref";
-      break;
+//     case AST_Decl::NT_interface:
+//       *os << "CORBA::tk_objref";
+//       break;
     case AST_Decl::NT_valuetype:
       *os << "CORBA::tk_value";
       break;
@@ -410,7 +410,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       os << "::CORBA::TypeCode_ptr const _tc_"
          << node->local_name ()
          << " =" << be_idt_nl
-         << "&_tc_TAO_tc_"
+         << "&_tao_tc_"
          << node->flat_name () << ";"
          << be_uidt;
 
@@ -548,7 +548,7 @@ be_visitor_typecode_defn::visit_exception (be_exception *node)
       return ((this->computed_encap_len_ > 0) ? 0 : -1);
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      return this->visit_members (node);
+//       return this->visit_members (node);
     default:
       // error
       break;
@@ -583,34 +583,34 @@ be_visitor_typecode_defn::visit_field (be_field *node)
                     -1);
 }
 
-int
-be_visitor_typecode_defn::visit_interface (be_interface *node)
-{
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-      return this->visit_type (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-      return this->gen_typecode (node);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-      return this->gen_encapsulation (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-      this->computed_tc_size_ = this->compute_tc_size (node);
-      return ((this->computed_tc_size_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    default:
-      // error
-      break;
-    }
+// int
+// be_visitor_typecode_defn::visit_interface (be_interface *node)
+// {
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
+//       return this->visit_type (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
+//       return this->gen_typecode (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
+//       return this->gen_encapsulation (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
+//       this->computed_tc_size_ = this->compute_tc_size (node);
+//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     default:
+//       // error
+//       break;
+//     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
-}
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
+// }
 
 int
 be_visitor_typecode_defn::visit_component (be_component *node)
@@ -735,7 +735,7 @@ be_visitor_typecode_defn::visit_structure (be_structure *node)
       return ((this->computed_encap_len_ > 0) ? 0 : -1);
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      return this->visit_members (node);
+//       return this->visit_members (node);
     default:
       // error
       break;
@@ -796,7 +796,7 @@ be_visitor_typecode_defn::visit_union (be_union *node)
       return ((this->computed_encap_len_ > 0) ? 0 : -1);
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      return this->visit_members (node);
+//       return this->visit_members (node);
     default:
       // error
       break;
@@ -1299,100 +1299,100 @@ be_visitor_typecode_defn::gen_encapsulation (be_field *node)
   return 0;
 }
 
-int
-be_visitor_typecode_defn::gen_typecode (be_interface *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+// int
+// be_visitor_typecode_defn::gen_typecode (be_interface *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
+//   os->indent (); // start from whatever indentation level we were at
 
-  // check if we are repeated
-  const be_visitor_typecode_defn::QNode *qnode =
-    this->queue_lookup (this->tc_queue_, node);
+//   // check if we are repeated
+//   const be_visitor_typecode_defn::QNode *qnode =
+//     this->queue_lookup (this->tc_queue_, node);
 
-  if (qnode && be_global->opt_tc ())
-    {
-      // we are repeated, so we must generate an indirection here
-      *os << "0xffffffff, // indirection" << be_nl;
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-      // the offset must point to the tc_kind value of the first occurrence of
-      // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
-                 (qnode->offset - this->tc_offset_),
-                 (qnode->offset - this->tc_offset_));
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-    }
-  else
-    {
-      if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_typecode_defn::"
-                           "visit_type - "
-                           "queue insert failed\n"),
-                          -1);
-      }
+//   if (qnode && be_global->opt_tc ())
+//     {
+//       // we are repeated, so we must generate an indirection here
+//       *os << "0xffffffff, // indirection" << be_nl;
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       // the offset must point to the tc_kind value of the first occurrence of
+//       // this type
+//       os->print ("0x%x, // negative offset (%ld)\n",
+//                  (qnode->offset - this->tc_offset_),
+//                  (qnode->offset - this->tc_offset_));
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//     }
+//   else
+//     {
+//       if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
+//       {
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "(%N:%l) be_visitor_typecode_defn::"
+//                            "visit_type - "
+//                            "queue insert failed\n"),
+//                           -1);
+//       }
 
-      *os << "CORBA::tk_objref, // typecode kind" << be_nl;
-      // size of the enum
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       *os << "CORBA::tk_objref, // typecode kind" << be_nl;
+//       // size of the enum
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-      {
-        Scoped_Compute_Queue_Guard guard (this);
+//       {
+//         Scoped_Compute_Queue_Guard guard (this);
 
-        // emit the encapsulation length
-        this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
-        if (node->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                               ACE_TEXT ("gen_typecode (interface) - ")
-                               ACE_TEXT ("Failed to get encap length\n")),
-                              -1);
-          }
-      }
+//         // emit the encapsulation length
+//         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
+//         if (node->accept (this) == -1)
+//           {
+//             ACE_ERROR_RETURN ((LM_ERROR,
+//                                ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+//                                ACE_TEXT ("gen_typecode (interface) - ")
+//                                ACE_TEXT ("Failed to get encap length\n")),
+//                               -1);
+//           }
+//       }
 
-      *os << this->computed_encap_len_ << ", // encapsulation length"
-          << be_idt << "\n";
-      // size of the encap length
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       *os << this->computed_encap_len_ << ", // encapsulation length"
+//           << be_idt << "\n";
+//       // size of the encap length
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-      // now emit the encapsulation
-      this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
-      if (node->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ACE_TEXT ("::gen_typecode (interface) - ")
-                             ACE_TEXT ("failed to generate encapsulation\n")),
-                            -1);
-        }
-      *os << be_uidt << "\n";
-    }
-  return 0;
-}
+//       // now emit the encapsulation
+//       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+//       if (node->accept (this) == -1)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                              ACE_TEXT ("::gen_typecode (interface) - ")
+//                              ACE_TEXT ("failed to generate encapsulation\n")),
+//                             -1);
+//         }
+//       *os << be_uidt << "\n";
+//     }
+//   return 0;
+// }
 
-int
-be_visitor_typecode_defn::gen_encapsulation (be_interface *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+// int
+// be_visitor_typecode_defn::gen_encapsulation (be_interface *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
+//   os->indent (); // start from whatever indentation level we were at
 
-  *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
-  // size of the encapsulation byte order flag. Although it is 1 byte, the
-  // aligned size is 4 bytes
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
+//   // size of the encapsulation byte order flag. Although it is 1 byte, the
+//   // aligned size is 4 bytes
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  // generate repoID.
-  this->gen_repoID (node);
+//   // generate repoID.
+//   this->gen_repoID (node);
 
-  // generate name.
-  os->indent ();
-  this->gen_name (node);
+//   // generate name.
+//   os->indent ();
+//   this->gen_name (node);
 
-  return 0;
-}
+//   return 0;
+// }
 
 int
 be_visitor_typecode_defn::gen_typecode (be_interface_fwd *)
