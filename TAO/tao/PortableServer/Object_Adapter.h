@@ -178,6 +178,9 @@ public:
   /// Convenience constructor combining construction & initialization.
   TAO_POA_Current_Impl (void);
 
+  /// Return the previous current implementation.
+  TAO_POA_Current_Impl *previous (void) const;
+
   /// Teardown the current for this request.
   void teardown (void);
 

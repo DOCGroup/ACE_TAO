@@ -27,6 +27,7 @@ DIRS = \
 	Codec \
 	CodeSets \
 	Collocation \
+	Collocation_Opportunities \
 	Collocation_Tests \
 	Connect_Strategy_Test \
 	Connection_Purging \

@@ -25,6 +25,7 @@ DIRS  = CDR \
 	Collocation_Tests \
 	CodeSets \
 	Collocation \
+	Collocation_Opportunities \
 	Connection_Failure \
 	Connection_Timeout \
         IDL_Test \

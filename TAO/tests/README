@@ -71,6 +71,11 @@ how to run the following tests:
           This program performs a series of sanity check on the
           collocation support in TAO.
 
+        . Collocation_Opportunities
+
+          A test for making sure the ORB avails all collocation
+          opportunities it is presented with.                   
+
         . Connection_Purging
 
           This is a test which stress tests the connection management
