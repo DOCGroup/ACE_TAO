@@ -287,7 +287,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[5].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -298,7 +298,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[6].handle,
                         config_infos[0].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -306,7 +306,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[6].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -314,7 +314,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[6].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -325,7 +325,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[1].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -333,7 +333,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[3].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -341,7 +341,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[5].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -349,7 +349,7 @@ main (int argc, char *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[6].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL,  // type of dependency
+                        RtecBase::ONE_WAY_CALL  // type of dependency
                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
