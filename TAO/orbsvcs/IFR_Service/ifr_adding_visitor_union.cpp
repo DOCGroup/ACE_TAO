@@ -64,7 +64,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
           idl_bool defined_here = ft->is_child (this->scope_);
 
-          // If the struct member is defined in the struct, we have to
+          // If the union member is defined in the union, we have to
           // do some visiting - otherwise we can just look up the entry.
           if (defined_here)
             {
@@ -72,7 +72,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 {
                   // Since the enclosing scope hasn't been created yet,
                   // we make a special visitor to create this member
-                  // at global scope and move it into the struct later.
+                  // at global scope and move it into the union later.
                   ifr_adding_visitor_union visitor (ft,
                                                     1);
 
@@ -169,23 +169,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 }
               else      // Default case label.
                 {
-                  AST_Union::DefaultValue dv;
-
-                  if (u->default_value (dv) == -1)
-                    {
-                      ACE_ERROR_RETURN ((
-                          LM_ERROR,
-                          ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                          ACE_TEXT ("visit_scope - ")
-                          ACE_TEXT ("computing default value failed\n")
-                        ),
-                        -1
-                      );
-                    }
-
-                  this->load_any_with_default (dv,
-                                               u,
-                                               this->members_[index].label);
+                  this->members_[index].label <<= CORBA::Any::from_octet (0);
                 }
 
               this->members_[index].name = 
@@ -564,52 +548,3 @@ ifr_adding_visitor_union::ir_current (void) const
   return this->ir_current_.in ();
 }
 
-void 
-ifr_adding_visitor_union::load_any_with_default (AST_Union::DefaultValue &dv,
-                                                 AST_Union *u,
-                                                 CORBA::Any &any)
-{
-  switch (u->udisc_type ())
-  {
-    case AST_Expression::EV_char:
-      any <<= CORBA::Any::from_char (dv.u.char_val);
-      break;
-    case AST_Expression::EV_bool:
-      any <<= CORBA::Any::from_boolean (ACE_static_cast (CORBA::Boolean,
-                                                         dv.u.bool_val));
-      break;
-    case AST_Expression::EV_wchar:
-      any <<= CORBA::Any::from_wchar (dv.u.wchar_val);
-      break;
-    case AST_Expression::EV_short:
-      any <<= dv.u.short_val;
-      break;
-    case AST_Expression::EV_ushort:
-      any <<= dv.u.ushort_val;
-      break;
-    case AST_Expression::EV_long:
-      any <<= dv.u.long_val;
-      break;
-    case AST_Expression::EV_ulong:
-      any <<= dv.u.ulong_val;
-      break;
-    case AST_Expression::EV_any:
-    {
-      TAO_OutputCDR cdr;
-      cdr.write_ulong (dv.u.enum_val);
-      any._tao_replace (this->disc_tc_.in (),
-                        TAO_ENCAP_BYTE_ORDER,
-                        cdr.begin ());
-      break;
-    }
-    case AST_Expression::EV_ulonglong:
-    case AST_Expression::EV_longlong:
-      // As yet unimplemented.
-    default:
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                  ACE_TEXT ("load_any_with_default - ")
-                  ACE_TEXT ("type (%d) is invalid\n"), 
-                  u->udisc_type ()));
-  }
-}
