@@ -26,38 +26,33 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_SSL_ENDPOINTSC_H_
-#define _TAO_IDL_SSL_ENDPOINTSC_H_
+#ifndef _TAO_IDL_ORIG_SSL_ENDPOINTSC_H_
+#define _TAO_IDL_ORIG_SSL_ENDPOINTSC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
 
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CDR.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
+
 #include "orbsvcs/SSLIOPC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_SSLIOP_Export
-
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_SSLIOP_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -69,7 +64,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_ch.cpp:101
+// be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_SSLENDPOINTSEQUENCE_CH_)
 #define _TAO_SSLENDPOINTSEQUENCE_CH_
@@ -103,23 +98,35 @@ public:
   TAO_SSLEndpointSequence (
       CORBA::ULong max,
       CORBA::ULong length,
-      SSLIOP::SSL* buffer,
+      SSLIOP::SSL* buffer, 
       CORBA::Boolean release = 0
     );
   TAO_SSLEndpointSequence (const TAO_SSLEndpointSequence &);
   ~TAO_SSLEndpointSequence (void);
-
-  static void _tao_any_destructor (void *);
-
+  
   typedef TAO_SSLEndpointSequence_var _var_type;
 };
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_decl.cpp:44
+// be\be_visitor_typecode/typecode_decl.cpp:44
 
-extern TAO_SSLIOP_Export ::CORBA::TypeCode_ptr  _tc_TAO_SSLEndpointSequence;
+extern TAO_SSLIOP_Export ::CORBA::TypeCode_ptr const _tc_TAO_SSLEndpointSequence;
+
+// TAO_IDL - Generated from
+// be\be_visitor_traits.cpp:59
+
+// Traits specializations.
+namespace TAO
+{
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
+
+#if !defined _TAO_CDR_OP_TAO_SSLEndpointSequence_H_
+#define _TAO_CDR_OP_TAO_SSLEndpointSequence_H_
 
 TAO_SSLIOP_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -130,12 +137,14 @@ TAO_SSLIOP_Export CORBA::Boolean operator>> (
     TAO_SSLEndpointSequence &
   );
 
-// TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
-
+#endif /* _TAO_CDR_OP_TAO_SSLEndpointSequence_H_ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// be\be_codegen.cpp:958
+
+#if defined (__ACE_INLINE__)
+#include "ssl_endpointsC.inl"
+#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
@@ -148,3 +157,5 @@ TAO_SSLIOP_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
+

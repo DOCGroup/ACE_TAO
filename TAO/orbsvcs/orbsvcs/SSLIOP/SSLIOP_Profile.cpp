@@ -1,5 +1,5 @@
 #include "SSLIOP_Profile.h"
-#include "ssl_endpoints.h"
+#include "ssl_endpointsC.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "ace/OS_NS_string.h"
