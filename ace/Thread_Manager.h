@@ -213,7 +213,8 @@ public:
   // -1 on failure (<errno> will explain...), otherwise returns the
   // group id of the threads.
 
-  void *exit (void *status, int do_thread_exit = 1);
+  void *exit (void *status,
+              int do_thread_exit = 1);
   // Called to clean up when a thread exits.  If <do_thread_exit> is
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
   // which case <status> is passed as the exit value of the thread.
@@ -290,9 +291,11 @@ public:
   // = Kill methods, send signals -- which isn't supported on Win32 (will not block).
   int kill_all (int signum);
   // Send signum to all stopped threads
-  int kill (ACE_thread_t, int signum);
+  int kill (ACE_thread_t,
+            int signum);
   // Kill a single thread.
-  int kill_grp (int grp_id, int signum);
+  int kill_grp (int grp_id,
+                int signum);
   // Kill a group of threads.
 
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
@@ -306,8 +309,10 @@ public:
   // True if <t_id> is cancelled, else false.
 
   // = Set/get group ids for a particular thread id.
-  int set_grp (ACE_thread_t, int grp_id);
-  int get_grp (ACE_thread_t, int &grp_id);
+  int set_grp (ACE_thread_t,
+               int grp_id);
+  int get_grp (ACE_thread_t,
+               int &grp_id);
 
   // = The following methods are new methods which resemble current
   // methods in <ACE_Thread Manager>. For example, the <apply_task>
@@ -322,7 +327,8 @@ public:
   // Suspend all threads in an ACE_Task.
   int resume_task (ACE_Task_Base *task);
   // Resume all threads in an ACE_Task.
-  int kill_task (ACE_Task_Base *task, int signum);
+  int kill_task (ACE_Task_Base *task,
+                 int signum);
   // Kill all threads in an ACE_Task.
   int cancel_task (ACE_Task_Base *task);
   // Cancel all threads in an ACE_Task.
@@ -376,8 +382,8 @@ public:
   int acquire_release (void);
   // Do nothing but to acquire the thread manager's lock and release.
   // This is used mainly to get newly spawned thread in synch with
-  // thread manager and prevent it from accessing it thread descriptor
-  // before it gets fully built.
+  // thread manager and prevent it from accessing its thread
+  // descriptor before it gets fully built.
 
   void wait_on_exit (int dowait);
   int  wait_on_exit (void);
@@ -414,7 +420,8 @@ protected:
   // Locate the index of the table slot occupied by <h_id>.  Returns
   // -1 if <h_id> is not in the table doesn't contain <h_id>.
 
-  ACE_Thread_Descriptor *find_task (ACE_Task_Base *task, int index = -1);
+  ACE_Thread_Descriptor *find_task (ACE_Task_Base *task,
+                                    int index = -1);
   // Locate the thread descriptor address of the list occupied by
   // <task>.  Returns 0 if <task> is not in the table doesn't contain
   // <task>.
@@ -434,7 +441,8 @@ protected:
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
-  void remove_thr (ACE_Thread_Descriptor *td, int close_handler);
+  void remove_thr (ACE_Thread_Descriptor *td,
+                   int close_handler);
   // Remove thread from the table.
 
   void remove_thr_all (void);
@@ -443,33 +451,44 @@ protected:
   // = The following four methods implement a simple scheme for
   // operating on a collection of threads atomically.
 
-  int check_state (ACE_Thread_State state, ACE_thread_t thread);
+  int check_state (ACE_Thread_State state,
+                   ACE_thread_t thread);
   // Efficiently check whether <thread> is in a particular <state>.
   // This call updates the TSS cache if possible to speed up
   // subsequent searches.
 
-  int apply_task (ACE_Task_Base *task, ACE_THR_MEMBER_FUNC, int  = 0);
+  int apply_task (ACE_Task_Base *task,
+                  ACE_THR_MEMBER_FUNC,
+                  int = 0);
   // Apply <func> to all members of the table that match the <task>
 
-  int apply_grp (int grp_id, ACE_THR_MEMBER_FUNC func, int arg = 0);
+  int apply_grp (int grp_id,
+                 ACE_THR_MEMBER_FUNC func,
+                 int arg = 0);
   // Apply <func> to all members of the table that match the <grp_id>.
 
-  int apply_all (ACE_THR_MEMBER_FUNC, int  = 0);
+  int apply_all (ACE_THR_MEMBER_FUNC,
+                 int  = 0);
   // Apply <func> to all members of the table.
 
-  int join_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
+  int join_thr (ACE_Thread_Descriptor *td,
+                int = 0);
   // Join the thread described in <tda>.
 
-  int resume_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
+  int resume_thr (ACE_Thread_Descriptor *td,
+                  int = 0);
   // Resume the thread described in <tda>.
 
-  int suspend_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
+  int suspend_thr (ACE_Thread_Descriptor *td,
+                   int = 0);
   // Suspend the thread described in <tda>.
 
-  int kill_thr (ACE_Thread_Descriptor *td, int signum);
+  int kill_thr (ACE_Thread_Descriptor *td, 
+                int signum);
   // Send signal <signum> to the thread described in <tda>.
 
-  int cancel_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
+  int cancel_thr (ACE_Thread_Descriptor *td,
+                  int = 0);
   // Set the cancellation flag for the thread described in <tda>.
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
@@ -536,7 +555,8 @@ public:
   // Remove the thread from its associated <Thread_Manager> and exit
   // the thread if <do_thr_exit> is enabled.
 
-  void *exit (void *status, int do_thr_exit);
+  void *exit (void *status,
+              int do_thr_exit);
   // Remove this thread from its associated <Thread_Manager> and exit
   // the thread if <do_thr_exit> is enabled.
 
