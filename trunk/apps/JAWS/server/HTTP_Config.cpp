@@ -1,6 +1,8 @@
 // HTTP_Config.cpp
 // $Id$
 
+#include "ace/OS.h"
+
 #include "JAWS/server/HTTP_Config.h"
 
 static HTTP_Config_Info config_info;
@@ -9,9 +11,9 @@ HTTP_Config_Info * HTTP_Config::instance_ = 0;
 HTTP_Config_Info *
 HTTP_Config::instance (void)
 {
-  if (HTTP_Config::instance_ = 0)
+  if (HTTP_Config::instance_ == 0)
     {
-      HTTP_Config::instance_ = &config_info;
+      HTTP_Config::instance_ = & ::config_info;
 
       HTTP_Config::instance_->document_root (0);
       HTTP_Config::instance_->cgi_path (0);
@@ -32,38 +34,42 @@ HTTP_Config_Info::HTTP_Config_Info (void)
 {
 }
 
+HTTP_Config_Info::~HTTP_Config_Info (void)
+{
+}
+
 const char *
-document_root (void) const
+HTTP_Config_Info::document_root (void) const
 {
   return this->document_root_;
 }
 
 const char *
-cgi_path (void) const
+HTTP_Config_Info::cgi_path (void) const
 {
   return this->cgi_path_;
 }
 
 const char *
-user_dir (void) const
+HTTP_Config_Info::user_dir (void) const
 {
   return this->user_dir_;
 }
 
 const char *
-dir_index (void) const
+HTTP_Config_Info::dir_index (void) const
 {
   return this->dir_index_;
 }
 
 int
-proxy_flag (void) const
+HTTP_Config_Info::proxy_flag (void) const
 {
   return this->proxy_flag_;
 }
 
 char *
-document_root (char *dr_string)
+HTTP_Config_Info::document_root (char *dr_string)
 {
   if (dr_string) this->document_root_ = dr_string;
   else
@@ -76,7 +82,7 @@ document_root (char *dr_string)
 }
 
 char *
-cgi_path (char *cp_string)
+HTTP_Config_Info::cgi_path (char *cp_string)
 {
   if (cp_string) this->cgi_path_ = cp_string;
   else
@@ -89,7 +95,7 @@ cgi_path (char *cp_string)
 }
 
 char *
-user_dir (char *ud_string)
+HTTP_Config_Info::user_dir (char *ud_string)
 {
   if (ud_string) this->user_dir_ = ud_string;
   else
@@ -102,12 +108,12 @@ user_dir (char *ud_string)
 }
 
 char *
-dir_index (char *di_string)
+HTTP_Config_Info::dir_index (char *di_string)
 {
   if (di_string) this->dir_index_ = di_string;
   else
     {
-      this->dir_index__ = ACE_OS::getenv ("JAWS_DIR_INDEX");
+      this->dir_index_ = ACE_OS::getenv ("JAWS_DIR_INDEX");
       if (! this->dir_index_) this->dir_index_ = "index.html";
     }
 
@@ -115,7 +121,7 @@ dir_index (char *di_string)
 }
 
 int
-proxy_flag (int pf) const
+HTTP_Config_Info::proxy_flag (int pf)
 {
   this->proxy_flag_ = pf;
   return this->proxy_flag_;

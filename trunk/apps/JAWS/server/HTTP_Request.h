@@ -41,7 +41,13 @@ public:
   const char * cgi_args (void) const;
   const char * cgi_env (void) const;
 
+  const char * query_string (void) const;
+  const char * path_info (void) const;
+
   int type (void) const;
+
+  // These are accessors I didn't implement, or don't
+  // remember implementing, anyway.
   char *data (void);
   int data_length (void);
   int content_length (void);
@@ -99,12 +105,6 @@ private:
   int type (const char *type_string);
 
 private:
-  int complete_request (ACE_Message_Block &mb);
-  int complete_header_line (ACE_Message_Block &mb);
-
-  void parse_request_line (ACE_Message_Block &mb);
-  void parse_header_line (ACE_Message_Block &mb);
-  
   int got_request_line (void) const;
 
 private:
@@ -115,15 +115,18 @@ private:
   char *uri_;
   char *version_;
 
+  int cgi_;
+  char *cgi_env_;
+  char *cgi_args_;
+
+  char *query_string_;
+  char *path_info_;
+
   const char * const * const header_strings_;
   static const char * const static_header_strings_[NUM_HEADER_STRINGS];
 
   const char * const * const method_strings_;
   static const char * const static_method_strings_[NUM_METHOD_STRINGS];
-
-  int cgi_;
-  char *cgi_env_;
-  char *cgi_args_;
 
   char *data_;
   int datalen_;

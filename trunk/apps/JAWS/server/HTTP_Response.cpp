@@ -47,12 +47,21 @@ HTTP_Response::process_request (void)
 
     switch (this->request_.type ()) {
     case HTTP_Request::GET :
-      this->build_headers ();
-      this->io_.transmit_file (this->request_.filename (), 
-                               this->HTTP_HEADER, 
-                               this->HTTP_HEADER_LENGTH,
-                               this->HTTP_TRAILER, 
-                               this->HTTP_TRAILER_LENGTH);
+      if (this->request_.cgi ())
+        {
+	  // Build command line if any
+	  // Build environment variables
+	  // Exec the cgi program
+        }
+      else
+        {
+          this->build_headers ();
+          this->io_.transmit_file (this->request_.filename (), 
+                                   this->HTTP_HEADER, 
+                                   this->HTTP_HEADER_LENGTH,
+                                   this->HTTP_TRAILER, 
+                                   this->HTTP_TRAILER_LENGTH);
+        }
       break;
 
     case HTTP_Request::HEAD :
@@ -62,7 +71,20 @@ HTTP_Response::process_request (void)
       break;
 
     case HTTP_Request::POST :
-      // this->io_.spawn_cgi (...);
+      if (this->request_.cgi ())
+	{
+	  // Build command line if any
+	  // Build environment variables
+	  // Exec the cgi program
+	}
+      else
+	{
+	  // What to do here?
+	  // Standard says this is implementation dependent.
+	  // Examples: annotations, page updates, etc.
+	  // They may be a good place to stick CORBA stuff,
+	  // and mobile code.
+	}
       break;
 
     case HTTP_Request::PUT :

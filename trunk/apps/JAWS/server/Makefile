@@ -12,6 +12,7 @@ BIN   	= main
 
 FILES  	= \
 	HTTP_Server \
+	HTTP_Config \
 	HTTP_Handler \
 	HTTP_Helpers \
 	HTTP_Request \
