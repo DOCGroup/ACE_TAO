@@ -1,3 +1,10 @@
+Thu Mar 11 07:10:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/String_Base.cpp (resize):
+	  
+	  Set release_ = 1, else we will start leaking memory. Thanks to
+	  Andrew G. Harvey <agh@cisco.com> for reporting the problem.
+
 Thu Mar 11 06:42:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
@@ -18,10 +25,10 @@ Thu Mar 11 06:42:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Mar 10 18:34:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-        * bin/fuzz.pl:
-          Changed the requried runlevel for check_for_include test.
-          Also added support for the user to specify any single test
-          to run by using the [-t test_name] augment option.
+	* bin/fuzz.pl:
+	  Changed the requried runlevel for check_for_include test.
+	  Also added support for the user to specify any single test
+	  to run by using the [-t test_name] argument option.
 
 Wed Mar 10 18:54:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
