@@ -21,10 +21,10 @@
 #include "ace/ACE.h"
 #endif /* !ACE_HAS_INLINED_OSCALLS */
 
+#include "ace/Object_Manager.h"
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
-#include "ace/Containers.h"
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
@@ -65,16 +65,12 @@ static ACE_thread_key_t key_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
-typedef ACE_Unbounded_Set<ACE_Log_Msg *> ACE_Log_Msg_Set;
-
 class ACE_Log_Msg_Manager
   // = TITLE
   //      Synchronize output operations.
 {
 public:
   static ACE_Thread_Mutex *get_lock (void);
-
-  static int open (void);
 
 #if defined (VXWORKS)
   // For keeping track of the number of tasks, so we know when to
@@ -84,36 +80,21 @@ public:
   static void close (WIND_TCB *);
 #else
   static void close (void);
-
-  static void insert (ACE_Log_Msg *);
-  static int remove (ACE_Log_Msg *);
-  // Remove returns the number of ACE_Log_Msg instances remaining.
-  // When there are none left it returns 0.
 #endif /* VXWORKS */
 
 private:
   static ACE_Thread_Mutex *lock_;
 
-#if !defined (VXWORKS)
-  // Holds a list of all <ACE_Log_Msg> instances.  <instances_>
-  // requires global construction/destruction.
-  static ACE_Log_Msg_Set *instances_;
-#endif /* ! VXWORKS */
 };
 
-int
-ACE_Log_Msg_Manager::open (void)
-{
-#if !defined (VXWORKS)
-  if (ACE_Log_Msg_Manager::instances_ == 0)
-    ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
-#endif /* ! VXWORKS */
+// Instance count for Log_Msg - used to know when dynamically allocated
+// storage (program name and host name) can be safely deleted.
+int ACE_Log_Msg::instance_count_ = 0;
 
-  return 1;
-}
+
 
 void
-ACE_Log_Msg::close (void)
+ACE_Log_Msg::close ()
 {
 #if !defined (VXWORKS)
   // Please note that this will be called by a statement that is
@@ -160,50 +141,23 @@ ACE_Log_Msg_Manager::close (WIND_TCB *tcb)
     }
 }
 #else
-ACE_Log_Msg_Set *ACE_Log_Msg_Manager::instances_ = 0;
 
-void
-ACE_Log_Msg_Manager::insert (ACE_Log_Msg *log_msg)
+/*
+** delete_log_msg is registered as the cleanup function for Log_Msg
+** instances.  Will be called by ACE_Object_Manager at shutdown.
+*/
+static void
+delete_log_msg(void *log_msg_instance, void *param)
 {
-  ACE_Log_Msg_Manager::instances_->insert (log_msg);
+  delete (ACE_Log_Msg *)log_msg_instance;
+  ACE_UNUSED_ARG(param);
+  return;
 }
 
-int
-ACE_Log_Msg_Manager::remove (ACE_Log_Msg *log_msg)
-{
-  ACE_Log_Msg_Manager::instances_->remove (log_msg);
-
-  return ACE_Log_Msg_Manager::instances_->size ();
-}
 
 void
 ACE_Log_Msg_Manager::close (void)
 {
-  if (ACE_Log_Msg_Manager::instances_ != 0)
-    {
-
-      // The program is exiting, so delete all ACE_Log_Msg instances.
-      ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i
-        (*ACE_Log_Msg_Manager::instances_);
-
-      for (ACE_Log_Msg **log_msg;
-           i.next (log_msg) != 0;
-           )
-        {
-          // Advance the iterator first because it needs to read the next
-          // field of the ACE_Node that will be deleted as a result of
-          // the following call to remove the node.
-          i.advance ();
-
-          // Causes a call to <ACE_Log_Msg_Manager::remove> via the
-          // destructor of <ACE_Log_Msg>.
-          delete *log_msg;
-        }
-
-      delete ACE_Log_Msg_Manager::instances_;
-      ACE_Log_Msg_Manager::instances_ = 0;
-    }
-
   ACE_OS::thr_keyfree (key_);
 
   // Ugly, ugly, but don't know a better way.
@@ -284,8 +238,6 @@ ACE_Log_Msg::instance (void)
           ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::close);
         }
 
-      if (! ACE_Log_Msg_Manager::open ()) return 0;
-
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage, i.e., in the task control block.
       ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
@@ -339,12 +291,6 @@ ACE_Log_Msg::instance (void)
     {
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage (on the stack...).
-
-      // Must protect access to lock managers list
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), 0));
-
-      if (! ACE_Log_Msg_Manager::open ()) return 0;
-
       // Stop heap checking, the memory will always be freed by the
       // ACE_Object_Manager. This prevents from getting these blocks
       // reported as memory leaks.
@@ -352,12 +298,12 @@ ACE_Log_Msg::instance (void)
 	ACE_NO_HEAP_CHECK;
 
 	ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
-	ACE_Log_Msg_Manager::insert (tss_log_msg);
-
 	// Store the dynamically allocated pointer in thread-specific
-	// storage.
+	// storage.  Register with Object_Manager to come back at program
+	// exit to delete the memory.
 	if (ACE_OS::thr_setspecific (key_, (void *) tss_log_msg) != 0)
 	  return 0; // Major problems, this should *never* happen!
+	ACE_Object_Manager::at_exit(tss_log_msg, &delete_log_msg, NULL);
       }
     }
 
@@ -509,6 +455,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 		    | LM_EMERGENCY)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
+  ++instance_count_;
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -521,7 +468,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
 
   // If this is the last instance then cleanup.
-  if (ACE_Log_Msg_Manager::remove (this) == 0)
+  if (--instance_count_ == 0)
     {
       if (ACE_Log_Msg::program_name_)
 	{
@@ -1285,14 +1232,3 @@ ACE_Log_Msg::getpid (void) const
 
   return ACE_Log_Msg::pid_;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<ACE_Log_Msg *>;
-template class ACE_Unbounded_Set<ACE_Log_Msg *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<ACE_Log_Msg *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Log_Msg *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
