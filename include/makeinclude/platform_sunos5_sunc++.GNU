@@ -87,7 +87,7 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### Create template repository to avoid compiler warning.
   TEMPLATE_REPOSITORY = Templates.DB
 else  # ! 4.2
-ifeq (C++ 5,$(findstring Compilers 5,$(CC_VERSION)))
+ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
   #### CC 5.0 or later
   #### Inlining appears to cause link problems with early releases of
   #### CC 5.0.
