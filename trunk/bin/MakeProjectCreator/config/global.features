@@ -13,7 +13,7 @@
 // This file is somewhat akin to the platform_macros.GNU file in that build
 // settings can be set here.
 
-// Be default we disable build these.
+// By default we disable these.
 ssl           = 0
 qos           = 0
 rapi          = 0

@@ -1,3 +1,9 @@
+Thu Jun  5 09:05:21 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Fixed a bad comment.
+
 Thu Jun  5 08:20:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
