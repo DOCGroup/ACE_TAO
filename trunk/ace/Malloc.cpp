@@ -199,7 +199,7 @@ ACE_PI_Control_Block::print_alignment_info (void)
               ACE_PI_CONTROL_BLOCK_SIZE,
               ACE_PI_CONTROL_BLOCK_ALIGN_LONGS,
               sizeof (ACE_Malloc_Header),
-              sizeof (ACE_Control_Block)
+              sizeof (ACE_PI_Control_Block)
               ));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End <--- ACE_PI_Control_Block::print_alignment_info:\n")));
 }
