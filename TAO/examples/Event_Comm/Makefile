@@ -20,7 +20,8 @@ PROG_SRCS = Consumer_Handler.cpp \
 	    Supplier_Input_Handler.cpp \
 	    consumer.cpp \
             notifier.cpp \
-	    supplier.cpp
+	    supplier.cpp \
+	    Notifier_Server.cpp
 
 IDL_SRC	= Event_CommS.cpp Event_CommC.cpp
 
@@ -40,7 +41,10 @@ SUPPLIER_OBJS = Event_CommC.o \
 		Notifier_Handler.o \
 		supplier.o
 
-NOTIFIER_OBJS = Notifier_Handler.o \
+NOTIFIER_OBJS = Event_CommC.o \
+		Event_CommS.o \
+		Notifier_Server.o \
+		Event_Comm_i.o \
 		notifier.o
 
 BIN = supplier \
