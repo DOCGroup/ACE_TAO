@@ -130,19 +130,9 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union." << f->local_name ()
-          << " (_tao_union_tmp);";
-
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << " (_tao_union_tmp);" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       return 0;
 
@@ -230,20 +220,10 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
-          << "_tao_union." << f->local_name () << " ("
-          << "_tao_union_tmp);";
-
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << "_tao_union." << f->local_name ()
+          << " (_tao_union_tmp);" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       return 0;
 
@@ -324,19 +304,9 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());";
-          
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       break;
 
@@ -388,19 +358,9 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());";
-          
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       break;
 
@@ -513,16 +473,8 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
             << "_tao_union." << f->local_name ()
             << " (_tao_union_tmp);";
 
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
+      *os << be_nl;
+      *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
       *os << "}" << be_uidt;
 
       break;
@@ -605,19 +557,9 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
             << "if (result)" << be_idt_nl
             << "{" << be_idt_nl
             << "_tao_union."
-            << f->local_name () << " (_tao_union_tmp);";
-
-        if (this->explicit_default ())
-          {
-            *os << be_nl;
-            *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-          }
-        else
-          {
-            *os << be_uidt_nl;
-          }
-
-        *os << "}" << be_uidt;
+            << f->local_name () << " (_tao_union_tmp);" << be_nl
+            << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+            << "}" << be_uidt;
 
         return 0;
       }
@@ -711,19 +653,9 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp);";
-
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << f->local_name () << " (_tao_union_tmp);" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       break;
 
@@ -774,19 +706,9 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union." << f->local_name ()
-          << " (_tao_union_tmp);";
-
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << " (_tao_union_tmp);" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       return 0;
 
@@ -891,20 +813,10 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
-          << "_tao_union." << f->local_name () << " ("
-          << "_tao_union_tmp);";
-
-      if (this->explicit_default ())
-        {
-          *os << be_nl;
-          *os << "_tao_union._d (_tao_discriminant);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt;
+          << "_tao_union." << f->local_name ()
+          << " (_tao_union_tmp);" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
 
       return 0;
 
