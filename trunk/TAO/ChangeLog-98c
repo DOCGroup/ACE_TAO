@@ -1,30 +1,35 @@
+Wed Sep 23 10:02:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/summarize: fixed
+          calculation of number of low-priority threads.
+
 Wed Sep 23 02:39:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.14 released.
 
 Wed Sep 23 01:24:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.h (struct TAO_Leader_Follower_Info): Added constructor
- 	  cause all the fields were not being initialized properly.
-	
+        * tao/ORB.h (struct TAO_Leader_Follower_Info): Added constructor
+          cause all the fields were not being initialized properly.
+
 1998-09-22  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp :
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp :
           Fixed the stats.sample to just pass the
-	  latency as it in microseconds and also removed the 0.5 addition
-	  since it caused an floating point exception on chorus.
-	  Also fixed the (1/frequency) error while calculating sleep_time
-	  for a thread which caused the high priority to keep running in
-	  chorus.
+          latency as it in microseconds and also removed the 0.5 addition
+          since it caused an floating point exception on chorus.
+          Also fixed the (1/frequency) error while calculating sleep_time
+          for a thread which caused the high priority to keep running in
+          chorus.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
-	  Fixed the pccTimerInit macro for chorus.
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+          Fixed the pccTimerInit macro for chorus.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Timer.cpp:
-	  performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
-	  Fixed chorus compile errors.
+        * performance-tests/Cubit/TAO/MT_Cubit/Timer.cpp:
+          performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          Fixed chorus compile errors.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
 
 Tue Sep 22 23:04:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
