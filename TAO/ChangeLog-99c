@@ -1,3 +1,22 @@
+Thu Jul 29 22:00:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/Wait_Strategy.cpp:
+	  Fixed [BUGID:173] the dead-lock in the leader follower set. The
+	  problem is explained in the following comment:
+          //   Assume that we are the only follower, another thread is
+          //   the leader and it completes its work, it sends us the
+          //   signal and removes us from the set.
+          //   Before waking up another thread becomes the leader, when
+          //   we do wake up we believe that it was a false return from
+          //   the condition variable and go into the loop again.
+          //   But now the follower set is empty and nobody is ever
+          //   going to wake us up, dead-locking the application.
+	  the solution was to add the follower to the set after returning
+	  from the condition variable wait.
+
 Thu Jul 29 20:47:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* examples/Makefile:

@@ -1467,8 +1467,8 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
         // Wake up all waiting threads in the reactor.
         this->reactor ()->end_reactor_event_loop ();
       }
-  }                        
-  
+  }
+
   // Grab the thread manager
   ACE_Thread_Manager *tm = this->thr_mgr ();
 
@@ -1492,11 +1492,14 @@ TAO_Leader_Follower::get_next_follower (void)
     // means set is empty
     return 0;
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - next follower is %x\n",
-                *iterator));
-
   ACE_SYNCH_CONDITION *cond = *iterator;
+
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+  ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) LF::get_next_follower - "
+              "follower is %x\n",
+              cond));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
   // We *must* remove it when we signal it so the same condition is
   // not signalled for both wake up as a follower and as the next
