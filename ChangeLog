@@ -1,3 +1,10 @@
+Fri Feb 21 13:32:43 2003  Edward Scott  <eas@prismtechnologies.com>
+
+        * docs/bugzilla-build-setup.html:
+
+	  Removed obsolete documentation file. Thanks to Johnny Willemsen
+	  <jwillemsen@remedy.nl> for reporting the problem.
+
 Fri Feb 21 06:18:19 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Framework_Component_DLL.cpp:
