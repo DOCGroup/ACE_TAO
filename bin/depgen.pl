@@ -134,10 +134,12 @@ sub setReplace {
   my($name)    = shift;
   my($value)   = shift;
 
-  ## The key will be used in a regular expression.
-  ## So, we need to escape some special characters.
-  $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
-  $$replace{$name} = $value;
+  if (defined $name) {
+    ## The key will be used in a regular expression.
+    ## So, we need to escape some special characters.
+    $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
+    $$replace{$name} = $value;
+  }
 }
 
 
@@ -170,6 +172,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
   elsif ($arg eq '-A') {
     setReplace(\%replace, $ENV{ACE_ROOT}, '$(ACE_ROOT)');
     setReplace(\%replace, $ENV{TAO_ROOT}, '$(TAO_ROOT)');
+    setReplace(\%replace, $ENV{ACE_PLATFORM_CONFIG}, '$(ACE_PLATFORM_CONFIG)');
   }
   elsif ($arg eq '-R') {
     ++$i;
