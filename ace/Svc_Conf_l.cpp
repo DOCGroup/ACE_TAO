@@ -868,7 +868,7 @@ case 19:
 ACE_YY_RULE_SETUP
 #line 60 "Svc_Conf.l"
 { // Check for first type of string, i.e.,
-                        // "double quotes" delimited.  
+                        // "double quotes" delimited.
                         ACE_TCHAR *s = ACE_OS::strrchr (ace_yytext, '"');
                         if (s == 0)
                           // Check for second type of string, i.e.,
@@ -913,7 +913,7 @@ case 24:
 ACE_YY_RULE_SETUP
 #line 85 "Svc_Conf.l"
 { ACE_ERROR ((LM_ERROR,
-                                ACE_LIB_TEXT ("unknown character = (%d"), 
+                                ACE_LIB_TEXT ("unknown character = (%d"),
                                           *ace_yytext));
                         if (ACE_OS::ace_isprint (*ace_yytext))
                           ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("|%c"), *ace_yytext));

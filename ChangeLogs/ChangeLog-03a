@@ -1,3 +1,22 @@
+Tue Jul 31 16:43:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.h:
+
+	  If "__LITTLE_ENDIAN__" is defined then assume that the
+	  architecture is little endian.  Some compilers/platforms define
+	  that macro.  Suggested by Frank Wolf" <fwolf@gum.de>.
+
+	* ace/Svc_Conf.h (yy_push_buffer):
+	* ace/Svc_Conf.l (yy_push_buffer):
+	* ace/Svc_Conf_l.cpp (ace_yy_push_buffer):
+	* ace/Svc_Conf_Lexer_Guard.cpp (ACE_Svc_Conf_Lexer_Guard):
+	* ace/Svc_Conf_Lexer_Guard.h (ACE_Svc_Conf_Lexer_Guard):
+
+	  The Service Configurator directive is an "ACE_TCHAR *" not a
+	  "char *".  Updated these method/function parameters to accept
+	  the former.  Fixes a compile-time problem on "wchar/Unicode"
+	  builds.
+
 Tue Jul 31 05:34:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.h: Removed a spurious WNOHANG definition.  Thanks to

@@ -126,7 +126,7 @@ yy_push_buffer (FILE *file)
 }
 
 void
-yy_push_buffer (const char *directive)
+yy_push_buffer (const ACE_TCHAR *directive)
 {
   // External synchronization is required.
 

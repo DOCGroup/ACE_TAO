@@ -15,7 +15,7 @@ ACE_Svc_Conf_Lexer_Guard::ACE_Svc_Conf_Lexer_Guard (FILE *file)
   ::ace_yy_push_buffer (file);
 }
 
-ACE_Svc_Conf_Lexer_Guard::ACE_Svc_Conf_Lexer_Guard (const char *directive)
+ACE_Svc_Conf_Lexer_Guard::ACE_Svc_Conf_Lexer_Guard (const ACE_TCHAR *directive)
 {
   // External synchronization is required.
 

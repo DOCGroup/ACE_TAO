@@ -55,7 +55,7 @@ public:
    * Configurator directive, push it onto the underlying buffer stack,
    * and make it the current buffer.
    */
-  ACE_Svc_Conf_Lexer_Guard (const char *directive);
+  ACE_Svc_Conf_Lexer_Guard (const ACE_TCHAR *directive);
 
   /// Destructor
   /**
