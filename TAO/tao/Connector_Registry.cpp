@@ -108,16 +108,25 @@ TAO_Connector_Registry::close_all (void)
 }
 
 int
-TAO_Connector_Registry::preconnect (TAO_EndpointSet &preconnections)
+TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
+                                    TAO_PreconnectSet &preconnections)
 {
-  TAO_EndpointSetIterator first_endpoint_set =
-    preconnections.begin ();
-  TAO_EndpointSetIterator last_endpoint_set =
-    preconnections.end ();
+  // Put the preconnects in a form that makes it simple for protocol 
+  // implementers to parse.
+  if (this->preprocess_preconnects (orb_core, preconnections) != 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) Unable to preprocess the preconnections.\n"));
 
-  for (TAO_EndpointSetIterator i = first_endpoint_set;
-       i != last_endpoint_set;
-       ++i)
+      return -1;
+    }
+
+  TAO_PreconnectSetIterator preconnects = preconnections.begin ();
+
+  for (ACE_CString *i = 0;
+       preconnects.next (i) != 0;
+       preconnects.advance ())
     {
       TAO_ConnectorSetItor first_connector =
         this->connectors_.begin ();
@@ -128,11 +137,104 @@ TAO_Connector_Registry::preconnect (TAO_EndpointSet &preconnections)
            connector != last_connector;
            ++connector)
         if (*connector)
-          (*connector)->preconnect ((*i).c_str ());
+          (*connector)->preconnect (i->c_str ());
     }
 
   return 0;  // Success
 }
+
+int
+TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
+                                                TAO_PreconnectSet &preconnects)
+{
+  // Organize all matching protocol endpoints and addrs into a single
+  // endpoint for the given protocol.
+  //
+  // For example, the following endpoints:
+  //
+  //   uiop://1.1@/tmp/foobar,/tmp/chicken
+  //   iiop://1.0@localhost
+  //   uiop:///tmp/soup
+  //   iiop://1.1@mopbucket
+  //
+  // will be merged to create the following endpoints:
+  //
+  //   uiop://1.1@/tmp/foobar,/tmp/chicken,/tmp/soup
+  //   iiop://1.0@localhost,1.1@mopbucket
+  //
+  // The four elements in the preconnect set will be squeezed into two 
+  // elements, in this case. This is done to simplify the preconnect
+  // parsing code in each protocol specific connector.
+
+  const size_t num_protocols =
+    orb_core->protocol_factories ()->size ();
+
+  ACE_CString *processed = 0;
+
+  ACE_NEW_RETURN (processed,
+                  ACE_CString[num_protocols],
+                  -1);
+
+  // Open one connector for each loaded protocol!
+  TAO_ProtocolFactorySetItor begin =
+    orb_core->protocol_factories ()->begin ();
+  TAO_ProtocolFactorySetItor end =
+    orb_core->protocol_factories ()->end ();
+
+  ACE_CString *tmp = processed;
+
+  // Iterate over the protocols, *not* the connectors!
+  for (TAO_ProtocolFactorySetItor factory = begin;
+       factory != end;
+       ++factory, ++tmp)
+    {
+      (*tmp) =
+        ACE_CString ((*factory)->factory ()->prefix ()) + ACE_CString ("://");
+
+      TAO_PreconnectSetIterator p = preconnects.begin ();
+
+      for (ACE_CString *i = 0;
+           p.next (i) != 0;
+           p.advance ())
+        {
+          const int slot = i->find ("://");
+
+          ACE_CString protocol_name = i->substring (0, slot);
+
+          if ((*factory)->factory ()->match_prefix (protocol_name.c_str ()))
+            {
+              if (slot != ACE_CString::npos)
+                (*tmp) += i->substring (slot + 3); // +3 due to "://"
+              else
+                (*tmp) += i->substring (3);
+
+              (*tmp) += ACE_CString (',');
+            }
+        }
+
+      // Remove the trailing comma ','.
+      if ((*tmp)[tmp->length () - 1] == ',')
+        (*tmp) = tmp->substring (0, tmp->length () - 1);
+    }
+
+  preconnects.reset ();
+
+  // Now enqueue the re-formed preconnect strings.
+  for (size_t n = 0; n < num_protocols; ++n)
+    {
+      if (preconnects.enqueue_tail (processed[n]) != 0)
+        {
+          delete [] processed;
+
+          return -1;
+        }
+    }
+
+  delete [] processed;
+
+  return 0;
+}
+
 
 int
 TAO_Connector_Registry::connect (TAO_Profile *&profile,
