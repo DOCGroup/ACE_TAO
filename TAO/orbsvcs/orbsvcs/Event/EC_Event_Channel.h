@@ -26,14 +26,14 @@
 #ifndef TAO_EC_EVENT_CHANNEL_H
 #define TAO_EC_EVENT_CHANNEL_H
 
-#include "ace/OS.h"
+#include "EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "EC_Defaults.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "EC_Factory.h"
 
 class TAO_ORBSVCS_Export TAO_EC_Event_Channel_Attributes
 {

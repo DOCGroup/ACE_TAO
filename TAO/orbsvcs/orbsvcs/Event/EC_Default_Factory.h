@@ -31,6 +31,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "EC_Defaults.h"
+
 class TAO_EC_SupplierFiltering;
 
 class TAO_ORBSVCS_Export TAO_EC_Default_Factory : public TAO_EC_Factory
