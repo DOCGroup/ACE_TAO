@@ -1,3 +1,12 @@
+Tue Apr  6 20:39:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Log_Record.cpp (format_msg): 
+	* ace/Log_Record.cpp (print): 
+
+	  Changed host_name[] to *host_name since null pointers were being
+	  passed into the host_name array.  Strictly speaking, host_name
+	  should thus be a pointer, not an array.
+	
 Tue Apr  6 20:19:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Makefile: Removed the ATM_Addr files until Joe can
