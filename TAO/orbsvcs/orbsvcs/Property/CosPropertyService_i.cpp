@@ -761,6 +761,10 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 {
   ACE_DEBUG ((LM_DEBUG, "get_all_property_names\n"));
 
+  // Allocating storage is a must.
+  ACE_NEW (property_names,
+           CosPropertyService::PropertyNames);
+  
   size_t num_of_properties =
     this->get_number_of_properties (TAO_IN_ENV);
 
@@ -773,8 +777,6 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 
   if (how_many > 0)
     {
-      ACE_NEW (property_names,
-               CosPropertyService::PropertyNames);
       if (how_many >= num_of_properties)
         sequence_length = num_of_properties;
       else
@@ -864,21 +866,22 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
 {
   ACE_DEBUG ((LM_DEBUG, "get_properties\n"));
 
+  // Allocate memory for the out parameter.
+  ACE_NEW_RETURN (nproperties,
+                  CosPropertyService::Properties,
+                  0);
+  
+  // Validate the length.
   size_t n = property_names.length ();
-
   if (n == 0)
     return 0;
-
-  CORBA::Any_ptr any_ptr = 0;
-
-  ACE_NEW_RETURN (nproperties,
-                  CosPropertyService::Properties (n),
-                  0);
-
+  
+  // Set the length for the out parameter.
   nproperties->length (n);
-
+  
+  CORBA::Any_ptr any_ptr = 0;
   CORBA::Boolean ret_val = 1;
-
+  
   for (size_t i = 0; i < n; i++)
     {
       TAO_IN_ENV.clear ();
@@ -922,25 +925,29 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 {
   ACE_DEBUG ((LM_DEBUG, "get_all_properties\n"));
 
+  // Allocate memory for the out parameter.
+  ACE_NEW (nproperties,
+           CosPropertyService::Properties);
+
+  // Validate the length.
   size_t num_of_properties =
     hash_table_.current_size ();
 
   if (num_of_properties == 0)
     return;
 
-  // Alloc memory for nproperties if how_many > 0.
+  // Set the length for the nproperties if how_many > 0. 
   CORBA::ULong sequence_length = 0;
 
   if (how_many > 0)
     {
-      ACE_NEW (nproperties,
-               CosPropertyService::Properties);
       if (how_many >= num_of_properties)
         sequence_length = num_of_properties;
       else
         sequence_length = how_many;
       nproperties->length (sequence_length);
     }
+
   ACE_DEBUG ((LM_DEBUG,
               "PropertySet::get_all_properties -seq-length :%d\n",
               sequence_length));
@@ -1540,16 +1547,18 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
                                         CosPropertyService::PropertyModes_out property_modes,
                                         CORBA::Environment &)
 {
-  // Get the length of names sequence.
+  // Allocate memory for the out parameter.
+  ACE_NEW_RETURN (property_modes,
+                  CosPropertyService::PropertyModes,
+                  1);
+  
+  // Validate the length of names sequence.
   size_t sequence_length = property_names.length ();
-
+  
   if (sequence_length == 0)
     return 1;
 
-  // Allocate memory for the out parameter.
-  ACE_NEW_RETURN (property_modes,
-                  CosPropertyService::PropertyModes (sequence_length),
-                  1);
+  // Set the length of the sequence.
   property_modes->length (sequence_length);
 
   // Intialize thre return value.
@@ -1829,15 +1838,16 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
                                    CosPropertyService::PropertyNames_out property_names,
                                    CORBA::Environment &)
 {
+  // Allocate memory for the out parameter.
+  ACE_NEW_RETURN (property_names,
+                  CosPropertyService::PropertyNames,
+                  0);
+  
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return 0;
-
-  ACE_NEW_RETURN (property_names,
-                  CosPropertyService::PropertyNames,
-                  0);
-
+  
   size_t size = this->iterator_.map ().current_size ();
 
   property_names->length (how_many <= size ? how_many : size);
@@ -1898,14 +1908,15 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
                                 CosPropertyService::Properties_out nproperties,
                                 CORBA::Environment &)
 {
+  // Allocate memory for the out parameter.
+  ACE_NEW_RETURN (nproperties,
+                  CosPropertyService::Properties,
+                  0);
+  
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return 0;
-
-  ACE_NEW_RETURN (nproperties,
-                  CosPropertyService::Properties,
-                  0);
 
   size_t size = this->iterator_.map ().current_size ();
 
