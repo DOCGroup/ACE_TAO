@@ -29,6 +29,9 @@ Thu Jul 08 21:34:42 1999  David L. Levine  <levine@cs.wustl.edu>
           #define ACE_MAP_FIXED to 0 and ACE_DEFAULT_BASE_ADDR to
           0 to try to get the OS to always pick shared memory addresses.
 
+          Thanks to Dan Butler <daniel.g.butler@boeing.com> for
+          suggesting the use of ACE_NEEDS_HUGE_THREAD_STACKSIZE here.
+
         * tests/Recursive_Mutex_Test.cpp (main): removed explicit
           stack size setting, now that we're using
           ACE_NEEDS_HUGE_THREAD_STACKSIZE on LynxOS/PPC.
