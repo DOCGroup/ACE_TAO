@@ -1,4 +1,23 @@
+/* -*- C++ -*- */
 // $Id$
+
+// ===========================================================
+//
+//
+// = LIBRARY
+//    ACE_wrappers/examples/DLL
+//
+// = FILENAME
+//    Newsweek.h
+//
+// = DESCRIPTION
+//    This is a derived class from Magazine which is a magazine pertaining 
+//    to news and information.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #ifndef NEWSWEEK_H
 #define NEWSWEEK_H
@@ -20,11 +39,11 @@ class Newsweek : public Magazine
   //   of Magazine is bound to the Newsweek object at runtime.
 public:
 
-  // @@ Kirthika, please put this comment underneath the title()
+  // *done*@@ Kirthika, please put this comment underneath the title()
   // method.
 
-  // This is the abstract class method which describes the magazine.
   void title (void);
+  // This is the abstract class method which describes the magazine.
 };
 
 # endif /* NEWSWEEK_H */
