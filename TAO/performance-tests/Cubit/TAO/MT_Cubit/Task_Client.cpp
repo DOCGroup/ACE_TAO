@@ -733,12 +733,12 @@ Client::svc (void)
   ACE_ENDTRY;
 
   // To avoid a memPartFree on VxWorks.  It will leak memory, though.
-  int status = 0;
+  ACE_THR_FUNC_RETURN status = 0;
 
   if (thr_mgr ())
-    thr_mgr ()->exit (&status, 1);
+    thr_mgr ()->exit (status, 1);
   else
-    ACE_OS::thr_exit (&status);
+    ACE_OS::thr_exit (status);
 
   return 0;
 }
