@@ -1,3 +1,20 @@
+Wed Sep 15 09:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbsvcs/orbsvcs/PortableGroup/GOA.{h,cpp}:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.{cpp,h}:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h:
+          Changes to make TAO_GOA loadable as POA and use that, at the moment
+          I created the branch it seems CosNaming didn't build, so I can't
+          test this right now, have to move my branch forward one time.
+
+        * tao/orbsvcs/orbsvcs/PortableGroup/POA_Hooks.{cpp,h}:
+          Removed, functionality is now in TAO_GOA
+
+        * tao/orbsvcs/orbsvcs/PortableGroup/PG_Object_Adapter_Factory.{h,cpp}:
+          New files
+
 Wed Sep 15 08:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup.idl:
