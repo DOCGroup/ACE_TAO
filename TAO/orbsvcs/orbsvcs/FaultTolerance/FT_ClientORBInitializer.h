@@ -2,15 +2,15 @@
 
 //=============================================================================
 /**
- *  @file     FT_ORBInitializer.h
+ *  @file     FT_ClientORBInitializer.h
  *
  *  $Id$
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-#ifndef TAO_FT_ORB_INITIALIZER_H
-#define TAO_FT_ORB_INITIALIZER_H
+#ifndef TAO_FT_CLIENTORB_INITIALIZER_H
+#define TAO_FT_CLIENTORB_INITIALIZER_H
 
 #include /**/ "ace/pre.h"
 
@@ -34,7 +34,7 @@
 #endif /* _MSC_VER */
 
 /// RTCORBA ORB initializer.
-class TAO_FT_Export TAO_FT_ORBInitializer :
+class TAO_FT_Export TAO_FT_ClientORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
 {
@@ -57,11 +57,6 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register the necessary interceptors.
-  void register_server_request_interceptors (
-         PortableInterceptor::ORBInitInfo_ptr info
-         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   void register_client_request_interceptors (
          PortableInterceptor::ORBInitInfo_ptr info
          ACE_ENV_ARG_DECL)

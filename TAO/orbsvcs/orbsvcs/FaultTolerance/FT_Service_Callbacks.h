@@ -107,7 +107,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "FT_Service_Callbacks.i"
+# include "FT_Service_Callbacks.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
