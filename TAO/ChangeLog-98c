@@ -1,13 +1,23 @@
+Fri Oct 02 16:49:59 1998  David L. Levine  <levine@cs.wustl.edu>
+
+         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp},
+           client.cpp,server.cpp: replaced NO_ACE_QUANTIFY with
+           ACE_HAS_QUANTIFY.
+
+         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+           kill with -15 instead of -1, because HUP no longer
+           kills TAO processes.
+
 Fri Oct  2 16:09:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/IIOP_Object.i (use_locate_requests): Changed the 1s to 0s so
- 	  they would work correctly.  Thanks to Michael Kircher
- 	  <mlkirche@trick.informatik.uni-stuttgart.de> for reporting this.
+        * tao/IIOP_Object.i (use_locate_requests): Changed the 1s to 0s so
+          they would work correctly.  Thanks to Michael Kircher
+          <mlkirche@trick.informatik.uni-stuttgart.de> for reporting this.
 
 Fri Oct 02 09:02:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Removed an
-	  unused local variable, not the one Andy just added. ;)
+          unused local variable, not the one Andy just added. ;)
 
 Fri Oct  2 08:18:28 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
