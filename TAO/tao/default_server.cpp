@@ -90,7 +90,7 @@ TAO_Default_Server_Strategy_Factory::create_servant_lock (void)
   if (this->concurrency_strategy_ != &this->reactive_strategy_ &&
       this->concurrency_strategy_ != 0)
       ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
                       0);
   else
 #endif /* ACE_HAS_THREADS */
