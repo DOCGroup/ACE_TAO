@@ -799,10 +799,7 @@ AST_Module::add_CORBA_members (void)
   Identifier *id = 0;
 
   ACE_NEW (id,
-           Identifier ("TypeCode",
-                       1,
-                       0,
-                       I_FALSE));
+           Identifier ("TypeCode"));
 
   ACE_NEW (sn,
            UTL_ScopedName (id,
@@ -818,10 +815,7 @@ AST_Module::add_CORBA_members (void)
   this->fe_add_predefined_type (pdt);
 
   ACE_NEW (id,
-           Identifier ("TCKind",
-                       1,
-                       0,
-                       I_FALSE));
+           Identifier ("TCKind"));
 
   ACE_NEW (sn,
            UTL_ScopedName (id,
@@ -840,10 +834,7 @@ AST_Module::add_CORBA_members (void)
   if (idl_global->obv_support ())
     {
       ACE_NEW (id,
-               Identifier ("ValueBase",
-                           1,
-                           0,
-                           I_FALSE));
+               Identifier ("ValueBase"));
 
       ACE_NEW (sn,
                UTL_ScopedName (id,

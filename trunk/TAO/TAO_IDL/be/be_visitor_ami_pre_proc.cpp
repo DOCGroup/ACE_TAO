@@ -241,13 +241,10 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
   // Create a virtual module named "Messaging" and an valuetype "ExceptionHolder"
   // from which we inherit.
   UTL_ScopedName *inherit_name =
-    new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
+    new UTL_ScopedName (new Identifier ("Messaging"),
                         0);
 
-  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder",
-                                                           0,
-                                                           0,
-                                                           0),
+  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder"),
                                            0));
 
   be_valuetype *inherit_vt = new be_valuetype (inherit_name,
@@ -256,10 +253,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                                0);
   inherit_vt->set_name (inherit_name);
 
-  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging",
-                                                                      0,
-                                                                      0,
-                                                                      0),
+  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging"),
                                                             0),
                                   0);
 
@@ -354,10 +348,10 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   // Create a virtual module named "Messaging" and an interface "ReplyHandler"
   // from which we inherit.
   UTL_ScopedName *inherit_name =
-    new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
+    new UTL_ScopedName (new Identifier ("Messaging"),
                         0);
 
-  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ReplyHandler", 0,0,0),
+  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ReplyHandler"),
                                            0));
 
   be_interface *inherit_intf = new be_interface (inherit_name,
@@ -370,7 +364,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                  0); // not abstract
   inherit_intf->set_name (inherit_name);
 
-  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
+  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging"),
                                                       0),
                                   0);
 
@@ -499,10 +493,7 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
-                                                     (new Identifier ("void",
-                                                                      1,
-                                                                      0,
-                                                                      I_FALSE),
+                                                     (new Identifier ("void"),
                                                       0),
                                                    0);
 
@@ -522,7 +513,7 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
 
   op_name->nconc (new UTL_ScopedName (
                     new Identifier (
-                      new_local_name.rep (), 1, 0, I_FALSE),
+                      new_local_name.rep ()),
                     0));
 
   be_operation *operation = new be_operation (rt,
@@ -571,7 +562,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
-                                                     (new Identifier ("void", 1, 0, I_FALSE),
+                                                     (new Identifier ("void"),
                                                       0),
                                                    0);
 
@@ -627,10 +618,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                                           field_type, // is also a valuetype
                                           new UTL_ScopedName (
                                               new Identifier (
-                                                  "ami_handler",
-                                                  1,
-                                                  0,
-                                                  I_FALSE
+                                                  "ami_handler"
                                                 ),
                                               0
                                             ),
@@ -705,7 +693,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
-                                                     (new Identifier ("void", 1, 0, I_FALSE),
+                                                     (new Identifier ("void"),
                                                       0),
                                                    0);
 
@@ -717,7 +705,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
   UTL_ScopedName *op_name = ACE_static_cast (UTL_ScopedName *, reply_handler->name ()-> copy ());
   op_name->nconc (new UTL_ScopedName (
                     new Identifier (
-                      original_op_name.rep (), 1, 0, I_FALSE),
+                      original_op_name.rep ()),
                     0));
 
   // Create the operation
@@ -739,7 +727,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
                                           node->return_type (),
                                           new UTL_ScopedName
                                           (new Identifier
-                                              ("ami_return_val", 1, 0, I_FALSE),
+                                              ("ami_return_val"),
                                             0),
                                           0);
 
@@ -823,7 +811,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
-                                                     (new Identifier ("void", 1, 0, I_FALSE),
+                                                     (new Identifier ("void"),
                                                       0),
                                                    0);
 
@@ -832,7 +820,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                       excep_holder, // is also a valuetype
                                       new UTL_ScopedName (
                                         new Identifier (
-                                          "excep_holder", 1, 0, I_FALSE),
+                                          "excep_holder"),
                                         0),
                                       0);
 
@@ -847,7 +835,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   UTL_ScopedName *op_name = ACE_static_cast (UTL_ScopedName *, reply_handler->name ()-> copy ());
   op_name->nconc (new UTL_ScopedName
                   (new Identifier
-                   (new_op_name.rep (), 1, 0, I_FALSE),
+                   (new_op_name.rep ()),
                    0));
 
   // create the operation
@@ -1020,7 +1008,7 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
                                                    (new Identifier
-                                                    ("void", 1, 0, I_FALSE), 0),
+                                                    ("void"), 0),
                                                    0);
 
   // argument type is the same as the attribute type

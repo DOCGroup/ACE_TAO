@@ -43,8 +43,8 @@ module CosLifeCycle
   //     The purpose of the life cycle service is to 
   
   typedef CosNaming::Name Key; 
-  typedef Object Factory;
-  typedef sequence <Factory> Factories;
+  typedef Object _Factory;
+  typedef sequence <_Factory> Factories;
 
   typedef struct NVP 
   {

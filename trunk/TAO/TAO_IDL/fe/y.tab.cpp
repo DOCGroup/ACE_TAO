@@ -1387,7 +1387,7 @@ case 19:
 #line 323 "fe/idl.tao_yy"
 {
             UTL_ScopedName      *n =
-                new UTL_ScopedName(new Identifier(tao_yyvsp[0].strval, 1, 0, I_FALSE), NULL);
+                new UTL_ScopedName(new Identifier(tao_yyvsp[0].strval), NULL);
             AST_Module          *m = NULL;
             UTL_Scope           *s = idl_global->scopes()->top_non_null();
             UTL_StrList         *p = idl_global->pragmas();
@@ -1935,7 +1935,7 @@ case 90:
 {
           idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
-          tao_yyval.idlist = new UTL_IdList(new Identifier(tao_yyvsp[-2].strval, 1, 0, I_FALSE),
+          tao_yyval.idlist = new UTL_IdList(new Identifier(tao_yyvsp[-2].strval),
                               new UTL_IdList(tao_yyvsp[0].idval, NULL));
         }
 break;
@@ -1957,7 +1957,7 @@ break;
 case 93:
 #line 878 "fe/idl.tao_yy"
 {
-            tao_yyval.idval = new Identifier(tao_yyvsp[0].strval, 1, 0, I_FALSE);
+            tao_yyval.idval = new Identifier(tao_yyvsp[0].strval);
         }
 break;
 case 94:
@@ -3229,7 +3229,7 @@ case 263:
 {
           UTL_Scope             *s = idl_global->scopes()->top_non_null();
           UTL_ScopedName        *n =
-                new UTL_ScopedName(new Identifier(tao_yyvsp[0].strval, 1, 0, I_FALSE), NULL);
+                new UTL_ScopedName(new Identifier(tao_yyvsp[0].strval), NULL);
           AST_EnumVal           *e = NULL;
           AST_Enum              *c = NULL;
           UTL_StrList           *p = idl_global->pragmas();
@@ -3667,7 +3667,7 @@ case 300:
 {
           UTL_Scope             *s = idl_global->scopes()->top_non_null();
           UTL_ScopedName        *n =
-                new UTL_ScopedName(new Identifier(tao_yyvsp[0].strval, 1, 0, I_FALSE), NULL);
+                new UTL_ScopedName(new Identifier(tao_yyvsp[0].strval), NULL);
           AST_Operation         *o = NULL;
           UTL_StrList           *p = idl_global->pragmas();
 

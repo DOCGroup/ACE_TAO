@@ -18,61 +18,61 @@
  	register int tao_yy_act;
  
  #line 126 "fe/idl.ll"
-@@ -1502,7 +1502,7 @@
+@@ -1500,7 +1500,7 @@
    		  idl_global->set_lineno(idl_global->lineno() + 1);
  		  idl_store_pragma(ace_tao_yytext);
  		}
 -	TAO_YY_BREAK
 +	break;
  case 69:
- #line 286 "fe/idl.ll"
+ #line 284 "fe/idl.ll"
  case 70:
-@@ -1511,7 +1511,7 @@
+@@ -1509,7 +1509,7 @@
 {/* ignore file */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 -	TAO_YY_BREAK
 +       break;
 case 71:
-#line 290 "fe/idl.ll"
+#line 288 "fe/idl.ll"
 case 72:
-@@ -1520,7 +1520,7 @@
+@@ -1518,7 +1518,7 @@
  {
  		  idl_parse_line_and_file(ace_tao_yytext);
  		}
 -	TAO_YY_BREAK
 +	break;
  case 73:
- #line 294 "fe/idl.ll"
+ #line 292 "fe/idl.ll"
  case 74:
-@@ -1529,7 +1529,7 @@
+@@ -1527,7 +1527,7 @@
  {
  		  idl_parse_line_and_file(ace_tao_yytext);
  		}
 -	TAO_YY_BREAK
 +	break;
  case 75:
- #line 298 "fe/idl.ll"
+ #line 296 "fe/idl.ll"
  case 76:
-@@ -1538,7 +1538,7 @@
+@@ -1536,7 +1536,7 @@
  {
  		  idl_parse_line_and_file(ace_tao_yytext);
  		}
 -	TAO_YY_BREAK
 +	break;
  case 77:
- #line 302 "fe/idl.ll"
+ #line 300 "fe/idl.ll"
  case 78:
-@@ -1547,7 +1547,7 @@
+@@ -1545,7 +1545,7 @@
  {
  		  idl_parse_line_and_file(ace_tao_yytext);
  	        }
 -	TAO_YY_BREAK
 +	break;
  case 79:
- #line 306 "fe/idl.ll"
+ #line 304 "fe/idl.ll"
  case 80:
-@@ -1556,7 +1556,7 @@
+@@ -1554,7 +1554,7 @@
 {
  		  /* store cpp ident */
                   idl_global->ident_string (ace_tao_yytext);
@@ -82,8 +82,8 @@ case 72:
 +	break;
  case 81:
  TAO_YY_RULE_SETUP
- #line 311 "fe/idl.ll"
-@@ -1565,7 +1565,7 @@
+ #line 308 "fe/idl.ll"
+@@ -1563,7 +1563,7 @@
  		  /* ignore comments */
    		  idl_global->set_lineno(idl_global->lineno() + 1);
  		}
@@ -91,8 +91,8 @@ case 72:
 +	break;
  case 82:
  TAO_YY_RULE_SETUP
- #line 314 "fe/idl.ll"
-@@ -1583,19 +1583,19 @@
+ #line 312 "fe/idl.ll"
+@@ -1581,19 +1581,19 @@
  		    }
  	          }
  	        }
@@ -100,13 +100,13 @@ case 72:
 +	break;
  case 83:
  TAO_YY_RULE_SETUP
- #line 328 "fe/idl.ll"
+ #line 326 "fe/idl.ll"
  ;
 -	TAO_YY_BREAK
 +	break;
  case 84:
  TAO_YY_RULE_SETUP
- #line 329 "fe/idl.ll"
+ #line 327 "fe/idl.ll"
  {
    		  idl_global->set_lineno(idl_global->lineno() + 1);
  		}
@@ -114,10 +114,10 @@ case 72:
 +	break;
  case 85:
  TAO_YY_RULE_SETUP
- #line 332 "fe/idl.ll"
-@@ -1605,7 +1605,7 @@
+ #line 330 "fe/idl.ll"
+@@ -1603,7 +1603,7 @@
  TAO_YY_RULE_SETUP
- #line 334 "fe/idl.ll"
+ #line 332 "fe/idl.ll"
  TAO_YY_ECHO;
 -	TAO_YY_BREAK
 +	break;

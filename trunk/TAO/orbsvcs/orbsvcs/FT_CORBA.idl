@@ -104,7 +104,7 @@ module FT
   typedef Properties Criteria;
 
   struct FactoryInfo {
-    GenericFactory factory;
+    GenericFactory _factory;
     Location the_location;
     Criteria the_criteria;
   };

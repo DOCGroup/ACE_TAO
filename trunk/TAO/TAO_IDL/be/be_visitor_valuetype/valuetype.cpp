@@ -223,7 +223,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
                                                    (new Identifier
-                                                    ("void", 1, 0, I_FALSE), 0),
+                                                    ("void"), 0),
                                                    0);
   // argument type is the same as the attribute type
   be_argument *arg = new be_argument (AST_Argument::dir_IN,
