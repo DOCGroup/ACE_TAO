@@ -159,7 +159,7 @@ auto_array_ptr<X>::auto_array_ptr (X *p)
 }
 
 template<class X> ACE_INLINE X *
-auto_array_ptr<X>::operator->() 
+auto_array_ptr<X>::operator->() const
 {
   return p_;
 }
