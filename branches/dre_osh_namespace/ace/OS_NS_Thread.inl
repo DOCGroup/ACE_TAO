@@ -7,12 +7,9 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
-#if defined (ACE_LACKS_CONST_TIMESPEC_PTR)
-typedef struct timespec * ACE_TIMESPEC_PTR;
-#else
-typedef const struct timespec * ACE_TIMESPEC_PTR;
-#endif /* HPUX */
+#if defined (ACE_HAS_PRIOCNTL)
+#  include /**/ <sys/priocntl.h>
+#endif /* ACE_HAS_PRIOCNTL */
 
 /*****************************************************************************/
 

@@ -30,6 +30,7 @@
 # include "ace/os_include/os_pthread.h"
 # include "ace/Base_Thread_Adapter.h"
 # include "ace/os_include/sys/os_sem.h"
+# include "ace/os_include/os_semaphore.h"
 # include "ace/OS_Memory.h"
 
 # if defined (ACE_HAS_PRIOCNTL)

@@ -81,6 +81,12 @@ extern "C"
 #  endif /* defined (ACE_PSOS_DIAB_PPC) */
 #endif /*  defined (ACE_PSOS) && !defined (USER_INCLUDE_SYS_TIME_TM) */
 
+#if defined (ACE_LACKS_CONST_TIMESPEC_PTR)
+typedef struct timespec * ACE_TIMESPEC_PTR;
+#else
+typedef const struct timespec * ACE_TIMESPEC_PTR;
+#endif /* HPUX */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

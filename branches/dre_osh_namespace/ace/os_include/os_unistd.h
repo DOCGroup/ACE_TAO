@@ -36,6 +36,10 @@
 #  include /**/ <io.h>
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
+#if defined (ACE_HAS_SYSINFO)
+#  include /**/ <sys/systeminfo.h>
+#endif /* ACE_HAS_SYS_INFO */
+
 #if !defined (ACE_LACKS_UNISTD_H)
 #  include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
