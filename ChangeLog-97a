@@ -1,3 +1,11 @@
+Thu Feb  6 20:25:13 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.i (select): Adapted ACE_OS::select methods for use on
+	  platforms (such as Linux) that allow select(2) to modify its
+	  struct timeval arg.  New behavior is triggered by the define
+	  ACE_HAS_NONCONST_SELECT_TIMEVAL.  Thanks to Jorn Jensen
+	  <jornj@funcom.com> for reporting this!
+
 Thu Feb 06 09:48:43 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos-sun*.h,README: added
