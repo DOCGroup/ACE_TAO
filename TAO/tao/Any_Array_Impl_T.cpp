@@ -58,15 +58,16 @@ CORBA::Boolean
 TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                                    _tao_destructor destructor,
                                                    CORBA::TypeCode_ptr tc,
-                                                   const T_slice *& _tao_elem)
+                                                   T_slice *& _tao_elem)
 {
   _tao_elem = 0;
 
   ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean _tao_equiv = any_tc->equivalent (tc
-                                                      ACE_ENV_ARG_PARAMETER);
+      const CORBA::Boolean _tao_equiv =
+        any_tc->equivalent (tc
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (_tao_equiv == 0)
@@ -88,7 +89,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
               return 0;
             }
 
-          _tao_elem = reinterpret_cast <const T_slice*> (narrow_impl->value_);
+          _tao_elem = reinterpret_cast <T_slice*> (narrow_impl->value_);
           return 1;
         }
 
@@ -121,7 +122,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 
       if (result == 1)
         {
-          _tao_elem = reinterpret_cast <const T_slice*> (replacement->value_);
+          _tao_elem = reinterpret_cast <T_slice*> (replacement->value_);
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
           return 1;

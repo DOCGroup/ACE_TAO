@@ -47,7 +47,7 @@ namespace TAO
     static CORBA::Boolean extract (const CORBA::Any &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T_slice *&);
+                                   T_slice *&);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
