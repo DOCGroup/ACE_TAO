@@ -4,6 +4,11 @@ Sat Mar 14 06:43:32 1998  David L. Levine  <levine@cs.wustl.edu>
           moved WIN32 and SGI-specific code out of Basic_Types.h and
           into their respective config files.
 
+        * ace/Object_Manager.h: changed ACE_HAS_NON_STATIC_OBJECT_MANAGER
+          to ACE_HAS_NONSTATIC_OBJECT_MANAGER in comments.  Thanks to
+          Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
+          this.
+
 Sat Mar 14 00:13:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task.h (ACE_Task_Base): Give a default value of 0 for the
