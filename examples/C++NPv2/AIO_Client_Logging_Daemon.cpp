@@ -315,7 +315,7 @@ void AIO_CLD_Acceptor::close (void) {
 
 AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
   AIO_Input_Handler *ih;
-  ACE_NEW_RETURN (ih, AIO_Input_Handler, 0);
+  ACE_NEW_RETURN (ih, AIO_Input_Handler (this), 0);
   if (clients_.insert (ih) == -1)
     { delete ih; return 0; }
   return ih;
