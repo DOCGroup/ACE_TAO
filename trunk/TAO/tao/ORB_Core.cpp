@@ -1532,6 +1532,27 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   CORBA::PolicyList *policy_list
                                   ACE_ENV_ARG_DECL)
 {
+  // Add the Polices contained in "policy_list" to each profile so
+  // that those policies will be exposed to the client in the IOR.  In
+  // particular each CORBA::Policy has to be converted in to
+  // Messaging::PolicyValue, and then all the Messaging::PolicyValue
+  // should be embedded inside a Messaging::PolicyValueSeq which
+  // became in turns the "body" of the IOP::TaggedComponent. This
+  // conversion is a responsability of the CORBA::Profile class.  (See
+  // orbos\98-05-05.pdf Section 5.4)
+  if (policy_list->length () != 0)
+    {
+      TAO_Profile * profile;
+
+      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+        {
+          // Get the ith profile
+          profile = mprofile.get_profile (i);
+          profile->policies (policy_list TAO_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
+    }
+
   /// Initialize a TAO_Stub object with the mprofile thats passed.
   TAO_Stub *stub =
     this->create_stub (type_id, mprofile ACE_ENV_ARG_PARAMETER);
