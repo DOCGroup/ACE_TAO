@@ -23,22 +23,20 @@ DEFINE_GUID (IID_CORBA_SystemException,
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : _type (tc),
-    refcount_ (1)
+    refcount_ (0)
 {
   if (_type)
     _type->AddRef ();
   assert (_type != 0);
-  assert (refcount_ > 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception	&src)
   : _type (src._type),
-    refcount_ (1)
+    refcount_ (0)
 {
   if (_type)
     _type->AddRef ();
   assert (_type != 0);
-  assert (refcount_ > 0);
 }
 
 // NOTE:  It's this code, not anything defined in a subclass, which
@@ -62,7 +60,6 @@ CORBA_Exception::operator = (const CORBA_Exception &src)
   if (_type)
     _type->AddRef ();
   assert (_type != 0);
-  assert (refcount_ > 0);
 
   return *this;
 }
@@ -72,7 +69,6 @@ CORBA_Exception::id (void) const
 {
   CORBA::Environment env;
 
-  assert (refcount_ > 0);
   if (_type)
     return _type->id (env);
   else
@@ -82,7 +78,6 @@ CORBA_Exception::id (void) const
 TAO_CONST CORBA::TypeCode_ptr
 CORBA_Exception::type (void) const
 {
-  assert (refcount_ > 0);
   return _type;
 }
 
@@ -93,7 +88,6 @@ CORBA_Exception::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
-  assert (refcount_ > 0);
   return ++refcount_;
 }
 
@@ -103,7 +97,6 @@ CORBA_Exception::Release (void)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
-    assert (refcount_ > 0);
     refcount_--;
     if (refcount_ != 0)
       return refcount_;
@@ -123,7 +116,6 @@ HRESULT __stdcall
 CORBA_Exception::QueryInterface (REFIID	riid,
 				 void **ppv)
 {
-  assert (refcount_ > 0);
   *ppv = 0;
 
   if (IID_CORBA_Exception == riid || IID_IUnknown == riid)
