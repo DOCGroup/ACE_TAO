@@ -67,6 +67,9 @@ public:
   /// Is the current value valid
   CORBA::Boolean is_valid (void) const;
 
+  /// Invalidate this property's value.
+  void invalidate (void);
+
 protected:
   /// The Property name.
   ACE_CString name_;
@@ -95,6 +98,9 @@ public:
 
   /// Constuctor
   TAO_NS_Property_T (const ACE_CString& name);
+
+  /// Assignment from TYPE
+  TAO_NS_Property_T& operator= (const TYPE& rhs);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error

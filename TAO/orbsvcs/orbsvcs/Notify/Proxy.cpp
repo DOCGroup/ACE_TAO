@@ -16,6 +16,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
 #include "Notify_Service.h"
 #include "Method_Request_Updates.h"
 #include "Worker_Task.h"
+#include "Properties.h"
 
 TAO_NS_Proxy::TAO_NS_Proxy (void)
   :updates_off_ (0)
@@ -31,7 +32,15 @@ TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_Even
 {
   TAO_NS_Method_Request_Updates request (added, removed, this);
 
-  this->worker_task ()->exec (request);
+  if (TAO_NS_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
+    {
+      this->worker_task ()->exec (request);
+    }
+  else // execute in the current thread context.
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+      request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
 }
 
 CORBA::Boolean

@@ -96,6 +96,7 @@ Notify_Sequence_Push_Consumer::push_structured_events (
   ACE_DEBUG ((LM_DEBUG,
               "-------------------------\n"));
   this->count_++;
+
   if (this->count_ > this->high_)
     {
       this->done_ = 2;
@@ -112,5 +113,3 @@ Notify_Sequence_Push_Consumer::push_structured_events (
       ACE_OS::sleep (1);
     }
 }
-
-

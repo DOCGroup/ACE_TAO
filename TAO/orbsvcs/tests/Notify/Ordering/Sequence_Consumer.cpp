@@ -23,8 +23,8 @@
 
 static const char* ior = "file://supplier.ior";
 static CORBA::Short order_policy = CosNotification::FifoOrder;
-static unsigned int low = 19;
-static unsigned int high = 20;
+static unsigned int expected = 6*16; // Look in Sequence_Supplier.cpp, the supplier is sending 6*16 events.
+static unsigned int high = expected + 4; // If we go over the expected we're getting more events.
 
 // ******************************************************************
 // Subroutine Section
@@ -51,7 +51,7 @@ Consumer_Client::parse_args (int argc, char *argv[])
         break;
 
       case 'l':
-        low = ACE_OS::atoi (get_opts.optarg);
+        expected = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'h':
@@ -131,8 +131,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   ACE_NEW_THROW_EX (consumer_1,
                     Notify_Sequence_Push_Consumer ("consumer1",
                                                    order_policy,
-                                                   low,
-                                                   high,
+                                                   expected,
                                                    client->done ()),
                     CORBA::NO_MEMORY ());
 
@@ -207,13 +206,13 @@ int main (int argc, char* argv[])
                 }
 
               unsigned int try_count = 0;
-              unsigned int try_max = (high - low) * 2;
+              unsigned int try_max = (high - expected) * 2;
               while (client.done () <= 1)
                 {
                   // See if we can get any more events
                   if (client.done ())
                     {
-                      ACE_OS::sleep (3);
+                      ACE_OS::sleep (1);
                       try_count++;
                       if (try_count >= try_max)
                         break;

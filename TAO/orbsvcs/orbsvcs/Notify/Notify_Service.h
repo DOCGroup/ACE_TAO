@@ -67,6 +67,18 @@ protected:
   /// Apply ORB Scheduling policy to main thread and set its priority to the lowest available.
   void init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
+  /// Set consumer admin thread options.
+  void set_consumer_admin_threads (int threads);
+
+  /// Set supplier admin thread options.
+  void set_supplier_admin_threads (int threads);
+
+  /// Set proxy supplier thread options.
+  void set_proxy_supplier_threads (int threads);
+
+  // Set proxy consumer threads options.
+  void set_proxy_consumer_threads (int threads);
+
   /// Service component for object factory operations.
   TAO_NS_Factory* factory_;
 

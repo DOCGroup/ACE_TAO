@@ -1,3 +1,143 @@
+Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  Modified to run the basic tests with a reactive and
+	  multithreaded Notification.
+	* orbsvcs/tests/Notify/Basic/notify.mt.conf:
+	  Added MT conf for the Basic test.
+	* orbsvcs/tests/Notify/Basic/notify.reactive.conf:	
+	  Added reactive conf for the Basic test.
+
+	* orbsvcs/tests/Notify/Blocking/notify.conf:
+	* orbsvcs/tests/Notify/Discarding/notify.conf:
+	* orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
+	* orbsvcs/tests/Notify/Ordering/notify.conf:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/notify.conf:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/notify.conf
+	* orbsvcs/tests/Notify/performance-tests/Filter/notify.conf
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf
+	* orbsvcs/logging_service/notify_logging_service/svc.conf:
+	* orbsvcs/Notify_Service/svc.conf:
+	  Reverted factory back to
+	  Notify_Default_Event_Manager_Objects_Factory.
+ 	  I have decided not to introduce any changes for Notify Options in
+	  TAO 1.3.
+	  Better replacements will be introduced gradually in subsequent releases.	
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
+ 	  Not handling signals. 
+	  The shutdown code and event handler is maintained in case we want to address this in the future.
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+	  - Modified to run all 3 test cases described in the README.   	    
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Red
+	 
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	  Changed hardcoded "10" to the expected number of events that can
+	  be specified on the command line.
+	
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:	  
+	  - Changed low=2 and high=20. Here is the explaination:
+	  The Supplier sends 96 events as 6 batches of 16 events.
+	  The Notification is run with 1 dispatching thread. The Discarding
+	  Policy is set and the MaxEventsPerConsumer is set to 2 (Event
+	  Batches).The Batch size is 5 so the maximum batches that can be
+	  received is 20 (19 batches with 5 events each and 1 batch with 1
+	  event).if we receive 20 batches then the channel
+	  hasn't discarded anything. so high = 20. In the worst case the
+	  consumer starts *after* the supplier has send all the events to
+	  the Notification. This means that only 2 batches are queued and
+	  all others are discarded. Hence low = 2.
+	  - Changed the sleep time that the consumer was polling fior
+	  excess events, from 3 to 1 sec. otherwise the perl script was
+	  timing out.
+
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:	    
+	  Removed high-low logic. There is *no* discarding policy set so
+	  the Sequence Consumer should received the expected number of 96 events.
+
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+	  - Changed ConsumerAdmin interfilter operator to AND_OP. With an
+	  OR_OP, all the filters would return true! this is because the
+	  filters of the Admin and Proxy, both are combined to determine event
+	  eligibility. Note that this test success/failure has to be
+	  determined visually.
+
+	* orbsvcs/tests/Notify/listener.conf:
+ 	* orbsvcs/tests/Notify/lookup.conf:
+ 	* orbsvcs/tests/Notify/reactive.conf:
+	  Reverted to Notify_Default_Event_Manager_Objects_Factory for
+	  backward compatibility.
+	
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Multi_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Multi_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+	  Reverted executable name to Structured_* prefix.
+
+	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+	  Discarding condition should be executed when buffering limit has
+	  reached. Current logic was enqueing 1 extra event.
+	
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	  Added call to set default startup QoS options on the Proxys and Admins.  
+	
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
+	  - Added support for configuring startup threads at the proxy and
+	    Admin level while maintaining backward compatibility.
+	  - Modified updates logic - Updates are send synchronously by
+	  default. If the -AsynchUpdates option is set, updates are queued along
+	  with the regular events in the Proxy objects worker task.
+	
+	* orbsvcs/orbsvcs/Notify/Properties.h:
+	* orbsvcs/orbsvcs/Notify/Properties.inl:
+	  Added get/set methods for Proxy and Admin level default QoS.
+	  Changed <updates> to <asynch_updates> flag.		
+	
+	* orbsvcs/orbsvcs/Notify/Property_T.h:
+	* orbsvcs/orbsvcs/Notify/Property_T.inl:
+	- Added assignment operator to TAO_NS_Property_T.
+	- Added an <invalidate> method to TAO_NS_PropertyBase_T
+	
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	- Send updates synchronously unless default properties mandate
+	  asynchrony. In that case the event is executed in the current
+	  thread context. 
+	
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+	  Added dummy methods and ACE_ASSERT in them if called.
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.inl:
+	  Added an accessor for the current size of the EventBatch.
+	  Note that this size can be greater than the batchsize.		 
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+	  Overloaded ProxyPushSupplier::push method.
+	  The overloaded implementation executes the filtering and
+	  dispatch in the current thread context. Now, this dispatch
+	  doesn't immediately go remote but is stored in an event batch
+	  waiting for the pacing interval to expire after which the
+	  batchsize events are queued in the SequenceProxy's worker thread
+	  to be finally dispatched to the remote consumer.
+
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+	  Removed <dispatch_immediate> and <cancel_timer> methods.
+	  There was no need for these seperate methods.
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+	  Modified the implementation so that the Pacing Timer is deployed
+	  only if there is atleast 1 event queued to send, otherwise the
+	  existing timer is removed. This will avoid needless timeouts. 
+
 Sat Nov 16 08:22:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:

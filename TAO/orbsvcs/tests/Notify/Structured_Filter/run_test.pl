@@ -22,9 +22,9 @@ $TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
                             "localhost:$port/NameService " .
                             "-IORoutput $notifyior -ORBSvcConf " .
                             "$notify_conf" );
-$STS = new PerlACE::Process ("Supplier");
+$STS = new PerlACE::Process ("Structured_Supplier");
 
-$STC = new PerlACE::Process ("Consumer");
+$STC = new PerlACE::Process ("Structured_Consumer");
 
 $args = " -ORBInitRef NameService=iioploc://localhost:$port/NameService ";
 $cargs = "-f -n100 -c2 ";

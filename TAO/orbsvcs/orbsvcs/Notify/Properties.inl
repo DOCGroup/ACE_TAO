@@ -73,27 +73,15 @@ TAO_NS_Properties::sched_policy (long sched_policy)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_NS_Properties::updates (void)
+TAO_NS_Properties::asynch_updates (void)
 {
-  return this->updates_;
+  return this->asynch_updates_;
 }
 
 ACE_INLINE void
-TAO_NS_Properties::updates (CORBA::Boolean synchronous_updates)
+TAO_NS_Properties::asynch_updates (CORBA::Boolean asynch_updates)
 {
-  this->updates_ = synchronous_updates;
-}
-
-ACE_INLINE ACE_Time_Value&
-TAO_NS_Properties::update_period (void)
-{
-  return this->update_period_;
-}
-
-ACE_INLINE void
-TAO_NS_Properties::update_period (ACE_Time_Value& time_value)
-{
-  this->update_period_ = time_value;
+  this->asynch_updates_ = asynch_updates;
 }
 
 ACE_INLINE const CosNotification::QoSProperties&
@@ -106,4 +94,52 @@ ACE_INLINE void
 TAO_NS_Properties::default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos)
 {
   this->ec_qos_ = ec_qos;
+}
+
+ACE_INLINE const CosNotification::QoSProperties&
+TAO_NS_Properties::default_supplier_admin_qos_properties (void)
+{
+  return this->sa_qos_;
+}
+
+ACE_INLINE void
+TAO_NS_Properties::default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos)
+{
+  this->sa_qos_ = sa_qos;
+}
+
+ACE_INLINE const CosNotification::QoSProperties&
+TAO_NS_Properties::default_consumer_admin_qos_properties (void)
+{
+  return this->ca_qos_;
+}
+
+ACE_INLINE void
+TAO_NS_Properties::default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos)
+{
+  this->ca_qos_ = ca_qos;
+}
+
+ACE_INLINE const CosNotification::QoSProperties&
+TAO_NS_Properties::default_proxy_supplier_qos_properties (void)
+{
+  return this->ps_qos_;
+}
+
+ACE_INLINE void
+TAO_NS_Properties::default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos)
+{
+  this->ps_qos_ = ps_qos;
+}
+
+ACE_INLINE const CosNotification::QoSProperties&
+TAO_NS_Properties::default_proxy_consumer_qos_properties (void)
+{
+  return this->pc_qos_;
+}
+
+ACE_INLINE void
+TAO_NS_Properties::default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos)
+{
+  this->pc_qos_ = pc_qos;
 }
