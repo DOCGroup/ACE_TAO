@@ -20,7 +20,7 @@ LDLIBS	= $(addprefix .shobj/,$(SHOBJ))
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VBIN)
+BUILD 	= $(LDLIBS) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
