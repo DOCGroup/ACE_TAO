@@ -39,27 +39,4 @@ ACE_RCSID (ace,
 
   //ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 
-
-
-
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// These are only instantiated with ACE_HAS_THREADS.
-template class ACE_Guard<ACE_Thread_Mutex>;
-template class ACE_Guard<ACE_RW_Thread_Mutex>;
-template class ACE_Read_Guard<ACE_RW_Thread_Mutex>;
-template class ACE_Read_Guard<ACE_Thread_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Thread_Mutex>;
-template class ACE_Write_Guard<ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// These are only instantiated with ACE_HAS_THREADS.
-#pragma instantiate ACE_Guard<ACE_Thread_Mutex>
-#pragma instantiate ACE_Guard<ACE_RW_Thread_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_RW_Thread_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_Thread_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_RW_Thread_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_SYNCH_C */

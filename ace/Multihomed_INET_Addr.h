@@ -14,8 +14,8 @@
 #define ACE_MULTIHOMED_INET_ADDR_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "ace/INET_Addr.h"
-#include /**/ "ace/Containers_T.h"
+#include "ace/INET_Addr.h"
+#include "ace/Containers_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -149,7 +149,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include /**/ "ace/Multihomed_INET_Addr.i"
+#  include "ace/Multihomed_INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
