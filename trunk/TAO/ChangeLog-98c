@@ -1,3 +1,32 @@
+Tue Jan 20 17:00:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/strategy_T.h: Added this file to contain template strategies
+ 	such as TAO_Reactive_Strategy<>.
+
+	* tao/default_server.*: Moved TAO_Reactive_Strategy<> into its own
+ 	set of files.  Thanks to Bryan Mendel <brian.r.mendel@boeing.com>
+ 	for suggesting this fix!
+
+	* tao/sequence_T.cpp (operator =): Corrected a problem where T**
+ 	was being assigned to T*.
+
+	* tao/orb_core.cpp (init): Moved setting of stuff in orb_params()
+ 	to be post-service initialization.  It needs to be this way
+ 	because the ORB Parameters are now regulated by the resource
+ 	factory settings, and that gets created during service
+ 	initialization.
+
+	* tao/giop.cpp: Changed the TAO_GIOP_LocateRequestHeader::init to
+ 	be more efficient and not generate warnings on Irix.
+
+	* tao/{giop,connect}.cpp: Update code that touches ORB-internal
+ 	sequences to use the API of TAO_Unbounded_Sequence<> rather than
+ 	the old crufty code.
+
+	* tao/giop.h: Change ORB-internal sequences (such as the
+ 	ServiceContextList) to use the new TAO_Unbounded_Sequence<>
+ 	template rather than the deprecated CORBA_SEQUENCE<> hack.
+
 Tue Jan 20 09:18:31 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tao/interp.cpp: Used TAO_opaque to set the size of any

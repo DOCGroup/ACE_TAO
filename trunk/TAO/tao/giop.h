@@ -59,8 +59,7 @@ struct TAO_IOP_Tagged_Profile
   TAO_opaque profile_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_IOP_Tagged_Profile> 
-        TAO_IOP_Tagged_Profile_Sequence;
+typedef TAO_Unbounded_Sequence<TAO_IOP_Tagged_Profile> TAO_IOP_Tagged_Profile_Sequence;
 
 struct TAO_IOP_IOR 
   // = TITLE
@@ -109,8 +108,7 @@ struct TAO_IOP_TaggedComponent
   TAO_opaque component_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_IOP_TaggedComponent> 
-        TAO_IOP_MultipleComponentProfile;
+typedef TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent> TAO_IOP_MultipleComponentProfile;
 
 // namespace TAO_GIOP
 
@@ -180,8 +178,7 @@ struct TAO_GIOP_ServiceContext
   TAO_opaque context_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_GIOP_ServiceContext> 
-        TAO_GIOP_ServiceContextList;
+typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext> TAO_GIOP_ServiceContextList;
 
 extern CORBA::TypeCode TC_ServiceContextList;
 

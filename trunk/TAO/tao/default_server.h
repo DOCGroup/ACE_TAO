@@ -19,15 +19,7 @@
 
 #include "tao/corba.h"
 
-template <class SH>
-class TAO_Reactive_Strategy : public ACE_Reactive_Strategy<SH>
-{
-public:
-  TAO_Reactive_Strategy (void);
-  ~TAO_Reactive_Strategy (void);
-
-  virtual int activate_svc_handler (SH *sh, void *arg);
-};
+#include "tao/strategy_T.h"
 
 class TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
   // = TITLE
