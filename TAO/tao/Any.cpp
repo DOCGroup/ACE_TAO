@@ -21,7 +21,7 @@ ACE_RCSID(tao, Any, "$Id$")
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
-  return CORBA::TypeCode::_duplicate (this->type_);
+  return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
 
 // Will replace if the typecode arg is an alias for the existing one -
@@ -157,7 +157,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
     value_ (0),
     destructor_ (0)
 {
-  if (src.type_ != 0)
+  if (!CORBA::is_nil (src.type_.in ()))
     this->type_ =
       CORBA::TypeCode::_duplicate (src.type_);
   else
@@ -192,7 +192,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   this->free_value ();
 
   // Now copy the contents of the source to ourselves.
-  if (src.type_.in () != CORBA::TypeCode::_nil ())
+  if (!CORBA::is_nil (src.type_.in ()))
     {
       this->type_ =
         CORBA::TypeCode::_duplicate (src.type_);
