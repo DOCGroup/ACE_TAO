@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Malloc.h 
+//    Malloc.h
 //
 // = AUTHOR
 //    Doug Schmidt and Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_MALLOC_H)
@@ -27,7 +27,7 @@ class ACE_Export ACE_Allocator
   //    allocating and deallocating memory.
 public:
   // = Memory Management
-  
+
   static ACE_Allocator *instance (void);
   // Get pointer to a default <ACE_Allocator>.
 
@@ -62,7 +62,7 @@ public:
   // assocations.  Returns 0 if successfully binds (1) a previously
   // unbound <name> or (2) <duplicates> != 0, returns 1 if trying to
   // bind a previously bound <name> and <duplicates> == 0, else
-  // returns -1 if a resource failure occurs.  
+  // returns -1 if a resource failure occurs.
 
   virtual int trybind (const char *name, void *&pointer) = 0;
   // Associate <name> with <pointer>.  Does not allow duplicate
@@ -113,11 +113,13 @@ public:
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const = 0;
   // Dump statistics of how malloc is behaving.
-#endif /* ACE_HAS_MALLOC_STATS */ 
+#endif /* ACE_HAS_MALLOC_STATS */
 
   virtual void dump (void) const = 0;
   // Dump the state of the object.
 private:
+  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!
+  // See the ACE_Allocator::instance () implementation for explanation.
 
   static ACE_Allocator *allocator_;
   // Pointer to a process-wide <ACE_Allocator> instance.
@@ -144,18 +146,18 @@ struct ACE_Export ACE_Malloc_Stats
   ACE_Malloc_Stats (void);
   void dump (void) const;
 
-  ACE_INT nchunks_; 
-  // Coarse-grained unit of allocation. 
+  ACE_INT nchunks_;
+  // Coarse-grained unit of allocation.
 
-  ACE_INT nblocks_; 
-  // Fine-grained unit of allocation. 
+  ACE_INT nblocks_;
+  // Fine-grained unit of allocation.
 
-  ACE_INT ninuse_;  
-  // Number of blocks in use 
+  ACE_INT ninuse_;
+  // Number of blocks in use
 };
 #define AMS(X) X
 #else
-#define AMS(X) 
+#define AMS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
 // ACE_MALLOC_ALIGN allows you to insure that allocated regions are at
@@ -186,7 +188,7 @@ union ACE_Export ACE_Malloc_Header
     ACE_Malloc_Header *next_block_;
     // Points to next block if on free list.
 
-    size_t size_; 
+    size_t size_;
     // Size of this block.
   } s_;
 
@@ -194,10 +196,10 @@ union ACE_Export ACE_Malloc_Header
   // Force alignment.
 };
 
-class ACE_Export ACE_Name_Node 
+class ACE_Export ACE_Name_Node
 {
   // = TITLE
-  //    This is stored as a linked list within the Memory_Pool  
+  //    This is stored as a linked list within the Memory_Pool
   //    to allow "named memory chunks."
 public:
   // = Initialization methods.
@@ -230,34 +232,34 @@ public:
   // Head of the linked list of Name Nodes.
 
   ACE_Malloc_Header *freep_;
-  // Current head of the freelist. 
+  // Current head of the freelist.
 
   char lock_name_[MAXNAMELEN];
-  // Name of lock thats ensures mutual exclusion. 
+  // Name of lock thats ensures mutual exclusion.
 
 #if defined (ACE_HAS_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
-				      + sizeof (ACE_Malloc_Header *) \
-				      + MAXNAMELEN  \
-				      + sizeof (ACE_Malloc_Stats)))
+                                      + sizeof (ACE_Malloc_Header *) \
+                                      + MAXNAMELEN  \
+                                      + sizeof (ACE_Malloc_Stats)))
 #else
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof(ACE_Name_Node *) \
-				      + sizeof (ACE_Malloc_Header *) \
-				      + MAXNAMELEN))
+                                      + sizeof (ACE_Malloc_Header *) \
+                                      + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
 // Notice the casting to int for sizeof() otherwise unsigned int
 // arithmetic is used and some awful things may happen.
 #define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
-					? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
-					: ACE_MALLOC_ALIGN) / int(sizeof(long)))
+                                        ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
+                                        : ACE_MALLOC_ALIGN) / int(sizeof(long)))
 
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
 
   ACE_Malloc_Header base_;
-  // Dummy node used to anchor the freelist. 
+  // Dummy node used to anchor the freelist.
 
   void dump (void) const;
   // Dump the state of the object.
@@ -278,7 +280,7 @@ class ACE_Export ACE_New_Allocator : public ACE_Allocator
   //     This will allow you to use the added functionality of
   //     bind/find/etc. while using the new/delete operators.
 public:
-  virtual void *malloc (size_t nbytes); 
+  virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
   virtual void free (void *ptr);
   virtual int remove (void);
@@ -290,12 +292,16 @@ public:
   virtual int unbind (const char *name, void *&pointer);
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
+  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const;
-#endif /* ACE_HAS_MALLOC_STATS */ 
+#endif /* ACE_HAS_MALLOC_STATS */
   virtual void dump (void) const;
+
+private:
+  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!
+  // See the ACE_Allocator::instance () implementation for explanation.
 };
 
 class ACE_Export ACE_Static_Allocator_Base : public ACE_Allocator
@@ -315,7 +321,7 @@ class ACE_Export ACE_Static_Allocator_Base : public ACE_Allocator
   //     occur.
 public:
   ACE_Static_Allocator_Base (char *buffer, size_t size);
-  virtual void *malloc (size_t nbytes); 
+  virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
   virtual void free (void *ptr);
   virtual int remove (void);
@@ -327,11 +333,11 @@ public:
   virtual int unbind (const char *name, void *&pointer);
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
+  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const;
-#endif /* ACE_HAS_MALLOC_STATS */ 
+#endif /* ACE_HAS_MALLOC_STATS */
   virtual void dump (void) const;
 
 protected:
