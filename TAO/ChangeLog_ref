@@ -1,3 +1,22 @@
+Tue Oct 14 10:45:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Blocking_Sync_None/Makefile:
+	* tests/Connection_Timeout/Makefile:
+	* tests/DSI_Gateway/Makefile:
+	* tests/MProfile_Connection_Timeout/Makefile:
+	* tests/MT_Timeout/Makefile:
+	* tests/Nested_Upcall_Crash/Makefile:
+	* tests/Oneway_Buffering/Makefile:
+	* tests/Param_Test/Makefile:
+	* tests/Policies/Makefile:
+	* tests/Reliable_Oneways/Makefile:
+	* tests/Timed_Buffered_Oneways/Makefile: Added -lTAO_Valuetype to
+	  all these Makefiles.
+
+	* tests/Param_Test/results.h:
+	* tests/NestedUpcall/Triangle_Test/initiator.cpp: Fixed
+	  compilation problems if native exceptions are turned of. 
+
 Tue Oct 14 09:45:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any_Unknown_IDL_Type.h:

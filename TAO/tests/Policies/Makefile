@@ -47,7 +47,7 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
 Manipulation: $(addprefix $(VDIR),$(MANIPULATION_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging -lTAO_Valuetype $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
