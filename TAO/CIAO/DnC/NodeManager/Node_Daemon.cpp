@@ -20,7 +20,7 @@
 //===============================================================
 
 #include "NodeDaemon_Impl.h"
-#include "ciao/Server_init.h"
+#include "Server_init.h"
 #include "tao/IORTable/IORTable.h"
 
 // Include Name Service header
