@@ -518,11 +518,11 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // New for Multiple profile.  Get the MProfile list from the
   // forwarded object refererence
 
-  this->stub_->add_forward_profiles (*stubobj->make_profiles ());
+  this->stub_->add_forward_profiles (stubobj->base_profiles ());
   // store the new profile list and set the first forwarding profile
-  // note: this has to be and is thread safe.  Also make_profiles() returns
-  // a pointer to a new MProfile object which we give to our
-  // TAO_Stub.
+  // note: this has to be and is thread safe.
+  // @@ TAO_Stub::add_forward_profiles() already makes a copy of the
+  //    MProfile, so do not make a copy here.
 
   // @@ Why do we clear the environment?
   // ACE_TRY_ENV.clear ();
