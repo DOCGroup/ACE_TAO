@@ -147,8 +147,8 @@ interface Param_Test
 
   typedef sequence<any> AnySeq;
   AnySeq test_anyseq (in AnySeq s1,
-                                      inout AnySeq s2,
-                                          out AnySeq s3);
+                      inout AnySeq s2,
+                      out AnySeq s3);
 
 /*  typedef sequence<any, 32> Bounded_AnySeq;
   Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
@@ -265,6 +265,28 @@ interface Param_Test
   Big_Union test_big_union (in Big_Union u1,
                             inout Big_Union u2,
                             out Big_Union u3);
+
+  // The following two structs are used to help compose
+  // a complex Any for the test function below.
+  struct level4
+    {
+      string level5_string;
+
+      any level5_any;
+    };
+
+  struct level8
+    {
+      string level9_string;
+
+      boolean level9_boolean;
+
+      short level9_short;
+    };
+
+  any test_complex_any (in any ca1, 
+                        inout any ca2, 
+                        out any ca3);
 
   // multidimensional arrays (fixed). The following will give rise to a 3
   // dimensional array. The following will define a 3-dimensional array of size
