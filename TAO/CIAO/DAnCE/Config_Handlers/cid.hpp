@@ -19,8 +19,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XSCRT/XMLSchema.hpp"
-#include "XSCRT/Parser.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -38,7 +37,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -48,7 +47,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // package
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::ComponentPackageDescription const& package () const;
       ::CIAO::Config_Handlers::ComponentPackageDescription& package ();
@@ -58,7 +57,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > package_;
 
       // configProperty
-      //
+      // 
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -69,7 +68,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // selectRequirement
-      //
+      // 
       public:
       bool selectRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& selectRequirement () const;
@@ -80,7 +79,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > selectRequirement_;
 
       // reference
-      //
+      // 
       public:
       bool reference_p () const;
       ::CIAO::Config_Handlers::ComponentPackageReference const& reference () const;
@@ -91,7 +90,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > reference_;
 
       // id
-      //
+      // 
       public:
       bool id_p () const;
       ::XMLSchema::ID< char > const& id () const;
@@ -102,7 +101,9 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::ID< char > > id_;
 
       public:
-      SubcomponentInstantiationDescription ();
+      SubcomponentInstantiationDescription (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::ComponentPackageDescription const& package__);
+
       SubcomponentInstantiationDescription (::XSCRT::XML::Element< char > const&);
       SubcomponentInstantiationDescription (SubcomponentInstantiationDescription const& s);
 
@@ -119,7 +120,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // propertyName
-      //
+      // 
       public:
       ::XMLSchema::string< char > const& propertyName () const;
       ::XMLSchema::string< char >& propertyName ();
@@ -129,7 +130,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > propertyName_;
 
       // instance
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance () const;
       ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& instance ();
@@ -139,7 +140,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > instance_;
 
       public:
-      SubcomponentPropertyReference ();
+      SubcomponentPropertyReference (::XMLSchema::string< char > const& propertyName__,
+      ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance__);
+
       SubcomponentPropertyReference (::XSCRT::XML::Element< char > const&);
       SubcomponentPropertyReference (SubcomponentPropertyReference const& s);
 
@@ -156,7 +159,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -166,7 +169,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // externalName
-      //
+      // 
       public:
       ::XMLSchema::string< char > const& externalName () const;
       ::XMLSchema::string< char >& externalName ();
@@ -176,7 +179,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > externalName_;
 
       // delegatesTo
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo () const;
       ::CIAO::Config_Handlers::SubcomponentPropertyReference& delegatesTo ();
@@ -186,7 +189,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentPropertyReference > delegatesTo_;
 
       public:
-      AssemblyPropertyMapping ();
+      AssemblyPropertyMapping (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& externalName__,
+      ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo__);
+
       AssemblyPropertyMapping (::XSCRT::XML::Element< char > const&);
       AssemblyPropertyMapping (AssemblyPropertyMapping const& s);
 
@@ -203,7 +209,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // instance
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::iterator instance_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::const_iterator instance_const_iterator;
@@ -217,7 +223,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > instance_;
 
       // connection
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::iterator connection_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::const_iterator connection_const_iterator;
@@ -231,7 +237,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription > connection_;
 
       // externalProperty
-      //
+      // 
       public:
       bool externalProperty_p () const;
       ::CIAO::Config_Handlers::AssemblyPropertyMapping const& externalProperty () const;
@@ -243,6 +249,7 @@ namespace CIAO
 
       public:
       ComponentAssemblyDescription ();
+
       ComponentAssemblyDescription (::XSCRT::XML::Element< char > const&);
       ComponentAssemblyDescription (ComponentAssemblyDescription const& s);
 
@@ -259,7 +266,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // execParameter
-      //
+      // 
       public:
       bool execParameter_p () const;
       ::CIAO::Config_Handlers::Property const& execParameter () const;
@@ -270,7 +277,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // primaryArtifact
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator primaryArtifact_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator primaryArtifact_const_iterator;
@@ -284,7 +291,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > primaryArtifact_;
 
       // deployRequirement
-      //
+      // 
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::ImplementationRequirement const& deployRequirement () const;
@@ -296,6 +303,7 @@ namespace CIAO
 
       public:
       MonolithicImplementationDescription ();
+
       MonolithicImplementationDescription (::XSCRT::XML::Element< char > const&);
       MonolithicImplementationDescription (MonolithicImplementationDescription const& s);
 
@@ -312,7 +320,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      //
+      // 
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -323,7 +331,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      //
+      // 
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -334,7 +342,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // implements
-      //
+      // 
       public:
       bool implements_p () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& implements () const;
@@ -345,7 +353,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > implements_;
 
       // assemblyImpl
-      //
+      // 
       public:
       bool assemblyImpl_p () const;
       ::CIAO::Config_Handlers::ComponentAssemblyDescription const& assemblyImpl () const;
@@ -356,7 +364,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentAssemblyDescription > assemblyImpl_;
 
       // monolithicImpl
-      //
+      // 
       public:
       bool monolithicImpl_p () const;
       ::CIAO::Config_Handlers::MonolithicImplementationDescription const& monolithicImpl () const;
@@ -367,7 +375,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::MonolithicImplementationDescription > monolithicImpl_;
 
       // configProperty
-      //
+      // 
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -378,7 +386,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // capability
-      //
+      // 
       public:
       bool capability_p () const;
       ::CIAO::Config_Handlers::Capability const& capability () const;
@@ -389,7 +397,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Capability > capability_;
 
       // dependsOn
-      //
+      // 
       public:
       bool dependsOn_p () const;
       ::CIAO::Config_Handlers::ImplementationDependency const& dependsOn () const;
@@ -400,7 +408,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
 
       // infoProperty
-      //
+      // 
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -411,7 +419,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      //
+      // 
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< char > const& contentLocation () const;
@@ -423,6 +431,7 @@ namespace CIAO
 
       public:
       ComponentImplementationDescription ();
+
       ComponentImplementationDescription (::XSCRT::XML::Element< char > const&);
       ComponentImplementationDescription (ComponentImplementationDescription const& s);
 

@@ -1,5 +1,5 @@
-// $Id$
 #include "pcd.hpp"
+// $Id$
 
 namespace CIAO
 {
@@ -10,7 +10,7 @@ namespace CIAO
 
     PackageConfiguration::
     PackageConfiguration ()
-    :
+    : 
     regulator__ ()
     {
     }
@@ -18,6 +18,7 @@ namespace CIAO
     PackageConfiguration::
     PackageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const& s)
     :
+    XSCRT::Type (), 
     label_ (s.label_.get () ? new ::XMLSchema::string< char > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< char > (*s.UUID_) : 0),
     basePackage_ (s.basePackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
@@ -320,9 +321,7 @@ namespace CIAO
 
     PackageConfiguration::
     PackageConfiguration (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
