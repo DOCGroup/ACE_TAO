@@ -1,3 +1,23 @@
+Tue Aug 17 19:10:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/OS.cpp: Fixed typo.
+
+        * ace/Stats.cpp: Removed some warnings showing up in MSVC when
+          assigning ACE_UINT64 values to ACE_UINT32 variables.  Used
+          ACE_U64_TO_U32 to remove these warnings.
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
+          Added a new method, <reset_interval> which can be used to 
+          change the interval of a timer represented by a timer_id.
+
 Tue Aug 17 18:43:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/OS.h:
