@@ -45,6 +45,7 @@ href="Options.html#svcfonf"><code>-ORBsvcconf</code></a> option).</p>
         <li><a href="#poa">POA.</a>
         <li><a href="#coltbl">Collocation Table.</a>
         <li><a href="#iiopprofile">Forwarding IIOP Profile</a>
+        <li><a href="#orbsvcs">orbsvcs Library</a>
       </ul>
   <li><b><a href="#examples">Configuration examples</a></b>
       <ul>
@@ -90,21 +91,21 @@ href="Options.html#svcfonf"><code>-ORBsvcconf</code></a> option).</p>
                 <td>Specifies the options for each service in order to utilize this configuration.</td>
               </tr>
             </table>
-	  </ul>
-	<li><b><a href="#homogenous">Configuration for homogenous
-	      systems</a></b>
-	  <UL>
-	    <LI><A HREF="#homogenous_compile">Compile time options</A></LI>
-	    <LI><A HREF="#homogenous_runtime">Runtime time</A></LI>
-	  </UL>
-	</LI>
+          </ul>
+        <li><b><a href="#homogenous">Configuration for homogenous
+              systems</a></b>
+          <UL>
+            <LI><A HREF="#homogenous_compile">Compile time options</A></LI>
+            <LI><A HREF="#homogenous_runtime">Runtime time</A></LI>
+          </UL>
+        </LI>
 </UL>
 
 
 </blockquote>
 
 <HR><P>
-<h3>Configuring key components<a name="comp"></a></h3>
+<h3><a name="comp">Configuring key components</a></h3>
 
 <ul>
   <li><b><a name="concurrency">Server concurrency strategy</a></b>
@@ -180,31 +181,59 @@ href="Options.html#svcfonf"><code>-ORBsvcconf</code></a> option).</p>
 
       </ul><p>
 
-  <li><b><a name="iiopprofile">Forwarding IIOP Profile:</a></b> 
-	  In the case of multiple threads using the same <code>CORBA::Object</code> and
-	  using forwarding, it is necessary to protect the forwarding
-	  <code>IIOP_Profile</code>, which is part of the <code>IIOP_Object</code>, 
-	  which is part of the CORBA::Object against multiple access. Therefore
-	  a mutex lock is used by default to ensure proper access. Using
-	  the switch <code>-ORBiiopprofilelock</code> this policy can 
-	  be deactivated specifying <code>-ORBiiopprofilelock null</code>.
-	  A motivation to do this might be performance reasons in cases,
-	  where no forwarding is used or no multithreading with access 
-	  to shared <code>CORBA::Object</code>'s. Deactivating forces the ORB
-	  to use a null mutex, which does introduce only a very small 
-	  overhead, compared with overhead introduced by a regular mutex lock.
-	  <p>
+  <li><b><a name="iiopprofile">Forwarding IIOP Profile:</a></b>
+          In the case of multiple threads using the same <code>CORBA::Object</code> and
+          using forwarding, it is necessary to protect the forwarding
+          <code>IIOP_Profile</code>, which is part of the <code>IIOP_Object</code>,
+          which is part of the CORBA::Object against multiple access. Therefore
+          a mutex lock is used by default to ensure proper access. Using
+          the switch <code>-ORBiiopprofilelock</code> this policy can
+          be deactivated specifying <code>-ORBiiopprofilelock null</code>.
+          A motivation to do this might be performance reasons in cases,
+          where no forwarding is used or no multithreading with access
+          to shared <code>CORBA::Object</code>'s. Deactivating forces the ORB
+          to use a null mutex, which does introduce only a very small
+          overhead, compared with overhead introduced by a regular mutex lock.
+          <p>
 
+  <li><strong><a name="orbsvcs">orbsvcs Library:</a></b>
+    By default, the TAO orbsvcs library contains all of the services
+    that TAO currently supports.  To reduce build time and library
+    size, you can exclude unused services.  To do that, define
+    a <code>TAO_ORBSVCS</code> variable using one of these approaches:<p>
+    <ol>
+      <li>In your
+        <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
+        file,<p>
+      <li>On the make command line, <em>e.g.</em>,<p>
+        <pre><code>
+          make TAO_ORBSVCS=Naming
+        </code></pre>or<p>
+      <li>Set (and export) a <code>TAO_ORBSVCS</code> environment variable.<p>
+    </ol><p>
+    Please see <a href="../rules.tao.GNU"><code>rules.tao.GNU</code></a>
+    for the default setting of <code>TAO_ORBSVCS</code>.<p>
 
+    Please note the current limitations:<p>
+    <ol>
+      <li>We currently don't check for interdependencies between
+          services.  For example, if you build the CosEvent service, you
+          must also explicitly specify the Sched and Event services, at
+          least.<p>
+      <li>It would be nice to customize tmplinst-orbsvcs based on the
+          value of TAO_ORBSVCS.<p>
+      <li>We currently don't check this macro in each of the orbsvcs
+          Makefiles, or in their tests.  We'll add those checks soon.<p>
+    </ol>
 </ul>
 
 
 
 <HR><P>
-<H3>Configuration Example<a name="examples"></a></H3>
+<H3><a name="examples">Configuration Example</a></H3>
 
 <UL>
-<LI>Single-threaded, reactive model.<A NAME="reactive"></A>
+<LI><A NAME="reactive">Single-threaded, reactive model.</A>
 
 <p>
 <table border=2 width="90%" cellspacing="2" cellpadding="0">
@@ -247,7 +276,7 @@ href="Options.html#svcfonf"><code>-ORBsvcconf</code></a> option).</p>
 </table>
 </p>
 
-<LI>Multiple threads, thread-per-connection model.<A NAME="tpc"></A>
+<LI><A NAME="tpc">Multiple threads, thread-per-connection model.</A>
 
 <p>
 <table border=2 width="90%" cellspacing="2" cellpadding="0">
@@ -455,48 +484,48 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 
     <UL>
       <LI><P><B>Compile time options<a name="homogenous_compile"></a></B></P>
-	<P>Many real-time applications run on homogenous environments,
-	  TAO can take advantage of this fact by simplifying the server
-	  side demarshaling;
-	  to enable this feature you have to edit the
-	  <CODE>$TAO_ROOT/tao/orbconf.h</CODE> file and enable the macro
-	  <CODE>TAO_DISABLE_SWAP_ON_READ</CODE>.
-	</P>
-	<P>In this systems it is also common that server and the
-	  client startup and shutdown simultaneously,
-	  in those circumstances there is no need to check the
-	  timestamps in the POA,
-	  another macro (<CODE>POA_NO_TIMESTAMP</CODE>) can be used for
-	  this purpose.
-	</P>
-	<P>Users running in embebbed systems may also need to modify
-	  the default options for TAO,
-	  the macros <CODE>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</CODE>,
-	  <CODE>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</CODE>
-	  and <CODE>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</CODE>
-	  can be used for those purposes.
-	  If the footprint size is an issue users may consider writing
-	  custom strategy factories that only create the right
-	  strategies, this eliminates the parsing code for the
-	  different options.
-	</P>
+        <P>Many real-time applications run on homogenous environments,
+          TAO can take advantage of this fact by simplifying the server
+          side demarshaling;
+          to enable this feature you have to edit the
+          <CODE>$TAO_ROOT/tao/orbconf.h</CODE> file and enable the macro
+          <CODE>TAO_DISABLE_SWAP_ON_READ</CODE>.
+        </P>
+        <P>In this systems it is also common that server and the
+          client startup and shutdown simultaneously,
+          in those circumstances there is no need to check the
+          timestamps in the POA,
+          another macro (<CODE>POA_NO_TIMESTAMP</CODE>) can be used for
+          this purpose.
+        </P>
+        <P>Users running in embebbed systems may also need to modify
+          the default options for TAO,
+          the macros <CODE>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</CODE>,
+          <CODE>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</CODE>
+          and <CODE>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</CODE>
+          can be used for those purposes.
+          If the footprint size is an issue users may consider writing
+          custom strategy factories that only create the right
+          strategies, this eliminates the parsing code for the
+          different options.
+        </P>
       </LI>
       <LI><P><B>Runtime options<a name="homogenous_runtime"></a></B></P>
-	<P>If the only ORB running is TAO and there is no need to be
-	  IIOP interoperable the option <CODE>-ORBiioplite</CODE> can
-	  be used to reduce the message size and the processing time.
-	</P>
-	<P>Some embedded systems run without the benefit of a DNS
-	  server, in that case they can use the
-	  <CODE>-ORBdotteddecimaladdresses</CODE> option;
-	  the ORB will avoid the use of hostnames in the profiles it
-	  generates,
-	  thus clients don't need to do any name resolution.
-	  The compile-time define
-	  <CODE>TAO_USES_DOTTED_DECIMAL_ADDRESSES</CODE>
-	  in <CODE>$TAO_ROOT/tao/orbconf.h</CODE> to make this the
-	  default behavior.
-	</P>
+        <P>If the only ORB running is TAO and there is no need to be
+          IIOP interoperable the option <CODE>-ORBiioplite</CODE> can
+          be used to reduce the message size and the processing time.
+        </P>
+        <P>Some embedded systems run without the benefit of a DNS
+          server, in that case they can use the
+          <CODE>-ORBdotteddecimaladdresses</CODE> option;
+          the ORB will avoid the use of hostnames in the profiles it
+          generates,
+          thus clients don't need to do any name resolution.
+          The compile-time define
+          <CODE>TAO_USES_DOTTED_DECIMAL_ADDRESSES</CODE>
+          in <CODE>$TAO_ROOT/tao/orbconf.h</CODE> to make this the
+          default behavior.
+        </P>
       </LI>
     </UL>
 
@@ -516,110 +545,110 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 
     <UL>
       <LI>
-	<P><B>ORB-per-thread</B>
-	  The main motivation behind this options
-	  is to minimize priority invertion,
-	  since threads share no ORB resources no locking is required
-	  and thus,
-	  priority is preserved in most cases (assuming proper support
-	  from the OS).
-	  If you are not too concerned about priority inversion try to
-	  use a global ORB,
-	  using ORB-per-thread has some tradeoffs
-	  (like calling ORB_init on each thread, activation of a servant
-	  is more complicated, etc.)
-	  Some of the problems, can be minimized, but they require
-	  even more careful analysis.
-	  For example,
-	  object activation can be simplified by using a global POA;
-	  the careful reader will wonder how could global POA be
-	  useful in anyway since it will require locks and thus
-	  introduce priority inversions again;
-	  some applications activate all their objects beforehand so
-	  locks in the POA are not always needed;
-	  other applications only activate a few objects after
-	  startup,
-	  so they can use a child POA with the right locking policy
-	  for the dynamic servants and the root poa (with no locking)
-	  for the majority of the servants.
-	</P>
-	<P>
-	  As the reader will note this is a delicate configuration
-	  option, the rule of thumb should be <B>not</B> to use
-	  ORB-per-thread unless it is really required.
-	</P>
+        <P><B>ORB-per-thread</B>
+          The main motivation behind this options
+          is to minimize priority invertion,
+          since threads share no ORB resources no locking is required
+          and thus,
+          priority is preserved in most cases (assuming proper support
+          from the OS).
+          If you are not too concerned about priority inversion try to
+          use a global ORB,
+          using ORB-per-thread has some tradeoffs
+          (like calling ORB_init on each thread, activation of a servant
+          is more complicated, etc.)
+          Some of the problems, can be minimized, but they require
+          even more careful analysis.
+          For example,
+          object activation can be simplified by using a global POA;
+          the careful reader will wonder how could global POA be
+          useful in anyway since it will require locks and thus
+          introduce priority inversions again;
+          some applications activate all their objects beforehand so
+          locks in the POA are not always needed;
+          other applications only activate a few objects after
+          startup,
+          so they can use a child POA with the right locking policy
+          for the dynamic servants and the root poa (with no locking)
+          for the majority of the servants.
+        </P>
+        <P>
+          As the reader will note this is a delicate configuration
+          option, the rule of thumb should be <B>not</B> to use
+          ORB-per-thread unless it is really required.
+        </P>
       </LI>
 
       <LI><B>Collocation tables</B>
-	Why could the application what a non-global collocation table?
-	If objects are to serve requests only at a well known priority
-	the application can be configured with the ORB-per-thread
-	option, and the object is activated only in the thread (ORB)
-	corresponding to the desired priority.
-	But using a global table would subert the priority assignment
-	(because calls would run at the priority of the client).
-	<P></P>
+        Why could the application what a non-global collocation table?
+        If objects are to serve requests only at a well known priority
+        the application can be configured with the ORB-per-thread
+        option, and the object is activated only in the thread (ORB)
+        corresponding to the desired priority.
+        But using a global table would subert the priority assignment
+        (because calls would run at the priority of the client).
+        <P></P>
       </LI>
       <LI><B>Single-threaded vs. Multi-threaded Connection Handlers</B>
 
-	The <CODE>Client_Connection_Handler</CODE> is the component in
-	TAO that writes the requests to the underlying transport
-	socket;
-	this is also the component that reads the response back from
-	the server.
-	<P>While waiting for this response new requests to the local
-	  ORB can arrive, this is the so-called nested upcall support.
-	  TAO supports two mechanisms for handling nested upcalls,
-	  the default uses the leader-follower model to allow multiple
-	  threads to wait on a single reactor for several concurrent
-	  requests;
-	  sometimes this configuration can be an overkill,
-	  if only one thread is using a reactor at the same time a
-	  lighter weight implementation can be used.
-	</P>
-	<P>This configuration is controled by the
-	  <CODE>-ORBclientconnectionhandler</CODE> option,
-	  good opportunities to use this option are:
-	</P>
-	<UL>
-	  <LI>Single threaded servers</LI>
-	  <LI>Servers running in ORB-per-thread mode</LI>
-	  <LI>Pure clients that will never receive a request</LI>
-	</UL>
-	<P></P>
+        The <CODE>Client_Connection_Handler</CODE> is the component in
+        TAO that writes the requests to the underlying transport
+        socket;
+        this is also the component that reads the response back from
+        the server.
+        <P>While waiting for this response new requests to the local
+          ORB can arrive, this is the so-called nested upcall support.
+          TAO supports two mechanisms for handling nested upcalls,
+          the default uses the leader-follower model to allow multiple
+          threads to wait on a single reactor for several concurrent
+          requests;
+          sometimes this configuration can be an overkill,
+          if only one thread is using a reactor at the same time a
+          lighter weight implementation can be used.
+        </P>
+        <P>This configuration is controled by the
+          <CODE>-ORBclientconnectionhandler</CODE> option,
+          good opportunities to use this option are:
+        </P>
+        <UL>
+          <LI>Single threaded servers</LI>
+          <LI>Servers running in ORB-per-thread mode</LI>
+          <LI>Pure clients that will never receive a request</LI>
+        </UL>
+        <P></P>
       </LI>
       <LI><B>Allocator for input CDR streams</B>
-	Normally the application has no access to this buffer, and it
-	is only used on the demarshaling of arguments (or results).
-	It is almost always better to use the
-	"<CODE>-ORBinputcdrallocator tss</CODE>" option since it will
-	allocate memory from a thread specific allocator and it will
-	not need locks to manage that memory.
-	
-	<P>In some cases the user <I>may</I> gain access to the CDR
-	  stream buffer:
-	  TAO makes no copies when demarshaling octet sequences,
-	  instead the octet sequence simply points to the CDR buffer,
-	  since the octet sequence does not own this buffer a copy must
-	  be made if the user wants to keep the buffer after the
-	  upcall.
-	</P>
-	
-	<P>The user can, however, increase the reference count on the
-	  CDR stream buffer, thus allowing her to extend the lifetime
-	  of this buffer.
-	  Still passing this buffer to another thread and attempting
-	  to release it in that thread will result in some memory leak
-	  or corruption.
-	  Users willing to use this feature of TAO can still do so,
-	  <B>if</B> they use a global allocator for their input CDR
-	  stream, but that will introduce extra locking on the
-	  critical path.
-	</P>
+        Normally the application has no access to this buffer, and it
+        is only used on the demarshaling of arguments (or results).
+        It is almost always better to use the
+        "<CODE>-ORBinputcdrallocator tss</CODE>" option since it will
+        allocate memory from a thread specific allocator and it will
+        not need locks to manage that memory.
 
-	<P>As the reader can see this is an option that has limited
-	  applicability and requires careful consideration of the
-	  tradeoffs involved.</P>
+        <P>In some cases the user <I>may</I> gain access to the CDR
+          stream buffer:
+          TAO makes no copies when demarshaling octet sequences,
+          instead the octet sequence simply points to the CDR buffer,
+          since the octet sequence does not own this buffer a copy must
+          be made if the user wants to keep the buffer after the
+          upcall.
+        </P>
+
+        <P>The user can, however, increase the reference count on the
+          CDR stream buffer, thus allowing her to extend the lifetime
+          of this buffer.
+          Still passing this buffer to another thread and attempting
+          to release it in that thread will result in some memory leak
+          or corruption.
+          Users willing to use this feature of TAO can still do so,
+          <B>if</B> they use a global allocator for their input CDR
+          stream, but that will introduce extra locking on the
+          critical path.
+        </P>
+
+        <P>As the reader can see this is an option that has limited
+          applicability and requires careful consideration of the
+          tradeoffs involved.</P>
       </LI>
 
     </UL>
