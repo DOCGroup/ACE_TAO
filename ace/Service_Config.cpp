@@ -522,10 +522,13 @@ ACE_Service_Config::load_static_svcs (void)
 
 int
 ACE_Service_Config::open (const ASYS_TCHAR program_name[],
-                          LPCTSTR logger_key)
+                          LPCTSTR logger_key,
+                          int ignore_static_svcs)
 {
   int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
+
+  ACE_Service_Config::no_static_svcs_ = (char) ignore_static_svcs;
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
     return -1;
