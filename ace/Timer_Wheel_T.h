@@ -9,7 +9,7 @@
 //    Timer_Wheel.h
 //
 // = AUTHOR
-//    Darrell Brunsch 
+//    Darrell Brunsch <brunsch@cs.wustl.edu>
 // 
 // ============================================================================
 
@@ -44,6 +44,7 @@ public:
 
   void reset (void);
   // Resets the iterator
+
 protected:
   ACE_Timer_Wheel_T<TYPE, FUNCTOR> &timer_wheel_;
   // Pointer to the <ACE_Timer_List> that we are iterating over.
@@ -67,18 +68,19 @@ public:
   // Type of iterator
 
   friend WHEEL_ITERATOR;
-  // Iterator is a friend
+  // Iterator is a friend.
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR> INHERITED;
-  // Type inherited from 
+  // Type inherited from.
 
   // = Initialization and termination methods.
   ACE_Timer_Wheel_T (size_t wheelsize = 1024, 
                      size_t resolution = 1000, 
                      size_t prealloc = 0,
                      FUNCTOR *upcall_functor = 0);
-  // Constructor that takes in a size for the timing wheel and a 
-  // resolution for placement in the timing wheel lists (in microseconds)
+  // Constructor that takes in a size for the timing wheel and a
+  // resolution for placement in the timing wheel lists (in
+  // microseconds).
 
   virtual ~ACE_Timer_Wheel_T (void);
   // Destructor
@@ -136,7 +138,7 @@ protected:
 
 private:
   NODE *remove (void);
-  // Removes the earliest node and returns a pointer to it
+  // Removes the earliest node and returns a pointer to it.
 
   virtual void reschedule (NODE *);
   // Reschedule an "interval" node
@@ -145,27 +147,28 @@ private:
   // Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
 
   NODE **wheel_;
-  // Timing Wheel
+  // Timing Wheel.
 
   size_t wheel_size_;
-  // Size of the timing wheel
+  // Size of the timing wheel.
 
   size_t resolution_;
-  // Resolution (in microsoconds) of the timing wheel
+  // Resolution (in microsoconds) of the timing wheel.
 
   size_t current_pos_;
-  // Current position in the timing wheel
+  // Current position in the timing wheel.
 
   ACE_Time_Value current_time_;
-  // Keeps track of the previous time <current_pos_> was updated
+  // Keeps track of the previous time <current_pos_> was updated.
 
   long size_;
   // Keeps track of the size of the queue
 
   ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR> iterator_;
-  // Iterator used to expire timers
+  // Iterator used to expire timers.
 
   NODE *freelist_;
+  // Pointer to the freelist of <NODE>.
 
   // = Don't allow these operations for now.
   ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T &);
