@@ -134,7 +134,7 @@ Dispatcher_Task::svc (void)
       int result = this->getq (mb);
 
 #if defined (ACE_HAS_DSUI)
-      DSUI_EVENT_LOG (DISP_TASK_FAM, AFTER_GETQ_CALL, 0, sizeof(ACE_Object_Counter::object_id), (char*)&mb->get_ID());
+      DSUI_EVENT_LOG (DISP_TASK_FAM, AFTER_GETQ_CALL, 0, sizeof(Object_ID), (char*)&mb->get_ID());
 #endif // ACE_HAS_DSUI
 
       if (result == -1)
@@ -167,13 +167,13 @@ Dispatcher_Task::svc (void)
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
-      ACE_Object_Counter::object_id oid = mb->get_ID();
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      Object_ID oid = mb->get_ID();
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(Object_ID), (char*)&oid);
       ACE_ASSERT(command != 0);
 
       //@BT INSTRUMENT with event ID: EVENT_START_DISPATCHING Measure
       //time to actually dispatch event
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_START_DISPATCHING, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_START_DISPATCHING, 0, sizeof(Object_ID), (char*)&oid);
 
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
@@ -184,7 +184,7 @@ Dispatcher_Task::svc (void)
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
       //Measure time to actually dispatch event
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, sizeof(Object_ID), (char*)&oid);
 
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",tv.msec()));
@@ -224,7 +224,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->allocator_);
 #if defined (ACE_HAS_DSUI)
-  ACE_Object_Counter::object_id oid = cmd->getID();
+  Object_ID oid = cmd->getID();
   qitem->set_ID (oid);
 #endif // ACE_HAS_DSUI
 
@@ -249,7 +249,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
       //between original dispatch and dispatch because of RG
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(Object_ID), (char*)&oid);
 
       ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %u\n",tv.msec()));
@@ -300,7 +300,7 @@ void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
   this->msg_deadline_time (qos_info.deadline_);
 }
 
-void Dispatch_Queue_Item::set_ID (ACE_Object_Counter::object_id oid)
+void Dispatch_Queue_Item::set_ID (Object_ID oid)
 {
   this->oid_ = oid;
 }
