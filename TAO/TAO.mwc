@@ -1,5 +1,8 @@
 // $Id$
 
 workspace {
+  exclude {
+    CIAO
+  }
 }
 
