@@ -54,9 +54,9 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
   const u_int threshold = 8 /* promille */;
 
   microinterval *= 1000u;
-  const ACE_hrtime_t hr_difference = (microinterval > nanointerval  ?
-                                      microinterval - nanointerval  :
-                                      nanointerval - microinterval    );
+  ACE_hrtime_t hr_difference = (microinterval > nanointerval  ?
+                                microinterval - nanointerval  :
+                                nanointerval - microinterval    );
   const u_int difference = ACE_U64_TO_U32 (hr_difference);
   if (nanointerval == 0)
     nanointerval = 1;      // Prevent divide-by-zero
