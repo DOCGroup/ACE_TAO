@@ -153,14 +153,19 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 //
 ////////////////////////////////////////////////////////////////////////
 
-// Platform supports ACE_TLI.
+// Platform supports ACE_TLI, including SVR4 facilities.
 #define ACE_HAS_TLI
+// ACE_HAS_SVR4_TLI should work on HP-UX, but doesn't yet.  Riverace
+// problem ID P27.
+//#define ACE_HAS_SVR4_TLI
 // Platform supports ACE_TLI tiuser header.
 #define ACE_HAS_TIUSER_H
 // But it has _terrno() outside the extern "C" stuff.
 #define ACE_HAS_TIUSER_H_BROKEN_EXTERN_C
 // Platform provides ACE_TLI function prototypes.
 #define ACE_HAS_TLI_PROTOTYPES
+// Platform uses a TCP TLI device other than /dev/tcp.  Uses XTI only.
+#define ACE_TLI_TCP_DEVICE  "/dev/inet_cots"
 
 /////////////////////////////////////////////////////////////////////////
 //

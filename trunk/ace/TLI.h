@@ -22,6 +22,14 @@
 #include "ace/Addr.h"
 
 #if defined (ACE_HAS_TLI)
+
+// There's not a universal device name for TLI devices.  If the platform
+// needs something other than /dev/tcp, it needs to be set up in the config.h
+// file as ACE_TLI_TCP_DEVICE.
+#ifndef ACE_TLI_TCP_DEVICE
+#define ACE_TLI_TCP_DEVICE "/dev/tcp"
+#endif
+
 class ACE_Export ACE_TLI : public ACE_IPC_SAP
   // = TITLE
   //     Defines the member functions for the base class of the

@@ -50,7 +50,7 @@ public:
 		    int oflag = O_RDWR, 
 		    struct t_info *info = 0, 
 		    int backlog = 5,
-		    const char device[] = "/dev/tcp");
+		    const char device[] = ACE_TLI_TCP_DEVICE);
   // Initiate a passive mode socket.
 
   ACE_HANDLE open (const ACE_Addr &remote_sap, 
@@ -58,7 +58,7 @@ public:
 		   int oflag = O_RDWR, 
 		   struct t_info *info = 0, 
 		   int backlog = 5,
-		   const char device[] = "/dev/tcp");
+		   const char device[] = ACE_TLI_TCP_DEVICE);
   // Initiate a passive mode socket.
 
   int close (void);
