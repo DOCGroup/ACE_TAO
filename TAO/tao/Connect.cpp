@@ -1002,7 +1002,6 @@ template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
 #pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate HASH_ADDR
 #pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
-#pragma instantiate TAO_HASH_RECYCLABLE_ADDR
 #pragma instantiate TAO_SVC_TUPLE
 #pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
