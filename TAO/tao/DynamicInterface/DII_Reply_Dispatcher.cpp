@@ -49,11 +49,14 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
+  if (params.input_cdr_ == 0)
+    return -1;
+
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
+    this->reply_cdr_.clone_from (*params.input_cdr_);
 
 
   if (db == 0)

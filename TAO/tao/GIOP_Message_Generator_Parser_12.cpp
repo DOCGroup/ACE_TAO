@@ -366,7 +366,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
 
   if ((cdr >> params.svc_ctx_) == 0)
     {
-      if (TAO_debug_level > 0)
+      // if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) parse_reply, ")
                     ACE_TEXT ("extracting context\n")));
@@ -379,13 +379,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
       // Align the read pointer on an 8-byte boundary
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
     }
-
-
-
-
-  // Steal the contents in to the reply CDR and loose ownership of the
-  // data block.
-  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }
@@ -410,10 +403,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
       // Align the read pointer on an 8-byte boundary
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
       }*/
-
-  // Steal the contents in to the reply CDR and loose ownership of the
-  // data block.
-  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }

@@ -7,6 +7,7 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
+#include "Transport_Mux_Strategy.h"
 #include "LF_Strategy.h"
 #include "Request_Dispatcher.h"
 #include "Codeset_Manager.h"
@@ -15,8 +16,8 @@
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           GIOP_Message_Base, 
+ACE_RCSID (tao,
+           GIOP_Message_Base,
            "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
@@ -739,7 +740,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
-  // copies at all here. The same is alos done in the higher layers.
+  // copies at all here.
   TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
                           ACE_Message_Block::DONT_DELETE,
                           rd_pos,
@@ -749,30 +750,52 @@ TAO_GIOP_Message_Base::process_reply_message (
                           qd->minor_version_,
                           this->orb_core_);
 
-  // Reset the message state. Now, we are ready for the next nested
-  // upcall if any.
-  // this->message_handler_.reset (0);
-
   // We know we have some reply message. Check whether it is a
   // GIOP_REPLY or GIOP_LOCATE_REPLY to take action.
 
   // Once we send the InputCDR stream we need to just forget about
   // the stream and never touch that again for anything. We basically
   // loose ownership of the data_block.
+  int retval = 0;
 
   switch (qd->msg_type_)
     {
     case TAO_PLUGGABLE_MESSAGE_REPLY:
       // Should be taken care by the state specific parsing
-      return generator_parser->parse_reply (input_cdr,
-                                            params);
+      retval =
+        generator_parser->parse_reply (input_cdr,
+                                       params);
 
+      break;
     case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
-      return generator_parser->parse_locate_reply (input_cdr,
-                                                   params);
+      retval =
+        generator_parser->parse_locate_reply (input_cdr,
+                                              params);
+      break;
     default:
-        return -1;
+      retval = -1;
     }
+
+  if (retval == -1)
+    return retval;
+
+  params.input_cdr_ = &input_cdr;
+
+  retval =
+    params.transport_->tms ()->dispatch_reply (params);
+
+  if (retval == -1)
+    {
+      // Something really critical happened, we will forget about
+      // every reply on this connection.
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - GIOP_Message_Base[%d]::process_parsed_messages, "
+                    "dispatch reply failed\n",
+                    params.transport_->id ()));
+    }
+
+  return retval;
 }
 
 int

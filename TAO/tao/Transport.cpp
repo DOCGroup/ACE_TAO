@@ -1762,7 +1762,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =  qd->msg_type_;
 
-  int result = 0;
+  // int result = 0;
 
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {
@@ -1797,10 +1797,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     {
       rh.resume_handle ();
 
-      // @@todo: Maybe the input_cdr can be constructed from the
-      // message_block
-      TAO_Pluggable_Reply_Params params (this->orb_core ());
-
+      TAO_Pluggable_Reply_Params params (this);
 
       if (this->messaging_object ()->process_reply_message (params,
                                                             qd) == -1)
@@ -1810,21 +1807,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
                         "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
                         "error in process_reply_message %p\n",
                         this->id (), ""));
-
-          return -1;
-        }
-
-      result = this->tms ()->dispatch_reply (params);
-
-      if (result == -1)
-        {
-          // Something really critical happened, we will forget about
-          // every reply on this connection.
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
-                        "dispatch reply failed\n",
-                        this->id ()));
 
           return -1;
         }
