@@ -13,8 +13,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/RT_Task.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Event/RT_Task.h"
 
 class ACE_Command_Base;
 

@@ -25,7 +25,7 @@
 #include "PG_Location_Hash.h"
 #include "PG_Location_Equal_To.h"
 
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 #include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"

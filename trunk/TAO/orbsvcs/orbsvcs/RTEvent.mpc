@@ -7,7 +7,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
   dynamicflags = TAO_RTEVENT_BUILD_DLL
   tagchecks   += RTEvent
   // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     RtecDefaultEventData.idl

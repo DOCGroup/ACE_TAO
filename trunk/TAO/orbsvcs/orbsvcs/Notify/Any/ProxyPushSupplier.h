@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/Event_ForwarderS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/Event_ForwarderS.h"
 
 #include "../ProxySupplier_T.h"
 

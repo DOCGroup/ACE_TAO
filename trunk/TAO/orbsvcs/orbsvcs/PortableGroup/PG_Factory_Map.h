@@ -24,7 +24,7 @@
 
 #include "PG_Factory_Set.h"
 
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 

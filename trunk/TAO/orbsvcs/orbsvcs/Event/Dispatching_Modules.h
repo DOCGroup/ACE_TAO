@@ -23,9 +23,9 @@
 
 #include "ace/Reactor_Notification_Strategy.h"
 #include "tao/Timeprobe.h"
-#include "orbsvcs/Event/ReactorTask.h"
-#include "orbsvcs/Event/Event_Manip.h"
-#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/ReactorTask.h"
+#include "orbsvcs/orbsvcs/Event/Event_Manip.h"
+#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
 
 // ************************************************************
 

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 #include "../Supplier.h"
 
 class TAO_Notify_ProxyConsumer;

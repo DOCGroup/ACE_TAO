@@ -5,11 +5,13 @@
 
 #include "ace/FILE_Connector.h"
 #include "ace/Process_Manager.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(SMI_Iterator, client, "$Id$")
+ACE_RCSID (SMI_Iterator, 
+           client, 
+           "$Id$")
 
 
 // Retrieve the data from the server

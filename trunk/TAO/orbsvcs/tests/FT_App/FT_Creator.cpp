@@ -15,7 +15,7 @@
 #include "FT_Creator.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-#include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
 
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>

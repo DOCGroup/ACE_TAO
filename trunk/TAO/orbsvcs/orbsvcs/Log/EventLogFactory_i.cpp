@@ -1,12 +1,11 @@
-#include "orbsvcs/Log/EventLogFactory_i.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/EventLogNotification.h"
+#include "orbsvcs/orbsvcs/Log/EventLogFactory_i.h"
+#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/orbsvcs/Log/EventLogNotification.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (Log,
            EventLogFactory_i,
            "$Id$")
-
 
 TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
 {

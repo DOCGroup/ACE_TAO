@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 #include "Server_Request_Interceptor.h"
-#include "orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/ORB_Constants.h"
 #include "testS.h"
 

@@ -24,7 +24,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_Factory;
 class TAO_Notify_Builder;

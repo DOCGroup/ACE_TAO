@@ -6,7 +6,6 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
   idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h
   dynamicflags = TAO_FTRTEVENT_BUILD_DLL
   tagchecks    = FtRtEvent
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     idlflags += -GC

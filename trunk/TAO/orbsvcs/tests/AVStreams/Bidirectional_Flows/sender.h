@@ -18,10 +18,10 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 
 class Sender_Callback : public TAO_AV_Callback
 {

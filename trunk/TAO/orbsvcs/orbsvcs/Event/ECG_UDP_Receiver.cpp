@@ -1,14 +1,16 @@
 // $Id$
 
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_UDP_Receiver, "$Id$")
+ACE_RCSID (Event, 
+           ECG_UDP_Receiver, 
+           "$Id$")
 
 
 // ****************************************************************

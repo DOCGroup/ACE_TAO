@@ -6,7 +6,9 @@
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Send_File, test_i, "$Id$")
+ACE_RCSID (Send_File, 
+           test_i, 
+           "$Id$")
 
 void
 Simple_Server_i::send_line (const char *

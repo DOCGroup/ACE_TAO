@@ -9,7 +9,7 @@ ACE_RCSID (Notify,
            TAO_Notify_Admin, 
            "$Id$")
 
-#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 
 #include "Container_T.h"
 #include "Proxy.h"

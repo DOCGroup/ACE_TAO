@@ -17,8 +17,8 @@
 #ifndef EC_RANDOM_H
 #define EC_RANDOM_H
 
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/CosTypedEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosTypedEventChannelAdminC.h"
 #include "CountryC.h"
 
 ACE_RCSID(CosEC_Examples, Supplier, "$Id:")

@@ -13,8 +13,6 @@ project(CosNotification) : orbsvcslib, core, svc_utils, etcl, dynamicany, portab
   dynamicflags = TAO_NOTIFY_BUILD_DLL TAO_EVENT_BUILD_DLL
 
   tagchecks   += Notify
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     CosEventComm.idl

@@ -26,8 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
-#include "orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
+#include "orbsvcs/orbsvcs/DsLogAdminC.h"
 
 #include "tao/Typecode.h"
 

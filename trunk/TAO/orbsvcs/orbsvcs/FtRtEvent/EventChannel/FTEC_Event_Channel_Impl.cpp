@@ -11,7 +11,7 @@
 #include "FT_ProxyAdmin_Base.h"
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
-#include "orbsvcs/FtRtecEventCommC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventCommC.h"
 
 
 ACE_RCSID (EventChannel,

@@ -28,8 +28,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Log_Msg.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "Quoter_i.h"
 #include "QuoterC.h"

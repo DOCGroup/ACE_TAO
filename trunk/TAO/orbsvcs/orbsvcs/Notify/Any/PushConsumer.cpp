@@ -6,10 +6,12 @@
 #include "PushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, TAO_Notify_PushConsumer, "$Id$")
+ACE_RCSID (Notify, 
+           TAO_Notify_PushConsumer, 
+           "$Id$")
 
 #include "ace/Refcounted_Auto_Ptr.h"
-#include "orbsvcs/CosEventCommC.h"
+#include "orbsvcs/orbsvcs/CosEventCommC.h"
 #include "../Event.h"
 
 TAO_Notify_PushConsumer::TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy)

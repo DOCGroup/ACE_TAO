@@ -18,8 +18,8 @@
 #define ORBSVCS_TIME_UTILITIES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/TimeBaseC.h"
-#include "orbsvcs/svc_utils_export.h"
+#include "orbsvcs/orbsvcs/TimeBaseC.h"
+#include "orbsvcs/orbsvcs/svc_utils_export.h"
 #include "ace/OS_NS_time.h"
 
 class TAO_Svc_Utils_Export ORBSVCS_Time

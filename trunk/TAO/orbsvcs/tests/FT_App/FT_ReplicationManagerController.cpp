@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/FT_ReplicationManagerC.h"
+#include "orbsvcs/orbsvcs/FT_ReplicationManagerC.h"
 #include <ace/Get_Opt.h>
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"

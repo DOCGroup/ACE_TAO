@@ -8,10 +8,12 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID(Notify, TAO_CosNotify_Service, "$Id$")
+ACE_RCSID (Notify, 
+           TAO_CosNotify_Service, 
+           "$Id$")
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
   : factory_ (0)

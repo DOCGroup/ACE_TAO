@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "security_export.h"
-#include "orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
 
 /**
  * @class TAO_Security_Current_Impl

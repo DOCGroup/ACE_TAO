@@ -19,8 +19,8 @@
 #include "Constraint_Visitors.h"
 #include "Interpreter.h"
 
-#include "orbsvcs/CosTradingS.h"
-#include "orbsvcs/CosTradingReposS.h"
+#include "orbsvcs/orbsvcs/CosTradingS.h"
+#include "orbsvcs/orbsvcs/CosTradingReposS.h"
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;

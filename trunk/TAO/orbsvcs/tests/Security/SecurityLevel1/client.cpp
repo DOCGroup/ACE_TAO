@@ -4,7 +4,9 @@
 
 #include "SLevel1_TestC.h"
 
-ACE_RCSID (SecurityLevel1, client, "$Id$")
+ACE_RCSID (SecurityLevel1, 
+           client, 
+           "$Id$")
 
 const char *ior = "file://test.ior";
 

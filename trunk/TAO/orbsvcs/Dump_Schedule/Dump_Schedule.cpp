@@ -6,10 +6,12 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
 
-ACE_RCSID(Dump_Schedule, Dump_Schedule, "$Id$")
+ACE_RCSID (Dump_Schedule, 
+           Dump_Schedule, 
+           "$Id$")
 
 // This program dumps the results of one scheduling in a C++ file.
 

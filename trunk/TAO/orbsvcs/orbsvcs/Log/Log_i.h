@@ -20,14 +20,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "orbsvcs/orbsvcs/Log/LogRecordStore.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
 #include "log_export.h"
 

@@ -1,12 +1,11 @@
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/NotifyLogNotification.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/orbsvcs/Log/NotifyLogNotification.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
 ACE_RCSID (Log,
            NotifyLogNotification,
            "$Id$")
-
 
 TAO_NotifyLogNotification::TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr ec)
 : TAO_LogNotification (), event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))

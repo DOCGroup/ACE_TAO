@@ -2,13 +2,15 @@
 
 #include "EC_Timeout_Generator.h"
 #include "EC_Timeout_Filter.h"
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Timeout_Generator, "$Id$")
+ACE_RCSID (Event, 
+           EC_Timeout_Generator, 
+           "$Id$")
 
 TAO_EC_Timeout_Generator::~TAO_EC_Timeout_Generator (void)
 {

@@ -20,8 +20,8 @@
 
 #include "ace/Task.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/CosNotifyChannelAdminC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "../orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
 

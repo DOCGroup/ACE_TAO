@@ -19,7 +19,7 @@
 
 #include "tao/Basic_Types.h"
 
-#include "orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/orbsvcs/Trader/trading_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

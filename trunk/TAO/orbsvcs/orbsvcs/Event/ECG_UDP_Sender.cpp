@@ -9,14 +9,16 @@
  *
  */
 
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_UDP_Sender, "$Id$")
+ACE_RCSID (Event, 
+           ECG_UDP_Sender, 
+           "$Id$")
 
 // ****************************************************************
 

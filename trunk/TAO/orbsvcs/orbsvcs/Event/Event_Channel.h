@@ -40,11 +40,11 @@
 
 #include "tao/Timeprobe.h"
 
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/Event/Local_ESTypes.h"
-#include "orbsvcs/Event/Timer_Module.h"
-#include "orbsvcs/Event/ReactorTask.h"
-#include "orbsvcs/Event/Event_Manip.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Event/Local_ESTypes.h"
+#include "orbsvcs/orbsvcs/Event/Timer_Module.h"
+#include "orbsvcs/orbsvcs/Event/ReactorTask.h"
+#include "orbsvcs/orbsvcs/Event/Event_Manip.h"
 
 // ************************************************************
 

@@ -12,8 +12,8 @@
 //=============================================================================
 #ifndef TAO_PG_PROPERTIES_ENCODER_H
 #define TAO_PG_PROPERTIES_ENCODER_H
-#include "orbsvcs/PortableGroupS.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/PortableGroupS.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "portablegroup_export.h"
 
 #include "ace/Vector_T.h"

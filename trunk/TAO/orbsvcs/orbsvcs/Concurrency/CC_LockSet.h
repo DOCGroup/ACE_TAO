@@ -44,7 +44,7 @@
 #include "ace/Token.h"
 #include "ace/Unbounded_Queue.h"
 
-#include "orbsvcs/CosConcurrencyControlS.h"
+#include "orbsvcs/orbsvcs/CosConcurrencyControlS.h"
 #include "concurrency_export.h"
 
 #if defined (lock_held)
