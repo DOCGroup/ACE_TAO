@@ -62,11 +62,8 @@ static CEC_Factory "-CECDispatching reactive ....."
           <TD>Select the dispatching strategy used by the COS
             event service. A <EM>reactive</EM> strategy will use the
             same thread that received the event from the supplier to
-            push the event to all the consumers,
-            the <EM>priority</EM> strategy will use a prioritized pool
-            of threads and will query the scheduling service to select
-            the thread that will dispatch each event;
-            the <EM>mt</EM> strategy will also use a pool of threads,
+            push the event to all the consumers.
+            The <EM>mt</EM> strategy will also use a pool of threads,
             but the thread to dispatch is randomly selected.
           </TD>
         </TR>
@@ -76,7 +73,7 @@ static CEC_Factory "-CECDispatching reactive ....."
           <TD><CODE>-CECDispatchingThreads</CODE>
             <EM>number_of_threads</EM>
           </TD>
-          <TD>Select the number of threads used bythe <EM>mt</EM>
+          <TD>Select the number of threads used by the <EM>mt</EM>
             dispatching strategy.
           </TD>
         </TR>
@@ -262,9 +259,9 @@ static CEC_Factory "-CECDispatching reactive ....."
     </P>
 
 <PRE>
-  TAO_EC_EventChannel (const TAO_CEC_EventChannel_Attributes& attributes,
-                       TAO_CEC_Factory* factory = 0,
-                       int own_factory = 0);
+  TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attributes,
+                        TAO_CEC_Factory* factory = 0,
+                        int own_factory = 0);
 </PRE>
 
     <P>The <CODE>factory</CODE> is an optional parameter to override
@@ -304,6 +301,18 @@ static CEC_Factory "-CECDispatching reactive ....."
             publications;
             this is usually more efficient that disconnecting and
             connecting again.
+          </TD>
+        </TR>
+
+        <TR><TD><CODE>disconnect_callbacks</CODE></TD>
+          <TD>It not zero the event channel will send disconnect 
+            callbacks when a disconnect method is called on a Proxy.  
+            In other words, if a consumer calls 
+            <CODE>disconnect_push_supplier()</CODE> on its proxy the 
+            EC will invoke <CODE>disconnect_push_consumer()</CODE> 
+            on the consumer.  A similar thing is done for suppliers. 
+            It is a matter of debate what the spec requires for the 
+            regular event service.
           </TD>
         </TR>
 
