@@ -16,7 +16,6 @@
 #ifndef PACE_AIO_H
 #define PACE_AIO_H
 
-#include <aio.h>
 #include "pace/time.h"
 #include "pace/signal.h"
 
