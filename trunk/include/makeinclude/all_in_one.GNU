@@ -25,15 +25,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 # The CLEAN_* targets are defined in wrapper_macros.GNU, so use them
 # to determine if we should include rules.bin.GNE or rules.lib.GNU.
 
-ifdef CLEANUP_BIN
+ifneq ($(CLEANUP_BIN),)
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 endif # CLEANUP_BIN
 
-ifdef CLEANUP_LIB
+ifneq ($(CLEANUP_LIB),)
   include_lib = 1
 endif # LIB
 
-ifdef CLEANUP_SHLIB
+ifneq ($(CLEANUP_SHLIB),)
   include_lib = 1
   # If the Makefile has both BIN and SHLIB targets, add .shobj to OBJDIRS
   # so that it will get cleanup too.
@@ -51,12 +51,12 @@ BUILD := $(VBIN)
 
 # Add VSHLIB if we're building shared_libs, could be undefined.
 ifdef shared_libs
-  BUILD := $(BUILD) $(VSHLIB)
+  BUILD := $(VSHLIB) $(SHLIBA) $(BUILD)
 endif
 
 # Finally, add VLIB if building static_libs, which could also be undefined.
-ifdef static_libs
-  BUILD := $(BUILD) $(VLIB)
+ifdef static_libs 
+  BUILD := $(VLIB) $(BUILD)
 endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
