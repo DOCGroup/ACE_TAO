@@ -1,123 +1,137 @@
+Wed Jul 07 16:25:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h,Exception.cpp (_tao_errno,_info):
+          1) Added support for these errnos:
+            EAGAIN, ENOMEM, EACCES, EFAULT, EBUSY, EEXIST
+          2) Changed minor code to use 5 bits for location and
+            7 for errno encoding, instead of 8 and 4, respectively.
+          3) If an unknown errno is given to _tao_errno, it
+            returns the low 7 bits.  These are stored directly
+            in the 7 bit minor code field.  _info then prints
+            out the value.  Not perfect, due to the loss of
+            information, but it often provides a lot more useful
+            information than it did before.  [18]
+
 Wed Jul  7 16:14:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence_T.h:
-	* tao/Sequence_T.cpp:
-	  Fixed assignment from TAO_Object_Field_T<> to
-	  TAO_Object_Manager<>.
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.cpp:
+          Fixed assignment from TAO_Object_Field_T<> to
+          TAO_Object_Manager<>.
 
 Wed Jul  7 15:50:10 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp: Removed some commented out
-	code that was not required.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp: Removed some commented out
+        code that was not required.
 
 Wed Jul  7 15:35:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Added documentation for the -ORBProtocolFactory option.
+          Added documentation for the -ORBProtocolFactory option.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
 
-	  Changed some print statement to print on stderr so that they get
-	  printed before the tests actually run.
+          Changed some print statement to print on stderr so that they get
+          printed before the tests actually run.
 
-	* tao/UIOP_Acceptor.{h,cpp}:
+        * tao/UIOP_Acceptor.{h,cpp}:
 
-	  Added a destructor to aid in post-error rendezvous point clean
-	  up.
+          Added a destructor to aid in post-error rendezvous point clean
+          up.
 
-	* tao/Acceptor_Registry.cpp (~TAO_Acceptor_Registry):
+        * tao/Acceptor_Registry.cpp (~TAO_Acceptor_Registry):
 
-	  Added a call to TAO_Acceptor_Registry::close_all () in the
-	  TAO_Acceptor_Registry destructor.  The call in the destructor
-	  shouldn't be necessary since close_all () is already called by
-	  the ORB, but it is safer to add the call to the destructor.
+          Added a call to TAO_Acceptor_Registry::close_all () in the
+          TAO_Acceptor_Registry destructor.  The call in the destructor
+          shouldn't be necessary since close_all () is already called by
+          the ORB, but it is safer to add the call to the destructor.
 
-	* tao/Acceptor_Registry.cpp (open, open_default):
-	* tao/Connector_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open, open_default):
+        * tao/Connector_Registry.cpp (open):
 
-	  Added some useful and/or missing error checks.
+          Added some useful and/or missing error checks.
 
-	  Fixed some memory leaks that may occur when an error occurs.
+          Fixed some memory leaks that may occur when an error occurs.
 
-	* tao/Connector_Registry.cpp (TAO_Connector_Registry):
+        * tao/Connector_Registry.cpp (TAO_Connector_Registry):
 
-	  Added connectors_ member to the member initializer list.
+          Added connectors_ member to the member initializer list.
 
-	* tao/Connector_Registry.cpp (create_profile): 
-	* tao/default_resource.cpp (init):
+        * tao/Connector_Registry.cpp (create_profile):
+        * tao/default_resource.cpp (init):
 
-	  Explicitly initialized some variables to fix potential
-	  "uninitialized variable" warnings.
+          Explicitly initialized some variables to fix potential
+          "uninitialized variable" warnings.
 
-	* tao/default_resource.cpp:
+        * tao/default_resource.cpp:
 
-	  Added protocol_factories_ member to TAO_Default_Resource_Factory 
-	  member initializer list.
+          Added protocol_factories_ member to TAO_Default_Resource_Factory
+          member initializer list.
 
-	  Fixed potential memory leaks due to failed (and unlikely)
-	  insertions into the protocol factory set.
+          Fixed potential memory leaks due to failed (and unlikely)
+          insertions into the protocol factory set.
 
-	* tao/Resource_Factory.h (TAO_Protocol_Item):
+        * tao/Resource_Factory.h (TAO_Protocol_Item):
 
-	  Minor spelling correction in comment.
+          Minor spelling correction in comment.
 
 Wed Jul  7 14:24:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/varout.h:
-	* tao/varout.i:
-	* tao/varout.cpp:
-	* tao/CDR_Interpreter.cpp:
-	* tao/DomainC.cpp:
-	* tao/DynAnyC.cpp:
-	* tao/IORC.cpp:
-	* tao/IORC.h:
-	* tao/IORC.i:
-	* tao/IORManipulation.cpp:
-	* tao/MessagingC.cpp:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.h:
-	* tao/Object.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	* tao/decode.cpp:
-	* tao/deep_free.cpp:
-	* tao/encode.cpp:
-	  Changed TAO_Object_Field_T to take two arguments, that way it
-	  can have an assignment operator from Object_Manager and properly 
-	  increment the reference count in that case [BUGID:16]
+        * tao/Makefile:
+        * tao/varout.h:
+        * tao/varout.i:
+        * tao/varout.cpp:
+        * tao/CDR_Interpreter.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynAnyC.cpp:
+        * tao/IORC.cpp:
+        * tao/IORC.h:
+        * tao/IORC.i:
+        * tao/IORManipulation.cpp:
+        * tao/MessagingC.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/Object.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+          Changed TAO_Object_Field_T to take two arguments, that way it
+          can have an assignment operator from Object_Manager and properly
+          increment the reference count in that case [BUGID:16]
 
-	* TAO_IDL/Makefile:
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_visitor_sequence.cpp:
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be_include/be_sequence.h:
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
-	  The IDL compiler generates proper code with two arguments now.
+        * TAO_IDL/Makefile:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+          The IDL compiler generates proper code with two arguments now.
 
-	* tests/Param_Test/tmplinst.cpp:
-	  Fixed template instantiations
+        * tests/Param_Test/tmplinst.cpp:
+          Fixed template instantiations
 
-	* examples/Simple/bank/run_test.pl:
-	* orbsvcs/tests/Property/run_test.pl:
-	  Fixed output and fine tune execution time.
+        * examples/Simple/bank/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl:
+          Fixed output and fine tune execution time.
 
 Wed Jul 07 13:07:09 1999  David L. Levine  <levine@cs.wustl.edu>
 

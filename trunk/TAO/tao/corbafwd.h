@@ -953,27 +953,28 @@ TAO_NAMESPACE CORBA
 #define TAO_DEFAULT_MINOR_CODE 0x54410000
 #define TAO_MAX_MINOR_CODE 0x54410FFF
 
-// Minor code encoding.  Encode the location in 8 bits, and the errno
-// in 4 bits:
-// 0x   0101 0100   0100 0001   0000   ____  ____     ____
-//          T           A        0      location      errno
+// Minor code encoding.  Encode the location in 5 bits, and the errno
+// in 7 bits:
+// 0x   0101 0100   0100 0001   0000   ____ _     ___ ____
+//          T           A        0    location      errno
 
-// Location encoding:  8 bits, after the errno encoding.
-#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 4)
-#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 4)
-#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 4)
-#define TAO_POA_DISCARDING                         (0x04U << 4)
-#define TAO_POA_HOLDING                            (0x05U << 4)
-#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 4)
-#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 4)
-#define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x08U << 4)
-#define TAO_NULL_POINTER_MINOR_CODE                (0x09U << 4)
-#define TAO_MPROFILE_CREATION_ERROR                (0x0AU << 4)
-#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0BU << 4)
-#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0CU << 4)
-#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0DU << 4)
+// Location encoding:  5 bits, after the errno encoding.
+#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 7)
+#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 7)
+#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 7)
+#define TAO_POA_DISCARDING                         (0x04U << 7)
+#define TAO_POA_HOLDING                            (0x05U << 7)
+#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 7)
+#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 7)
+#define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x08U << 7)
+#define TAO_NULL_POINTER_MINOR_CODE                (0x09U << 7)
+#define TAO_MPROFILE_CREATION_ERROR                (0x0AU << 7)
+#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0BU << 7)
+#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0CU << 7)
+#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0DU << 7)
+// *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 
-// errno encoding:  bottom 4 bits.
+// errno encoding:  bottom 7 bits.
 #define TAO_UNSPECIFIED_MINOR_CODE  0x0U
 #define TAO_ETIMEDOUT_MINOR_CODE    0x1U
 #define TAO_ENFILE_MINOR_CODE       0x2U
@@ -985,7 +986,13 @@ TAO_NAMESPACE CORBA
 #define TAO_ENOSYS_MINOR_CODE       0x8U
 #define TAO_EPERM_MINOR_CODE        0x9U
 #define TAO_EAFNOSUPPORT_MINOR_CODE 0xAU
-#define TAO_UNKNOWN_MINOR_CODE      0xFU
+#define TAO_EAGAIN_MINOR_CODE       0xBU
+#define TAO_ENOMEM_MINOR_CODE       0xCU
+#define TAO_EACCES_MINOR_CODE       0xDU
+#define TAO_EFAULT_MINOR_CODE       0xEU
+#define TAO_EBUSY_MINOR_CODE        0xFU
+#define TAO_EEXIST_MINOR_CODE       0x10U
+// *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
 
 // These numbers are assigned by the OpenGroup, a database is
 // available at
