@@ -152,7 +152,6 @@
 //#define       ACE_HAS_PTHREAD_EQUAL
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 //#define ACE_LACKS_THREAD_STACK_ADDR
-//#define ACE_LACKS_KEYDELETE
 // If ACE doesn't compile due to the lack of these methods, please
 // send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED

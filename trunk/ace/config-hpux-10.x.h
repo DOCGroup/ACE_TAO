@@ -211,9 +211,6 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 // Platform lacks pthread_attr_setdetachstate()
 #  define ACE_LACKS_SETDETACH
 
-// Platform lacks TSS keydelete
-#  define ACE_LACKS_KEYDELETE
-
 // Platform lacks pthread_attr_setscope
 #  define ACE_LACKS_THREAD_PROCESS_SCOPING
 
