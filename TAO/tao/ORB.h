@@ -426,15 +426,18 @@ private:
   CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout);
   // Resolve the trading object reference.
 
-  char *multicast_query (TAO_Service_ID service_id,
-                         u_short port,
-                         ACE_Time_Value *timeout);
+  int multicast_query (char *buf,
+                       TAO_Service_ID service_id,
+                       u_short port,
+                       ACE_Time_Value *timeout,
+                       u_short attempts);
   // returns and IOR string, the client is responsible for freeing
   // memory!
 
   CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
                                          u_short port,
-                                         ACE_Time_Value *timeout);
+                                         ACE_Time_Value *timeout,
+                                         u_short attempts);
   // Resolve the refernce of a service of type <name>.
 
   ACE_SYNCH_MUTEX lock_;
