@@ -1,322 +1,290 @@
-<!-- $Id$ -->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
-  <HEAD>
-    <TITLE>Event Service Status</TITLE>
-  </HEAD>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Event Service Status</TITLE>
+<!-- $Id$ -->
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
 
-  <BODY TEXT="#000000" BGCOLOR="#FFFFFF">
-    <H3>Event Service Status</H3>
-      Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
+<H3>
+Event Service Status</H3>
+Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
+<H4>
+Last Updated: $Date$</H4>
 
-    <H4>Last Updated: $Date$ </H4>
+<H3>
+New on this release</H3>
 
-    <H3>New on this release</H3>
+<UL>Continued work on the multicast support for the EC, we added a new
+server that maps the event types (and supplier ids) into the right mcast
+group. Usually this server is collocated with the helper classes that send
+the events through multicast, so using a CORBA interface for this mapping
+is not expensive, further it adds the flexibility of using a global service
+with complete knowledge of the traffic in the system, that could try to
+optimize multicast group usage.
+<P>The subscriptions and publications on a particular EC can be remotely
+observed by instances of the <TT>RtecChannelAdmin::Observer</TT> class.
+Once more using CORBA for this interface cost us little or nothing because
+it is usually used by objects collocated with the EC.
+<P><TT>TAO_EC_UDP_Receiver</TT> is a helper class that receives events
+from multicast groups and dispatches them as a supplier to some event channel.
+This class has to <B>join</B> the right multicast groups, using the <TT>Observer</TT>
+described above and the <TT>RtecUDPAdmin</TT> to map the subscriptions
+into multicast groups it can do this dynamically, as consumers join or
+leave its Event Channel.
+<P>When sending Events through multicast all the <TT>TAO_EC_UDP_Sender</TT>
+objects can shared the same socket.</UL>
 
-    <UL>
-      <LI><P>Continued work on the multicast support for the EC,
-	  we added a new server that maps the event types
-	  (and supplier ids) into the right mcast group.
-	  Usually this server is collocated with the helper classes
-	  that send the events through multicast,
-	  so using a CORBA interface for this mapping is not
-	  expensive,
-	  further it adds the flexibility of using a global service
-	  with complete knowledge of the traffic in the system,
-	  that could try to optimize multicast group usage.
-	</P>
-      </LI>
-      <LI><P>The subscriptions and publications on a particular EC can
-	  be remotely observed by instances of the
-	  <CODE>RtecChannelAdmin::Observer</CODE> class.
-	  Once more using CORBA for this interface cost us little or
-	  nothing because it is usually used by objects collocated
-	  with the EC.
-	</P>
-      </LI>
-      <LI><P><CODE>TAO_EC_UDP_Receiver</CODE> is a helper class that
-	  receives events from multicast groups and dispatches them as
-	  a supplier to some event channel.
-	  This class has to <B>join</B> the right multicast groups,
-	  using the <CODE>Observer</CODE> described above and the
-	  <CODE>RtecUDPAdmin</CODE> to map the subscriptions into
-	  multicast groups it can do this dynamically,
-	  as consumers join or leave its Event Channel.
-	</P>
-      </LI>
-      <LI><P>When sending Events through multicast all the
-	  <CODE>TAO_EC_UDP_Sender</CODE> objects can shared the same
-	  socket.
-	</P>
-      </LI>
-    </UL>
+<H3>
+Known issues:</H3>
 
-    <H3>Known issues:</H3>
-    <DL>
-      <DT><EM>The schedule cannot be downloaded</EM></DT>
-      <DD>
-	The Scheduling Service seems to compute proper schedules,
-	but it is not possible to download them,
-	apparently there is a marshalling problem for sequences of
-	complex structures.
+<DL>
+<DT>
+<I>The schedule cannot be downloaded</I></DT>
 
-	<P>Due to this problem we have been unable to test the
-	  run-time scheduler and performance it is impossible to
-	  complete performance measurements and optimizations:
-	  the (global) scheduling service latency and overhead is at
-	  least as large as the EC itself.</P>
-	<P><STRONG>Note:</STRONG> This does not seem to be the case
-	  anymore, but the comment will remain here until I can
-	  confirm that the problem dissapeared.</P>
-	</DD>
+<DD>
+The Scheduling Service seems to compute proper schedules, but it is not
+possible to download them, apparently there is a marshalling problem for
+sequences of complex structures.</DD>
 
-      <DT><EM>Run-time scheduler requires re-link</EM></DT>
-      <DD>
-	During a normal execution of the system
-	there is no
-	need to use the a global Real-time Scheduling Service,
-	a faster,
-	collocated implementation for the service is available.
-	Obviously the scheduling information is precomputed in some
-	config run.
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>Due to this problem we have been unable to test the run-time scheduler
+and performance it is impossible to complete performance measurements and
+optimizations: the (global) scheduling service latency and overhead is
+at least as large as the EC itself.
+<P><B>Note:</B> This does not seem to be the case anymore, but the comment
+will remain here until I can confirm that the problem dissapeared.
+<DT>
+<I>Run-time scheduler requires re-link</I></DT>
 
-	<P>Unfortunately the current scheme requires a relink of all the
-	involved applications against the generated tables for the
-	run-time scheduling service.</P>
+<DD>
+During a normal execution of the system there is no need to use the a global
+Real-time Scheduling Service, a faster, collocated implementation for the
+service is available. Obviously the scheduling information is precomputed
+in some config run.</DD>
 
-	<P>We should be able to download the schedule to the interested
-	parties,
-	without need for a separate link phase.
-	This will simplify and speed up the developing cycle,
-	but requires a (small and fixed) amount of dynamic memory
-	allocation.
-	It could be interesting to "save" the schedule computation in
-	some persistent form,
-	so startup cost are lower too.</P>
-	
-	<P>The current design contemplates a config run were a global
-	consumer accumulates the QoS requirements of all the objects, 
-	next an external utility is used to force a computation and
-	save of the schedule.
-	In future executions 
-	the global scheduler pre-loads this schedule and 
-	the clients simply download the precomputed schedule,
-	and all scheduling queries are to a local scheduling service, 
-	without any further contact to the global instance.</P>
-      </DD>
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>Unfortunately the current scheme requires a relink of all the involved
+applications against the generated tables for the run-time scheduling service.
+<P>We should be able to download the schedule to the interested parties,
+without need for a separate link phase. This will simplify and speed up
+the developing cycle, but requires a (small and fixed) amount of dynamic
+memory allocation. It could be interesting to "save" the schedule computation
+in some persistent form, so startup cost are lower too.
+<P>The current design contemplates a config run were a global consumer
+accumulates the QoS requirements of all the objects, next an external utility
+is used to force a computation and save of the schedule. In future executions
+the global scheduler pre-loads this schedule and the clients simply download
+the precomputed schedule, and all scheduling queries are to a local scheduling
+service, without any further contact to the global instance.
+<DT>
+<I>Users have no control over service collocations</I></DT>
 
-      <DT><EM>Users have no control over service
-	  collocations</EM></DT>
-      <DD>
-	<P>The user should have complete control of services collocation,
-	  using ACE Service Configurator;
-	  currently the services must be explicitly instantiated by the
-	  user.
-	</P>
-      </DD>
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>The user should have complete control of services collocation, using
+ACE Service Configurator; currently the services must be explicitly instantiated
+by the user.
+<DT>
+<I>The <TT>TAO_EC_Gateway_IIOP</TT> objects publish events coming from
+multiple suppliers</I></DT>
 
-      <DT><EM>The <CODE>TAO_EC_Gateway_IIOP</CODE> objects publish
-	  events coming from multiple suppliers</EM></DT>
-      <DD><P>This objects receive the events from a "remote" EC and
-	  pushes them into a "local" EC,
-	  it subscribes to the disjunction of the events in the local
-	  consumers and it uses the same event
-	  types/<CODE>supplier_ids</CODE> to
-	  connect as a local supplier.
-	  This list may potentially include several different
-	  subscriptions based on different supplier ids,
-	  so the <CODE>Gateway</CODE> may end up with an invalid
-	  publication.
-	  We need to have different local suppliers for each remote
-	  <CODE>supplier_id</CODE> potentially shared between all the
-	  local <CODE>Gateways</CODE>.
-	</P>
-      </DD>
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>This objects receive the events from a "remote" EC and pushes them into
+a "local" EC, it subscribes to the disjunction of the events in the local
+consumers and it uses the same event types/<TT>supplier_ids</TT> to connect
+as a local supplier. This list may potentially include several different
+subscriptions based on different supplier ids, so the <TT>Gateway</TT>
+may end up with an invalid publication. We need to have different local
+suppliers for each remote <TT>supplier_id</TT> potentially shared between
+all the local <TT>Gateways</TT>.
+<DT>
+<I>There is no <TT>CosEventChannel</TT> interface</I></DT>
 
-      <DT><EM>There is no <CODE>CosEventChannel</CODE>
-	  interface</EM></DT>
-      <DD><P>This is more of a warning than an issue.
-	  TAO's Real-time Event Channel is <B>not</B> an
-	  implementation of the CORBAservices Event Channel;
-	  it provides a similar set of features,
-	  and the interfaces are also similar,
-	  but real-time applications require more control over
-	  their middleware than what the CORBA Event Channel
-	  provides.
-	</P>
-	<P>
-	  It should also be noted that the Event Channel only provides
-	  the <B>Push</B> model,
-	  since it is more predictable and it can be reuse the
-	  scheduling algorithms uses for normal function calls.
-	</P>
-	<P>It would be fairly simple to implement a standard CORBA
-	  Event Service on top of TAO's Real-time Event Channel,
-	  but this is a low priority task,
-	  since our sponsors have no need for such a beast.
-	</P>
-      </DD>
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>This is more of a warning than an issue. TAO's Real-time Event Channel
+is <B>not</B> an implementation of the CORBAservices Event Channel; it
+provides a similar set of features, and the interfaces are also similar,
+but real-time applications require more control over their middleware than
+what the CORBA Event Channel provides.
+<P>It should also be noted that the Event Channel only provides the <B>Push</B>
+model, since it is more predictable and it can be reuse the scheduling
+algorithms uses for normal function calls.
+<P>It would be fairly simple to implement a standard CORBA Event Service
+on top of TAO's Real-time Event Channel, but this is a low priority task,
+since our sponsors have no need for such a beast.
+<DT>
+<I>Further details:</I></DT>
 
-      <DT><EM>Further details:</EM></DT>
-      <DD>
-	<P>Many lower level issues and tasks can be found in the
-	  <A HREF="TODO.html">TODO list</A>.
-	</P>
-      </DD>
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>Many lower level issues and tasks can be found in the <A HREF="TODO.html">TODO
+list</A>.</DL>
 
-    </DL>
+<H3>
+Examples</H3>
+For general documentation on the Event Service please read <A HREF="http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz">The
+Design and Performance of a Real-time CORBA Event Service</A>.
+<P>The simplest test for the Event Channel is <TT>Event_Latency</TT>, below
+are the basic instructions to run it:
+<OL>
+<LI>
+Compile everything under <TT>$TAO_ROOT/orbsvcs</TT>, this needs, obviously,
+<TT>$TAO_ROOT/tao</TT>
+and the IDL compiler in <TT>$TAO_ROOT/TAO_IDL</TT>.</LI>
 
-    <H3>Examples</H3>
+<BR>&nbsp;
+<P>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<P>Run the naming service, the scheduling service, the event service and
+the test in <TT>$TAO_ROOT/TAO/orbsvcs/tests/Event_Latency</TT>; remember
+to give a different port to each one, using the <TT>-ORBport</TT> option.
+As in:
+<P><TT>$ cd $TAO_ROOT/orbsvcs</TT>
+<P><TT>$ cd Naming_Service ; ./Naming_Service -ORBport 10000 &amp;</TT>
+<P><TT>$ cd Event_Service ; ./Event_Service -ORBport 0 &amp;</TT>
+<P><TT>$ cd tests/Event_Latency ; ./Event_Latency -ORBport 0 -m 20 -j &amp;</TT>
+<P>You may want to run each program in a separate window. Try using a fixed
+port number for the <TT>Naming Service</TT> so you can use the <TT>NameService</TT>
+environment variable.
+<P>The script <TT>start_services</TT> in <TT>$TAO_ROOT/orbsvcs/tests</TT>
+can help with this.
+<LI>
+If you want real-time behavior on Solaris you may need to run these programs
+as root; on the other hand, this particular example really has no priority
+inversion, since only one thread runs at a time.</LI>
+</OL>
+Another example is <TT>EC_Multiple</TT>, numerous examples on how to run
+this test can be found in the scripts located in <TT>$TAO_ROOT/orbsvcs/tests/EC_Multiple</TT>.
+<H3>
+Features in previous releases</H3>
 
-    <P>For general documentation on the Event Service please read
-      <A HREF="http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz">
-	The Design and Performance of a Real-time CORBA Event
-	Service</A>.
+<UL>Added a prototype Consumer and Supplier that can send events though
+multicast groups (or regular UDP sockets).
+<P>The Event Channel can be configured using a Factory that constructs
+the right modules (like changing the dispatching module), in the current
+release only the default Factory is implemented.
+<P>When several suppliers are consumers are distributed over the network
+it could be nice to exploit locality and have a separate Event Channel
+on each process (or host). Only when an event is required by some remote
+consumer we need to send it through the network.
+<P>The basic architecture to achieve this seems very simple, each Event
+Channel has a proxy that connects to the EC peers, providing a "merge"
+of its (local) consumer subscriptions as its own subscription list.
+<P>Locally the proxy connects as a supplier, publishing all the events
+it has register for.
+<P>To avoid event looping the events carry a time-to-live field that is
+decremented each time the event goes through a proxy, when the TTL gets
+to zero the event is not propagated by the proxy.
+<P>In the current release an experimental implementation is provided, it
+basically hardcodes all the subscriptions and publications, we are researching
+on how to automatically build the publication list.
+<P>We use the COS Time Service types (not the services) to specify time
+for the Event Service and Scheduling Service.
+<LI>
+The <TT>Gateway</TT> to connect two event channels was moved from a test
+to the library. The corresponding test (<TT>EC_Multiple</TT>) has been
+expanded and improved.</LI>
 
-    <P>The simplest test for the Event Channel is
-      <CODE>Event_Latency</CODE>,
-      below are the basic instructions to run it:</P>
+<LI>
+The user can register a set of <TT>EC_Gateways</TT> with the <TT>EventChannel</TT>
+implementation, the event channel will automatically update the subscription
+list as consumers subscribe to the EC.</LI>
 
-    <OL>
-      <LI> Compile everything under <CODE>$TAO_ROOT/orbsvcs</CODE>, this
-	needs, obviously, <CODE>$TAO_ROOT/tao</CODE> and
-	the IDL compiler in <CODE>$TAO_ROOT/TAO_IDL</CODE>.</LI>
+<LI>
+The code for consumer and supplier disconnection was improved and seems
+to work without problems now</LI>
 
-      <LI><P>Run the naming service, the scheduling service, the event service
-	and the test in
-	<CODE>$TAO_ROOT/TAO/orbsvcs/tests/Event_Latency</CODE>;
-	remember to give a different port to each one,
-	using the <CODE>-ORBport</CODE> option. As in:</P>
+<LI>
+The <TT>Event_Service</TT> program creates a collocated <TT>Scheduling
+Service</TT> this works around a problem in the ORB when running on multiprocessor.</LI>
 
-	<CODE>
-	<P>
-	  $ cd $TAO_ROOT/orbsvcs
-	</P>
-	<P>
-$ cd Naming_Service ; ./Naming_Service -ORBport 10000 &
-	</P>
-	<P>
-$ cd Event_Service ; ./Event_Service -ORBport 0 &
-	</P>
-	<P>
-$ cd tests/Event_Latency ; ./Event_Latency -ORBport 0 -m 20 -j &
-	</P>
-	</CODE>
+<LI>
+Startup and shutdown were revised, the event channel shutdown cleanly now.</LI>
 
-	  <P>
-	    You may want to run each program in a separate window.
-	    Try using a fixed port number for the <CODE>Naming
-	      Service</CODE> so you can use the <CODE>NameService</CODE>
-	    environment variable.
-	  </P>
-	  
-	  <P>
-	    The script <CODE>start_services</CODE>
-	    in <CODE>$TAO_ROOT/orbsvcs/tests</CODE> can help with
-	    this.
-	  </P>
-	  
-      </LI>
+<LI>
+Added yet another example (<TT>$TAO_ROOT/orbsvcs/tests/EC_Throughput</TT>),
+this one ilustrate how to use the TAO extensions to create octet sequences
+based on CDR streams, without incurring in extra copies. This is useful
+to implement custom marshalling or late dermashalling of the event payload.
+Future versions of the test will help measuring the EC throughput, hence
+the name.</LI>
+</UL>
 
-      <LI> If you want real-time behavior on Solaris you may need to run
-	these programs as root; on the other hand, this particular
-	example really has no priority inversion, since only one
-	thread runs at a time.</LI>
-    </OL>
+<HR WIDTH="100%">
+<H3>
+COS-compliant Event Service Status</H3>
 
-    <P>Another example is <CODE>EC_Multiple</CODE>,
-      numerous examples on how to run this test can be found in the
-      scripts located in 
-      <CODE>$TAO_ROOT/orbsvcs/tests/EC_Multiple</CODE>.</P>
+<H4>
+Last Updated: Sat Jan&nbsp; 2 01:17:33 CST 1999</H4>
+Point of contact: <A HREF="mailto:pradeep@cs.wustl.edu">Pradeep Gore</A>
+<P>The COS compliant Event Service implements the <A HREF="http://siesta.cs.wustl.edu/~coryan/Docs/formal/97-12-11.pdf">Event
+Service Specification</A>
+<BR>This implementation is based on the Real Time Event service.
+<H3>
+Features in this release:</H3>
 
-    <H3>Features in previous releases</H3>
+<UL>
+<LI>
+The Event Channel (<TT>$TAO_ROOT/orbsvcs/orbsvcs/CosEvent</TT>) supports
+the <TT>push </TT>style event&nbsp; communication.</LI>
 
-    <UL>
-      <LI><P>
-	  Added a prototype Consumer and Supplier that can send events
-	  though multicast groups (or regular UDP sockets).
-	</P>
-      </LI>
-      <LI><P>The Event Channel can be configured using a Factory that
-	  constructs the right modules (like changing the dispatching
-	  module),
-	  in the current release only the default Factory is
-	  implemented.
-	</P>
-      </LI>
-      <LI>
-	<P>
-	When several suppliers are consumers are distributed over the
-	network it could be nice to exploit locality and have a
-	separate Event Channel on each process (or host).
-	Only when an event is required by some remote consumer we need
-	to send it through the network. </P>
+<LI>
+A simple test (<TT>$TAO_ROOT/orbsvcs/tests/CosEC_Basic</TT>) demonstrates
+how to create and use the event channel.</LI>
+</UL>
 
-	<P>
-	The basic architecture to achieve this seems very simple,
-	each Event Channel has a proxy that connects to the EC peers,
-	providing a "merge" of its (local) consumer subscriptions as
-	its own subscription list. </P>
+<H3>
+Current Work:</H3>
 
-	<P>
-	Locally the proxy connects as a supplier,
-	publishing all the events it has register for. </P>
+<UL>
+<LI>
+<TT>Event Service</TT>: The Event Service will create an event channel
+and register it with the naming service, Push style consumers and producers</LI>
 
-	<P>
-	To avoid event looping the events carry a time-to-live field
-	that is decremented each time the event goes through a proxy, 
-	when the TTL gets to zero the event is not propagated by the
-	proxy. </P>
+<BR>can then connect to the service and send /receive events.
+<LI>
+<TT>CosEC_Multiple</TT>:&nbsp; This test demonstrates how multiple CosEC's
+connect to one RtEC and how multiple consumers and producers exchange<BR>
+events in this configuration.</LI>
 
-	<P>
-	In the current release an experimental implementation is
-	provided,
-	it basically hardcodes all the subscriptions and publications,
-	we are researching on how to automatically build the
-	  publication list.</P>
-      </LI>
+<BR>&nbsp;
+<P>&nbsp;</UL>
 
-      <LI> <P>
-	We use the COS Time Service types (not the services) to
-	specify time for the Event Service and Scheduling Service.</P>
-      </LI>
+<UL>&nbsp;</UL>
 
-      <LI>The <CODE>Gateway</CODE> to connect two event channels was
-	moved from a test to the library.
-	The corresponding test (<CODE>EC_Multiple</CODE>) has been
-	expanded and improved.</LI>
-
-	<LI>
-	  The user can register a set of <CODE>EC_Gateways</CODE> with
-	  the <CODE>EventChannel</CODE> implementation, the event
-	  channel will automatically update the subscription list as
-	  consumers subscribe to the EC.
-	</LI>
-	<LI>
-	  The code for consumer and supplier disconnection was
-	  improved and seems to work without problems now
-	</LI>
-	<LI>
-	  The <CODE>Event_Service</CODE> program creates a collocated
-	  <CODE>Scheduling Service</CODE> this works around a problem
-	  in the ORB when running on multiprocessor.
-	</LI>
-	<LI>
-	  Startup and shutdown were revised, the event channel
-	  shutdown cleanly now.
-	</LI>
-	<LI>
-	  Added yet another example
-	  (<CODE>$TAO_ROOT/orbsvcs/tests/EC_Throughput</CODE>), this
-	  one ilustrate how to use the 
-	  TAO extensions to create octet sequences based on CDR
-	  streams, without incurring in extra copies.
-	  This is useful to implement custom marshalling or late
-	  dermashalling of the event payload.
-	  Future versions of the test will help measuring the EC
-	  throughput, hence the name.
-	</LI>
-    </UL>
-
-  </BODY>
+</BODY>
 </HTML>
