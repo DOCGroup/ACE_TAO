@@ -33,21 +33,21 @@ TAO_ObjectReferenceTemplate::~TAO_ObjectReferenceTemplate ()
 }
 
 char *
-TAO_ObjectReferenceTemplate::server_id (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ObjectReferenceTemplate::server_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ACE_const_cast (char *, this->server_id_);
 }
 
 char *
-TAO_ObjectReferenceTemplate::orb_id (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ObjectReferenceTemplate::orb_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ACE_const_cast (char *, this->orb_id_);
 }
 
 PortableInterceptor::AdapterName *
-TAO_ObjectReferenceTemplate::adapter_name (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ObjectReferenceTemplate::adapter_name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->adapter_name_;
