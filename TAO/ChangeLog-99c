@@ -1,3 +1,13 @@
+Sat Oct  2 17:56:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	  Fixed assignment operator if union is recursive. Before,
+	  the only way to initialize such a union was from the
+	  bottom up. Otherwise we would end up calling the member
+	  sequence copy constructor with a dereference null 
+	  pointer as an rhs. Now recursive unions can be initialized
+	  from the top down.
+
 Sat Oct  2 16:36:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Makefile:
