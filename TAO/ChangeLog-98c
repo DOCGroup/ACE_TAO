@@ -1,3 +1,17 @@
+Wed Jan 14 23:10:13 1998    <coryan@MILONGA>
+
+	* sequence.h: 
+	* sequence.i: 
+	* sequence.cpp: 
+	* sequence_T.h: 
+	* sequence_T.i: 
+	  More generated and parametric code reduced, also fixed some
+	  problems  detected by MSVC++.
+
+	* tao/TAO.dsp:
+	* TAO_DL/tao_idl.dsp:
+	  Updated projects to include new files.
+
 Wed Jan 14 21:03:18 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* sequence.h: 

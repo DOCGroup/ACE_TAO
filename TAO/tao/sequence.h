@@ -17,7 +17,7 @@
 #if !defined (TAO_SEQUENCE_H)
 #  define TAO_SEQUENCE_H
 
-class TAO_Base_Sequence
+class TAO_Export TAO_Base_Sequence
 {
   // = TITLE
   //   Base class for TAO sequences.
@@ -38,11 +38,8 @@ public:
   CORBA::ULong maximum (void) const;
   // return the maximum length of the sequence
 
-  void length (CORBA::ULong length);
+  // void length (CORBA::ULong length);
   // set the length
-
-  CORBA::ULong length (void) const;
-  // return the current length
 
   virtual void _allocate_buffer (CORBA::ULong length) = 0;
   // Ensure that the buffer contains space for at least <length>
@@ -50,14 +47,6 @@ public:
   // the old ones (if any) must be copied into the buffer using
   // operator= and then their destructors must be called.
   // Finally the old buffer must be released.
-
-  virtual void _deallocate_buffer (void) = 0;
-  // Releases the buffer and call the destructor for all the elements
-  // in it; remember that there are <maximum> elements in the buffer.
-
-  virtual int _bounded (void) const = 0;
-  // Returns 1 if the sequence is bounded (hence it cannot be resized)
-  // and 0 otherwise.
 
 protected:
   TAO_Base_Sequence (void);
@@ -95,12 +84,84 @@ protected:
   // destroyed.
 };
 
+class TAO_Export TAO_Unbounded_Base_Sequence : public TAO_Base_Sequence
+{
+  // = TITLE
+  //   Base class for all bounded sequences.
+  //
+  // = DESCRIPTION
+  //   This class implements part of the funcionality common to all
+  //   bounded sequences, using this intermediate class instead of
+  //   virtual methods on TAO_Base_Sequence give us a slight
+  //   improvement of performance, but also reduces the amount of
+  //   generated code in the templates.
+public:
+  void length (CORBA::ULong length);
+  // set the length, for this sequences this call increases the
+  // capacity on demand.
+
+  CORBA::ULong length (void) const;
+  // return the current length, it cannot go into the base class due
+  // to the C++ name lookup rules (if you don't know what I'm talking
+  // about, then try moving it there).
+
+protected:
+  TAO_Unbounded_Base_Sequence (void);
+  // Default constructor.
+
+  TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
+			       CORBA::ULong length,
+			       void* buffer,
+			       CORBA::Boolean release = 0);
+  // Constructor with control of ownership.
+
+  TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
+			       void* buffer);
+  // Assume ownership and set length to 0.
+};
+
+class TAO_Export TAO_Bounded_Base_Sequence : public TAO_Base_Sequence
+{
+  // = TITLE
+  //   Base class for all bounded sequences.
+  //
+  // = DESCRIPTION
+  //   This class implements part of the funcionality common to all
+  //   bounded sequences, using this intermediate class instead of
+  //   virtual methods on TAO_Base_Sequence give us a slight
+  //   improvement of performance, but also reduces the amount of
+  //   generated code in the templates.
+public:
+  void length (CORBA::ULong length);
+  // set the length, for this sequences this call is ignored if the
+  // new length is greater that the maximum.
+
+  CORBA::ULong length (void) const;
+  // return the current length, it cannot go into the base class due
+  // to the C++ name lookup rules (if you don't know what I'm talking
+  // about, then try moving it there).
+
+protected:
+  TAO_Bounded_Base_Sequence (void);
+  // Default constructor.
+
+  TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
+		     CORBA::ULong length,
+		     void* buffer,
+		     CORBA::Boolean release = 0);
+  // Constructor with control of ownership.
+
+  TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
+		     void* buffer);
+  // Assume ownership and set length to 0.
+};
+
 /****************************************************************/
 
 template<class T, class Manager> class TAO_Unbounded_Managed_Sequence;
 template<class T, class Manager, CORBA::ULong MAX> class TAO_Bounded_Managed_Sequence;
 
-class TAO_String_Manager
+class TAO_Export TAO_String_Manager
 {
   // = TITLE
   //   Manager for strings.
