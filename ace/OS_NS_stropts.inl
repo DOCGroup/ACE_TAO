@@ -103,7 +103,7 @@ ACE_OS::fdetach (const char *file)
 
 ACE_INLINE int
 ACE_OS::ioctl (ACE_HANDLE handle,
-               int cmd,
+               ACE_IOCTL_TYPE_ARG2 cmd,
                void *val)
 {
   ACE_OS_TRACE ("ACE_OS::ioctl");
