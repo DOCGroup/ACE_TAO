@@ -1,3 +1,8 @@
+Sat Jan 17 00:42:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SString.cpp (substring): Fixed bug.  count should be
+ 	  initialized to length and not len_.
+
 Fri Jan 16 15:52:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/IOStream.h (ACE_Streambuf): 
