@@ -1,3 +1,11 @@
+Thu May 18 21:05:46 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	* orbsvcs/Notify_Service/Makefile:
+	* orbsvcs/examples/Notify/Filter/Makefile:
+	* orbsvcs/examples/Notify/Subscribe/Makefile:
+	  Removed unnecessary dependencies in the Makefiles.
+
 Thu May 18 17:02:11 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/ORBEndpoint.html:
@@ -11,16 +19,16 @@ Thu May 18 17:02:11 2000  Ossama Othman  <ossama@uci.edu>
 
 Thu May 18 16:33:16 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 		
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	  Fixed warnings with KCC3.4 compiler	
-		
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+	  Fixed warnings with KCC3.4 compiler
+
 Thu May 18 11:28:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/ORBEndpoint.html:
@@ -52,7 +60,7 @@ Thu May 18 08:14:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Moved the generation of the destructor and default
 	  constructor for interfaces out of the *C.i file and
 	  into the *C.cpp file. Earlier changes to prevent a
-	  widening _var assignment created problems with 
+	  widening _var assignment created problems with
 	  aggessively inlining compilers in the case where an
 	  interface is forward declared, and has a child which
 	  is forward declared earlier.
@@ -63,19 +71,19 @@ Wed May 17 20:57:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
           The using std::set_unexpected needed to be used in Borland,
           so I changed the #if guard around it to check for _MSC_VER
-          instead of ACE_WIN32. 
+          instead of ACE_WIN32.
 
 Wed May 17 12:11:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/default_resource.cpp (allocate_reactor_impl):
 
           Changed a check for ACE_HAS_WINCE to ACE_LACKS_MSG_WMFO
-          so Pharlap is also covered.  
+          so Pharlap is also covered.
 
 Wed May 17 12:30:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
-	  Added a missing case (wchar) to switch statement used to 
+	  Added a missing case (wchar) to switch statement used to
 	  compute a valid value for the default case label. I was
 	  looking through IDL code trying to figure out how to
 	  write TypeCodeFactory_i::create_union_tc and I found
