@@ -1,5 +1,6 @@
 Tue Apr  3 22:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
+        * tao/PortableServer/PolicyS.i:
         * tao/PortableServer/PolicyS_T.h:
         * tao/PortableServer/PolicyS_T.i:
         * tao/PortableServer/PolicyS_T.cpp:
