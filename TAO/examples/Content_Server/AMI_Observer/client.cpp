@@ -8,6 +8,8 @@
 #include "Push_Web_ServerC.h"
 #include "Push_Iterator_Handler.h"
 
+ACE_RCSID(AMI_Observer, client, "$Id$")
+
 int
 main (int argc, char *argv[])
 {
@@ -22,7 +24,7 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Ossama's Mighty ORB",
+                                            "Mighty ORB",
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -49,7 +51,7 @@ main (int argc, char *argv[])
       // Narrow to a Naming Context
       CosNaming::NamingContext_var nc;
       nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {

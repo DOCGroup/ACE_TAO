@@ -8,7 +8,7 @@
 #include "Push_Iterator_Handler.h"
 #include "Callback.h"
 
-ACE_RCSID(Content_Server, Push_Iterator_Handler, "$Id$")
+ACE_RCSID(AMI_Observer, Push_Iterator_Handler, "$Id$")
 
 Push_Iterator_Handler::Push_Iterator_Handler (void)
   : callback_servant_ (0),
@@ -20,39 +20,20 @@ Push_Iterator_Handler::Push_Iterator_Handler (void)
 
 Push_Iterator_Handler::~Push_Iterator_Handler (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Get the POA used when activating the Reply Handler object.
-      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Get the object ID associated with this servant.
-      PortableServer::ObjectId_var oid =
-        poa->servant_to_id (this,
-                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Now deactivate the iterator object.
-      poa->deactivate_object (oid.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught unexpected exception ")
-                           ACE_TEXT ("in ~Push_Iterator_Handler():"));
-    }
-  ACE_ENDTRY;
+  // Nothing else
 }
 
 void
 Push_Iterator_Handler::register_callback (
     const Web_Server::Metadata_Type & metadata,
-    CORBA::Environment &)
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_servant_->metadata (metadata);
+
+  // This handler is no longer needed, so deactivate it.
+  this->deactivate (ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -74,7 +55,7 @@ Push_Iterator_Handler::run (int * request_count,
   // Activate the Callback.
   this->callback_ = this->callback_servant_->_this (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   // Activate this Reply Handler.
   this->ami_handler_ = this->_this (ACE_TRY_ENV);
   ACE_CHECK;
@@ -84,5 +65,24 @@ Push_Iterator_Handler::run (int * request_count,
                                     pathname,
                                     this->callback_.in (),
                                     ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+Push_Iterator_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Get the POA used when activating the Reply Handler object.
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Get the object ID associated with this servant.
+  PortableServer::ObjectId_var oid =
+    poa->servant_to_id (this,
+                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Now deactivate the AMI_CallbackHandler object.
+  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
