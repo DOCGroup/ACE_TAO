@@ -31,6 +31,12 @@ my(%compscript) = ('ACE_COMPONENTS'     => ['--ace',     '--set'],
 # Subroutine Section
 # ************************************************************
 
+sub dollar_special {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub sort_files {
   #my($self) = shift;
   return 0;

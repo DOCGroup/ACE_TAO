@@ -1,28 +1,46 @@
+Tue Sep 30 14:06:53 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/tests/gperf_test.mpb:
+        * apps/gperf/tests/tests.mpc:
+
+          Added an mpc file for all of the gperf tests.
+
+        * bin/MakeProjectCreator/modules/AutomakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/MakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added code to handle double dollar signs ($$) in mpc assignment
+          values.  In make based projects, leave $$ as it is, but in others
+          convert $$ into $.
+
 Tue Sep 30 10:44:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Bug_1576_Regression_Test.cpp: Fixed fuzz errors.
+        * ace/Bug_1576_Regression_Test.cpp: Fixed fuzz errors.
 
 Tue Sep 30 10:43:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/UUID.cpp (ACE_Utils): 
+        * ace/UUID.cpp (ACE_Utils):
 
-	  Fixed fuzz errors.
-	
+          Fixed fuzz errors.
+
 Tue Sep 30 10:40:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.h:
-	* Kokyu/DSRT_Dispatch_Item_T.h:
-	* Kokyu/DSRT_Dispatch_Item_T.i:
-	* Kokyu/DSRT_Dispatcher_Impl_T.h:
-	* Kokyu/DSRT_Sched_Queue_T.h:
-	* Kokyu/Default_Dispatcher_Impl.h:
-	* Kokyu/Dispatcher_Impl.h:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/Kokyu.h:
-	* Kokyu/Kokyu_defs.h:
-	* Kokyu/Kokyu_dsrt.h:
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.h:
+        * Kokyu/DSRT_Dispatch_Item_T.h:
+        * Kokyu/DSRT_Dispatch_Item_T.i:
+        * Kokyu/DSRT_Dispatcher_Impl_T.h:
+        * Kokyu/DSRT_Sched_Queue_T.h:
+        * Kokyu/Default_Dispatcher_Impl.h:
+        * Kokyu/Dispatcher_Impl.h:
+        * Kokyu/Dispatcher_Task.h:
+        * Kokyu/Kokyu.h:
+        * Kokyu/Kokyu_defs.h:
+        * Kokyu/Kokyu_dsrt.h:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Tue Sep 30 10:10:17 2003  Chad Elliott  <elliott_c@ociweb.com>
 

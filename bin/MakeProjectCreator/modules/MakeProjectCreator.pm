@@ -21,6 +21,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub dollar_special {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub sort_files {
   #my($self) = shift;
   return 0;
