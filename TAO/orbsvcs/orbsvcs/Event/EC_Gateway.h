@@ -180,4 +180,4 @@ private:
   // We talk to the EC (as a consumer) using this proxy.
 };
 
-#endif /* ACE_EVENT_CHANNEL_H */
+#endif /* ACE_EC_GATEWAY_H */

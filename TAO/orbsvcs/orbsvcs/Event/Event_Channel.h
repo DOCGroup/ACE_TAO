@@ -169,11 +169,12 @@ class TAO_Module_Factory;
 // ec..
 class TAO_ORBSVCS_Export ACE_EventChannel : public POA_RtecEventChannelAdmin::EventChannel
 // = TITLE
-//   ACE Event Channel.
+//   TAO's Real-time Event Channel.
 //
 // = DESCRIPTION
-//   Implementation of COSS Event Channel.  For more detailed
-//   information, see http://www.cs.wustl.edu/~mda/event.html.
+//   This class implements the interface defined in
+//   RtecEventChannelAdmin.idl. For more details check:
+//   http://www.cs.wustl.edu/~coryan/EC/JSAC98.pdf
 {
 public:
   enum { INITIAL_STATE = 0,
@@ -190,20 +191,6 @@ public:
 
   virtual ~ACE_EventChannel (void);
   // Calls destroy.
-
-  // = Accessor methods to Event Channel objects.  The Event Channel
-  // acts as a sort of service repository of object references.  All
-  // objects in the Event Service come to this interface to obtain
-  // object references during initialization.
-
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers (CORBA::Environment &);
-  // Consumer administration factory method.
-
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers (CORBA::Environment &);
-  // Supplier administration factory method.
-
-  virtual void destroy (CORBA::Environment &);
-  // Explicitly shut down the channel.
 
   RtecEventChannelAdmin::EventChannel_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::EventChannel.
@@ -249,9 +236,31 @@ public:
   void update_supplier_gwys (CORBA::Environment& _env);
   // The consumer (or supplier) list has changed, thus the EC has to
   // inform any gateways it has.
-  // TODO: currently we only support consumer gateways.
 
   ACE_Task_Manager* task_manager (void) const;
+  // Each Event Channel has its own Task_Manager to handle timers.
+
+  // = The RtecEventChannelAdmin::EventChannel methods.
+
+  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
+    for_consumers (CORBA::Environment &);
+  // In this implementation of the EC this returns the interface for
+  // the Consumer_Module.
+
+  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
+    for_suppliers (CORBA::Environment &);
+  // Return an interface to the Supplier_Module.
+
+  virtual void destroy (CORBA::Environment &);
+  // Shutdown the EC, free all resources, stop all threads and then
+  // shutdown the server where the Servant is running.
+
+  virtual RtecEventChannelAdmin::Observer_Handle
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer,
+		     CORBA::Environment &env);
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle,
+				CORBA::Environment &env);
+  // The observer manipulators
 
 private:
   ACE_RTU_Manager *rtu_manager_;

@@ -53,12 +53,12 @@ DOVE_Supplier::notify (CORBA::Any &message)
     event.source_ = SOURCE_ID;
     event.type_ = ACE_ES_EVENT_NOTIFICATION;
     event.ttl_ = 1;
-    event.creation_time_ = ORBSVCS_Time::zero;
-    event.ec_recv_time_ = ORBSVCS_Time::zero;
-    event.ec_send_time_ = ORBSVCS_Time::zero;
+    event.header.creation_time = ORBSVCS_Time::zero;
+    event.header.ec_recv_time = ORBSVCS_Time::zero;
+    event.header.ec_send_time = ORBSVCS_Time::zero;
     //event.data_.x = 0;
     //event.data_.y = 0;
-    event.data_.any_value = message;
+    event.data.any_value = message;
 
     RtecEventComm::EventSet events;
     events.length (1);
@@ -192,13 +192,14 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].event.source_ = SOURCE_ID;
     qos.publications[0].event.type_ = ACE_ES_EVENT_NOTIFICATION;
     qos.publications[0].event.ttl_ = 1;
-    qos.publications[0].event.creation_time_ = ORBSVCS_Time::zero;
-    qos.publications[0].event.ec_recv_time_ = ORBSVCS_Time::zero;
-    qos.publications[0].event.ec_send_time_ = ORBSVCS_Time::zero;
-    qos.publications[0].event.data_.any_value.replace (CORBA::_tc_short,
-                                                       &x,
-                                                       0,
-                                                       TAO_TRY_ENV);
+    qos.publications[0].event.header.creation_time = ORBSVCS_Time::zero;
+    qos.publications[0].event.header.ec_recv_time = ORBSVCS_Time::zero;
+    qos.publications[0].event.header.ec_send_time = ORBSVCS_Time::zero;
+    qos.publications[0].event.data.any_value.replace (CORBA::_tc_short,
+						      &x,
+						      0,
+						      TAO_TRY_ENV);
+    TAO_CHECK_ENV;
     qos.publications[0].dependency_info.number_of_calls = 1;
     qos.publications[0].dependency_info.rt_info = rt_info;
 

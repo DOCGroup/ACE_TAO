@@ -214,7 +214,7 @@ Driver::push_consumer (void* consumer_cookie,
     {
       const RtecEventComm::Event& e = events[i];
 
-      if (e.data_.payload.mb () == 0)
+      if (e.data.payload.mb () == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
           continue;
@@ -228,10 +228,10 @@ Driver::push_consumer (void* consumer_cookie,
       // already!)?
 
       // Note that there is no copying
-      int byte_order = e.data_.payload[0];
+      int byte_order = e.data.payload[0];
 
       ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (e.data_.payload.mb ());
+        ACE_Message_Block::duplicate (e.data.payload.mb ());
       mb->rd_ptr (1); // skip the byte order
 
       TAO_InputCDR cdr (mb, byte_order);

@@ -15,18 +15,26 @@ TAO_ECG_UDP_Sender::TAO_ECG_UDP_Sender (void)
 int
 TAO_ECG_UDP_Sender::get_local_addr (ACE_INET_Addr& addr)
 {
-  return this->dgram_.get_local_addr (addr);
+  if (this->dgram_ == 0)
+    return -1;
+  return this->dgram_->get_local_addr (addr);
 }
 
 void 
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 			  RtecScheduler::Scheduler_ptr lcl_sched,
 			  const char* lcl_name,
-			  const ACE_INET_Addr& ipaddr,
+			  RtecUDPAdmin::AddrServer_ptr addr_server,
+			  ACE_SOCK_Dgram *dgram,
 			  CORBA::Environment &_env)
 {
   this->lcl_ec_ = 
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
+
+  this->addr_server_ = 
+    RtecUDPAdmin::AddrServer::_duplicate (addr_server);
+
+  this->dgram_ = dgram;
 
   this->lcl_info_ =
     lcl_sched->create (lcl_name, _env);
@@ -45,14 +53,6 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 		  RtecScheduler::OPERATION,
 		  _env);
   if (_env.exception () != 0) return;
-
-  if (this->dgram_.open (ipaddr) == -1)
-    {
-      // @@ TODO Use a Event Channel specific exception
-      ACE_ERROR ((LM_ERROR, "ECG_UDP::init - Dgram open failed\n"));
-      _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-    }
-  if (_env.exception () != 0) return;
 }
 
 void
@@ -61,14 +61,6 @@ TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& _env)
   this->close (_env);
   if (_env.exception () == 0) return;
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
-
-  if (this->dgram_.close () == -1)
-    {
-      // @@ TODO Use a Event Channel specific exception
-      ACE_ERROR ((LM_ERROR, "ECG_UDP::init - Dgram close failed\n"));
-      _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-    }
-  if (_env.exception () != 0) return;
 }
 
 void
@@ -139,7 +131,7 @@ void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 			  CORBA::Environment & _env)
 {
-  ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - "));
+  // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - "));
 
   if (events.length () == 0)
     {
@@ -147,7 +139,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "%d event(s) - ", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s) - ", events.length ()));
 
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.
@@ -155,25 +147,32 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
   RtecEventComm::EventSet out (events.length ());
   for (u_int i = 0; i < events.length (); ++i)
     {
-      //ACE_DEBUG ((LM_DEBUG, "type = %d ", events[i].type_));
-      if (events[i].ttl_ > 0)
-        {
-          count++;
-          out.length (count);
-          out[count - 1] = events[i];
-          out[count - 1].ttl_--;
-        }
-    }
-  ACE_DEBUG ((LM_DEBUG, "count = %d\n", count));
+      if (events[i].header.ttl <= 0)
+	continue;
 
-  if (count > 0)
-    {
+      const RtecEventComm::Event& e = events[i];
+
+      // Copy only the header...
+      RtecEventComm::EventHeader header = e.header;
+      header.ttl--;
+      
+      RtecUDPAdmin::UDP_Addr udp_addr;
+      this->addr_server_->get_addr (header, udp_addr, _env);
+      TAO_CHECK_ENV_RETURN_VOID(_env);
+
       TAO_OutputCDR cdr;
       cdr.write_boolean (TAO_ENCAP_BYTE_ORDER);
       cdr.write_ulong (0); // Place holder for size...
 
-      cdr.encode (RtecEventComm::_tc_EventSet, &out, 0, _env);
-      if (_env.exception () != 0) return;
+      // Marshal as if it was a sequence of one element, notice how we
+      // marshal a modified version of the header, but the data is not
+      // copied...
+      cdr.write_ulong (1);
+      cdr.encode (RtecEventComm::_tc_EventHeader, &header, 0, _env);
+      TAO_CHECK_ENV_RETURN_VOID(_env);
+
+      cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, _env);
+      TAO_CHECK_ENV_RETURN_VOID(_env);
 
       CORBA::ULong bodylen = cdr.total_length ();
       char* buf = ACE_const_cast(char*,cdr.buffer ());
@@ -192,8 +191,9 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 #endif
 
       // This is a good maximum, because Dgrams cannot be longer than
-      // 64K and the usual size for a CDR fragment is 512 bytes, still
-      // if this is not enough we allocate memory from the heap.
+      // 64K and the usual size for a CDR fragment is 512 bytes.
+      // @@ TODO In the future we may need to allocate some memory
+      // from the heap.
       const int TAO_WRITEV_MAX = 128;
       ACE_IO_Vector iov[TAO_WRITEV_MAX];
 
@@ -207,20 +207,23 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 	  iovcnt++;
 	}
 
-      ssize_t n = this->dgram_.send (iov, iovcnt);
+      ACE_INET_Addr inet_addr (udp_addr.port, udp_addr.ipaddr);
+      // ACE_DEBUG ((LM_DEBUG, "sending to (%d,%u)\n",
+      // udp_addr.port, udp_addr.ipaddr));
+      ssize_t n = this->dgram_->send (iov, iovcnt, inet_addr);
       if (n == -1)
 	{
 	  // @@ TODO Use a Event Channel specific exception
 	  ACE_DEBUG ((LM_DEBUG,
 		      "ECG_UDP (%t) send failed %p\n", ""));
-	  _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+	  TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 	}
       else if (n == 0)
 	{
 	  // @@ TODO Use a Event Channel specific exception
 	  ACE_DEBUG ((LM_DEBUG,
 		      "ECG_UDP (%t) EOF on send \n"));
-	  _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+	  TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 	}
     }
 }
@@ -445,12 +448,22 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv)
 }
 
 int
-TAO_ECG_Mcast_EH::open (const ACE_INET_Addr& mcast_group)
+TAO_ECG_Mcast_EH::open (void)
 {
-  if (this->dgram_.subscribe (mcast_group) == -1)
-    return -1;
   return this->reactor ()->register_handler (this,
 					     ACE_Event_Handler::READ_MASK);
+}
+
+int
+TAO_ECG_Mcast_EH::subscribe (const ACE_INET_Addr &mcast_addr)
+{
+  return this->dgram_.subscribe (mcast_addr);
+}
+
+int
+TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
+{
+  return this->dgram_.unsubscribe ();
 }
 
 int

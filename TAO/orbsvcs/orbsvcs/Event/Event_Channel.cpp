@@ -165,7 +165,7 @@ public:
       ACE_ES_Dependency_Iterator iter (consumer->qos ().dependencies);
       while (iter.advance_dependency () == 0)
         {
-          RtecEventComm::EventType &type = (*iter).event.type_;
+          RtecEventComm::EventType &type = (*iter).event.header.type;
           if (type != ACE_ES_GLOBAL_DESIGNATOR &&
               type != ACE_ES_CONJUNCTION_DESIGNATOR &&
               type != ACE_ES_DISJUNCTION_DESIGNATOR)
@@ -422,7 +422,7 @@ ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr 
   // @@ TODO: The SupplierQOS should have a more reasonable interface to
   // obtain the supplier_id(), BTW, a callback to push_supplier will
   // not work: it usually results in some form of dead-lock.
-  this->source_id_ = qos_.publications[0].event.source_;
+  this->source_id_ = qos_.publications[0].event.header.source;
 
   supplier_module_->connected (this, _env);
 }
@@ -438,7 +438,7 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
     {
       RtecEventComm::Event& ev =
         ACE_const_cast(RtecEventComm::Event&,event[i]);
-      ORBSVCS_Time::hrtime_to_TimeT (ev.ec_recv_time_, ec_recv);
+      ORBSVCS_Time::hrtime_to_TimeT (ev.header.ec_recv_time, ec_recv);
     }
   supplier_module_->push (this, event, _env);
 }
@@ -810,6 +810,21 @@ ACE_EventChannel::update_supplier_gwys (CORBA::Environment& _env)
       gw->update_supplier (c_qos, s_qos, _env);
       if (_env.exception () != 0) return;
     }
+}
+
+RtecEventChannelAdmin::Observer_Handle
+ACE_EventChannel::append_observer (RtecEventChannelAdmin::Observer_ptr,
+				   CORBA::Environment &)
+{
+  return 0;
+  // @@ TODO fill in the "implementation details"
+}
+
+void
+ACE_EventChannel::remove_observer (RtecEventChannelAdmin::Observer_Handle,
+				   CORBA::Environment &)
+{
+  // @@ TODO fill in the "implementation details"
 }
 
 // ****************************************************************
@@ -1267,7 +1282,7 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
     {
       RtecEventComm::Event& ev =
         ACE_const_cast(RtecEventComm::Event&,event_set[i]);
-      ORBSVCS_Time::hrtime_to_TimeT (ev.ec_send_time_, ec_send);
+      ORBSVCS_Time::hrtime_to_TimeT (ev.header.ec_send_time, ec_send);
     }
   request->consumer ()->push (event_set, _env);
 }
@@ -1333,9 +1348,9 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
 
   CORBA::ULong cc = 0;
   CORBA::ULong sc = 0;
-  dep[cc].event.type_ = ACE_ES_DISJUNCTION_DESIGNATOR;
-  dep[cc].event.source_ = 0;
-  dep[cc].event.creation_time_ = ORBSVCS_Time::zero;
+  dep[cc].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
+  dep[cc].event.header.source = 0;
+  dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
   dep[cc].rt_info = 0;
   cc++;
 
@@ -1354,7 +1369,7 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
           RtecEventComm::Event& event =
             c->qos ().dependencies[j].event;
 
-          RtecEventComm::EventType type = event.type_;
+          RtecEventComm::EventType type = event.header.type;
           if (type <= ACE_ES_EVENT_UNDEFINED)
             continue;
 
@@ -1369,22 +1384,22 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
           CORBA::ULong k;
           for (k = 0; k < cc; ++k)
             {
-              if (dep[k].event.type_ == event.type_
-                  && dep[k].event.source_ == event.source_)
+              if (dep[k].event.header.type == event.header.type
+                  && dep[k].event.header.source == event.header.source)
                 break;
             }
           if (k == cc)
             {
-              dep[cc].event.type_ = event.type_;
-              dep[cc].event.source_ = event.source_;
-              dep[cc].event.creation_time_ = ORBSVCS_Time::zero;
+              dep[cc].event.header.type = event.header.type;
+              dep[cc].event.header.source = event.header.source;
+              dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
               // The RT_Info is filled up later.
               dep[cc].rt_info = 0;
               cc++;
 
-              pub[sc].event.type_ = event.type_;
-              pub[sc].event.source_ = event.source_;
-              pub[sc].event.creation_time_ = ORBSVCS_Time::zero;
+              pub[sc].event.header.type = event.header.type;
+              pub[sc].event.header.source = event.header.source;
+              pub[sc].event.header.creation_time = ORBSVCS_Time::zero;
               pub[sc].dependency_info.dependency_type =
                 RtecScheduler::TWO_WAY_CALL;
               pub[sc].dependency_info.number_of_calls = 1;
@@ -1471,9 +1486,9 @@ int
 ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consumer)
 {
   RtecEventComm::Time &interval =
-    consumer->dependency ()->event.creation_time_;
+    consumer->dependency ()->event.header.creation_time;
   RtecEventComm::Time &delay =
-    consumer->dependency ()->event.creation_time_;
+    consumer->dependency ()->event.header.creation_time;
 
   // Store the preemption priority so we can cancel the correct timer.
   // The priority values may change during the process lifetime (e.g.,
@@ -1528,9 +1543,9 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
   else
     {
       RtecEventComm::Time &interval =
-        consumer->dependency ()->event.creation_time_;
+        consumer->dependency ()->event.header.creation_time;
       RtecEventComm::Time &delay =
-        consumer->dependency ()->event.creation_time_;
+        consumer->dependency ()->event.header.creation_time;
 
       // Store the preemption priority so we can cancel the correct timer.
       // The priority values may change during the process lifetime (e.g.,
@@ -1705,7 +1720,7 @@ ACE_ES_Consumer_Correlation::connected (ACE_Push_Consumer_Proxy *consumer,
       // Keep track of how many conjunction and disjunction groups are
       // registered.  Update the index pointers so that the helper
       // functions can update the appropriate group objects.
-      switch ((*iter).event.type_)
+      switch ((*iter).event.header.type)
         {
         case ACE_ES_CONJUNCTION_DESIGNATOR:
           cgroup_index++;
@@ -1880,8 +1895,8 @@ ACE_ES_Consumer_Correlation::get_consumer_rep (RtecEventChannelAdmin::Dependency
       RtecEventComm::Event& e = consumer_reps_[x]->dependency ()->event;
       // If <dependency> matches any previously subscribed consumer
       // reps, we'll reuse it.
-      if (e.type_ == dependency.event.type_
-          && e.source_ == dependency.event.source_ )
+      if (e.header.type == dependency.event.header.type
+          && e.header.source == dependency.event.header.source )
         {
           rep = consumer_reps_[x];
           break;
@@ -2120,8 +2135,10 @@ ACE_ES_Consumer_Rep_Timeout::execute (void)
       CORBA::Environment __env;
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
       ORBSVCS_Time::Time_Value_to_TimeT
-        (timeout_event_->creation_time_, tv);
-      correlation_->correlation_module_->push (this, timeout_event_, __env);
+        (timeout_event_->header.creation_time, tv);
+      correlation_->correlation_module_->push (this,
+					       timeout_event_,
+					       __env);
       if (__env.exception () != 0)
         ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep_Timeout::execute: unexpected exception.\n"));
     }
@@ -2174,7 +2191,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
     RtecEventChannelAdmin::PublicationSet &publications =
       supplier->qos ().publications;
 
-    sid = publications[0].event.source_;
+    sid = publications[0].event.header.source;
     for (CORBA::ULong index=0; index < publications.length (); index++)
       {
         // Check to make sure an RT_Info was specified.
@@ -2188,7 +2205,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 #endif
 
         RtecEventComm::EventType event_type =
-          publications[index].event.type_;
+          publications[index].event.header.type;
 
         // @@ TODO we should throw something Check to make sure a type
         // was specified.
@@ -2474,12 +2491,12 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
         return 0;
       }
 
-    if (supplier_map.find (event->type_, subscribers) == -1)
+    if (supplier_map.find (event->header.type, subscribers) == -1)
       {
         ACE_DEBUG ((LM_ERROR,
                     "EC (%t) ACE_ES_Subscription_Module::push_source_type"
                     " Warning: event type %d not registered.\n",
-                    event->type_));
+                    event->header.type));
         ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
         return 0; // continue anyway
       }
@@ -2789,23 +2806,23 @@ ACE_ES_Subscription_Module::subscribe (ACE_ES_Consumer_Rep *consumer)
   int result = 0;
   RtecEventComm::Event &event = consumer->dependency ()->event;
 
-  if (event.source_ == 0)
+  if (event.header.source == 0)
     // Not source-based subscription.
     {
-      if (event.type_ == ACE_ES_EVENT_ANY)
+      if (event.header.type == ACE_ES_EVENT_ANY)
         result = this->subscribe_all (consumer);
       else
-        result = this->subscribe_type (consumer, event.type_);
+        result = this->subscribe_type (consumer, event.header.type);
     }
   else
     // Source-based subscription.
     {
-      if (event.type_ == ACE_ES_EVENT_ANY)
-        result = this->subscribe_source (consumer, event.source_);
+      if (event.header.type == ACE_ES_EVENT_ANY)
+        result = this->subscribe_source (consumer, event.header.source);
       else
         result = this->subscribe_source_type (consumer,
-                                              event.source_,
-                                              event.type_);
+                                              event.header.source,
+                                              event.header.type);
     }
 
   return result;
@@ -2823,18 +2840,18 @@ ACE_ES_Subscription_Module::unsubscribe (ACE_ES_Consumer_Rep *consumer)
 
   RtecEventComm::Event &event = consumer->dependency ()->event;
 
-  if (event.type_ != ACE_ES_EVENT_ANY)
+  if (event.header.type != ACE_ES_EVENT_ANY)
     {
       // Remove the consumer from the global type-based subscription list.
       ACE_ES_Subscription_Info::remove (type_subscribers_,
                                         consumer,
-                                        event.type_);
+                                        event.header.type);
     }
   else
     // Remove the consumer from the global source-based subscription list.
     ACE_ES_Subscription_Info::remove (source_subscribers_,
                                       consumer,
-                                      event.source_);
+                                      event.header.source);
 
 #if 0
   // @@ TODO This code was removed and I'm (coryan) adding it again
@@ -2858,19 +2875,21 @@ ACE_ES_Subscription_Module::unsubscribe (ACE_ES_Consumer_Rep *consumer)
 
   int result = 0;
 
-  if (event.source_ == 0)
+  if (event.header.source == 0)
     {
-      if (event.type_ == ACE_ES_EVENT_ANY)
+      if (event.header.type == ACE_ES_EVENT_ANY)
         result = this->unsubscribe_all (consumer);
       else
-        result = this->unsubscribe_type (consumer, event.type_);
+        result = this->unsubscribe_type (consumer, event.header.type);
     }
   else
     {
-      if (event.type_ == ACE_ES_EVENT_ANY)
-        result = this->unsubscribe_source (consumer, event.source_);
+      if (event.header.type == ACE_ES_EVENT_ANY)
+        result = this->unsubscribe_source (consumer, event.header.source);
       else
-        result = this->unsubscribe_source_type (consumer, event.source_, event.type_);
+        result = this->unsubscribe_source_type (consumer,
+						event.header.source,
+						event.header.type);
     }
   return result;
 #else
@@ -2943,13 +2962,13 @@ ACE_ES_Subscription_Module::unsubscribe_source_type (ACE_ES_Consumer_Rep *consum
   Supplier_Iterator iter (all_suppliers_);
 
   // Step through all supplier proxies looking for a match to the
-  // consumer's event.source_.  This is the same as unsubscribe_type,
-  // only we can check the source first.
+  // consumer's event.header.source.  This is the same as
+  // unsubscribe_type, only we can check the source first.
   for (ACE_Push_Supplier_Proxy **proxy = 0;
        iter.next (proxy) != 0;
        iter.advance ())
     // If the proxy matches the source id we're looking for, try to
-    // remove <consumer> from the proxy's <event.type_> set.
+    // remove <consumer> from the proxy's <event.header.type> set.
     if ((**proxy) == source)
       {
         ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
@@ -3228,9 +3247,9 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
 
   CORBA::ULong cc = 0;
   CORBA::ULong sc = 0;
-  dep[cc].event.type_ = ACE_ES_DISJUNCTION_DESIGNATOR;
-  dep[cc].event.source_ = 0;
-  dep[cc].event.creation_time_ = ORBSVCS_Time::zero;
+  dep[cc].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
+  dep[cc].event.header.source = 0;
+  dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
   dep[cc].rt_info = 0;
   cc++;
 
@@ -3249,7 +3268,7 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
           RtecEventComm::Event& event =
             s->qos ().publications[j].event;
 
-          RtecEventComm::EventType type = event.type_;
+          RtecEventComm::EventType type = event.header.type;
           if (type <= ACE_ES_EVENT_UNDEFINED)
             continue;
 
@@ -3264,22 +3283,22 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
           CORBA::ULong k;
           for (k = 0; k < sc; ++k)
             {
-              if (pub[k].event.type_ == event.type_
-                  && pub[k].event.source_ == event.source_)
+              if (pub[k].event.header.type == event.header.type
+                  && pub[k].event.header.source == event.header.source)
                 break;
             }
           if (k == sc)
             {
-              dep[cc].event.type_ = event.type_;
-              dep[cc].event.source_ = event.source_;
-              dep[cc].event.creation_time_ = ORBSVCS_Time::zero;
+              dep[cc].event.header.type = event.header.type;
+              dep[cc].event.header.source = event.header.source;
+              dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
               // The RT_Info is filled up later.
               dep[cc].rt_info = 0;
               cc++;
 
-              pub[sc].event.type_ = event.type_;
-              pub[sc].event.source_ = event.source_;
-              pub[sc].event.creation_time_ = ORBSVCS_Time::zero;
+              pub[sc].event.header.type = event.header.type;
+              pub[sc].event.header.source = event.header.source;
+              pub[sc].event.header.creation_time = ORBSVCS_Time::zero;
               pub[sc].dependency_info.dependency_type =
                 RtecScheduler::TWO_WAY_CALL;
               pub[sc].dependency_info.number_of_calls = 1;
@@ -3386,10 +3405,10 @@ dump_event (const RtecEventComm::Event &event)
   ACE_DEBUG ((LM_DEBUG, "source_ = %d "
               "type_ = %d "
               "time_ = %u.\n",
-              (void*)event.source_,
-              event.type_,
+              (void*)event.header.source,
+              event.header.type,
               // The divide-by-1 is for ACE_U_LongLong support.
-              ORBSVCS_Time::to_hrtime (event.creation_time_) / 1));
+              ORBSVCS_Time::to_hrtime (event.header.creation_time) / 1));
 }
 
 // ************************************************************
