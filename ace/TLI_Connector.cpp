@@ -3,6 +3,7 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/TLI_Connector.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(ace, TLI_Connector, "$Id$")
 
@@ -30,15 +31,15 @@ ACE_TLI_Connector::ACE_TLI_Connector (void)
 // complicated this is to do in TLI...
 
 int
-ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream, 
-                            const ACE_Addr &remote_sap, 
+ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
+                            const ACE_Addr &remote_sap,
                             ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap, 
+                            const ACE_Addr &local_sap,
                             int reuse_addr,
                             int flags,
                             int /* perms */,
-                            const char device[], 
-                            struct t_info *info, 
+                            const char device[],
+                            struct t_info *info,
                             int rwf,
                             netbuf *udata,
                             netbuf *opt)
@@ -58,7 +59,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
       struct t_bind *localaddr;
 
-      localaddr = (struct t_bind *) 
+      localaddr = (struct t_bind *)
         ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
 
       if (localaddr == 0)
@@ -73,7 +74,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
           // maybe options are configured differently for XTI than for
           // TLI (at least for FORE's implementation - XTI is supposed
           // to be a superset of TLI).
-          if (reuse_addr 
+          if (reuse_addr
               && new_stream.set_option (SOL_SOCKET,
                                         SO_REUSEADDR,
                                         &one,
@@ -110,7 +111,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
   struct t_call *callptr = 0;
 
-  callptr = (struct t_call *) 
+  callptr = (struct t_call *)
     ACE_OS::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR);
 
   if (callptr == 0)
@@ -142,19 +143,19 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
     {
       if (new_stream.enable (ACE_NONBLOCK) == -1)
         result = -1;
-      
+
       // Do a non-blocking connect.
       if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
         {
           result = -1;
-          
+
           // Check to see if we simply haven't connected yet on a
           // non-blocking handle or whether there's really an error.
-          if (t_errno == TNODATA) 
+          if (t_errno == TNODATA)
             {
               if (timeout->sec () == 0 && timeout->usec () == 0)
                 errno = EWOULDBLOCK;
-              else 
+              else
                 result = this->complete (new_stream, 0, timeout);
             }
           else if (t_errno == TLOOK && new_stream.look () == T_DISCONNECT)
@@ -165,7 +166,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   else if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
     result = -1;
 
-  if (result != -1) 
+  if (result != -1)
     {
       new_stream.set_rwflag (rwf);
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
@@ -190,7 +191,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 // Try to complete a non-blocking connection.
 
 int
-ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream, 
+ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
                              ACE_Addr *remote_sap,
                              ACE_Time_Value *tv)
 {
@@ -226,10 +227,10 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 
           if (ACE_OS::ioctl (new_stream.get_handle (),
                              TI_GETPEERNAME,
-                             &name) == -1) 
+                             &name) == -1)
 #else /* SunOS4 */
           if (0)
-#endif /* ACE_HAS_SVR4_TLI */  
+#endif /* ACE_HAS_SVR4_TLI */
             {
               new_stream.close ();
               return -1;

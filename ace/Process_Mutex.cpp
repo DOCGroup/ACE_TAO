@@ -3,6 +3,7 @@
 #include "ace/Process_Mutex.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process_Mutex.inl"
