@@ -849,7 +849,8 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       ub->gen_label_value (os);
       *os << ";" << be_nl;
 
-      if (bt->size_type () == be_type::VARIABLE)
+      if (bt->size_type () == be_type::VARIABLE
+          || node->has_constructor ())
         {
           *os << "this->u_." << ub->local_name () << "_ = new "
               << bt->name () << " (val);" << be_uidt_nl;
@@ -871,7 +872,8 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "ACE_INLINE const " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl;
-  if (bt->size_type () == be_type::VARIABLE)
+  if (bt->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
     *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   else
     *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
@@ -882,7 +884,8 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "ACE_INLINE " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl;
-  if (bt->size_type () == be_type::VARIABLE)
+  if (bt->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
     *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   else
     *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
