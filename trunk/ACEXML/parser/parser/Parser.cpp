@@ -756,9 +756,16 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
           else
             {
               this->xml_namespace_.processName(startname, ns_uri, ns_lname, 0);
-              const ACEXML_Char* prefix = this->xml_namespace_.getPrefix (ns_uri);
+              ACEXML_Char* temp (ACE::strnew (startname));
+              ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_temp (temp);
+              ACE_Tokenizer ns_att (temp);
+              ns_att.delimiter_replace (':', 0);
+              ACEXML_Char* prefix = ns_att.next ();
+              ACEXML_Char* name = ns_att.next();
               if (this->namespaces_)
                 {
+                  if (name == 0)
+                    prefix = 0;
                   this->content_handler_->startPrefixMapping (prefix,
                                                               ns_uri,
                                                               xmlenv);
@@ -788,9 +795,16 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
         case '>':
           {
             this->xml_namespace_.processName (startname, ns_uri, ns_lname, 0);
-            const ACEXML_Char* prefix = this->xml_namespace_.getPrefix (ns_uri);
+            ACEXML_Char* temp (ACE::strnew (startname));
+            ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_temp (temp);
+            ACE_Tokenizer ns_att (temp);
+            ns_att.delimiter_replace (':', 0);
+            ACEXML_Char* prefix = ns_att.next ();
+            ACEXML_Char* name = ns_att.next();
             if (this->namespaces_)
               {
+                if (name == 0)
+                  prefix = 0;
                 this->content_handler_->startPrefixMapping (prefix,
                                                             ns_uri,
                                                             xmlenv);
@@ -987,44 +1001,52 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
               ACEXML_CHECK;
               break;
             case '/':             // an ETag.
-              this->get ();       // consume '/'
-              endname = this->read_name ();
-              if (endname == 0 ||
-                  ACE_OS_String::strcmp (startname, endname) != 0)
-                {
-                  ACE_NEW_NORETURN (exception,
-                                    ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT
-                                     ("Mismatched End-tag encountered")));
-                  xmlenv.exception (exception);
-                  this->report_fatal_error(*exception, xmlenv);
-                  return ;
-                }
-              if (this->skip_whitespace (0) != '>')
-                {
-                  ACE_NEW_NORETURN (exception,
-                                    ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT
-                                     ("Expecting '>' in an end-tag")));
-                  xmlenv.exception (exception);
-                  this->report_fatal_error(*exception, xmlenv);
-                  return;
-                }
-              this->content_handler_->endElement (ns_uri,
-                                                  ns_lname,
-                                                  endname,
-                                                  xmlenv);
-              ACEXML_CHECK;
-              if (this->namespaces_)
-                {
-                  const ACEXML_Char* prefix = this->xml_namespace_.getPrefix (ns_uri);
-                  this->content_handler_->endPrefixMapping (prefix, xmlenv);
-                  ACEXML_CHECK;
-                }
-              if (new_namespace != 0)
-                this->xml_namespace_.popContext ();
-              return;
-
+              {
+                this->get ();       // consume '/'
+                endname = this->read_name ();
+                if (endname == 0 ||
+                    ACE_OS_String::strcmp (startname, endname) != 0)
+                  {
+                    ACE_NEW_NORETURN (exception,
+                                      ACEXML_SAXParseException
+                                      (ACE_LIB_TEXT
+                                       ("Mismatched End-tag encountered")));
+                    xmlenv.exception (exception);
+                    this->report_fatal_error(*exception, xmlenv);
+                    return ;
+                  }
+                if (this->skip_whitespace (0) != '>')
+                  {
+                    ACE_NEW_NORETURN (exception,
+                                      ACEXML_SAXParseException
+                                      (ACE_LIB_TEXT
+                                       ("Expecting '>' in an end-tag")));
+                    xmlenv.exception (exception);
+                    this->report_fatal_error(*exception, xmlenv);
+                    return;
+                  }
+                this->content_handler_->endElement (ns_uri,
+                                                    ns_lname,
+                                                    endname,
+                                                    xmlenv);
+                ACEXML_CHECK;
+                ACEXML_Char* temp (ACE::strnew (startname));
+                ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_temp (temp);
+                ACE_Tokenizer ns_att (temp);
+                ns_att.delimiter_replace (':', 0);
+                ACEXML_Char* prefix = ns_att.next ();
+                ACEXML_Char* name = ns_att.next();
+                if (this->namespaces_)
+                  {
+                    if (name == 0)
+                      prefix = 0;
+                    this->content_handler_->endPrefixMapping (prefix, xmlenv);
+                    ACEXML_CHECK;
+                  }
+                if (new_namespace != 0)
+                  this->xml_namespace_.popContext ();
+                return;
+              }
             default:              // a new nested element?
               this->parse_element (0, xmlenv);
               ACEXML_CHECK;
