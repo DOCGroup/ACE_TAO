@@ -58,7 +58,11 @@ int
 ACE_Process_Semaphore::acquire (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::acquire");
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   return this->lock_.acquire ();
+#else
+  return this->lock_.acquire (0, SEM_UNDO);
+#endif // defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 }
 
 // Conditionally decrement the semaphore if count is greater
@@ -68,7 +72,11 @@ int
 ACE_Process_Semaphore::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   return this->lock_.tryacquire ();
+#else
+  return this->lock_.tryacquire (0, SEM_UNDO);
+#endif // defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 }
 
 // Increment the semaphore, potentially unblocking
@@ -78,7 +86,11 @@ int
 ACE_Process_Semaphore::release (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::release");
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   return this->lock_.release ();
+#else
+  return this->lock_.release (0, SEM_UNDO);
+#endif // defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 }
 
 /*****************************************************************************/
