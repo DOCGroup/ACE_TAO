@@ -139,12 +139,6 @@ public:
   };
 
 private:
-  ACE_Filecache_Handle (const ACE_Filecache_Handle &);
-  ACE_Filecache_Handle & operator= (const ACE_Filecache_Handle & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
-
   ACE_Filecache_Object *file_;
   // A reference to the low level instance.
 
