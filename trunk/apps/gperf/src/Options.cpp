@@ -78,7 +78,7 @@ void
 Options::usage (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage: %n [-abcCdDef[num]gGhH<hashname>i<init>IjJ"
+              "Usage: %n [-acCdDef[num]gGhH<hashname>i<init>IjJ"
               "k<keys>K<keyname>lL<language>mMnN<function name>o"
               "Oprs<size>S<switches>tTvVZ<class name>].\n"
               "(type %n -h for help)\n"));
@@ -94,7 +94,7 @@ Options::print_options (void)
   ACE_OS::printf ("/* Command-line: ");
 
   for (i = 0; i < argc_; i++)
-    ACE_OS::printf ("%s ",
+    ACE_OS::printf ("%s ", 
                     argv_[i]);
 
   ACE_OS::printf (" */");
@@ -117,7 +117,7 @@ Options::key_sort (char *base, int len)
       for (curr = i + 1, tmp = base[curr];
            curr > 0 && tmp >= base[curr - 1];
            curr--)
-        if ((base[curr] = base[curr - 1]) == tmp)
+        if ((base[curr] = base[curr - 1]) == tmp) 
           // Oh no, a duplicate!!!
           return 0;
 
@@ -161,7 +161,7 @@ Options::~Options (void)
                        "\nDUP is.........: %s\nFAST is........: %s\nCOMP is........: %s"
                        "\nNOTYPE is......: %s\nGLOBAL is......: %s\nCONSTANT is....: %s"
                        "\nCPLUSPLUS is...: %s\nC is...........: %s\nENUM is........: %s"
-                       "\nSTRCASECMP is..: %s\nOPTIMIZE is....: %s\nBINSEARCH is...: %s"
+                       "\nSTRCASECMP is..: %s\nOPTIMIZE is....: %s"
                        "\niterations = %d\nlookup function name = %s\nhash function name = %s"
                        "\nkey name = %s\njump value = %d\nmax associcated value = %d"
                        "\ninitial associated value = %d\ndelimiters = %s\nnumber of switch statements = %d\n",
@@ -187,12 +187,11 @@ Options::~Options (void)
                        ACE_BIT_ENABLED (option_word_, ENUM) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, STRCASECMP) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, OPTIMIZE) ? "enabled" : "disabled",
-                       ACE_BIT_ENABLED (option_word_, BINARYSEARCH) ? "enabled" : "disabled",
-		       iterations_,
+                       iterations_,
                        function_name_,
                        hash_name_,
                        key_name_,
-                       jump_,
+                       jump_, 
                        size_ - 1,
                        initial_asso_value_,
                        delimiters_,
@@ -224,7 +223,7 @@ Options::parse_args (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt getopt (argc, argv, "aBdcCDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
+  ACE_Get_Opt getopt (argc, argv, "adcCDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
   int option_char;
 
   argc_ = argc;
@@ -235,32 +234,25 @@ Options::parse_args (int argc, char *argv[])
       switch (option_char)
         {
           // Generated coded uses the ANSI prototype format.
-        case 'a':
+        case 'a':               
           {
             ACE_SET_BITS (option_word_, ANSI);
             break;
           }
-	  // Generate code for Binary Search.
-        case 'B':
-	  {
-	    ACE_SET_BITS (option_word_, BINARYSEARCH);
-	    break;
-	  }
-          
-          // Generate strncmp rather than strcmp.
-        case 'c':
+        // Generate strncmp rather than strcmp.
+        case 'c':               
           {
             ACE_SET_BITS (option_word_, COMP);
             break;
           }
         // Make the generated tables readonly (const).
-        case 'C':
+        case 'C':               
           {
             ACE_SET_BITS (option_word_, CONSTANT);
             break;
           }
         // Enable debugging option.
-        case 'd':
+        case 'd':               
           {
             ACE_SET_BITS (option_word_, DEBUG);
             ACE_ERROR ((LM_ERROR,
@@ -269,13 +261,13 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Enable duplicate option.
-        case 'D':
+        case 'D':               
           {
             ACE_SET_BITS (option_word_, DUP);
             break;
           }
         // Allows user to provide keyword/attribute separator
-        case 'e':
+        case 'e': 
           {
             delimiters_ = getopt.optarg;
             break;
@@ -286,7 +278,7 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Generate the hash table ``fast.''
-        case 'f':
+        case 'f':               
           {
             ACE_SET_BITS (option_word_, FAST);
             iterations_ = atoi (getopt.optarg);
@@ -298,24 +290,23 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Use the ``inline'' keyword for generated sub-routines.
-        case 'g':
+        case 'g':               
           {
             ACE_SET_BITS (option_word_, INLINE);
             break;
           }
         // Make the keyword table a global variable.
-        case 'G':
+        case 'G':               
           {
             ACE_SET_BITS (option_word_, GLOBAL);
             break;
           }
         // Displays a list of helpful Options to the user.
-        case 'h':
+        case 'h':               
           {
             ACE_OS::fprintf (stderr,
                              "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
-			     "-B\tGenerate code for Binary Search.\n"
-			     "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
+                             "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
                              "-C\tMake the contents of generated lookup tables constant, i.e., readonly.\n"
                              "-d\tEnables the debugging option (produces verbose output to the standard error).\n"
                              "-D\tHandle keywords that hash to duplicate values.  This is useful\n"
@@ -400,13 +391,13 @@ Options::parse_args (int argc, char *argv[])
             return -1;
           }
         // Sets the name for the hash function.
-        case 'H':
+        case 'H':               
           {
             hash_name_ = getopt.optarg;
             break;
           }
         // Sets the initial value for the associated values array.
-        case 'i':
+        case 'i':               
           {
             initial_asso_value_ = atoi (getopt.optarg);
             if (initial_asso_value_ < 0)
@@ -424,7 +415,7 @@ Options::parse_args (int argc, char *argv[])
              break;
            }
          // Sets the jump value, must be odd for later algorithms.
-        case 'j':
+        case 'j':               
           {
             jump_ = atoi (getopt.optarg);
             if (jump < 0)
@@ -440,13 +431,13 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Skip including the header file string.h.
-        case 'J':
+        case 'J':         
           {
             ACE_SET_BITS (option_word_, SKIPSTRINGH);
             break;
           }
         // Sets key positions used for hash function.
-        case 'k':
+        case 'k':               
           {
             const int BAD_VALUE = -1;
             int value;
@@ -458,7 +449,7 @@ Options::parse_args (int argc, char *argv[])
                              EOS);
 
             // Use all the characters for hashing!!!!
-            if (*getopt.optarg == '*')
+            if (*getopt.optarg == '*') 
               option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
             else
               {
@@ -480,7 +471,7 @@ Options::parse_args (int argc, char *argv[])
 
                 total_keysig_size_ = (l_key_pos - key_positions_);
                 if (total_keysig_size_ == 0)
-                  ACE_ERROR_RETURN ((LM_ERROR,
+                  ACE_ERROR_RETURN ((LM_ERROR, 
                                      "No keys selected.\n%r",
                                      &Options::usage),
                                     -1);
@@ -490,26 +481,26 @@ Options::parse_args (int argc, char *argv[])
                                      &Options::usage),
                                     -1);
                 if (total_keysig_size_ != 2
-                    || (key_positions_[0] != 1
+                    || (key_positions_[0] != 1 
                         || key_positions_[1] != WORD_END))
                   ACE_CLR_BITS (option_word_, DEFAULTCHARS);
               }
             break;
           }
         // Make this the keyname for the keyword component field.
-        case 'K':
+        case 'K':               
           {
             key_name_ = getopt.optarg;
             break;
           }
         // Create length table to avoid extra string compares.
-        case 'l':
+        case 'l':               
           {
             ACE_SET_BITS (option_word_, LENTABLE);
             break;
           }
         // Deal with different generated languages.
-        case 'L':
+        case 'L':               
           {
             option_word_ &= ~C;
             if (!ACE_OS::strcmp (getopt.optarg, "C++"))
@@ -526,31 +517,31 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Don't print the warnings.
-        case 'm':
+        case 'm':           
           {
             ACE_SET_BITS (option_word_, MUTE);
             break;
           }
         // Skip the class definition while in C++ mode.
-        case 'M':
+        case 'M': 
           {
             ACE_SET_BITS (option_word_, SKIPCLASS);
             break;
           }
         // Don't include the length when computing hash function.
-        case 'n':
+        case 'n':               
           {
             ACE_SET_BITS (option_word_, NOLENGTH);
             break;
           }
         // Make generated lookup function name be optarg
-        case 'N':
+        case 'N':               
           {
             function_name_ = getopt.optarg;
             break;
           }
         // Order input by frequency of key set occurrence.
-        case 'o':
+        case 'o':               
           {
             ACE_SET_BITS (option_word_, ORDER);
             break;
@@ -561,14 +552,14 @@ Options::parse_args (int argc, char *argv[])
  	    break;
  	  }
         // Generated lookup function now a pointer instead of int.
-        case 'p':
+        case 'p':               
           {
             ACE_SET_BITS (option_word_, POINTER);
             break;
           }
         // Utilize randomness to initialize the associated values
         // table.
-        case 'r':
+        case 'r':               
           {
             ACE_SET_BITS (option_word_, RANDOM);
             if (initial_asso_value_ != 0)
@@ -577,7 +568,7 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Range of associated values, determines size of final table.
-        case 's':
+        case 's':         
           {
             size_ = atoi (getopt.optarg);
             if (abs (size_) > 50)
@@ -587,12 +578,12 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Generate switch statement output, rather than lookup table.
-        case 'S':
+        case 'S':         
           {
             ACE_SET_BITS (option_word_, SWITCH);
             total_switches_ = atoi (getopt.optarg);
             if (total_switches_ <= 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_ERROR_RETURN ((LM_ERROR, 
                                  "number of switches %s must be a positive number\n%r",
                                  getopt.optarg,
                                  &Options::usage),
@@ -600,19 +591,19 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
         // Enable the TYPE mode, allowing arbitrary user structures.
-        case 't':
+        case 't':          
           {
             ACE_SET_BITS (option_word_, TYPE);
             break;
           }
         // Don't print structure definition.
-        case 'T':
+        case 'T':               
           {
             ACE_SET_BITS (option_word_, NOTYPE);
             break;
           }
         // Print out the version and quit.
-        case 'v':
+        case 'v':               
           ACE_ERROR ((LM_ERROR,
                       "%n: version %s\n%r\n%a",
                       version_string,
@@ -626,7 +617,7 @@ Options::parse_args (int argc, char *argv[])
           /* NOTREACHED */
           break;
         // Set the class name.
-        case 'Z':
+        case 'Z':               
           {
             class_name_ = getopt.optarg;
             break;
@@ -640,11 +631,11 @@ Options::parse_args (int argc, char *argv[])
 
     }
 
-  if (argv[getopt.optind] &&
+  if (argv[getopt.optind] && 
       freopen (argv[getopt.optind],
                "r",
                stdin) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACE_ERROR_RETURN ((LM_ERROR, 
                        "Cannot open keyword file %p\n%r",
                        argv[getopt.optind],
                        &Options::usage),
