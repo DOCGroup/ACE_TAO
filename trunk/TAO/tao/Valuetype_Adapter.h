@@ -23,8 +23,6 @@
 
 #include "tao/corbafwd.h"
 
-class TAO_ValueFactory_Map;
-
 /**
  * @class TAO_Valuetype_Adapter
  *
@@ -45,15 +43,13 @@ public:
 
   virtual CORBA::ULong type_info_single (void) const = 0;
 
-  virtual TAO_ValueFactory_Map * valuefactory_map_instance (void) = 0;
-
-  virtual int vf_map_rebind (TAO_ValueFactory_Map *,
-                             const char *,
+  virtual int vf_map_rebind (const char *,
                              CORBA::ValueFactory &) = 0;
 
-  virtual int vf_map_find (TAO_ValueFactory_Map *,
-                           const char *,
-                           CORBA::ValueFactory &) = 0;
+  virtual int vf_map_unbind (const char *) = 0;
+
+
+  virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
 };
 
 #include "ace/post.h"

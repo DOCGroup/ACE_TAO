@@ -52,9 +52,8 @@ class TAO_Server_Strategy_Factory;
 class TAO_InputCDR;
 class TAO_OutputCDR;
 class TAO_Stub;
-
+class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
-class TAO_ValueFactory_Map;
 
 
 // ****************************************************************
@@ -174,27 +173,27 @@ namespace CORBA
     // Typedefs for CORBA::ORB::RequestSeq, which is an argument of
     // send_multiple_requests_*().
 
-    typedef 
+    typedef
       TAO_Unbounded_Pseudo_Sequence<
-          CORBA::Request, 
+          CORBA::Request,
           CORBA::Request_var
-        > 
+        >
       RequestSeq;
 
-    typedef 
+    typedef
       TAO_VarSeq_Var_T<
-          RequestSeq, 
+          RequestSeq,
           TAO_Pseudo_Object_Manager<
-              CORBA::Request, 
+              CORBA::Request,
               CORBA::Request_var
             >
-        > 
+        >
       RequestSeq_var;
 
-    typedef 
+    typedef
       TAO_Seq_Out_T<
-          RequestSeq, 
-          RequestSeq_var, 
+          RequestSeq,
+          RequestSeq_var,
           TAO_Pseudo_Object_Manager<
               CORBA::Request,
               CORBA::Request_var
@@ -603,8 +602,17 @@ namespace CORBA
     /// The ORB_Core that created us....
     TAO_ORB_Core *orb_core_;
 
+    /// @@NOTE: No freaking clue why this is in the ORB??
+#if 0
     /// If non-0 then this is the Factory for OBV unmarshaling
     TAO_ValueFactory_Map *valuetype_factory_map_;
+#endif /**/
+
+    /// Pointer to the adapter..
+    /// @@ NOTE this should have ideally been in the ORB_core like the
+    /// others. Continuing on the earlier mistake we are adding it to
+    /// the ORB.
+    TAO_Valuetype_Adapter *valuetype_adapter_;
 
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;
