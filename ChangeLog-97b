@@ -1,5 +1,12 @@
 Mon Nov 10 10:21:55 1997  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/INET_Addr.cpp: updated gethostbyname/addr support for
+          Chorus.  Thanks to Wei Chiang <chiang@tele.nokia.fi> for
+          the patches for this fix.
+
+        * ace/config-chorus.h: disabled ACE_LACKS_SOCKETPAIR.  Thanks
+          to Wei for this fix, also.
+
         * etc/ace_ld,include/makeinclude/platform_vxworks5.x_g++.GNU:
           added ace_ld, a drop-in replacement for ld that supports munching.
           We need to munch for VxWorks/g++.
