@@ -66,6 +66,3 @@ void set_variance(HIST hist, double variance);
 void add_histogram(HIST dest, HIST source);
 
 double histfloor(double x);
-
-hist_t *read_hist(FILE *f);
-
