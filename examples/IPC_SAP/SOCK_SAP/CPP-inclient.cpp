@@ -119,14 +119,16 @@ Options::Options (void)
     message_buf_ (0),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
-    oneway_ (1), // Make oneway calls the default.
-    barrier_ (0)
+    oneway_ (1) // Make oneway calls the default.
+#if defined (ACE_MT_SAFE)
+    , barrier_ (0)
+#endif /* ACE_MT_SAFE */
 {
 }
 
 Options::~Options (void)
 {
-  delete this->barrier_;
+  ACE_MT (delete this->barrier_);
   delete [] this->message_buf_;
 }
   
@@ -157,9 +159,9 @@ Options::init (void)
                   this->message_len_ - sizeof (ACE_UINT32));
 
   // Allocate the barrier with the correct count.
-  ACE_NEW_RETURN (this->barrier_,
-                  ACE_Barrier (this->threads_),
-                  -1);
+  ACE_MT (ACE_NEW_RETURN (this->barrier_,
+                          ACE_Barrier (this->threads_),
+                          -1));
   return 0;
 }
 
@@ -300,7 +302,7 @@ Options::shared_client_test (u_short port,
               "(%P|%t) waiting...\n"));
               
   // Wait for all other threads to finish initialization.
-  this->barrier_->wait ();
+  ACE_MT (this->barrier_->wait ());
   return buf;
 }
 // Static function entry point to the oneway client service.
@@ -471,7 +473,7 @@ run_client (void)
   else
     ACE_Thread_Manager::instance ()->wait ();
 #else
-  client (0);
+  (*OPTIONS::instance ()->thr_func) ();
 #endif /* ACE_HAS_THREADS */
   return 0;
 }
