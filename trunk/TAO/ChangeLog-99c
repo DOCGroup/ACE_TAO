@@ -77,6 +77,8 @@ Mon Jul 26 17:11:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           Take out all the information from the <message_state> and reset
           it so that nested upcall on the same transport can be handled.
+	  Thanks to Geisler Andreas <Andreas.Geisler@erls.siemens.de> for
+	  sending an example showing the problem in TAO.
 
         * tao/GIOP.h (TAO_GIOP::process_server_message): Changed method
           interface to take message_type and giop_version instead of
