@@ -1,9 +1,14 @@
+Fri Dec  1 09:30:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux.GNU:
+          Add support for wxWindows under linux.
+
 Fri Dec  1 10:56:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* include/makeinclude/ace_flags.bor:
+        * include/makeinclude/ace_flags.bor:
 
-	  Added definitions necessary for the new smart proxies
-	  library and its Borland makefile.
+          Added definitions necessary for the new smart proxies
+          library and its Borland makefile.
 
 Fri Dec 01 09:21:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -15,11 +20,11 @@ Thu Nov 30 22:49:10 2000  pradeep@cs.wustl.edu  <pradeep@cs.wustl.edu>
 
 Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* apps/drwho/server.cpp:
-	* apps/drwho/BS_Client.cpp:	  
-	  Used casts to quiet VxWorks/LynxOS.
-	* bin/auto_run_tests.lst: 
-	  Commented out this test - its broken.
+        * apps/drwho/server.cpp:
+        * apps/drwho/BS_Client.cpp:       
+          Used casts to quiet VxWorks/LynxOS.
+        * bin/auto_run_tests.lst: 
+          Commented out this test - its broken.
 
 Wed Nov 29 09:41:51 2000  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/Reactor/Multicast/*.bor
