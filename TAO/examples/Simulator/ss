@@ -1,10 +1,22 @@
 #!/bin/ksh 
 # $Id$
 
-#saving old working dir
+# =TITLE
+#  Restart script
+#
+# =AUTHOR
+#  Michael Kircher (mk1@cs.wustl.edu)
+#
+# =DESCRIPTION
+#  This script restarts the Naming, Scheduling and Event Service,
+#  if "clean" is specified as a parameter, then the old
+#  services are only killed and not restarted 
 
+# save the old working dir
 old_dir=$cwd
+# get the user name
 login=`whoami`
+# get the user id 
 uid=`id | cut -c5-20 | cut -f1 -d"("`
 
 #### Set TAO_ROOT, if it wasn't set.
@@ -26,6 +38,12 @@ if [ -s /tmp/pids$login ]; then
   kill $pids
 fi
 
+# stop here if "ss clean" was called
+if [ $1 ]; then 
+  if [ $1 =  "clean" ]; then
+     exit
+  fi
+fi
 
 echo // Initializing the log file
 
