@@ -45,25 +45,25 @@ project(adainset): gperf_test {
   }
 }
 
-project(c++inset): gperf_test {
-  exename = c++out
+project(cppinset): gperf_test {
+  exename = cppout
 
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests: c++out
-    "	@echo "Testing c++out"
-    "	./c++out -v < c++.gperf > c++out.out
-    "	-diff -b c++-res.exp c++out.out"
+    runtests: cppout
+    "	@echo "Testing cppout"
+    "	./cppout -v < cpp.gperf > cppout.out
+    "	-diff -b cpp-res.exp cppout.out"
   }
 
   GPERF_Files {
     commandflags += -a -D
-    c++.gperf
+    cpp.gperf
   }
 
   Source_Files {
-    c++.cpp
+    cpp.cpp
   }
 }
 
@@ -213,7 +213,7 @@ project(taoinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -c -C -D -E -f 0 -a -o 
+    commandflags += -c -C -D -E -f 0 -a -o
     tao.gperf
   }
 
