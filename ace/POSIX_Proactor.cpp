@@ -812,37 +812,37 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio
 
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1);
 
-  int result = (aiocb_list_cur_size_ >= aiocb_list_max_size_) ? -1 : 0;
+  int ret_val = (aiocb_list_cur_size_ >= aiocb_list_max_size_) ? -1 : 0;
 
   if (result == 0) // Just check the status of the list
-    return result;
+    return ret_val;
 
   // Non-zero ptr.  Find a free slot and store.
-  if (result == 0)
+  if (ret_val == 0)
     {
       for (size_t i= 0; i < this->aiocb_list_max_size_; i++)
         if (aiocb_list_[i] == 0)  
           {
-            result = start_aio (result, op);
+            ret_val = start_aio (result, op);
 
-            if (result == 0)   // Store the pointers.
+            if (ret_val == 0)   // Store the pointers.
               {
-                aiocb_list_  [i] = result; 
-                result_list_ [i] = result;
+                aiocb_list_[i] = result; 
+                result_list_[i] = result;
 
-                aiocb_list_cur_size_ ++;
+                aiocb_list_cur_size_++;
               }
-            return result;
+            return ret_val;
           }
 
       errno = EAGAIN;
-      result = -1;
+      ret_val = -1;
     }
 				 
   ACE_ERROR ((LM_ERROR,
               "%N:%l:(%P | %t)::\n"
               "register_and_start_aio: No space to store the <aio>info\n"));
-  return result;
+  return ret_val;
 }
 
 int
@@ -850,7 +850,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result, int op)
 {
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio");
 
-  int result;
+  int ret_val;
   const TCHAR *ptype;
 
   // Start IO
@@ -859,25 +859,25 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result, int op)
     {
     case 0:
       ptype = "read ";
-      result = aio_read (result);
+      ret_val = aio_read (result);
       break;
     case 1:
       ptype = "write";
-      result = aio_write (result);
+      ret_val = aio_write (result);
       break;
     default:
       ptype = "?????";
-      result = -1;
+      ret_val = -1;
       break;
     }
 	
-  if (result == -1)
+  if (ret_val == -1)
     ACE_ERROR ((LM_ERROR,
                 "%N:%l:(%P | %t)::start_aio: aio_%s %p\n",
                 ptype,
                 "queueing failed\n"));
 
-  return result;
+  return ret_val;
 }
 
 // *********************************************************************

@@ -2023,7 +2023,7 @@ ACE_POSIX_AIOCB_Asynch_Accept::accept (ACE_Message_Block &message_block,
   size_t available_space = total_size - space_in_use;
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Buffer too small\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffer too small\n")), -1);
 
   // Common code for both WIN and POSIX.
   ACE_POSIX_Asynch_Accept_Result *result = 0;
@@ -2167,7 +2167,7 @@ ACE_POSIX_SIG_Asynch_Accept::accept (ACE_Message_Block &message_block,
   size_t available_space = total_size - space_in_use;
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Buffer too small\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffer too small\n")), -1);
 
   // Common code for both WIN and POSIX.
   ACE_POSIX_Asynch_Accept_Result *result = 0;
