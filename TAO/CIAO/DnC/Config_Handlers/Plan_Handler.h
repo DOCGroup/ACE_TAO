@@ -388,6 +388,18 @@ namespace CIAO
       /// process references
       void process_refs (DOMNamedNodeMap* named_node_map);
 
+      /// update mdd refs
+      void update_mdd_refs (Deployment::DeploymentPlan& plan);
+
+      /// update idd refs
+      void update_idd_refs (Deployment::DeploymentPlan& plan);
+
+      /// update pspe refs
+      void update_pspe_refs (Deployment::DeploymentPlan& plan);
+
+      /// update pspr refs
+      void update_pspr_refs (Deployment::DeploymentPlan& plan);
+
     private:
 
       typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
