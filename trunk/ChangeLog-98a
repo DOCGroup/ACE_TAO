@@ -1,3 +1,8 @@
+Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* apps/Gateway/Peer/Options.h: Updated the path of include file
+ 	  Event.h.
+
 Thu Jan 08 22:11:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Env_Value_T.i (ACE_Convert): Added static cast for int and
