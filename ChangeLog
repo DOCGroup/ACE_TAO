@@ -25,6 +25,17 @@ Thu Apr 17 08:23:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  ACE_NS_WString.  The latter only works for platforms with 16 bit
 	  wide characters.
 
+	* ace/Name_Request_Reply.h:
+
+	  No need to include "ace/Time_Value.h" and "ace/SString.h".  The
+	  latter isn't need at all, and a forward declaration for
+	  ACE_Time_Value is sufficient.
+
+	* ace/Name_Request_Reply.cpp:
+
+	  Include "ace/Time_Value.h" to pull in ACE_Time_Value class
+	  declaration.
+
 Thu Apr 17 13:26:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * bin/MakeProjectCreator/configmessaging_only.mpb:
