@@ -21,8 +21,6 @@
 
 static const int CHUNK = 100;
 
-TAO_CodeGen::MAXNAMELEN = 100;
-
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
@@ -107,9 +105,9 @@ TAO_CodeGen::make_state (void)
 const char *
 TAO_CodeGen::upcase (const char *str)
 {
-  static char upcase_str [TAO_CodeGen::MAXNAMELEN];
+  static char upcase_str [NAMEBUFSIZE];
 
-  ACE_OS::memset (upcase_str, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (upcase_str, '\0', NAMEBUFSIZE);
   // convert letters in str to upcase
   for (unsigned int i=0; i < ACE_OS::strlen (str); i++)
     {
@@ -145,10 +143,10 @@ TAO_CodeGen::client_header (const char *fname)
   else
     {
       // now generate the #if !defined clause
-      static char macro_name [TAO_CodeGen::MAXNAMELEN];
+      static char macro_name [NAMEBUFSIZE];
       char *suffix;
 
-      ACE_OS::memset (macro_name, '\0', TAO_CodeGen::MAXNAMELEN);
+      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
 	return -1; // bad file name
@@ -261,10 +259,10 @@ TAO_CodeGen::server_header (const char *fname)
   else
     {
       // now generate the #if !defined clause
-      static char macro_name [TAO_CodeGen::MAXNAMELEN];
+      static char macro_name [NAMEBUFSIZE];
       char *suffix;
 
-      ACE_OS::memset (macro_name, '\0', TAO_CodeGen::MAXNAMELEN);
+      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
 	return -1; // bad file name

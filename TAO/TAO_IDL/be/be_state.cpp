@@ -89,13 +89,14 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_interface: // type is an obj reference
       {
         os->indent (); // start from current indentation
-        *os << bt->name () << "_var " << f->local_name () << ";\n\n";
+        *os << bt->nested_type_name (bs) << "_var " << f->local_name () <<
+          ";\n\n";
       }
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
         os->indent (); // start from current indentation
-        *os << bt->name () << " " << f->local_name () << ";\n\n";
+        *os << bt->nested_type_name (bs) << " " << f->local_name () << ";\n\n";
       }
       break;
     case AST_Decl::NT_string: // type is a string
@@ -103,7 +104,7 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         os->indent (); // start from current indentation
         if (bt->node_type () == AST_Decl::NT_typedef)
           {
-            *os << bt->name () << "_var " << f->local_name () << ";\n\n";
+            *os << bt->nested_type_name (bs) << "_var " << f->local_name () << ";\n\n";
           }
         else
           {
@@ -125,7 +126,7 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
             return -1;
 
         os->indent ();
-        *os << bt->name () << " " << f->local_name () << ";\n\n";
+        *os << bt->nested_type_name (bs) << " " << f->local_name () << ";\n\n";
       }
       break;
     case AST_Decl::NT_except: // type is an exception
@@ -164,6 +165,11 @@ be_state_union_disctypedefn_ch::gen_code (be_type *bt, be_decl *d, be_type *type
   TAO_OutStream *os; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  be_union *bu;
+
+  bu = be_union::narrow_from_decl (d); // downcast to union type
+  if (!bu)
+    return -1;
 
   if (!type) // not a recursive call
     type = bt;
@@ -200,9 +206,9 @@ be_state_union_disctypedefn_ch::gen_code (be_type *bt, be_decl *d, be_type *type
 
         os->indent ();
         // the set method
-        *os << "void _d (" << bt->name () << ");" << nl;
+        *os << "void _d (" << bt->nested_type_name (bu) << ");" << nl;
         // the get method
-        *os << bt->name () << " _d (void) const;\n\n";
+        *os << bt->nested_type_name (bu) << " _d (void) const;\n\n";
       }
       break;
     case AST_Decl::NT_typedef: // type is a typedef
@@ -227,19 +233,22 @@ be_state_union_disctypedefn_ci::be_state_union_disctypedefn_ci (void)
 
 // generate code for union discriminant type in client inline
 int
-be_state_union_disctypedefn_ci::gen_code (be_type *t, be_decl *d, be_type *type)
+be_state_union_disctypedefn_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
   TAO_OutStream *os; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_union *bu;
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (type);
-
   bu = be_union::narrow_from_decl (d); // downcast to union type
   if (!bu)
     return -1;
+
+  if (!type) // not a recursive call
+    type = bt;
+  else // recursively called thru a typedef. "type" will have the most primitive
+       // base class of the typedef
+    ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
   os = cg->client_inline (); // get client inline stream
 
@@ -247,7 +256,7 @@ be_state_union_disctypedefn_ci::gen_code (be_type *t, be_decl *d, be_type *type)
   // appropriate type. If the downcast fails, return error, else proceed. In
   // some cases, the type itself may need code generation, e.g., anonymous
   // struct types.
-  switch (t->node_type ())
+  switch (type->node_type ())
     {
     case AST_Decl::NT_interface: // type is an obj reference
     case AST_Decl::NT_string: // type is a string
@@ -267,7 +276,8 @@ be_state_union_disctypedefn_ci::gen_code (be_type *t, be_decl *d, be_type *type)
         // the set method
         *os << "// accessor to set the discriminant" << nl;
         *os << "ACE_INLINE void" << nl;
-        *os << bu->name () << "::_d (" << t->name () << " discval)" << nl;
+        *os << bu->name () << "::_d (" << bt->name () <<
+          " discval)" << nl;
         *os << "{\n";
         os->incr_indent ();
         *os << "this->disc_ = discval;\n";
@@ -275,7 +285,7 @@ be_state_union_disctypedefn_ci::gen_code (be_type *t, be_decl *d, be_type *type)
         *os << "}" << nl;
         // the get method
         *os << "// accessor to get the discriminant" << nl;
-        *os << "ACE_INLINE " << t->name () << nl;
+        *os << "ACE_INLINE " << bt->name () << nl;
         *os << bu->name () << "::_d (void) const" << nl;
         *os << "{\n";
         os->incr_indent ();
@@ -327,9 +337,9 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_interface: // type is an obj reference
       {
         os->indent (); // start from current indentation
-        *os << "void " << ub->local_name () << " (" << bt->name () <<
-          "_ptr);// set" << nl;
-        *os << bt->name () << "_ptr " << ub->local_name () <<
+        *os << "void " << ub->local_name () << " (" << bt->nested_type_name
+          (bu) << "_ptr);// set" << nl;
+        *os << bt->nested_type_name (bu) << "_ptr " << ub->local_name () <<
           " (void) const; // get method\n\n";
       }
       break;
@@ -342,24 +352,40 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
             return -1;
 
         os->indent (); // start from current indentation
-        *os << "void " << ub->local_name () << " (" << bt->name () <<
-          ");// set" << nl;
-        *os << bt->name () << " " << ub->local_name () <<
+        *os << "void " << ub->local_name () << " (" << bt->nested_type_name (bu)
+          << ");// set" << nl;
+        *os << bt->nested_type_name (bu) << " " << ub->local_name () <<
           " (void) const; // get method\n\n";
       }
       break;
     case AST_Decl::NT_string: // type is a string
       {
         os->indent (); // start from current indentation
-        // three methods to set the string value
-        *os << "void " << ub->local_name () << " (char *); // set" << nl;
-        *os << "void " << ub->local_name () << " (const char *); // set"
-            << nl;
-        *os << "void " << ub->local_name () <<
-          " (const CORBA::String_var&); // set"  << nl;
-        *os << "const char *" << ub->local_name () <<
-          " (void) const; // get method\n\n";
-
+        if (bt->node_type () == AST_Decl::NT_typedef)
+          {
+            // three methods to set the string value
+            *os << "void " << ub->local_name () << " (" << bt->nested_type_name
+              (bu) << "); // set" << nl;
+            *os << "void " << ub->local_name () << " (const " <<
+              bt->nested_type_name (bu) << "); // set"
+                << nl;
+            *os << "void " << ub->local_name () <<
+              " (const " << bt->nested_type_name (bu) << "_var &); // set"  <<
+              nl;
+            *os << "const " << bt->nested_type_name (bu) << " " <<
+              ub->local_name () << " (void) const; // get method\n\n";
+          }
+        else
+          {
+            // three methods to set the string value
+            *os << "void " << ub->local_name () << " (char *); // set" << nl;
+            *os << "void " << ub->local_name () << " (const char *); // set"
+                << nl;
+            *os << "void " << ub->local_name () <<
+              " (const CORBA::String_var&); // set"  << nl;
+            *os << "const char *" << ub->local_name () <<
+              " (void) const; // get method\n\n";
+          }
       }
       break;
     case AST_Decl::NT_array: // type is an array
@@ -371,9 +397,9 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
             return -1;
 
         os->indent ();
-        *os << "void " << ub->local_name () << " (" << bt->name () <<
-          ");// set" << nl;
-        *os << bt->name () << "_slice *" << ub->local_name () <<
+        *os << "void " << ub->local_name () << " (" << bt->nested_type_name
+          (bu) << ");// set" << nl;
+        *os << bt->nested_type_name (bu) << "_slice *" << ub->local_name () <<
           " (void) const; // get method\n\n";
 
       }
@@ -387,11 +413,11 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
           if (bt->gen_client_header () == -1)
             return -1;
         os->indent ();
-        *os << "void " << ub->local_name () << " (const " << bt->name () <<
-          " &);// set" << nl;
-        *os << "const " << bt->name () << " &" << ub->local_name () <<
-          " (void) const; // get method (read only)" << nl;
-        *os << bt->name () << " &" << ub->local_name () <<
+        *os << "void " << ub->local_name () << " (const " <<
+          bt->nested_type_name (bu) << " &);// set" << nl;
+        *os << "const " << bt->nested_type_name (bu) << " &" << ub->local_name
+          () << " (void) const; // get method (read only)" << nl;
+        *os << bt->nested_type_name (bu) << " &" << ub->local_name () <<
           " (void); // get method (read/write only)\n\n";
 
       }
@@ -534,7 +560,16 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         os->indent (); // start from current indentation
         *os << "// accessor to set the member" << nl;
         *os << "ACE_INLINE void" << nl;
-        *os << bu->name () << "::" << ub->local_name () << " (char *val)" << nl;
+        if (bt->node_type () == AST_Decl::NT_typedef)
+          {
+            *os << bu->name () << "::" << ub->local_name () << " (" << bt->name
+              () << " val)" << nl;
+          }
+        else
+          {
+            *os << bu->name () << "::" << ub->local_name () << " (char *val)"
+                << nl;
+          }
         *os << "{\n";
         os->incr_indent ();
         // set the discriminant to the appropriate label
@@ -567,8 +602,16 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         // (2) set method from const char *
         *os << "// accessor to set the member" << nl;
         *os << "ACE_INLINE void" << nl;
-        *os << bu->name () << "::" << ub->local_name () << " (const char *val)" <<
-          nl;
+        if (bt->node_type () == AST_Decl::NT_typedef)
+          {
+            *os << bu->name () << "::" << ub->local_name () << " (const " <<
+              bt->name () << " val)" << nl;
+          }
+        else
+          {
+            *os << bu->name () << "::" << ub->local_name () <<
+              " (const char *val)" << nl;
+          }
         *os << "{\n";
         os->incr_indent ();
         // set the discriminant to the appropriate label
@@ -601,8 +644,16 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         // (3) set from const String_var&
         *os << "// accessor to set the member" << nl;
         *os << "ACE_INLINE void" << nl;
-        *os << bu->name () << "::" << ub->local_name () <<
-          " (char CORBA::String_var &val)" << nl;
+        if (bt->node_type () == AST_Decl::NT_typedef)
+          {
+            *os << bu->name () << "::" << ub->local_name () << " (const " <<
+              bt->name () << "_var &val)" << nl;
+          }
+        else
+          {
+            *os << bu->name () << "::" << ub->local_name () <<
+              " (const CORBA::String_var &val)" << nl;
+          }
         *os << "{\n";
         os->incr_indent ();
         // set the discriminant to the appropriate label
@@ -633,7 +684,14 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         *os << "}" << nl;
 
         // return const char*
-        *os << "ACE_INLINE const char *" << nl;
+        if (bt->node_type () == AST_Decl::NT_typedef)
+          {
+            *os << "ACE_INLINE " << bt->name () << nl;
+          }
+        else
+          {
+            *os << "ACE_INLINE const char *" << nl;
+          }
         *os << bu->name () << "::" << ub->local_name () <<
           " (void) const // get method" << nl;
         *os << "{\n";
@@ -768,7 +826,7 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_interface: // type is an obj reference
       {
         os->indent (); // start from current indentation
-        *os << bt->name () << "_var " << ub->local_name () <<
+        *os << bt->nested_type_name (bu) << "_var " << ub->local_name () <<
           "_;\n";
       }
       break;
@@ -776,21 +834,28 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_enum: // type is an enum
       {
         os->indent (); // start from current indentation
-        *os << bt->name () << " " << ub->local_name () <<
+        *os << bt->nested_type_name (bu) << " " << ub->local_name () <<
           "_;\n";
       }
       break;
     case AST_Decl::NT_string: // type is a string
       {
         os->indent (); // start from current indentation
-        *os << "CORBA::String_var " << ub->local_name () <<
-          "_;\n";
+        if (bt->node_type () == AST_Decl::NT_typedef)
+          {
+            *os << bt->nested_type_name (bu) << "_var " << ub->local_name () <<
+              "_;\n";
+          }
+        else
+          {
+            *os << "CORBA::String_var " << ub->local_name () << "_;\n";
+          }
       }
       break;
     case AST_Decl::NT_array: // type is an array
       {
         os->indent ();
-        *os << bt->name () << "_slice *" << ub->local_name () <<
+        *os << bt->nested_type_name (bu) << "_slice *" << ub->local_name () <<
           "_;\n";
       }
       break;
@@ -799,8 +864,7 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_union: // type is a union
       {
         os->indent ();
-        *os << bt->name () << " " << ub->local_name () <<
-          "_;\n";
+        *os << bt->nested_type_name (bu) << " " << ub->local_name () << "_;\n";
       }
       break;
     case AST_Decl::NT_except: // type is an exception
@@ -837,6 +901,16 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
   TAO_OutStream *os = 0; // output stream
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  be_operation *bop;
+  be_interface *bif; // interface in which the operation was defined
+
+  bop = be_operation::narrow_from_decl (d);
+  if (!bop)
+    return -1;
+
+  bif = be_interface::narrow_from_scope (bop->defined_in ());
+  if (!bif)
+    return -1;
 
   switch (cg->state ())
     {
@@ -904,6 +978,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
               *os << "retval"; // assign to retval
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              // to keep MSVC++ happy
+              *os << bt->nested_type_name (bif) << "_ptr ";
             }
             break;
           default:
@@ -1063,12 +1143,26 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           {
           case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
             {
-              *os << "char *";
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  *os << bt->name ();
+                }
+              else
+                {
+                  *os << "char *";
+                }
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
             {
-              *os << "char *retval = 0;" << nl;
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  *os << bt->name () << " retval = 0;" << nl;
+                }
+              else
+                {
+                  *os << "char *retval = 0;" << nl;
+                }
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
@@ -1083,12 +1177,32 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
-              *os << "char *retval;" << nl;
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  *os << bt->name () << " retval;" << nl;
+                }
+              else
+                {
+                  *os << "char *retval;" << nl;
+                }
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
               *os << "retval";
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  // to keep MSVC++ happy
+                  *os << bt->nested_type_name (bif);
+                }
+              else
+                {
+                  *os << "char *";
+                }
             }
             break;
           default:
@@ -1131,6 +1245,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
               *os << "retval";
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              // to keep MSVC++ happy
+              *os << bt->nested_type_name (bif) << "_slice *";
             }
             break;
           default:
@@ -1176,6 +1296,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "retval";
             }
             break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              // to keep MSVC++ happy
+              *os << bt->nested_type_name (bif) << " *";
+            }
+            break;
           default:
             {
               *os << bt->name () << " *";
@@ -1216,6 +1342,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
               *os << "*retval";
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              // to keep MSVC++ happy
+              *os << bt->nested_type_name (bif);
             }
             break;
           default:
@@ -1293,6 +1425,16 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
             }
             break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              // to keep MSVC++ happy
+              *os << bt->nested_type_name (bif);
+              // check if we are fixed size or variable sized. Depending on that we
+              // return a pointer or the aggregate itself
+              if (type->size_type () == be_decl::VARIABLE)
+                *os << " *";
+            }
+            break;
           default:
             {
               *os << bt->name ();
@@ -1339,6 +1481,8 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_argument *arg;  // argument node
+  be_interface *bif; // interface inside which the operation that uses this
+                     // argument was defined
 
   switch (cg->state ())
     {
@@ -1358,6 +1502,15 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
     }
 
   arg = be_argument::narrow_from_decl (d);
+  if (!arg)
+    return -1;
+
+  // get the scope of the arg which is the operation. Its scope is the
+  // interface node
+  bif = be_interface::narrow_from_scope (ScopeAsDecl (arg->defined_in
+                                                      ())->defined_in ());
+  if (!bif)
+    return -1;
 
   if (!type) // not a recursive call
     type = bt;
@@ -1388,6 +1541,11 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   bt->tc_name () << ", " << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << "_ptr ";
+              }
             else
               {
                 *os << bt->name () << "_ptr ";
@@ -1407,6 +1565,11 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   bt->tc_name () << ", " << arg->local_name () <<
                   ", 1); // ORB owns" << nl;
               }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << "_ptr &";
+              }
             else
               {
                 *os << bt->name () << "_ptr &";
@@ -1425,6 +1588,11 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
                   bt->tc_name () << ", " << arg->local_name () <<
                   ", 1); // ORB owns" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << "_out ";
               }
             else
               {
@@ -1698,72 +1866,96 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       switch (arg->direction ())
         {
         case AST_Argument::dir_IN:
-          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
-            {
-              // declare a variable
-              *os << bt->name () << " " << arg->local_name ()
-                  << ";" << nl;
-              // now define a NamedValue_ptr
-              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                ";" << nl;
-              // declare an Any
-              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", " << arg->local_name () <<
-                "); // ORB does not own" << nl;
-            }
-          else
-            {
-              *os << "const " << bt->name ();
-            }
+          {
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                // declare a variable
+                *os << bt->name () << " " << arg->local_name ()
+                    << ";" << nl;
+                // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () <<
+                  "); // ORB does not own" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << "const " << bt->nested_type_name (bif);
+              }
+            else
+              {
+                *os << "const " << bt->name ();
+              }
+          }
           break;
         case AST_Argument::dir_INOUT:
-          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
-            {
+          {
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
                     // declare a variable
-              *os << bt->name ();
-              if (bt->size_type () == be_decl::VARIABLE)
-                {
-                  *os << "_slice *";
-                }
-              *os << " " << arg->local_name () << ";" << nl;
+                *os << bt->name ();
+                if (bt->size_type () == be_decl::VARIABLE)
+                  {
+                    *os << "_slice *";
+                  }
+                *os << " " << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                ";" << nl;
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
                     // declare an Any
-              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", " << arg->local_name () <<
-                "); // ORB does not own" << nl;
-            }
-          else
-            {
-              *os << bt->name ();
-              if (bt->size_type () == be_decl::VARIABLE)
-                {
-                  *os << "_slice *";
-                }
-            }
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () <<
+                  "); // ORB does not own" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif);
+                if (bt->size_type () == be_decl::VARIABLE)
+                  {
+                    *os << "_slice *";
+                  }
+              }
+            else
+              {
+                *os << bt->name ();
+                if (bt->size_type () == be_decl::VARIABLE)
+                  {
+                    *os << "_slice *";
+                  }
+              }
+          }
           break;
         case AST_Argument::dir_OUT:
-          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
-            {
+          {
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
                     // declare a variable
-              *os << bt->name () << "_slice *" << arg->local_name () << ";" <<
-                nl;
+                *os << bt->name () << "_slice *" << arg->local_name () << ";" <<
+                  nl;
                     // now define a NamedValue_ptr
-              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                ";" << nl;
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
                     // declare an Any
-              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", " << arg->local_name () <<
-                ", 1); // ORB owns" << nl;
-            }
-          else
-            {
-              *os << bt->name () << "_out";
-              break;
-            }
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () <<
+                  ", 1); // ORB owns" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << "_out ";
+              }
+            else
+              {
+                *os << bt->name () << "_out";
+              }
+          }
           break;
-        }
+        } // end of switch direction
       break;
     case AST_Decl::NT_sequence: // type is a sequence
     case AST_Decl::NT_struct: // type is a struct
@@ -1771,123 +1963,107 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       switch (arg->direction ())
         {
         case AST_Argument::dir_IN:
-          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
-            {
-              // declare a variable
-              *os << bt->name () << " " << arg->local_name () <<
-                ";" << nl;
-              // now define a NamedValue_ptr
-              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                ";" << nl;
-              // declare an Any
-              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", &" << arg->local_name () <<
-                "); // ORB does not own" << nl;
-            }
-          else
-            {
-              *os << "const " << bt->name () << " &";
-            }
-          break;
-        case AST_Argument::dir_INOUT:
-          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
-            {
-              // declare a variable
-              *os << bt->name () << " " << arg->local_name () <<
-                ";" << nl;
-              // now define a NamedValue_ptr
-              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                ";" << nl;
-              // declare an Any
-              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", &" << arg->local_name () <<
-                "); // ORB does not own" << nl;
-            }
-          else
-            {
-              *os << bt->name () << " &";
-            }
-          break;
-        case AST_Argument::dir_OUT:
-          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
-            {
-              if (bt->size_type () == be_decl::VARIABLE)
-                {
-                  // declare a variable
-                  *os << bt->name () << " *" << arg->local_name () << ";" <<
-                    nl;
-                  // now define a NamedValue_ptr
-                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                    ";" << nl;
-                  // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", " << arg->local_name () <<
-                    ", 1); // ORB owns" << nl;
-                }
-              else
-                {
-                  // declare a variable
-                  *os << bt->name () << " " << arg->local_name () << ";" <<
-                    nl;
-                  // now define a NamedValue_ptr
-                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                    ";" << nl;
-                  // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", &" << arg->local_name () <<
-                    ", 1); // ORB owns" << nl;
-                }
-            }
-          else
-            {
-              *os << bt->name () << "_out";
-              break;
-            }
-          break;
-        }
-      break;
-    case AST_Decl::NT_enum: // type is an enum
-        switch (arg->direction ())
           {
-          case AST_Argument::dir_IN:
             if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
               {
-                    // declare a variable
-                *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl;
-                    // now define a NamedValue_ptr
+                // declare a variable
+                *os << bt->name () << " " << arg->local_name () <<
+                  ";" << nl;
+                // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
-                    // declare an Any
+                // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
                   bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << "const " << bt->nested_type_name (bif) << " &";
               }
             else
               {
-                *os << bt->name ();
+                *os << "const " << bt->name () << " &";
               }
-            break;
-          case AST_Argument::dir_INOUT:
+          }
+          break;
+        case AST_Argument::dir_INOUT:
+          {
             if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
               {
-                    // declare a variable
-                *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl;
-                    // now define a NamedValue_ptr
+                // declare a variable
+                *os << bt->name () << " " << arg->local_name () <<
+                  ";" << nl;
+                // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
-                    // declare an Any
+                // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
                   bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << " &";
               }
             else
               {
                 *os << bt->name () << " &";
               }
-            break;
-          case AST_Argument::dir_OUT:
+          }
+          break;
+        case AST_Argument::dir_OUT:
+          {
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                if (bt->size_type () == be_decl::VARIABLE)
+                  {
+                    // declare a variable
+                    *os << bt->name () << " *" << arg->local_name () << ";" <<
+                      nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", " << arg->local_name () <<
+                      ", 1); // ORB owns" << nl;
+                  }
+                else
+                  {
+                    // declare a variable
+                    *os << bt->name () << " " << arg->local_name () << ";" <<
+                      nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", &" << arg->local_name () <<
+                      ", 1); // ORB owns" << nl;
+                  }
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << "_out ";
+              }
+            else
+              {
+                *os << bt->name () << "_out";
+                break;
+              }
+          }
+          break;
+        }
+      break;
+    case AST_Decl::NT_enum: // type is an enum
+      switch (arg->direction ())
+        {
+        case AST_Argument::dir_IN:
+          {
             if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
               {
                     // declare a variable
@@ -1901,12 +2077,70 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif);
+              }
+            else
+              {
+                *os << bt->name ();
+              }
+          }
+          break;
+        case AST_Argument::dir_INOUT:
+          {
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << bt->name () << " " << arg->local_name () << ";" <<
+                  nl;
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", &" << arg->local_name () <<
+                  "); // ORB does not own" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << " &";
+              }
+            else
+              {
+                *os << bt->name () << " &";
+              }
+          }
+          break;
+        case AST_Argument::dir_OUT:
+          {
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << bt->name () << " " << arg->local_name () << ";" <<
+                  nl;
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", &" << arg->local_name () <<
+                  "); // ORB does not own" << nl;
+              }
+            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
+              {
+                // to keep the MSVC++ compiler happy
+                *os << bt->nested_type_name (bif) << "_out ";
+              }
             else
               {
                 *os << bt->name () << "_out";
               }
-            break;
           }
+          break;
+        }
       break;
     case AST_Decl::NT_except: // type is an exception
       {
