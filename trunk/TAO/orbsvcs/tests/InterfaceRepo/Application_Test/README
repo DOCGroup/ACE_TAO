@@ -1,0 +1,81 @@
+$Id$
+
+The test in this directory utilizes the Interface Repository
+as might be done in an application. This test is also the
+only one in this suite that makes use of the Interface
+Repository administration executable 'tao_ifr'.
+
+The test must be run by executing the Perl scrip 'run_test.pl'.
+The order of events is as follows:
+
+(1)     The Interface Repository service is started.
+
+(2)     The server proces is started. The server makes
+        available an object reference to an interface
+        called 'inventory', which exists in a namespace
+        called 'warehouse', and contains an operation
+        called 'getCDinfo'. The operation takes an IN
+        argument which is a string representing the
+        artist's name, and INOUT argument which is a
+        string representing the album title, and an OUT
+        argument which is a float representing the price.
+        The operation returns a boolean value indicating
+        whether or not the particular CD is in stock. All
+        this iformation is contained in the IDL file
+        'test.idl'.
+
+(3)     The Interface Repository administration executable
+        'tao_ifr' is executed on test.idl, which adds the
+        information in test.idl to the repository.
+
+(4)     The client process is started. The client performs
+        the following actions:
+
+        (a)     Locates the Interface Repository by calling
+                resolve_initial_references ("InterfaceRepository"),
+                and narrowing.
+
+        (b)     Gets the IOR of the target object. In a real
+                application, this would probably be done
+                through the Naming Service, but here the
+                IOR is read from the file where it was
+                stored by the server.
+                
+        (c)     The client then makes several calls to the
+                repository, first searching for an object 
+                with the name 'warehouse'. Once this is
+                found, the client checks to see if 'warehouse'
+                may contain other objects. If so, it gets a
+                list of all the objects 'contained' by
+                warehouse which are interfaces. Each inteface's
+                name is checked to find one called  'inventory'. 
+                Then the client gets a list of all inventory's
+                operations. Each of these is checked to find
+                one called 'getCDinfo'. The client then gets
+                the return type and a list of the operation's
+                parameters by querying the operation repository
+                object.
+
+        (d)     The client creates a DII request pseudo-object,
+                sets its return type and adds parameters
+                according to the information extracted from
+                the operation repository object. Notice that
+                the client does not have the correct string for 
+                the album title, but one that is commonly used
+                by people when referring to that album. The
+                server will try to be smart about this, and
+                match a substring of the given album title with
+                a substring of the real album title, returning
+                the corrected album title if it finds a match.
+
+        (e)     The client invokes the DII request and displays
+                the results.
+
+(5)     The server is shut down.
+
+(6)     tao_ifr is again invoked on test.idl, this time with
+        the '-r' option, which removes the objects coresponding
+        to the contents of the IDL file from the repository.
+
+(7)     The repository is shut down.
+
