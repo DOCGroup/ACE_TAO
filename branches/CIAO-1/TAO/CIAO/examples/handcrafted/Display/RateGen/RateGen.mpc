@@ -14,9 +14,11 @@ project (RateGen_stub) : ciao_client {
 }
 
 project (RateGen_skel) : ciao_component {
-  depends += HUD_skel
+  depends += HUD_skel RateGen_stub
   sharedname = RateGen_skel
   dllflags  = RATEGEN_SKEL_BUILD_DLL
+  libpaths += ..
+  libs += RateGen_stub HUD_stub
 
   IDL_Files {
   }

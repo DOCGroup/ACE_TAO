@@ -17,6 +17,8 @@ project (GPS_skel) : ciao_component {
   depends += HUD_skel GPS_stub
   sharedname = GPS_skel
   dllflags  = GPS_SKEL_BUILD_DLL
+  libpaths += ..
+  libs += GPS_stub HUD_stub
 
   IDL_Files {
   }

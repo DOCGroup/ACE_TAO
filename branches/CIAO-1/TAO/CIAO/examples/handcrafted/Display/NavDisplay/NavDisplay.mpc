@@ -14,9 +14,11 @@ project (NavDisplay_stub) : ciao_client {
 }
 
 project (NavDisplay_skel) : ciao_component {
-  depends += HUD_skel
+  depends += HUD_skel NavDisplay_stub
   sharedname = NavDisplay_skel
   dllflags  = NAVDISPLAY_SKEL_BUILD_DLL
+  libpaths += ..
+  libs += NavDisplay_stub HUD_stub
 
   IDL_Files {
   }
