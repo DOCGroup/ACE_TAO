@@ -1,3 +1,15 @@
+Thu Jan 28 15:02:42 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+
+          Some minor optimization changes.
+
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+
+          Changed this test by install a set of components in 2 different
+          containers hosted in the same NodeApplication. I worked fine.          
+
 Thu Jan 27 15:43:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Object_Set_T.cpp

@@ -270,8 +270,9 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Even if above operation failed we should still remove homes.
+  const Home_Iterator end = this->home_map_.end ();
   for (Home_Iterator iter (this->home_map_.begin ());
-       iter != this->home_map_.end ();
+       iter != end;
        ++iter)
     {
       this->container_->ciao_uninstall_home ( (*iter).int_id_
@@ -299,8 +300,9 @@ CIAO::Container_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Remove all the components in the NodeApplication/Container
   // Release all component servant object.
+  const Component_Iterator end = this->component_map_.end ();
   for (Component_Iterator iter (this->component_map_.begin ());
-       iter != this->component_map_.end ();
+       iter != end;
        ++iter)
   {
     // Find the component home first, then call the remove_component
