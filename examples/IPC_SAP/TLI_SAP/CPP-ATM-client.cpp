@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/TLI_Connector.h"
-#include "ace/ATM_QoS.h"                              
+#include "ace/ATM_QoS.h"
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
@@ -11,10 +11,10 @@ ACE_RCSID(TLI_SAP, CPP_ATM_client, "$Id$")
 
 /* ACE_XTI/ATM Client */
 
-int main (int argc, char *argv[])                       
+int main (int argc, char *argv[])
 {
   if (argc < 2)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Usage: %s [-s selector] hostname [QoS in KB/sec]\n",
                        argv[0]),
                       1);
@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
 
   // Initiate timed, non-blocking connection with server.
   ACE_TLI_Connector con;
-                                                        
+
   // Construct QoS options - currently FORE only supports bandwidth
   ACE_ATM_QoS qos;
   qos.set_rate(cli_stream.get_handle (),
@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
   // Not sure why but reuse_addr set to true/1 causes problems for
   // FORE/XTI/ATM - this is now handled in ACE_TLI_Connector::connect()
   if (con.connect (cli_stream,
-                   remote_addr, 
+                   remote_addr,
                    (ACE_Time_Value *) &ACE_Time_Value::zero,
                    local_addr,
                    1,
@@ -127,14 +127,14 @@ int main (int argc, char *argv[])
                           1);
       else
 	ACE_DEBUG ((LM_DEBUG,
-                    "connected to %s\n", 
+                    "connected to %s\n",
 		    remote_addr.addr_to_string ()));
     }
 
   // Send data to server (correctly handles "incomplete writes").
-  
+
   for (int r_bytes;
-       (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0; 
+       (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0;
        )
     if (cli_stream.send_n (buf,
                            r_bytes,
@@ -145,17 +145,17 @@ int main (int argc, char *argv[])
                         1);
 
   // Explicitly close the connection.
-  if (cli_stream.close () == -1) 
+  if (cli_stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "close"),
                       -1);
   return 0;
-}                                                       
+}
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "your platform isn't configured to support XTI/ATM\n"),
                     1);
 }

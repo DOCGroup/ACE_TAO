@@ -1,15 +1,15 @@
 // $Id$
 
-#include "ace/TLI_Acceptor.h"                             
+#include "ace/TLI_Acceptor.h"
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(TLI_SAP, CPP_ATM_server, "$Id$")
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
-// ACE_TLI Server 
+// ACE_TLI Server
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
@@ -33,12 +33,12 @@ main (int argc, char *argv[])
       } // switch
     } // while getopt
 
-  // Create a server address. 
+  // Create a server address.
   ACE_ATM_Addr addr;
   if (selector_specified)
     addr.set_selector(selector);
 
-  // Create a server, reuse the addr. 
+  // Create a server, reuse the addr.
   ACE_TLI_Acceptor peer_acceptor;
 
   // Not sure why but reuse_addr set to true/1 causes problems for
@@ -54,22 +54,22 @@ main (int argc, char *argv[])
                        "open"),
                       -1);
 
-  ACE_TLI_Stream new_stream;                                   
+  ACE_TLI_Stream new_stream;
 
   ACE_DEBUG ((LM_DEBUG,
-              "starting server at address %s\n", 
+              "starting server at address %s\n",
               addr.addr_to_string ()));
 
 
-  // Performs the iterative server activities 
+  // Performs the iterative server activities
 
-  for (;;) 
+  for (;;)
     {
-      char buf[BUFSIZ];                                          
+      char buf[BUFSIZ];
 
       // Create a new ACE_TLI_Stream endpoint (note automatic restart
       // if errno == EINTR).
-      if (peer_acceptor.accept (new_stream, 
+      if (peer_acceptor.accept (new_stream,
 				&addr,
                                 &timeout) == -1)
 	{
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
                       "%p\n",
                       "accept"));
 	  continue;
-	}          
+	}
 
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected\n",
@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
       // Read data from client (terminate on error).
 
-      for (int r_bytes; 
+      for (int r_bytes;
 	   (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; )
         if (ACE_OS::write (ACE_STDOUT,
                            buf,
@@ -95,7 +95,7 @@ main (int argc, char *argv[])
                       "ACE::send_n"));
 
 	// Close new endpoint (listening endpoint stays open).
-      if (new_stream.close () == -1) 
+      if (new_stream.close () == -1)
 	ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "close"));
@@ -105,7 +105,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform isn't configured to support XTI/ATM\n"),
