@@ -434,6 +434,12 @@ SOURCE=.\OS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_Dirent.cpp
+
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Parse_Node.cpp
 
 
