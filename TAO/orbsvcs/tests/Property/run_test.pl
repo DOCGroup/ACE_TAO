@@ -39,7 +39,7 @@ sub name_server
 
 sub server
 {
-    my $args = "-ORBNameServiceIOR file://$nsior";
+    my $args = "-ORBInitRef NameService=file://$nsior";
     print STDERR "\nServer $args\n";
     $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", $args);
 }
@@ -47,7 +47,7 @@ sub server
 
 sub client
 {
-    my $args = "-ORBNameServiceIOR file://$nsior";
+    my $args = "-ORBInitRef NameService=file://$nsior";
     print STDERR "\nclient $args\n";
     $CL = Process::Create ($EXEPREFIX."client$EXE_EXT", $args);
 }
