@@ -35,7 +35,8 @@ ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_qu
     this->queue_ = new_queue;
   else
     {
-      ACE_NEW (this->queue_, ACE_Message_Queue<ACE_SYNCH>);
+      ACE_NEW (this->queue_,
+               ACE_Message_Queue<ACE_SYNCH>);
       this->delete_queue_ = 1;
     }
 }
@@ -54,9 +55,10 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
   // Dequeue the message.
   if (this->queue_->dequeue_head (mb, tv) != -1)
     {
-
-      // Get the method object.
-      ACE_Method_Request *mo = (ACE_Method_Request *) mb->base ();
+      // Get the next <Method_Request>.
+      ACE_Method_Request *mo =
+        ACE_reinterpret_case (ACE_Method_Request *,
+                              mb->base ());
 
       // Delete the message block.
       mb->release ();
@@ -72,7 +74,12 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mo,
 {
   ACE_Message_Block *mb;
 
-  ACE_NEW_RETURN (mb, ACE_Message_Block ((char *) mo), -1);
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block ((char *) mo,
+                                     0,
+                                     mo->priority ()),
+                  -1);
 
+  // Enqueue in priority order.
   return this->queue_->enqueue_prio (mb, tv);
 }

@@ -36,15 +36,26 @@ class ACE_Export ACE_Method_Request
   //     invokes the <call> method.
 public:
   // = Initialization and termination methods.
-  ACE_Method_Request (void);
+  ACE_Method_Request (u_long priority = 0);
   // Constructor.
 
   virtual ~ACE_Method_Request (void);
   // Destructor.
 
-  // = Invocation method
+  // = Accessors.
+  u_long priority (void);
+  // Get priority.
+
+  void priority (u_long);
+  // Set priority.
+
+  // = Invocation method (must be overridden by subclasses).
   virtual int call (void) = 0;
   // Invoked when the <Method_Request> is scheduled to run.
+
+protected:
+  u_long priority_;
+  // The priority of the request.
 };
 
 #endif /* ACE_METHOD_REQUEST_H */
