@@ -17,7 +17,7 @@ Wed Jul 23 14:45:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):
 
 	  Fixed format specifier mismatch warning in fscanf() call.  The
-	  being scanned is an "unsigned int".  As such, the format
+	  data being scanned is an "unsigned int".  As such, the format
 	  specifier should be "%u", not "%d".
 
 Wed Jul 23 16:25:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
