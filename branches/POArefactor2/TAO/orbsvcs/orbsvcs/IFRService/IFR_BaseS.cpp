@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:605
 
 #ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASES_CPP_
@@ -35,6 +35,7 @@
 
 #include "IFR_BaseS.h"
 #include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -76,13 +77,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_CORBA_ANY__ARG_TRAITS_SS_)
 #define _CORBA_ANY__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::Any>
     : public
@@ -95,13 +96,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:573
 
 #if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_SS_)
 #define _CORBA_DEFINITIONKIND__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::DefinitionKind>
     : public
@@ -115,7 +116,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONTAINED__ARG_TRAITS_SS_)
 #define _CORBA_CONTAINED__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::Contained>
     : public
@@ -129,13 +130,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:654
 
 #if !defined (_CORBA_CONTAINED_DESCRIPTION__ARG_TRAITS_SS_)
 #define _CORBA_CONTAINED_DESCRIPTION__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::Contained::Description>
     : public
@@ -151,7 +152,7 @@ namespace TAO
 
 #if !defined (_CORBA_REPOSITORY__ARG_TRAITS_SS_)
 #define _CORBA_REPOSITORY__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::Repository>
     : public
@@ -168,7 +169,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONTAINER__ARG_TRAITS_SS_)
 #define _CORBA_CONTAINER__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::Container>
     : public
@@ -182,13 +183,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:382
 
 #if !defined (_CORBA_CONTAINER_DESCRIPTIONSEQ__ARG_TRAITS_SS_)
 #define _CORBA_CONTAINER_DESCRIPTIONSEQ__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class  Arg_Traits<CORBA::Container::DescriptionSeq>
     : public
