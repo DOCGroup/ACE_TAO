@@ -46,6 +46,13 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
+  // The SI and SS cases are caught in BE_produce()
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SH
+      && !be_global->gen_skel_files ())
+    {
+      return 0;
+    }
+
   TAO_OutStream * const os = this->ctx_->stream ();
 
   int status = 0;

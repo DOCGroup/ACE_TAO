@@ -1,3 +1,23 @@
+Thu Mar 10 09:37:25 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        
+          Added new command line option -SS to suppress generation of
+          skeleton files. Only an empty *S.h file, containing the
+          copyright and an explanatory comment, is generated when 
+          this option is used. This empty file is generated in order
+          to have something to include in the *S.h file generated
+          from an IDL file that includes the file on which the
+          option maybe used - the *S.h include is generated automatically
+          by the IDL compiler and there is no way to know what options
+          may be have been used on the included IDL file. This option
+          will be useful when regenerating TAO files from .pidl files,
+          when only stub files need to be compiled.
+
 Thu Mar 10 15:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/include/ast.h:
