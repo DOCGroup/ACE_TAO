@@ -1,3 +1,10 @@
+Fri Mar 12 17:24:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
+
+	  Added dummy_label to the MPC  to get the stuff compiling for
+	  now. 
+
 Fri Mar 12 14:04:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAOACE.mwc:
