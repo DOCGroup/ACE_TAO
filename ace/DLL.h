@@ -87,6 +87,9 @@ public:
   // won't call <close> when it goes out of scope, even if
   // <close_on_destruction> is set.
 
+  int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
+  // Set the handle for the DLL object. By default, the <close> operation on the
+  // object will be invoked before it is destroyed.
 private:
   ACE_SHLIB_HANDLE handle_;
   // This is a handle to the DLL.

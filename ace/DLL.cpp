@@ -139,3 +139,22 @@ ACE_DLL::get_handle (int become_owner)
   // Return the handle requested by the user.
   return this->handle_;
 }
+
+// Set the handle for the DLL. By default, the object will be closed 
+// before it is destroyed.
+
+int
+ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle, 
+                     int close_on_destruction)
+{
+  // Close the handle in use before accepting the next one.
+  if (this->close () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%s\n", this->error ()),
+                      -1);
+  
+  this->handle_ = handle;
+  this->close_on_destruction_ = close_on_destruction;
+  
+  return 0;
+}
