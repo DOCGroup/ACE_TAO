@@ -1,4 +1,3 @@
-#include <fstream.h>
 // $Id$
 
 #include "ace/Service_Config.h"
