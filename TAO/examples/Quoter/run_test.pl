@@ -114,7 +114,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
       print "run_test [-n num] [-leave] [-onewin]".
-	"[-twowin] [-d] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
+        "[-twowin] [-d] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-leave              -- leaves the servers running and their windows open\n";
@@ -221,7 +221,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
 name_server ();
 sleep $sleeptime;
 read_nsior ();
-
 lifecycle_server ();
 sleep $sleeptime;
 
@@ -256,7 +255,7 @@ if ($leave)
     $LC->Kill (); $LC->TimedWait (1);
     $NS->Kill (); $NS->TimedWait (1);
   }
-
+}
 
 unlink $nsiorfile;
 
