@@ -25,8 +25,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Exception.h"
-#include "Services.h"
+#include "ServicesC.h"
 #include "CORBA_String.h"
+#include "ObjectIdListC.h"
 #include "objectid.h"
 
 // IRIX needs this for the throw specs
@@ -102,7 +103,7 @@ public:
       );
     };
 
-  typedef char *ObjectId;
+  typedef CORBA_ORB_ObjectId ObjectId;
   typedef CORBA::String_var ObjectId_var;
   typedef CORBA::String_out ObjectId_out;
   static CORBA::TypeCode_ptr _tc_ObjectId;
@@ -110,7 +111,6 @@ public:
   typedef CORBA_ORB_ObjectIdList ObjectIdList;
   typedef CORBA_ORB_ObjectIdList_var ObjectIdList_var;
   typedef CORBA_ORB_ObjectIdList_out ObjectIdList_out;
-  typedef CORBA_ORB_ObjectIdList *ObjectIdList_ptr;
   static CORBA::TypeCode_ptr _tc_ObjectIdList;
 
   /// Return a duplicate of <{orb}>.  When work with this duplicate is
@@ -511,7 +511,7 @@ private:
 
   /// Resolve the given service based on the service ID.
   CORBA::Object_ptr resolve_service (TAO_MCAST_SERVICEID service_id
-                                    ACE_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_DECL);
 
   /// Convert an OMG IOR into an object reference.
   CORBA::Object_ptr ior_string_to_object (const char* ior

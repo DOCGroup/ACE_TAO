@@ -1,3 +1,39 @@
+Fri Jan 10 09:30:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ObjectIDList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/ObjectIDList.i:
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Services.i:
+
+	  Removed these files containing hand-crafted generated
+	  code.
+
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectIdListC.h:
+        * tao/ObjectIdListC.i:
+        * tao/Services.pidl:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ServicesC.i:
+
+	  Replaced the removed files with those above, and added
+	  a .pidl file to generate the ServicesC.* files.
+
+        * tao/ORB.h:
+        * tao/ORB_Core.cpp:
+        * tao/StringSeq.pidl:
+        * tao/TAO.dsp:
+        * tao/TAO_Server_Request.h:
+        * tao/Typecode_Constants.cpp:
+        * tao/corba.h:
+        * tao/corbafwd.cpp:
+        * tao/corbafwd.h:
+        * tao/orb.idl:
+
+	  Changes related to the new files listed above.
+
 Thu Jan  9 18:51:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Acceptor_Filter.h:

@@ -61,15 +61,6 @@ CORBA::wstring_dup (const WChar *const str)
                         str);
 }
 
-// ****************************************************************
-
-TAO_NAMESPACE_TYPE (const CORBA::ServiceType)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::ServiceType, Security, 1)
-TAO_NAMESPACE_END
-
-// ****************************************************************
-
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Visibility, 0)

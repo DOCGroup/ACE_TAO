@@ -639,7 +639,7 @@ SOURCE=.\Object_Ref_Table.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIDList.cpp
+SOURCE=.\ObjectIdListC.cpp
 # End Source File
 # Begin Source File
 
@@ -803,11 +803,11 @@ SOURCE=.\Service_Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.cpp
+SOURCE=.\Services_Activate.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services_Activate.cpp
+SOURCE=.\ServicesC.cpp
 # End Source File
 # Begin Source File
 
@@ -1475,7 +1475,7 @@ SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIDList.h
+SOURCE=.\ObjectIdListC.h
 # End Source File
 # Begin Source File
 
@@ -1651,11 +1651,11 @@ SOURCE=.\Service_Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.h
+SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services_Activate.h
+SOURCE=.\ServicesC.h
 # End Source File
 # Begin Source File
 
@@ -2167,7 +2167,7 @@ SOURCE=.\Object_Loader.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIDList.i
+SOURCE=.\ObjectIdListC.i
 # End Source File
 # Begin Source File
 
@@ -2275,7 +2275,7 @@ SOURCE=.\Service_Context.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.i
+SOURCE=.\ServicesC.i
 # End Source File
 # Begin Source File
 
