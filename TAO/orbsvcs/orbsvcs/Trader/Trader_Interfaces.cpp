@@ -119,8 +119,8 @@ query (const char *type,
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
-  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
-    type_struct (rep->fully_describe_type (type, env));
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct = 
+    rep->fully_describe_type (type, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
 
   ACE_NEW (returned_offers, CosTrading::OfferSeq);
@@ -307,12 +307,11 @@ lookup_all_subtypes (const char* type,
   // closure of a type's super type relation includes the super type
   // being considered, then perform a search on that type.
   CORBA::ULong num_types = all_types->length ();
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
   for (CORBA::ULong i = 0;
        i < num_types && offer_filter.ok_to_consider_more ();
        i++)
     {
-      CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
-
       TAO_TRY
         {
           // Obtain a description of the prospective type.
@@ -1046,8 +1045,8 @@ modify (const char *id,
   if (offer != 0)
     {
       // Yank our friend, the type struct.
-      CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct
-        = rep->fully_describe_type (type, _env);
+      CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
+        rep->fully_describe_type (type, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
       TAO_Offer_Modifier offer_mod (type, type_struct.in (), offer);
 
@@ -1089,8 +1088,8 @@ withdraw_using_constraint (const char *type,
   TAO_String_Queue ids;
 
   // Retrieve the type struct
-  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
-    type_struct = rep->fully_describe_type (type, _env);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
+    rep->fully_describe_type (type, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Try to find the map of offers of desired service type.
