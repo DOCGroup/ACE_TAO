@@ -19,7 +19,7 @@ Wed Feb 04 22:23:24 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_HAS_EXCEPTIONS #define from config-linux-common.h to
           config-g++-common.h.
 
-        * include/makeinclude/wrapper_macros.GNU: disable exception handling,
+        * include/makeinclude/wrapper_macros.GNU: disabled exception handling,
           the default, on g++ >= 2.8.0.  On both Linux/alpha and
           Solaris 2.5.1/sparc, exception handling increased the size of
           libACE.so by about 25 percent.  Exception handling can easily
