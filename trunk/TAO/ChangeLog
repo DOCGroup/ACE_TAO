@@ -1,3 +1,9 @@
+Wed Mar  5 06:14:34 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* tao/Makefile.bor (OBJFILES): 
+
+	Added Codeset related files to makefile.
+
 Wed Mar  5 00:01:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/util/utl_global.cpp (validate_included_idl_files): 
