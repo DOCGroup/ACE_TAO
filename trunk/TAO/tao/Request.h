@@ -50,7 +50,7 @@ public:
   CORBA::ExceptionList_ptr exceptions (void);
   // Return the exceptions resulting from this request.
 
-  CORBA_Environment *env (void);
+  //CORBA_Environment *env (void);
   // Return the <Environment> for this request.
 
   // Argument manipulation helper functions.
@@ -69,14 +69,14 @@ public:
   // Returns reference to Any for extraction using >>=.
   CORBA_Any &return_value (void);
 
-  void invoke (void);
+  void invoke (CORBA::Environment &);
   // Perform method resolution and invoke an appropriate method. If
   // the method returns successfully, its result is placed in the
   // result argument specified on <create_request>. The behavior is
   // undefined if this <Request> has already been used with a previous
   // call to <invoke>, <send>, or <send_multiple_requests>.
 
-  void send_oneway (void);
+  void send_oneway (CORBA::Environment &);
   // Send a oneway request.
 
   // Pseudo object methods
@@ -118,7 +118,7 @@ private:
   CORBA::Flags flags_;
   // invocation flags
 
-  CORBA_Environment env_;
+  // CORBA_Environment env_;
   // holds exceptions
 
   CORBA::ExceptionList exceptions_;
