@@ -1,3 +1,55 @@
+Thu May 29 02:00:14 1997    <irfan@TWOSTEP>
+
+	* ace/ACE.cpp (bind_port): Changed the implementation of this
+ 	  method such that a recently used port is not used again in the
+ 	  next call to this method on Win32, i.e., upper limit is
+ 	  decreased even in the successful case. This fixes the problem on
+ 	  Win32 where binding to a recently used port works but the
+ 	  following connect fails.
+
+	* ace/Acceptor.cpp (close): Added a close method that allows us
+ 	  to shutdown the Acceptor (without having to destroy it).
+
+	* ace/Connector.cpp (close): Added a close method that allows us
+ 	  to shutdown the Connector (without having to destroy it).
+
+	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp
+
+	  (handle_close): Removed this method. This code seemed to be
+ 	  duplicating the code in the handle_close of the proxies.
+
+	  (initiate_connection): Removed the code that did
+ 	  rescheduling. The proxies are responsible for this.
+
+	* apps/Gateway/Gateway/Event_Channel.cpp
+
+	  (initiate_proxy_connection): Must *always* use the correct synch
+ 	  options while connecting.
+
+	  (reinitiate_proxy_connection): Always register for timeouts if
+	  we are not disconnecting. This allows us to remove duplicated
+	  logic in Proxy_Handler_Connector. 
+
+	  The new logic of close() allows us to remove the code that use
+ 	  to remove the proxy from the map to prevent double deletes.
+
+	  (close): Changed the shutdown logic to: Tell everyone that the
+ 	  spaceship is here (behind the comet), close down the connector,
+ 	  close down the acceptor, tell everyone that it is now time to
+ 	  commit suicide.
+
+	* apps/Gateway/Gateway/Proxy_Handler.cpp (handle_timeout): Must
+ 	  return 0, or else the timer queue will cancel the handler and
+ 	  *all* its timeouts.
+
+	* apps/Gateway/Peer/svc.conf,Makefile: We now generate a Peer
+ 	  shared library (instead of just an .so). The svc.conf was
+ 	  changed to reflect this.
+
+	* tests/UPIPE_SAP_Test.cpp: Fixed output message.
+
+	* Handle_Set.i (operator): Fixed typo.
+
 Thu May 29 11:09:52 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU: check for directory
