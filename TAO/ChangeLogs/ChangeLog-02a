@@ -1,3 +1,15 @@
+Mon Sep 24 14:12:11 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/MCAST_Parser.cpp (assign_to_variables): 
+	  Modified so that if the nic address isnt specified, the kernel
+	  chooses the nic. This is because the nic is platform specific
+	  and we cant default it to eth0.  Thanks to Ossama for pointing
+	  it out.
+	
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Added
+	  MCASTServer in the list of multicast services that are valid. This
+	  is needed for the test (orbsvcs/tests/IOR_MCAST). 
+
 Mon Sep 24 12:22:32 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/params.cpp: 
