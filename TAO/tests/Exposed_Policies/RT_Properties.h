@@ -20,11 +20,7 @@
 #ifndef RT_PROPERTIES_H_
 #define RT_PROPERTIES_H_
 
-#include "tao/corba.h"
-#include <tao/RT_ORB.h>
-
-#if (TAO_HAS_RT_CORBA == 1)
-
+#include "tao/RTCORBA/RTCORBA.h"
 
 class RT_Properties
 {
@@ -52,7 +48,5 @@ private:
   RTCORBA::PriorityBands priority_bands_;
   char ior_source_[256];
 };
-
-#endif /* (TAO_HAS_RT_CORBA == 1) */
 
 #endif /* RT_PROPERTIES_H_ */

@@ -1,3 +1,8 @@
+Wed Jun 13 10:22:51 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tests/Exposed_Policies/RT_Properties.h:
+          Fixed header file include to work with new RTCORBA libraries.
+
 Wed Jun 13 09:07:14 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
