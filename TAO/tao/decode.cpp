@@ -708,8 +708,8 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                                 {
                                   if (is_corba_object == 0)
                                     {
-                                      TAO_Object_Field* field =
-                                        ACE_reinterpret_cast (TAO_Object_Field *,
+                                      TAO_Object_Field_T<CORBA_Object>* field =
+                                        ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
                                                               ACE_const_cast (void *, data));
                                       field->_downcast (object, env);
                                       // The size of this field is different...

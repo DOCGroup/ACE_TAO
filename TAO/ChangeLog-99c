@@ -1,3 +1,22 @@
+Fri Mar 12 10:38:18 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/CDR_Interpreter.cpp:
+
+	  setup_entry for objrect references required
+	  TAO_Object_Field_T<CORBA_Object> as the first parameter instead
+	  of CORBA_OBject_ptr for the accurate size computation. Thanks to
+	  Alexey Gadzhiev (alg@null.ru) for reporting the bug and
+	  supplying us with a test program and other information to help
+	  us fix the bug.
+
+	* tao/{encode, decode, deep_free}.cpp:
+
+	  In encode/decode/deep_free for structures, for the case where we
+	  are dealing with fields that are object references, we cast the
+	  data to TAO_Object_Field_T<CORBA_Object>* instead of simply
+	  TAO_Object_Field*. These changes were made during the bug fix
+	  described aove.
+
 Fri Mar 12 00:35:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp

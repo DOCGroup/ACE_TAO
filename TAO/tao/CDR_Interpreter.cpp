@@ -211,6 +211,7 @@ TAO_CDR_Interpreter::init (void)
   setup_entry (CORBA::TypeCode_ptr, tk_TypeCode);
   setup_entry (CORBA::Principal_ptr, tk_Principal);
   setup_entry (CORBA::Object_ptr, tk_objref);
+  setup_entry (TAO_Object_Field_T<CORBA_Object>, tk_objref);
 
   enum generic_enum {a, b, c, d};
 
