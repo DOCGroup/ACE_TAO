@@ -31,6 +31,20 @@ also receives other options that are specific to it<P>
     <th>Description</th>
     <th>Remark</th>
   </tr>
+  <tr><a NAME="ORBInitRef">
+    <td><tt>-ORBInitRef InterfaceRepository=
+            corbaloc:iiop:[hostname]:[port]/InterfaceRepository</tt></td>
+    
+    <td>Locate the Interface Repository using the <a href="../INS.html">Interoperable Naming Service</a></td>
+    <td>Without this option, the Interface Repository will be located by multicast.</td>
+
+   </tr>
+   <tr>
+    <td><tt>-ORBInitRef InterfaceRepository=file://[filename]</tt></td>
+    <td>Locate the Interface Repository using the IOR from a file.</td>
+
+    <td>Without this option, the Interface Repository will be located by multicast.</td>
+  </tr>
   <tr><a NAME="u">
     <td><tt>-u</tt></td>
 
