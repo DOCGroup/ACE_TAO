@@ -53,6 +53,36 @@ be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // If we contain an anonymous sequence, 
+  // generate code for the sequence here.
+
+  // retrieve the base type
+  be_type *base = be_type::narrow_from_decl (node->base_type ());
+  if (!base)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_cdr_op_ci::"
+                         "visit_sequence - "
+                         "Bad base type\n"),
+                        -1);
+    }
+
+  if (base->node_type () == AST_Decl::NT_sequence)
+    {
+      // CDR operators for sequences are now declared in the .i file,
+      // so we pass this state to the function.
+      if (this->gen_anonymous_base_type (base, 
+                                         TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI) 
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cdr_op_ci::"
+                             "visit_sequence - "
+                             "gen_anonymous_base_type failed\n"),
+                            -1);
+        }              
+    }
+
   // Sequences are *always* generated in the .cpp file, it doesn't
   // save all that time to generate them inline and this breaks
   // the dependencies for recursive types.
