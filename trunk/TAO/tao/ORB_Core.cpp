@@ -136,7 +136,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (CORBA::ORB::_nil ()),
     root_poa_ (),
-    portable_group_poa_hooks_ (0),
     orb_params_ (),
     init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
@@ -1514,7 +1513,6 @@ TAO_ORB_Core::service_context_list (
   ACE_CHECK;
 }
 
-
 TAO_Client_Strategy_Factory *
 TAO_ORB_Core::client_factory (void)
 {
@@ -1539,24 +1537,6 @@ TAO_ORB_Core::server_factory (void)
     }
 
   return this->server_factory_;
-}
-
-
-
-int
-TAO_ORB_Core::inherit_from_parent_thread (
-  TAO_ORB_Core_TSS_Resources *tss_resources)
-{
-  // Inherit properties/objects used in ORB_Core from the
-  // parent thread.  Stuff inherited here must already exist
-  // in the "parent" orbcore.
-  // This is used in the thread-per-connection concurrency model where
-  // each ORB spawned thread must use the resources of the spawning
-  // thread...
-
-  if (tss_resources == 0)
-    return -1;
-  return 0;
 }
 
 CORBA::Object_ptr
@@ -2393,24 +2373,6 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
 
   return this->lane_resources ().output_cdr_dblock_allocator ();
-
-#if 0
-  // Allocating memory here confuses purify a bit. We do delete this
-  // memory when TSS delete
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  if (tss == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("TAO_ORB_Core::output_cdr_dblock_allocator (); ")
-                       ACE_TEXT ("no more TSS keys")),
-                      0);
-
-  if (tss->output_cdr_dblock_allocator_ == 0)
-    tss->output_cdr_dblock_allocator_ =
-      this->resource_factory ()->output_cdr_dblock_allocator ();
-
-  return tss->output_cdr_dblock_allocator_;
-#endif /* if 0*/
 }
 
 ACE_Allocator*
@@ -2762,6 +2724,7 @@ TAO_ORB_Core::add_interceptor (
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("IORInterceptor Adapter Factory instance")));
+
       ACE_THROW (CORBA::INTERNAL ());
     }
 }

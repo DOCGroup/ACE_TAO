@@ -155,7 +155,7 @@ namespace TAO
     if (!(icdr.read_string (rep_id.out ()) &&
           icdr.read_ulong (min) &&
           icdr.read_ulong (cs)))
-      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
                                  CORBA::COMPLETED_MAYBE));
 
     cs = CORBA::CompletionStatus (cs);

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "Offer_Importer.h"
 
 ACE_RCSID(Trading, import_test, "$Id$")

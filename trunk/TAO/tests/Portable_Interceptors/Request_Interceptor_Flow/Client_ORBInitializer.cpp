@@ -33,7 +33,7 @@ Client_ORBInitializer::post_init (
                     Client_Request_Interceptor ("CLIENT A"),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -49,7 +49,7 @@ Client_ORBInitializer::post_init (
                     Client_Request_Interceptor ("CLIENT B"),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -64,7 +64,7 @@ Client_ORBInitializer::post_init (
                     Client_Request_Interceptor ("CLIENT C"),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

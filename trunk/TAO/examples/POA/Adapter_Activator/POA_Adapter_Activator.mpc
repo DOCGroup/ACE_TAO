@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, minimum_corba {
+project(*Server): taoserver, minimum_corba {
    includes += ../Generic_Servant
    libs += Generic_Servant
    after += POA_Generic_Servant_Lib

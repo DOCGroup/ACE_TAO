@@ -19,10 +19,101 @@
 
 #include "testS.h"
 #include "ace/SString.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 class test_i : public POA_test
 {
 };
+
+void
+test_get_servant_manager (PortableServer::POA_ptr poa)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Getting the servant manager should give a wrong policy exception
+      // exception
+      PortableServer::ServantManager_ptr servant_manager =
+        poa->get_servant_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_UNUSED_ARG (servant_manager);
+    }
+  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+    {
+      succeed = true;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, get servant manager failed, should give an exception\n"));
+  }
+}
+
+void
+test_set_servant_manager (PortableServer::POA_ptr poa)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Setting the servant manager should give a wrong policy exception
+      // exception
+      poa->set_servant_manager (PortableServer::ServantManager::_nil() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+    {
+      succeed = true;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, set servant manager failed, should give an exception\n"));
+  }
+}
+
+void
+test_get_servant_with_no_set (PortableServer::POA_ptr poa)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Getting the default servant without one set whould give a NoServant
+      // exception
+      PortableServer::Servant servant =
+        poa->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_UNUSED_ARG (servant);
+    }
+  ACE_CATCH (PortableServer::POA::NoServant, ex)
+    {
+      succeed = true;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, get servant without one set failed\n"));
+  }
+}
 
 int
 main (int argc, char **argv)
@@ -102,6 +193,12 @@ main (int argc, char **argv)
 
       // Test servant.
       test_i test;
+
+      (void) test_get_servant_with_no_set (default_servant_poa.in());
+
+      (void) test_get_servant_manager (default_servant_poa.in());
+
+      (void) test_set_servant_manager (default_servant_poa.in());
 
       // Register default servant.
       default_servant_poa->set_servant (&test

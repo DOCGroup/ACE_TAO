@@ -46,9 +46,9 @@
 #ifndef _DYNAMIC_ANY_IDL_
 #define _DYNAMIC_ANY_IDL_
 
-#include <orb.idl>
-
 #pragma prefix "omg.org"
+
+#include <Typecode_types.pidl>
 
 module DynamicAny {
 

@@ -26,12 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
-#include "IORTableC.h"
+#include "IORTable.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -39,11 +38,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "IORTableC.i"
+#include "IORTableC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -84,14 +83,13 @@ IORTable::AlreadyBound::operator= (const ::IORTable::AlreadyBound &_tao_excp)
 IORTable::AlreadyBound *
 IORTable::AlreadyBound::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:IORTable/AlreadyBound:1.0", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (AlreadyBound *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<AlreadyBound *> (_tao_excp);
+}
+
+const IORTable::AlreadyBound *
+IORTable::AlreadyBound::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const AlreadyBound *> (_tao_excp);
 }
 
 CORBA::Exception *IORTable::AlreadyBound::_alloc (void)
@@ -179,14 +177,13 @@ IORTable::NotFound::operator= (const ::IORTable::NotFound &_tao_excp)
 IORTable::NotFound *
 IORTable::NotFound::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:IORTable/NotFound:1.0", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (NotFound *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<NotFound *> (_tao_excp);
+}
+
+const IORTable::NotFound *
+IORTable::NotFound::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const NotFound *> (_tao_excp);
 }
 
 CORBA::Exception *IORTable::NotFound::_alloc (void)
@@ -281,12 +278,6 @@ TAO::Objref_Traits<IORTable::Table>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*IORTable__TAO_Table_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 IORTable::Table::Table (void)
 {}
 
@@ -346,18 +337,18 @@ IORTable::Table::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:IORTable/Table:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -418,12 +409,6 @@ TAO::Objref_Traits<IORTable::Locator>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*IORTable__TAO_Locator_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 IORTable::Locator::Locator (void)
 {}
 
@@ -483,18 +468,18 @@ IORTable::Locator::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:IORTable/Locator:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -523,15 +508,8 @@ CORBA::Boolean operator<< (
     const IORTable::AlreadyBound &_tao_aggregate
   )
 {
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  // Marshal the repository ID.
+  return (strm << _tao_aggregate._rep_id ());
 }
 
 CORBA::Boolean operator>> (
@@ -539,7 +517,7 @@ CORBA::Boolean operator>> (
     IORTable::AlreadyBound&
   )
 {
-  return 1;
+  return true;
 }
 
 // TAO_IDL - Generated from
@@ -550,15 +528,8 @@ CORBA::Boolean operator<< (
     const IORTable::NotFound &_tao_aggregate
   )
 {
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  // Marshal the repository ID.
+  return (strm << _tao_aggregate._rep_id ());
 }
 
 CORBA::Boolean operator>> (
@@ -566,11 +537,11 @@ CORBA::Boolean operator>> (
     IORTable::NotFound&
   )
 {
-  return 1;
+  return true;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -583,7 +554,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         IORTable::Locator
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         IORTable::Locator
@@ -598,7 +569,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         IORTable::Table
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         IORTable::Table
@@ -615,7 +586,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         IORTable::Locator
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         IORTable::Locator
@@ -630,10 +601,10 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         IORTable::Table
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         IORTable::Table
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

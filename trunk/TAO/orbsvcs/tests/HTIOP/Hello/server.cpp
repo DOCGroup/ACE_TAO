@@ -5,7 +5,7 @@
 #include "tests/test_config.h"
 
 #include "ace/Get_Opt.h"
-#include "tao/IORTable/IORTableC.h"
+#include "tao/IORTable/IORTable.h"
 #include "orbsvcs/CosNamingC.h"
 
 ACE_RCSID (Hello,

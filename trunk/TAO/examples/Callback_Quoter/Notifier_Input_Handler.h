@@ -21,7 +21,7 @@
 
 #include "Notifier_i.h"
 #include "NotifierS.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 

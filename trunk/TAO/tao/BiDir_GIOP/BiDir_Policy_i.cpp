@@ -61,7 +61,7 @@ TAO_BidirectionalPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_BidirectionalPolicy* tmp;
   ACE_NEW_THROW_EX (tmp, TAO_BidirectionalPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 

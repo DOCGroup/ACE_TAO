@@ -53,8 +53,7 @@
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 
-#include "tao/ParameterModeC.h"
-#include "IFR_BaseC.h"
+#include "tao/IFR_Client/IFR_BaseC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

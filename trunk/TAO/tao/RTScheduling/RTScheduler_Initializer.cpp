@@ -58,7 +58,7 @@ void
                     TAO_RTScheduler_Current,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -83,7 +83,7 @@ void
                     Client_Interceptor,
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                         CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -97,7 +97,7 @@ void
                     Server_Interceptor (this->current_),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                         CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -113,7 +113,7 @@ void
                     TAO_RTScheduler_Manager (tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

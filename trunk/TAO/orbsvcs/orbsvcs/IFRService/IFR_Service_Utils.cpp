@@ -11,9 +11,10 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
+#include "tao/ValueModifierC.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFR_Service,
@@ -259,7 +260,7 @@ TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
             {
               delete heap;
               heap = 0;
-            
+
               ACE_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
@@ -1175,8 +1176,8 @@ TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
   PortableServer::ObjectId object_id;
   TAO::ObjectKey object_key =
     obj->_stubobj ()->profile_in_use ()->object_key ();
-  int status = TAO_POA::parse_ir_object_key (object_key,
-                                             object_id);
+  int status = TAO_Root_POA::parse_ir_object_key (object_key,
+                                                  object_id);
   if (status != 0)
     {
       ACE_DEBUG ((LM_DEBUG,

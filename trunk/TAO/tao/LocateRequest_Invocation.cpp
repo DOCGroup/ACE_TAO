@@ -48,7 +48,7 @@ namespace TAO
         // to call the interceptors in this case?
         this->resolver_.transport ()->close_connection ();
 
-        ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::INTERNAL (TAO::VMCID,
                                            CORBA::COMPLETED_NO),
                           TAO_INVOKE_FAILURE);
       }
@@ -127,7 +127,7 @@ namespace TAO
       case TAO_GIOP_OBJECT_HERE:
         break;
       case TAO_GIOP_UNKNOWN_OBJECT:
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO::VMCID,
                                                    CORBA::COMPLETED_YES),
                           TAO_INVOKE_FAILURE);
       case TAO_GIOP_OBJECT_FORWARD:
@@ -144,14 +144,14 @@ namespace TAO
             {
               // Could not demarshal the exception id, raise a local
               // CORBA::MARSHAL exception.
-              ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+              ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
                                                 CORBA::COMPLETED_MAYBE),
                                 TAO_INVOKE_SYSTEM_EXCEPTION);
             }
 
           // This kind of exception shouldn't happen with locate requests,
           // but if it does, we turn it into a CORBA::UNKNOWN exception.
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO::VMCID,
                                             CORBA::COMPLETED_YES),
                             TAO_INVOKE_SYSTEM_EXCEPTION);
         }
@@ -166,7 +166,7 @@ namespace TAO
             {
               // Could not demarshal the addressing disposition, raise a local
               // CORBA::MARSHAL exception.
-              ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+              ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
                                                 CORBA::COMPLETED_MAYBE),
                                 TAO_INVOKE_SUCCESS);
             }

@@ -5,6 +5,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/POA_Current.h"
 #include "tao/ORB_Core.h"
 #include "RT_Servant_Dispatcher.h"
 #include "RT_Policy_Validator.h"
@@ -14,7 +15,6 @@ ACE_RCSID (RTPortableServer,
            RT_Object_Adapter_Factory,
            "$Id$")
 
-
 TAO_RT_Object_Adapter_Factory::TAO_RT_Object_Adapter_Factory (void)
 {
 }
@@ -23,7 +23,7 @@ TAO_Adapter*
 TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
 {
   // Setup the POA_Current object in the ORB
-  CORBA::Object_var current = new TAO_POA_Current;
+  CORBA::Object_var current = new TAO::Portable_Server::POA_Current;
   orb_core->poa_current (current.in ());
 
   if (!orb_core->orb_params ()->disable_rt_collocation_resolver ())
@@ -43,14 +43,14 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
                   0);
 
   // Create and register the RT servant dispatcher.
-  TAO_RT_Servant_Dispatcher *rt_servant_dispatcher;
+  TAO_RT_Servant_Dispatcher *rt_servant_dispatcher = 0;
   ACE_NEW_RETURN (rt_servant_dispatcher,
                   TAO_RT_Servant_Dispatcher,
                   0);
   object_adapter->servant_dispatcher (rt_servant_dispatcher);
 
   // Create and add the RT policy validator.
-  TAO_POA_RT_Policy_Validator *rt_validator;
+  TAO_POA_RT_Policy_Validator *rt_validator = 0;
   ACE_NEW_RETURN (rt_validator,
                   TAO_POA_RT_Policy_Validator (*orb_core),
                   0);

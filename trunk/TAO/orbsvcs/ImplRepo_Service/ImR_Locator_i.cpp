@@ -7,7 +7,7 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/IORTable/IORTable.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
 #include "tao/Messaging/Messaging.h"
@@ -393,7 +393,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   {
     info.reset();
   }
- 
+
   while(true)
   {
     if (is_alive(info))
@@ -636,7 +636,7 @@ ImR_Locator_i::register_server_i (const char* server,
         server, info->activator.c_str()));
       ACE_THROW (ImplementationRepository::AlreadyRegistered());
     }
- 
+
     if (this->debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR Locator: Updating server <%s>.\n", server));
 
@@ -821,7 +821,7 @@ ImR_Locator_i::server_is_running (const char* name,
     // allocated on the heap here, but is deleted within the
     // handle_timeout() call.
     Status_Changed_Timer* sct;
-    ACE_NEW_THROW_EX (sct, 
+    ACE_NEW_THROW_EX (sct,
                       Status_Changed_Timer (this, info),
                       CORBA::NO_MEMORY ());
 
@@ -1109,7 +1109,7 @@ ImR_Locator_i::is_alive(Server_Info& info)
     // This is evil, but there's not much else we can do for now. We should never
     // reach this code once the ImR Servers are fixed so that they don't lie about
     // server_is_running. Currently, they send this notification during poa creation.
-    // We have to run the orb, because the very thing that may be slowing the 
+    // We have to run the orb, because the very thing that may be slowing the
     // aliveness of the servers is the fact that they're trying to register more
     // objects with us.
     ACE_Time_Value tv = IS_ALIVE_RETRY_INTERVAL;

@@ -93,7 +93,7 @@ TAO_Named_RT_Mutex_Manager::create_mutex (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_RT_Mutex (),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
@@ -173,7 +173,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                         TAO_Named_RT_Mutex (name),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
@@ -250,14 +250,14 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                         dont_route,
                                         no_delay,
                                         enable_network_priority),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::TCPProtocolProperties::_nil ());
 
   return tmp;
 }
 
-RTCORBA::UnixDomainProtocolProperties_ptr 
+RTCORBA::UnixDomainProtocolProperties_ptr
 TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                     CORBA::Long send_buffer_size,
                                                     CORBA::Long recv_buffer_size
@@ -269,14 +269,14 @@ TAO_RT_ORB::create_unix_domain_protocol_properties (
                     TAO_UnixDomain_Protocol_Properties (
                                                send_buffer_size,
                                                recv_buffer_size),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::UnixDomainProtocolProperties::_nil ());
 
   return tmp;
 }
 
-RTCORBA::SharedMemoryProtocolProperties_ptr 
+RTCORBA::SharedMemoryProtocolProperties_ptr
 TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       CORBA::Long send_buffer_size,
                                                       CORBA::Long recv_buffer_size,
@@ -291,7 +291,7 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
 {
   TAO_SharedMemory_Protocol_Properties *tmp;
   ACE_NEW_THROW_EX (tmp,
-                    TAO_SharedMemory_Protocol_Properties (send_buffer_size,                                                          
+                    TAO_SharedMemory_Protocol_Properties (send_buffer_size,
                                                           recv_buffer_size,
                                                           keep_alive,
                                                           dont_route,
@@ -299,14 +299,14 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                           preallocate_buffer_size,
                                                           mmap_filename,
                                                           mmap_lockname),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::SharedMemoryProtocolProperties::_nil ());
-  
+
   return tmp;
 }
 
-RTCORBA::UserDatagramProtocolProperties_ptr 
+RTCORBA::UserDatagramProtocolProperties_ptr
 TAO_RT_ORB::create_user_datagram_protocol_properties (
                                                       CORBA::Boolean enable_network_priority
                                                       ACE_ENV_ARG_DECL)
@@ -316,14 +316,14 @@ TAO_RT_ORB::create_user_datagram_protocol_properties (
   ACE_NEW_THROW_EX (tmp,
                     TAO_UserDatagram_Protocol_Properties (
                                                  enable_network_priority),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::UserDatagramProtocolProperties::_nil ());
 
   return tmp;
 }
 
-RTCORBA::StreamControlProtocolProperties_ptr 
+RTCORBA::StreamControlProtocolProperties_ptr
 TAO_RT_ORB::create_stream_control_protocol_properties (
                                                        CORBA::Long send_buffer_size,
                                                        CORBA::Long recv_buffer_size,
@@ -343,10 +343,10 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                   dont_route,
                                                   no_delay,
                                                   enable_network_priority),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::StreamControlProtocolProperties::_nil ());
-  
+
   return tmp;
 }
 
@@ -409,7 +409,7 @@ TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
   TAO_PriorityModelPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (priority_model, server_priority),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::PriorityModelPolicy::_nil ());
 
@@ -424,7 +424,7 @@ TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
   TAO_ThreadpoolPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (threadpool),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::ThreadpoolPolicy::_nil ());
 
@@ -440,7 +440,7 @@ TAO_RT_ORB::create_priority_banded_connection_policy (const
   TAO_PriorityBandedConnectionPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (priority_bands),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::PriorityBandedConnectionPolicy::_nil ());
 
@@ -454,7 +454,7 @@ TAO_RT_ORB::create_private_connection_policy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_PrivateConnectionPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::PrivateConnectionPolicy::_nil ());
 
@@ -469,7 +469,7 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
   TAO_ServerProtocolPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (protocols),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::ServerProtocolPolicy::_nil ());
 
@@ -484,7 +484,7 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
   TAO_ClientProtocolPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (protocols),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::ClientProtocolPolicy::_nil ());
 

@@ -54,6 +54,7 @@
 
 #include <IOP.pidl>
 #include <TimeBase.pidl>
+#include <Policy.pidl>
 
 #pragma prefix "omg.org"
 

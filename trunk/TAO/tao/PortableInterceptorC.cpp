@@ -44,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:65
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -159,18 +159,18 @@ PortableInterceptor::Interceptor::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/Interceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -637,22 +637,22 @@ PortableInterceptor::Current::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Current:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/Current:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -780,18 +780,18 @@ PortableInterceptor::RequestInfo::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/RequestInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -919,22 +919,22 @@ PortableInterceptor::ClientRequestInfo::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/RequestInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/ClientRequestInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1062,22 +1062,22 @@ PortableInterceptor::ServerRequestInfo::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/RequestInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/ServerRequestInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1205,22 +1205,22 @@ PortableInterceptor::ClientRequestInterceptor::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/Interceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/ClientRequestInterceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1348,22 +1348,22 @@ PortableInterceptor::ServerRequestInterceptor::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/Interceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1491,18 +1491,18 @@ PortableInterceptor::PolicyFactory::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1925,18 +1925,18 @@ PortableInterceptor::ORBInitInfo::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2076,18 +2076,18 @@ PortableInterceptor::ORBInitializer::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/ORBInitializer:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -2120,21 +2120,14 @@ CORBA::Boolean operator<< (
   if (strm << _tao_aggregate._rep_id ())
     {
       // Now marshal the members (if any).
-      if (
+      return (
         (strm << _tao_aggregate.forward.in ()) &&
         (strm << CORBA::Any::from_boolean (_tao_aggregate.permanent))
-       )
-        {
-          return 1;
-        }
-      else
-        {
-          return 0;
-        }
+       );
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -2144,17 +2137,10 @@ CORBA::Boolean operator>> (
   )
 {
   // Demarshal the members.
-  if (
+  return (
     (strm >> _tao_aggregate.forward.out ()) &&
     (strm >> CORBA::Any::to_boolean (_tao_aggregate.permanent))
-  )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  );
 }
 
 // TAO_IDL - Generated from
@@ -2165,15 +2151,8 @@ CORBA::Boolean operator<< (
     const PortableInterceptor::InvalidSlot &_tao_aggregate
   )
 {
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  // Marshal the repository ID.
+  return (strm << _tao_aggregate._rep_id ());
 }
 
 CORBA::Boolean operator>> (
@@ -2181,7 +2160,7 @@ CORBA::Boolean operator>> (
     PortableInterceptor::InvalidSlot&
   )
 {
-  return 1;
+  return true;
 }
 
 // TAO_IDL - Generated from

@@ -289,7 +289,7 @@ CORBA::SystemException::_info (void) const
 
   const CORBA::ULong VMCID = this->minor () & 0xFFFFF000u;
 
-  if (VMCID == TAO_DEFAULT_MINOR_CODE)
+  if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
       const char *location;

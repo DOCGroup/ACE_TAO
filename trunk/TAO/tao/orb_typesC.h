@@ -40,6 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 
@@ -56,9 +57,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -71,52 +70,52 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
-
+  // be\be_visitor_typedef/typedef_ch.cpp:413
+  
   typedef char * ORBid;
   typedef CORBA::String_var ORBid_var;
   typedef CORBA::String_out ORBid_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBid;
-
+  
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
-
+  // be\be_visitor_typedef/typedef_ch.cpp:379
+  
   typedef CORBA::ULong Flags;
   typedef CORBA::ULong_out Flags_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Flags;
-
+  
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
-
+  // be\be_visitor_typedef/typedef_ch.cpp:413
+  
   typedef char * Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Identifier;
-
+  
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
-
+  // be\be_visitor_typedef/typedef_ch.cpp:413
+  
   typedef char * RepositoryId;
   typedef CORBA::String_var RepositoryId_var;
   typedef CORBA::String_out RepositoryId_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RepositoryId;
 
 // TAO_IDL - Generated from
@@ -133,13 +132,13 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:964
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "orb_typesC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

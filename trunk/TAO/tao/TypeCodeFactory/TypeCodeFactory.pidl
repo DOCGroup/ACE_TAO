@@ -28,7 +28,7 @@
 //   2. Generate the code. The command used to generate code from this
 //   IDL file is:
 //
-//     tao_idl -o orig -Sc -Ge 1 -GT -I../.. -ci "C.inl" \
+//     tao_idl -o orig -Sc -Ge 1 -GT -I../.. \
 //          -Wb,export_macro=TAO_TypeCodeFactory_Export \
 //          -Wb,export_include=typecodefactory_export.h \
 //          -Wb,pre_include="ace/pre.h" \

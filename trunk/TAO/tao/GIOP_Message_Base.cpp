@@ -246,19 +246,18 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
-  CORBA::ULong bodylen = ACE_static_cast (CORBA::ULong,
-                           total_len - TAO_GIOP_MESSAGE_HEADER_LEN);
+  CORBA::ULong bodylen = static_cast <CORBA::ULong>
+                           (total_len - TAO_GIOP_MESSAGE_HEADER_LEN);
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast (CORBA::ULong *, buf +
-                         TAO_GIOP_MESSAGE_SIZE_OFFSET) = bodylen;
+  *(reinterpret_cast <CORBA::ULong *> (buf +
+                         TAO_GIOP_MESSAGE_SIZE_OFFSET)) = bodylen;
 #else
   if (!stream.do_byte_swap ())
-    *ACE_reinterpret_cast (CORBA::ULong *,
-                           buf + TAO_GIOP_MESSAGE_SIZE_OFFSET) = bodylen;
+    *(reinterpret_cast <CORBA::ULong *>
+                           (buf + TAO_GIOP_MESSAGE_SIZE_OFFSET)) = bodylen;
   else
-    ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
-                                           &bodylen),
+    ACE_CDR::swap_4 (reinterpret_cast <char *> (&bodylen),
                      buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -276,8 +275,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
         }
       ///
       this->dump_msg ("send",
-                      ACE_reinterpret_cast (u_char *,
-                                            buf),
+                      reinterpret_cast <u_char *> (buf),
                       total_len);
 
       //
@@ -551,8 +549,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   if (TAO_debug_level > 0)
     this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *,
-                                          qd->msg_block_->rd_ptr ()),
+                    reinterpret_cast <u_char *> (qd->msg_block_->rd_ptr ()),
                     qd->msg_block_->length ());
 
 
@@ -645,8 +642,7 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   if (TAO_debug_level > 0)
     this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *,
-                                          qd->msg_block_->rd_ptr ()),
+                    reinterpret_cast <u_char *> (qd->msg_block_->rd_ptr ()),
                     qd->msg_block_->length ());
 
 
@@ -1434,14 +1430,14 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (byte_order == TAO_ENCAP_BYTE_ORDER)
         {
-          id = ACE_reinterpret_cast (ACE_CDR::ULong*, tmp_id);
+          id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
         }
       else
         {
-          ACE_CDR::swap_4 (tmp_id, ACE_reinterpret_cast (char*,id));
+          ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
         }
 #else
-      id = ACE_reinterpret_cast(ACE_CDR::ULong*, tmp_id);
+      id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
         }

@@ -19,7 +19,9 @@
 #include "UIPMC_Transport.h"
 #include "UIPMC_Endpoint.h"
 
-ACE_RCSID(tao, UIPMC_Connect, "$Id$")
+ACE_RCSID(PortableGroup,
+          UIPMC_Connect,
+          "$Id$")
 
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
@@ -131,7 +133,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
   if(TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("\nTAO (%P|%t) TAO_UIPMC_Connection_Handler::open -")
+                 ACE_TEXT("TAO (%P|%t) TAO_UIPMC_Connection_Handler::open, ")
                  ACE_TEXT("listening on: <%s:%u>\n"),
                  this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()));
@@ -155,7 +157,7 @@ TAO_UIPMC_Connection_Handler::open_server (void)
   if( TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("\nTAO (%P|%t) TAO_UIPMC_Connection_Handler::open_server -")
+                 ACE_TEXT("TAO (%P|%t) TAO_UIPMC_Connection_Handler::open_server, ")
                  ACE_TEXT("subcribed to multicast group at %s:%d\n"),
                  this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()

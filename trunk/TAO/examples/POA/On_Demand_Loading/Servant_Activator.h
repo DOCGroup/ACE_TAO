@@ -23,6 +23,7 @@
 #define SERVANT_ACTIVATOR_H
 
 #include "Servant_Manager.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 class ServantActivator_i : public PortableServer::ServantActivator
 {

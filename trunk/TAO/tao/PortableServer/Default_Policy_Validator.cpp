@@ -1,10 +1,9 @@
 // @(#) $Id$
 
 #include "Default_Policy_Validator.h"
-#include "POA_Policies.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
-
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            Default_Policy_Validator,
@@ -39,7 +38,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
     srp->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  policy = 
+  policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -65,7 +64,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
       ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
 
-  policy = 
+  policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS
                                 ACE_ENV_ARG_PARAMETER);
 
@@ -80,7 +79,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
   ACE_CHECK;
 
 
-  policy = 
+  policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -93,7 +92,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
     iap->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  policy = 
+  policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -75,7 +75,7 @@ namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ServerId;
   typedef CORBA::String_var ServerId_var;
@@ -87,7 +87,7 @@ namespace PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerId;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ORBId;
   typedef CORBA::String_var ORBId_var;
@@ -99,7 +99,7 @@ namespace PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBId;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef CORBA::StringSeq AdapterName;
   typedef CORBA::StringSeq_var AdapterName_var;
@@ -111,7 +111,7 @@ namespace PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterName;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
@@ -123,7 +123,7 @@ namespace PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Long AdapterManagerId;
   typedef CORBA::Long_out AdapterManagerId_out;
@@ -134,7 +134,7 @@ namespace PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterManagerId;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short AdapterState;
   typedef CORBA::Short_out AdapterState_out;

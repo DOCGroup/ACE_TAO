@@ -15,7 +15,9 @@
 #ifndef IMR_FORWARDER_H
 #define IMR_FORWARDER_H
 
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -42,7 +42,7 @@ TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (props);
@@ -146,7 +146,7 @@ TAO_LB_Random::_tao_next_member (
 
   // Prevent integer arithmetic overflow.
   const CORBA::Float flen = static_cast<CORBA::Float> (len);
-                                  
+
   const CORBA::ULong i =
     static_cast<CORBA::ULong> (flen * ACE_OS::rand () / (RAND_MAX + 1.0));
 

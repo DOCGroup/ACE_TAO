@@ -109,7 +109,7 @@ namespace TAO
     // Pull the exception ID out of the marshaling buffer.
     if (tmp_stream.read_string (buf.inout ()) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
                                           CORBA::COMPLETED_YES),
                           TAO_INVOKE_FAILURE);
       }
@@ -161,7 +161,7 @@ namespace TAO
     // @@ It would seem that if the remote exception is a
     //    UserException we can assume that the request was
     //    completed.
-    ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW_RETURN (CORBA::UNKNOWN (TAO::VMCID,
                                       CORBA::COMPLETED_YES),
                       TAO_INVOKE_USER_EXCEPTION);
 

@@ -93,10 +93,6 @@ namespace CORBA
   TypeCode_ptr CORBA::TypeCode::_tc_BadKind = 0;
   TypeCode_ptr  _tc_exception_type = 0;
 
-  // Some more typecodes in the CORBA namespace. We keep adding
-  // to this list as we find more and more things being introduced
-  // to the CORBA namespace.
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
      TypeCode_ptr  _tc_NamedValue = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -22,12 +22,11 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/LocalObject.h"
 
 // Forward declarations.
 class TAO_LB_LoadManager;
-
 
 /**
  * @class TAO_LB_MemberLocator

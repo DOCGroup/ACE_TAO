@@ -7,7 +7,7 @@
  *
  * @brief Pre-compiled IDL source for the IOP module.
  *
- * This file is used to generate IOPC.{h,i,cpp}, using the following
+ * This file is used to generate IOPC.{h,inl,cpp}, using the following
  * command:
  *
  *   tao_idl.exe
@@ -18,17 +18,13 @@
  *        -Wb,post_include="ace/post.h"
  *        IOP_Codec.pidl
  *
- * and then apply the patches in  diffs/IOP_Codec.diff.
- *
- * Move the typecodes for exceptions in IOP_CodecA.cpp to
- * IOP_CodecC.cpp.  The code left in IOP_CodecC.{h,i,cpp} and
- * IOP_CodecA.cpp is ready to use.
  */
 
 #ifndef TAO_IOP_CODEC_PIDL
 #define TAO_IOP_CODEC_PIDL
 
-#include <orb.idl>
+#include <Typecode_types.pidl>
+#include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 

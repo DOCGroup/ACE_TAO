@@ -149,7 +149,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::WrongTransac
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WrongTransaction &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "WrongTransactionC.inl"

@@ -14,7 +14,7 @@
 //   is:
 //
 //     tao_idl
-//        -o orig -Sa -Gp -Gd -Ge 1 -GT
+//        -o orig -GA -Sa -Gp -Gd -Ge 1 -GT
 //          -Wb,export_macro=TAO_RTScheduler_Export
 //          -Wb,export_include="rtscheduler_export.h"
 //          -Wb,pre_include="ace/pre.h"
@@ -26,8 +26,8 @@
 #ifndef TAO_RTSCHEDULER_PIDL
 #define TAO_RTSCHEDULER_PIDL
 
-#include "tao/RTCORBA/RTCORBA.pidl"
-#include "tao/PortableServer/PortableServer.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
+#include "tao/PortableServer/PortableServer_include.pidl"
 #include "tao/PortableInterceptor.pidl"
 
 

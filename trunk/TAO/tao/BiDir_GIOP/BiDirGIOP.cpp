@@ -41,7 +41,7 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
                         TAO_BiDir_ORBInitializer,
                         CORBA::NO_MEMORY (
                             CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
+                                TAO::VMCID,
                                 ENOMEM),
                             CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (-1);
@@ -73,7 +73,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
                     TAO_BiDirPolicy_Validator (val.orb_core ()),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                         CORBA::COMPLETED_NO));
   ACE_CHECK;

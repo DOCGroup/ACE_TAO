@@ -1,8 +1,9 @@
 // $Id$
 
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/POA.h"
-#include "tao/PortableServer/Operation_Table.h"
+#include "Servant_Base.h"
+#include "Root_POA.h"
+#include "Operation_Table.h"
+#include "POA_Current_Impl.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -15,11 +16,9 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (PortableServer,
            Servant_Base,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "Servant_Base.i"
@@ -144,8 +143,8 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Stub *stub = 0;
 
-  TAO_POA_Current_Impl *poa_current_impl =
-    static_cast<TAO_POA_Current_Impl *>
+  TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+    static_cast<TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   CORBA::ORB_ptr servant_orb = 0;

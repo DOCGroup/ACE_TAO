@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosTrading) : orbsvcslib, core {
+project(CosTrading) : orbsvcslib, core, utils {
   sharedname   = TAO_CosTrading
   dynamicflags = TAO_TRADING_BUILD_DLL
 
@@ -93,7 +93,7 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
 }
 
 
-project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils {
+project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils, utils {
   sharedname   = TAO_CosTrading_Serv
   dynamicflags = TAO_TRADING_SERV_BUILD_DLL
   tagchecks   += Trader

@@ -3,6 +3,7 @@
 #include "AccountManager_i.h"
 #include "Account_i.h"
 #include "tao/debug.h"
+#include "tao/Utils/ORB_Manager.h"
 
 ACE_RCSID(AccountManager, AccountManager_i, "$Id$")
 

@@ -135,7 +135,7 @@ namespace TAO
     if (stub == 0)
       ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             EINVAL),
                           CORBA::COMPLETED_NO),
                         stub);
@@ -195,7 +195,7 @@ namespace TAO
         {
           // Grab the syncscope policy from the ORB.
           Messaging::SyncScope sync_scope;
-    
+
           bool has_synchronization = false;
 
           stub->orb_core ()->call_sync_scope_hook (stub,
@@ -287,7 +287,7 @@ namespace TAO
       {
         ACE_THROW_RETURN (CORBA::INTERNAL (
             CORBA::SystemException::_tao_minor_code (
-                TAO_DEFAULT_MINOR_CODE,
+                TAO::VMCID,
                 EINVAL),
             CORBA::COMPLETED_NO),
                           TAO_INVOKE_FAILURE);

@@ -32,7 +32,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val
   TAO_FT_Heart_Beat_Enabled_Policy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_FT_Heart_Beat_Enabled_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -53,7 +53,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_FT_Heart_Beat_Enabled_Policy * tmp;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Enabled_Policy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 

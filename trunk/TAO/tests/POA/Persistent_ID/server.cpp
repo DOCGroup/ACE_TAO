@@ -20,6 +20,7 @@
 #include "ace/SString.h"
 #include "testS.h"
 #include "ace/OS_NS_stdio.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 

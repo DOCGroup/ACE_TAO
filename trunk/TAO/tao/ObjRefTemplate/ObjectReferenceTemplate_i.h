@@ -25,12 +25,20 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Default_ORTC.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/SystemException.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+namespace PortableServer
+{
+  class POA;
+
+  typedef POA *POA_ptr;
+  typedef TAO_Objref_Var_T<POA> POA_var;
+}
 
 namespace TAO
 {
@@ -102,6 +110,7 @@ namespace TAO
     PortableServer::POA_var poa_;
   };
 }
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

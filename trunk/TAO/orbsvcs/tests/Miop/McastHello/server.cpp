@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "orbsvcs/PortableGroup/MIOP.h"
+#include "orbsvcs/PortableGroup/GOA.h"
 
 ACE_RCSID (McastHello,
            server,
@@ -61,8 +62,8 @@ main (int argc, char *argv[])
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+      PortableGroup::GOA_var root_poa =
+        PortableGroup::GOA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))

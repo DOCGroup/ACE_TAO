@@ -36,21 +36,21 @@ MUF_Sched_Param_Policy::value (const MUF_Scheduling::SchedulingParameter& value 
   this->value_ = value;
 }
 
-CORBA::Policy_ptr 
+CORBA::Policy_ptr
 MUF_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   MUF_Sched_Param_Policy* tmp;
-  ACE_NEW_THROW_EX (tmp, 
+  ACE_NEW_THROW_EX (tmp,
 		    MUF_Sched_Param_Policy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
-void 
+void
 MUF_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -88,7 +88,7 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
   ACE_CHECK;
 
   IOP::CodecFactory_var codec_factory;
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     orb->resolve_initial_references ("CodecFactory"
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -130,7 +130,7 @@ MUF_Scheduler::create_scheduling_parameter (const MUF_Scheduling::SchedulingPara
                     MUF_Sched_Param_Policy,
                     CORBA::NO_MEMORY (
                                       CORBA::SystemException::_tao_minor_code (
-                                       TAO_DEFAULT_MINOR_CODE,
+                                       TAO::VMCID,
                                        ENOMEM),
                                       CORBA::COMPLETED_NO));
 
@@ -150,8 +150,8 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                    RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):MUF_Scheduler::begin_new_scheduling_segment enter\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):MUF_Scheduler::begin_new_scheduling_segment enter\n"));
 #endif
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -175,8 +175,8 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   kokyu_dispatcher_->schedule (guid, qos);
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):MUF_Scheduler::begin_new_scheduling_segment exit\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):MUF_Scheduler::begin_new_scheduling_segment exit\n"));
 #endif
 }
 
@@ -333,7 +333,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
       sc.context_data =
         reinterpret_cast<CORBA::OctetSeq &> (*codec_->encode (sc_qos_as_any));
-      
+
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t|%T): send_request : about to add sched SC\n")));
@@ -505,7 +505,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   if (CORBA::is_nil (sched_policy))
   {
 #ifdef KOKYU_DSRT_LOGGING
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "(%t|%T): sched_policy nil.\n "));
 #endif
     //24 hrs from now - infinity
@@ -517,7 +517,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   else
     {
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T):sched_policy not nil. ",
                   "sched params set\n"));
 #endif
@@ -550,7 +550,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 #endif
     }
 
-  kokyu_dispatcher_->update_schedule (*(this->current_->id ()), 
+  kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
                                       Kokyu::BLOCK);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -602,7 +602,7 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   // Check that the reply service context was received as
   // expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (Client_Interceptor::SchedulingInfo 
+    ri->get_reply_service_context (Client_Interceptor::SchedulingInfo
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

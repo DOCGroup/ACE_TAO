@@ -39,7 +39,7 @@ RPS_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
                     CosLoadBalancing::Location (this->location_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -69,7 +69,7 @@ RPS_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -79,7 +79,7 @@ RPS_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   load_list->length (1);
 
   load_list[0].id = CosLoadBalancing::RequestsPerSecond;
-  
+
   // VC 7.1 gives a warning without an explicit cast.
   load_list[0].value =
     static_cast<CORBA::Float> (request_count / elapsed_time.msec () * 1000);

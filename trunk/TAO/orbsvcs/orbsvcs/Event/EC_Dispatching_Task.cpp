@@ -10,8 +10,8 @@
 #include "EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Dispatching, 
+ACE_RCSID (Event,
+           EC_Dispatching,
            "$Id$")
 
 int
@@ -77,7 +77,7 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
   void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                  CORBA::COMPLETED_NO));
 
   ACE_Message_Block *mb =

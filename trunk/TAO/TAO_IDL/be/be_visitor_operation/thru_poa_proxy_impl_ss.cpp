@@ -91,7 +91,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << "{" << be_idt_nl;
 
 #if 0
-      << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "obj->_stubobj ()"
       << "->servant_orb_var ()->orb_core ()"

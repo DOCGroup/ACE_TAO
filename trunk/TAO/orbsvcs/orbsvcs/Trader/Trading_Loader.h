@@ -17,7 +17,7 @@
 #define TAO_TRADING_LOADER_H
 
 #include "tao/Object_Loader.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

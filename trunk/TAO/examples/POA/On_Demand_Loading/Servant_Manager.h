@@ -24,9 +24,11 @@
 #include "ace/Containers.h"
 
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Active_Object_Map.h"
 
 #include "tao/ORB.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

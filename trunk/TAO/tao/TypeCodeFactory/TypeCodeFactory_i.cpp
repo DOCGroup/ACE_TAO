@@ -433,7 +433,7 @@ TAO_TypeCodeFactory_i::create_fixed_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                          CORBA::COMPLETED_NO),
                     CORBA::TypeCode::_nil ());
 }
@@ -774,12 +774,12 @@ TAO_TypeCodeFactory_i::compute_default_label (
             {
               TAO::Any_Impl *impl = members[i].label.impl ();
               TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
-              
+
               if (impl->encoded ())
                 {
                   TAO::Unknown_IDL_Type *unk =
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-                    
+
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
                   // to copy the state, not the buffer.
@@ -792,7 +792,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
                   TAO_InputCDR tmp (out);
                   for_reading = tmp;
                 }
-                
+
               for_reading.read_ulong (u.enum_val);
 
               if (u.enum_val == dv.enum_val)
@@ -1448,12 +1448,12 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
             {
               TAO::Any_Impl *impl = members[i].label.impl ();
               TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
-              
+
               if (impl->encoded ())
                 {
                   TAO::Unknown_IDL_Type *unk =
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-                    
+
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
                   // to copy the state, not the buffer.
@@ -1466,7 +1466,7 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
                   TAO_InputCDR tmp (out);
                   for_reading = tmp;
                 }
-                
+
               for_reading.read_ulong (s.enum_val);
 
               if (checker.insert (s.enum_val) != 0)

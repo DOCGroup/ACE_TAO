@@ -26,16 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
-#include "PortableServerC.h"
+#include "PortableServer.h"
 #include "tao/CDR.h"
+#include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
-
-#include "tao/PortableServer/POA.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -46,14 +45,11 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
-
-#if (TAO_HAS_MINIMUM_POA == 0)
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
 {
-
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_
 
@@ -70,34 +66,6 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// Hand crafted.
-
-char *
-PortableServer::ObjectId_to_string (const PortableServer::ObjectId &id)
-{
-  return TAO_POA::ObjectId_to_string (id);
-}
-
-CORBA::WChar *
-PortableServer::ObjectId_to_wstring (const PortableServer::ObjectId &id)
-{
-  return TAO_POA::ObjectId_to_wstring (id);
-}
-
-PortableServer::ObjectId *
-PortableServer::string_to_ObjectId (const char *id)
-{
-  return TAO_POA::string_to_ObjectId (id);
-}
-
-PortableServer::ObjectId *
-PortableServer::wstring_to_ObjectId (const CORBA::WChar *id)
-{
-  return TAO_POA::wstring_to_ObjectId (id);
 }
 
 // TAO_IDL - Generated from
@@ -150,2209 +118,11 @@ void PortableServer::POAList::_tao_any_destructor (
   )
 {
   POAList * _tao_tmp_pointer =
-    ACE_static_cast (POAList *, _tao_void_pointer);
+    static_cast<POAList *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 #endif /* end #if !defined */
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/exception_cs.cpp:63
-
-PortableServer::ForwardRequest::ForwardRequest (void)
-  : CORBA::UserException (
-        "IDL:omg.org/PortableServer/ForwardRequest:2.3",
-        "ForwardRequest"
-      )
-{
-}
-
-PortableServer::ForwardRequest::~ForwardRequest (void)
-{
-}
-
-PortableServer::ForwardRequest::ForwardRequest (const ::PortableServer::ForwardRequest &_tao_excp)
-  : CORBA::UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
-{
-  this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
-}
-
-PortableServer::ForwardRequest&
-PortableServer::ForwardRequest::operator= (const ::PortableServer::ForwardRequest &_tao_excp)
-{
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
-  this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
-  return *this;
-}
-
-void PortableServer::ForwardRequest::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ForwardRequest *_tao_tmp_pointer =
-    ACE_static_cast (ForwardRequest*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-PortableServer::ForwardRequest *
-PortableServer::ForwardRequest::_downcast (CORBA::Exception *_tao_excp)
-{
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/ForwardRequest:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (ForwardRequest *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableServer::ForwardRequest, 0);
-  return retval;
-}
-
-CORBA::Exception *
-PortableServer::ForwardRequest::_tao_duplicate (void) const
-{
-  CORBA::Exception *result;
-  ACE_NEW_RETURN (
-      result,
-      ::PortableServer::ForwardRequest (*this),
-      0
-    );
-  return result;
-}
-
-void PortableServer::ForwardRequest::_raise (void) const
-{
-  TAO_RAISE (*this);
-}
-
-void PortableServer::ForwardRequest::_tao_encode (
-    TAO_OutputCDR &cdr
-    ACE_ENV_ARG_DECL
-  ) const
-{
-  if (cdr << *this)
-    {
-      return;
-    }
-
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableServer::ForwardRequest::_tao_decode (
-    TAO_InputCDR &cdr
-    ACE_ENV_ARG_DECL
-  )
-{
-  if (cdr >> *this)
-    {
-      return;
-    }
-
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/exception_ctor.cpp:66
-
-PortableServer::ForwardRequest::ForwardRequest (
-    const CORBA::Object_ptr  _tao_forward_reference
-  )
-  : CORBA::UserException (
-        "IDL:omg.org/PortableServer/ForwardRequest:2.3",
-        "ForwardRequest"
-      )
-{
-  this->forward_reference = CORBA::Object::_duplicate (_tao_forward_reference);
-}
-
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
-  return ::PortableServer::_tc_ForwardRequest;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/exception_cs.cpp:63
-
-PortableServer::NotAGroupObject::NotAGroupObject (void)
-  : CORBA::UserException (
-        "IDL:omg.org/PortableServer/NotAGroupObject:2.3",
-        "NotAGroupObject"
-      )
-{
-}
-
-PortableServer::NotAGroupObject::~NotAGroupObject (void)
-{
-}
-
-PortableServer::NotAGroupObject::NotAGroupObject (const ::PortableServer::NotAGroupObject &_tao_excp)
-  : CORBA::UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
-{
-}
-
-PortableServer::NotAGroupObject&
-PortableServer::NotAGroupObject::operator= (const ::PortableServer::NotAGroupObject &_tao_excp)
-{
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
-  return *this;
-}
-
-void PortableServer::NotAGroupObject::_tao_any_destructor (void *_tao_void_pointer)
-{
-  NotAGroupObject *_tao_tmp_pointer =
-    ACE_static_cast (NotAGroupObject*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-PortableServer::NotAGroupObject *
-PortableServer::NotAGroupObject::_downcast (CORBA::Exception *_tao_excp)
-{
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/NotAGroupObject:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (NotAGroupObject *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-CORBA::Exception *PortableServer::NotAGroupObject::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableServer::NotAGroupObject, 0);
-  return retval;
-}
-
-CORBA::Exception *
-PortableServer::NotAGroupObject::_tao_duplicate (void) const
-{
-  CORBA::Exception *result;
-  ACE_NEW_RETURN (
-      result,
-      ::PortableServer::NotAGroupObject (*this),
-      0
-    );
-  return result;
-}
-
-void PortableServer::NotAGroupObject::_raise (void) const
-{
-  TAO_RAISE (*this);
-}
-
-void PortableServer::NotAGroupObject::_tao_encode (
-    TAO_OutputCDR &cdr
-    ACE_ENV_ARG_DECL
-  ) const
-{
-  if (cdr << *this)
-    {
-      return;
-    }
-
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableServer::NotAGroupObject::_tao_decode (
-    TAO_InputCDR &cdr
-    ACE_ENV_ARG_DECL
-  )
-{
-  if (cdr >> *this)
-    {
-      return;
-    }
-
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::NotAGroupObject::_type (void) const
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
-  return ::PortableServer::_tc_NotAGroupObject;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/sequence_cs.cpp:65
-
-#if !defined (_PORTABLESERVER_IDS_CS_)
-#define _PORTABLESERVER_IDS_CS_
-
-PortableServer::IDs::IDs (void)
-{}
-
-PortableServer::IDs::IDs (
-    CORBA::ULong max
-  )
-  : TAO_Unbounded_Sequence<
-        PortableServer::ObjectId
-      >
-    (max)
-{}
-
-PortableServer::IDs::IDs (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    PortableServer::ObjectId * buffer,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Sequence<
-        PortableServer::ObjectId
-      >
-    (max, length, buffer, release)
-{}
-
-PortableServer::IDs::IDs (
-    const IDs &seq
-  )
-  : TAO_Unbounded_Sequence<
-        PortableServer::ObjectId
-      >
-    (seq)
-{}
-
-PortableServer::IDs::~IDs (void)
-{}
-
-void PortableServer::IDs::_tao_any_destructor (
-    void * _tao_void_pointer
-  )
-{
-  IDs * _tao_tmp_pointer =
-    ACE_static_cast (IDs *, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-#endif /* end #if !defined */
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::ThreadPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ThreadPolicy_ptr
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::duplicate (
-    PortableServer::ThreadPolicy_ptr p
-  )
-{
-  return PortableServer::ThreadPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::release (
-    PortableServer::ThreadPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ThreadPolicy_ptr
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::nil (void)
-{
-  return PortableServer::ThreadPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::marshal (
-    PortableServer::ThreadPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_ThreadPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::ThreadPolicy::ThreadPolicy (void)
-{}
-
-PortableServer::ThreadPolicy::~ThreadPolicy (void)
-{}
-
-void
-PortableServer::ThreadPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ThreadPolicy *_tao_tmp_pointer =
-    ACE_static_cast (ThreadPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::ThreadPolicy_ptr
-PortableServer::ThreadPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadPolicy::_nil ();
-    }
-
-  ThreadPolicy_ptr proxy =
-    dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-
-  return ThreadPolicy::_duplicate (proxy);
-}
-
-PortableServer::ThreadPolicy_ptr
-PortableServer::ThreadPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadPolicy::_nil ();
-    }
-
-  ThreadPolicy_ptr proxy =
-    dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-
-  return ThreadPolicy::_duplicate (proxy);
-}
-
-PortableServer::ThreadPolicy_ptr
-PortableServer::ThreadPolicy::_duplicate (ThreadPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::ThreadPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ThreadPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::ThreadPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/ThreadPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::ThreadPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::LifespanPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::LifespanPolicy_ptr
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::duplicate (
-    PortableServer::LifespanPolicy_ptr p
-  )
-{
-  return PortableServer::LifespanPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::release (
-    PortableServer::LifespanPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::LifespanPolicy_ptr
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::nil (void)
-{
-  return PortableServer::LifespanPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::marshal (
-    PortableServer::LifespanPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_LifespanPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::LifespanPolicy::LifespanPolicy (void)
-{}
-
-PortableServer::LifespanPolicy::~LifespanPolicy (void)
-{}
-
-void
-PortableServer::LifespanPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  LifespanPolicy *_tao_tmp_pointer =
-    ACE_static_cast (LifespanPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::LifespanPolicy_ptr
-PortableServer::LifespanPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return LifespanPolicy::_nil ();
-    }
-
-  LifespanPolicy_ptr proxy =
-    dynamic_cast<LifespanPolicy_ptr> (_tao_objref);
-
-  return LifespanPolicy::_duplicate (proxy);
-}
-
-PortableServer::LifespanPolicy_ptr
-PortableServer::LifespanPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return LifespanPolicy::_nil ();
-    }
-
-  LifespanPolicy_ptr proxy =
-    dynamic_cast<LifespanPolicy_ptr> (_tao_objref);
-
-  return LifespanPolicy::_duplicate (proxy);
-}
-
-PortableServer::LifespanPolicy_ptr
-PortableServer::LifespanPolicy::_duplicate (LifespanPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::LifespanPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/LifespanPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::LifespanPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/LifespanPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::LifespanPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::IdUniquenessPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::IdUniquenessPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::duplicate (
-    PortableServer::IdUniquenessPolicy_ptr p
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::release (
-    PortableServer::IdUniquenessPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::IdUniquenessPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::nil (void)
-{
-  return PortableServer::IdUniquenessPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::marshal (
-    PortableServer::IdUniquenessPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_IdUniquenessPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void)
-{}
-
-PortableServer::IdUniquenessPolicy::~IdUniquenessPolicy (void)
-{}
-
-void
-PortableServer::IdUniquenessPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  IdUniquenessPolicy *_tao_tmp_pointer =
-    ACE_static_cast (IdUniquenessPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::IdUniquenessPolicy_ptr
-PortableServer::IdUniquenessPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return IdUniquenessPolicy::_nil ();
-    }
-
-  IdUniquenessPolicy_ptr proxy =
-    dynamic_cast<IdUniquenessPolicy_ptr> (_tao_objref);
-
-  return IdUniquenessPolicy::_duplicate (proxy);
-}
-
-PortableServer::IdUniquenessPolicy_ptr
-PortableServer::IdUniquenessPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return IdUniquenessPolicy::_nil ();
-    }
-
-  IdUniquenessPolicy_ptr proxy =
-    dynamic_cast<IdUniquenessPolicy_ptr> (_tao_objref);
-
-  return IdUniquenessPolicy::_duplicate (proxy);
-}
-
-PortableServer::IdUniquenessPolicy_ptr
-PortableServer::IdUniquenessPolicy::_duplicate (IdUniquenessPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::IdUniquenessPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/IdUniquenessPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::IdUniquenessPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/IdUniquenessPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::IdUniquenessPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::IdAssignmentPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::IdAssignmentPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::duplicate (
-    PortableServer::IdAssignmentPolicy_ptr p
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::release (
-    PortableServer::IdAssignmentPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::IdAssignmentPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::nil (void)
-{
-  return PortableServer::IdAssignmentPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::marshal (
-    PortableServer::IdAssignmentPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_IdAssignmentPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void)
-{}
-
-PortableServer::IdAssignmentPolicy::~IdAssignmentPolicy (void)
-{}
-
-void
-PortableServer::IdAssignmentPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  IdAssignmentPolicy *_tao_tmp_pointer =
-    ACE_static_cast (IdAssignmentPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::IdAssignmentPolicy_ptr
-PortableServer::IdAssignmentPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return IdAssignmentPolicy::_nil ();
-    }
-
-  IdAssignmentPolicy_ptr proxy =
-    dynamic_cast<IdAssignmentPolicy_ptr> (_tao_objref);
-
-  return IdAssignmentPolicy::_duplicate (proxy);
-}
-
-PortableServer::IdAssignmentPolicy_ptr
-PortableServer::IdAssignmentPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return IdAssignmentPolicy::_nil ();
-    }
-
-  IdAssignmentPolicy_ptr proxy =
-    dynamic_cast<IdAssignmentPolicy_ptr> (_tao_objref);
-
-  return IdAssignmentPolicy::_duplicate (proxy);
-}
-
-PortableServer::IdAssignmentPolicy_ptr
-PortableServer::IdAssignmentPolicy::_duplicate (IdAssignmentPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::IdAssignmentPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/IdAssignmentPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::IdAssignmentPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/IdAssignmentPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::IdAssignmentPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::ImplicitActivationPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ImplicitActivationPolicy_ptr
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::duplicate (
-    PortableServer::ImplicitActivationPolicy_ptr p
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::release (
-    PortableServer::ImplicitActivationPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ImplicitActivationPolicy_ptr
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::nil (void)
-{
-  return PortableServer::ImplicitActivationPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::marshal (
-    PortableServer::ImplicitActivationPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_ImplicitActivationPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
-{}
-
-PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
-{}
-
-void
-PortableServer::ImplicitActivationPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ImplicitActivationPolicy *_tao_tmp_pointer =
-    ACE_static_cast (ImplicitActivationPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::ImplicitActivationPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ImplicitActivationPolicy::_nil ();
-    }
-
-  ImplicitActivationPolicy_ptr proxy =
-    dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-
-  return ImplicitActivationPolicy::_duplicate (proxy);
-}
-
-PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ImplicitActivationPolicy::_nil ();
-    }
-
-  ImplicitActivationPolicy_ptr proxy =
-    dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-
-  return ImplicitActivationPolicy::_duplicate (proxy);
-}
-
-PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::ImplicitActivationPolicy::_duplicate (ImplicitActivationPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::ImplicitActivationPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ImplicitActivationPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::ImplicitActivationPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/ImplicitActivationPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::ImplicitActivationPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::ServantRetentionPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantRetentionPolicy_ptr
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::duplicate (
-    PortableServer::ServantRetentionPolicy_ptr p
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::release (
-    PortableServer::ServantRetentionPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantRetentionPolicy_ptr
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::nil (void)
-{
-  return PortableServer::ServantRetentionPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::marshal (
-    PortableServer::ServantRetentionPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_ServantRetentionPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
-{}
-
-PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
-{}
-
-void
-PortableServer::ServantRetentionPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ServantRetentionPolicy *_tao_tmp_pointer =
-    ACE_static_cast (ServantRetentionPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::ServantRetentionPolicy_ptr
-PortableServer::ServantRetentionPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantRetentionPolicy::_nil ();
-    }
-
-  ServantRetentionPolicy_ptr proxy =
-    dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-
-  return ServantRetentionPolicy::_duplicate (proxy);
-}
-
-PortableServer::ServantRetentionPolicy_ptr
-PortableServer::ServantRetentionPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantRetentionPolicy::_nil ();
-    }
-
-  ServantRetentionPolicy_ptr proxy =
-    dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-
-  return ServantRetentionPolicy::_duplicate (proxy);
-}
-
-PortableServer::ServantRetentionPolicy_ptr
-PortableServer::ServantRetentionPolicy::_duplicate (ServantRetentionPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::ServantRetentionPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ServantRetentionPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::ServantRetentionPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/ServantRetentionPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::ServantRetentionPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::RequestProcessingPolicy.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::RequestProcessingPolicy_ptr
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::duplicate (
-    PortableServer::RequestProcessingPolicy_ptr p
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
-    PortableServer::RequestProcessingPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::RequestProcessingPolicy_ptr
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::nil (void)
-{
-  return PortableServer::RequestProcessingPolicy::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::marshal (
-    PortableServer::RequestProcessingPolicy_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_RequestProcessingPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
-{}
-
-PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void)
-{}
-
-void
-PortableServer::RequestProcessingPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RequestProcessingPolicy *_tao_tmp_pointer =
-    ACE_static_cast (RequestProcessingPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::RequestProcessingPolicy_ptr
-PortableServer::RequestProcessingPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestProcessingPolicy::_nil ();
-    }
-
-  RequestProcessingPolicy_ptr proxy =
-    dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref);
-
-  return RequestProcessingPolicy::_duplicate (proxy);
-}
-
-PortableServer::RequestProcessingPolicy_ptr
-PortableServer::RequestProcessingPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestProcessingPolicy::_nil ();
-    }
-
-  RequestProcessingPolicy_ptr proxy =
-    dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref);
-
-  return RequestProcessingPolicy::_duplicate (proxy);
-}
-
-PortableServer::RequestProcessingPolicy_ptr
-PortableServer::RequestProcessingPolicy::_duplicate (RequestProcessingPolicy_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::RequestProcessingPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/RequestProcessingPolicy:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::RequestProcessingPolicy::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/RequestProcessingPolicy:2.3";
-}
-
-CORBA::Boolean
-PortableServer::RequestProcessingPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::POAManager.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::POAManager_ptr
-TAO::Objref_Traits<PortableServer::POAManager>::duplicate (
-    PortableServer::POAManager_ptr p
-  )
-{
-  return PortableServer::POAManager::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::POAManager>::release (
-    PortableServer::POAManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::POAManager_ptr
-TAO::Objref_Traits<PortableServer::POAManager>::nil (void)
-{
-  return PortableServer::POAManager::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::POAManager>::marshal (
-    PortableServer::POAManager_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_POAManager_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/exception_cs.cpp:63
-
-PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
-  : CORBA::UserException (
-        "IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3",
-        "AdapterInactive"
-      )
-{
-}
-
-PortableServer::POAManager::AdapterInactive::~AdapterInactive (void)
-{
-}
-
-PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
-  : CORBA::UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
-{
-}
-
-PortableServer::POAManager::AdapterInactive&
-PortableServer::POAManager::AdapterInactive::operator= (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
-{
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
-  return *this;
-}
-
-void PortableServer::POAManager::AdapterInactive::_tao_any_destructor (void *_tao_void_pointer)
-{
-  AdapterInactive *_tao_tmp_pointer =
-    ACE_static_cast (AdapterInactive*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-PortableServer::POAManager::AdapterInactive *
-PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception *_tao_excp)
-{
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (AdapterInactive *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableServer::POAManager::AdapterInactive, 0);
-  return retval;
-}
-
-CORBA::Exception *
-PortableServer::POAManager::AdapterInactive::_tao_duplicate (void) const
-{
-  CORBA::Exception *result;
-  ACE_NEW_RETURN (
-      result,
-      ::PortableServer::POAManager::AdapterInactive (*this),
-      0
-    );
-  return result;
-}
-
-void PortableServer::POAManager::AdapterInactive::_raise (void) const
-{
-  TAO_RAISE (*this);
-}
-
-void PortableServer::POAManager::AdapterInactive::_tao_encode (
-    TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
-  ) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableServer::POAManager::AdapterInactive::_tao_decode (
-    TAO_InputCDR &
-    ACE_ENV_ARG_DECL
-  )
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POAManager::AdapterInactive::_type (void) const
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
-  return ::PortableServer::POAManager::_tc_AdapterInactive;
-}
-
-PortableServer::POAManager::POAManager (void)
-{}
-
-PortableServer::POAManager::~POAManager (void)
-{}
-
-void
-PortableServer::POAManager::_tao_any_destructor (void *_tao_void_pointer)
-{
-  POAManager *_tao_tmp_pointer =
-    ACE_static_cast (POAManager *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::POAManager_ptr
-PortableServer::POAManager::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return POAManager::_nil ();
-    }
-
-  POAManager_ptr proxy =
-    dynamic_cast<POAManager_ptr> (_tao_objref);
-
-  return POAManager::_duplicate (proxy);
-}
-
-PortableServer::POAManager_ptr
-PortableServer::POAManager::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return POAManager::_nil ();
-    }
-
-  POAManager_ptr proxy =
-    dynamic_cast<POAManager_ptr> (_tao_objref);
-
-  return POAManager::_duplicate (proxy);
-}
-
-PortableServer::POAManager_ptr
-PortableServer::POAManager::_duplicate (POAManager_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::POAManager::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/POAManager:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::POAManager::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/POAManager:2.3";
-}
-
-CORBA::Boolean
-PortableServer::POAManager::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::AdapterActivator.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::AdapterActivator_ptr
-TAO::Objref_Traits<PortableServer::AdapterActivator>::duplicate (
-    PortableServer::AdapterActivator_ptr p
-  )
-{
-  return PortableServer::AdapterActivator::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
-    PortableServer::AdapterActivator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::AdapterActivator_ptr
-TAO::Objref_Traits<PortableServer::AdapterActivator>::nil (void)
-{
-  return PortableServer::AdapterActivator::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::AdapterActivator>::marshal (
-    PortableServer::AdapterActivator_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_AdapterActivator_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::AdapterActivator::AdapterActivator (void)
-{}
-
-PortableServer::AdapterActivator::~AdapterActivator (void)
-{}
-
-void
-PortableServer::AdapterActivator::_tao_any_destructor (void *_tao_void_pointer)
-{
-  AdapterActivator *_tao_tmp_pointer =
-    ACE_static_cast (AdapterActivator *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::AdapterActivator_ptr
-PortableServer::AdapterActivator::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return AdapterActivator::_nil ();
-    }
-
-  AdapterActivator_ptr proxy =
-    dynamic_cast<AdapterActivator_ptr> (_tao_objref);
-
-  return AdapterActivator::_duplicate (proxy);
-}
-
-PortableServer::AdapterActivator_ptr
-PortableServer::AdapterActivator::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return AdapterActivator::_nil ();
-    }
-
-  AdapterActivator_ptr proxy =
-    dynamic_cast<AdapterActivator_ptr> (_tao_objref);
-
-  return AdapterActivator::_duplicate (proxy);
-}
-
-PortableServer::AdapterActivator_ptr
-PortableServer::AdapterActivator::_duplicate (AdapterActivator_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::AdapterActivator::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/AdapterActivator:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::AdapterActivator::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/AdapterActivator:2.3";
-}
-
-CORBA::Boolean
-PortableServer::AdapterActivator::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::ServantManager.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantManager_ptr
-TAO::Objref_Traits<PortableServer::ServantManager>::duplicate (
-    PortableServer::ServantManager_ptr p
-  )
-{
-  return PortableServer::ServantManager::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::ServantManager>::release (
-    PortableServer::ServantManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantManager_ptr
-TAO::Objref_Traits<PortableServer::ServantManager>::nil (void)
-{
-  return PortableServer::ServantManager::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantManager>::marshal (
-    PortableServer::ServantManager_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_ServantManager_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::ServantManager::ServantManager (void)
-{}
-
-PortableServer::ServantManager::~ServantManager (void)
-{}
-
-void
-PortableServer::ServantManager::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ServantManager *_tao_tmp_pointer =
-    ACE_static_cast (ServantManager *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::ServantManager_ptr
-PortableServer::ServantManager::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantManager::_nil ();
-    }
-
-  ServantManager_ptr proxy =
-    dynamic_cast<ServantManager_ptr> (_tao_objref);
-
-  return ServantManager::_duplicate (proxy);
-}
-
-PortableServer::ServantManager_ptr
-PortableServer::ServantManager::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantManager::_nil ();
-    }
-
-  ServantManager_ptr proxy =
-    dynamic_cast<ServantManager_ptr> (_tao_objref);
-
-  return ServantManager::_duplicate (proxy);
-}
-
-PortableServer::ServantManager_ptr
-PortableServer::ServantManager::_duplicate (ServantManager_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::ServantManager::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ServantManager:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::ServantManager::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/ServantManager:2.3";
-}
-
-CORBA::Boolean
-PortableServer::ServantManager::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::ServantActivator.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantActivator_ptr
-TAO::Objref_Traits<PortableServer::ServantActivator>::duplicate (
-    PortableServer::ServantActivator_ptr p
-  )
-{
-  return PortableServer::ServantActivator::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::ServantActivator>::release (
-    PortableServer::ServantActivator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantActivator_ptr
-TAO::Objref_Traits<PortableServer::ServantActivator>::nil (void)
-{
-  return PortableServer::ServantActivator::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantActivator>::marshal (
-    PortableServer::ServantActivator_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_ServantActivator_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::ServantActivator::ServantActivator (void)
-{}
-
-PortableServer::ServantActivator::~ServantActivator (void)
-{}
-
-void
-PortableServer::ServantActivator::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ServantActivator *_tao_tmp_pointer =
-    ACE_static_cast (ServantActivator *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::ServantActivator_ptr
-PortableServer::ServantActivator::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantActivator::_nil ();
-    }
-
-  ServantActivator_ptr proxy =
-    dynamic_cast<ServantActivator_ptr> (_tao_objref);
-
-  return ServantActivator::_duplicate (proxy);
-}
-
-PortableServer::ServantActivator_ptr
-PortableServer::ServantActivator::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantActivator::_nil ();
-    }
-
-  ServantActivator_ptr proxy =
-    dynamic_cast<ServantActivator_ptr> (_tao_objref);
-
-  return ServantActivator::_duplicate (proxy);
-}
-
-PortableServer::ServantActivator_ptr
-PortableServer::ServantActivator::_duplicate (ServantActivator_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::ServantActivator::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ServantManager:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ServantActivator:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::ServantActivator::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/ServantActivator:2.3";
-}
-
-CORBA::Boolean
-PortableServer::ServantActivator::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::ServantLocator.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantLocator_ptr
-TAO::Objref_Traits<PortableServer::ServantLocator>::duplicate (
-    PortableServer::ServantLocator_ptr p
-  )
-{
-  return PortableServer::ServantLocator::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::ServantLocator>::release (
-    PortableServer::ServantLocator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::ServantLocator_ptr
-TAO::Objref_Traits<PortableServer::ServantLocator>::nil (void)
-{
-  return PortableServer::ServantLocator::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantLocator>::marshal (
-    PortableServer::ServantLocator_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_ServantLocator_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-PortableServer::ServantLocator::ServantLocator (void)
-{}
-
-PortableServer::ServantLocator::~ServantLocator (void)
-{}
-
-void
-PortableServer::ServantLocator::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ServantLocator *_tao_tmp_pointer =
-    ACE_static_cast (ServantLocator *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::ServantLocator_ptr
-PortableServer::ServantLocator::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantLocator::_nil ();
-    }
-
-  ServantLocator_ptr proxy =
-    dynamic_cast<ServantLocator_ptr> (_tao_objref);
-
-  return ServantLocator::_duplicate (proxy);
-}
-
-PortableServer::ServantLocator_ptr
-PortableServer::ServantLocator::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantLocator::_nil ();
-    }
-
-  ServantLocator_ptr proxy =
-    dynamic_cast<ServantLocator_ptr> (_tao_objref);
-
-  return ServantLocator::_duplicate (proxy);
-}
-
-PortableServer::ServantLocator_ptr
-PortableServer::ServantLocator::_duplicate (ServantLocator_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::ServantLocator::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ServantManager:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/ServantLocator:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::ServantLocator::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/ServantLocator:2.3";
-}
-
-CORBA::Boolean
-PortableServer::ServantLocator::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
@@ -2394,12 +164,6 @@ TAO::Objref_Traits<PortableServer::POA>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_POA_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
@@ -2433,21 +197,20 @@ PortableServer::POA::AdapterAlreadyExists::operator= (const ::PortableServer::PO
 void PortableServer::POA::AdapterAlreadyExists::_tao_any_destructor (void *_tao_void_pointer)
 {
   AdapterAlreadyExists *_tao_tmp_pointer =
-    ACE_static_cast (AdapterAlreadyExists*, _tao_void_pointer);
+    static_cast<AdapterAlreadyExists *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::AdapterAlreadyExists *
 PortableServer::POA::AdapterAlreadyExists::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (AdapterAlreadyExists *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<AdapterAlreadyExists *> (_tao_excp);
+}
+
+const PortableServer::POA::AdapterAlreadyExists *
+PortableServer::POA::AdapterAlreadyExists::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const AdapterAlreadyExists *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::AdapterAlreadyExists::_alloc (void)
@@ -2493,13 +256,50 @@ void PortableServer::POA::AdapterAlreadyExists::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::AdapterAlreadyExists::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_AdapterAlreadyExists;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  56,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f41),
+  ACE_NTOHL (0x64617074),
+  ACE_NTOHL (0x6572416c),
+  ACE_NTOHL (0x72656164),
+  ACE_NTOHL (0x79457869),
+  ACE_NTOHL (0x7374733a),
+  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:2.3
+    21,
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x74657241),
+  ACE_NTOHL (0x6c726561),
+  ACE_NTOHL (0x64794578),
+  ACE_NTOHL (0x69737473),
+  ACE_NTOHL (0x0),  // name = AdapterAlreadyExists
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_AdapterAlreadyExists),
+    (char *) &_oc_PortableServer_POA_AdapterAlreadyExists,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists =
+  &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -2534,21 +334,20 @@ PortableServer::POA::AdapterNonExistent::operator= (const ::PortableServer::POA:
 void PortableServer::POA::AdapterNonExistent::_tao_any_destructor (void *_tao_void_pointer)
 {
   AdapterNonExistent *_tao_tmp_pointer =
-    ACE_static_cast (AdapterNonExistent*, _tao_void_pointer);
+    static_cast<AdapterNonExistent *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::AdapterNonExistent *
 PortableServer::POA::AdapterNonExistent::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterNonExistent:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (AdapterNonExistent *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<AdapterNonExistent *> (_tao_excp);
+}
+
+const PortableServer::POA::AdapterNonExistent *
+PortableServer::POA::AdapterNonExistent::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const AdapterNonExistent *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::AdapterNonExistent::_alloc (void)
@@ -2594,13 +393,49 @@ void PortableServer::POA::AdapterNonExistent::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::AdapterNonExistent::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_AdapterNonExistent;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_AdapterNonExistent[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  54,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f41),
+  ACE_NTOHL (0x64617074),
+  ACE_NTOHL (0x65724e6f),
+  ACE_NTOHL (0x6e457869),
+  ACE_NTOHL (0x7374656e),
+  ACE_NTOHL (0x743a322e),
+  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POA/AdapterNonExistent:2.3
+    19,
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x7465724e),
+  ACE_NTOHL (0x6f6e4578),
+  ACE_NTOHL (0x69737465),
+  ACE_NTOHL (0x6e740000),  // name = AdapterNonExistent
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterNonExistent (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_AdapterNonExistent),
+    (char *) &_oc_PortableServer_POA_AdapterNonExistent,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent =
+  &_tc_TAO_tc_PortableServer_POA_AdapterNonExistent;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -2637,21 +472,20 @@ PortableServer::POA::InvalidPolicy::operator= (const ::PortableServer::POA::Inva
 void PortableServer::POA::InvalidPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   InvalidPolicy *_tao_tmp_pointer =
-    ACE_static_cast (InvalidPolicy*, _tao_void_pointer);
+    static_cast<InvalidPolicy *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::InvalidPolicy *
 PortableServer::POA::InvalidPolicy::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/InvalidPolicy:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (InvalidPolicy *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<InvalidPolicy *> (_tao_excp);
+}
+
+const PortableServer::POA::InvalidPolicy *
+PortableServer::POA::InvalidPolicy::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const InvalidPolicy *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::InvalidPolicy::_alloc (void)
@@ -2713,18 +547,57 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::InvalidPolicy::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_InvalidPolicy;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_InvalidPolicy[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  49,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f49),
+  ACE_NTOHL (0x6e76616c),
+  ACE_NTOHL (0x6964506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a322e33),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/POA/InvalidPolicy:2.3
+    14,
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696450),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x79000000),  // name = InvalidPolicy
+  1, // member count
+    6,
+  ACE_NTOHL (0x696e6465),
+  ACE_NTOHL (0x78000000),  // name = index
+    CORBA::tk_ushort,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_InvalidPolicy (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_InvalidPolicy),
+    (char *) &_oc_PortableServer_POA_InvalidPolicy,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy =
+  &_tc_TAO_tc_PortableServer_POA_InvalidPolicy;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::POA::NoServant::NoServant (void)
   : CORBA::UserException (
@@ -2756,21 +629,20 @@ PortableServer::POA::NoServant::operator= (const ::PortableServer::POA::NoServan
 void PortableServer::POA::NoServant::_tao_any_destructor (void *_tao_void_pointer)
 {
   NoServant *_tao_tmp_pointer =
-    ACE_static_cast (NoServant*, _tao_void_pointer);
+    static_cast<NoServant *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::NoServant *
 PortableServer::POA::NoServant::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/NoServant:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (NoServant *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<NoServant *> (_tao_excp);
+}
+
+const PortableServer::POA::NoServant *
+PortableServer::POA::NoServant::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const NoServant *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::NoServant::_alloc (void)
@@ -2816,15 +688,47 @@ void PortableServer::POA::NoServant::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::NoServant::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_NoServant;
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  45,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f4e),
+  ACE_NTOHL (0x6f536572),
+  ACE_NTOHL (0x76616e74),
+  ACE_NTOHL (0x3a322e33),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/POA/NoServant:2.3
+    10,
+  ACE_NTOHL (0x4e6f5365),
+  ACE_NTOHL (0x7276616e),
+  ACE_NTOHL (0x74000000),  // name = NoServant
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_NoServant),
+    (char *) &_oc_PortableServer_POA_NoServant,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant =
+  &_tc_TAO_tc_PortableServer_POA_NoServant;
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -2859,21 +763,20 @@ PortableServer::POA::ObjectAlreadyActive::operator= (const ::PortableServer::POA
 void PortableServer::POA::ObjectAlreadyActive::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectAlreadyActive *_tao_tmp_pointer =
-    ACE_static_cast (ObjectAlreadyActive*, _tao_void_pointer);
+    static_cast<ObjectAlreadyActive *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::ObjectAlreadyActive *
 PortableServer::POA::ObjectAlreadyActive::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (ObjectAlreadyActive *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<ObjectAlreadyActive *> (_tao_excp);
+}
+
+const PortableServer::POA::ObjectAlreadyActive *
+PortableServer::POA::ObjectAlreadyActive::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const ObjectAlreadyActive *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::ObjectAlreadyActive::_alloc (void)
@@ -2919,13 +822,49 @@ void PortableServer::POA::ObjectAlreadyActive::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::ObjectAlreadyActive::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_ObjectAlreadyActive;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_ObjectAlreadyActive[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  55,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f4f),
+  ACE_NTOHL (0x626a6563),
+  ACE_NTOHL (0x74416c72),
+  ACE_NTOHL (0x65616479),
+  ACE_NTOHL (0x41637469),
+  ACE_NTOHL (0x76653a32),
+  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:2.3
+    20,
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x6374416c),
+  ACE_NTOHL (0x72656164),
+  ACE_NTOHL (0x79416374),
+  ACE_NTOHL (0x69766500),  // name = ObjectAlreadyActive
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_ObjectAlreadyActive),
+    (char *) &_oc_PortableServer_POA_ObjectAlreadyActive,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive =
+  &_tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -2960,21 +899,20 @@ PortableServer::POA::ObjectNotActive::operator= (const ::PortableServer::POA::Ob
 void PortableServer::POA::ObjectNotActive::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectNotActive *_tao_tmp_pointer =
-    ACE_static_cast (ObjectNotActive*, _tao_void_pointer);
+    static_cast<ObjectNotActive *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::ObjectNotActive *
 PortableServer::POA::ObjectNotActive::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectNotActive:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (ObjectNotActive *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<ObjectNotActive *> (_tao_excp);
+}
+
+const PortableServer::POA::ObjectNotActive *
+PortableServer::POA::ObjectNotActive::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const ObjectNotActive *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::ObjectNotActive::_alloc (void)
@@ -3020,13 +958,47 @@ void PortableServer::POA::ObjectNotActive::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::ObjectNotActive::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_ObjectNotActive;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_ObjectNotActive[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  51,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f4f),
+  ACE_NTOHL (0x626a6563),
+  ACE_NTOHL (0x744e6f74),
+  ACE_NTOHL (0x41637469),
+  ACE_NTOHL (0x76653a32),
+  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA/ObjectNotActive:2.3
+    16,
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63744e6f),
+  ACE_NTOHL (0x74416374),
+  ACE_NTOHL (0x69766500),  // name = ObjectNotActive
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectNotActive (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_ObjectNotActive),
+    (char *) &_oc_PortableServer_POA_ObjectNotActive,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive =
+  &_tc_TAO_tc_PortableServer_POA_ObjectNotActive;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -3061,21 +1033,20 @@ PortableServer::POA::ServantAlreadyActive::operator= (const ::PortableServer::PO
 void PortableServer::POA::ServantAlreadyActive::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantAlreadyActive *_tao_tmp_pointer =
-    ACE_static_cast (ServantAlreadyActive*, _tao_void_pointer);
+    static_cast<ServantAlreadyActive *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::ServantAlreadyActive *
 PortableServer::POA::ServantAlreadyActive::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantAlreadyActive:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (ServantAlreadyActive *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<ServantAlreadyActive *> (_tao_excp);
+}
+
+const PortableServer::POA::ServantAlreadyActive *
+PortableServer::POA::ServantAlreadyActive::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const ServantAlreadyActive *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::ServantAlreadyActive::_alloc (void)
@@ -3121,13 +1092,50 @@ void PortableServer::POA::ServantAlreadyActive::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::ServantAlreadyActive::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_ServantAlreadyActive;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_ServantAlreadyActive[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  56,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f53),
+  ACE_NTOHL (0x65727661),
+  ACE_NTOHL (0x6e74416c),
+  ACE_NTOHL (0x72656164),
+  ACE_NTOHL (0x79416374),
+  ACE_NTOHL (0x6976653a),
+  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/ServantAlreadyActive:2.3
+    21,
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x616e7441),
+  ACE_NTOHL (0x6c726561),
+  ACE_NTOHL (0x64794163),
+  ACE_NTOHL (0x74697665),
+  ACE_NTOHL (0x0),  // name = ServantAlreadyActive
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantAlreadyActive (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_ServantAlreadyActive),
+    (char *) &_oc_PortableServer_POA_ServantAlreadyActive,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive =
+  &_tc_TAO_tc_PortableServer_POA_ServantAlreadyActive;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -3162,21 +1170,20 @@ PortableServer::POA::ServantNotActive::operator= (const ::PortableServer::POA::S
 void PortableServer::POA::ServantNotActive::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantNotActive *_tao_tmp_pointer =
-    ACE_static_cast (ServantNotActive*, _tao_void_pointer);
+    static_cast<ServantNotActive *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::ServantNotActive *
 PortableServer::POA::ServantNotActive::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantNotActive:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (ServantNotActive *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<ServantNotActive *> (_tao_excp);
+}
+
+const PortableServer::POA::ServantNotActive *
+PortableServer::POA::ServantNotActive::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const ServantNotActive *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::ServantNotActive::_alloc (void)
@@ -3222,13 +1229,48 @@ void PortableServer::POA::ServantNotActive::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::ServantNotActive::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_ServantNotActive;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_ServantNotActive[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  52,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f53),
+  ACE_NTOHL (0x65727661),
+  ACE_NTOHL (0x6e744e6f),
+  ACE_NTOHL (0x74416374),
+  ACE_NTOHL (0x6976653a),
+  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/ServantNotActive:2.3
+    17,
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x616e744e),
+  ACE_NTOHL (0x6f744163),
+  ACE_NTOHL (0x74697665),
+  ACE_NTOHL (0x0),  // name = ServantNotActive
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantNotActive (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_ServantNotActive),
+    (char *) &_oc_PortableServer_POA_ServantNotActive,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive =
+  &_tc_TAO_tc_PortableServer_POA_ServantNotActive;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -3263,21 +1305,20 @@ PortableServer::POA::WrongAdapter::operator= (const ::PortableServer::POA::Wrong
 void PortableServer::POA::WrongAdapter::_tao_any_destructor (void *_tao_void_pointer)
 {
   WrongAdapter *_tao_tmp_pointer =
-    ACE_static_cast (WrongAdapter*, _tao_void_pointer);
+    static_cast<WrongAdapter *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::WrongAdapter *
 PortableServer::POA::WrongAdapter::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongAdapter:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (WrongAdapter *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<WrongAdapter *> (_tao_excp);
+}
+
+const PortableServer::POA::WrongAdapter *
+PortableServer::POA::WrongAdapter::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const WrongAdapter *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::WrongAdapter::_alloc (void)
@@ -3323,13 +1364,46 @@ void PortableServer::POA::WrongAdapter::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::WrongAdapter::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_WrongAdapter;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_WrongAdapter[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f57),
+  ACE_NTOHL (0x726f6e67),
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x7465723a),
+  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/WrongAdapter:2.3
+    13,
+  ACE_NTOHL (0x57726f6e),
+  ACE_NTOHL (0x67416461),
+  ACE_NTOHL (0x70746572),
+  ACE_NTOHL (0x0),  // name = WrongAdapter
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongAdapter (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_WrongAdapter),
+    (char *) &_oc_PortableServer_POA_WrongAdapter,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter =
+  &_tc_TAO_tc_PortableServer_POA_WrongAdapter;
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -3364,21 +1438,20 @@ PortableServer::POA::WrongPolicy::operator= (const ::PortableServer::POA::WrongP
 void PortableServer::POA::WrongPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   WrongPolicy *_tao_tmp_pointer =
-    ACE_static_cast (WrongPolicy*, _tao_void_pointer);
+    static_cast<WrongPolicy *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POA::WrongPolicy *
 PortableServer::POA::WrongPolicy::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongPolicy:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (WrongPolicy *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<WrongPolicy *> (_tao_excp);
+}
+
+const PortableServer::POA::WrongPolicy *
+PortableServer::POA::WrongPolicy::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const WrongPolicy *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POA::WrongPolicy::_alloc (void)
@@ -3424,13 +1497,45 @@ void PortableServer::POA::WrongPolicy::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::POA::WrongPolicy::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
   return ::PortableServer::POA::_tc_WrongPolicy;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POA_WrongPolicy[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  47,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f57),
+  ACE_NTOHL (0x726f6e67),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a32),
+  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA/WrongPolicy:2.3
+    12,
+  ACE_NTOHL (0x57726f6e),
+  ACE_NTOHL (0x67506f6c),
+  ACE_NTOHL (0x69637900),  // name = WrongPolicy
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongPolicy (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POA_WrongPolicy),
+    (char *) &_oc_PortableServer_POA_WrongPolicy,
+    0,
+    0
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy =
+  &_tc_TAO_tc_PortableServer_POA_WrongPolicy;
 
 PortableServer::POA::POA (void)
 {}
@@ -3442,7 +1547,7 @@ void
 PortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
-    ACE_static_cast (POA *, _tao_void_pointer);
+    static_cast<POA *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -3499,18 +1604,18 @@ PortableServer::POA::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableServer/POA:2.3"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -3532,569 +1637,7 @@ PortableServer::POA::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableServer::Current.
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::Current_ptr
-TAO::Objref_Traits<PortableServer::Current>::duplicate (
-    PortableServer::Current_ptr p
-  )
-{
-  return PortableServer::Current::_duplicate (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-void
-TAO::Objref_Traits<PortableServer::Current>::release (
-    PortableServer::Current_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-PortableServer::Current_ptr
-TAO::Objref_Traits<PortableServer::Current>::nil (void)
-{
-  return PortableServer::Current::_nil ();
-}
-
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-CORBA::Boolean
-TAO::Objref_Traits<PortableServer::Current>::marshal (
-    PortableServer::Current_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableServer__TAO_Current_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/exception_cs.cpp:63
-
-PortableServer::Current::NoContext::NoContext (void)
-  : CORBA::UserException (
-        "IDL:omg.org/PortableServer/Current/NoContext:2.3",
-        "NoContext"
-      )
-{
-}
-
-PortableServer::Current::NoContext::~NoContext (void)
-{
-}
-
-PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::NoContext &_tao_excp)
-  : CORBA::UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
-{
-}
-
-PortableServer::Current::NoContext&
-PortableServer::Current::NoContext::operator= (const ::PortableServer::Current::NoContext &_tao_excp)
-{
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
-  return *this;
-}
-
-void PortableServer::Current::NoContext::_tao_any_destructor (void *_tao_void_pointer)
-{
-  NoContext *_tao_tmp_pointer =
-    ACE_static_cast (NoContext*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-PortableServer::Current::NoContext *
-PortableServer::Current::NoContext::_downcast (CORBA::Exception *_tao_excp)
-{
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/Current/NoContext:2.3", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (NoContext *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-CORBA::Exception *PortableServer::Current::NoContext::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableServer::Current::NoContext, 0);
-  return retval;
-}
-
-CORBA::Exception *
-PortableServer::Current::NoContext::_tao_duplicate (void) const
-{
-  CORBA::Exception *result;
-  ACE_NEW_RETURN (
-      result,
-      ::PortableServer::Current::NoContext (*this),
-      0
-    );
-  return result;
-}
-
-void PortableServer::Current::NoContext::_raise (void) const
-{
-  TAO_RAISE (*this);
-}
-
-void PortableServer::Current::NoContext::_tao_encode (
-    TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
-  ) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableServer::Current::NoContext::_tao_decode (
-    TAO_InputCDR &
-    ACE_ENV_ARG_DECL
-  )
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::Current::NoContext::_type (void) const
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This TAO-specific method is now")
-              ACE_TEXT (" deprecated and will be removed")
-              ACE_TEXT (" in future versions.\n")));
-
-  return ::PortableServer::Current::_tc_NoContext;
-}
-
-PortableServer::Current::Current (void)
-{}
-
-PortableServer::Current::~Current (void)
-{}
-
-void
-PortableServer::Current::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Current *_tao_tmp_pointer =
-    ACE_static_cast (Current *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableServer::Current_ptr
-PortableServer::Current::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-
-  return Current::_duplicate (proxy);
-}
-
-PortableServer::Current_ptr
-PortableServer::Current::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-
-  return Current::_duplicate (proxy);
-}
-
-PortableServer::Current_ptr
-PortableServer::Current::_duplicate (Current_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-PortableServer::Current::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Current:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/PortableServer/Current:2.3"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* PortableServer::Current::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableServer/Current:2.3";
-}
-
-CORBA::Boolean
-PortableServer::Current::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_cs.cpp:60
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::ForwardRequest &_tao_aggregate
-  )
-{
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      // Now marshal the members (if any).
-      if (
-        (strm << _tao_aggregate.forward_reference.in ())
-       )
-        {
-          return 1;
-        }
-      else
-        {
-          return 0;
-        }
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::ForwardRequest &_tao_aggregate
-  )
-{
-  // Demarshal the members.
-  if (
-    (strm >> _tao_aggregate.forward_reference.out ())
-  )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_cs.cpp:60
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::NotAGroupObject &_tao_aggregate
-  )
-{
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    PortableServer::NotAGroupObject&
-  )
-{
-  return 1;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_cs.cpp:96
-
-#if !defined _TAO_CDR_OP_PortableServer_IDs_CPP_
-#define _TAO_CDR_OP_PortableServer_IDs_CPP_
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::IDs &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return 0;
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::IDs &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return 0;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return 1;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return 0;
-}
-
-#endif /* _TAO_CDR_OP_PortableServer_IDs_CPP_ */
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ThreadPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ThreadPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::ThreadPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::LifespanPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::LifespanPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::LifespanPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::IdUniquenessPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdUniquenessPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::IdUniquenessPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::IdAssignmentPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdAssignmentPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::IdAssignmentPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ImplicitActivationPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ImplicitActivationPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::ImplicitActivationPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ServantRetentionPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ServantRetentionPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::ServantRetentionPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_cs.cpp:51
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::RequestProcessingPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessingPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (PortableServer::RequestProcessingPolicyValue, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -4158,177 +1701,6 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessing
 
 #endif /* end #if !defined */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO_VarSeq_Var_T<
-        PortableServer::IDs,
-        PortableServer::ObjectId
-      >;
-
-  template class
-    TAO_Seq_Var_Base_T<
-        PortableServer::IDs,
-        PortableServer::ObjectId
-      >;
-
-  template class
-    TAO_Seq_Out_T<
-        PortableServer::IDs,
-        PortableServer::IDs_var,
-        PortableServer::ObjectId
-      >;
-
-#if !defined (_CORBA_SEQUENCE__EXPLICIT_CS_)
-#define _CORBA_SEQUENCE__EXPLICIT_CS_
-
-  template class
-    TAO_Unbounded_Sequence<
-        PortableServer::ObjectId
-      >;
-
-#endif /* end #if !defined */
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ThreadPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ThreadPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ThreadPolicy
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::LifespanPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::LifespanPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::LifespanPolicy
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::IdUniquenessPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::IdUniquenessPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::IdUniquenessPolicy
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::IdAssignmentPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::IdAssignmentPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::IdAssignmentPolicy
-      >;
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ImplicitActivationPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ImplicitActivationPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ImplicitActivationPolicy
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantRetentionPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantRetentionPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantRetentionPolicy
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::RequestProcessingPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::RequestProcessingPolicy
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::RequestProcessingPolicy
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::POAManager
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::POAManager
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::POAManager
-      >;
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_
 
@@ -4346,95 +1718,6 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessing
       >;
 
 #endif /* end #if !defined */
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::AdapterActivator
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::AdapterActivator
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::AdapterActivator
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantManager
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantManager
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantManager
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantActivator
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantActivator
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantActivator
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantLocator
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantLocator
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantLocator
-      >;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::Current
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::Current
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::Current
-      >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -4492,173 +1775,6 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessing
 
 #endif /* end #if !defined */
 
-# pragma instantiate \
-    TAO_VarSeq_Var_T< \
-        PortableServer::IDs, \
-        PortableServer::ObjectId \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Var_Base_T< \
-        PortableServer::IDs, \
-        PortableServer::ObjectId \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Out_T< \
-        PortableServer::IDs, \
-        PortableServer::IDs_var, \
-        PortableServer::ObjectId \
-      >
-
-#if !defined (_CORBA_SEQUENCE__EXPLICIT_CS_)
-#define _CORBA_SEQUENCE__EXPLICIT_CS_
-
-# pragma instantiate \
-    TAO_Unbounded_Sequence< \
-        PortableServer::ObjectId \
-      >
-
-#endif /* end #if !defined */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ThreadPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ThreadPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ThreadPolicy
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::LifespanPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::LifespanPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::LifespanPolicy
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::IdUniquenessPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::IdUniquenessPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::IdUniquenessPolicy
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::IdAssignmentPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::IdAssignmentPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::IdAssignmentPolicy
-      >
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ImplicitActivationPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ImplicitActivationPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ImplicitActivationPolicy
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantRetentionPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantRetentionPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantRetentionPolicy
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::RequestProcessingPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::RequestProcessingPolicy
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::RequestProcessingPolicy
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::POAManager \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::POAManager
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::POAManager
-      >
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_
 
@@ -4676,94 +1792,5 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessing
       >
 
 #endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::AdapterActivator \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::AdapterActivator
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::AdapterActivator
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantManager \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantManager
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantManager
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantActivator \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantActivator
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantActivator
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantLocator \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantLocator
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantLocator
-      >
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::Current \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::Current
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::Current
-      >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -18,8 +18,8 @@
 #include "EC_Kokyu_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Kokyu_Dispatching, 
+ACE_RCSID (Event,
+           EC_Kokyu_Dispatching,
            "$Id$")
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
@@ -44,7 +44,7 @@ TAO_EC_Kokyu_Dispatching::activate (void)
 {
   if (!lanes_setup_)
     setup_lanes ();
-  
+
   this->dispatcher_->activate ();
 
   //ACE_DEBUG ((LM_DEBUG, "Kokyu dispatcher activated\n"));
@@ -94,7 +94,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
   attrs.sched_scope (disp_sched_scope_);
 
   // Create Kokyu::Dispatcher using factory
-  Kokyu::Dispatcher_Auto_Ptr 
+  Kokyu::Dispatcher_Auto_Ptr
     tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
   this->dispatcher_ = tmp;
   this->lanes_setup_ = 1;
@@ -128,12 +128,12 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 {
     if (this->dispatcher_.get () == 0)
         this->setup_lanes ();
-    
-    void* buf = 
+
+    void* buf =
       this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
 
     if (buf == 0)
-      ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                    CORBA::COMPLETED_NO));
 
   // Create Dispatch_Command
@@ -141,16 +141,16 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
     new (buf) TAO_EC_Kokyu_Push_Command (proxy,
                                          consumer,
                                          event, this->allocator_);
-    
-  /*    
+
+  /*
   TAO_EC_Kokyu_Push_Command *cmd =
     new TAO_EC_Kokyu_Push_Command (proxy,
                                    consumer,
                                  event, 0);
   */
-    
+
   // Convert TAO_EC_QOS_Info to QoSDescriptor
-  RtecScheduler::RT_Info *rt_info = 
+  RtecScheduler::RT_Info *rt_info =
     this->scheduler_->get(qos_info.rt_info);
 
   Kokyu::QoSDescriptor qosd;
@@ -158,7 +158,7 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   qosd.deadline_ = rt_info->period;
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
-  
+
   this->dispatcher_->dispatch(cmd,qosd);
 }
 
@@ -188,7 +188,7 @@ TAO_EC_Kokyu_Push_Command::execute ()
 
   ACE_TRY
     {
-      //ACE_DEBUG ((LM_DEBUG, 
+      //ACE_DEBUG ((LM_DEBUG,
       //            "(%t) Command object executed.\n"));
 
       this->proxy_->push_to_consumer (this->consumer_.in (),

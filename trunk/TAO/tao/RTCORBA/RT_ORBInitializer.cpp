@@ -107,7 +107,7 @@ TAO_RT_ORBInitializer::pre_init (
                     TAO_Priority_Mapping_Manager (pm),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -143,7 +143,7 @@ TAO_RT_ORBInitializer::pre_init (
                     TAO_Network_Priority_Mapping_Manager (npm),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -181,7 +181,7 @@ TAO_RT_ORBInitializer::pre_init (
                     TAO_RT_ORB (tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -198,7 +198,7 @@ TAO_RT_ORBInitializer::pre_init (
                     TAO_RT_Current (tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

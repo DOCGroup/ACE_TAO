@@ -39,7 +39,7 @@ TAO::SSLIOP::Current_Impl::client_credentials (
                                                     this->ssl_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (SecurityLevel3::ClientCredentials::_nil ());

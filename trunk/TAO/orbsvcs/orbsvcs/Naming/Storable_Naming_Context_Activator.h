@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -18,6 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)

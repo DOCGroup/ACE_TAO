@@ -556,7 +556,7 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     this->gen_raise_interceptor_exception (
       bt,
       "CORBA::UNKNOWN",
-      "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES");
+      "TAO::VMCID, CORBA::COMPLETED_YES");
 
   if (status == -1)
     {

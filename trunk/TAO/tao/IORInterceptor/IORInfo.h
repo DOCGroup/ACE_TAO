@@ -32,7 +32,7 @@
 
 
 /// Forward declarations.
-class TAO_POA;
+class TAO_Root_POA;
 
 
 /**
@@ -48,7 +48,7 @@ class TAO_IORInfo
 public:
 
   /// Constructor.
-  TAO_IORInfo (TAO_POA *poa);
+  TAO_IORInfo (TAO_Root_POA *poa);
 
   /**
    * @name PortableInterceptor::IORInfo Methods
@@ -144,7 +144,7 @@ private:
 private:
 
   /// Pointer to POA
-  TAO_POA *poa_;
+  TAO_Root_POA *poa_;
 
   /// True if the IORInterceptor::components_established()
   /// interception point was called.  False otherwise.

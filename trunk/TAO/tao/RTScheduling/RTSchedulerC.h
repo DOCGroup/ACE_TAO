@@ -26,20 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_RTSCHEDULERC_H_
 #define _TAO_IDL_ORIG_RTSCHEDULERC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "rtscheduler_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Sequence_T.h"
@@ -47,8 +50,8 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "tao/PortableServer/PortableServer_includeC.h"
 #include "tao/PortableInterceptorC.h"
 
 #ifndef TAO_RTSCHEDULER_SAFE_INCLUDE
@@ -68,9 +71,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -79,7 +80,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -97,6 +98,7 @@ namespace CORBA
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
+
   // Hand crafted
   typedef void* VoidData;
 
@@ -109,7 +111,7 @@ namespace RTScheduling
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_RTSCHEDULING_THREADACTION__VAR_OUT_CH_)
 #define _RTSCHEDULING_THREADACTION__VAR_OUT_CH_
@@ -159,7 +161,7 @@ namespace RTScheduling
     
     static ThreadAction_ptr _nil (void)
     {
-      return (ThreadAction_ptr)0;
+      return static_cast<ThreadAction_ptr> (0);
     }
     
     
@@ -168,7 +170,7 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void _cxx_do (
-        CORBA::VoidData data
+        ::CORBA::VoidData data
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -207,7 +209,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadAction;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__VAR_OUT_CH_)
 #define _RTSCHEDULING_DISTRIBUTABLETHREAD__VAR_OUT_CH_
@@ -257,7 +259,7 @@ namespace RTScheduling
     
     static DistributableThread_ptr _nil (void)
     {
-      return (DistributableThread_ptr)0;
+      return static_cast<DistributableThread_ptr> (0);
     }
     
     
@@ -330,7 +332,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DistributableThread;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_RTSCHEDULING_CURRENT__VAR_OUT_CH_)
 #define _RTSCHEDULING_CURRENT__VAR_OUT_CH_
@@ -359,7 +361,7 @@ namespace RTScheduling
 #define _RTSCHEDULING_CURRENT_CH_
   
   class TAO_RTScheduler_Export Current
-    : public virtual RTCORBA::Current
+    : public virtual ::RTCORBA::Current
   {
   public:
     typedef Current_ptr _ptr_type;
@@ -380,7 +382,7 @@ namespace RTScheduling
     
     static Current_ptr _nil (void)
     {
-      return (Current_ptr)0;
+      return static_cast<Current_ptr> (0);
     }
     
     
@@ -389,13 +391,13 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::RTScheduling::DistributableThread_ptr spawn (
-        RTScheduling::ThreadAction_ptr start,
-        CORBA::VoidData data,
+        ::RTScheduling::ThreadAction_ptr start,
+        ::CORBA::VoidData data,
         const char * name,
-        CORBA::Policy_ptr sched_param,
-        CORBA::Policy_ptr implicit_sched_param,
-        CORBA::ULong stack_size,
-        RTCORBA::Priority base_priority
+        ::CORBA::Policy_ptr sched_param,
+        ::CORBA::Policy_ptr implicit_sched_param,
+        ::CORBA::ULong stack_size,
+        ::RTCORBA::Priority base_priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -419,8 +421,10 @@ namespace RTScheduling
       UNSUPPORTED_SCHEDULING_DISCIPLINE &operator= (const UNSUPPORTED_SCHEDULING_DISCIPLINE &);
       
       static UNSUPPORTED_SCHEDULING_DISCIPLINE *_downcast (CORBA::Exception *);
+      static const UNSUPPORTED_SCHEDULING_DISCIPLINE *_downcast (CORBA::Exception const *);
+      
       static CORBA::Exception *_alloc (void);
-
+      
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void) const;
@@ -436,7 +440,7 @@ namespace RTScheduling
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:125
+      // be\be_visitor_exception/exception_ch.cpp:127
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
@@ -453,13 +457,13 @@ namespace RTScheduling
     
     virtual void begin_scheduling_segment (
         const char * name,
-        CORBA::Policy_ptr sched_param,
-        CORBA::Policy_ptr implicit_sched_param
+        ::CORBA::Policy_ptr sched_param,
+        ::CORBA::Policy_ptr implicit_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+        CORBA::SystemException,
+        ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -467,13 +471,13 @@ namespace RTScheduling
     
     virtual void update_scheduling_segment (
         const char * name,
-        CORBA::Policy_ptr sched_param,
-        CORBA::Policy_ptr implicit_sched_param
+        ::CORBA::Policy_ptr sched_param,
+        ::CORBA::Policy_ptr implicit_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+        CORBA::SystemException,
+        ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -560,7 +564,7 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::RTScheduling::DistributableThread_ptr lookup (
-        const RTScheduling::Current::IdType & id
+        const ::RTScheduling::Current::IdType & id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -678,7 +682,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_RTSCHEDULING_RESOURCEMANAGER__VAR_OUT_CH_)
 #define _RTSCHEDULING_RESOURCEMANAGER__VAR_OUT_CH_
@@ -707,7 +711,7 @@ namespace RTScheduling
 #define _RTSCHEDULING_RESOURCEMANAGER_CH_
   
   class TAO_RTScheduler_Export ResourceManager
-    : public virtual RTCORBA::Mutex
+    : public virtual ::RTCORBA::Mutex
   {
   public:
     typedef ResourceManager_ptr _ptr_type;
@@ -728,7 +732,7 @@ namespace RTScheduling
     
     static ResourceManager_ptr _nil (void)
     {
-      return (ResourceManager_ptr)0;
+      return static_cast<ResourceManager_ptr> (0);
     }
     
     
@@ -765,7 +769,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ResourceManager;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_RTSCHEDULING_SCHEDULER__VAR_OUT_CH_)
 #define _RTSCHEDULING_SCHEDULER__VAR_OUT_CH_
@@ -815,7 +819,7 @@ namespace RTScheduling
     
     static Scheduler_ptr _nil (void)
     {
-      return (Scheduler_ptr)0;
+      return static_cast<Scheduler_ptr> (0);
     }
     
     
@@ -837,8 +841,10 @@ namespace RTScheduling
       INCOMPATIBLE_SCHEDULING_DISCIPLINES &operator= (const INCOMPATIBLE_SCHEDULING_DISCIPLINES &);
       
       static INCOMPATIBLE_SCHEDULING_DISCIPLINES *_downcast (CORBA::Exception *);
+      static const INCOMPATIBLE_SCHEDULING_DISCIPLINES *_downcast (CORBA::Exception const *);
+      
       static CORBA::Exception *_alloc (void);
-
+      
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void) const;
@@ -854,7 +860,7 @@ namespace RTScheduling
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:125
+      // be\be_visitor_exception/exception_ch.cpp:127
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
@@ -880,7 +886,7 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void scheduling_policies (
-        const CORBA::PolicyList & scheduling_policies
+        const ::CORBA::PolicyList & scheduling_policies
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -912,7 +918,7 @@ namespace RTScheduling
     
     virtual ::RTScheduling::ResourceManager_ptr create_resource_manager (
         const char * name,
-        CORBA::Policy_ptr scheduling_parameter
+        ::CORBA::Policy_ptr scheduling_parameter
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -923,9 +929,9 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_scheduling_parameter (
-        PortableServer::Servant & resource,
+        ::PortableServer::Servant & resource,
         const char * name,
-        CORBA::Policy_ptr scheduling_parameter
+        ::CORBA::Policy_ptr scheduling_parameter
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -936,52 +942,52 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void begin_new_scheduling_segment (
-        const RTScheduling::Current::IdType & guid,
+        const ::RTScheduling::Current::IdType & guid,
         const char * name,
-        CORBA::Policy_ptr sched_param,
-        CORBA::Policy_ptr implicit_sched_param
+        ::CORBA::Policy_ptr sched_param,
+        ::CORBA::Policy_ptr implicit_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+        CORBA::SystemException,
+        ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void begin_nested_scheduling_segment (
-        const RTScheduling::Current::IdType & guid,
+        const ::RTScheduling::Current::IdType & guid,
         const char * name,
-        CORBA::Policy_ptr sched_param,
-        CORBA::Policy_ptr implicit_sched_param
+        ::CORBA::Policy_ptr sched_param,
+        ::CORBA::Policy_ptr implicit_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+        CORBA::SystemException,
+        ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void update_scheduling_segment (
-        const RTScheduling::Current::IdType & guid,
+        const ::RTScheduling::Current::IdType & guid,
         const char * name,
-        CORBA::Policy_ptr sched_param,
-        CORBA::Policy_ptr implicit_sched_param
+        ::CORBA::Policy_ptr sched_param,
+        ::CORBA::Policy_ptr implicit_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+        CORBA::SystemException,
+        ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void end_scheduling_segment (
-        const RTScheduling::Current::IdType & guid,
+        const ::RTScheduling::Current::IdType & guid,
         const char * name
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -993,9 +999,9 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void end_nested_scheduling_segment (
-        const RTScheduling::Current::IdType & guid,
+        const ::RTScheduling::Current::IdType & guid,
         const char * name,
-        CORBA::Policy_ptr outer_sched_param
+        ::CORBA::Policy_ptr outer_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1006,35 +1012,35 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void send_request (
-        PortableInterceptor::ClientRequestInfo_ptr ri
+        ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void receive_request (
-        PortableInterceptor::ServerRequestInfo_ptr ri,
-        RTScheduling::Current::IdType_out guid,
+        ::PortableInterceptor::ServerRequestInfo_ptr ri,
+        ::RTScheduling::Current::IdType_out guid,
         CORBA::String_out name,
-        CORBA::Policy_out sched_param,
-        CORBA::Policy_out implicit_sched_param
+        ::CORBA::Policy_out sched_param,
+        ::CORBA::Policy_out implicit_sched_param
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void send_reply (
-        PortableInterceptor::ServerRequestInfo_ptr ri
+        ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1045,43 +1051,43 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void send_exception (
-        PortableInterceptor::ServerRequestInfo_ptr ri
+        ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr ri
+        ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void send_poll (
-        PortableInterceptor::ClientRequestInfo_ptr ri
+        ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void receive_reply (
-        PortableInterceptor::ClientRequestInfo_ptr ri
+        ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1092,31 +1098,31 @@ namespace RTScheduling
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void receive_exception (
-        PortableInterceptor::ClientRequestInfo_ptr ri
+        ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void receive_other (
-        PortableInterceptor::ClientRequestInfo_ptr ri
+        ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableInterceptor::ForwardRequest
+        CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void cancel (
-        const RTScheduling::Current::IdType & guid
+        const ::RTScheduling::Current::IdType & guid
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1170,17 +1176,17 @@ namespace TAO
 #define _RTSCHEDULING_THREADACTION__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::ThreadAction>
+  struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::ThreadAction>
   {
-    static RTScheduling::ThreadAction_ptr duplicate (
-        RTScheduling::ThreadAction_ptr
+    static ::RTScheduling::ThreadAction_ptr duplicate (
+        ::RTScheduling::ThreadAction_ptr
       );
     static void release (
-        RTScheduling::ThreadAction_ptr
+        ::RTScheduling::ThreadAction_ptr
       );
-    static RTScheduling::ThreadAction_ptr nil (void);
+    static ::RTScheduling::ThreadAction_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTScheduling::ThreadAction_ptr p,
+        ::RTScheduling::ThreadAction_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1191,17 +1197,17 @@ namespace TAO
 #define _RTSCHEDULING_DISTRIBUTABLETHREAD__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::DistributableThread>
+  struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::DistributableThread>
   {
-    static RTScheduling::DistributableThread_ptr duplicate (
-        RTScheduling::DistributableThread_ptr
+    static ::RTScheduling::DistributableThread_ptr duplicate (
+        ::RTScheduling::DistributableThread_ptr
       );
     static void release (
-        RTScheduling::DistributableThread_ptr
+        ::RTScheduling::DistributableThread_ptr
       );
-    static RTScheduling::DistributableThread_ptr nil (void);
+    static ::RTScheduling::DistributableThread_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTScheduling::DistributableThread_ptr p,
+        ::RTScheduling::DistributableThread_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1212,17 +1218,17 @@ namespace TAO
 #define _RTSCHEDULING_CURRENT__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::Current>
+  struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::Current>
   {
-    static RTScheduling::Current_ptr duplicate (
-        RTScheduling::Current_ptr
+    static ::RTScheduling::Current_ptr duplicate (
+        ::RTScheduling::Current_ptr
       );
     static void release (
-        RTScheduling::Current_ptr
+        ::RTScheduling::Current_ptr
       );
-    static RTScheduling::Current_ptr nil (void);
+    static ::RTScheduling::Current_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTScheduling::Current_ptr p,
+        ::RTScheduling::Current_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1233,17 +1239,17 @@ namespace TAO
 #define _RTSCHEDULING_RESOURCEMANAGER__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::ResourceManager>
+  struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::ResourceManager>
   {
-    static RTScheduling::ResourceManager_ptr duplicate (
-        RTScheduling::ResourceManager_ptr
+    static ::RTScheduling::ResourceManager_ptr duplicate (
+        ::RTScheduling::ResourceManager_ptr
       );
     static void release (
-        RTScheduling::ResourceManager_ptr
+        ::RTScheduling::ResourceManager_ptr
       );
-    static RTScheduling::ResourceManager_ptr nil (void);
+    static ::RTScheduling::ResourceManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTScheduling::ResourceManager_ptr p,
+        ::RTScheduling::ResourceManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1254,17 +1260,17 @@ namespace TAO
 #define _RTSCHEDULING_SCHEDULER__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::Scheduler>
+  struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::Scheduler>
   {
-    static RTScheduling::Scheduler_ptr duplicate (
-        RTScheduling::Scheduler_ptr
+    static ::RTScheduling::Scheduler_ptr duplicate (
+        ::RTScheduling::Scheduler_ptr
       );
     static void release (
-        RTScheduling::Scheduler_ptr
+        ::RTScheduling::Scheduler_ptr
       );
-    static RTScheduling::Scheduler_ptr nil (void);
+    static ::RTScheduling::Scheduler_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTScheduling::Scheduler_ptr p,
+        ::RTScheduling::Scheduler_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1273,13 +1279,13 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "RTSchedulerC.i"
+#include "RTSchedulerC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -1290,4 +1296,5 @@ namespace TAO
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

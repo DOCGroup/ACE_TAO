@@ -14,7 +14,7 @@
  *
  * The command used to generate code from this IDL file is:
  *
- *   tao_idl -Ge 1 -Sc -GT -I../.. \
+ *   tao_idl -GA -Ge 1 -Sc -GT -I../.. \
  *        -Wb,export_macro=TAO_IFR_Client_Export \
  *        -Wb,export_include=ifr_client_export.h \
  *        -Wb,pre_include="ace/pre.h" \
@@ -50,7 +50,8 @@
 #ifndef _IFR_BASE_IDL_
 #define _IFR_BASE_IDL_
 
-#include <orb.idl>
+#include <orb_types.pidl>
+#include <Typecode_types.pidl>
 
 module CORBA
 {
