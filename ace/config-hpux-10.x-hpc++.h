@@ -46,6 +46,14 @@
 #  define volatile
 
 #else  // aC++ definitions
+ 
+// Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
+// macro is not set until A.01.18. If it's not set, set it - it won't be an
+// HP-advertised value, but we don't check the value/version - just whether
+// it's set or not.
+#  if !defined (__HP_aCC)
+#    define __HP_aCC
+#  endif /* __HP_aCC */
 
 // Compiler supports to-be-ANSI casts
 #  define ACE_HAS_ANSI_CASTS
