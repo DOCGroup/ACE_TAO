@@ -102,7 +102,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_table_ (CORBA::Object::_nil ()),
     rt_orb_ (CORBA::Object::_nil ()),
     rt_current_ (CORBA::Object::_nil ()),
-    rt_priority_mapping_manager_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (),
     orb_params_ (),
@@ -1206,10 +1205,6 @@ TAO_ORB_Core::fini (void)
   // Pass reactor back to the resource factory.
   if (this->resource_factory_ != 0)
     this->resource_factory_->reclaim_reactor (this->reactor_);
-
-  // Release the priority mapping manager here since it can be used when
-  // shutting down the reactor above.
-  CORBA::release (this->rt_priority_mapping_manager_);
 
   (void) TAO_Internal::close_services ();
 
@@ -2328,9 +2323,9 @@ TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
       // The Loader has not been statically configured, try to
       // dynamically load it...
       ACE_Service_Config::process_directive (
-                                             "dynamic RT_ORB_Loader Service_Object *"
-                                             "TAO_RTCORBA:_make_TAO_RT_ORB_Loader()"
-                                             );
+        "dynamic RT_ORB_Loader Service_Object *"
+        "TAO_RTCORBA:_make_TAO_RT_ORB_Loader()"
+        );
 
       loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
@@ -2338,7 +2333,7 @@ TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
 
-  /// Create RT_ORB object.
+  // Create RTORB object.
   this->rt_orb_ =
     loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
 }
@@ -2354,9 +2349,9 @@ TAO_ORB_Core::resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV)
       // The Loader has not been statically configured, try to
       // dynamically load it...
       ACE_Service_Config::process_directive (
-                                             "dynamic RT_Current_Loader Service_Object *"
-                                             "TAO_RTCORBA:_make_TAO_RT_Current_Loader()"
-                                             );
+        "dynamic RT_Current_Loader Service_Object *"
+        "TAO_RTCORBA:_make_TAO_RT_Current_Loader()"
+        );
 
       loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
@@ -2364,7 +2359,7 @@ TAO_ORB_Core::resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
 
-  /// Create RT_Current object.
+  // Create RT_Current object.
   this->rt_current_ =
     loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
 }
@@ -2482,20 +2477,20 @@ TAO_ORB_Core::resolve_rir (const char *name,
 
   // Get the list of initial reference prefixes specified through
   // -ORBDefaultInitRef.
-  char * default_init_ref =
+  CORBA::String_var default_init_ref =
     this->orb_params ()->default_init_ref ();
 
   // Check if a DefaultInitRef was specified.
-  if (ACE_OS::strlen (default_init_ref) != 0)
+  if (ACE_OS::strlen (default_init_ref.in ()) != 0)
     {
       static const char corbaloc_prefix[] = "corbaloc:";
       char object_key_delimiter = 0;
 
-      ACE_CString list_of_profiles (default_init_ref);
+      ACE_CString list_of_profiles (default_init_ref.in ());
 
       // Check if the protocol is corbaloc:.
       // If it is, set the object_key_delimiter.
-      if (ACE_OS::strncmp (default_init_ref,
+      if (ACE_OS::strncmp (default_init_ref.in (),
                            corbaloc_prefix,
                            sizeof corbaloc_prefix -1) == 0)
         {
@@ -2510,9 +2505,6 @@ TAO_ORB_Core::resolve_rir (const char *name,
                      list_of_profiles.c_str ());
         }
 
-      // Clean up.
-      delete [] default_init_ref;
-
       // Make sure that the default initial reference doesn't end
       // with the object key delimiter character.
       if (list_of_profiles[list_of_profiles.length() - 1] !=
@@ -2524,11 +2516,7 @@ TAO_ORB_Core::resolve_rir (const char *name,
       return this->orb ()->string_to_object (list_of_profiles.c_str (),
                                              ACE_TRY_ENV);
     }
-  else
-    {
-      // Clean up.
-      delete [] default_init_ref;
-    }
+
   return CORBA::Object::_nil ();
 }
 
@@ -2545,8 +2533,8 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
 
   const size_t total_size =
     initial_services_size
-    + this->init_ref_map_.current_size ();
-//     + this->object_ref_table_.current_size ();
+    + this->init_ref_map_.current_size ()
+    + this->object_ref_table_.current_size ();
 
   CORBA::ORB::ObjectIdList_ptr tmp = 0;
 
@@ -2568,14 +2556,15 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
   // Now iterate over the initial references created by the user and
   // add them to the sequence.
 
-//   // References registered via
-//   // ORBInitInfo::register_initial_reference().
-//   TAO_Object_Ref_Table::Iterator end = this->object_ref_table_.end ();
+  // References registered via
+  // ORBInitInfo::register_initial_reference().
+  TAO_Object_Ref_Table::Iterator obj_ref_end =
+    this->object_ref_table_.end ();
 
-//   for (TAO_Object_Ref_Table::Iterator i = this-> object_ref_table_.begin ();
-//        i != end;
-//        ++i, ++index)
-//     list[index] = (*i).int_id_;
+  for (TAO_Object_Ref_Table::Iterator i = this->object_ref_table_.begin ();
+       i != obj_ref_end;
+       ++i, ++index)
+    list[index] = CORBA::string_dup ((*i).ext_id_);
 
   // References registered via INS.
   InitRefMap::iterator end = this->init_ref_map_.end ();
@@ -2583,7 +2572,7 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
        ++j, ++index)
-    list[index] = (*j).int_id_.c_str ();
+    list[index] = (*j).ext_id_.c_str ();
 
   return list._retn ();
 }

@@ -1018,9 +1018,6 @@ protected:
   /// The cached object reference for the RTCORBA::RTCurrent interface.
   CORBA::Object_ptr rt_current_;
 
-  /// The cached object reference for the priority mapping manager.
-  CORBA::Object_ptr rt_priority_mapping_manager_;
-
   /**
    * @note
    * Should we keep a single ORB pointer? This is good because
