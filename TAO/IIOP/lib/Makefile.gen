@@ -5,7 +5,7 @@
 include		$(ROOT)/Makefile.conf
 
 CPPFLAGS +=	-I$(ROOT)/lib
-CCFLAGS +=	-pic
+CCFLAGS +=	-PIC
 
 default:	$(FILES:%.cpp=../obj/%.o)
 
