@@ -12,7 +12,7 @@
 #include "ace/Dynamic_Service.h"
 #include "../orbsvcs/Notify/Service.h"
 
-TAO_Notify_Service::TAO_Notify_Service (void)
+TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
   : notify_service_ (0),
         bootstrap_ (0),
     use_name_svc_ (1),
@@ -25,14 +25,14 @@ TAO_Notify_Service::TAO_Notify_Service (void)
   // No-Op.
 }
 
-TAO_Notify_Service::~TAO_Notify_Service (void)
+TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
 {
   if (ior_output_file_)
     fclose(ior_output_file_);
 }
 
 int
-TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
+TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
                               ACE_ENV_ARG_DECL)
 {
   // Copy command line parameter.
@@ -70,7 +70,7 @@ TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
 }
 
 int
-TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
+TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                           ACE_ENV_ARG_DECL)
 {
   // initalize the ORB.
@@ -257,7 +257,7 @@ TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
 }
 
 int
-TAO_Notify_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service_Driver::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
@@ -284,7 +284,7 @@ TAO_Notify_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service_Driver::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (TAO_debug_level > 0 )
     ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
@@ -303,7 +303,7 @@ TAO_Notify_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   if (this->use_name_svc_)
@@ -344,7 +344,7 @@ TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Service::parse_args (int argc, ACE_TCHAR *argv[])
+TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
