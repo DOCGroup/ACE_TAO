@@ -7,29 +7,31 @@
 //    ACE_wrappers/examples/QOS
 //
 // = FILENAME
-//    Receiver_QOS_Event_Handler.cpp
+//    Sender_QoS_Event_Handler.cpp
 //
 // = AUTHOR
 //    Vishal Kachroo <vishal@cs.wustl.edu>
 //
 // ============================================================================
 
-#include "Receiver_QOS_Event_Handler.h"
+#include "Sender_QoS_Event_Handler.h"
 
 // Constructor.
-ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (void)
+Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (void)
 {
 }
 
-ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast,
-                                              ACE_QoS_Session *qos_session)
-  : dgram_mcast_ (dgram_mcast),
+// Constructor.
+Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS 
+                                                    &dgram_mcast_qos,
+                                                    ACE_QoS_Session *qos_session)
+  : dgram_mcast_qos_ (dgram_mcast_qos),
     qos_session_ (qos_session)
 {
 }
 
 // Destructor.
-ACE_QOS_Event_Handler::~ACE_QOS_Event_Handler (void)
+Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler (void)
 {
 }
 
@@ -37,15 +39,17 @@ ACE_QOS_Event_Handler::~ACE_QOS_Event_Handler (void)
 // internally by the reactor.
 
 ACE_HANDLE
-ACE_QOS_Event_Handler::get_handle (void) const
+Sender_QoS_Event_Handler::get_handle (void) const
 {
-  return this->dgram_mcast_.get_handle ();
+  return this->dgram_mcast_qos_.get_handle ();
 }
 
-int
-ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
-{
+// Handle the QoS Event. In this case send data to the receiver 
+// using WSASendTo() that uses overlapped I/O.
 
+int
+Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
+{
   ACE_DEBUG ((LM_DEBUG,
               "\nReceived a QOS event. Inside handle_qos ()\n"));
 
@@ -94,41 +98,44 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
               ace_get_qos.receiving_flowspec ().minimum_policed_size (),
               ace_get_qos.sending_flowspec ().minimum_policed_size ()));
 
+  // This is SPECIFIC TO WIN2K and should be done in the qos_update function.
+
+//    ACE_QoS ace_get_qos;
+//    u_long dwBytes;
+
+//    if (ACE_OS::ioctl (this->dgram_mcast_qos_.get_handle (),
+//                       ACE_SIO_GET_QOS,
+//                       ace_get_qos,
+//                       &dwBytes) == -1)
+//      ACE_ERROR ((LM_ERROR,
+//                  "Error in Qos get ACE_OS::ioctl ()\n"
+//                  "Bytes Returned = %d\n",
+//                  dwBytes));
+//    else
+//      ACE_DEBUG ((LM_DEBUG,
+//                  "Getting QOS using ACE_OS::ioctl () succeeds.\n"));  
+
+  iovec iov[1];
+  iov[0].iov_base = (char *) "Hello sent on a QoS enabled session !!\n";
+  iov[0].iov_len = ACE_OS::strlen (iov[0].iov_base);
+
+  size_t bytes_sent = 0;
+
+  // Send "Hello" to the QoS session address to which the receiver has 
+  // subscribed.
+  if (this->dgram_mcast_qos_.send (iov,
+                                   1,
+                                   bytes_sent,
+                                   0,
+                                   this->qos_session_->dest_addr (),
+                                   0,
+                                   0) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in dgram_mcast.send ()\n"),
+                      -1);
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "Using ACE_OS::sendto () : Bytes sent : %d",
+                bytes_sent));
   return 0;
 }
-
-// Called when there is a READ activity on the dgram_mcast handle.
-
-int
-ACE_QOS_Event_Handler::handle_input (ACE_HANDLE)
-{
-  char buf[BUFSIZ];
-	
-  iovec iov;
-  iov.iov_base = buf;
-  iov.iov_len = BUFSIZ;
-	
-  ACE_OS::memset (iov.iov_base,
-                  0,
-                  BUFSIZ);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Inside handle_input () of ACE_Read_Handler ()\n"));
-
-  // Receive message from multicast group.
-  ssize_t result =
-    this->dgram_mcast_.recv (&iov,
-                             1,
-                             this->remote_addr_);
-
-  if (result != -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Message Received %s",
-                  iov.iov_base));
-      return 0;
-    }
-  else
-    return -1;
-}
-
