@@ -7,10 +7,10 @@
 //     TAO
 //
 // = FILENAME
-//     LSOCK_Transport.h
+//     UIOP_Transport.h
 //
 // = DESCRIPTION
-//     Unix Domain Socket (LSOCK) Transport specific processing
+//     Unix Domain Socket (UIOP) Transport specific processing
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
@@ -18,20 +18,20 @@
 //
 // ============================================================================
 
-#ifndef TAO_LSOCK_TRANSPORT_H
-#define TAO_LSOCK_TRANSPORT_H
+#ifndef TAO_UIOP_TRANSPORT_H
+#define TAO_UIOP_TRANSPORT_H
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "tao/Pluggable.h"
 
 // Forward decls.
-class TAO_LSOCK_Handler_Base;
+class TAO_UIOP_Handler_Base;
 class TAO_Client_Connection_Handler;
 class TAO_Server_Connection_Handler;
 class TAO_ORB_Core;
 
-class TAO_Export TAO_LSOCK_Transport : public TAO_Transport
+class TAO_Export TAO_UIOP_Transport : public TAO_Transport
 {
   // = TITLE
   //   This class acts as a bridge class to the transport specific 
@@ -40,14 +40,14 @@ class TAO_Export TAO_LSOCK_Transport : public TAO_Transport
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
-  TAO_LSOCK_Transport (TAO_LSOCK_Handler_Base *handler);
+  TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler);
   // Base object's creator method. 
 
-  ~TAO_LSOCK_Transport (void);
+  ~TAO_UIOP_Transport (void);
   // Default destructor.
 
   CORBA::ULong tag (void);
-  // Returns the specific IOP instance, in this case LSOCK.
+  // Returns the specific IOP instance, in this case UIOP.
 
   void close_connection (void);
   // Call the corresponding connection handlers handle_close method.
@@ -59,7 +59,7 @@ public:
   int idle (void);
   // Idles the corresponding connection handler.
 
-  TAO_LSOCK_Handler_Base *&handler (void);
+  TAO_UIOP_Handler_Base *&handler (void);
   // Return a reference to the corresponding connection handler.
 
   int is_nil (TAO_Transport *obj);
@@ -109,15 +109,15 @@ public:
   // Default action to be taken for send request.
 
 protected:
-  TAO_LSOCK_Handler_Base *handler_;
+  TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
   // communication protocols.
 
   CORBA::ULong tag_;
-  // LSOCK tag.
+  // UIOP tag.
 };
 
-class TAO_Export TAO_LSOCK_Client_Transport : public TAO_LSOCK_Transport
+class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
 {
   // = TITLE
   //   The Transport class used for Client side communication with a
@@ -126,12 +126,12 @@ class TAO_Export TAO_LSOCK_Client_Transport : public TAO_LSOCK_Transport
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
-  TAO_LSOCK_Client_Transport (TAO_Client_Connection_Handler *handler);
-  // Constructor.  Note, TAO_LSOCK_Handler_Base is the base class for
+  TAO_UIOP_Client_Transport (TAO_Client_Connection_Handler *handler);
+  // Constructor.  Note, TAO_UIOP_Handler_Base is the base class for
   // both TAO_Client_Connection_Handler and
   // TAO_Server_Connection_Handler.
 
-  ~TAO_LSOCK_Client_Transport (void);
+  ~TAO_UIOP_Client_Transport (void);
   // destructor
 
   TAO_Client_Connection_Handler *client_handler (void);
@@ -150,7 +150,7 @@ private:
   // pointer to the corresponding client side connection handler.
 };
 
-class TAO_Export TAO_LSOCK_Server_Transport : public TAO_LSOCK_Transport
+class TAO_Export TAO_UIOP_Server_Transport : public TAO_UIOP_Transport
 {
   // = TITLE
   //   The Transport class used for server communication with a
@@ -160,10 +160,10 @@ class TAO_Export TAO_LSOCK_Server_Transport : public TAO_LSOCK_Transport
   //   @@ Fred, please fill in here.
 public:
 
-  TAO_LSOCK_Server_Transport (TAO_Server_Connection_Handler *handler);
+  TAO_UIOP_Server_Transport (TAO_Server_Connection_Handler *handler);
   //  Default creator method.
 
-  ~TAO_LSOCK_Server_Transport (void);
+  ~TAO_UIOP_Server_Transport (void);
   // Default destructor
 
   TAO_Server_Connection_Handler *server_handler (void);
@@ -179,4 +179,4 @@ private:
 
 # endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#endif  /* TAO_LSOCK_TRANSPORT_H */
+#endif  /* TAO_UIOP_TRANSPORT_H */
