@@ -1,4 +1,4 @@
-// $Id$
+// sender.cpp,v 1.1 2001/04/15 02:55:56 yamuna Exp
 
 #include "sender.h"
 #include "tao/debug.h"
@@ -35,6 +35,9 @@ CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
 				   const AVStreams::flowSpec &/* the_flows */,
 				   CORBA::Environment &/* ACE_TRY_ENV */)
+                            ACE_THROW_SPEC((CORBA::SystemException,
+		                            AVStreams::noSuchFlow,
+                                            AVStreams::QoSRequestFailed ))
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Sender_StreamEndPoint::modify_QoS\n"));

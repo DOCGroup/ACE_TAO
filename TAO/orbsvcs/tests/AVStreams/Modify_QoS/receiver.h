@@ -5,7 +5,7 @@
 /**
  *  @file   receiver.h
  *
- *  $Id$
+ *  receiver.h,v 1.1 2001/04/15 02:56:26 yamuna Exp
  *  
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */

@@ -1,4 +1,4 @@
-// $Id$
+// receiver.cpp,v 1.2 2001/04/15 20:32:54 yamuna Exp
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
@@ -303,7 +303,7 @@ main (int argc,
 
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfull\n"));
+                    "File Opened Successfully\n"));
 
       Receiver receiver;
       result =
