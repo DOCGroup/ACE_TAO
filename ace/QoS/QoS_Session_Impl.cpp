@@ -93,9 +93,9 @@ rsvp_callback (rapi_sid_t sid,
 			    -1);
 
 	    ACE_NEW_RETURN (receiving_fs,
-			    ACE_Flow_Spec (csxp->xspec_r,
-					   csxp->xspec_b,
-					   csxp->xspec_p,
+			    ACE_Flow_Spec ((u_long)csxp->xspec_r,
+					   (u_long)csxp->xspec_b,
+					   (u_long)csxp->xspec_p,
 					   0,
 					   csxp->xspec_S,
 					   1,
@@ -163,11 +163,11 @@ rsvp_callback (rapi_sid_t sid,
 		// qos_service_type.
 		sending_flow->service_type (csxp->spec_type);
 		// Token Bucket Average Rate (B/s)
-		sending_flow->token_rate (csxp->xspec_r);
+		sending_flow->token_rate ((u_long)csxp->xspec_r);
 		// Token Bucket Rate (B)
-		sending_flow->token_bucket_size (csxp->xspec_b);
+		sending_flow->token_bucket_size ((u_long)csxp->xspec_b);
 		// Peak Data Rate (B/s)
-		sending_flow->peak_bandwidth (csxp->xspec_p);
+		sending_flow->peak_bandwidth ((u_long)csxp->xspec_p);
 		// Minimum Policed Unit (B)
 		sending_flow->minimum_policed_size (csxp->xspec_m);
 		// Max Packet Size (B)

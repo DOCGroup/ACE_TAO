@@ -25,6 +25,7 @@
 
 #include "ace/MEM_Stream.h"
 #include "ace/MEM_Addr.h"
+#include "ace/OS_QoS.h"
 
 // Forward decl.
 class ACE_Reactor;

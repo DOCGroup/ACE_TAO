@@ -861,6 +861,8 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
+typedef OVERLAPPED ACE_OVERLAPPED;
+
 #   if !defined (USER_INCLUDE_SYS_TIME_TM)
 #     if defined (ACE_PSOS_DIAB_PPC)
 typedef struct timespec timespec_t;
@@ -3491,8 +3493,6 @@ PAGE_NOCACHE  */
 #     define _O_TEXT   O_TEXT
 #   endif /* __BORLANDC__ */
 
-typedef OVERLAPPED ACE_OVERLAPPED;
-
 typedef DWORD ACE_thread_t;
 #   if !defined(__MINGW32__)
 typedef long pid_t;
@@ -3699,6 +3699,19 @@ struct ACE_OVERLAPPED
   u_long OffsetHigh;
   ACE_HANDLE hEvent;
 };
+
+// Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
+// method.
+#if defined(ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0
+typedef LPWSAOVERLAPPED_COMPLETION_ROUTINE ACE_OVERLAPPED_COMPLETION_FUNC;
+typedef GROUP ACE_SOCK_GROUP;
+#else
+typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
+                                                u_long bytes_transferred,
+                                                ACE_OVERLAPPED *overlapped,
+                                                u_long flags);
+typedef u_long ACE_SOCK_GROUP;
+#endif /* ACE_HAS_WINSOCK2 != 0 */
 
 // Add some typedefs and macros to enhance Win32 conformance...
 #   if !defined (LPSECURITY_ATTRIBUTES)
@@ -4980,340 +4993,6 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#if defined (ACE_HAS_WINSOCK2_GQOS)
-typedef SERVICETYPE ACE_SERVICE_TYPE;
-#else
-typedef u_long ACE_SERVICE_TYPE;
-#endif /* ACE_HAS_WINSOCK2_GQOS */
-typedef GROUP ACE_SOCK_GROUP;
-typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
-#define ACE_OVERLAPPED_SOCKET_FLAG WSA_FLAG_OVERLAPPED
-
-#define ACE_XP1_QOS_SUPPORTED XP1_QOS_SUPPORTED
-#define ACE_XP1_SUPPORT_MULTIPOINT XP1_SUPPORT_MULTIPOINT
-
-#define ACE_BASEERR WSABASEERR
-#define ACE_ENOBUFS WSAENOBUFS
-#define ACE_FROM_PROTOCOL_INFO FROM_PROTOCOL_INFO
-#define ACE_FLAG_MULTIPOINT_C_ROOT WSA_FLAG_MULTIPOINT_C_ROOT
-#define ACE_FLAG_MULTIPOINT_C_LEAF WSA_FLAG_MULTIPOINT_C_LEAF
-#define ACE_FLAG_MULTIPOINT_D_ROOT WSA_FLAG_MULTIPOINT_D_ROOT
-#define ACE_FLAG_MULTIPOINT_D_LEAF WSA_FLAG_MULTIPOINT_D_LEAF
-
-#define ACE_QOS_NOT_SPECIFIED QOS_NOT_SPECIFIED
-#define ACE_SERVICETYPE_NOTRAFFIC SERVICETYPE_NOTRAFFIC
-#define ACE_SERVICETYPE_CONTROLLEDLOAD SERVICETYPE_CONTROLLEDLOAD
-#define ACE_SERVICETYPE_GUARANTEED SERVICETYPE_GUARANTEED
-
-#define ACE_JL_SENDER_ONLY JL_SENDER_ONLY
-#define ACE_JL_BOTH JL_BOTH
-
-#define ACE_SIO_GET_QOS SIO_GET_QOS
-#define ACE_SIO_MULTIPOINT_LOOPBACK SIO_MULTIPOINT_LOOPBACK
-#define ACE_SIO_MULTICAST_SCOPE SIO_MULTICAST_SCOPE
-#define ACE_SIO_SET_QOS SIO_SET_QOS
-
-#else
-typedef u_long ACE_SERVICE_TYPE;
-typedef u_long ACE_SOCK_GROUP;
-struct ACE_Protocol_Info
-{
-  u_long dwServiceFlags1;
-  int iAddressFamily;
-  int iProtocol;
-  char szProtocol[255+1];
-};
-#define ACE_OVERLAPPED_SOCKET_FLAG 0
-
-#define ACE_XP1_QOS_SUPPORTED        0x00002000
-#define ACE_XP1_SUPPORT_MULTIPOINT   0x00000400
-
-#define ACE_BASEERR   10000
-#define ACE_ENOBUFS   (ACE_BASEERR+55)
-
-#define ACE_FROM_PROTOCOL_INFO (-1)
-
-#define ACE_FLAG_MULTIPOINT_C_ROOT    0x02
-#define ACE_FLAG_MULTIPOINT_C_LEAF    0x04
-#define ACE_FLAG_MULTIPOINT_D_ROOT    0x08
-#define ACE_FLAG_MULTIPOINT_D_LEAF    0x10
-
-#define ACE_QOS_NOT_SPECIFIED            0xFFFFFFFF
-#define ACE_SERVICETYPE_NOTRAFFIC        0x00000000  /* No data in this */
-                                                     /* direction. */
-#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000001  /* Controlled Load. */
-#define ACE_SERVICETYPE_GUARANTEED       0x00000003  /* Guaranteed. */
-
-#define ACE_JL_SENDER_ONLY    0x01
-#define ACE_JL_BOTH           0x04
-
-#define ACE_SIO_GET_QOS              (0x40000000 | 0x08000000 | 7)
-#define ACE_SIO_MULTIPOINT_LOOPBACK  (0x08000000 | 9)
-#define ACE_SIO_MULTICAST_SCOPE      (0x08000000 | 10)
-#define ACE_SIO_SET_QOS              (0x08000000 | 11)
-
-#endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
-
-/**
- * @class ACE_Flow_Spec
- *
- * @brief Wrapper class that defines the flow spec QoS information,
- *    which is used by IntServ (RSVP) and DiffServ.
- */
-class ACE_OS_Export ACE_Flow_Spec
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  : public FLOWSPEC
-#endif /* ACE_HAS_WINSOCK2 */
-{
-public:
-  // = Initialization methods.
-  /// Default constructor.
-  ACE_Flow_Spec (void);
-
-  /// Constructor that initializes all the fields.
-  ACE_Flow_Spec (u_long token_rate,
-                 u_long token_bucket_size,
-                 u_long peak_bandwidth,
-                 u_long latency,
-                 u_long delay_variation,
-                 ACE_SERVICE_TYPE service_type,
-                 u_long max_sdu_size,
-                 u_long minimum_policed_size,
-                 int ttl,
-                 int priority);
-
-  // = Get/set the token rate in bytes/sec.
-  u_long token_rate (void) const;
-  void token_rate (u_long tr);
-
-  // = Get/set the token bucket size in bytes.
-  u_long token_bucket_size (void) const;
-  void token_bucket_size (u_long tbs);
-
-  // = Get/set the PeakBandwidth in bytes/sec.
-  u_long peak_bandwidth (void) const;
-  void peak_bandwidth (u_long pb);
-
-  // = Get/set the latency in microseconds.
-  u_long latency (void) const;
-  void latency (u_long l);
-
-  // = Get/set the delay variation in microseconds.
-  u_long delay_variation (void) const;
-  void delay_variation (u_long dv);
-
-  // = Get/set the service type.
-  ACE_SERVICE_TYPE service_type (void) const;
-  void service_type (ACE_SERVICE_TYPE st);
-
-  // = Get/set the maximum SDU size in bytes.
-  u_long max_sdu_size (void) const;
-  void max_sdu_size (u_long mss);
-
-  // = Get/set the minimum policed size in bytes.
-  u_long minimum_policed_size (void) const;
-  void minimum_policed_size (u_long mps);
-
-  // = Get/set the time-to-live.
-  int ttl (void) const;
-  void ttl (int t);
-
-  // = Get/set the priority.
-  int priority (void) const;
-  void priority (int p);
-
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
-    defined (ACE_HAS_WINSOCK2_GQOS)
-#else
-private:
-  u_long token_rate_;
-  u_long token_bucket_size_;
-  u_long peak_bandwidth_;
-  u_long latency_;
-  u_long delay_variation_;
-  ACE_SERVICE_TYPE service_type_;
-  u_long max_sdu_size_;
-  u_long minimum_policed_size_;
-  int ttl_;
-  int priority_;
-#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
-          defined (ACE_HAS_WINSOCK2_GQOS) */
-};
-
-/**
- * @class ACE_QoS
- *
- * @brief Wrapper class that holds the sender and receiver flow spec
- *     information, which is used by IntServ (RSVP) and DiffServ.
- */
-class ACE_OS_Export ACE_QoS
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  : public QOS
-#endif /* ACE_HAS_WINSOCK2 */
-{
-public:
-
-  ACE_QoS (void);
-
-  // = Get/set the flow spec for data sending.
-  ACE_Flow_Spec *sending_flowspec (void) const;
-  void sending_flowspec (ACE_Flow_Spec *fs);
-
-  // = Get/set the flow spec for data receiving.
-  ACE_Flow_Spec *receiving_flowspec (void) const;
-  void receiving_flowspec (ACE_Flow_Spec *fs);
-
-  // = Get/set the provider specific information.
-  iovec provider_specific (void) const;
-  void provider_specific (const iovec &ps);
-
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#else
-private:
-
-  ACE_Flow_Spec *sending_flowspec_;
-  ACE_Flow_Spec *receiving_flowspec_;
-#endif
-
-};
-
-/**
- * @class ACE_QoS_Params
- *
- * @brief Wrapper class that simplifies the information passed to the QoS
- * enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
- */
-class ACE_OS_Export ACE_QoS_Params
-{
-public:
-  /**
-   * Initialize the data members.  The <caller_data> is a pointer to
-   * the user data that is to be transferred to the peer during
-   * connection establishment.  The <callee_data> is a pointer to the
-   * user data that is to be transferred back from the peer during
-   * connection establishment.  The_<socket_qos> is a pointer to the
-   * flow specifications for the socket, one for each direction.  The
-   * <group_socket_qos> is a pointer to the flow speicfications for
-   * the socket group, if applicable.  The_<flags> indicate if we're a
-   * sender, receiver, or both.
-   */
-  ACE_QoS_Params (iovec *caller_data = 0,
-                  iovec *callee_data = 0,
-                  ACE_QoS *socket_qos = 0,
-                  ACE_QoS *group_socket_qos = 0,
-                  u_long flags = 0);
-
-  // = Get/set caller data.
-  iovec *caller_data (void) const;
-  void caller_data (iovec *);
-
-  // = Get/set callee data.
-  iovec *callee_data (void) const;
-  void callee_data (iovec *);
-
-  // = Get/set socket qos.
-  ACE_QoS *socket_qos (void) const;
-  void socket_qos (ACE_QoS *);
-
-  // = Get/set group socket qos.
-  ACE_QoS *group_socket_qos (void) const;
-  void group_socket_qos (ACE_QoS *);
-
-  // = Get/set flags.
-  u_long flags (void) const;
-  void flags (u_long);
-
-private:
-  /// A pointer to the user data that is to be transferred to the peer
-  /// during connection establishment.
-  iovec *caller_data_;
-
-  /// A pointer to the user data that is to be transferred back from
-  /// the peer during connection establishment.
-  iovec *callee_data_;
-
-  /// A pointer to the flow speicfications for the socket, one for each
-  /// direction.
-  ACE_QoS *socket_qos_;
-
-  /// A pointer to the flow speicfications for the socket group, if
-  /// applicable.
-  ACE_QoS *group_socket_qos_;
-
-  /// Flags that indicate if we're a sender, receiver, or both.
-  u_long flags_;
-};
-
-// Callback function that's used by the QoS-enabled <ACE_OS::accept>
-// method.
-typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
-                                       iovec *caller_data,
-                                       ACE_QoS *socket_qos,
-                                       ACE_QoS *group_socket_qos,
-                                       iovec *callee_id,
-                                       iovec *callee_data,
-                                       ACE_SOCK_GROUP *g,
-                                       u_long callbackdata);
-
-// Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
-// method.
-#if defined(ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0
-typedef LPWSAOVERLAPPED_COMPLETION_ROUTINE ACE_OVERLAPPED_COMPLETION_FUNC;
-#else
-typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
-                                                u_long bytes_transferred,
-                                                ACE_OVERLAPPED *overlapped,
-                                                u_long flags);
-#endif /* ACE_HAS_WINSOCK2 != 0 */
-
-/**
- * @class ACE_Accept_QoS_Params
- *
- * @brief Wrapper class that simplifies the information passed to the QoS
- * enabled <ACE_OS::accept> method.
- */
-class ACE_OS_Export ACE_Accept_QoS_Params
-{
-public:
-  /**
-   * Initialize the data members.  The <qos_condition_callback> is the
-   * address of an optional, application-supplied condition function
-   * that will make an accept/reject decision based on the caller
-   * information pass in as parameters, and optionally create or join
-   * a socket group by assinging an appropriate value to the result
-   * parameter <g> of this function.  The <callback_data> data is
-   * passed back to the application as a condition function parameter,
-   * i.e., it is an Asynchronous Completion Token (ACT).
-   */
-  ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
-                         u_long callback_data = 0);
-
-  // = Get/set QoS condition callback.
-  ACE_QOS_CONDITION_FUNC qos_condition_callback (void) const;
-  void qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc);
-
-  // = Get/Set callback data.
-  u_long callback_data (void) const;
-  void callback_data (u_long cd);
-
-private:
-  /**
-   * This is the address of an optional, application-supplied
-   * condition function that will make an accept/reject decision based
-   * on the caller information pass in as parameters, and optionally
-   * create or join a socket group by assinging an appropriate value
-   * to the result parameter <g> of this function.
-   */
-  ACE_QOS_CONDITION_FUNC qos_condition_callback_;
-
-  /**
-   * This data is passed back to the application as a condition
-   * function parameter, i.e., it is an Asynchronous Completion Token
-   * (ACT).
-   */
-  u_long callback_data_;
-};
 
 
 /// Helper for the ACE_OS::timezone() function
@@ -5417,6 +5096,23 @@ inline char *ace_cuserid(char *user)
 #define ACE_SHUTDOWN_BOTH 2
 #endif /* SD_RECEIVE */
 
+// forward declarations of QoS data structures
+class ACE_QoS;
+class ACE_QoS_Params;
+class ACE_Accept_QoS_Params;
+
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
+#else  /*  (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+struct ACE_Protocol_Info
+{
+  u_long dwServiceFlags1;
+  int iAddressFamily;
+  int iProtocol;
+  char szProtocol[255+1];
+};
+
+#endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 /**
  * @class ACE_OS
  *

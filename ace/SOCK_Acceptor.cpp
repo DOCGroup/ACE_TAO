@@ -3,6 +3,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_QoS.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Acceptor.i"
