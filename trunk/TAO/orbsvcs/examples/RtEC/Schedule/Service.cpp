@@ -22,11 +22,11 @@ ACE_RCSID(EC_Examples, Service, "$Id$")
 int config_run = 0;
 
 int parse_args (int argc, char *argv[]);
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
- (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+//#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+// (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 
 typedef TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
-#endif
+// #endif
 
 int
 main (int argc, char* argv[])
