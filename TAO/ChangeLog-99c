@@ -1,5 +1,12 @@
 Tue Mar  9 20:01:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
+	* examples/Simulator/DOVEMIB/Makefile:
+	* examples/Simulator/Event_Supplier/Makefile:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/tests/AVStreams/benchmark/Makefile:
+	* orbsvcs/tests/AVStreams/server_discovery/Makefile:
+	* performance-tests/Demux/Makefile:
+	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
 	* tao/Makefile:
  	* tao/ORB.cpp:
  	* tao/TAO.dsp:
