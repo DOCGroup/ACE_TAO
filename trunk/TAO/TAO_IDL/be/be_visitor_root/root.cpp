@@ -101,7 +101,8 @@ int be_visitor_root::visit_root (be_root *node)
 
           // Generate stub/skeleton argument selection function templates
           // in skeleton.
-          if (be_global->gen_thru_poa_collocation ())
+          if (be_global->gen_thru_poa_collocation ()
+              && idl_global->non_local_iface_seen_)
             {
               *os << be_nl << be_nl
                   << "// Stub/skeleton argument selection function templates."
