@@ -819,6 +819,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TypeCode_Creation"=.\TypeCode_Creation\TypeCode_Creation.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Global:
 
 Package=<5>

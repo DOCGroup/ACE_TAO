@@ -1536,6 +1536,11 @@ CORBA_ORB::create_struct_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_struct_tc (id,
                                     name,
                                     members,
@@ -1556,6 +1561,11 @@ CORBA_ORB::create_union_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_union_tc (id,
                                    name,
@@ -1578,6 +1588,11 @@ CORBA_ORB::create_enum_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_enum_tc (id,
                                   name,
                                   members,
@@ -1597,6 +1612,11 @@ CORBA_ORB::create_alias_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_alias_tc (id,
                                    name,
@@ -1618,6 +1638,11 @@ CORBA_ORB::create_exception_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_exception_tc (id,
                                        name,
                                        members,
@@ -1637,6 +1662,11 @@ CORBA_ORB::create_interface_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_interface_tc (id,
                                        name,
                                        ACE_TRY_ENV);              
@@ -1654,6 +1684,11 @@ CORBA_ORB::create_string_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_string_tc (bound,
                                     ACE_TRY_ENV);              
 }
@@ -1669,6 +1704,11 @@ CORBA_ORB::create_wstring_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_wstring_tc (bound,
                                      ACE_TRY_ENV);              
@@ -1686,6 +1726,11 @@ CORBA_ORB::create_fixed_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_fixed_tc (digits,
                                    scale,
@@ -1705,6 +1750,11 @@ CORBA_ORB::create_sequence_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_sequence_tc (bound,
                                       element_type,
                                       ACE_TRY_ENV);              
@@ -1722,6 +1772,11 @@ CORBA_ORB::create_array_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_array_tc (length,
                                    element_type,
@@ -1743,6 +1798,11 @@ CORBA_ORB::create_value_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_value_tc (id,
                                    name,
@@ -1766,6 +1826,11 @@ CORBA_ORB::create_value_box_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_value_box_tc (id,
                                        name,
                                        boxed_type,
@@ -1785,6 +1850,11 @@ CORBA_ORB::create_native_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_native_tc (id,
                                     name,
                                     ACE_TRY_ENV);              
@@ -1801,6 +1871,11 @@ CORBA_ORB::create_recursive_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_recursive_tc (id,
                                        ACE_TRY_ENV);              
@@ -1819,6 +1894,11 @@ CORBA_ORB::create_abstract_interface_tc (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
 
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
+
   return adapter->create_abstract_interface_tc (id,
                                                 name,
                                                 ACE_TRY_ENV);
@@ -1836,6 +1916,11 @@ CORBA_ORB::create_local_interface_tc (
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
+
+  if (adapter == 0)
+    {
+      return CORBA::TypeCode::_nil ();
+    }
 
   return adapter->create_local_interface_tc (id,
                                              name,
