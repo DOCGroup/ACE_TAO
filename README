@@ -500,6 +500,7 @@ Berni Merkle <merkle@io.freinet.de>
 Tom Wright <twright@gem-net.demon.co.uk>
 Torbjorn Lindgren <tl@funcom.no>
 Darrell Brunsch <brunsch@cs.wustl.edu>
+Mike Bernat <sagmb@sagus.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
@@ -507,9 +508,9 @@ Makefile scheme that underlies this distribution and also spent
 countless hours with me discussing object-oriented techniques for
 developing distributed application frameworks. 
 
-Finally, I'd also like to thank Todd L. Montgomery
-<tmont@cerc.wvu.edu>, fellow heavy metal head, for fulfilling his
-quest to get ACE to compile with GCC!
+Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
+fellow heavy metal head, for fulfilling his quest to get ACE to
+compile with GCC!
 
 In conclusion, my goal is to see ACE continue to evolve and become a
 more comprehensive, robust, and well-documented C++ class library that
