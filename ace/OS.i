@@ -3909,7 +3909,9 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
+#if defined (FreeBSD)
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
   *sig = ::sigwait (set);
   return *sig;
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3932,7 +3934,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   // third arg is timeout:  0 means forever
   *sig = ::sigtimedwait (set, 0, 0);
   return *sig;
-#endif /* ACE_HAS_STHREADS */
+#endif /* FreeBSD */
 #else
   ACE_UNUSED_ARG (set);
   ACE_UNUSED_ARG (sig);

@@ -5,15 +5,13 @@ applications that utilize the ACE features.
 	  gateway that uses source-based and destination-based routing
 	  of messages between peers connected via TCP/IP networks.
 	
+	. JAWS -- This is a high-performance HTTP Web server written
+	  with ACE.  It illustrates a number of sophisticated ACE
+	  concurrency and event demultiplexing strategies.
+
 	. Orbix-Examples -- Implements several applications that
 	  integrate ACE and Orbix (which is IONA's implementation of
-	  CORBA).
+	  CORBA).  By default, these aren't compiled since most
+	  platforms don't have Orbix.
 
-	. Synch-Benchmarks -- Implements a number of benchmarks
-	  that test the performance of various synchronization
-	  mechanisms.
-
-	. TTCP -- Implements several variants of the TTCP benchmarking
-	  test for TCP and UCP using C sockets, ACE C++ wrappers, and 
-	  several versions of CORBA (Orbix and ORBeline).
-
+	. gperf -- The GNU perfect hash function generator.

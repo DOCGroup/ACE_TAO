@@ -1,3 +1,16 @@
+Tue Apr 22 00:21:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/OS/Process/process.cpp (main): Replaced the use of
+ 	  "/bin/cat" with "cat" since we are now using execvp().  Thanks
+ 	  to Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
+
+	* ace/Process.cpp (start): Changed the use of execv() to execvp()
+ 	  in order to avoid having to pass in the full pathname.
+
+	* ace/OS.i (sigwait): Added an #ifdef for FreeBSD so that we
+ 	  return ACE_NOTSUP_RETURN(-1) for ACE_OS::sigwait().  Thanks to
+ 	  Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
+
 Mon Apr 21 18:14:32 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/config-win32-common.h: Added checks around _AFXDLL before
@@ -29,6 +42,16 @@ Sun Apr 20 20:47:34 1997  Sumedh Mungee	      <sumedh@cs.wustl.edu>
 
 	* apps/JAWS/stress-testing: Added README file
 	
+Sun Apr 20 13:11:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Makefile: By default, we now compile JAWS along with the
+ 	  rest of ACE.  I've also added some README files that explain
+ 	  what JAWS is all about.
+
+	* examples/Service_Configurator/Misc/Timer_Service: Improved the
+ 	  Timer_Service test so that it makes more sense and is better
+ 	  documented.
+
 Sat Apr 19 11:56:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude: Removed the platform_irix6.2_sgiCC.GNU
