@@ -113,7 +113,8 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 #include	"nvlist.h"
 #include	"request.h"
 #include	"svrrqst.h"
-#if 0
+
+#if !defined(__IIOP_BUILD)
 #include        "boa.h"
 
 // Bootstrapping, etc

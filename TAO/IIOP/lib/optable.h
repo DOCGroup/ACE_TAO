@@ -97,7 +97,7 @@ public:
   // on failure.
 
   virtual int bind (const CORBA_String &opname,
-		    TAO_Skeleton skelptr);
+		    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
@@ -131,7 +131,7 @@ public:
   // on failure.
 
   virtual int bind (const CORBA_String &opname,
-		    TAO_Skeleton skelptr);
+		    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 

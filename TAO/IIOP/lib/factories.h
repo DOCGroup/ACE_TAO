@@ -26,7 +26,11 @@
 
 #  include "params.h"
 #  include "connect.h"
-#  include "objtable.h"
+#  if defined(__IIOP_BUILD)
+#    include "objtable.h"
+#  else
+#    include "corba/objtable.h"
+#  endif
 
 class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE

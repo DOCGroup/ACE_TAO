@@ -28,8 +28,10 @@
 #  include "request.h"
 #  include "optable.h"
 
+#if 0
 void CORBA_release (CORBA_Object_ptr obj);
 CORBA_Boolean CORBA_is_nil (CORBA_Object_ptr obj);
+#endif
 
 extern const IID IID_CORBA_Object;
 
