@@ -180,13 +180,13 @@ public:
 };
 
 // @@ Is there a particular reason we need these to be thread-specific singletons?!
-typedef ACE_TSS_Singleton <Video_Control_Waiting_State, ACE_SYNCH_MUTEX>
+typedef ACE_Singleton <Video_Control_Waiting_State, ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_WAITING_STATE;     
-typedef ACE_TSS_Singleton <Video_Control_Play_State, ACE_SYNCH_MUTEX>
+typedef ACE_Singleton <Video_Control_Play_State, ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_PLAY_STATE;        
-typedef ACE_TSS_Singleton <Video_Control_Fast_Forward_State, ACE_SYNCH_MUTEX>
+typedef ACE_Singleton <Video_Control_Fast_Forward_State, ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_FAST_FORWARD_STATE;
-typedef ACE_TSS_Singleton <Video_Control_Fast_Backward_State, ACE_SYNCH_MUTEX>
+typedef ACE_Singleton <Video_Control_Fast_Backward_State, ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_FAST_BACKWARD_STATE;
 
 #endif /* MPEG_VIDEO_SERVER_STATE_H */
