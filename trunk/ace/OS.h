@@ -4459,6 +4459,9 @@ public:
   static int getopt (int argc,
                      char *const *argv,
                      const char *optstring);
+  static int argv_to_string (ASYS_TCHAR **argv,
+                             ASYS_TCHAR *&buf,
+                             int substitute_env_args = 1);
   static int string_to_argv (ASYS_TCHAR *buf,
                              size_t &argc,
                              ASYS_TCHAR **&argv,

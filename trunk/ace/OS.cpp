@@ -3487,6 +3487,69 @@ ACE_OS::thr_key_detach (void *inst)
 }
 
 int
+ACE_OS::argv_to_string (ASYS_TCHAR **argv,
+                        ASYS_TCHAR *&buf,
+                        int substitute_env_args)
+{
+  if (argv == 0 || argv[0] == 0)
+    return 0;
+
+  int buf_len = 0;
+  
+  // Determine the length of the buffer.
+
+  for (int i = 0; argv[i] != 0; i++)
+    {
+      ASYS_TCHAR *temp;
+
+      // Account for environment variables.
+      if (substitute_env_args
+	  && (argv[i][0] == '$'
+              && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
+	buf_len += ACE_OS::strlen (temp);	
+      else
+	buf_len += ACE_OS::strlen (argv[i]);
+
+      // Add one for the extra space between each string.
+      buf_len++;
+    }
+
+  // Step through all argv params and copy each one into buf; separate
+  // each param with white space.
+
+  ACE_NEW_RETURN (buf, 
+                  ASYS_TCHAR[buf_len + 1],
+                  0);
+
+  // Initial null charater to make it a null string.
+  buf[0] = '\0';
+  ASYS_TCHAR *end = buf;
+  int j;
+
+  for (j = 0; argv[j] != 0; j++)
+    {
+      ASYS_TCHAR *temp;
+
+      // Account for environment variables.
+      if (substitute_env_args
+	  && (argv[j][0] == '$'
+              && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
+	end = ACE::strecpy (end, temp);
+      else
+	end = ACE::strecpy (end, argv[j]);
+
+      // Replace the null char that strecpy put there with white
+      // space.
+      end[-1] = ' ';
+    }
+
+  // Null terminate the string.
+  *end = '\0';
+  // The number of arguments.
+  return j;
+}
+
+int
 ACE_OS::string_to_argv (ASYS_TCHAR *buf,
                         size_t &argc,
                         ASYS_TCHAR **&argv,
@@ -3621,9 +3684,9 @@ pid_t
 ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
-  ACE_TCHAR *buf = ACE_OS::string_to_argv (argv);
+  ASYS_TCHAR *buf;
 
-  if (buf != 0)
+  if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
 #   if !defined (ACE_HAS_WINCE)
@@ -3638,8 +3701,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            0, // No process attributes.
                            0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
-                           0,   /* CREATE_NEW_CONSOLE */
-                                // Don't create a new console window.
+                           0, // Don't create a new console window.
                            0, // No environment.
                            0, // No current directory.
                            &startup_info,
@@ -3650,8 +3712,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            0, // No process attributes.
                            0,  // No thread attributes.
                            FALSE, // Can's inherit handles on CE
-                           0, /* CREATE_NEW_CONSOLE */
-                              // Don't create a new console window.
+                           0, // Don't create a new console window.
                            0, // No environment.
                            0, // No current directory.
                            0, // Can't use startup info on CE
@@ -3662,6 +3723,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
           ACE_OS::close (process_info.hThread);
           ACE_OS::close (process_info.hProcess);
           // Return new process id.
+          delete [] buf;
           return process_info.dwProcessId;
         }
     }
@@ -3682,7 +3744,8 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
           // Child process.
           if (ACE_OS::execv (argv[0], argv) == -1)
             {
-              ACE_ERROR ((LM_ERROR, "%p Exec failed\n"));
+              ACE_ERROR ((LM_ERROR,
+                          "%p Exec failed\n"));
 
               // If the execv fails, this child needs to exit.
               ACE_OS::exit (errno);

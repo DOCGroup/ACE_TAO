@@ -5,16 +5,17 @@ Thu Feb 18 21:10:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  ACE_OS::strenvdup().
 
 	* ace/ACE.cpp: Implemented ACE::strenvdup() using
-	  ACE_OS::strenvdup().
+ 	  ACE_OS::strenvdup().
 
 	* ace/OS: Move the implementation of strenvdup() from ACE to
-	  ACE_OS to remove another dependency from the OS wrappers.
+ 	  ACE_OS to remove another dependency from the OS wrappers.
 
-	* ace/ARGV.cpp (string_to_argv): Rewrote this method to use the
- 	  new ACE_OS::string_to_argv().
+	* ace/ARGV.cpp: Rewrote the ACE_ARGV::string_to_argv() and
+ 	  ACE_ARGV::argv_to_string() methods to use the new
+ 	  ACE_OS::string_to_argv() and ACE_OS::argv_to_string().
 
-	* ace/OS.h: Added a string_to_argv() method to ACE_OS to remove
- 	  the dependency on ACE_ARGV.
+	* ace/OS.h: Added string_to_argv() and argv_to_string() methods to
+ 	  ACE_OS to remove the dependency on ACE_ARGV.
 
 Thu Feb 18 19:21:03 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 	
