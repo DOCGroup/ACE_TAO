@@ -1,3 +1,19 @@
+Wed Jan 28 13:19:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/README: 
+	  Update README on how to run the test.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Print the IOR always, it is neded to run properly.
+	  
+
+	* tests/Cubit/TAO/MT_Cubit/tmplinst.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/tmplinst.cpp: 
+	  Instantiate on CORBA::Long instead of a plain long.
+
+	* orbsvcs/tests/Logger/svr.cpp: 
+	  Cosmetic changes on debug messages.
+
 Wed Jan 28 11:20:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
