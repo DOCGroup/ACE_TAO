@@ -1,3 +1,10 @@
+Fri Aug 22 09:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * tests/MEM_Stream_Test.cpp:
+
+          Changed to remove compile warning resulting from bad use
+          of ACE_UNUSED_ARG().
+
 Fri Aug 20 15:10:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/core.mpb:
