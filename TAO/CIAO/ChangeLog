@@ -1,25 +1,34 @@
+Tue Mar  2 01:34:18 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * DnC/Node:
+	* DnC/Node/NodeApplication_Impl.h:
+	* DnC/Node/NodeApplication_Impl.h:
+
+	  Added the prototype definition files of
+	  NodeApplication and NodeApplicationManager.
+
 Sun Feb 29 20:57:40 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Configurator.h: 
-	* tools/static_configurator/Static_Configurator.cpp: 
+	* tools/static_configurator/Static_Configurator.h:
+	* tools/static_configurator/Static_Configurator.cpp:
 	* tools/static_configurator/Static_Assembly_Parser.cpp: Fixed
 	  compile errors in builds with native exceptions disabled.
-	
+
 	* tools/static_configurator/Static_Assembly_Visitors.cpp: Fixed
 	  compile errors in gcc 3.3.2. Thanks to Bala for pointing out.
 
 Sat Feb 28 15:42:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/static_configurator/Static_Assembly_Visitors.cpp:
-	 
+
 	  Fixed a couple of small errors. But this file still doeasn't
-	  compile with gcc 3.3.2. Sending Venkita note. 
+	  compile with gcc 3.3.2. Sending Venkita note.
 
 Fri Feb 27 11:35:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
-          Fixed code generation errors reported by Edward Mulholland 
+
+          Fixed code generation errors reported by Edward Mulholland
           <emulholl@atl.lmco.com>.
 
 Thu Feb 26 14:21:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
