@@ -24,6 +24,17 @@ use vars qw(@ISA);
 # ************************************************************
 
 
+sub crlf {
+  my($self) = shift;
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
+}
+
+
 sub workspace_file_name {
   my($self) = shift;
   return $self->get_workspace_name() . ".sln";
@@ -33,8 +44,9 @@ sub workspace_file_name {
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
+  my($crlf) = $self->crlf();
 
-  print $fh "Microsoft Visual Studio Solution File, Format Version 7.00\r\n";
+  print $fh "Microsoft Visual Studio Solution File, Format Version 7.00$crlf";
 }
 
 
@@ -46,6 +58,7 @@ sub write_comps {
   my($ggen)     = new GUID();
   my($guid)     = $ggen->generate($self->workspace_file_name());
   my($pjs)      = $self->get_project_info();
+  my($crlf)     = $self->crlf();
 
   ## Project Information
   foreach my $project (@$projects) {
@@ -55,13 +68,13 @@ sub write_comps {
     ## Convert all /'s to \
     my($cpy) = $project;
     $cpy =~ s/\//\\/g;
-    print $fh "Project(\"{$guid}\") = \"$name\", \"$cpy\", \"{$pguid}\"\r\n" .
-              "EndProject\r\n";
+    print $fh "Project(\"{$guid}\") = \"$name\", \"$cpy\", \"{$pguid}\"$crlf" .
+              "EndProject$crlf";
   }
 
   ## Project Configurations
-  print $fh "Global\r\n" .
-            "        GlobalSection(SolutionConfiguration) = preSolution\r\n";
+  print $fh "Global$crlf" .
+            "        GlobalSection(SolutionConfiguration) = preSolution$crlf";
 
   my(%configs) = ();
   foreach my $project (@$projects) {
@@ -74,13 +87,13 @@ sub write_comps {
   }
   my($count) = 0;
   foreach my $key (sort keys %configs) {
-    print $fh "                ConfigName.$count = $key\r\n";
+    print $fh "                ConfigName.$count = $key$crlf";
     $count++;
   }
 
   ## Project Dependencies
-  print $fh "        EndGlobalSection\r\n" .
-            "        GlobalSection(ProjectDependencies) = postSolution\r\n";
+  print $fh "        EndGlobalSection$crlf" .
+            "        GlobalSection(ProjectDependencies) = postSolution$crlf";
   foreach my $project (@$projects) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid) = @$pi;
@@ -93,14 +106,14 @@ sub write_comps {
           $val = $dep;
         }
         if ($pguid ne $val) {
-          print $fh "                {$pguid}.$i = {$val}\r\n";
+          print $fh "                {$pguid}.$i = {$val}$crlf";
           $i++;
         }
       }
     }
   }
-  print $fh "        EndGlobalSection\r\n" .
-            "        GlobalSection(ProjectConfiguration) = postSolution\r\n";
+  print $fh "        EndGlobalSection$crlf" .
+            "        GlobalSection(ProjectConfiguration) = postSolution$crlf";
 
   ## Project Configuration Names
   foreach my $project (@$projects) {
@@ -109,16 +122,16 @@ sub write_comps {
     foreach my $cfg (@cfgs) {
       my($c) = $cfg;
       $c =~ s/\|.*//;
-      print $fh "                {$pguid}.$c.ActiveCfg = $cfg\r\n" .
-                "                {$pguid}.$c.Build.0 = $cfg\r\n";
+      print $fh "                {$pguid}.$c.ActiveCfg = $cfg$crlf" .
+                "                {$pguid}.$c.Build.0 = $cfg$crlf";
     }
   }
-  print $fh "        EndGlobalSection\r\n" .
-            "        GlobalSection(ExtensibilityGlobals) = postSolution\r\n" .
-            "        EndGlobalSection\r\n" .
-            "        GlobalSection(ExtensibilityAddIns) = postSolution\r\n" .
-            "        EndGlobalSection\r\n" .
-            "EndGlobal\r\n";
+  print $fh "        EndGlobalSection$crlf" .
+            "        GlobalSection(ExtensibilityGlobals) = postSolution$crlf" .
+            "        EndGlobalSection$crlf" .
+            "        GlobalSection(ExtensibilityAddIns) = postSolution$crlf" .
+            "        EndGlobalSection$crlf" .
+            "EndGlobal$crlf";
 }
 
 

@@ -32,11 +32,12 @@ sub workspace_file_name {
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
+  my($crlf) = $self->crlf();
 
-  print $fh "#----------------------------------------------------------------------------\n" .
-            "#       GNU Workspace\n" .
-            "#----------------------------------------------------------------------------\n" .
-            "\n";
+  print $fh "#----------------------------------------------------------------------------$crlf" .
+            "#       GNU Workspace$crlf" .
+            "#----------------------------------------------------------------------------$crlf" .
+            "$crlf";
 }
 
 
@@ -46,21 +47,22 @@ sub write_comps {
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
   my(@list)     = $self->sort_dependencies($projects, $pjs);
+  my($crlf)     = $self->crlf();
 
   ## Print out the projet Makefile
-  print $fh "include \$(ACE_ROOT)/include/makeinclude/macros.GNU\n" .
-            "TARGETS_NESTED := \$(TARGETS_NESTED:.nested=)\n" .
-            "\n" .
-            "\$(TARGETS_NESTED):\n" .
-            "ifeq (Windows,\$(findstring Windows,\$(OS)))\n";
+  print $fh "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf" .
+            "TARGETS_NESTED := \$(TARGETS_NESTED:.nested=)$crlf" .
+            "$crlf" .
+            "\$(TARGETS_NESTED):$crlf" .
+            "ifeq (Windows,\$(findstring Windows,\$(OS)))$crlf";
   foreach my $project (@list) {
-    print $fh "\t\@cmd /c \"\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@)\"\n";
+    print $fh "\t\@cmd /c \"\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@)\"$crlf";
   }
-  print $fh "else\n";
+  print $fh "else$crlf";
   foreach my $project (@list) {
-    print $fh "\t\@\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@);\n";
+    print $fh "\t\@\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@);$crlf";
   }
-  print $fh "endif\n";
+  print $fh "endif$crlf";
 }
 
 

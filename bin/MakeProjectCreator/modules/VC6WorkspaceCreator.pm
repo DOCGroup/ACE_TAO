@@ -23,6 +23,17 @@ use vars qw(@ISA);
 # ************************************************************
 
 
+sub crlf {
+  my($self) = shift;
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
+}
+
+
 sub workspace_file_name {
   my($self) = shift;
   return $self->get_workspace_name() . ".dsw";
@@ -32,10 +43,11 @@ sub workspace_file_name {
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
+  my($crlf) = $self->crlf();
 
-  print $fh "Microsoft Developer Studio Workspace File, Format Version 6.00\r\n" .
-            "# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!\r\n" .
-            "\r\n";
+  print $fh "Microsoft Developer Studio Workspace File, Format Version 6.00$crlf" .
+            "# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!$crlf" .
+            "$crlf";
 }
 
 
@@ -44,6 +56,7 @@ sub write_comps {
   my($fh)       = shift;
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
+  my($crlf)     = $self->crlf();
 
   foreach my $project (@$projects) {
     my($pi) = $$pjs{$project};
@@ -52,31 +65,31 @@ sub write_comps {
     ## Convert all /'s to \
     $project =~ s/\//\\/g;
 
-    print $fh "###############################################################################\r\n" .
-              "\r\n" .
-              "Project: \"$name\"=$project - Package Owner=<4>\r\n" .
-              "\r\n" .
-              "Package=<5>\r\n" .
-              "{{{\r\n" .
-              "}}}\r\n" .
-              "\r\n" .
-              "Package=<4>\r\n" .
-              "{{{\r\n";
+    print $fh "###############################################################################$crlf" .
+              "$crlf" .
+              "Project: \"$name\"=$project - Package Owner=<4>$crlf" .
+              "$crlf" .
+              "Package=<5>$crlf" .
+              "{{{$crlf" .
+              "}}}$crlf" .
+              "$crlf" .
+              "Package=<4>$crlf" .
+              "{{{$crlf";
 
     if (defined $deps && $deps ne "") {
       my($darr) = $self->create_array($deps);
       foreach my $dep (@$darr) {
         ## Avoid cirular dependencies
         if ($name ne $dep) {
-          print $fh "    Begin Project Dependency\r\n" .
-                    "    Project_Dep_Name $dep\r\n" .
-                    "    End Project Dependency\r\n";
+          print $fh "    Begin Project Dependency$crlf" .
+                    "    Project_Dep_Name $dep$crlf" .
+                    "    End Project Dependency$crlf";
         }
       }
     }
 
-    print $fh "}}}\r\n" .
-              "\r\n";
+    print $fh "}}}$crlf" .
+              "$crlf";
   }
 }
 
@@ -85,20 +98,20 @@ sub post_workspace {
   my($self) = shift;
   my($fh)   = shift;
 
-  print $fh "###############################################################################\r\n" .
-            "\r\n" .
-            "Global:\r\n" .
-            "\r\n" .
-            "Package=<5>\r\n" .
-            "{{{\r\n" .
-            "}}}\r\n" .
-            "\r\n" .
-            "Package=<3>\r\n" .
-            "{{{\r\n" .
-            "}}}\r\n" .
-            "\r\n" .
-            "###############################################################################\r\n" .
-            "\r\n";
+  print $fh "###############################################################################$crlf" .
+            "$crlf" .
+            "Global:$crlf" .
+            "$crlf" .
+            "Package=<5>$crlf" .
+            "{{{$crlf" .
+            "}}}$crlf" .
+            "$crlf" .
+            "Package=<3>$crlf" .
+            "{{{$crlf" .
+            "}}}$crlf" .
+            "$crlf" .
+            "###############################################################################$crlf" .
+            "$crlf";
 }
 
 
