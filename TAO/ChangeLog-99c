@@ -1,3 +1,12 @@
+Fri Jul  2 11:53:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Sequence_T.cpp:
+
+	  Removed some unnecessary null pointer checks that were performed
+	  before calling delete.
+
+	  Minor exception handling updates.
+
 Fri Jul  2 12:06:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
