@@ -20,8 +20,7 @@
 #define TAO_ATTRIBUTES_H
 
 #include "orbsvcs/CosTradingS.h"
-
-class TAO_Trader_Base;
+#include "Monitor.h"
  
 class TAO_Export TAO_Support_Attributes_Impl
   // = TITLE
@@ -34,7 +33,7 @@ class TAO_Export TAO_Support_Attributes_Impl
 {
 public:
   // = Initialization and termination methods.
-  TAO_Support_Attributes_Impl (TAO_Trader_Base &trader);
+  TAO_Support_Attributes_Impl (TAO_Lockable &locker);
   ~TAO_Support_Attributes_Impl ();
 
   // = Accessor methods.
@@ -52,7 +51,7 @@ public:
 
 private:
 
-  TAO_Trader_Base &trader_;
+  TAO_Lockable &locker_;
   // A reference to the trader (needed for obtaining the lock.)
 
   CORBA::Boolean supports_modifiable_properties_;
@@ -80,7 +79,7 @@ class TAO_Export TAO_Link_Attributes_Impl
 public:
   // = Initialization and termination methods.
 
-  TAO_Link_Attributes_Impl (TAO_Trader_Base &trader);
+  TAO_Link_Attributes_Impl (TAO_Lockable &locker);
   ~TAO_Link_Attributes_Impl ();
 
   // = Accessor methods.
@@ -90,7 +89,7 @@ public:
 
 private:
 
-  TAO_Trader_Base &trader_;
+  TAO_Lockable &locker_;
   // A reference to the trader (needed for obtaining the lock.)
 
   CosTrading::FollowOption max_link_follow_policy_;
@@ -109,7 +108,7 @@ class TAO_Export TAO_Import_Attributes_Impl
 public:
   // = Initialization and termination methods.
 
-  TAO_Import_Attributes_Impl (TAO_Trader_Base &trader);
+  TAO_Import_Attributes_Impl (TAO_Lockable &locker);
 
   ~TAO_Import_Attributes_Impl (void);
 
@@ -150,7 +149,7 @@ public:
 
 private:
 
-  TAO_Trader_Base &trader_;
+  TAO_Lockable &locker_;
 
   CORBA::ULong def_search_card_;
   // Upper bound of offers to be searched if <search_card>
@@ -206,7 +205,7 @@ class TAO_Export TAO_Trading_Components_Impl
 public:
 
   // = Initialization and termination methods.
-  TAO_Trading_Components_Impl (TAO_Trader_Base &trader);
+  TAO_Trading_Components_Impl (TAO_Lockable &locker);
   ~TAO_Trading_Components_Impl (void);
 
   // = CosTrading::TraderComponents methods. 
@@ -248,7 +247,7 @@ public:
 
 private:
 
-  TAO_Trader_Base &trader_;
+  TAO_Lockable &locker_;
 
   CosTrading::Lookup_var lookup_;
   CosTrading::Register_var register_;

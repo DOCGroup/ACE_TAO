@@ -21,6 +21,7 @@
 
 #include "stl.h"
 #include "Attributes.h"
+#include "Monitor.h"
 
 typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
 
@@ -43,7 +44,7 @@ public:
 #endif /* ACE_HAS_THREADS */
 };
 
-class TAO_Export TAO_Trader_Base
+class TAO_Export TAO_Trader_Base : public TAO_Lockable
   //
   // = TITLE
   //     TAO_Trader inherits from this "helper" class.
@@ -82,9 +83,6 @@ public:
   const TAO_Link_Attributes_Impl &link_attributes (void) const;
 
   // = Accessor for trader's lock.
-
-  virtual ACE_Lock &lock (void) = 0;
-  // return lock that guards trader's current configuration.
 
   static CORBA::Boolean is_valid_identifier_name (const char* ident);
   // Determine whether the identifier is a valid one (i.e., if the
