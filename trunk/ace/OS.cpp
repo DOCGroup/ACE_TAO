@@ -1586,12 +1586,15 @@ ACE_TSS_Cleanup::exit (void * /* status */)
     // persistant system wide.
     for (int i = 0; i < index; i++)
       {
-#   if defined (ACE_WIN32)
-        ::TlsFree (key_arr[i]);
-#   else
+# if defined (ACE_WIN32)
+        // Calling thr_keyfree here ensure the key
+        // gets removed appropriately.  Notice that
+        // a key should be removed before freeing it.
+        ACE_OS::thr_keyfree (key_info->key_);
+# else
         // don't bother to free the key
-#   endif /* ACE_WIN32 */
-        this->table_.remove (ACE_TSS_Info (key_arr[i]));
+        this->remove (key_info->key_);
+# endif /* ACE_WIN32 */
       }
 # endif /* 0 */
   }
@@ -1602,6 +1605,8 @@ ACE_TSS_Cleanup::free_all_key_left (void)
   // This is call from ACE_OS::cleanup_tss
   // When this gets called, all threads should
   // have exited except the main thread.
+  // No key should be freed from this routine.
+  // It there's any, something might be wrong.
 {
   ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
   ACE_TSS_Info *key_info = 0;
@@ -1679,8 +1684,18 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
   if (key_index <= this->table_.size ())
     {
       // "Remove" the TSS_Info table entry by zeroing out its key_ and
-      // destructor_ fields.
+      // destructor_ fields.  Also, keep track of the number threads
+      // using the key.
       ACE_TSS_Info &info = this->table_ [key_index];
+
+      // Don't bother to check <in_use_> if the program is shutting down.
+      // Doing so will cause a new ACE_TSS object getting created again.
+      if (! ACE_Object_Manager::shutting_down () &&
+          ! in_use_->test_and_clear (info.key_))
+        {
+          --info.thread_count_;
+        }
+
       info.key_ = ACE_OS::NULL_key;
       info.destructor_ = 0;
       return 0;
@@ -1723,13 +1738,13 @@ ACE_TSS_Cleanup::detach (void *inst)
     {
       // Mark the key as no longer being used.
       key_info->key_in_use (0);
-
+      ACE_thread_key_t temp_key = key_info->key_;
+      int retv = this->remove (key_info->key_);
+      
 # if defined (ACE_WIN32)
-      ::TlsFree (key_info->key_);
-# else
-      // don't bother to free the key
+      ::TlsFree (temp_key);
 # endif /* ACE_WIN32 */
-      return this->remove (key_info->key_);
+      return retv;
     }
 
   return 0;
