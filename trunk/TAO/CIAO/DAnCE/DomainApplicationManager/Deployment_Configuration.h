@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DeploymentC.h"
-
+#include "DomainApplicationManager/DomainApplicationManager_Export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
@@ -47,7 +47,7 @@ namespace CIAO
    * strategy.  We can enhance this class later on to provide
    * different deployment location strategies, such as naming service.
    */
-  class Deployment_Configuration
+  class DomainApplicationManager_Export Deployment_Configuration
   {
   public:
     typedef struct _node_manager_info
