@@ -175,6 +175,7 @@ public:
   // Simply returns t
 };
 
+#if ACE_SIZEOF_LONG != 8
 ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<ACE_UINT64>
 {
@@ -184,6 +185,7 @@ public:
   u_long operator () (ACE_UINT64 t) const;
   // Simply returns t
 };
+#endif /* ACE_SIZEOF_LONG != 8 */
 
 ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<const char *>
