@@ -1,3 +1,17 @@
+Mon Nov 20 21:22:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/NVList.i:
+	* tao/NVList.cpp:
+
+	  Modified the new method _lazy_has_arguments() to handle the
+	  case where the list's input CDR is null, and also uninlined
+	  the method since it is now not so simple.
+
+	* tao/DynamicInterface/Request.cpp:
+
+	  Replace the NVList::count() call with NVList::_lazy_has_arguments
+	  in Request::send_oneway, as it was in Request::invoke.
+
 Mon Nov 20 20:25:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: 
