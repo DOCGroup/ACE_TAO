@@ -2,8 +2,14 @@
 //
 // $Id$
 
+// @@ OCI folks -- file header please...
 #ifndef FT_NOTIFIER_I_H_
 #define FT_NOTIFIER_I_H_
+
+// @@OCI folks -- please include pre.h before the pragma. Oh, BTW gcc
+// 3.* would complain that  pragma has been deprecated. Probably you
+// should add a simple header file before the pragma.
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -18,6 +24,7 @@
 // Forward references
 class TAO_ORB_Manager;
 
+// @@OCI folks, please use the TAO namespace
 
 class  FT_FaultNotifier_i : public virtual POA_FT::FaultNotifier
 {
@@ -72,6 +79,10 @@ public:
   //////////////////
   // CORBA interface
   // See IDL for documentation
+
+  //@@OCI folks, please don't use "WITH_DEFAULTS" since that makes a
+  // TSS lookup, which is slower. Yes, IDL compile generates with
+  //them, but the implementation should have the raw macro.
 
   virtual void push_structured_fault (
       const CosNotification::StructuredEvent & event

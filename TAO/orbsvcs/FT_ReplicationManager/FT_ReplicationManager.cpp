@@ -12,6 +12,7 @@
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================
+// @@ Pre.h is not required here..
 #include "ace/pre.h"
 #include "FT_ReplicationManager.h"
 #include "FT_Property_Validator.h"

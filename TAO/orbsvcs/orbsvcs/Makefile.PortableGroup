@@ -30,6 +30,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 # the export_include IDL flag.
 override TAO_IDLFLAGS += \
         -I$(TAO_ROOT) \
+        -I$(TAO_ROOT)/orbsvcs \
 	-Ge 1 \
 	-GC \
         -Wb,export_macro=TAO_PortableGroup_Export \
