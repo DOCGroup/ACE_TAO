@@ -55,7 +55,11 @@ CC      = gcc
 CXX     = g++
 RC      = windres
 
-MODEL_FLAGS += -mcpu=$(TCPU)
+ifeq (3.4,$(findstring 3.4,$(GNUWIN32_CXX_VERSION)))
+  MODEL_FLAGS += -mtune=$(TCPU)
+else
+  MODEL_FLAGS += -mcpu=$(TCPU)
+endif
 
 CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
@@ -107,7 +111,7 @@ endif
 
 PRELIB  = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
