@@ -1,3 +1,8 @@
+Sat Apr 12 20:42:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
+	  (make_svc_handler): added return statement.
+
 Sat Apr 12 11:53:49 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Transceiver/transceiver.cpp (main):
