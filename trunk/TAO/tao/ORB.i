@@ -366,13 +366,13 @@ CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::ORB_ptr obj)
 {
-  return obj == 0;
+  return obj == CORBA_ORB::_nil ();
 }
 
 ACE_INLINE void
 CORBA::release (CORBA::ORB_ptr obj)
 {
-  if (obj)
+  if (!CORBA::is_nil (obj))
     obj->_decr_refcnt ();
 }
 
