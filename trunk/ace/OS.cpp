@@ -694,7 +694,7 @@ class ACE_TSS_Ref
   //     "Reference count" for thread-specific storage keys.  
   //
   // = DESCRIPTION
-  //     Since the ACE_Unbounded_Set doesn't allow duplicates, the
+  //     Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
   //     "reference count" is the identify of the thread_id.
 {
 public:
@@ -733,8 +733,8 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info)
   return this->tid_ == info.tid_;
 }
 
-typedef ACE_Unbounded_Set<ACE_TSS_Ref> ACE_TSS_REF_TABLE;
-typedef ACE_Unbounded_Set_Iterator<ACE_TSS_Ref> ACE_TSS_REF_TABLE_ITERATOR;
+typedef ACE_Unbounded_Stack<ACE_TSS_Ref> ACE_TSS_REF_TABLE;
+typedef ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref> ACE_TSS_REF_TABLE_ITERATOR;
 
 class ACE_TSS_Info
   // = TITLE
@@ -822,8 +822,8 @@ ACE_TSS_Info::dump (void)
 
 // Create a set of <ACE_TSS_Info> objects that will reside
 // within thread-specific storage.
-typedef ACE_Unbounded_Set<ACE_TSS_Info> ACE_TSS_TABLE;
-typedef ACE_Unbounded_Set_Iterator<ACE_TSS_Info> ACE_TSS_TABLE_ITERATOR;
+typedef ACE_Unbounded_Stack<ACE_TSS_Info> ACE_TSS_TABLE;
+typedef ACE_Unbounded_Stack_Iterator<ACE_TSS_Info> ACE_TSS_TABLE_ITERATOR;
 
 class ACE_TSS_Cleanup
   // = TITLE

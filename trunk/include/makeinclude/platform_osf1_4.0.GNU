@@ -15,4 +15,4 @@ ARFLAGS		= ruvZ
 RANLIB		= /usr/bin/true
 SOFLAGS		=  -shared
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
- 		  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o -lACE $(LIBS)
+ 		  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o $(LIBS)
