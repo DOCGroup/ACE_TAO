@@ -149,6 +149,23 @@ bgcolor="#ffffff">
           const ASYS_TCHAR *net_if,
         #endif /* ! ACE_PSOS */
         </pre><p>
+
+    <li>Protect header files against multiple inclusion with this
+        construct:
+        <pre>
+        #ifndef FOO_H
+        #define FOO_H
+
+        [contents of header file]
+
+        #endif /* FOO_H */
+        </pre><p>
+
+        This exact construct (note the <code>#ifndef</code>)
+        is optimized by many compilers such they only open the
+        file once per compilation unit.  <strong>No</strong> code
+        can appear after the final <code>#endif</code> for the
+        optimization to be effective and correct.<p>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
