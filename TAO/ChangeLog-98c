@@ -5,6 +5,8 @@ Thu Feb 19 12:54:50 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 Thu Feb 19 12:49:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * Makefile: build orbsvcs before tests.
+
         * tao/Makefile: set fakesvcconf on LynxOS.
 
         * TAO_IDL/Makefile: don't build the IDL compiler for
