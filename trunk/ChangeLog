@@ -1,3 +1,9 @@
+Fri Nov 10 17:15:42 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Made the output look a little closer to MSVC's.
+
 Fri Nov 10 17:08:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * etc/tao_strategies.doxygen:
