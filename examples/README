@@ -20,6 +20,9 @@ please take a look at $WRAPPER_ROOT/ACE-categories.
 		Illustrate how the various Acceptor and Connector
 		components can be used.		
 
+	. IOStream
+		Illustrate how the ACE IOStreams wrapper works.
+
 	. IPC_SAP
 		Illustrate the C++ wrappers for Sockets, TLI, UNIX and
 		Win32 Named Pipes, and UNIX Stream Pipes.

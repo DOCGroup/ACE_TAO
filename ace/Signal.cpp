@@ -121,7 +121,7 @@ sig_atomic_t
 ACE_Sig_Handler::sig_pending (void)
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
   return ACE_Sig_Handler::sig_pending_;
 }
 
@@ -129,7 +129,7 @@ void
 ACE_Sig_Handler::sig_pending (sig_atomic_t pending)
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
   ACE_Sig_Handler::sig_pending_ = pending;
 }
 
@@ -137,7 +137,7 @@ ACE_Event_Handler *
 ACE_Sig_Handler::handler (int signum)
 {
   ACE_TRACE ("ACE_Sig_Handler::handler");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
 
   if (ACE_Sig_Handler::in_range (signum))
     return ACE_Sig_Handler::signal_handlers_[signum];
@@ -149,7 +149,7 @@ ACE_Event_Handler *
 ACE_Sig_Handler::handler (int signum, ACE_Event_Handler *new_sh)
 {
   ACE_TRACE ("ACE_Sig_Handler::handler");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
 
   if (ACE_Sig_Handler::in_range (signum))
     {
@@ -172,7 +172,7 @@ ACE_Sig_Handler::register_handler (int signum,
 				   ACE_Sig_Action *old_disp)
 {
   ACE_TRACE ("ACE_Sig_Handler::register_handler");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
 
   if (ACE_Sig_Handler::in_range (signum))
     {
@@ -206,7 +206,7 @@ ACE_Sig_Handler::remove_handler (int signum,
 				 int)
 {
   ACE_TRACE ("ACE_Sig_Handler::remove_handler");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
 
   if (ACE_Sig_Handler::in_range (signum))
     {
@@ -398,7 +398,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 				    ACE_Sig_Action *old_disp)
 {
   ACE_TRACE ("ACE_Sig_Handlers::register_handler");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
 
   if (ACE_Sig_Handler::in_range (signum))
     {
@@ -515,7 +515,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
 				  int sigkey)
 {
   ACE_TRACE ("ACE_Sig_Handlers::remove_handler");
-  ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
 
   if (ACE_Sig_Handler::in_range (signum))
     {
@@ -651,6 +651,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 ACE_MT (template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>);
+ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
 template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

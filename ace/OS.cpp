@@ -1670,6 +1670,8 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
   return ::pthread_key_delete (key);
 #elif defined (ACE_HAS_DCETHREADS) 
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_HAS_THR_KEYDELETE)
+  return ::thr_keydelete (key);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
