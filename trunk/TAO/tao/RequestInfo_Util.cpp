@@ -97,7 +97,7 @@ TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any,
       CORBA::TypeCode_var safe_tc = tc;
 
       ACE_NEW_THROW_EX (any,
-                        CORBA::Any (tc, ACE_TRY_ENV),
+                        CORBA::Any (tc),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,

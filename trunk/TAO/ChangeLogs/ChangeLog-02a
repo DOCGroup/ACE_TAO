@@ -1,3 +1,21 @@
+Thu Mar  8 20:44:23 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+
+	  Removed CORBA::Environment parameter from the constructor.  It's
+	  a really bad idea to attempt to support emulated exceptions in
+	  constructors.  In any case, the parameter wasn't used.
+
+	* tao/RequestInfo_Util.cpp (make_any):
+
+	  Removed ACE_TRY_ENV parameter from the CORBA::Any constructor
+	  call.  It is no longer part of the constructor's signature.
+
+	* docs/INS.html:
+
+	Updated URL for the INS spec.
+
 Thu Mar  8 21:34:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.cpp (schedule_timer): Fixed a
