@@ -1,3 +1,9 @@
+Tue Nov 19 07:09:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Tests not runnable in minimum
+	  configuration were being run. Hence prevented them from
+	  running. 
+
 Mon Nov 18 20:49:33 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/IPC_SAP/FILE_SAP/client.cpp (ACE_TMAIN): Changed to use
