@@ -487,13 +487,8 @@ BPR_Handler_Base::~BPR_Handler_Base (void)
 // Helper method: clears all timers.
 
 int
-BPR_Handler_Base::clear_all_timers (void *arg)
+BPR_Handler_Base::clear_all_timers (void *)
 {
-  // Macro to avoid compiler warnings on some platforms.  This
-  // is a command accessible method, which necessitates passing
-  // a void pointer to a potential command argument.
-  ACE_UNUSED_ARG (arg);
-
   // Loop through the timers in the queue, cancelling each one.
 
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
@@ -531,8 +526,8 @@ Send_Handler::~Send_Handler (void)
 // Call back hook.
 
 int
-Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
-			      const void *arg)
+Send_Handler::handle_timeout (const ACE_Time_Value &,
+			      const void *)
 {
   switch (relay_.send_input ())
     {
@@ -553,7 +548,7 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
           }
         else
           {
-            // All packets are sent, time to end the transmission, redisplay 
+            // All packets are sent, time to end the transmission, redisplay
             // the user menu, cancel any other timers, and go away.
             relay_.end_transmission (Bounded_Packet_Relay::COMPLETED);
             driver_.display_menu ();
@@ -584,13 +579,8 @@ Send_Handler::cancelled (void)
 // Helper method: re-registers this timer
 
 int
-Send_Handler::reregister (void *arg)
+Send_Handler::reregister (void *)
 {
-  // Macro to avoid compiler warnings on some platforms.  This
-  // is a command accessible method, which necessitates passing
-  // a void pointer to a potential command invocation argument.
-  ACE_UNUSED_ARG (arg);
-
   // Re-register the handler for a new timeout.
   if (queue_.schedule (this,
                        0,
@@ -623,10 +613,10 @@ Termination_Handler::~Termination_Handler (void)
 // Call back hook.
 
 int
-Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
-                                     const void *arg)
+Termination_Handler::handle_timeout (const ACE_Time_Value &,
+                                     const void *)
 {
-  // Transmission timed out, so end the transmission, display the user 
+  // Transmission timed out, so end the transmission, display the user
   // menu, and register a callback to clear the timer queue and then
   // make this object go away.
   relay_.end_transmission (Bounded_Packet_Relay::TIMED_OUT);
