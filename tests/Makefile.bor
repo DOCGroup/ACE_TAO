@@ -4,6 +4,7 @@
 #
 
 NAMES = \
+        ACE_Test \
 	Aio_Platform_Test \
         Arg_Shifter_Test \
 	ARGV_Test \
