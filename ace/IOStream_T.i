@@ -33,8 +33,9 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
                                  int flags,
                                  ACE_Time_Value *tv)
 {
+  this->timeout_ = 0;
   ssize_t rval = peer_->recv_n (buf, len, flags, tv);
-  if (errno == ETIME) 
+  if (rval == -1  &&  errno == ETIME)
     this->timeout_ = 1;
   return rval;
 }
@@ -60,16 +61,16 @@ ACE_IOStream<STREAM>::eof (void) const
 
   // Reset the timeout value of the streambuf.
   (void) this->streambuf_->recv_timeout (timeout);
- 
+
   char c;
   int rval = this->streambuf_->recv_n (&c,
                                        sizeof c,
                                        MSG_PEEK,
                                        timeout);
- 
+
   // If recv_n() didn't fail or failed because of timeout we're not at
   // EOF.
-  return rval != -1 && ! this->streambuf_->timeout ();
+  return rval == -1 && ! this->streambuf_->timeout ();
 }
 
 template <class STREAM> ACE_INLINE
