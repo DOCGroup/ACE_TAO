@@ -283,24 +283,6 @@ ACE_Message_Block::access_allocators (ACE_Allocator *& allocator_strategy,
     this->message_block_allocator_;
 }
 
-ACE_INLINE void
-ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
-                                     ACE_Allocator *data_block_allocator,
-                                     ACE_Allocator *message_block_allocator)
-{
-  this->data_block_->allocator_strategy_ =
-    allocator_strategy;
-  this->data_block_->data_block_allocator_ =
-    data_block_allocator;
-  this->message_block_allocator_ =
-    message_block_allocator;
-
-  if (this->cont () != 0)
-    this->cont ()->reset_allocators (allocator_strategy,
-                                     data_block_allocator,
-                                     message_block_allocator);
-}
-
 ACE_INLINE char *
 ACE_Message_Block::base (void) const
 {
@@ -437,6 +419,24 @@ ACE_Message_Block::cont (void) const
 {
   ACE_TRACE ("ACE_Message_Block::cont");
   return this->cont_;
+}
+
+ACE_INLINE void
+ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
+                                     ACE_Allocator *data_block_allocator,
+                                     ACE_Allocator *message_block_allocator)
+{
+  this->data_block_->allocator_strategy_ =
+    allocator_strategy;
+  this->data_block_->data_block_allocator_ =
+    data_block_allocator;
+  this->message_block_allocator_ =
+    message_block_allocator;
+
+  if (this->cont () != 0)
+    this->cont ()->reset_allocators (allocator_strategy,
+                                     data_block_allocator,
+                                     message_block_allocator);
 }
 
 ACE_INLINE void
