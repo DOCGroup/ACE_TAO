@@ -1,3 +1,18 @@
+Tue Jul 18 10:45:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Client_Priority_Policy.cpp: 
+	* tao/Client_Priority_Policy.h:
+	* tao/Buffering_Constraint_Policy.cpp:
+	* tao/Buffering_Constraint_Policy.h:
+	* tao/Messaging_Policy_i.cpp:
+	* tao/Messaging_Policy_i.h:
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/RT_Policy_i.cpp:
+	* tao/RT_Policy_i.h: Fixed a bunch of compile errors in
+	  KCC. They were due to non-specification of the exceptions in the
+	  signature.
+
 Tue Jul 18 10:00:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Adapter_Activator/server.cpp (AdapterActivator):

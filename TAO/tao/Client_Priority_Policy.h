@@ -76,13 +76,16 @@ public:
     ACE_THROW_SPEC (());
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Policy_ptr copy (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void destroy (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
+       )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   TAO::PrioritySpecification priority_spec_;
