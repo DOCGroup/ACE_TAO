@@ -45,20 +45,63 @@ be_visitor_interface_fwd_ci::~be_visitor_interface_fwd_ci (void)
 int
 be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
 {
-  if (!node->cli_inline_gen () && !node->imported ())
+  if (node->cli_inline_gen () || node->imported ())
+    return 0;
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent (); // start from the current indentation level
+
+  // generate the constructors and destructor
+  *os << "ACE_INLINE" << be_nl;
+  *os << node->name () << "::" << node->local_name () <<
+    " (void) // default constructor" << be_nl;
+  *os << "{}" << be_nl << be_nl;
+
+  if (! node->is_local ())
     {
-#if 0
-      // We don't generate any code here.....
-
-      // It is possible to generate the definitions for the _var and
-      // _out types, but if we do that then the _duplicate() and
-      // _nil() methods cannot be inlined.
-
-      // Since these classes will be generated once the forward
-      // declaration is resolved there is really no problem here
-#endif /* 0 */
-
-      node->cli_inline_gen (I_TRUE);
+      *os << "ACE_INLINE" << be_nl;
+      *os << node->name () << "::" << node->local_name () <<
+        " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
+          << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
+      *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)"
+          << be_nl;
+      *os << "{}" << be_nl << be_nl;
     }
+
+  *os << "ACE_INLINE" << be_nl;
+  *os << node->name () << "::~" << node->local_name () <<
+    " (void) // destructor" << be_nl;
+  *os << "{}\n\n";
+
+  // generate the ifdefined macro for  the _var type
+  os->gen_ifdef_macro (node->flat_name (), "_var");
+  if (node->gen_var_impl () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_ci::"
+                         "visit_interface - "
+                         "codegen for _var failed\n"), -1);
+    }
+  os->gen_endif ();
+
+  // generate the ifdefined macro for  the _out type
+  os->gen_ifdef_macro (node->flat_name (), "_out");
+  if (node->gen_out_impl () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_ci::"
+                         "visit_interface - "
+                         "codegen for _out failed\n"), -1);
+    }
+  os->gen_endif ();
+
+  node->cli_inline_gen (I_TRUE);
+
+  // Set the flag in the corresponding interface definition as well.
+  AST_Interface *fd = node->full_definition ();
+  be_interface *bfd = be_interface::narrow_from_decl (fd);
+  bfd->cli_inline_gen (I_TRUE);
+
   return 0;
  }
