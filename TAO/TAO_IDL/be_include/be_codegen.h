@@ -202,7 +202,7 @@ public:
       TAO_UNION_PUBLIC_RESET_CS,
 
       // Emitting code for private members of the union.
-      TAO_UNION_PRIVATE_CH,
+      TAO_UNION_PRIVATE_CH
     };
 
   enum LOOKUP_STRATEGY
