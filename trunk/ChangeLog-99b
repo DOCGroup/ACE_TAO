@@ -1,3 +1,11 @@
+Wed Mar  3 09:35:20 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (handle_signal): Added a check to see if the
+	  current mapping is up to date so that faults caused by other
+	  mappings will be passed on.  Thanks to
+	  Joseph Weihs <joseph-w@Orbotech.COM> for reporting this and for
+	  providing a fix.
+
 Wed Mar  3 05:48:24 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/ACE.cpp (fork): Added an extra pair of parens within the
