@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_argument.h"
 #include "ast_operation.h"
+#include "ast_root.h"
 #include "fe_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
@@ -91,26 +92,13 @@ static char             idl_escape_reader (char *);
 static double           idl_atof (char *);
 static long             idl_atoi (char *, long);
 static idl_uns_long     idl_atoui (char *, long);
-static void		idl_parse_line_and_file (char *);
-static void		idl_store_pragma (char *);
+static void             idl_parse_line_and_file (char *);
+static void             idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
 static idl_bool         idl_valid_version (char *);
 static AST_Decl *       idl_find_node (char *);
 
-#if 0 /* defined (HPUX) */
-// HPUX has yytext typed to unsigned char *. We make sure here that
-// we'll always use char * static char* __yytext = (char*) yytext;
-// NOTE: This will not work under flex(1) were yytext is not a fixed
-// buffer, but a dynamically allocated one. This function should do
-// the trick for us.
-inline char *__yytext()
-{
-  return (char *) yytext;
-}
-#define ace_yytext __yytext()
-#else
 #define ace_yytext yytext
-#endif /* 0 */
 
 %}
 
@@ -124,35 +112,35 @@ NL [\r?\n]
 
 any             return IDL_ANY;
 Object          return IDL_OBJECT;
-module		return IDL_MODULE;
-raises		return IDL_RAISES;
-readonly	return IDL_READONLY;
-attribute	return IDL_ATTRIBUTE;
-exception	return IDL_EXCEPTION;
-context		return IDL_CONTEXT;
-interface	return IDL_INTERFACE;
-const		return IDL_CONST;
-typedef		return IDL_TYPEDEF;
-struct		return IDL_STRUCT;
-enum		return IDL_ENUM;
-string		return IDL_STRING;
-wstring 	return IDL_WSTRING;
-sequence	return IDL_SEQUENCE;
-union		return IDL_UNION;
-fixed		return IDL_FIXED;
-switch		return IDL_SWITCH;
-case		return IDL_CASE;
-default		return IDL_DEFAULT;
-float		return IDL_FLOAT;
-double		return IDL_DOUBLE;
-long		return IDL_LONG;
-short		return IDL_SHORT;
-unsigned	return IDL_UNSIGNED;
-char		return IDL_CHAR;
-wchar		return IDL_WCHAR;
-boolean		return IDL_BOOLEAN;
-octet		return IDL_OCTET;
-void		return IDL_VOID;
+module          return IDL_MODULE;
+raises          return IDL_RAISES;
+readonly        return IDL_READONLY;
+attribute       return IDL_ATTRIBUTE;
+exception       return IDL_EXCEPTION;
+context         return IDL_CONTEXT;
+interface       return IDL_INTERFACE;
+const           return IDL_CONST;
+typedef         return IDL_TYPEDEF;
+struct          return IDL_STRUCT;
+enum            return IDL_ENUM;
+string          return IDL_STRING;
+wstring         return IDL_WSTRING;
+sequence        return IDL_SEQUENCE;
+union           return IDL_UNION;
+fixed           return IDL_FIXED;
+switch          return IDL_SWITCH;
+case            return IDL_CASE;
+default         return IDL_DEFAULT;
+float           return IDL_FLOAT;
+double          return IDL_DOUBLE;
+long            return IDL_LONG;
+short           return IDL_SHORT;
+unsigned        return IDL_UNSIGNED;
+char            return IDL_CHAR;
+wchar           return IDL_WCHAR;
+boolean         return IDL_BOOLEAN;
+octet           return IDL_OCTET;
+void            return IDL_VOID;
 native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return IDL_ABSTRACT;
@@ -181,22 +169,22 @@ typeprefix      return IDL_TYPEPREFIX;
 uses            return IDL_USES;
 manages         return IDL_MANAGES;
 
-TRUE		return IDL_TRUETOK;
-FALSE		return IDL_FALSETOK;
+TRUE            return IDL_TRUETOK;
+FALSE           return IDL_FALSETOK;
 
-inout		return IDL_INOUT;
-in		return IDL_IN;
-out		return IDL_OUT;
-oneway		return IDL_ONEWAY;
+inout           return IDL_INOUT;
+in              return IDL_IN;
+out             return IDL_OUT;
+oneway          return IDL_ONEWAY;
 
-\<\<		return IDL_LEFT_SHIFT;
-\>\>		return IDL_RIGHT_SHIFT;
-\:\:		{
-		  yylval.strval = (char *) "::";
-		  return IDL_SCOPE_DELIMITOR;
-		}
+\<\<            return IDL_LEFT_SHIFT;
+\>\>            return IDL_RIGHT_SHIFT;
+\:\:            {
+                  yylval.strval = (char *) "::";
+                  return IDL_SCOPE_DELIMITOR;
+                }
 
-[a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]*	{
+[a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++
   // keyword and grab the mapping.  BTW, the reason for the odd
@@ -209,21 +197,21 @@ oneway		return IDL_ONEWAY;
       // This check will ensure that escaped C++ keywords will be
       // caught and prepended with '_cxx' as non-escaped keywords
       // are now prepended with '_cxx_'.
-      const char *tmp = 
-        ace_tao_yytext[0] == '_' ? ace_tao_yytext + 1 : ace_tao_yytext;
+      const char *tmp =
+        ace_yytext[0] == '_' ? ace_yytext + 1 : ace_yytext;
 
-      entry = 
+      entry =
         cpp_key_tbl.lookup (tmp,
                             static_cast<unsigned int> (ACE_OS::strlen (tmp)));
     }
 
   if (entry)
     {
-      tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
+      yylval.strval = ACE_OS::strdup (entry->mapping_);
     }
   else
     {
-      tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
+      yylval.strval = ACE_OS::strdup (ace_yytext);
     }
 
   return IDENTIFIER;
@@ -238,34 +226,34 @@ oneway		return IDL_ONEWAY;
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
-"-"[1-9][0-9]*	{
-		  yylval.ival = idl_atoi(ace_yytext, 10);
-		  return IDL_INTEGER_LITERAL;
-	        }
+"-"[1-9][0-9]*  {
+                  yylval.ival = idl_atoi(ace_yytext, 10);
+                  return IDL_INTEGER_LITERAL;
+                }
 [1-9][0-9]*     {
-		  yylval.uival = idl_atoui(ace_yytext, 10);
-		  return IDL_UINTEGER_LITERAL;
-		}
+                  yylval.uival = idl_atoui(ace_yytext, 10);
+                  return IDL_UINTEGER_LITERAL;
+                }
 "-"0[xX][a-fA-F0-9]+ {
-		  yylval.ival = idl_atoi(ace_yytext, 16);
-		  return IDL_INTEGER_LITERAL;
-	        }
+                  yylval.ival = idl_atoi(ace_yytext, 16);
+                  return IDL_INTEGER_LITERAL;
+                }
 0[xX][a-fA-F0-9]+    {
                   yylval.uival = idl_atoui(ace_yytext, 16);
-		  return IDL_UINTEGER_LITERAL;
-		}
-"-"0[0-7]*	{
-		  yylval.ival = idl_atoi(ace_yytext, 8);
-		  return IDL_INTEGER_LITERAL;
-	      	}
-0[0-7]*	        {
-		  yylval.uival = idl_atoui(ace_yytext, 8);
-		  return IDL_UINTEGER_LITERAL;
-	      	}
+                  return IDL_UINTEGER_LITERAL;
+                }
+"-"0[0-7]*      {
+                  yylval.ival = idl_atoi(ace_yytext, 8);
+                  return IDL_INTEGER_LITERAL;
+                }
+0[0-7]*         {
+                  yylval.uival = idl_atoui(ace_yytext, 8);
+                  return IDL_UINTEGER_LITERAL;
+                }
 
-(\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"[ \t]*)+	{
-		  /* Skip the quotes */
-		  char *tmp = ace_yytext;
+(\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"[ \t]*)+ {
+                  /* Skip the quotes */
+                  char *tmp = ace_yytext;
                   for(int i = strlen(tmp) - 1; i >= 0; --i) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
@@ -274,103 +262,103 @@ oneway		return IDL_ONEWAY;
                       break;
                     }
                   }
-		  tmp[strlen (tmp) - 1] = '\0';
-		  ACE_NEW_RETURN (yylval.sval,
+                  tmp[strlen (tmp) - 1] = '\0';
+                  ACE_NEW_RETURN (yylval.sval,
                                   UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
-		  return IDL_STRING_LITERAL;
-	      	}
-(L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+	{
-		  /* Skip the bookends */
-		  char *tmp = ACE_OS::strdup (ace_yytext);
-		  tmp[strlen (tmp) - 1] = '\0';
-		  yylval.wsval = idl_wstring_escape_reader(tmp + 2);
-		  return IDL_WSTRING_LITERAL;
-		}
-"'"."'"		{
-		  yylval.cval = ace_yytext [1];
-		  return IDL_CHARACTER_LITERAL;
-	      	}
-"'"\\([0-7]{1,3})"'"	{
-		  // octal character constant
-		  yylval.cval = idl_escape_reader(ace_yytext + 1);
-		  return IDL_CHARACTER_LITERAL;
-		}
-"'"\\[xX]([0-9a-fA-F]{1,2})"'"	{
-		  // hexadecimal character constant
-		  yylval.cval = idl_escape_reader(ace_yytext + 1);
-		  return IDL_CHARACTER_LITERAL;
-		}
-"'"\\."'"	{
-		  yylval.cval = idl_escape_reader(ace_yytext + 1);
-		  return IDL_CHARACTER_LITERAL;
-		}
-L"'"."'"	{
-		  // wide character constant
-		  yylval.wcval = ace_yytext [2];
-		  return IDL_WCHAR_LITERAL;
-		}
-L"'"\\u([0-9a-fA-F]{1,4})"'"	{
-		  // hexadecimal wide character constant
-		  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
-		  return IDL_WCHAR_LITERAL;
-		}
-^[ \t]*#[ \t]*pragma[ \t].*{NL}	|
-^\?\?=[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
-  		  idl_global->set_lineno(idl_global->lineno() + 1);
-		  idl_store_pragma(ace_yytext);
-		}
-^[ \t]*#file[ \t].*{NL}	|
-^\?\?=[ \t]*file[ \t].*{NL}	{/* ignore file */
-  		  idl_global->set_lineno(idl_global->lineno() + 1);
-		}
-^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		|
-^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		{
-		  idl_parse_line_and_file(ace_yytext);
-		}
-^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
-^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
-		  idl_parse_line_and_file(ace_yytext);
-		}
-^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL}		|
-^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
-		  idl_parse_line_and_file(ace_yytext);
-		}
+                  return IDL_STRING_LITERAL;
+                }
+(L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
+                  /* Skip the bookends */
+                  char *tmp = ACE_OS::strdup (ace_yytext);
+                  tmp[strlen (tmp) - 1] = '\0';
+                  yylval.wsval = idl_wstring_escape_reader(tmp + 2);
+                  return IDL_WSTRING_LITERAL;
+                }
+"'"."'"         {
+                  yylval.cval = ace_yytext [1];
+                  return IDL_CHARACTER_LITERAL;
+                }
+"'"\\([0-7]{1,3})"'" {
+                  // octal character constant
+                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  return IDL_CHARACTER_LITERAL;
+                }
+"'"\\[xX]([0-9a-fA-F]{1,2})"'" {
+                  // hexadecimal character constant
+                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  return IDL_CHARACTER_LITERAL;
+                }
+"'"\\."'"       {
+                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  return IDL_CHARACTER_LITERAL;
+                }
+L"'"."'"        {
+                  // wide character constant
+                  yylval.wcval = ace_yytext [2];
+                  return IDL_WCHAR_LITERAL;
+                }
+L"'"\\u([0-9a-fA-F]{1,4})"'" {
+                  // hexadecimal wide character constant
+                  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
+                  return IDL_WCHAR_LITERAL;
+                }
+^[ \t]*#[ \t]*pragma[ \t].*{NL} |
+^\?\?=[ \t]*pragma[ \t].*{NL} {/* remember pragma */
+                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_store_pragma(ace_yytext);
+                }
+^[ \t]*#file[ \t].*{NL} |
+^\?\?=[ \t]*file[ \t].*{NL} {/* ignore file */
+                  idl_global->set_lineno(idl_global->lineno() + 1);
+                }
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} |
+^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} {
+                  idl_parse_line_and_file(ace_yytext);
+                }
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} |
+^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
+                  idl_parse_line_and_file(ace_yytext);
+                }
+^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL} |
+^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
+                  idl_parse_line_and_file(ace_yytext);
+                }
 ^[ \t]*#[ \t]*[0-9]*{NL} |
 ^\?\?=[ \t]*[0-9]*{NL} {
-		  idl_parse_line_and_file(ace_yytext);
-	        }
-^[ \t]*#[ \t]*ident[ \t].*{NL}	|
-^\?\?=[ \t]*ident[ \t].*{NL}	{
-		  /* ignore cpp ident */
-  		  idl_global->set_lineno(idl_global->lineno() + 1);
-		}
-\/\/.*{NL}	{
-		  /* ignore comments */
-  		  idl_global->set_lineno(idl_global->lineno() + 1);
-		}
-"/*"		{
-		  for(;;) {
-		    char c = yyinput();
-		    if (c == '*') {
-		      char next = yyinput();
-		      if (next == '/')
-			break;
-		      else
-			yyunput(c, NULL);
-	              if (c == '\n')
-		        idl_global->set_lineno(idl_global->lineno() + 1);
-		    }
-	          }
-	        }
-[ \t]*		;
-{NL}		{
-  		  idl_global->set_lineno(idl_global->lineno() + 1);
-		}
-.		return ace_yytext [0];
+                  idl_parse_line_and_file(ace_yytext);
+                }
+^[ \t]*#[ \t]*ident[ \t].*{NL} |
+^\?\?=[ \t]*ident[ \t].*{NL} {
+                  /* ignore cpp ident */
+                  idl_global->set_lineno(idl_global->lineno() + 1);
+                }
+\/\/.*{NL}      {
+                  /* ignore comments */
+                  idl_global->set_lineno(idl_global->lineno() + 1);
+                }
+"/*"            {
+                  for(;;) {
+                    char c = yyinput();
+                    if (c == '*') {
+                      char next = yyinput();
+                      if (next == '/')
+                        break;
+                      else
+                        yyunput(c, NULL);
+                      if (c == '\n')
+                        idl_global->set_lineno(idl_global->lineno() + 1);
+                    }
+                  }
+                }
+[ \t]*          ;
+{NL}            {
+                  idl_global->set_lineno(idl_global->lineno() + 1);
+                }
+.               return ace_yytext [0];
 
 %%
-	/* subroutines */
+        /* subroutines */
 
 // Parse a #line statement generated by the C preprocessor
 static void
@@ -450,10 +438,10 @@ idl_parse_line_and_file (char *buf)
         {
           if (h[j] == '\\' && h[j + 1] == '\\')
             {
-	            j++;
+              j++;
             }
 
-	        h[i] = h[j];
+            h[i] = h[j];
         }
 
       h[i] = '\0';
@@ -482,7 +470,7 @@ idl_parse_line_and_file (char *buf)
 
   // Strip off any command line -I prefix that may have been added
   // by the preprocessor.
-  if (!(idl_global->in_main_file ()) && idl_global->import ()) 
+  if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
       ACE_NEW (
           nm,
@@ -594,7 +582,7 @@ idl_store_pragma (char *buf)
           ext_id.set (idl_global->filename ()->get_string (),
                       0);
           char *int_id = ACE::strnew (new_prefix);
-          (void) idl_global->file_prefixes ().rebind (ext_id, 
+          (void) idl_global->file_prefixes ().rebind (ext_id,
                                                       int_id);
         }
     }
@@ -629,7 +617,7 @@ idl_store_pragma (char *buf)
           len = ACE_OS::strlen (number);
         }
 
-      // This call adds a proper null terminator to tmp, so no need to 
+      // This call adds a proper null terminator to tmp, so no need to
       // do it here.
       AST_Decl *d = idl_find_node (tmp);
 
@@ -646,7 +634,7 @@ idl_store_pragma (char *buf)
 
       d->version (ACE::strnew (number));
     }
-  else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0) 
+  else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0)
     {
       idl_global->ident_string (buf + 8);
     }
@@ -676,7 +664,7 @@ idl_store_pragma (char *buf)
                                                   new_id);
               return;
             }
-            
+
           d->repoID (new_id);
           d->typeid_set (I_TRUE);
         }
@@ -774,24 +762,24 @@ idl_atof (char *s)
   double e, k;
   long neg = 0, negexp = 0;
 
-  if (*s == '-') 
+  if (*s == '-')
     {
       neg = 1;
       s++;
     }
 
-  while (*s >= '0' && *s <= '9') 
+  while (*s >= '0' && *s <= '9')
     {
       d = (d * 10) + *s - '0';
       s++;
     }
 
-  if (*s == '.') 
+  if (*s == '.')
     {
       s++;
       e = 10;
 
-      while (*s >= '0' && *s <= '9') 
+      while (*s >= '0' && *s <= '9')
         {
           d += (*s - '0') / (e * 1.0);
           e *= 10;
@@ -799,15 +787,15 @@ idl_atof (char *s)
         }
     }
 
-  if (*s == 'e' || *s == 'E') 
+  if (*s == 'e' || *s == 'E')
     {
       s++;
 
-      if (*s == '-') 
+      if (*s == '-')
         {
             negexp = 1;
             s++;
-        } 
+        }
       else if (*s == '+')
         {
           s++;
@@ -815,13 +803,13 @@ idl_atof (char *s)
 
       e = 0;
 
-      while (*s >= '0' && *s <= '9') 
+      while (*s >= '0' && *s <= '9')
         {
           e = (e * 10) + *s - '0';
           s++;
         }
 
-      if (e > 0) 
+      if (e > 0)
         {
           for (k = 1; e > 0; k *= 10, e--);
 
@@ -836,7 +824,7 @@ idl_atof (char *s)
         }
     }
 
-  if (neg) 
+  if (neg)
     {
       d *= -1.0;
     }
@@ -852,12 +840,12 @@ idl_escape_reader(
     char *str
   )
 {
-  if (str[0] != '\\') 
+  if (str[0] != '\\')
     {
-	    return str[0];
+            return str[0];
     }
 
-  switch (str[1]) 
+  switch (str[1])
   {
     case 'n':
       return '\n';
@@ -886,10 +874,10 @@ idl_escape_reader(
         int i;
 
         // hex value
-        for (i = 2; str[i] != '\0' && isxdigit (str[i]); ++i) 
+        for (i = 2; str[i] != '\0' && isxdigit (str[i]); ++i)
           {
-	     continue;
-	  }
+            continue;
+          }
 
         char save = str[i];
         str[i] = '\0';
@@ -900,25 +888,25 @@ idl_escape_reader(
       ACE_NOTREACHED (break;)
     default:
       // check for octal value
-      if (str[1] >= '0' && str[1] <= '7') 
+      if (str[1] >= '0' && str[1] <= '7')
         {
- 	  int i;
+          int i;
 
-	  for (i = 1; str[i] >= '0' && str[i] <= '7'; ++i) 
+          for (i = 1; str[i] >= '0' && str[i] <= '7'; ++i)
             {
-	      continue;
-	    }
+              continue;
+            }
 
-	  char save = str[i];
-	  str[i] = '\0';
-	  char out = (char)idl_atoui(&str[1], 8);
-	  str[i] = save;
-	  return out;
-	} 
-      else 
+          char save = str[i];
+          str[i] = '\0';
+          char out = (char)idl_atoui(&str[1], 8);
+          str[i] = save;
+          return out;
+        }
+      else
         {
-	  return str[1] - 'a';
-	}
+          return str[1] - 'a';
+        }
       ACE_NOTREACHED  (break;)
   }
 }

@@ -1,3 +1,20 @@
+Fri Feb 11 07:08:12 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/tao_idl.mpc:
+
+          Brought the ll and yy files back into sync with the cpp files that
+          had been modified independently.  I also added targets to the mpc
+          file to regenerate lex.yy.cpp, y.tab.cpp and fe_lookup.cpp based
+          on the original Makefile targets.  The generated code (aside from
+          whitespace) is virtually the same as the previous version.
+
 Fri Feb 11 10:08:39 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Services.pidl:
@@ -199,10 +216,10 @@ Sat Feb  5 21:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb  4 18:00:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 
-	  Followed the same protocol as applied in "Thu Feb  3 19:27:58
-	  2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
+          Followed the same protocol as applied in "Thu Feb  3 19:27:58
+          2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
 
 Fri Feb  4 15:09:22 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -218,10 +235,10 @@ Fri Feb  4 15:09:22 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Fri Feb  4 11:17:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Profile.cpp (TAO_Profile):
+        * tao/Profile.cpp (TAO_Profile):
 
-	  Updated order of attributes in constructor base member
-	  initializer lists to match new attribute declaration order.
+          Updated order of attributes in constructor base member
+          initializer lists to match new attribute declaration order.
 
 Fri Feb  4 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -236,38 +253,38 @@ Fri Feb  4 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb  4 01:25:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IIOP_Endpoint.h:
-	* tao/Object.h:
-	* tao/Profile.h:
-	* tao/Profile_Transport_Resolver.h:
-	* tao/params.h:
+        * tao/IIOP_Endpoint.h:
+        * tao/Object.h:
+        * tao/Profile.h:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/params.h:
 
-	  Optimized class/struct attribute declaration order to reduce
-	  alignment padding, hence the overall size of the class/struct.
+          Optimized class/struct attribute declaration order to reduce
+          alignment padding, hence the overall size of the class/struct.
 
-	* tao/IIOP_Endpoint.cpp:
-	* tao/Object.cpp:
-	* tao/Object.i:
-	* tao/Profile.cpp:
-	* tao/Profile_Transport_Resolver.inl:
-	* tao/params.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/Object.cpp:
+        * tao/Object.i:
+        * tao/Profile.cpp:
+        * tao/Profile_Transport_Resolver.inl:
+        * tao/params.cpp:
 
-	  Updated order of attributes in constructor base member
-	  initializer lists accordingly.
+          Updated order of attributes in constructor base member
+          initializer lists accordingly.
 
 Thu Feb  3 19:27:58 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (reply_timed_out):
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp (reply_timed_out):
 
-	  A slightly modified fix for [BUGID2038]. Once Torsten confirms
-	  this works, I will close the bugzilla entry.
+          A slightly modified fix for [BUGID2038]. Once Torsten confirms
+          this works, I will close the bugzilla entry.
 
 Thu Feb  3 19:14:17 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 
-	  Reverted this patch "Thu Jan 27 20:01:21 2005  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>"
+          Reverted this patch "Thu Jan 27 20:01:21 2005  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>"
 
 Wed Feb  2 22:17:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
