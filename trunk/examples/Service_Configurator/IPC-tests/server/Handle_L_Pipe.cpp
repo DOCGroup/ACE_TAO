@@ -15,7 +15,7 @@ Handle_L_Pipe::upper_case (char s[], int n)
 {
   while (--n >= 0)
     if (ACE_OS::ace_islower (s[n]))
-      s[n] = ACE_OS::to_upper (s[n]);
+      s[n] = ACE_OS::ace_toupper (s[n]);
 
   return s;
 } 

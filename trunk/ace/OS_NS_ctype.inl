@@ -114,30 +114,29 @@ ACE_OS::ace_isxdigit (const ACE_TCHAR c)
 }
 
 ACE_INLINE int
-ACE_OS::to_lower (int c)
+ACE_OS::ace_tolower (int c)
 {
   return tolower (c);
 }
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
 ACE_INLINE wint_t
-ACE_OS::to_lower (wint_t c)
+ACE_OS::ace_towlower (wint_t c)
 {
   return towlower (c);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
 
 ACE_INLINE int
-ACE_OS::to_upper (int c)
+ACE_OS::ace_toupper (int c)
 {
   return toupper (c);
 }
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWUPPER)
 ACE_INLINE wint_t
-ACE_OS::to_upper (wint_t c)
+ACE_OS::ace_towupper (wint_t c)
 {
   return towupper (c);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
-

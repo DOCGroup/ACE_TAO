@@ -21,8 +21,8 @@ ACE_OS::strcasecmp_emulation (const char *s, const char *t)
   const char *scan2 = t;
 
   while (*scan1 != 0
-         && ACE_OS::to_lower (*scan1)
-            == ACE_OS::to_lower (*scan2))
+         && ACE_OS::ace_tolower (*scan1)
+            == ACE_OS::ace_tolower (*scan2))
     {
       ++scan1;
       ++scan2;
@@ -39,7 +39,7 @@ ACE_OS::strcasecmp_emulation (const char *s, const char *t)
   else if (*scan2 == '\0')
     return 1;
   else
-    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
+    return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_tolower (*scan2);
 }
 #endif /* ACE_LACKS_STRCASECMP */
 
@@ -55,8 +55,8 @@ ACE_OS::strncasecmp_emulation (const char *s,
 
   while (count++ < len
          && *scan1 != 0
-         && ACE_OS::to_lower (*scan1)
-            == ACE_OS::to_lower (*scan2))
+         && ACE_OS::ace_tolower (*scan1)
+            == ACE_OS::ace_tolower (*scan2))
     {
       ++scan1;
       ++scan2;
@@ -76,6 +76,6 @@ ACE_OS::strncasecmp_emulation (const char *s,
   else if (*scan2 == '\0')
     return 1;
   else
-    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
+    return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_tolower (*scan2);
 }
 #endif /* ACE_LACKS_STRCASECMP */
