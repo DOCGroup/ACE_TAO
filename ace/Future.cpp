@@ -62,16 +62,29 @@ ACE_Future_Rep<T>::dump (void) const
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::create (void)
+ACE_Future_Rep<T>::internal_create (void)
 {
-  // Yes set ref count to zero.
-
   ACE_Future_Rep<T> *temp = 0;
   ACE_NEW_RETURN (temp,
                   ACE_Future_Rep<T> (),
                   0);
   return temp;
 }
+
+template <class T> ACE_Future_Rep<T> *
+ACE_Future_Rep<T>::create (void)
+{
+  // Yes set ref count to zero.
+  ACE_Future_Rep<T> *temp = internal_create ();
+#if defined (ACE_NEW_THROWS_EXCEPTIONS)
+  if (temp == 0)
+    ACE_throw_bad_alloc;
+#else
+  ACE_ASSERT (temp != 0);
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+   return temp;
+ }
+
 
 template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)

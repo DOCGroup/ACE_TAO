@@ -21,14 +21,27 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null (void) const
 }
 
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::internal_create (X *p)
 {
-  // Yes set ref count to zero.
   ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *temp = 0;
   ACE_NEW_RETURN (temp,
                   (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>) (p),
                   0);
   return temp;
+}
+
+template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
+{
+  // Yes set ref count to zero.
+  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *temp = internal_create (p);
+#if defined (ACE_NEW_THROWS_EXCEPTIONS)
+  if (temp == 0)
+    ACE_throw_bad_alloc;
+#else
+  ACE_ASSERT (temp != 0);
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+   return temp;
 }
 
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *

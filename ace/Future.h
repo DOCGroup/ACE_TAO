@@ -161,6 +161,10 @@ private:
   // These methods must go after the others to work around a bug with
   // Borland's C++ Builder...
 
+  /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
+  /// cannot be created.
+  static ACE_Future_Rep<T> *internal_create (void);
+
   /// Create a ACE_Future_Rep<T> and initialize the reference count.
   static ACE_Future_Rep<T> *create (void);
 

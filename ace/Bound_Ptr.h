@@ -66,6 +66,10 @@ public:
   static int object_was_deleted (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
 private:
+  /// Allocate a new ACE_Bound_Ptr_Counter<ACE_LOCK> instance, returning NULL
+  /// if it cannot be created.
+  static ACE_Bound_Ptr_Counter<ACE_LOCK> *internal_create (int init_obj_ref_count);
+
   /// Reference count of underlying object. Is set to -1 once the object has
   /// been destroyed to indicate to all weak pointers that it is no longer valid.
   int obj_ref_count_;
