@@ -356,7 +356,9 @@ public:
   // be inserted after every put operation so that my transmitted
   // "fields" are always separated.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_IOSTREAM_FX)
+  // These should be faked out to do the right thing, if we knew
+  // what that was.  Instead, they're just faked out.
   virtual int ipfx (int need = 0) { ACE_UNUSED_ARG (need); return 1; }
   virtual int ipfx0(void)         { return 1; }  // Optimized ipfx(0)
   virtual int ipfx1(void)         { return 1; }  // Optimized ipfx(1)
@@ -370,7 +372,7 @@ public:
   virtual void isfx (void)        { iostream::isfx(); }
   virtual int opfx (void)         { return(iostream::opfx()); }
   virtual void osfx (void)        { iostream::osfx(); }
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_IOSTREAM_FX */
 
 protected:
   ACE_Streambuf<STREAM> *streambuf_;
