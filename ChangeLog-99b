@@ -1,9 +1,14 @@
+Mon Aug 09 14:47:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.h (open): Revised the comments for several
+	  service_config flags.  Thanks to Doug for pointing this out.
+
 Mon Aug  9 11:29:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Reactor/Misc/test_demuxing.cpp: Added a destructor
 	  to ~STDIN_Handler that will remove the event handler for STDIN
  	  and the registered timer.
-	
+
 Mon Aug  9 10:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp (handle_signal):  When working with an MMAP
@@ -14,14 +19,14 @@ Mon Aug  9 10:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
  	  behaviour which is disabled once you register a signal handler.
   	  Even if the signal handler returns a bad return value which
  	  crashes the program, a core file will not be written.
-  
+
           The fix for this is to modify the mmap() signal handler so that
  	  it de-registers the signal handler when detecting a segfault
  	  with the mapping up to date and return an "ok" answer. the
  	  program will attempt to access the illegal address again and
  	  dump core.  Thanks to Joseph Weihs <joseph-w@Orbotech.Co.IL> for
  	  contributing this fix.
-  
+
 	* ace/Signal: Changed the new handle_i() and register_handler_i()
 	  methods to be static member functions so they can be called from
  	  the static dispatch() member function.  Thanks to Andreas
