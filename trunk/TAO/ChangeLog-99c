@@ -1,3 +1,31 @@
+Thu May 20 12:17:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/NVList.cpp:
+	  Changed the signature of 
+
+	    void _tao_replace (CORBA::TypeCode_ptr,
+                     const ACE_Message_Block *mb,
+		     CORBA::Boolean any_owns_data,
+                     CORBA::Environment &TAO_IN_ENV =
+                       CORBA::default_environment ());
+
+	  to
+
+	    void _tao_replace (CORBA::TypeCode_ptr,
+                     const ACE_Message_Block *mb,
+                     CORBA::Environment &TAO_IN_ENV =
+                       CORBA::default_environment ());
+	  
+	  Also modified Any's copy contructor and assignment
+	  operator to set any_own_data_ to 0. In all these cases,
+	  the void* value_ is freed, but not set to anything.
+	  Also changed the calls to _tao_replace() in the last
+	  two files to reflect the new signature.
+
+
 Thu May 20 12:14:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
