@@ -569,13 +569,14 @@ object. Each profile for an object may encode information pertaining to
 QoS, network and transport protocols, addresses or routes.<p>
 
 <li>
-<b>Example Transport protocols</b> - Aside from IIOP, four additional
+<b>Example Transport protocols</b> - Aside from IIOP, five additional
 transport protocols are distributed with TAO:
 <ol>
 <P><li>UIOP: GIOP over local IPC (UNIX domain sockets)</li>
 <P><li>SHMIOP: GIOP over shared memory</li>
 <P><li>SSLIOP: IIOP over SSL (Secure Socket Layer)</li>
 <P><li>DIOP: GIOP over UDP/IP</li>
+<P><li>MIOP: GIOP over unreliable multicast</li>
 </ol>
 
 <P>
@@ -1690,6 +1691,10 @@ Implemented Features:
 	      This policy makes it possible to, for example, make both secure
 	      and insecure invocations within the same client process.
 	  </LI>
+	  <LI>
+	    TAO's SSLIOP pluggable protocol implementation is now
+	    thread-safe.
+	  </LI>
     </UL>
   </LI>
 </UL>
@@ -1698,24 +1703,37 @@ Current Status:
 <UL>
   <LI>
     Core <CODE>SecurityLevel2</CODE> interfaces such as
-    <CODE>Credentials</CODE> are currently under development.
+    <CODE>Credentials</CODE>, <CODE>SecurityManager</CODE>, and
+    <CODE>PrincipalAuthenticator</CODE> are currently under
+    development.
   </LI>
+      <LI>
+        Begin implementation of the interfaces in the
+        <CODE>SecurityReplaceable</CODE> IDL module.  They provide the
+        ability to replace key security components in the ORB with
+        another implementation with ease.  Thus, the security
+        components in the ORB become highly extensible.
+      </LI>
+
 </UL>
 
 Schedule:
 <UL>
-  <LI>
-    <FONT COLOR=BLUE>Septempter 2001</FONT><BR>
-    The following milestones establish a strong foundation upon which
-    the remaining, more "interesting," CORBA Security Service features
-    will be built on.  Once they are in place, it will also be
-    possible to perform some real research on fault injection, and
-    real-time security.
-    <UL>
+
       <LI>
-        Partial implementation of <CODE>SecurityManager</CODE>
-        interface.
+	<FONT COLOR=BLUE>April 2002</FONT><BR>
+	<UL>
+	  <LI>
+	    Begin implementation of the Common Secure Interoperability
+	    version 2 (CSIv2) protocol/specification.  Needed for more
+	    advanced features, such as delegation.
+	  </LI>
+	</UL>
       </LI>
+
+  <LI>
+    <FONT COLOR=BLUE>September 2002</FONT><BR>
+    <UL>
       <LI>
         SSLIOP performance enhancements.
       </LI>
@@ -1723,7 +1741,7 @@ Schedule:
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>October 2001</FONT>
+    <FONT COLOR=BLUE>October 2002</FONT>
     <UL>
       <LI>
         Request authentication via
@@ -1748,34 +1766,22 @@ Schedule:
         to secure existing services such as
         <A HREF="ec.html">TAO's Real-Time Event Service</A>.
       </LI>
-      <LI>
-        Begin implementation of the interfaces in the
-        <CODE>SecurityReplaceable</CODE> IDL module.  They provide the
-        ability to replace key security components in the ORB with
-        another implementation with ease.  Thus, the security
-        components in the ORB become highly extensible.
-      </LI>
     </UL
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>November 2001</FONT><BR>
-    The following are slated for post TAO 1.2 betas.
+    <FONT COLOR=BLUE>November 2002</FONT><BR>
     <UL>
       <LI>
-        Complete implementation of the Commone Secure Interoperability
-        protocol (CSIv2).  Needed for more advanced features, such as
-	delegation.
-      </LI>
-      <LI>
-        Begin implementation of a <CODE>DomainManager</CODE> for TAO.
+        Begin implementation of a <CODE>DomainManager</CODE> and/or
+	<I>Domain Membership</I> specification for TAO.
         This is needed to support security domains.
       </LI>
     </UL>
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>December 2001</FONT>
+    <FONT COLOR=BLUE>December 2002</FONT>
     <UL>
       <LI>
         Begin work on the CORBA Non-Repudiation Service.
