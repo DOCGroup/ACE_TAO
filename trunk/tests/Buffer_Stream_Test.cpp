@@ -31,6 +31,8 @@ ACE_RCSID(tests, Buffer_Stream_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
 typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
@@ -114,7 +116,7 @@ Supplier::svc (void)
 
   // Send one message for each letter of the alphabet, then send an empty
   // message to mark the end.
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
       // Allocate a new message.
       char d[2];
@@ -157,7 +159,7 @@ Consumer::svc (void)
 {
   ACE_Message_Block *mb = 0;
   int result;
-  char *c = ACE_ALPHABET;
+  const char *c = ACE_ALPHABET;
   char *output;
 
   // Keep looping, reading a message out of the queue, until we

@@ -30,6 +30,7 @@
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 const int SHMSZ = 27;
 static ACE_TCHAR *shm_key;
 
@@ -65,7 +66,7 @@ child (void * = 0)
   result = synchronizer->acquire ();
   ACE_ASSERT (result != -1);
 
-  char *t = ACE_ALPHABET;
+  const char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_child;
 
   result = shm_child.open (shm_key);
@@ -102,7 +103,7 @@ parent (void * = 0)
 
   char *s = shm;
 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     *s++ = *c;
 
   *s = '\0';

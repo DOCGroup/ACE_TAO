@@ -66,6 +66,10 @@
 
 #define ACE_HAS_ITOA
 
+#define ACE_ITOA_EQUIVALENT ::_itoa
+#define ACE_STRCASECMP_EQUIVALENT ::_stricmp
+#define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
+
 // VC5 doesn't support operator placement delete
 # if defined (_MSC_VER) && (_MSC_VER < 1200)  
 #  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE

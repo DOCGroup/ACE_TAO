@@ -1,3 +1,65 @@
+Sun Oct 22 15:07:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_dll.dsp:
+
+          While playing with doxygen, I found some old .h files listed
+          in the project but no longer existed.  Removed these.
+
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+
+          Added quite a few emulation macros for wcs* functions that
+          often do not exist on platforms.  Since these wcs* functions
+          just play with wchar_t's, they are not difficult to put in.
+          Some, such as to_upper and strtod/l/ul are more difficult,
+          so they are not present on platforms without support for 
+          them.  
+
+          Also updated the docs to doxygen style.  Someday I'll get 
+          around to writing a script to do this...
+
+        * ace/config-win32-borland.h:
+        * ace/config-win32-msvc.h:
+
+          Added a couple of macros:
+          - ACE_HAS_STRCASECMP_EQUIVALENT 
+          - ACE_HAS_STRNCASECMP_EQUIVALENT
+          - ACE_ITOA_EQUIVALENT
+          
+          These are used to specify different names for functions
+          that differ in names across different compilers.   
+
+        * tests/OS_Test.cpp:
+
+          Added tests to test OS_String methods so I can make sure
+          the emulations work.
+
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/test_config.h:
+
+          In order to get the test_config.h to work when a project
+          has more than one .cpp file that includes it (and some 
+          compilers give warnings about a static char[]) I moved
+          ACE_ALPHABET into the tests that need it.  Also I changed
+          it to a static const char[] in places that allowed it.
+
+          So it could be possible to move it back to test_config.h
+          now that it can be static const char[], but I'm not 100%
+          sure that will keep all compilers from complaining.
+
+        * tests/run_test.lst:
+          
+          Added OS_Test to the list of tests run.
+
 Sun Oct 22 17:11:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Malloc_T.h: Added a default value of sizeof (T) to the
