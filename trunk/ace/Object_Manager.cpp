@@ -113,7 +113,7 @@ ACE_Object_Manager_Preallocations *ace_object_manager_preallocations = 0;
 // We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
 // needs to be in the ACE_Export context rather than the
 // ACE_Svc_Export context.
-extern "C" ACE_Export ACE_Service_Object *_make_ACE_Service_Manager (void);
+extern "C" ACE_Export ACE_Service_Object *_make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
 
 ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
 {

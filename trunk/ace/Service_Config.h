@@ -30,7 +30,7 @@ class ACE_Thread_Manager;
 
 extern "C"
 {
-  typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (void);
+  typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (ACE_Service_Object_Exterminator *);
 }
 
 struct ACE_Static_Svc_Descriptor

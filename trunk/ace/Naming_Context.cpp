@@ -19,7 +19,7 @@ typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>
 // svc.conf file to dynamically initialize the state of the Name
 // Server client.
 
-ACE_SVC_FACTORY_DEFINE (ACE_Naming_Context)
+ACE_FACTORY_DEFINE (ACE, ACE_Naming_Context)
 
 // The ACE_Naming_Context static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.

@@ -37,7 +37,8 @@ public:
   // = Initialization and termination methods.
   ACE_Service_Type_Impl (void *object, 
 			 const ASYS_TCHAR *s_name, 
-			 u_int flags = 0);
+			 u_int flags = 0,
+                         ACE_Service_Object_Exterminator gobbler = 0);
   virtual ~ACE_Service_Type_Impl (void);
 
   // = Pure virtual interface (must be defined by the subclass).
@@ -70,6 +71,9 @@ protected:
   // Pointer to object that implements the service.  This actually
   // points to an <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 
+  ACE_Service_Object_Exterminator gobbler_;
+  // Destroy function to deallocate obj_.  
+
   u_int flags_;
   // Flags that control serivce behavior (particularly deletion).
 };
@@ -83,7 +87,8 @@ public:
   // = Initialization method.
   ACE_Service_Object_Type (void *so,
 			   const ASYS_TCHAR *name, 
-			   u_int flags = 0);
+			   u_int flags = 0,
+                           ACE_Service_Object_Exterminator gobbler = 0);
 
   // = Implement the hooks for <ACE_Service_Objects>.
   virtual int suspend (void) const;

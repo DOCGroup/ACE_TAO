@@ -244,7 +244,7 @@ YYSTYPE ace_yylval;
 #define ace_yystacksize YYSTACKSIZE
 short ace_yyss[YYSTACKSIZE];
 YYSTYPE ace_yyvs[YYSTACKSIZE];
-#line 274 "Svc_Conf.y"
+#line 275 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -317,7 +317,8 @@ ACE_Service_Type_Impl *
 ace_create_service_type (const ASYS_TCHAR *name,
                          int type,
                          void *symbol,
-                         u_int flags)
+                         u_int flags,
+                         ACE_Service_Object_Exterminator gobbler)
 {
   ACE_Service_Type_Impl *stp = 0;
 
@@ -330,7 +331,8 @@ ace_create_service_type (const ASYS_TCHAR *name,
     case ACE_SVC_OBJ_T:
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
-                                               ASYS_WIDE_STRING (name), flags),
+                                               ASYS_WIDE_STRING (name), flags,
+                                               gobbler),
                       0);
       break;
     case ACE_MODULE_T:
@@ -373,7 +375,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 377 "Svc_Conf_y.cpp"
+#line 379 "Svc_Conf_y.cpp"
 #define YYABORT goto ace_yyabort
 #define YYACCEPT goto ace_yyaccept
 #define YYERROR goto ace_yyerrlab
@@ -848,12 +850,13 @@ case 30:
       u_int flags
         = ACE_Service_Type::DELETE_THIS
         | (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      void *sym = ace_yyvsp[-1].location_node_->symbol ();
+      ACE_Service_Object_Exterminator gobbler;
+      void *sym = ace_yyvsp[-1].location_node_->symbol (&gobbler);
 
       if (sym != 0)
         {
           ACE_Service_Type_Impl *stp
-            = ace_create_service_type (ASYS_WIDE_STRING (ace_yyvsp[-3].ident_), ace_yyvsp[-2].type_, sym, flags);
+            = ace_create_service_type (ASYS_WIDE_STRING (ace_yyvsp[-3].ident_), ace_yyvsp[-2].type_, sym, flags, gobbler);
           ace_yyval.svc_record_ = new ACE_Service_Type (ASYS_WIDE_STRING (ace_yyvsp[-3].ident_), stp, ace_yyvsp[-1].location_node_->handle (), ace_yyvsp[0].type_);
         }
       else
@@ -865,64 +868,64 @@ case 30:
     }
 break;
 case 31:
-#line 220 "Svc_Conf.y"
+#line 221 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 32:
-#line 224 "Svc_Conf.y"
+#line 225 "Svc_Conf.y"
 {
       ace_yyval.type_ = 0;
     }
 break;
 case 33:
-#line 228 "Svc_Conf.y"
+#line 229 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 34:
-#line 235 "Svc_Conf.y"
+#line 236 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Object_Node (ace_yyvsp[-2].ident_, ace_yyvsp[0].ident_);
     }
 break;
 case 35:
-#line 239 "Svc_Conf.y"
+#line 240 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Function_Node (ace_yyvsp[-4].ident_, ace_yyvsp[-2].ident_);
     }
 break;
 case 36:
-#line 243 "Svc_Conf.y"
+#line 244 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Static_Function_Node (ace_yyvsp[-2].ident_);
     }
 break;
 case 37:
-#line 250 "Svc_Conf.y"
+#line 251 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_MODULE_T;
     }
 break;
 case 38:
-#line 254 "Svc_Conf.y"
+#line 255 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_SVC_OBJ_T;
     }
 break;
 case 39:
-#line 258 "Svc_Conf.y"
+#line 259 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_STREAM_T;
     }
 break;
 case 41:
-#line 265 "Svc_Conf.y"
+#line 266 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 925 "Svc_Conf_y.cpp"
+#line 928 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;
