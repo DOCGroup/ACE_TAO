@@ -1342,7 +1342,8 @@ int
 TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 {
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - start of run\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - start of run\n"));
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
   {
@@ -1379,7 +1380,8 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
   while (this->has_shutdown () == 0)
     {
       if (TAO_debug_level >= 3)
-        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - blocking on handle events\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - blocking on handle events\n"));
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.
