@@ -138,6 +138,13 @@ module PortableServer
 
   interface POAManager
     {
+      enum State
+      {
+        HOLDING,
+        ACTIVE,
+        DISCARDING,
+        INACTIVE
+      };
       exception AdapterInactive{};
 
       void activate()
@@ -151,6 +158,7 @@ module PortableServer
                         in boolean wait_for_completion)
         raises(AdapterInactive);
 #endif /* TAO_HAS_MINIMUM_CORBA */
+      State get_state ();
     };
 
   // **************************************************
