@@ -1,3 +1,21 @@
+Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/WinCE/ce_tests.dsw:
+	* tests/WinCE/Atomic_Op_Test.dsp:
+	* tests/WinCE/Barrier_Test.dsp:
+	* tests/WinCE/Basic_Types_Test.dsp:
+	* tests/WinCE/Map_Manager_Test.dsp: Added/Updated project files.
+
+	* tests/Atomic_Op_Test.cpp:
+	* tests/Barrier_Test.cpp:
+	* tests/Basic_Types_Test.cpp: Made them CE friendly.
+	
+	* ace/config-WinCE.h: Only define ACE_LACKS_INLINE_FUNCTIONS when
+	  building debug version of ACE for SH series CPU.
+
+	* WindozeCE/WindozeCEDlg.cpp: Updated the initial message after the
+	  display window but before ACE console progrm started.
+	  
 Mon May 11 17:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* ace/ace_dll.dsp
