@@ -681,7 +681,7 @@ STUB_Object::do_dynamic_call (const char *opname,
                     {
                       CORBA::TypeCode_var tcp = result->value ()->type ();
                       size_t size = tcp->size (env);
-                      dexc (env, "do_dynamic_call, get result size");
+                      env.print_exception ("do_dynamic_call, get result size");
 
                       if (size != 0)
                         {
@@ -689,7 +689,7 @@ STUB_Object::do_dynamic_call (const char *opname,
 
                           result->value ()->replace (tcp.in (), ptr,
                                                      1, env);
-                          dexc (env, "do_dynamic_call, set result mem");
+                          env.print_exception ("do_dynamic_call, set result mem");
                         }
                     }
 #endif
@@ -749,7 +749,7 @@ STUB_Object::do_dynamic_call (const char *opname,
                         {
                           CORBA::TypeCode_var tcp = value->value ()->type ();
                           size_t size = tcp->size (env);
-                          dexc (env, "do_dynamic_call, get param size");
+                          env.print_exception ("do_dynamic_call, get param size");
 
                           if (size != 0)
                             {
@@ -757,7 +757,7 @@ STUB_Object::do_dynamic_call (const char *opname,
 
                               value->value ()->replace (tcp.in (), ptr,
                                                         1, env);
-                              dexc (env, "do_dynamic_call, set result mem");
+                              env.print_exception ("do_dynamic_call, set result mem");
                             }
                         }
 #endif

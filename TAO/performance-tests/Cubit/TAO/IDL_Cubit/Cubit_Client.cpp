@@ -231,7 +231,7 @@ Cubit_Client::cube_union (void)
     }
   else
     {
-      dmsg ("cube union ...");
+      ACE_DEBUG ((LM_DEBUG, "cube union ..."));
       u.l (u.l () * u.l () * u.l ()) ;
 
       if (u.l () != r.l ())
@@ -269,7 +269,7 @@ Cubit_Client::cube_union (void)
     }
   else
     {
-      dmsg ("cube union ...");
+      ACE_DEBUG ((LM_DEBUG, "cube union ..."));
       u.cm ().l = u.cm ().l * u.cm ().l * u.cm ().l;
       u.cm ().s = u.cm ().s * u.cm ().s * u.cm ().s;
       u.cm ().o = u.cm ().o * u.cm ().o * u.cm ().o;
@@ -308,9 +308,10 @@ Cubit_Client::cube_short (int i)
     }
   else
     {
-      dmsg2 ("cube short:  %d --> %d\n",
-             arg_short,
-             ret_short);
+      ACE_DEBUG ((LM_DEBUG,
+                  "cube short:  %d --> %d\n",
+                  arg_short,
+                  ret_short));
       arg_short = arg_short * arg_short * arg_short;
 
       if (arg_short != ret_short)
@@ -385,7 +386,8 @@ Cubit_Client::cube_octet (int i)
     }
   else
     {
-      dmsg2 ("cube octet:  %d --> %d\n", arg_octet, ret_octet);
+      ACE_DEBUG ((LM_DEBUG,
+                  "cube octet:  %d --> %d\n", arg_octet, ret_octet));
       arg_octet = arg_octet * arg_octet * arg_octet;
       if (arg_octet != ret_octet) {
         ACE_DEBUG ((LM_DEBUG,
@@ -421,7 +423,9 @@ Cubit_Client::cube_long (int i)
     }
   else
     {
-      dmsg2 ("cube long:  %d --> %d\n", arg_long, ret_long);
+      ACE_DEBUG ((LM_DEBUG,
+                  "cube long:  %d --> %d\n",
+                  arg_long, ret_long));
       arg_long = arg_long * arg_long * arg_long;
 
       if (arg_long != ret_long)
@@ -463,7 +467,8 @@ Cubit_Client::cube_struct (int i)
     }
   else
     {
-      dmsg ("cube struct ...");
+      ACE_DEBUG ((LM_DEBUG,
+                  "cube struct ..."));
       arg_struct.l = arg_struct.l * arg_struct.l * arg_struct.l;
       arg_struct.s = arg_struct.s * arg_struct.s * arg_struct.s;
       arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;
@@ -1045,8 +1050,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
 
           ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
 
-          dexc (this->env_,
-                "server, please ACE_OS::exit");
+          this->env_.print_exception ("server, please ACE_OS::exit");
         }
       TAO_CATCHANY
         {
@@ -1060,7 +1064,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (this->env_);
-      dexc (this->env_, "server, please ACE_OS::exit");
+      this->env_.print_exception ("server, please ACE_OS::exit");
     }
 
   return 0;
@@ -1090,7 +1094,7 @@ Cubit_Client::run_oneway (void)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (this->env_);
-      dexc (this->env_, "server, please ACE_OS::exit");
+      this->env_.print_exception ("server, please ACE_OS::exit");
     }
 
   return this->error_count_ == 0 ? 0 : 1;
@@ -1119,7 +1123,7 @@ Cubit_Client::run_void (void)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (this->env_);
-      dexc (this->env_, "server, please ACE_OS::exit");
+      this->env_.print_exception ("server, please ACE_OS::exit");
     }
 
   return this->error_count_ == 0 ? 0 : 1;
