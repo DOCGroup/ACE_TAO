@@ -404,12 +404,12 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " [-s Means NOT to use the name service] "
-                           " [-p <port>]"
-                           " [-h <my_hostname>]"
-                           " [-t <num_objects>]"
-                           " [-f <ior_file>]"
-                           " [-r Use thread per rate]"
+                           " \t[-s Means NOT to use the name service] \n"
+                           " \t[-p <port>]\n"
+                           " \t[-h <my_hostname>]\n"
+                           " \t[-t <num_objects>]\n"
+                           " \t[-f <ior_file>]\n"
+                           " \t[-r Use thread per rate]\n"
                            "\n", argv [0]),
                           1);
       }
@@ -753,7 +753,7 @@ main (int argc, char *argv[])
         ACE_Sched_Params (
           ACE_SCHED_FIFO,
 #if defined (__Lynx__)
-          ACE_THR_PRI_FIFO_DEF + 50,//30,
+          30,
 #elif defined (VXWORKS) /* ! __Lynx__ */
           6,
 #elif defined (ACE_WIN32)
@@ -824,14 +824,14 @@ main (int argc, char *argv[])
       ACE_Time_Value delta_t;
       timer_.start ();
       // execute computation.
-      for (int k=0; k < 1000; k++)
+      for (int k=0; k < 10000; k++)
 	util_task->computation ();
       timer_.stop ();
       timer_.elapsed_time (delta_t);
       // Store the time in milli-seconds.
-      util_task_duration = (delta_t.sec () * 
+      util_task_duration = ((double)delta_t.sec () * 
 			    ACE_ONE_SECOND_IN_USECS + 
-			    (double)delta_t.usec ())  / 1000;
+			    (double)delta_t.usec ())  / 10000;
 #endif /* !CHORUS */
     }
   // Barrier for the multiple clients to synchronize after binding to
