@@ -298,6 +298,7 @@ libACE_Connection_la_SOURCES = \
 libACE_Sockets_la_SOURCES = \
   Addr.cpp \
   INET_Addr.cpp \
+  Multihomed_INET_Addr.cpp \
   IPC_SAP.cpp \
   LSOCK.cpp \
   LSOCK_Acceptor.cpp \
@@ -314,6 +315,9 @@ libACE_Sockets_la_SOURCES = \
   SOCK_Dgram_Bcast.cpp \
   SOCK_Dgram_Mcast.cpp \
   SOCK_IO.cpp \
+  SOCK_SEQPACK_Acceptor.cpp \
+  SOCK_SEQPACK_Association.cpp \
+  SOCK_SEQPACK_Connector.cpp \
   SOCK_Stream.cpp
 
 libACE_IPC_la_SOURCES = \
@@ -740,6 +744,7 @@ HEADER_FILES = \
   Min_Max.h \
   Module.h \
   Msg_WFMO_Reactor.h \
+  Multihomed_INET_Addr.h \
   Multiplexor.h \
   NT_Service.h \
   Name_Proxy.h \
@@ -800,6 +805,9 @@ HEADER_FILES = \
   SOCK_Dgram_Bcast.h \
   SOCK_Dgram_Mcast.h \
   SOCK_IO.h \
+  SOCK_SEQPACK_Acceptor.h \
+  SOCK_SEQPACK_Association.h \
+  SOCK_SEQPACK_Connector.h \
   SOCK_Stream.h \
   SPIPE.h \
   SPIPE_Acceptor.h \
@@ -1007,6 +1015,7 @@ INLINE_FILES = \
   Message_Queue_T.i \
   Module.i \
   Msg_WFMO_Reactor.i \
+  Multihomed_INET_Addr.i \
   Multiplexor.i \
   NT_Service.i \
   OS.i \
@@ -1037,6 +1046,9 @@ INLINE_FILES = \
   SOCK_Dgram_Bcast.i \
   SOCK_Dgram_Mcast.i \
   SOCK_IO.i \
+  SOCK_SEQPACK_Acceptor.i \
+  SOCK_SEQPACK_Association.i \
+  SOCK_SEQPACK_Connector.i \
   SOCK_Stream.i \
   SPIPE.i \
   SPIPE_Addr.i \
