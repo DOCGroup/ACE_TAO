@@ -27,6 +27,8 @@ $long_usage="   -? option prints this message\n" .
 ########
 if (-d '/pkg/gnu/bin') {
   $gnu = '/pkg/gnu/bin/';
+  #### Insert it at head of PATH, so that cvs diff uses GNU diff.
+  $ENV{'PATH'} = "/pkg/gnu/bin:" . $ENV{'PATH'};
 } else {
   #### The default utilities had better be GNU.
   $gnu = '';
@@ -112,6 +114,7 @@ $chmod = '/bin/chmod';
 $cpio = "${gnu}cpio";
 $cvs = "${exec_prefix}${gnu}cvs";
 $date = "${gnu}date";
+$egrep = "${gnu}egrep";
 $find = "${gnu}find";
 $gzip = "${gnu}gzip";
 $mv = '/bin/mv';
@@ -358,16 +361,16 @@ sub create_kit () {
   if ($kit eq 'ace') {
     system ("$exec_prefix" .
             "$find $release_files $release_filter | " .
-            "grep -E \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
+            "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE.zip -q9@ &&" .
             "$find $release_files $release_filter | " .
-            "grep -vE \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
+            "$egrep -v \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE.zip -qlg9@ &&" .
             "$find $release_lib_files $release_filter | " .
-            "grep -E \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
+            "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE-lib.zip -q9@ &&" .
             "$find $release_lib_files $release_filter | " .
-            "grep -vE \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
+            "$egrep -v \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE-lib.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H tar | " .
             "$gzip -9 > ACE.tar.gz && " .
@@ -379,10 +382,10 @@ sub create_kit () {
   } elsif ($kit eq 'ace+tao') {
     system ("$exec_prefix" .
             "$find $release_files $release_filter | " .
-            "grep -E \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
+            "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE+TAO.zip -q9@ &&" .
             "$find $release_files $release_filter | " .
-            "grep -vE \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
+            "$egrep -v \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE+TAO.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H tar | " .
             "$gzip -9 > ACE+TAO.tar.gz && " .
