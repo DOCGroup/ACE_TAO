@@ -1,31 +1,25 @@
 // $Id$
 
 //========================================================================
-//
-// = LIBRARY
-//     TAO/tests/IORManipulation
-//
-//
-// = FILENAME
-//     IORTest.cpp
-//
-// = DESCRIPTION
-//   This program tests the basic functionality of the
-//   IOR Manipulation interface.
-//
-// = AUTHOR
-//     Fred Kuhns
-//
+/**
+ * @file  IORTest.cpp
+ *
+ * This program tests the basic functionality of the IORManipulation
+ * interface.
+ *
+ * @author Fred Kuhns
+ */
 //=========================================================================
 
 
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
-#include "tao/ORB.h"
 
 
-ACE_RCSID(IORManipluation, IORTest, "$Id$")
+ACE_RCSID (IORManipluation,
+           IORTest,
+           "$Id$")
 
 int
 main (int argc, char *argv[])
@@ -44,46 +38,36 @@ main (int argc, char *argv[])
       // Retrieve the ORB.
       CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
                                              argv,
-                                             0,
+                                             "",
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       // **********************************************************************
 
       // Get an object reference for the ORBs IORManipulation object!
       CORBA::Object_var IORM =
-        orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                          0,
+        orb_->resolve_initial_references ("IORManipulation",
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      cout << "Amba " <<endl;
-
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
-               TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in (),
-                                                       ACE_TRY_ENV);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in (),
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       // **********************************************************************
 
       // Create a few fictitious IORs
       CORBA::Object_var name1 =
-        orb_->string_to_object ("iiop://macarena.cs.wustl.edu:6060/xyz",
+        orb_->string_to_object ("corbaloc:iiop:macarena.cs.wustl.edu:6060/xyz",
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::Object_var name2 =
-        orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz",
+        orb_->string_to_object ("corbaloc:iiop:tango.cs.wustl.edu:7070/xyz",
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      // **********************************************************************
 
-      // @@ CORBA::ORB::object_to_string() cannot be called on
-      //    locality constrained objects such as IORManipulation.
-      //        -Ossama
-      // CORBA::String_var iorm_ior =
-      //   orb_->object_to_string (IORM, ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
-      // ACE_DEBUG ((LM_DEBUG,
-      //             "\tIORManipulation IOR string = %s\n",
-      //             iorm_ior.in ()));
+      // **********************************************************************
 
       CORBA::String_var name1_ior =
         orb_->object_to_string (name1.in (), ACE_TRY_ENV);
@@ -96,6 +80,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "\tSecond made up IOR = %s\n", name2_ior.in ()));
 
       // **********************************************************************
+
       // Create IOR list for use with merge_iors.
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length (2);
@@ -151,6 +136,7 @@ main (int argc, char *argv[])
                     "**ERROR (merge_iors): name2 is_in_ior returned profile "
                     "count bad (%d)!\n",
                     in_count));
+
       // **********************************************************************
 
       // Verify ability to remove profiles from an IOR
@@ -226,6 +212,7 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR (add_profiles): is_in_ior returned "
                     "profile count bad!\n"));
+
       // **********************************************************************
 
       CORBA::Object_var just2 =
