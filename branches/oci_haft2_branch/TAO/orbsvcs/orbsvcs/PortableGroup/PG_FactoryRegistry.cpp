@@ -690,16 +690,32 @@ int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class ACE_Hash_Map_Manager <ACE_CString, TAO::PG_FactoryRegistry::RoleInfo *, MapMutex>;
-  template class ACE_Hash_Map_Entry <ACE_CString, TAO::PG_FactoryRegistry::RoleInfo *>;
-  template class ACE_Hash_Map_Iterator <ACE_CString, TAO::PG_FactoryRegistry::RoleInfo *>;
+  template class ACE_Hash_Map_Manager <
+    ACE_CString, 
+    TAO::PG_FactoryRegistry::RoleInfo *, 
+    TAO::PG_FactoryRegistry::MapMutex>;
+  template class ACE_Hash_Map_Entry <
+    ACE_CString, 
+    TAO::PG_FactoryRegistry::RoleInfo *>;
+  template class ACE_Hash_Map_Iterator <
+    ACE_CString, 
+    TAO::PG_FactoryRegistry::RoleInfo *, 
+    TAO::PG_FactoryRegistry::MapMutex>;
   template class ACE_Vector<ACE_CString>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate ACE_Hash_Map_Manager <ACE_CString, TAO::PG_FactoryRegistry::RoleInfo *, MapMutex>
-# pragma instantiate ACE_Hash_Map_Entry <ACE_CString, TAO::PG_FactoryRegistry::RoleInfo *>
-# pragma instantiate ACE_Hash_Map_Iterator <ACE_CString, TAO::PG_FactoryRegistry::RoleInfo *, MapMutex>
+# pragma instantiate ACE_Hash_Map_Manager <
+    ACE_CString, 
+    TAO::PG_FactoryRegistry::RoleInfo *, 
+    TAO::PG_FactoryRegistry::MapMutex>
+# pragma instantiate ACE_Hash_Map_Entry <
+    ACE_CString, 
+    TAO::PG_FactoryRegistry::RoleInfo *>
+# pragma instantiate ACE_Hash_Map_Iterator <
+    ACE_CString, 
+    TAO::PG_FactoryRegistry::RoleInfo *, 
+    TAO::PG_FactoryRegistry::MapMutex>
 # pragma instantiate ACE_Vector<ACE_CString>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
