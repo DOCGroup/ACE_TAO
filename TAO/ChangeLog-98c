@@ -1,7 +1,8 @@
 Sun Aug 23 16:11:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp: Commented out
-	warning message on failure to execute GPERF. 
+	warning message on failure to execute GPERF. Added <-H perfect>
+	and <-H dynamic> options. 
 
 Sun Aug 23 14:17:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
