@@ -51,6 +51,8 @@ public:
 
   long get_total_snd (void) { return this->total_snd_; }
   long get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_w   (void) { return this->total_w_; }
+  long get_total_r   (void) { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
   virtual int open (void * pVoid);
@@ -72,6 +74,8 @@ private:
   ACE_Recursive_Thread_Mutex mutex_;
   long total_snd_;
   long total_rcv_;
+  long total_w_;
+  long total_r_;
 };
 
 // *************************************************************
@@ -83,6 +87,8 @@ public:
   size_t get_number_sessions (void) { return sessions_; }
   long get_total_snd (void) { return this->total_snd_; }
   long get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_w   (void) { return this->total_w_; }
+  long get_total_r   (void) { return this->total_r_; }
 
   Acceptor (void);
   virtual ~Acceptor (void);
@@ -100,6 +106,8 @@ private:
   Receiver *list_receivers_[MAX_RECEIVERS];
   long total_snd_;
   long total_rcv_;
+  long total_w_;
+  long total_r_;
 
   void on_new_receiver (Receiver & rcvr);
   void on_delete_receiver (Receiver & rcvr);
@@ -123,6 +131,8 @@ public:
 
   long get_total_snd (void) { return this->total_snd_; }
   long get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_w   (void) { return this->total_w_; }
+  long get_total_r   (void) { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
   virtual int open (void * pVoid);
@@ -147,6 +157,8 @@ private:
   char send_buf_ [1024];
   long total_snd_;
   long total_rcv_;
+  long total_w_;
+  long total_r_;
 };
 
 // *************************************************************
@@ -158,6 +170,8 @@ public:
   long get_number_sessions (void) { return sessions_; }
   long get_total_snd (void) { return this->total_snd_; }
   long get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_w   (void) { return this->total_w_; }
+  long get_total_r   (void) { return this->total_r_; }
 
 
   Connector ();
@@ -176,6 +190,8 @@ private:
   Sender * list_senders_ [MAX_SENDERS];
   long total_snd_;
   long total_rcv_;
+  long total_w_;
+  long total_r_;
 
   void on_new_sender (Sender & sndr);
   void on_delete_sender (Sender & sndr);
