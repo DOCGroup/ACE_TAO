@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//
 // $Id$
 //
 // ============================================================================
@@ -18,8 +17,8 @@
 //
 // ============================================================================
 
-#if ! defined (SCHEDULER_H)
-#define SCHEDULER_H
+#if ! defined (DYNSCHED_H)
+#define DYNSCHED_H
 
 #include "ace/ACE.h"
 #include "ace/Map_Manager.h"
@@ -28,12 +27,12 @@
 #include "ace/SString.h"
 #include "SchedEntry.h"
 
-class TAO_ORBSVCS_Export ACE_Scheduler
+class TAO_ORBSVCS_Export ACE_DynScheduler
   // = TITLE
   //    dispatch scheduling interface.
   //
   // = DESCRIPTION
-  //    This abstract base class provides the majority of the 
+  //    This abstract base class provides the majority of the
   //    implementation of either an off-line scheduler, or the
   //    necessary on-line component of the Scheduler.
 {
@@ -98,7 +97,7 @@ public:
   // public member functions //
   /////////////////////////////
 
-  virtual ~ACE_Scheduler ();
+  virtual ~ACE_DynScheduler ();
     // public dtor
 
   // = Utility function for outputting the textual
@@ -133,8 +132,8 @@ public:
   void reset ();
   // Prepare for another schedule computation: once a reasonable schedule
   // has been generated, a new schedule will not be computed unless an
-  // RT_Info is added, or this method is invoked to clear the previous 
-  // schedule (allows fault correcting alteration of RT_Infos outside the 
+  // RT_Info is added, or this method is invoked to clear the previous
+  // schedule (allows fault correcting alteration of RT_Infos outside the
   // scheduler implementation, followed by generation of a new schedule).
 
   // = Registers a task.
@@ -154,7 +153,7 @@ public:
   // In the SUCCEEDED and UNKNOWN_TASK cases, this->register_task
   // (rtinfo, 0, handle) is called.  Returns FAILED if an error
   // occurs.
-  // 
+  //
   // One motivation for allocating RT_Info's from within the Scheduler
   // is to allow RT_Infos to persist after the tasks that use them.
   // For instance, we may want to call this->schedule right before the
@@ -214,7 +213,7 @@ public:
   // the only supported levels are 0 (quiet), 1 (verbose) and 2 (debug)
 
   int add_dependency(RT_Info* rt_info,
-       			     Dependency_Info& d);
+                             Dependency_Info& d);
 
   static int number_of_dependencies(RT_Info* rt_info);
   static int number_of_dependencies(RT_Info& rt_info);
@@ -233,11 +232,11 @@ protected:
   // protected member functions //
   ////////////////////////////////
 
-  ACE_Scheduler ();
+  ACE_DynScheduler ();
 
 
   status_t schedule_threads (void);
-  // thread scheduling method: sets up array of pointers to task 
+  // thread scheduling method: sets up array of pointers to task
   // entries that are threads, calls internal thread scheduling method
 
   status_t schedule_dispatches (void);
@@ -271,13 +270,13 @@ protected:
                                       u_int count) = 0;
   // = assign priorities to the sorted dispatches
 
-  virtual status_t assign_subpriorities (Dispatch_Entry **dispatches, 
+  virtual status_t assign_subpriorities (Dispatch_Entry **dispatches,
                                          u_int count) = 0;
   // = assign dynamic and static sub-priorities to the sorted dispatches
 
   virtual status_t
     schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
-                             ACE_Unbounded_Queue <Dispatch_Entry *> 
+                             ACE_Unbounded_Queue <Dispatch_Entry *>
                                &reschedule_queue) = 0;
   // = schedule a dispatch entry into the timeline being created
 
@@ -297,7 +296,7 @@ protected:
   // Collection of known tasks.
 
   Task_Entry **ordered_task_entries_;
-  // An array of pointers to task entries which wrap RT_Infos. It is 
+  // An array of pointers to task entries which wrap RT_Infos. It is
   // sorted by the DFS finishing time and then the resulting topological
   // over the call graph is used both to check for call chain cycles and
   // to correctly propagate scheduling information away from the threads.
@@ -314,11 +313,11 @@ protected:
     // the set of dispatch entries
 
   ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_;
-    // expanded set of dispatch entries (all dispatch entries produced by 
+    // expanded set of dispatch entries (all dispatch entries produced by
     // expanding sub-frames to the total frame size during timeline creation)
 
   Dispatch_Entry **ordered_dispatch_entries_;
-  // An array of pointers to  dispatch entries. It is  
+  // An array of pointers to  dispatch entries. It is
   // sorted by the schedule_dispatches method.
 
   u_int dispatch_entry_count_;
@@ -365,11 +364,11 @@ private:
   status_t output_preemption_timeline (const char *filename);
   status_t output_preemption_timeline (FILE *file);
   // this prints a preemption timeline to the specified file
-  
+
   status_t output_viewer_timeline (const char *filename);
   status_t output_viewer_timeline (FILE *file);
   // this prints a scheduling viewer timeline to the specified file
-  
+
   status_t output_dispatch_priorities (const char *filename);
   status_t output_dispatch_priorities (FILE *file);
   // this prints the scheduling parameters and assigned priorities to the specified file
@@ -377,7 +376,7 @@ private:
   // = Set up the task entry data structures
   status_t setup_task_entries (void);
 
-  // = Relate the task entries according to the 
+  // = Relate the task entries according to the
   //   dependencies of the underlying RT_Infos
   status_t relate_task_entries (void);
 
@@ -405,7 +404,7 @@ private:
 
   // update the scheduling parameters for the previous priority level
   void update_priority_level_params ();
-  
+
   status_t propagate_dispatches ();
   // propagate the dispatch information from the
   // threads throughout the call graph
@@ -414,8 +413,8 @@ private:
   // calculate utilization, frame size, etc.
 
   // the following functions are not implememented
-  ACE_UNIMPLEMENTED_FUNC(ACE_Scheduler (const ACE_Scheduler &))
-  ACE_UNIMPLEMENTED_FUNC(ACE_Scheduler &operator= (const ACE_Scheduler &))
+  ACE_UNIMPLEMENTED_FUNC(ACE_DynScheduler (const ACE_DynScheduler &))
+  ACE_UNIMPLEMENTED_FUNC(ACE_DynScheduler &operator= (const ACE_DynScheduler &))
 
   //////////////////////////
   // private data members //
@@ -468,7 +467,7 @@ private:
 
   Preemption_Priority minimum_guaranteed_priority_queue_;
     // The platform-independent priority value of the minimum priority dispatch
-    // queue whose operations are guaranteed to be schedulable.  The value of 
+    // queue whose operations are guaranteed to be schedulable.  The value of
     // the maximum priority dispatch queue is always 0, -1 indicates none can
     // be guaranteed.
 
@@ -476,9 +475,9 @@ private:
     // indicates whether the a valid schedule has been generated since the last
     // relevant change (addition, alteration or removal of an RT_Info, etc.)
 
-  u_long min_dispatch_id_; 
+  u_long min_dispatch_id_;
 
-  u_long max_dispatch_id_; 
+  u_long max_dispatch_id_;
 
 };
 
@@ -486,6 +485,6 @@ private:
 #include "DynSched.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* SCHEDULER_H */
+#endif /* DYNSCHED_H */
 
 // EOF

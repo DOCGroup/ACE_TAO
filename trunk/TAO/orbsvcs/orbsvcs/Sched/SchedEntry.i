@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//
 // $Id$
 //
 // ============================================================================
@@ -50,33 +49,33 @@ Task_Entry::effective_period (Task_Entry::Period p)
   effective_period_ = p;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 Task_Entry::discovered (long l)
 {
   discovered_ = l;
   dfs_status_ = VISITED;
 }
 
-ACE_INLINE long 
+ACE_INLINE long
 Task_Entry::discovered () const
 {
   return discovered_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 Task_Entry::finished (long l)
 {
   finished_ = l;
   dfs_status_ = FINISHED;
 }
 
-ACE_INLINE long 
+ACE_INLINE long
 Task_Entry::finished () const
 {
   return finished_;
 }
 
-ACE_INLINE Task_Entry::DFS_Status 
+ACE_INLINE Task_Entry::DFS_Status
 Task_Entry::dfs_status () const
 {
   return dfs_status_;
@@ -101,26 +100,26 @@ Task_Entry::is_thread_delineator () const
 }
 
 // access set of Task Entries on which this entry depends
-ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> & 
+ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
 Task_Entry::calls ()
 {
   return calls_;
 }
 
 // access set of Task Entries which depend on this entry
-ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> & 
+ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
 Task_Entry::callers ()
 {
   return callers_;
 }
 
 // get set of arrivals in the effective period
-ACE_Ordered_MultiSet<Dispatch_Entry_Link> &
+ACE_INLINE ACE_Ordered_MultiSet<Dispatch_Entry_Link> &
 Task_Entry::dispatches ()
 {
   return dispatches_;
 }
-      
+
 
 ACE_INLINE Task_Entry::Info_Type
 Task_Entry::info_type () const
@@ -131,8 +130,13 @@ Task_Entry::info_type () const
 ACE_INLINE u_long
 Task_Entry::effective_execution_time () const
 {
+  // Just use low 32 bits.  This will have to change when CosTimeBase.idl
+  // is finalized.
+  ACE_UINT32 worst_case_execution_time =
+    ACE_static_cast (ACE_UINT32, rt_info_->worst_case_execution_time.low);
+
   return (rt_info_->info_type == RtecScheduler::OPERATION)
-         ? rt_info_->worst_case_execution_time * arrival_count_
+         ? worst_case_execution_time * arrival_count_
          : 0;
 }
 
@@ -142,29 +146,29 @@ Task_Entry::effective_execution_time () const
 ///////////////////////////
 
 
-// accessor: number of calls of dependency by dependant 
+// accessor: number of calls of dependency by dependant
 ACE_INLINE CORBA::Long
-Task_Entry_Link::number_of_calls () const 
+Task_Entry_Link::number_of_calls () const
 {
   return number_of_calls_;
 }
 
-ACE_INLINE Task_Entry_Link::Dependency_Type 
-Task_Entry_Link::dependency_type () const 
+ACE_INLINE Task_Entry_Link::Dependency_Type
+Task_Entry_Link::dependency_type () const
 {
   return dependency_type_;
 }
 
 // accessor: dependant task entry
 ACE_INLINE Task_Entry &
-Task_Entry_Link::caller () const 
+Task_Entry_Link::caller () const
 {
   return caller_;
 }
-    
+
 // accessor: dependency task entry
 ACE_INLINE Task_Entry &
-Task_Entry_Link::called () const 
+Task_Entry_Link::called () const
 {
   return called_;
 }
@@ -228,13 +232,13 @@ Dispatch_Entry::static_subpriority (Dispatch_Entry::Sub_Priority p)
 }
 
 
-ACE_INLINE Dispatch_Entry::Time 
+ACE_INLINE Dispatch_Entry::Time
 Dispatch_Entry::arrival () const
 {
   return arrival_;
 }
 
-ACE_INLINE Dispatch_Entry::Time 
+ACE_INLINE Dispatch_Entry::Time
 Dispatch_Entry::deadline () const
 {
   return deadline_;
@@ -248,7 +252,7 @@ Dispatch_Entry::task_entry () const
 
 
 // accessor for pointer to original dispatch
-Dispatch_Entry *
+ACE_INLINE Dispatch_Entry *
 Dispatch_Entry::original_dispatch ()
 {
   return original_dispatch_;
@@ -259,12 +263,13 @@ Dispatch_Entry::original_dispatch ()
 // Class Dispatch_Entry_Link //
 ///////////////////////////////
 
-ACE_INLINE 
+ACE_INLINE
 Dispatch_Entry_Link::~Dispatch_Entry_Link ()
 {
 }
   // dtor
 
+ACE_INLINE int
 Dispatch_Entry_Link::operator < (const Dispatch_Entry_Link &d) const
 {
   return (this->dispatch_entry_ < d.dispatch_entry_);
@@ -305,28 +310,28 @@ TimeLine_Entry::dispatch_entry () const
 
 
 // accessor for time slice start time (100 nanoseconds)
-ACE_INLINE u_long 
+ACE_INLINE u_long
 TimeLine_Entry::start () const
 {
   return start_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
-ACE_INLINE u_long 
+ACE_INLINE u_long
 TimeLine_Entry::stop () const
 {
   return stop_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
-ACE_INLINE u_long 
+ACE_INLINE u_long
 TimeLine_Entry::arrival () const
 {
   return arrival_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
-ACE_INLINE u_long 
+ACE_INLINE u_long
 TimeLine_Entry::deadline () const
 {
   return deadline_;
@@ -341,7 +346,7 @@ TimeLine_Entry::next (void) const
 }
 
 // mutator for next slice for this dispatch
-ACE_INLINE void 
+ACE_INLINE void
 TimeLine_Entry::next (TimeLine_Entry *t)
 {
   next_ = t;
@@ -355,14 +360,14 @@ TimeLine_Entry::prev (void) const
 }
 
 // mutator for previous slice for this dispatch
-ACE_INLINE void 
+ACE_INLINE void
 TimeLine_Entry::prev (TimeLine_Entry *t)
 {
   prev_ = t;
 }
 
 
-ACE_INLINE int 
+ACE_INLINE int
 TimeLine_Entry::operator < (const TimeLine_Entry &t) const
 {
   return (start_ < t.start_) ? 1 : 0;
@@ -387,8 +392,8 @@ TimeLine_Entry_Link::entry () const
   return entry_;
 }
   // accessor for the underlying entry
- 
-ACE_INLINE int 
+
+ACE_INLINE int
 TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
 {
   return (entry_ < l.entry_) ? 1 : 0;

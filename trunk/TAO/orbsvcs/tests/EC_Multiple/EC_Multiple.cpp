@@ -32,7 +32,7 @@ EC_Proxy::open (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
                 const RtecEventChannelAdmin::SupplierQOS& publications,
                 CORBA::Environment &_env)
 {
-  ACE_UNUSED_ARG (_env);  
+  ACE_UNUSED_ARG (_env);
 
   TAO_TRY
     {
@@ -207,7 +207,7 @@ Test_ECP::run (int argc, char* argv[])
       // Register Event_Service with Naming Service.
       ACE_EventChannel ec_impl;
 
-      RtecEventChannelAdmin::EventChannel_var ec = 
+      RtecEventChannelAdmin::EventChannel_var ec =
 	ec_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -224,7 +224,7 @@ Test_ECP::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "waiting to start\n"));
       ACE_Time_Value tv (15, 0);
-      
+
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -315,6 +315,7 @@ Test_ECP::connect_supplier (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       TAO_CHECK_ENV;
 
       server->set (rt_info,
+                   RtecScheduler::VERY_HIGH_CRITICALITY,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
@@ -322,6 +323,7 @@ Test_ECP::connect_supplier (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
 		   ORBSVCS_Time::zero,
                    1,
+                   RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -381,6 +383,7 @@ Test_ECP::connect_consumer (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       TAO_CHECK_ENV;
 
       server->set (rt_info,
+                   RtecScheduler::VERY_HIGH_CRITICALITY,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
@@ -388,6 +391,7 @@ Test_ECP::connect_consumer (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
 		   ORBSVCS_Time::zero,
                    1,
+                   RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -452,6 +456,7 @@ Test_ECP::connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       TAO_CHECK_ENV;
 
       server->set (rmt_info,
+                   RtecScheduler::VERY_HIGH_CRITICALITY,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
@@ -459,6 +464,7 @@ Test_ECP::connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
 		   ORBSVCS_Time::zero,
                    1,
+                   RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -478,6 +484,7 @@ Test_ECP::connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       TAO_CHECK_ENV;
 
       server->set (lcl_info,
+                   RtecScheduler::VERY_HIGH_CRITICALITY,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
 		   ORBSVCS_Time::zero,
@@ -485,6 +492,7 @@ Test_ECP::connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
 		   ORBSVCS_Time::zero,
                    1,
+                   RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -612,7 +620,7 @@ Test_ECP::shutdown (CORBA::Environment& _env)
 
   this->supplier_proxy_->disconnect_push_supplier (_env);
   if (_env.exception () != 0) return -1;
-      
+
   this->ecp_.shutdown (_env);
   if (_env.exception () != 0) return -1;
 

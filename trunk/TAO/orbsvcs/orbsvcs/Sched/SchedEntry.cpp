@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//
 // $Id$
 //
 // ============================================================================
@@ -44,7 +42,7 @@ u_long gcd (u_long x, u_long y)
 
 
 // TBD - move this to the ACE class
-// calculate the minimum frame size that 
+// calculate the minimum frame size that
 u_long minimum_frame_size (u_long period1, u_long period2)
 {
   // first, find the greatest common divisor of the two periods
@@ -92,7 +90,7 @@ Task_Entry::Task_Entry ()
 {
 }
 
-Task_Entry::~Task_Entry () 
+Task_Entry::~Task_Entry ()
 {
   // zero out the task entry ACT in the corresponding rt_info
   rt_info_->volatile_token = 0;
@@ -170,7 +168,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
       // there should not be any other kind of RT_Info, or if
       // there is, the above switch logic is in need of repair.
-      result -1;
+      result = -1;
       break;
   }
 
@@ -185,7 +183,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 // considered dependency specification errors: if these constraints
 // are removed in the future, this method should be removed as well
 // Returns 0 if all is well, or -1 if an error has occurred.
-int 
+int
 Task_Entry::prohibit_dispatches (Dependency_Type dt)
 {
   // iterate over the set of dependencies, ensuring
@@ -212,7 +210,7 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
 // multiplier and repetition over the new frame size and merged
 int
 Task_Entry::disjunctive_merge (
-  Dependency_Type dt, 
+  Dependency_Type dt,
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
 {
   // iterate over the set of dependencies, ensuring
@@ -232,7 +230,7 @@ Task_Entry::disjunctive_merge (
       // merge the caller's dispatches into the current set
       if (merge_frames (dispatch_entries, *this, dispatches_,
                        (*link)->caller ().dispatches_, effective_period_,
-                       (*link)->caller ().effective_period_, 
+                       (*link)->caller ().effective_period_,
                        (*link)->number_of_calls ()) < 0)
       {
         return -1;
@@ -251,14 +249,14 @@ Task_Entry::disjunctive_merge (
 // iteratively merged by choosing the maximal arrival time at
 // the current position in each queue (iteration is in lockstep
 // over all queues, and ends when any queue ends).
-int 
+int
 Task_Entry::conjunctive_merge (
-  Dependency_Type dt, 
+  Dependency_Type dt,
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
 {
   int result = 0;
 
-  // iterate over the dependencies, and determine the total frame size 
+  // iterate over the dependencies, and determine the total frame size
   u_long frame_size = 1;
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
   for (dep_iter.first (); dep_iter.done () == 0; dep_iter.advance ())
@@ -278,18 +276,18 @@ Task_Entry::conjunctive_merge (
 
   // reframe dispatches in the set to the new frame size
   // (expands the set's effective period to be the new enclosing frame)
-  if (reframe (dispatch_entries, *this, dispatches_, 
+  if (reframe (dispatch_entries, *this, dispatches_,
                effective_period_, frame_size) < 0)
   {
     return -1;
   }
 
-  // A set and iterator for virtual dispatch sets 
+  // A set and iterator for virtual dispatch sets
   // over which the conjunction will iterate
   ACE_Ordered_MultiSet <Dispatch_Proxy_Iterator *> conj_set;
   ACE_Ordered_MultiSet_Iterator <Dispatch_Proxy_Iterator *> conj_set_iter (conj_set);
 
-  // iterate over the dependencies, and for each of the given call type, 
+  // iterate over the dependencies, and for each of the given call type,
   // create a Dispatch_Proxy_Iterator for the caller's dispatch set, using
   // the caller's period, the total frame size, and the number of calls:
   // if any of the sets is empty, just return 0;
@@ -305,16 +303,16 @@ Task_Entry::conjunctive_merge (
     if ((*link)->dependency_type () == dt)
     {
       Dispatch_Proxy_Iterator *proxy_ptr;
-      ACE_NEW_RETURN (proxy_ptr, 
+      ACE_NEW_RETURN (proxy_ptr,
                       Dispatch_Proxy_Iterator (
-                        (*link)->caller ().dispatches_, 
-                        (*link)->caller ().effective_period_, 
+                        (*link)->caller ().dispatches_,
+                        (*link)->caller ().effective_period_,
                         frame_size, (*link)->number_of_calls ()),
                       -1);
 
       // if there are no entries in the virtual set, we're done
       if (proxy_ptr->done ())
-      {  
+      {
         return 0;
       }
       if (conj_set.insert (proxy_ptr, conj_set_iter) < 0)
@@ -323,7 +321,7 @@ Task_Entry::conjunctive_merge (
       }
     }
   }
-  
+
   // loop, adding conjunctive dispatches, until one of the conjunctive
   // dispatch sources runs out of entries over the total frame
   conj_set_iter.first ();
@@ -335,9 +333,9 @@ Task_Entry::conjunctive_merge (
     long priority = 0;
 
     for (conj_set_iter.first ();
-         conj_set_iter.done () == 0; 
+         conj_set_iter.done () == 0;
          conj_set_iter.advance ())
-	 {
+         {
       // initialize to earliest arrival and deadline, and highest priority
       arrival = 0;
       deadline = 0;
@@ -363,14 +361,14 @@ Task_Entry::conjunctive_merge (
       }
 
       // use latest arrival, latest deadline, lowest priority (0 is highest)
-      arrival = (arrival < (*proxy_iter)->arrival ()) 
+      arrival = (arrival < (*proxy_iter)->arrival ())
         ? arrival : (*proxy_iter)->arrival ();
-      deadline = (deadline < (*proxy_iter)->deadline ()) 
+      deadline = (deadline < (*proxy_iter)->deadline ())
         ? deadline : (*proxy_iter)->deadline ();
-      priority = (priority < (*proxy_iter)->priority ()) 
+      priority = (priority < (*proxy_iter)->priority ())
         ? priority : (*proxy_iter)->priority ();
 
-      (*proxy_iter)->advance ();         
+      (*proxy_iter)->advance ();
       if ((*proxy_iter)->done ())
       {
         more_dispatches = 0;
@@ -378,8 +376,12 @@ Task_Entry::conjunctive_merge (
     }
 
     Dispatch_Entry *entry_ptr;
-    ACE_NEW_RETURN (entry_ptr, 
-                    Dispatch_Entry (arrival, deadline, priority, *this),
+    // The following two statements should be removed when
+    // CosTimeBase.idl is finalized.
+    const TimeBase::ulonglong arrival_tb = {arrival, 0};
+    const TimeBase::ulonglong deadline_tb = {deadline, 0};
+    ACE_NEW_RETURN (entry_ptr,
+                    Dispatch_Entry (arrival_tb, deadline_tb, priority, *this),
                     -1);
 
     // if even one new dispatch was inserted, result is "something happened".
@@ -390,14 +392,14 @@ Task_Entry::conjunctive_merge (
     if (dispatch_entries.insert (entry_ptr) < 0)
     {
       return -1;
-    }            
+    }
 
     // use iterator for efficient insertion into the dispatch set
     ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
     if (dispatches_.insert (Dispatch_Entry_Link (*entry_ptr), insert_iter) < 0)
     {
       return -1;
-    }    
+    }
 
     // TBD - Clients are not assigned priority, but rather obtain it from
     // their call dependencies.  We could complain here if there is a
@@ -413,7 +415,7 @@ Task_Entry::conjunctive_merge (
 // in each successive sub-frame.  Returns 1 if the set was reframed
 // to a new period, 0 if the set was not changed (the new period
 // was not a multiple of the old one), or -1 if an error occurred.
-int 
+int
 Task_Entry::reframe (
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
   Task_Entry &owner,
@@ -423,7 +425,7 @@ Task_Entry::reframe (
   // make sure the new period is greater than the current
   // set period, and that they are harmonically related
   if (new_period <= set_period)
-  {  
+  {
     // return an error if they're not harmonically related,
     // do nothing if set's frame is a multiple of the new frame
     return (set_period % new_period) ? -1 : 0;
@@ -433,7 +435,7 @@ Task_Entry::reframe (
     return -1;
   }
 
-  // make a shallow copy of the set in a new ordered 
+  // make a shallow copy of the set in a new ordered
   // multiset using the Dispatch_Entry_Link smart pointers
   ACE_Ordered_MultiSet <Dispatch_Entry_Link> new_set;
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> new_iter (new_set);
@@ -450,14 +452,14 @@ Task_Entry::reframe (
     if (new_set.insert (*link, new_iter) < 0)
     {
       return -1;
-    }    
+    }
   }
 
   // do a deep copy merge back into the set using the new period and starting
-  // after the 0th sub-frame: this puts all dispatches after the 0th 
+  // after the 0th sub-frame: this puts all dispatches after the 0th
   // sub-frame of the new period into the set, and leaves existing dispatches
   // in the 0th sub-frame of the new period in the set as well.
-  int result = merge_frames (dispatch_entries, owner, set, 
+  int result = merge_frames (dispatch_entries, owner, set,
                          new_set, new_period, set_period, 1, 1);
 
   // update the set's period to be the new frame
@@ -471,7 +473,7 @@ Task_Entry::reframe (
 // multiplied by the given multipliers for the period and number of
 // instances in each period of each existing dispatch, into the
 // given "into" set, without affecting the "from set".
-int 
+int
 Task_Entry::merge_frames (
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
   Task_Entry &owner,
@@ -486,7 +488,7 @@ Task_Entry::merge_frames (
 
   // reframe dispatches in the destination set to the new frame size
   // (expands the destination set's period to be the new enclosing frame)
-  if (reframe (dispatch_entries, owner, dest, dest_period, 
+  if (reframe (dispatch_entries, owner, dest, dest_period,
                minimum_frame_size (dest_period, src_period)) < 0)
   {
     return -1;
@@ -497,23 +499,27 @@ Task_Entry::merge_frames (
 
   // do virutal iteration over the source set in the new frame,
   // adding adjusted dispatch entries to the destination
-  Dispatch_Proxy_Iterator src_iter (src, src_period, dest_period, 
-                                    number_of_calls, 
+  Dispatch_Proxy_Iterator src_iter (src, src_period, dest_period,
+                                    number_of_calls,
                                     starting_dest_sub_frame);
 
   for (src_iter.first (starting_dest_sub_frame); src_iter.done () == 0; src_iter.advance ())
   {
 
-    // Policy: disjunctively dispatched operations get their deadline and 
+    // Policy: disjunctively dispatched operations get their deadline and
     //         priority from the original dispatch - when and if it is useful
     //         to change any of the merge policies, this should be one of the
-    //         decisions factored out into the disjunctive merge strategy 
+    //         decisions factored out into the disjunctive merge strategy
     //         class.
 
     Dispatch_Entry *entry_ptr;
-    ACE_NEW_RETURN (entry_ptr, 
-                    Dispatch_Entry (src_iter.arrival (), 
-                                    src_iter.deadline (),
+    // The following two statements should be removed when
+    // CosTimeBase.idl is finalized.
+    const TimeBase::ulonglong arrival_tb = {src_iter.arrival (), 0};
+    const TimeBase::ulonglong deadline_tb = {src_iter.deadline (), 0};
+    ACE_NEW_RETURN (entry_ptr,
+                    Dispatch_Entry (arrival_tb,
+                                    deadline_tb,
                                     src_iter.priority (), owner),
                     -1);
 
@@ -525,16 +531,16 @@ Task_Entry::merge_frames (
     if (dispatch_entries.insert (entry_ptr) < 0)
     {
       return -1;
-    }            
-    
+    }
+
     if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
     {
       return -1;
-    }        
+    }
 
     // TBD - Clients are not assigned priority, but rather obtain it from
-    // their call dependencies.  We could complain here if there is a 
-    // priority specified that doesn't match (or is lower QoS?)    
+    // their call dependencies.  We could complain here if there is a
+    // priority specified that doesn't match (or is lower QoS?)
   }
 
   return status;
@@ -550,11 +556,11 @@ Task_Entry_Link::Task_Entry_Link (
   Task_Entry &caller,
   Task_Entry &called,
   CORBA::Long number_of_calls,
-  RtecScheduler::Dependency_Type dependency_type) 
-  : caller_ (caller)
+  RtecScheduler::Dependency_Type dependency_type)
+  : number_of_calls_ (number_of_calls)
+  , caller_ (caller)
   , called_ (called)
   , dependency_type_ (dependency_type)
-  , number_of_calls_ (number_of_calls) 
 {
 }
 
@@ -568,7 +574,7 @@ Dispatch_Entry::Dispatch_Id Dispatch_Entry::next_id_ = 0;
 Dispatch_Entry::Dispatch_Entry (
       Time arrival,
       Time deadline,
-	   Preemption_Priority priority,
+           Preemption_Priority priority,
       Task_Entry &task_entry,
       Dispatch_Entry *original_dispatch)
 
@@ -600,7 +606,7 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
 }
 
 
-ACE_INLINE int 
+int
 Dispatch_Entry::operator < (const Dispatch_Entry &d) const
 {
   // for positioning in the ordered dispatch multiset
@@ -618,10 +624,12 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   }
 
   // lowest laxity (highest dynamic sub-priority) third
-  Time this_laxity = deadline_ - 
-                     task_entry ().rt_info ()->worst_case_execution_time;
-  Time that_laxity = d.deadline_ - 
-                     d.task_entry ().rt_info ()->worst_case_execution_time;
+  // Just use low 32 bits of worst_case_execution_time.  This will
+  // have to change when CosTimeBase.idl is finalized.
+  ACE_INT32 /* Time */ this_laxity = deadline_.low -
+                     task_entry ().rt_info ()->worst_case_execution_time.low;
+  ACE_INT32 /* Time */ that_laxity = d.deadline_.low -
+                     d.task_entry ().rt_info ()->worst_case_execution_time.low;
   if (this_laxity != that_laxity)
   {
     return (this_laxity < that_laxity) ? 1 : 0;
@@ -629,7 +637,7 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
 
   // finally, by higher importance
   return (task_entry ().rt_info ()->importance >
-          d.task_entry ().rt_info ()->importance) ? 1 : 0;  
+          d.task_entry ().rt_info ()->importance) ? 1 : 0;
 }
 
 
@@ -673,7 +681,7 @@ Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
 }
       // ctor
 
-int 
+int
 Dispatch_Proxy_Iterator::first (u_int sub_frame)
 {
   if (actual_frame_size_ * (sub_frame) >= virtual_frame_size_)
@@ -692,7 +700,7 @@ Dispatch_Proxy_Iterator::first (u_int sub_frame)
   // restart the iterator
   return iter_.first ();
 }
-  // positions the iterator at the first entry of the passed 
+  // positions the iterator at the first entry of the passed
   // sub-frame, returns 1 if it could position the iterator
   // correctly, 0 if not, and -1 if an error occurred.
 
@@ -712,7 +720,7 @@ Dispatch_Proxy_Iterator::last ()
   // frame, returns 1 if it could position the iterator
   // correctly, 0 if not, and -1 if an error occurred.
 
-int 
+int
 Dispatch_Proxy_Iterator::advance ()
 {
   int result = 1;
@@ -756,7 +764,7 @@ Dispatch_Proxy_Iterator::advance ()
   // frame, returns 1 if it could position the iterator
   // correctly, 0 if not, and -1 if an error occurred.
 
-int 
+int
 Dispatch_Proxy_Iterator::retreat ()
 {
   int result = 1;
@@ -800,7 +808,7 @@ Dispatch_Proxy_Iterator::retreat ()
   // frame, returns 1 if it could position the iterator
   // correctly, 0 if not, and -1 if an error occurred.
 
-u_long 
+u_long
 Dispatch_Proxy_Iterator::arrival () const
 {
   Dispatch_Entry_Link *link;
@@ -809,11 +817,13 @@ Dispatch_Proxy_Iterator::arrival () const
     return 0;
   }
 
-  return link->dispatch_entry ().arrival () + current_frame_offset_;
+  // Just use low 32 bits of arrival.  This will
+  // have to change when CosTimeBase.idl is finalized.
+  return link->dispatch_entry ().arrival ().low + current_frame_offset_;
 }
   // returns the adjusted arrival time of the virtual entry
 
-u_long 
+u_long
 Dispatch_Proxy_Iterator::deadline () const
 {
   Dispatch_Entry_Link *link;
@@ -822,11 +832,13 @@ Dispatch_Proxy_Iterator::deadline () const
     return 0;
   }
 
-  return link->dispatch_entry ().deadline () + current_frame_offset_;
+  // Just use low 32 bits of deadline.  This will
+  // have to change when CosTimeBase.idl is finalized.
+  return link->dispatch_entry ().deadline ().low + current_frame_offset_;
 }
   // returns the adjusted deadline time of the virtual entry
 
-Dispatch_Proxy_Iterator::Preemption_Priority 
+Dispatch_Proxy_Iterator::Preemption_Priority
 Dispatch_Proxy_Iterator::priority () const
 {
   Dispatch_Entry_Link *link;
@@ -846,7 +858,7 @@ Dispatch_Proxy_Iterator::priority () const
 //////////////////////////
 
 
-    // time slice constructor 
+    // time slice constructor
 TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                                 u_long start, u_long stop,
                                 u_long arrival, u_long deadline,
@@ -861,4 +873,3 @@ TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
   , prev_ (prev)
 {
 }
-

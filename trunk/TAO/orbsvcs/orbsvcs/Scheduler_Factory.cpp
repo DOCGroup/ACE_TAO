@@ -1,8 +1,4 @@
-// ============================================================================
-//
 // $Id$
-//
-// ============================================================================
 
 #include "ace/OS.h"
 
@@ -19,13 +15,13 @@ static int entry_count = -1;
 static ACE_Scheduler_Factory::POD_RT_Info* rt_info = 0;
 
 int ACE_Scheduler_Factory::use_runtime (int ec,
-					POD_RT_Info rti[])
+                                        POD_RT_Info rti[])
 {
   if (server_ != 0 || entry_count != -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "ACE_Scheduler_Factory::use_runtime - "
-			 "server already configured\n"), -1);
+                         "ACE_Scheduler_Factory::use_runtime - "
+                         "server already configured\n"), -1);
     }
 
   entry_count = ec;
@@ -45,16 +41,16 @@ RtecScheduler::Scheduler_ptr static_server ()
     {
       info[i] = new RtecScheduler::RT_Info;
       if (info[i] == 0)
-	{
-	  for (int j = 0; j < i; ++j)
-	    {
-	      delete info[i];
-	    }
-	  delete[] info;
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "ACE_Scheduler_Factory::config_runtime - "
-			     "cannot allocate RT_Info\n"), 0);
-	}
+        {
+          for (int j = 0; j < i; ++j)
+            {
+              delete info[i];
+            }
+          delete[] info;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_Scheduler_Factory::config_runtime - "
+                             "cannot allocate RT_Info\n"), 0);
+        }
       info[i]->entry_point = rt_info[i].entry_point;
       info[i]->handle = rt_info[i].handle;
       info[i]->worst_case_execution_time = rt_info[i].worst_case_execution_time;
@@ -65,7 +61,7 @@ RtecScheduler::Scheduler_ptr static_server ()
       info[i]->quantum = rt_info[i].quantum;
       info[i]->threads = rt_info[i].threads;
       info[i]->priority = rt_info[i].priority;
-      info[i]->subpriority = rt_info[i].subpriority;
+      info[i]->static_subpriority = rt_info[i].static_subpriority;
       info[i]->preemption_priority = rt_info[i].preemption_priority;
     }
   static ACE_Runtime_Scheduler scheduler(entry_count, info);
@@ -75,18 +71,18 @@ RtecScheduler::Scheduler_ptr static_server ()
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "ACE_Scheduler_Factory - configured static server\n"));
+                  "ACE_Scheduler_Factory - configured static server\n"));
     }
   TAO_CATCHANY
     {
       for (int i = 0; i < entry_count; ++i)
-	{
-	  delete info[i];
-	}
+        {
+          delete info[i];
+        }
       delete[] info;
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "ACE_Scheduler_Factory::config_runtime - "
-			 "cannot allocate server\n"), 0);
+                         "ACE_Scheduler_Factory::config_runtime - "
+                         "cannot allocate server\n"), 0);
     }
   TAO_ENDTRY;
   return server_;
@@ -108,11 +104,11 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
       schedule_name.length (1);
       CORBA::Object_ptr objref =
-	naming->resolve (schedule_name, TAO_TRY_ENV);
+        naming->resolve (schedule_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       server_ =
-	RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
+        RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       RtecScheduler::Scheduler::_duplicate (server_);
@@ -122,8 +118,8 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
     {
       server_ = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "ACE_Scheduler_Factory::use_context - "
-			 " exception while resolving server\n"), -1);
+                         "ACE_Scheduler_Factory::use_context - "
+                         " exception while resolving server\n"), -1);
     }
   TAO_ENDTRY;
   return 0;
@@ -142,11 +138,11 @@ ACE_Scheduler_Factory::use_config (CORBA::ORB_ptr orb)
   TAO_TRY
     {
       CORBA::Object_ptr objref =
-	orb->resolve_initial_references ("ScheduleService");
+        orb->resolve_initial_references ("ScheduleService");
       TAO_CHECK_ENV;
 
       server_ =
-	RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
+        RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       RtecScheduler::Scheduler::_duplicate (server_);
@@ -156,8 +152,8 @@ ACE_Scheduler_Factory::use_config (CORBA::ORB_ptr orb)
     {
       server_ = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "ACE_Scheduler_Factory::use_context - "
-			 " exception while resolving server\n"), -1);
+                         "ACE_Scheduler_Factory::use_context - "
+                         " exception while resolving server\n"), -1);
     }
   TAO_ENDTRY;
   return 0;
@@ -171,12 +167,12 @@ ACE_Scheduler_Factory::server (void)
     {
       server_ = static_server ();
     }
-	
+
   if (server_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "ACE_Scheduler_Factor::server - "
-			 "no scheduling service configured\n"), 0);
+                         "ACE_Scheduler_Factor::server - "
+                         "no scheduling service configured\n"), 0);
     }
   return server_;
 }
@@ -188,7 +184,7 @@ static char header[] =
 "#include \"orbsvcs/Scheduler_Factory.h\"\n"
 "\n";
 
-static char footer[] = 
+static char footer[] =
 "\n"
 "// This setups Scheduler_Factory to use the runtime version\n"
 "static int scheduler_factory_setup = \n"
@@ -197,10 +193,10 @@ static char footer[] =
 "\n"
 "// EOF\n";
 
-static char start_infos[] = 
+static char start_infos[] =
 "static ACE_Scheduler_Factory::POD_RT_Info infos[] = {\n";
 
-static char end_infos[] = 
+static char end_infos[] =
 "};\n";
 
 int ACE_Scheduler_Factory::dump_schedule
@@ -212,9 +208,9 @@ int ACE_Scheduler_Factory::dump_schedule
     {
       file = ACE_OS::fopen (filename, "w");
       if (file == 0)
-	{
-	  return -1;
-	}
+        {
+          return -1;
+        }
     }
   ACE_OS::fprintf(file, header);
 
@@ -222,25 +218,25 @@ int ACE_Scheduler_Factory::dump_schedule
   for (u_int i = 0; i < infos.length (); ++i)
     {
       if (i != 0)
-	{
-	  // Finish previous line
-	  ACE_OS::fprintf(file, ",\n");
-	}
+        {
+          // Finish previous line
+          ACE_OS::fprintf(file, ",\n");
+        }
       const RtecScheduler::RT_Info& info = infos[i];
       ACE_OS::fprintf (file,
 "{ \"%s\", %d, %f, %f, %f, %d, %d, %f, %d, %d, %d, %d }",
-		       (const char*)info.entry_point,
-		       info.handle,
-		       info.worst_case_execution_time,
-		       info.typical_execution_time,
-		       info.cached_execution_time,
-		       info.period,
-		       info.importance,
-		       info.quantum,
-		       info.threads,
-		       info.priority,
-		       info.subpriority,
-		       info.preemption_priority);
+                       (const char*)info.entry_point,
+                       info.handle,
+                       info.worst_case_execution_time,
+                       info.typical_execution_time,
+                       info.cached_execution_time,
+                       info.period,
+                       info.importance,
+                       info.quantum,
+                       info.threads,
+                       info.priority,
+                       info.static_subpriority,
+                       info.preemption_priority);
     }
   // finish last line.
   ACE_OS::fprintf(file, "\n");

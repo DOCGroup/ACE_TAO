@@ -479,13 +479,16 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
       TAO_TRY
         {// @@ TODO: Handle exceptions...
           ACE_Scheduler_Factory::server()->set (rt_info_,
+                                                RtecScheduler::VERY_HIGH_CRITICALITY,
                                                 ORBSVCS_Time::zero,
                                                 ORBSVCS_Time::zero,
                                                 ORBSVCS_Time::zero,
                                                 0,
                                                 RtecScheduler::VERY_LOW_IMPORTANCE,
                                                 ORBSVCS_Time::zero,
-                                                1, TAO_TRY_ENV);
+                                                1,
+                                                RtecScheduler::OPERATION,
+                                                TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
       TAO_CATCHANY
