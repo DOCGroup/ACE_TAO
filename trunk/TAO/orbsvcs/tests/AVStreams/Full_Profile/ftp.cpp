@@ -323,9 +323,13 @@ Client::run (void)
       ACE_Time_Value elapsed;
       timer.start ();
 
+      AVStreams::MMDevice_var client_mmdevice
+        = this->client_mmdevice_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+        
       // Bind the client and server mmdevices.
       CORBA::Boolean result =
-        this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
+        this->streamctrl_.bind_devs (client_mmdevice.in (),
                                      this->server_mmdevice_.in (),
                                      the_qos.inout (),
                                      flow_spec,
