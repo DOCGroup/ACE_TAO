@@ -11,7 +11,8 @@ ACE_URL_Record::id (void) const
 ACE_INLINE void
 ACE_URL_Record::id (ACE_URL_OfferID id)
 {
-  delete[] this->id_;
+  delete [] this->id_;
+
   if (id)
     {
       ACE_NEW (this->id_, TCHAR[ACE_OS::strlen (id) + 1]);

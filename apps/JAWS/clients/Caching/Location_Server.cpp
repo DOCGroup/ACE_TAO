@@ -11,7 +11,7 @@
 #include "Location_Server.i"
 #endif /* __ACE_INLINE__ */
 
-
-
+// @@ Nanbor, please make sure that you add the template
+// specializations that are necessary to get this to work with GCC.
 
 #endif /* ACE_LOCATION_SERVER_C */

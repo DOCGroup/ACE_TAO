@@ -31,19 +31,24 @@ main (int, char *[])
 
   char buf[BUFSIZ];
 
-  ACE_OS::fprintf (stderr, "* ");
+  ACE_DEBUG ((LM_DEBUG, "* "));
+
   while (ACE_OS::fgets (buf, sizeof (buf), stdin) != NULL)
     {
-      char * s = buf;
-      while (*s == ' ' || *s == '\t')
+      char *s = buf;
+
+      while (isspace (*s))
         s++;
 
       if (*s == '!')
         {
-          // Shell command
-          do s++; while (*s == ' ' || *s == '\t');
+          do 
+	    s++; 
+	  while (isspace (*s));
+
+          // Shell command.
           if (ACE_OS::system (s) == -1)
-            ACE_OS::fprintf (stderr, " ! Error executing: %s\n", s);
+            ACE_ERROR ((LM_ERROR, " ! Error executing: %s\n", s));
         }
       else if (ACE_OS::strncmp (s, "http://", 7) == 0)
         {
@@ -52,9 +57,9 @@ main (int, char *[])
           connector.connect (s);
         }
       else
-        ACE_OS::fprintf (stderr, " ? I don't understand: %s\n", s);
+        ACE_ERROR ((LM_ERROR, " ? I don't understand: %s\n", s));
 
-      ACE_OS::fprintf (stderr, "* ");
+      ACE_ERROR ((LM_ERROR, "* "));
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nBye!\n"));

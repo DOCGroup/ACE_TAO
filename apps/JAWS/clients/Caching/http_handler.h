@@ -29,6 +29,7 @@ class HTTP_Handler
   //     The fetched file is cached.
 {
 public:
+  // = Initialization methods.
   HTTP_Handler (void);
   HTTP_Handler (const char * path);
 
@@ -36,7 +37,7 @@ public:
   virtual int svc (void);
   // Entry points defined by the abstract Svc_Handler.
 
-  const char * filename (void) const;
+  const char *filename (void) const;
   // Accessor to the file being fetched.
 
 private:
@@ -64,6 +65,7 @@ private:
 		char *host,
 		u_short *port,
 		char *path);
+  // Helper function.
 
 private:
   ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;
