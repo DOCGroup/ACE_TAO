@@ -10,6 +10,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "Simple_Server_i.h"
 
 //#include "ciao/HomeRegistrar_i.h"
