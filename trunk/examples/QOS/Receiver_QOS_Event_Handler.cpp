@@ -22,7 +22,7 @@ ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (void)
 }
 
 ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast,
-											  ACE_QoS_Session *qos_session)
+                                              ACE_QoS_Session *qos_session)
   : dgram_mcast_ (dgram_mcast),
     qos_session_ (qos_session)
 {
@@ -57,9 +57,9 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
   // Win2K example.
 
   if (this->qos_session_->update_qos () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-					   "Error in updating QoS\n"),
-						-1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in updating QoS\n"),
+                      -1);
   else
     ACE_DEBUG ((LM_DEBUG,
                 " Updating QOS succeeds.\n"));
