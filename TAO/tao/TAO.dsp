@@ -366,6 +366,25 @@ SOURCE=.\CDR_Interpreter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Priority_Policy.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Strategy_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2621,6 +2640,10 @@ SOURCE=.\CDR_Interpreter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Priority_Policy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -3102,6 +3125,10 @@ SOURCE=.\Asynch_Invocation.i
 # Begin Source File
 
 SOURCE=.\cdr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
