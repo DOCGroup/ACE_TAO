@@ -9,10 +9,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/Exception.h"
-#include "Config_Handlers/XercesString.h"
-#include "Config_Handlers/Config_Handler_export.h"
-#include "Config_Handlers/DnC_Dump.h"
-#include "Config_Handlers/Config_Error_Handler.h"
+#include "Old_Config_Handlers/XercesString.h"
+#include "Old_Config_Handlers/Config_Handler_export.h"
+#include "Old_Config_Handlers/DnC_Dump.h"
+#include "Old_Config_Handlers/Config_Error_Handler.h"
 
 #include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/dom/DOM.hpp>

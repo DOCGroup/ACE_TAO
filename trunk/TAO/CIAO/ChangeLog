@@ -1,3 +1,18 @@
+Sun Mar 20 14:05:08 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/CompIntrDesc_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/CompPkgDesc_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Domain_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Handler_Test.h:
+        * DAnCE/tests/Config_Handlers/IAD_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/PC_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Plan_Handler_Test.cpp:
+
+          Made changed to include the "right" config handlers
+          to fix the compilation errors.
+
 Sun Mar 20 13:57:55 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/XercesString.cpp:
