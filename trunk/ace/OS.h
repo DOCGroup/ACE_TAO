@@ -3837,6 +3837,9 @@ public:
     struct flock lock_;
 #endif /* ACE_WIN32 */
 
+    LPCTSTR lockname_;
+    // Name of this filelock.
+
     ACE_HANDLE handle_;
     // Handle to the underlying file.
   };
