@@ -1,3 +1,12 @@
+Sun Apr 13 00:01:56 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* roa.cpp: Fix continuation condition in ROA_Handler::svc()'s loop
+ 	so that it doesn't stop after one iteration.  Also added some
+ 	debug messages.
+
+	* giop.cpp: Fixed some returns being called with no value.  This
+ 	should have been caught in the previous round of changes.
+
 Sat Apr 12 23:10:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tcpoa.{hh,cpp}: TCP_OA::handle_message() now returns a value

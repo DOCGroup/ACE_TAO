@@ -27,6 +27,10 @@ ROA_Handler::open(void*)
     {
       if (activate(ACE_ROA::threadFlags()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "ROA_Handler unable to spawn a thread: %p\n", "spawn"), -1);
+      else
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%P|%t) threaded connection from client %s\n",
+		    addr.get_host_name()));
     }
   else
     {
@@ -53,8 +57,10 @@ ROA_Handler::svc()
 {
   int result = 0;
 
-  while ((result = handle_input()) > 0)
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ROA_Handler::svc begin\n"));
+  while ((result = handle_input()) >= 0)
     ;
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ROA_Handler::svc end\n"));
 
   return result;
 }
