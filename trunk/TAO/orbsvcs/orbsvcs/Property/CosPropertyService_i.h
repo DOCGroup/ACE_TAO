@@ -97,9 +97,10 @@ class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyServic
   //
   // = DESCRIPTION
   //     Uses a HashTable to manage the properties. 
+public:
   friend class TAO_PropertyNamesIterator;
   friend class TAO_PropertiesIterator;
-public:
+
   // = Initialization and termination methods.
   TAO_PropertySet (void);
   // Default constructor. 
@@ -121,8 +122,8 @@ public:
   // Get the number of properties that are currently defined in the
   // PropertySet.
   
-  virtual void get_all_property_names (CORBA::ULong how_many, 
-                                       CosPropertyService::PropertyNames_out property_names, 
+  virtual void get_all_property_names (CORBA::ULong how_many,
+                                       CosPropertyService::PropertyNames_out property_names,
                                        CosPropertyService::PropertyNamesIterator_out rest,
                                        CORBA::Environment &env);
   // Get the names of all the properties that are currently defined in
@@ -141,8 +142,10 @@ public:
                                    CosPropertyService::Properties_out nproperties, 
                                    CosPropertyService::PropertiesIterator_out rest,
                                    CORBA::Environment &env);
-  // Get all the property values alone.
-  
+  // Returns all of the property names currently defined in the
+  // PropertySet. If the PropertySet contains more than how_many
+  // property names, then the remaining property names are put into the PropertyNamesIterator.
+
   virtual void delete_property (const char *property_name,
                                 CORBA::Environment &env);
   // Delete a property given a name.
@@ -219,7 +222,7 @@ public:
   // mode is also checked to be sure a new value may be written. If
   // the property does not exist, then the property is added to the
   // PropertySet.
-
+  
   virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
                                              CORBA::Environment &env);
   // This operation will modify or add each of the properties in the
@@ -258,8 +261,7 @@ class TAO_ORBSVCS_Export TAO_PropertyNamesIterator :  public virtual POA_CosProp
   //     the PropertyNamesIterator interface with the additional names.
 public:
   // = Initialization and termination methods.
-  TAO_PropertyNamesIterator (TAO_PropertySet &property_set,
-                             CORBA::Environment &env);
+  TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
   // Constructor.
   
   virtual ~TAO_PropertyNamesIterator (void);
@@ -298,7 +300,6 @@ private:
 
   CosProperty_Hash_Iterator iterator_;
   // The Iterator object.
-  
 };
 
 class TAO_ORBSVCS_Export TAO_PropertiesIterator :  public virtual POA_CosPropertyService::PropertiesIterator
@@ -317,8 +318,7 @@ class TAO_ORBSVCS_Export TAO_PropertiesIterator :  public virtual POA_CosPropert
   //     interface with the additional properties.
 public:
   // = Initialization and termination methods.
-  TAO_PropertiesIterator (TAO_PropertySet &property_set,
-                          CORBA::Environment &env);
+  TAO_PropertiesIterator (TAO_PropertySet &property_set);
   // Constructor.
   
   virtual ~TAO_PropertiesIterator (void);
@@ -354,6 +354,7 @@ private:
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
           CosProperty_Hash_Entry;
   typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
+  
 
   CosProperty_Hash_Iterator iterator_;
   // The iterator object.

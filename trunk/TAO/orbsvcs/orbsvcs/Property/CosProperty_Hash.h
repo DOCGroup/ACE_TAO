@@ -65,17 +65,24 @@ public:
   CosProperty_Hash_Value (void);
   // Default constructor.
   
-  CosProperty_Hash_Value (const CORBA::Any &any);
+  //CosProperty_Hash_Value (const CORBA::Any &any);
   // Constructor with Any value.
+  
+  CosProperty_Hash_Value (const CORBA::Any &any,
+                          const CosPropertyService::PropertyModeType &mode);
+  // Constructor with the property_value and the property_mode.
   
   CosProperty_Hash_Value (const CosProperty_Hash_Value &hash_value);
   // Copy constructor.
-
+  
   virtual ~CosProperty_Hash_Value (void);
   // Destructor.
   
   CORBA::Any_var pvalue_;
-  // Public data -- the property value.
+  // property value.
+  
+  CosPropertyService::PropertyModeType pmode_;
+  // Property Mode.
 };
 
 #endif /* COSPROPERTY_HASH_H */
