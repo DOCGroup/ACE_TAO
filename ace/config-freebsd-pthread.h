@@ -35,8 +35,12 @@ enum schedparam_policy {
         SCHED_OTHER
 };
 
-// Platform supports POSIX timers via timestruct_t.
+// Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
+
+// Platform defines struct timespec but not timespec_t
+#define ACE_LACKS_TIMESPEC_T
+
 #define ACE_NEEDS_SYSTIME_H
 
 #define ACE_LACKS_STRRECVFD

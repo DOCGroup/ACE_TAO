@@ -499,6 +499,10 @@ typedef struct timespec
 #include /**/ <sys/timers.h>
 #endif /* !ACE_HAS_POSIX_TIME */
 
+#if defined(ACE_LACKS_TIMESPEC_T)
+typedef struct timespec timespec_t;
+#endif /* ACE_LACKS_TIMESPEC_T */
+
 #if !defined (ACE_HAS_CLOCK_GETTIME) && !defined (_CLOCKID_T)
 typedef int clockid_t;
 #if !defined (CLOCK_REALTIME)
