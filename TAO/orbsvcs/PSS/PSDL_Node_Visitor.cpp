@@ -417,8 +417,6 @@ TAO_PSDL_Node_Visitor::visit_except_dcl (TAO_PSDL_Except_Dcl *except_dcl)
 
   if (this->node_visitor_ != 0)
     return this->node_visitor_->visit_except_dcl (except_dcl);
-  else
-    return -1;
 
   /*
     if (except_dcl->identifier ()->accept (this) == -1)
@@ -430,7 +428,7 @@ TAO_PSDL_Node_Visitor::visit_except_dcl (TAO_PSDL_Except_Dcl *except_dcl)
         return -1;
     }
   */
-  return 0;
+  return -1;
 }
 
 int
@@ -511,9 +509,8 @@ TAO_PSDL_Node_Visitor::visit_forward_dcl (TAO_PSDL_Forward_Dcl *forward_dcl)
 
   if (this->node_visitor_ != 0)
     return this->node_visitor_->visit_forward_dcl (forward_dcl);
-  else
-    return -1;
-  return 0;
+
+  return -1;
 }
 
 int
@@ -615,14 +612,11 @@ TAO_PSDL_Node_Visitor::base_type (const ACE_CString &identifier,
           return 1;
         }
     }
-  else
-    {
-      // identifier_name is a predefined type like char *.
-      identifier_type = identifier_name;
-      return 1;
-    }
 
-  return 0;
+  // identifier_name is a predefined type like char *.
+  identifier_type = identifier_name;
+
+  return 1;
 }
 
 ACE_CString
