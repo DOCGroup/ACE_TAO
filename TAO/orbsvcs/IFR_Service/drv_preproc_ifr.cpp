@@ -396,7 +396,6 @@ void
 DRV_pre_proc (const char *myfile)
 {
   long  readfromstdin = I_FALSE;
-  char  catbuf[512];
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (readfromstdin);
@@ -585,9 +584,33 @@ DRV_pre_proc (const char *myfile)
   FE_set_yyin (ACE_reinterpret_cast (File *, yyin));
 
   // @@ TODO: This is not portable, cat(1) is a UNIX tool.
-  if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) {
-    sprintf(catbuf, "cat < %s", tmp_file);
-    system(catbuf);
+  if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) 
+    {
+      FILE *preproc = ACE_OS::fopen (tmp_file, "r");      
+      char buffer[BUFSIZ + 1];  // 1 for extra null
+      int bytes;
+
+      if (preproc == NULL)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%s: Could not open cpp output file: %s\n",
+                      ACE_TEXT (idl_global->prog_name ()),
+                      ACE_TEXT (tmp_file)));
+
+          ACE_OS::exit (99);
+        }
+
+      while ((bytes = ACE_OS::fread (buffer, 
+                                     sizeof (char), 
+                                     BUFSIZ, 
+                                     preproc)) != 0) 
+        {
+          buffer[bytes] = 0;  // Null char
+
+          ACE_DEBUG ((LM_DEBUG, buffer));
+        }
+
+      ACE_OS::fclose (preproc);
   }
 
   if (ACE_OS::unlink (tmp_ifile) == -1) 

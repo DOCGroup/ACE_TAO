@@ -37,7 +37,7 @@ class ifr_adding_visitor_exception : public ifr_adding_visitor
   //    for the case when an exception node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_exception (CORBA::Environment &ACE_TRY_ENV);
+  ifr_adding_visitor_exception (void);
   // Constructor.
 
   virtual ~ifr_adding_visitor_exception (void);
