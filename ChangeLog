@@ -8,6 +8,13 @@ Mon May 22 15:25:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  Thanks to Eric Yee <eyee@authentica.com> for reporting the
 	  problem.
 
+	  Notice that ACE 5.1.1, 5.1.2 and 5.1.3 all have the same problem
+	  of creating TSS keys unnecessarily without cleaning them up.
+	  This will most likely cause a long running server process
+	  creating a lot of threads to crash eventually (at least on NT.)
+	  Therefore, you should not use these versions in a production
+	  environment.
+
 Mon May 22 11:23:19 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * ACE version 5.1.3 released.
