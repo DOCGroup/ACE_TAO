@@ -58,7 +58,6 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (ACE_Object_Manager::starting_up () ||
           ACE_Object_Manager::shutting_down ())
         {
@@ -68,13 +67,12 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           // so the preallocated lock is not available.  Either way,
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
-#endif /* ACE_MT_SAFE */
 
           ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
         {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per ACE_Singleton
           // instantiation.
@@ -87,15 +85,15 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 #endif /* ACE_MT_SAFE */
+              ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
-        }
 #endif /* ACE_MT_SAFE */
+        }
     }
 
   return &singleton->instance_;
