@@ -47,8 +47,6 @@
 #   if defined (ACE_USES_OLD_IOSTREAMS)
 #     include /**/ <iostream.h>
 #     include /**/ <fstream.h>
-#     include /**/ <istream.h>
-#     include /**/ <ostream.h>
 #     include /**/ <iomanip.h>
 #   else
 #     include /**/ <iostream>
