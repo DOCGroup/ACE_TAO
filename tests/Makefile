@@ -15,6 +15,7 @@ BIN =   Aio_Platform_Test \
 	Basic_Types_Test \
 	Buffer_Stream_Test \
 	Conn_Test \
+	DLList_Test \
 	Enum_Interfaces_Test \
 	Env_Value_Test \
 	Future_Test \
