@@ -1,8 +1,3 @@
-Tue Jun 27 12:09:43 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * netsvcs/servers/main.cpp: Logging_Strategy.h had been moved.
-          Changed include path accordingly.
-
 Tue Jun 27 11:11:41 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: Remove more output which triggers false fails
