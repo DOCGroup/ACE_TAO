@@ -11,17 +11,12 @@
  *          CIAO_Transaction.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
 //#define CIAO_HAS_IMPORT_KEYWORD
-
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typeprefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
 
 module Components
 {
+  typeprefix Components "omg.org";
+
   // @@ Components::Transaction is still there.
   module Transaction
   {

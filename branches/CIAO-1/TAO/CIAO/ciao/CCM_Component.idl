@@ -11,17 +11,8 @@
  *          CIAO_Component.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
-//#define CIAO_HAS_IMPORT_KEYWORD
-
 #include "CIAO_Event.pidl"
 #include <tao/IFR_Client/Interface.pidl>
-
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typeprefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
 
 module Components
 {

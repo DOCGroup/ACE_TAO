@@ -11,22 +11,17 @@
  *          CIAO_Container_Ex.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
 //#define CIAO_HAS_IMPORT_KEYWORD
 
 #include "CIAO_Container.pidl"
 #include <CosPersistentState.idl>
 
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typeprefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
-
 // *************** Extended Container Interfaces ***************
 
 module Components
 {
+  typeprefix Components "omg.org";
+
   enum BadComponentReferenceReason
   {
     NON_LOCAL_REFERENCE,

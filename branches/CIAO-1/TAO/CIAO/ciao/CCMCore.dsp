@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CCMCORE_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "W:\ACE_wrappers" /I "W:\ACE_wrappers\TAO" /I "W:\ACE_wrappers\TAO\orbsvcs\orbsvcs" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CCMCORE_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "W:\ACE_wrappers" /I "W:\ACE_wrappers\TAO" /I "W:\ACE_wrappers\TAO\orbsvcs\orbsvcs" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CIAO_BUILD_DLL" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CCMCORE_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "W:\ACE_wrappers" /I "W:\ACE_wrappers\TAO" /I "W:\ACE_wrappers\TAO\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CCMCORE_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "W:\ACE_wrappers" /I "W:\ACE_wrappers\TAO" /I "W:\ACE_wrappers\TAO\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CIAO_BUILD_DLL" /YX /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -91,11 +91,19 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Component_BaseC.cpp
+SOURCE=.\CIAO_BaseC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Component_BaseS.cpp
+SOURCE=.\CIAO_ComponentC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_EventC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_TransactionC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -103,44 +111,434 @@ SOURCE=.\Component_BaseS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Component_BaseC.h
+SOURCE=.\CIAO_BaseC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Component_BaseS.h
+SOURCE=.\CIAO_ComponentC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_EventC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_TransactionC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Version.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\ciao.rc
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "i,inl"
 # Begin Source File
 
-SOURCE=.\Component_BaseC.i
+SOURCE=.\CIAO_BaseC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Component_BaseS.i
+SOURCE=.\CIAO_ComponentC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_EventC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_TransactionC.i
 # End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter "idl;pidl"
 # Begin Source File
 
-SOURCE=.\Component_BaseS_T.cpp
-# PROP Exclude_From_Build 1
+SOURCE=.\CIAO_Base.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Base.pidl
+InputName=CIAO_Base
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Base.pidl
+InputName=CIAO_Base
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=.\Component_BaseS_T.h
+SOURCE=.\CIAO_Component.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Component.pidl
+InputName=CIAO_Component
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Component.pidl
+InputName=CIAO_Component
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=.\Component_BaseS_T.i
+SOURCE=.\CIAO_Container.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Container.pidl
+InputName=CIAO_Container
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Container.pidl
+InputName=CIAO_Container
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Container_Ex.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Container_Ex.pidl
+InputName=CIAO_Container_Ex
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Container_Ex.pidl
+InputName=CIAO_Container_Ex
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Deployment.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Deployment.pidl
+InputName=CIAO_Deployment
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Deployment.pidl
+InputName=CIAO_Deployment
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Event.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Event.pidl
+InputName=CIAO_Event
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Event.pidl
+InputName=CIAO_Event
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Transaction.pidl
+
+!IF  "$(CFG)" == "CCMCore - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Transaction.pidl
+InputName=CIAO_Transaction
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CCMCore - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Transaction.pidl
+InputName=CIAO_Transaction
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_Export -Wb,export_include=CIAO_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	del $(InputName)S.* \
+	del $(InputName)S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
