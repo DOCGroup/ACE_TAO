@@ -1,3 +1,9 @@
+Wed Apr  4 14:54:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tao/Leader_Follower.h (TAO_Leader_Follower):
+
+	 Fixed a erroneous comment.
+
 Wed Apr  4 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/AbstractInterfaceDef_i.cpp:
