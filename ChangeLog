@@ -1,3 +1,20 @@
+Sat Feb 4 11:38:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/run_test.pl:
+
+	  Added functionality to run and analyze ACE tests for VxWorks from the
+	  autobuild process (depending on target features).
+
+	* tests/Multicast_Test.cpp:
+
+	  Fixed sloppy resource management (sockets) leading to problems on VxWorks.
+
+	* tests/TP_Reactor_Test.cpp:
+
+	  Fixed compiletime test around pthread_sigmask() call so it now compiles
+	  correctly for (non-WIN32) platforms having threads but no pthread_sigmask()
+	  (f.i. VxWorks).
+
 Sat Feb 4 11:32:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_time.inl:

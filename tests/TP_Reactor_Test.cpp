@@ -1121,7 +1121,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#ifndef ACE_WIN32
+#if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
   sigset_t signal_set;
   if (sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -1139,7 +1139,7 @@ disable_signal (int sigmin, int sigmax)
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */
 
   return 1;
 }
