@@ -128,7 +128,7 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
-      &FtRtecEventChannelAdmin::EventChannel::resume_push_supplier
+      &FtRtecEventChannelAdmin::EventChannelFacade::resume_push_supplier
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
@@ -159,7 +159,7 @@ void TAO_FTEC_ProxyPushSupplier::resume_connection (ACE_ENV_SINGLE_ARG_DECL)
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
-      &FtRtecEventChannelAdmin::EventChannel::suspend_push_supplier
+      &FtRtecEventChannelAdmin::EventChannelFacade::suspend_push_supplier
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }

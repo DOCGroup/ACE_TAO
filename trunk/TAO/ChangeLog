@@ -1,3 +1,8 @@
+Mon Dec 01 03:05:44 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp:
+          Fixed Anachronism warning in SunForte8 build.
+
 Mon Dec 01 07:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/RtEC/Simple/RtEC_Simple.mpc:
