@@ -1,3 +1,25 @@
+Wed Dec 30 17:37:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Detecting if a fragment comes from the current process is harder
+	  than I thought: just using the local address of the seding
+	  socket is not enough, because in some platform this address has
+	  the ipaddr set to 0 (the source address is chosen by the kernel
+	  after routing considerations).
+	  We use the ACE facilities to find the list of local ipaddresses
+	  to work around this problem.
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Adjusted the timeout value for the UDP fragments, it was too
+	  low.
+
+	* orbsvcs/tests/EC_Mcast/README: 
+	  Updated the documentation.
+
 Wed Dec 30 16:43:35 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	The following files have been added to the newly created
@@ -59,7 +81,7 @@ Wed Dec 30 16:26:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 
 Wed Dec 30 16:19:06 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
-	added the following files for the CosEC test to orbsvcs
+
 	* orbsvcs/tests/CosEC_Basic:
 	* orbsvcs/tests/CosEC_Basic/README:
 	* orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
@@ -69,6 +91,7 @@ Wed Dec 30 16:19:06 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
 	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
 	* orbsvcs/tests/CosEC_Basic/Makefile:
+	  Added the following files for the CosEC test to orbsvcs
 
 1998-12-30  Seth Widoff  <swidoff@cs.cmu.edu>
 

@@ -155,7 +155,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 
   if (events.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
 
@@ -451,6 +451,48 @@ TAO_ECG_UDP_Sender::compute_fragment_count (const ACE_Message_Block* begin,
 
 // ****************************************************************
 
+TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint (void)
+{
+  delete[] this->ifs_;
+  this->ifs_ = 0;
+}
+
+CORBA::Boolean
+TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
+{
+  if (this->port_number_ == 0)
+    {
+      // Cache the port number...
+      ACE_INET_Addr local_addr;
+      if (this->dgram ().get_local_addr (local_addr) == -1)
+        return 0;
+      this->port_number_ = local_addr.get_port_number ();
+    }
+
+  // Most of the time the port number is enough to determine if the
+  // message is remote, only when the local port number and the remote
+  // port number match we have to look at the local ip addresses.
+  if (from.get_port_number () != this->port_number_)
+    return 0;
+
+  if (this->ifs_ == 0)
+    {
+      ACE::get_ip_interfaces (this->if_count_, this->ifs_);
+    }
+
+  for (ACE_INET_Addr* i = this->ifs_;
+       i != this->ifs_ + this->if_count_;
+       ++i)
+    {
+      if ((*i).get_ip_address () == from.get_ip_address ())
+        return 1;
+    }
+  return 0;
+}
+
+
+// ****************************************************************
+
 #if 0
 TAO_ECG_UDP_Request_Entry::TAO_ECG_UDP_Request_Entry (void)
   : request_size_ (0),
@@ -617,7 +659,7 @@ void
 TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             RtecScheduler::Scheduler_ptr lcl_sched,
                             const char* lcl_name,
-                            const ACE_INET_Addr& ignore_from,
+                            TAO_ECG_UDP_Out_Endpoint* ignore_from,
 			    RtecUDPAdmin::AddrServer_ptr addr_server,
                             ACE_Reactor *reactor,
                             const ACE_Time_Value &expire_interval,
@@ -755,7 +797,8 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
   // This is to avoid receiving the events we send; notice that we
   // must read the message to drop it...
-  if (from == this->ignore_from_)
+  if (this->ignore_from_ != 0
+      && this->ignore_from_->is_loopback (from))
     {
       n = dgram.recv (header, sizeof(header), from);
       // ACE_DEBUG ((LM_DEBUG,
@@ -795,7 +838,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
     }
 
   //  ACE_DEBUG ((LM_DEBUG,
-  //              "ECG_UDP_Receiver (%P|%t): msg = %d, from = (%u:%d)"
+  //              "ECG_UDP_Receiver (%P|%t): msg = %d, from = (%u:%d) "
   //              "fragment = %d/%d\n",
   //              request_id,
   //              from.get_ip_address (), from.get_port_number (),
@@ -921,8 +964,10 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       TAO_CHECK_ENV;
 
       //      ACE_DEBUG ((LM_DEBUG,
-      //                  "TAO_ECG_UDP_Received (%P|%t): push %d\n",
-      //                  request_id));
+      //                  "TAO_ECG_UDP_Received (%P|%t): push %d "
+      //                  "from = (%u:%d)\n",
+      //                  request_id,
+      //                  from.get_ip_address (), from.get_port_number ()));
     }
   TAO_CATCHANY
     {
@@ -963,6 +1008,10 @@ TAO_ECG_UDP_Receiver::handle_timeout (const ACE_Time_Value& /* tv */,
           Request_Map_Entry& entry = *j;
           ++j;
           {
+            // ACE_DEBUG ((LM_DEBUG,
+            //            "TAO_ECG_UDP_Receiver::handle_timeout (%P|%t) "
+            //            "msg = %d\n",
+            //            entry.ext_id_.request_id));
             delete entry.int_id_;
             this->request_map_.unbind (&entry);
           }

@@ -300,6 +300,7 @@ public:
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                       RtecScheduler::Scheduler_ptr scheduler,
+                      TAO_ECG_UDP_Out_Endpoint* ignore_from,
                       CORBA::Environment &_env);
   // Connect the UDP receiver to the EC.
 
