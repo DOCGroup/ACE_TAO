@@ -65,6 +65,9 @@
 /// Enable exceptions
 #define ACE_HAS_EXCEPTIONS
 
+/// Enable timeprobes
+#define ACE_COMPILE_TIMEPROBES
+
 /// TAO features that should be documented too
 #define TAO_HAS_RT_CORBA 1
 #define TAO_HAS_MINIMUM_CORBA 0
