@@ -1,3 +1,9 @@
+Mon Aug  7 21:50:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Smart_Proxies/Makefile: Applied the patch sent by Craig 
+	  Rodrigues <rodrigc@mediaone.net> to resolve build problems on 
+	  Linux. Thanks Craig!
+		
 Mon Aug  7 05:08:32 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton.cpp:
