@@ -1,3 +1,10 @@
+Wed Aug 27 13:14:24 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp: Added explicit
+	  template instantiations to fix link errors in
+	  RH71_Explicit_Templates build.
+
 Wed Aug 27 16:58:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
