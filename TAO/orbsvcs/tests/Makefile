@@ -15,7 +15,8 @@ DIRS  =	Simple_Naming \
 
 ifdef av
 ## Add the implementation files 
-DIRS += AVStreams
+DIRS += AVStreams\
+	CosPropertyService
 endif
 
 #----------------------------------------------------------------------------
