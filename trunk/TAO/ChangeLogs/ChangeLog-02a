@@ -2,13 +2,14 @@ Wed Dec  6 01:17:17 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Banded_Connections/server.conf
 	* tests/RTCORBA/Server_Protocol/server_reverse.conf
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf
-
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
 	* tests/RTCORBA/Banded_Connections/README
 	* tests/RTCORBA/Banded_Connections/run_test.pl
 	* tests/RTCORBA/Client_Propagated/run_test.pl
 	* tests/RTCORBA/Client_Protocol/run_test.pl
-	* tests/RTCORBA/Server_Protocol/run_test.pl
+	* tests/RTCORBA/Server_Protocol/run_test.pl:
+
+	 Updated.
 
 	* tests/RTCORBA/Banded_Connections/client.conf
 	* tests/RTCORBA/Client_Protocol/client_nt.conf
@@ -20,6 +21,8 @@ Wed Dec  6 01:17:17 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/RTCORBA/Server_Protocol/server_nt.conf
 	* tests/RTCORBA/Server_Protocol/server_uiop.conf
 	* tests/RTCORBA/Server_Protocol/svc.conf:
+
+	  Removed.
 
 	  Cleaned up RTCORBA tests after Priyanka's Strategy
 	  library-related changes: removed unnecessary config files,
