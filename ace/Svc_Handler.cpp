@@ -111,20 +111,28 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
   ACE_PEER_STREAM_ADDR client_addr;
 
   if (this->peer_.get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("get_remote_addr")), -1);
-
-  if (client_addr.addr_to_string (buf, sizeof buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("can't obtain peer's address")), -1);
-
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("connected to %s on fd %d\n"),
-              buf, this->peer_.get_handle ()));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("get_remote_addr")),
+                      -1);
+  else if (client_addr.addr_to_string (buf, sizeof buf) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("can't obtain peer's address")),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("connected to %s on fd %d\n"),
+              buf,
+              this->peer_.get_handle ()));
 #endif /* DEBUGGING */
   if (this->reactor ()
       && this->reactor ()->register_handler
-      (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("unable to register client handler")), -1);
+      (this,
+       ACE_Event_Handler::READ_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("unable to register client handler")),
+                      -1);
   return 0;
 }
 
