@@ -1,3 +1,11 @@
+Thu Jul 10 01:53:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* clients/Caching/http_handler.{h,cpp}: Added some comments to the
+	  code.  Also, moved the code to check to see if the file is in
+	  cache already into the connector, so that a connect is not
+	  done if the file is cached.  This required a filename ()
+	  accessor method to be added to the handler.
+
 Wed Jul  9 13:08:00 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* clients/Caching/http_handler.cpp (svc): Added code to check to
