@@ -11,11 +11,9 @@ ACE_RCSID (tao,
 
 template<typename S, typename to_S, typename from_S>
 TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::In_Special_Basic_Argument_T (
-    const S & x, 
-    char const * argname
+    const S & x
   )
-  : Argument (argname),
-    x_ (x)
+  : x_ (x)
 {}
 
 template<typename S, typename to_S, typename from_S>
@@ -46,10 +44,8 @@ TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::add_to_interceptor (
 
 template<typename S, typename to_S, typename from_S>
 TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::
-Inout_Special_Basic_Argument_T (S & x, 
-                                char const * argname)
-  : Argument (argname),
-    x_ (x)
+Inout_Special_Basic_Argument_T (S & x)
+  : x_ (x)
 {}
 
 template<typename S, typename to_S, typename from_S>
@@ -84,10 +80,8 @@ TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::add_to_interceptor (
 
 template<typename S, typename to_S, typename from_S>
 TAO::Out_Special_Basic_Argument_T<S,to_S,from_S>::
-Out_Special_Basic_Argument_T (S & x, 
-                              char const * argname)
-  : Argument (argname),
-    x_ (x)
+Out_Special_Basic_Argument_T (S & x)
+  : x_ (x)
 {}
 
 template<typename S, typename to_S, typename from_S>
@@ -117,10 +111,8 @@ TAO::Out_Special_Basic_Argument_T<S,to_S,from_S>::add_to_interceptor (
 // ============================================================
 
 template<typename S, typename to_S, typename from_S>
-TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::Ret_Special_Basic_Argument_T (
-    S const & x
-  )
-  : x_ (ACE_const_cast (S &, x))
+TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::
+Ret_Special_Basic_Argument_T (void)
 {
 }
 
@@ -146,10 +138,7 @@ TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::add_to_interceptor (
 
 template<typename S, typename to_S, typename from_S>
 TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::
-In_Special_Basic_SArgument_T (S const & x, 
-                              char const * argname)
-  : Argument (argname),
-    x_ (ACE_const_cast (S &, x))
+In_Special_Basic_SArgument_T (void)
 {}
 
 template<typename S, typename to_S, typename from_S>
@@ -188,10 +177,7 @@ TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::operator S () const
 
 template<typename S, typename to_S, typename from_S>
 TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::
-Inout_Special_Basic_SArgument_T (S const & x, 
-                                 char const * argname)
-  : Argument (argname),
-    x_ (ACE_const_cast (S &, x))
+Inout_Special_Basic_SArgument_T (void)
 {}
 
 template<typename S, typename to_S, typename from_S>
@@ -232,10 +218,7 @@ TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::operator S & ()
 
 template<typename S, typename to_S, typename from_S>
 TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::
-Out_Special_Basic_SArgument_T (S const & x, 
-                               char const * argname)
-  : Argument (argname),
-    x_ (ACE_const_cast (S &, x))
+Out_Special_Basic_SArgument_T (void)
 {}
 
 template<typename S, typename to_S, typename from_S>
@@ -271,10 +254,8 @@ TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::operator S & ()
 // ==============================================================
 
 template<typename S, typename to_S, typename from_S>
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::Ret_Special_Basic_SArgument_T (
-    S const & x
-   )
-  : x_ (ACE_const_cast (S &, x))
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::
+Ret_Special_Basic_SArgument_T (void)
 {
 }
 

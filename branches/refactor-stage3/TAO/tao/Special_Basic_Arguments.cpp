@@ -8,10 +8,10 @@ ACE_RCSID (tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO::Traits<CORBA::Char>;
-template class TAO::Traits<CORBA::WChar>;
-template class TAO::Traits<CORBA::Octet>;
-template class TAO::Traits<ACE_InputCDR::to_boolean>;
+template class TAO::Arg_Traits<CORBA::Char>;
+template class TAO::Arg_Traits<CORBA::WChar>;
+template class TAO::Arg_Traits<CORBA::Octet>;
+template class TAO::Arg_Traits<ACE_InputCDR::to_boolean>;
 
 template class TAO::Special_Basic_Arg_Traits_T<CORBA::Char,
                                                ACE_InputCDR::to_char,
@@ -31,10 +31,10 @@ template class TAO::Special_Basic_Arg_Traits_T<CORBA::Boolean,
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Traits<CORBA::Char>
-# pragma instantiate TAO::Traits<CORBA::WChar>
-# pragma instantiate TAO::Traits<CORBA::Octet>
-# pragma instantiate TAO::Traits<ACE_InputCDR::to_boolean>
+# pragma instantiate TAO::Arg_Traits<CORBA::Char>
+# pragma instantiate TAO::Arg_Traits<CORBA::WChar>
+# pragma instantiate TAO::Arg_Traits<CORBA::Octet>
+# pragma instantiate TAO::Arg_Traits<ACE_InputCDR::to_boolean>
 
 # pragma instantiate TAO::Special_Basic_Arg_Traits_T< \
                               CORBA::Char, \

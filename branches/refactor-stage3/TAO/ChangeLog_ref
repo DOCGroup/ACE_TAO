@@ -1,3 +1,32 @@
+Wed Jun 18 19:09:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Renamed Traits_T.h as this.
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+
+          Removed string argument name member - it's never used.
+
+        * tao/Traits_T.h:
+
+          Renamed this as Arg_Traits_T.h.
+
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+
+          New files, for unbounded string and wstring arguments.
+
 Tue Jun 17 18:27:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Argument.h:
