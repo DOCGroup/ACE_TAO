@@ -126,7 +126,12 @@ test_ace_u_longlong (void)
                                   (ACE_U_LongLong) (ull6 % 0x20007),
                                   0, 0x3f63);
 
-  ACE_U_LongLong ull7 (37500);
+  ACE_U_LongLong ull7 (12);
+  ull7 *= 3125;
+  errors += check_ace_u_longlong ("12 * 3125",
+                                  ull7,
+                                  0, 37500);
+
   ull7 *= 100;
   errors += check_ace_u_longlong ("37500 * 100",
                                   ull7,
