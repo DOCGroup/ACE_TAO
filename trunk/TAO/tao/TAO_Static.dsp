@@ -235,6 +235,10 @@ SOURCE=.\default_client.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Protocols_Hooks.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\default_resource.h
 # End Source File
 # Begin Source File
@@ -619,6 +623,10 @@ SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Protocols_Hooks.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
@@ -647,6 +655,10 @@ SOURCE=.\RT_Current.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Invocation_Endpoint_Selectors.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Mutex.h
 # End Source File
 # Begin Source File
@@ -664,6 +676,10 @@ SOURCE=.\RT_Policy_i.h
 # Begin Source File
 
 SOURCE=.\RT_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Protocols_Hooks.h
 # End Source File
 # Begin Source File
 
@@ -952,6 +968,10 @@ SOURCE=.\CurrentC.i
 # Begin Source File
 
 SOURCE=.\default_client.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Protocols_Hooks.i
 # End Source File
 # Begin Source File
 
@@ -1279,6 +1299,10 @@ SOURCE=.\RT_Current.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Invocation_Endpoint_Selectors.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Mutex.i
 # End Source File
 # Begin Source File
@@ -1288,6 +1312,10 @@ SOURCE=.\RT_ORB.i
 # Begin Source File
 
 SOURCE=.\RT_Policy_i.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Protocols_Hooks.i
 # End Source File
 # Begin Source File
 
@@ -1568,6 +1596,10 @@ SOURCE=.\debug.cpp
 # Begin Source File
 
 SOURCE=.\default_client.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Protocols_Hooks.cpp
 # End Source File
 # Begin Source File
 
@@ -1919,6 +1951,10 @@ SOURCE=.\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Protocols_Hooks.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
@@ -1947,6 +1983,10 @@ SOURCE=.\RT_Current.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Mutex.cpp
 # End Source File
 # Begin Source File
@@ -1964,6 +2004,10 @@ SOURCE=.\RT_Policy_i.cpp
 # Begin Source File
 
 SOURCE=.\RT_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Protocols_Hooks.cpp
 # End Source File
 # Begin Source File
 
