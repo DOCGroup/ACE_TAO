@@ -398,7 +398,6 @@ private:
 private: \
 ACE_UNIMPLEMENTED_FUNC (CLASSNAME (void)) \
 ACE_UNIMPLEMENTED_FUNC (CLASSNAME (const CLASSNAME&)) \
-class ace_dewarn_gplusplus; \
 friend class ace_dewarn_gplusplus
 
 // These hooks enable ACE to have all dynamic memory management
