@@ -216,6 +216,11 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD>
   </TR>
   <TR>
+    <TD><CODE>-ORBNodelay</CODE> <EM>boolean (0|1)</EM></TD>
+    <TD><A NAME="-ORBNodelay"></a>Enable or disable the TCP_NODELAY
+        option. By default, TCP_NODELAY is enabled.</TD>
+  </TR>
+  <TR>
     <TD><CODE>-ORBNameServicePort</CODE> <EM>portspec</EM></TD>
     <TD>Specifies which port the Naming Service is listening on for
         multicast requests. By default,
@@ -318,7 +323,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         homogenous environments..</TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0 / 1)</EM></TD>
+    <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0|1)</EM></TD>
     <TD><A name="-ORBDottedDecimalAddresses"></a> Use the dotted decimal
         notation for addresses. By default domain names are used in IORs.</TD>
   </TR>
@@ -343,7 +348,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   </TR>
 
   <TR>
-    <TD><CODE>-ORBStdProfileComponents</CODE> <EM>boolean (0 / 1)</EM></TD>
+    <TD><CODE>-ORBStdProfileComponents</CODE> <EM>boolean (0|1)</EM></TD>
     <TD><A name="-ORBStdProfileComponents"></a> If <EM>0</EM> then the ORB
         does not generate the OMG standarized profile
         components, such as the ORB type and codesets.
