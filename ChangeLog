@@ -1,3 +1,14 @@
+Tue May 14 19:14:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/TP_Reactor_Test.cpp (Connector):
+	  Fixed the warnings by removing the check condition 
+	  'size_t index_ >= 0' which is always going to be true.
+
+	* tests/Proactor_Test.cpp:
+	  Integrated the changes sent by Alex Libman
+	  <AlexL@rumblegroup.com>to fix the test on
+	  linux and other platforms that has a weak AIO implementation.
+
 Mon May 13 16:43:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/parser/parser/Parser.cpp (parse_xml_prolog):
