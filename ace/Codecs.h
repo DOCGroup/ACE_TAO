@@ -99,7 +99,7 @@ private:
   static const ACE_Byte pad_;
 
   /// Boolean to denote whether initialization is complete
-  static bool init_;
+  static int init_;
 
   /// Number of columns per line of encoded output (Can have a max value of 76)
   static int max_columns_;

@@ -324,11 +324,8 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
                  this->allocator_->malloc ((this->buf_len_ + 1) *
                                            sizeof (ACE_WSTRING_TYPE)));
   this->release_ = 1;
-  size_t i;
-  for (i = 0; i < this->buf_len_; i++)
+  for (size_t i = 0; i <= this->buf_len_; i++)
     this->rep_[i] = s[i];
-  this->rep_[i] = 0;
-
 }
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)

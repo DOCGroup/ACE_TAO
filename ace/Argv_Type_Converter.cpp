@@ -17,9 +17,9 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int& argc, wchar_t** argv)
     , char_argv_ (0)
     , wchar_argv_ (argv)
     , before_pass_argc_ (argc)
-    , original_type_ (true)
-    , wchar_passed_ (false)
-    , char_passed_ (false)
+    , original_type_ (1)
+    , wchar_passed_ (0)
+    , char_passed_ (0)
 {
   this->initialize ();
 
@@ -38,9 +38,9 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int& argc, char** argv)
 #if defined (ACE_USES_WCHAR)
     , wchar_argv_(0)
     , before_pass_argc_(argc)
-    , original_type_(false)
-    , wchar_passed_(false)
-    , char_passed_(false)
+    , original_type_(0)
+    , wchar_passed_(0)
+    , char_passed_(0)
 {
   this->initialize();
 
@@ -192,7 +192,7 @@ ACE_Argv_Type_Converter::cleanup (void)
 
   this->before_pass_argc_ = this->saved_argc_;
 
-  this->wchar_passed_ = false;
-  this->char_passed_ = false;
+  this->wchar_passed_ = 0;
+  this->char_passed_ = 0;
 }
 #endif  // ACE_USES_WCHAR

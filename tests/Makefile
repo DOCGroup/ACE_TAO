@@ -8,6 +8,7 @@
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
+DIRS_PARALLEL = 1
 
 BIN =   Aio_Platform_Test \
         Arg_Shifter_Test \
@@ -168,7 +169,7 @@ else
 endif
 
 ifeq ($(shared_libs),1)
-# Both the Service_Config_Test and Framework_Component_Test dynamically load 
+# Both the Service_Config_Test and Framework_Component_Test dynamically load
 # a shared library.
   BIN += Service_Config_Test
   BIN += Framework_Component_Test
@@ -197,9 +198,9 @@ ifndef SOEXT
 endif
 ifdef shared_libs
   ifndef VXWORKS
-    #### Build libFramework_Component_DLL, libDLL_Test, and 
-    #### libService_Config_DLL libraries first, so that they 
-    #### don't see the template instantiations from all of the 
+    #### Build libFramework_Component_DLL, libDLL_Test, and
+    #### libService_Config_DLL libraries first, so that they
+    #### don't see the template instantiations from all of the
     #### tests.
     BUILD := \
       libFramework_Component_DLL.$(SOEXT) \
