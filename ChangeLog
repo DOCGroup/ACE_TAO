@@ -1,3 +1,21 @@
+Wed Nov 26 12:10:22 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_NS_signal.h: Put the typedef for ACE_SIGNAL_C_FUNC inside
+	  of an extern "C" block to quiet warnings on Solaris.  Thanks to
+	  Kevin Heifner <heifner_k@ociweb.com> for this suggestion!
+
+	* ace/POSIX_Proactor.cpp: Made the sig_handler() function static
+	  so that it won't "leak" out of ACE!
+
+	* tests/Log_Msg_Test.cpp (test_format_specs): 
+	* ace/Log_Msg.cpp (log): ACE_Log_Msg::log has a number of problems
+	  when ACE is built with ACE_USES_WCHAR  
+	  1) %m needs to convert strerror to wide string
+	  2) %I should not use memset to set spaces in wide string
+	  3) recent modifications to remove dependencies on ACE_TRACE
+	     prevent %I from indenting 
+	  Thanks to Duane Binder for these fixes.
+
 Wed Nov 26 12:15:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:
