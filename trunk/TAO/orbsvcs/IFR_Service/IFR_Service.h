@@ -47,7 +47,7 @@ public:
 
   int init (int argc,
             char *argv[]
-            ACE_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Initialize the IFR service.
   
   int init_with_orb (int argc,
@@ -55,26 +55,26 @@ public:
 		     CORBA::ORB_ptr orb);
   // Initialize the IFR service with the command line arguments and the ORB.
   
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Run the IFR service.
 
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Shut down the IFR service.
 
 protected:
-  int create_poas (ACE_ENV_SINGLE_ARG_DECL);
+  int create_poas (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Two persistent POAs, one using a servant locator.
 
-  int create_locator (ACE_ENV_SINGLE_ARG_DECL);
+  int create_locator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Create a servant locator and register it with its POA.
 
-  int open_config (ACE_ENV_SINGLE_ARG_DECL);
+  int open_config (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Open an ACE_Configuration of the appropriate type.
 
-  int create_repository (ACE_ENV_SINGLE_ARG_DECL);
+  int create_repository (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Create and initialize the repository.
 
-  int init_multicast_server (ACE_ENV_SINGLE_ARG_DECL);
+  int init_multicast_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Enable the Interface Repository to answer multicast requests
   // for its IOR.
 
