@@ -1,3 +1,21 @@
+Wed Mar 21 17:28:26 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.h: Moved definition of typedef for
+          ACE_DEFAULT_MESSAGE_QUEUE_TYPE from Message_Queue.h to
+          Message_Queue_T.h, just after defining ACE_Message_Queue<>.
+          Fixes the case where Message_Queue_T.h is included first,
+          it includes Message_Queue.h before ACE_Message_Queue<> is
+          defined, and that breaks the compile. IBM C/C++ hit this.
+
+Wed Mar 21 16:42:19 2001  Steve Huston  <shuston@riverace.com>
+
+        * bin/auto_compile: Added an option: -notao to ignore the TAO aspects
+          of the non-configurable things, like looking at the TAO/ChangeLog.
+          Also, now looks for auto_run_tests.lst in the $BUILD/bin directory,
+          not the $MODULE/bin directory - this allows some builds to specify
+          their own lists.
+
 Wed Mar 21 16:00:56 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
           The followings are contributions from Scott Snyder
