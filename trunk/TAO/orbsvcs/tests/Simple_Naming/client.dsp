@@ -17,8 +17,10 @@ CFG=Simple Naming Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Naming Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Naming Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -64,7 +66,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -72,7 +75,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs"
+# ADD LINK32 aced.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
@@ -80,9 +83,131 @@ LINK32=link.exe
 
 # Name "Simple Naming Client - Win32 Release"
 # Name "Simple Naming Client - Win32 Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\clnt.cpp
+SOURCE=.\client.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\test_objectC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_objectS.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ".h"
+# Begin Source File
+
+SOURCE=.\client.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_objectC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_objectS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_objectS_T.h
+
+!IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ".idl"
+# Begin Source File
+
+SOURCE=.\test_object.idl
+
+!IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
+
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\test_object.idl
+InputName=test_object
+
+BuildCmds= \
+	..\..\..\TAO_IDL\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\test_objectC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_objectS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_objectS_T.i
+# End Source File
+# End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\test_objectS_T.cpp
+
+!IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# End Group
 # End Target
 # End Project
