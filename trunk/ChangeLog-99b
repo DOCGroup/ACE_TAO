@@ -1,3 +1,14 @@
+Mon May 24 14:04:11 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Send_Recv_Test.cpp: New test to exercise ACE_SOCK send
+          and receive variations.  It concentrates on recvv/sendv-like things
+          now in order to shake out Winsock 1.1 issues.  To be complete, it
+          should be added to over time.
+
+        * tests/Makefile:
+        * tests/version_tests/{SOCK_Send_Recv_Test.dsp, version_tests.dsw}:
+        * tests/{SOCK_Send_Recv_Test.dsp, tests.dsw}: Add new test.
+
 Mon May 24 12:11:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (ACE_SOCKCALL_RETURN): Fixed macro by comparing against
