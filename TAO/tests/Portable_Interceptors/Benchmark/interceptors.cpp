@@ -4,13 +4,11 @@
 
 ACE_RCSID(Benchmark, interceptors, "$Id$")
 
-#if (TAO_HAS_INTERCEPTORS == 1)
 const CORBA::ULong request_ctx_id = 0xdead;
 //const CORBA::ULong reply_ctx_id = 0xbeef;   // Never used.
 
-Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Client_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor (void)
+  : myname_ ("Vault_Client_Interceptor")
 {
 }
 
@@ -33,7 +31,7 @@ Vault_Client_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Client_Request_Interceptor::name (CORBA::Environment &)
+Vault_Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
@@ -41,8 +39,8 @@ Vault_Client_Request_Interceptor::name (CORBA::Environment &)
 
 void
 Vault_Client_Request_Interceptor::send_poll (
-                PortableInterceptor::ClientRequestInfo_ptr,
-                CORBA::Environment &
+                PortableInterceptor::ClientRequestInfo_ptr
+                TAO_ENV_ARG_DECL_NOT_USED
                 )
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -50,8 +48,9 @@ Vault_Client_Request_Interceptor::send_poll (
 }
 
 void
-Vault_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                               CORBA::Environment &)
+Vault_Client_Request_Interceptor::send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -86,8 +85,9 @@ Vault_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReque
 }
 
 void
-Vault_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                CORBA::Environment &)
+Vault_Client_Request_Interceptor::receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (ri->operation (), "update_records") == 0)
@@ -101,8 +101,8 @@ Vault_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequ
 
 void 
 Vault_Client_Request_Interceptor::receive_other (
-               PortableInterceptor::ClientRequestInfo_ptr,
-               CORBA::Environment &
+               PortableInterceptor::ClientRequestInfo_ptr
+               TAO_ENV_ARG_DECL_NOT_USED
                )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
@@ -111,33 +111,32 @@ Vault_Client_Request_Interceptor::receive_other (
 }
 
 void
-Vault_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
-                                                    CORBA::Environment &)
+Vault_Client_Request_Interceptor::receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr rinfo
+      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  TAO_ClientRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ClientRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ClientRequestInfo::_narrow
-                               )
-                              )
-                             );
-  // As of now, there is no way to extract an exception from an Any in TAO.
-  CORBA::Exception *e = ri->_received_exception ();
+  TAO_ENV_ARG_DEFN;
 
-  if (! (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0))
+  CORBA::Any_var any = rinfo->received_exception (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::TypeCode_var tc = any->type ();
+
+  const char *id = tc->id (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::String_var exception_id =
+    rinfo->received_exception_id (ACE_TRY_ENV);
+
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
     ACE_ASSERT ("Exception id mismatch\n");
 }
 
 
-Vault_Server_Request_Interceptor::Vault_Server_Request_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Server_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Server_Request_Interceptor::Vault_Server_Request_Interceptor (void)
+  : myname_ ("Vault_Server_Interceptor")
 {
 }
 
@@ -160,18 +159,21 @@ Vault_Server_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Server_Request_Interceptor::name (CORBA::Environment &)
+Vault_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+Vault_Server_Request_Interceptor::receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
   if (ACE_OS::strcmp (ri->operation (), "authenticate") == 0)
     {
 
@@ -181,7 +183,8 @@ Vault_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRe
      if (sc == 0)
        ACE_THROW (CORBA::NO_MEMORY ());
 
-     const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+     const char *buf = ACE_reinterpret_cast (const char *,
+                                             sc->context_data.get_buffer ());
      if (ACE_OS::strcmp (buf, "root123") !=0)
        ACE_THROW (Test_Interceptors::Invalid ());
     }
@@ -200,8 +203,8 @@ Vault_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRe
 
 void 
 Vault_Server_Request_Interceptor::receive_request_service_contexts (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment &)
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -209,8 +212,9 @@ Vault_Server_Request_Interceptor::receive_request_service_contexts (
 }
 
 void
-Vault_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                             CORBA::Environment &)
+Vault_Server_Request_Interceptor::send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (ri->operation (), "update_records") == 0)
@@ -222,31 +226,19 @@ Vault_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequest
 }
 
 void
-Vault_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
-                                                 CORBA::Environment &)
+Vault_Server_Request_Interceptor::send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ServerRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ServerRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ServerRequestInfo::_narrow
-                               )
-                              )
-                             );
-
-  ri->_sending_exception ();
-
+  // Do Nothing
 }
 
 void 
 Vault_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -256,9 +248,8 @@ Vault_Server_Request_Interceptor::send_other (
 
 //////////////////////////////////  Context /////////////////////////
 
-Vault_Client_Request_Context_Interceptor::Vault_Client_Request_Context_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Client_Context_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Client_Request_Context_Interceptor::Vault_Client_Request_Context_Interceptor (void)
+  : myname_ ("Vault_Client_Context_Interceptor")
 {
 }
 
@@ -281,7 +272,7 @@ Vault_Client_Request_Context_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Client_Request_Context_Interceptor::name (CORBA::Environment &)
+Vault_Client_Request_Context_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
@@ -289,8 +280,8 @@ Vault_Client_Request_Context_Interceptor::name (CORBA::Environment &)
 
 void
 Vault_Client_Request_Context_Interceptor::send_poll (
-                PortableInterceptor::ClientRequestInfo_ptr,
-                CORBA::Environment &
+                PortableInterceptor::ClientRequestInfo_ptr
+                TAO_ENV_ARG_DECL_NOT_USED
                 )
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -298,8 +289,9 @@ Vault_Client_Request_Context_Interceptor::send_poll (
 }
 
 void
-Vault_Client_Request_Context_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                        CORBA::Environment &)
+Vault_Client_Request_Context_Interceptor::send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -323,8 +315,8 @@ Vault_Client_Request_Context_Interceptor::send_request (PortableInterceptor::Cli
 
 void 
 Vault_Client_Request_Context_Interceptor::receive_other (
-               PortableInterceptor::ClientRequestInfo_ptr,
-               CORBA::Environment &
+               PortableInterceptor::ClientRequestInfo_ptr
+               TAO_ENV_ARG_DECL_NOT_USED
                )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
@@ -333,43 +325,41 @@ Vault_Client_Request_Context_Interceptor::receive_other (
 }
 
 void
-Vault_Client_Request_Context_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr,
-                                                CORBA::Environment &)
+Vault_Client_Request_Context_Interceptor::receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
-Vault_Client_Request_Context_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
-                                                    CORBA::Environment &)
+Vault_Client_Request_Context_Interceptor::receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr rinfo
+      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  TAO_ClientRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ClientRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ClientRequestInfo::_narrow
-                               )
-                              )
-                             );
+  TAO_ENV_ARG_DEFN;
 
-  // As of now, there is no way to extract an exception from an Any in TAO.
-  CORBA::Exception *e = ri->_received_exception ();
+  CORBA::Any_var any = rinfo->received_exception (ACE_TRY_ENV);
+  ACE_CHECK;
 
+  CORBA::TypeCode_var tc = any->type ();
 
-  if (! (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0))
+  const char *id = tc->id (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::String_var exception_id =
+    rinfo->received_exception_id (ACE_TRY_ENV);
+
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
     ACE_ASSERT ("Exception id mismatch\n");
 }
 
 
-Vault_Server_Request_Context_Interceptor::Vault_Server_Request_Context_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Server_Context_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Server_Request_Context_Interceptor::Vault_Server_Request_Context_Interceptor (void)
+  : myname_ ("Vault_Server_Context_Interceptor")
 {
 }
 
@@ -392,33 +382,37 @@ Vault_Server_Request_Context_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Server_Request_Context_Interceptor::name (CORBA::Environment &)
+Vault_Server_Request_Context_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Server_Request_Context_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+Vault_Server_Request_Context_Interceptor::receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext *sc = ri->get_request_service_context (id);
 
   if (sc == 0)
     ACE_THROW (CORBA::NO_MEMORY ());
 
-  const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+  const char *buf = ACE_reinterpret_cast (const char *,
+                                          sc->context_data.get_buffer ());
   if (ACE_OS::strcmp (buf, "root123") !=0)
     ACE_THROW (Test_Interceptors::Invalid ());
 }
 
 void
 Vault_Server_Request_Context_Interceptor::receive_request_service_contexts(
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -426,38 +420,27 @@ Vault_Server_Request_Context_Interceptor::receive_request_service_contexts(
 }
 
 void
-Vault_Server_Request_Context_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr,
-                                                      CORBA::Environment &)
+Vault_Server_Request_Context_Interceptor::send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
-Vault_Server_Request_Context_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
-                                                 CORBA::Environment &)
+Vault_Server_Request_Context_Interceptor::send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ServerRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ServerRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ServerRequestInfo::_narrow
-                               )
-                              )
-                             );
-  ri->_sending_exception ();
-
 }
 
 void 
 Vault_Server_Request_Context_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -466,9 +449,8 @@ Vault_Server_Request_Context_Interceptor::send_other (
 
 ///////////////////////////////////Dynamic ////////////////////////////////////
 
-Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Client_Dynamic_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Interceptor (void)
+  : myname_ ("Vault_Client_Dynamic_Interceptor")
 {
 }
 
@@ -491,7 +473,7 @@ Vault_Client_Request_Dynamic_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Client_Request_Dynamic_Interceptor::name (CORBA::Environment &)
+Vault_Client_Request_Dynamic_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
@@ -499,8 +481,8 @@ Vault_Client_Request_Dynamic_Interceptor::name (CORBA::Environment &)
 
 void
 Vault_Client_Request_Dynamic_Interceptor::send_poll (
-                PortableInterceptor::ClientRequestInfo_ptr,
-                CORBA::Environment &
+                PortableInterceptor::ClientRequestInfo_ptr
+                TAO_ENV_ARG_DECL_NOT_USED
                 )
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -508,8 +490,9 @@ Vault_Client_Request_Dynamic_Interceptor::send_poll (
 }
 
 void
-Vault_Client_Request_Dynamic_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                               CORBA::Environment &)
+Vault_Client_Request_Dynamic_Interceptor::send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -532,8 +515,9 @@ Vault_Client_Request_Dynamic_Interceptor::send_request (PortableInterceptor::Cli
 }
 
 void
-Vault_Client_Request_Dynamic_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                         CORBA::Environment &)
+Vault_Client_Request_Dynamic_Interceptor::receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -555,8 +539,8 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (PortableInterceptor::Cl
 
 void 
 Vault_Client_Request_Dynamic_Interceptor::receive_other (
-               PortableInterceptor::ClientRequestInfo_ptr,
-               CORBA::Environment &
+               PortableInterceptor::ClientRequestInfo_ptr
+               TAO_ENV_ARG_DECL_NOT_USED
                )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
@@ -565,34 +549,32 @@ Vault_Client_Request_Dynamic_Interceptor::receive_other (
 }
 
 void
-Vault_Client_Request_Dynamic_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
-                                                             CORBA::Environment &)
+Vault_Client_Request_Dynamic_Interceptor::receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr rinfo
+      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  TAO_ClientRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ClientRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ClientRequestInfo::_narrow
-                               )
-                              )
-                             );
+  TAO_ENV_ARG_DEFN;
 
-  // As of now, there is no way to extract an exception from an Any in TAO.
-  CORBA::Exception *e = ri->_received_exception ();
+  CORBA::Any_var any = rinfo->received_exception (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  if (! (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0))
+  CORBA::TypeCode_var tc = any->type ();
+
+  const char *id = tc->id (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::String_var exception_id =
+    rinfo->received_exception_id (ACE_TRY_ENV);
+
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
     ACE_ASSERT ("Exception id mismatch\n");
 }
 
 
-Vault_Server_Request_Dynamic_Interceptor::Vault_Server_Request_Dynamic_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Server_Dynamic_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Server_Request_Dynamic_Interceptor::Vault_Server_Request_Dynamic_Interceptor (void)
+  : myname_ ("Vault_Server_Dynamic_Interceptor")
 {
 }
 
@@ -615,15 +597,16 @@ Vault_Server_Request_Dynamic_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Server_Request_Dynamic_Interceptor::name (CORBA::Environment &)
+Vault_Server_Request_Dynamic_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Server_Request_Dynamic_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                           CORBA::Environment &)
+Vault_Server_Request_Dynamic_Interceptor::receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -646,8 +629,8 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (PortableInterceptor::
 
 void
 Vault_Server_Request_Dynamic_Interceptor::receive_request_service_contexts(
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -655,8 +638,9 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request_service_contexts(
 }
 
 void
-Vault_Server_Request_Dynamic_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                             CORBA::Environment &)
+Vault_Server_Request_Dynamic_Interceptor::send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -676,31 +660,18 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (PortableInterceptor::Serve
 }
 
 void
-Vault_Server_Request_Dynamic_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
-                                                 CORBA::Environment &)
+Vault_Server_Request_Dynamic_Interceptor::send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ServerRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ServerRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ServerRequestInfo::_narrow
-                               )
-                              )
-                             );
-
-  ri->_sending_exception ();
-
 }
 
 void 
 Vault_Server_Request_Dynamic_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment &)
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -709,9 +680,8 @@ Vault_Server_Request_Dynamic_Interceptor::send_other (
 
 //////////////////////////////NOOP///////////////////////////////////////
 
-Vault_Client_Request_NOOP_Interceptor::Vault_Client_Request_NOOP_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Client_NOOP_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Client_Request_NOOP_Interceptor::Vault_Client_Request_NOOP_Interceptor (void)
+  : myname_ ("Vault_Client_NOOP_Interceptor")
 {
 }
 
@@ -734,7 +704,7 @@ Vault_Client_Request_NOOP_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Client_Request_NOOP_Interceptor::name (CORBA::Environment &)
+Vault_Client_Request_NOOP_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
@@ -742,8 +712,8 @@ Vault_Client_Request_NOOP_Interceptor::name (CORBA::Environment &)
 
 void
 Vault_Client_Request_NOOP_Interceptor::send_poll (
-                PortableInterceptor::ClientRequestInfo_ptr,
-                CORBA::Environment &
+                PortableInterceptor::ClientRequestInfo_ptr
+                TAO_ENV_ARG_DECL_NOT_USED
                 )
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -751,8 +721,9 @@ Vault_Client_Request_NOOP_Interceptor::send_poll (
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr,
-                                               CORBA::Environment &)
+Vault_Client_Request_NOOP_Interceptor::send_request (
+      PortableInterceptor::ClientRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -761,8 +732,8 @@ Vault_Client_Request_NOOP_Interceptor::send_request (PortableInterceptor::Client
 
 void 
 Vault_Client_Request_NOOP_Interceptor::receive_other (
-               PortableInterceptor::ClientRequestInfo_ptr,
-               CORBA::Environment &
+               PortableInterceptor::ClientRequestInfo_ptr
+               TAO_ENV_ARG_DECL_NOT_USED
                )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
@@ -771,42 +742,41 @@ Vault_Client_Request_NOOP_Interceptor::receive_other (
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr,
-                                                CORBA::Environment &)
+Vault_Client_Request_NOOP_Interceptor::receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
-                                                    CORBA::Environment &)
+Vault_Client_Request_NOOP_Interceptor::receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr rinfo
+      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  TAO_ClientRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ClientRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ClientRequestInfo::_narrow
-                               )
-                              )
-                             );
+  TAO_ENV_ARG_DEFN;
 
-  // As of now, there is no way to extract an exception from an Any in TAO.
-  CORBA::Exception *e = ri->_received_exception ();
+  CORBA::Any_var any = rinfo->received_exception (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  if (! (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0))
+  CORBA::TypeCode_var tc = any->type ();
+
+  const char *id = tc->id (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::String_var exception_id =
+    rinfo->received_exception_id (ACE_TRY_ENV);
+
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
     ACE_ASSERT ("Exception id mismatch\n");
 }
 
 
-Vault_Server_Request_NOOP_Interceptor::Vault_Server_Request_NOOP_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Vault_Server_NOOP_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Vault_Server_Request_NOOP_Interceptor::Vault_Server_Request_NOOP_Interceptor (void)
+  : myname_ ("Vault_Server_NOOP_Interceptor")
 {
 }
 
@@ -829,15 +799,16 @@ Vault_Server_Request_NOOP_Interceptor::_remove_ref (void)
 }
 
 char *
-Vault_Server_Request_NOOP_Interceptor::name (CORBA::Environment &)
+Vault_Server_Request_NOOP_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Server_Request_NOOP_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
-                                                        CORBA::Environment &)
+Vault_Server_Request_NOOP_Interceptor::receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -846,8 +817,8 @@ Vault_Server_Request_NOOP_Interceptor::receive_request (PortableInterceptor::Ser
 
 void
 Vault_Server_Request_NOOP_Interceptor::receive_request_service_contexts(
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -855,44 +826,29 @@ Vault_Server_Request_NOOP_Interceptor::receive_request_service_contexts(
 }
 
 void
-Vault_Server_Request_NOOP_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr,
-                                             CORBA::Environment &)
+Vault_Server_Request_NOOP_Interceptor::send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
-Vault_Server_Request_NOOP_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
-                                                 CORBA::Environment &)
+Vault_Server_Request_NOOP_Interceptor::send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr
+      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ServerRequest_Info *ri
-    =  ACE_reinterpret_cast (TAO_ServerRequest_Info *,
-                             rinfo->_tao_QueryInterface
-                             (
-                              ACE_reinterpret_cast
-                              (
-                               ptr_arith_t,
-                               &PortableInterceptor::ServerRequestInfo::_narrow
-                               )
-                              )
-                             );
-
-
-  ri->_sending_exception ();
-
 }
 
 void 
 Vault_Server_Request_NOOP_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
-
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */
