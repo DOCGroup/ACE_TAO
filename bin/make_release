@@ -614,6 +614,9 @@ sub create_kit () {
 
   my $dest = $install  ?  "$export_dir"  :  'created';
   my $dispose = $install  ?  "$mv"  :  'echo';
+  my $checksum = $install  ?  "$md5sum"  :  'echo';
+  my $cksum_ext = 'md5';
+  my $redirect = $install  ?  '>'  :  '\>';
 
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
@@ -684,15 +687,18 @@ sub create_kit () {
     }
   }
 
-  my $md5sum_command =
+  # The "$dest/\$p" is going to look a bit funny if the release isn't
+  # being installed in the FTP directory since it will expand to
+  # `created/ACE.tar.gz', for example.  No big deal, I guess.
+  my $checksum_command =
     "for p in $archives; do " .
-      "$rm \$p.md5; " .
-      "$md5sum \$p > \$p.md5; " .
-      "$dispose \$p.md5 $dest; " .
+      "$rm \${p}.${cksum_ext}; " .
+      "$checksum $dest/\$p $redirect \${p}.${cksum_ext}; " .
+      "$dispose \${p}.${cksum_ext} $dest; " .
       "done";
 
   &ex ($build_command);
-  #### This doesn't work:  &ex ($md5sum_command);
+  &ex ($checksum_command);
 }
 
 
