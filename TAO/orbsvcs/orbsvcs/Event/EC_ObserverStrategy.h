@@ -35,16 +35,14 @@ class TAO_EC_ProxyPushSupplier;
 /**
  * @class TAO_EC_ObserverStrategy
  *
- * @brief The strategy to handle observers for the Event Channel
- * subscriptions and publication.
+ * @brief The strategy to handle observers for the Event Channel subscriptions
+ * and publication.
  *
- * The Event Channel supports Observers for the set of
- * subscriptions and publications.
- * This is used to implement federations of event channels,
- * either through UDP (multicast and unicast) and/or regular CORBA
- * calls.
- * This behavior of the EC is strategized to avoid overhead when
- * no gateways are needed.
+ * The Event Channel supports Observers for the set of subscriptions and
+ * publications. This is used to implement federations of event channels,
+ * either through UDP (multicast and unicast) and/or regular CORBA calls.
+ * This behavior of the EC is strategized to avoid overhead when no gateways
+ * are needed.
  */
 class TAO_RTEvent_Export TAO_EC_ObserverStrategy
 {
@@ -77,7 +75,7 @@ public:
   virtual void disconnected (TAO_EC_ProxyPushConsumer*
                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
 
-  /// Used by the EC to inform the ObserverStrategy that a Consumer has
+  /// Used by the EC to inform the ObserverStrategy that a Supplier has
   /// connected or disconnected from it.
   virtual void connected (TAO_EC_ProxyPushSupplier*
                           ACE_ENV_ARG_DECL_NOT_USED) = 0;
@@ -194,7 +192,7 @@ public:
   {
     // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
     // otherwise it thinks they are used as inline functions before
-    // beign used as such.... Apparently in the template code for the
+    // being used as such.... Apparently in the template code for the
     // Hash_Map_Manager.
     ACE_INLINE Observer_Entry (void);
     ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
