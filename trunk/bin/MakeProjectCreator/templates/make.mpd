@@ -33,11 +33,11 @@ LIB           = lib<%staticname%>.a
 <%endif%>
 <%foreach(platforms)%>
 EXEEXT        = <%exeext%>
+LN            = <%ln%>
 <%if(soext)%>
 <%if(sharedname)%>
 SHLIB         = lib<%sharedname%>.$(SOEXT)
 SOEXT         = <%soext%>
-LN            = <%ln%>
 <%foreach(configurations)%>
 <%if(pic)%>
 PICFLAGS      = <%pic%>
@@ -60,13 +60,20 @@ CPPFLAGS      = $(PICFLAGS) $(GENFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%f
 ARFLAGS       = <%arflags%>
 <%endif%>
 SRC           =<%foreach(source_files)%> <%source_file%><%endfor%>
-OBJS          =<%foreach(source_files)%> <%noextension(source_file)%>.o<%endfor%>
+OBJS          =<%foreach(source_files)%> <%noextension(source_file)%>.o<%endfor%><%foreach(platforms)%><%if(rc)%><%foreach(resource_files)%> <%resource_file%>.o<%endfor%><%endif%><%endfor%>
 LDFLAGS       =<%if(libpaths)%><%foreach(libpaths)%> -L<%libpath%><%endfor%><%endif%><%foreach(configurations)%><%if(linkflags)%> <%linkflags%><%endif%><%endfor%>
 LDLIBS        =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(platforms)%> <%ldlibs%><%endfor%>
 LINK.cc       = $(LD) $(LDFLAGS)
 COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS)  -c
 RM            = rm -f
 OUTPUT_OPTION = -o $@
+<%if(dynamicflags)%>
+DYNAMICFLAGS  =<%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%>
+<%endif%>
+<%if(staticflags)%>
+STATICFLAGS   =<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
+<%endif%>
+EXPORTFLAGS   = <%if(!exename)%><%foreach(configurations)%><%foreach(platforms)%><%if(soext && sharedname)%>$(DYNAMICFLAGS)<%else%>$(STATICFLAGS)<%endif%><%endfor%><%endfor%><%endif%>
 <%marker(macros)%>
 
 #----------------------------------------------------------------------------
@@ -168,9 +175,20 @@ $(TEMPINCDIR):
 <%endfor%>
 <%foreach(source_files)%>
 <%noextension(source_file)%>.o: <%source_file%>
-	$(COMPILE.cc) <%source_file%> $(OUTPUT_OPTION)
+	$(COMPILE.cc) $(EXPORTFLAGS) <%source_file%> $(OUTPUT_OPTION)
 
 <%endfor%>
+<%if(resource_files)%>
+<%foreach(platforms)%>
+<%if(rc)%>
+<%foreach(resource_files)%>
+<%resource_file%>.o: <%resource_file%>
+	<%rc%> <%resource_file%> <%resource_file%>.o
+
+<%endfor%>
+<%endif%>
+<%endfor%>
+<%endif%>
 <%if(install)%>
 <%if(exename)%>
 INSTARGET = $(BIN)

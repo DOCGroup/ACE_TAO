@@ -101,30 +101,34 @@ wrspentium {
 // ***********************************************************************
 
 tru64 {
-  extracppflags = -D__USE_STD_IOSTREAM
   shflags       = -shared /usr/lib/libcxxstd.a
   ldlibs        = -ltli -lrt
+  extracppflags = -D__USE_STD_IOSTREAM -D_REENTRANT
 }
 
 linux {
-  shflags = -shared
-  ldlibs  = -ldl -lpthread
+  shflags       = -shared
+  ldlibs        = -ldl -lpthread
+  extracppflags = -D_REENTRANT
 }
 
 solaris {
-  shflags = -G
-  ldlibs  = -lsocket -ldl -lnsl -lgen -lposix4
+  shflags       = -G
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lposix4 -lthread
+  extracppflags = -D_REENTRANT
 }
 
 hpux {
-  soext   = sl
-  shflags = -b
-  ldlibs  = -lxti -lpthread -lrt -ldld
+  soext         = sl
+  shflags       = -b
+  ldlibs        = -lxti -lpthread -lrt -ldld
+  extracppflags = -D_REENTRANT
 }
 
 aix {
-  soext  =
-  ldlibs = -ldl
+  soext         =
+  ldlibs        = -ldl -lpthread
+  extracppflags = -D_REENTRANT
 }
 
 irix {
@@ -145,8 +149,10 @@ macos {
 }
 
 unixware {
-  shflags = -G
-  ldlibs  = -lsocket -ldl -lnsl -lgen -lposix4
+  shflags       = -G
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lposix4 -lthread
+  extracppflags = -D_REENTRANT
+
 }
 
 qnx {
@@ -157,10 +163,10 @@ qnx {
 
 vxworks {
   soext         =
-  extracppflags = -I$(WIND_BASE)/target/h
   specialscript = "#!/bin/sh\nfor i in $$3; do\nfor j in $$4; do\ni=`echo $$i | sed sa\^-laa`\n[ -r \"$$j/lib$$i.a\" ] && libs=\"$$libs $$j/lib$$i.a\" && break\ndone\ndone\n$$1 $$2 $$libs | munch | grep -v \\.cpp > $$5"
   prelink       = __ctordtor.c
   ldlibs        = -L$(WIND_BASE)/target/lib/$(CPUTYPE)/$(CPU)/common -larch
+  extracppflags = -I$(WIND_BASE)/target/h
 }
 
 cygwin32 {
@@ -168,6 +174,7 @@ cygwin32 {
   exeext  = .exe
   shflags = -shared
   ln      = mv
+  rc      = windres
 }
 
 mingw32 {
@@ -176,4 +183,5 @@ mingw32 {
   shflags = -shared
   ln      = mv
   ldlibs  = -lwsock32 -lnetapi32
+  rc      = windres
 }
