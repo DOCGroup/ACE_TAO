@@ -1,32 +1,39 @@
+Tue Jun 30 16:32:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Operation_Table.h (TAO_Perfect_Hash_OpTable):
+ 	* tao/Operation_Table.cpp :
+		Defined the class TAO_Perfect_Hash_OpTable, the factory
+	class for Perfect_Hashing-Operation_Lookup strategy.
+
 Tue Jun 30 13:23:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
 	  Workaround Sun/CC problem when compiling with -O (but not
 	  -fast). Apparently it does not like to use static (file) scope
 	  symbols in the definition of a template.
 
 Tue Jun 30 10:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* docs/configurations.html: Added documentation about the 
+	* docs/configurations.html: Added documentation about the
 	  -ORBiiopprofilelock switch.
 
 	* tao/Client_Strategy_Factory.{h,cpp}: Added the create_iiop_profile_lock (void)
 
 	* tao/GIOP.cpp: Use ACE_Lock instead of ACE_SYNCH_MUTEX.
-	
-	* tao/IIOP_Object.cpp: Added the initialization of the fwd_profile_lock_ptr to 
+
+	* tao/IIOP_Object.cpp: Added the initialization of the fwd_profile_lock_ptr to
 	  the constructor.
-	
+
 	* tao/IIOP_Object.h: Changed the forward profile lock to a pointer to a lock.
 
-	* tao/IIOP_Object.i: Added the initialization of the fwd_profile_lock_ptr to 
+	* tao/IIOP_Object.i: Added the initialization of the fwd_profile_lock_ptr to
 	  the constructor.
 
 	* tao/default_client.{h,cpp}: Added the parsing of "-ORBportiiopproflielock" to
 	  the parse_args method. "thread" (default) means to use a mutex lock
-	  on the access of the forwarding iiop profile. "null" means, use a null 
+	  on the access of the forwarding iiop profile. "null" means, use a null
 	  mutex, which is faster, but does not provide any protection.
-	  Added also the function create_iiop_profile_lock () to allow 
+	  Added also the function create_iiop_profile_lock () to allow
 	  others to create a new lock, depending on the above mentioned switch.
 
 Tue Jun 30 00:58:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>

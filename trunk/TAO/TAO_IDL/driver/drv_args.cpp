@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -72,7 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"drv_private.h"
 #include        "drv_link.h"
 
-#include	<stdio.h> 
+#include        "be.h"
+#include	<stdio.h>
 
 /*
  * Push a file into the list of files to be processed
@@ -89,7 +90,7 @@ DRV_push_file(char *s)
 static void
 DRV_prep_cpp_arg(char *s)
 {
-  char *newarg = new char[512];  
+  char *newarg = new char[512];
   char *farg;
 
   newarg[0] = '\0';
@@ -133,6 +134,9 @@ DRV_parse_args(long ac, char **av)
   char	*s;
   long	i;
 
+  // Retrieve the singleton instance of the code generator.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
   DRV_cpp_init();
   idl_global->set_prog_name(av[0]);
   for (i = 1; i < ac; i++) {
@@ -153,6 +157,12 @@ DRV_parse_args(long ac, char **av)
 	strcat(idl_global->local_escapes(), s);
 	strcat(idl_global->local_escapes(), " ");
 	break;
+
+        // Perfect hashing-Operation lookup strategy.
+      case 'P':
+        cg->lookup_strategy (TAO_CodeGen::TAO_PERFECT_HASH);
+        break;
+
       case 'D':
       case 'U':
       case 'I':
@@ -164,7 +174,7 @@ DRV_parse_args(long ac, char **av)
 	    i++;
 	  } else {
 	    cerr << GTDEVEL("IDL: missing argument after '")
-		 << av[i] 
+		 << av[i]
 		 << GTDEVEL("' flag\n");
 	    exit(99);
 	  }

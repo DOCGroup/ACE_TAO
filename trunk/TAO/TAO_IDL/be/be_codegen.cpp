@@ -35,7 +35,8 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_inline_ (0),
     server_template_inline_ (0),
     curr_os_ (0),
-    visitor_factory_ (0)
+    visitor_factory_ (0),
+    strategy_ (TAO_DYNAMIC_HASH)
 {
 }
 
@@ -340,9 +341,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
   // retrieve a specialized instance
   this->server_template_header_ = factory->make_outstream ();
   if (!this->server_template_header_)
-    {
-      return -1;
-    }
+    return -1;
 
   if (this->server_template_header_->open (fname,
                                            TAO_OutStream::TAO_SVR_TMPL_HDR)
@@ -481,7 +480,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       // generate the include statement for the server header
       *this->server_template_skeletons_ << "#include \"" <<
         idl_global->be_get_server_template_hdr_fname () << "\"\n\n";
-      
+
       // generate the code that includes the inline file if not included in the
       // header file
       *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
@@ -637,6 +636,18 @@ TAO_CodeGen::end_server_template_skeletons (void)
 // effectively a global.
 
 void
+TAO_CodeGen::gperf_input (TAO_OutStream *os)
+{
+  this->gperf_input_ = os;
+}
+
+TAO_OutStream *
+TAO_CodeGen::gperf_input (void)
+{
+  return this->gperf_input_;
+}
+
+void
 TAO_CodeGen::outstream (TAO_OutStream *os)
 {
   this->curr_os_ = os;
@@ -666,6 +677,17 @@ TAO_CodeGen::visitor_factory (TAO_Visitor_Factory *f)
   this->visitor_factory_ = f;
 }
 
+void
+TAO_CodeGen::lookup_strategy (LOOKUP_STRATEGY s)
+{
+  this->strategy_ = s;
+}
+
+LOOKUP_STRATEGY
+TAO_CodeGen::lookup_strategy (void) const
+{
+  return this->strategy_;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX>;

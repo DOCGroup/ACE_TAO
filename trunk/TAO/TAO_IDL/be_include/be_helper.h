@@ -68,13 +68,14 @@ extern const TAO_UNINDENT be_uidt_nl;
 class TAO_OutStream
 {
   // =TITLE
-  // TAO_OutStream
+  //   TAO_OutStream
+  //
   // =DESCRIPTION
-  //  Defines an interface by which the backend code generator can print its
-  //  output to the underlying I/O handle. This is a helper class that will be
-  //  used by the TAO_CodeGen class. However, this is an abstract class and
-  //  classes that understand specific front ends must derive from this
-  //  class.
+  //    Defines an interface by which the backend code generator can
+  //    print its output to the underlying I/O handle. This is a
+  //    helper class that will be used by the TAO_CodeGen
+  //    class. However, this is an abstract class and classes that
+  //    understand specific front ends must derive from this class.
 public:
 
   // Enumerated type to indicate the stream type
@@ -88,23 +89,28 @@ public:
       TAO_SVR_INL,
       TAO_SVR_TMPL_INL,
       TAO_SVR_IMPL,
-      TAO_SVR_TMPL_IMPL
+      TAO_SVR_TMPL_IMPL,
+      TAO_GPERF_INPUT
     };
 
   TAO_OutStream (void);
   // constructor.
 
   virtual ~TAO_OutStream (void);
-  // destructor
+  // destructor.
 
-  int open (const char *fname, TAO_OutStream::STREAM_TYPE st=TAO_OutStream::TAO_CLI_HDR);
-  // open the underlying low-level handle for output
+  int open (const char *fname,
+            TAO_OutStream::STREAM_TYPE st=TAO_OutStream::TAO_CLI_HDR);
+  // open the underlying low-level handle for output.
 
   void stream_type (TAO_OutStream::STREAM_TYPE);
   // set the stream type
 
   TAO_OutStream::STREAM_TYPE stream_type (void);
   // return the stream type
+
+  FILE *file (void);
+  // Return the underlying lowlevel file pointer.
 
   int incr_indent (unsigned short flag=1);
   // increment the indentation level and by default actually indent the output

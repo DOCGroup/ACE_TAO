@@ -73,7 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // files defining the different units of the compiler
 
 #include        "ace/ACE.h"             // Most important ACE include file
-#include    "ace/streams.h"     // iostreams
+#include        "ace/streams.h"         // iostreams
+
 #include	"intlmacros.h"		// Define macros for intl'ion
 
 #include	<stdlib.h>		// POSIX standard defns
