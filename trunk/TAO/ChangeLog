@@ -1,3 +1,9 @@
+Wed Mar 17 18:06:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/PICurrent_Guard.cpp:
+
+	  Fixed a type which gave warnings with MSVC6.
+
 Wed Mar 17 13:56:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CORBA_String.cpp:
