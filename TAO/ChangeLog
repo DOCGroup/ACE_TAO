@@ -1,3 +1,7 @@
+Fri Nov  8 13:19:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (svc_i): Cosmetic fixes.
+
 Fri Nov 08 10:47:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Abstract_Interface/Abstract_Interface_Server.dsp: Fixed
