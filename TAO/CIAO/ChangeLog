@@ -11,8 +11,8 @@ Sat Apr 24 21:22:48 2004  George Edwards <g.edwards@vanderbilt.edu>
         Added files:
         * DnC/Config_Handlers/PC_Handler.h:
         * DnC/Config_Handlers/PC_Handler.cpp:
-        * DnC/Config_Handlers/CompPkgDesc.h:
-        * DnC/Config_Handlers/CompPkgDesc.cpp:
+        * DnC/Config_Handlers/CompPkgDesc_Handler.h:
+        * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
 
           Added new handlers for PackageConfiguration and ComponentPackageDescription.
 
