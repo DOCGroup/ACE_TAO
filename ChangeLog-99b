@@ -1,3 +1,12 @@
+Fri Jun 25 14:28:05 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/UNIX_Addr.cpp (ACE_UNIX_Addr): 
+
+	  Moved base_set() call in constructor to member initializer list.
+	  This is cleaner coding style.  The original code, before a bug
+	  fix was made, was like that.  I just forgot to put it back in
+	  the member initializer list after the fix.
+
 Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/UPIPE_Event_Server/Peer_Router.h:
