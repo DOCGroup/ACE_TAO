@@ -1,4 +1,23 @@
+project(commonlib): rtcosscheduling, orbsvcslib {
+  requires     += interceptors
+  sharedname    = testSched_Common
+  idlflags     +=  -Wb,export_macro=testSched_Export \
+                   -Wb,export_include=testSched_export.h
+
+  dynamicflags += TESTSCHED_BUILD_DLL
+  tagchecks    += testSched_Common
+
+  IDL_Files {
+    testSched.idl
+  }
+  Source_Files {
+    testSchedC.cpp
+    testSchedS.cpp
+  }
+}
+
 project(*server): rtcosscheduling, rt_server, orbsvcsexe {
+  after += commonlib
   exename = server
   comps = 
   Source_Files {
@@ -8,6 +27,7 @@ project(*server): rtcosscheduling, rt_server, orbsvcsexe {
 }
 
 project(*client): rtcosscheduling, rt_client, orbsvcsexe {
+  after += commonlib
   exename = client
   comps = 
   Source_Files {

@@ -20,7 +20,7 @@ ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
 
-TAO_IDL = ../../../bin/tao_idl
+TAO_IDL = ../../../../bin/tao_idl
 IDL_FILES = testSched
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
@@ -77,7 +77,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../../orbsvcs -I../../.. -I../../../tao -I../../..
+CPPFLAGS     += -I../../../orbsvcs -I../../.. -I../../../tao -I../../../..
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
@@ -85,7 +85,7 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L../../../lib
+LDFLAGS      += -L../../../../lib
 
 TAO_IDLFLAGS += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Gv
 #----------------------------------------------------------------------------
@@ -95,8 +95,8 @@ require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo rt_corba
 
-../../../lib:
-	-@mkdir -p "../../../lib"
+../../../../lib:
+	-@mkdir -p "../../../../lib"
 
 
 ADDITIONAL_IDL_TARGETS =
