@@ -214,6 +214,12 @@ how to run the following tests:
           code, i.e., a call to perform_work() or run() from the
           implementation of the servant.
 
+        . Oneway_Buffering
+
+          A regression test for the oneway buffering features in TAO.
+	  It verifies that flushing based on message count, message
+	  sizes and timeouts work correctly.
+
         . ORB_destroy
         
           A simple ORB destruction test.

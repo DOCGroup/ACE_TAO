@@ -44,6 +44,7 @@ DIRS = \
         NestedUpcall \
         Object_Loader \
 	OctetSeq \
+	Oneway_Buffering \
 	ORB_destroy \
 	ORB_init \
 	Param_Test \
