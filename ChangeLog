@@ -1,3 +1,9 @@
+Fri Sep  3 15:53:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-sunos5.8.h: Added ACE_HAS_TIMEZONE. This may be
+	  pertinent to previous Solaris versions, but I don't have any
+	  to test on.
+
 Fri Sep  3 12:34:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_sys_mman.inl:
