@@ -375,8 +375,12 @@ public:
   // Seen this include before?
 
   long last_seen_index (void) const;
-
   void last_seen_index (long val);
+  // Accessors for last_seen_index_ member.
+
+  idl_bool repeat_include (void) const;
+  void repeat_include (idl_bool val);
+  // Accessors for repeat_include_ member.
 
 private:
   // Data
@@ -447,6 +451,9 @@ private:
 
   long last_seen_index_;
   // The index (not zero-based!) of the last seen included file.
+
+  idl_bool repeat_include_;
+  // Has this IDL file been included before?
 };
 
 
