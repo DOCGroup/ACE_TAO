@@ -40,7 +40,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -lmpeg_server -lmpeg_shared -lmpeg_mib
-CPPFLAGS += -DSH_MEM -DNDEBUG -DSunOS -DSTAT
+CPPFLAGS += -DSH_MEM -DNDEBUG -DSTAT
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
 
 clean:
@@ -191,7 +191,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -199,16 +201,20 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/CDR.h \
- $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -218,21 +224,15 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
@@ -245,12 +245,24 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_Control_i.h \
- ../mpeg_server/Video_Server.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Ior_Multicast.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
