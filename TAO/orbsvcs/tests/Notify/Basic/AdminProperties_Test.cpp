@@ -157,9 +157,9 @@ void
 AdminProperties_Test::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
   // Create the requested number of suppliers.
-  CosNotifyChannelAdmin::AdminID adminid;
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-    CosNotifyChannelAdmin::OR_OP;
+  // @@ CosNotifyChannelAdmin::AdminID adminid;
+  // @@ CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
+  // @@   CosNotifyChannelAdmin::OR_OP;
 
   int index = 0;
 
@@ -189,9 +189,9 @@ void
 AdminProperties_Test::create_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   // Create the requested number of suppliers.
-  CosNotifyChannelAdmin::AdminID adminid;
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-    CosNotifyChannelAdmin::OR_OP;
+  // @@ CosNotifyChannelAdmin::AdminID adminid;
+  // @@ CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
+  // @@   CosNotifyChannelAdmin::OR_OP;
 
   int index = 0;
 
@@ -251,7 +251,7 @@ AdminProperties_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
   event.filterable_data[2].name = CORBA::string_dup("pressure");
   event.filterable_data[2].value <<= (CORBA::Long)80;
 
-  CORBA::Short prio = CosNotification::LowestPriority;
+  // @@ CORBA::Short prio = CosNotification::LowestPriority;
 
   TAO_Notify_StructuredPushSupplier *supplier =
     new TAO_Notify_StructuredPushSupplier ();

@@ -59,7 +59,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Throughput.o .obj/Throughput.o .obj/Throughput.o .obj/Throughput.o: Throughput.cpp Throughput.h ../lib/Driver.h \
+.obj/Throughput.o .obj/Throughput.so .shobj/Throughput.o .shobj/Throughput.so: Throughput.cpp Throughput.h ../lib/Driver.h \
  ../lib/ectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -403,7 +403,7 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Connect.o .obj/Connect.o .obj/Connect.o .obj/Connect.o: Connect.cpp Connect.h ../lib/Consumer.h ../lib/Driver.h \
+.obj/Connect.o .obj/Connect.so .shobj/Connect.o .shobj/Connect.so: Connect.cpp Connect.h ../lib/Consumer.h ../lib/Driver.h \
  ../lib/ectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -748,7 +748,7 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
-.obj/Inversion.o .obj/Inversion.o .obj/Inversion.o .obj/Inversion.o: Inversion.cpp Inversion.h ../lib/Driver.h \
+.obj/Inversion.o .obj/Inversion.so .shobj/Inversion.o .shobj/Inversion.so: Inversion.cpp Inversion.h ../lib/Driver.h \
  ../lib/ectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \

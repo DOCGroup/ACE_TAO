@@ -78,7 +78,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/INS_test_client.o .obj/INS_test_client.o .obj/INS_test_client.o .obj/INS_test_client.o: INS_test_client.cpp INSC.h \
+.obj/INS_test_client.o .obj/INS_test_client.so .shobj/INS_test_client.o .shobj/INS_test_client.so: INS_test_client.cpp INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -352,7 +352,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  INSC.i
 
-.obj/INS_i.o .obj/INS_i.o .obj/INS_i.o .obj/INS_i.o: INS_i.cpp INS_i.h INSS.h INSC.h \
+.obj/INS_i.o .obj/INS_i.so .shobj/INS_i.o .shobj/INS_i.so: INS_i.cpp INS_i.h INSS.h INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -635,7 +635,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
-.obj/Server_i.o .obj/Server_i.o .obj/Server_i.o .obj/Server_i.o: Server_i.cpp Server_i.h \
+.obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp Server_i.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -928,7 +928,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i
 
-.obj/INS_test_server.o .obj/INS_test_server.o .obj/INS_test_server.o .obj/INS_test_server.o: INS_test_server.cpp Server_i.h \
+.obj/INS_test_server.o .obj/INS_test_server.so .shobj/INS_test_server.o .shobj/INS_test_server.so: INS_test_server.cpp Server_i.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1217,7 +1217,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
-.obj/INSC.o .obj/INSC.o .obj/INSC.o .obj/INSC.o: INSC.cpp INSC.h \
+.obj/INSC.o .obj/INSC.so .shobj/INSC.o .shobj/INSC.so: INSC.cpp INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1491,7 +1491,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  INSC.i
 
-.obj/INSS.o .obj/INSS.o .obj/INSS.o .obj/INSS.o: INSS.cpp INSS.h INSC.h \
+.obj/INSS.o .obj/INSS.so .shobj/INSS.o .shobj/INSS.so: INSS.cpp INSS.h INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

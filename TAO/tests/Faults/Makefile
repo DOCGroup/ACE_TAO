@@ -79,7 +79,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -365,7 +365,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -651,7 +651,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
-.obj/middle.o .obj/middle.o .obj/middle.o .obj/middle.o: middle.cpp \
+.obj/middle.o .obj/middle.so .shobj/middle.o .shobj/middle.so: middle.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -937,7 +937,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
-.obj/ping.o .obj/ping.o .obj/ping.o .obj/ping.o: ping.cpp \
+.obj/ping.o .obj/ping.so .shobj/ping.o .shobj/ping.so: ping.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1223,7 +1223,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  pingS_T.h pingS_T.i pingS_T.cpp pingS.i ping_i.i
 
-.obj/pong.o .obj/pong.o .obj/pong.o .obj/pong.o: pong.cpp \
+.obj/pong.o .obj/pong.so .shobj/pong.o .shobj/pong.so: pong.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1509,7 +1509,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  pingS_T.h pingS_T.i pingS_T.cpp pingS.i ping_i.i
 
-.obj/test_i.o .obj/test_i.o .obj/test_i.o .obj/test_i.o: test_i.cpp test_i.h testS.h testC.h \
+.obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1792,7 +1792,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
-.obj/ping_i.o .obj/ping_i.o .obj/ping_i.o .obj/ping_i.o: ping_i.cpp ping_i.h pingS.h pingC.h \
+.obj/ping_i.o .obj/ping_i.so .shobj/ping_i.o .shobj/ping_i.so: ping_i.cpp ping_i.h pingS.h pingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2075,7 +2075,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  pingS_T.h pingS_T.i pingS_T.cpp pingS.i ping_i.i
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2349,7 +2349,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h testC.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2653,7 +2653,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/pingC.o .obj/pingC.o .obj/pingC.o .obj/pingC.o: pingC.cpp pingC.h \
+.obj/pingC.o .obj/pingC.so .shobj/pingC.o .shobj/pingC.so: pingC.cpp pingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2927,7 +2927,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  pingC.i
 
-.obj/pingS.o .obj/pingS.o .obj/pingS.o .obj/pingS.o: pingS.cpp pingS.h pingC.h \
+.obj/pingS.o .obj/pingS.so .shobj/pingS.o .shobj/pingS.so: pingS.cpp pingS.h pingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

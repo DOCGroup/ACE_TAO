@@ -48,7 +48,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Concurrency_Service.o .obj/Concurrency_Service.o .obj/Concurrency_Service.o .obj/Concurrency_Service.o: Concurrency_Service.cpp Concurrency_Service.h \
+.obj/Concurrency_Service.o .obj/Concurrency_Service.so .shobj/Concurrency_Service.o .shobj/Concurrency_Service.so: Concurrency_Service.cpp Concurrency_Service.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

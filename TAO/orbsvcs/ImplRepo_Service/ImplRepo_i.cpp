@@ -101,7 +101,7 @@ ImplRepo_i::find_ior (const ACE_CString &object_name,
     }
   ACE_CATCHANY
     {
-      ACE_THROW (IORTable::NotFound ());
+      ACE_THROW_RETURN (IORTable::NotFound (), 0);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);

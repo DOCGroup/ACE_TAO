@@ -43,7 +43,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/FindPOA.o .obj/FindPOA.o .obj/FindPOA.o .obj/FindPOA.o: FindPOA.cpp \
+.obj/FindPOA.o .obj/FindPOA.so .shobj/FindPOA.o .shobj/FindPOA.so: FindPOA.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

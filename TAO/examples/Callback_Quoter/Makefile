@@ -122,7 +122,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/NotifierC.o .obj/NotifierC.o .obj/NotifierC.o .obj/NotifierC.o: NotifierC.cpp NotifierC.h \
+.obj/NotifierC.o .obj/NotifierC.so .shobj/NotifierC.o .shobj/NotifierC.so: NotifierC.cpp NotifierC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -396,7 +396,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  ConsumerC.h ConsumerC.i NotifierC.i
 
-.obj/NotifierS.o .obj/NotifierS.o .obj/NotifierS.o .obj/NotifierS.o: NotifierS.cpp NotifierS.h ConsumerS.h ConsumerC.h \
+.obj/NotifierS.o .obj/NotifierS.so .shobj/NotifierS.o .shobj/NotifierS.so: NotifierS.cpp NotifierS.h ConsumerS.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -701,7 +701,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/ConsumerC.o .obj/ConsumerC.o .obj/ConsumerC.o .obj/ConsumerC.o: ConsumerC.cpp ConsumerC.h \
+.obj/ConsumerC.o .obj/ConsumerC.so .shobj/ConsumerC.o .shobj/ConsumerC.so: ConsumerC.cpp ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -975,7 +975,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  ConsumerC.i
 
-.obj/ConsumerS.o .obj/ConsumerS.o .obj/ConsumerS.o .obj/ConsumerS.o: ConsumerS.cpp ConsumerS.h ConsumerC.h \
+.obj/ConsumerS.o .obj/ConsumerS.so .shobj/ConsumerS.o .shobj/ConsumerS.so: ConsumerS.cpp ConsumerS.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1279,7 +1279,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/consumer.o .obj/consumer.o .obj/consumer.o .obj/consumer.o: consumer.cpp Consumer_Handler.h ConsumerC.h \
+.obj/consumer.o .obj/consumer.so .shobj/consumer.o .shobj/consumer.so: consumer.cpp Consumer_Handler.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1592,7 +1592,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  Consumer_Input_Handler.h Consumer_Signal_Handler.h
 
-.obj/supplier.o .obj/supplier.o .obj/supplier.o .obj/supplier.o: supplier.cpp Supplier_i.h \
+.obj/supplier.o .obj/supplier.so .shobj/supplier.o .shobj/supplier.so: supplier.cpp Supplier_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1902,7 +1902,7 @@ realclean: clean
  NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i \
  Supplier_Timer_Handler.h
 
-.obj/Supplier_i.o .obj/Supplier_i.o .obj/Supplier_i.o .obj/Supplier_i.o: Supplier_i.cpp \
+.obj/Supplier_i.o .obj/Supplier_i.so .shobj/Supplier_i.o .shobj/Supplier_i.so: Supplier_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2215,7 +2215,7 @@ realclean: clean
  NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i \
  Supplier_Timer_Handler.h
 
-.obj/Supplier_Timer_Handler.o .obj/Supplier_Timer_Handler.o .obj/Supplier_Timer_Handler.o .obj/Supplier_Timer_Handler.o: Supplier_Timer_Handler.cpp \
+.obj/Supplier_Timer_Handler.o .obj/Supplier_Timer_Handler.so .shobj/Supplier_Timer_Handler.o .shobj/Supplier_Timer_Handler.so: Supplier_Timer_Handler.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2526,7 +2526,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.i \
  NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i
 
-.obj/notifier.o .obj/notifier.o .obj/notifier.o .obj/notifier.o: notifier.cpp Notifier_Input_Handler.h Notifier_i.h \
+.obj/notifier.o .obj/notifier.so .shobj/notifier.o .shobj/notifier.so: notifier.cpp Notifier_Input_Handler.h Notifier_i.h \
  NotifierS.h ConsumerS.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2837,7 +2837,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h
 
-.obj/Notifier_Input_Handler.o .obj/Notifier_Input_Handler.o .obj/Notifier_Input_Handler.o .obj/Notifier_Input_Handler.o: Notifier_Input_Handler.cpp \
+.obj/Notifier_Input_Handler.o .obj/Notifier_Input_Handler.so .shobj/Notifier_Input_Handler.o .shobj/Notifier_Input_Handler.so: Notifier_Input_Handler.cpp \
  Notifier_Input_Handler.h Notifier_i.h NotifierS.h ConsumerS.h \
  ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -3151,7 +3151,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Notifier_i.o .obj/Notifier_i.o .obj/Notifier_i.o .obj/Notifier_i.o: Notifier_i.cpp Notifier_i.h NotifierS.h ConsumerS.h \
+.obj/Notifier_i.o .obj/Notifier_i.so .shobj/Notifier_i.o .shobj/Notifier_i.so: Notifier_i.cpp Notifier_i.h NotifierS.h ConsumerS.h \
  ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3437,7 +3437,7 @@ realclean: clean
  NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp NotifierS.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
-.obj/Consumer_i.o .obj/Consumer_i.o .obj/Consumer_i.o .obj/Consumer_i.o: Consumer_i.cpp Consumer_i.h ConsumerS.h ConsumerC.h \
+.obj/Consumer_i.o .obj/Consumer_i.so .shobj/Consumer_i.o .shobj/Consumer_i.so: Consumer_i.cpp Consumer_i.h ConsumerS.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3722,7 +3722,7 @@ realclean: clean
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
  NotifierS.i
 
-.obj/Consumer_Input_Handler.o .obj/Consumer_Input_Handler.o .obj/Consumer_Input_Handler.o .obj/Consumer_Input_Handler.o: Consumer_Input_Handler.cpp \
+.obj/Consumer_Input_Handler.o .obj/Consumer_Input_Handler.so .shobj/Consumer_Input_Handler.o .shobj/Consumer_Input_Handler.so: Consumer_Input_Handler.cpp \
  Consumer_Input_Handler.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4037,7 +4037,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  Consumer_Signal_Handler.h
 
-.obj/Consumer_Signal_Handler.o .obj/Consumer_Signal_Handler.o .obj/Consumer_Signal_Handler.o .obj/Consumer_Signal_Handler.o: Consumer_Signal_Handler.cpp \
+.obj/Consumer_Signal_Handler.o .obj/Consumer_Signal_Handler.so .shobj/Consumer_Signal_Handler.o .shobj/Consumer_Signal_Handler.so: Consumer_Signal_Handler.cpp \
  Consumer_Signal_Handler.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4352,7 +4352,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  Consumer_Input_Handler.h
 
-.obj/Consumer_Handler.o .obj/Consumer_Handler.o .obj/Consumer_Handler.o .obj/Consumer_Handler.o: Consumer_Handler.cpp Consumer_Handler.h \
+.obj/Consumer_Handler.o .obj/Consumer_Handler.so .shobj/Consumer_Handler.o .shobj/Consumer_Handler.so: Consumer_Handler.cpp Consumer_Handler.h \
  ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \

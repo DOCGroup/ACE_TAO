@@ -37,7 +37,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ORB_destroy.o .obj/ORB_destroy.o .obj/ORB_destroy.o .obj/ORB_destroy.o: ORB_destroy.cpp \
+.obj/ORB_destroy.o .obj/ORB_destroy.so .shobj/ORB_destroy.o .shobj/ORB_destroy.so: ORB_destroy.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

@@ -89,7 +89,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/demux_testC.o .obj/demux_testC.o .obj/demux_testC.o .obj/demux_testC.o: demux_testC.cpp demux_testC.h \
+.obj/demux_testC.o .obj/demux_testC.so .shobj/demux_testC.o .shobj/demux_testC.so: demux_testC.cpp demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -363,7 +363,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  demux_testC.i
 
-.obj/demux_testS.o .obj/demux_testS.o .obj/demux_testS.o .obj/demux_testS.o: demux_testS.cpp demux_testS.h demux_testC.h \
+.obj/demux_testS.o .obj/demux_testS.so .shobj/demux_testS.o .shobj/demux_testS.so: demux_testS.cpp demux_testS.h demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -667,7 +667,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/demux_test_server.o .obj/demux_test_server.o .obj/demux_test_server.o .obj/demux_test_server.o: demux_test_server.cpp demux_test_server.h \
+.obj/demux_test_server.o .obj/demux_test_server.so .shobj/demux_test_server.o .shobj/demux_test_server.so: demux_test_server.cpp demux_test_server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -981,7 +981,7 @@ realclean: clean
  demux_testS_T.h demux_testS_T.i demux_testS_T.cpp demux_testS.i \
  demux_test_macros.h
 
-.obj/demux_test_i.o .obj/demux_test_i.o .obj/demux_test_i.o .obj/demux_test_i.o: demux_test_i.cpp demux_test_i.h demux_testS.h \
+.obj/demux_test_i.o .obj/demux_test_i.so .shobj/demux_test_i.o .shobj/demux_test_i.so: demux_test_i.cpp demux_test_i.h demux_testS.h \
  demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1265,7 +1265,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  demux_testS_T.h demux_testS_T.i demux_testS_T.cpp demux_testS.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp demux_test_server.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp demux_test_server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1579,7 +1579,7 @@ realclean: clean
  demux_testS_T.h demux_testS_T.i demux_testS_T.cpp demux_testS.i \
  demux_test_macros.h
 
-.obj/demux_testC.o .obj/demux_testC.o .obj/demux_testC.o .obj/demux_testC.o: demux_testC.cpp demux_testC.h \
+.obj/demux_testC.o .obj/demux_testC.so .shobj/demux_testC.o .shobj/demux_testC.so: demux_testC.cpp demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1853,7 +1853,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  demux_testC.i
 
-.obj/demux_testS.o .obj/demux_testS.o .obj/demux_testS.o .obj/demux_testS.o: demux_testS.cpp demux_testS.h demux_testC.h \
+.obj/demux_testS.o .obj/demux_testS.so .shobj/demux_testS.o .shobj/demux_testS.so: demux_testS.cpp demux_testS.h demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2157,7 +2157,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/demux_test_client.o .obj/demux_test_client.o .obj/demux_test_client.o .obj/demux_test_client.o: demux_test_client.cpp demux_test_client.h \
+.obj/demux_test_client.o .obj/demux_test_client.so .shobj/demux_test_client.o .shobj/demux_test_client.so: demux_test_client.cpp demux_test_client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2434,7 +2434,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  demux_testC.i demux_test_macros.h demux_test_client.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp demux_test_client.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp demux_test_client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2711,6 +2711,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  demux_testC.i demux_test_macros.h
 
-.obj/demux_stats.o .obj/demux_stats.o .obj/demux_stats.o .obj/demux_stats.o: demux_stats.cpp
+.obj/demux_stats.o .obj/demux_stats.so .shobj/demux_stats.o .shobj/demux_stats.so: demux_stats.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -59,7 +59,7 @@ endif # !def TAO_IDL_PREPROCESSOR
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/tao_idl.o .obj/tao_idl.o .obj/tao_idl.o .obj/tao_idl.o: tao_idl.cpp include/idl.h \
+.obj/tao_idl.o .obj/tao_idl.so .shobj/tao_idl.o .shobj/tao_idl.so: tao_idl.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -191,7 +191,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h include/../../tao/Version.h
 
-.obj/drv_init.o .obj/drv_init.o .obj/drv_init.o .obj/drv_init.o: driver/drv_init.cpp include/idl.h \
+.obj/drv_init.o .obj/drv_init.so .shobj/drv_init.o .shobj/drv_init.so: driver/drv_init.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -322,7 +322,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/drv_private.o .obj/drv_private.o .obj/drv_private.o .obj/drv_private.o: driver/drv_private.cpp include/idl.h \
+.obj/drv_private.o .obj/drv_private.so .shobj/drv_private.o .shobj/drv_private.so: driver/drv_private.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -430,7 +430,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h include/drv_private.h
 
-.obj/drv_args.o .obj/drv_args.o .obj/drv_args.o .obj/drv_args.o: driver/drv_args.cpp include/idl.h \
+.obj/drv_args.o .obj/drv_args.so .shobj/drv_args.o .shobj/drv_args.so: driver/drv_args.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -562,7 +562,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/drv_preproc.o .obj/drv_preproc.o .obj/drv_preproc.o .obj/drv_preproc.o: driver/drv_preproc.cpp include/idl.h \
+.obj/drv_preproc.o .obj/drv_preproc.so .shobj/drv_preproc.o .shobj/drv_preproc.so: driver/drv_preproc.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

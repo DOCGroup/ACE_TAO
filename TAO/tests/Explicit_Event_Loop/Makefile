@@ -71,7 +71,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/timeC.o .obj/timeC.o .obj/timeC.o .obj/timeC.o: timeC.cpp timeC.h \
+.obj/timeC.o .obj/timeC.so .shobj/timeC.o .shobj/timeC.so: timeC.cpp timeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -345,7 +345,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  timeC.i
 
-.obj/timeS.o .obj/timeS.o .obj/timeS.o .obj/timeS.o: timeS.cpp timeS.h timeC.h \
+.obj/timeS.o .obj/timeS.so .shobj/timeS.o .shobj/timeS.so: timeS.cpp timeS.h timeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -649,7 +649,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp timeC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp timeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -923,7 +923,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  timeC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp server.h timeS.h timeC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h timeS.h timeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

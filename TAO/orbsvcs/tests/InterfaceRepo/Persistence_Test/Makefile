@@ -58,7 +58,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test.o .obj/test.o .obj/test.o .obj/test.o: test.cpp Ptest.h \
+.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp Ptest.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -331,7 +331,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i
 
-.obj/Ptest.o .obj/Ptest.o .obj/Ptest.o .obj/Ptest.o: Ptest.cpp Ptest.h \
+.obj/Ptest.o .obj/Ptest.so .shobj/Ptest.o .shobj/Ptest.so: Ptest.cpp Ptest.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
