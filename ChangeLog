@@ -1,3 +1,11 @@
+Thu Jul 31 13:12:17 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          The KEEP_GOING flag is automatically set now.  It is keyed off of
+          the -k option to make.  If -k is passed to make, then KEEP_GOING
+          will be set to 1, otherwise it will be set to 0.
+
 Thu Jul 31 11:36:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:

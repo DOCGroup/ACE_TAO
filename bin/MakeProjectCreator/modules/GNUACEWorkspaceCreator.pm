@@ -70,8 +70,11 @@ sub write_comps {
       print $fh $crlf;
     }
     print $fh $crlf .
-              "ifeq (\$(KEEP_GOING),)$crlf" .
+              "MAKE_OPTIONS=\$(shell echo \$(MAKEFLAGS) | sed 's/ .*//')$crlf" .
+              "ifeq (\$(findstring k,\$(MAKE_OPTIONS)),k)$crlf" .
               "  KEEP_GOING = 1$crlf" .
+              "else$crlf" .
+              "  KEEP_GOING = 0$crlf" .
               "endif$crlf";
   }
 
