@@ -718,7 +718,8 @@ ACE_INLINE FILE *
 ACE_OS::fopen (const char *filename, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-  ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
+  ACE_OSCALL_RETURN
+    (::fopen (filename, ACE_TEXT_ALWAYS_CHAR (mode)), FILE *, 0);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -727,7 +728,9 @@ ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   // Non-Windows doesn't use wchar_t file systems.
-  ACE_OSCALL_RETURN (::fopen (ACE_TEXT_ALWAYS_CHAR(filename), mode), FILE*, 0);
+  ACE_Wide_To_Ascii n_filename (filename);
+  ACE_OSCALL_RETURN
+    (::fopen (n_filename.char_rep (), ACE_TEXT_ALWAYS_CHAR (mode)), FILE*, 0);
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -971,7 +974,20 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   // No native wide-char support; convert to narrow and call the char* variant.
   char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
   char *npfx = ACE_Wide_To_Ascii (pfx).char_rep ();
-  return ACE_OS::tempnam (ndir, npfx);
+  char *name = ACE_OS::tempnam (ndir, npfx);
+  // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
+  // Convert that string to wide-char and free() the original.
+  wchar_t *wname = 0;
+  if (name != 0)
+    {
+      size_t namelen = ACE_OS::strlen (name) + 1;
+      wname = reinterpret_cast<wchar_t *>
+        (ACE_OS::malloc (namelen * sizeof (wchar_t)));
+      if (wname != 0)
+        ACE_OS::strcpy (wname, ACE_Ascii_To_Wide (name).wchar_rep ());
+      ACE_OS::free (name);
+    }
+  return wname;
 #endif /* VXWORKS */
 }
 #endif /* ACE_HAS_WCHAR */
