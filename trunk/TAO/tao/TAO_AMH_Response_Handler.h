@@ -58,7 +58,7 @@ public:
 
   // @@ Mayur please do no use public fields unless you have a very
   // good reason for it... better to use an accessor...
-  TAO_OutputCDR *tao_out_;
+  TAO_OutputCDR _tao_out_;
 
 
 private:

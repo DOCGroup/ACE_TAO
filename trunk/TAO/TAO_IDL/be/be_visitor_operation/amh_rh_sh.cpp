@@ -117,7 +117,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
 
   delete visitor;
 
-  *os << be_nl;
+  *os << ";" << be_nl;
 
   return 0;
 }
