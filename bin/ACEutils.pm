@@ -22,6 +22,21 @@ sub CheckForExeDir
   }
 }
 
+
+### Check and remove, but don't actually use
+sub CheckForConfig
+{
+  for($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq '-Config') {  
+      if (!defined $ARGV[$i + 1]) {
+        print STDERR "You must pass a configuration with Config\n";
+        exit(1);
+      }
+      splice(@ARGV, $i, 2);
+    }
+  }
+}
+
 sub checkForTarget
 {
   my($cwd) = shift;
@@ -95,5 +110,6 @@ sub waitforfile_timed
 $sleeptime = 5;
 
 CheckForExeDir ();
+CheckForConfig ();
 
 1;

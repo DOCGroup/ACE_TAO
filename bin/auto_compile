@@ -156,6 +156,12 @@ if ($debug) {
 
 push @INC, $CHECKOUT . '/' . $MODULE . '/bin';
 
+require PerlACE::ConfigList;
+
+$config_list = new PerlACE::ConfigList;
+
+$config_list->my_config_list (@CONFIGURATION_OPTIONS);
+
 if ($#BUILD_LIST == -1) {
   @BUILD_LIST=('.', 'TAO');
 }
@@ -174,26 +180,9 @@ if ($debug) {
   $ADMIN = $ENV{'LOGNAME'};
 
 } else {
-  my $line;
-  open (LIST, "<".$CHECKOUT . '/' . $MODULE . '/bin/auto_run_tests.lst')
-    || mydie "Cannot open auto_run_tests list\n";
-
-  LIST_ELEMENT: while (<LIST>) {
-    # ignore comments and blank lines
-    next if (/^\#/ || /^\s*$/);
-
-    chomp;
-    my @stuff = split ":";
-
-    foreach my $config (@CONFIGURATION_OPTIONS) {
-      if (/$config/) {
-	next LIST_ELEMENT;
-      }
-    }
-    my $program = shift @stuff;
-    $program =~ s/\s*//g;  #remove any extra whitepace
-    push @RUN_LIST, $program;
-  }
+  $config_list->load ($CHECKOUT . '/' . $MODULE . '/bin/auto_run_tests.lst');
+  
+  @RUN_LIST = $config_list->valid_entries ();
 }
 
 sub mail_logs {

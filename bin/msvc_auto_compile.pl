@@ -23,6 +23,7 @@ else {
              "$ACE_ROOT\\tests",
              "$ACE_ROOT\\websvcs");
 
+$debug = 0;
 $verbose = 0;
 $print_status = 0;
 $Ignore_errors = 0;              # By default, bail out if an error occurs.
@@ -104,11 +105,17 @@ sub Build ($$)
 {
   my ($project, $config) = @_;
 
-  print "Auto_compiling $project : $config\n";
+  if ($debug == 1) {
+    print "$project\n";
+    return 0;
+  }
+  else {
+    print "Auto_compiling $project : $config\n";
+ 
+    print "Building $project $config\n" if $verbose;
 
-  print "Building $project $config\n" if $verbose;
-
-  return system ("msdev.com $project /MAKE \"$config\" $Build_Cmd $useenv");
+    return system ("msdev.com $project /MAKE \"$config\" $Build_Cmd $useenv");
+  }
 }
 
 # Only builds the core libraries.
@@ -227,6 +234,9 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "Ignore errors\n" if ( $verbose );
         $Ignore_errors = 1;
     }
+    elsif ($ARGV[0] =~ /^-d$/i) {       # debug
+        $debug = 1;
+    }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
     }
@@ -287,6 +297,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     }
     elsif ($ARGV[0] =~ '-(\?|h)') {     # Help information
         print "Options\n";
+        print "-d         = Debug (only print out projects)\n";
         print "-k         = Ignore Errors\n";
         print "-v         = Script verbose Mode\n";
         print "-s         = Print status messages to STDERR\n";
