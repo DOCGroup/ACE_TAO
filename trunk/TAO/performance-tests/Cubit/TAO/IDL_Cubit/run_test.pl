@@ -23,7 +23,7 @@ $clflags = "";
 $svflags = "";
 $mcast = 0;
 
-#make sure the file is gone, so we can wait on it.
+# Make sure the file is gone, so we can wait on it.
 unlink $iorfile;
 
 # Parse the arguments
@@ -101,20 +101,34 @@ if ($mcast == 1)
 }
 else
 {
-  ACE::waitforfile ($iorfile);
+  if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+  }
 }
 
-unlink
+$CL = Process::Create ($exepref . "client".$Process::EXE_EXT.
+                       $clflags .
+                       $clnsflags .
+                       " -x");
 
-$status = system ($exepref."client".$Process::EXE_EXT.
-                  $clflags.
-                  $clnsflags.
-                  " -x");
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
 
-# @@ TODO change to Wait() once the -x option works.
-$SV->Kill (); $SV->Wait ();
+$server = $SV->TimedWait (10);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-# @@ Capture any errors from the server too.
-exit $status;
+if ($server != 0 || $client != 0) {
+  exit 1;
+}
+
+exit 0;
