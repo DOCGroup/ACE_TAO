@@ -1,3 +1,18 @@
+Wed Aug 23 16:04:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAOACE_Static.dsw:
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl.dsw:
+	* TAO_IDL/tao_idl_static.dsp:
+
+	New Files:
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+	  More tweaks to the tao_idl project file plus
+	  addition of static versions of all the projects
+	  to the tao_idl and TAOACE workspaces.
+
 Wed Aug 23 15:34:29 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Current.h
