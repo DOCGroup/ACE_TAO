@@ -1046,7 +1046,7 @@ Caleb Epstein <cae@home.com>
 Bruno Marconi <bmarconi@jetstream.com>
 Ken Childress <kchildre@uccs.jpl.nasa.gov>
 Michael Kramer <kramer@ave.ac.agit.de>
-Johnny Willemsen <johnny.willemsen@meco.nl>
+Johnny Willemsen <jwillemsen@remedy.nl>
 Jonathan Astle <JNASTLE@dera.gov.uk>
 Javier Lopez Sanchez <jlopez@uida.es>
 Nir Drang <Nir@bandwiz.com>
@@ -1507,6 +1507,7 @@ Ansgar Konermann <ansgar.konermann@inf.tu-dresden.de>
 Amir Kunst <amir@fats.co.il>
 Daniel Garrido <dgarrido@lcc.uma.es>
 Andy Alvarez <andy_alvarez@baxter.com>
+Soeren Gerlach
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

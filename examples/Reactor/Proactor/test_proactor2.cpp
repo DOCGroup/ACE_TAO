@@ -368,11 +368,12 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
 class Sender : public ACE_Handler
 {
 public:
-Sender (void);
-~Sender (void);
-int open (const ACE_TCHAR *host, u_short port);
-void close ();
-ACE_HANDLE handle (void) const;
+  Sender (void);
+  ~Sender (void);
+  int open (const ACE_TCHAR *host, u_short port);
+  void close ();
+  ACE_HANDLE handle (void) const;
+  void handle (ACE_HANDLE);
 
 protected:
 // These methods are called by the freamwork
@@ -428,6 +429,11 @@ void Sender::close ()
 ACE_HANDLE Sender::handle (void) const
 {
   return this->stream_.get_handle ();
+}
+
+void Sender::handle (ACE_HANDLE handle)
+{
+  return this->stream_.set_handle (handle);
 }
 
 int Sender::open (const ACE_TCHAR *host, u_short port)
@@ -754,6 +760,8 @@ int DisableSignal ( int SigNum )
                   "Error:(%P | %t):%p\n",
                   "pthread_sigmask failed"));
     }
+#else
+  ACE_UNUSED_ARG(SigNum);
 #endif
 
   return  1;
@@ -791,7 +799,6 @@ int PrintSigMask ()
               break ;
             }
       }
-
 #endif
   return 0;
 }
