@@ -716,16 +716,20 @@ ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
   ACE_Time_Value timeout (0, 0);
   int result = 0;
 
-  while (1)
+  for (;;)
     {
       result = this->handle_events (timeout);
+
       if (result != 0 || errno == ETIME)
         break;
     }
 
   // If our handle_events failed, we'll report a failure to the
   // Reactor.
-  return result == -1 ? -1 : 0;
+  if (result == -1)
+    return -1;
+  else
+    return 0;
 }
 
 int

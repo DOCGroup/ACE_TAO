@@ -151,22 +151,22 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   // When signaled, print message, remove self, and add self
   // This will force Reactor to update its internal handle tables
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_signal() called: handle value = %d\n", 
-	      siginfo->si_handle_));
 
   if (ACE_Reactor::instance ()->remove_handler (siginfo->si_handle_,
 						ACE_Event_Handler::DONT_CALL) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%t) %p\tTask cannot be unregistered from Reactor: handle value = %d\n", 
-		       "Task_Handler::handle_signal",
-		       siginfo->si_handle_), -1);
+    return -1;
+  // ACE_ERROR_RETURN ((LM_ERROR, 
+  //		       "(%t) %p\tTask cannot be unregistered from Reactor: handle value = %d\n", 
+  //		       "Task_Handler::handle_signal",
+  //		       siginfo->si_handle_), -1);
   
   if (ACE_Reactor::instance ()->register_handler (this,
 						  siginfo->si_handle_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%t) %p\tTask cannot be registered with Reactor: handle value = %d\n",  
-		       "Task_Handler::handle_signal",
-		       siginfo->si_handle_), -1);
+    return -1;
+  // ACE_ERROR_RETURN ((LM_ERROR, 
+  // 		       "(%t) %p\tTask cannot be registered with Reactor: handle value = %d\n",  
+  //		       "Task_Handler::handle_signal",
+  //		       siginfo->si_handle_), -1);
   return 0;
 }
 

@@ -199,7 +199,11 @@ Thread_Handler::svc (void)
 int 
 Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+  // @@ Note that this code is not portable to all OS platforms since
+  // it uses print statements within signal handler context.
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) received signal %S\n",
+              signum));
 
   switch (signum)
     {

@@ -28,7 +28,6 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
 int
 ACE_Client_Logging_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
-  ACE_TRACE ("ACE_Client_Logging_Acceptor::handle_signal");
   return -1;
 }
 

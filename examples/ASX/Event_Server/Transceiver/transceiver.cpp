@@ -121,10 +121,6 @@ Event_Transceiver::handle_signal (int signum,
 				  siginfo_t *,
 				  ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) received signal %S\n",
-              signum));
-
   ACE_Reactor::end_event_loop ();
   return 0;
 }

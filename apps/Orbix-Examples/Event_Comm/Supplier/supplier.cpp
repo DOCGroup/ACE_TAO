@@ -50,9 +50,6 @@ Supplier::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int 
 Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "%S\n",
-              signum));
   ACE_Reactor::end_event_loop ();
   return 0;
 }

@@ -44,25 +44,17 @@ public:
 int 
 Event_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
 {
-  char *reason = 0;
-
   HANDLE handle = s->si_handle_;
   if (handle == this->handle_.handle ())
-    {
-      reason = "event";
-      ACE_ASSERT (ACE_Reactor::instance ()->register_handler (this, 
-                                                              this->mutex_->lock ().proc_mutex_) == 0);
-    }
+    ACE_Reactor::instance ()->register_handler (this, 
+                                                this->mutex_->lock ().proc_mutex_);
   else
     {
-      ACE_ASSERT (ACE_Reactor::instance ()->remove_handler (this->mutex_->lock ().proc_mutex_,
-                                                            ACE_Event_Handler::DONT_CALL) == 0);
+      ACE_Reactor::instance ()->remove_handler (this->mutex_->lock ().proc_mutex_,
+                                                ACE_Event_Handler::DONT_CALL);
       delete this->mutex_;
-      reason = "mutex";
     }
   
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_signal for %s\n", reason));  
-
   return 0;
 }
 

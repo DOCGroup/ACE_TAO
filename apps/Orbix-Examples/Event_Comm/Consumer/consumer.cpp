@@ -44,15 +44,11 @@ Consumer::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int 
 Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "%S\n",
-              signum));
-
   // Indicate that the consumer initiated the shutdown.
   this->ih_->consumer_initiated_shutdown (1);
 
   // Shut down the event loop.
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 

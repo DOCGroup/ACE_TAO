@@ -139,9 +139,12 @@ Peer_Handler<PR_ST_2>::handle_signal (int signum,
                                       siginfo_t *,
                                       ucontext_t *)
 {
+  ACE_UNUSED_ARG (signum);
+
+  // @@ Note that this code is not portable to all OS platforms since
+  // it uses print statements within signal handler context.
   ACE_DEBUG ((LM_DEBUG,
               "in handle_signal\n"));
-  ACE_UNUSED_ARG (signum);
 
   return (this->*action_) ();
 }
