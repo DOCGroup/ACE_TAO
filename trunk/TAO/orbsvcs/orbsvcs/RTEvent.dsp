@@ -465,7 +465,25 @@ SOURCE=.\RtecUDPAdminC.cpp
 # Begin Source File
 
 SOURCE=.\RtecUDPAdminS.cpp
+
+!IF  "$(CFG)" == "RTEvent - Win32 Release"
+
+# ADD CPP /GR
+
+!ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
+
 # ADD CPP /GR-
+
+!ELSEIF  "$(CFG)" == "RTEvent - Win32 MFC Debug"
+
+# ADD CPP /GR-
+
+!ELSEIF  "$(CFG)" == "RTEvent - Win32 MFC Release"
+
+# ADD CPP /GR-
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"
