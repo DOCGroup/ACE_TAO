@@ -1,3 +1,13 @@
+Fri Nov  7 09:58:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Connector.cpp (fini): Added a call to
+ 	  ACE_Map_Manager::close() in fini() since the destructor may not
+ 	  be called.  Thanks to Eric C. Newton <ecn@smart.net> for
+ 	  reporting this.
+
+	* ace/{FILE,SPIPE}_Addr.cpp (set): Added a return value.  Thanks
+ 	  to Marios Zikos <zikos@csi.forth.gr> for reporting this.
+
 Fri Nov 07 02:45:55 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.39, released Fri Nov 07 02:45:55 1997.
