@@ -479,7 +479,7 @@ POA_CORBA__tao_direct_collocated_DomainManager::POA_CORBA__tao_direct_collocated
     POA_CORBA_DomainManager_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,DomainManager) (),
+  : CORBA_DomainManager (stub, 1),
     TAO_Collocated_Object (stub, 1, servant),
     CORBA_Object (stub, 1),
     servant_ (servant)

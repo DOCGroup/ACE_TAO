@@ -3020,11 +3020,11 @@ operator>> (
 #if !defined _TAO_CDR_OP_PortableServer_ObjectId_I_
 #define _TAO_CDR_OP_PortableServer_ObjectId_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_PortableServer_Export operator<< (
     TAO_OutputCDR &,
     const PortableServer::ObjectId &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_PortableServer_Export operator>> (
     TAO_InputCDR &,
     PortableServer::ObjectId &
   );

@@ -18,6 +18,7 @@
 #define TAO_OPTABLE_H
 #include "ace/pre.h"
 
+#include "portableserver_export.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,7 +43,7 @@ public:
   // skeleton pointer
 };
 
-class TAO_Export TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Operation_Table
 {
   // = TITLE
   //     Abstract class for maintaining and lookup of CORBA IDL
@@ -63,7 +64,7 @@ public:
   virtual ~TAO_Operation_Table (void);
 };
 
-class TAO_Export TAO_Operation_Table_Factory
+class TAO_PortableServer_Export TAO_Operation_Table_Factory
 {
   // = TITLE
   //   Factory for producing operation table lookup objects based on
@@ -79,7 +80,7 @@ public:
   // destructor
 };
 
-class TAO_Export TAO_Operation_Table_Parameters
+class TAO_PortableServer_Export TAO_Operation_Table_Parameters
 {
   // = TITLE
   //    Parameters used to create the operation table.
@@ -122,7 +123,7 @@ private:
   // the enumerated value indicating the lookup strategy
 };
 
-class TAO_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
 {
   // = TITLE
   //     Dynamic Hashing scheme for CORBA IDL operation name lookup.
@@ -166,7 +167,7 @@ private:
   // The hash table data structure.
 };
 
-class TAO_Export TAO_Linear_Search_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Linear_Search_OpTable : public TAO_Operation_Table
 {
   // = TITLE
   //    Operation table lookup strategy based on
@@ -197,7 +198,7 @@ private:
   virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
 
-class TAO_Export TAO_Active_Demux_OpTable_Entry
+class TAO_PortableServer_Export TAO_Active_Demux_OpTable_Entry
 {
   // = TITLE
   //   Active Demux lookup table entry.
@@ -213,7 +214,7 @@ public:
   // Skeleton pointer corresponding to the index.
 };
 
-class TAO_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
 {
   // = TITLE
   //   Implements the active demultiplexed lookup strategy. The key is
@@ -249,7 +250,7 @@ private:
   // internal lookup table
 };
 
-class TAO_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
 {
   // = TITLE
   //     Helper class  for use of perfect hashing operation lookup
@@ -289,7 +290,7 @@ private:
   virtual const TAO_operation_db_entry* lookup (const char *str, unsigned int len) = 0;
 };
 
-class TAO_Export TAO_Binary_Search_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Binary_Search_OpTable : public TAO_Operation_Table
 {
   // = TITLE
   //     Helper class for using binary search operatin lookup strategy

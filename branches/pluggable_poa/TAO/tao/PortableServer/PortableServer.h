@@ -19,14 +19,14 @@
 #define TAO_PORTABLESERVER_H
 #include "ace/pre.h"
 
-// #include "portableserver_export.h"
+#include "portableserver_export.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export /* TAO_Portableserver_Export */ TAO_POA_Initializer
+class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
   static int init (void);

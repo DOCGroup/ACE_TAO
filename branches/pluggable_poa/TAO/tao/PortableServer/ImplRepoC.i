@@ -1930,11 +1930,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationReposito
 #if !defined _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_
 #define _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_PortableServer_Export operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::EnvironmentList &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_PortableServer_Export operator>> (
     TAO_InputCDR &,
     ImplementationRepository::EnvironmentList &
   );
@@ -2020,11 +2020,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationReposito
 #if !defined _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_
 #define _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_PortableServer_Export operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::ServerInformationList &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_PortableServer_Export operator>> (
     TAO_InputCDR &,
     ImplementationRepository::ServerInformationList &
   );

@@ -30,7 +30,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 {
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
-  class TAO_Export ServerObject :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export ServerObject :  public virtual PortableServer::ServantBase
   {
   protected:
     ServerObject (void);
@@ -119,7 +119,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_ServerObject     : public virtual ::ImplementationRepository::ServerObject
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_ServerObject     : public virtual ::ImplementationRepository::ServerObject
   {
   public:
     _tao_thru_poa_collocated_ServerObject (
@@ -159,7 +159,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export ServerObject_tie : public ServerObject
+  class TAO_PortableServer_Export ServerObject_tie : public ServerObject
   {
   public:
     ServerObject_tie (T &t);
@@ -220,7 +220,7 @@ private:
 
   class Administration;
   typedef Administration *Administration_ptr;
-  class TAO_Export Administration :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export Administration :  public virtual PortableServer::ServantBase
   {
   protected:
     Administration (void);
@@ -445,7 +445,7 @@ private:
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_Administration     : public virtual ::ImplementationRepository::Administration
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_Administration     : public virtual ::ImplementationRepository::Administration
   {
   public:
     _tao_thru_poa_collocated_Administration (
@@ -565,7 +565,7 @@ private:
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export Administration_tie : public Administration
+  class TAO_PortableServer_Export Administration_tie : public Administration
   {
   public:
     Administration_tie (T &t);
@@ -706,7 +706,7 @@ private:
 
   class ServerInformationIterator;
   typedef ServerInformationIterator *ServerInformationIterator_ptr;
-  class TAO_Export ServerInformationIterator :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export ServerInformationIterator :  public virtual PortableServer::ServantBase
   {
   protected:
     ServerInformationIterator (void);
@@ -797,7 +797,7 @@ private:
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_ServerInformationIterator     : public virtual ::ImplementationRepository::ServerInformationIterator
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_ServerInformationIterator     : public virtual ::ImplementationRepository::ServerInformationIterator
   {
   public:
     _tao_thru_poa_collocated_ServerInformationIterator (
@@ -839,7 +839,7 @@ private:
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export ServerInformationIterator_tie : public ServerInformationIterator
+  class TAO_PortableServer_Export ServerInformationIterator_tie : public ServerInformationIterator
   {
   public:
     ServerInformationIterator_tie (T &t);
