@@ -134,6 +134,7 @@ enum schedparam_policy {
 
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+#define ACE_HAS_NONCONST_MSGSND
 
 // Thread specific settings
 // Yes, we do have threads.
