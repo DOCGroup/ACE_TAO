@@ -85,10 +85,10 @@ public:
 
 protected:
   // = More TAO_Connector methods, please check the documentation on
-  // Pluggable.h
-  virtual int make_profile (const char *endpoint,
-                            TAO_Profile *&,
-                            CORBA::Environment &ACE_TRY_ENV);
+  //   Pluggable.h
+  virtual void make_profile (const char *endpoint,
+                             TAO_Profile *&,
+                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   virtual int check_prefix (const char *endpoint);
 
