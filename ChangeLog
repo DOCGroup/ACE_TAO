@@ -1,3 +1,8 @@
+Tue Apr 15 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Corrected libraries to link with.
+
 Mon Apr 14 22:37:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu.cpp:
@@ -16,27 +21,27 @@ Mon Apr 14 15:19:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  New test added for testing MIF schedule using Kokyu.
 
 Mon Apr 14 18:35:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
-        
+
         * bin/generate_compile_stats.sh:
-        
+
           Improved the html presentation by:
-        
+
            - dividing ACE and TAO into two seperate pages.
            - stripping off version numbers from libraries.
-           - stripping off the path from dependent objects (was 
+           - stripping off the path from dependent objects (was
              redundant and made it hard to read).
            - sorting dependent object lists.
            - stripping off the TAO/ part of the path for TAO object
              since this was also redundant.
            - always listing dependent objects even if there was only
              one.
-        
+
           Thanks to Bala for his suggestions.
 
 Mon Apr 14 18:28:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.lib.GNU:
-          Only pass LDFLAGS once to the linker
+          Only pass LDFLAGS once to the linker of Kylix
 
         * include/makeinclude/platform_linux_borland.GNU:
           Pass BORLDFLAGS to the SOFLAGS and removed setting of SOLINK.cc.
