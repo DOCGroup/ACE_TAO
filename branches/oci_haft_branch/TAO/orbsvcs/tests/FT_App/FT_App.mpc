@@ -131,3 +131,17 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
 		run_test_rmregistry.pl
   }
 }
+
+project(*RMController): taoclient, fault_tolerance, orbsvcsexe {
+  exename = replmgr_controller
+  Source_Files {
+    FT_ReplicationManagerController.cpp
+  }
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_replication_mgr.pl
+  }
+}

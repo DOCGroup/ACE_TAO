@@ -479,6 +479,8 @@ namespace TAO
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
 
+    /// Quit flag.
+    int quit_;
   };
 
 } // namespace TAO
