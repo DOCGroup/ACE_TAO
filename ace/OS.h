@@ -23,6 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if 0
 #include "ace/Cleanup.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_main.h"
@@ -405,6 +406,8 @@ namespace ACE_OS
 # include "ace/Thread_Exit.h"
 # include "ace/Thread_Control.h"
 #endif  /* ACE_LEGACY_MODE */
+
+#endif /* 0 */
 
 #include /**/ "ace/post.h"
 #endif  /* ACE_OS_H */

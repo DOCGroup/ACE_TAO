@@ -40,7 +40,6 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
-#include "ace/OS.h"
 #include "ace/Malloc_Allocator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

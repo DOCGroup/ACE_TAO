@@ -1,12 +1,16 @@
 #include "ace/SOCK_Dgram.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#  include "ace/SOCK_Dgram.i"
+#endif
+
 #include "ace/Handle_Set.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram.i"
-#endif
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_select.h"
+#include "ace/os_include/net/os_if.h"
 
 ACE_RCSID (ace,
            SOCK_Dgram,

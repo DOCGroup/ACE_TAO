@@ -25,8 +25,6 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_math.h"
-
 namespace ACE_OS {
 
   /// This method computes the largest integral value not greater than x.

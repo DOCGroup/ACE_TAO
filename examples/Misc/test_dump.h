@@ -6,7 +6,7 @@
 #define __TEST_DUMP_H
 
 #include "ace/Dump.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 
 class SOCK
 {

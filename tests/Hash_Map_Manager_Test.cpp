@@ -23,7 +23,7 @@
 #include "test_config.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
-#include "ace/Synch.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 

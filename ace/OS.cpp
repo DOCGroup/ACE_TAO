@@ -1,8 +1,8 @@
 // $Id$
 
 #include "ace/OS.h"
-#include "ace/Sched_Params.h"
-#include "ace/OS_Thread_Adapter.h"
+//#include "ace/Sched_Params.h"
+//#include "ace/OS_Thread_Adapter.h"
 
 #if !defined (ACE_HAS_WINCE)
 # include "ace/OS_QoS.h"
@@ -155,7 +155,7 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
   size_t previous = 0;
-  size_t length   = ACE_OS_String::strlen (string);
+  size_t length   = ACE_OS::strlen (string);
 
   // We use <= to make sure that we get the last argument
   for (size_t i = 0; i <= length; i++)
@@ -181,7 +181,7 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
         {
           // The next character is automatically
           // skipped because of the strcpy
-          ACE_OS_String::strcpy (string + i, string + i + 1);
+          ACE_OS::strcpy (string + i, string + i + 1);
           length--;
         }
       else if (!indouble &&

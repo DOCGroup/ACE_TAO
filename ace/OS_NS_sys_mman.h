@@ -25,8 +25,8 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_mman.h"
 #include "ace/Global_Macros.h"
+#include "ace/os_include/sys/os_types.h"
 
 namespace ACE_OS {
 

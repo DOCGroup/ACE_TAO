@@ -3,6 +3,9 @@
 #include "ace/SV_Shared_Memory.h"
 #include "ace/Log_Msg.h"
 #include "SV_Shared_Memory_Test.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SV_Shared_Memory, SV_Shared_Memory_Test, "$Id$")
 

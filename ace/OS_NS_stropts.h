@@ -39,7 +39,7 @@ typedef GROUP ACE_SOCK_GROUP;
 #else  /*  (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 struct ACE_Protocol_Info
 {
-  u_long dwServiceFlags1;
+  unsigned long dwServiceFlags1;
   int iAddressFamily;
   int iProtocol;
   char szProtocol[255+1];
@@ -47,11 +47,11 @@ struct ACE_Protocol_Info
 
 // Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
 // method.
-typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
-                                                u_long bytes_transferred,
+typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (unsigned long error,
+                                                unsigned long bytes_transferred,
                                                 ACE_OVERLAPPED *overlapped,
-                                                u_long flags);
-typedef u_long ACE_SOCK_GROUP;
+                                                unsigned long flags);
+typedef unsigned long ACE_SOCK_GROUP;
 
 #endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 
@@ -99,23 +99,23 @@ namespace ACE_OS {
 #if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl>.
   int ioctl (ACE_HANDLE socket,
-             u_long io_control_code,
+             unsigned long io_control_code,
              void *in_buffer_p,
-             u_long in_buffer,
+             unsigned long in_buffer,
              void *out_buffer_p,
-             u_long out_buffer,
-             u_long *bytes_returned,
+             unsigned long out_buffer,
+             unsigned long *bytes_returned,
              ACE_OVERLAPPED *overlapped,
              ACE_OVERLAPPED_COMPLETION_FUNC func);
 
   /// QoS-enabled <ioctl> when the I/O control code is either
   /// SIO_SET_QOS or SIO_GET_QOS.
   int ioctl (ACE_HANDLE socket,
-             u_long io_control_code,
+             unsigned long io_control_code,
              ACE_QoS &ace_qos,
-             u_long *bytes_returned,
+             unsigned long *bytes_returned,
              void *buffer_p = 0,
-             u_long buffer = 0,
+             unsigned long buffer = 0,
              ACE_OVERLAPPED *overlapped = 0,
              ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
 #endif  // ACE_HAS_WINCE

@@ -2,16 +2,16 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
+#if !defined (__ACE_INLINE__)
+#include "ace/POSIX_Asynch_IO.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_Pseudo_Task.h"
 #include "ace/POSIX_Proactor.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
-
+#include "ace/OS_NS_sys_socket.h"
 
 ACE_RCSID (ace,
            POSIX_Asynch_IO,

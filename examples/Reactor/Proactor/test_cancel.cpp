@@ -35,6 +35,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"

@@ -13,6 +13,7 @@ ACE_RCSID(ace, OS_NS_Thread, "$Id$")
 #include "ace/Sched_Params.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_Thread_Adapter.h"
+#include "ace/Min_Max.h"
 
 // This is necessary to work around nasty problems with MVS C++.
 

@@ -49,12 +49,16 @@ static const char usage [] = "[-? |\n"
                              "       [-n to spawn a new LWP with each thread\n"
                              "[<iterations>]]";
 
+#include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Semaphore.h"
+#include "ace/Barrier.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Misc, context_switch_time, "$Id$")
 

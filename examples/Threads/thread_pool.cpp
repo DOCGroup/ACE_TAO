@@ -11,10 +11,9 @@
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
 // more ACE features by Doug Schmidt <schmidt@cs.wustl.edu>.
 
+#include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-
-#include "ace/Task.h"
 
 ACE_RCSID(Threads, thread_pool, "$Id$")
 

@@ -96,7 +96,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
     }
 # elif defined (__GLIBC__)
   // GNU C library has a different signature
-  ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
+  ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyaddr_r ((char *) addr,
                          length,
@@ -198,7 +198,7 @@ ACE_OS::gethostbyname_r (const char *name,
     }
 # elif defined (__GLIBC__)
   // GNU C library has a different signature
-  ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
+  ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyname_r (name,
                          result,
@@ -486,7 +486,7 @@ ACE_OS::getservbyname_r (const char *svc,
     return (struct servent *) 0;
 # elif defined (__GLIBC__)
   // GNU C library has a different signature
-  ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
+  ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   if (::getservbyname_r (svc,
                          proto,

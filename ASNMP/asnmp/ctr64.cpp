@@ -32,6 +32,7 @@
 =====================================================================*/
 
 #include "asnmp/ctr64.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(asnmp, ctr64, "$Id$")
 

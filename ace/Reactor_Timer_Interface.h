@@ -18,6 +18,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Time_Value.h"
+
 class ACE_Event_Handler;
 
 /**

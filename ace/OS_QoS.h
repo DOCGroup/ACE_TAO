@@ -16,17 +16,20 @@
 #define ACE_OS_QOS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/os_include/sys/os_uio.h"
+#include "ace/OS_NS_stropts.h"
+
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #if defined (ACE_HAS_WINSOCK2_GQOS)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
 #else
-typedef u_long ACE_SERVICE_TYPE;
+typedef unsigned long ACE_SERVICE_TYPE;
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 
 
@@ -57,7 +60,7 @@ typedef u_long ACE_SERVICE_TYPE;
 #define ACE_SIO_SET_QOS SIO_SET_QOS
 
 #else
-typedef u_long ACE_SERVICE_TYPE;
+typedef unsigned long ACE_SERVICE_TYPE;
 
 #define ACE_OVERLAPPED_SOCKET_FLAG 0
 #define ACE_XP1_QOS_SUPPORTED        0x00002000
@@ -108,46 +111,46 @@ public:
   ACE_Flow_Spec (void);
 
   /// Constructor that initializes all the fields.
-  ACE_Flow_Spec (u_long token_rate,
-                 u_long token_bucket_size,
-                 u_long peak_bandwidth,
-                 u_long latency,
-                 u_long delay_variation,
+  ACE_Flow_Spec (unsigned long token_rate,
+                 unsigned long token_bucket_size,
+                 unsigned long peak_bandwidth,
+                 unsigned long latency,
+                 unsigned long delay_variation,
                  ACE_SERVICE_TYPE service_type,
-                 u_long max_sdu_size,
-                 u_long minimum_policed_size,
+                 unsigned long max_sdu_size,
+                 unsigned long minimum_policed_size,
                  int ttl,
                  int priority);
 
   /// Get the token rate in bytes/sec.
-  u_long token_rate (void) const;
+  unsigned long token_rate (void) const;
 
   /// Set the token rate in bytes/sec.
-  void token_rate (u_long tr);
+  void token_rate (unsigned long tr);
 
   /// Get the token bucket size in bytes.
-  u_long token_bucket_size (void) const;
+  unsigned long token_bucket_size (void) const;
 
   /// Set the token bucket size in bytes.
-  void token_bucket_size (u_long tbs);
+  void token_bucket_size (unsigned long tbs);
 
   /// Get the PeakBandwidth in bytes/sec.
-  u_long peak_bandwidth (void) const;
+  unsigned long peak_bandwidth (void) const;
 
   /// Set the PeakBandwidth in bytes/sec.
-  void peak_bandwidth (u_long pb);
+  void peak_bandwidth (unsigned long pb);
 
   /// Get the latency in microseconds.
-  u_long latency (void) const;
+  unsigned long latency (void) const;
 
   /// Set the latency in microseconds.
-  void latency (u_long l);
+  void latency (unsigned long l);
 
   /// Get the delay variation in microseconds.
-  u_long delay_variation (void) const;
+  unsigned long delay_variation (void) const;
 
   /// Set the delay variation in microseconds.
-  void delay_variation (u_long dv);
+  void delay_variation (unsigned long dv);
 
   /// Get the service type.
   ACE_SERVICE_TYPE service_type (void) const;
@@ -156,16 +159,16 @@ public:
   void service_type (ACE_SERVICE_TYPE st);
 
   /// Get the maximum SDU size in bytes.
-  u_long max_sdu_size (void) const;
+  unsigned long max_sdu_size (void) const;
 
   /// Set the maximum SDU size in bytes.
-  void max_sdu_size (u_long mss);
+  void max_sdu_size (unsigned long mss);
 
   /// Get the minimum policed size in bytes.
-  u_long minimum_policed_size (void) const;
+  unsigned long minimum_policed_size (void) const;
 
   /// Set the minimum policed size in bytes.
-  void minimum_policed_size (u_long mps);
+  void minimum_policed_size (unsigned long mps);
 
   /// Get the time-to-live.
   int ttl (void) const;
@@ -183,14 +186,14 @@ public:
     defined (ACE_HAS_WINSOCK2_GQOS)
 #else
 private:
-  u_long token_rate_;
-  u_long token_bucket_size_;
-  u_long peak_bandwidth_;
-  u_long latency_;
-  u_long delay_variation_;
+  unsigned long token_rate_;
+  unsigned long token_bucket_size_;
+  unsigned long peak_bandwidth_;
+  unsigned long latency_;
+  unsigned long delay_variation_;
   ACE_SERVICE_TYPE service_type_;
-  u_long max_sdu_size_;
-  u_long minimum_policed_size_;
+  unsigned long max_sdu_size_;
+  unsigned long minimum_policed_size_;
   int ttl_;
   int priority_;
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
@@ -264,7 +267,7 @@ public:
                   iovec *callee_data = 0,
                   ACE_QoS *socket_qos = 0,
                   ACE_QoS *group_socket_qos = 0,
-                  u_long flags = 0);
+                  unsigned long flags = 0);
 
   /// Get caller data.
   iovec *caller_data (void) const;
@@ -291,10 +294,10 @@ public:
   void group_socket_qos (ACE_QoS *);
 
   /// Get flags.
-  u_long flags (void) const;
+  unsigned long flags (void) const;
 
   /// Set flags.
-  void flags (u_long);
+  void flags (unsigned long);
 
 private:
   /// A pointer to the user data that is to be transferred to the peer
@@ -314,7 +317,7 @@ private:
   ACE_QoS *group_socket_qos_;
 
   /// Flags that indicate if we're a sender, receiver, or both.
-  u_long flags_;
+  unsigned long flags_;
 };
 
 // Callback function that's used by the QoS-enabled <ACE_OS::accept>
@@ -326,7 +329,7 @@ typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
                                        iovec *callee_id,
                                        iovec *callee_data,
                                        ACE_SOCK_GROUP *g,
-                                       u_long callbackdata);
+                                       unsigned long callbackdata);
 
 
 /**
@@ -349,7 +352,7 @@ public:
    * i.e., it is an Asynchronous Completion Token (ACT).
    */
   ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
-                         u_long callback_data = 0);
+                         unsigned long callback_data = 0);
 
   /// Get QoS condition callback.
   ACE_QOS_CONDITION_FUNC qos_condition_callback (void) const;
@@ -358,10 +361,10 @@ public:
   void qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc);
 
   /// Get callback data.
-  u_long callback_data (void) const;
+  unsigned long callback_data (void) const;
 
   /// Set callback data.
-  void callback_data (u_long cd);
+  void callback_data (unsigned long cd);
 
 private:
   /**
@@ -378,7 +381,7 @@ private:
    * function parameter, i.e., it is an Asynchronous Completion Token
    * (ACT).
    */
-  u_long callback_data_;
+  unsigned long callback_data_;
 };
 
 

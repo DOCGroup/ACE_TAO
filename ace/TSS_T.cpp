@@ -18,6 +18,7 @@ ACE_RCSID(ace, TSS_T, "$Id$")
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
+#include "ace/OS_NS_stdio.h"
 
 #if defined (ACE_HAS_THR_C_DEST)
 #  include "ace/TSS_Adapter.h"

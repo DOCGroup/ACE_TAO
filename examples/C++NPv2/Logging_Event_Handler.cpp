@@ -7,6 +7,7 @@
 #include "ace/FILE_Connector.h"
 
 #include "Logging_Event_Handler.h"
+#include "ace/OS_NS_string.h"
 
 int Logging_Event_Handler::open () {
 
@@ -16,7 +17,7 @@ int Logging_Event_Handler::open () {
 
   logging_handler_.peer ().get_remote_addr (logging_peer_addr);
   logging_peer_addr.get_host_name (filename, MAXHOSTNAMELEN);
-  strcat (filename, LOGFILE_SUFFIX);
+  ACE_OS::strcat (filename, LOGFILE_SUFFIX);
 
   ACE_FILE_Connector connector;
   connector.connect (log_file_,

@@ -8,6 +8,13 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_pwd.h"
 
+#if defined (ACE_HAS_CHARPTR_SPRINTF)
+#  define ACE_SPRINTF_ADAPTER(X) ACE_OS::strlen (X)
+#else
+#  define ACE_SPRINTF_ADAPTER(X) X
+#endif /* ACE_HAS_CHARPTR_SPRINTF */
+
+
 #if defined (ACE_PSOS)
 ACE_INLINE int
 isatty (int h)

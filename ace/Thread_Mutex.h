@@ -28,7 +28,7 @@
 // ACE platform supports some form of threading.
 
 #include "ace/ACE_export.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 
   /**
    * @class ACE_Thread_Mutex

@@ -7,7 +7,7 @@
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Handle_Set, "$Id$")
 

@@ -22,7 +22,6 @@
 
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
-#include "ace/OS.h"
 
 #if defined (SD_RECEIVE)
 #define ACE_SHUTDOWN_READ SD_RECEIVE

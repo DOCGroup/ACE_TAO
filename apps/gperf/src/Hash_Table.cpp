@@ -28,6 +28,7 @@ ACE_RCSID(src, Hash_Table, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 // The size of the hash table is always the smallest power of 2 >= the
 // size indicated by the user.  This allows several optimizations,

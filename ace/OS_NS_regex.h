@@ -25,8 +25,6 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_regex.h"
-
 namespace ACE_OS {
 
   // non=standard..

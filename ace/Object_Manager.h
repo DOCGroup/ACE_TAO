@@ -16,8 +16,8 @@
 #define ACE_OBJECT_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
+#include "ace/Object_Manager_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,8 +36,6 @@ class ACE_Sig_Set;
 
   // This is included because Svc_conf_l.cpp needs it and I don't want to 
   // have to change it right now.  :-(
-  // The worst thing about this, is that it still includes OS.h, but since we
-  // have to include it above anyway, it doesn't make a difference right now.
   // dhinton.
   #include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */

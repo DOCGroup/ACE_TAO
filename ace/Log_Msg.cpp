@@ -11,7 +11,11 @@
 
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_wchar.h"
+#include "ace/OS_NS_signal.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
 # include "ace/Object_Manager.h"
@@ -1173,11 +1177,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                         else
                           this_len = ACE_OS::sprintf
                             (bp, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                       }
                     else
 #endif /* !ACE_HAS_WINCE */
@@ -1283,10 +1287,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format,
-                             ACE_OS_String::strerror (errno));
+                             ACE_OS::strerror (errno));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, ACE_OS_String::strerror (errno));
+                            (bp, format, ACE_OS::strerror (errno));
                       }
                     else
                       {
@@ -2067,7 +2071,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   // 58 for the HEXDUMP header;
 
   ACE_TCHAR *msg_buf;
-  const size_t text_sz = text ? ACE_OS_String::strlen(text) : 0;
+  const size_t text_sz = text ? ACE_OS::strlen(text) : 0;
   ACE_NEW_RETURN (msg_buf,
                   ACE_TCHAR[text_sz + 58],
                  -1);

@@ -27,7 +27,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS.h"
 #include "ace/Thread_Mutex.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || defined (VXWORKS) || defined (ACE_PSOS)

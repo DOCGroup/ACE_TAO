@@ -3,6 +3,11 @@
 #include "Multicast_Manager.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_Memory.h"
+#include "ace/os_include/os_ctype.h"
 
 // Initialize all the static member vars.
 int Multicast_Manager::received_host_count = 0;
@@ -118,7 +123,7 @@ Multicast_Manager::get_host_entry (const char *host)
     hp = ACE_OS::gethostbyname (host);
 
 
-  return hp == 0 ? 0 : (hostent *) memcpy (&host_entry, hp, sizeof *hp);
+  return hp == 0 ? 0 : (hostent *) ACE_OS::memcpy (&host_entry, hp, sizeof *hp);
 }
 
 // Adds an additional new host to the list of host machines.

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/streams.h"
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID(Misc, test_time_value, "$Id$")
 

@@ -1,7 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/Object_Manager.h"
+#include "ace/Object_Manager_Base.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Global_Macros.h"
 
 // Doesn't need a macro since it *never* returns!
 

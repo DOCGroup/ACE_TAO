@@ -699,6 +699,9 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
+// empty ACE_OS namespace to help identify compiler errors more easily.
+namespace ACE_OS {}
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_ALL_H */

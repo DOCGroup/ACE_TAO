@@ -6,15 +6,16 @@
 // is useful as a baseline to compare against ORB-level performance
 // for the same types of data.
 
+#include "CPP-inclient.h"
+
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Singleton.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Synch.h"
-
-#include "CPP-inclient.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")
 

@@ -4518,14 +4518,14 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 //#   define ACE_SPECIAL_INLINE inline
 # endif
 
-ACE_SPECIAL_INLINE
+ACE_INLINE
 int
 ACE_OS_Thread_Mutex_Guard::acquire (void)
 {
   return owner_ = ACE_OS::thread_mutex_lock (&lock_);
 }
 
-ACE_SPECIAL_INLINE
+ACE_INLINE
 int
 ACE_OS_Thread_Mutex_Guard::release (void)
 {
@@ -4538,13 +4538,14 @@ ACE_OS_Thread_Mutex_Guard::release (void)
     }
 }
 
-ACE_SPECIAL_INLINE
+ACE_INLINE
 ACE_OS_Thread_Mutex_Guard::ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m)
    : lock_ (m)
 {
   acquire ();
 }
 
+ACE_INLINE
 ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
 {
   release ();
@@ -4552,14 +4553,14 @@ ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
 
 /*****************************************************************************/
 
-ACE_SPECIAL_INLINE
+ACE_INLINE
 int
 ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
 {
   return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
 }
 
-ACE_SPECIAL_INLINE
+ACE_INLINE
 int
 ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
 {
@@ -4572,7 +4573,7 @@ ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
     }
 }
 
-ACE_SPECIAL_INLINE
+ACE_INLINE
 ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
   ACE_recursive_thread_mutex_t &m)
    : lock_ (m),
@@ -4581,6 +4582,7 @@ ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
   acquire ();
 }
 
+ACE_INLINE
 ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
 {
   release ();

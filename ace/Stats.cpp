@@ -1,11 +1,14 @@
 // $Id$
 
 #include "ace/Stats.h"
-#include "ace/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Stats.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Stats, "$Id$")
 
@@ -272,7 +275,7 @@ ACE_Stats::print_summary (const u_int precision,
 #if !defined (ACE_HAS_WINCE)
       ACE_OS::fprintf (file,
                        ACE_LIB_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
-                       strerror (overflow_));
+                       ACE_OS::strerror (overflow_));
 #else
       // WinCE doesn't have strerror ;(
       ACE_OS::fprintf (file,

@@ -3,7 +3,8 @@
 // This test program illustrates how the ACE barrier synchronization
 // mechanisms work.
 
-#include "ace/Synch.h"
+#include "ace/OS_main.h"
+#include "ace/Barrier.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 

@@ -7,7 +7,7 @@
 #if !defined (SYNCHLIB_EXPORT_H)
 #define SYNCHLIB_EXPORT_H
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (SYNCHLIB_HAS_DLL)
 #define SYNCHLIB_HAS_DLL 1

@@ -4,6 +4,8 @@
 #include "ace/streams.h"
 #include "ace/Log_Msg.h"
 #include "test.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SV_Message_Queues, TMQ_Client, "$Id$")
 

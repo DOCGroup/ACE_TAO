@@ -11,12 +11,12 @@ ACE_RCSID(ace, OS_NS_stropts, "$Id$")
 
 int
 ACE_OS::ioctl (ACE_HANDLE socket,
-               u_long io_control_code,
+               unsigned long io_control_code,
                void *in_buffer_p,
-               u_long in_buffer,
+               unsigned long in_buffer,
                void *out_buffer_p,
-               u_long out_buffer,
-               u_long *bytes_returned,
+               unsigned long out_buffer,
+               unsigned long *bytes_returned,
                ACE_OVERLAPPED *overlapped,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
@@ -49,18 +49,18 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
 int
 ACE_OS::ioctl (ACE_HANDLE socket,
-               u_long io_control_code,
+               unsigned long io_control_code,
                ACE_QoS &ace_qos,
-               u_long *bytes_returned,
+               unsigned long *bytes_returned,
                void *buffer_p,
-               u_long buffer,
+               unsigned long buffer,
                ACE_OVERLAPPED *overlapped,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
   QOS qos;
-  u_long qos_len = sizeof (QOS);
+  unsigned long qos_len = sizeof (QOS);
 
   if (io_control_code == SIO_SET_QOS)
     {
@@ -84,7 +84,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
     }
   else
     {
-      u_long dwBufferLen = 0;
+      unsigned long dwBufferLen = 0;
 
       // Query for the buffer size.
       int result = ::WSAIoctl ((ACE_SOCKET) socket,
@@ -100,7 +100,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
       if (result == SOCKET_ERROR)
           {
-                u_long dwErr = ::WSAGetLastError ();
+                unsigned long dwErr = ::WSAGetLastError ();
 
                 if (dwErr == WSAEWOULDBLOCK)
                 {

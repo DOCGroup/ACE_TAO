@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ace/Configuration_Import_Export.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
+
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
@@ -306,7 +309,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
                                                    ACE_Configuration_Section_Key& section)
 {
   // Chop any cr/lf at the end of the line.
-  ACE_TCHAR *endp = ACE_OS_String::strpbrk (buffer, ACE_LIB_TEXT ("\r\n"));
+  ACE_TCHAR *endp = ACE_OS::strpbrk (buffer, ACE_LIB_TEXT ("\r\n"));
   if (endp != 0)
     *endp = '\0';
 
@@ -597,15 +600,15 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
     return 0;
 
   // Start at the end and work backwards over all whitespace.
-  for (cp = src + ACE_OS_String::strlen (src) - 1;
+  for (cp = src + ACE_OS::strlen (src) - 1;
        cp != src;
        --cp)
-    if (!ACE_OS_String::ace_isspace (*cp))
+    if (!ACE_OS::ace_isspace (*cp))
       break;
   cp[1] = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
-  for (cp = src; ACE_OS_String::ace_isspace (*cp); ++cp)
+  for (cp = src; ACE_OS::ace_isspace (*cp); ++cp)
     continue;
 
   return cp;

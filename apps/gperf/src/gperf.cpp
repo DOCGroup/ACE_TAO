@@ -33,6 +33,8 @@ ACE_RCSID(src, gperf, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "Options.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdio.h"
 
 int
 main (int argc, char *argv[])

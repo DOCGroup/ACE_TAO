@@ -22,7 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_fcntl.h"
 
 # if !defined (ACE_DEFAULT_MUTEX_A)
 #   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"

@@ -25,7 +25,7 @@ ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
       && (this->name_ = ACE::strnew (name)) != 0)
     {
       this->ptr_ = this->start_;
-      this->end_ = this->start_ + ACE_OS_String::strlen (this->start_);
+      this->end_ = this->start_ + ACE_OS::strlen (this->start_);
       return this->determine_encoding();
     }
   return -1;                // Invalid string passed.
@@ -97,7 +97,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
     {
       if (len * sizeof (ACEXML_Char) > (size_t) (this->end_ - this->ptr_))
         len = this->end_ - this->ptr_;
-      ACE_OS_String::strncpy (str, this->ptr_, len);
+      ACE_OS::strncpy (str, this->ptr_, len);
       this->ptr_ += len;
       return ACE_static_cast (int, len);
     }

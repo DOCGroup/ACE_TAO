@@ -25,8 +25,6 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_ctype.h"
-
 namespace ACE_OS {
 
   // these are non-standard names...

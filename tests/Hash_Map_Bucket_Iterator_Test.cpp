@@ -18,7 +18,8 @@
 
 #include "test_config.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Get_Opt.h"
 #include "ace/Functor.h"
 

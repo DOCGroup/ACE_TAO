@@ -64,12 +64,6 @@ extern "C"
 #  define _strnicmp strnicmp
 #endif /* __BORLANDC__ */
 
-#if defined (ACE_HAS_CHARPTR_SPRINTF)
-#  define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
-#else
-#  define ACE_SPRINTF_ADAPTER(X) X
-#endif /* ACE_HAS_CHARPTR_SPRINTF */
-
 #if defined (ACE_PSOS_SNARFS_HEADER_INFO)
    // Header information snarfed from compiler provided header files
    // that are not included because there is already an identically
