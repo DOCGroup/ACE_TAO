@@ -31,8 +31,9 @@
 
 #include "SSLIOP_Credentials.h"
 
+
 /// Tag for storing multiple ssl endpoints within a single profile.
-#define TAO_TAG_SSL_ENDPOINTS 0x54414f01U
+const ACE_UINT32 TAO_TAG_SSL_ENDPOINTS = 0x54414f01U;
 
 
 /**
@@ -40,6 +41,8 @@
  *
  * @brief SSLIOP-specific implementation of PP Framework Endpoint
  *        interface.
+ *
+ * 
  */
 class TAO_SSLIOP_Export TAO_SSLIOP_Endpoint : public TAO_Endpoint
 {
@@ -115,10 +118,10 @@ public:
   /// Get the establishment of trust settings for this endpoint.
   Security::EstablishTrust trust (void) const;
 
-  /// Set the establishment of trust settings for this endpoint.
+  /// Set the credentials for this endpoint.
   void credentials (TAO_SSLIOP_Credentials_ptr creds);
 
-  /// Get the establishment of trust settings for this endpoint.
+  /// Get the credentials for this endpoint.
   /**
    * @note This method does not follow C++ mapping memory management
    *       rules.  Specifically, no duplication or reference counting
