@@ -705,7 +705,9 @@ IDL_GlobalData::validate_included_idl_files (void)
               ACE_CString pre_partial (*path_tmp);
               pre_partial += separator;
               pre_partial += pre_preproc_includes[j];
-              (void) FULLPATH (pre_abspath, pre_partial.c_str (), MAXPATHLEN);
+              (void) FULLPATH (pre_abspath, 
+                               pre_partial.fast_rep (), 
+                               MAXPATHLEN);
 
               if (pre_abspath != 0)
                 {
