@@ -59,12 +59,9 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
           buf += iterator->length ();
         }
 
-      //policy_value_seq[i] = pv;
-      
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
 
-      //out_CDR.reset ();
     }
   
   TAO_OutputCDR out_CDR;
@@ -101,9 +98,9 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
-  tagged_components_.set_component (tagged_component);
-  are_policies_parsed_ = 1;
-
+  this->tagged_components_.set_component (tagged_component);
+  this->are_policies_parsed_ = 1;
+  
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_UNUSED_ARG (policy_list);
@@ -119,7 +116,7 @@ TAO_Profile::policies (void)
   
   ACE_DEBUG ((LM_DEBUG, "TAO_Profile::policies Decoder called.\n"));
   CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
-  if (!are_policies_parsed_
+  if (!this->are_policies_parsed_
       && (policies->length () == 0))
     // None has already parsed the policies.
     {
@@ -192,7 +189,7 @@ TAO_Profile::policies (void)
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
-  return *(stub_->base_profiles ().policy_list ());
+  return *(this->stub_->base_profiles ().policy_list ());
 }
 
 void
@@ -204,7 +201,7 @@ TAO_Profile::the_stub (TAO_Stub *stub)
 TAO_Stub*
 TAO_Profile::the_stub (void)
 {
-  return stub_;
+  return this->stub_;
 }
 
 // ****************************************************************
