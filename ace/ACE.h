@@ -43,11 +43,13 @@ class ACE_Export ACE
 
   ACE_CLASS_IS_NAMESPACE (ACE);
 public:
-  // Initialize ACE library services.
+  // Initialize ACE library services.  Can be called only once per
+  // program invocation.
   static int init (void);
   // Returns 0 on success, -1 on failure, and 1 if it had already been called.
 
-  // Shut down ACE library services.
+  // Shut down ACE library services.  Can be called only once per
+  // program invocation.
   static int fini (void);
   // Returns 0 on success, -1 on failure, and 1 if it had already been called.
 
@@ -443,7 +445,7 @@ public:
 
   static int get_temp_dir (char *buffer, size_t buffer_len);
   static int get_temp_dir (wchar_t *buffer, size_t buffer_len);
-  // Returns the temporary directory including the trailing slash in 
+  // Returns the temporary directory including the trailing slash in
   // <buffer>.  Returns -1 for an error or if the buffer_len is not
   // long enough.
 
