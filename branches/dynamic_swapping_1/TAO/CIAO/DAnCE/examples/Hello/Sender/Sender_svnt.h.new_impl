@@ -21,7 +21,6 @@
 #ifndef CIAO_GLUE_SESSION_SENDER_SVNT_H
 #define CIAO_GLUE_SESSION_SENDER_SVNT_H
 
-
 #include /**/ "ace/pre.h"
 
 #include "SenderEC.h"
@@ -31,17 +30,54 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ciao/Container_Base.h"
-#include "ciao/Swapping_Container.h"
 #include "ciao/Servant_Impl_T.h"
 #include "ciao/Context_Impl_T.h"
+#include "ciao/Home_Servant_Impl_Base.h"
 #include "ciao/Home_Servant_Impl_T.h"
-#include "ciao/Swapping_Servant_Home_Impl_T.h"
 #include "ace/Active_Map_Manager_T.h"
 
 #include "SenderS.h"
 
 namespace Sender_Impl
 {
+  namespace CIAO_GLUE_Hello
+  {
+    template <typename T>
+    class ReadMessage_Servant_T
+    : public virtual POA_Hello::ReadMessage,
+    public virtual PortableServer::RefCountServantBase
+    {
+      public:
+      ReadMessage_Servant_T (
+      ::Hello::CCM_ReadMessage_ptr executor,
+      ::Components::CCMContext_ptr ctx);
+
+      virtual ~ReadMessage_Servant_T (void);
+
+      virtual char *
+      get_message (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+      // Get component implementation.
+      virtual CORBA::Object_ptr
+      _get_component (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+
+      protected:
+      // Facet executor.
+      ::Hello::CCM_ReadMessage_var executor_;
+
+      // Context object.
+      ::Components::CCMContext_var ctx_;
+    };
+
+    typedef SENDER_SVNT_Export ReadMessage_Servant_T<int> ReadMessage_Servant;
+  }
+
   namespace CIAO_GLUE_Hello
   {
     class Sender_Servant;
@@ -68,13 +104,19 @@ namespace Sender_Impl
 
       Sender_Context (
       ::Components::CCMHome_ptr home,
-      ::CIAO::Swapping_Container *c,
+      ::CIAO::Session_Container *c,
       Sender_Servant *sv);
 
       virtual ~Sender_Context (void);
 
       // Operations for Sender receptacles and event sources,
       // defined in ::Hello::CCM_Sender_Context.
+
+      virtual void
+      push_click_out (
+      ::Hello::TimeOut *ev
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
       // CIAO-specific.
 
@@ -86,7 +128,26 @@ namespace Sender_Impl
       protected:
       // Methods that manage this component's connections and consumers.
 
+      virtual ::Components::Cookie *
+      subscribe_click_out (
+      ::Hello::TimeOutConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::ExceededConnectionLimit));
+
+      virtual ::Hello::TimeOutConsumer_ptr
+      unsubscribe_click_out (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::InvalidConnection));
+
       protected:
+      ACE_Active_Map_Manager<
+      ::Hello::TimeOutConsumer_var>
+      ciao_publishes_click_out_map_;
     };
   }
 
@@ -112,7 +173,8 @@ namespace Sender_Impl
       Sender_Servant (
       ::Hello::CCM_Sender_ptr executor,
       ::Components::CCMHome_ptr home,
-      ::CIAO::Swapping_Container *c);
+      ::CIAO::Home_Servant_Impl_Base *home_servant,
+      ::CIAO::Session_Container *c);
 
       virtual ~Sender_Servant (void);
 
@@ -129,6 +191,27 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Public port operations.
+
+      virtual ::Hello::ReadMessage_ptr
+      provide_push_message (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual ::Components::Cookie *
+      subscribe_click_out (
+      ::Hello::TimeOutConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::ExceededConnectionLimit));
+
+      virtual ::Hello::TimeOutConsumer_ptr
+      unsubscribe_click_out (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::InvalidConnection));
 
       // Component attribute operations.
 
@@ -212,10 +295,18 @@ namespace Sender_Impl
 
       private:
 
+      ::Hello::ReadMessage_var
+      provide_push_message_;
+
       private:
 
       void
       populate_port_tables (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+      ::CORBA::Object_ptr
+      provide_push_message_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
     };
@@ -224,7 +315,7 @@ namespace Sender_Impl
   namespace CIAO_GLUE_Hello
   {
     class SENDER_SVNT_Export SenderHome_Servant
-      : public virtual CIAO::Swapping_Servant_Home_Impl<
+      : public virtual CIAO::Home_Servant_Impl<
           POA_Hello::SenderHome,
           ::Hello::CCM_SenderHome,
           ::Hello::CCM_SenderHome_var,
@@ -237,7 +328,7 @@ namespace Sender_Impl
     {
       public:
       /// Hack for VC6.
-      typedef CIAO::Swapping_Servant_Home_Impl<
+      typedef CIAO::Home_Servant_Impl<
           POA_Hello::SenderHome,
           ::Hello::CCM_SenderHome,
           ::Hello::CCM_SenderHome_var,
@@ -250,7 +341,7 @@ namespace Sender_Impl
 
       SenderHome_Servant (
       ::Hello::CCM_SenderHome_ptr exe,
-      ::CIAO::Swapping_Container *c);
+      ::CIAO::Session_Container *c);
 
       virtual ~SenderHome_Servant (void);
 
@@ -264,7 +355,7 @@ namespace Sender_Impl
     extern "C" SENDER_SVNT_Export ::PortableServer::Servant
     createSenderHome_Servant (
     ::Components::HomeExecutorBase_ptr p,
-    CIAO::Swapping_Container *c
+    CIAO::Session_Container *c
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   }
 }
