@@ -1189,10 +1189,11 @@ TAO_ORB_Core::fini (void)
   // as the Singleton reactor, is used instead of an ORB created one.
 
   ACE_Handle_Set handle_set;
+  TAO_EventHandlerSet unregistered;
 
   // Close the transport cache and return the handle set that needs
   // to be de-registered from the reactor.
-  this->transport_cache_.close (handle_set);
+  this->transport_cache_.close (handle_set, unregistered);
 
   // Shutdown all open connections that are registered with the ORB
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
@@ -1203,6 +1204,16 @@ TAO_ORB_Core::fini (void)
   if (handle_set.num_set () > 0)
     (void) this->reactor ()->remove_handler (handle_set,
                                              ACE_Event_Handler::ALL_EVENTS_MASK);
+  if (!unregistered.is_empty ())
+    {
+      ACE_Event_Handler** eh;
+      for (TAO_EventHandlerSetIterator iter(unregistered);
+           iter.next (eh); iter.advance())
+        {
+          (*eh)->handle_close (ACE_INVALID_HANDLE,
+                               ACE_Event_Handler::ALL_EVENTS_MASK);
+        }
+    }
 
   // Pass reactor back to the resource factory.
   if (this->resource_factory_ != 0)

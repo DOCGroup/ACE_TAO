@@ -211,10 +211,16 @@ public:
   /**
    * Called by the cache when the cache is closing in order to fill
    * in a handle_set in a lock-safe manner.
-   * @param handle_set the ACE_Handle_Set into which the transport
-   *        should place any handle registered with the reactor
+   *
+   * @param reactor_registered the ACE_Handle_Set into which the
+   *        transport should place any handle registered with the reactor
+   *
+   * @param unregistered the TAO_EventHandlerSet into which the
+   *        transport should place any event handler that is not registered
+   *        with anyone
    */
-  void provide_handle (ACE_Handle_Set &handle_set);
+  void provide_handle (ACE_Handle_Set &reactor_registered,
+                       TAO_EventHandlerSet &unregistered);
 
   /// Extracts the list of listen points from the <cdr> stream. The
   /// list would have the protocol specific details of the

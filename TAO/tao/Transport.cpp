@@ -152,7 +152,8 @@ TAO_Transport::handle_output ()
 }
 
 void
-TAO_Transport::provide_handle (ACE_Handle_Set &handle_set)
+TAO_Transport::provide_handle (ACE_Handle_Set &reactor_registered,
+                               TAO_EventHandlerSet &unregistered)
 {
   ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
@@ -160,8 +161,17 @@ TAO_Transport::provide_handle (ACE_Handle_Set &handle_set)
   ACE_Event_Handler *eh = this->event_handler_i ();
   // TAO_Connection_Handler *ch = ACE_reinterpret_cast (TAO_Connection_Handler *, eh);
 
-  if (eh && this->ws_->is_registered ())
-    handle_set.set_bit (eh->get_handle ());
+  if (eh != 0)
+    {
+      if (this->ws_->is_registered ())
+        {
+          reactor_registered.set_bit (eh->get_handle ());
+        }
+      else
+        {
+          unregistered.insert (eh);
+        }
+    }
 }
 
 static void

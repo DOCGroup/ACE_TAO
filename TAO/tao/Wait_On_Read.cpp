@@ -22,15 +22,17 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                         int &reply_received)
 {
   reply_received = 0;
-  while (reply_received != 1)
+  while (reply_received == 0)
     {
       reply_received =
         this->transport_->read_process_message (max_wait_time, 1);
-      if (reply_received == -1)
-        return -1;
     }
 
-  return 0;
+  if (reply_received == -1)
+    {
+      this->transport_->close_connection ();
+    }
+  return (reply_received == 1 ? 0 : reply_received);
 }
 
 // No-op.
