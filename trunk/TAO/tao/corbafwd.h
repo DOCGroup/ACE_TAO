@@ -165,6 +165,16 @@ class CORBA_NVList_var;
 class CORBA_NVList_out;
 typedef class CORBA_NVList *CORBA_NVList_ptr;
 
+class CORBA_Context;
+class CORBA_Context_var;
+class CORBA_Context_out;
+typedef class CORBA_Context *CORBA_Context_ptr;
+
+class CORBA_ContextList;
+class CORBA_ContextList_var;
+class CORBA_ContextList_out;
+typedef class CORBA_ContextList *CORBA_ContextList_ptr;
+
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
 class CORBA_ORB;
@@ -176,16 +186,6 @@ class CORBA_Object;
 class CORBA_Object_var;
 class CORBA_Object_out;
 typedef class CORBA_Object *CORBA_Object_ptr;
-
-class CORBA_Context;
-class CORBA_Context_var;
-class CORBA_Context_out;
-typedef class CORBA_Context *CORBA_Context_ptr;
-
-class CORBA_ContextList;
-class CORBA_ContextList_var;
-class CORBA_ContextList_out;
-typedef class CORBA_ContextList *CORBA_ContextList_ptr;
 
 class CORBA_Current;
 class CORBA_Current_var;
@@ -391,13 +391,6 @@ public:
   typedef CORBA_NVList_var NVList_var;
   typedef CORBA_NVList_out NVList_out;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  typedef CORBA_Object Object;
-  typedef CORBA_Object *Object_ptr;
-  typedef CORBA_Object_var Object_var;
-  typedef CORBA_Object_out Object_out;
-
   typedef CORBA_Context Context;
   typedef CORBA_Context *Context_ptr;
   typedef CORBA_Context_var Context_var;
@@ -407,6 +400,13 @@ public:
   typedef CORBA_ContextList *ContextList_ptr;
   typedef CORBA_ContextList_var ContextList_var;
   typedef CORBA_ContextList_out ContextList_out;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  typedef CORBA_Object Object;
+  typedef CORBA_Object *Object_ptr;
+  typedef CORBA_Object_var Object_var;
+  typedef CORBA_Object_out Object_out;
 
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
@@ -482,7 +482,6 @@ TAO_SYSTEM_EXCEPTION_LIST
   // = all the CORBA::is_nil methods.
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
-  //  static Boolean is_nil (Context_ptr);
   static Boolean is_nil (TypeCode_ptr);
   static Boolean is_nil (ORB_ptr);
   static Boolean is_nil (Principal_ptr);
@@ -493,6 +492,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   static Boolean is_nil (Request_ptr);
   static Boolean is_nil (NamedValue_ptr);
   static Boolean is_nil (NVList_ptr);
+  //  static Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -500,7 +500,6 @@ TAO_SYSTEM_EXCEPTION_LIST
   static void release (Object_ptr);
   static void release (Environment_ptr);
   static void release (Principal_ptr);
-  static void release (Context_ptr);
   static void release (TypeCode_ptr);
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);
@@ -510,6 +509,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   static void release (Request_ptr);
   static void release (NamedValue_ptr);
   static void release (NVList_ptr);
+  static void release (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

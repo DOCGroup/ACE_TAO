@@ -1,3 +1,21 @@
+Fri May  7 10:00:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/Context.cpp:
+	* tao/Context.h:
+	* tao/DynAnyC.h:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/Object_Adapter.cpp:
+	* tao/POA.i:
+	* tao/POAC.i:
+	* tao/Typecode_Constants.cpp:
+	* tao/corbafwd.h:
+	  Several fixes to support minimum CORBA.
+
+	* examples/Quoter/server.cpp:
+	  Fixed error in my use of ACE_PRINT_EXCEPTION.
+
 Thu May  6 21:49:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union_branch.cpp:

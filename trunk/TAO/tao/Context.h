@@ -22,6 +22,8 @@
 
 #include "tao/corbafwd.h"
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class TAO_Export CORBA_Context
 {
   // = TITLE
@@ -287,5 +289,7 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/Context.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_CONTEXT_H */
