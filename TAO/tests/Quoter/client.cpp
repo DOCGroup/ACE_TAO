@@ -28,7 +28,8 @@ Quoter_Client::Quoter_Client (void)
     quoter_var_ (Stock::Quoter::_nil ()),
     quoter_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
-    use_naming_service_ (1)
+    use_naming_service_ (1),
+    useLifeCycleService_(0)  // use the Generic Factory
 {
 }
 
@@ -60,7 +61,7 @@ Quoter_Client::read_ior (char *filename)
 int
 Quoter_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:gk:xs");
   int c;
   int result;
   
@@ -82,6 +83,9 @@ Quoter_Client::parse_args (void)
         this->quoter_factory_key_ =
           ACE_OS::strdup (get_opts.optarg);
         break;
+      case 'l':
+        this->useLifeCycleService_ = 1;
+        break;
       case 'x': 
         this->shutdown_ = 1;
         break;
@@ -94,6 +98,7 @@ Quoter_Client::parse_args (void)
                           "usage:  %s"
                           " [-d]"
                           " [-f quoter_factory-obj-ref-key-file]"
+                          " [-g] # use a generic factory instead of the lifecycle service"
                           " [-k quoter-obj-ref-key]"
                           " [-x]"
                           " [-s]"
@@ -241,14 +246,20 @@ Quoter_Client::init_naming_service (void)
 
     ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
 
-    // The name of the Quoter Factory
+    // The name of the Quoter Generic Factory
     CosLifeCycle::Key factoryName (1);  // max = 1 
     factoryName.length(1);
 
-    // to use directly a Quoter_Generic_Factory
-    // factoryName[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
-    // or to use the life cycle service
-    factoryName[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
+    if (this->useLifeCycleService_ == 1)
+    {
+      // use the LifeCycle Service
+      factoryName[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
+    }
+    else
+    {
+      // use a Generic Factory
+      factoryName[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
+    }
     
     ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
 
