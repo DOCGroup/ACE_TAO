@@ -1,3 +1,8 @@
+Thu Mar 11 08:06:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* CIAO/docs/static_ciao_contents.html: Updated the locations of
+	  the images.
+
 Wed Mar 10 19:41:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/LoadBalancer/Signal_Handler.cpp:
