@@ -1,3 +1,9 @@
+Thu Jan  8 16:46:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/tao_idl.mpc:
+	  Added staticflags += TAO_AS_STATIC_LIBS to the TAO_IDL_EXE project
+	  to fix link errors in the MSVC6 Static build
+
 Thu Jan  8 07:44:14 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/RT_Notification.mpc:
