@@ -213,7 +213,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
                       -1);
 
   // Reset Svc_Handler state.
-  svc_handler->state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
+  svc_handler->recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
 
   return 0;
 }

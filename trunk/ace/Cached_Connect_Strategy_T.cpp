@@ -88,7 +88,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
   CONNECTION_CACHE_ENTRY *possible_entry = (CONNECTION_CACHE_ENTRY *) sh->recycling_act ();
 
   // Check to see if the hint svc_handler has been closed down
-  if (possible_entry->ext_id_.state () == ACE_RECYCLABLE_CLOSED)
+  if (possible_entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
     {
       // If close, decrement refcount
       if (possible_entry->ext_id_.decrement () == 0)
@@ -108,8 +108,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
 
   // If hint is not closed, see if it is connected to the correct
   // address and is recyclable
-  else if ((possible_entry->ext_id_.state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-            possible_entry->ext_id_.state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE) &&
+  else if ((possible_entry->ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+            possible_entry->ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE) &&
            possible_entry->ext_id_.subject () == remote_addr)
     {
       // Hint successful
@@ -315,7 +315,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::connect_svc_handler_i
 
   // For all successful cases: mark the <svc_handler> in the cache
   // as being <in_use>.  Therefore recyclable is BUSY.
-  entry->ext_id_.state (ACE_RECYCLABLE_BUSY);
+  entry->ext_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
   // And increment the refcount
   entry->ext_id_.increment ();
@@ -332,11 +332,35 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cache_i (const void *recycling_act)
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
-  entry->ext_id_.state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
+  entry->ext_id_.recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
   return 0;
 }
 
+template<ACE_T1> int
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::recycle_state_i (const void *recycling_act,
+                                                         ACE_Recyclable_State new_state)
+{
+  // The wonders and perils of ACT
+  CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
+
+  // Mark the <svc_handler> in the cache as not being <in_use>.
+  // Therefore recyclable is IDLE.
+  entry->ext_id_.recycle_state (new_state);
+
+  return 0;
+}
+
+template<ACE_T1> ACE_Recyclable_State
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::recycle_state_i (const void *recycling_act) const
+{
+  // The wonders and perils of ACT
+  CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
+
+  // Mark the <svc_handler> in the cache as not being <in_use>.
+  // Therefore recyclable is IDLE.
+  return entry->ext_id_.recycle_state ();
+}
 
 template <ACE_T1> int
 ACE_Cached_Connect_Strategy_Ex<ACE_T2>::purge_i (const void *recycling_act)
@@ -355,7 +379,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::mark_as_closed_i (const void *recycling_
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
 
   // Mark the <svc_handler> in the cache as CLOSED.
-  entry->ext_id_.state (ACE_RECYCLABLE_CLOSED);
+  entry->ext_id_.recycle_state (ACE_RECYCLABLE_CLOSED);
 
   return 0;
 }
@@ -371,7 +395,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup_hint_i (const void *recycling_ac
 
   // If the svc_handler state is closed and the refcount == 0, call
   // close() on svc_handler.
-  if (entry->ext_id_.state () == ACE_RECYCLABLE_CLOSED &&
+  if (entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED &&
       refcount == 0)
     {
       entry->int_id_.first ()->recycler (0, 0);
@@ -418,11 +442,11 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (ACE_Refcounted_Hash_Recyclable<ACE
     {
       REFCOUNTED_HASH_RECYCLABLE_ADDRESS &addr = (*iterator).ext_id_;
 
-      if (addr.state () != ACE_RECYCLABLE_IDLE_AND_PURGABLE &&
-          addr.state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
+      if (addr.recycle_state () != ACE_RECYCLABLE_IDLE_AND_PURGABLE &&
+          addr.recycle_state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
         continue;
 
-      if (addr != search_addr)
+      if (addr.subject () != search_addr.subject ())
         continue;
 
       entry = &(*iterator);

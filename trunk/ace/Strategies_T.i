@@ -369,7 +369,7 @@ ACE_Refcounted_Hash_Recyclable<T>::subject (void)
 template <class T> ASYS_INLINE int
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
-  return this->state () == rhs.state () &&
+  return this->recycle_state () == rhs.recycle_state () &&
          this->t_ == rhs.t_;
 }
 

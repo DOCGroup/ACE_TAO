@@ -205,8 +205,8 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
       // If the <min> entry isnt IDLE_AND_PURGABLE continue until you reach
       // the first entry which can be purged. This is the minimum with
       // which you will compare the rest of the purgable entries.
-      if ((*iter).ext_id_.state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-          (*iter).ext_id_.state () == ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE)
+      if ((*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+          (*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE)
         {
           if (found == 0)
             {

@@ -301,13 +301,22 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::idle (u_long flags)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::state (ACE_Recyclable_State new_state)
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle_state (ACE_Recyclable_State new_state)
 {
   if (this->recycler ())
-    return this->recycler ()->state (this->recycling_act_,
-                                     new_state);
+    return this->recycler ()->recycle_state (this->recycling_act_,
+                                             new_state);
 
   return 0;
+}
+
+template <PR_ST_1, ACE_SYNCH_DECL> ACE_Recyclable_State
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle_state (void) const
+{
+  if (this->recycler ())
+    return this->recycler ()->recycle_state (this->recycling_act_);
+
+  return ACE_RECYCLABLE_UNKNOWN;
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void

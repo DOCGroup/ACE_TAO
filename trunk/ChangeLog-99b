@@ -1,3 +1,33 @@
+Mon Jul 19 19:46:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h: Added ACE_*_cast_*_ptr and ACE_*_cast_*_ref for const,
+	  static, and reinterpret casts.
+
+	* ace/Strategies_T.cpp (find):
+	* ace/Cached_Connect_Strategy_T.cpp (find):
+
+          The comparison should be between ACE_PEER_CONNECTOR_ADDR and not
+	  REFCOUNTED_HASH_RECYCLABLE_ADDRESS.
+
+	* ace/Svc_Handler: Changed <state> to <recycle_state>.  <state>
+	  was too generic and in some cases a <state> method was already
+	  present in classes deriving from Svc_Handler.
+
+	  Also, added a <recycle_state> accessor.
+
+	  The following files were effected:
+
+          - ace/Cached_Connect_Strategy_T.cpp
+          - ace/Cached_Connect_Strategy_T.h
+          - ace/Caching_Utility_T.cpp
+          - ace/Strategies.h
+          - ace/Strategies.i
+          - ace/Strategies_T.cpp
+          - ace/Strategies_T.h
+          - ace/Strategies_T.i
+	  - tests/Cached_Accept_Conn_Test.cpp
+	  - tests/Cached_Conn_Test.cpp
+
 Mon Jul 19 20:08:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp:
