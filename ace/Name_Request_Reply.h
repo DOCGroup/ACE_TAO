@@ -6,17 +6,17 @@
 //
 // = LIBRARY
 //    ACE
-// 
-// = FILENAME
-//    ACE_Name_Request_Reply.h
 //
-// = DESCRIPTION 
-//     Define the format used to exchange messages between the 
+// = FILENAME
+//    Name_Request_Reply.h
+//
+// = DESCRIPTION
+//     Define the format used to exchange messages between the
 //     ACE_Name Server and its clients.
 //
 // = AUTHOR
 //    Gerhard Lenzer, Douglas C. Schmidt, and Prashant Jain
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_NAME_REQUEST_REPLY_H)
@@ -30,24 +30,24 @@ class ACE_Export ACE_Name_Request
   //   Message format for delivering requests to the ACE_Name Server.
   //
   // = DESCRIPTION
-  //   This class is implemented to minimize data copying.  
+  //   This class is implemented to minimize data copying.
   //   In particular, all marshaling is done in situ...
 {
 public:
   enum Constants
   {
     /* Request message types. */
-    BIND = 01, 
-    REBIND = 02, 
-    RESOLVE = 03, 
-    UNBIND  = 04, 
+    BIND = 01,
+    REBIND = 02,
+    RESOLVE = 03,
+    UNBIND  = 04,
     LIST_NAMES = 05,
     LIST_VALUES = 015,
     LIST_TYPES = 025,
     LIST_NAME_ENTRIES = 06,
     LIST_VALUE_ENTRIES = 016,
     LIST_TYPE_ENTRIES = 026,
-    MAX_ENUM = 11, 
+    MAX_ENUM = 11,
     MAX_LIST = 3,
 
     // Mask for bitwise operation used for table lookup
@@ -69,7 +69,7 @@ public:
 		    const char type[],
 		    const size_t type_length,
 		    ACE_Time_Value *timeout = 0); // Max time willing to wait for request.
-  // Create a <ACE_Name_Request> message.  
+  // Create a <ACE_Name_Request> message.
 
   void init (void);
   // Initialize length_ in order to ensure correct byte ordering
@@ -91,7 +91,7 @@ public:
   ACE_Time_Value timeout (void) const;
   void timeout (const ACE_Time_Value timeout);
 
-  // = Set/get the name 
+  // = Set/get the name
   const ACE_USHORT16 *name (void) const;
   void name (const ACE_USHORT16 *);
 
@@ -125,7 +125,7 @@ public:
   // Print out the values of the message for debugging purposes.
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.  
+  // = The 5 fields in the <Transfer> struct are transmitted to the server.
   // The remaining 2 fields are not tranferred -- they are used only on
   // the server-side to simplify lookups.
 
@@ -138,7 +138,7 @@ private:
     // Type of the request (i.e., <BIND>, <REBIND>, <RESOLVE>, and <UNBIND>).
 
     ACE_UINT32 block_forever_;
-    // Indicates if we should block forever.  If 0, then <secTimeout_> 
+    // Indicates if we should block forever.  If 0, then <secTimeout_>
     // and <usecTimeout_> indicates how long we should wait.
 
     ACE_UINT32 sec_timeout_;
@@ -180,7 +180,7 @@ class ACE_Export ACE_Name_Reply
   //     Message format for delivering replies from the ACE_Name Server.
   //
   // = DESCRIPTION
-  //   This class is implemented to minimize data copying.  
+  //   This class is implemented to minimize data copying.
   //   In particular, all marshaling is done in situ...
 {
 public:
@@ -198,7 +198,7 @@ public:
   // Default constructor.
 
   ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
-  // Create a <ACE_Name_Reply> message.  
+  // Create a <ACE_Name_Reply> message.
 
   void init (void);
   // Initialize length_ in order to ensure correct byte ordering

@@ -7,7 +7,7 @@
 //    ace
 //
 // = FILENAME
-//    Local_Tokens
+//    Local_Tokens.h
 //
 // = AUTHOR
 //    Karl-Heinz Dorn (kdorn@erlh.siemens.de)

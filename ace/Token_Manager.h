@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Token_Manager
+//    Token_Manager.h
 //
 // = AUTHOR
 //    Tim Harrison (harrison@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_TOKEN_MANAGER_H)
@@ -54,7 +54,7 @@ public:
     // an existing token.  If none is found, the Token Manager calls
     // ACE_Token_Proxy::create_token to create a new one.  When
     // finished, sets ACE_Token_Proxy::token_.  <token_name> uniquely
-    // id's the token name. 
+    // id's the token name.
 
     int check_deadlock (ACE_Token_Proxy *proxy);
     int check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy);

@@ -6,17 +6,17 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    ACE_Dynamic.h 
+//    Dynamic.h
 //
 // = AUTHOR
 //    Doug Schmidt and Irfan Pyrarli.
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_DYNAMIC_H)
-#define ACE_DYNAMIC_H 
+#define ACE_DYNAMIC_H
 
 #include "ace/ACE.h"
 
@@ -54,4 +54,3 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_DYNAMIC_H */
-

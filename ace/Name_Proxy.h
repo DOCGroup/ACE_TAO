@@ -8,7 +8,7 @@
 //    ACE
 //
 // = FILENAME
-//    ACE_Name_Proxy.h
+//    Name_Proxy.h
 //
 // = DESCRIPTION
 //    Proxy for dealing with remote server process managing NET_LOCAL
@@ -39,7 +39,7 @@ class ACE_Export ACE_Name_Proxy : public ACE_Event_Handler
 public:
   ACE_Name_Proxy (void);
   // Default constructor.
- 
+
   // = Establish a binding with the ACE_Name Server.
   ACE_Name_Proxy (const ACE_INET_Addr &remote_addr, // Address of ACE_Name Server.
 		  ACE_Synch_Options& options =
@@ -51,16 +51,16 @@ public:
 
   int request_reply (ACE_Name_Request &request);
   // Perform the request and wait for the reply.
- 
+
   int send_request (ACE_Name_Request &request);
   // Perform the request.
- 
+
   int recv_reply (ACE_Name_Request &reply);
   // Receive the reply.
- 
+
   virtual ACE_HANDLE get_handle (void) const;
   // Obtain underlying handle.
- 
+
   virtual ~ACE_Name_Proxy (void);
   // Close down the connection to the server.
 
