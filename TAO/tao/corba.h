@@ -175,6 +175,7 @@ operator>>(TAO_InputCDR&, TAO_opaque&);
 #include "tao/Request.h"
 #include "tao/Stub.h"
 #include "tao/Object.h"
+#include "tao/varout.h"
 #include "tao/Typecode.h"
 
 // Marshaling

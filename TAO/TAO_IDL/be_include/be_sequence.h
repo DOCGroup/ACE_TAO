@@ -43,7 +43,8 @@ public:
     MNG_UNKNOWN ,
     MNG_NONE,
     MNG_STRING,
-    MNG_OBJREF
+    MNG_OBJREF,
+    MNG_PSEUDO
   };
 
   // =Operations

@@ -257,3 +257,19 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 
   iiopobj->use_locate_requests (use_it);
 }
+
+// ****************************************************************
+
+TAO_Object_Field::~TAO_Object_Field (void)
+{
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_Object_Field_T<CORBA_Object>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Object_Field_T<CORBA_Object>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

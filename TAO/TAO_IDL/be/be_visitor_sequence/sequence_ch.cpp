@@ -67,13 +67,19 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
   // generate the appropriate sequence type
   switch (node->managed_type ())
     {
-    case be_sequence::MNG_OBJREF: // sequence of objrefs
+    case be_sequence::MNG_OBJREF:
       if (node->unbounded ())
         *os << "TAO_Unbounded_Object_Sequence<";
       else
         *os << "TAO_Bounded_Object_Sequence<";
       break;
-    case be_sequence::MNG_STRING: // sequence of strings
+    case be_sequence::MNG_PSEUDO:
+      if (node->unbounded ())
+        *os << "TAO_Unbounded_Pseudo_Sequence<";
+      else
+        *os << "TAO_Bounded_Pseudo_Sequence<";
+      break;
+    case be_sequence::MNG_STRING:
       if (node->unbounded ())
         *os << "TAO_Unbounded_String_Sequence";
       else
@@ -145,7 +151,8 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
   // generate the appropriate sequence type
   switch (node->managed_type ())
     {
-    case be_sequence::MNG_OBJREF: // sequence of objrefs
+    case be_sequence::MNG_PSEUDO:
+    case be_sequence::MNG_OBJREF:
       if (node->unbounded ())
         this->gen_unbounded_obj_sequence (node);
       else

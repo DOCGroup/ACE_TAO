@@ -2,7 +2,7 @@
 
 // $Id$
 
-// ===================================================================================
+// ================================================================
 //
 // = LIBRARY
 //     cos
@@ -11,12 +11,13 @@
 //     CosPropertyService.idl
 //
 // = DESCRITION
-//     The property service, downloaded from ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
+//     The property service, downloaded from
+//     ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps 
 //
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
-// ======================================================================================
+// ================================================================
 
 module CosPropertyService
 {
@@ -26,8 +27,8 @@ module CosPropertyService
   //     of the type system.
   //
   // = DESCRIPTION
-  //     The data types and interfaces to deal with property names, property values,
-  //     property modes etc.
+  //     The data types and interfaces to deal with property names,
+  //     property values, property modes etc.
 
   // = Data Types.
 

@@ -13,8 +13,6 @@
 //
 // ========================================================================
 
-#define TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-
 module CosTrading
 {
   // forward references to our interfaces
@@ -343,13 +341,8 @@ module CosTrading
           {
 		struct LinkInfo
                 {
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-                  string target;
-                  string target_reg;
-#else
                   Lookup target;
                   Register target_reg;
-#endif 
                   FollowOption def_pass_on_follow_rule;
                   FollowOption limiting_follow_rule;
 		};
@@ -544,11 +537,7 @@ module CosTradingDynamic
     };
 
     struct DynamicProp {
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-      string eval_if;
-#else
       DynamicPropEval eval_if;
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
       TypeCode returned_type;
       any extra_info;
     };
