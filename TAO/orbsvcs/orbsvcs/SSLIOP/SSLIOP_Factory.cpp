@@ -10,6 +10,7 @@
 
 #include "tao/debug.h"
 
+#include "ace/SSL/sslconf.h"
 #include "ace/SSL/SSL_Context.h"
 
 
@@ -18,7 +19,21 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
+// An SSL session id seed value. Needs not be too unique, just somewhat
+// different. See the OpenSSL manual 
+static const unsigned char session_id_context_[] = 
+  "$Id$";
+
+// Protocol name prefix
 static const char *prefix_[] = {"iiop", "ssliop"};
+
+// An OS-dependent path separator character
+static const char *TAO_PATH_SEPARATOR_STRING = 
+#if defined(ACE_WIN32)        
+  ACE_TEXT (";");
+#else
+  ACE_TEXT (":");
+#endif 
 
 namespace TAO
 {
@@ -81,7 +96,7 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 // Parses a X509 path. Beware: This function modifies
 // the buffer pointed to by arg!
 int
-TAO::SSLIOP::Protocol_Factory::parse_x509_file_path (char *arg,
+TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg,
                                                    char **path)
 {
   ACE_ASSERT (arg!= 0);
@@ -108,6 +123,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   char *certificate_path = 0;
   char *private_key_path = 0;
   char *dhparams_path = 0;
+  char *ca_file = 0;
+  char *ca_dir = 0;
+  char *rand_path = 0;
 
   int certificate_type = -1;
   int private_key_type = -1;
@@ -126,10 +144,29 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   // problems may occur later on due to lack of initialization of the
   // underlying SSL library (e.g. OpenSSL), which occurs when an
   // ACE_SSL_Context is instantiated.
-  //
+  
   // The code is cleaner this way anyway.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
   ACE_ASSERT (ssl_ctx != 0);
+
+  size_t session_id_len = 
+    (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH) 
+      ? SSL_MAX_SSL_SESSION_ID_LENGTH 
+      : sizeof session_id_context_;
+  
+  // Note that this function returns 1, if the operation succeded. 
+  // See SSL_CTX_set_session_id_context(3)
+  if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(), 
+                                             session_id_context_, 
+                                             session_id_len))
+  {
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) Unable to set the session id ")
+                  ACE_TEXT ("context to \'%s\'\n"), session_id_context_));
+
+    return -1;
+  }
 
   for (int curarg = 0; curarg != argc; ++curarg)
     {
@@ -156,7 +193,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
             {
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                            ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
                             ACE_TEXT ("SSL cipher in SSLIOP ")
                             ACE_TEXT ("factory.\n")));
 
@@ -183,7 +220,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           curarg++;
           if (curarg < argc)
             {
-              certificate_type = parse_x509_file_path (argv[curarg], &certificate_path);
+              certificate_type = parse_x509_file (argv[curarg], &certificate_path);
             }
         }
 
@@ -193,7 +230,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           curarg++;
           if (curarg < argc)
             {
-              private_key_type = parse_x509_file_path (argv[curarg], &private_key_path);
+              private_key_type = parse_x509_file (argv[curarg], &private_key_path);
             }
         }
 
@@ -260,12 +297,112 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           curarg++;
           if (curarg < argc)
             {
-              dhparams_type = parse_x509_file_path (argv[curarg], &dhparams_path);
+              dhparams_type = parse_x509_file (argv[curarg], &dhparams_path);
             }
         }
 
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLCAfile") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              (void) parse_x509_file (argv[curarg], &ca_file);
+            }
+        }
+      
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLCApath") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              ca_dir = argv[curarg];
+            }
+        }
+      
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLrand") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              rand_path = argv[curarg];
+            }
+        }
     }
 
+  // Load some (more) entropy from the user specified sources
+  // in addition to what's pointed to by ACE_SSL_RAND_FILE_ENV
+  if (rand_path != 0)
+  {
+    short errors = 0;
+    char *file_name = 0;
+    const char *path = ACE_OS::strtok_r (rand_path, 
+                                         TAO_PATH_SEPARATOR_STRING,
+                                         &file_name);
+    while ( path != 0)
+    {
+      if( -1 == ssl_ctx->seed_file (path, -1))
+      {
+        errors++;
+        
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) Failed to load ")
+                      ACE_TEXT ("more entropy from <%s>: %m\n"), path));
+      }
+      else
+      {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) Loaded ")
+                        ACE_TEXT ("more entropy from <%s>\n"), path));
+      }
+      
+      path = ACE_OS::strtok_r (0, TAO_PATH_SEPARATOR_STRING, &file_name);
+    }
+    
+    if (errors > 0) 
+      return -1;
+  }
+
+  // Load any trusted certificates explicitely rather than relying on 
+  // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
+  if (ca_file != 0 || ca_dir != 0)
+    {
+      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) Unable to load ")
+                        ACE_TEXT ("CA certs from %s%s%s\n"),
+                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ") 
+                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV) 
+                                                    ACE_TEXT (" env var (if any)")),
+                        ACE_TEXT (" and "),
+                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ") 
+                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV) 
+                                                  ACE_TEXT (" env var (if any)"))));
+
+          return -1;
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_INFO,
+                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
+                        ACE_TEXT ("Trusted Certificates from %s%s%s\n"),
+                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ") 
+                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV) 
+                                                    ACE_TEXT (" env var (if any)")),
+                        ACE_TEXT (" and "),
+                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ") 
+                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV) 
+                                                  ACE_TEXT (" env var (if any)"))));
+        }
+    }
+  
   // Load in the DH params.  If there was a file explicitly specified,
   // then we do that here, otherwise we load them in from the cert file.
   // Note that we only do this on the server side, I think so we might
@@ -331,7 +468,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Unable to set ")
+                        ACE_TEXT ("TAO (%P|%t) Unable to set ")
                         ACE_TEXT ("SSL certificate <%s> ")
                         ACE_TEXT ("in SSLIOP factory.\n"),
                         certificate_path));
@@ -342,7 +479,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
+                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("SSL certificate ")
                         ACE_TEXT ("from %s\n"),
                         certificate_path));
@@ -357,7 +494,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Unable to set ")
+                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
                           ACE_TEXT ("SSL private key ")
                           ACE_TEXT ("<%s> in SSLIOP factory.\n"),
                           private_key_path));
@@ -369,7 +506,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
+                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Private Key ")
                         ACE_TEXT ("from %s\n"),
                         private_key_path));
