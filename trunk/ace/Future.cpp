@@ -205,8 +205,9 @@ ACE_Future_Rep<T>::get (T &value,
   // If the value is already produced, return it.
   if (this->value_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
-
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, 
+                                ACE_const_cast (ACE_Thread_Mutex &, this->value_ready_mutex_),
+                                -1));
       // If the value is not yet defined we must block until the
       // producer writes to it.
 
