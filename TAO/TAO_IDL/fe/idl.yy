@@ -113,6 +113,7 @@ extern int yyleng;
   FE_Declarator		*deval;		/* Declarator value	*/
   idl_bool		bval;		/* Boolean value	*/
   long			ival;		/* Long value		*/
+  unsigned long		uival;		/* Unsigned long value	*/
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
@@ -175,6 +176,7 @@ extern int yyleng;
 %token          IDL_VALUETYPE
 
 %token <ival>	IDL_INTEGER_LITERAL
+%token <uival>  IDL_UINTEGER_LITERAL
 %token <sval>	IDL_STRING_LITERAL
 %token <cval>	IDL_CHARACTER_LITERAL
 %token <dval>	IDL_FLOATING_PT_LITERAL
@@ -235,7 +237,7 @@ extern int yyleng;
 
 %type <idval>	interface_decl value_decl id
 
-%type <ival> type_dcl
+%type <ival>    type_dcl
 %%
 
 /*
@@ -1051,6 +1053,10 @@ primary_expr
 
 literal
 	: IDL_INTEGER_LITERAL
+	{
+	  $$ = idl_global->gen()->create_expr($1);
+	}
+	| IDL_UINTEGER_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
 	}
