@@ -1,3 +1,14 @@
+Sun Dec 19 14:50:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+
+	  Fixed the warning about not completely initializing all the
+	  virtual base classes. 
+	
+	* orbsvcs/orbsvcs/Notify/Topology_Object.h:
+
+	  Cosmetoc fixes.
+
 Sat Dec 18 20:08:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
@@ -15,9 +26,9 @@ Sat Dec 18 09:56:04 2004  Olli Savia  <ops@iki.fi>
         * tao/SystemException.cpp:
         * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
         * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
-          Replaced __Lynx__ macro with ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
-          macro. This makes code maintenace easier across different
-          LynxOS versions.
+          Replaced __Lynx__ macro with
+	  ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO macro. This makes code
+	  maintenace easier across different LynxOS versions.
 
 Sat Dec 18 01:08:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
