@@ -2564,6 +2564,15 @@ TAO_Export void operator<<= (CORBA::Any &, const FT::Properties &); // copying v
 TAO_Export void operator<<= (CORBA::Any &, FT::Properties*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, FT::Properties *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const FT::Properties *&);
+
+// Goofiness for FT_Name. This is just a hack and not a good one at
+// that.
+TAO_Export void operator<<= (CORBA::Any &, const FT::Name &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, FT::Name*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, FT::Name *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const FT::Name *&);
+// End Goofiness
+
 TAO_Export void operator<<= (CORBA::Any &, const FT::Locations &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, FT::Locations*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, FT::Locations *&); // deprecated
