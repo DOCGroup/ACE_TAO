@@ -139,7 +139,7 @@ TAO_LB_ObjectGroupManager::locations_of_members (
 
 LoadBalancing::ObjectGroupId
 TAO_LB_ObjectGroupManager::get_object_group_id (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    LoadBalancing::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))

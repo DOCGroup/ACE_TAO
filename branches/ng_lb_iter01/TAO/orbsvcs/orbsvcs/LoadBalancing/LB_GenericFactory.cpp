@@ -24,7 +24,7 @@ TAO_LB_GenericFactory::TAO_LB_GenericFactory (
 CORBA::Object_ptr
 TAO_LB_GenericFactory::create_object (
     const char * type_id,
-    const LoadBalancing::Criteria & the_criteria,
+    const LoadBalancing::Criteria & /* the_criteria */,
     LoadBalancing::GenericFactory::FactoryCreationId_out
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
@@ -35,10 +35,10 @@ TAO_LB_GenericFactory::create_object (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::CannotMeetCriteria))
 {
-//   LoadBalancing::Criteria_var creation_criteria =
-//     this->property_manager_.process_criteria (the_criteria,
-//                                               ACE_TRY_ENV);
-//   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  LoadBalancing::Properties_var properties =
+    this->property_manager_.get_type_properties (type_id,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong factory_infos_count = factory_infos.length ();
 
@@ -199,21 +199,6 @@ TAO_LB_GenericFactory::populate_object_group (
 {
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
     {
-      // The FactoryInfo::the_location member was used when
-      // determining which FactoryInfo
-      //    member?
-      // @@ It looks like it is only used when the application
-      //    control membership style is used.  The application
-      //    requests that a replica be created at a given
-      //    "location," at which point the ReplicationManager
-      //    searches through its registered FactoryInfos for a
-      //    FactoryInfo with a "Location" member that matches
-      //    the location at which to create the desired
-      //    replica.
-      // @@ It is also used to ensure that only one replica of
-      //    a given type is created at a given location.
-
-
       LoadBalancing::FactoryInfo &factory_info =
         factory_infos[j];
 
