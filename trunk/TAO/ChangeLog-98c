@@ -1,3 +1,10 @@
+Thu Mar 19 09:55:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/CDR/README: 
+	* tests/CDR/basic_types.cpp: 
+	* tests/CDR/tc.cpp: 
+	  Added basic documentation on the purpose of the tests.
+
 Thu Mar 19 09:26:25 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Added an entry for the Concurrency
