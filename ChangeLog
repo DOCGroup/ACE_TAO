@@ -1,3 +1,12 @@
+Wed Jun 25 13:14:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+    * bin/MakeProjectCreator/templates/em3vcp.mpd:
+    * bin/MakeProjectCreator/templates/nmake.mpd:
+    * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+    * bin/MakeProjectCreator/templates/vc7.mpd:
+
+      Forgot to rename the dllflag keyword.
+
 Wed Jun 25 12:45:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/topinfo_iorsize_stats.sh (s_id): 
