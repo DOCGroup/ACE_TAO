@@ -303,7 +303,7 @@ else
 endif
 <%endfor%>
 
-OBJS   = $(addsuffix .$(OBJEXT), $(subst ../, ,$(FILES)))
+OBJS   = $(addsuffix .$(OBJEXT), $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
 ifneq (,$(RC))
