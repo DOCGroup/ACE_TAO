@@ -473,12 +473,12 @@ public:
   // = Timer management. 
   virtual long schedule_timer (ACE_Event_Handler *, 
 			       const void *arg,
-			       const ACE_Time_Value &delta,
+			       const ACE_Time_Value &delta_time,
 			       const ACE_Time_Value &interval = ACE_Time_Value::zero);  
-  // Schedule an <event_handler> that will expire after <delay> amount
-  // of time.  If it expires then <arg> is passed in as the value to
-  // the <event_handler>'s <handle_timeout> callback method.  If
-  // <interval> is != to <ACE_Time_Value::zero> then it is used to
+  // Schedule an <event_handler> that will expire after <delta_time>
+  // amount of time.  If it expires then <arg> is passed in as the
+  // value to the <event_handler>'s <handle_timeout> callback method.
+  // If <interval> is != to <ACE_Time_Value::zero> then it is used to
   // reschedule the <event_handler> automatically.  This method
   // returns a <timer_id> that uniquely identifies the <event_handler>
   // in an internal list.  This <timer_id> can be used to cancel an
