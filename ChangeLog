@@ -1,3 +1,10 @@
+Tue Jul 11 08:07:23 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/generate_man_pages: don't try generate man pages for
+          RMCast_Export.h, because it's a generated file and doesn't
+          have any man page formatting info.  It trips up class2man.
+          [Bug 608]
+
 Tue Jul 11 07:42:57 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Local_Tokens.cpp (ACE_TPQ_Entry ctor): cast result
