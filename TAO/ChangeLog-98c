@@ -11,6 +11,7 @@ Tue Nov  4 23:37:04 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 Tue Nov  4 23:21:29 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp (main): 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (run): Changed the format of the 
 	output to be more readable.  Also, fixed resolution of the time for 
 	the cube_struct_dii() call.
