@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	@(#)Makefile	1.1	10/18/96
 #
-#	Makefile for a test of the miscellaneous Reactor examples
+#	Makefile for the miscellaneous Reactor examples
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 
 BIN    	= pingpong \
 	  notification \
-	  signal_tester \
+	  test_demuxing \
 	  test_event_handler_t \
 	  test_handle_set \
 	  test_reactors \

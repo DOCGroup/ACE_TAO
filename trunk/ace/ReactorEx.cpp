@@ -10,17 +10,27 @@
 #include "ace/ReactorEx.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ReactorEx::ACE_ReactorEx (void)
+ACE_ReactorEx::ACE_ReactorEx (ACE_Timer_Queue *tq)
   : active_handles_ (0),
     timer_skew_ (0, ACE_TIMER_SKEW),
     token_ (*this)
 {
+  this->timer_queue_ = tq;
+
+  if (this->timer_queue_ == 0)
+    {
+      ACE_NEW (this->timer_queue_, ACE_Timer_Queue);
+      this->delete_timer_queue_ = 1;
+    }
+
   if (this->register_handler (&this->notify_handler_) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "registering notify handler"));
 }
 
 ACE_ReactorEx::~ACE_ReactorEx (void)
 {
+  if (this->delete_timer_queue_)
+    delete this->timer_queue_;
 }
 
 int 
@@ -75,6 +85,7 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 	  // Reinitial the ReactorEx pointer since we no longer point
 	  // to this one.
 	  handlers_[index]->reactorex (0);
+
 	  // If there was only one handle, reset the pointer to 0.
 	  if (this->active_handles_ == 1)
 	    {
@@ -107,7 +118,7 @@ ACE_ReactorEx::schedule_timer (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_ReactorEx::schedule_timer");
 
-  return this->timer_queue_.schedule 
+  return this->timer_queue_->schedule 
     (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
 }
 
@@ -139,7 +150,7 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
   // Stash the current time.
   ACE_Time_Value prev_time = ACE_OS::gettimeofday ();
   // Check for pending timeout events.
-  how_long = timer_queue_.calculate_timeout (how_long);
+  how_long = timer_queue_->calculate_timeout (how_long);
   // Translate into Win32 time value.
   int timeout = how_long == 0 ? INFINITE : how_long->msec ();
 
@@ -151,9 +162,9 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
 					      relative_handles,
 					      wait_all,
 					      timeout);
-      if (!this->timer_queue_.is_empty ())
+      if (!this->timer_queue_->is_empty ())
 	// Fudge factor accounts for problems with Solaris timers...
-	this->timer_queue_.expire (ACE_OS::gettimeofday () + this->timer_skew_);
+	this->timer_queue_->expire (ACE_OS::gettimeofday () + this->timer_skew_);
 
       // Compute the time while the ReactorEx was processing.
       ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time;
@@ -267,14 +278,6 @@ ACE_ReactorEx_Token::sleep_hook (void)
 
 // ************************************************************
 
-ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void)
-{
-}
-
-ACE_ReactorEx_Notify::~ACE_ReactorEx_Notify (void)
-{
-}
-
 ACE_HANDLE
 ACE_ReactorEx_Notify::get_handle (void) const
 {
@@ -296,7 +299,8 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
     {
       ACE_Message_Block *mb = 0;
   
-      if (this->message_queue_.dequeue_head (mb) == -1)
+      if (this->message_queue_.dequeue_head 
+	  (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
 	{
 	  if (errno == EWOULDBLOCK)
 	    // We've reached the end of the processing, return

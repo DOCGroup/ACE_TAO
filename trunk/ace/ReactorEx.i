@@ -7,7 +7,7 @@ ACE_INLINE int
 ACE_ReactorEx::cancel_timer (ACE_Event_Handler *handler)
 {
   ACE_TRACE ("ACE_ReactorEx::cancel_timer");
-  return this->timer_queue_.cancel (handler);
+  return this->timer_queue_->cancel (handler);
 }
 
 ACE_INLINE int
@@ -15,7 +15,7 @@ ACE_ReactorEx::cancel_timer (int timer_id,
 			    const void **arg)
 {
   ACE_TRACE ("ACE_ReactorEx::cancel_timer");
-  return this->timer_queue_.cancel (timer_id, arg);
+  return this->timer_queue_->cancel (timer_id, arg);
 }
 
 ACE_INLINE int

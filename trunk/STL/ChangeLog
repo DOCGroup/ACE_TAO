@@ -1,0 +1,53 @@
+This version of STL was obtained from
+http://www.rahul.net/terris/.  This is a modified version of the
+implementation that comes with VC++4.0.  Please see readme2.stl for
+details. 
+
+The following modification have been made for compilation with VC++4.x
+
+________________________________________
+
+vector.h (line 85)
+________________________________________
+
+
+    /*
+     *  This is cause the VC++ compiler sucks
+     *  and does not recognize nested classes properly
+     *       
+     */
+#if !defined (VC_PLUS_PLUS_NESTED_CLASS_PROBLEM)
+    vector(size_type n, const T& value = T()) {
+	start = static_allocator.allocate(n);
+	uninitialized_fill_n(start, n, value);
+	finish = start + n;
+	end_of_storage = finish;
+    }
+#endif /* VC_PLUS_PLUS_NESTED_CLASS_PROBLEM */
+
+
+________________________________________
+
+bstring.h (line 1102)
+________________________________________
+
+
+    /* 
+     * This should be correctly scoped
+     *
+     * if (cap == ::reserve)
+     */
+
+    if (cap == std::reserve)
+    {
+       len = 0;
+       res = size;
+       ptr = new charT [res];
+    }
+    /* 
+     * This should be correctly scoped
+     *
+     *     else if ((cap == ::default_size) && (size != NPOS))
+     */
+
+    else if ((cap == std::default_size) && (size != NPOS))
