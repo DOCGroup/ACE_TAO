@@ -1,3 +1,24 @@
+Thu Jul 25 11:32:41 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Added a little more detail about what the depends keyword refers
+          to.
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Changed the code to show the default type in the usage message.
+
+        * bin/MakeProjectCreator/modules/GNUWorkspaceCreator.pm:
+
+          Change the workspace to use a for loop when building on UNIX.
+
+        * tests/RMCast/tests.mpc:
+        * tests/SSL/tests.mpc:
+
+          Fixed the case on the dependencies lines.
+
 Wed Jul 24 13:38:40 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:

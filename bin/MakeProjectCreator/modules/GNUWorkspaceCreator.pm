@@ -52,15 +52,24 @@ sub write_comps {
   ## Print out the projet Makefile
   print $fh "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf" .
             "TARGETS_NESTED := \$(TARGETS_NESTED:.nested=)$crlf" .
-            "$crlf" .
-            "\$(TARGETS_NESTED):$crlf" .
-            "ifeq (Windows,\$(findstring Windows,\$(OS)))$crlf";
-  foreach my $project (@list) {
-    print $fh "\t\@cmd /c \"\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@)\"$crlf";
+            "MFILES = \\$crlf";
+  for(my $i = 0; $i <= $#list; $i++) {
+    print $fh "         $list[$i]";
+    if ($i != $#list) {
+      print $fh " \\";
+    }
+    print $fh $crlf;
   }
-  print $fh "else$crlf";
+
+  print $fh "$crlf" .
+            "\$(TARGETS_NESTED):$crlf" .
+            "ifneq (Windows,\$(findstring Windows,\$(OS)))$crlf" .
+            "\t\@for file in \$(MFILES); do \\$crlf" .
+            "\t\$(MAKE) -f `basename \$\$file` -C `dirname \$\$file` \$(\@); \\$crlf" .
+            "\tdone$crlf" .
+            "else$crlf";
   foreach my $project (@list) {
-    print $fh "\t\@\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@);$crlf";
+    print $fh "\t-\@cmd /c \"\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@)\"$crlf";
   }
   print $fh "endif$crlf";
 }
