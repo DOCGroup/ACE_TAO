@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe, naming_serv, utils {
+project(*server): namingexe, iortable, utils {
   Source_Files {
     Account_i.cpp
     AccountManager_i.cpp
@@ -10,7 +10,7 @@ project(*server): namingexe, naming_serv, utils {
   }
 }
 
-project(*client): namingexe, naming_serv, utils {
+project(*client): namingexe, iortable, utils {
   exename = client
 
   Source_Files {

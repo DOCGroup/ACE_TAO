@@ -21,7 +21,6 @@
 
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Client.h"
-#include "orbsvcs/Naming/Naming_Server.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
@@ -78,7 +77,7 @@ protected:
   // The ORB manager - a helper class for accessing the POA and
   // registering objects.
 
-  TAO_Naming_Server naming_server_;
+  TAO_Naming_Client naming_client_;
   // helper class for getting access to Naming Service.
 
   FILE *ior_output_file_;

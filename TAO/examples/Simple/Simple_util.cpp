@@ -223,12 +223,11 @@ template <class Servant> int
 Server<Servant>::register_name (void)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
-  PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
 
-  this->naming_server_.init (orb.in (),
-                             child_poa.in ());
+  if (this->naming_client_.init (orb.in ()) == -1)
+    return -1;
+
   // create the name for the naming service
-
   CosNaming::Name bindName;
   bindName.length (1);
   bindName[0].id = CORBA::string_dup (name);
@@ -244,7 +243,7 @@ Server<Servant>::register_name (void)
       this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      naming_server_->rebind (bindName,
+      naming_client_->rebind (bindName,
                               object.in()
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
