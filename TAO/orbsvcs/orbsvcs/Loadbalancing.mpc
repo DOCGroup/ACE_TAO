@@ -12,6 +12,11 @@ project(LoadBalancing) : orbsvcslib {
   Source_Files {
     LoadBalancingC.cpp
     LoadBalancingS.cpp
-    LoadBalancing
+    LoadBalancing/LoadBalancer_i.cpp
+    LoadBalancing/LoadBalancing_Strategy.cpp
+    LoadBalancing/ReplicaLocator.cpp
+    LoadBalancing/ReplicaProxy.cpp
+    LoadBalancing/Round_Robin_Strategy.cpp
+    LoadBalancing/Minimum_Dispersion.cpp
   }
 }
