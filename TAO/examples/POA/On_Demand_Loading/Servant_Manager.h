@@ -106,10 +106,6 @@ public:
   // This is the hash map object. The hash map is used to provide
   // an quick access to the dll object associated with every servant
   // using the unique ObjectId as key.
-
-  // *done*@@ Kirthika, please add some more comments explaining exactly
-  // what this hash map is used for in this application.
-
   
 };
 #endif /* SERVANT_MANAGER_H */
