@@ -102,24 +102,6 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:743
 
-
-
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
-
-static TAO::TypeCode::Alias<char const *,
-                            TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_PolicyType (
-    "IDL:omg.org/CORBA/PolicyType:1.0",
-    "PolicyType",
-    &CORBA::_tc_ulong);
-  
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_PolicyType =
-    &_tao_tc_CORBA_PolicyType;
-}
-
 namespace TAO
 {
   namespace TypeCode
