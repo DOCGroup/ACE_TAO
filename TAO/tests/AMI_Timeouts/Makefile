@@ -21,9 +21,9 @@ IDL_SRC   = \
 
 BIN_UNCHECKED =  server client
 
-CLIENT_OBJS = client.o timeout_i.o timeout_client.o$(IDL_SRC:.cpp=.o)
+CLIENT_OBJS = client.o timeout_i.o timeout_client.o $(IDL_SRC:.cpp=.o)
 
-SERVER_OBJS = server.o timeout_i.o timeout_client.o$(IDL_SRC:.cpp=.o)
+SERVER_OBJS = server.o timeout_i.o timeout_client.o $(IDL_SRC:.cpp=.o)
 
 SRC= $(addsuffix .cpp, $(BIN) timeout_i timeout_client) $(IDL_SRC)
 
