@@ -220,6 +220,9 @@ RTCosScheduling_ClientScheduler_i::tasks(
   /// Skip to the appropriate node
 #ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#else
+# warning ACE_OS::clearerr() is unimplemented on this platform.
+# warning This code may not function properly.
 #endif  /* !ACE_LACKS_CLEARERR */
   do
     {
@@ -239,6 +242,9 @@ RTCosScheduling_ClientScheduler_i::tasks(
   /// Skip to the appropriate task section of the node
 #ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#else
+# warning ACE_OS::clearerr() is unimplemented on this platform.
+# warning This code may not function properly.
 #endif  /* !ACE_LACKS_CLEARERR */
   do
     {

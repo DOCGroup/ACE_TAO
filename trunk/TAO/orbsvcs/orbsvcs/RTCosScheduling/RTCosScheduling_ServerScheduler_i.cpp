@@ -674,6 +674,9 @@ RTCosScheduling_ServerScheduler_i::resources(
 
 #ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#else
+# warning ACE_OS::clearerr() is unimplemented on this platform.
+# warning This code may not function properly.
 #endif  /* !ACE_LACKS_CLEARERR */
   do
     {
@@ -693,6 +696,9 @@ RTCosScheduling_ServerScheduler_i::resources(
   /// Skip to the appropriate Task section of the node
 #ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#else
+# warning ACE_OS::clearerr() is unimplemented on this platform.
+# warning This code may not function properly.
 #endif  /* !ACE_LACKS_CLEARERR */
   do
     {
