@@ -4,6 +4,9 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
           config-osf1-4.0-g++.h.  Thanks to Frederic Andres
           <andres@rd.nacsis.ac.jp> for the DCE threads support #defines.
 
+        * ace/platform_osf1_4.0.GNU: added comment on how to use DCE threads
+          instead of POSIX threads.
+
         * ace/OS.i (thr_getprio): don't apply the !defined(ACE_LACKS_SETSCHED)
           check if ACE_HAS_DCETHREADS.
 
