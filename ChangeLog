@@ -1,3 +1,8 @@
+Fri Aug 24 14:25:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Massimo Pichini <massimo@webbridges.it> to the
+	  hall of fame.  
+
 Fri Aug 24 13:40:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Removed HPUX and AIX_VAC for the
