@@ -1,3 +1,29 @@
+Wed Apr 21 18:50:39 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Makefile:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/ORBInitializer.cpp:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/ORBInitializer.h:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Roundtrip.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Roundtrip.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Test.idl:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/default.conf:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/default.conf.xml:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/default_configuration.pl:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/svc.conf.xml:
+
+          Added a new test under the LBPerf performance test directory.
+
+          This test will use the CPU Utilization monitor and monitor
+          the CPU utilization percentage to make load balancing decisions.
+
+
 Wed Apr 21 18:30:25 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
