@@ -1,4 +1,5 @@
 1998-12-06  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
 	added the following files for the implementation of
 	the Cos Event Channel - 
 	* orbsvcs/orbsvcs/CosEventChannelAdmin.idl	
