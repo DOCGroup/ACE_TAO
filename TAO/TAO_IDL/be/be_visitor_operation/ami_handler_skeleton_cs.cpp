@@ -153,12 +153,16 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << parent->compute_name ("AMI_", "Handler");
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
+  // @@ Michael: We do not activate this right now,
+  //             as long as we do the major changes.
+#if 0
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_idt_nl
       << "{" << be_idt_nl
       << "case TAO_AMI_REPLY_OK:" << be_idt_nl
       << "{\n";
+#endif
 
   // declare a return type variable
   ctx = *this->ctx_;
@@ -201,7 +205,9 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                          "gen_demarshal_params failed\n"),
                         -1);
     }
-
+  // @@ Michael:
+  // We do not activate this right now.
+#if 0
   os->indent ();
   *os << be_uidt_nl
       << "}" << be_uidt_nl << "return;" << be_uidt_nl
@@ -234,6 +240,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "// request!" << be_nl
       << "break;" << be_uidt_nl
       << "}" << be_uidt_nl;
+#endif
 
   *os << be_uidt_nl << "};" << be_nl << be_nl;
 
