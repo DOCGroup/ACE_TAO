@@ -21,7 +21,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ciao/DeploymentC.h"
-
+#include "ace/SString.h"
 
 
 namespace CIAO
