@@ -1,3 +1,9 @@
+Mon Jun 14 14:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Gobbler.i:
+        * tests/Conn_Test.cpp:
+          Added missing include
+
 Mon Jun 14 14:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TTY_IO.cpp:
