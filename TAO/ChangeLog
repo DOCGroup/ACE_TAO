@@ -1,3 +1,7 @@
+Mon Jun 16 11:14:15 2003  Chris Cleeland  <cleeland@ociweb.com>
+
+        * TAO version 1.3.3 released.
+
 Sat Jun 14 08:44:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h: gcc version 2.9-gnupro-98r2 on LynxOS produces
