@@ -6,6 +6,7 @@ DIRS = \
 	Client_Propagated \
 	Client_Protocol \
 	Server_Declared \
-	Server_Protocol
+	Server_Protocol \
+	MT_Client_Protocol_Priority
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
