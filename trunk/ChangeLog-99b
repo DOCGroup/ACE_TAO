@@ -1,3 +1,15 @@
+Sun Aug 29 00:13:35 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager.i: Moved the destructor for
+	  ACE_Process_Descriptor out of the *.i file since it's always
+ 	  called by vector delete and therefore inlining it is pointless.
+
+Sat Aug 28 23:46:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (resize): The loop should run
+	  from 0 < this->current_count_ rather than 0 <
+ 	  this->max_process_table_size_.
+
 Sat Aug 28 16:28:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Synch_T.i: reordered some methods to avoid
