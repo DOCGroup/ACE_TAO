@@ -28,7 +28,7 @@ CLNT_TEST_OBJS = client.o ifr_dii_client.o
 
 SVR_TEST_OBJS = testC.o testS.o server.o test_i.o
 
-BIN = client server
+BIN_UNCHECKED = client server
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
