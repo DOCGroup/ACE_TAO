@@ -74,8 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (util, 
-           utl_global, 
+ACE_RCSID (util,
+           utl_global,
            "$Id$")
 
 // Define an increment for the size of the array used to store names of
@@ -99,6 +99,7 @@ IDL_GlobalData::dsf::dsf (void)
     string_seen_ (0),
     array_seen_ (0),
     aggregate_seen_ (0),
+    union_seen_ (0),
     exception_seen_ (0),
     operation_seen_ (0),
     non_local_op_seen_ (0),
@@ -196,13 +197,13 @@ IDL_GlobalData::IDL_GlobalData (void)
 #if defined (ACE_GPERF)
       const char ace_gperf[] = ACE_GPERF;
       ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root) 
-                     + ACE_OS::strlen (ace_gperf) 
+               char [ACE_OS::strlen (ace_root)
+                     + ACE_OS::strlen (ace_gperf)
                      + 1]);
 #  if defined (ACE_WIN32)
       ACE_OS::sprintf (this->gperf_path_,
                        "%s\\bin\\%s",
-                       ace_root, 
+                       ace_root,
                        ace_gperf);
 #  else /* Not ACE_WIN32 */
       ACE_OS::sprintf (this->gperf_path_,
@@ -213,8 +214,8 @@ IDL_GlobalData::IDL_GlobalData (void)
 #else /* Not ACE_GPERF */
       // Set it to the default value.
       ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root) 
-                     + ACE_OS::strlen ("/bin/gperf") 
+               char [ACE_OS::strlen (ace_root)
+                     + ACE_OS::strlen ("/bin/gperf")
                      + 1]);
 #  if defined (ACE_WIN32)
       ACE_OS::sprintf (this->gperf_path_,
@@ -245,33 +246,34 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.string_seen_,            cursor << 10);
   ACE_SET_BITS (this->decls_seen_masks.array_seen_,             cursor << 11);
   ACE_SET_BITS (this->decls_seen_masks.aggregate_seen_,         cursor << 12);
-  ACE_SET_BITS (this->decls_seen_masks.exception_seen_,         cursor << 13);
-  ACE_SET_BITS (this->decls_seen_masks.operation_seen_,         cursor << 14);
-  ACE_SET_BITS (this->decls_seen_masks.non_local_op_seen_,      cursor << 15);
-  ACE_SET_BITS (this->decls_seen_masks.typecode_seen_,          cursor << 16);
-  ACE_SET_BITS (this->decls_seen_masks.any_seen_,               cursor << 17);
-  ACE_SET_BITS (this->decls_seen_masks.parametermode_seen_,     cursor << 18);
-  ACE_SET_BITS (this->decls_seen_masks.base_object_seen_,       cursor << 19);
-  ACE_SET_BITS (this->decls_seen_masks.valuefactory_seen_,      cursor << 20);
+  ACE_SET_BITS (this->decls_seen_masks.union_seen_,             cursor << 13);
+  ACE_SET_BITS (this->decls_seen_masks.exception_seen_,         cursor << 14);
+  ACE_SET_BITS (this->decls_seen_masks.operation_seen_,         cursor << 15);
+  ACE_SET_BITS (this->decls_seen_masks.non_local_op_seen_,      cursor << 16);
+  ACE_SET_BITS (this->decls_seen_masks.typecode_seen_,          cursor << 17);
+  ACE_SET_BITS (this->decls_seen_masks.any_seen_,               cursor << 18);
+  ACE_SET_BITS (this->decls_seen_masks.parametermode_seen_,     cursor << 19);
+  ACE_SET_BITS (this->decls_seen_masks.base_object_seen_,       cursor << 20);
+  ACE_SET_BITS (this->decls_seen_masks.valuefactory_seen_,      cursor << 21);
 
-  ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 21);
-  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 22);
-  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 23);
-  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 24);
-  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 25);
-  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 26);
-  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 27);
-  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 28);
+  ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 22);
+  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 23);
+  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 24);
+  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 25);
+  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 26);
+  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 27);
+  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 28);
+  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 29);
 
-  ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 32);
-  ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 33);
-  ACE_SET_BITS (this->decls_seen_masks.fixed_array_arg_seen_,   cursor << 34);
-  ACE_SET_BITS (this->decls_seen_masks.fixed_size_arg_seen_,    cursor << 35);
-  ACE_SET_BITS (this->decls_seen_masks.object_arg_seen_,        cursor << 36);
-  ACE_SET_BITS (this->decls_seen_masks.special_basic_arg_seen_, cursor << 37);
-  ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 38);
-  ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 39);
-  ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 40);
+  ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 30);
+  ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 31);
+  ACE_SET_BITS (this->decls_seen_masks.fixed_array_arg_seen_,   cursor << 32);
+  ACE_SET_BITS (this->decls_seen_masks.fixed_size_arg_seen_,    cursor << 33);
+  ACE_SET_BITS (this->decls_seen_masks.object_arg_seen_,        cursor << 34);
+  ACE_SET_BITS (this->decls_seen_masks.special_basic_arg_seen_, cursor << 35);
+  ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 36);
+  ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 37);
+  ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 38);
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)
@@ -769,10 +771,10 @@ IDL_GlobalData::validate_included_idl_files (void)
               post_tmp = post_preproc_includes[ni]->get_string ();
               (void) FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
 
-              if (post_abspath != 0 
+              if (post_abspath != 0
                   && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
                 {
-	                FILE *test = ACE_OS::fopen (post_abspath, "r");
+                        FILE *test = ACE_OS::fopen (post_abspath, "r");
 
                   if (test == 0)
                     {
@@ -799,7 +801,7 @@ IDL_GlobalData::validate_included_idl_files (void)
               ACE_CString pre_partial (*path_tmp);
               pre_partial += separator;
               pre_partial += pre_preproc_includes[j];
-              (void) FULLPATH (pre_abspath, 
+              (void) FULLPATH (pre_abspath,
                                ACE_const_cast (char *, pre_partial.c_str ()),
                                MAXPATHLEN);
 
@@ -810,10 +812,10 @@ IDL_GlobalData::validate_included_idl_files (void)
                       post_tmp = post_preproc_includes[m]->get_string ();
                       (void) FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
 
-                      if (post_abspath != 0 
+                      if (post_abspath != 0
                           && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
                         {
-	                        FILE *test = ACE_OS::fopen (post_abspath, "r");
+                                FILE *test = ACE_OS::fopen (post_abspath, "r");
 
                           if (test == 0)
                             {
@@ -1115,7 +1117,7 @@ IDL_GlobalData::pragma_prefixes (void)
   return this->pragma_prefixes_;
 }
 
-void 
+void
 IDL_GlobalData::update_prefix (char *filename)
 {
   // If we are just starting up and processing the temporary filename,
@@ -1277,27 +1279,27 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
 }
 
 /**
- Whether we should not mung idl element names that are  
- C++ keywords e.g. delete, operator etc. with _cxx_ prefix. 
- Should be true when being used by the IFR Service 
- */ 
-idl_bool  
-IDL_GlobalData::preserve_cpp_keywords (void) 
-{ 
-  return preserve_cpp_keywords_; 
-} 
- 
-/** 
- Set whether we should not mung idl element names that are C++  
- keywords e.g. delete, operator etc. with _cxx_ prefix. 
- Is unset by the tao_idl compiler. 
- */ 
-void  
-IDL_GlobalData::preserve_cpp_keywords (idl_bool val) 
-{ 
-  preserve_cpp_keywords_ = val; 
-} 
- 
+ Whether we should not mung idl element names that are
+ C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
+ Should be true when being used by the IFR Service
+ */
+idl_bool
+IDL_GlobalData::preserve_cpp_keywords (void)
+{
+  return preserve_cpp_keywords_;
+}
+
+/**
+ Set whether we should not mung idl element names that are C++
+ keywords e.g. delete, operator etc. with _cxx_ prefix.
+ Is unset by the tao_idl compiler.
+ */
+void
+IDL_GlobalData::preserve_cpp_keywords (idl_bool val)
+{
+  preserve_cpp_keywords_ = val;
+}
+
 void
 IDL_GlobalData::add_include_path (const char *s)
 {

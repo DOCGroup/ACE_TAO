@@ -30,8 +30,8 @@
 #include "idl_defines.h"
 #include "global_extern.h"
 
-ACE_RCSID (be, 
-           be_union, 
+ACE_RCSID (be,
+           be_union,
            "$Id$")
 
 
@@ -84,7 +84,7 @@ be_union::be_union (AST_ConcreteType *dt,
   if (!this->imported ())
     {
       ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.aggregate_seen_);
+                    idl_global->decls_seen_masks.union_seen_);
     }
 }
 
