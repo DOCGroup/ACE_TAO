@@ -18,6 +18,7 @@
 // ================================================================
 
 #include "CONV_FRAMEC.h"
+#include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "CONV_FRAMEC.i"
