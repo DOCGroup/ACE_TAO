@@ -503,7 +503,7 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   buf[n_bytes] = 0;
   
   ACE_DEBUG ((LM_DEBUG,
-	      "%s; Naming service resolved to ior: '%s'\n",
+	      "%s; Service resolved to ior: '%s'\n",
 	      __FILE__,
 	      buf));
   
