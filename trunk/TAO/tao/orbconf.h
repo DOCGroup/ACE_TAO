@@ -461,9 +461,17 @@ enum MCAST_SERVICEID
 #  endif  /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif  /* !TAO_HAS_UIOP */
 
-#if !defined (TAO_HAS_SHMIOP)
-#  define TAO_HAS_SHMIOP 1
-#endif /* TAO_HAS_SHMIOP */
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+# if !defined (TAO_HAS_SHMIOP)
+#   define TAO_HAS_SHMIOP 1
+# endif /* TAO_HAS_SHMIOP */
+#else
+# if defined (TAO_HAS_SHMIOP)
+#   undef TAO_HAS_SHMIOP
+# endif /* TAO_HAS_SHMIOP */
+# define TAO_HAS_SHMIOP 0
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+
 
 // RT_CORBA support is enabled by default if TAO is not configured for
 // minimum CORBA.  If TAO is configured for minimum CORBA, then

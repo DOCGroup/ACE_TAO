@@ -1,3 +1,9 @@
+Fri Mar 02 15:39:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h: Since MEM_Stream is not supported if position
+	  independent pointers are not, we need to disable SHMIOP in that
+	  case.
+
 Fri Mar 02 15:20:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
   * tests/AMI_Timeouts/timout_client.cpp:
