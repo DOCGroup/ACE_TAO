@@ -4,7 +4,6 @@
 #define __WORKER_H
 
 #include "ace/Task.h"
-#include "tao/CORBA.h"
 #include "ace/Synch.h"
 #include "RootPanel.h"
 
