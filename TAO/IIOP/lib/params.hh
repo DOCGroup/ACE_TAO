@@ -38,8 +38,8 @@ public:
   enum DEMUX_STRATEGY{
     TAO_LINEAR,
     TAO_DYNAMIC_HASH,
-    TAO_PERFECT_HASH,
-    TAO_ACTIVE_DEMUX
+    TAO_ACTIVE_DEMUX,
+    TAO_USER_DEFINED
   };
 
   typedef CORBA_BOA::dsi_handler UpcallFunc;
@@ -99,6 +99,8 @@ public:
   ACE_INET_Addr addr();
   void demux_strategy(char *strategy);
   ROA_Parameters::DEMUX_STRATEGY demux_strategy();
+  void tablesize(CORBA_ULong tablesize);
+  CORBA_ULong tablesize();
 private:
   int using_threads_;		// If non-zero, threads are used for processing requests
   unsigned int thread_flags_;	// Flags passed to <thr_create> when threads created
@@ -108,6 +110,7 @@ private:
   CORBA_BOA_ptr oa_;			// Pointer to One True Object Adapter
   ROA_Parameters::DEMUX_STRATEGY demux_;  // demux strategy
   ACE_INET_Addr addr_;          // host + port number we are listening on
+  CORBA_ULong tablesize_;       // size of object lookup table
 };
 
 // Create a type for the singleton
@@ -125,13 +128,18 @@ public:
   ACCEPT_STRATEGY*      accept_strategy();
   CONCURRENCY_STRATEGY* concurrency_strategy();
   SCHEDULING_STRATEGY*  scheduling_strategy();
+  TAO_Object_Table*     objlookup_strategy();
   
+  void set_userdef_objtable(TAO_Object_Table *ot);
+  // hook provided to user
+
   ROA_Factory();
 private:
   CONCURRENCY_STRATEGY* concurrency_strategy_;
   ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;
   ACE_Reactive_Strategy<ROA_Handler> reactive_strategy_;
 
+  TAO_Object_Table*     objtable_;
 #if 0
   // Someday we'll need these!
   CREATION_STRATEGY*    creation_strategy_;

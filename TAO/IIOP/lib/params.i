@@ -93,9 +93,9 @@ ROA_Parameters::demux_strategy(char* strategy)
     {
       this->demux_ = ROA_Parameters::TAO_DYNAMIC_HASH;
     }
-  else if (!ACE_OS::strcmp(strategy, "perfect_hash"))
+  else if (!ACE_OS::strcmp(strategy, "user_def"))
     {
-      this->demux_ = ROA_Parameters::TAO_PERFECT_HASH;
+      this->demux_ = ROA_Parameters::TAO_USER_DEFINED;
     }
   else if (!ACE_OS::strcmp(strategy, "active_demux"))
     {
@@ -107,6 +107,18 @@ ACE_INLINE ROA_Parameters::DEMUX_STRATEGY
 ROA_Parameters::demux_strategy()
 {
   return this->demux_;
+}
+
+ACE_INLINE void
+ROA_Parameters::tablesize(CORBA_ULong tblsize)
+{
+  this->tablesize_ = tblsize;
+}
+
+ACE_INLINE CORBA_ULong
+ROA_Parameters::tablesize()
+{
+  return this->tablesize_;
 }
 
 ACE_INLINE
