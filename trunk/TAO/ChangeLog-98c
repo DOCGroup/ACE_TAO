@@ -1,3 +1,9 @@
+Tue Mar 31 19:30:03 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Added a
+	check in the destructor to unbind the cubit_factory from the
+	naming service.
+
 Tue Mar 31 15:15:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence.h: 

@@ -141,7 +141,8 @@ Cubit_Server::run (CORBA::Environment& env)
 
 Cubit_Server::~Cubit_Server (void)
 {
-  TAO_TRY
+  if (this->use_naming_service_)
+    TAO_TRY
     {
       // Unbind cubit factory context and name.
       CosNaming::Name factory_name (2);
