@@ -472,3 +472,10 @@ Param_Test_i::test_any (const CORBA::Any &a1,
 
   return ret;
 }
+
+void
+Param_Test_i::shutdown (CORBA::Environment &)
+{
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+}
+

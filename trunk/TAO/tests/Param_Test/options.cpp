@@ -1,4 +1,4 @@
-// $Id:
+// $Id$
 
 // ============================================================================
 //
@@ -28,7 +28,8 @@ Options::Options (void)
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
     loop_count_ (1),
-    debug_ (0)
+    debug_ (CORBA::B_FALSE),
+    shutdown_ (CORBA::B_FALSE)
 {
 }
 
@@ -44,7 +45,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:f:i:t:k:");
+  ACE_Get_Opt get_opts (argc, argv, "xdn:f:i:t:k:");
   int c;
   char temp_buf[MAX_IOR_SIZE];
   char *result;
@@ -57,9 +58,15 @@ Options::parse_args (int argc, char **argv)
         TAO_debug_level++;
         this->debug_ = 1;
         break;
+
+      case 'x':
+	this->shutdown_ = CORBA::B_TRUE;
+	break;
+
       case 'n':			// loop count
         this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.optarg);
         break;
+
       case 'f':
 	ior_file = ACE_OS::fopen (get_opts.optarg,"r");
 	if (ior_file == 0)
@@ -74,14 +81,17 @@ Options::parse_args (int argc, char **argv)
 	this->ior_ = CORBA::string_copy (temp_buf);
 	ACE_OS::fclose (ior_file);
 	break;
+
      case 'k':
 	CORBA::string_free (this->ior_);
 	this->ior_ = CORBA::string_copy (get_opts.optarg);
 	break;
+
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.optarg, "dii"))
           this->invoke_type_ = Options::DII;
         break;
+
       case 't': // data type
         if (!ACE_OS::strcmp (get_opts.optarg, "short"))
           this->test_type_ = Options::TEST_SHORT;
@@ -120,6 +130,7 @@ Options::parse_args (int argc, char **argv)
 	else if (!ACE_OS::strcmp (get_opts.optarg, "bounded_long_sequence"))
 	  this->test_type_ = Options::TEST_BOUNDED_LONGSEQ;
         break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -166,6 +177,12 @@ CORBA::Boolean
 Options::debug (void) const
 {
   return this->debug_;
+}
+
+CORBA::Boolean
+Options::shutdown (void) const
+{
+  return this->shutdown_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

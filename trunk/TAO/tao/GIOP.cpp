@@ -206,7 +206,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   const int TAO_WRITEV_MAX = 16;
   ACE_IO_Vector iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
-  for (ACE_Message_Block* i = stream.begin ();
+  for (const ACE_Message_Block* i = stream.begin ();
        i != stream.end ();
        i = i->cont ())
     {

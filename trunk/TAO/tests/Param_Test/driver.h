@@ -41,7 +41,7 @@ public:
   // Execute client example code.
 
 private:
-  CORBA::ORB_ptr orb_ptr_;
+  CORBA::ORB_var orb_;
   // underlying ORB (we do not own it)
 
   Param_Test_var objref_;

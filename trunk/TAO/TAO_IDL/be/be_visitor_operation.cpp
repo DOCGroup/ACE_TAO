@@ -2418,7 +2418,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_array (be_array *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_slice *_tao_retval = 0;\n";
+  *os << bt->name () << "_var _tao_retval;\n";
   return 0;
 }
 
@@ -2448,7 +2448,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *)
   // address of the objref to the marshaling routine, we use the base
   // CORBA::Object_ptr as the type for the return value even though the actual
   // return type may be some derived class
-  *os << "CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();\n";
+  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
   return 0;
 }
 
@@ -2463,7 +2463,7 @@ visit_interface_fwd (be_interface_fwd *)
   // address of the objref to the marshaling routine, we use the base
   // CORBA::Object_ptr as the type for the return value even though the actual
   // return type may be some derived class
-  *os << "CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();\n";
+  *os << "CORBA::Object_var _tao_retval;\n";
   return 0;
 }
 
@@ -2483,11 +2483,11 @@ visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
-      *os << bt->name () << "_ptr _tao_retval = 0;\n";
+      *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_any:
       os->indent ();
-      *os << bt->name () << " *_tao_retval = 0;\n";
+      *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -2513,7 +2513,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_sequence (be_sequence *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << " *_tao_retval = 0;\n";
+  *os << bt->name () << "_var _tao_retval;\n";
   return 0;
 }
 
@@ -2523,7 +2523,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_string (be_string * /* node*/)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "char *_tao_retval = 0;\n";
+  *os << "CORBA::String_var _tao_retval;\n";
   return 0;
 }
 
@@ -2542,7 +2542,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_structure (be_structure *node)
   // based on whether we are variable or not, we return a pointer or the
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
-    *os << bt->name () << " *_tao_retval = 0;\n";
+    *os << bt->name () << "_var _tao_retval;\n";
   else
     *os << bt->name () << " _tao_retval;\n";
   return 0;
@@ -2579,7 +2579,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
   // based on whether we are variable or not, we return a pointer or the
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
-    *os << bt->name () << " *_tao_retval = 0;\n";
+    *os << bt->name () << "_var _tao_retval;\n";
   else
     *os << bt->name () << " _tao_retval;\n";
   return 0;
@@ -2606,7 +2606,7 @@ be_visitor_operation_rettype_marshal_ss::visit_array (be_array *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval";
+  *os << "_tao_retval.ptr ()";
   return 0;
 }
 
@@ -2627,7 +2627,7 @@ be_visitor_operation_rettype_marshal_ss::visit_interface (be_interface *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "&_tao_retval";
+  *os << "_tao_retval.ptr ()";
 
   return 0;
 }
@@ -2639,7 +2639,7 @@ visit_interface_fwd (be_interface_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "&_tao_retval";
+  *os << "_tao_retval.ptr ()";
 
   return 0;
 }
@@ -2656,11 +2656,14 @@ visit_predefined_type (be_predefined_type *node)
       os->indent ();
       *os << "0";
       break;
+    case AST_PredefinedType::PT_pseudo:
+      os->indent ();
+      *os << "_tao_retval.in ()";
+      break;
     case AST_PredefinedType::PT_any:
       os->indent ();
-      *os << "_tao_retval";
+      *os << "&_tao_retval.in ()";
       break;
-    case AST_PredefinedType::PT_pseudo:
     default:
       os->indent ();
       *os << "&_tao_retval";
@@ -2675,7 +2678,7 @@ be_visitor_operation_rettype_marshal_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval";
+  *os << "_tao_retval.ptr ()";
 
   return 0;
 }
@@ -2686,7 +2689,7 @@ be_visitor_operation_rettype_marshal_ss::visit_string (be_string * /* node*/)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "&_tao_retval";
+  *os << "_tao_retval.in ()";
 
   return 0;
 }
@@ -2698,7 +2701,7 @@ be_visitor_operation_rettype_marshal_ss::visit_structure (be_structure *node)
 
   os->indent ();
   if (node->size_type () == be_type::VARIABLE)
-    *os << "_tao_retval";
+    *os << "_tao_retval.ptr ()";
   else
     *os << "&_tao_retval";
 
@@ -2728,7 +2731,7 @@ be_visitor_operation_rettype_marshal_ss::visit_union (be_union *node)
 
   os->indent ();
   if (node->size_type () == be_type::VARIABLE)
-    *os << "_tao_retval";
+    *os << "_tao_retval.ptr ()";
   else
     *os << "&_tao_retval";
 
@@ -2891,115 +2894,48 @@ be_visitor_operation_rettype_post_upcall_ss::~be_visitor_operation_rettype_post_
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_array (be_array *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  os->indent ();
-  *os << "delete _tao_retval;\n";
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  switch (node->pt ())
-    {
-    case AST_PredefinedType::PT_pseudo:
-      break;
-    case AST_PredefinedType::PT_any:
-      break;
-    case AST_PredefinedType::PT_void:
-      break;
-    default:
-      break;
-    }
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_sequence (be_sequence *node)
 {
-  // we should never directly be here because anonymous sequence return types
-  // are not allowed
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_string (be_string * /* node*/)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
   return 0;
 }
 
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   return 0;
 }
 
@@ -3022,14 +2958,6 @@ be_visitor_operation_rettype_post_upcall_ss::visit_typedef (be_typedef *node)
 int
 be_visitor_operation_rettype_post_upcall_ss::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   return 0;
 }
 

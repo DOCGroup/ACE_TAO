@@ -142,57 +142,51 @@ CDR::grow (ACE_Message_Block *mb,
 TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
                               TAO_Marshal_Factory *factory)
-  :  factory_ (factory),
+  :  start_ (size?size:CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT),
+     factory_ (factory),
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
 {
-  if (size == 0)
-    {
-      size = CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT;
-    }
-  ACE_NEW (this->start_, ACE_Message_Block (size));
-  CDR::mb_align (this->start_);
-  this->current_ = this->start_;
+  CDR::mb_align (&this->start_);
+  this->current_ = &this->start_;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (char *data, size_t size,
                               int byte_order,
                               TAO_Marshal_Factory *factory)
-  :  factory_ (factory),
+  :  start_ (data, size),
+     factory_ (factory),
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
 {
-  ACE_NEW (this->start_, ACE_Message_Block (data, size));
   // We cannot trust the buffer to be properly aligned
-  CDR::mb_align (this->start_);
-  this->current_ = this->start_;
+  CDR::mb_align (&this->start_);
+  this->current_ = &this->start_;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                               int byte_order,
                               TAO_Marshal_Factory *factory)
-  :  factory_ (factory),
+  :  start_ (data->data_block ()->duplicate ()),
+     factory_ (factory),
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
-{
-  this->start_ = ACE_Message_Block::duplicate (data);
+{ 
   // We cannot trust the buffer to be properly aligned
-  CDR::mb_align (this->start_);
-  this->current_ = this->start_;
+  CDR::mb_align (&this->start_);
+  this->current_ = &this->start_;
 }
 
 TAO_OutputCDR::~TAO_OutputCDR (void)
 {
-  ACE_Message_Block::release (this->start_);
-  this->start_ = 0;
   this->current_ = 0;
 }
 
 void
 TAO_OutputCDR::reset (void)
 {
-  this->current_ = this->start_;
-  CDR::mb_align (this->start_);
+  this->current_ = &this->start_;
+  CDR::mb_align (&this->start_);
 }
 
 size_t
@@ -200,7 +194,7 @@ TAO_OutputCDR::total_length (void) const
 {
   size_t l = 0;
   // Compute the total size.
-  for (ACE_Message_Block *i = this->begin ();
+  for (const ACE_Message_Block *i = this->begin ();
        i != this->end ();
        i = i->cont ())
     l += i->length ();
@@ -661,7 +655,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs)
     good_bit_ (1)
 {
   CDR::mb_align (&this->start_);
-  for (ACE_Message_Block *i = rhs.begin ();
+  for (const ACE_Message_Block *i = rhs.begin ();
        i != rhs.end ();
        i = i->cont ())
     this->start_.copy (i->rd_ptr (), i->length ());

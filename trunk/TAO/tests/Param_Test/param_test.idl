@@ -164,6 +164,11 @@ interface Param_Test
   //  typedef sequence<TypeCode> TypeCodeSeq;
   //  TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
 
+  void shutdown ();
+  // Shutdown the server: this is useful to check for memory leaks,
+  // performance results and in general to verify that orderly
+  // shutdown is possible.
+
   // test simple objects
   //  Object test_object (in Object o1, inout Object o2, out Object o3);
 
