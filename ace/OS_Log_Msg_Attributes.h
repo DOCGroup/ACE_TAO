@@ -60,7 +60,7 @@ protected:
   ACE_OSTREAM_TYPE *ostream_;
 
   /// Priority_mask to be used in new TSS Log_Msg.
-  u_long priority_mask_;
+  unsigned long priority_mask_;
 
   /// Are we allowing tracing in this thread?
   int tracing_enabled_;
