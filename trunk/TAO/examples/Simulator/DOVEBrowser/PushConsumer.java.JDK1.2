@@ -87,8 +87,8 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
       System.out.println ("Demo Consumer: Have to disconnect!");
     }
   
-  public void open_consumer (RtecEventChannelAdmin.EventChannel event_channel_,
-			     RtecScheduler.Scheduler scheduler_,
+  public void open_consumer (RtecEventChannelAdmin.EventChannel event_channel,
+			     RtecScheduler.Scheduler scheduler,
 			     String name)
     {
       
@@ -97,9 +97,9 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	  
 	  // Define Real-time information
 	  
-	  rt_info_ = scheduler_.create (name);
+	  rt_info_ = scheduler.create (name);
 	  
-	  scheduler_.set (rt_info_,
+	  scheduler.set (rt_info_,
 			  RtecScheduler.Criticality.VERY_LOW_CRITICALITY,
 			  new TimeBase.ulonglong (0,0), 
 			  new TimeBase.ulonglong (0,0),
@@ -114,7 +114,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	  // Register for Notification and Shutdown events
 	  
 	  
-	  RtecEventComm.Event disjunction_designator_ = 
+	  RtecEventComm.Event disjunction_designator = 
 	    new RtecEventComm.Event (ACE_ES_DISJUNCTION_DESIGNATOR,  0, 
 				     1,        // ttl
 				     new TimeBase.ulonglong (0,0),
@@ -122,7 +122,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 				     new TimeBase.ulonglong (0,0),
 				     new RtecEventComm.EventData (0, 0, orb_.create_any())
 				      );
-	  RtecEventComm.Event notification_event_ = 
+	  RtecEventComm.Event notification_event = 
 	    new RtecEventComm.Event (ACE_ES_EVENT_NOTIFICATION,  0, 
 				     1,        // ttl
 				     new TimeBase.ulonglong (0,0),
@@ -130,7 +130,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 				     new TimeBase.ulonglong (0,0),
 				     new RtecEventComm.EventData (0, 0, orb_.create_any())
 				      );
-	  RtecEventComm.Event shutdown_event_ = 
+	  RtecEventComm.Event shutdown_event = 
 	    new RtecEventComm.Event (ACE_ES_EVENT_SHUTDOWN,  0, 
 				     1,        // ttl
 				     new TimeBase.ulonglong (0,0),
@@ -140,16 +140,16 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 				      );
 	  
 	  
-	  RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[3];  
-	  dependencies_[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator_, rt_info_);
-	  dependencies_[1] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_);
-	  dependencies_[2] = new RtecEventChannelAdmin.Dependency (shutdown_event_, rt_info_); 
+	  RtecEventChannelAdmin.Dependency dependencies[] = new RtecEventChannelAdmin.Dependency[3];  
+	  dependencies[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator, rt_info_);
+	  dependencies[1] = new RtecEventChannelAdmin.Dependency (notification_event, rt_info_);
+	  dependencies[2] = new RtecEventChannelAdmin.Dependency (shutdown_event, rt_info_); 
 	  	 	  
-	  RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies_); 
+	  RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies); 
 	  
 	  // The channel administrator is the event channel we got from the invocation
 	  // of this routine
-	  channel_admin_ = event_channel_;
+	  channel_admin_ = event_channel;
 	  
 	  // Connect as a consumer
 	  consumer_admin_ = channel_admin_.for_consumers ();
