@@ -7,6 +7,7 @@
 #include "tao/Any.h"
 #include "tao/Marshal.h"
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
@@ -36,7 +37,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T (void)
 {
 }
 
-template<typename T_slice, typename T_forany> 
+template<typename T_slice, typename T_forany>
 void
 TAO::Any_Array_Impl_T<T_slice, T_forany>::insert (CORBA::Any & any,
                                                   _tao_destructor destructor,
@@ -52,7 +53,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::insert (CORBA::Any & any,
   any.replace (new_impl);
 }
 
-template<typename T_slice, typename T_forany> 
+template<typename T_slice, typename T_forany>
 CORBA::Boolean
 TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                                    _tao_destructor destructor,
@@ -98,7 +99,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                       any_tc,
                                       T_forany::tao_alloc ()),
                       0);
-                      
+
       auto_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (
           replacement
         );
@@ -111,8 +112,8 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 						            TAO_DEF_GIOP_MAJOR,
 						            TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (any_tc, 
-                               &cdr 
+      impl->assign_translator (any_tc,
+                               &cdr
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -133,11 +134,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
-template<typename T_slice, typename T_forany> 
+template<typename T_slice, typename T_forany>
 void
 TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
 {
@@ -151,8 +152,8 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
   CORBA::release (this->type_);
 }
 
-template<typename T_slice, typename T_forany> 
-void 
+template<typename T_slice, typename T_forany>
+void
 TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
                                                        ACE_ENV_ARG_DECL)
 {
