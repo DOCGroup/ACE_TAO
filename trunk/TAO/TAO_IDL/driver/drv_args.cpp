@@ -245,7 +245,7 @@ DRV_usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
-      ACE_TEXT (" CORBA::Environment arguments (enabled by default")
+      ACE_TEXT (" CORBA::Environment arguments (disabled by default")
       ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
     ));
   ACE_DEBUG ((
