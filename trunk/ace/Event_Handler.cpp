@@ -138,7 +138,7 @@ ACE_Event_Handler::reactor (ACE_Reactor *reactor)
 ACE_Reactor *
 ACE_Event_Handler::reactor (void) const
 {
-  ACE_TRACE ("ACE_Event_Handler::Reactor");
+  ACE_TRACE ("ACE_Event_Handler::reactor");
   return this->reactor_;
 }
 

@@ -79,6 +79,24 @@ protected:
   ACE_Reactor *reactor_;
 };
 
+class ACE_Export ACE_Connection_Recycling_Strategy
+  // = TITLE
+  //
+  //     Defines the interface for a connection recycler.
+  //
+{
+public:
+
+  virtual ~ACE_Connection_Recycling_Strategy (void);
+  // Virtual Destructor
+
+  virtual int purge (const void *recycling_act) = 0;
+  // Remove from cache.
+
+  virtual int cache (const void *recycling_act) = 0;
+  // Add to cache.
+};
+
 // This needs to come here to avoid circular dependencies.
 #include "ace/Strategies_T.h"
 

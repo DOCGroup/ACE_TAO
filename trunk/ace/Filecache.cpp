@@ -124,13 +124,22 @@ ACE_Filecache_Handle::size (void) const
 #define ACE_Filecache_Hash_Entry \
         ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
 
-
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (const char *const &ext_id,
                                               ACE_Filecache_Object *const &int_id,
-                                              ACE_Filecache_Hash_Entry *ptr)
+                                              ACE_Filecache_Hash_Entry *next,
+                                              ACE_Filecache_Hash_Entry *prev)
   : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup ("")),
     int_id_ (int_id),
-    next_ (ptr)
+    next_ (next),
+    prev_ (prev)
+{
+}
+
+ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
+                                              ACE_Filecache_Hash_Entry *prev)
+  : ext_id_ (0),
+    next_ (next),
+    prev_ (prev)
 {
 }
 

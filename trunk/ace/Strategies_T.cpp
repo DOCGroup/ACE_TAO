@@ -709,63 +709,40 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
   ACE_Scheduling_Strategy<SVC_HANDLER>::dump ();
 }
 
-// Return the address of <b> by default.  This should typically be
-// specialized!
-
-template<class ADDR_T, class SVC_HANDLER> size_t
-ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::hash_i (const ADDR_T &b) const
+template<class ADDR_T> size_t
+ACE_Hash_Addr<ADDR_T>::hash_i (const ADDR_T &b) const
 {
-  size_t tmp;
-  const void *a = (void *) &b;
-  (void) ACE_OS::memcpy ((void *) &tmp, (void *) &a, sizeof tmp);
-  return tmp;
+  ACE_UNUSED_ARG (b);
+  return 0;
 }
 
-// Default definition for type comparison operation (returns values
-// corresponding to those returned by <memcmp>/<strcmp>).  This should
-// typically be specialized.
-
-template<class ADDR_T, class SVC_HANDLER> int
-ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::compare_i (const ADDR_T &b1, 
-					       const ADDR_T &b2) const
-{
-  if (&b1 == &b2)
-    return 0;
-  else
-    return ACE_OS::memcmp (&b1, &b2, sizeof b1);
-}
-
-// Automatic conversion operators
-template<class ADDR_T, class SVC_HANDLER>
-ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::operator ADDR_T& (void)
-{
-  return addr_;
-}
-
-template<class ADDR_T, class SVC_HANDLER>
-ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::operator const ADDR_T& (void) const
-{
-  return addr_;
-}
-
-template<class ADDR_T, class SVC_HANDLER>
-ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::ACE_Hash_Addr (void)
+template<class ADDR_T>
+ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (void)
   : hash_value_ (0),
-    svc_handler_ (0)
+    recyclable_ (0)
 {
 }
 
-template<class ADDR_T, class SVC_HANDLER>
-ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::ACE_Hash_Addr (const ADDR_T &a, SVC_HANDLER *sh)
+template<class ADDR_T>
+ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (const ADDR_T &a)
   : hash_value_ (0),
-    svc_handler_ (sh),
+    recyclable_ (0),
     addr_ (a)
 {
-  (void) this->hash ();
+  this->hash ();
 }
 
-template<class ADDR_T, class SVC_HANDLER> u_long
-ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::hash (void) const
+template<class ADDR_T>
+ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (const ADDR_T &a, int recyclable)
+  : hash_value_ (0),
+    recyclable_ (recyclable),
+    addr_ (a)
+{
+  this->hash ();
+}
+
+template<class ADDR_T> u_long
+ACE_Hash_Addr<ADDR_T>::hash (void) const
 {
   // In doing the check below, we take chance of paying a performance
   // price when the hash value is zero.  But, that will (hopefully)
@@ -774,19 +751,30 @@ ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::hash (void) const
   // relative to the simple comparison.
 
   if (this->hash_value_ == 0)
-    ((ACE_Hash_Addr<ADDR_T, SVC_HANDLER> *) this)->hash_value_ = this->hash_i (addr_);
+    ((ACE_Hash_Addr<ADDR_T> *) this)->hash_value_ = this->hash_i (addr_);
 
   return this->hash_value_;
 }
 
-template<class ADDR_T, class SVC_HANDLER> int
-ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::operator== (const ACE_Hash_Addr<ADDR_T, SVC_HANDLER> &rhs) const
+template<class ADDR_T> int
+ACE_Hash_Addr<ADDR_T>::operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const
 {
-  if (svc_handler_ == 0)
-    return this->compare_i (addr_, rhs.addr_) == 0;
-  else
-    return svc_handler_->in_use () == 0 
-      && this->compare_i (addr_, rhs.addr_) == 0;
+  if (!this->recyclable ())
+    return 0;
+  else 
+    return this->addr_ == rhs.addr_;
+}
+
+template<class ADDR_T> int 
+ACE_Hash_Addr<ADDR_T>::recyclable (void) const
+{
+  return this->recyclable_;
+}
+
+template<class ADDR_T> void 
+ACE_Hash_Addr<ADDR_T>::recyclable (int new_value)
+{
+  this->recyclable_ = new_value;
 }
 
 template <class SVC_HANDLER> int
@@ -806,42 +794,111 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
    int flags,
    int perms)
 {
-  ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> search_addr (remote_addr);
-
-  // Synchronization is required here as the setting of the in_use bit
-  // in the service handler must be done atomically with the finding
-  // and binding of the service handler in the cache.
+  // Synchronization is required here as the setting of the recyclable
+  // bit must be done atomically with the finding and binding of the
+  // service handler in the cache.
   ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
 
-  // Try to find the addres in the cache.  Only if we don't find it do
-  // we create a new <SVC_HANDLER> and connect it with the server.  
-  if (this->connection_cache_.find (search_addr, sh) == -1)
+  // Try to find the address in the cache.  Only if we don't find it
+  // do we create a new <SVC_HANDLER> and connect it with the server.
+
+  ADDRESS search_addr (remote_addr);
+  CONNECTION_MAP_ENTRY *entry = 0;
+  
+  if (this->connection_cache_.find (search_addr, entry) == -1)
     {
       ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
       
       // Actively establish the connection.  This is a timed blocking
       // connect.
-      if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
-          (sh,
-           remote_addr,
-           timeout,
-           local_addr,
-           reuse_addr,
-           flags,
-           perms) == -1)
-        return -1;
+      if (CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                 remote_addr,
+                                                 timeout,
+                                                 local_addr,
+                                                 reuse_addr,
+                                                 flags,
+                                                 perms) == -1)
+        {
+          // If connect() failed because of timeouts, we have to
+          // reject the connection entirely. This is necessary since
+          // currently there is no way for the non-blocking connects
+          // to complete and for the <Connector> to notify the cache
+          // of the completion of connect().
+          if (errno == EWOULDBLOCK)
+            errno = ENOTSUP;
+          return -1;
+        }
       // Insert the new SVC_HANDLER instance into the cache.
       else
-        {
-          ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> server_addr (remote_addr,
-                                                                           sh);
-          if (this->connection_cache_.bind (server_addr, sh) == -1)
+        {          
+          ADDRESS server_addr (remote_addr);
+          if (this->connection_cache_.bind (server_addr, 
+                                            sh,
+                                            entry) == -1)            
             return -1;
+
+          // Set the recycler and the recycling act
+          sh->recycler (this, entry);          
         }
     }
+  else
+    // We found a cached svc_handler.
+    {
+      // Get the cached <svc_handler>
+      sh = entry->int_id_;
+
+      // Tell the <svc_handler> that it should prepare itself for being
+      // recycled.
+      sh->recycle ();        
+    }
   
-  sh->in_use (1);
+  // Mark the <svc_handler> in the cache as being <in_use>.
+  // Therefore recyclable is 0.
+  entry->ext_id_.recyclable (0);
+
   return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> 
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cached_Connect_Strategy (void)
+{
+  // Close down all cached service handlers.
+  CONNECTION_MAP_ENTRY *entry;
+  for (CONNECTION_MAP_ITERATOR iterator (connection_cache_);
+       iterator.next (entry);
+       iterator.advance ())
+    entry->int_id_->close ();
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache (const void *recycling_act)
+{
+  // Synchronization is required here as the setting of the recyclable
+  // bit must be done atomically with respect to other threads that
+  // are querying the cache.
+  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  
+  // The wonders and perils of ACT
+  CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
+
+  // Mark the <svc_handler> in the cache as not being <in_use>.
+  // Therefore recyclable is 1.
+  entry->ext_id_.recyclable (1);
+
+  return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::purge (const void *recycling_act)
+{
+  // Excluded other threads from changing cache while we take this
+  // entry out.
+  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+
+  // The wonders and perils of ACT
+  CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
+
+  return this->connection_cache_.unbind (entry);
 }
 
 #endif /* ACE_STRATEGIES_T_C */

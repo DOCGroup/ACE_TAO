@@ -77,6 +77,8 @@ friend class ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 public:
   // = Traits.
+  typedef EXT_ID KEY;
+  typedef INT_ID VALUE;
   typedef ACE_Map_Entry<EXT_ID, INT_ID> ENTRY;
   typedef ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> REVERSE_ITERATOR;

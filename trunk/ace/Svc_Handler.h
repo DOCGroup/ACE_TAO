@@ -17,13 +17,14 @@
 #if !defined (ACE_SVC_HANDLER_H)
 #define ACE_SVC_HANDLER_H
 
+// Forward decls.
+class ACE_Dynamic;
+class ACE_Connection_Recycling_Strategy;
+
 #include "ace/Synch_Options.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch_T.h"
-
-// Forward decls.
-class ACE_Dynamic;
 
 template <ACE_PEER_STREAM_1, ACE_SYNCH_1>
 class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_2>
@@ -56,6 +57,11 @@ public:
 
   virtual int close (u_long flags = 0);
   // Object termination hook.
+
+  virtual int idle (u_long flags = 0);
+  // Call this method if you want to recycling the <Svc_Handler>
+  // instead of closing it.  If the object does not have a recycler,
+  // it will be closed.
 
   // = Dynamic linking hooks.
   virtual int init (int argc, char *argv[]);
@@ -121,6 +127,28 @@ public:
   // destroy().  Unfortunately, the C++ standard doesn't allow there
   // to be a public new and a private delete.
 
+public:
+
+  // Note: The following methods are not suppose to be public.  But
+  // because friendship is *not* inherited in C++, these methods have
+  // to be public.
+
+  // = Accessors to set/get the connection recycler.
+  
+  virtual void recycler (ACE_Connection_Recycling_Strategy *recycler, 
+                         const void *recycling_act);
+  // Set the recycler and the <recycling_act> that is used during
+  // purging and caching.
+
+  virtual ACE_Connection_Recycling_Strategy *recycler (void) const;
+  // Get the recycler.
+  
+  virtual int recycle (void * = 0);
+  // Upcall made by the recycler when it is about to recycle the
+  // connection.  This gives the object a chance to prepare itself for
+  // recycling.  Return 0 if the object is ready for recycling, -1 on
+  // failures.
+
 private:  
   ACE_PEER_STREAM peer_; 
   // Maintain connection with client.
@@ -137,6 +165,12 @@ private:
   char closing_;
   // Keeps track of whether we are in the process of closing (required
   // to avoid circular calls to <handle_close>).
+
+  ACE_Connection_Recycling_Strategy *recycler_;
+  // Pointer to the connection recycler.
+
+  const void *recycling_act_;
+  // ACT to be used to when talking to the recycler.
 };
 
 #if defined (__ACE_INLINE__)

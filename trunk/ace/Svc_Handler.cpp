@@ -8,6 +8,7 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"
+#include "ace/Strategies.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Svc_Handler.i"
@@ -111,7 +112,10 @@ template <PR_ST_1, ACE_SYNCH_1>
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
                                                         ACE_Message_Queue<ACE_SYNCH_2> *mq,
                                                         ACE_Reactor *reactor)
-  : ACE_Task<ACE_SYNCH_2> (tm, mq)
+  : ACE_Task<ACE_SYNCH_2> (tm, mq),
+    closing_ (0),
+    recycler_ (0),
+    recycling_act_ (0)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler");
   
@@ -128,7 +132,6 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
   if (this->dynamic_)
     // Make sure to reset the flag
     ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->reset ();
-  this->closing_ = 0;
 }
 
 // Default behavior for a ACE_Svc_Handler object is to be registered with
@@ -179,6 +182,10 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown (void)
       // Remove self from reactor.
       this->reactor ()->remove_handler (this, mask);
     }
+
+  // Remove self from the recycler.
+  if (this->recycler ())
+    this->recycler ()->purge (this->recycling_act_);
 
   this->peer ().close ();
 }
@@ -275,6 +282,40 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::info (char **, size_t) const
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::info");
   return -1;
 }
+
+template <PR_ST_1, ACE_SYNCH_1> int
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::idle (u_long flags)
+{
+  if (this->recycler ())
+    return this->recycler ()->cache (this->recycling_act_);
+  else
+    return this->close (flags);
+}
+
+template <PR_ST_1, ACE_SYNCH_1> void 
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::recycler (ACE_Connection_Recycling_Strategy *recycler, 
+                                                 const void *recycling_act)
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::recycler");
+  this->recycler_ = recycler;
+  this->recycling_act_ = recycling_act;
+}
+
+template <PR_ST_1, ACE_SYNCH_1> ACE_Connection_Recycling_Strategy *
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::recycler (void) const
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::recycler");
+  return this->recycler_;
+}
+
+template <PR_ST_1, ACE_SYNCH_1> int 
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::recycle (void *)
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::recycle");
+  // By default, the object is ready and willing to be recycled.
+  return 0;
+}
+
 #undef PR_ST_1
 #undef PR_ST_2
 #endif /* ACE_SVC_HANDLER_C */
