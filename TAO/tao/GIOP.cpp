@@ -839,13 +839,16 @@ TAO_GIOP::parse_reply (TAO_Transport *,
 
   // For GIOP 1.0 and 1.1 the reply_ctx comes first:
   // @@ Use <header.giop_version> to make this work with GIOP 1.2
-  if ((state.cdr >> reply_ctx) == 0)
+  if (state.message_type != TAO_GIOP::LocateReply)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) TAO_GIOP::parse_reply, "
-                    "extracting context\n"));
-      return -1;
+      if ((state.cdr >> reply_ctx) == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) TAO_GIOP::parse_reply, "
+                        "extracting context\n"));
+          return -1;
+        }
     }
 
   // Read the request id

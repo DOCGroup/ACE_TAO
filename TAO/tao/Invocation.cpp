@@ -131,7 +131,6 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
       else
         // mode == TAO::USE_THREAD_PRIORITY
         {
-          //@@ Need to convert thread priority into CORBA priority.
           if (this->orb_core_->get_thread_priority (min_priority) == -1)
             ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1,
                                                       CORBA::COMPLETED_NO),
@@ -388,7 +387,12 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
-  this->stub_->set_valid_profile ();
+  // @@ Preserve semantics for the case when no ClientPriorityPolicy
+  // is set/used.  For the case when it is, we don't want to set
+  // anything because usage cases of various profiles based on
+  // priorities aren't fully supported by MProfiles & friends (yet).
+  if (this->stub_->profile_in_use () == this->profile_)
+    this->stub_->set_valid_profile ();
 
   return TAO_INVOKE_OK;
 }
@@ -972,7 +976,12 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
-  this->stub_->set_valid_profile ();
+  // @@ Preserve semantics for the case when no ClientPriorityPolicy
+  // is set/used.  For the case when it is, we don't want to set
+  // anything because usage cases of various profiles based on
+  // priorities aren't fully supported by MProfiles & friends (yet).
+  if (this->stub_->profile_in_use () == this->profile_)
+    this->stub_->set_valid_profile ();
 
   // Wait for the reply.
 
@@ -1014,7 +1023,15 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       // NOTREACHED
 
     case TAO_GIOP_OBJECT_FORWARD:
-      return this->location_forward (this->inp_stream (), ACE_TRY_ENV);
+      // When ClientPriorityPolicy is not set/used, behave normally.
+      if (this->stub_->profile_in_use () == this->profile_)
+        return this->location_forward (this->inp_stream (),
+                                       ACE_TRY_ENV);
+      else
+        // else, don't change profile structures - we are not ready
+        // to handle location forwards with priority profiles yet (not enough
+        // support from MProfiles ...)
+        return TAO_INVOKE_RESTART;
       // NOTREACHED
     }
 
