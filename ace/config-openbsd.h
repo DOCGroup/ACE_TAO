@@ -230,8 +230,6 @@
 // bogus compiler syntax error.
 #define ACE_LACKS_CLEARERR
 
-#define ACE_HAS_MKSTEMP
-
 #define ACE_HAS_SNPRINTF
 
 // OpenBSD 3.2 lacks sched_setscheduler (see /usr/src/lib/libc_r/TODO)
