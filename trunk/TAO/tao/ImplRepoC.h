@@ -10,16 +10,6 @@
 #ifndef _TAO_IDL_IMPLREPOC_H_
 #define _TAO_IDL_IMPLREPOC_H_
 
-#include "tao/corbafwd.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-#include "ace/streams.h"
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
 #include "tao/Object.h"
 #include "tao/Managed_Types.h"
 #include "tao/POAC.h"
@@ -31,6 +21,15 @@
 #include "tao/NVList.h"
 #include "tao/Object_Adapter.h"
 #include "tao/Invocation.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+#include "ace/streams.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
