@@ -159,6 +159,7 @@ OBJFILES = \
    $(OBJDIR)\Notification_Strategy.obj \
    $(OBJDIR)\OS_Errno.obj \
    $(OBJDIR)\OS_Log_Msg_Attributes.obj \
+   $(OBJDIR)\OS_main.obj \
    $(OBJDIR)\OS_NS_Thread.obj \
    $(OBJDIR)\OS_NS_arpa_inet.obj \
    $(OBJDIR)\OS_NS_ctype.obj \
