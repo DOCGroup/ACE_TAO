@@ -929,8 +929,7 @@ private:
 # endif /* ACE_TIMER_SKEW */
 
 // This needs to go here *first* to avoid problems with AIX.
-// Just to be safe we'll do it with pthreads, too -- jwr
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 extern "C" {
 #   include /**/ <pthread.h>
 #   if defined (DIGITAL_UNIX)
@@ -938,23 +937,23 @@ extern "C" {
 extern "C" pthread_t pthread_self (void);
 #   endif /* DIGITAL_UNIX */
 }
-# endif /* ACE_HAS_DCETHREADS */
+# endif /* ACE_HAS_PTHREADS */
 
 // There are a lot of threads-related macro definitions in the config files.
 // They came in at different times and from different places and platform
 // requirements as threads evolved.  They are probably not all needed - some
 // overlap or are otherwise confused.  This is an attempt to start
 // straightening them out.
-# if defined (ACE_HAS_PTHREADS_1003_DOT_1C)    /* POSIX.1C threads (pthreads) */
-  // POSIX.1C threads implies pthread_sigmask()
-#   if !defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (__Lynx__)
+# if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
+  // POSIX.1c threads implies pthread_sigmask()
+#   if !defined (ACE_HAS_PTHREAD_SIGMASK)
 #     define ACE_HAS_PTHREAD_SIGMASK
-#   endif /* ! ACE_HAS_PTHREAD_SIGMASK && ! __Lynx__ */
+#   endif /* ! ACE_HAS_PTHREAD_SIGMASK */
   // ... and 2-parameter asctime_r and ctime_r
-#   ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && !defined (ACE_HAS_STHREADS)
 #     define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #   endif
-# endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
+# endif /* ACE_HAS_PTHREADS_STD */
 
 # if (ACE_NTRACE == 1)
 #   define ACE_TRACE(X)
@@ -1668,20 +1667,20 @@ struct stat {
 #     define ACE_SCOPE_THREAD 2
 #   endif /* ACE_HAS_STHREADS */
 
-#   if ! (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS))
+#   if !defined (ACE_HAS_PTHREADS)
 #     define ACE_SCHED_OTHER 0
 #     define ACE_SCHED_FIFO 1
 #     define ACE_SCHED_RR 2
-#   endif /* ! (ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS) */
+#   endif /* ! ACE_HAS_PTHREADS */
 
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
 #     define ACE_SCHED_OTHER SCHED_OTHER
 #     define ACE_SCHED_FIFO SCHED_FIFO
 #     define ACE_SCHED_RR SCHED_RR
 
 // Definitions for mapping POSIX pthreads onto Solaris threads.
 
-#     if defined (ACE_HAS_FSU_PTHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT6)
 #       define PTHREAD_DETACHED        0x1
 #       define PTHREAD_SCOPE_SYSTEM    0x2
 #       define PTHREAD_INHERIT_SCHED   0x4
@@ -1693,11 +1692,7 @@ struct stat {
 #       define PTHREAD_EXPLICIT_SCHED          0
 #       define PTHREAD_MIN_PRIORITY            0
 #       define PTHREAD_MAX_PRIORITY            126
-#     endif /* ACE_HAS_FSU_PTHREADS */
-
-#     if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
-#       define PRIORITY_MAX                    PTHREAD_MAX_PRIORITY
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT6 */
 
 // Definitions for THREAD- and PROCESS-LEVEL priorities...some
 // implementations define these while others don't.  In order to
@@ -1730,6 +1725,13 @@ struct stat {
 #       define ACE_THR_PRI_RR_MAX    PRI_RR_MAX
 #       define ACE_THR_PRI_OTHER_MIN PRI_OTHER_MIN
 #       define ACE_THR_PRI_OTHER_MAX PRI_OTHER_MAX
+#     elif defined (AIX)
+#       define ACE_THR_PRI_FIFO_MIN  PRIORITY_MIN
+#       define ACE_THR_PRI_FIFO_MAX  PRIORITY_MAX
+#       define ACE_THR_PRI_RR_MIN    PRIORITY_MIN
+#       define ACE_THR_PRI_RR_MAX    PRIORITY_MAX
+#       define ACE_THR_PRI_OTHER_MIN PRIORITY_MIN
+#       define ACE_THR_PRI_OTHER_MAX PRIORITY_MAX
 #     else
 #       define ACE_THR_PRI_FIFO_MIN  ACE_PROC_PRI_FIFO_MIN
 #       define ACE_THR_PRI_FIFO_MAX  ACE_PROC_PRI_FIFO_MAX
@@ -1824,7 +1826,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #       endif /* PTHREAD_MUTEXTYPE_FAST */
 #     endif /* PTHREAD_PROCESS_SHARED */
 
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
 #       if defined (PTHREAD_PROCESS_PRIVATE)
 #         define USYNC_THREAD    PTHREAD_PROCESS_PRIVATE
 #       else
@@ -1839,7 +1841,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #     elif !defined (ACE_HAS_STHREADS)
 #       define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
 #       define USYNC_PROCESS PTHREAD_PROCESS_SHARED
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
 #     define THR_BOUND               0x00000001
 #     if defined (CHORUS)
@@ -2148,7 +2150,7 @@ public:
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
-#   endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
 
 #   if defined (ACE_LACKS_COND_T)
 class ACE_Export ACE_cond_t
