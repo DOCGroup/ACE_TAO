@@ -244,9 +244,6 @@ static table_element table [CORBA::TC_KIND_COUNT] =
   };
   
 #if defined (unix) || defined (VXWORKS) || defined (ACE_WIN32)
-// @@ Chris, can you please put this magic number macro in a more
-// prominent place (e.g., in a header file somewhere?  
-#define TAO_ALIGNMENT_MAGIC_NUMBER 64
 #define declare_entry(x,t) \
     	struct align_struct_ ## t { \
     	    x one; \
