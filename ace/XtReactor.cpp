@@ -11,8 +11,8 @@
 
 struct ACE_XtReactorID 
 {
-    XtInputId id;
-    int good_id;
+  XtInputId id_;
+  int good_id_;
 };
 
 ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
@@ -47,7 +47,7 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 
 ACE_XtReactor::~ACE_XtReactor (void)
 {
-  delete this->ids_;
+  delete [] this->ids_;
 }
 
 // This is just the wait_for_multiple_events from ace/Reactor.cpp but
@@ -209,10 +209,10 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 	more[i] = ids_[i];
 
       for (i = this->id_len_; i < handle + 1; i++)
-	more[i].good_id = 0;
+	more[i].good_id_ = 0;
 
       id_len_ = handle + 1;
-      delete this->ids_;
+      delete [] this->ids_;
       ids_ = more;
     }
 
@@ -229,15 +229,15 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 
   if (condition != 0)
     {
-      if (ids_[handle].good_id)
-	::XtRemoveInput (ids_[handle].id);
+      if (ids_[handle].good_id_)
+	::XtRemoveInput (ids_[handle].id_);
 
-      ids_[handle].id = ::XtAppAddInput (context_, 
+      ids_[handle].id_ = ::XtAppAddInput (context_, 
 					 handle, 
 					 (XtPointer) condition, 
 					 InputCallbackProc, 
 					 (XtPointer) this);
-      ids_[handle].good_id = 1;
+      ids_[handle].good_id_ = 1;
     }
   return 0;
 }
@@ -261,11 +261,11 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 
   if (handle <= id_len_)
     { 
-      if (ids_[handle].good_id)
-	::XtRemoveInput (ids_[handle].id);
+      if (ids_[handle].good_id_)
+	::XtRemoveInput (ids_[handle].id_);
       else
 	ACE_DEBUG ((LM_DEBUG, "Handle id is not good %d\n", handle));
-      ids_[handle].good_id = 0;
+      ids_[handle].good_id_ = 0;
     }
   else 
     ACE_DEBUG ((LM_DEBUG, "Handle out of range %d\n", handle));
