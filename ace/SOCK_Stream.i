@@ -56,7 +56,8 @@ ACE_SOCK_Stream::recv_n (void *buf,
                       buf,
                       len,
                       flags,
-                      timeout);
+                      timeout,
+                      error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -69,7 +70,8 @@ ACE_SOCK_Stream::recv_n (void *buf,
   return ACE::recv_n (this->get_handle (),
                       buf,
                       len,
-                      timeout);
+                      timeout,
+                      error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -82,7 +84,8 @@ ACE_SOCK_Stream::recvv_n (iovec iov[],
   return ACE::recvv_n (this->get_handle (),
                        iov,
                        n,
-                       timeout);
+                       timeout,
+                       error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -97,7 +100,8 @@ ACE_SOCK_Stream::send_n (const void *buf,
                       buf,
                       len,
                       flags,
-                      timeout);
+                      timeout,
+                      error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -110,7 +114,8 @@ ACE_SOCK_Stream::send_n (const void *buf,
   return ACE::send_n (this->get_handle (),
                       buf,
                       len,
-                      timeout);
+                      timeout,
+                      error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -123,7 +128,8 @@ ACE_SOCK_Stream::sendv_n (const iovec iov[],
   return ACE::sendv_n (this->get_handle (),
                        iov,
                        n,
-                       timeout);
+                       timeout,
+                       error_on_eof);
 }
 
 ASYS_INLINE ssize_t

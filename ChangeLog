@@ -1,53 +1,59 @@
+Wed Apr 19 10:03:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/SOCK_Stream.i:
+          The new <error_on_eof> flag was present but not used in several
+          methods, just forward them to the ACE::xxx() operation.
+
 Wed Apr 19 08:18:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* */Makefile:
-	  Updated all the dependencies
+        * */Makefile:
+          Updated all the dependencies
 
 Wed Apr 19 09:44:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp:
-	  Changed the signature of a (WIN32-specific) call to
-	  send_n, to resolve a function overload ambiguity on NT.
+        * ace/Log_Msg.cpp:
+          Changed the signature of a (WIN32-specific) call to
+          send_n, to resolve a function overload ambiguity on NT.
 
 Wed Apr 19 00:00:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace: There are two general use cases of the _n() methods:
+        * ace: There are two general use cases of the _n() methods:
 
-	  (1) The method keeps looping, until all the data has been
-	  transmitted, or until timeout occurs, or until the handle is
-	  closed.  This use case occurs when one does not know how much
-	  data is coming across in the case of a recv(), or one wants to
-	  know exactly how much data was sent in the case of a send().
-	  And one don't want to treat a premature eof as an error but
-	  wants to know the exact number of bytes that have been
-	  transferred so far.
+          (1) The method keeps looping, until all the data has been
+          transmitted, or until timeout occurs, or until the handle is
+          closed.  This use case occurs when one does not know how much
+          data is coming across in the case of a recv(), or one wants to
+          know exactly how much data was sent in the case of a send().
+          And one don't want to treat a premature eof as an error but
+          wants to know the exact number of bytes that have been
+          transferred so far.
 
-	  (2) In other cases when one knows exactly how much data is
-	  coming across in the case of recv(), or how much data needs to
-	  be transmitted in the case of a send(). Premature closing of the
-	  handle is usually an error.
+          (2) In other cases when one knows exactly how much data is
+          coming across in the case of recv(), or how much data needs to
+          be transmitted in the case of a send(). Premature closing of the
+          handle is usually an error.
 
-	  By adding an additional <error_on_eof> parameter to all the _n()
-	  methods, the above two use cases can be distinguished.  The
-	  following files were modified:
+          By adding an additional <error_on_eof> parameter to all the _n()
+          methods, the above two use cases can be distinguished.  The
+          following files were modified:
 
-	  - OS
-	  - ACE
-	  - SOCK_Stream
-	  - TLI_Stream
+          - OS
+          - ACE
+          - SOCK_Stream
+          - TLI_Stream
 
-	  The other IO classes such as FIFO, MEM_IO, PIPE, etc., should
-	  also include this change.  However, they should first get fixed
-	  with respect to timeouts.  If <error_on_eof> comes before
-	  timeouts, ordering of the parameters will get messed up.
+          The other IO classes such as FIFO, MEM_IO, PIPE, etc., should
+          also include this change.  However, they should first get fixed
+          with respect to timeouts.  If <error_on_eof> comes before
+          timeouts, ordering of the parameters will get messed up.
 
-	  Thanks to Steffen Winther Sorensen <sts@siimnet.dk> for
-	  reporting this second use of the _n() methods.
+          Thanks to Steffen Winther Sorensen <sts@siimnet.dk> for
+          reporting this second use of the _n() methods.
 
-	* ace/OS.h: t_snd() interface was fixed.  The buffer parameter
-	  should be const.
+        * ace/OS.h: t_snd() interface was fixed.  The buffer parameter
+          should be const.
 
-	* ace/ACE: Added support for TLI I/O functions to the ACE class.
+        * ace/ACE: Added support for TLI I/O functions to the ACE class.
 
 Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -315,53 +321,53 @@ Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Apr 18 21:32:21 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (sema_init): Fixed another problem that required
-	  a cast to ACE_mutexattr_t *.  Thanks to Priyanka for
-	  reporting this.
+        * ace/OS.i (sema_init): Fixed another problem that required
+          a cast to ACE_mutexattr_t *.  Thanks to Priyanka for
+          reporting this.
 
 Tue Apr 18 19:39:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Synch.cpp,
-	* ace/OS.cpp: Added a cast to ACE_mutexattr_t *.  Thanks to
-	  Darrell for pointing this out.
+        * ace/Synch.cpp,
+        * ace/OS.cpp: Added a cast to ACE_mutexattr_t *.  Thanks to
+          Darrell for pointing this out.
 
 Tue Apr 18 15:18:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h,
-	* ace/OS.i,
-  	* ace/Synch.h,
-    	* ace/Synch.cpp: Updated the ACE_OS::*mutex_init() methods (and the
-	  corresponding ACE_Thread_Mutex, ACE_Mutex, and
- 	  ACE_Recursive_Thread_Mutex classes) so that they now take an
- 	  optional ACE_mutexattr_t * rather than just a void *.  This is
- 	  nice because it makes it possible to pass in special attributes,
- 	  such as the mutex prioceiling attribute, to the underlying
- 	  pthreads mutex (assuming we're running on pthreads, of course).
-  	  Thanks to lafortg@res.raytheon.com for motivating this.
+        * ace/OS.h,
+        * ace/OS.i,
+        * ace/Synch.h,
+        * ace/Synch.cpp: Updated the ACE_OS::*mutex_init() methods (and the
+          corresponding ACE_Thread_Mutex, ACE_Mutex, and
+          ACE_Recursive_Thread_Mutex classes) so that they now take an
+          optional ACE_mutexattr_t * rather than just a void *.  This is
+          nice because it makes it possible to pass in special attributes,
+          such as the mutex prioceiling attribute, to the underlying
+          pthreads mutex (assuming we're running on pthreads, of course).
+          Thanks to lafortg@res.raytheon.com for motivating this.
 
-	* ace/Containers_T.cpp (copy_nodes): Added a call to the
-	  allocator->malloc() rather than new.  Thanks to Umar Syyid
- 	  <usyyid@hns.com> for reporting this.
+        * ace/Containers_T.cpp (copy_nodes): Added a call to the
+          allocator->malloc() rather than new.  Thanks to Umar Syyid
+          <usyyid@hns.com> for reporting this.
 
 Tue Apr 18 14:06:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp:
-	  Patch to ACE_CDR::consolidate() sent in by Carlos, that
-	  fixes a bug reported by Harald Finster <finster@ave.ac.agit.de>,
-	  and an added check for 0 value of the 'length' arg in
-	  read_array() and write_array(), that fixes [Bug 540],
-	  reported by Mathew Samuel <Mathew.Samuel@msdw.com>.
+        * ace/CDR_Stream.cpp:
+          Patch to ACE_CDR::consolidate() sent in by Carlos, that
+          fixes a bug reported by Harald Finster <finster@ave.ac.agit.de>,
+          and an added check for 0 value of the 'length' arg in
+          read_array() and write_array(), that fixes [Bug 540],
+          reported by Mathew Samuel <Mathew.Samuel@msdw.com>.
 
 Tue Apr 18 11:47:57 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SOCK_Connector.cpp:
+        * ace/SOCK_Connector.cpp:
 
-	  Removed inclusion of `ace/Handle_Set.h'.  The ACE_SOCK_Connector
-	  doesn't directly use an ACE_Handle_Set.
+          Removed inclusion of `ace/Handle_Set.h'.  The ACE_SOCK_Connector
+          doesn't directly use an ACE_Handle_Set.
 
-	* ace/Makefile:
+        * ace/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Apr 18 08:54:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -371,10 +377,10 @@ Tue Apr 18 08:54:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Apr 16 22:24:34 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated the link for GNU make to be more
-	  specific.  Thanks to Xiaojun Wu <depender@yahoo.com> for
- 	  reporting this.  BTW, Xiaojun was the 900th contributor to
- 	  ACE+TAO, so he gets a free copy of ACE+TAO!
+        * ACE-INSTALL.html: Updated the link for GNU make to be more
+          specific.  Thanks to Xiaojun Wu <depender@yahoo.com> for
+          reporting this.  BTW, Xiaojun was the 900th contributor to
+          ACE+TAO, so he gets a free copy of ACE+TAO!
 
 Mon Apr 17 20:10:18 2000  Vishal  <vishal@cs.wustl.edu>
 
@@ -382,73 +388,73 @@ Mon Apr 17 20:10:18 2000  Vishal  <vishal@cs.wustl.edu>
 
 Mon Apr 17 16:33:17 2000  Ossama Othman  <ossama@uci.edu>
 
-	* acconfig.h (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
-	  ACE_LACKS_ACE_TOKEN):
+        * acconfig.h (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
+          ACE_LACKS_ACE_TOKEN):
 
-	  Added support for these macros.  They are used when enabling
-	  subsetting.
+          Added support for these macros.  They are used when enabling
+          subsetting.
 
-	* configure.in:
+        * configure.in:
 
-	  lseek64() and llseek() test has been moved to
-	  `m4/acinclude.m4'.
+          lseek64() and llseek() test has been moved to
+          `m4/acinclude.m4'.
 
-	  Include `sys/types.h' when running the TLI/XTI tests.  Some
-	  platforms use typedefs such as "ulong" but such typedefs may not
-	  be defined in the TLI/XTI headers.
+          Include `sys/types.h' when running the TLI/XTI tests.  Some
+          platforms use typedefs such as "ulong" but such typedefs may not
+          be defined in the TLI/XTI headers.
 
-	  (ACE_HAS_BROKEN_T_ERROR):
+          (ACE_HAS_BROKEN_T_ERROR):
 
-	  Corrected test for broken t_error().  A variable, "errmsg" was
-	  being passed to the t_error() call in the test, but the variable
-	  was declared as "ace_errmsg."  Thanks to Roland Gigler
-	  <roland@mch.pn.siemens.de> for pointing this out.
+          Corrected test for broken t_error().  A variable, "errmsg" was
+          being passed to the t_error() call in the test, but the variable
+          was declared as "ace_errmsg."  Thanks to Roland Gigler
+          <roland@mch.pn.siemens.de> for pointing this out.
 
-	  (ACE_MAJOR, ACE_MINOR, ACE_BETA):
+          (ACE_MAJOR, ACE_MINOR, ACE_BETA):
 
-	  If any of these variables is evaluates to the empty string, then
-	  set it to zero.  This fixes a problem that was occuring when the
-	  the ACE version contained no beta number (e.g. "5.1" instead
-	  "5.1.0").  Libtool didn't like the fact that one of the numbers
-	  was an empty string.
+          If any of these variables is evaluates to the empty string, then
+          set it to zero.  This fixes a problem that was occuring when the
+          the ACE version contained no beta number (e.g. "5.1" instead
+          "5.1.0").  Libtool didn't like the fact that one of the numbers
+          was an empty string.
 
-	* ace/Makefile.am (libACE_IPC_la_SOURCES, libACE_Other_la_SOURCES,
-	  HEADER_FILES, INLINE_FILES):
+        * ace/Makefile.am (libACE_IPC_la_SOURCES, libACE_Other_la_SOURCES,
+          HEADER_FILES, INLINE_FILES):
 
-	  Synchronized the sources associated with these Makefile
-	  variables with those in the classical ACE Makefile.
+          Synchronized the sources associated with these Makefile
+          variables with those in the classical ACE Makefile.
 
-	* m4/acinclude.m4 (ACE_CHECK_LSEEK64):
+        * m4/acinclude.m4 (ACE_CHECK_LSEEK64):
 
-	  Moved checks for lseek64() and llseek() from configure.in to
-	  this file.  The beginnings of a test for a 64 bit offset type
-	  have also been added, but that test is currently not in use.
+          Moved checks for lseek64() and llseek() from configure.in to
+          this file.  The beginnings of a test for a 64 bit offset type
+          have also been added, but that test is currently not in use.
 
-	* m4/ace.m4 (ACE_COMPILATION_OPTIONS):
+        * m4/ace.m4 (ACE_COMPILATION_OPTIONS):
 
-	  Removed check for exception support in C compiler.  It didn't
-	  make too much sense to check for exception support in a C
-	  compiler.
+          Removed check for exception support in C compiler.  It didn't
+          make too much sense to check for exception support in a C
+          compiler.
 
-	  Since exception support is disabled by default, make sure
-	  "-fno-exceptions" is set when using g++ with the default ACE
-	  exception configuration value.
+          Since exception support is disabled by default, make sure
+          "-fno-exceptions" is set when using g++ with the default ACE
+          exception configuration value.
 
-	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 
-	  Fixed typos where "$GXX" was used instead of "$CXX."  "$GXX" is
-	  set to yes when GNU C++ is being used, and "$CXX" is set to the
-	  compiler being used (e.g. "c++").  Thanks to Rich Seibel
+          Fixed typos where "$GXX" was used instead of "$CXX."  "$GXX" is
+          set to yes when GNU C++ is being used, and "$CXX" is set to the
+          compiler being used (e.g. "c++").  Thanks to Rich Seibel
           <seibel_r@ociweb.com> for pointing this out.
 
-	  This also fixes a problem where "-fcheck-new" wasn't being added
-	  to the C++ flags ($CXXFLAGS).
+          This also fixes a problem where "-fcheck-new" wasn't being added
+          to the C++ flags ($CXXFLAGS).
 
-	* m4/subsets.m4 (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
-	  ACE_LACKS_ACE_TOKEN):
+        * m4/subsets.m4 (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
+          ACE_LACKS_ACE_TOKEN):
 
-	  When disabling the "Other," "SvcConf" and/or the "Token" subset,
-	  then define the corresponding preprocessor macro.
+          When disabling the "Other," "SvcConf" and/or the "Token" subset,
+          then define the corresponding preprocessor macro.
 
 Sat Apr 15 21:49:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -489,12 +495,12 @@ Sat Apr 15 19:35:57 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Apr 15 18:17:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
-	  Fixed the handle_output() function so that it does the "Right
- 	  Thing"[TM] on Windows NT.  Win32 Winsock doesn't trigger
- 	  multiple "You can write now" signals, so we have to assume that
- 	  we can continue to write until we get another EWOULDBLOCK.
-	  Thanks to Nick Pratt
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+          Fixed the handle_output() function so that it does the "Right
+          Thing"[TM] on Windows NT.  Win32 Winsock doesn't trigger
+          multiple "You can write now" signals, so we have to assume that
+          we can continue to write until we get another EWOULDBLOCK.
+          Thanks to Nick Pratt
 
 Thu Apr 13 16:30:01 2000  David L. Levine  <levine@cs.wustl.edu>
 
