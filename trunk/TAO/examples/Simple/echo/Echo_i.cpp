@@ -48,7 +48,7 @@ Echo_i::echo (const char *mesg,
   // if CORBA::string_dup() returns a 0 pointer, an exception is
   // raised.
 
-  if (str == 0)
+  if (str.in() == 0)
     env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // @@ Make sure that you test out an version of this test where you
