@@ -1,3 +1,9 @@
+Mon Apr 14 08:43:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/mkcsregdb/mkcsregdb.mpc:
+
+          Added an mpc file for this project.
+
 Mon Apr 14 07:05:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
