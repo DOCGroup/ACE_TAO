@@ -652,7 +652,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ace/Caching_Strategies_T.cpp")
+#pragma implementation ("Caching_Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CACHING_STRATEGIES_H */
