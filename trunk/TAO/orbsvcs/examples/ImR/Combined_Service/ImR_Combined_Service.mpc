@@ -1,6 +1,5 @@
 // $Id$
-project : orbsvcsexe, portableserver {
-  requires += exceptions
+project : orbsvcsexe, portableserver, exceptions {
   exename   = combined_service
   source_files {
     combined.cpp
@@ -12,8 +11,7 @@ project : orbsvcsexe, portableserver {
   }
 }
 
-project(*Controller) : orbsvcsexe {
-  requires += exceptions
+project(*Controller) : orbsvcsexe, exceptions {
   exename   = controller
   source_files {
     controller.cpp
@@ -25,8 +23,7 @@ project(*Controller) : orbsvcsexe {
 }
 
 // A client that uses corba to test out basic imr functionality
-project(*Test) : orbsvcsexe {
-  requires += exceptions
+project(*Test) : orbsvcsexe, exceptions {
   source_files {
     test.cpp
     testC.cpp
@@ -39,8 +36,7 @@ project(*Test) : orbsvcsexe {
 // A server to use with the imr
 // The gnuace specific portion is to prevent the test.idl from being compiled
 // multiple times and causing invalid object files to be created.
-project(*TestServer) : orbsvcsexe, portableserver, iortable {
-  requires += exceptions
+project(*TestServer) : orbsvcsexe, portableserver, iortable, exceptions {
   specific(gnuace) {
     after += *Test
   }
@@ -58,8 +54,7 @@ project(*TestServer) : orbsvcsexe, portableserver, iortable {
 // combined_service.
 // The gnuace specific portion is to prevent the test.idl from being compiled
 // multiple times and causing invalid object files to be created.
-project(*DynamicServer) : taolib_with_idl, portableserver, iortable {
-  requires    += exceptions
+project(*DynamicServer) : taolib_with_idl, portableserver, iortable, exceptions {
   dynamicflags = DYNSERVER_BUILD_DLL
   sharedname   = DynServer
   specific(gnuace) {
