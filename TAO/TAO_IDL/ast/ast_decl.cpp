@@ -916,9 +916,16 @@ AST_Decl::version (void)
                                   ':');
         }
 
-      if (! this->typeid_set_ && tail2 != 0)
+      if (! this->typeid_set_)
         {
-          this->version_ = ACE::strnew (tail2 + 1);
+          if (tail2 != 0)
+            {
+              this->version_ = ACE::strnew (tail2 + 1);
+            }
+          else
+            {
+              this->version_ = ACE::strnew ("1.0");
+            }
         }
     }
 
