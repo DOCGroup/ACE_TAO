@@ -111,7 +111,7 @@ TAO::ObjectKey::encode_sequence_to_string (char * &str,
   char *cp = str;
 
   for (u_int i = 0;
-       cp < (cp + len) && i < seq.length();
+       cp < (str + len) && i < seq.length();
        ++i)
     {
       u_char bt = seq[i];
