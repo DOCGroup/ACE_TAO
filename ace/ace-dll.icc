@@ -28,9 +28,9 @@ if $__TOS_AIX__ {
                 gen(enumsize, small),
                 report (disable, "CPPC1125")
         TargetType = "shr"
-        TargetName = "shr.o"
-        run after targets("shr.o") "ar -r -u libACEshr.a shr.o"
-        run cleanup targets("shr.o") "rm -rf libACEshr.a"
+        TargetName = "libACE.o"
+        run after targets("libACE.o") "ar -r -u libACE.a libACE.o"
+        run cleanup targets("libACE.o") "rm -rf libACE.a libACE.o"
 }
 
 option
