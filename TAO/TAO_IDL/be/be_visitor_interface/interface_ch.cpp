@@ -52,8 +52,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Generate the AMI Reply Handler's forward declaration code, if
       // the option is enabled, for this interface.
       
-      // #if defined (TAO_IDL_HAS_AMI)
-      if (1)
+      if (idl_global->ami_call_back () == I_TRUE)
         {
           // Set the context.
           be_visitor_context ctx (*this->ctx_);

@@ -556,6 +556,13 @@ public:
   virtual idl_bool case_diff_error (void);
   // are we strict about case-only differences or not?
 
+  virtual void ami_call_back (idl_bool value);
+  // To enable or disable AMI call back feature of the Messaging
+  // specification in the generated code.
+
+  virtual idl_bool ami_call_back (void);
+  // Return the flag.
+
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -696,6 +703,11 @@ private:
   idl_bool case_diff_error_;
   // do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
+
+  idl_bool ami_call_back_;
+  // Flag to indicate whether the AMI Call back feature of the
+  // Messaging specification should be enabled for the generated files
+  // or not.
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

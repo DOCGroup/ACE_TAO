@@ -144,6 +144,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -in \t\t\tTo generate <>s for standard #include'd files (non-changing files)\n");
   cerr << GTDEVEL (" -ic \t\t\tTo generate \"\"s for standard #include'd files (changing files) <\n");
   cerr << GTDEVEL (" -Idir\t\t\tincludes dir in search path for preprocessor\n");
+  cerr << GTDEVEL (" -MC \t\t\tTo enable AMI Call back feature of the Messaging Specification.\n");
   cerr << GTDEVEL (" -o <output_dir>\tOutput directory for the generated files. Default is current directory\n");
   cerr << GTDEVEL (" -si\t\t\tServer's inline file name ending. Default is S.i\n");
   cerr << GTDEVEL (" -ss\t\t\tServer's skeleton file name ending. Default is S.cpp\n");
@@ -376,6 +377,19 @@ DRV_parse_args (long ac, char **av)
             case 'g':
               idl_global->gperf_path (av[i+1]);
               i++;
+              break;
+              
+              // Option to generate the features regarding the
+              // Messaging Specification.  
+
+            case 'M':
+              // AMI with Call back.
+              if (av[i][2] == 'C')
+                idl_global->ami_call_back (I_TRUE);
+              else
+                ACE_ERROR ((LM_ERROR,
+                            "%s: Unknown -M option <%c>\n",
+                            av [0], av [i][i+2]));
               break;
 
               // Directory where all the IDL-Compiler-Generated files are to
