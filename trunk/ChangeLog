@@ -1,3 +1,10 @@
+Mon Apr 19 14:10:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Moved the implementation of ACE_OS::thr_equal() before the first
+          placed where it is used in this file. This fixes a warning in the
+          Tru64 build.
+
 Mon Apr 19 14:02:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_msg.h:
