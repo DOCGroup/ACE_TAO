@@ -1,6 +1,6 @@
 # $Id$
 
-# SunOS 5.x (Solaris 2.x) with Sun C++ 4.2, *not* using Orbix.
+# SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x, *not* using Orbix.
 #
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
