@@ -1,3 +1,12 @@
+Fri Feb 18 09:46:25 2005  Dale Wilson  <wilson_d@ociweb.com>
+
+        * NEWS:
+          Documented TSS changes.
+
+        * ace/OS_NS_Thread.h:
+          Added a comment that the "inst" argument to ACE_OS::thr_key_detach
+          and thr_keycreate is deprecated and will be ignored.
+
 Fri Feb 18 09:34:06 2005  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
