@@ -29,8 +29,8 @@
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-// TAO_IDL - Generated from 
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -103,5 +103,5 @@ CORBA::Boolean operator>>= (
         CORBA::ShortSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
