@@ -57,15 +57,16 @@ TAO_Persistent_IntId::type (void)
 }
 
 TAO_Persistent_ExtId::TAO_Persistent_ExtId (void)
-  : kind_ (0),
-    id_ (0)
+  : id_ (0),
+    kind_ (0)
 {
 }
 
 TAO_Persistent_ExtId::TAO_Persistent_ExtId (const char *id,
                                             const char *kind)
-  : kind_ (kind),
-    id_ (id)
+  : id_ (id),
+    kind_ (kind)
+
 {
 }
 
