@@ -1,3 +1,9 @@
+Wed Aug 25 12:09:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Makefile:
+	  Include (conditionally) the $TAO_ROOT/tao/tao_targets.GNU file,
+	  that defines the targets required to compile just TAO.
+
 Tue Aug 24 21:47:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Synch_Options.{h,cpp} (timeout): added const to
