@@ -7,6 +7,10 @@ Things to do
 
 - Remove kerberos warnings
 
+- Need to fix the following warnings:
+    "Video_Server.cpp", line 880: Warning: para hides Video_Server::para.
+    "Video_Server.cpp", line 906: Warning: para hides Video_Server::para.
+
 - Seg fault wile exiting
   Destructor of reactor crashes the server
 
