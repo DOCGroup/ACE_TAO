@@ -85,7 +85,7 @@ template class auto_ptr<TAO_InterfaceDef_i>;
 template class auto_ptr<TAO_Container_i>;
 template class auto_ptr<TAO_Contained_i>;
 template class auto_ptr<TAO_IDLType_i>;
-template class auto_ptr<char>;
+template class ACE_Auto_Basic_Ptr<char>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -167,6 +167,6 @@ template class auto_ptr<char>;
 #pragma instantiate auto_ptr<TAO_Container_i>
 #pragma instantiate auto_ptr<TAO_Contained_i>
 #pragma instantiate auto_ptr<TAO_IDLType_i>
-#pragma instantiate auto_ptr<char>
+#pragma instantiate ACE_Auto_Basic_Ptr<char>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
