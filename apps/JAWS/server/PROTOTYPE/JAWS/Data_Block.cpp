@@ -9,12 +9,6 @@ JAWS_Data_Block::task (void)
   return this->task_;
 }
 
-ACE_INET_Addr *
-JAWS_Data_Block::addr (void)
-{
-  return this->addr_;
-}
-
 JAWS_IO_Handler *
 JAWS_Data_Block::handler (void)
 {
@@ -31,12 +25,6 @@ void
 JAWS_Data_Block::task (JAWS_Pipeline_Handler *taskp)
 {
   this->task_ = taskp;
-}
-
-void
-JAWS_Data_Block::addr (ACE_INET_Addr *addrp)
-{
-  this->addr_ = addrp;
 }
 
 void
@@ -62,7 +50,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   // data->policy ()->update (handler);
 
   JAWS_IO *io = policy->io ();
-  io->accept (data->addr ());
+  // io->accept (data->addr ());
   return 0;
 }
 
