@@ -1,3 +1,10 @@
+2002-01-26  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.cpp
+	  (ORT_test_IORInterceptor_ORBInitializer::post_init):
+	  Removed TAO_ENV_ARG_DEFN and corrected usage of
+	  TAO_ENV_ARG_PARAMETER.
+
 Fri Jan 25 19:05:24 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/OBV/Forward/server.dsp:
