@@ -259,8 +259,8 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
   ACE_NEW_RETURN (this->proactor_,
                   ACE_Proactor (proactor_impl, 1 ), 
                   -1);
-
-  ACE_Proactor::instance (this->proactor_);
+  // Set new singleton and delete it in close_singleton()
+  ACE_Proactor::instance (this->proactor_, 1);
   return 0;
 }
 
@@ -275,8 +275,7 @@ MyTask::delete_proactor (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Delete Proactor\n")));
 
-  ACE_Proactor::instance ((ACE_Proactor *) 0);
-  delete this->proactor_;
+  ACE_Proactor::close_singleton ();
   this->proactor_ = 0;
 
   return 0;
@@ -323,12 +322,6 @@ MyTask::stop ()
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p.\n"),
                 ACE_TEXT ("unable to stop thread pool")));
-
-  // Right choice - to delete proactor in destuctor
-  //if (this->delete_proactor () == -1)
-  //  ACE_ERROR ((LM_ERROR,
-  //              ACE_TEXT ("%p.\n"),
-  //              ACE_TEXT ("unable to delete proactor")));
 
   return 0;
 }
