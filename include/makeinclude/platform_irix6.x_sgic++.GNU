@@ -50,7 +50,9 @@ LDFLAGS		+= -Wl,-woff,133
 
 # You need to remove this if you are using 6.2 without the Pthread
 # patches or if you want to compile without threads support.
-LIBS		+= -lpthread
+ifndef DONT_LINK_PTHREADS
+ LIBS          += -lpthread
+endif
 
 PIC		= -KPIC
 AR		= ar

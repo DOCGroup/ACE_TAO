@@ -386,6 +386,12 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *type)
 {
 }
 
+template <class TYPE> ACE_INLINE int
+ACE_TSS<TYPE>::ts_init (void) const
+{
+  return 0;
+}
+
 template <class TYPE> ACE_INLINE TYPE *
 ACE_TSS<TYPE>::ts_object (void) const
 {

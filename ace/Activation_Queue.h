@@ -27,6 +27,9 @@
 #include "ace/Message_Queue.h"
 #include "ace/Method_Request.h"
 
+// Be compatible with the terminology in the POSA2 book!
+#define ACE_Activation_List ACE_Activation_Queue 
+
 class ACE_Export ACE_Activation_Queue
 {
   // = TITLE

@@ -342,7 +342,8 @@ public:
   // it is reallocated.  Returns 0 if successful, else -1.
 
   size_t space (void) const;
-  // Get the number of bytes in the top-level <Message_Block>.
+  // Get the number of bytes available after the <wr_ptr_> in the
+  // top-level <Message_Block>.
 
   void crunch (void);
   // Normalizes data in message block to align with the base.

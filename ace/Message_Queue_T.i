@@ -128,24 +128,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::message_count (void)
   return this->cur_count_;
 }
 
-template <ACE_SYNCH_DECL> ACE_INLINE void
-ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (size_t new_value)
-{
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
-  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_);
-
-  this->cur_bytes_ = new_value;
-}
-
-template <ACE_SYNCH_DECL> ACE_INLINE void
-ACE_Message_Queue<ACE_SYNCH_USE>::message_length (size_t new_value)
-{
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
-  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_);
-
-  this->cur_length_ = new_value;
-}
-
 template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Message_Queue<ACE_SYNCH_USE>::activate (void)
 {

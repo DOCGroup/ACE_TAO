@@ -143,6 +143,24 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+template <ACE_SYNCH_DECL> void
+ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_);
+
+  this->cur_bytes_ = new_value;
+}
+
+template <ACE_SYNCH_DECL> void
+ACE_Message_Queue<ACE_SYNCH_USE>::message_length (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_);
+
+  this->cur_length_ = new_value;
+}
+
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,

@@ -371,8 +371,12 @@ protected:
 
 // ACE_Allocator version
 
-typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> > PERSISTENT_ALLOCATOR;
-typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> > HEAP_ALLOCATOR;
+typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL,
+                                           ACE_SYNCH_MUTEX> > 
+        PERSISTENT_ALLOCATOR;
+typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
+                                           ACE_SYNCH_MUTEX> > 
+        HEAP_ALLOCATOR;
 
 class ACE_Export ACE_Configuration_ExtId
 {
