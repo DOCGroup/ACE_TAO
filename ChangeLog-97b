@@ -9,8 +9,9 @@ Wed Oct 15 08:57:15 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ACE.{h,i},Version.h: added ACE version macros, and static
-	  functions to access them in class ACE.
-
+	  functions to access them in class ACE.  Version.h currently must
+	  be maintained manually.  We'll automate it later.
+	
 	* tests/Time_Value_Test.cpp:  added test of ACE version accessors.
 
 	* ace/OS.cpp,Object_Manager.cpp: changed ACE_TSS_CLEANUP_LOCK
