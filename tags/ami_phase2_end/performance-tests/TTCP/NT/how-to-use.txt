@@ -1,0 +1,1 @@
+To use run TTCPR.BAT for the receiver and "TTCPX.BAT hostname" for the sender
