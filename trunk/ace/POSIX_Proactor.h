@@ -56,52 +56,7 @@ public:
   virtual int register_handle (ACE_HANDLE handle,
 			       const void *completion_key);
   // This function is a no-op function for Unix systems. Returns 0.
-
-  // = Timer management.
-
-  virtual long schedule_timer (ACE_Handler &handler,
-			       const void *act,
-			       const ACE_Time_Value &time);
-  // Schedule a <handler> that will expire after <time>.  If it
-  // expires then <act> is passed in as the value to the <handler>'s
-  // <handle_timeout> callback method.  This method returns a
-  // <timer_id>. This <timer_id> can be used to cancel a timer before
-  // it expires.  The cancellation ensures that <timer_ids> are unique
-  // up to values of greater than 2 billion timers.  As long as timers
-  // don't stay around longer than this there should be no problems
-  // with accidentally deleting the wrong timer.  Returns -1 on
-  // failure (which is guaranteed never to be a valid <timer_id>.
-
-  virtual long schedule_repeating_timer (ACE_Handler &handler,
-					 const void *act,
-					 const ACE_Time_Value &interval);
-
-  // Same as above except <interval> it is used to reschedule the
-  // <handler> automatically.
-
-  virtual long schedule_timer (ACE_Handler &handler,
-			       const void *act,
-			       const ACE_Time_Value &time,
-			       const ACE_Time_Value &interval);
-  // This combines the above two methods into one. Mostly for backward
-  // compatibility.
-
-  virtual int cancel_timer (ACE_Handler &handler,
-			    int dont_call_handle_close);
-  // Cancel all timers associated with this <handler>.  Returns number
-  // of timers cancelled.
-
-  virtual int cancel_timer (long timer_id,
-			    const void **act,
-			    int dont_call_handle_close);
-  // Cancel the single <ACE_Handler> that matches the <timer_id> value
-  // (which was returned from the <schedule> method).  If <act> is
-  // non-NULL then it will be set to point to the ``magic cookie''
-  // argument passed in when the <Handler> was registered.  This makes
-  // it possible to free up the memory and avoid memory leaks.
-  // Returns 1 if cancellation succeeded and 0 if the <timer_id>
-  // wasn't found.
-
+  
   virtual int post_completion (ACE_POSIX_Asynch_Result *result) = 0;
   // Post a result to the completion port of the Proactor.  If errors
   // occur, the result will be deleted by this method.  If successful,
@@ -119,12 +74,6 @@ public:
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
   // Number of thread used as a parameter to CreatIoCompletionPort.
-
-#if 0
-  Timer_Queue *timer_queue (void) const;
-  void timer_queue (Timer_Queue *);
-  // Get/Set timer queue.
-#endif /* 0 */
 
   virtual ACE_HANDLE get_handle (void) const;
   // Get the event handle. This is a no-op in POSIX. Returns
@@ -190,19 +139,18 @@ public:
                                                                                     const void *act,
                                                                                     ACE_HANDLE event,
                                                                                     int priority);
+  
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
+                                                       const void *act,
+                                                       const ACE_Time_Value &tv,
+                                                       ACE_HANDLE event,
+                                                       int priority);
+  // Create a timer result object which can be used with the Timer
+  // mechanism of the Proactor. 
+  
 protected:
   ACE_POSIX_Proactor (void);
   // Constructor.
-
-#if 0
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Called when object is signaled by OS (either via UNIX signals or
-  // when a Win32 object becomes signaled).
-
-  virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
-  // Called when object is removed from the ACE_Reactor.
-#endif /* 0 */
 
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
@@ -213,15 +161,6 @@ protected:
   // dispatching handles.
 
 #if 0
-  Timer_Queue *timer_queue_;
-  // Timer Queue.
-
-  int delete_timer_queue_;
-  // Flag on whether to delete the timer queue.
-
-  ACE_Proactor_Timer_Handler *timer_handler_;
-  // Handles timeouts events.
-
   ACE_Thread_Manager thr_mgr_;
   // This will manage the thread in the Timer_Handler.
 
@@ -392,6 +331,39 @@ protected:
   // These signals are used for completion notification by the
   // Proactor. ACE_SIG_AIO is the only signal used here right now. We
   // use this variable instread of hard-coding ACE_SIG_AIO.
+};
+
+class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
+{
+  // = TITLE
+  //     This class is posted to the completion port when a timer
+  //     expires. When the <complete method> of this object is
+  //     called, the <handler>'s <handle_timeout> method will be
+  //     called. 
+  
+  friend class ACE_POSIX_Proactor;
+  // The factory method for this class is with the POSIX_Proactor
+  // class. 
+
+protected:
+  ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
+                          const void *act,
+                          const ACE_Time_Value &tv,
+                          ACE_HANDLE event = ACE_INVALID_HANDLE,
+                          int priority = 0);
+  // Constructor.
+  
+  virtual ~ACE_POSIX_Asynch_Timer (void) {}
+  // Destructor.
+
+  virtual void complete (u_long bytes_transferred,
+                         int success,
+                         const void *completion_key,
+                         u_long error = 0);
+  // This method calls the <handler>'s handle_timeout method.
+
+  ACE_Time_Value time_;
+  // Time value requested by caller
 };
 
 #if defined (__ACE_INLINE__)

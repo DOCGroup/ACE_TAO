@@ -15,27 +15,12 @@
 
 ACE_POSIX_Proactor::~ACE_POSIX_Proactor (void)
 {
+  this->close ();
 }
 
 int
 ACE_POSIX_Proactor::close (void)
 {
-#if 0
-  // Take care of the timer handler
-  if (this->timer_handler_)
-    {
-      delete this->timer_handler_;
-      this->timer_handler_ = 0;
-    }
-
-  // Take care of the timer queue
-  if (this->delete_timer_queue_)
-    {
-      delete this->timer_queue_;
-      this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;
-    }
-#endif /* 0 */
   return 0;
 }
 
@@ -46,98 +31,6 @@ ACE_POSIX_Proactor::register_handle (ACE_HANDLE handle,
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (completion_key);
   return 0;
-}
-
-long
-ACE_POSIX_Proactor::schedule_timer (ACE_Handler &handler,
-                                    const void *act,
-                                    const ACE_Time_Value &time)
-{
-  return this->schedule_timer (handler,
-                               act,
-                               time,
-                               ACE_Time_Value::zero);
-}
-
-long
-ACE_POSIX_Proactor::schedule_repeating_timer (ACE_Handler &handler,
-                                              const void *act,
-                                              const ACE_Time_Value &interval)
-{
-  return this->schedule_timer (handler,
-                               act,
-                               interval,
-                               interval);
-}
-
-long
-ACE_POSIX_Proactor::schedule_timer (ACE_Handler &handler,
-                                    const void *act,
-                                    const ACE_Time_Value &time,
-                                    const ACE_Time_Value &interval)
-{
-  ACE_UNUSED_ARG (handler);
-  ACE_UNUSED_ARG (act);
-  ACE_UNUSED_ARG (time);
-  ACE_UNUSED_ARG (interval);
-  ACE_NOTSUP_RETURN ((long) -1);
-
-#if 0
-  // absolute time.
-  ACE_Time_Value absolute_time =
-    this->timer_queue_->gettimeofday () + time;
-
-  // Only one guy goes in here at a time
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->mutex (), -1);
-
-  // Schedule the timer
-  long result = this->timer_queue_->schedule (&handler,
-                                              act,
-                                              absolute_time,
-                                              interval);
-  if (result != -1)
-    {
-      // no failures: check to see if we are the earliest time
-      if (this->timer_queue_->earliest_time () == absolute_time)
-
-        // wake up the timer thread
-        if (this->timer_handler_->timer_event_.signal () == -1)
-          {
-            // Cancel timer
-            this->timer_queue_->cancel (result);
-            result = -1;
-          }
-    }
-  return result;
-#endif /* 0 */
-}
-
-int
-ACE_POSIX_Proactor::cancel_timer (long timer_id,
-                                  const void **arg,
-                                  int dont_call_handle_close)
-{
-  ACE_NOTSUP_RETURN (-1);
-#if 0
-  // No need to singal timer event here. Even if the cancel timer was
-  // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (timer_id,
-                                     arg,
-                                     dont_call_handle_close);
-#endif /* 0 */
-}
-
-int
-ACE_POSIX_Proactor::cancel_timer (ACE_Handler &handler,
-                                  int dont_call_handle_close)
-{
-  ACE_NOTSUP_RETURN (-1);
-#if 0
-  // No need to signal timer event here. Even if the cancel timer was
-  // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (&handler,
-                                     dont_call_handle_close);
-#endif /* 0 */
 }
 
 int
@@ -165,40 +58,6 @@ ACE_POSIX_Proactor::number_of_threads (size_t threads)
   // @@ Implement it.
   ACE_UNUSED_ARG (threads);
 }
-
-#if 0
-ACE_Proactor::Timer_Queue *
-ACE_POSIX_Proactor::timer_queue (void) const
-{
-  return this->timer_queue_;
-}
-
-void
-ACE_POSIX_Proactor::timer_queue (Timer_Queue *tq)
-{
-  // cleanup old timer queue
-  if (this->delete_timer_queue_)
-    {
-      delete this->timer_queue_;
-      this->delete_timer_queue_ = 0;
-    }
-
-  // new timer queue
-  if (tq == 0)
-    {
-      this->timer_queue_ = new Timer_Heap;
-      this->delete_timer_queue_ = 1;
-    }
-  else
-    {
-      this->timer_queue_ = tq;
-      this->delete_timer_queue_ = 0;
-    }
-
-  // Set the proactor in the timer queue's functor
-  this->timer_queue_->upcall_functor ().proactor (*this);
-}
-#endif /* 0 */
 
 ACE_HANDLE
 ACE_POSIX_Proactor::get_handle (void) const
@@ -354,6 +213,24 @@ ACE_POSIX_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                          act,
                                                          event,
                                                          priority),
+                  0);
+  return implementation;
+}
+
+ACE_Asynch_Result_Impl *
+ACE_POSIX_Proactor::create_asynch_timer (ACE_Handler &handler,
+                                         const void *act,
+                                         const ACE_Time_Value &tv,
+                                         ACE_HANDLE event,
+                                         int priority)
+{
+  ACE_Asynch_Result_Impl *implementation;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Timer (handler,
+                                          act,
+                                          tv,
+                                          event,
+                                          priority),
                   0);
   return implementation;
 }
@@ -602,6 +479,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events (void)
 int
 ACE_POSIX_AIOCB_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
 {
+  // Notify to the completion queue.
   return this->aiocb_notify_pipe_manager_->notify (result);
 }
 
@@ -782,13 +660,10 @@ ACE_POSIX_AIOCB_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *as
 int
 ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
 {
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor");
+
   if (result == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Status check max %d cur %d\n",
-                  this->aiocb_list_max_size_,
-                  this->aiocb_list_cur_size_));
-
       // Just check the status of the list.
       if (this->aiocb_list_cur_size_ >=
           this->aiocb_list_max_size_)
@@ -1080,56 +955,31 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   return 1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if 0
-template class ACE_Timer_Queue_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Queue_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_List_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_List_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Node_T<ACE_Handler *>;
-template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Handler *> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Handler *> *>;
-template class ACE_Node <ACE_Timer_Node_T<ACE_Handler *> *>;
-template class ACE_Free_List<ACE_Timer_Node_T<ACE_Handler *> >;
-template class ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Handler *>, ACE_Null_Mutex>;
-template class ACE_Timer_Heap_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Heap_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Wheel_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-#endif /* 0 */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Timer_Queue_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Queue_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_List_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_List_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Heap_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Wheel_T<ACE_Handler *,
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Wheel_Iterator_T<ACE_Handler *,\
-        ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+// *********************************************************************
+
+ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
+                                                const void *act,
+                                                const ACE_Time_Value &tv,
+                                                ACE_HANDLE event,
+                                                int priority)
+  : ACE_Asynch_Result_Impl (),
+    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority),
+    time_ (tv)
+{
+}
+
+void
+ACE_POSIX_Asynch_Timer::complete (u_long bytes_transferred,
+                                  int success,
+                                  const void *completion_key,
+                                  u_long error)
+{
+  ACE_UNUSED_ARG (error);
+  ACE_UNUSED_ARG (completion_key);
+  ACE_UNUSED_ARG (success);
+  ACE_UNUSED_ARG (bytes_transferred);
+
+  this->handler_.handle_time_out (this->time_, this->act ());
+}
 
 #endif /* ACE_HAS_AIO_CALLS */
