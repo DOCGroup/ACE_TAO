@@ -1,3 +1,11 @@
+Thu Aug 14 15:49:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Added -GH option (AMH classes generation enabled) to the usage
+          message. Thanks to Carlos O'Ryan <coryan@atdesk.com> for
+          reporting the oversight.
+
 Thu Aug 14 15:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
