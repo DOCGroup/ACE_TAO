@@ -312,9 +312,16 @@ Scoping and name resolution rules have changed in CORBA with version
 <li>
 IDL compiler now supports the CORBA AMI callback model, generating code
 for reply handlers and reply stubs if the -GC command line option is
-used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING and
-TAO_HAS_AMI_CALLBACK. IDL_HAS_VALUETYPE, which is also necessary, is
-defined by default by the TAO IDL compiler.
+used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING = 1.
+If this is done, TAO_HAS_AMI_CALLBACK will automatically be defined to
+1 as well. IDL_HAS_VALUETYPE is defined to 1 by default.
+
+<li>
+The rule that forward declared interfaces must be defined in the same
+file has been recently relaxed by CORBA 2.3.1 (99-10-07). This relaxation 
+has been added to the TAO IDL compiler. The forward declared interface
+in question must be fully defined in some generated .cpp file included
+in the build, or there will be a C++ link error.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
