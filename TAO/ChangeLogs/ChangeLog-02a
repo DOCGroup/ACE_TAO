@@ -1,4 +1,18 @@
-	Tue Jun 18 19:23:01 2002  Ossama Othman  <ossama@uci.edu>
+Tue Jun 18 19:46:04 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Nested_Upcall_Crash/Makefile.bor:
+	* tests/Nested_Upcall_Crash/Nested_Upcall_Crash.dsw:
+	* tests/Nested_Upcall_Crash/client.bor:
+	* tests/Nested_Upcall_Crash/client.dsp:
+	* tests/Nested_Upcall_Crash/scavenger.bor:
+	* tests/Nested_Upcall_Crash/scavenger.dsp:
+	* tests/Nested_Upcall_Crash/server.bor:
+	* tests/Nested_Upcall_Crash/server.dsp:
+
+	  Added missing MSVC++ project/workspace files and Borland C++
+	  Makefiles.
+
+Tue Jun 18 19:23:01 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE_Static.dsw:
 	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
