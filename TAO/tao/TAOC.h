@@ -126,7 +126,7 @@ TAO_NAMESPACE  TAO
 #if !defined (_TAO_CLIENTPRIORITYPOLICY___VAR_CH_)
 #define _TAO_CLIENTPRIORITYPOLICY___VAR_CH_
 
-  class TAO_Export ClientPriorityPolicy_var
+  class TAO_Export ClientPriorityPolicy_var : public TAO_Base_var
   {
   public:
     ClientPriorityPolicy_var (void); // default constructor
@@ -149,6 +149,9 @@ TAO_NAMESPACE  TAO
 
   private:
     ClientPriorityPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ClientPriorityPolicy_var (const TAO_Base_var &rhs);
+    ClientPriorityPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -313,7 +316,7 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
 #if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CH_)
 #define _TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CH_
 
-  class TAO_Export BufferingConstraintPolicy_var
+  class TAO_Export BufferingConstraintPolicy_var : public TAO_Base_var
   {
   public:
     BufferingConstraintPolicy_var (void); // default constructor
@@ -336,6 +339,9 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
 
   private:
     BufferingConstraintPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    BufferingConstraintPolicy_var (const TAO_Base_var &rhs);
+    BufferingConstraintPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 

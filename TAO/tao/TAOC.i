@@ -171,7 +171,8 @@ TAO::ClientPriorityPolicy_var::ptr (void) const
 
 ACE_INLINE
 TAO::ClientPriorityPolicy_var::ClientPriorityPolicy_var (const ::TAO::ClientPriorityPolicy_var &p) // copy constructor
-  : ptr_ (ClientPriorityPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ClientPriorityPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -485,7 +486,8 @@ TAO::BufferingConstraintPolicy_var::ptr (void) const
 
 ACE_INLINE
 TAO::BufferingConstraintPolicy_var::BufferingConstraintPolicy_var (const ::TAO::BufferingConstraintPolicy_var &p) // copy constructor
-  : ptr_ (BufferingConstraintPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (BufferingConstraintPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

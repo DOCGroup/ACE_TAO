@@ -64,7 +64,7 @@ TAO_NAMESPACE  ImplementationRepository
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___VAR_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___VAR_CH_
 
-  class TAO_Export ServerObject_var
+  class TAO_Export ServerObject_var : public TAO_Base_var
   {
   public:
     ServerObject_var (void); // default constructor
@@ -87,6 +87,9 @@ TAO_NAMESPACE  ImplementationRepository
 
   private:
     ServerObject_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServerObject_var (const TAO_Base_var &rhs);
+    ServerObject_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -790,7 +793,7 @@ typedef ServerInformationIterator *ServerInformationIterator_ptr;
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_
 
-class TAO_Export ServerInformationIterator_var
+class TAO_Export ServerInformationIterator_var : public TAO_Base_var
 {
 public:
   ServerInformationIterator_var (void); // default constructor
@@ -813,6 +816,9 @@ public:
 
 private:
   ServerInformationIterator_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  ServerInformationIterator_var (const TAO_Base_var &rhs);
+  ServerInformationIterator_var &operator= (const TAO_Base_var &rhs);
 };
 
 
@@ -855,7 +861,7 @@ typedef Administration *Administration_ptr;
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___VAR_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___VAR_CH_
 
-class TAO_Export Administration_var
+class TAO_Export Administration_var : public TAO_Base_var
 {
 public:
   Administration_var (void); // default constructor
@@ -878,6 +884,9 @@ public:
 
 private:
   Administration_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  Administration_var (const TAO_Base_var &rhs);
+  Administration_var &operator= (const TAO_Base_var &rhs);
 };
 
 
@@ -1339,7 +1348,7 @@ typedef ServerInformationIterator *ServerInformationIterator_ptr;
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___VAR_CH_
 
-class TAO_Export ServerInformationIterator_var
+class TAO_Export ServerInformationIterator_var : public TAO_Base_var
 {
 public:
   ServerInformationIterator_var (void); // default constructor
@@ -1362,6 +1371,9 @@ public:
 
 private:
   ServerInformationIterator_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  ServerInformationIterator_var (const TAO_Base_var &rhs);
+  ServerInformationIterator_var &operator= (const TAO_Base_var &rhs);
 };
 
 

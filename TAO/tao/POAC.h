@@ -73,7 +73,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
 
-  class TAO_Export POA_var
+  class TAO_Export POA_var : public TAO_Base_var
   {
   public:
     POA_var (void); // default constructor
@@ -96,6 +96,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     POA_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    POA_var (const TAO_Base_var &rhs);
+    POA_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -280,7 +283,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_THREADPOLICY___VAR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___VAR_CH_
 
-  class TAO_Export ThreadPolicy_var
+  class TAO_Export ThreadPolicy_var : public TAO_Base_var
   {
   public:
     ThreadPolicy_var (void); // default constructor
@@ -303,6 +306,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     ThreadPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ThreadPolicy_var (const TAO_Base_var &rhs);
+    ThreadPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -390,7 +396,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___VAR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___VAR_CH_
 
-  class TAO_Export LifespanPolicy_var
+  class TAO_Export LifespanPolicy_var : public TAO_Base_var
   {
   public:
     LifespanPolicy_var (void); // default constructor
@@ -413,6 +419,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     LifespanPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    LifespanPolicy_var (const TAO_Base_var &rhs);
+    LifespanPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -500,7 +509,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_
 
-  class TAO_Export IdUniquenessPolicy_var
+  class TAO_Export IdUniquenessPolicy_var : public TAO_Base_var
   {
   public:
     IdUniquenessPolicy_var (void); // default constructor
@@ -523,6 +532,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     IdUniquenessPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    IdUniquenessPolicy_var (const TAO_Base_var &rhs);
+    IdUniquenessPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -610,7 +622,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_
 
-  class TAO_Export IdAssignmentPolicy_var
+  class TAO_Export IdAssignmentPolicy_var : public TAO_Base_var
   {
   public:
     IdAssignmentPolicy_var (void); // default constructor
@@ -633,6 +645,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     IdAssignmentPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    IdAssignmentPolicy_var (const TAO_Base_var &rhs);
+    IdAssignmentPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -723,7 +738,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_
 
-  class TAO_Export ImplicitActivationPolicy_var
+  class TAO_Export ImplicitActivationPolicy_var : public TAO_Base_var
   {
   public:
     ImplicitActivationPolicy_var (void); // default constructor
@@ -746,6 +761,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     ImplicitActivationPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ImplicitActivationPolicy_var (const TAO_Base_var &rhs);
+    ImplicitActivationPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -838,7 +856,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_
 
-  class TAO_Export ServantRetentionPolicy_var
+  class TAO_Export ServantRetentionPolicy_var : public TAO_Base_var
   {
   public:
     ServantRetentionPolicy_var (void); // default constructor
@@ -861,6 +879,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     ServantRetentionPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServantRetentionPolicy_var (const TAO_Base_var &rhs);
+    ServantRetentionPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -954,7 +975,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_
 
-  class TAO_Export RequestProcessingPolicy_var
+  class TAO_Export RequestProcessingPolicy_var : public TAO_Base_var
   {
   public:
     RequestProcessingPolicy_var (void); // default constructor
@@ -977,6 +998,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     RequestProcessingPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    RequestProcessingPolicy_var (const TAO_Base_var &rhs);
+    RequestProcessingPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -1057,7 +1081,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_POAMANAGER___VAR_CH_)
 #define _PORTABLESERVER_POAMANAGER___VAR_CH_
 
-  class TAO_Export POAManager_var
+  class TAO_Export POAManager_var : public TAO_Base_var
   {
   public:
     POAManager_var (void); // default constructor
@@ -1080,6 +1104,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     POAManager_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    POAManager_var (const TAO_Base_var &rhs);
+    POAManager_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -1206,7 +1233,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_
 
-  class TAO_Export AdapterActivator_var
+  class TAO_Export AdapterActivator_var : public TAO_Base_var
   {
   public:
     AdapterActivator_var (void); // default constructor
@@ -1229,6 +1256,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     AdapterActivator_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    AdapterActivator_var (const TAO_Base_var &rhs);
+    AdapterActivator_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -1304,7 +1334,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___VAR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___VAR_CH_
 
-  class TAO_Export ServantManager_var
+  class TAO_Export ServantManager_var : public TAO_Base_var
   {
   public:
     ServantManager_var (void); // default constructor
@@ -1327,6 +1357,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     ServantManager_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServantManager_var (const TAO_Base_var &rhs);
+    ServantManager_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -1402,7 +1435,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_
 
-  class TAO_Export ServantActivator_var
+  class TAO_Export ServantActivator_var : public TAO_Base_var
   {
   public:
     ServantActivator_var (void); // default constructor
@@ -1425,6 +1458,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     ServantActivator_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServantActivator_var (const TAO_Base_var &rhs);
+    ServantActivator_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -1501,7 +1537,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___VAR_CH_
 
-  class TAO_Export ServantLocator_var
+  class TAO_Export ServantLocator_var : public TAO_Base_var
   {
   public:
     ServantLocator_var (void); // default constructor
@@ -1524,6 +1560,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     ServantLocator_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServantLocator_var (const TAO_Base_var &rhs);
+    ServantLocator_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -1604,7 +1643,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
 
-  class TAO_Export POA_var
+  class TAO_Export POA_var : public TAO_Base_var
   {
   public:
     POA_var (void); // default constructor
@@ -1627,6 +1666,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     POA_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    POA_var (const TAO_Base_var &rhs);
+    POA_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */
@@ -2123,7 +2165,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_CURRENT___VAR_CH_)
 #define _PORTABLESERVER_CURRENT___VAR_CH_
 
-  class TAO_Export Current_var
+  class TAO_Export Current_var : public TAO_Base_var
   {
   public:
     Current_var (void); // default constructor
@@ -2146,6 +2188,9 @@ TAO_NAMESPACE PortableServer{
 
   private:
     Current_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    Current_var (const TAO_Base_var &rhs);
+    Current_var &operator= (const TAO_Base_var &rhs);
   };
 
 #endif /* end #if !defined */

@@ -41,7 +41,8 @@ CORBA_Pollable_var::ptr (void) const
 
 ACE_INLINE
 CORBA_Pollable_var::CORBA_Pollable_var (const ::CORBA_Pollable_var &p) // copy constructor
-  : ptr_ (CORBA_Pollable::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_Pollable::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -223,7 +224,8 @@ CORBA_DIIPollable_var::ptr (void) const
 
 ACE_INLINE
 CORBA_DIIPollable_var::CORBA_DIIPollable_var (const ::CORBA_DIIPollable_var &p) // copy constructor
-  : ptr_ (CORBA_DIIPollable::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_DIIPollable::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -405,7 +407,8 @@ CORBA_PollableSet_var::ptr (void) const
 
 ACE_INLINE
 CORBA_PollableSet_var::CORBA_PollableSet_var (const ::CORBA_PollableSet_var &p) // copy constructor
-  : ptr_ (CORBA_PollableSet::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_PollableSet::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

@@ -73,7 +73,7 @@ be_interface_fwd::gen_var_defn (char *)
 
   ch->indent (); // start with whatever was our current indent level
   *ch << "class " << idl_global->stub_export_macro ()
-      << " " << namebuf << nl;
+      << " " << namebuf << " : public TAO_Base_var" << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
@@ -125,7 +125,10 @@ be_interface_fwd::gen_var_defn (char *)
   // private
   *ch << "private:\n";
   ch->incr_indent ();
-  *ch << this->local_name () << "_ptr ptr_;\n";
+  *ch << this->local_name () << "_ptr ptr_;" << nl;
+  *ch << "// Unimplemented - prevents widening assignment." << nl;
+  *ch << this->local_name () << "_var (const TAO_Base_var &rhs);" << nl;
+  *ch << this->local_name () << "_var &operator= (const TAO_Base_var &rhs);\n";
 
   ch->decr_indent ();
   *ch << "};\n\n";
@@ -208,7 +211,8 @@ be_interface_fwd::gen_var_impl (char *,
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (" << this->name () << "::_duplicate (p.ptr ()))" << nl;
+  *ci << "  : TAO_Base_var ()," << nl;
+  *ci << "    ptr_ (" << this->name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor

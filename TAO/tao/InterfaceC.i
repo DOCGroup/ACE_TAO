@@ -47,7 +47,8 @@ CORBA_IRObject_var::ptr (void) const
 
 ACE_INLINE
 CORBA_IRObject_var::CORBA_IRObject_var (const CORBA::IRObject_var &p) // copy constructor
-  : ptr_ (CORBA::IRObject::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA::IRObject::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -234,7 +235,8 @@ IR_Contained_var::ptr (void) const
 
 ACE_INLINE
 IR_Contained_var::IR_Contained_var (const ::IR_Contained_var &p) // copy constructor
-  : ptr_ (IR_Contained::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_Contained::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -6630,7 +6632,8 @@ IR_Container_var::ptr (void) const
 
 ACE_INLINE
 IR_Container_var::IR_Container_var (const ::IR_Container_var &p) // copy constructor
-  : ptr_ (IR_Container::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_Container::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -7363,7 +7366,8 @@ IR_IDLType_var::ptr (void) const
 
 ACE_INLINE
 IR_IDLType_var::IR_IDLType_var (const ::IR_IDLType_var &p) // copy constructor
-  : ptr_ (IR_IDLType::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_IDLType::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -7550,7 +7554,8 @@ IR_Repository_var::ptr (void) const
 
 ACE_INLINE
 IR_Repository_var::IR_Repository_var (const ::IR_Repository_var &p) // copy constructor
-  : ptr_ (IR_Repository::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_Repository::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -7737,7 +7742,8 @@ IR_ComponentRepository_var::ptr (void) const
 
 ACE_INLINE
 IR_ComponentRepository_var::IR_ComponentRepository_var (const ::IR_ComponentRepository_var &p) // copy constructor
-  : ptr_ (IR_ComponentRepository::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ComponentRepository::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -7924,7 +7930,8 @@ IR_ModuleDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ModuleDef_var::IR_ModuleDef_var (const ::IR_ModuleDef_var &p) // copy constructor
-  : ptr_ (IR_ModuleDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ModuleDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -8287,7 +8294,8 @@ IR_ConstantDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ConstantDef_var::IR_ConstantDef_var (const ::IR_ConstantDef_var &p) // copy constructor
-  : ptr_ (IR_ConstantDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ConstantDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -8650,7 +8658,8 @@ IR_TypedefDef_var::ptr (void) const
 
 ACE_INLINE
 IR_TypedefDef_var::IR_TypedefDef_var (const ::IR_TypedefDef_var &p) // copy constructor
-  : ptr_ (IR_TypedefDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_TypedefDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -9013,7 +9022,8 @@ IR_StructDef_var::ptr (void) const
 
 ACE_INLINE
 IR_StructDef_var::IR_StructDef_var (const ::IR_StructDef_var &p) // copy constructor
-  : ptr_ (IR_StructDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_StructDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -9200,7 +9210,8 @@ IR_UnionDef_var::ptr (void) const
 
 ACE_INLINE
 IR_UnionDef_var::IR_UnionDef_var (const ::IR_UnionDef_var &p) // copy constructor
-  : ptr_ (IR_UnionDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_UnionDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -9387,7 +9398,8 @@ IR_EnumDef_var::ptr (void) const
 
 ACE_INLINE
 IR_EnumDef_var::IR_EnumDef_var (const ::IR_EnumDef_var &p) // copy constructor
-  : ptr_ (IR_EnumDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_EnumDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -9574,7 +9586,8 @@ IR_AliasDef_var::ptr (void) const
 
 ACE_INLINE
 IR_AliasDef_var::IR_AliasDef_var (const ::IR_AliasDef_var &p) // copy constructor
-  : ptr_ (IR_AliasDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_AliasDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -9761,7 +9774,8 @@ IR_NativeDef_var::ptr (void) const
 
 ACE_INLINE
 IR_NativeDef_var::IR_NativeDef_var (const ::IR_NativeDef_var &p) // copy constructor
-  : ptr_ (IR_NativeDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_NativeDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -9948,7 +9962,8 @@ IR_PrimitiveDef_var::ptr (void) const
 
 ACE_INLINE
 IR_PrimitiveDef_var::IR_PrimitiveDef_var (const ::IR_PrimitiveDef_var &p) // copy constructor
-  : ptr_ (IR_PrimitiveDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_PrimitiveDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -10135,7 +10150,8 @@ IR_StringDef_var::ptr (void) const
 
 ACE_INLINE
 IR_StringDef_var::IR_StringDef_var (const ::IR_StringDef_var &p) // copy constructor
-  : ptr_ (IR_StringDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_StringDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -10322,7 +10338,8 @@ IR_WstringDef_var::ptr (void) const
 
 ACE_INLINE
 IR_WstringDef_var::IR_WstringDef_var (const ::IR_WstringDef_var &p) // copy constructor
-  : ptr_ (IR_WstringDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_WstringDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -10509,7 +10526,8 @@ IR_FixedDef_var::ptr (void) const
 
 ACE_INLINE
 IR_FixedDef_var::IR_FixedDef_var (const ::IR_FixedDef_var &p) // copy constructor
-  : ptr_ (IR_FixedDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_FixedDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -10696,7 +10714,8 @@ IR_SequenceDef_var::ptr (void) const
 
 ACE_INLINE
 IR_SequenceDef_var::IR_SequenceDef_var (const ::IR_SequenceDef_var &p) // copy constructor
-  : ptr_ (IR_SequenceDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_SequenceDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -10883,7 +10902,8 @@ IR_ArrayDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ArrayDef_var::IR_ArrayDef_var (const ::IR_ArrayDef_var &p) // copy constructor
-  : ptr_ (IR_ArrayDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ArrayDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -11070,7 +11090,8 @@ IR_ExceptionDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ExceptionDef_var::IR_ExceptionDef_var (const ::IR_ExceptionDef_var &p) // copy constructor
-  : ptr_ (IR_ExceptionDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ExceptionDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -12153,7 +12174,8 @@ IR_AttributeDef_var::ptr (void) const
 
 ACE_INLINE
 IR_AttributeDef_var::IR_AttributeDef_var (const ::IR_AttributeDef_var &p) // copy constructor
-  : ptr_ (IR_AttributeDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_AttributeDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -13257,7 +13279,8 @@ IR_OperationDef_var::ptr (void) const
 
 ACE_INLINE
 IR_OperationDef_var::IR_OperationDef_var (const ::IR_OperationDef_var &p) // copy constructor
-  : ptr_ (IR_OperationDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_OperationDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -14555,7 +14578,8 @@ IR_InterfaceDef_var::ptr (void) const
 
 ACE_INLINE
 IR_InterfaceDef_var::IR_InterfaceDef_var (const ::IR_InterfaceDef_var &p) // copy constructor
-  : ptr_ (IR_InterfaceDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_InterfaceDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -15464,7 +15488,8 @@ IR_ValueMemberDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ValueMemberDef_var::IR_ValueMemberDef_var (const ::IR_ValueMemberDef_var &p) // copy constructor
-  : ptr_ (IR_ValueMemberDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ValueMemberDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -15651,7 +15676,8 @@ IR_ValueDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ValueDef_var::IR_ValueDef_var (const ::IR_ValueDef_var &p) // copy constructor
-  : ptr_ (IR_ValueDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ValueDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -16014,7 +16040,8 @@ IR_ValueBoxDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ValueBoxDef_var::IR_ValueBoxDef_var (const ::IR_ValueBoxDef_var &p) // copy constructor
-  : ptr_ (IR_ValueBoxDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ValueBoxDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -16201,7 +16228,8 @@ IR_ProvidesDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ProvidesDef_var::IR_ProvidesDef_var (const ::IR_ProvidesDef_var &p) // copy constructor
-  : ptr_ (IR_ProvidesDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ProvidesDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -16564,7 +16592,8 @@ IR_UsesDef_var::ptr (void) const
 
 ACE_INLINE
 IR_UsesDef_var::IR_UsesDef_var (const ::IR_UsesDef_var &p) // copy constructor
-  : ptr_ (IR_UsesDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_UsesDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -17667,7 +17696,8 @@ IR_EventDef_var::ptr (void) const
 
 ACE_INLINE
 IR_EventDef_var::IR_EventDef_var (const ::IR_EventDef_var &p) // copy constructor
-  : ptr_ (IR_EventDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_EventDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -18030,7 +18060,8 @@ IR_EmitsDef_var::ptr (void) const
 
 ACE_INLINE
 IR_EmitsDef_var::IR_EmitsDef_var (const ::IR_EmitsDef_var &p) // copy constructor
-  : ptr_ (IR_EmitsDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_EmitsDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -18217,7 +18248,8 @@ IR_PublishesDef_var::ptr (void) const
 
 ACE_INLINE
 IR_PublishesDef_var::IR_PublishesDef_var (const ::IR_PublishesDef_var &p) // copy constructor
-  : ptr_ (IR_PublishesDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_PublishesDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -18404,7 +18436,8 @@ IR_ConsumesDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ConsumesDef_var::IR_ConsumesDef_var (const ::IR_ConsumesDef_var &p) // copy constructor
-  : ptr_ (IR_ConsumesDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ConsumesDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -18591,7 +18624,8 @@ IR_ComponentDef_var::ptr (void) const
 
 ACE_INLINE
 IR_ComponentDef_var::IR_ComponentDef_var (const ::IR_ComponentDef_var &p) // copy constructor
-  : ptr_ (IR_ComponentDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_ComponentDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -18954,7 +18988,8 @@ IR_PrimaryKeyDef_var::ptr (void) const
 
 ACE_INLINE
 IR_PrimaryKeyDef_var::IR_PrimaryKeyDef_var (const ::IR_PrimaryKeyDef_var &p) // copy constructor
-  : ptr_ (IR_PrimaryKeyDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_PrimaryKeyDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -19317,7 +19352,8 @@ IR_FactoryDef_var::ptr (void) const
 
 ACE_INLINE
 IR_FactoryDef_var::IR_FactoryDef_var (const ::IR_FactoryDef_var &p) // copy constructor
-  : ptr_ (IR_FactoryDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_FactoryDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -19504,7 +19540,8 @@ IR_FinderDef_var::ptr (void) const
 
 ACE_INLINE
 IR_FinderDef_var::IR_FinderDef_var (const ::IR_FinderDef_var &p) // copy constructor
-  : ptr_ (IR_FinderDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_FinderDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -19691,7 +19728,8 @@ IR_HomeDef_var::ptr (void) const
 
 ACE_INLINE
 IR_HomeDef_var::IR_HomeDef_var (const ::IR_HomeDef_var &p) // copy constructor
-  : ptr_ (IR_HomeDef::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (IR_HomeDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -20054,7 +20092,8 @@ CORBA_TypeCodeFactory_var::ptr (void) const
 
 ACE_INLINE
 CORBA_TypeCodeFactory_var::CORBA_TypeCodeFactory_var (const ::CORBA_TypeCodeFactory_var &p) // copy constructor
-  : ptr_ (CORBA_TypeCodeFactory::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_TypeCodeFactory::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

@@ -35,7 +35,7 @@ class IR_InterfaceDef;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export CORBA_DomainManager_var
+class TAO_Export CORBA_DomainManager_var : public TAO_Base_var
 {
 public:
   CORBA_DomainManager_var (void); // default constructor
@@ -58,6 +58,9 @@ public:
 
 private:
   CORBA_DomainManager_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_DomainManager_var (const TAO_Base_var &rhs);
+  CORBA_DomainManager_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_DomainManager_out
@@ -205,7 +208,7 @@ private:
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-class TAO_Export CORBA_ConstructionPolicy_var
+class TAO_Export CORBA_ConstructionPolicy_var : public TAO_Base_var
 {
 public:
   CORBA_ConstructionPolicy_var (void); // default constructor
@@ -228,6 +231,9 @@ public:
 
 private:
   CORBA_ConstructionPolicy_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_ConstructionPolicy_var (const TAO_Base_var &rhs);
+  CORBA_ConstructionPolicy_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_ConstructionPolicy_out

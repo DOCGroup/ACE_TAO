@@ -43,7 +43,8 @@ Messaging::RebindPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RebindPolicy_var::RebindPolicy_var (const ::Messaging::RebindPolicy_var &p) // copy constructor
-  : ptr_ (RebindPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RebindPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -229,7 +230,8 @@ Messaging::SyncScopePolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::SyncScopePolicy_var::SyncScopePolicy_var (const ::Messaging::SyncScopePolicy_var &p) // copy constructor
-  : ptr_ (SyncScopePolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (SyncScopePolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -543,7 +545,8 @@ Messaging::RequestPriorityPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RequestPriorityPolicy_var::RequestPriorityPolicy_var (const ::Messaging::RequestPriorityPolicy_var &p) // copy constructor
-  : ptr_ (RequestPriorityPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RequestPriorityPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -725,7 +728,8 @@ Messaging::ReplyPriorityPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::ReplyPriorityPolicy_var::ReplyPriorityPolicy_var (const ::Messaging::ReplyPriorityPolicy_var &p) // copy constructor
-  : ptr_ (ReplyPriorityPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ReplyPriorityPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -911,7 +915,8 @@ Messaging::RequestStartTimePolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (const ::Messaging::RequestStartTimePolicy_var &p) // copy constructor
-  : ptr_ (RequestStartTimePolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RequestStartTimePolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1097,7 +1102,8 @@ Messaging::RequestEndTimePolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RequestEndTimePolicy_var::RequestEndTimePolicy_var (const ::Messaging::RequestEndTimePolicy_var &p) // copy constructor
-  : ptr_ (RequestEndTimePolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RequestEndTimePolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1283,7 +1289,8 @@ Messaging::ReplyStartTimePolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::ReplyStartTimePolicy_var::ReplyStartTimePolicy_var (const ::Messaging::ReplyStartTimePolicy_var &p) // copy constructor
-  : ptr_ (ReplyStartTimePolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ReplyStartTimePolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1469,7 +1476,8 @@ Messaging::ReplyEndTimePolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::ReplyEndTimePolicy_var::ReplyEndTimePolicy_var (const ::Messaging::ReplyEndTimePolicy_var &p) // copy constructor
-  : ptr_ (ReplyEndTimePolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ReplyEndTimePolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1655,7 +1663,8 @@ Messaging::RelativeRequestTimeoutPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RelativeRequestTimeoutPolicy_var::RelativeRequestTimeoutPolicy_var (const ::Messaging::RelativeRequestTimeoutPolicy_var &p) // copy constructor
-  : ptr_ (RelativeRequestTimeoutPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RelativeRequestTimeoutPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1841,7 +1850,8 @@ Messaging::RelativeRoundtripTimeoutPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RelativeRoundtripTimeoutPolicy_var::RelativeRoundtripTimeoutPolicy_var (const ::Messaging::RelativeRoundtripTimeoutPolicy_var &p) // copy constructor
-  : ptr_ (RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2155,7 +2165,8 @@ Messaging::RoutingPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::RoutingPolicy_var::RoutingPolicy_var (const ::Messaging::RoutingPolicy_var &p) // copy constructor
-  : ptr_ (RoutingPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (RoutingPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2341,7 +2352,8 @@ Messaging::MaxHopsPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::MaxHopsPolicy_var::MaxHopsPolicy_var (const ::Messaging::MaxHopsPolicy_var &p) // copy constructor
-  : ptr_ (MaxHopsPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (MaxHopsPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2527,7 +2539,8 @@ Messaging::QueueOrderPolicy_var::ptr (void) const
 
 ACE_INLINE
 Messaging::QueueOrderPolicy_var::QueueOrderPolicy_var (const ::Messaging::QueueOrderPolicy_var &p) // copy constructor
-  : ptr_ (QueueOrderPolicy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (QueueOrderPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -3877,7 +3890,8 @@ Messaging::ReplyHandler_var::ptr (void) const
 
 ACE_INLINE
 Messaging::ReplyHandler_var::ReplyHandler_var (const ::Messaging::ReplyHandler_var &p) // copy constructor
-  : ptr_ (ReplyHandler::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ReplyHandler::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

@@ -85,7 +85,8 @@ CORBA_Policy_var::ptr (void) const
 // copy constructor
 ACE_INLINE
 CORBA_Policy_var::CORBA_Policy_var (const CORBA_Policy_var &p)
-  : ptr_ (CORBA_Policy::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_Policy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -642,7 +643,8 @@ CORBA_PolicyManager_var::ptr (void) const
 
 ACE_INLINE
 CORBA_PolicyManager_var::CORBA_PolicyManager_var (const CORBA_PolicyManager_var &p) // copy constructor
-  : ptr_ (CORBA_PolicyManager::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_PolicyManager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -831,7 +833,8 @@ CORBA_PolicyCurrent_var::ptr (void) const
 
 ACE_INLINE
 CORBA_PolicyCurrent_var::CORBA_PolicyCurrent_var (const CORBA_PolicyCurrent_var &p) // copy constructor
-  : ptr_ (CORBA_PolicyCurrent::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_PolicyCurrent::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

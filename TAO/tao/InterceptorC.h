@@ -59,7 +59,7 @@ TAO_NAMESPACE  PortableInterceptor
 #if !defined (_PORTABLEINTERCEPTOR_COOKIE___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_COOKIE___VAR_CH_
 
-  class TAO_Export Cookie_var
+  class TAO_Export Cookie_var : public TAO_Base_var
   {
   public:
     Cookie_var (void); // default constructor
@@ -82,6 +82,9 @@ TAO_NAMESPACE  PortableInterceptor
 
   private:
     Cookie_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    Cookie_var (const TAO_Base_var &rhs);
+    Cookie_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -325,7 +328,7 @@ class TAO_Export Cookie : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR___VAR_CH_
 
-  class TAO_Export Interceptor_var
+  class TAO_Export Interceptor_var : public TAO_Base_var
   {
   public:
     Interceptor_var (void); // default constructor
@@ -348,6 +351,9 @@ class TAO_Export Cookie : public virtual CORBA_Object
 
   private:
     Interceptor_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    Interceptor_var (const TAO_Base_var &rhs);
+    Interceptor_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -442,7 +448,7 @@ class TAO_Export Interceptor : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___VAR_CH_
 
-  class TAO_Export ServerRequestInterceptor_var
+  class TAO_Export ServerRequestInterceptor_var : public TAO_Base_var
   {
   public:
     ServerRequestInterceptor_var (void); // default constructor
@@ -465,6 +471,9 @@ class TAO_Export Interceptor : public virtual CORBA_Object
 
   private:
     ServerRequestInterceptor_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServerRequestInterceptor_var (const TAO_Base_var &rhs);
+    ServerRequestInterceptor_var &operator= (const TAO_Base_var &rhs);
   };
 
 
@@ -594,7 +603,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___VAR_CH_
 
-  class TAO_Export ClientRequestInterceptor_var
+  class TAO_Export ClientRequestInterceptor_var : public TAO_Base_var
   {
   public:
     ClientRequestInterceptor_var (void); // default constructor
@@ -617,6 +626,9 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 
   private:
     ClientRequestInterceptor_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ClientRequestInterceptor_var (const TAO_Base_var &rhs);
+    ClientRequestInterceptor_var &operator= (const TAO_Base_var &rhs);
   };
 
 

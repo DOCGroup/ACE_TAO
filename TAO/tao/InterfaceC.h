@@ -46,7 +46,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-  class TAO_Export CORBA_IRObject_var
+  class TAO_Export CORBA_IRObject_var : public TAO_Base_var
   {
   public:
     CORBA_IRObject_var (void); // default constructor
@@ -69,6 +69,9 @@
 
   private:
     CORBA_IRObject_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    CORBA_IRObject_var (const TAO_Base_var &rhs);
+    CORBA_IRObject_var &operator= (const TAO_Base_var &rhs);
   };
 
   class TAO_Export CORBA_IRObject_out
@@ -226,7 +229,7 @@ private:
   ::CORBA::IRObject_var base_proxy_;
 };
 
-  class TAO_Export IR_Contained_var
+  class TAO_Export IR_Contained_var : public TAO_Base_var
   {
   public:
     IR_Contained_var (void); // default constructor
@@ -249,6 +252,9 @@ private:
 
   private:
     IR_Contained_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    IR_Contained_var (const TAO_Base_var &rhs);
+    IR_Contained_var &operator= (const TAO_Base_var &rhs);
   };
 
   class TAO_Export IR_Contained_out
@@ -268,7 +274,7 @@ private:
     IR_Contained_ptr &ptr_;
   };
 
-  class TAO_Export IR_Repository_var
+  class TAO_Export IR_Repository_var : public TAO_Base_var
   {
   public:
     IR_Repository_var (void); // default constructor
@@ -291,6 +297,9 @@ private:
 
   private:
     IR_Repository_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    IR_Repository_var (const TAO_Base_var &rhs);
+    IR_Repository_var &operator= (const TAO_Base_var &rhs);
   };
 
   class TAO_Export IR_Repository_out
@@ -310,7 +319,7 @@ private:
     IR_Repository_ptr &ptr_;
   };
 
-  class TAO_Export IR_Container_var
+  class TAO_Export IR_Container_var : public TAO_Base_var
   {
   public:
     IR_Container_var (void); // default constructor
@@ -333,6 +342,9 @@ private:
 
   private:
     IR_Container_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    IR_Container_var (const TAO_Base_var &rhs);
+    IR_Container_var &operator= (const TAO_Base_var &rhs);
   };
 
   class TAO_Export IR_Container_out
@@ -711,7 +723,7 @@ private:
   IR_Contained_var base_proxy_;
 };
 
-class TAO_Export IR_ModuleDef_var
+class TAO_Export IR_ModuleDef_var : public TAO_Base_var
 {
 public:
   IR_ModuleDef_var (void); // default constructor
@@ -734,6 +746,9 @@ public:
 
 private:
   IR_ModuleDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ModuleDef_var (const TAO_Base_var &rhs);
+  IR_ModuleDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ModuleDef_out
@@ -753,7 +768,7 @@ private:
   IR_ModuleDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ConstantDef_var
+class TAO_Export IR_ConstantDef_var : public TAO_Base_var
 {
 public:
   IR_ConstantDef_var (void); // default constructor
@@ -776,6 +791,9 @@ public:
 
 private:
   IR_ConstantDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ConstantDef_var (const TAO_Base_var &rhs);
+  IR_ConstantDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ConstantDef_out
@@ -795,7 +813,7 @@ private:
   IR_ConstantDef_ptr &ptr_;
 };
 
-class TAO_Export IR_IDLType_var
+class TAO_Export IR_IDLType_var : public TAO_Base_var
 {
 public:
   IR_IDLType_var (void); // default constructor
@@ -818,6 +836,9 @@ public:
 
 private:
   IR_IDLType_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_IDLType_var (const TAO_Base_var &rhs);
+  IR_IDLType_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_IDLType_out
@@ -837,7 +858,7 @@ private:
   IR_IDLType_ptr &ptr_;
 };
 
-class TAO_Export IR_StructDef_var
+class TAO_Export IR_StructDef_var : public TAO_Base_var
 {
 public:
   IR_StructDef_var (void); // default constructor
@@ -860,6 +881,9 @@ public:
 
 private:
   IR_StructDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_StructDef_var (const TAO_Base_var &rhs);
+  IR_StructDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_StructDef_out
@@ -879,7 +903,7 @@ private:
   IR_StructDef_ptr &ptr_;
 };
 
-class TAO_Export IR_UnionDef_var
+class TAO_Export IR_UnionDef_var : public TAO_Base_var
 {
 public:
   IR_UnionDef_var (void); // default constructor
@@ -902,6 +926,9 @@ public:
 
 private:
   IR_UnionDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_UnionDef_var (const TAO_Base_var &rhs);
+  IR_UnionDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_UnionDef_out
@@ -921,7 +948,7 @@ private:
   IR_UnionDef_ptr &ptr_;
 };
 
-class TAO_Export IR_EnumDef_var
+class TAO_Export IR_EnumDef_var : public TAO_Base_var
 {
 public:
   IR_EnumDef_var (void); // default constructor
@@ -944,6 +971,9 @@ public:
 
 private:
   IR_EnumDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_EnumDef_var (const TAO_Base_var &rhs);
+  IR_EnumDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_EnumDef_out
@@ -963,7 +993,7 @@ private:
   IR_EnumDef_ptr &ptr_;
 };
 
-class TAO_Export IR_AliasDef_var
+class TAO_Export IR_AliasDef_var : public TAO_Base_var
 {
 public:
   IR_AliasDef_var (void); // default constructor
@@ -986,6 +1016,9 @@ public:
 
 private:
   IR_AliasDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_AliasDef_var (const TAO_Base_var &rhs);
+  IR_AliasDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_AliasDef_out
@@ -1005,7 +1038,7 @@ private:
   IR_AliasDef_ptr &ptr_;
 };
 
-class TAO_Export IR_InterfaceDef_var
+class TAO_Export IR_InterfaceDef_var : public TAO_Base_var
 {
 public:
   IR_InterfaceDef_var (void); // default constructor
@@ -1028,6 +1061,9 @@ public:
 
 private:
   IR_InterfaceDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_InterfaceDef_var (const TAO_Base_var &rhs);
+  IR_InterfaceDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_InterfaceDef_out
@@ -1047,7 +1083,7 @@ private:
   IR_InterfaceDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ExceptionDef_var
+class TAO_Export IR_ExceptionDef_var : public TAO_Base_var
 {
 public:
   IR_ExceptionDef_var (void); // default constructor
@@ -1070,6 +1106,9 @@ public:
 
 private:
   IR_ExceptionDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ExceptionDef_var (const TAO_Base_var &rhs);
+  IR_ExceptionDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ExceptionDef_out
@@ -1089,7 +1128,7 @@ private:
   IR_ExceptionDef_ptr &ptr_;
 };
 
-class TAO_Export IR_NativeDef_var
+class TAO_Export IR_NativeDef_var : public TAO_Base_var
 {
 public:
   IR_NativeDef_var (void); // default constructor
@@ -1112,6 +1151,9 @@ public:
 
 private:
   IR_NativeDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_NativeDef_var (const TAO_Base_var &rhs);
+  IR_NativeDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_NativeDef_out
@@ -1252,7 +1294,7 @@ private:
   void operator= (const IR_InterfaceDefSeq_var &);
 };
 
-class TAO_Export IR_ValueDef_var
+class TAO_Export IR_ValueDef_var : public TAO_Base_var
 {
 public:
   IR_ValueDef_var (void); // default constructor
@@ -1275,6 +1317,9 @@ public:
 
 private:
   IR_ValueDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ValueDef_var (const TAO_Base_var &rhs);
+  IR_ValueDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ValueDef_out
@@ -1414,7 +1459,7 @@ private:
   void operator= (const IR_ValueDefSeq_var &);
 };
 
-class TAO_Export IR_ValueBoxDef_var
+class TAO_Export IR_ValueBoxDef_var : public TAO_Base_var
 {
 public:
   IR_ValueBoxDef_var (void); // default constructor
@@ -1437,6 +1482,9 @@ public:
 
 private:
   IR_ValueBoxDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ValueBoxDef_var (const TAO_Base_var &rhs);
+  IR_ValueBoxDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ValueBoxDef_out
@@ -1456,7 +1504,7 @@ private:
   IR_ValueBoxDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ComponentDef_var
+class TAO_Export IR_ComponentDef_var : public TAO_Base_var
 {
 public:
   IR_ComponentDef_var (void); // default constructor
@@ -1479,6 +1527,9 @@ public:
 
 private:
   IR_ComponentDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ComponentDef_var (const TAO_Base_var &rhs);
+  IR_ComponentDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ComponentDef_out
@@ -1618,7 +1669,7 @@ private:
   void operator= (const IR_ComponentDefSeq_var &);
 };
 
-class TAO_Export IR_ProvidesDef_var
+class TAO_Export IR_ProvidesDef_var : public TAO_Base_var
 {
 public:
   IR_ProvidesDef_var (void); // default constructor
@@ -1641,6 +1692,9 @@ public:
 
 private:
   IR_ProvidesDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ProvidesDef_var (const TAO_Base_var &rhs);
+  IR_ProvidesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ProvidesDef_out
@@ -1780,7 +1834,7 @@ private:
   void operator= (const IR_ProvidesDefSeq_var &);
 };
 
-class TAO_Export IR_UsesDef_var
+class TAO_Export IR_UsesDef_var : public TAO_Base_var
 {
 public:
   IR_UsesDef_var (void); // default constructor
@@ -1803,6 +1857,9 @@ public:
 
 private:
   IR_UsesDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_UsesDef_var (const TAO_Base_var &rhs);
+  IR_UsesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_UsesDef_out
@@ -1942,7 +1999,7 @@ private:
   void operator= (const IR_UsesDefSeq_var &);
 };
 
-class TAO_Export IR_HomeDef_var
+class TAO_Export IR_HomeDef_var : public TAO_Base_var
 {
 public:
   IR_HomeDef_var (void); // default constructor
@@ -1965,6 +2022,9 @@ public:
 
 private:
   IR_HomeDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_HomeDef_var (const TAO_Base_var &rhs);
+  IR_HomeDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_HomeDef_out
@@ -2104,7 +2164,7 @@ private:
   void operator= (const IR_HomeDefSeq_var &);
 };
 
-class TAO_Export IR_EventDef_var
+class TAO_Export IR_EventDef_var : public TAO_Base_var
 {
 public:
   IR_EventDef_var (void); // default constructor
@@ -2127,6 +2187,9 @@ public:
 
 private:
   IR_EventDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_EventDef_var (const TAO_Base_var &rhs);
+  IR_EventDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_EventDef_out
@@ -2146,7 +2209,7 @@ private:
   IR_EventDef_ptr &ptr_;
 };
 
-class TAO_Export IR_EmitsDef_var
+class TAO_Export IR_EmitsDef_var : public TAO_Base_var
 {
 public:
   IR_EmitsDef_var (void); // default constructor
@@ -2169,6 +2232,9 @@ public:
 
 private:
   IR_EmitsDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_EmitsDef_var (const TAO_Base_var &rhs);
+  IR_EmitsDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_EmitsDef_out
@@ -2308,7 +2374,7 @@ private:
   void operator= (const IR_EmitsDefSeq_var &);
 };
 
-class TAO_Export IR_PublishesDef_var
+class TAO_Export IR_PublishesDef_var : public TAO_Base_var
 {
 public:
   IR_PublishesDef_var (void); // default constructor
@@ -2331,6 +2397,9 @@ public:
 
 private:
   IR_PublishesDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_PublishesDef_var (const TAO_Base_var &rhs);
+  IR_PublishesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_PublishesDef_out
@@ -2470,7 +2539,7 @@ private:
   void operator= (const IR_PublishesDefSeq_var &);
 };
 
-class TAO_Export IR_ConsumesDef_var
+class TAO_Export IR_ConsumesDef_var : public TAO_Base_var
 {
 public:
   IR_ConsumesDef_var (void); // default constructor
@@ -2493,6 +2562,9 @@ public:
 
 private:
   IR_ConsumesDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ConsumesDef_var (const TAO_Base_var &rhs);
+  IR_ConsumesDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ConsumesDef_out
@@ -2632,7 +2704,7 @@ private:
   void operator= (const IR_ConsumesDefSeq_var &);
 };
 
-class TAO_Export IR_FactoryDef_var
+class TAO_Export IR_FactoryDef_var : public TAO_Base_var
 {
 public:
   IR_FactoryDef_var (void); // default constructor
@@ -2655,6 +2727,9 @@ public:
 
 private:
   IR_FactoryDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_FactoryDef_var (const TAO_Base_var &rhs);
+  IR_FactoryDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_FactoryDef_out
@@ -2794,7 +2869,7 @@ private:
   void operator= (const IR_FactoryDefSeq_var &);
 };
 
-class TAO_Export IR_FinderDef_var
+class TAO_Export IR_FinderDef_var : public TAO_Base_var
 {
 public:
   IR_FinderDef_var (void); // default constructor
@@ -2817,6 +2892,9 @@ public:
 
 private:
   IR_FinderDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_FinderDef_var (const TAO_Base_var &rhs);
+  IR_FinderDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_FinderDef_out
@@ -2956,7 +3034,7 @@ private:
   void operator= (const IR_FinderDefSeq_var &);
 };
 
-class TAO_Export IR_PrimaryKeyDef_var
+class TAO_Export IR_PrimaryKeyDef_var : public TAO_Base_var
 {
 public:
   IR_PrimaryKeyDef_var (void); // default constructor
@@ -2979,6 +3057,9 @@ public:
 
 private:
   IR_PrimaryKeyDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_PrimaryKeyDef_var (const TAO_Base_var &rhs);
+  IR_PrimaryKeyDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_PrimaryKeyDef_out
@@ -4521,7 +4602,7 @@ private:
   ::IR_IDLType_var base_proxy_;
 };
 
-class TAO_Export IR_PrimitiveDef_var
+class TAO_Export IR_PrimitiveDef_var : public TAO_Base_var
 {
 public:
   IR_PrimitiveDef_var (void); // default constructor
@@ -4544,6 +4625,9 @@ public:
 
 private:
   IR_PrimitiveDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_PrimitiveDef_var (const TAO_Base_var &rhs);
+  IR_PrimitiveDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_PrimitiveDef_out
@@ -4563,7 +4647,7 @@ private:
   IR_PrimitiveDef_ptr &ptr_;
 };
 
-class TAO_Export IR_StringDef_var
+class TAO_Export IR_StringDef_var : public TAO_Base_var
 {
 public:
   IR_StringDef_var (void); // default constructor
@@ -4586,6 +4670,9 @@ public:
 
 private:
   IR_StringDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_StringDef_var (const TAO_Base_var &rhs);
+  IR_StringDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_StringDef_out
@@ -4605,7 +4692,7 @@ private:
   IR_StringDef_ptr &ptr_;
 };
 
-class TAO_Export IR_SequenceDef_var
+class TAO_Export IR_SequenceDef_var : public TAO_Base_var
 {
 public:
   IR_SequenceDef_var (void); // default constructor
@@ -4628,6 +4715,9 @@ public:
 
 private:
   IR_SequenceDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_SequenceDef_var (const TAO_Base_var &rhs);
+  IR_SequenceDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_SequenceDef_out
@@ -4647,7 +4737,7 @@ private:
   IR_SequenceDef_ptr &ptr_;
 };
 
-class TAO_Export IR_ArrayDef_var
+class TAO_Export IR_ArrayDef_var : public TAO_Base_var
 {
 public:
   IR_ArrayDef_var (void); // default constructor
@@ -4670,6 +4760,9 @@ public:
 
 private:
   IR_ArrayDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ArrayDef_var (const TAO_Base_var &rhs);
+  IR_ArrayDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ArrayDef_out
@@ -4689,7 +4782,7 @@ private:
   IR_ArrayDef_ptr &ptr_;
 };
 
-class TAO_Export IR_WstringDef_var
+class TAO_Export IR_WstringDef_var : public TAO_Base_var
 {
 public:
   IR_WstringDef_var (void); // default constructor
@@ -4712,6 +4805,9 @@ public:
 
 private:
   IR_WstringDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_WstringDef_var (const TAO_Base_var &rhs);
+  IR_WstringDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_WstringDef_out
@@ -4731,7 +4827,7 @@ private:
   IR_WstringDef_ptr &ptr_;
 };
 
-class TAO_Export IR_FixedDef_var
+class TAO_Export IR_FixedDef_var : public TAO_Base_var
 {
 public:
   IR_FixedDef_var (void); // default constructor
@@ -4754,6 +4850,9 @@ public:
 
 private:
   IR_FixedDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_FixedDef_var (const TAO_Base_var &rhs);
+  IR_FixedDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_FixedDef_out
@@ -5029,7 +5128,7 @@ private:
   ::IR_Repository_var base_proxy_;
 };
 
-class TAO_Export IR_ComponentRepository_var
+class TAO_Export IR_ComponentRepository_var : public TAO_Base_var
 {
 public:
   IR_ComponentRepository_var (void); // default constructor
@@ -5052,6 +5151,9 @@ public:
 
 private:
   IR_ComponentRepository_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ComponentRepository_var (const TAO_Base_var &rhs);
+  IR_ComponentRepository_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ComponentRepository_out
@@ -5653,7 +5755,7 @@ private:
   void operator= (const IR_ConstantDescription_var &);
 };
 
-class TAO_Export IR_TypedefDef_var
+class TAO_Export IR_TypedefDef_var : public TAO_Base_var
 {
 public:
   IR_TypedefDef_var (void); // default constructor
@@ -5676,6 +5778,9 @@ public:
 
 private:
   IR_TypedefDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_TypedefDef_var (const TAO_Base_var &rhs);
+  IR_TypedefDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_TypedefDef_out
@@ -7994,7 +8099,7 @@ private:
   void operator= (const IR_ExcDescriptionSeq_var &);
 };
 
-class TAO_Export IR_AttributeDef_var
+class TAO_Export IR_AttributeDef_var : public TAO_Base_var
 {
 public:
   IR_AttributeDef_var (void); // default constructor
@@ -8017,6 +8122,9 @@ public:
 
 private:
   IR_AttributeDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_AttributeDef_var (const TAO_Base_var &rhs);
+  IR_AttributeDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_AttributeDef_out
@@ -8556,7 +8664,7 @@ private:
   void operator= (const IR_ContextIdSeq_var &);
 };
 
-class TAO_Export IR_OperationDef_var
+class TAO_Export IR_OperationDef_var : public TAO_Base_var
 {
 public:
   IR_OperationDef_var (void); // default constructor
@@ -8579,6 +8687,9 @@ public:
 
 private:
   IR_OperationDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_OperationDef_var (const TAO_Base_var &rhs);
+  IR_OperationDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_OperationDef_out
@@ -9818,7 +9929,7 @@ private:
   void operator= (const IR_ValueMemberSeq_var &);
 };
 
-class TAO_Export IR_ValueMemberDef_var
+class TAO_Export IR_ValueMemberDef_var : public TAO_Base_var
 {
 public:
   IR_ValueMemberDef_var (void); // default constructor
@@ -9841,6 +9952,9 @@ public:
 
 private:
   IR_ValueMemberDef *ptr_;
+  // Unimplemented - prevents widening assignment.
+  IR_ValueMemberDef_var (const TAO_Base_var &rhs);
+  IR_ValueMemberDef_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export IR_ValueMemberDef_out
@@ -13070,7 +13184,7 @@ private:
   void operator= (const IR_HomeDescription_var &);
 };
 
-  class TAO_Export CORBA_TypeCodeFactory_var
+  class TAO_Export CORBA_TypeCodeFactory_var : public TAO_Base_var
   {
   public:
     CORBA_TypeCodeFactory_var (void); // default constructor
@@ -13093,6 +13207,9 @@ private:
 
   private:
     CORBA_TypeCodeFactory_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    CORBA_TypeCodeFactory_var (const TAO_Base_var &rhs);
+    CORBA_TypeCodeFactory_var &operator= (const TAO_Base_var &rhs);
   };
 
   class TAO_Export CORBA_TypeCodeFactory_out

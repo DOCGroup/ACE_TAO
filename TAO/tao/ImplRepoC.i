@@ -46,7 +46,8 @@ ImplementationRepository::ServerObject_var::ptr (void) const
 
 ACE_INLINE
 ImplementationRepository::ServerObject_var::ServerObject_var (const ::ImplementationRepository::ServerObject_var &p) // copy constructor
-  : ptr_ (ServerObject::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ServerObject::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1501,7 +1502,8 @@ ImplementationRepository::Administration_var::ptr (void) const
 
 ACE_INLINE
 ImplementationRepository::Administration_var::Administration_var (const ::ImplementationRepository::Administration_var &p) // copy constructor
-  : ptr_ (Administration::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (Administration::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1700,7 +1702,8 @@ ImplementationRepository::ServerInformationIterator_var::ptr (void) const
 
 ACE_INLINE
 ImplementationRepository::ServerInformationIterator_var::ServerInformationIterator_var (const ::ImplementationRepository::ServerInformationIterator_var &p) // copy constructor
-  : ptr_ (ServerInformationIterator::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (ServerInformationIterator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
