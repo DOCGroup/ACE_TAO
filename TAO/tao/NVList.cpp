@@ -303,7 +303,6 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 
 void
 CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
-                            TAO_ORB_Core *,
                             int flag
                             ACE_ENV_ARG_DECL)
 {

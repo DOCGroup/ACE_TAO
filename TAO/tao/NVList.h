@@ -205,7 +205,6 @@ namespace CORBA
     /// Encode the NVList into the CDR stream. <flag> masks the type of
     /// arguments (IN, OUT or INOUT) that are to be marshaled.
     void _tao_encode (TAO_OutputCDR & cdr,
-                      TAO_ORB_Core * orb_core,
                       int flag
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 

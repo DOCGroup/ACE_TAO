@@ -184,7 +184,6 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->params_->_tao_encode (
                              this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core (),
                              CORBA::ARG_INOUT | CORBA::ARG_OUT
                              ACE_ENV_ARG_PARAMETER
                            );

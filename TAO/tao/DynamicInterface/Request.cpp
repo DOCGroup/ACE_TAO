@@ -190,7 +190,6 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       this->args_->_tao_encode (call.out_stream (),
-                                this->orb_->orb_core (),
                                 CORBA::ARG_IN | CORBA::ARG_INOUT
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -290,7 +289,6 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       this->args_->_tao_encode (call.out_stream (),
-                                this->orb_->orb_core (),
                                 CORBA::ARG_IN | CORBA::ARG_INOUT
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -356,7 +354,6 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       this->args_->_tao_encode (call.out_stream (),
-                                this->orb_->orb_core (),
                                 CORBA::ARG_IN | CORBA::ARG_INOUT
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;

@@ -1,3 +1,22 @@
+Mon Sep  8 11:21:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/NVList.cpp:
+        * tao/NVList.h:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Server_Request.cpp:
+
+          Removed the ORB_Core* argument from NVList::_tao_decode(). It
+          is not used.
+
+        * tao/DynamicInterface/DII_Arguments.cpp:
+        * tao/DynamicInterface/DII_Arguments.h:
+        * tao/DynamicInterface/DII_Arguments.inl:
+
+          New files, containing (non-template) argument helper classes
+          for NamedValue (which handles the DII request return value)
+          and NVList (which handles the entire DII request argument list
+          as a single 'argument').
+
 Sun Sep  7 20:43:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ImR_ActivatorC.cpp: Removed include of
