@@ -48,11 +48,11 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (void)
   this->init ();
 }
 
-ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename, int mapit)
+ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
+                                            ACE_Filecache_Flag mapit)
   : mapit_ (mapit)
 {
   this->init ();
-
   // Fetch the file from the Virtual_Filesystem let the
   // Virtual_Filesystem do the work of cache coherency.
 
@@ -63,7 +63,7 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename, int mapit)
 
 ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
                                             int size,
-                                            int mapit)
+                                            ACE_Filecache_Flag mapit)
   : mapit_ (mapit)
 {
   this->init ();
@@ -222,7 +222,7 @@ ACE_Filecache::insert_i (const char *filename,
   if (this->hash_.find (filename, handle) == -1)
     {
       ACE_NEW_RETURN (handle,
-                      ACE_Filecache_Object (filename, filelock, mapit),
+                      ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
       ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
@@ -274,7 +274,7 @@ ACE_Filecache::update_i (const char *filename,
   if (this->hash_.find (filename, handle) == -1)
     {
       ACE_NEW_RETURN (handle,
-                      ACE_Filecache_Object (filename, filelock, mapit),
+                      ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
       ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
@@ -292,7 +292,7 @@ ACE_Filecache::update_i (const char *filename,
           handle = this->remove_i (filename);
 
           ACE_NEW_RETURN (handle,
-                          ACE_Filecache_Object (filename, filelock, mapit),
+                          ACE_Filecache_Object (filename, filelock, 0, mapit),
                           0);
 
           ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename));
@@ -456,8 +456,8 @@ ACE_Filecache_Object::ACE_Filecache_Object (void)
 
 ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
-                                            int mapit,
-                                            LPSECURITY_ATTRIBUTES sa)
+                                            LPSECURITY_ATTRIBUTES sa,
+                                            int mapit)
   : stale_ (0),
     sa_ (sa),
     lock_ (lock)
