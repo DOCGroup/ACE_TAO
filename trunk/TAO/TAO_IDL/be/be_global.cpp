@@ -138,19 +138,19 @@ be_change_idl_file_extension (UTL_String* idl_file,
     ".IDL",
     ".PIDL"
   };
-  
+
   static int nextensions = sizeof(extensions)/sizeof(extensions[0]);
 
   for (int k = 0; k < nextensions; ++k)
     {
       base = ACE_OS::strstr (string, extensions[k]);
-      
+
       if (base != 0)
         {
           break;
         }
     }
-    
+
   if (base == 0)
     {
       return 0;
@@ -175,13 +175,13 @@ be_change_idl_file_extension (UTL_String* idl_file,
 
   // Turn '\' and '\\' into '/'.
   char* i = fname;
-  
+
   for (char* j = fname; *j != 0; ++i, ++j)
     {
       if (*j == '\\')
         {
           *i = '/';
-          
+
           if (*(j+1) == '\\')
             {
               ++j;
@@ -192,7 +192,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
           *i = *j;
         }
     }
-    
+
   *i = 0;
 
   // Append the newextension.
@@ -1284,9 +1284,16 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
+
             int result = ACE_OS::mkdir (av[i + 1]);
-            
-            if (result != 0 && errno != EEXIST)
+
+            #if !defined (__BORLANDC__)
+              if (result != 0 && errno != EEXIST)
+            #else
+              // The Borland RTL doesn't give EEXIST back, only EACCES in case
+              // the directory exists, reported to Borland as QC 9495
+              if (result != 0 && errno != EEXIST && errno != EACCES)
+            #endif
               {
                 ACE_ERROR ((
                     LM_ERROR,
