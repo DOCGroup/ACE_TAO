@@ -1,3 +1,9 @@
+Tue Dec 15 14:43:47 1998  Ossama Othman  <ossama@debian.org>
+
+	* ace/OS.{h,i},README: added lstat() and readlink() methods.
+	  Use ACE_LACKS_LSTAT and ACE_LACKS_READLINK if lstat() and readlink()
+	  aren't supported.
+
 Tue Dec 15 11:55:51 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE_Library.(mak mdp): Added Message_Queue.cpp to the files list.
