@@ -1,3 +1,9 @@
+Fri Jun 20 15:42:14 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* performance-tests/Sequence_Latency/Deferred/run_test.pl
+
+	  Added this missing file into the directory.
+
 Fri Jun 20 14:48:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp: 
