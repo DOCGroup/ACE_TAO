@@ -29,6 +29,13 @@ AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
  AC_REQUIRE([AC_PROG_CXXCPP])
  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 
+ dnl In case a library with the asynchronous libraries is found but
+ dnl the asynchronous IO support is not functional then save a copy
+ dnl of the list of libraries before the asynch IO function library
+ dnl is added to the list so that we can revert the list to its
+ dnl pre-asynch-IO check state.
+ ace_save_LIBS="$LIBS"
+
  dnl Asynchronous IO library check
  dnl Some platforms, such as Solaris puts aio_read in -lposix4, for example.
  dnl In some cases, the thread library must be linked to in addition to the
@@ -540,6 +547,6 @@ main (int, char *[])
            ace_cv_feature_aio_calls=no
           ])
        ])
-    ], AC_DEFINE(ACE_HAS_AIO_CALLS),)
+    ], AC_DEFINE(ACE_HAS_AIO_CALLS), LIBS="$ace_save_LIBS")
 fi dnl test "$ace_has_aio_funcs" = yes
 ])
