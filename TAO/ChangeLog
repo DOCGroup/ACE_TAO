@@ -1,3 +1,14 @@
+Fri Dec 27 11:49:22 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CORBALOC_Parser.h: 
+	* tao/CORBALOC_Parser.cpp: 
+	  Modified the signature of parse_string_assign_helper. We dont
+	  have to send the length of original string as an argument.
+	  When invoking assign_ke_string, the length of the token needs 
+	  to be sent as opposed to the length of the whole address.
+          Thanks to Bertin Colpron <BColpron@interstarinc.com>
+	  for pointing out.
+	
 Fri Dec 27 14:57:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/Makefile:
