@@ -550,6 +550,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
   return number_purged;
 
 #else /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
+  ACE_UNUSED_ARG (eh);
   ACE_NOTSUP_RETURN (-1);
 #endif  /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
 }
