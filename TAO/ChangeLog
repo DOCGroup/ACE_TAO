@@ -1,3 +1,11 @@
+Tue Dec  7 20:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging_SyncScopeC.{h,cpp,i,inl}:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
 Tue Dec  7 18:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
@@ -7,7 +15,6 @@ Tue Dec  7 18:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BoundsA.cpp:
         * tao/BoundsC.{h,cpp,i,inl}:
-          Regenerated and replace .i file with .inl variant
 
 Tue Dec  7 18:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
