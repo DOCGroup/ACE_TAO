@@ -622,7 +622,7 @@ ACE_Streambuf::~ACE_Streambuf (void)
 u_char ACE_Streambuf::timeout (void)
 {
   u_char rval = this->timeout_;
-  time->timeout_ = 0;
+  this->timeout_ = 0;
   return rval;
 }
 
