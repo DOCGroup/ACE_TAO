@@ -1,3 +1,24 @@
+Tue May  2 10:24:10 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_compile_win32.pl:
+
+          Fixed a couple of release configurations that were out of date.
+
+Tue May  2 10:05:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * websvcs/lib/URL_Addr.cpp:
+        * websvcs/lib/URL_Addr.h:
+        * websvcs/lib/URL_Addr.i:
+        * websvcs/lib/websvcs.dsp:
+
+          The changes to the new wchar style wasn't completely correct,
+          and I missed quite a few LPCTSTRs in the .i file.  Also corrected
+          my earlier attempt at doing the export stuff the "right way".
+
+          Also changed the use of the variable passwd to password.  passwd
+          is also used as a structure so it confused MSVC when used in the
+          FTP class constructor
+
 Tue May  2 09:34:31 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Send_Recv_Test.cpp: Fix signed/unsigned warnings.
