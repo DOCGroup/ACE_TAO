@@ -444,6 +444,13 @@ TAO_SSLIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
+TAO_SSLIOP_Client_Connection_Handler::handle_input_i (ACE_HANDLE,
+                                                    ACE_Time_Value *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
 TAO_SSLIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                                     const void *)
 {
@@ -525,6 +532,13 @@ TAO_SSLIOP_Client_Connection_Handler::handle_cleanup (void)
 
   return 0;
 }
+
+ACE_HANDLE
+TAO_SSLIOP_Client_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
+}
+
 
 // ****************************************************************
 
