@@ -52,48 +52,37 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    if (ace___->log_priority_enabled X != 0) { \
-      ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
-                   ace___->msg_ostream (), ace___->msg_callback ()); \
-      ace___->log_hexdump X; \
-    } \
+    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error); \
+    ace___->log_hexdump X; \
   } while (0)
 #define ACE_RETURN(Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
-    ACE_Log_Msg::instance ()->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error); \
+    ACE_Log_Msg::instance ()->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
+                                   ace___->msg_ostream (), ace___->msg_callback ()); \
     return Y; \
   } while (0)
 #define ACE_ERROR_RETURN(X, Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    if (ace___->log_priority_enabled X != 0) { \
-      ace___->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
-                   ace___->msg_ostream (), ace___->msg_callback ()); \
-      ace___->log X; \
-    } \
+    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error); \
+    ace___->log X; \
     return Y; \
   } while (0)
 #define ACE_ERROR(X) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    if (ace___->log_priority_enabled X != 0) { \
-      ace___->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
-                   ace___->msg_ostream (), ace___->msg_callback ()); \
-      ace___->log X; \
-    } \
+    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, -1, __ace_error); \
+    ace___->log X; \
   } while (0)
 #define ACE_DEBUG(X) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    if (ace___->log_priority_enabled X != 0) { \
-      ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
-                   ace___->msg_ostream (), ace___->msg_callback ()); \
-      ace___->log X; \
-    } \
+    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error); \
+    ace___->log X; \
   } while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS) \
   do { \
@@ -491,6 +480,13 @@ public:
   // restart flag, ostream, and the callback object.  This combines
   // all the other set methods into a single method.
 
+  void conditional_set (const ACE_TCHAR *file,
+                        int line,
+                        int op_status,
+                        int errnum);
+  // These values are only actually set if the requested priority is
+  // enabled.
+
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
   // options (prefixed by '%', as in printf format strings) include:
@@ -624,6 +620,18 @@ private:
   // names
   static u_long default_priority_mask_;
   // Priority mask to use for each new instance
+
+  // Anonymous struct since there will only be one instance.  This
+  // struct keeps information stored away in case we actually end up
+  // calling log() if the log priority is correct.
+  struct
+  {
+    int is_set_;
+    const ACE_TCHAR *file_;
+    int line_;
+    int op_status_;
+    int errnum_;
+  } conditional_values_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static int key_created_;
