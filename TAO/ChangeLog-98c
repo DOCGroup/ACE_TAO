@@ -1,3 +1,8 @@
+Thu Nov  6 01:40:29 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* tao/tao_internals.h: #defined ACE_Thread_Mutex to be
+	ACE_Null_Mutex for NetBSD.
+
 Thu Nov  6 01:36:43 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/orbconf.h: Added NetBSD to the #define around HAVE_WIDEC_H.
