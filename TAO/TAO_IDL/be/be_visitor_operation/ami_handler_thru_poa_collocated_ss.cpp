@@ -78,8 +78,19 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_ss::visit_operation (be
 
 
 
-  *os << "void " << intf->full_coll_name (be_interface::THRU_POA) << "::"
-      << node->local_name () << " ";
+  *os << "void " << intf->full_coll_name (be_interface::THRU_POA) << "::";
+  
+  // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "set_";
+      else
+        *os << "get_";
+    }  
+  
+  *os << node->local_name () << " ";
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)

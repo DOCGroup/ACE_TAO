@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    ami_handler_servant_operation_ss.h
+//    ami_handler_operation_ss.h
 //
 // = DESCRIPTION
 //    Visitor for generating code for IDL operations in server skeletons
@@ -18,18 +18,18 @@
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_OPERATION_AMI_HANDLER_SERVANT_OPERATION_SS_H_
-#define _BE_VISITOR_OPERATION_AMI_HANDLER_SERVANT_OPERATION_SS_H_
+#ifndef _BE_VISITOR_OPERATION_ami_handler_operation_ss_H_
+#define _BE_VISITOR_OPERATION_ami_handler_operation_ss_H_
 
 // ************************************************************
 // Operation visitor for server skeletons
 // ************************************************************
 
-class be_visitor_operation_ami_handler_servant_operation_ss : public be_visitor_operation
+class be_visitor_operation_ami_handler_operation_ss : public be_visitor_operation
 {
   //
   // = TITLE
-  //   be_visitor_operation_ami_handler_servant_operation_ss
+  //   be_visitor_operation_ami_handler_operation_ss
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the server skeletons for operation
@@ -37,10 +37,10 @@ class be_visitor_operation_ami_handler_servant_operation_ss : public be_visitor_
   //
 public:
 
-  be_visitor_operation_ami_handler_servant_operation_ss (be_visitor_context *ctx);
+  be_visitor_operation_ami_handler_operation_ss (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_operation_ami_handler_servant_operation_ss (void);
+  ~be_visitor_operation_ami_handler_operation_ss (void);
   // destructor
 
   virtual int visit_operation (be_operation *node);
@@ -77,11 +77,11 @@ public:
 
 // concrete visitors
 
-class be_interpretive_visitor_operation_ami_handler_servant_operation_ss : public be_visitor_operation_ami_handler_servant_operation_ss
+class be_interpretive_visitor_operation_ami_handler_operation_ss : public be_visitor_operation_ami_handler_operation_ss
 {
   //
   // = TITLE
-  //   be_interpretive_visitor_operation_ami_handler_servant_operation_ss
+  //   be_interpretive_visitor_operation_ami_handler_operation_ss
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the server skeletons for
@@ -89,10 +89,10 @@ class be_interpretive_visitor_operation_ami_handler_servant_operation_ss : publi
   //
   //
 public:
-  be_interpretive_visitor_operation_ami_handler_servant_operation_ss (be_visitor_context *ctx);
+  be_interpretive_visitor_operation_ami_handler_operation_ss (be_visitor_context *ctx);
   // constructor
 
-  ~be_interpretive_visitor_operation_ami_handler_servant_operation_ss (void);
+  ~be_interpretive_visitor_operation_ami_handler_operation_ss (void);
   // destructor
 
   // template methods
@@ -108,11 +108,11 @@ public:
 
 };
 
-class be_compiled_visitor_operation_ami_handler_servant_operation_ss : public be_visitor_operation_ami_handler_servant_operation_ss
+class be_compiled_visitor_operation_ami_handler_operation_ss : public be_visitor_operation_ami_handler_operation_ss
 {
   //
   // = TITLE
-  //   be_compiled_visitor_operation_ami_handler_servant_operation_ss
+  //   be_compiled_visitor_operation_ami_handler_operation_ss
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the server skeletons for
@@ -120,10 +120,10 @@ class be_compiled_visitor_operation_ami_handler_servant_operation_ss : public be
   //
   //
 public:
-  be_compiled_visitor_operation_ami_handler_servant_operation_ss (be_visitor_context *ctx);
+  be_compiled_visitor_operation_ami_handler_operation_ss (be_visitor_context *ctx);
   // constructor
 
-  ~be_compiled_visitor_operation_ami_handler_servant_operation_ss (void);
+  ~be_compiled_visitor_operation_ami_handler_operation_ss (void);
   // destructor
 
   // template methods
@@ -139,4 +139,4 @@ public:
 
 };
 
-#endif /* _BE_VISITOR_OPERATION_AMI_HANDLER_SERVANT_OPERATION_SS_H_ */
+#endif /* _BE_VISITOR_OPERATION_ami_handler_operation_ss_H_ */
