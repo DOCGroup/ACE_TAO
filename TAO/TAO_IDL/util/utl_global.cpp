@@ -88,6 +88,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       pd_filename (0),
       pd_main_filename (0),
       pd_real_filename (0),
+      pd_stripped_filename (0),
+      pd_import (I_FALSE),
       pd_in_main_file (I_FALSE),
       pd_prog_name (0),
       pd_cpp_location (0),
