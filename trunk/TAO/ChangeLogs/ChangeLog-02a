@@ -1,3 +1,8 @@
+Thu Nov 23 15:01:53 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/RedGreen/Makefile:
+	  Link with TAO_Svc_Utils to fix linkage error on SunCC5.
+
 Thu Nov 23 12:33:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/tests/ior_corbaname/README:
