@@ -33,6 +33,8 @@
 
 ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 static void *
 client (void *arg)
 {
@@ -57,10 +59,12 @@ client (void *arg)
   if (con.connect (cli_stream,
                    server_addr,
                    timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("connection failed")),
-                      0);
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("connection failed")));
+      return 0;
+    }
 
   if (cli_stream.get_local_addr (client_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,7 +83,7 @@ client (void *arg)
 
   // Send data to server (correctly handles "incomplete writes").
 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send_n (c, 1) == -1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
@@ -163,7 +167,7 @@ server (void *arg)
       while ((result = peer_acceptor->accept (new_stream,
                                               &cli_addr)) != -1)
         {
-          char *t = ACE_ALPHABET;
+          const char *t = ACE_ALPHABET;
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) client %s connected from %d\n"),
