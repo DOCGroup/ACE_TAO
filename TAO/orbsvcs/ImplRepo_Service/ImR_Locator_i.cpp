@@ -611,8 +611,6 @@ ImR_Locator_i::reregister_server (
         {
           ACE_ERROR ((LM_ERROR,
                       "Couldnt get a reference to an activator during reregistering a server\n"));
-
-          ACE_THROW (ImplementationRepository::NotFound ());
         }
     }
 }
