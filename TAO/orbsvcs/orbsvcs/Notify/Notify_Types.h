@@ -5,7 +5,7 @@
 //   Orbsvcs
 //
 // = FILENAME
-//   Notify_Resource_Manager.h
+//   Notify_Types.h
 //
 // = DESCRIPTION
 //   Internal types used by Notify
@@ -55,18 +55,21 @@ class TAO_Notify_EventType
 
   static TAO_Notify_EventType& special_event_type (void);
   // Return the special event type.
-  /*
-    static CORBA::Boolean is_special (const CosNotification::EventType event_type);*/
+
   CORBA::Boolean is_special (void) const;
   // Is this the special event (accept everything).
 
-  CosNotification::EventType event_type_;
+  const CosNotification::EventType& get_native (void) const;
+  // Get the type underneath us.
 
   protected:
   void recompute_hash (void);
   // Recompute the hash value.
 
   // = Data Members
+  CosNotification::EventType event_type_;
+  // The event_type that we're decorating.
+
   u_long hash_value_;
   // The hash value computed.
 
@@ -93,7 +96,7 @@ class TAO_Notify_Event
   // We may need to make a copy of the underlying data if it is not owned
   // by us.
   // Note this behaviour: If this object owns the data, then we *transfer*
-  // ownership of the data to the new object otherwise we copy the data and
+  // ownership of the data to the new object otherwise we copy the data
   // for the new object.
 
   virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter, CORBA::Environment &ACE_TRY_ENV) const = 0;
