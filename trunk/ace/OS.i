@@ -1156,6 +1156,25 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
+ACE_INLINE char *
+ACE_OS::strsplit_r (char *str, const char *token, char *&next_start)
+{
+  char *tok_loc;
+  char *ret = 0;
+  
+  if (str != 0)
+    next_start = str;
+  
+  if ( (tok_loc = strstr(next_start, token)) != 0)
+    {
+      ret = next_start;         // return the beginning of the string
+      *tok_loc = '\0';          // insure its terminated
+      next_start = tok_loc + strlen(token);
+    }
+
+  return ret;
+}
+
 ACE_INLINE long 
 ACE_OS::strtol (const char *s, char **ptr, int base)
 {
