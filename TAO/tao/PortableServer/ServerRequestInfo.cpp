@@ -117,13 +117,13 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
                       CORBA::Object::_nil ());
 
-  // We don't get the forward reference from the TAO_Server_Request
+  // We don't get the forward reference from the TAO_ServerRequest
   // object since it may not have been set there.  For example, this
   // is the case when a Servant Manager throws a
   // PortableServer::ForwardRequest exception.  As such, we only
   // return the one stored in this object since it is explicitly set
   // by the responsible request forwarding code.
-  return CORBA::Object::_duplicate (this->forward_reference_);
+  return CORBA::Object::_duplicate (this->forward_reference_.in ());
 }
 
 CORBA::Any *

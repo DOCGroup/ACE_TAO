@@ -65,13 +65,19 @@ features which would not be supported when the spec gets
 finalized.</p>
 
 <p>We have modifed TAO's interceptor interface to conform with the
-proposed spec.  The current version of interceptors consists of support
-for the <CODE>Dynamic</CODE> module as well as the canonical
-interception points including (1) <CODE>send_request</CODE>,
-(2) <CODE>receive_request</CODE>, (3) <CODE>send_reply</CODE>,
-(4) <CODE>receive_reply</CODE>, (5) <CODE>send_exception</CODE>,
-(6) <CODE>receive_exception</CODE>, and
-(7) <CODE>establish_components</CODE> (specific to
+proposed spec.  The current implementation of interceptors consists of
+support for the <CODE>Dynamic</CODE> module as well as the canonical
+interception points including
+(1) <CODE>send_request</CODE>,
+(2) <CODE>receive_reply</CODE>,
+(3) <CODE>receive_exception</CODE>,
+(4) <CODE>receive_other</CODE>,
+(5) <CODE>receive_request_service_contexts</CODE>,
+(6) <CODE>receive_request</CODE>,
+(7) <CODE>send_reply</CODE>,
+(8) <CODE>send_exception</CODE>,
+(9) <CODE>send_other</CODE>, and
+(10) <CODE>establish_components</CODE> (specific to
 <CODE>IORInterceptor</CODE>s).  Each request interception point is
 passed a <CODE>RequestInfo</CODE> object which encapsulates the
 details of the operation like arguments, etc.  The IOR interception
@@ -298,13 +304,22 @@ module PortableInterceptor
 <hr><P>
 <h3><a name="status">Current Status</a></h3>
 <ul>
-  <li>The basic infrastructure is in place as well as the canonical
-      request interception points:  <CODE>send_request</CODE>,
-      <CODE>receive_request</CODE>, <CODE>send_exception</CODE>,
-      <CODE>receive_exception</CODE>, <CODE>send_reply</CODE>, and
-      <CODE>receive_reply</CODE>.  The remaining request interception
-      points are mostly for specific applications like AMI, FT,
-      etc. which will be implemented as and when needed.
+  <li>The core infrastructure is in place as well as the canonical
+      request and IOR interception points:
+      <CODE>send_request</CODE>,
+      <CODE>receive_reply</CODE>,
+      <CODE>receive_exception</CODE>,
+      <CODE>receive_other</CODE>,
+      <CODE>receive_request_service_contexts</CODE>,
+      <CODE>receive_request</CODE>,
+      <CODE>send_reply</CODE>,
+      <CODE>send_exception</CODE>,
+      <CODE>send_other</CODE>, and
+      <CODE>establish_components</CODE>.
+      The remaining client request interception point,
+      <CODE>send_poll</CODE>, is <EM>time independent invocation</EM>
+      specific.  Once TAO supports time independent invocations, the
+      <CODE>send_poll</CODE> interception point will be implemented.
   <li><CODE>ORBInitializer</CODE> registration has been implemented,
       as per the spec.
   <li>Registration of interceptors is now conformant to the spec
@@ -326,6 +341,9 @@ module PortableInterceptor
   <li>Basically, all <CODE>ORBInitInfo</CODE> methods have been
       implemented except <CODE>allocate_slot_id</CODE> and
       <CODE>codec_factory</CODE>.
+  <li>Implemented most of the remaining
+      <CODE>ClientRequestInfo</CODE>, <CODE>ServerRequestInfo</CODE>
+      and <CODE>IORInfo</CODE> methods.
 </ul>
 
 <hr><P>
@@ -346,10 +364,7 @@ module PortableInterceptor
       to create the <CODE>octet</CODE> sequence that is part of an
       <CODE>IOP::TaggedComponent</CODE>.  This means that it could
       compliment the IOR interceptor support.
-  <li>Implement the remaining interception points, namely:
-      <CODE>receive_other</CODE>,
-      <CODE>receive_request_service_contexts</CODE> and
-      <CODE>send_other</CODE>.  The <CODE>send_poll</CODE>
+  <li>The <CODE>send_poll</CODE> request interception point
       implementation will most likely be deferred until TII is
       supported in TAO.
 </ol>
