@@ -28,7 +28,8 @@ Tue Dec 12 06:55:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  we) need to investigate why malloc fails for large memory
 	  chunks. Someday I will know why. Thanks to Petr Tuma
 	  <petr.tuma@mff.cuni.cz> for reporting this problem.  The test
-	  case that will be checked in after getting his permissions.
+	  case that he gave us will be checked in after getting his
+	  permissions. 
 
 	* tests/DLL_ORB/Test_Server_Module.cpp: Added
 	  "ace/Service_Config.h"  to fix a compilation error in the

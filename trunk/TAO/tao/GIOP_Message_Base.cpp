@@ -566,7 +566,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   // Create a input CDR stream. We do the following
   //  1 - If the incoming message block has a data block with a flag
-  //      DONT_DELETE  (for the data block) we create an inpur CDR
+  //      DONT_DELETE  (for the data block) we create an input CDR
   //      stream the same way.
   //  2 - If the incoming message block had a datablock from heap just
   //      use it by duplicating it and make the flag 0.
