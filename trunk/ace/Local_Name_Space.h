@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,6 +14,7 @@
 
 #ifndef ACE_LOCAL_NAME_SPACE_H
 #define ACE_LOCAL_NAME_SPACE_H
+
 #include "ace/pre.h"
 
 #include "ace/SString.h"
@@ -42,8 +43,8 @@ public:
   ACE_NS_String (void);
 
   /// Initialization method.
-  ACE_NS_String (ACE_USHORT16 *dst,
-                 const ACE_USHORT16 *src,
+  ACE_NS_String (ACE_WCHAR_T *dst,
+                 const ACE_WCHAR_T *src,
                  size_t len);
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
@@ -71,7 +72,7 @@ public:
   size_t len (void) const;
 
   /// Returns the underlying representation.
-  ACE_USHORT16 *fast_rep (void) const;
+  ACE_WCHAR_T *fast_rep (void) const;
 
   /// Returns a hash value for this string.
   u_long hash (void) const;
@@ -81,7 +82,7 @@ private:
   size_t len_;
 
   /// This actually points into shared/persistent memory.
-  ACE_USHORT16 *rep_;
+  ACE_WCHAR_T *rep_;
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)
@@ -124,4 +125,5 @@ private:
 #include "ace/Local_Name_Space_T.h"
 
 #include "ace/post.h"
+
 #endif /* ACE_LOCAL_NAME_SPACE_H */

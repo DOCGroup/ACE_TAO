@@ -1,5 +1,5 @@
-#ifndef ACE_LOCAL_NAME_SPACE_T_C
-#define ACE_LOCAL_NAME_SPACE_T_C
+#ifndef ACE_LOCAL_NAME_SPACE_T_CPP
+#define ACE_LOCAL_NAME_SPACE_T_CPP
 
 #include "ace/ACE.h"
 
@@ -136,10 +136,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
 {
 
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
-  size_t name_len = (name.length () + 1) * sizeof (ACE_USHORT16);
-  size_t value_len = (value.length () + 1) * sizeof (ACE_USHORT16);
-  size_t type_len = ACE_OS::strlen (type) + 1;
-  size_t total_len = name_len + value_len + type_len;
+  const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
+  const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
+  const size_t type_len = ACE_OS::strlen (type) + 1;
+  const size_t total_len = name_len + value_len + type_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
   if (ptr == 0)
@@ -148,12 +148,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
     {
       // Note that the value_rep *must* come first to make sure we can
       // retrieve this pointer later on in unbind().
-      ACE_USHORT16 *value_rep = (ACE_USHORT16 *) (ptr);
-      ACE_USHORT16 *name_rep = (ACE_USHORT16 *) (ptr + value_len);
+      ACE_WCHAR_T *value_rep = (ACE_WCHAR_T *) (ptr);
+      ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
-      ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
+      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> name_urep (name.rep ());
+      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> value_urep (value.rep ());
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 
@@ -322,7 +322,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   value = nbc_string;
 
   // Gets type and then the actual reprsentation which is a
-  // ACE_USHORT16
+  // ACE_WCHAR_T
   const char *temp = ns_internal.type ();
 
   size_t len = ACE_OS::strlen (ns_internal.type ());
@@ -960,4 +960,4 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
     }
 }
 
-#endif /* ACE_LOCAL_NAME_SPACE_T_C */
+#endif /* ACE_LOCAL_NAME_SPACE_T_CPP */

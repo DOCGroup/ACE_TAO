@@ -1,14 +1,13 @@
-// Local_Name_Space.cpp
-// $Id$
-
-#if !defined (ACE_LOCAL_NAME_SPACE_C)
-#define ACE_LOCAL_NAME_SPACE_C
+#ifndef ACE_LOCAL_NAME_SPACE_CPP
+#define ACE_LOCAL_NAME_SPACE_CPP
 
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 #include "ace/RW_Process_Mutex.h"
 
-ACE_RCSID(ace, Local_Name_Space, "$Id$")
+ACE_RCSID (ace,
+           Local_Name_Space,
+           "$Id$")
 
 ACE_NS_String::~ACE_NS_String (void)
 {
@@ -16,7 +15,7 @@ ACE_NS_String::~ACE_NS_String (void)
     delete [] this->rep_;
 }
 
-ACE_USHORT16 *
+ACE_WCHAR_T *
 ACE_NS_String::fast_rep (void) const
 {
   ACE_TRACE ("ACE_NS_String::fast_rep");
@@ -27,7 +26,7 @@ ACE_NS_String::operator ACE_NS_WString () const
 {
   ACE_TRACE ("ACE_NS_String::operator ACE_NS_WString");
   return ACE_NS_WString (this->rep_,
-                         (this->len_ / sizeof (ACE_USHORT16)) - 1);
+                         (this->len_ / sizeof (ACE_WCHAR_T)) - 1);
 }
 
 size_t
@@ -42,7 +41,7 @@ ACE_NS_String::char_rep (void) const
 {
   ACE_TRACE ("ACE_NS_String::char_rep");
   ACE_NS_WString w_string (this->rep_,
-                           (this->len_ / sizeof (ACE_USHORT16)) - 1);
+                           (this->len_ / sizeof (ACE_WCHAR_T)) - 1);
   return w_string.char_rep ();
 }
 
@@ -55,8 +54,8 @@ ACE_NS_String::ACE_NS_String (void)
 }
 
 ACE_NS_String::ACE_NS_String (const ACE_NS_WString &s)
-  : len_ ((s.length () + 1) * sizeof (ACE_USHORT16)),
-    rep_ (s.ushort_rep ()),
+  : len_ ((s.length () + 1) * sizeof (ACE_WCHAR_T)),
+    rep_ (s.rep ()),
     delete_rep_ (1)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
@@ -76,14 +75,14 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
   else
     {
       // They're smaller than we are...
-      size_t len = (this->len_ - s.len_) / sizeof (ACE_USHORT16);
-      size_t pat_len = s.len_ / sizeof (ACE_USHORT16) - 1;
+      const size_t len = (this->len_ - s.len_) / sizeof (ACE_WCHAR_T);
+      const size_t pat_len = s.len_ / sizeof (ACE_WCHAR_T) - 1;
 
-      for (size_t i = 0; i <= len; i++)
+      for (size_t i = 0; i <= len; ++i)
         {
           size_t j;
 
-          for (j = 0; j < pat_len; j++)
+          for (j = 0; j < pat_len; ++j)
             if (this->rep_[i + j] != s.rep_[j])
               break;
 
@@ -112,8 +111,8 @@ ACE_NS_String::operator != (const ACE_NS_String &s) const
   return !this->operator == (s);
 }
 
-ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
-                              const ACE_USHORT16 *src,
+ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
+                              const ACE_WCHAR_T *src,
                               size_t bytes)
   : len_ (bytes),
     rep_ (dst),
@@ -127,7 +126,7 @@ u_long
 ACE_NS_String::hash (void) const
 {
   return ACE::hash_pjw
-    (ACE_reinterpret_cast (char *, ACE_const_cast (ACE_USHORT16 *,
+    (ACE_reinterpret_cast (char *, ACE_const_cast (ACE_WCHAR_T *,
                                                    this->rep_)),
      this->len_);
 }
@@ -216,4 +215,4 @@ template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
 #pragma instantiate ACE_Write_Guard<ACE_RW_Process_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ACE_LOCAL_NAME_SPACE_C */
+#endif /* ACE_LOCAL_NAME_SPACE_CPP */
