@@ -1,3 +1,29 @@
+Tue Aug 13 09:16:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Makefile.bor (DIRS):
+
+	  Removed LoadBalancing test directory from the list of tests.  A
+	  new test suite is currently under development.
+
+	* orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+	* orbsvcs/tests/LoadBalancing/LoadBalancing.dsw:
+	* orbsvcs/tests/LoadBalancing/LoadBalancing.mpc:
+	* orbsvcs/tests/LoadBalancing/Makefile:
+	* orbsvcs/tests/LoadBalancing/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/client.bor:
+	* orbsvcs/tests/LoadBalancing/client.cpp:
+	* orbsvcs/tests/LoadBalancing/client.dsp:
+	* orbsvcs/tests/LoadBalancing/server.bor:
+	* orbsvcs/tests/LoadBalancing/server.cpp:
+	* orbsvcs/tests/LoadBalancing/server.dsp:
+
+	  Removed this test.  It was for the old Load Balancer prototype.
+	  New tests will be added soon.
+
 Tue Aug 13 08:22:33 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/Makefile:
