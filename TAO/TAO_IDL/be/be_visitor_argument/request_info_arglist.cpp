@@ -90,75 +90,23 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       bt = node;
     }
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ")";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << "const " << this->type_name (node);
-          }
+        *os << "const " << this->type_name (node);
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ")";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node);
-          }
+        *os << this->type_name (node);
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << "_out)";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -182,75 +130,24 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       bt = node;
     }
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ")" << " &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ") &";
+        *os << this->type_name (node) << " &";
 
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
         break;
 
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << "_out)";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -335,13 +232,6 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
       bt = node;
     }
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
     {
@@ -349,64 +239,19 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
         {
         case AST_Argument::dir_IN:
           {
-            if (scope == this->ctx_->scope ()
-                && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-              {
-                *os << "const ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os << ")" << " &";
-
-                // Reset the substate.
-                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-              }
-            else
-              {
-                *os << "const " << this->type_name (node) << " &";
-              }
+            *os << "const " << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_INOUT:
           {
-            if (scope == this->ctx_->scope ()
-                && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-              {
-                *os << "ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os << ")" << " &";
-
-                // Reset the substate.
-                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-              }
-            else
-              {
-                *os << this->type_name (node) << " &";
-              }
+            *os << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_OUT:
           {
-            if (scope == this->ctx_->scope ()
-                && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-              {
-                *os << "ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os << "_out)";
-
-                // Reset the substate.
-                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-              }
-            else
-              {
-                *os << this->type_name (node, "_out");
-              }
+            *os << this->type_name (node, "_out");
 
             break;
           }
@@ -433,64 +278,19 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
         {
         case AST_Argument::dir_IN:
           {
-            if (scope == this->ctx_->scope ()
-                && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-              {
-                *os << "const ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os << ")" << " &";
-
-                // Reset the substate.
-                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-              }
-            else
-              {
-                *os << "const " << this->type_name (node) << " &";
-              }
+            *os << "const " << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_INOUT:
           {
-            if (scope == this->ctx_->scope ()
-                && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-              {
-                *os << "ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os << ")" << " &";
-
-                // Reset the substate.
-                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-              }
-            else
-              {
-                *os << this->type_name (node) << " &";
-              }
+            *os << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_OUT:
           {
-            if (scope == this->ctx_->scope ()
-                && this->ctx_->sub_state () 
-                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-              {
-                *os << "ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os << "_out)";
-
-                // Reset the substate.
-                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-              }
-            else
-              {
-                *os << this->type_name (node, "_out");
-              }
+            *os << this->type_name (node, "_out");
 
             break;
           }
@@ -515,75 +315,23 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
       bt = node;
     }
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ") &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
+        *os << "const " << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ") &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << "_out)";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -645,75 +393,23 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
       bt = node;
     }
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ") &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
+        *os << "const " << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << ") &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os << "_out)";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -737,75 +433,23 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
       bt = node;
     }
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
+        *os << "const " << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_out)";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
