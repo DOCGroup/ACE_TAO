@@ -1197,7 +1197,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
   return result;
 }
 
- 
+int 
 ACE_WFMO_Reactor::update_state (void)
 {
   // This GUARD is necessary since we are updating shared state.
@@ -1250,6 +1250,11 @@ ACE_WFMO_Reactor::update_state (void)
 	// change thread
 	this->waiting_to_change_state_.signal ();
     }
+  // This is if we were woken up explicitily by the user and there are
+  // no state changes required.
+  else if (this->active_threads_ == 0)
+    // Turn off <wakeup_all_threads_>
+    this->wakeup_all_threads_.reset ();
 
   return 0;
 }
