@@ -1,4 +1,4 @@
-#!/bin/nawk
+#!/usr/bin/gawk
 
 $0 ~ "</pre><H2>SEE ALSO</H2>" {
   print $0

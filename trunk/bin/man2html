@@ -63,7 +63,7 @@ do
 	     -e 's/>/\&gt;/g' \
 	     -e 's/\\|//g' \
 	     -e 's/\\e/\\/g'     |
-	/bin/nawk -f ${LIBDIR}/man2html1.awk | 
+	gawk -f ${LIBDIR}/man2html1.awk | 
 	 sed -e 's^\\fB\([^\\]*\)\\fR^<B>\1</B></I>^g' \
 	    -e 's^\\f(CO\(.[^\\]*\)\\fR^<CODE>\1</CODE>^g' \
 	    -e 's^\\fI\(.[^\\]*\)\\fR^<I>\1</I></B>^g' \
@@ -80,9 +80,10 @@ do
 	    -e 's$^\.BE *$</pre><HR>$' \
 	    -e 's/^\.RS.*/<UL>/' \
 	    -e 's$^\.RE.*$</UL>$' \
+	    -e 's/^$/<P>/g' \
 	    -e 's^\.SH *"*\([^"]*\)"*^</pre><H2>\1</H2>^' \
 	    -e '/^\.[a-zA-Z]*.*/d'	|
-	/bin/nawk -f ${LIBDIR}/man2html2.awk > ${OUTPUT}
+	gawk -f ${LIBDIR}/man2html2.awk > ${OUTPUT}
   fi
   shift
 done

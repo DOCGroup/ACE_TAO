@@ -29,10 +29,10 @@ export OSE_VERSION_ROOT
 BINDIR="$OSE_VERSION_ROOT/$OSE_HOST/bin"
 LIBDIR=${CLASSINFOLIBDIR-"$OSE_VERSION_ROOT/bin"}
 
-AWK="${AWK-nawk}"
+AWK="${AWK-gawk}"
 
 
-if test "$AWK" = "nawk"
+if test "$AWK" = "gawk"
 then
   VARG="-v"
 fi
