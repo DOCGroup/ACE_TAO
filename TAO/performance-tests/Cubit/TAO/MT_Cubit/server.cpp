@@ -9,7 +9,10 @@
 //    server.cpp
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
+//    Andy Gokhale,
+//    Sumedh Mungee,
+//    Sergio Flores-Gaitan, and 
+//    Nagarajan Surendran
 //
 // ============================================================================
 
@@ -23,29 +26,31 @@
 ACE_RCSID(MT_Cubit, server, "$Id$")
 
 Globals::Globals (void)
-  :ior_file (0),
-   base_port (0),
-   num_of_objs (2),
-   use_name_service (1),
-   thread_per_rate (0),
-   use_multiple_priority (0),
-   run_utilization_test (0),
-   ready_ (0),
-   ready_cnd_ (ready_mtx_),
-   barrier_ (0)
+  : ior_file (0),
+    base_port (0),
+    num_of_objs (2),
+    use_name_service (1),
+    thread_per_rate (0),
+    use_multiple_priority (0),
+    run_utilization_test (0),
+    ready_ (0),
+    ready_cnd_ (ready_mtx_),
+    barrier_ (0)
 {
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
-      perror ("gethostname");
+    ACE_OS::perror ("gethostname");
 }
 
 int
-Globals::parse_args (int argc,char **argv)
+Globals::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rmU");
   int c;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "%s",
+              hostname));
 
-  ACE_DEBUG ((LM_DEBUG,"%s",hostname));
   while ((c = opts ()) != -1)
     {
       //      ACE_DEBUG ((LM_DEBUG,"parse_args:%c ,",c));
@@ -66,8 +71,10 @@ Globals::parse_args (int argc,char **argv)
         break;
       case 'f':
         //        ior_file = opts.optarg;
-        ACE_NEW_RETURN (ior_file,char[BUFSIZ],-1);
-        ACE_OS::strcpy (ior_file,opts.optarg);
+        ACE_NEW_RETURN (ior_file,
+                        char[BUFSIZ],-1);
+        ACE_OS::strcpy (ior_file,
+                        opts.optarg);
         //        ACE_DEBUG ((LM_DEBUG,"Using file %s",ior_file));
         break;
       case 'h':
@@ -106,7 +113,6 @@ Globals::parse_args (int argc,char **argv)
   return 0;
 }
 
-
 Cubit_Task::Cubit_Task (void)
 {
   // No-op.
@@ -142,9 +148,11 @@ Cubit_Task::svc (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s' and priority %d\n",
-              orbargs_, prio));
+              orbargs_,
+              prio));
 
   int rc = this->initialize_orb ();
+
   if (rc == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ORB initialization failed.\n"),
@@ -155,7 +163,6 @@ Cubit_Task::svc (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Create Servants failed.\n"),
                       -1);
-
   TAO_TRY
     {
       this->poa_manager_->activate (TAO_TRY_ENV);
@@ -187,7 +194,7 @@ Cubit_Task::svc (void)
   // created!
 
   for (u_int i = 0; i < num_of_objs_; i++)
-    delete servants_ [i];
+    delete this->servants_[i];
 
   return 0;
 }
@@ -202,6 +209,9 @@ Cubit_Task::initialize_orb (void)
       int argc = args.argc ();
       char **argv = args.argv ();
 
+      // @@ Naga, can you please try to use the TAO_Object_Manager for
+      // all of this initialization, rather than doing it all by hand?
+
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
@@ -211,14 +221,15 @@ Cubit_Task::initialize_orb (void)
 
       // Initialize the Object Adapter.
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references ("RootPOA");
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in(),
+        PortableServer::POA::_narrow (poa_object.in (),
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -264,21 +275,26 @@ Cubit_Task::initialize_orb (void)
         }
       TAO_CHECK_ENV;
 
-      // Do the argument parsing
+      // Do the argument parsing.
 
       if (this->task_id_ == 0)
         {
           //          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
-          if (GLOBALS::instance ()->parse_args (argc,argv) < 0)
+          if (GLOBALS::instance ()->parse_args (argc,
+                                                argv) < 0)
             return -1;
-          GLOBALS::instance ()->barrier_ = new ACE_Barrier (GLOBALS::instance ()->num_of_objs+1);
+          ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
+                          ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
+                          -1);
           //          ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
           ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
           ready_mon.release ();
           if (GLOBALS::instance ()->barrier_ == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,"(%t)Unable to create barrier\n"),-1);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%t)Unable to create barrier\n"),
+                              -1);
         }
 
       if (GLOBALS::instance ()->use_name_service == 0)
@@ -289,7 +305,7 @@ Cubit_Task::initialize_orb (void)
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Name Service.\n"),
-                          1);
+                          -1);
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in (),
@@ -299,7 +315,7 @@ Cubit_Task::initialize_orb (void)
       // nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
           CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
-        return 1;
+        return -1;
 
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
@@ -331,7 +347,6 @@ Cubit_Task::initialize_orb (void)
       this->mt_cubit_context_ =
         CosNaming::NamingContext::_narrow (objref.in (),
                                            TAO_TRY_ENV);
-
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -354,7 +369,7 @@ Cubit_Task::get_servant_ior (u_int index)
 }
 
 int
-Cubit_Task::create_servants ()
+Cubit_Task::create_servants (void)
 {
   TAO_TRY
     {
@@ -369,10 +384,11 @@ Cubit_Task::create_servants ()
                       -1);
 
       char *buffer;
-      int l = ACE_OS::strlen (this->key_) + 3;
+      // @@ Naga, can you please document why the value "3" is here?
+      int len = ACE_OS::strlen (this->key_) + 3;
 
       ACE_NEW_RETURN (buffer,
-                      char[l],
+                      char[len],
                       -1);
 
       // This loop creates multiple servants, and prints out their
@@ -439,6 +455,7 @@ Cubit_Task::create_servants ()
                             buffer));
             }
         }
+
       delete [] buffer;
     }
   TAO_CATCHANY
@@ -472,57 +489,74 @@ Server::initialize (int argc, char **argv)
 
 #if defined (FORCE_ARGS)
    int argc = 4;
-   char *argv[] = { "server",
-                    "-s",
-                    "-f",
-                    "ior.txt" };
-
+   char *argv[] = 
+   {
+     "server",
+     "-s",
+     "-f",
+     "ior.txt" 
+   };
 #endif /* defined (FORCE_ARGS) */
 #endif /* defined (VXWORKS) */
 
-   // Make sure we've got plenty of socket handles.  This call will use
-   // the default maximum.
+   // Make sure we've got plenty of socket handles.  This call will
+   // use the default maximum.
    ACE::set_handle_limit ();
-
    return 0;
 }
 
 int
-Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
+Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
+                        Task_State *ts)
 {
 
-  ACE_ARGV  tmp_args (this->argv_);
+  ACE_ARGV tmp_args (this->argv_);
   char *arg_buf = tmp_args.buf ();
 
   char *low_thread_args;
 
-  int arg_len = strlen (arg_buf);
+  int arg_len = ACE_OS::strlen (arg_buf);
 
   ACE_NEW_RETURN (low_thread_args,
-                  char [arg_len+1],
+                  char[arg_len + 1],
                   -1);
 
   ACE_OS::strcpy (low_thread_args,
                   arg_buf);
   char *args1;
 
+  // @@ Naga, can you please explain why you need to do all of this?
+  // i.e, we need some comments here!  In particular, what is args1
+  // being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
+  // is an appropriate size?  It seems to me that we should either (1)
+  // add an accessor on ACE_ARGV to determine what this size ought to
+  // be or (2) we should try to use/add a method on ACE_ARGV that
+  // converts the argv back into a char * buffer or something!  At any
+  // rate, this code should be cleaned up and abstracted better.
   ACE_NEW_RETURN (args1,
                   char[ACE_DEFAULT_ARGV_BUFSIZ],
                   -1);
   int i;
 
-
   for (i = 0; i < this->argc_ ; i++)
     {
-      if ((ACE_OS::strcmp (this->argv_[i],"-p") == 0) && (i-1 < this->argc_))
+      if (ACE_OS::strcmp (this->argv_[i], "-p" == 0)
+          && i - 1 < this->argc_)
         {
-          GLOBALS::instance ()->base_port = ACE_OS::atoi (this->argv_[i+1]);
-          ACE_DEBUG ((LM_DEBUG,"base_port:%d",GLOBALS::instance()->base_port));
+          GLOBALS::instance ()->base_port =
+            ACE_OS::atoi (this->argv_[i + 1]);
+          ACE_DEBUG ((LM_DEBUG,
+                      "base_port:%d",
+                      GLOBALS::instance()->base_port));
         }
-      else if ((ACE_OS::strcmp (this->argv_[i],"-h") == 0) && (i-1 < this->argc_))
-        ACE_OS::strcpy (GLOBALS::instance ()->hostname,this->argv_[i+1]);
-      else if ((ACE_OS::strcmp (this->argv_[i],"-t") == 0) && (i-1 < this->argc_))
-        GLOBALS::instance ()->num_of_objs = ACE_OS::atoi (this->argv_ [i+1]);
+      else if (ACE_OS::strcmp (this->argv_[i], "-h") == 0
+               && i - 1 < this->argc_)
+        ACE_OS::strcpy (GLOBALS::instance ()->hostname,
+                        this->argv_[i+1]);
+      else if (ACE_OS::strcmp (this->argv_[i], "-t") == 0
+               && i - 1 < this->argc_)
+        GLOBALS::instance ()->num_of_objs =
+          ACE_OS::atoi (this->argv_ [i + 1]);
     }
   // Create an array to hold pointers to the Cubit objects.
   CORBA::String *cubits;
@@ -530,7 +564,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
   ACE_NEW_RETURN (cubits,
                   CORBA::String [GLOBALS::instance ()->num_of_objs],
                   -1);
-
   ACE_OS::sprintf (args1,
                    "-ORBport %d "
                    "-ORBhost %s "
@@ -541,14 +574,14 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                    GLOBALS::instance ()->hostname);
 
   char *high_thread_args;
-  int args1_len = strlen (args1);
+  int args1_len = ACE_OS::strlen (args1);
 
   ACE_NEW_RETURN (high_thread_args,
                   char [arg_len + args1_len +1],
                   -1);
 
-  ACE_OS::strcpy (high_thread_args,arg_buf);
-  ACE_OS::strcat (high_thread_args,args1);
+  ACE_OS::strcpy (high_thread_args, arg_buf);
+  ACE_OS::strcat (high_thread_args, args1);
   Cubit_Task *high_priority_task;
 
   ACE_NEW_RETURN (high_priority_task,
@@ -563,17 +596,21 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
 #if defined (VXWORKS)
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
-  ACE_Sched_Priority priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                                                ACE_SCOPE_THREAD);
+  ACE_Sched_Priority priority =
+    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                    ACE_SCOPE_THREAD);
 #else
+  // @@ Naga/Sergio, why is there a "25" here?  This seems like to
+  // much of a "magic" number.  Can you make this more "abstract?"
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
 #endif /* VXWORKS */
 
   if (GLOBALS::instance ()->run_utilization_test == 1)
-     priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                 ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                                                 ACE_SCOPE_THREAD),
-                                                 ACE_SCOPE_THREAD);
+    priority =
+      ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                       ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                                                       ACE_SCOPE_THREAD),
+                                       ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating servant 0 with high priority %d\n",
@@ -584,23 +621,23 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                                     1,
                                     0,
                                     priority) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
-                  "\thigh_priority_task->activate failed"));
-    }
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                "\thigh_priority_task->activate failed"));
 
   //  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
+
   while (!GLOBALS::instance ()->ready_)
     GLOBALS::instance ()->ready_cnd_.wait ();
+
   //  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
 
-
   if (GLOBALS::instance ()->run_utilization_test == 1)
-     priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                 ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                                                 ACE_SCOPE_THREAD),
-                                                 ACE_SCOPE_THREAD);
+    priority = 
+      ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                       ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                                                       ACE_SCOPE_THREAD),
+                                       ACE_SCOPE_THREAD);
 
   // Create an array to hold pointers to the low priority tasks.
   Cubit_Task **low_priority_task;
@@ -615,49 +652,49 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
   u_int counter = 0;
   u_int j;
 
-  number_of_low_priority_servants = GLOBALS::instance ()->num_of_objs - 1;
+  number_of_low_priority_servants =
+    GLOBALS::instance ()->num_of_objs - 1;
 
   // Drop the priority
-  if (GLOBALS::instance ()->thread_per_rate == 1 || GLOBALS::instance ()->use_multiple_priority == 1)
+  if (GLOBALS::instance ()->thread_per_rate == 1 
+      || GLOBALS::instance ()->use_multiple_priority == 1)
     {
-      ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-                                                     ACE_SCOPE_THREAD);
-
       number_of_priorities = 0;
 
-      while (priority_iterator.more ())
-        {
-          number_of_priorities ++;
-          priority_iterator.next ();
-        }
+      for (ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
+                                                          ACE_SCOPE_THREAD);
+           priority_iterator.more ();
+          priority_iterator.next ())
+        number_of_priorities ++;
 
       // 1 priority is exclusive for the high priority client.
       number_of_priorities --;
 
-      // Drop the priority, so that the priority of clients will increase
-      // with increasing client number.
-      for (j = 0; j < number_of_low_priority_servants; j++)
-        priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                        priority,
-                                                        ACE_SCOPE_THREAD);
+      // Drop the priority, so that the priority of clients will
+      // increase with increasing client number.
+      for (j = 0;
+           j < number_of_low_priority_servants;
+           j++)
+        priority =
+          ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                               priority,
+                                               ACE_SCOPE_THREAD);
 
-      // granularity of the assignment of the priorities.  Some OSs have
-      // fewer levels of priorities than we have threads in our test, so
-      // with this mechanism we assign priorities to groups of threads when
-      // there are more threads than priorities.
+      // Granularity of the assignment of the priorities.  Some OSs
+      // have fewer levels of priorities than we have threads in our
+      // test, so with this mechanism we assign priorities to groups
+      // of threads when there are more threads than priorities.
       grain = number_of_low_priority_servants / number_of_priorities;
       counter = 0;
 
       if (grain <= 0)
         grain = 1;
-
     }
   else
-    {
-      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                      priority,
-                                                      ACE_SCOPE_THREAD);
-    }
+    priority =
+      ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                           priority,
+                                           ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants starting at priority %d\n",
@@ -682,7 +719,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                        (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i,
                        GLOBALS::instance ()->hostname);
 
-      int args_len = strlen (args);
+      int args_len = ACE_OS::strlen (args);
       char *new_args;
       
       ACE_NEW_RETURN  (new_args,
@@ -705,30 +742,28 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                                            1,
                                            0,
                                            priority) == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
-                      "\tlow_priority_task[i]->activate"));
-        }
-
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                    "\tlow_priority_task[i]->activate"));
       ACE_DEBUG ((LM_DEBUG,
                   "Created servant %d with priority %d\n",
                   i,
                   priority));
 
-      // use different priorities on thread per rate or multiple priority.
-      if (GLOBALS::instance ()->use_multiple_priority == 1 || GLOBALS::instance ()->thread_per_rate == 1)
+      // Use different priorities on thread per rate or multiple
+      // priority.
+      if (GLOBALS::instance ()->use_multiple_priority == 1 
+          || GLOBALS::instance ()->thread_per_rate == 1)
         {
           counter = (counter + 1) % grain;
-          if ( (counter == 0) &&
+          if (counter == 0
+              &&
                //Just so when we distribute the priorities among the
                //threads, we make sure we don't go overboard.
-               ((number_of_priorities * grain) > (number_of_low_priority_servants - (i - 1))) )
-              {
-                      // Get the next higher priority.
-                      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                             priority,
-                                                             ACE_SCOPE_THREAD);
-              }
+              (number_of_priorities * grain > number_of_low_priority_servants - (i - 1)))
+            // Get the next higher priority.
+            priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                        priority,
+                                                        ACE_SCOPE_THREAD);
 
         }
     } /* end of for() */
@@ -739,7 +774,9 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
   {
     cubits[0] = high_priority_task->get_servant_ior (0);
 
-    for (j = 0; j < GLOBALS::instance ()->num_of_objs-1; ++j)
+    for (j = 0;
+         j < GLOBALS::instance ()->num_of_objs-1;
+         ++j)
       cubits[j + 1] = low_priority_task[j]->get_servant_ior (0);
 
     FILE *ior_f = 0;
@@ -750,7 +787,9 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
         ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file, "w");
       }
 
-    for (j = 0; j < GLOBALS::instance ()->num_of_objs; ++j)
+    for (j = 0;
+         j < GLOBALS::instance ()->num_of_objs;
+         ++j)
       {
         if (ior_f != 0)
           {
@@ -773,7 +812,8 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
 }
 
 Util_Thread *
-Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
+Server::start_utilization (ACE_Thread_Manager *util_thr_mgr,
+                           Task_State *ts)
 {
   Util_Thread *util_task;
 
@@ -782,9 +822,10 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
                                util_thr_mgr),
                   0);
 
-  ACE_Sched_Priority priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                                ACE_SCOPE_THREAD);
-
+  ACE_Sched_Priority priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                    ACE_SCOPE_THREAD);
+  
   ACE_DEBUG ((LM_DEBUG,
               "Creating Utilization Task with priority %d\n",
               priority));
@@ -874,7 +915,7 @@ main (int argc, char *argv[])
       ts.loop_count_ = 0;
      }
 
-  Util_Thread * util_task = 0;
+  Util_Thread *util_task = 0;
 
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager servant_thread_manager;
@@ -950,7 +991,8 @@ main (int argc, char *argv[])
 
       ts.timer_.elapsed_time (total_elapsed);
 
-      total_util_task_duration = util_task_duration * util_task->get_number_of_computations ();
+      total_util_task_duration =
+        util_task_duration * util_task->get_number_of_computations ();
 
       total_latency = (total_elapsed.sec () *
                        ACE_ONE_SECOND_IN_USECS +
