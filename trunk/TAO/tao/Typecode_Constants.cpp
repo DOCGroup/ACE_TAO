@@ -435,7 +435,7 @@ TAO_TypeCodes::init (void)
                          sizeof oc_completion_status,
                          (char *) &oc_completion_status,
                          1,
-                         sizeof (CompletionStatus));
+                         sizeof (CORBA::CompletionStatus));
 }
 
 // destroy all the typecodes owned by the ORB
