@@ -2,6 +2,7 @@ Sat Feb 21 11:53:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Remember to reset the
 	  current size to 0 after deallocating all entries in the map.
+	  Thanks to Alex for noticing this.
 
 Fri Feb 20 06:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
