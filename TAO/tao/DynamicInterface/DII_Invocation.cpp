@@ -85,7 +85,11 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
         }
 
       // If we couldn't find the right exception, report it as
-      // CORBA::UNKNOWN.
+      // CORBA::UNKNOWN. 
+      
+      // But first, save the user exception in case we
+      // are being used in a TAO gateway.
+      this->host_->raw_user_exception (this->inp_stream ());
 
       // @@ It would seem that if the remote exception is a
       //    UserException we can assume that the request was

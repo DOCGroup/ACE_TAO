@@ -35,10 +35,17 @@ public:
                            const Structure& the_in_structure,
                            Structure_out the_out_structure,
                            char *&name,
-                           CORBA::Environment&)
+                           CORBA::Environment &)
     ACE_THROW_SPEC (());
 
-  void shutdown (CORBA::Environment&)
+  void raise_user_exception (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     test_exception));
+
+  void raise_system_exception (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown (CORBA::Environment &)
     ACE_THROW_SPEC (());
 
 private:

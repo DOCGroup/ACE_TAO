@@ -16,21 +16,21 @@
 #ifndef TAO_DSI_GATEWAY_TEST_DSI_H
 #define TAO_DSI_GATEWAY_TEST_DSI_H
 
-#include "testS.h"
+#include "tao/ORB.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 
 class DSI_Simple_Server : public TAO_DynamicImplementation
 {
   // = TITLE
-  //   Simpler Server implementation
+  //   DSI Simpler Server implementation
   //
   // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
+  //   Implements the DSI/DII gateway.
   //
 public:
   DSI_Simple_Server (CORBA::ORB_ptr orb,
-                     Simple_Server_ptr target,
+                     CORBA::Object_ptr target,
                      PortableServer::POA_ptr poa);
   // ctor
 
@@ -38,17 +38,23 @@ public:
   virtual void invoke (CORBA::ServerRequest_ptr request,
                        CORBA::Environment &env)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
-                                                  PortableServer::POA_ptr poa,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+
+  virtual CORBA::RepositoryId _primary_interface (
+      const PortableServer::ObjectId &oid,
+      PortableServer::POA_ptr poa,
+      CORBA::Environment &ACE_TRY_ENV
+    )
       ACE_THROW_SPEC (());
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &ACE_TRY_ENV);
+
+  virtual PortableServer::POA_ptr _default_POA (
+      CORBA::Environment &ACE_TRY_ENV
+    );
 
 private:
   CORBA::ORB_var orb_;
   // The ORB
 
-  Simple_Server_var target_;
+  CORBA::Object_var target_;
   // Target object, forward requests to it...
 
   PortableServer::POA_var poa_;

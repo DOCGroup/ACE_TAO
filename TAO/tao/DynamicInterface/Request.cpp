@@ -150,6 +150,7 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
                                 ACE_OS::strlen (this->opname_),
                                 argument_flag,
                                 this->orb_->orb_core (),
+                                this,
                                 this->byte_order_);
 
   // Loop as needed for forwarding.

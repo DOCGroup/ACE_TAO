@@ -39,6 +39,23 @@ Simple_Server_i::test_method (CORBA::Long x,
 }
 
 void
+Simple_Server_i::raise_user_exception (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     test_exception))
+{
+  ACE_THROW (test_exception (33,
+                             "reactor meltdown",
+                             "kaput"));
+}
+
+void
+Simple_Server_i::raise_system_exception (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW (CORBA::NO_PERMISSION ());
+}
+
+void
 Simple_Server_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC (())
 {
