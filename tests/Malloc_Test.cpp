@@ -29,7 +29,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if !defined (__Lynx__) || !defined (ACE_LACKS_FORK) || defined (ACE_WIN32)
+#if !defined (__Lynx__) && (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32))
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
@@ -150,7 +150,8 @@ print (const char *process_name,
                   t->i2_,
                   t->i3_));
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("*t->bpl_ = %d, t->long_test_->array_[0] = %d\n>>>>\n"),
+                  ASYS_TEXT ("*t->bpl_ = %d, t->long_test_->array_[0] = ")
+                  ASYS_TEXT ("%d\n>>>>\n"),
                   *t->long_test_->bpl_,
                   t->long_test_->array_[0]));
     }
@@ -205,7 +206,7 @@ main (int argc, ASYS_TCHAR *[])
 
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
-      options.command_line (ACE_TEXT (".") 
+      options.command_line (ACE_TEXT (".")
                             ACE_DIRECTORY_SEPARATOR_STR
                             ACE_TEXT ("Malloc_Test")
                             ACE_PLATFORM_EXE_SUFFIX
@@ -216,7 +217,8 @@ main (int argc, ASYS_TCHAR *[])
       ACE_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) PARENT allocator at = %x, data allocated at %x\n"),
+                  ASYS_TEXT ("(%P) PARENT allocator at = %x, ")
+                  ASYS_TEXT ("data allocated at %x\n"),
                   myalloc,
                   data));
       myalloc->dump ();
@@ -247,8 +249,9 @@ main (int argc, ASYS_TCHAR *[])
       ACE_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) CHILD allocator at = %x, data allocated at %x\n"),
-                  myalloc, 
+                  ASYS_TEXT ("(%P) CHILD allocator at = %x, ")
+                  ASYS_TEXT ("data allocated at %x\n"),
+                  myalloc,
                   data));
       myalloc->dump ();
       child ();
@@ -288,4 +291,4 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* !defined (__Lynx__) || !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) */
+#endif /* ! __Lynx__  &&  (! ACE_LACKS_FORK || ACE_WIN32) */
