@@ -1,3 +1,8 @@
+Fri May 17 18:55:09 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ORT/client.dsp : 
+	  Fixed a typo: Portableclient to PortableServer.
+
 Fri May 17 11:30:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/tests/ORT/client.dsp:
