@@ -214,13 +214,13 @@ typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
 class JAWS_Asynch_IO_Handler : protected JAWS_IO_Handler
 {
 public:
-  JAWS_Asynch_IO_Handler (void);
+  JAWS_Asynch_IO_Handler (JAWS_IO_Handler_Factory *factory);
   virtual ~JAWS_Asynch_IO_Handler (void);
 
 protected:
   // Inherited from JAWS_IO_Handler
 
-  virtual void accept_complete (void);
+  virtual void accept_complete (ACE_HANDLE handle);
   virtual void accept_error (void);
   virtual void read_complete (ACE_Message_Block *data);
   virtual void read_error (void);
@@ -231,19 +231,29 @@ protected:
   virtual void write_error (void);
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
-  virtual JAWS_IO_Handler_Factory *factory (void);
   virtual void task (JAWS_Pipeline_Handler *ph);
+
+  virtual JAWS_IO_Handler_Factory *factory (void);
+  virtual ACE_HANDLE handle (void);
+
+  virtual void done (void);
+  virtual int status (void);
   virtual JAWS_Pipeline_Handler *task (void);
 
+  virtual void message_block (JAWS_Data_Block *mb);
+  virtual JAWS_Data_Block *message_block (void);
 
 private:
-  ACE_Message_Block *state_;
+  int status_;
+  // The state of the handler.
+
+  JAWS_Data_Block *mb_;
   // This maintains the state of the request.
 
-  JAWS_IO *io_;
-  // The reference to our IO interface (synch vs. asynch)
+  ACE_HANDLE handle_;
+  // The socket handle returned from accept.
 
-  JAWS_Pipeline *pipeline_;
+  JAWS_Pipeline_Handler *task_;
   // This is a reference to the next stage of the pipeline when the IO
   // request completes.
 
