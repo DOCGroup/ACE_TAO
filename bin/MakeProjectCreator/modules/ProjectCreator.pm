@@ -404,7 +404,7 @@ sub process_assignment_add {
     $nval = $value;
   }
   $self->process_assignment($name, $nval);
-  $self->process_lib_modification($name);
+  $self->process_duplicate_modification($name);
 }
 
 
@@ -423,20 +423,20 @@ sub process_assignment_sub {
       }
     }
     $self->process_assignment($name, $nval);
-    $self->process_lib_modification($name);
+    $self->process_duplicate_modification($name);
   }
 }
 
 
-sub process_lib_modification {
+sub process_duplicate_modification {
   my($self)   = shift;
   my($name)   = shift;
 
-  ## If we are modifying the "libs" assignment with
+  ## If we are modifying the libs, libpaths or includes assignment with
   ## either addition or subtraction, we are going to
   ## perform a little fix on the value to avoid multiple
   ## libraries and to try to insure the correct linking order
-  if ($name eq "libs") {
+  if ($name eq "libs" || $name eq "libpaths" || $name eq "includes") {
     my($nval) = $self->get_assignment($name);
     if (defined $nval) {
       my($parts) = $self->create_array($nval);
