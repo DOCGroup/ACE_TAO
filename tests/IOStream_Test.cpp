@@ -224,7 +224,6 @@ client (void *arg = 0)
  	}
     }
 
-  server >> i;
   server >> f1;
   server >> l;
   server >> f2;
