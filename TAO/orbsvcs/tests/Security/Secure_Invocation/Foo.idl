@@ -1,0 +1,26 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file Foo.idl
+ *
+ * $Id$
+ *
+ * IDL for the Secure_Invocation test.
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+module Foo
+{
+  interface Bar
+  {
+    /// Test method.
+    void baz ();
+
+    /// Shutdown the server.
+    oneway void shutdown ();
+  };
+
+};
