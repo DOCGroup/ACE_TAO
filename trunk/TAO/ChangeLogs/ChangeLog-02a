@@ -1,3 +1,27 @@
+Fri Jul 21 17:54:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation.cpp (reset_reply_received): 
+	* tao/Invocation.h: Added a new method reset_reply_received
+	  (). This method resets the reply_received field in the
+	  Invocation classes.
+
+	* be/be_visitor_operation/operation_cs.cpp: The above method gets
+	  called from within the generated code. The call is made from
+	  within the for () loop that starts invocation on to the server.
+
+	  A problem occurs when a request is forwarded, and executing
+	  the request at the forwarded location takes a reasonable amount
+	  of time (a few seconds is plenty).  The ORB sends the initial
+	  request, gets back a "FORWARD" response, and calls
+	  location_forward.  This is all fine. However, it then resends
+	  the request to the location it was forwarded to and somehow ends
+	  up in location_forward again, even though the forwarded location
+	  is the real one (it will not generate another "FORWARD"
+	  response). This was observed by William Rucklidge
+	  <wjr@imarkets.com> in his site. I was not able to reproduce the
+	  problem here. He also tested the fix and reported that it worked
+	  fine. 
+
 Fri Jul 21 11:55:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/Makefile:

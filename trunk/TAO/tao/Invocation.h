@@ -237,6 +237,9 @@ public:
 
   TAO_InputCDR &inp_stream (void);
   // return the underlying input stream
+  
+  void reset_reply_received (void);
+  // Reset the reply status
 private:
   int invoke_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
