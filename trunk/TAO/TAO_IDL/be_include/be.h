@@ -68,6 +68,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // be.h
 //
 
+#if defined (ACE_WIN32)
+#pragma    warning(disable:4250)
+#endif /* ACE_WIN32 */
+
 // ACE includes
 
 #include        "ace/ACE.h"
