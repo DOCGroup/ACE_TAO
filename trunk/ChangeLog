@@ -64,7 +64,6 @@ Mon Feb  2 13:48:23 2004  Chad Elliott  <elliott_c@ociweb.com>
           that the custom build rules are processed before source files are
           compiled.
 
->>>>>>> 4.6400
 Mon Feb 02 10:00:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/config-win32-msvc-6.h:
