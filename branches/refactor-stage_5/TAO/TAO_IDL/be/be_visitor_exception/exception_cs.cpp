@@ -140,8 +140,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer = ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_nl
+          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
+          << "ACE_static_cast ("
+          << node->local_name () << "*, _tao_void_pointer);" << be_uidt_nl
           << "delete _tao_tmp_pointer;" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -294,11 +295,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << "  : CORBA::UserException ("
-          << be_idt << be_idt << be_idt << be_idt_nl
+      *os << be_idt_nl
+          << ": CORBA::UserException ("
+          << be_idt << be_idt << be_idt_nl
           << "\"" << node->repoID () << "\"," << be_nl
           << "\"" << node->local_name () << "\"" << be_uidt_nl
-          << ")" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
+          << ")" << be_uidt << be_uidt << be_uidt_nl;
       *os << "{" << be_idt;
 
       // Assign each individual member. We need yet another state.

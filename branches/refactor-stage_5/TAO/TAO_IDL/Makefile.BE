@@ -73,6 +73,7 @@ FILES = be/be_array \
         be/be_visitor_ami_pre_proc \
 	be/be_visitor_amh_pre_proc \
         be/be_visitor_argument \
+        be/be_visitor_arg_traits \
         be/be_visitor_array \
         be/be_visitor_attribute \
 	be/be_visitor_ccm_pre_proc \

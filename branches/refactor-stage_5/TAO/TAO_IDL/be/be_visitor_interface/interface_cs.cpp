@@ -104,10 +104,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  // Initialize the static narrrowing helper variable.
-  *os << be_nl << be_nl
-      << "int " << node->full_name () << "::_tao_class_id = 0;";
-
   if (node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl
@@ -180,12 +176,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "_setup_collocation (int collocated)" << be_nl
           << "{" << be_idt_nl
           << "if (collocated)" << be_idt_nl
+          << "{" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl
           << "::" << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer (this);"
-          << be_uidt << be_uidt;
+          << "_Factory_function_pointer (this);" << be_uidt << be_uidt_nl
+          << "}" << be_uidt;
 
       // Now we setup the immediate parents.
       int n_parents = node->n_inherits ();
@@ -229,8 +226,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer = ACE_static_cast ("
-          << node->local_name () << " *, _tao_void_pointer);" << be_nl
+          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
+          << "ACE_static_cast ("
+          << node->local_name () << " *, _tao_void_pointer);" << be_uidt_nl
           << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -252,73 +250,48 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
+      *os << "CORBA::AbstractBase_ptr";
     }
   else
     {
-      *os << "CORBA::Object_ptr obj" << be_nl;
+      *os << "CORBA::Object_ptr";
     }
 
-  *os << "ACE_ENV_ARG_DECL" << be_uidt_nl
+  *os << " _tao_objref" << be_nl
+      << "ACE_ENV_ARG_DECL"
+      << (node->is_local () ? "_NOT_USED" : "")
+      << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  // Local interfaces have slightly different _narrow implementation.
-  if (! node->is_local ())
+  if (node->is_local ())
     {
-      // Remote _narrow implementation.
-      *os << "if (CORBA::is_nil (obj))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return " << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
-      if (! node->is_abstract ())
-        {
-          *os << "if (! obj->_is_local ())" << be_idt_nl
-              << "{" << be_idt_nl;
-        }
-
-      *os << "CORBA::Boolean is_a =" << be_idt_nl
-          << "obj->_is_a (" << be_idt << be_idt_nl
-          << "\"" << node->repoID () << "\"" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
-          << "ACE_CHECK_RETURN (" << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ());" << be_nl << be_nl
-          << "if (is_a == 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return " << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ();" << be_uidt_nl;
-
-      if (node->is_abstract ())
-        {
-          *os << "}" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "}" << be_uidt << be_uidt_nl;
-          *os << "}" << be_uidt_nl;
-        }
-
-      *os << be_nl;
-    }
-
-  *os << "return " << bt->nested_type_name (this->ctx_->scope ())
-      << "::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  if (node->is_abstract ())
-    {
-      this->gen_abstract_unchecked_narrow (node,
-                                           bt,
-                                           os);
+      *os << node->local_name () << "_ptr proxy =" << be_idt_nl
+          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref);"
+          << be_uidt_nl
+          << "proxy->_add_ref ();" << be_nl
+          << "return proxy;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
     }
   else
     {
-      this->gen_concrete_unchecked_narrow (node,
-                                           bt,
-                                           os);
+      *os << "return" << be_idt_nl
+          << "TAO::Narrow_Utils<" << node->local_name () << ">::narrow ("
+          << be_idt << be_idt_nl
+          << "_tao_objref," << be_nl
+          << "\"" << node->repoID () << "\"";
+
+      if (!node->is_abstract ())
+        {
+          *os << "," << be_nl
+              << node->flat_client_enclosing_scope ()
+              << node->base_proxy_broker_name ()
+              << "_Factory_function_pointer" << be_nl;
+        }
+
+      *os << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
     }
 
   if (node->is_abstract ())

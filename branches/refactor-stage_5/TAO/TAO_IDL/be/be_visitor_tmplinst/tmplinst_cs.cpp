@@ -600,6 +600,30 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
 }
 
 int 
+be_visitor_tmplinst_cs::visit_exception (be_exception *node)
+{
+  if (this->this_mode_generated (node))
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  if (be_global->any_support ())
+    {
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Any_Dual_Impl_T<" << this->linebreak_ 
+          << be_idt << be_idt_nl
+          << node->name () << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+    }
+
+  this->this_mode_generated (node, I_TRUE);
+  return 0;
+}
+
+int 
 be_visitor_tmplinst_cs::visit_structure (be_structure *node)
 {
   if (this->this_mode_generated (node))

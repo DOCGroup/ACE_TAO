@@ -367,11 +367,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
             << node->local_name () << "," << be_nl
             << elem->nested_type_name (scope);
 
-        /*if (nt == AST_Decl::NT_array)
-          {
-            *os << "_slice *";
-            }*/
-
         *os << be_uidt_nl
             << ">" << be_uidt_nl
             << node->local_name () << "_var;" << be_uidt;
@@ -382,11 +377,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
             << node->local_name () << "," << be_nl
             << node->local_name () << "_var," << be_nl
             << elem->nested_type_name (scope);
-
-        /*if (nt == AST_Decl::NT_array)
-          {
-            *os << "_slice *";
-            }*/
 
         *os << be_uidt_nl
             << ">" << be_uidt_nl
