@@ -27,8 +27,11 @@ public class  MTDataHandlerAdapter extends Thread
   // Enqueue an event set for the handler thread.
   public void push (RtecEventComm.Event[] events)
     {
+      //      System.out.println ("in MTDataHandlerAdapter.push");
+
       if (use_queueing_)
         {
+	  //          System.out.println ("MTDataHandlerAdapter.push queueing events");
           queue_.enqueue_tail (events);
         }
       else
@@ -38,6 +41,7 @@ public class  MTDataHandlerAdapter extends Thread
               if(events[i].header.type == 
                  PushConsumer.ACE_ES_EVENT_NOTIFICATION)
                 {
+		  //                  System.out.println ("MTDataHandlerAdapter.push updating data handler");
                   dataHandler_.update (events[i]);
                 }
             }

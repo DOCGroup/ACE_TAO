@@ -37,8 +37,10 @@ REM This part build with JDK
 :JDK
 @echo JDK1.2
 idltojava NavWeap.idl
+idltojava Persian.idl
 idltojava RtecEventComm.idl
 idltojava RtecEventChannelAdmin.idl
+idltojava RtecDefaultEventData.idl
 idltojava RtecScheduler.idl
 idltojava CosNaming.idl
 idltojava TimeBase.idl
@@ -49,6 +51,8 @@ javac RtecScheduler\*.java
 javac RtecEventComm\*.java
 javac RtecEventComm\EventChannelPackage\*.java
 javac RtecEventChannelAdmin\*.java
+javac RtecDefaultEventData\*.java
+javac PersianRecursion\*.java
 javac *.java
 
 @goto end
@@ -59,11 +63,13 @@ javac *.java
 
 @del *.idl
 @xcopy ..\NavWeap.idl
+@xcopy ..\Persian.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\TimeBase.idl
 @mkdir tao
 @xcopy ..\..\..\tao\TimeBase.pidl tao\
 @xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecDefaultEventData.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecScheduler.idl
 
@@ -75,12 +81,14 @@ javac *.java
 
 @del *.idl
 @xcopy ..\NavWeap.idl
+@xcopy ..\Persian.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\TimeBase.idl
 @mkdir tao
 @xcopy ..\..\..\tao\TimeBase.pidl tao\
 @xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecDefaultEventData.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecScheduler.idl
 
 :clean
@@ -111,6 +119,10 @@ javac *.java
 @del RtecScheduler\*.class
 @rd RtecScheduler
 
+@del PersianRecursion\*.java
+@del PersianRecursion\*.class
+@rd PersianRecursion
+
 @del CosNaming\*.java
 @del CosNaming\*.class
 @del CosNaming\NamingContextPackage\*.java
@@ -134,10 +146,14 @@ REM This part build with VB
 @echo Visibroker
 @echo idl2java NavWeap.idl
 @idl2java NavWeap.idl
+@echo idl2java Persian.idl
+@idl2java Persian.idl
 @echo idl2java RtecEventComm.idl
 @idl2java RtecEventComm.idl
 @echo idl2java RtecEventChannelAdmin.idl
 @idl2java RtecEventChannelAdmin.idl
+@echo idl2java RtecDefaultEventData.idl
+@idl2java RtecDefaultEventData.idl
 @echo idl2java RtecScheduler.idl
 @idl2java RtecScheduler.idl
 @echo idl2java CosNaming.idl
@@ -151,4 +167,7 @@ REM This part build with VB
 @vbjc *.java
 
 :end
+
+
+
 

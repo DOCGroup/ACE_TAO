@@ -22,6 +22,24 @@ public class NavWeapDataHandler implements DataHandler {
   int received_events_;
 
 
+  // Observable for Persian Recursion data
+  class PersianObservable extends DemoObservable {
+    
+    // to ask which kind of viewer is needed to display data
+    public int getProperty () {
+	return Properties.PERSIAN;
+    }
+    
+    public void updatePersianData (PersianRecursion.Data data) {
+
+      //      System.out.println ("in PersianObservable.updatePersianData");
+
+      setChanged ();
+      notifyObservers (data);
+    }
+  }
+
+
   // Observable for Navigation data
   class NavigationObservable extends DemoObservable {
     
@@ -33,8 +51,7 @@ public class NavWeapDataHandler implements DataHandler {
     public void updateNavigation (Navigation navigation) {
       setChanged ();
       notifyObservers (navigation);
-    }
-      
+    }      
   }
 
   class WeaponsObservable extends DemoObservable {
@@ -62,6 +79,7 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (temp_);
     }
   }
+
   class OverheadObservable extends DemoObservable {
     
     public int getProperty () {
@@ -74,6 +92,7 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (temp_);
     }
   }
+
   class JitterObservable extends DemoObservable {
     double latency = 0.0;
     double avg_latency = 0.0;
@@ -103,6 +122,7 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (temp_);
     }
   }
+
   class DeadlinesObservable extends DemoObservable {
     
     public int getProperty () {
@@ -118,6 +138,7 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (temp_);	
     }
   }
+
   class CriticalDeadlinesObservable extends DeadlinesObservable {
     
     public int getProperty () {
@@ -143,6 +164,16 @@ public class NavWeapDataHandler implements DataHandler {
     public int getProperty () {
       return Properties.DOUBLE;
     }
+
+    public void updateLatency (long computation_time) {
+      last_latency = latency;
+      latency = (double)(computation_time);
+      latency = latency > 0 ? latency : 0;
+      
+      setChanged ();
+      Double temp_ = new Double(latency);
+      notifyObservers (temp_);	
+    }
     
     public void updateLatency (long completion_time,
 			       long computation_time,
@@ -162,9 +193,75 @@ public class NavWeapDataHandler implements DataHandler {
   
   public synchronized void update (RtecEventComm.Event event) {
 
-    Any any_value = event.data.any_value;
+    // System.out.println ("in NavWeapDataHandler.update");
 
-    if (any_value.type().equal (NavigationHelper.type()))
+    Any any_value;
+    PersianRecursion.Data persian_recursion_data;
+
+    any_value = event.data.any_value;
+
+    if (any_value.type().equal (PersianRecursion.DataHelper.type()))
+      {
+	//        System.out.println ("type matched PersianRecursion.Data");
+
+        try
+	  {
+            persian_recursion_data = 
+              PersianRecursion.DataHelper.extract (any_value);
+	  }
+        catch (Exception e)
+	  {
+            System.err.println (e.getMessage () +
+                                "\nThe stack trace is:\n");
+            e.printStackTrace ();
+            return;
+	  }
+
+	//       System.out.println ("extracted any");
+
+        if (persian_recursion_data.criticality_level.equals (RtecScheduler.Criticality_t.HIGH_CRITICALITY)
+            || persian_recursion_data.criticality_level.equals (RtecScheduler.Criticality_t.VERY_HIGH_CRITICALITY))
+	  {
+	    //            System.out.println ("obtaining high priority persian recursion observable");
+
+	    PersianObservable pobs_hi =
+              (PersianObservable) ObservablesTable.get ("High Consumer Persian Recursion");
+
+	    //            System.out.println ("updating high priority persian recursion observable");
+
+	    pobs_hi.updatePersianData (persian_recursion_data);
+
+            // LatencyObservable lobs_hi = 
+	    // (LatencyObservable) ObservablesTable.get ("High Consumer Execution Time (100 ns)");
+
+	    // lobs_hi.updateLatency (persian_recursion_data.computation_time);
+	  }
+        else
+	  {
+	    //            System.out.println ("obtaining low priority persian recursion observable");
+	    PersianObservable pobs_lo =
+              (PersianObservable) ObservablesTable.get ("Low Consumer Persian Recursion");
+
+	    //            System.out.println ("obtained low priority persian recursion observable");
+            // System.out.println ("updating low priority persian recursion observable");
+
+            pobs_lo.updatePersianData (persian_recursion_data);
+
+	    //            System.out.println ("updated low priority persian recursion observable");
+
+            // LatencyObservable lobs_lo = 
+	    // (LatencyObservable) ObservablesTable.get ("Low Consumer Execution Time (100 ns)");
+
+	    // lobs_lo.updateLatency (persian_recursion_data.computation_time);
+	  }
+
+	//        System.out.println ("done updating PersianObservables");
+
+	received_events_++;
+
+	//        System.out.println ("total events received: " + received_events_);
+     }
+    else if (any_value.type().equal (NavigationHelper.type()))
       {
 	Navigation navigation_ = NavigationHelper.extract (any_value);
 
@@ -255,7 +352,7 @@ public class NavWeapDataHandler implements DataHandler {
       }
     else 
       {
-	System.out.println ("Received wrong type information");
+       	System.out.println ("Received wrong type information");
   
 	System.out.println ("Received any_value.type (): [" +
                             any_value.type() + "]");
@@ -265,6 +362,9 @@ public class NavWeapDataHandler implements DataHandler {
 
 	System.out.println ("OR WeaponsHelper.type (): [" +
                             WeaponsHelper.type() + "]");
+
+	System.out.println ("OR PersianRecursion.DataHelper.type (): [" +
+                            PersianRecursion.DataHelper.type() + "]");
       }
   }
   
@@ -280,9 +380,13 @@ public class NavWeapDataHandler implements DataHandler {
     ObservablesTable.put ("Weapons Latency Jitter (100 ns)", new JitterObservable());
     ObservablesTable.put ("Missed Deadlines", new DeadlinesObservable());
     ObservablesTable.put ("Missed Critical Deadlines", new CriticalDeadlinesObservable());
-    ObservablesTable.put ("Latency (100 ns)", new LatencyObservable()); 
+    ObservablesTable.put ("Latency (100 ns)", new LatencyObservable());
     ObservablesTable.put ("Weapons Latency (100 ns)", new LatencyObservable()); 
     ObservablesTable.put ("Navigation Latency (100 ns)", new LatencyObservable()); 
+    ObservablesTable.put ("High Consumer Persian Recursion", new PersianObservable()); 
+    ObservablesTable.put ("Low Consumer Persian Recursion", new PersianObservable()); 
+    ObservablesTable.put ("High Consumer Execution Time (100 ns)", new LatencyObservable()); 
+    ObservablesTable.put ("Low Consumer Execution Time (100 ns)", new LatencyObservable()); 
   }
   
   public java.util.Enumeration getObservablesList () {
@@ -301,5 +405,3 @@ public class NavWeapDataHandler implements DataHandler {
 
     
     
-
-
