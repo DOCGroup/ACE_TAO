@@ -12,7 +12,8 @@ INFO  = README
 
 DIRS  = Gateway \
         gperf \
-	JAWS
+	JAWS \
+	drwho
 
 # The following directories aren't compiled by default since haven't
 # finished integrating it into ACE...

@@ -1,12 +1,45 @@
+Wed Apr 19 15:00:44 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * apps/Makefile:
+        * apps/drwho/Makefile:
+        * performance-tests/Makefile:
+        * performance-tests/Server_Concurrency/Leader_Follower/Makefile:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile:
+          More Makefiles that were not in the default compilation path,
+          added them and update dependencies.
+
+        * bin/Makefile:
+        * examples/Bounded_Packet_Relay/Makefile:
+        * examples/QOS/Makefile:
+        * performance-tests/RPC/Makefile:
+        * performance-tests/Synch-Benchmarks/Base_Test/Makefile:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Makefile:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Makefile:
+        * ASNMP/asnmp/Makefile:
+        * ASNMP/examples/get/Makefile:
+        * ASNMP/examples/next/Makefile:
+        * ASNMP/examples/set/Makefile:
+        * ASNMP/examples/trap/Makefile:
+        * ASNMP/examples/walk/Makefile:
+        * ASNMP/tests/Makefile:
+          Just updated dependencies.  More fixes are needed to put them in
+          the normal compilation path.
+
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+          They wouldn't compile on platforms that lack context switch
+          counters in rusage.  Conditionally compile that code to avoid
+          the problem.
+
 Wed Apr 19 14:09:29 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * etc/Svc_Conf_l.cpp.diff: Fixed the diff so it generates 
+        * etc/Svc_Conf_l.cpp.diff: Fixed the diff so it generates
           the correct Svc_Conf_l.cpp.
 
 Wed Apr 19 12:48:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/ACE.cpp: Added a missing pointer in the signature of
-	  ACE::t_rcv_n_i (). 
+        * ace/ACE.cpp: Added a missing pointer in the signature of
+          ACE::t_rcv_n_i ().
 
 Wed Apr 19 10:11:23 2000  Darrell Brunsch <brunsch@uci.edu>
 

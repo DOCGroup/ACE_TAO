@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+# $Id$
 #
 #	Makefile for get application
 #----------------------------------------------------------------------------
@@ -8,8 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
- 
-# ACE+SNMP 
+
+# ACE+SNMP
 BIN   = get get_async
 CCFLAGS = -I$(ACE_ROOT)/ASNMP/
 LSRC   = $(addsuffix .cpp,$(BIN))
@@ -38,3 +38,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -386,11 +386,8 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
   throughput.dump_results (argv[0], "throughput");
 
-  ACE_DEBUG ((LM_DEBUG, "\n(%t) Context switches %d/%d\n",
 #if defined(ACE_HAS_PRUSAGE_T)
-              rusage.pr_vctx,
-              rusage.pr_ictx));
-#else
+  ACE_DEBUG ((LM_DEBUG, "\n(%t) Context switches %d/%d\n",
               rusage.pr_vctx,
               rusage.pr_ictx));
 #endif /* ACE_HAS_PRUSAGE_T */

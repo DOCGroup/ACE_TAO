@@ -1,20 +1,20 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+# $Id$
 #
-#	Makefile for walk sample application 
+#	Makefile for walk sample application
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
- 
-# ACE+SNMP 
+
+# ACE+SNMP
 BIN   = walk
 CCFLAGS = -I$(ACE_ROOT)/ASNMP/
 LSRC   = $(addsuffix .cpp,$(BIN))
 
-LDLIBS := -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR)) 
+LDLIBS := -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
 
@@ -39,3 +39,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
