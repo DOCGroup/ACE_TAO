@@ -1,3 +1,5 @@
+Wed Feb 05 10:45:41 1997  David L. Levine  <levine@cs.wustl.edu>
+
 	* ace/SOCK_Dgram.cpp (send,recv): added casts of addr.get_addr ()
 	  to caddr_t so it will compile with Sun C++.
 
@@ -6,9 +8,9 @@
 	* tests/Naming_Test.cpp: moved declaration of "i" out of for loop
 	  because it is used after the loop.
 
-	* examples/ASX/UPIPE_Event_server.cpp (open): return 1 if init ()
-	  succeeds.  There's a commented-out call to activate the object
-	  that would (should?) return a value.
+	* examples/ASX/UPIPE_Event_server/{Consumer,Supplier}_Router.cpp
+	  (open): return 1 if init () succeeds.  There's a commented-out
+	  call to activate the objects that would (should?) return a value.
 
 Tue Feb  4 19:06:52 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
