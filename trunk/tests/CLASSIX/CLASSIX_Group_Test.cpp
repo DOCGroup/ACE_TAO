@@ -17,11 +17,11 @@
 // 
 // ============================================================================
 
-#include "tests/test_config.h"
-#include "CLASSIX/Addr.h"
-#include "CLASSIX/Group_Stamp.h"
-#include "CLASSIX/Group_Dynamic.h"
+#include "ace/CLASSIX/CLASSIX_Addr.h"
+#include "ace/CLASSIX/CLASSIX_Group_Stamp.h"
+#include "ace/CLASSIX/CLASSIX_Group_Dynamic.h"
 
+#include "tests/test_config.h"
 
 int
 main (int, char *[])

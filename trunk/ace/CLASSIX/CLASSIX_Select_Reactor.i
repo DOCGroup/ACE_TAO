@@ -12,6 +12,11 @@ ACE_CLASSIX_Select_Reactor_Notify::ACE_CLASSIX_Select_Reactor_Notify(void)
 }
 
 ACE_INLINE
+ACE_CLASSIX_Select_Reactor_Notify::~ACE_CLASSIX_Select_Reactor_Notify(void)
+{
+}
+
+ACE_INLINE
 ACE_CLASSIX_Select_Reactor::ACE_CLASSIX_Select_Reactor(
     ACE_Timer_Queue *theTimeQ)
   : ACE_Select_Reactor(0, theTimeQ, 0,
@@ -43,12 +48,13 @@ ACE_CLASSIX_Select_Reactor_Notify::close (void)
 
 ACE_INLINE
 void
-ACE_Select_Reactor::max_notify_iterations (int iterations)
+ACE_CLASSIX_Select_Reactor_Notify::max_notify_iterations (int iterations)
 {
 }
 
+ACE_INLINE
 int
-ACE_Select_Reactor::max_notify_iterations (void)
+ACE_CLASSIX_Select_Reactor_Notify::max_notify_iterations (void)
 {
     return 1;
 }

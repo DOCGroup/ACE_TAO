@@ -25,12 +25,13 @@
 //
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
-#include "CLASSIX/OS.h"
-#include "CLASSIX/Reactor.h"
+#include "ace/CLASSIX/CLASSIX_OS.h"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.h"
+
+#include "CLASSIX_test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 

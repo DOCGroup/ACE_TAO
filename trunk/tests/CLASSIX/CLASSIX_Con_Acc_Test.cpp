@@ -27,7 +27,6 @@
 //
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
@@ -36,9 +35,11 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Priority_Reactor.h"
 
-#include "CLASSIX/Connector.h"
-#include "CLASSIX/Acceptor.h"
-#include "Con_Acc_Test.h"
+#include "ace/CLASSIX/CLASSIX_CO_Connector.h"
+#include "ace/CLASSIX/CLASSIX_CO_Acceptor.h"
+
+#include "CLASSIX_test_config.h"
+#include "CLASSIX_Con_Acc_Test.h"
 
 
 // The number of children to run, it can be changed using the -c
@@ -60,9 +61,9 @@ static int opt_max_duration = 60;
 // -m option.
 static int max_retries = 5;
 
-typedef ACE_Connector<Write_Handler, ACE_CLASSIX_CONNECTOR>
+typedef ACE_Connector<Write_Handler, ACE_CLASSIX_CO_CONNECTOR>
         CONNECTOR;
-typedef ACE_Acceptor<Read_Handler, ACE_CLASSIX_ACCEPTOR>
+typedef ACE_Acceptor<Read_Handler, ACE_CLASSIX_CO_ACCEPTOR>
         ACCEPTOR;
 
 typedef ACE_CLASSIX_Port ADDR;
@@ -372,8 +373,8 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector<Write_Handler, ACE_CLASSIX_CONNECTOR>;
-template class ACE_Acceptor<Read_Handler, ACE_CLASSIX_ACCEPTOR>;
+template class ACE_Connector<Write_Handler, ACE_CLASSIX_CO_CONNECTOR>;
+template class ACE_Acceptor<Read_Handler, ACE_CLASSIX_CO_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_CLASSIX_STREAM, ACE_SYNCH>;
 template class auto_ptr<ACE_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor>;

@@ -18,11 +18,10 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "Reactor_Test.h"
-#include "CLASSIX/Reactor.h"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.h"
 
-
+#include "CLASSIX_test_config.h"
+#include "CLASSIX_Reactor_Test.h"
 
 static ACE_Reactor *the_reactor;
 

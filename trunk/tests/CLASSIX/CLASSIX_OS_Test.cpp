@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "tests/test_config.h"
-#include "CLASSIX/OS.h"
+#include "ace/CLASSIX/CLASSIX_OS.h"
 
 
 int
