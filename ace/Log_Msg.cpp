@@ -1561,14 +1561,14 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nflags_ = %x\n"), this->flags_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntrace_depth_ = %d\n"),
               this->trace_depth_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\trace_active_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntrace_active_ = %d\n"),
               this->trace_active_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\tracing_enabled_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntracing_enabled_ = %d\n"),
               this->tracing_enabled_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npriority_mask_ = %x\n"),
               this->priority_mask_));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\thr_state_ = %d\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nthr_state_ = %d\n"),
                 this->thr_desc_->state ()));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
 
