@@ -138,7 +138,8 @@ ACE_OS_Dirent::readdir_r (DIR *dirp,
                         (_FILE_OFFSET_BITS == 64))) || \
       (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
-                         defined (__USE_POSIX)))
+                         defined (__USE_POSIX) || \
+                         defined (HPUX_11)))
 # if defined (__GNUG__) && defined (DIGITAL_UNIX)
   return readdir_r (dirp, entry, result);
 # else

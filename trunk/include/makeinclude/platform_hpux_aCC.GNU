@@ -45,7 +45,8 @@ CXX		= /opt/aCC/bin/aCC
 # If the user has requested building without threads, then don't set any
 # for 10.20, but for 11.00, the default is to use threads, so explicitly
 # turn them off if the user requested build without threads.
-#
+# On HP-UX 11, even without building for threads, the *_r reentrant
+# functions are available, and _REENTRANT enables them.
 ifeq ($(threads),1)
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
 THR_DEFS	= -DACE_HAS_THREADS -D_POSIX_C_SOURCE=199506L
@@ -54,7 +55,7 @@ THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
 endif
 else
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-THR_DEFS	= -DACE_HAS_THREADS=0
+THR_DEFS	= -DACE_HAS_THREADS=0 -D_REENTRANT
 endif
 endif
 
