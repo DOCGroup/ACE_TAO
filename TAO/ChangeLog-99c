@@ -1,3 +1,12 @@
+Tue Jun  1 17:27:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Removed ACE_NTOHL macro from code generated for 
+	  32-bit union case label values (long, ulong and enum).
+	  The bytes were getting swapped one too many times.
+	  Thanks to Carlos for his explanation of the byte-
+	  swapping that goes on in typecode generation.
+
 Tue Jun  1 14:08:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html:
