@@ -6215,6 +6215,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
 
 ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
 {
+  dynamically_allocated_ = 0;   // Don't delete this again in fini()
   fini ();
 }
 
@@ -6232,9 +6233,7 @@ ACE_OS_Object_Manager::instance (void)
       ACE_NEW_RETURN (instance_pointer, ACE_OS_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
 
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
       instance_pointer->dynamically_allocated_ = 1;
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
     }
 
@@ -6246,45 +6245,48 @@ ACE_OS_Object_Manager::init (void)
 {
   if (starting_up_i ())
     {
-      // First, indicate that the ACE_OS_Object_Manager instance is being
+      // First, indicate that this ACE_OS_Object_Manager instance is being
       // initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZING;
 
+      if (this == instance_)
+        {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
-      if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
+          ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
+          if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("ACE_OS_Object_Manager::init (1)")));
-      ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
-                                 ACE_TSS_CLEANUP_LOCK)
-      if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (1)")));
+          ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
+                                     ACE_TSS_CLEANUP_LOCK)
+          if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
         ACE_recursive_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) !=
         0)
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("ACE_OS_Object_Manager::init (2)")));
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (2)")));
 #   if defined (ACE_HAS_TSS_EMULATION) && \
        defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-      ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
-                                 ACE_TSS_BASE_LOCK)
-      if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-        ACE_recursive_thread_mutex_t *,
-        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("ACE_OS_Object_Manager::init (3)")));
+          ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
+                                     ACE_TSS_BASE_LOCK)
+          if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
+          ACE_recursive_thread_mutex_t *,
+          ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (3)")));
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 
-      // Open Winsock (no-op on other platforms).
-      ACE_OS::socket_init (ACE_WSOCK_VERSION);
+          // Open Winsock (no-op on other platforms).
+          ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-      // Register the exit hook, for use by ACE_OS::exit ().
-      ACE_OS::set_exit_hook (ACE_OS_Object_Manager_Internal_Exit_Hook);
+          // Register the exit hook, for use by ACE_OS::exit ().
+          ACE_OS::set_exit_hook (ACE_OS_Object_Manager_Internal_Exit_Hook);
+        }
 
       // Finally, indicate that the ACE_OS_Object_Manager instance has
       // been initialized.
@@ -6297,6 +6299,11 @@ ACE_OS_Object_Manager::init (void)
     }
 }
 
+// Clean up an ACE_OS_Object_Manager.  There can be instances of this object
+// other than The Instance.  This can happen if (on Win32) the ACE DLL
+// causes one to be created, or if a user creates one for some reason.
+// Only The Instance cleans up the static preallocated objects.  All objects
+// clean up their per-object information and managed objects.
 int
 ACE_OS_Object_Manager::fini (void)
 {
@@ -6320,61 +6327,66 @@ ACE_OS_Object_Manager::fini (void)
       next_ = 0;  // Protect against recursive calls.
     }
 
-  // Close down Winsock (no-op on other platforms).
-  ACE_OS::socket_fini ();
+  // Only clean up preallocated objects when the singleton Instance is being
+  // destroyed.
+  if (this == instance_)
+    {
+      // Close down Winsock (no-op on other platforms).
+      ACE_OS::socket_fini ();
 
 #if ! defined (ACE_HAS_STATIC_PREALLOCATION)
-  // Cleanup the dynamically preallocated objects.
+      // Cleanup the dynamically preallocated objects.
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   if !defined (__Lynx__)
-    // LynxOS 3.0.0 has problems with this after fork.
-    if (ACE_OS::thread_mutex_destroy (ACE_reinterpret_cast (
-      ACE_thread_mutex_t *,
-      ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT("%p\n"),
-                    ASYS_TEXT("ACE_OS_Object_Manager::fini (1)")));
+      // LynxOS 3.0.0 has problems with this after fork.
+      if (ACE_OS::thread_mutex_destroy (ACE_reinterpret_cast (
+        ACE_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (1)")));
 #   endif /* ! __Lynx__ */
-    ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
+      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
+                                         ACE_OS_MONITOR_LOCK)
 #   if !defined (__Lynx__)
-    // LynxOS 3.0.0 has problems with this after fork.
-    if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-      ACE_recursive_thread_mutex_t *,
-      ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT("%p\n"),
-                    ASYS_TEXT("ACE_OS_Object_Manager::fini (2)")));
+      // LynxOS 3.0.0 has problems with this after fork.
+      if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
+       ACE_recursive_thread_mutex_t *,
+       ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (2)")));
 #   endif /* ! __Lynx__ */
-    ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
-                                       ACE_TSS_CLEANUP_LOCK)
+      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
+                                         ACE_TSS_CLEANUP_LOCK)
 #   if defined (ACE_HAS_TSS_EMULATION) && \
        defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 #   if !defined (__Lynx__)
-    // LynxOS 3.0.0 has problems with this after fork.
-    if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-      ACE_recursive_thread_mutex_t *,
-      ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT("%p\n"),
-                    ASYS_TEXT("ACE_OS_Object_Manager::fini (3)")));
+      // LynxOS 3.0.0 has problems with this after fork.
+      if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
+        ACE_recursive_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (3)")));
 #   endif /* ! __Lynx__ */
-    ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
-                                      ACE_TSS_BASE_LOCK)
+      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
+                                         ACE_TSS_BASE_LOCK)
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
+    }
 
-  // Indicate that the ACE_OS_Object_Manager instance has been shut down.
+  // Indicate that this ACE_OS_Object_Manager instance has been shut down.
   object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   if (dynamically_allocated_)
     {
-      delete instance_;
+      delete this;
     }
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
-  instance_ = 0;
+  if (this == instance_)
+    instance_ = 0;
 
   return 0;
 }
