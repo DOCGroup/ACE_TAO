@@ -3,9 +3,9 @@
 #include "Task_Client.h"
 #include "ace/Stats.h"
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
 #include "quantify.h"
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
 Task_State::Task_State (int argc, char **argv)
   : key_ ("Cubit"),
@@ -153,7 +153,7 @@ Task_State::Task_State (int argc, char **argv)
   else
     {
       ACE_NEW (barrier_,
-	       ACE_Barrier (thread_count_));
+	       ACE_Barrier (thread_count_ - 1));
     }
 
   ACE_NEW (semaphore_,
@@ -366,30 +366,44 @@ Client::svc (void)
       switch (this->id_)
         {
         case CB_40HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm the high priority client, "
-                      "my id is %d.\n", this->id_));
           frequency = CB_40HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n", 
+		      CB_40HZ_CONSUMER_RATE,
+		      this->id_));
           break;
         case CB_20HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
-                      "my id is %d.\n", this->id_));
           frequency = CB_20HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n", 
+		      CB_20HZ_CONSUMER_RATE,
+		      this->id_));
           break;
         case CB_10HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
-                      "my id is %d.\n", this->id_));
           frequency = CB_10HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n", 
+		      CB_10HZ_CONSUMER_RATE,
+		      this->id_));
           break;
         case CB_5HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
-                      "my id is %d.\n", this->id_));
           frequency = CB_5HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n", 
+		      CB_5HZ_CONSUMER_RATE,
+		      this->id_));
           break;
         case CB_1HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
-                      "my id is %d.\n", this->id_));
           frequency = CB_1HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n", 
+		      CB_1HZ_CONSUMER_RATE,
+		      this->id_));
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID!!!!\n", this->id_));
@@ -633,15 +647,15 @@ Client::run_tests (Cubit_ptr cb,
                 // Cube an octet.
                 CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
                 ret_octet = cb->cube_octet (arg_octet, env);
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -672,16 +686,16 @@ Client::run_tests (Cubit_ptr cb,
 
                 CORBA::Short arg_short = func (i), ret_short;
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 // start recording quantify data from here.
                 quantify_start_recording_data ();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 ret_short = cb->cube_short (arg_short, env);
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -713,16 +727,16 @@ Client::run_tests (Cubit_ptr cb,
                 CORBA::Long arg_long = func (i);
                 CORBA::Long ret_long;
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 ret_long = cb->cube_long (arg_long, env);
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -757,16 +771,16 @@ Client::run_tests (Cubit_ptr cb,
                 arg_struct.s = func (i);
                 arg_struct.o = func (i);
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 // start recording quantify data from here.
                 quantify_start_recording_data ();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 ret_struct = cb->cube_struct (arg_struct, env);
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -797,14 +811,14 @@ Client::run_tests (Cubit_ptr cb,
       else
         {
           call_count++;
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
           // start recording quantify data from here.
           quantify_start_recording_data ();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
           cb->noop (env);
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
           quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
           if (env.exception () != 0)
             {
               env.print_exception ("oneway call noop()\n");
