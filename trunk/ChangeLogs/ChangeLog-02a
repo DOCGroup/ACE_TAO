@@ -1,3 +1,8 @@
+Sun Jun  9 08:51:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Date_Time.{h,i}: Added support for weekday.  Thanks to
+	  Eyal Lubetzky <eyall@BANDWIZ.COM> for reporting this.
+
 Sat Jun  8 14:46:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Array_Base.h: Replaced 
