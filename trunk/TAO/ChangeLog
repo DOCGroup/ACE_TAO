@@ -1,3 +1,8 @@
+Fri Oct 31 13:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Parser_Registry.h:
+          Added include of ace/os_include/os_stddef.h to pickup size_t type
+
 Fri Oct 31 07:39:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Special_Basic_Argument_T.h:
