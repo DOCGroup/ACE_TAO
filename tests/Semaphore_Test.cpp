@@ -23,8 +23,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
-#define ACE_HAS_STHREADS
-
 ACE_RCSID(tests, Semaphore_Test, "$Id$")
 
 #if defined (__BORLANDC__) && __BORLANDC__ >= 0x0530
@@ -149,9 +147,7 @@ worker (void *)
        iterations <= n_iterations;
        iterations++)
     {
-#if defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
-      s.acquire ();
-#else
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
       ACE_Time_Value wait (0,
                            iterations * 1000 * 100);  // Wait 'iter' msec
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
@@ -171,15 +167,18 @@ worker (void *)
                           diff.msec ()));
               test_result = 1;
             }
-#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
           // Hold the lock for a while.
           ACE_OS::sleep (ACE_Time_Value (0,
                                          (ACE_OS::rand () % 1000) * 1000));
           s.release ();
-#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
         }
+#else
+      s.acquire ();
+      // Hold the lock for a while.
+      ACE_OS::sleep (ACE_Time_Value (0,
+                                     (ACE_OS::rand () % 1000) * 1000));
+      s.release ();
 #endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
-
       ACE_Thread::yield ();
     }
 
