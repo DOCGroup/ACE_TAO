@@ -49,7 +49,7 @@ ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 int 
 ACE_Thread_Descriptor::operator==(const ACE_Thread_Descriptor &rhs) const
 {
-  return ACE_OS::thr_cmp (this->thr_handle_, rhs_th.thr_handle_) == 0
+  return ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_) == 0
     && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_) == 0;
 }
 
