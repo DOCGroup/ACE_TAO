@@ -7,15 +7,15 @@
 #if defined (ACE_HAS_WCHAR)
 
 inline
-ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void) 
-{ 
-  delete [] this->s_; 
+ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void)
+{
+  delete [] this->s_;
 }
 
 inline char *
-ACE_Wide_To_Ascii::char_rep (void) 
-{ 
-  return this->s_; 
+ACE_Wide_To_Ascii::char_rep (void)
+{
+  return this->s_;
 }
 
 
@@ -27,22 +27,22 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
     return 0;
 
 # if defined (ACE_WIN32)
-  size_t len = ::WideCharToMultiByte (CP_OEMCP, 
-                                      0, 
-                                      wstr, 
-                                      -1, 
-                                      NULL, 
-                                      0, 
-                                      NULL, 
-                                      NULL);
+  int len = ::WideCharToMultiByte (CP_OEMCP,
+                                   0,
+                                   wstr,
+                                   -1,
+                                   NULL,
+                                   0,
+                                   NULL,
+                                   NULL);
 # elif defined (ACE_LACKS_WCSLEN)
   const wchar_t *wtemp = wstr;
   while (wtemp != 0)
     ++wtemp;
 
-  size_t len = wtemp - wstr + 1;
+  int len = wtemp - wstr + 1;
 # else  /* ACE_WIN32 */
-  size_t len = ::wcslen (wstr) + 1;
+  int len = ::wcslen (wstr) + 1;
 # endif /* ACE_WIN32 */
 
   char *str = new char[len];
@@ -52,7 +52,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 # elif defined (VXWORKS)
   ::wcstombs (str, wstr, len);
 # else /* ACE_WIN32 */
-  for (size_t i = 0; i < len; i++)
+  for (int i = 0; i < len; i++)
     {
       wchar_t *t = ACE_const_cast (wchar_t *, wstr);
       str[i] = ACE_static_cast (char, *(t + i));
@@ -63,22 +63,22 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 
 
 inline
-ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s) 
-  : s_ (ACE_Wide_To_Ascii::convert (s)) 
+ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s)
+  : s_ (ACE_Wide_To_Ascii::convert (s))
 {
 }
 
 
-inline 
-ACE_Ascii_To_Wide::~ACE_Ascii_To_Wide (void) 
-{ 
-  delete [] this->s_; 
+inline
+ACE_Ascii_To_Wide::~ACE_Ascii_To_Wide (void)
+{
+  delete [] this->s_;
 }
 
 inline wchar_t *
-ACE_Ascii_To_Wide::wchar_rep (void) 
-{ 
-  return this->s_; 
+ACE_Ascii_To_Wide::wchar_rep (void)
+{
+  return this->s_;
 }
 
 
@@ -90,11 +90,11 @@ ACE_Ascii_To_Wide::convert (const char *str)
     return 0;
 
 # if defined (ACE_WIN32)
-  size_t len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, NULL, 0);
+  int len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, NULL, 0);
 # else /* ACE_WIN32 */
-  size_t len = strlen (str) + 1;
+  int len = strlen (str) + 1;
 # endif /* ACE_WIN32 */
-    
+
   wchar_t *wstr = new wchar_t[len];
 
 # if defined (ACE_WIN32)
@@ -102,7 +102,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
 # elif defined (VXWORKS)
   ::mbstowcs (wstr, str, len);
 # else /* ACE_WIN32 */
-  for (size_t i = 0; i < len; i++)
+  for (int i = 0; i < len; i++)
     {
       char *t = ACE_const_cast (char *, str);
       wstr[i] = ACE_static_cast (wchar_t, *(t + i));
@@ -112,12 +112,11 @@ ACE_Ascii_To_Wide::convert (const char *str)
 }
 
 
-inline 
-ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s) 
-: s_ (ACE_Ascii_To_Wide::convert (s)) 
+inline
+ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s)
+: s_ (ACE_Ascii_To_Wide::convert (s))
 {
 }
 
 
 #endif /* ACE_HAS_WCHAR */
-
