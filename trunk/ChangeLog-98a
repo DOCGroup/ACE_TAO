@@ -1,3 +1,9 @@
+Mon Dec 15 20:17:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Tried to fix the fstat() wrapper on Win32 so that
+	  it does the right think for HANDLES.  Thanks to Lori Anderson
+	  <lori@probita.com> for pointing this out.
+
 Mon Dec 15 15:36:07 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (exit,wait): Changed these two functions
