@@ -392,6 +392,7 @@ RND_Timer::push (const RtecEventComm::EventSet &event,
   ACE_TRY
     {
       this->driver_->timer (event[0], ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
