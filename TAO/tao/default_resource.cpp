@@ -270,7 +270,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
                       "TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n"));
         }
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory");
 
@@ -307,7 +307,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
         }
-#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* TAO_HAS_UIOP */
       return 0;
     }
 

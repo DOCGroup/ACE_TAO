@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Connector.h"
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
@@ -611,4 +611,4 @@ template class ACE_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDL
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* TAO_HAS_UIOP */

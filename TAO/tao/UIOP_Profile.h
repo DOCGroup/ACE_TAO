@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+# if defined (TAO_HAS_UIOP)
 
 #include "tao/Object_KeyC.h"
 #include "tao/UIOP_Connect.h"
@@ -172,6 +172,6 @@ private:
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+# endif  /* TAO_HAS_UIOP */
 
 #endif  /* TAO_UIOP_PROFILE_H */

@@ -21,16 +21,16 @@
 #ifndef TAO_UIOP_CONNECTOR_H
 #define TAO_UIOP_CONNECTOR_H
 
-#include "ace/Connector.h"
+#include "tao/Pluggable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+# if defined (TAO_HAS_UIOP)
 
+#include "ace/Connector.h"
 #include "ace/LSOCK_Connector.h"
-#include "tao/Pluggable.h"
 #include "tao/UIOP_Connect.h"
 #include "tao/Resource_Factory.h"
 
@@ -192,6 +192,6 @@ private:
   // from the connection cache.
 };
 
-# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+# endif  /* TAO_HAS_UIOP */
 
 #endif  /* TAO_UIOP_CONNECTOR_H */

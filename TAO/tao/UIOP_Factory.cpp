@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Factory.h"
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
@@ -77,10 +77,10 @@ ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_UIOP_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |
-                                  ACE_Service_Type::DELETE_OBJ,
+                          ACE_Service_Type::DELETE_OBJ,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_UIOP_Protocol_Factory)
 
 
-# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif  /* TAO_HAS_UIOP */

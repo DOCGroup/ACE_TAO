@@ -17,9 +17,9 @@
 #ifndef TAO_UIOP_CONNECT_H
 #define TAO_UIOP_CONNECT_H
 
-#include "ace/Reactor.h"
+#include "tao/UIOP_Transport.h"
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -27,13 +27,13 @@
 
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
+#include "ace/Reactor.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 
-#include "tao/UIOP_Transport.h"
 
 // Forward Decls
 class TAO_ORB_Core;
@@ -156,6 +156,6 @@ protected:
 #include "tao/UIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* TAO_HAS_UIOP */
 
 #endif /* TAO_UIOP_CONNECT_H */
