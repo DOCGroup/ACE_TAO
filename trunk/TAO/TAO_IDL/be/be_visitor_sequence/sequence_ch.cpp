@@ -52,6 +52,16 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
+
+  // !! branching in either compile time template instantiation
+  // or manual template instatiation
+  os->gen_ifdef_AHETI();
+
+  // this is the instantiation branch
+  *os << node->instance_name ();
+
+  os->gen_else_AHETI();
+
   // generate the appropriate sequence type
   switch (node->managed_type ())
     {
@@ -108,8 +118,54 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
           *os << ", " << node->max_size () << ">";
         }
     }
+ 
+  os->gen_endif_AHETI();
+
   return 0;
 }
+
+
+int
+be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  bt = be_type::narrow_from_decl (node->base_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ch::"
+                         "gen_instantiate_template_name - "
+                         "Bad element type\n"), -1);
+    }
+
+  // generate the appropriate sequence type
+  switch (node->managed_type ())
+    {
+    case be_sequence::MNG_OBJREF: // sequence of objrefs
+      if (node->unbounded ())
+        this->gen_unbounded_obj_sequence (node);
+      else
+        this->gen_bounded_obj_sequence (node);
+      break;
+    case be_sequence::MNG_STRING: // sequence of strings
+      if (!node->unbounded ())
+        this->gen_bounded_str_sequence (node);
+      // else 
+      //   inheriting from the right class is enough
+      break;
+    default: // not a managed type
+      if (node->unbounded ())
+        this->gen_unbounded_sequence (node);
+      else
+        this->gen_bounded_sequence (node);
+      break;
+    }
+
+  return 0;
+}
+
 
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
@@ -127,6 +183,20 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   if (node->cli_hdr_gen () || node->imported ())
     return 0;
+
+  // instantiation
+
+  if (this->instantiate_sequence (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ch::"
+                         "visit_sequence - "
+                         "codegen. for the primitive type sequence\n"), -1);
+    }
+
+  // end of instantiation
+
+
 
    // generate the ifdefined macro for the sequence type
   os->gen_ifdef_macro (node->flatname ());
@@ -153,6 +223,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // generate a typedef to a parametrized sequence
   *os << "class " << idl_global->export_macro ()
       << " " << node->local_name () << " : public ";
+
   if (this->gen_base_sequence_class (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,8 +232,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                          "codegen for base sequence class\n"), -1);
     }
 
-  *os << be_nl
-      << "{" << be_nl
+  *os << "{" << be_nl
       << "public:" << be_idt_nl
       << node->local_name () << " (void); // default ctor" << be_nl;
   // for unbounded sequences, we have a different set of constructors

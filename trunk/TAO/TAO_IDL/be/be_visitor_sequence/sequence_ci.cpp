@@ -47,6 +47,7 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
   if (node->cli_inline_gen () || node->imported ())
     return 0;
 
+  
   // all we do is generate the _var and _out implementations
   if (this->gen_var_impl (node) == -1)
     {

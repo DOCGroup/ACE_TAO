@@ -47,6 +47,7 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
+
   // retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
@@ -57,6 +58,13 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
                          "gen_base_sequence_class - "
                          "Bad element type\n"), -1);
     }
+
+  os->gen_ifdef_AHETI();
+
+  // this is the instantiation branch
+  *os << node->instance_name ();
+
+  os->gen_else_AHETI();
 
   // generate the appropriate sequence type
   switch (node->managed_type ())
@@ -114,6 +122,9 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
           *os << ", " << node->max_size () << ">";
         }
     }
+
+  os->gen_endif_AHETI();
+
   return 0;
 }
 
@@ -158,14 +169,17 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       *os << node->name () << "::" << node->local_name ()
           << " (CORBA::ULong max) // uses max size" << be_nl
           << "  : ";
+
       // pass it to the base constructor
       if (this->gen_base_sequence_class (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_cs::"
                              "visit_sequence - "
-                             "codegen for base sequence class\n"), -1);
+                            "codegen for base sequence class\n"), -1);
         }
+
+
       *os << " (max)" << be_nl
           << "{}" << be_nl;
     }
@@ -184,7 +198,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
+                         "(%N:%l) be_visitor_sequence_cs::"
                          "visit_sequence - "
                          "Bad visitor\n"), -1);
     }
@@ -192,7 +206,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (bt->accept (visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
+                         "(%N:%l) be_visitor_sequence_cs::"
                          "visit_sequence - "
                          "base type visit failed\n"),
                         -1);

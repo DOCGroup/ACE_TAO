@@ -321,6 +321,129 @@ be_sequence::accept (be_visitor *visitor)
   return visitor->visit_sequence (this);
 }
 
+
+const char *
+be_sequence::instance_name ()
+{
+  static char namebuf[NAMEBUFSIZE];
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+
+  be_type *bt;
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "(%N:%l) be_visitor_sequence_ch::"
+                  "gen_instantiate_name - "
+                  "Bad element type\n"));
+      return namebuf;
+    }
+
+  // generate the class name
+  be_type  *prim_type; // base types
+  if (bt->node_type () == AST_Decl::NT_typedef)
+  {
+    // get the primitive base type of this typedef node
+    be_typedef *t = be_typedef::narrow_from_decl (bt);
+    prim_type = t->primitive_base_type ();
+  }
+  else
+    prim_type = bt;
+
+
+  // generate the appropriate sequence type
+  switch (this->managed_type ())
+    {
+    case be_sequence::MNG_OBJREF: // sequence of objrefs
+      if (this->unbounded ())
+        ACE_OS::sprintf (namebuf, 
+                         "_TAO_Unbounded_Object_Sequence_%s",
+                         this->flatname());
+      else
+        ACE_OS::sprintf (namebuf, 
+                         "_TAO_Bounded_Object_Sequence_%s_%d",
+                         this->flatname(),
+                         this->max_size ()->ev()->u.ulval);
+      break;
+    case be_sequence::MNG_STRING: // sequence of strings
+      if (this->unbounded ())
+        ACE_OS::sprintf (namebuf, 
+                         "TAO_Unbounded_String_Sequence");
+      else
+        ACE_OS::sprintf (namebuf, 
+                         "_TAO_Bounded_String_Sequence_%s",
+                         this->flatname());
+      break;
+    default: // not a managed type
+      if (this->unbounded ())
+        ACE_OS::sprintf (namebuf, 
+                         "_TAO_Unbounded_Sequence_%s",
+                         this->flatname());
+                         //prim_type->flatname ());
+      else
+        ACE_OS::sprintf (namebuf, 
+                         "_TAO_Bounded_Sequence_%s_%d",
+                          this->flatname(),
+                          //prim_type->flatname (),
+                          this->max_size()->ev()->u.ulval);
+      break;
+    }
+
+  return namebuf; 
+}
+
+
+const char *
+be_sequence::object_manager_name ()
+{
+  static char namebuf[NAMEBUFSIZE];
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+
+  be_type *bt;
+  bt = be_type::narrow_from_decl (this->base_type ());
+  if (!bt)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "(%N:%l) be_visitor_sequence_ch::"
+                  "gen_instantiate_name - "
+                  "Bad element type\n"));
+      return namebuf;
+    }
+
+
+  // We need that later, when we generate it on a global scope
+  /*
+  be_type  *prim_type; // base types
+  if (bt->node_type () == AST_Decl::NT_typedef)
+  {
+    // get the primitive base type of this typedef node
+    be_typedef *t = be_typedef::narrow_from_decl (bt);
+    prim_type = t->primitive_base_type ();
+  }
+  else
+    prim_type = bt;
+  */
+  be_scope * bs = be_scope::narrow_from_scope (this->defined_in());
+
+  if (!bs)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "(%N:%l) be_visitor_sequence_ch::"
+                  "gen_instantiate_name - "
+                  "Bad element type\n"));
+      return namebuf;
+    }
+
+  ACE_OS::sprintf (namebuf, 
+                   "_TAO_Object_Manager_%s_%s",
+                   bs->decl()->flatname(),
+                   bt->flatname());  
+
+
+  return namebuf; 
+}
+
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_sequence)
