@@ -10,26 +10,26 @@
 //   CosNaming_i.h
 //
 // = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu> &
+//    Marina Spivak <marina@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 // 
 // ============================================================================
 
-#if !defined (COSNAMING_I_H)
-#define	COSNAMING_I_H
+#if !defined (TAO_NAMING_I_H)
+#define	TAO_NAMING_I_H
 
 #include "orbsvcs/CosNamingS.h"
 #include "Entries.h"
-#include "ace/Synch.h"
   
 class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
 {
   // = TITLE
-  //     This class implements the NamingContext interface that is
-  //     part of the CosNaming idl module.
+  //     This class implements the <NamingContext> interface that is
+  //     part of the <CosNaming> IDL module.
   //
   // = DESCRIPTION
   //     Extensive comments can be found in the Naming IDL file.
+
 public:
   typedef ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex> 
           HASH_MAP;
@@ -133,35 +133,40 @@ protected:
   // (including the last component that doesn't need to be resolved)
   // Returns a pointer to the target context.
   
+  int is_valid (CORBA::ULong len,
+                CORBA::Environment &_env);
+  // Check to see if we've got a valid name and raise an exception if
+  // we don't.
+
 private:    
   HASH_MAP context_;
-  // This implementation of NamingContext uses ACE thread-safe Hash
-  // Map for storage and manipulation of name-object bindings.
+  // This implementation of <NamingContext> uses <ACE_Hash_Map> for
+  // storage and manipulation of name-object bindings.
   
   ACE_Lock *lock_;
   // Lock to serialize access to the underlying data structure.  This
   // is a lock adapter that hides the type of lock, which may be a
-  // null lock, if the ORB decides it is not needed.
+  // null lock if the ORB decides threading is not necessary.
 };
 
 class TAO_ORBSVCS_Export NS_BindingIterator : public POA_CosNaming::BindingIterator
 {
   // = TITLE
-  //     This class implements the BindingIterator interface 
-  //     that is part of the CosNaming idl module.
+  //     This class implements the <BindingIterator> interface that is
+  //     part of the <CosNaming> idl module.
   //
   // = DESCRIPTION
-  //     NS_BindingIterator constructor expects a pointer to a
-  //     DYNAMICALLY allocated hash map iterator. Destructor
+  //     <NS_BindingIterator> constructor expects a pointer to a
+  //     dynamically allocated hash map iterator. Destructor
   //     deallocates hash map iterator.
 public:
   // = Intialization and termination methods.
   NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter,
                       ACE_Lock *lock);
-  // constructor.
+  // Constructor.
 
   ~NS_BindingIterator (void);
-  // destructor.
+  // Destructor.
 
   CORBA::Boolean next_one (CosNaming::Binding_out b, 
 			   CORBA::Environment &IT_env);
@@ -181,8 +186,8 @@ private:
   // A pointer to the hash map iterator.
 
   ACE_Lock *lock_;
-  // Lock passed on from NS_NamingContext to serialize access to the
+  // Lock passed on from <NS_NamingContext> to serialize access to the
   // internal data structure.
 }; 
 
-#endif /* COSNAMING_I_H */
+#endif /* TAO_NAMING_I_H */
