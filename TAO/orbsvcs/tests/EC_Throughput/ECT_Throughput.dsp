@@ -1,25 +1,25 @@
-# Microsoft Developer Studio Project File - Name="ECT_Supplier" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="ECT_Throughput" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=ECT_Supplier - Win32 Debug
+CFG=ECT_Throughput - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "ECT_Supplier.mak".
+!MESSAGE NMAKE /f "ECT_Throughput.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ECT_Supplier.mak" CFG="ECT_Supplier - Win32 Debug"
+!MESSAGE NMAKE /f "ECT_Throughput.mak" CFG="ECT_Throughput - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ECT_Supplier - Win32 Release" (based on\
+!MESSAGE "ECT_Throughput - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "ECT_Supplier - Win32 Debug" (based on\
+!MESSAGE "ECT_Throughput - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +29,7 @@ CFG=ECT_Supplier - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "ECT_Supplier - Win32 Release"
+!IF  "$(CFG)" == "ECT_Throughput - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 TAO.lib orbsvcs.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "ECT_Supplier - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ECT_Throughput - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -67,8 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -82,11 +81,15 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "ECT_Supplier - Win32 Release"
-# Name "ECT_Supplier - Win32 Debug"
+# Name "ECT_Throughput - Win32 Release"
+# Name "ECT_Throughput - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
+# Begin Source File
+
+SOURCE=.\ECT_Consumer.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\ECT_Driver.cpp
@@ -97,7 +100,7 @@ SOURCE=.\ECT_Supplier.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ECT_Supplier_Driver.cpp
+SOURCE=.\ECT_Throughput.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -105,7 +108,7 @@ SOURCE=.\ECT_Supplier_Driver.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\ECT_Driver.h
+SOURCE=.\ECT_Consumer.h
 # End Source File
 # Begin Source File
 
@@ -113,7 +116,7 @@ SOURCE=.\ECT_Supplier.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ECT_Supplier_Driver.h
+SOURCE=.\ECT_Throughput.h
 # End Source File
 # End Group
 # End Target
