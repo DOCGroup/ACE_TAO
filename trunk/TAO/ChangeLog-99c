@@ -18,7 +18,23 @@ Mon Nov 22 16:10:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Added dependencies.
 
 	* tests/Smart_Proxies/run_test.pl:
-	  Added perl script to automate executionof the test.
+	  Added perl script to automate execution of the test.
+
+	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
+	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+	* tests/Smart_Proxies/Collocation/Coll_Tester.{cpp, h}:
+	* tests/Smart_Proxies/Collocation/Collocation.{bor, dsp, dsw}:
+	* tests/Smart_Proxies/Collocation/Diamond.{idl, bor, dsp}:
+	* tests/Smart_Proxies/Collocation/Diamond_i.{h,cpp}:
+	* tests/Smart_Proxies/Collocation/Makefile.bor:
+	* tests/Smart_Proxies/Collocation/README:
+	* tests/Smart_Proxies/Collocation/diamond_export.h:
+	* tests/Smart_Proxies/Collocation/main.cpp:
+	* tests/Smart_Proxies/Collocation/stub_export.h:
+	* tests/Smart_Proxies/Collocation/svc.conf:
+	  Added a collocated smart proxy to the existing collocation test
+	  to verify and demostrate that the smart proxy could be
+	  collocated too.
 	  
 Mon Nov 22 14:03:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
