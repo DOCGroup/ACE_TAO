@@ -1,3 +1,9 @@
+Tue Jan 06 10:37:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (rw_trywrlock_upgrade): moved the #if 0 up a bit so
+          that it builds on Linux/non-glibc.  For some reason, its
+          preprocessor was getting confused.
+
 Mon Jan  5 01:20:51 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
         * ace/Map_Manager.{h,cpp}: Made operator == and != and their
