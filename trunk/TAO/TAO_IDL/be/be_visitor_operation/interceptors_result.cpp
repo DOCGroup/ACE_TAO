@@ -51,13 +51,13 @@ int be_visitor_operation_interceptors_result::visit_array (be_array *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () <<  "_forany _tao_forany_result" 
+  *os << bt->name () <<  "_forany _tao_forany_result"
       << " (this->result_);" << be_nl
       << "this->result_val_ <<= _tao_forany_result;"<< be_nl;
   return 0;
 }
 
-int be_visitor_operation_interceptors_result::visit_enum (be_enum *node)
+int be_visitor_operation_interceptors_result::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   os->indent ();
@@ -66,7 +66,7 @@ int be_visitor_operation_interceptors_result::visit_enum (be_enum *node)
   return 0;
 }
 
-int be_visitor_operation_interceptors_result::visit_interface (be_interface *node)
+int be_visitor_operation_interceptors_result::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
@@ -75,7 +75,7 @@ int be_visitor_operation_interceptors_result::visit_interface (be_interface *nod
 
   return 0;
 }
-int be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *node)
+int be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   os->indent ();
@@ -86,7 +86,7 @@ int be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_
 }
 #ifdef IDL_HAS_VALUETYPE
 
-int be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *node)
+int be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   os->indent ();
@@ -98,7 +98,7 @@ int be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *nod
 
 }
 
-int be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *node)
+int be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   os->indent ();
@@ -111,7 +111,7 @@ int be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_
 
 #endif /* IDL_HAS_VALUETYPE */
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -131,7 +131,7 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
     case AST_PredefinedType::PT_octet:
       *os << "CORBA::Any::from_octet (this->result_);"<<be_nl;
       break;
-    case AST_PredefinedType::PT_pseudo:            
+    case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
     case AST_PredefinedType::PT_long:
     case AST_PredefinedType::PT_ulong:
@@ -142,7 +142,7 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
     case AST_PredefinedType::PT_float:
     case AST_PredefinedType::PT_double:
     case AST_PredefinedType::PT_longdouble:
-      *os << "this->result_;"<<be_nl; 
+      *os << "this->result_;"<<be_nl;
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -150,13 +150,13 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
                          "visit_predefined_type - "
                          "Bad predefined type\n"),
                         -1);
-      
+
     }
   return 0;
 
 }
 
-int be_visitor_operation_interceptors_result::visit_sequence (be_sequence *node)
+int be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   os->indent ();
@@ -166,7 +166,7 @@ int be_visitor_operation_interceptors_result::visit_sequence (be_sequence *node)
 
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -193,8 +193,8 @@ be_visitor_operation_interceptors_result::visit_string (be_string *node)
       *os << "this->result_; ";
 return 0;
 }
- 
-int be_visitor_operation_interceptors_result::visit_structure (be_structure *node)
+
+int be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
@@ -205,7 +205,7 @@ int be_visitor_operation_interceptors_result::visit_structure (be_structure *nod
 
 }
 
-int be_visitor_operation_interceptors_result::visit_union (be_union *node)
+int be_visitor_operation_interceptors_result::visit_union (be_union *)
 {
  TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
@@ -216,7 +216,7 @@ int be_visitor_operation_interceptors_result::visit_union (be_union *node)
 
 }
 
-int be_visitor_operation_interceptors_result::visit_typedef (be_typedef *node)
+int be_visitor_operation_interceptors_result::visit_typedef (be_typedef *)
 {
  TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
