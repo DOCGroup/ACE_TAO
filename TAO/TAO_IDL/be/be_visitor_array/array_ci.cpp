@@ -74,27 +74,32 @@ int be_visitor_array_ci::visit_array (be_array *node)
         }
     }
 
-  // generate code for the _var, _out, and _forany types
-  if (this->gen_var_impl (node) == -1)
+  // No _var or _out class for an anonymous (non-typedef'd) array.
+  if (this->ctx_->tdef () != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ci::"
-                         "visit_array - "
-                         "var_defn failed\n"),
-                        -1);
-    }
-  if (node->size_type () == be_decl::VARIABLE)
-    {
-      if (this->gen_out_impl (node) == -1)
+      // Generate code for the _var and _out types
+      if (this->gen_var_impl (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_array_ci::"
                              "visit_array - "
-                             "out_defn failed\n"),
+                             "var_defn failed\n"),
                             -1);
+        }
+      if (node->size_type () == be_decl::VARIABLE)
+        {
+          if (this->gen_out_impl (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_array_ci::"
+                                 "visit_array - "
+                                 "out_defn failed\n"),
+                                -1);
+            }
         }
     }
 
+  // Generate code for the forany type.
   if (this->gen_forany_impl (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
