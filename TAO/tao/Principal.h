@@ -48,6 +48,11 @@ public:
 
   CORBA_Principal (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Principal_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 private:
   ~CORBA_Principal (void);
 

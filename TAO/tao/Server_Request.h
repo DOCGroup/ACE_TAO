@@ -184,6 +184,12 @@ public:
 
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA::ServerRequest_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
@@ -250,7 +256,7 @@ public:
   virtual void demarshal (CORBA_Environment &orb_env,
                           const TAO_Call_Data_Skel *info,
                           ...);
-  // demarshal incoming parameters. Used by the SSI skeleton (i.e., the IDL
+  // demarshal incoming parameters. Used by the SII skeleton (i.e., the IDL
   // compiler generated skeleton)
 
   virtual void marshal (CORBA_Environment &orb_env,
