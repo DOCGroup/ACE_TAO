@@ -56,3 +56,6 @@ ACE_Addr::ACE_Addr (int type, int size)
   this->base_set (type, size);
 }
 
+ACE_Addr::~ACE_Addr (void)
+{
+}
