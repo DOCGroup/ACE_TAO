@@ -1,3 +1,9 @@
+Mon Feb 23 19:08:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl: 
+
+	  Added the missing inline file.
+
 Mon Feb 23 16:05:12 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
