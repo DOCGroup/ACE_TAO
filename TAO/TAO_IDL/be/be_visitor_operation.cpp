@@ -1576,7 +1576,16 @@ int
 be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -1911,7 +1920,16 @@ int
 be_visitor_operation_rettype_vardecl_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_vardecl_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2032,7 +2050,16 @@ int
 be_visitor_operation_rettype_pre_docall_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_pre_docall_cs::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2166,7 +2193,16 @@ int
 be_visitor_operation_rettype_docall_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_docall_cs::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2336,7 +2372,16 @@ int
 be_visitor_operation_rettype_return_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_return_cs::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2512,7 +2557,16 @@ int
 be_visitor_operation_rettype_vardecl_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_vardecl_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2657,7 +2711,16 @@ int
 be_visitor_operation_rettype_marshal_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_marshal_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2790,7 +2853,16 @@ int
 be_visitor_operation_rettype_assign_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_assign_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
@@ -2937,7 +3009,16 @@ int
 be_visitor_operation_rettype_post_upcall_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // set the alias node
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_post_upcall_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int
