@@ -1,3 +1,11 @@
+Fri Sep 11 17:49:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/TypeCode.{h,cpp}:
+	* tao/Any.cpp;
+	  Added an equivalent() function to typecode, similar to equal(),
+	  but disregarding aliases. Changed the extraction operators in
+	  Any to use equivalent() instead of equal().
+
 Fri Sep 11 17:29:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : Replaced the
