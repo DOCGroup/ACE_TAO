@@ -1472,7 +1472,7 @@ Key_List::output_lookup_array (void)
             ACE_OS::printf ("      %*d, /* slot = %d */\n",
                             Key_List::field_width,
                             *lookup_ptr,
-                            lookup_ptr - lookup_array);
+                            (int)(lookup_ptr - lookup_array));
           else
             ACE_OS::printf ("%*d, %s",
                             Key_List::field_width,
