@@ -1,3 +1,8 @@
+Thu Feb 28 11:38:51 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP: 
+	  Updated the dependencies.
+
 Thu Feb 28 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Makefile.bor:
