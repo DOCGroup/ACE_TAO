@@ -1,3 +1,9 @@
+Tue Jan 25 19:41:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+
+        Fixed typo in include statement. Thanks to JT Conklin.
+
 Tue Jan 25 15:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
