@@ -65,10 +65,6 @@ namespace TAO
   }
 }
 
-#if defined (__ACE_INLINE__)
-# include "Root_POA.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_PORTABLESERVER_FUNCTIONS_H */

@@ -1,3 +1,11 @@
+Fri Dec 10 05:02:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/LF_CH_Event.h:
+	* tao/PortableServer/PortableServer_Functions.h:
+	* tao/PortableServer/ServerRequestInfo.h:
+
+	  Fixed some subtle compile errors.
+
 Thu Dec  9 14:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.{cpp,h,i}:
