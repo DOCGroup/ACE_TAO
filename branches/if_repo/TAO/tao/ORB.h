@@ -39,6 +39,10 @@
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
 
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+#  include "tao/InterfaceC.h"
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
+
 // For the (W)String_var and (W)String_out iostream operators.
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -379,7 +383,7 @@ public:
              TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
+#if defined (TAO_HAS_INTERCEPTORS)
   // = Interceptor registration routine
   //   Currently, we only support one interceptor per-ORB.
 
@@ -404,7 +408,7 @@ public:
   // accessor to the server-side interceptor.  You get a duplicate.
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   // Typedefs for CORBA_ORB_RequestSeq,
   // which is an argument of send_multiple_requests_*().
@@ -494,21 +498,24 @@ public:
                                                CORBA::Environment &ACE_TRY_ENV
                                                = TAO_default_environment ());
 
+
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+
   //Methods added for Philipe Merle for CORBA Script..
+
   CORBA_TypeCode_ptr create_interface_tc (const char * id,
                                           const char * name,
                                           CORBA::Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
   CORBA_TypeCode_ptr create_enum_tc (const char *id,
                                      const char *name,
-                                     CORBA_EnumMemberSeq &members,
+                                     IR::EnumMemberSeq &members,
                                      CORBA::Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
 
   CORBA_TypeCode_ptr create_exception_tc (const char *id,
                                           const char *name,
-                                          CORBA_StructMemberSeq &members,
+                                          IR::StructMemberSeq &members,
                                           CORBA::Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
 
@@ -520,12 +527,11 @@ public:
 
   CORBA_TypeCode_ptr create_struct_tc (const char *id,
                                        const char *name,
-                                       CORBA_StructMemberSeq &members,
+                                       IR::StructMemberSeq &members,
                                        CORBA::Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
 
-
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -803,7 +809,7 @@ private:
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
+#if defined (TAO_HAS_INTERCEPTORS)
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.
