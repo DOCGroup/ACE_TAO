@@ -173,7 +173,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "void " << full_skel_name
         << "::_is_a_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * servant_upcall," << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant" << be_nl
         << "ACE_ENV_ARG_DECL" << be_uidt_nl
         << ")" << be_uidt_nl;
@@ -286,7 +286,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "void " << full_skel_name
         << "::_non_existent_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * servant_upcall," << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant" << be_nl
         << "ACE_ENV_ARG_DECL" << be_uidt_nl
         << ")" << be_uidt_nl;
@@ -467,7 +467,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "void " << full_skel_name
         << "::_component_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * servant_upcall," << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant" << be_nl
         << "ACE_ENV_ARG_DECL" << be_uidt_nl
         << ")" << be_uidt_nl;
