@@ -1,3 +1,9 @@
+Sun Jun 27 14:56:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/run_tests.bat: Added the patch for running tests compiled
+	  with Borland C++.  Thanks to Jody Haggins <jody@atdesk.com> for
+	  the patch.
+
 Sun Jun 27 12:36:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{h, i}: Moved non-deprecated iterator base class

@@ -40,9 +40,6 @@ set exedir=.\bor\bin\
 rem Set deco to whatever decoration you have for the executables
 set deco=
 set platform=bor
-@echo *******************************************************************************
-@echo                           Running BC++ Tests
-@echo *******************************************************************************
 goto endsetup
 
 :setupmsc_arg
@@ -52,9 +49,6 @@ set arg=%1
 set exedir=
 set deco=
 set platform=
-@echo *******************************************************************************
-@echo                           Running MSVC Tests
-@echo *******************************************************************************
 goto endsetup
 
 :usage
