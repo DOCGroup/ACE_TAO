@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_OBSTACK_H
 #define ACE_OBSTACK_H
 #include "ace/pre.h"
