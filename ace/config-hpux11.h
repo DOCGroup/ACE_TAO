@@ -154,11 +154,6 @@
 // Platform has XPG4 wide character support
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-// Platform lacks readers/writer locks.
-// For now... it does have pthread read/write locks but the code in OS.{h i}
-// doesn't know how to do pthread read/write locks.
-#define ACE_LACKS_RWLOCK_T
-
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
 
@@ -246,6 +241,7 @@
 
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_STD
+#  define ACE_HAS_PTHREADS_UNIX98_EXT
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #endif /* ACE_HAS_THREADS */

@@ -408,6 +408,8 @@ ACE_HAS_PTHREADS_DRAFT7                 Platform's 'Pthreads' is .1c draft 7
 ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         (This is the final standard
                                         Pthreads).
+ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
+                                        Pthreads (susp/cont, rwlocks)
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().

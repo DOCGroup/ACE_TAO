@@ -2114,7 +2114,7 @@ protected:
 typedef rwlock_t ACE_rwlock_t;
 #         endif /* !ACE_LACKS_RWLOCK_T */
 #         include /**/ <thread.h>
-#       endif /* defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
+#       endif /* (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
 
 #     else
 #       if !defined (ACE_HAS_POSIX_SEM)
@@ -2429,6 +2429,8 @@ protected:
   ACE_cond_t waiting_important_writer_;
   // condition for the upgrading reader
 };
+#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+typedef pthread_rwlock_t ACE_rwlock_t;
 #   elif defined (ACE_HAS_STHREADS)
 #     include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
