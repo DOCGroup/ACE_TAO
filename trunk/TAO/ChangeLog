@@ -1,3 +1,16 @@
+Fri Nov 21 21:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/AV.mpc:
+
+	  Added SCT_SEQ.cpp coditionally in makefiles only when sctp is
+	  enabled. 
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
+
+	  Fixed compile error that showed up in MPC builds. They needed a
+	  couple of inclusions.
+
 Fri Nov 21 21:05:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
