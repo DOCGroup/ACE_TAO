@@ -62,8 +62,10 @@ TAO_MarshalFactory::~TAO_MarshalFactory()
 // factory method
 //
 // Based on the kind of the typecode, return the appropriate marshal object
-TAO_MarshalObject* TAO_MarshalFactory::make_marshal_object(CORBA_TypeCode_ptr tc)
+TAO_MarshalObject* TAO_MarshalFactory::make_marshal_object(CORBA_TypeCode_ptr tc,
+							   CORBA_Environment &env)
 {
+  env.clear();
   if (tc)
     {
       switch(tc->_kind)
@@ -111,6 +113,7 @@ TAO_MarshalObject* TAO_MarshalFactory::make_marshal_object(CORBA_TypeCode_ptr tc
 	  return m_wstring_;
 	default:
 	  // anything else is an error
+	  env.exception (new CORBA_BAD_TYPECODE(COMPLETED_NO));
 	  return (TAO_MarshalObject *)0;
 	}
     }

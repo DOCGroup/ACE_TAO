@@ -1391,14 +1391,20 @@ CORBA_TypeCode::prv_size (CORBA_Environment &env)
   env.clear ();
 
   if (table [_kind].calc == 0)
-    return table [_kind].size;
+    {
+      _prv_state->tc_size_known_ = CORBA_B_TRUE;
+      _prv_state->tc_size_ = table [_kind].size;
+      return _prv_state->tc_size_;
+    }
 
   size_t alignment;
   CDR stream;
 
   stream.setup_encapsulation (_buffer, (size_t) _length);
 
-  return table [_kind].calc (&stream, alignment, env);
+  _prv_state->tc_size_known_ = CORBA_B_TRUE;
+  _prv_state->tc_size_ = table [_kind].calc (&stream, alignment, env);
+  return _prv_state->tc_size_;
 }
 
 // Tell user the alignment restriction for the data type described by
@@ -1416,7 +1422,11 @@ CORBA_TypeCode::prv_alignment (CORBA_Environment &env)
   env.clear ();
 
   if (table [_kind].calc == 0)
-    return table [_kind].alignment;
+    {
+        _prv_state->tc_alignment_known_ = CORBA_B_TRUE;
+        _prv_state->tc_alignment_ = table [_kind].alignment;
+	return _prv_state->tc_alignment_;
+    }
 
   size_t alignment;
   CDR stream;
@@ -1424,5 +1434,7 @@ CORBA_TypeCode::prv_alignment (CORBA_Environment &env)
   stream.setup_encapsulation (_buffer, (size_t) _length);
 
   (void) table [_kind].calc (&stream, alignment, env);
+  _prv_state->tc_alignment_known_ = CORBA_B_TRUE;
+  _prv_state->tc_alignment_ = alignment;
   return alignment;
 }

@@ -114,11 +114,6 @@ class ACE_Svc_Export CORBA_TypeCode : public IUnknown
   // = DESCRIPTION
   // Implements the CORBA::TypeCode interface specified by CORBA 2.0 spec
 public:
-  // Special Note:
-  // Many of the methods on this class should have been "const"
-  // methods. However, we are not able to do so due to our precompute
-  // optimizations that change the state of the object whenever a quantify is
-  // not yet precomputed
 
   static CORBA_TypeCode_ptr _duplicate(CORBA_TypeCode_ptr tc);
   static CORBA_TypeCode_ptr _nil();
@@ -291,6 +286,10 @@ public:
 private:
   // All the private/helper methods
 
+  void child_free();
+  // helper to the destructor. Called to traverse children and recursively
+  // delete them
+
   CORBA_Boolean prv_equal (CORBA_TypeCode_ptr tc, CORBA_Environment &env) const;
   // compares the typecodes
 
@@ -347,7 +346,13 @@ private:
   u_int _refcount;
   // if refcount reaches 0, free this typecode
 
+  CORBA_Boolean _delete_flag;
+  // indicates if we are freeing ourselves
+
   CORBA_Boolean	_orb_owns;
+  // TAO's approach differs from the SunSoft IIOP. Constant typecodes are owned
+  // by the ORB and get freed only when the ORB dies. 
+
   // If "orb_owns" is false, the value is a constant typecode with
   // both the typecode and the buffer statically allocated; the
   // typecode is never freed.  Otherwise the typecode and the buffer
