@@ -46,4 +46,29 @@ protected:
   AVStreams::StreamCtrl_var stream_ctrl_;
 };
 
+class Video_Client_StreamEndPoint
+  : public virtual TAO_Client_StreamEndPoint
+{
+public:
+  Video_Client_StreamEndPoint ();
+  
+  virtual void handle_stop (const AVStreams::flowSpec &the_spec,
+                            CORBA::Environment &env);
+  
+  virtual void handle_start (const AVStreams::flowSpec &the_spec,  
+                             CORBA::Environment &env);
+  
+  virtual void handle_destroy (const AVStreams::flowSpec &the_spec,  
+                               CORBA::Environment &env);
+
+  virtual CORBA::Boolean handle_connection_established (AVStreams::StreamEndPoint_ptr responder, 
+                                                        AVStreams::streamQoS &qos_spec, 
+                                                        const AVStreams::flowSpec &the_spec,  
+                                                        CORBA::Environment &env);
+
+
+};
+
+
+
 #endif /* AVSTREAMS_CLIENT_H */
