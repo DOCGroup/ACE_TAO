@@ -1,15 +1,20 @@
+Fri Aug 06 10:49:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated egcs versions that we use
+          (1.1.1 and 1.1.2).
+
 Fri Aug  6 08:43:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Log_Msg/test_log_msg.cpp (main): Changed this
-	  test so that it no longer abort()s, but instead calls
- 	  ACE_OS::_exit().  This should help avoid confusion when it's
- 	  run.  Thanks to Kevin Lyda <kevin.lyda@trintech.com> for
- 	  reporting this.  This fixes [BUGID:211].
+        * examples/Log_Msg/test_log_msg.cpp (main): Changed this
+          test so that it no longer abort()s, but instead calls
+          ACE_OS::_exit().  This should help avoid confusion when it's
+          run.  Thanks to Kevin Lyda <kevin.lyda@trintech.com> for
+          reporting this.  This fixes [BUGID:211].
 
-	* ace/SOCK_Dgram_Mcast: The QoS-enabled subscribe() call must
-	  call the QoS-enabled open() call, rather than the "regular"
- 	  open() call because otherwise QoS information isn't initialized!
-  	  Thanks to Vishal for pointing this out.
+        * ace/SOCK_Dgram_Mcast: The QoS-enabled subscribe() call must
+          call the QoS-enabled open() call, rather than the "regular"
+          open() call because otherwise QoS information isn't initialized!
+          Thanks to Vishal for pointing this out.
 
 Fri Aug 06 08:22:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
