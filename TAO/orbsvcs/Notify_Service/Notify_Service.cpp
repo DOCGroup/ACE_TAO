@@ -159,14 +159,15 @@ Notify_Service::init (int argc, char *argv[],
   if (this->use_name_svc_)
   {
     // Register the Factory
-    ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
+    ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
-    CosNaming::Name name (1);
-    name.length (1);
-    name[0].id =
-      CORBA::string_dup (this->notify_factory_name_.c_str ());
+    CosNaming::Name_var name =
+      this->naming_->to_name (this->notify_factory_name_.c_str (),
+                              ACE_TRY_ENV);
+    ACE_CHECK_RETURN (-1);
 
-    this->naming_->rebind (name,
+
+    this->naming_->rebind (name.in (),
                            this->notify_factory_.in (),
                            ACE_TRY_ENV);
     ACE_CHECK_RETURN (-1);
@@ -188,10 +189,13 @@ Notify_Service::init (int argc, char *argv[],
                                                  initial_admin,
                                                  id,
                                                  ACE_TRY_ENV);
-        name[0].id =
-          CORBA::string_dup (this->notify_channel_name_.c_str ());
+        name = this->naming_->to_name (
+          this->notify_channel_name_.c_str (),
+          ACE_TRY_ENV);
+        ACE_CHECK_RETURN (-1);
 
-        this->naming_->rebind (name,
+
+        this->naming_->rebind (name.in (),
                                ec.in (),
                                ACE_TRY_ENV);
         ACE_CHECK_RETURN (-1);
@@ -221,8 +225,8 @@ Notify_Service::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                       ACE_TRY_ENV);
+    CosNaming::NamingContextExt::_narrow (naming_obj.in (),
+                                          ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   return 0;

@@ -1,3 +1,13 @@
+Fri Jul  6 15:59:17 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.h (naming_):
+	* orbsvcs/Notify_Service/Notify_Service.cpp (init,
+	  resolve_naming_service):
+
+	  Integrated patch from Jody Hagins <jody@atdesk.com>.  Take
+	  advantage of the methods provided by the
+	  CosNaming::NamingContextExt interface.
+
 Fri Jul  6 18:02:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp: Removed support for GIOP Lite for the time
@@ -54,7 +64,7 @@ Fri Jul 06 14:58:09 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  version libarary to XXXmfc.lib.
 
 	  Thanks to Kristopher Johnson <kristopher.johnson@transcore.com>
-	  for providing the fix.
+	  for providing the fix.  [Bug 898]
 
 Fri Jul  6 13:33:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -708,7 +718,7 @@ Wed Jun 13 17:55:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  of the circular linked list. This is now replaced by the size of
 	  the linked list. This fixes quite a few errors.
 
-	* tao/Transport.cpp: On read () if we get errno === EWOULDBLOCK we
+	* tao/Transport.cpp: On read () if we get errno == EWOULDBLOCK we
 	  were closing the connection prematurely. This is not right. We
 	  should only return a 0 to the reactor, so that it can call us
 	  back when there is data in the socket.
