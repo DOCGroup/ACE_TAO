@@ -1778,21 +1778,24 @@ ACE::get_ip_interfaces (size_t &count,
 #define IPADDR_NAME_ID TEXT("IPAddress")
 #define PERIOD_STR TEXT(".")
 #define BLANK_STR TEXT(" ")
+#define INVALID_TCPIP_DEVICE_ADDR "0.0.0.0"
 
   const int MAX_STRING_SZ = 4096;
 
   // 1. extract bind=device list 
+  TCHAR raw_buffer[MAXPATHLEN];
+  DWORD raw_buflen = MAXPATHLEN;
   TCHAR buffer[MAX_STRING_SZ]; // 45 chars
   DWORD buf_len = MAX_STRING_SZ;
 
   if (::get_reg_value (LINKAGE_KEY1,
 		       BIND_NAME_ID,
-		       buffer,
-		       buf_len))
+		       raw_buffer,
+		       raw_buflen))
     return -1;
 
   // 2. returned buffer may contain "\\Device\\dev1\0\\device\\dev2\0\0"
-  string_array dev_names ((TCHAR *) buffer); // access raw buffer through this class
+  string_array dev_names ((TCHAR *) raw_buffer); // access raw buffer through this class
   int n_interfaces = dev_names.count ();
 
   // case 1. no interfaces present, empty string? OS version change?
@@ -1800,16 +1803,17 @@ ACE::get_ip_interfaces (size_t &count,
     return 0;
 
   ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -2);
-  
+
+  count = 0;
   for (int i = 0; i < n_interfaces; i++) 
     {
 
       // a. construct name to access IPAddress for this interface 
       NT_STRING ifdevkey (SVCS_KEY1);
-      NT_STRING the_dev = dev_names[i]; // chop off the "\Device" and keep last name
+      NT_STRING the_dev = dev_names[i]; // chop off the "\Device" and keep last name.
 
       if (the_dev.length() < 8)
-	return -3;
+	return -3;		// Something's wrong
       else 
 	{
 	  the_dev = the_dev.substring (8);  // rest of string from offset 8
@@ -1820,16 +1824,18 @@ ACE::get_ip_interfaces (size_t &count,
 	  if (get_reg_value (ifdevkey.rep(), IPADDR_NAME_ID, buffer, buf_len)) 
 	    return -4;
 
+	  if (ACE_OS::strcmp (buffer, INVALID_TCPIP_DEVICE_ADDR) == 0)
+	    continue;		// Don't count this device
+
 	  // c. store in hostinfo object array and up the counter
 #if defined (UNICODE)
 	  const MAX_HOSTNAME_LEN = 256; // per rfc
 	  char c_string[MAX_HOSTNAME_LEN +1];
 	  ::wcstombs(c_string, buffer, MAX_HOSTNAME_LEN);
-	  addrs[i] = ACE_INET_Addr ((unsigned short) 0, c_string);
+	  addrs[count++] = ACE_INET_Addr ((unsigned short) 0, c_string);
 #else
-	  addrs[i] = ACE_INET_Addr ((unsigned short) 0, buffer);
+	  addrs[count++] = ACE_INET_Addr ((unsigned short) 0, buffer);
 #endif /* UNICODE */
-	  count++;
 	}
     }
   return 0;
