@@ -23,7 +23,7 @@
 // Useful typedefs.
 typedef size_t TAO_attribute_calculator (TAO_InputCDR *stream,
                                          size_t &alignment,
-                                         CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                         CORBA_Environment &_env);
 typedef CORBA::Boolean TAO_param_skip_rtn (TAO_InputCDR *);
 
 class TAO_Export TAO_IIOP_Interpreter
