@@ -93,6 +93,23 @@ ACE::hash_pjw (const char *str)
   return hash;
 }
 
+size_t
+ACE::strrepl (char *s, char search, char replace)
+{
+  ACE_TRACE ("ACE::strrepl");
+
+  size_t replaced = 0;
+
+  for (size_t i = 0; s[i] != '\0'; i++)
+    if (s[i] == search)
+      {
+	s[i] = replace;
+	replaced++;
+      }
+
+  return replaced;
+}
+
 char *
 ACE::strenvdup (const char *str)
 {
@@ -136,7 +153,7 @@ ACE::ldfind (const char filename[],
   char tempfilename[MAXPATHLEN];
   char searchfilename[MAXPATHLEN];
 
-  // Create a working copy of filename to mess with
+  // Create a copy of filename to work with.
   if (ACE_OS::strlen (filename) + 1 > sizeof tempcopy)
     {
       errno = ENOMEM;
@@ -148,17 +165,12 @@ ACE::ldfind (const char filename[],
   // Insert canonical directory separators.
   char *separator_ptr;
 
-  for (separator_ptr = tempcopy; 
-       *separator_ptr != '\0'; 
-       separator_ptr++)
-    if (*separator_ptr == '\\' 
-	|| *separator_ptr == ACE_DIRECTORY_SEPARATOR_CHAR)
-      *separator_ptr = '/';
-
-  int got_prefix = 0;
+  if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
+    // Make all the directory separators ``canonical'' to simplify
+    // subsequent code.
+    ACE::strrepl (tempcopy, ACE_DIRECTORY_SEPARATOR_CHAR, '/');
 
   // Separate filename from pathname.
-
   separator_ptr = ACE_OS::strrchr (tempcopy, '/');
 
   // This is a relative path.
@@ -166,13 +178,6 @@ ACE::ldfind (const char filename[],
     {
       searchpathname[0] = '\0';
       ACE_OS::strcpy (tempfilename, tempcopy);
-
-      // Note that we only try to set the prefix if we're dealing with
-      // a relative path.
-      if (ACE_OS::strlen (ACE_DLL_PREFIX) == 0
-	  || ACE_OS::strncmp (tempfilename, ACE_DLL_PREFIX, 
-			      ACE_OS::strlen (ACE_DLL_PREFIX) == 0))
-	got_prefix = 1;
     } 
   else // This is an absolute path.
     {
@@ -181,37 +186,32 @@ ACE::ldfind (const char filename[],
       ACE_OS::strcpy (searchpathname, tempcopy);
     }
 
-  // Determine how the filename needs to be decorated.
-
   int got_suffix = 0;
 
   // Check to see if this has an appropriate DLL suffix for the OS
   // platform.
   char *s = ACE_OS::strrchr (tempfilename, '.');
-  if (s != 0 && ACE_OS::strcmp (s + 1, ACE_DLL_SUFFIX))
-    got_suffix = 1;
 
-  // Create the properly decorated filename.
+  if (s != 0)
+    {
+      // Check whether this matches the appropriate platform-specific suffix.
+      if (ACE_OS::strcmp (s + 1, ACE_DLL_SUFFIX) == 0)
+	got_suffix = 1;
+      else
+	ACE_ERROR ((LM_WARNING, 
+		    "Warning: improper suffix for a shared library on this platform: %s\n", 
+		    s));
+    }
+
+  // Make sure we've got enough space in tempfilename.
   if (ACE_OS::strlen (tempfilename) + 
-      got_prefix ? 0 : ACE_OS::strlen (ACE_DLL_PREFIX) + 
+      ACE_OS::strlen (ACE_DLL_PREFIX) + 
       got_suffix ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= sizeof searchfilename) 
     {
       errno = ENOMEM;
       return -1;
     } 
-  else 
-    ::sprintf (searchfilename, "%s%s%s", 
-	       got_prefix ? "" : ACE_DLL_PREFIX,
-	       tempfilename, 
-	       got_suffix ? "" : ACE_DLL_SUFFIX);
 
-  if (ACE_OS::strcmp (searchfilename 
-		      + ACE_OS::strlen (searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
-		      ACE_DLL_SUFFIX))
-    ACE_ERROR ((LM_NOTICE, 
-		"CAUTION: improper name for a shared library on this patform: %s\n", 
-		searchfilename));
-  
   // Use absolute pathname if there is one.
   if (ACE_OS::strlen (searchpathname) > 0)
     {
@@ -223,16 +223,27 @@ ACE::ldfind (const char filename[],
 	} 
       else 
 	{
+	  if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
+	    // Revert to native path name separators
+	    ACE::strrepl (searchpathname, '/', ACE_DIRECTORY_SEPARATOR_CHAR);
 
-	  // Revert to native path name separators
-	  for (separator_ptr = searchpathname; 
-	       *separator_ptr != '\0'; 
-	       separator_ptr++)
-	    if (*separator_ptr == '/') 
-	      *separator_ptr = ACE_DIRECTORY_SEPARATOR_CHAR;
+	  // First, try matching the filename *without* adding a
+	  // prefix.
+	  ::sprintf (pathname, "%s%s%s",
+		     searchpathname,
+		     tempfilename, 
+		     got_suffix ? "" : ACE_DLL_SUFFIX);
+	  if (ACE_OS::access (pathname, F_OK) == 0)
+	    return 0;
 
-	  ::sprintf (pathname, "%s%s", searchpathname, searchfilename);
-	  return 0;
+	  // Second, try matching the filename *with* adding a prefix.
+	  ::sprintf (pathname, "%s%s%s%s", 
+		     searchpathname,
+		     ACE_DLL_PREFIX,
+		     tempfilename, 
+		     got_suffix ? "" : ACE_DLL_SUFFIX);
+	  if (ACE_OS::access (pathname, F_OK) == 0)
+	    return 0;
 	}
     }
 
@@ -259,15 +270,28 @@ ACE::ldfind (const char filename[],
 		  result = -1;
 		  break;
 		}
-	      ACE_OS::sprintf (pathname, "%s%c%s", 
+
+	      // First, try matching the filename *without* adding a
+	      // prefix.
+	      ACE_OS::sprintf (pathname, "%s%c%s",
 			       path_entry,
 			       ACE_DIRECTORY_SEPARATOR_CHAR, 
 			       searchfilename);
-
-	      if (ACE_OS::access (pathname, R_OK) == 0)
+	      if (ACE_OS::access (pathname, F_OK) == 0)
 		break;
-	      path_entry = ACE_OS::strtok (0,
-					   ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+
+	      // Second, try matching the filename *with* adding a
+	      // prefix.
+	      ACE_OS::sprintf (pathname, "%s%c%s%s",
+			       path_entry,
+			       ACE_DIRECTORY_SEPARATOR_CHAR, 
+			       ACE_DLL_PREFIX,
+			       searchfilename);
+	      if (ACE_OS::access (pathname, F_OK) == 0)
+		break;
+
+	      path_entry = ACE_OS::strtok 
+		(0, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
 	    }
 
 	  ACE_OS::free ((void *) ld_path);

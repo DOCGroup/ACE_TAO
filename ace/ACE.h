@@ -223,6 +223,10 @@ public:
   // Copies <t> to <s>, returning a pointer to the end of the copied
   // region (rather than the beginning, a la <strcpy>.
 
+  static size_t strrepl (char *s, char search, char replace);
+  // Replace all instances of <search> in <s> with <replace>.  Returns
+  // the number of replacements made.
+
   static const char *execname (const char *pathname);
   // On Win32 returns <pathname> if it already ends in ".exe,"
   // otherwise returns a dynamically allocated buffer containing
@@ -254,9 +258,9 @@ public:
   // a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
   // $LD_LIBRARY_PATH on UNIX or $PATH on Win32).  This function will
   // add appropriate suffix (e.g., .dll on Win32 or .so on UNIX)
-  // according to the OS platform.  In addition, if a relative path is
-  // used, this function will prefix the appropriate prefix (e.g.,
-  // "lib" on UNIX and "" on Win32).
+  // according to the OS platform.  In addition, this function will
+  // apply the appropriate prefix (e.g., "lib" on UNIX and "" on
+  // Win32) if the <filename> doesn't match directly.
 
   static FILE *ldopen (const char *filename, const char *type);
   // Uses <ldopen> to locate and open the appropriate <filename> and

@@ -26,8 +26,7 @@ sc_main (int argc, char *argv[])
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
-  while (daemon.reactor_event_loop_done () == 0)
-    daemon.run_reactor_event_loop ();
+  daemon.run_reactor_event_loop ();
 
   return 0;
 }

@@ -14,8 +14,8 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_ReactorEx_H)
-#define ACE_ReactorEx_H
+#if !defined (ACE_REACTOREX_H)
+#define ACE_REACTOREX_H
 
 #include "ace/Time_Value.h"
 #include "ace/Timer_Queue.h"
@@ -291,4 +291,4 @@ public:
 #if defined (__ACE_INLINE__)
 #include "ace/ReactorEx.i"
 #endif /* __ACE_INLINE__ */
-#endif /* ACE_ReactorEx_H */
+#endif /* ACE_REACTOREX_H */

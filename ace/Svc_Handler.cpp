@@ -137,6 +137,7 @@ template <PR_ST_1, ACE_SYNCH_1> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown");
+
   // Deregister this handler with the ACE_Reactor.
   if (this->reactor ())
     {
@@ -145,7 +146,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown (void)
 			      ACE_Event_Handler::DONT_CALL;
 
       // Make sure there are no timers.
-      this->reactor ()->cancel_timer( this );
+      this->reactor ()->cancel_timer (this);
 
       // Remove self from reactor.
       this->reactor ()->remove_handler (this, mask);

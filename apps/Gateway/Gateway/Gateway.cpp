@@ -6,11 +6,14 @@
 #include "Gateway.h"
 
 class Gateway : public ACE_Service_Object
+  // = TITLE
+  //     Integrates the whole Gateway application.
+  //
+  // = DESCRIPTION
+  //     This implementation uses the <ACE_Event_Channel> as the basis
+  //     for the <Gateway> routing.
 {
 public:
-  // = Initialization method.
-  Gateway (void);
-
   // = Service configurator hooks.
   virtual int init (int argc, char *argv[]);
   // Perform initialization.
@@ -34,6 +37,7 @@ protected:
   // file.
 
   ACE_Event_Channel<SUPPLIER_HANDLER, CONSUMER_HANDLER> event_channel_;
+  // The Event Channel routes events from Supplier(s) to Consumer(s).
 };
 
 // Convenient shorthands.
@@ -45,8 +49,6 @@ Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   if (signum > 0)
     ACE_DEBUG ((LM_DEBUG, "(%t) %S\n", signum));
-
-  this->event_channel_.close ();
 
   // Shut down the main event loop.
   ACE_Service_Config::end_reactor_event_loop ();
@@ -68,21 +70,11 @@ Gateway::handle_input (ACE_HANDLE h)
   return this->handle_signal (h);
 }
 
-// Give default values to data members.
-
-
-Gateway::Gateway (void)
-{
-}
-
 int
 Gateway::init (int argc, char *argv[])
 {
   if (this->event_channel_.open (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "open"), -1);
-
-  // Ignore SIPPIPE so each Consumer_Handler can handle it.
-  ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
@@ -91,13 +83,12 @@ Gateway::init (int argc, char *argv[])
   // Register ourselves to receive SIGINT and SIGQUIT 
   // so we can shut down gracefully via signals.
   
-  if (ACE_Service_Config::reactor ()->register_handler (sig_set, 
-						 this) == -1)
+  if (ACE_Service_Config::reactor ()->register_handler 
+      (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 
-  if (ACE_Service_Config::reactor ()->register_handler (0,
-						 this,
-						 ACE_Event_Handler::READ_MASK) == -1)
+  if (ACE_Service_Config::reactor ()->register_handler 
+      (0, this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
   return 0;
 }
