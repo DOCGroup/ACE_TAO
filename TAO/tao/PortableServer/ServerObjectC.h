@@ -137,7 +137,7 @@ namespace ImplementationRepository
     
     static ServerObject_ptr _nil (void)
     {
-      return (ServerObject_ptr)0;
+      return static_cast<ServerObject_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);

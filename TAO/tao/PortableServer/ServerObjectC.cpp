@@ -256,7 +256,7 @@ ImplementationRepository::ServerObject::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:ImplementationRepository/ServerObject:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -306,9 +306,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::ImplementationRepository::ServerObject RHS_SCOPED_NAME;
