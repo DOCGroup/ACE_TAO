@@ -63,7 +63,7 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
 // Evil macros b/c I'm lazy!
 #define TAO_BEGINCHECK  if (0)
 #define TAO_CHECKANDSET(sym) \
-  else if (ACE_OS::strcmp (ACE_const_cast (const ACE_TCHAR *, flag), ACE_LIB_TEXT(#sym)) == 0) \
+  else if (ACE_OS::strcmp (const_cast <const ACE_TCHAR *> ( flag), ACE_LIB_TEXT(#sym)) == 0) \
   ACE_SET_BITS (this->thread_flags_, sym)
 #define TAO_ENDCHECK
 
