@@ -359,13 +359,6 @@ main (int argc, ACE_TCHAR *argv[])
                           1);
     }
 
-  // Unlink this file right away so that it is automatically removed
-  // when the process exits.
-  else if (file.unlink () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("unlink failed for %p\n"),
-                       filename.get_path_name ()),
-                      1);
   CDR_Test cdr_test ('a',
                      0x00ff,
                      0xaabbccdd,
