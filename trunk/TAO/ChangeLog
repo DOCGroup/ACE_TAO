@@ -1,3 +1,9 @@
+Thu Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
+	  Added check for TAO_HAS_MINIMUM_CORBA in <handle_status>.
+
 Fri Apr  4 07:05:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/srver.bor: Fixed a typo. Thanks to
