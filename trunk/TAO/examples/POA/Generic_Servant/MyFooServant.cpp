@@ -70,6 +70,7 @@ void
 MyFooServant::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 
