@@ -1020,19 +1020,12 @@ private:
   // = Static data.
   static ACE_TSS_Cleanup *instance_;
   // Pointer to the singleton instance.
-
-public:
-  static ACE_Thread_Mutex lock_;
-  // Serialize initialization of <key_>.
 };
 
 // = Static object initialization.
 
 // Pointer to the singleton instance.
 ACE_TSS_Cleanup *ACE_TSS_Cleanup::instance_ = 0;
-
-// Serialize initialization of <key_>.
-ACE_Thread_Mutex ACE_TSS_Cleanup::lock_;
 
 int 
 ACE_TSS_Cleanup::mark_cleanup_i (void)
@@ -1069,7 +1062,7 @@ ACE_TSS_Cleanup::exit (void *status)
   // in an array without invoking the according destructors.
 
     {
-      ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+      ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance ());
 
       // Prevent recursive deletions
 
@@ -1125,7 +1118,7 @@ ACE_TSS_Cleanup::exit (void *status)
     // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
     // entries from ACE_TSS_Info table.
     {
-      ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+      ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance ());
 
       for (int i = 0; i < index; i++)
 	{
@@ -1174,7 +1167,7 @@ ACE_TSS_Cleanup::instance (void)
   if (ACE_TSS_Cleanup::instance_ == 0)
     {
       // Insure that we are serialized!
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, 0);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance (), 0);
 
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the key once.
@@ -1191,7 +1184,7 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
 			 void *inst)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::insert");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance (), -1);
 
   return this->table_.insert (ACE_TSS_Info (key, destructor, inst));
 }
@@ -1200,7 +1193,7 @@ int
 ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::remove");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance (), -1);
 
   return this->table_.remove (ACE_TSS_Info (key));
 }
@@ -1208,7 +1201,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 int 
 ACE_TSS_Cleanup::detach (void *inst)
 { 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance (), -1);
   
   ACE_TSS_Info *key_info = 0;
   int success = 0;
@@ -1250,7 +1243,7 @@ ACE_TSS_Cleanup::detach (ACE_thread_key_t key, ACE_thread_t tid)
 int 
 ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance (), -1);
 
   ACE_TSS_Info *key_info = 0;
 
