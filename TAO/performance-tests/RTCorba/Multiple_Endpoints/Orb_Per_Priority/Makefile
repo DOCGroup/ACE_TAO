@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-BIN = server client
+BIN_UNCHECKED = server client
 
 CLIENT_OBJS = 	client.o \
 		testC.o
