@@ -255,7 +255,8 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::cleanup_AST");
 
-  // Locate the ACE_Svc_Handler corresponding to the socket descriptor.
+  // Locate the ACE_Svc_Handler corresponding to the socket
+  // descriptor.
   if (this->handler_map_.find (handle, ast) == -1)
     {
       // Error, entry not found in map.
@@ -264,13 +265,13 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
 			"find", handle), -1);
     }
 
-  // Try to remove from ACE_Timer_Queue but if it's not there we ignore
-  // the error.
+  // Try to remove from ACE_Timer_Queue but if it's not there we
+  // ignore the error.
   this->reactor_->cancel_timer (ast->cancellation_id ());
 
   // Remove ACE_HANDLE from ACE_Reactor.
-  this->reactor_->remove_handler (handle, ACE_Event_Handler::ALL_EVENTS_MASK 
-				  | ACE_Event_Handler::DONT_CALL);
+  this->reactor_->remove_handler 
+    (handle, ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
 
   // Remove ACE_HANDLE from the map.
   this->handler_map_.unbind (handle);

@@ -162,7 +162,7 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 
       // Perform the callback.
       if (handler->handle_timeout (cur_time, arg) == -1)
-	this->cancel (handler);
+	this->cancel (handler, 0); // 0 means "call handle_close()".
 
       if (reclaim)
 	// Call the factory method to free up the node.

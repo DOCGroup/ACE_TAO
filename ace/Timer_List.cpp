@@ -137,53 +137,61 @@ ACE_Timer_List::reschedule (ACE_Timer_Node *expired)
 int
 ACE_Timer_List::schedule (ACE_Event_Handler *handler,
 			  const void *arg,
-			  const ACE_Time_Value	&future_time, 
-			  const ACE_Time_Value	&interval)
+			  const ACE_Time_Value &future_time, 
+			  const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List::schedule");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // Increment the sequence number (it will wrap around).
-  int timer_id = this->timer_id ();
-
-  if (this->is_empty () || future_time < this->earliest_time ())
+  if (handler == 0)
     {
-      // Place at the beginning of the list.
-      ACE_Timer_Node *temp = this->alloc_node ();
-
-      // Use operator placement new.
-      this->head_ = new (temp) ACE_Timer_Node (handler, 
-					       arg, 
-					       future_time,
-					       interval, 
-					       this->head_,
-					       timer_id);
-      return timer_id;
+      errno = EINVAL;
+      return -1;
     }
-
-  // Place in the middle of the list where it belongs (i.e., sorted in
-  // ascending order of absolute time to expire).
-  else 
+  else
     {
-      ACE_Timer_Node *prev = this->head_;
-      ACE_Timer_Node *after = this->head_->next_;
+      // Increment the sequence number (it will wrap around).
+      int timer_id = this->timer_id ();
 
-      while (after != 0 && future_time > after->timer_value_)
+      if (this->is_empty () || future_time < this->earliest_time ())
 	{
-	  prev = after;
-	  after = after->next_;
+	  // Place at the beginning of the list.
+	  ACE_Timer_Node *temp = this->alloc_node ();
+
+	  // Use operator placement new.
+	  this->head_ = new (temp) ACE_Timer_Node (handler, 
+						   arg, 
+						   future_time,
+						   interval, 
+						   this->head_,
+						   timer_id);
+	  return timer_id;
 	}
 
-      ACE_Timer_Node *temp = this->alloc_node ();
+      // Place in the middle of the list where it belongs (i.e., sorted in
+      // ascending order of absolute time to expire).
+      else 
+	{
+	  ACE_Timer_Node *prev = this->head_;
+	  ACE_Timer_Node *after = this->head_->next_;
 
-      // Use operator placement new.
-      prev->next_ = new (temp) ACE_Timer_Node (handler, 
-					       arg, 
-					       future_time,
-					       interval, 
-					       after,
-					       timer_id);
-      return timer_id;
+	  while (after != 0 && future_time > after->timer_value_)
+	    {
+	      prev = after;
+	      after = after->next_;
+	    }
+
+	  ACE_Timer_Node *temp = this->alloc_node ();
+
+	  // Use operator placement new.
+	  prev->next_ = new (temp) ACE_Timer_Node (handler, 
+						   arg, 
+						   future_time,
+						   interval, 
+						   after,
+						   timer_id);
+	  return timer_id;
+	}
     }
 }
 
@@ -204,7 +212,8 @@ ACE_Timer_List::timer_id (void)
 
 int
 ACE_Timer_List::cancel (int timer_id, 
-			const void **arg)
+			const void **arg,
+			int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_List::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -229,9 +238,10 @@ ACE_Timer_List::cancel (int timer_id,
       if (arg != 0)
 	*arg = curr->arg_;
 
-      // Call the close hook.
-      curr->handler_->handle_close (ACE_INVALID_HANDLE, 
-				    ACE_Event_Handler::TIMER_MASK);
+      if (dont_call_handle_close)
+	// Call the close hook.
+	curr->handler_->handle_close (ACE_INVALID_HANDLE, 
+				      ACE_Event_Handler::TIMER_MASK);
       this->free_node (curr);
       return 1;
     }
@@ -242,7 +252,8 @@ ACE_Timer_List::cancel (int timer_id,
 // Locate and remove all values of <handler> from the timer queue.
 
 int
-ACE_Timer_List::cancel (ACE_Event_Handler *handler)
+ACE_Timer_List::cancel (ACE_Event_Handler *handler,
+			int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_List::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -258,7 +269,8 @@ ACE_Timer_List::cancel (ACE_Event_Handler *handler)
 	{
 	  number_of_cancellations++;
 
-	  if (number_of_cancellations == 1)	  
+	  if (dont_call_handle_close == 0 
+	      && number_of_cancellations == 1)	  
 	    // Call the close hook.
 	    curr->handler_->handle_close (ACE_INVALID_HANDLE, 
 					  ACE_Event_Handler::TIMER_MASK);
