@@ -1,3 +1,8 @@
+Wed Aug 18 10:42:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/WFMO_Reactor.i (reset_timer_interval): The return type
+	  was incorrect...  Thanks to Andy and Jeff for reporting this.
+
 Wed Aug 18 09:47:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.pl:
