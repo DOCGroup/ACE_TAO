@@ -36,12 +36,14 @@
 //     concurrent access by their owning thread.
 //
 // = AUTHORS
-//     Copyright 1994-1995 by Sun Microsystems, Inc.
-//     Many enhancements added by Aniruddha Gokhale and Carlos O'Ryan.
-//     ACE version by Jeff Parsons and Istvan Buki
+//     Original copyright 1994-1995 by Sun Microsystems, Inc.  See
+//     $TAO_ROOT/COPYING.sun for more info.
+//     Many enhancements added by Aniruddha Gokhale
+//     <gokhale@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
+//     for TAO.  ACE version by Jeff Parsons <parsons@cs.wustl.edu>
+//     and Istvan Buki <istvan.buki@euronet.be>.
 //
 // ============================================================================
-
 
 #if !defined(ACE_CDR_H)
 #define ACE_CDR_H
@@ -53,12 +55,11 @@ class ACE_Export CDR
   // = TITLE
   //   Keep constants and some routines common to both Output and
   //   Input CDR streams.
-  //
 public:
   // = Constants defined by the CDR protocol.
-
-  // By defining as many of these constants as possible as enums we ensure 
-  // they get inlined and avoid pointless static memory allocations.
+  // By defining as many of these constants as possible as enums we
+  // ensure they get inlined and avoid pointless static memory
+  // allocations.
 
   enum
   {
@@ -104,10 +105,10 @@ public:
   static void swap_4 (const char *orig, char *target);
   static void swap_8 (const char *orig, char *target);
   static void swap_16 (const char *orig, char *target);
-  // Do byte swapping for each basic IDL type size.
-  // There exist only routines to put byte, halfword (2 bytes), word
-  // (4 bytes), doubleword (8 bytes) and quadword (16 byte); because
-  // those are the IDL basic type sizes.
+  // Do byte swapping for each basic IDL type size.  There exist only
+  // routines to put byte, halfword (2 bytes), word (4 bytes),
+  // doubleword (8 bytes) and quadword (16 byte); because those are
+  // the IDL basic type sizes.
 
   static void mb_align (ACE_Message_Block *mb);
 
@@ -117,9 +118,9 @@ public:
   // large enough to contain any of the basic IDL types.  Return -1 on
   // failure, 0 on success.
 
-  // Definitions of the IDL basic types, 
-  // for use in the CDR classes. The cleanest way to avoid 
-  // complaints from all compilers is to define them all. 
+  // Definitions of the IDL basic types, for use in the CDR
+  // classes. The cleanest way to avoid complaints from all compilers
+  // is to define them all.
   #if defined (ghs) && defined (CHORUS)
     // This is non-compliant, but a nasty bout with 
     // Green Hills C++68000 1.8.8 forces us into it.
@@ -194,10 +195,10 @@ public:
       };
   # endif /* ACE_SIZEOF_DOUBLE != 8 */
 
-    // 94-9-32 Appendix A defines a 128 bit floating point "long double"
-    // data type, with greatly extended precision and four more bits of
-    // exponent (compared to "double").  This is an IDL extension, not
-    // yet standard.
+    // 94-9-32 Appendix A defines a 128 bit floating point "long
+    // double" data type, with greatly extended precision and four
+    // more bits of exponent (compared to "double").  This is an IDL
+    // extension, not yet standard.
 
   #  if   ACE_SIZEOF_LONG_DOUBLE == 16
     typedef long double LongDouble;
@@ -214,34 +215,31 @@ public:
 
 };
 
-
 class ACE_Export ACE_OutputCDR
 {
-  //
   // = TITLE
   //   A CDR stream for writing, i.e. for marshalling.
   //
   // = DESCRIPTION
   //   This class is based on the the CORBA spec for Java (98-02-29),
-  //   java class omg.org.CORBA.portable.OutputStream.
-  //   It diverts in a few ways:
+  //   java class omg.org.CORBA.portable.OutputStream.  It diverts in
+  //   a few ways:
   //     + Operations taking arrays don't have offsets, because in C++
-  //     it is easier to describe an array starting from x+offset.
+  //       it is easier to describe an array starting from x+offset.
   //     + Operations return an error status, because exceptions are
-  //     not widely available in C++ (yet).
+  //       not widely available in C++ (yet).
   //
   //   A particularly useful static member function for this buffer is
   //   an interpretive encoding routine, usable as a typecode
   //   interpreter callback.  Ditto for decoding.  These are used to
   //   support all OMG-IDL datatypes, even those not supported
   //   directly by put/get primitives.
-  //
 public:
   friend class ACE_InputCDR;
   // For reading from an output CDR stream.
 
   ACE_OutputCDR (size_t size = 0, 
-		             int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  size_t memcpy_tradeoff = 
@@ -263,8 +261,8 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  size_t memcpy_tradeoff= 
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-  // Build a CDR stream with an initial Message_Block chain, it will *not*
-  // remove <data>, since it did not allocate it.
+  // Build a CDR stream with an initial Message_Block chain, it will
+  // *not* remove <data>, since it did not allocate it.
 
   ~ACE_OutputCDR (void);
   // destructor
@@ -323,7 +321,7 @@ public:
   CDR::Boolean write_double (const CDR::Double &x);
   CDR::Boolean write_longdouble (const CDR::LongDouble &x);
 
-  // For string we offer methods that accept a precomputed length.
+  // = For string we offer methods that accept a precomputed length.
   CDR::Boolean write_string (const CDR::Char *x);
   CDR::Boolean write_string (CDR::ULong len, const CDR::Char *x);
   CDR::Boolean write_string (const ACE_CString &x);
@@ -394,20 +392,20 @@ public:
   size_t total_length (void) const;
   // Add the length of each message block in the chain.
 
-  const ACE_Message_Block* begin (void) const;
+  const ACE_Message_Block *begin (void) const;
   // Return the start of the message block chain for this CDR stream.
   // NOTE: The complete CDR stream is represented by a chain of
   // message blocks.
 
-  const ACE_Message_Block* end (void) const;
+  const ACE_Message_Block *end (void) const;
   // Return the last message in the chain that is is use.
 
-  const char* buffer (void) const;
+  const char *buffer (void) const;
 
   size_t length (void) const;
-  // Return the start and size of the internal buffer.
-  // NOTE: This methods only return information about the first block
-  // in the chain.
+  // Return the start and size of the internal buffer.  NOTE: This
+  // methods only return information about the first block in the
+  // chain.
 
 private:
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
@@ -420,14 +418,14 @@ private:
   CDR::Boolean write_8 (const CDR::ULongLong *x);
   CDR::Boolean write_16 (const CDR::LongDouble *x);
 
-  CDR::Boolean write_array (const void* x, 
+  CDR::Boolean write_array (const void *x, 
                             size_t size, 
                             size_t align,
-		                        CDR::ULong length);
-  // write an array of <length> elements, each of <size> bytes and
-  // the start aligned at a multiple of <align>. The elements are
-  // assumed to be packed with the right alignment restrictions.
-  // It is mostly designed for buffers of the basic types.
+                            CDR::ULong length);
+  // write an array of <length> elements, each of <size> bytes and the
+  // start aligned at a multiple of <align>. The elements are assumed
+  // to be packed with the right alignment restrictions.  It is mostly
+  // designed for buffers of the basic types.
   //
   // This operation uses memcpy(); as explained above it is expected
   // that using assignment is faster that memcpy() for one element,
@@ -436,26 +434,25 @@ private:
   // for that case, but that would be too platform dependent.
 
   int adjust (size_t size, 
-              char*& buf);
+              char *&buf);
   // Returns (in <buf>) the next position in the buffer aligned to
   // <size>, it advances the Message_Block wr_ptr past the data
   // (i.e. <buf> + <size>). If necessary it grows the Message_Block
-  // buffer.
-  // Sets the good_bit to 0 and returns a -1 on failure.
+  // buffer.  Sets the good_bit to 0 and returns a -1 on failure.
 
   int adjust (size_t size, 
               size_t align, 
-              char*& buf);
+              char *&buf);
   // As above, but now the size and alignment requirements may be
   // different.
   
   int grow_and_adjust (size_t size, 
                        size_t align, 
-                       char*& buf);
+                       char *&buf);
   // Grow the CDR stream. When it returns <buf> contains a pointer to
   // memory in the CDR stream, with at least <size> bytes ahead of it
-  // and aligned to an <align> boundary. It moved the wr_ptr()
-  // to <buf + size>.
+  // and aligned to an <align> boundary. It moved the wr_ptr() to <buf
+  // + size>.
 
   int do_byte_swap (void) const;
   // If non-zero then this stream is writing in non-native byte order,
@@ -465,21 +462,21 @@ private:
   ACE_Message_Block start_;
   // The start of the chain of message blocks.
 
-  ACE_Message_Block* current_;
+  ACE_Message_Block *current_;
   // The current block in the chain were we are writing.
 
-  ACE_Allocator* buffer_allocator_;
-  ACE_Allocator* data_block_allocator_;
+  ACE_Allocator *buffer_allocator_;
+  ACE_Allocator *data_block_allocator_;
   // Allocators for stream growth.
 
   int do_byte_swap_;
   // If not zero swap bytes at writing so the created CDR stream byte
-  // order does *not* match the machine byte order.
-  // The motivation for such a beast is that in some setting a few
-  // (fast) machines can be serving hundreds of slow machines with the
-  // opposite byte order, so it makes sense (as a load balancing
-  // device) to put the responsability in the writers.
-  // THIS IS NOT A STANDARD IN CORBA, USE AT YOUR OWN RISK
+  // order does *not* match the machine byte order.  The motivation
+  // for such a beast is that in some setting a few (fast) machines
+  // can be serving hundreds of slow machines with the opposite byte
+  // order, so it makes sense (as a load balancing device) to put the
+  // responsability in the writers.  THIS IS NOT A STANDARD IN CORBA,
+  // USE AT YOUR OWN RISK
 
   int good_bit_;
   // Set to 0 when an error ocurrs.
@@ -490,20 +487,19 @@ private:
 
 class ACE_Export ACE_InputCDR
 {
-  //
   // = TITLE
   //   A CDR stream for reading, i.e. for demarshalling.
   //
   // = DESCRIPTION
   //   This class is based on the the CORBA spec for Java (98-02-29),
-  //   java class omg.org.CORBA.portable.InputStream.
-  //   It diverts in a few ways:
+  //   java class omg.org.CORBA.portable.InputStream.  It diverts in a
+  //   few ways:
   //     + Operations to retrieve basic types take parameters by
-  //     reference.
+  //       reference.
   //     + Operations taking arrays don't have offsets, because in C++
-  //     it is easier to describe an array starting from x+offset.
+  //       it is easier to describe an array starting from x+offset.
   //     + Operations return an error status, because exceptions are
-  //     not widely available in C++ (yet).
+  //       not widely available in C++ (yet).
   //
   //   A particularly useful static member function for this buffer is
   //   an interpretive encoding routine, usable as a typecode
@@ -511,7 +507,7 @@ class ACE_Export ACE_InputCDR
   //   support all OMG-IDL datatypes, even those not supported
   //   directly by put/get primitives.
 public:
-  ACE_InputCDR (const char* buf, 
+  ACE_InputCDR (const char *buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER);
   // Create an input stream from an arbitrary buffer, care must be
@@ -698,11 +694,11 @@ private:
   CDR::Boolean read_array (void* x, 
                            size_t size, 
                            size_t align,
-		                       CDR::ULong length);
-  // read an array of <length> elements, each of <size> bytes and
-  // the start aligned at a multiple of <align>. The elements are
-  // assumed to be packed with the right alignment restrictions.
-  // It is mostly designed for buffers of the basic types.
+                           CDR::ULong length);
+  // Read an array of <length> elements, each of <size> bytes and the
+  // start aligned at a multiple of <align>. The elements are assumed
+  // to be packed with the right alignment restrictions.  It is mostly
+  // designed for buffers of the basic types.
   //
   // This operation uses memcpy(); as explained above it is expected
   // that using assignment is faster that memcpy() for one element,
@@ -718,8 +714,8 @@ private:
               char *&buf);
   // Returns (in <buf>) the next position in the buffer aligned to
   // <size>, it advances the Message_Block rd_ptr past the data
-  // (i.e. <buf> + <size>).
-  // Sets the good_bit to 0 and returns a -1 on failure.
+  // (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
+  // on failure.
 
   int adjust (size_t size, 
               size_t align, 
