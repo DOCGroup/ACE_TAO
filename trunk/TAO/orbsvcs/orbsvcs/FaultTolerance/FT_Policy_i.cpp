@@ -26,7 +26,6 @@ TAO_FT_Request_Duration_Policy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 CORBA::Policy_ptr
 TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val
                                         TAO_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
@@ -110,7 +109,6 @@ TAO_FT_Heart_Beat_Policy::heartbeat_policy_value (TAO_ENV_SINGLE_ARG_DECL_NOT_US
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val
                                   TAO_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::HeartbeatPolicyValue *value;
   if ((val >>= value) == 0)
@@ -201,7 +199,6 @@ TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value (
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val
                                           TAO_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean value;
 
