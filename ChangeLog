@@ -1,3 +1,10 @@
+Thu Jan 15 16:06:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Export/test_export.h:
+        * ace/TMCast/Export.hpp:
+          Added check for ACE_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Thu Jan 15 16:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Bounded_Packet_Relay/Bounded_Packet_Relay.mpc:
