@@ -20,7 +20,7 @@ project {
     inline_pre_extension = C, S
     source_outputext     = .cpp, .cxx, .cc, .C
     header_outputext     = .h, .hpp, .hxx, .hh
-    inline_outputext     = .i, .inl
+    inline_outputext     = .inl, .i
     keyword idlflags     = commandflags
 
     optional(source_pre_extension) {
