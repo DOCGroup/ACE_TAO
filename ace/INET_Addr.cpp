@@ -210,7 +210,7 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
 int
 ACE_INET_Addr::set (u_short port_number,
                     ACE_UINT32 inet_address,
-                    int encode, 
+                    int encode,
                     int map)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
@@ -792,7 +792,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
         ip4 = ACE_HTONL (ip4);
 
 
-      if (this->get_type () == AF_INET) {
+      if (this->get_type () == AF_INET && map == 0) {
         this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
         this->inet_addr_.in4_.sin_family = AF_INET;
         this->set_size (sizeof (this->inet_addr_.in4_));
@@ -803,7 +803,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 #if defined (ACE_HAS_IPV6)
       else if (map == 0)
         {
-          this->set_type (AF_INET);
+          // this->set_type (AF_INET);
           this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
           this->inet_addr_.in4_.sin_family = AF_INET;
           this->set_size (sizeof (this->inet_addr_.in4_));
@@ -851,10 +851,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                           &newaddress,
                           sizeof (newaddress));
         }
-#else
-      ACE_UNUSED_ARG (map);
 #endif /* ACE_HAS_IPV6 */
-
       return 0;
     }   /* end if (len == 4) */
 #if defined (ACE_HAS_IPV6)
@@ -888,14 +885,14 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 }
 
 #if defined (__linux__) && defined (ACE_HAS_IPV6)
-int 
+int
 ACE_INET_Addr::set_interface (const char *intf_name)
 {
-  if (this->get_type () == PF_INET6 && 
+  if (this->get_type () == PF_INET6 &&
       IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr))
     {
-      this->inet_addr_.in6_.sin6_scope_id = 
-	ACE_OS::if_nametoindex (intf_name);
+      this->inet_addr_.in6_.sin6_scope_id =
+        ACE_OS::if_nametoindex (intf_name);
 
       // check to see if the interface lookup succeeded
       if (this->inet_addr_.in6_.sin6_scope_id != 0)
