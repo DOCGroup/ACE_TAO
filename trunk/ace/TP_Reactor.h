@@ -239,6 +239,27 @@ public:
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
                               ACE_Reactor_Mask);
 
+  /* @todo: The following methods are not supported. Support for
+   * signals is not available in the TP_Reactor. These methods will be
+   * supported once signal handling is supported. We have to include
+   * these two methods in the  TP_Reactor to keep some compilers
+   * silent.
+   */
+  /**
+   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * <sigkey> is ignored in this implementation since there is only
+   * one instance of a signal handler.  Install the new disposition
+   * (if given) and return the previous disposition (if desired by the
+   * caller).  Returns 0 on success and -1 if <signum> is invalid.
+   */
+  virtual int remove_handler (int signum,
+                              ACE_Sig_Action *new_disp,
+                              ACE_Sig_Action *old_disp = 0,
+                              int sigkey = -1);
+
+  /// Calls <remove_handler> for every signal in <sigset>.
+  virtual int remove_handler (const ACE_Sig_Set &sigset);
+
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
