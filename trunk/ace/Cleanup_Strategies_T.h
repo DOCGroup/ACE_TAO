@@ -141,7 +141,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "ace/Cleanup_Strategies_T.cpp"
+#pragma implementation ("ace/Cleanup_Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CLEANUP_STRATEGIES_H */
