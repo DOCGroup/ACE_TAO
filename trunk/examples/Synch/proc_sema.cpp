@@ -50,7 +50,7 @@ int main (int argc, ACE_TCHAR *argv[])
   int delete_sema = 0;
   int iteration = 0;
   int exit_delay = 0;
-  ACE_TCHAR *sema_name = ACE_TEXT ("Process_Semaphore_Test");
+  const ACE_TCHAR *sema_name = ACE_TEXT ("Process_Semaphore_Test");
 
   int opt;
 
