@@ -1,3 +1,17 @@
+Wed Jul  3 16:37:49 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_home.cpp:
+
+          Removed extra semicolons.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Removed code in lookup_by_name() that is no longer
+          used.
+
 Wed Jul  3 15:09:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_string.cpp:
