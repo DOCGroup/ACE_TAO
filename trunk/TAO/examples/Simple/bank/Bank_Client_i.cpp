@@ -135,17 +135,18 @@ Bank_Client_i::test_for_overdraft (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::Float initial_bal = 100.0;
   const char *name = "Name";
+  Bank::Account_var acct_id = client->open (name, initial_bal, ACE_TRY_ENV);
+  ACE_CHECK;
+  acct_id->deposit (100.00, ACE_TRY_ENV);
+  ACE_CHECK;
+  
+  CORBA::Float bal = acct_id->balance (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  Bank::Account_var acct_id = client->open (name,
-                                            initial_bal,
-                                            ACE_TRY_ENV);
-  acct_id->deposit (100.00,
-                    ACE_TRY_ENV);
+  acct_id->withdraw (bal + 20);
 
-  acct_id->withdraw (acct_id->balance (ACE_TRY_ENV) + 20);
-
-  client->close (acct_id.in (),
-                 ACE_TRY_ENV);
+  client->close (acct_id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -95,7 +95,9 @@ Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 	      "Running chat server...\n"));
 
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
+  int ret = this->orb_manager_.run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Server_i::run"),
 		      -1);
