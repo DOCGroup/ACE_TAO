@@ -65,7 +65,7 @@ public:
     Profile (const char *host,
              const CORBA::UShort port,
              const char *object_key);
-    // Called by client <_bind>.
+    // Called by client
 
     Profile (const char *host,
              const CORBA::UShort port,
@@ -190,8 +190,7 @@ public:
                const CORBA::UShort p,
                const char *objkey,
                char *repository_id = 0);
-  // This constructor will usually be used by a <_bind> call on the
-  // client side.
+  // This constructor will usually be used by the client side.
 
   IIOP_Object (char *repository_id,
                const ACE_INET_Addr &addr,

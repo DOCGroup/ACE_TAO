@@ -882,16 +882,16 @@ TAO_ORB_Core::create_and_set_root_poa (void)
 
   // Need to do double-checked locking here to cover the case of
   // multiple threads using a global resource policy.
-  TAO_POA_Manager *manager = new TAO_Strategy_POA_Manager;
+  TAO_POA_Manager *manager = new TAO_POA_Manager;
   TAO_POA_Policies root_poa_policies;
   root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
 
   // Construct a new POA
-  poa = new TAO_Strategy_POA ("",
-                              *manager,
-                              root_poa_policies,
-                              0,
-                              env);
+  poa = new TAO_POA ("",
+                     *manager,
+                     root_poa_policies,
+                     0,
+                     env);
 
   if (env.exception () != 0)
     return;

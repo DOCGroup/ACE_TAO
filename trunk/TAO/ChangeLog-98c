@@ -1,3 +1,51 @@
+Sat Jun 20 03:31:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: 
+
+	  - Added TAO_POA_locking as a new policy to the POA.  This policy
+ 	    is used to control the kind of lock created for POA state
+ 	    synchronization.  Previously, the user could only specific the
+ 	    synchronization choice at an application level in the svc.conf
+ 	    file.  This approach did not allow a scheme where some POAs
+ 	    had thread safe synchronization, while others had no
+	    (null) synchronization.
+
+	    The new policy has three options:
+	    
+	    - USE_DEFAULT_LOCK: This option is the default value for this
+ 	      policy.  This option indicates that the application level
+ 	      choice for POA synchronization specified in the svc.conf
+ 	      file be used.  Currently, this defaults to thread safe
+ 	      synchronization. 
+
+	      This option allows the programmer to make application level
+ 	      decisions about the synchronization in the POA. Hence,
+ 	      unless specified otherwise in create_POA, all POAs in the
+ 	      application will have thread safe synchronization or null
+ 	      (no) synchronization depending on the chioce made in
+ 	      svc.conf.
+
+	    - USE_NULL_LOCK: Use null (no) synchronization to protect the
+	      state of this POA.
+ 	
+	    - USE_THREAD_LOCK: Use thread synchronization to protect the
+ 	      state of this POA.
+
+	  - Changed POAC.{h,i,cpp}, POAS.{h,i,cpp} and POA{h,i,cpp} to
+ 	    support this new policy.
+
+	  - Removed Strategy_POA and Strategy_POA_Manager.  Both were
+ 	    rather unnecessary in view of the above changes.
+	
+	* tests/POA/locking/locking.cpp: New test for showing off new POA
+ 	  locking policy.
+
+	* tao/Sequence.h (Octet>): Removed extra operator<< and operator>>
+ 	  declarations, and changed the implementation to use non-private
+ 	  members.
+
+	* tao/Principal.i: Added new file (empty).
+
 Sat Jun 20 01:39:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO4.{mdp,mak}: Defined TAO_BUILD_DLL, undefined

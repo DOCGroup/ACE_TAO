@@ -23,12 +23,12 @@ PortableServer::POA::_nil (void)
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (void) // default constructor
-	: ptr_ (PortableServer::POA::_nil ())
+  : ptr_ (PortableServer::POA::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (PortableServer::POA_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::POA_ptr
@@ -39,7 +39,7 @@ PortableServer::POA_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (const PortableServer::POA_var &p) // copy constructor
-	: ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -60,10 +60,10 @@ ACE_INLINE PortableServer::POA_var &
 PortableServer::POA_var::operator= (const PortableServer::POA_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::POA::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::POA::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -127,14 +127,14 @@ PortableServer::POA_var::_retn (void)
 
 ACE_INLINE
 PortableServer::POA_out::POA_out (PortableServer::POA_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::POA::_nil ();
 }
 
 ACE_INLINE
 PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::POA::_nil ();
@@ -142,7 +142,7 @@ PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor fro
 
 ACE_INLINE
 PortableServer::POA_out::POA_out (PortableServer::POA_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::POA_out &
@@ -197,21 +197,21 @@ PortableServer::POA_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
-	: ptr_ (0)
+  : ptr_ (0)
 {}
 
 ACE_INLINE
 PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (PortableServer::_tao_seq_Octet *p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE
 PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (const PortableServer::_tao_seq_Octet_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new PortableServer::_tao_seq_Octet(*p.ptr_);
+    this->ptr_ = new PortableServer::_tao_seq_Octet(*p.ptr_);
   else
-  	this->ptr_ = 0;
+    this->ptr_ = 0;
 }
 
 ACE_INLINE
@@ -232,10 +232,10 @@ ACE_INLINE PortableServer::_tao_seq_Octet_var &
 PortableServer::_tao_seq_Octet_var::operator= (const PortableServer::_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    this->ptr_ = new PortableServer::_tao_seq_Octet (*p.ptr_);
-  }
+    {
+      delete this->ptr_;
+      this->ptr_ = new PortableServer::_tao_seq_Octet (*p.ptr_);
+    }
   return *this;
 }
 
@@ -323,14 +323,14 @@ PortableServer::_tao_seq_Octet_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq_Octet *&p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
 PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq_Octet_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   delete this->ptr_;
   this->ptr_ = 0;
@@ -338,7 +338,7 @@ PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq
 
 ACE_INLINE
 PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq_Octet_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::_tao_seq_Octet_out &
@@ -384,11 +384,11 @@ PortableServer::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 
 ACE_INLINE
 PortableServer::ThreadPolicy::ThreadPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                           STUB_Object *objref,
+                                           TAO_ServantBase *servant,
+                                           CORBA::Boolean collocated
+                                           )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -411,12 +411,12 @@ PortableServer::ThreadPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::ThreadPolicy_var::ThreadPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::ThreadPolicy::_nil ())
+  : ptr_ (PortableServer::ThreadPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::ThreadPolicy_var::ThreadPolicy_var (PortableServer::ThreadPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::ThreadPolicy_ptr
@@ -427,7 +427,7 @@ PortableServer::ThreadPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ThreadPolicy_var::ThreadPolicy_var (const PortableServer::ThreadPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::ThreadPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::ThreadPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -448,10 +448,10 @@ ACE_INLINE PortableServer::ThreadPolicy_var &
 PortableServer::ThreadPolicy_var::operator= (const PortableServer::ThreadPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::ThreadPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::ThreadPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -515,14 +515,14 @@ PortableServer::ThreadPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::ThreadPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::ThreadPolicy::_nil ();
@@ -530,7 +530,7 @@ PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy
 
 ACE_INLINE
 PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ThreadPolicy_out &
@@ -577,11 +577,11 @@ PortableServer::ThreadPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::LifespanPolicy::LifespanPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                               STUB_Object *objref,
+                                               TAO_ServantBase *servant,
+                                               CORBA::Boolean collocated
+                                               )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -604,12 +604,12 @@ PortableServer::LifespanPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::LifespanPolicy_var::LifespanPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::LifespanPolicy::_nil ())
+  : ptr_ (PortableServer::LifespanPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::LifespanPolicy_var::LifespanPolicy_var (PortableServer::LifespanPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::LifespanPolicy_ptr
@@ -620,7 +620,7 @@ PortableServer::LifespanPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::LifespanPolicy_var::LifespanPolicy_var (const PortableServer::LifespanPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::LifespanPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::LifespanPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -641,10 +641,10 @@ ACE_INLINE PortableServer::LifespanPolicy_var &
 PortableServer::LifespanPolicy_var::operator= (const PortableServer::LifespanPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::LifespanPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::LifespanPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -708,14 +708,14 @@ PortableServer::LifespanPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::LifespanPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::LifespanPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::LifespanPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::LifespanPolicy::_nil ();
@@ -723,7 +723,7 @@ PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::Lifespan
 
 ACE_INLINE
 PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::LifespanPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::LifespanPolicy_out &
@@ -770,11 +770,11 @@ PortableServer::LifespanPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy::IdUniquenessPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                       STUB_Object *objref,
+                                                       TAO_ServantBase *servant,
+                                                       CORBA::Boolean collocated
+                                                       )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -797,12 +797,12 @@ PortableServer::IdUniquenessPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_var::IdUniquenessPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::IdUniquenessPolicy::_nil ())
+  : ptr_ (PortableServer::IdUniquenessPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_var::IdUniquenessPolicy_var (PortableServer::IdUniquenessPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
@@ -813,7 +813,7 @@ PortableServer::IdUniquenessPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_var::IdUniquenessPolicy_var (const PortableServer::IdUniquenessPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::IdUniquenessPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::IdUniquenessPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -834,10 +834,10 @@ ACE_INLINE PortableServer::IdUniquenessPolicy_var &
 PortableServer::IdUniquenessPolicy_var::operator= (const PortableServer::IdUniquenessPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::IdUniquenessPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::IdUniquenessPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -901,14 +901,14 @@ PortableServer::IdUniquenessPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::IdUniquenessPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::IdUniquenessPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::IdUniquenessPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::IdUniquenessPolicy::_nil ();
@@ -916,7 +916,7 @@ PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::IdUniquenessPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_out &
@@ -963,11 +963,11 @@ PortableServer::IdUniquenessPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy::IdAssignmentPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                       STUB_Object *objref,
+                                                       TAO_ServantBase *servant,
+                                                       CORBA::Boolean collocated
+                                                       )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -990,12 +990,12 @@ PortableServer::IdAssignmentPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_var::IdAssignmentPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::IdAssignmentPolicy::_nil ())
+  : ptr_ (PortableServer::IdAssignmentPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_var::IdAssignmentPolicy_var (PortableServer::IdAssignmentPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
@@ -1006,7 +1006,7 @@ PortableServer::IdAssignmentPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_var::IdAssignmentPolicy_var (const PortableServer::IdAssignmentPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::IdAssignmentPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::IdAssignmentPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1027,10 +1027,10 @@ ACE_INLINE PortableServer::IdAssignmentPolicy_var &
 PortableServer::IdAssignmentPolicy_var::operator= (const PortableServer::IdAssignmentPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::IdAssignmentPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::IdAssignmentPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -1094,14 +1094,14 @@ PortableServer::IdAssignmentPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::IdAssignmentPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::IdAssignmentPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::IdAssignmentPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::IdAssignmentPolicy::_nil ();
@@ -1109,7 +1109,7 @@ PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::IdAssignmentPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::IdAssignmentPolicy_out &
@@ -1156,11 +1156,11 @@ PortableServer::IdAssignmentPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                                   STUB_Object *objref,
+                                                                   TAO_ServantBase *servant,
+                                                                   CORBA::Boolean collocated
+                                                                   )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -1183,12 +1183,12 @@ PortableServer::ImplicitActivationPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_var::ImplicitActivationPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::ImplicitActivationPolicy::_nil ())
+  : ptr_ (PortableServer::ImplicitActivationPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_var::ImplicitActivationPolicy_var (PortableServer::ImplicitActivationPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
@@ -1199,7 +1199,7 @@ PortableServer::ImplicitActivationPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_var::ImplicitActivationPolicy_var (const PortableServer::ImplicitActivationPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::ImplicitActivationPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::ImplicitActivationPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1220,10 +1220,10 @@ ACE_INLINE PortableServer::ImplicitActivationPolicy_var &
 PortableServer::ImplicitActivationPolicy_var::operator= (const PortableServer::ImplicitActivationPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::ImplicitActivationPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::ImplicitActivationPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -1287,14 +1287,14 @@ PortableServer::ImplicitActivationPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (PortableServer::ImplicitActivationPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::ImplicitActivationPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (PortableServer::ImplicitActivationPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::ImplicitActivationPolicy::_nil ();
@@ -1302,7 +1302,7 @@ PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (Port
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (PortableServer::ImplicitActivationPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ImplicitActivationPolicy_out &
@@ -1349,11 +1349,11 @@ PortableServer::ImplicitActivationPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy::ServantRetentionPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                               STUB_Object *objref,
+                                                               TAO_ServantBase *servant,
+                                                               CORBA::Boolean collocated
+                                                               )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -1376,12 +1376,12 @@ PortableServer::ServantRetentionPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_var::ServantRetentionPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::ServantRetentionPolicy::_nil ())
+  : ptr_ (PortableServer::ServantRetentionPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_var::ServantRetentionPolicy_var (PortableServer::ServantRetentionPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
@@ -1392,7 +1392,7 @@ PortableServer::ServantRetentionPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_var::ServantRetentionPolicy_var (const PortableServer::ServantRetentionPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::ServantRetentionPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::ServantRetentionPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1413,10 +1413,10 @@ ACE_INLINE PortableServer::ServantRetentionPolicy_var &
 PortableServer::ServantRetentionPolicy_var::operator= (const PortableServer::ServantRetentionPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::ServantRetentionPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::ServantRetentionPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -1480,14 +1480,14 @@ PortableServer::ServantRetentionPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (PortableServer::ServantRetentionPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::ServantRetentionPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (PortableServer::ServantRetentionPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::ServantRetentionPolicy::_nil ();
@@ -1495,7 +1495,7 @@ PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (Portable
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (PortableServer::ServantRetentionPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantRetentionPolicy_out &
@@ -1542,11 +1542,11 @@ PortableServer::ServantRetentionPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy::RequestProcessingPolicy(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                                 STUB_Object *objref,
+                                                                 TAO_ServantBase *servant,
+                                                                 CORBA::Boolean collocated
+                                                                 )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -1569,12 +1569,12 @@ PortableServer::RequestProcessingPolicy::_nil (void)
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_var::RequestProcessingPolicy_var (void) // default constructor
-	: ptr_ (PortableServer::RequestProcessingPolicy::_nil ())
+  : ptr_ (PortableServer::RequestProcessingPolicy::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_var::RequestProcessingPolicy_var (PortableServer::RequestProcessingPolicy_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
@@ -1585,7 +1585,7 @@ PortableServer::RequestProcessingPolicy_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_var::RequestProcessingPolicy_var (const PortableServer::RequestProcessingPolicy_var &p) // copy constructor
-	: ptr_ (PortableServer::RequestProcessingPolicy::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::RequestProcessingPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1606,10 +1606,10 @@ ACE_INLINE PortableServer::RequestProcessingPolicy_var &
 PortableServer::RequestProcessingPolicy_var::operator= (const PortableServer::RequestProcessingPolicy_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::RequestProcessingPolicy::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::RequestProcessingPolicy::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -1673,14 +1673,14 @@ PortableServer::RequestProcessingPolicy_var::_retn (void)
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (PortableServer::RequestProcessingPolicy_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::RequestProcessingPolicy::_nil ();
 }
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (PortableServer::RequestProcessingPolicy_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::RequestProcessingPolicy::_nil ();
@@ -1688,7 +1688,7 @@ PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (Portab
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (PortableServer::RequestProcessingPolicy_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::RequestProcessingPolicy_out &
@@ -1733,13 +1733,212 @@ PortableServer::RequestProcessingPolicy_out::operator-> (void)
 
 #endif // end #if !defined
 
+// **************************************************
+//
+// TAO spcific POA locking policy (non-standard)
+//
+// **************************************************
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy::TAO_POA_LockingPolicy(
+                                                             STUB_Object *objref,
+                                                             TAO_ServantBase *servant,
+                                                             CORBA::Boolean collocated
+                                                             )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
+{}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy::~TAO_POA_LockingPolicy (void) // destructor
+{}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
+PortableServer::TAO_POA_LockingPolicy::_nil (void)
+{
+  return (PortableServer::TAO_POA_LockingPolicy_ptr)0;
+}
+
+
+#if !defined (_PORTABLESERVER_TAO_POA_LockingPOLICY___VAR_CI_)
+#define _PORTABLESERVER_TAO_POA_LockingPOLICY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class PortableServer::TAO_POA_LockingPolicy_var
+// *************************************************************
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_var::TAO_POA_LockingPolicy_var (void) // default constructor
+  : ptr_ (PortableServer::TAO_POA_LockingPolicy::_nil ())
+{}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_var::TAO_POA_LockingPolicy_var (PortableServer::TAO_POA_LockingPolicy_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
+PortableServer::TAO_POA_LockingPolicy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_var::TAO_POA_LockingPolicy_var (const PortableServer::TAO_POA_LockingPolicy_var &p) // copy constructor
+  : ptr_ (PortableServer::TAO_POA_LockingPolicy::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_var::~TAO_POA_LockingPolicy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_var &
+PortableServer::TAO_POA_LockingPolicy_var::operator= (PortableServer::TAO_POA_LockingPolicy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_var &
+PortableServer::TAO_POA_LockingPolicy_var::operator= (const PortableServer::TAO_POA_LockingPolicy_var &p)
+{
+  if (this != &p)
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_duplicate (p.ptr ());
+    }
+  return *this;
+}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_var::operator const PortableServer::TAO_POA_LockingPolicy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_var::operator PortableServer::TAO_POA_LockingPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
+PortableServer::TAO_POA_LockingPolicy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
+PortableServer::TAO_POA_LockingPolicy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr &
+PortableServer::TAO_POA_LockingPolicy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr &
+PortableServer::TAO_POA_LockingPolicy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
+PortableServer::TAO_POA_LockingPolicy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  PortableServer::TAO_POA_LockingPolicy_ptr val = this->ptr_;
+  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+  return val;
+}
+
+
+#endif // end #if !defined
+
+
+#if !defined (_PORTABLESERVER_TAO_POA_LockingPOLICY___OUT_CI_)
+#define _PORTABLESERVER_TAO_POA_LockingPOLICY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class PortableServer::TAO_POA_LockingPolicy_out
+// *************************************************************
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_out::TAO_POA_LockingPolicy_out (PortableServer::TAO_POA_LockingPolicy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_out::TAO_POA_LockingPolicy_out (PortableServer::TAO_POA_LockingPolicy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_out::TAO_POA_LockingPolicy_out (PortableServer::TAO_POA_LockingPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
+{}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_out &
+PortableServer::TAO_POA_LockingPolicy_out::operator= (PortableServer::TAO_POA_LockingPolicy_out &p)
+{
+  this->ptr_ = p.ptr_;
+  return *this;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_out &
+PortableServer::TAO_POA_LockingPolicy_out::operator= (const PortableServer::TAO_POA_LockingPolicy_var &p)
+{
+  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_out &
+PortableServer::TAO_POA_LockingPolicy_out::operator= (PortableServer::TAO_POA_LockingPolicy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+PortableServer::TAO_POA_LockingPolicy_out::operator PortableServer::TAO_POA_LockingPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr &
+PortableServer::TAO_POA_LockingPolicy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
+PortableServer::TAO_POA_LockingPolicy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif // end #if !defined
+
 ACE_INLINE
 PortableServer::POAManager::POAManager(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                       STUB_Object *objref,
+                                       TAO_ServantBase *servant,
+                                       CORBA::Boolean collocated
+                                       )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -1762,12 +1961,12 @@ PortableServer::POAManager::_nil (void)
 
 ACE_INLINE
 PortableServer::POAManager_var::POAManager_var (void) // default constructor
-	: ptr_ (PortableServer::POAManager::_nil ())
+  : ptr_ (PortableServer::POAManager::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::POAManager_var::POAManager_var (PortableServer::POAManager_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::POAManager_ptr
@@ -1778,7 +1977,7 @@ PortableServer::POAManager_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::POAManager_var::POAManager_var (const PortableServer::POAManager_var &p) // copy constructor
-	: ptr_ (PortableServer::POAManager::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::POAManager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1799,10 +1998,10 @@ ACE_INLINE PortableServer::POAManager_var &
 PortableServer::POAManager_var::operator= (const PortableServer::POAManager_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::POAManager::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::POAManager::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -1866,14 +2065,14 @@ PortableServer::POAManager_var::_retn (void)
 
 ACE_INLINE
 PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::POAManager::_nil ();
 }
 
 ACE_INLINE
 PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::POAManager::_nil ();
@@ -1881,7 +2080,7 @@ PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_var &
 
 ACE_INLINE
 PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::POAManager_out &
@@ -1928,11 +2127,11 @@ PortableServer::POAManager_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::AdapterActivator::AdapterActivator(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                   STUB_Object *objref,
+                                                   TAO_ServantBase *servant,
+                                                   CORBA::Boolean collocated
+                                                   )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -1955,12 +2154,12 @@ PortableServer::AdapterActivator::_nil (void)
 
 ACE_INLINE
 PortableServer::AdapterActivator_var::AdapterActivator_var (void) // default constructor
-	: ptr_ (PortableServer::AdapterActivator::_nil ())
+  : ptr_ (PortableServer::AdapterActivator::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::AdapterActivator_var::AdapterActivator_var (PortableServer::AdapterActivator_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::AdapterActivator_ptr
@@ -1971,7 +2170,7 @@ PortableServer::AdapterActivator_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::AdapterActivator_var::AdapterActivator_var (const PortableServer::AdapterActivator_var &p) // copy constructor
-	: ptr_ (PortableServer::AdapterActivator::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::AdapterActivator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1992,10 +2191,10 @@ ACE_INLINE PortableServer::AdapterActivator_var &
 PortableServer::AdapterActivator_var::operator= (const PortableServer::AdapterActivator_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::AdapterActivator::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::AdapterActivator::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -2059,14 +2258,14 @@ PortableServer::AdapterActivator_var::_retn (void)
 
 ACE_INLINE
 PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::AdapterActivator_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::AdapterActivator::_nil ();
 }
 
 ACE_INLINE
 PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::AdapterActivator_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::AdapterActivator::_nil ();
@@ -2074,7 +2273,7 @@ PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::Adap
 
 ACE_INLINE
 PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::AdapterActivator_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::AdapterActivator_out &
@@ -2121,11 +2320,11 @@ PortableServer::AdapterActivator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantManager::ServantManager(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                               STUB_Object *objref,
+                                               TAO_ServantBase *servant,
+                                               CORBA::Boolean collocated
+                                               )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -2148,12 +2347,12 @@ PortableServer::ServantManager::_nil (void)
 
 ACE_INLINE
 PortableServer::ServantManager_var::ServantManager_var (void) // default constructor
-	: ptr_ (PortableServer::ServantManager::_nil ())
+  : ptr_ (PortableServer::ServantManager::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::ServantManager_var::ServantManager_var (PortableServer::ServantManager_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::ServantManager_ptr
@@ -2164,7 +2363,7 @@ PortableServer::ServantManager_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantManager_var::ServantManager_var (const PortableServer::ServantManager_var &p) // copy constructor
-	: ptr_ (PortableServer::ServantManager::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::ServantManager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2185,10 +2384,10 @@ ACE_INLINE PortableServer::ServantManager_var &
 PortableServer::ServantManager_var::operator= (const PortableServer::ServantManager_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::ServantManager::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::ServantManager::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -2252,14 +2451,14 @@ PortableServer::ServantManager_var::_retn (void)
 
 ACE_INLINE
 PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantManager_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::ServantManager::_nil ();
 }
 
 ACE_INLINE
 PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantManager_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::ServantManager::_nil ();
@@ -2267,7 +2466,7 @@ PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantM
 
 ACE_INLINE
 PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantManager_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantManager_out &
@@ -2314,11 +2513,11 @@ PortableServer::ServantManager_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantActivator::ServantActivator(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                                   STUB_Object *objref,
+                                                   TAO_ServantBase *servant,
+                                                   CORBA::Boolean collocated
+                                                   )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -2341,12 +2540,12 @@ PortableServer::ServantActivator::_nil (void)
 
 ACE_INLINE
 PortableServer::ServantActivator_var::ServantActivator_var (void) // default constructor
-	: ptr_ (PortableServer::ServantActivator::_nil ())
+  : ptr_ (PortableServer::ServantActivator::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::ServantActivator_var::ServantActivator_var (PortableServer::ServantActivator_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::ServantActivator_ptr
@@ -2357,7 +2556,7 @@ PortableServer::ServantActivator_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantActivator_var::ServantActivator_var (const PortableServer::ServantActivator_var &p) // copy constructor
-	: ptr_ (PortableServer::ServantActivator::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::ServantActivator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2378,10 +2577,10 @@ ACE_INLINE PortableServer::ServantActivator_var &
 PortableServer::ServantActivator_var::operator= (const PortableServer::ServantActivator_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::ServantActivator::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::ServantActivator::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -2445,14 +2644,14 @@ PortableServer::ServantActivator_var::_retn (void)
 
 ACE_INLINE
 PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::ServantActivator_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::ServantActivator::_nil ();
 }
 
 ACE_INLINE
 PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::ServantActivator_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::ServantActivator::_nil ();
@@ -2460,7 +2659,7 @@ PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::Serv
 
 ACE_INLINE
 PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::ServantActivator_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantActivator_out &
@@ -2507,11 +2706,11 @@ PortableServer::ServantActivator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantLocator::ServantLocator(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                               STUB_Object *objref,
+                                               TAO_ServantBase *servant,
+                                               CORBA::Boolean collocated
+                                               )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -2534,12 +2733,12 @@ PortableServer::ServantLocator::_nil (void)
 
 ACE_INLINE
 PortableServer::ServantLocator_var::ServantLocator_var (void) // default constructor
-	: ptr_ (PortableServer::ServantLocator::_nil ())
+  : ptr_ (PortableServer::ServantLocator::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::ServantLocator_var::ServantLocator_var (PortableServer::ServantLocator_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::ServantLocator_ptr
@@ -2550,7 +2749,7 @@ PortableServer::ServantLocator_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::ServantLocator_var::ServantLocator_var (const PortableServer::ServantLocator_var &p) // copy constructor
-	: ptr_ (PortableServer::ServantLocator::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::ServantLocator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2571,10 +2770,10 @@ ACE_INLINE PortableServer::ServantLocator_var &
 PortableServer::ServantLocator_var::operator= (const PortableServer::ServantLocator_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::ServantLocator::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::ServantLocator::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -2638,14 +2837,14 @@ PortableServer::ServantLocator_var::_retn (void)
 
 ACE_INLINE
 PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantLocator_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::ServantLocator::_nil ();
 }
 
 ACE_INLINE
 PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantLocator_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::ServantLocator::_nil ();
@@ -2653,7 +2852,7 @@ PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantL
 
 ACE_INLINE
 PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantLocator_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantLocator_out &
@@ -2700,11 +2899,11 @@ PortableServer::ServantLocator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::POA::POA(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                         STUB_Object *objref,
+                         TAO_ServantBase *servant,
+                         CORBA::Boolean collocated
+                         )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -2721,12 +2920,12 @@ PortableServer::POA::~POA (void) // destructor
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (void) // default constructor
-	: ptr_ (PortableServer::POA::_nil ())
+  : ptr_ (PortableServer::POA::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (PortableServer::POA_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::POA_ptr
@@ -2737,7 +2936,7 @@ PortableServer::POA_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::POA_var::POA_var (const PortableServer::POA_var &p) // copy constructor
-	: ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::POA::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2758,10 +2957,10 @@ ACE_INLINE PortableServer::POA_var &
 PortableServer::POA_var::operator= (const PortableServer::POA_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::POA::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::POA::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -2825,14 +3024,14 @@ PortableServer::POA_var::_retn (void)
 
 ACE_INLINE
 PortableServer::POA_out::POA_out (PortableServer::POA_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::POA::_nil ();
 }
 
 ACE_INLINE
 PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::POA::_nil ();
@@ -2840,7 +3039,7 @@ PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor fro
 
 ACE_INLINE
 PortableServer::POA_out::POA_out (PortableServer::POA_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::POA_out &
@@ -2887,11 +3086,11 @@ PortableServer::POA_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::Current::Current(
-    STUB_Object *objref,
-    TAO_ServantBase *servant,
-    CORBA::Boolean collocated
-  )
- : ACE_CORBA_1 (Object) (objref, servant, collocated)
+                                 STUB_Object *objref,
+                                 TAO_ServantBase *servant,
+                                 CORBA::Boolean collocated
+                                 )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
@@ -2914,12 +3113,12 @@ PortableServer::Current::_nil (void)
 
 ACE_INLINE
 PortableServer::Current_var::Current_var (void) // default constructor
-	: ptr_ (PortableServer::Current::_nil ())
+  : ptr_ (PortableServer::Current::_nil ())
 {}
 
 ACE_INLINE
 PortableServer::Current_var::Current_var (PortableServer::Current_ptr p)
-	: ptr_ (p)
+  : ptr_ (p)
 {}
 
 ACE_INLINE PortableServer::Current_ptr
@@ -2930,7 +3129,7 @@ PortableServer::Current_var::ptr (void) const
 
 ACE_INLINE
 PortableServer::Current_var::Current_var (const PortableServer::Current_var &p) // copy constructor
-	: ptr_ (PortableServer::Current::_duplicate (p.ptr ()))
+  : ptr_ (PortableServer::Current::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -2951,10 +3150,10 @@ ACE_INLINE PortableServer::Current_var &
 PortableServer::Current_var::operator= (const PortableServer::Current_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = PortableServer::Current::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::Current::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
@@ -3018,14 +3217,14 @@ PortableServer::Current_var::_retn (void)
 
 ACE_INLINE
 PortableServer::Current_out::Current_out (PortableServer::Current_ptr &p)
-	: ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = PortableServer::Current::_nil ();
 }
 
 ACE_INLINE
 PortableServer::Current_out::Current_out (PortableServer::Current_var &p) // constructor from _var
-	: ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = PortableServer::Current::_nil ();
@@ -3033,7 +3232,7 @@ PortableServer::Current_out::Current_out (PortableServer::Current_var &p) // con
 
 ACE_INLINE
 PortableServer::Current_out::Current_out (PortableServer::Current_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::Current_out &

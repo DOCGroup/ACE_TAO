@@ -439,14 +439,6 @@ public:
   // Replaces the current buffer with <mb>, using only <length> bytes.
   // It takes a duplicate of <mb>.
 
-  friend TAO_OutputCDR&
-    operator <<(TAO_OutputCDR&,
-		const TAO_Unbounded_Sequence<CORBA::Octet>&);
-
-  friend TAO_InputCDR&
-    operator <<(TAO_InputCDR&,
-		TAO_Unbounded_Sequence<CORBA::Octet>&);
-  
 private:
   ACE_Message_Block* mb_;
 };

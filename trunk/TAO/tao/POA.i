@@ -87,6 +87,24 @@ TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyVal
   this->request_processing_ = value;
 }
 
+// **************************************************
+//
+// TAO spcific POA locking policy (non-standard)
+//
+// **************************************************
+
+ACE_INLINE PortableServer::TAO_POA_LockingPolicyValue
+TAO_POA_Policies::TAO_POA_locking (void) const
+{
+  return this->TAO_POA_locking_;
+}
+
+ACE_INLINE void
+TAO_POA_Policies::TAO_POA_locking (PortableServer::TAO_POA_LockingPolicyValue value)
+{
+  this->TAO_POA_locking_ = value;
+}
+
 ACE_INLINE int
 TAO_Creation_Time::creation_time_length (void)
 {
@@ -234,7 +252,7 @@ TAO_POA::clone (const TAO_POA::String &adapter_name,
 ACE_INLINE ACE_Lock &
 TAO_POA::lock (void)
 {
-  return this->lock_;
+  return *this->lock_;
 }
 
 ACE_INLINE TAO_POA *
@@ -576,73 +594,13 @@ TAO_POA::object_key_type_length (void)
 ACE_INLINE ACE_Lock &
 TAO_POA_Manager::lock (void)
 {
-  return this->lock_;
+  return *this->lock_;
 }
 
 ACE_INLINE TAO_POA_Manager *
 TAO_POA_Manager::clone (void)
 {
   return new TAO_POA_Manager;
-}
-
-ACE_INLINE
-TAO_Strategy_POA::~TAO_Strategy_POA (void)
-{
-  delete this->lock_;
-}
-
-ACE_INLINE TAO_POA *
-TAO_Strategy_POA::clone (const TAO_POA::String &adapter_name,
-                         TAO_POA_Manager &poa_manager,
-                         const TAO_POA_Policies &policies,
-                         TAO_POA *parent,
-                         CORBA::Environment &env)
-{
-  return new SELF (adapter_name,
-                   poa_manager,
-                   policies,
-                   parent,
-                   env);
-}
-
-ACE_INLINE TAO_POA *
-TAO_Strategy_POA::clone (const TAO_POA::String &adapter_name,
-                         TAO_POA_Manager &poa_manager,
-                         const TAO_POA_Policies &policies,
-                         TAO_POA *parent,
-                         TAO_Object_Table &active_object_map,
-                         CORBA::Environment &env)
-{
-  return new SELF (adapter_name,
-                   poa_manager,
-                   policies,
-                   parent,
-                   active_object_map,
-                   env);
-}
-
-ACE_INLINE ACE_Lock &
-TAO_Strategy_POA::lock (void)
-{
-  return *this->lock_;
-}
-
-ACE_INLINE
-TAO_Strategy_POA_Manager::~TAO_Strategy_POA_Manager (void)
-{
-  delete this->lock_;
-}
-
-ACE_INLINE TAO_POA_Manager *
-TAO_Strategy_POA_Manager::clone (void)
-{
-  return new SELF;
-}
-
-ACE_INLINE ACE_Lock &
-TAO_Strategy_POA_Manager::lock (void)
-{
-  return *this->lock_;
 }
 
 ACE_INLINE void
