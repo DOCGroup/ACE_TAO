@@ -18,7 +18,6 @@
 
 #include "ace/Time_Value.h"
 #include "ace/Free_List.h"
-#include "ace/Synch_T.h"
 
 // This should be nested within the ACE_Timer_Queue class but some C++
 // compilers still don't like this...
