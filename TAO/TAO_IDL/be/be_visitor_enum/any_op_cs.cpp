@@ -80,7 +80,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
-      << "if (!type->equal (" << node->tc_name ()
+      << "if (!type->equivalent (" << node->tc_name ()
       << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"

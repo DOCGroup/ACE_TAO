@@ -98,7 +98,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
-      << "if (!type->equal (" << node->tc_name ()
+      << "if (!type->equivalent (" << node->tc_name ()
       << ", ACE_TRY_ENV))" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
