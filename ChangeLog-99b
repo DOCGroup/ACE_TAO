@@ -1,3 +1,12 @@
+Tue May 04 15:56:41 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: Re-enabled DllMain (see Mon May 3 entry from Chris
+          Gill).
+        * ace/OS.cpp, Object_Manager.cpp: In ACE_OS_Object_Manager and
+          ACE_Object_Manager, differentiate between The singleton instance and
+          other instances when allocating and freeing per-process information.
+        * tests/run_tests.bat: Added ACE_Init_Test.
+
 Mon May  3 18:04:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * examples/Reactor/Proactor/test_aiocb_ace.cpp: Added this
