@@ -25,6 +25,12 @@ Tue Jul 18 23:25:43 2000  John Heitmann  <jwh1@cs.wustl.edu>
 	Reverted part of my earlier changes to support Lynxos in
 	a cleaner way.
 
+	* ../ace/OS.h
+	* ../ace/OS.i
+
+	Many small changes including wrapping most calls with ACE_OSCALL
+	to handle EINTR correctly.
+
 Tue Jul 18 15:13:40 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/times.h:
