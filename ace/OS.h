@@ -2093,8 +2093,8 @@ typedef char TCHAR;
 #define ACE_SYSCALL_FAILED -1
 
 #define ACE_SEH_TRY
-#define ACE_SEH_EXCEPT(X)
-#define ACE_SEH_FINALLY
+#define ACE_SEH_EXCEPT(X) while (0)
+#define ACE_SEH_FINALLY while (0)
 
 // The "null" device on UNIX.
 #define ACE_DEV_NULL "/dev/null"
