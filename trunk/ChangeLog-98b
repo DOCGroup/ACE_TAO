@@ -1,3 +1,13 @@
+Tue Sep 08 10:25:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace_{dll,lib}.dsp: Changed the process type to "Blend*" which
+ 	  make the project to work on any type of intel processors.
+  	  However, this disable the bug-fix to get around the infamous
+ 	  Pentium floating point problem.
+
+	* netsvcs/lib/netsvcs.dsp:
+	* netsvcs/servers/servers.dsp: Perform VC 6 modification.
+	
 Tue Sep 08 07:28:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (readdir_r): don't use the POSIX.1c ::readdir_r on
