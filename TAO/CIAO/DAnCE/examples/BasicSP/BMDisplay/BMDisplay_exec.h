@@ -15,6 +15,7 @@
 
 #include "BMDisplayEIC.h"
 #include "tao/LocalObject.h"
+#include "BMDisplay_exec_export.h"
 
 namespace MyImpl
 {
