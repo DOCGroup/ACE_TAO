@@ -1,3 +1,14 @@
+Sat Nov 10 08:58:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* tao/TAO_Internal.cpp:
+	* tao/ORB_Core.cpp:
+  	* tao/ORB.cpp: Added "const" to char *variables that are
+	  initialized by ACE_Arg_Shifter methods that now return
+	  const char *.
+
 Thu Nov  8 15:48:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_string.cpp:

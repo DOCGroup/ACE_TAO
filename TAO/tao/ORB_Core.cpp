@@ -326,7 +326,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   while (arg_shifter.is_anything_left ())
     {
-      char *current_arg = 0;
+      const char *current_arg = 0;
 
       ////////////////////////////////////////////////////////////////
       // begin with the 'parameterless' flags                       //
@@ -502,7 +502,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // objrefs, where the hostname and TCP port number are
           // explicit (and the whole objref is readable by mortals).
           // BEGIN COMMENTS FROM IIOP-1.4
-          char *opt = current_arg;
+          const char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt,
                                   "URL") == 0)
             use_ior = 0;
@@ -513,7 +513,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                 ("-ORBCollocationStrategy")))
         {
           // Specify which collocation policy we want to use.
-          char *opt = current_arg;
+          const char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, "thru_poa") == 0)
             this->collocation_strategy_ = THRU_POA;
           else if (ACE_OS::strcasecmp (opt, "direct") == 0)
@@ -530,7 +530,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           int yes_implies_global = 0;
 
-          char *opt = current_arg;
+          const char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, "YES") == 0)
             {
               yes_implies_global = 1;
@@ -567,15 +567,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                       ACE_TEXT ("  Please use '-ORBCollocation global/per-orb/no'")
                       ACE_TEXT ("instead.\n")));
 
-          char *opt = current_arg;
+          const char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, "YES") == 0)
-            {
-              this->use_global_collocation_ = 1;
-            }
+            this->use_global_collocation_ = 1;
           else if (ACE_OS::strcasecmp (opt, "NO") == 0)
-            {
-              this->use_global_collocation_ = 0;
-            }
+            this->use_global_collocation_ = 0;
 
           arg_shifter.consume_arg ();
         }
@@ -643,7 +639,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                 ("-ORBInitRef")))
         {
           ACE_CString init_ref (current_arg);
-          char * pos = ACE_OS::strchr (current_arg, '=');
+          const char *pos = ACE_OS::strchr (current_arg, '=');
           if (pos == 0)
             {
               ACE_ERROR ((LM_ERROR,
@@ -692,35 +688,27 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBResources")))
         {
-          char *opt = current_arg;
+          const char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, "global") == 0)
-            {
-              use_tss_resources = 0;
-            }
+            use_tss_resources = 0;
           else if (ACE_OS::strcasecmp (opt, "tss") == 0)
-            {
-              use_tss_resources = 1;
-            }
+            use_tss_resources = 1;
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBLogFile")))
         {
-          //
           // redirect all ACE_DEBUG and ACE_ERROR output to a file
           // USAGE: -ORBLogFile <file>
           // default: if <file> is present     = append
           //          if <file> is not present = create
-          //
 
-          ACE_TCHAR* file_name = current_arg;
+          const ACE_TCHAR *file_name = current_arg;
           arg_shifter.consume_arg ();
 
-          //
           // would rather use ACE_OSTREAM_TYPE out here..
           // but need ACE_FSTREAM_TYPE to call ->open(...)
           // and haven't found such a macro to rep FILE* and/or fstream*
-          //
 
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
@@ -983,9 +971,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                        10);
 
   CORBA::String_var ns_port_ptr =
-    CORBA::string_alloc (ACE_OS::strlen
-                         ((const char *)
-                          ns_port_char));
+    CORBA::string_alloc (ACE_OS::strlen ((const char *) ns_port_char));
 
   ns_port_ptr = (const char *) ns_port_char;
 

@@ -653,7 +653,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      char *current_arg = arg_shifter.get_current ();
+      const char *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg, "-TSthreadsafe") == 0)
         {
@@ -665,7 +665,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              char* conformance_str = arg_shifter.get_current ();
+              const char* conformance_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (conformance_str, "Linked") == 0)
                 this->conformance_ = TAO_TRADER_LINKED;
@@ -684,7 +684,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              char* arg_str = arg_shifter.get_current ();
+              const char* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, "true") == 0)
                 this->supports_dynamic_properties_ = 1;
@@ -700,7 +700,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              char* arg_str = arg_shifter.get_current ();
+              const char* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, "true") == 0)
                 this->supports_modifiable_properties_ = 1;
@@ -763,7 +763,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              char* arg_str = arg_shifter.get_current ();
+              const char* arg_str = arg_shifter.get_current ();
               CosTrading::FollowOption follow_option;
 
               if (ACE_OS::strcasecmp (arg_str, "always") == 0)

@@ -16,7 +16,27 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
     back_ (argc - 1),
     front_ (0)
 {
-  // If not provided with one, allocate a temporary array.
+  this->init ();
+}
+
+ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
+                                  ACE_TCHAR** argv,
+                                  ACE_TCHAR** temp)
+  : argc_ (argc),
+    total_size_ (argc),
+    temp_ ((const ACE_TCHAR **) temp),
+    argv_ ((const ACE_TCHAR **) argv),
+    current_index_ (0),
+    back_ (argc - 1),
+    front_ (0)
+{
+  this->init ();
+}
+
+void 
+ACE_Arg_Shifter::init (void) 
+{ 
+  // If not provided with one, allocate a temporary array.  
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
              const ACE_TCHAR *[this->total_size_]);

@@ -87,7 +87,7 @@ TAO_Internal::open_services (int &argc, char **argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      char *current_arg = 0;
+      const char *current_arg = 0;
 
       // Start with the parameterless flags.
       if (arg_shifter.cur_arg_strncasecmp

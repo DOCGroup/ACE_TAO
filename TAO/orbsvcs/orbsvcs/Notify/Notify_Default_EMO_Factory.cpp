@@ -63,10 +63,10 @@ TAO_Notify_Default_EMO_Factory::init (int argc, char* argv[])
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  char *current_arg = 0;
+  const char *current_arg = 0;
   while (arg_shifter.is_anything_left ())
     {
-      char *arg = arg_shifter.get_current ();
+      const char *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, "-MTDispatching") == 0)
         {

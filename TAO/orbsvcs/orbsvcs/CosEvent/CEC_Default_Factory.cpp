@@ -88,7 +88,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      char *arg = arg_shifter.get_current ();
+      const char *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, "-CECDispatching") == 0)
         {
@@ -96,7 +96,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "reactive") == 0)
                 {
                   this->dispatching_ = 0;
@@ -122,7 +122,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -134,7 +134,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->consumer_collection_ =
                 this->parse_collection_arg (opt);
               arg_shifter.consume_arg ();
@@ -147,7 +147,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->supplier_collection_ =
                 this->parse_collection_arg (opt);
               arg_shifter.consume_arg ();
@@ -160,7 +160,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->consumer_lock_ = 0;
@@ -190,7 +190,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->supplier_lock_ = 0;
@@ -220,7 +220,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->reactive_pulling_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -244,7 +244,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->consumer_control_ = 0;
@@ -270,7 +270,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->supplier_control_ = 0;
@@ -296,7 +296,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->consumer_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -308,7 +308,7 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               this->supplier_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }

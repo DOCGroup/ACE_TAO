@@ -61,6 +61,12 @@ public:
                    const ACE_TCHAR **argv,
                    const ACE_TCHAR **temp = 0);
 
+  /// Same behavior as the preceding constructor, but without the
+  /// "const" qualifier.
+  ACE_Arg_Shifter (int& argc,
+                   ACE_TCHAR **argv,
+                   ACE_TCHAR **temp = 0);
+
   /// Destructor.
   ~ACE_Arg_Shifter (void);
 
@@ -155,6 +161,9 @@ public:
   int num_ignored_args (void) const;
 
 private:
+  /// Refactor the constructor logic.
+  void init (void);
+
   /// The size of the argument vector.
   int& argc_;
 
