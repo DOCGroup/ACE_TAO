@@ -36,11 +36,10 @@ Smart_Diamond_Top_Proxy::shape ( ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Smart_proxy: This is "));
 
-  CORBA::Short retval = 0;
   char *ans= 0;
   ACE_TRY
     {
-      ans = 
+      ans =
         ACE_OS::strdup (
             TAO_Diamond_Top_Smart_Proxy_Base::shape (
                 ACE_ENV_SINGLE_ARG_PARAMETER
