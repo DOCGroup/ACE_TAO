@@ -1,3 +1,14 @@
+Sat May  6 13:47:35 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Relaxed the restriction that ensured argv[0] be non-empty when
+	  argc was non-zero.  TAO no longer checks the length of argv[0]
+	  when argc is non-zero.  Instead it trusts the user's judgment.
+	  Thanks to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu>
+	  for pointing out that some users may wish to pass an empty
+	  program name argument (argv[0]) to CORBA::ORB_init().
+
 Thu May  4 17:17:32 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Accept_State.cpp: Fixed a problem with the way
