@@ -1,3 +1,8 @@
+Fri Aug 27 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+          Added #include "ace/Log_Msg.h"
+
 Fri Aug 27 01:12:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Table.h:
