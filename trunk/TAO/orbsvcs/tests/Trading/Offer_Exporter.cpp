@@ -337,9 +337,10 @@ TAO_Offer_Exporter::create_offers (void)
   TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
   TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
 
-  CosTradingDynamic::DynamicProp_var dp_user_queue;
-  CosTradingDynamic::DynamicProp_var dp_file_queue;
-  CosTradingDynamic::DynamicProp_var dp_space_left;
+  CORBA::Environment _env;
+  CosTradingDynamic::DynamicProp* dp_user_queue;
+  CosTradingDynamic::DynamicProp* dp_file_queue;
+  CosTradingDynamic::DynamicProp* dp_space_left;
 
   ACE_INET_Addr addr ((u_short) 0);
   const char* hostname = addr.get_host_name ();
@@ -398,9 +399,11 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER];
       this->props_plotters_[i][8].value <<= TT_Info::MODEL_NUMBERS[i];
       this->props_plotters_[i][9].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
-      this->props_plotters_[i][9].value <<= dp_user_queue.in ();
+      this->props_plotters_[i][9].
+	value.replace (CosTradingDynamic::_tc_DynamicProp, dp_user_queue, CORBA::B_TRUE, _env);
       this->props_plotters_[i][10].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
-      this->props_plotters_[i][10].value <<= dp_file_queue.in ();
+      this->props_plotters_[i][10].
+	value.replace (CosTradingDynamic::_tc_DynamicProp, dp_file_queue, CORBA::B_TRUE, _env);
     }
 
   // Initialize printers
@@ -457,9 +460,11 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_printers_[i][9].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC];
       this->props_printers_[i][9].value <<= (CORBA::UShort) i;
       this->props_printers_[i][10].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
-      this->props_printers_[i][10].value <<= dp_user_queue.in ();
+      this->props_printers_[i][10].
+	value.replace (CosTradingDynamic::_tc_DynamicProp, dp_user_queue, CORBA::B_TRUE, _env);
       this->props_printers_[i][11].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
-      this->props_printers_[i][11].value <<= dp_file_queue.in ();
+      this->props_printers_[i][11].
+	value.replace (CosTradingDynamic::_tc_DynamicProp, dp_file_queue, CORBA::B_TRUE, _env);
     }
 
   // Initialize FileSystem
@@ -496,7 +501,8 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_fs_[i][6].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL];
       this->props_fs_[i][6].value <<= (CORBA::UShort) (i + 1);
       this->props_fs_[i][7].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
-      this->props_fs_[i][7].value <<= dp_space_left.in ();
+      this->props_fs_[i][7].
+	value.replace (CosTradingDynamic::_tc_DynamicProp, dp_space_left, CORBA::B_TRUE, _env);
     }
 }
 
@@ -511,3 +517,5 @@ template class TAO_Simple_Dynamic_Property<CosTradingSequences::ULong>;
 #pragma instantiate TAO_Simple_Dynamic_Property<CosTradingSequences::ULongSeq>
 #pragma instantiate TAO_Simple_Dynamic_Property<CosTradingSequences::ULong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
