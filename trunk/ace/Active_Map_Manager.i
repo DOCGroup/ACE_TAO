@@ -9,7 +9,7 @@ ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (void)
 {
   // If you change ~0, please change ACE_Map_Manager::free_list_id()
   // accordingly.
-  this->key_data_.slot_index_ = ~0;
+  this->key_data_.slot_index_ = (ACE_UINT32) ~0;
   this->key_data_.slot_generation_ = 0;
 }
 

@@ -13,7 +13,13 @@ ACE_Time_Value::operator timeval () const
   return this->tv_;
 }
 
-// Returns a pointer to the object as a timeval.
+ACE_INLINE
+ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
+  // : tv_ ()
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  this->set (tv);
+}
 
 ACE_INLINE
 ACE_Time_Value::operator const timeval * () const
@@ -70,14 +76,6 @@ ACE_Time_Value::set (const timeval &tv)
   this->tv_.tv_usec = tv.tv_usec;
 
   this->normalize ();
-}
-
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
-  // : tv_ ()
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (tv);
 }
 
 ACE_INLINE

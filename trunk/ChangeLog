@@ -1,3 +1,12 @@
+Tue Jan 20 16:57:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Active_Map_Manager.i:
+	* ace/CDR_Stream.i:
+
+	  Fixed warnings in VC71 builds. Thanks to Grutzmacher
+	  Lukas<gruetzmacher@ais-dresden.de> for reporting the problem and
+	  providing patches.
+
 Tue Jan 20 15:37:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/msvc_mpc_auto_compile.pl: 
