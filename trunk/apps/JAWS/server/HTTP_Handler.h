@@ -10,9 +10,9 @@ class Message_Block;
 class HTTP_Handler_Factory;
 
 #include "ace/Asynch_IO.h"
-#include "apps/JAWS/server/HTTP_Request.h"
-#include "apps/JAWS/server/HTTP_Response.h"
-#include "apps/JAWS/server/IO.h"
+#include "HTTP_Request.h"
+#include "HTTP_Response.h"
+#include "IO.h"
 
 class HTTP_Handler : protected JAWS_IO_Handler
   //

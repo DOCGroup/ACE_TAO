@@ -2,7 +2,7 @@
 
 // HTTP_Helpers.cpp -- Helper utilities for both server and client
 
-#include "apps/JAWS/server/HTTP_Helpers.h"
+#include "HTTP_Helpers.h"
 
 // = Static initialization.
 const char * const
