@@ -264,7 +264,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
       this->get () != 'l')
     {
       xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Unrecognized XML Decl")));
+                        (ACE_LIB_TEXT ("Unrecognized XML Decl ('<?xml' ?)")));
       return;
     }
 
@@ -281,7 +281,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
       this->get_quoted_string (astring) != 0)
     {
       xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Unrecognized XML Decl")));
+                        (ACE_LIB_TEXT ("Unrecognized XML Decl ('version'?)")));
       return;
     }
 
@@ -329,7 +329,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
               else
                 {
                   xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Unrecognized XML Decl")));
+                                    (ACE_LIB_TEXT ("Unrecognized XML Decl ('encoding'?)")));
                   return;
                 }
             }
@@ -360,13 +360,13 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                     }
                 }
               xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Unrecognized XML Decl")));
+                                (ACE_LIB_TEXT ("Unrecognized XML Decl ('standalone'?)")));
               return;
             }
           else
             {
               xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Unrecognized XML Decl")));
+                                (ACE_LIB_TEXT ("Unrecognized XML Decl ('standalone'?)")));
               return;
             }
         }
@@ -377,7 +377,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
       if (this->get() != '>')
         {
           xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Unrecognized XML Decl")));
+                            (ACE_LIB_TEXT ("Unrecognized XML Decl ('>'?)")));
           return;
         }
       return;

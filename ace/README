@@ -975,6 +975,24 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
 					this problem.
 ----------------------------------------
 
+The following macros determine the svc.conf file format ACE uses.
+
+Macro                                   Description
+-----                                   -----------
+ACE_HAS_CLASSIC_SVC_CONF                This macro forces ACE to use the classic
+                                        svc.conf format.
+
+ACE_HAS_XML_SVC_CONF                    This macro forces ACE to use the XML
+                                        svc.conf format.
+
+ACE_USES_CLASSIC_SVC_CONF               This macro should be defined as 0 or 1, depending
+                                        on the preferred svc.conf file format.
+                                        Defining this macro to 0 means ACE will use XML
+                                        svc.conf file format.  Defining it to 1 will
+                                        force ACE to use the classic svc.conf format.
+                                        ** This macro takes precedence over previous
+                                        ** two macros.
+----------------------------------------
 The following is a partial list of where some of these macros are used
 in the code.  This list was originally compiled by Jam Hamidi
 (jh1@core01.osi.com).  It is now hopelessly out of date.  Hopefully,

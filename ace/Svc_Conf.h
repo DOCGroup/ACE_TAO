@@ -28,6 +28,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Parse_Node.h"
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+
 // Forward declarations.
 struct ace_yy_buffer_state;
 
@@ -193,6 +195,8 @@ extern ACE_TCHAR *ace_yytext;
 
 /// Holds the length of the lexeme for the current token
 extern int ace_yyleng;
+
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 /// Factory that creates a new ACE_Service_Type_Impl.
 extern ACE_Service_Type_Impl *

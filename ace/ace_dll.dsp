@@ -186,23 +186,11 @@ SOURCE=.\ARGV.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Argv_Type_Converter.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Connector.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Pseudo_Task.cpp
 # End Source File
 # Begin Source File
 
@@ -271,10 +259,6 @@ SOURCE=.\Connection_Recycling_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\Containers.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Copy_Disabled.cpp
 # End Source File
 # Begin Source File
 
@@ -954,10 +938,6 @@ SOURCE=.\Time_Request_Reply.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Time_Value.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Timeprobe.cpp
 # End Source File
 # Begin Source File
@@ -1070,6 +1050,10 @@ SOURCE=.\WIN32_Proactor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\XML_Svc_Conf.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\XtReactor.cpp
 # End Source File
 # End Group
@@ -1118,15 +1102,7 @@ SOURCE=.\ARGV.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Argv_Type_Converter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Asynch_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Connector.h
 # End Source File
 # Begin Source File
 
@@ -1135,10 +1111,6 @@ SOURCE=.\Asynch_IO.h
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Pseudo_Task.h
 # End Source File
 # Begin Source File
 
@@ -1275,10 +1247,6 @@ SOURCE=.\Containers.h
 # Begin Source File
 
 SOURCE=.\Containers_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Copy_Disabled.h
 # End Source File
 # Begin Source File
 
@@ -2278,6 +2246,10 @@ SOURCE=.\WIN32_Proactor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\XML_Svc_Conf.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\XtReactor.h
 # End Source File
 # End Group
@@ -2311,10 +2283,6 @@ SOURCE=.\Addr.i
 # Begin Source File
 
 SOURCE=.\ARGV.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Argv_Type_Converter.inl
 # End Source File
 # Begin Source File
 
@@ -3046,10 +3014,6 @@ SOURCE=.\Thread_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Time_Value.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Timer_Queue_Adapters.i
 # End Source File
 # Begin Source File
@@ -3150,19 +3114,6 @@ SOURCE=.\Asynch_Acceptor.cpp
 # Begin Source File
 
 SOURCE=.\Atomic_Op.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -3217,19 +3168,6 @@ SOURCE=.\Dump_T.cpp
 # Begin Source File
 
 SOURCE=.\Framework_Component_T.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
