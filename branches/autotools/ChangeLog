@@ -1,3 +1,10 @@
+Sat Feb  1 12:44:52 2003  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am (EXTRA_DIST):
+
+	  Removed "BIBLIOGRAPHY" from this list since that file no longer
+	  exists.  "make dist" now works once again.
+
 Sat Feb  1 12:40:11 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (libACE_Utils_la_SOURCES):
