@@ -101,6 +101,8 @@
 
 #define ACE_HAS_UNICODE
 
+#define ACE_HAS_PENTIUM
+
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
 //define ACE_HAS_AUTOMATIC_INIT_FINI
