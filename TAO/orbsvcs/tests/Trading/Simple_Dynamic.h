@@ -33,7 +33,7 @@ public:
 
 private:
 
-  T dp_;
+  const T& dp_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
