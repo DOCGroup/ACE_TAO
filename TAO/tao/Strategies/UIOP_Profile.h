@@ -59,14 +59,14 @@ public:
   /// already been marshaled.  (actually, no marshalling for this protocol)
   TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                     const TAO_ObjectKey &object_key,
-                    const TAO_GIOP_Version &version,
+                    const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor
   TAO_UIOP_Profile (const char *rendezvous_point,
                     const TAO_ObjectKey &object_key,
                     const ACE_UNIX_Addr &addr,
-                    const TAO_GIOP_Version &version,
+                    const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.

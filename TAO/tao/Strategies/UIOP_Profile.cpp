@@ -34,7 +34,7 @@ TAO_UIOP_Profile::object_key_delimiter (void) const
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                                     const TAO_ObjectKey &object_key,
-                                    const TAO_GIOP_Version &version,
+                                    const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE, orb_core, version),
     endpoint_ (addr),
@@ -47,7 +47,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
                                     const TAO_ObjectKey &object_key,
                                     const ACE_UNIX_Addr &addr,
-                                    const TAO_GIOP_Version &version,
+                                    const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE, orb_core, version),
     endpoint_ (addr),
@@ -60,7 +60,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE,
                  orb_core,
-                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR,
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
                                    TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),

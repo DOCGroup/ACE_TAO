@@ -34,7 +34,7 @@
 #include "tao/Acceptor_Impl.h"
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Version.h"
 // TAO SHMIOP_Acceptor concrete call defination
 
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
@@ -112,7 +112,7 @@ protected:
   ACE_MEM_Addr address_;
   // A local endpoint.
 
-  TAO_GIOP_Version version_;
+  TAO_GIOP_Message_Version version_;
   // The GIOP version for this endpoint
 
   TAO_ORB_Core *orb_core_;

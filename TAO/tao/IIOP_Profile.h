@@ -54,7 +54,7 @@ public:
   /// already been marshaled.
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                     const TAO_ObjectKey &object_key,
-                    const TAO_GIOP_Version &version,
+                    const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
   ///  Profile constructor, this is the most efficient since it
@@ -63,7 +63,7 @@ public:
                     CORBA::UShort port,
                     const TAO_ObjectKey &object_key,
                     const ACE_INET_Addr &addr,
-                    const TAO_GIOP_Version &version,
+                    const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.
