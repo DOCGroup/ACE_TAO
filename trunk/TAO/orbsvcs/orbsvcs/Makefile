@@ -130,7 +130,6 @@ ifneq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
         CosEvent/EventChannel_i \
         CosEvent/ProxyPushConsumer_i \
         CosEvent/ProxyPushSupplier_i \
-	CosEC_Utility_Methods_T \
 	CosEvent_Utilities
 endif # CosEvent
 

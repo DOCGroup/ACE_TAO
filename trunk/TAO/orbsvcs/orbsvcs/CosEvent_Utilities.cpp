@@ -2,7 +2,6 @@
 // $Id$
 
 #include "CosEvent_Utilities.h"
-#include "CosEC_Utility_Methods_T.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/CosEvent/EventChannel_i.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -70,17 +69,25 @@ CosEC_ServantBase::activate (CORBA::Environment &ACE_TRY_ENV)
   // Activate the CosEC
   if (this->activate_cosec (ACE_TRY_ENV) != 0)
     return -1;
-   ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (-1);
 
    // Activate ourselves..
-   // Note that the poa is <thispoa_)
-   CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>::
-    activate (this->thispoa_.in (),
-              this,
-              ACE_TRY_ENV);
+   // Note that the POA is <thispoa_>
+
+   PortableServer::ObjectId_var oid =
+     this->thispoa_->activate_object (this,
+                                      ACE_TRY_ENV);
    ACE_CHECK_RETURN (-1);
 
-   return 0;
+   this->_remove_ref (ACE_TRY_ENV);
+   ACE_CHECK_RETURN (-1);
+
+   CORBA::Object_var obj =
+     this->thispoa_->id_to_reference (oid,
+                                      ACE_TRY_ENV);
+   ACE_CHECK_RETURN (-1);
+
+   return 0; // success.
 }
 
 int
@@ -99,28 +106,47 @@ CosEC_ServantBase::activate (const char* servant_id,
     return -1;
    ACE_CHECK_RETURN (-1);
 
-   // Activate ourselves..
-   // Note that the poa is <thispoa_)
-   CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>::
-    activate (this->thispoa_.in (),
-              this,
-              servant_id,  // use the supplied id.
-              ACE_TRY_ENV);
-   ACE_CHECK_RETURN (-1);
 
-   return 0;
+  PortableServer::ObjectId_var oid =
+    TAO_POA::string_to_ObjectId (servant_id);
+
+  // Activate ourselves.
+  // Note that the POA is <thispoa_>
+  this->thispoa_->activate_object_with_id (oid,
+                                           this,
+                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::Object_var obj =
+    this->thispoa_->id_to_reference (oid,
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  return 0; // success.
 }
 
 void
 CosEC_ServantBase::activate_rtec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Activate the Rtec
-  this->rtec_ =
-    CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>::
-    activate (this->poa_.in (),
-              this->rtec_servant_,
-              ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    this->poa_->activate_object (this->rtec_servant_,
+                                 ACE_TRY_ENV);
   ACE_CHECK;
+
+  this->rtec_servant_->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (oid,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->rtec_ =
+    RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 
 int
@@ -154,13 +180,21 @@ CosEC_ServantBase::activate_cosec (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (-1);
 
   // Activate the CosEC
-  this->cosec_ =
-    CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>::
-    activate (this->poa_.in (),
-              this->cosec_servant_,
-              ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    this->poa_->activate_object (this->cosec_servant_,
+                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  this->cosec_servant_->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (oid,
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->cosec_ =
+    CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
   return 0; // success
 }
 
@@ -175,9 +209,14 @@ CosEC_ServantBase::deactivate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // Finally we go away..
-  CosEC_Utility_Methods<CORBA::Object>::deactivate (this->thispoa_,
-                                                    this,
-                                                    ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    this->thispoa_->servant_to_id (this,
+                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // deactivate from the poa.
+  this->thispoa_->deactivate_object (oid,
+                                 ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -185,9 +224,14 @@ void
 CosEC_ServantBase::deactivate_rtec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the rtec.
-  CosEC_Utility_Methods<CORBA::Object>::deactivate (this->poa_,
-                                                        this->rtec_servant_,
-                                                        ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    this->poa_->servant_to_id (this->rtec_servant_,
+                               ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // deactivate from the poa.
+  this->poa_->deactivate_object (oid,
+                                 ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -195,9 +239,14 @@ void
 CosEC_ServantBase::deactivate_cosec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the cosec.
-  CosEC_Utility_Methods<CORBA::Object>::deactivate (this->poa_,
-                                                    this->cosec_servant_,
-                                                    ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    this->poa_->servant_to_id (this->cosec_servant_,
+                               ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // deactivate from the poa.
+  this->poa_->deactivate_object (oid,
+                                 ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -389,16 +438,18 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class CosEC_Utility_Methods<RtecScheduler::Scheduler>;
-template class CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>;
-template class CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>;
-template class CosEC_Utility_Methods<CORBA::Object>;
+template class auto_ptr <POA_RtecEventChannelAdmin::EventChannel>;
+template class ACE_Auto_Basic_Ptr <POA_RtecEventChannelAdmin::EventChannel>;
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+template class auto_ptr <TAO_CosEC_EventChannel_i>;
+template class ACE_Auto_Basic_Ptr <TAO_CosEC_EventChannel_i>;
 
-#pragma instantiate CosEC_Utility_Methods<RtecScheduler::Scheduler>
-#pragma instantiate CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>
-#pragma instantiate CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>
-#pragma instantiate CosEC_Utility_Methods<CORBA::Object>
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
+#pragma instantiate auto_ptr <POA_RtecEventChannelAdmin::EventChannel>
+#pragma instantiate  ACE_Auto_Basic_Ptr <POA_RtecEventChannelAdmin::EventChannel>
+
+#pragma instantiate auto_ptr <TAO_CosEC_EventChannel_i>
+#pragma instantiate  ACE_Auto_Basic_Ptr <TAO_CosEC_EventChannel_i>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
