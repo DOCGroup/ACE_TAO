@@ -8,6 +8,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"
+#include "ace/OS_NS_select.h"
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
