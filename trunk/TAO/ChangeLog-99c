@@ -1,4 +1,4 @@
-Thu Mar 18 01:47:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Mar 18 01:54:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POAC.h: Fixed all the _out copy constructors to prevent
 	  warnings.
@@ -59,6 +59,11 @@ Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    new POA design, this scheme will not be required.  Also,
 	    removed the POA locking example in
 	    $TAO_ROOT/examples/POA/locking.
+
+	* examples/POA/Identity/: Added new example to test a whole bunch
+	  of conversions from servant to id to reference. The example is
+	  designed to test the new POA IOR creation and its Active Object
+	  Map.
 
 	* tao: Added support for minimalCORBA to TAO. For some
 	  applications CORBA is too large to meet exacting size and
