@@ -3483,6 +3483,8 @@ fi dnl test "$ac_cv_header_sys_priocntl_h" = yes
 dnl FIXME:  How do we check for a working sbrk()?  Do we need to?
 ACE_CHECK_LACKS_FUNCS(sbrk)
 
+ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
+
 ACE_CHECK_LACKS_FUNCS(wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 if test "$ac_cv_func_wcstok" = yes; then
