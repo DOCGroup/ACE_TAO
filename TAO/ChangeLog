@@ -30,7 +30,9 @@ Sun Dec 29 08:44:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	
 	* TAO_IDL/include/ast_module.h: #include'd ace/Unbounded_Set.h. 
 
-	* tao/Condition.h: #include'd tao/orbconf.h 
+	* tao/Condition.h: #include'd tao/orbconf.h and forward declared
+          ACE_Time_Value
+
 	* tao/FILE_Parser.cpp:
 	* tao/Typecode.cpp: #include'd ace/Malloc_Base.h. 
 
