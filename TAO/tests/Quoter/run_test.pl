@@ -1,16 +1,14 @@
-#!/pkg/gnu/bin/perl -I../../../bin
 # $Id$
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# If your perl installation isn't in /pkg/gnu/bin/perl,
-# please make the change accordingly
-#
 # This is a Perl script that runs the client and all the other servers that
-# are needed
+# are needed.
 
-use Process;
+unshift @INC, '../../../bin';
+
+require Process;
 
 $nsiorfile = "theior";
 
@@ -48,10 +46,10 @@ else
 # variables for parameters
 
 $nsport = 20000 + $uid;
-$clport = 0; 
-$svport = 0; 
-$ffport = 0; 
-$gfport = 0; 
+$clport = 0;
+$svport = 0;
+$ffport = 0;
+$gfport = 0;
 
 # other variables
 
@@ -97,7 +95,7 @@ sub factory_finder
 {
   my $args = "$other -ORBport $ffport -ORBobjrefstyle url -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
-	
+
   $FF = Process::Create ("Factory_Finder".$Process::EXE_EXT, $args);
 }
 
@@ -124,7 +122,7 @@ sub client
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {
-  SWITCH: 
+  SWITCH:
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
@@ -200,7 +198,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       #use a different set of *.conf files
       $c_conf = "c.conf";
       $s_conf = "s.conf";
-      last SWITCH; 
+      last SWITCH;
     }
     if ($ARGV[$i] eq "-onewin")
     {
@@ -210,7 +208,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       }
       last SWITCH;
     }
-    
+
     $other = $other." ".$ARGV[$i];
   }
 }
