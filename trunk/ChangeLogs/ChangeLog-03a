@@ -1,7 +1,12 @@
+Thu May 18 15:59:10 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tests/CDR_File_Test.cpp:
+          Fixed so it works on platforms that lack native 64 bit types.
+
 Thu May 18 13:56:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Configuration.cpp:
-	  Removed an unused variable from import_config().
+        * ace/Configuration.cpp:
+          Removed an unused variable from import_config().
 
 Thu May 18 13:28:41 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
