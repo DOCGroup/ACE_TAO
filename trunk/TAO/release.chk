@@ -39,8 +39,8 @@ Legend:
 [1100  ] 	POA/On_Demand_Activation runs
 [1101  ] POA/Explicit_Activation compiles
 [0100  ] 	POA/Explicit_Activation runs
-[x1x1x ] POA/Default_Servant compiles
-[x0x0x ] 	POA/Default_Servant runs
+[x101x ] POA/Default_Servant compiles
+[x000x ] 	POA/Default_Servant runs
 
 [1111x ] Param_Test compiles
 [1111x ] 	SII short
