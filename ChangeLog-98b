@@ -1,3 +1,13 @@
+Tue Dec  1 00:07:05 PST 1998  James Hu  <jxh@entera.com>
+
+	* ace/Containers_T.h:
+	* ace/Containers_T.i:
+          Fixed a bug introduced when someone genericized the creation
+          strategy for ACE_DLList.  The removal routing had not been
+          similarly genericized.  Thanks goes to Martin Krumpolec
+          <krumpo@pobox.sk> for spotting the problem.
+
+
 Mon Nov 30 19:10:23 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/DLL/Makefile:
