@@ -650,7 +650,7 @@ InputPath=.\UDP.idl
 InputName=UDP
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -Ge 1 -Sp -Sd $(InputName).idl
+	..\..\..\..\..\bin\tao_idl_static -Ge 1 -Sp -Sd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -681,6 +681,41 @@ BuildCmds= \
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "UDP Performance Server - Win32 Static Release"
+
+# Begin Custom Build
+InputPath=.\UDP.idl
+InputName=UDP
+
+BuildCmds= \
+	..\..\..\..\..\bin\Release\tao_idl_static -Ge 1 -Sp -Sd $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
 
 !ENDIF 
 
