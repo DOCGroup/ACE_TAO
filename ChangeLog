@@ -1,3 +1,11 @@
+Tue Jul  1 20:47:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/os_limits.h:
+          Added include of os_stdio.h.  This picks up FILENAME_MAX on
+          Windows and fixes an alignment problem with ACE_PI_Control_Block
+          due to differing definitions for MAXNAMELEN.  Thanks to
+          Serge Kolgan <skolgan@trigraph.com> for help figuring this out.
+
 Tue Jul  1 19:39:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-vxworks5.x.h:
