@@ -1,0 +1,50 @@
+$Id$
+
+Use - for things to do, * for urgent things, and + for things that
+have been done.
+
+
+Bugs
+----
+
++ States problem -- pressing play twice screws up, position is not working
++ client blocks forever while exiting sometimes (often after the above)
++ vs, as don't die as a result of the above
++ server segfaults if addr is already in use
+
+
+- IF peer i.e client aborts connection for some reason the as and vs
+processes should die. It currently prints the message peer probably
+aborted connection in which case we can try to exit the process.
+
+Things to do
+------------
+
+"Simple" things
+
+
+- Make #define's into enums in common.h/globals.h
+
++ try compiling ACE and the application with fast=1 to see if
+  performance improves
+
+- Rename "play", "play_send" etc. appropriately
+
+
+
+"Not-so-simple" things 
+
+
++ Logic for Video_Server is convoluted!!
+
++ Need to modularize Audio_Server
+
++ Seperate command parsing in its own class
+
+Naga:
+----
+- handle leaks on the server side. 
+
++ handle leak on the client side due to Naming Service.
+
+
