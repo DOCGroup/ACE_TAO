@@ -216,6 +216,7 @@ ORB_CORE_FILES = \
   Sync_Strategies \
   TAO_Internal \
   TAO_Server_Request \
+  TAO_AMH_Response_Handler \
   Typecode_Constants \
   TypeCodeFactory_Adapter \
   Wait_Strategy \

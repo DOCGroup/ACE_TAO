@@ -1,4 +1,12 @@
 // -*- C++ -*-
+
+// @@ Mayur the following comment is not properly formated.  I'm going
+// to give you are free copy of Emacs so you can get it right.
+
+// @@ Mayur the canonical naming convention is to call this file
+// "AMH_Response_Handler.h", without the TAO_ prefix.  The
+// Server_Request.h class is a deviation from the rules.
+
 /**
 *  @file   TAO_AMH_Response_Handler.h
 *
@@ -11,6 +19,7 @@
 #ifndef TAO_AMH_RESPONSE_HANDLER_H
 #define TAO_AMH_RESPONSE_HANDLER_H
 
+// @@ Mayur, please do not commit commented out code into the repo....
 //#include "tao/CDR.h"
 //#include "tao/ORB_Core.h"
 //#include "tao/ORB.h"
@@ -30,20 +39,30 @@ class TAO_ORB_Core;
 class TAO_AMH_Response_Handler
 {
 public:
+  // @@ Mayur, please document the class and all its methods using the
+  // Doxygen style....
   TAO_AMH_Response_Handler ();
+  virtual ~TAO_AMH_Response_Handler (void);
+
   void init_reply (void);
   void send_reply (void);
+
+  // @@ Mayur: why do you have 5 modifiers?  Aren't all these
+  // attributes changed simultaneously?
   void mesg_base (TAO_Pluggable_Messaging *mesg_base);
   void request_id (CORBA::ULong request_id);
   void response_expected (CORBA::Boolean response_expected);
   void transport (TAO_Transport *transport);
   //void reply_service_info (IOP::ServiceContext &service_context);
-  virtual ~TAO_AMH_Response_Handler (void);
 
+
+  // @@ Mayur please do no use public fields unless you have a very
+  // good reason for it... better to use an accessor...
   TAO_OutputCDR *tao_out_;
 
 
 private:
+  // @@ Mayur please document the fields of the class too!
   TAO_Pluggable_Messaging *mesg_base_;
   CORBA::ULong request_id_; // copy
   CORBA::Boolean response_expected_;
