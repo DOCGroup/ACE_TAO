@@ -49,13 +49,13 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Notify_Service.o .obj/Notify_Service.so .shobj/Notify_Service.o .shobj/Notify_Service.so: Notify_Service.cpp Notify_Service.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+.obj/Notify_Service.o .obj/Notify_Service.so .shobj/Notify_Service.o .shobj/Notify_Service.so: Notify_Service.cpp \
+ $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -66,13 +66,19 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -108,15 +114,17 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -333,27 +341,11 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
@@ -361,30 +353,43 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ Notify_Service.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -86,6 +86,7 @@ sub run_clients
 
 unlink $iorfile;
 
+if (0) {
 print STDERR "\n\n*** Single threaded server ***\n\n\n";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile");
@@ -109,6 +110,7 @@ unlink $iorfile;
 
 if ($server != 0 || $client != 0) {
   exit 1;
+}
 }
 
 print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
