@@ -29,29 +29,16 @@
     </CENTER>
 
     <UL>
-      <LI>Add suspend and resume operations to the PushConsumerProxy
-	and PushSupplierProxy interfaces, following the Notification
-	Service spec.
-      </LI>
-
-      <LI>The current implementation of octet sequences based on
-	message blocks has a few problems, it cannot marshall
-	chains of message blocks properly.
-	Notice that complete support for chains of message blocks will
-	complicate the sequence of octets implementation (like
-	operator[]) and will make others either hard or expensive
-	(like get_buffer ()). 
-      </LI>
-
-      <LI>The IDL compiler gets confused with paths in NT, this may be
-	due to my changes to report errors correctly.
-      </LI>
-
       <LI>The do_static_call() and do_dynamic_call() methods should
 	use an array of void* (in the first case static and generated
 	by the IDL compiler);
 	this will remove the problems with g++ and probably work
 	faster.
+      </LI>
+
+      <LI>The IDL compiler gets confused with paths in NT, this may be
+	due to my changes to report errors correctly (coryan).
+	<BR>[STATUS] Creating a Win32 workspace to try it.
       </LI>
 
       <LI>Object references inside structures or sequences are not
@@ -199,11 +186,6 @@
 
       <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
 	preserve end-to-end QoS.
-      </LI>
-
-      <LI>Debug Memory Pools in the EC there seem to be a problem when
-	sending multiple events in a row (a memory leak, limit or
-	corruption).
       </LI>
 
       <LI>Call ORB_init() in the EC threads?
@@ -389,7 +371,8 @@
       </LI>
 
       <LI>
-	The current implementation is optimal for hard-real-time
+	The current implementation of collocation is optimal for
+	hard-real-time 
 	applications, but in some cases it may be desirable to follow
 	the normal execution path yet minize costs for collocated
 	calls.
@@ -401,6 +384,10 @@
 	crossing the kernel boundary. Ideally even the serialization
 	could be minimized or avoided.
       </LI>
+      
+      <LI>The IDL compiler could generate a static method to access
+	the interface repository ID of a class.
+      </LI>
     </UL>
 
     <CENTER>
@@ -408,6 +395,31 @@
     </CENTER>
 
     <UL>
+      <LI>The current implementation of octet sequences based on
+	message blocks has a few problems, it cannot marshall
+	chains of message blocks properly.
+	Notice that complete support for chains of message blocks will
+	complicate the sequence of octets implementation (like
+	operator[]) and will make others either hard or expensive
+	(like get_buffer ()). 
+	<BR>[STATUS] It seems like the best tradeoff would be to
+	support the chain during marshalling, but disable or give no
+	warranties for operator[] and get_buffer().
+	<BR>[DONE]
+      </LI>
+
+      <LI>Debug Memory Pools in the EC there seem to be a problem when
+	sending multiple events in a row (a memory leak, limit or
+	corruption).
+	<BR>[DONE]
+      </LI>
+
+      <LI>Add suspend and resume operations to the PushConsumerProxy
+	and PushSupplierProxy interfaces, following the Notification
+	Service spec.
+	<BR>[DONE]
+      </LI>
+
       <LI>Optimize connection lookup in the client side, using "hints"
 	from the previous lookup, or keeping smaller sets on each IIOP
 	profile or a combination of both.
