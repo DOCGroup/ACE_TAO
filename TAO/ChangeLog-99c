@@ -1,3 +1,10 @@
+Tue Jun  8 15:03:02 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.h:	
+	* orbsvcs/tests/Property/client.cpp:
+	
+	 Fixed the SunCC5.0 warnings. 
+
 Tue Jun 08 13:36:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Stub.{h,i} (servant_orb): Added data member servant_orb_ and
