@@ -8,6 +8,7 @@
 
 #include "ace/Auto_Ptr.h"
 
+
 ACE_RCSID (FaultTolerance,
            TAO_FT_IOGR_Property,
            "$Id$")
@@ -51,6 +52,8 @@ TAO_FT_IOGR_Property::set_property (
   if (retval == 0)
     return retval;
 
+  const IOP::TaggedComponent &tmp_tc = tagged_components;
+
   // Go through every profile and set the TaggedComponent field
   for (CORBA::ULong i = 0; i < count ; i++)
     {
@@ -60,7 +63,7 @@ TAO_FT_IOGR_Property::set_property (
 
       // Finally set the <tagged_component> in the
       // <TAO_Tagged_Component>
-      tag_comp.set_component (tagged_components);
+      tag_comp.set_component (tmp_tc);
     }
 
   // Success
@@ -197,6 +200,7 @@ TAO_FT_IOGR_Property::set_primary (
 
   CORBA::ULong count =
     ior2->_stubobj ()->base_profiles ().profile_count ();
+
 
   for (CORBA::ULong ctr = 0;
        ctr < count;
@@ -343,6 +347,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
     const CORBA::Object_ptr iogr,
     FT::TagFTGroupTaggedComponent &fgtc
     ACE_ENV_ARG_DECL) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
@@ -383,9 +388,9 @@ TAO_FT_IOGR_Property::get_tagged_component (
 
           cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
-	  if ((cdr >> fgtc) == 1)
-	    return 1;
-	  else
+          if ((cdr >> fgtc) == 1)
+            return 1;
+          else
             ACE_THROW_RETURN (CORBA::MARSHAL (),
                               0);
         }
