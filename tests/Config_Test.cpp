@@ -709,7 +709,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                   --binary_length;
                                   ++ptr;
                                 }
-                              delete (char *)binary_data;
+                              delete [] (char *)binary_data;
                             }// end successful binary read
                         }// end if originalType was binary
                       else
