@@ -1,3 +1,10 @@
+Thu Mar  4 07:39:52 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Node.h: Added ACE_Unbounded_Queue_Const_Iterator as a
+	  friend to ACE_Node.  Thanks to Matthew Harris
+ 	  <mharris@hynomics.com> for reporting this.  This closes BUGID
+ 	  1759.
+
 Thu Mar  4 16:14:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
@@ -42,7 +49,7 @@ Thu Mar  4 11:17:27 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/modules/TemplateInputReader.pm:
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
 
-          More code ptimizations for an additional 8% performance increase.
+          More code optimizations for an additional 8% performance increase.
 
 Thu Mar  4 07:59:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 

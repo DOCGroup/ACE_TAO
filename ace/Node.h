@@ -44,6 +44,7 @@ class ACE_Node
 public:
   friend class ACE_Unbounded_Queue<T>;
   friend class ACE_Unbounded_Queue_Iterator<T>;
+  friend class ACE_Unbounded_Queue_Const_Iterator<T>;
   friend class ACE_Unbounded_Set<T>;
   friend class ACE_Unbounded_Set_Iterator<T>;
   friend class ACE_Unbounded_Set_Const_Iterator<T>;

@@ -254,7 +254,7 @@ Hakan Kallberg <hk@simulina.se>
 Eric Dean Russell <edrusse@somnet.sandia.gov>
 Daniel Montalibet <daniel_montalibet@stortek.com>
 Norbert Rapp <norbert.rapp@nexus-informatics.de>
-Ganesh Pai <gpai@voicetek.com>
+Ganesh Pai <GPai@sonusnet.com>
 Berni Merkle <merkle@io.freinet.de>
 Tom Wright <twright@gem-net.demon.co.uk>
 Torbjorn Lindgren <tl@funcom.no>
@@ -1844,14 +1844,15 @@ Pavan Mandalkar <pm2@cs.wustl.edu>
 Scott Willey <scott@sanasecurity.com>
 David Calkins <dcalk@dejazzd.com>
 Wu Yongwei <adah@netstd.com>
-Ganesh Pai <GPai@sonusnet.com>
 Karen L. Regner <karen.regner@swri.org>
 Michel Drapeau <michel.drapeau@asdfsadfh.com>
 Hans Bos <hans.bos@xelion.nl>
 Kevin Stacy <kevin_405@yahoo.com>
 Liat <vliat1@hotmail.com>
 Andreas Wagner <awagner@ls-wagner.de>
+Steven Xie <steven.xie@mpathix.com>
 Kris Dekeyser <Kris.Dekeyser@lms.be>
+Matthew Harris <mharris@hynomics.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
