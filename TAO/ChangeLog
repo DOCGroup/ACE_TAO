@@ -1,3 +1,9 @@
+Tue Feb 22 18:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_BaseS.h:
+          Removed includes which I should have removed after regenerating
+          this file
+
 Tue Feb 22 18:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
