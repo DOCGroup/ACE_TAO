@@ -1,3 +1,13 @@
+Thu Jul  6 13:04:02 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Posix_SP_Test.c: 
+          Made tests more robust checking for all possible parameter
+          values. Also, changed check for failure. Just because a
+          function doesn't support a particular parameter value, does
+          not mean the function doesn't support that function. If
+          the PACE symbols can be used (i.e., the code compiles) then
+          the function is supported.
+
 Thu Jul 06 12:17:21 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * pace/posix/pthread.inl (pace_pthread_mutex_{get,set}prioceiling):
