@@ -48,8 +48,8 @@ public:
     }
 
 private:
-  Element* next_;
   Element* prev_;
+  Element* next_;
   ACE_CString* item_;
 };
 
