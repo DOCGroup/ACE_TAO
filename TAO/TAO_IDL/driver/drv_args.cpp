@@ -128,18 +128,16 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Gv\t\t\tenable OBV (Valuetype) support (disabled by default)\n");
 #endif /* IDL_HAS_VALUETYPE */
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
-
-  cerr << GTDEVEL (" -GC \t\tGenerate the code for using AMI Call back model\n");
-  cerr << GTDEVEL (" -Gsp \t\tGenerate the code for Smart Proxies\n");
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
   cerr << GTDEVEL ("  \t\t\tb - Prefix to the implementation class names. Default is 'no prefix' \n");
   cerr << GTDEVEL ("  \t\t\te - Suffix to the implementation class names. Default is _i\n");
   cerr << GTDEVEL ("  \t\t\tc - Generate copy construtors\n");
-  //  cerr << GTDEVEL ("  \t\t\ta - Generate copy assigment operator\n");
   cerr << GTDEVEL (" -hc\t\t\tClient's header file name ending. Default is C.h\n");
   cerr << GTDEVEL (" -hs\t\t\tServer's header file name ending. Default is S.h\n");
   cerr << GTDEVEL (" -hT\t\t\tServer's template hdr file name ending. Default is S_T.h\n");
+  cerr << GTDEVEL (" -GC \t\tGenerate the code for using AMI Call back model\n");
+  cerr << GTDEVEL (" -Gsp \t\tGenerate the code for Smart Proxies\n");
   cerr << GTDEVEL (" -H perfect_hash\t\tTo force perfect hashed operation lookup strategy (default)\n");
   cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic hashed operation lookup strategy. Default is perfect hashing\n");
   cerr << GTDEVEL (" -H linear_search\t\tTo force linear searchoperation lookup strategy\n");
