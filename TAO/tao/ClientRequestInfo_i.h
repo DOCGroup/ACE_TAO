@@ -9,7 +9,7 @@
  * This is the implementation of the
  * PortableInterceptor::ClientRequestInfo interface.
  *
- * @author Ossama Othman <ossama@uci.edu>
+ * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  * @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
@@ -28,7 +28,6 @@
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 #include "tao/PortableInterceptorC.h"
-#include "tao/StringSeqC.h"
 #include "tao/PICurrent.h"
 
 

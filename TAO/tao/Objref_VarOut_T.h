@@ -27,7 +27,8 @@
 /**
  * @class TAO_Objref_Var_T
  *
- * @brief Parametrized implementation of _var class for object references.
+ * @brief Parameterized implementation of @c _var class for object
+ *       references.
  *
  */
 
