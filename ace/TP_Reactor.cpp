@@ -294,6 +294,22 @@ ACE_TP_Reactor::remove_handler (const ACE_Handle_Set &handles,
 }
 
 int
+ACE_TP_Reactor::remove_handler (int /*signum*/,
+                                ACE_Sig_Action * /*new_disp*/,
+                                ACE_Sig_Action * /*old_disp*/,
+                                int /*sigkey*/)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+ACE_TP_Reactor::remove_handler (const ACE_Sig_Set & /*sigset*/)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+
+int
 ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
                             ACE_TP_Token_Guard &guard)
 {
