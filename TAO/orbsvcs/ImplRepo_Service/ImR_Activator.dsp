@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="ImplRepo_Service" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="ImR_Activator " - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=ImplRepo_Service - Win32 Debug
+CFG=ImR_Activator  - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "implrepo.mak".
+!MESSAGE NMAKE /f "ImR_Activator.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "implrepo.mak" CFG="ImplRepo_Service - Win32 Debug"
+!MESSAGE NMAKE /f "ImR_Activator.mak" CFG="ImR_Activator  - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ImplRepo_Service - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "ImplRepo_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "ImR_Activator  - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "ImR_Activator  - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=ImplRepo_Service - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "ImplRepo_Service - Win32 Release"
+!IF  "$(CFG)" == "ImR_Activator  - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -51,9 +51,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_Svc_Utils.lib TAO_DynamicInterface.lib TAO_IORTable.lib TAO_PortableServer.lib TAO.lib ace.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /out:"Release/ImplRepo_Service.exe" /libpath:"..\orbsvcs" /libpath:"..\..\tao\DynamicInterface" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utils.lib TAO_DynamicInterface.lib TAO_IORTable.lib TAO_PortableServer.lib TAO.lib ace.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /out:"Release/ImR_Activator .exe" /libpath:"..\orbsvcs" /libpath:"..\..\tao\DynamicInterface" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "ImplRepo_Service - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ImR_Activator  - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -76,32 +76,56 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"ImplRepo_Service.exe" /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao\DynamicInterface" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"ImR_Activator .exe" /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao\DynamicInterface" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "ImplRepo_Service - Win32 Release"
-# Name "ImplRepo_Service - Win32 Debug"
+# Name "ImR_Activator  - Win32 Release"
+# Name "ImR_Activator  - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Adapter_Activator.cpp
+SOURCE=.\ImR_Activator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Forwarder.cpp
+SOURCE=.\ImR_Activator_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_Locator.cpp
+SOURCE=.\Iterator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_Locator_i.cpp
+SOURCE=.\Locator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Service.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Options.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Repository_Configuration.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Info.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Repository.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\XML_ContentHandler.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -109,15 +133,39 @@ SOURCE=.\ImR_Locator_i.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Adapter_Activator.h
+SOURCE=.\ImR_Activator_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Forwarder.h
+SOURCE=.\Iterator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_Locator_i.h
+SOURCE=.\Locator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Service.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Options.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Repository_Configuration.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Info.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Repository.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\XML_ContentHandler.h
 # End Source File
 # End Group
 # End Target

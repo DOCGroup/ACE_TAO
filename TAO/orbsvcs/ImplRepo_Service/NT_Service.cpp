@@ -16,7 +16,7 @@
 // Only on Windows for now
 #if defined (ACE_WIN32)
 
-#include "ImplRepo_i.h"
+#include "ImR_Activator_i.h"
 #include "tao/ORB_Core.h"
 
 /**
@@ -72,7 +72,7 @@ ImR_NT_Service::handle_exception (ACE_HANDLE)
 int
 ImR_NT_Service::svc (void)
 {
-  ImplRepo_i server;
+  ImR_Activator_i server;
 
   int status = 0;
 
