@@ -7238,7 +7238,6 @@ dnl   tests/Makefile
 AC_CONFIG_FILES([
   ace-config
   ace-config.1
-  aceConf.sh
   Makefile
   ace/Makefile
   ace/RMCast/Makefile

@@ -32,20 +32,14 @@ EXTRA_DIST =  \
   LICENSE.sun \
   README.sun \
   tao-config.in \
-  tao-config.1.in \
-  taoConf.sh.in
+  tao-config.1.in
 
-DISTCLEANFILES = tao-config taoConf.sh tao-config.1
+DISTCLEANFILES = tao-config tao-config.1
 
 ## release:
 ##         $(MAKE) dist distdir=$(PACKAGE)$(VERSION)
 release:
 	$(MAKE) dist
-
-## Put `exec' in the name because this should be installed by
-## `install-exec', not `install-data'.
-confexecdir=$(libdir)
-confexec_DATA = taoConf.sh
 
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't
