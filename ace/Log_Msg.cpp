@@ -1271,17 +1271,19 @@ private:
 
 ACE_Log_Msg_Sig_Guard::ACE_Log_Msg_Sig_Guard (void)
 {
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_OS::sigemptyset (&this->omask_);
 
-#if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+#  if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   ACE_OS::sigprocmask (SIG_BLOCK,
                        ACE_OS_Object_Manager::default_mask (),
                        &this->omask_);
-#else
+#  else
   ACE_OS::thr_sigsetmask (SIG_BLOCK,
                           ACE_OS_Object_Manager::default_mask (),
                           &this->omask_);
-#endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+#  endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+#endif /* ACE_LACKS_UNIX_SIGNALS */
 }
 
 ACE_Log_Msg_Sig_Guard::~ACE_Log_Msg_Sig_Guard (void)
@@ -1313,7 +1315,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       int tracing = this->tracing_enabled ();
       this->stop_tracing ();
 
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
+#if !defined (ACE_WIN32)
       // Make this block signal-safe.
       ACE_Log_Msg_Sig_Guard sb;
 #endif /* !ACE_WIN32 && !ACE_PSOS */
