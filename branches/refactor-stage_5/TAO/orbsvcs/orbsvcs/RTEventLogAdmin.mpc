@@ -1,0 +1,22 @@
+project(RTEventLogAdmin) : orbsvcslib, core, etcl, trading, iortable, naming, \
+    svc_utils, dynamicany, rtevent, rtsched, portableserver, dslogadmin {
+  sharedname   = TAO_RTEventLogAdmin
+  idlflags    += -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=Log/rteventlog_export.h
+  dynamicflags = TAO_RTEVENTLOG_BUILD_DLL
+  tagchecks    = RTEventLog
+
+  IDL_Files {
+    RTEventLogAdmin.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    RTEventLog {
+      RTEventLogAdminC.cpp
+      RTEventLogAdminS.cpp
+      Log/RTEventLogFactory_i.cpp
+      Log/RTEventLog_i.cpp
+      Log/RTEventLogConsumer.cpp
+      Log/RTEventLogNotification.cpp
+    }
+  }
+}
