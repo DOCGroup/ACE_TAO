@@ -1,3 +1,10 @@
+Wed Aug  4 18:09:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+	* configure.ac:
+	  Support --with/without-tao flag to provide find grain
+	  control over TAO configuration.
+
 Wed Aug  4 16:19:40 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Global_Macros.h (ACE_CORBA_1, ACE_CORBA_2, ACE_CORBA_3):
