@@ -126,6 +126,7 @@ chop ($now = `$date +"%a %b %d %T %Y"`);
 ########
 ######## Setup signal handlers.
 ########
+$status = 1;  #### Must get set to 0 explicitly to indicate success.
 $SIG{'HUP'} = $SIG{'INT'} = $SIG{'QUIT'} = $SIG{'TERM'} = 'cleanup';
 
 
@@ -142,13 +143,14 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   $major_version = $minor_version = $beta_version = 0;
   $previous_version = $version = '';
 
-  &check_workspace ()  ||
-  &get_versions ()  ||
-  &update_version_files ()  ||
-  &update_changelog ()  ||
-  &tag ()  ||
-  &diff ()  ||
-  &create_kit ();
+  $status =
+    &check_workspace ()  ||
+    &get_versions ()  ||
+    &update_version_files ()  ||
+    &update_changelog ()  ||
+    &tag ()  ||
+    &diff ()  ||
+    &create_kit ();
 } else {
   &create_kit ();
 }
@@ -159,7 +161,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
 ######## Clean up when done or on signal.
 ########
 sub cleanup {
-  exit;
+  exit $status;
 }
 
 
