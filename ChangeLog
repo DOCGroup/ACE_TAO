@@ -1,3 +1,9 @@
+Wed Jun 28 11:20:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * bin/pace_components: 
+          Modified to make PACE_ROOT $(ACE_ROOT)/PACE rather than the
+          previous value of $(ACE_ROOT)/pace.
+
 Wed Jun 28 11:42:53 2000  Steve Huston  <shuston@riverace.com>
 
         * ace.config-psos-diab-ppc.h: Added ACE_LACKS_PRAGMA_ONCE for the
