@@ -15,8 +15,7 @@ CFG=Future_Test - Win32 (WCE x86em) Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Future_Test.mak"\
- CFG="Future_Test - Win32 (WCE x86em) Debug"
+!MESSAGE NMAKE /f "Future_Test.mak" CFG="Future_Test - Win32 (WCE x86em) Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -48,7 +47,8 @@ CFG=Future_Test - Win32 (WCE x86em) Debug
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MLd /W3 /Gm /Zi /Od /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /YX /c
-# ADD CPP /nologo /MTd /W3 /Gm /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\WindozeCE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "ACE_HAS_WINCE" /D ACE_HAS_DLL=1 /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MTd /W3 /Gm /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\WindozeCE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "ACE_HAS_WINCE" /D ACE_HAS_DLL=1 /D "_AFXDLL" /c
+# SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_" /d "_AFXDLL"
@@ -80,7 +80,8 @@ EMPFILE=empfile.exe
 # PROP Target_Dir ""
 CPP=clmips.exe
 # ADD BASE CPP /nologo /MLd /W3 /Zi /Od /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D "DEBUG" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /YX /QMRWCE /c
-# ADD CPP /nologo /MTd /W3 /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\WindozeCE" /D "DEBUG" /D "MIPS" /D "_MIPS_" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "ACE_HAS_WINCE" /D ACE_HAS_DLL=1 /YX /QMRWCE /c
+# ADD CPP /nologo /MTd /W3 /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\WindozeCE" /D "DEBUG" /D "MIPS" /D "_MIPS_" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "ACE_HAS_WINCE" /D ACE_HAS_DLL=1 /QMRWCE /c
+# SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /r /d "MIPS" /d "_MIPS_" /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "UNICODE" /d "DEBUG"
 # ADD RSC /l 0x409 /r /d "MIPS" /d "_MIPS_" /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "UNICODE" /d "DEBUG"
@@ -114,7 +115,8 @@ PFILE=pfile.exe
 # PROP Target_Dir ""
 CPP=shcl.exe
 # ADD BASE CPP /nologo /MLd /W3 /Zi /Od /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /YX /c
-# ADD CPP /nologo /MTd /W3 /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\WindozeCE" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "ACE_HAS_WINCE" /D ACE_HAS_DLL=1 /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MTd /W3 /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\WindozeCE" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "ACE_HAS_WINCE" /D ACE_HAS_DLL=1 /D "_AFXDLL" /c
+# SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "UNICODE" /d "DEBUG"
 # ADD RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "UNICODE" /d "DEBUG" /d "_AFXDLL"
@@ -229,9 +231,11 @@ SOURCE=..\Future_Test.cpp
 
 !IF  "$(CFG)" == "Future_Test - Win32 (WCE x86em) Debug"
 
-DEP_CPP_MAP_M=\
+DEP_CPP_FUTUR=\
 	"..\..\ace\ACE.h"\
 	"..\..\ace\ACE.i"\
+	"..\..\ace\Activation_Queue.h"\
+	"..\..\ace\Activation_Queue.i"\
 	"..\..\ace\Atomic_Op.i"\
 	"..\..\ace\Auto_Ptr.cpp"\
 	"..\..\ace\Auto_Ptr.h"\
@@ -250,13 +254,14 @@ DEP_CPP_MAP_M=\
 	"..\..\ace\Free_List.cpp"\
 	"..\..\ace\Free_List.h"\
 	"..\..\ace\Free_List.i"\
+	"..\..\ace\Future.cpp"\
+	"..\..\ace\Future.h"\
 	"..\..\ace\Handle_Set.h"\
 	"..\..\ace\Handle_Set.i"\
 	"..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\High_Res_Timer.h"\
-	"..\..\ace\High_Res_Timer.i"\
 	"..\..\ace\inc_user_config.h"\
+	"..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\ace\iosfwd.h"\
 	"..\..\ace\Log_Msg.h"\
 	"..\..\ace\Log_Priority.h"\
@@ -270,19 +275,23 @@ DEP_CPP_MAP_M=\
 	"..\..\ace\Managed_Object.cpp"\
 	"..\..\ace\Managed_Object.h"\
 	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Map_Manager.cpp"\
-	"..\..\ace\Map_Manager.h"\
-	"..\..\ace\Map_Manager.i"\
 	"..\..\ace\Mem_Map.h"\
 	"..\..\ace\Mem_Map.i"\
 	"..\..\ace\Memory_Pool.h"\
 	"..\..\ace\Memory_Pool.i"\
+	"..\..\ace\Message_Block.h"\
+	"..\..\ace\Message_Block.i"\
+	"..\..\ace\Message_Queue.cpp"\
+	"..\..\ace\Message_Queue.h"\
+	"..\..\ace\Message_Queue.i"\
+	"..\..\ace\Method_Object.h"\
+	"..\..\ace\Module.cpp"\
+	"..\..\ace\Module.h"\
+	"..\..\ace\Module.i"\
 	"..\..\ace\Object_Manager.h"\
 	"..\..\ace\Object_Manager.i"\
 	"..\..\ace\OS.h"\
 	"..\..\ace\OS.i"\
-	"..\..\ace\Profile_Timer.h"\
-	"..\..\ace\Profile_Timer.i"\
 	"..\..\ace\Reactor.h"\
 	"..\..\ace\Reactor.i"\
 	"..\..\ace\Reactor_Impl.h"\
@@ -290,12 +299,24 @@ DEP_CPP_MAP_M=\
 	"..\..\ace\Service_Config.i"\
 	"..\..\ace\Service_Object.h"\
 	"..\..\ace\Service_Object.i"\
+	"..\..\ace\Service_Repository.h"\
+	"..\..\ace\Service_Repository.i"\
+	"..\..\ace\Service_Types.h"\
+	"..\..\ace\Service_Types.i"\
 	"..\..\ace\Shared_Object.h"\
 	"..\..\ace\Shared_Object.i"\
 	"..\..\ace\Signal.h"\
 	"..\..\ace\Signal.i"\
 	"..\..\ace\SString.h"\
 	"..\..\ace\SString.i"\
+	"..\..\ace\Strategies.h"\
+	"..\..\ace\Strategies.i"\
+	"..\..\ace\Strategies_T.cpp"\
+	"..\..\ace\Strategies_T.h"\
+	"..\..\ace\Strategies_T.i"\
+	"..\..\ace\Stream_Modules.cpp"\
+	"..\..\ace\Stream_Modules.h"\
+	"..\..\ace\Stream_Modules.i"\
 	"..\..\ace\streams.h"\
 	"..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\ace\SV_Semaphore_Complex.i"\
@@ -304,18 +325,28 @@ DEP_CPP_MAP_M=\
 	"..\..\ace\Svc_Conf_Tokens.h"\
 	"..\..\ace\Synch.h"\
 	"..\..\ace\Synch.i"\
+	"..\..\ace\Synch_Options.h"\
+	"..\..\ace\Synch_Options.i"\
 	"..\..\ace\Synch_T.cpp"\
 	"..\..\ace\Synch_T.h"\
 	"..\..\ace\Synch_T.i"\
 	"..\..\ace\sys_conf.h"\
+	"..\..\ace\Task.h"\
+	"..\..\ace\Task.i"\
+	"..\..\ace\Task_T.cpp"\
+	"..\..\ace\Task_T.h"\
+	"..\..\ace\Task_T.i"\
 	"..\..\ace\Thread.h"\
 	"..\..\ace\Thread.i"\
-	"..\..\ace\Time_Value.h"\
+	"..\..\ace\Thread_Manager.h"\
+	"..\..\ace\Thread_Manager.i"\
 	"..\..\ace\Timer_Queue.h"\
 	"..\..\ace\Timer_Queue_T.cpp"\
 	"..\..\ace\Timer_Queue_T.h"\
 	"..\..\ace\Timer_Queue_T.i"\
 	"..\..\ace\Trace.h"\
+	"..\..\ace\WFMO_Reactor.h"\
+	"..\..\ace\WFMO_Reactor.i"\
 	"..\..\ace\ws2tcpip.h"\
 	"..\test_config.h"\
 	
@@ -324,7 +355,7 @@ DEP_CPP_MAP_M=\
 
 !ELSEIF  "$(CFG)" == "Future_Test - Win32 (WCE SH) Debug"
 
-DEP_CPP_MAP_M=\
+DEP_CPP_FUTUR=\
 	"..\..\ace\ACE.h"\
 	"..\..\ace\ACE.i"\
 	"..\..\ace\Atomic_Op.i"\

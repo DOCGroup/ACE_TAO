@@ -1,5 +1,15 @@
-Sun May 17 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun May 17 23:14:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/Wince/*.dsp: Disabled precompiled headers.  They ate up
+	  all my disk space.
+
+	* ace/Service_Config.cpp: <process_directive> takes a string of
+	  type ASYS_TCHAR.  Use ACE_WIDE_STRING to do the conversion.
+
+	* ace/Log_Msg.{h,cpp} (ACE_ASSERT): Use unicode in ACE_ASSERT.
+	  (log): Don't exit the program for now.  Exiting program here
+	  destroys all debugging message in the window.
+	
 	* tests/Reader_Writer_Test.cpp: Reduced the number of iterations
 	  on WinCE.
 

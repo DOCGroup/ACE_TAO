@@ -393,7 +393,7 @@ ACE_Service_Config::process_commandline_directives (void)
            iter.advance ())
         {
           // Process just a single directive.
-          if (ACE_Service_Config::process_directive (sptr->fast_rep ()) == -1)
+          if (ACE_Service_Config::process_directive (ASYS_WIDE_STRING (sptr->fast_rep ())) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("%p\n"),
