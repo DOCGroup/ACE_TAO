@@ -2,7 +2,7 @@ Tue Jan 15 00:30:30 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be/be_valuetype.cpp:
 	  Moved implementation to client stubs for _var and _out classes.
-	
+
 Mon Jan 14 15:35:13 2002  Rob Ruff <rruff@scires.com>
                           Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -28,13 +28,13 @@ Mon Jan 14 15:35:13 2002  Rob Ruff <rruff@scires.com>
 	  TAO_AV_Connector_Registry and TAO_AV_Acceptor_Registry.
 	* orbsvcs/orbsvcs/AV/Transport.cpp: Add close() methods to
 	  TAO_AV_Connector_Registry and TAO_AV_Acceptor_Registry.
-	  Return result of reactor()->cancel_timer() in 
+	  Return result of reactor()->cancel_timer() in
 	  TAO_AV_Flow_Handler::cancel_timer().
 	* orbsvcs/orbsvcs/AV/RTCP.cpp: In TAO_AV_RTCP_Object::destroy(),
 	  delete this.
-	* orbsvcs/orbsvcs/AV/RTP.cpp: In TAO_AV_RTP_Object::destroy(), 
+	* orbsvcs/orbsvcs/AV/RTP.cpp: In TAO_AV_RTP_Object::destroy(),
 	  delete this.
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h: Make operator[] return 
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h: Make operator[] return
 	  const char *.  Add variables for cleanup.
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Add variables for cleanup.
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Memory leak fixes.
@@ -97,7 +97,7 @@ Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Changes to Notification Service test coce submitted by
           Chad Elliott <elliott_c@ociweb.com>.
-        
+
 Mon Jan 14 13:09:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
