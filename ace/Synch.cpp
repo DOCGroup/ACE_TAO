@@ -369,7 +369,7 @@ ACE_Mutex::dump (void) const
 
 ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
 #if defined (CHORUS)
-  : lock_ (0),
+  : process_lock_ (0),
     lockname_ (0)
 #endif /* CHORUS */
 {
