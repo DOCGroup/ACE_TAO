@@ -1,3 +1,9 @@
+Mon Jan 31 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/NamingViewer/SelectNSDialog.cpp:
+        * utils/NamingViewer/NamingViewer.cpp:
+          Fixed part of the compile errors in the unicode builds
+
 Sun Jan 30 20:47:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Simple/time-date/server.cpp:
