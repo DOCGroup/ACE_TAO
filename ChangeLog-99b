@@ -1,3 +1,9 @@
+Fri Sep 17 19:49:15 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Hash_Map_Manager_Test.cpp: Repositioned template
+	  instantiations and static variables to make the debug=0 build
+	  happy with SunCC5.0.
+
 Fri Sep 17 15:34:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.cpp (dump):
