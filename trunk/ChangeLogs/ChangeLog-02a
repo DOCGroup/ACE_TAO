@@ -1,3 +1,9 @@
+Sun Jul  1 11:03:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/generate_doxygen.pl: Removed SSLIOP from the list.
+        * etc/tao_ssliop.dosxygen: Removed the file as it was creating
+	  problems for the beta.   
+
 Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of 
