@@ -51,7 +51,8 @@ ECT_Consumer: $(addprefix $(VDIR),$(ECT_Consumer_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean:
-	$(RM) dataC.* dataS.* dataS_T.*
+	$(RM) -f dataC.* dataS.* dataS_T.*
+	$(RM) -f $(BUILD)
 
 #----------------------------------------------------------------------------
 #       Dependencies
