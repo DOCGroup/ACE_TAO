@@ -316,6 +316,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -655,6 +656,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -954,6 +956,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1294,6 +1297,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1633,6 +1637,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1971,6 +1976,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -2309,6 +2315,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -2647,6 +2654,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -2949,6 +2957,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
