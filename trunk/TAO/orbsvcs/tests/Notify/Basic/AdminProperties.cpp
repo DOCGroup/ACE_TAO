@@ -20,7 +20,7 @@ AdminProperties_Task::init (TAO_Notify_StructuredPushSupplier *supplier, AdminPr
 }
 
 int
-AdminProperties_Task::init (int argc, char *argv[])
+AdminProperties_Task::init (int argc, ACE_TCHAR *argv[])
 {
   return ACE_Task_Base::init (argc,
                                   argv);
