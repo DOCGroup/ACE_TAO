@@ -47,15 +47,17 @@ BIN2 = load_balancer server client
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifneq (1,$(repo))
-  #### ld on Linux (RedHat 6.0) with egcs 2.91.66 seg faults with repo
-  #### when trying to link load_balancer.
-  BIN = $(BIN2) 
-endif # ! repo
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  ifneq (1,$(repo))
+    #### ld on Linux (RedHat 6.0) with egcs 2.91.66 seg faults with repo
+    #### when trying to link load_balancer.
+    BIN = $(BIN2) 
+  endif # ! repo
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -1,3 +1,26 @@
+Tue Apr 25 10:05:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/examples/RtEC/MCast/Consumer.cpp:
+	* orbsvcs/examples/RtEC/MCast/Makefile:
+	* orbsvcs/examples/RtEC/MCast/Supplier.cpp:
+	* orbsvcs/tests/Event/Basic/Random.cpp:
+	  Fixed warnings and errors in platforms that lack exception
+	  handling.
+
+	* tests/Object_Loader/Makefile:
+	  Fixed the realclean target.
+
+	* tests/MProfile/server.cpp:
+	* tests/MProfile/test_i.h:
+	* tests/MProfile/test_i.cpp:
+	  Removed extra POA, that way the test can compile even when
+	  minimum corba is enabled.
+
+	* examples/Load_Balancing_persistent/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+	* tests/MProfile_Forwarding/Makefile:
+	  Disable for minimum CORBA builds
+
 Mon Apr 24 15:24:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/RtEC/Makefile:

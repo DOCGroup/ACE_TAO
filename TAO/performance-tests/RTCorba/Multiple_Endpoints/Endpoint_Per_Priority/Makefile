@@ -39,8 +39,10 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(rt_corba),1)
-  BIN=$(BIN_UNCHECKED)
-endif # minimum_corba
+  ifeq ($(minimum_corba),0)
+    BIN=$(BIN_UNCHECKED)
+  endif # minimum_corba
+endif # rt_corba
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
