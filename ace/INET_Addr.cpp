@@ -119,8 +119,15 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
     // Ugh, this is really a base class, so don't copy it.
     ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   else
-    // It's ok to make the copy.
-    ACE_OS::memcpy (&this->inet_addr_, &sa.inet_addr_, sa.get_size ());
+    {
+      // It's ok to make the copy.
+      ACE_OS::memcpy (&this->inet_addr_,
+                      &sa.inet_addr_,
+                      sa.get_size ());
+
+      this->set_type (sa.get_type());
+      this->set_size (sa.get_size());
+    }
 
   return 0;
 }
