@@ -46,7 +46,7 @@ static int max_messages = MAX_MESSAGES;
 static ACE_High_Res_Timer *timer = 0;
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue<ACE_SYNCH> SYNCH_QUEUE;
+typedef ACE_Message_Queue<ACE_MT_SYNCH> SYNCH_QUEUE;
 
 struct Queue_Wrapper
 {

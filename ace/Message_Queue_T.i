@@ -192,7 +192,6 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy (AC
   queue_->notification_strategy (s);
 }
 
-
 // Check if queue is empty (holds locks).
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int

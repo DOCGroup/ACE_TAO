@@ -204,7 +204,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify");
 
-  this->queue_->notify ();
+  return this->queue_->notify ();
 }
 
 template <ACE_SYNCH_DECL>
