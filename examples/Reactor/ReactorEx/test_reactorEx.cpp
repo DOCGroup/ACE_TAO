@@ -36,7 +36,7 @@
 
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 
-class Peer_Handler : public MT_TASK
+class Peer_Handler : public MT_TASK, public ACE_Handler
   // = TITLE
   //     Connect to a server.  Receive messages from STDIN_Handler 
   //     and forward them to the server using proactive I/O.
@@ -51,22 +51,21 @@ public:
   // It does blocking connects and accepts depending on whether a
   // hostname was specified from the command line.
 
-  virtual int handle_output_complete (ACE_Message_Block *msg, 
-				      long bytes_transferred);
-  // One of our asynchronous writes to the remote peer has completed.
-  // Make sure it succeeded and then delete the message.
-
-  virtual int handle_input_complete (ACE_Message_Block *msg, 
-				     long bytes_transferred);
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  // This method will be called when an asynchronous read completes on a stream. 
   // The remote peer has sent us something.  If it succeeded, print
   // out the message and reinitiate a read.  Otherwise, fail.  In both
   // cases, delete the message sent.
 
-  virtual ACE_Message_Block *get_message (void);
-  // This is so the Proactor can get a message to read into.
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  // This method will be called when an asynchronous write completes on a strea_m. 
+  // One of our asynchronous writes to the remote peer has completed.
+  // Make sure it succeeded and then delete the message.
 
-  virtual ACE_HANDLE get_handle (void) const;
-  // This is so the Proactor can get our handle.
+  virtual ACE_HANDLE handle (void) const;
+  // Get the I/O handle used by this <handler>. This method will be
+  // called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
+  // passed to <open>.
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // We've been removed from the ReactorEx.
@@ -90,6 +89,15 @@ private:
 
   u_short port_;
   // Port number for remote host.
+
+  ACE_Asynch_Read_Stream rd_stream_;
+  // Read stream
+
+  ACE_Asynch_Write_Stream wr_stream_;
+  // Write stream
+
+  ACE_Message_Block mb_;
+  // Message Block for reading from the network
 };
 
 class STDIN_Handler : public ACE_Task<ACE_NULL_SYNCH>
@@ -134,7 +142,8 @@ Peer_Handler::Peer_Handler (int argc, char *argv[])
     port_ (ACE_DEFAULT_SERVER_PORT),
     strategy_ (ACE_ReactorEx::instance (), 
 	       this, 
-	       ACE_Event_Handler::WRITE_MASK)
+	       ACE_Event_Handler::WRITE_MASK),
+    mb_ (BUFSIZ)
 {
   // This code sets up the message to notify us when a new message is
   // added to the queue.  Actually, the queue notifies ReactorEx which
@@ -178,7 +187,7 @@ Peer_Handler::open (void *)
       if (connector.connect (stream_, addr) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
 
-      ACE_DEBUG ((LM_DEBUG, "connected.\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%t) connected.\n"));
     }
   else // Acceptor
     {
@@ -189,45 +198,51 @@ Peer_Handler::open (void *)
 	  (acceptor.accept (this->stream_) == -1))
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept failed"), -1);
 
-      ACE_DEBUG ((LM_DEBUG, "accepted.\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%t) accepted.\n"));
     }
 
-  return ACE_Proactor::instance ()->initiate 
-    (this, ACE_Event_Handler::READ_MASK);
+  int result = this->rd_stream_.open (*this);
+  if (result != 0)
+    return result;
+  
+  result = this->wr_stream_.open (*this);
+  if (result != 0)
+    return result;
+
+  result = this->rd_stream_.read (this->mb_,
+				  this->mb_.size ());
+  return result;  
 }
 
 // One of our asynchronous writes to the remote peer has completed.
 // Make sure it succeeded and then delete the message.
 
-int 
-Peer_Handler::handle_output_complete (ACE_Message_Block *msg, 
-				      long bytes_transferred)
+void  
+Peer_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 {
-  if (bytes_transferred <= 0)
-    ACE_DEBUG ((LM_DEBUG, "%p bytes = %d\n", "Message failed",
-		bytes_transferred));
-
-  // This was allocated by the STDIN_Handler, queued, dequeued,
-  // passed to the proactor, and now passed back to us.
-  msg->release ();
-  return 0; // Do not reinvoke a send.
+  if (result.bytes_transferred () <= 0)
+    ACE_DEBUG ((LM_DEBUG, "(%t) %p bytes = %d\n", "Message failed",
+		result.bytes_transferred ()));
+  
+  // This was allocated by the STDIN_Handler, queued, dequeued, passed
+  // to the proactor, and now passed back to us.
+  result.message_block ().release ();
 }
 
 // The remote peer has sent us something.  If it succeeded, print
 // out the message and reinitiate a read.  Otherwise, fail.  In both
 // cases, delete the message sent.
 
-int 
-Peer_Handler::handle_input_complete (ACE_Message_Block *msg, 
-				     long bytes_transferred)
+  
+void 
+Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
-  int result = 1; // Reinvokes the recv() operation by default!
-
-  if (bytes_transferred > 0 && msg->length () > 0)
+  if (result.bytes_transferred () > 0 && 
+      this->mb_.length () > 0)
     {
-      msg->rd_ptr ()[bytes_transferred] = '\0';
+      this->mb_.rd_ptr ()[result.bytes_transferred ()] = '\0';
       // Print out the message received from the server.
-      ACE_DEBUG ((LM_DEBUG, "%s", msg->rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG, "%s", this->mb_.rd_ptr ()));
     }
   else
     {
@@ -235,29 +250,21 @@ Peer_Handler::handle_input_complete (ACE_Message_Block *msg,
       // went away.  We will end the event loop.  Since we're in the
       // main thread, we don't need to do a notify.
       ACE_ReactorEx::end_event_loop();
-      result = -1;
+      return;
     }
 
-  msg->release ();
-  return result;
-}
+  // Reset pointers 
+  this->mb_.wr_ptr (-result.bytes_transferred ());
 
-// This is so the Proactor can get a message to read into.
-
-ACE_Message_Block *
-Peer_Handler::get_message (void)
-{
-  // An extra byte for NUL termination.
-  ACE_Message_Block *message = 
-    new ACE_Message_Block (BUFSIZ + 1);
-
-  message->size (BUFSIZ);
-  return message;
+  // Start off another read
+  if (this->rd_stream_.read (this->mb_,
+			     this->mb_.size ()) == -1)
+    ACE_ERROR ((LM_ERROR, "%p Read initiate.\n", "Peer_Handler"));
 }
 
 // This is so the Proactor can get our handle.
 ACE_HANDLE 
-Peer_Handler::get_handle (void) const
+Peer_Handler::handle (void) const
 {
   return this->stream_.get_handle ();
 }
@@ -266,7 +273,7 @@ Peer_Handler::get_handle (void) const
 int 
 Peer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Peer_Handler closing down\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Peer_Handler closing down\n"));
   return 0;
 }
 
@@ -281,9 +288,9 @@ Peer_Handler::handle_output (ACE_HANDLE fd)
   // Forward the message to the remote peer receiver.
   if (this->getq (mb, &tv) != -1)
     {
-      if (ACE_Proactor::instance ()->
-	  initiate (this, ACE_Event_Handler::WRITE_MASK, mb) == -1)
-	ACE_ERROR ((LM_ERROR, "%p Write initiate.\n", "Peer_Handler"));
+      if (this->wr_stream_.write (*mb,
+				  mb->length ()) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p Write initiate.\n", "Peer_Handler"), -1);
     }
   return 0;
 }
@@ -291,7 +298,7 @@ Peer_Handler::handle_output (ACE_HANDLE fd)
 void 
 STDIN_Handler::handler (int signum)
 {
-  ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, "(%t) signal = %S\n", signum));
 }
 
 STDIN_Handler::STDIN_Handler (MT_TASK &ph)
@@ -355,7 +362,10 @@ STDIN_Handler::svc (void)
 	  this->ph_.putq (mb);
 	}
       else 
-	break;
+	{
+	  mb->release ();
+	  break;
+	}
     }
 
   // handle_signal will get called on the main proactor thread since
@@ -369,17 +379,13 @@ void
 STDIN_Handler::register_thread_exit_hook (void)
 {
   // Get a real handle to our thread.
-	ACE_Thread_Manager::instance ()->thr_self (this->thr_handle_);
+  ACE_Thread_Manager::instance ()->thr_self (this->thr_handle_);
 
   // Register ourselves to get called back when our thread exits.
 
   if (ACE_ReactorEx::instance ()->
       register_handler (this, this->thr_handle_) == -1)
     ACE_ERROR ((LM_ERROR, "Exit_Hook Register failed.\n"));
-
-  // We're in another thread, so we need to notify the ReactorEx so
-  // that it wakes up and waits on the new set of handles.
-  ACE_ReactorEx::instance ()->notify ();
 }
 
 // The STDIN thread has exited.  This means the user hit ^C.  We can
@@ -388,7 +394,7 @@ STDIN_Handler::register_thread_exit_hook (void)
 int 
 STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "STDIN thread has exited.\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) STDIN thread has exited.\n"));
   ACE_ASSERT (this->thr_handle_ == si->si_handle_);
   ACE_ReactorEx::end_event_loop();
   return 0;
@@ -397,6 +403,10 @@ STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 int
 main (int argc, char *argv[])
 {
+  // Let the proactor know that it will be used with ReactorEx
+  ACE_Proactor proactor (0, 0, 1);
+  ACE_Proactor::instance (&proactor);
+
   // Open handler for remote peer communications this will run from
   // the main thread.
   Peer_Handler peer_handler (argc, argv);
