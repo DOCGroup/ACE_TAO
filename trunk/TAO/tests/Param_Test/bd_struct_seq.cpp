@@ -17,8 +17,9 @@
 // ============================================================================
 
 #include "helper.h"
-
 #include "bd_struct_seq.h"
+
+const CORBA::ULong MAX_STRUCTSEQ_LEN = 1;
 
 // ************************************************************************
 //               Test_Bounded_Struct_Sequence
@@ -54,11 +55,8 @@ Test_Bounded_Struct_Sequence::init_parameters (Param_Test_ptr objref,
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
 
-  // get some sequence length (not more than 10)
-  CORBA::ULong len = this->in_.maximum ();
-
   // set the length of the sequence
-  this->in_.length (len);
+  this->in_.length (MAX_STRUCTSEQ_LEN);
   // now set each individual element
   for (CORBA::ULong i = 0; i < this->in_.length (); i++)
     {
@@ -85,8 +83,8 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
   Param_Test::Bounded_StructSeq_out out (this->out_.out ());
   this->ret_ = objref->test_bounded_struct_sequence (this->in_,
                                                      this->inout_.inout (),
-                                                                                                         out,
-                                                                                                         env);
+                                                     out,
+                                                     env);
   return (env.exception () ? -1:0);
 }
 
@@ -100,15 +98,15 @@ Test_Bounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
   CORBA::Any out_arg (Param_Test::_tc_Bounded_StructSeq, this->out_.out (), 0);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_StructSeq,
-                                                  &this->ret_,
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_StructSeq,
+                                            this->ret_._retn (),
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
@@ -126,16 +124,27 @@ Test_Bounded_Struct_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
   CORBA::Environment env;
-  this->inout_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
-                                                                                                        req->arguments ()->item
-                                                                                                        (1, env)->value ()->value ());
-  this->out_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *) req->arguments
-                                                                                                  ()->item (2, env)->value ()->value ());
-  this->ret_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)req->result
-                                                                                                  ()->value ()->value ());
+#if 0
+  this->inout_ = 
+    new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
+                                       req->arguments ()->item (1, env)->value ()->value ());
+  this->out_ = 
+    new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *) 
+                                       req->arguments ()->item (2, env)->value ()->value ());
+  this->ret_ = 
+    new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
+                                       req->result ()->value ()->value ());
 #endif
+
+  Param_Test::Bounded_StructSeq_ptr out_holder, ret_holder;
+
+  *req->arguments ()->item (2, env)->value () >>= out_holder;
+  *req->result ()->value () >>= ret_holder;
+
+  this->out_ = out_holder;
+  this->ret_ = ret_holder;
+
   return this->check_validity ();
 }
 
@@ -162,7 +171,7 @@ Test_Bounded_Struct_Sequence::print_values (void)
 
 CORBA::Boolean
 Test_Bounded_Struct_Sequence::compare (const Param_Test::Bounded_StructSeq &s1,
-                                                                           const Param_Test::Bounded_StructSeq &s2)
+                                       const Param_Test::Bounded_StructSeq &s2)
 {
   if (s1.maximum () != s2.maximum ())
       return 0;
