@@ -103,10 +103,10 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
   return 0;
 }
 
-
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
+                             int ignore_address,
                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -248,6 +248,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                          reactor,
                                          addrs,
                                          factory,
+                                         ignore_address,
                                          ACE_TRY_ENV);
               ACE_CHECK_RETURN (-1);
 
@@ -468,6 +469,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                ACE_Reactor *reactor,
                                ACE_CString &addrs,
                                TAO_ProtocolFactorySetItor &factory,
+                               int ignore_address,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_CString options_tmp;
@@ -509,7 +511,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                           minor);
 
           // Check for existence of endpoint.
-          if (address.length () == 0)
+          if (address.length () == 0 ||
+              ignore_address)
             {
               // Protocol prefix was specified without any endpoints.
               // All TAO pluggable protocols are expected to have the

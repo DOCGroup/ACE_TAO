@@ -65,6 +65,7 @@ public:
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
+            int ignore_address,
             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -117,6 +118,7 @@ private:
               ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
+              int ignore_address,
               CORBA::Environment &ACE_TRY_ENV);
 
 private:

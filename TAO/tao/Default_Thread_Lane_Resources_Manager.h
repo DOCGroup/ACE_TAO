@@ -60,12 +60,6 @@ public:
 
 protected:
 
-  /// Mutual exclusion for calling open.
-  TAO_SYNCH_MUTEX open_lock_;
-
-  /// Flag which denotes that the open method was called.
-  int open_called_;
-
   /// Default lane resources.
   TAO_Thread_Lane_Resources *lane_resources_;
 };

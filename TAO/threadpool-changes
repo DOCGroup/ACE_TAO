@@ -54,6 +54,10 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             return success only if we match all the protocols
             specified by the user.
 
+          - (validate_lifespan): If a POA is using a RTCORBA thread
+            pool, make sure the lifespan policy is not persistent
+            since we cannot support it right now.
+
           - (merge_policies_impl): Merging of policies specified at
             the ORB level was not done before. Check if the user has
             specified the priority model, server protocol, and thread
@@ -488,6 +492,17 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    passed to these methods instead of getting it from the ORB
 	    Core.
 
+	  - (open, open_i): The acceptor endpoints used by thread
+            lanes are selected randomly from the ones available on the
+            local machine.  There is no way for the user to associate
+            thread lanes with endpoints because the thread lanes are
+            unnamed.  
+
+            A new parameter <ignore_address> was added to open() and
+            open_i() that ignores the address specified in the
+            -ORBEndpoint option.  <ignore_address> is 1 for lane
+            acceptors and 0 for default acceptors.
+
           - (make_mprofile): This function was removed because it was
 	    doing too much, i.e., calling fill_mprofile() which was
 	    creating and encoding the mprofile.  Since the POA has to
@@ -743,6 +758,20 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           the creation and destruction of thread pools (with and
           without lanes).
 
+	* tests/RTCORBA/Persistent_IOR: New test added that:
+
+          - For POAs using the default thread pool, the user can
+            continue to use -ORBEndpoint option.
+
+          - Makes sure that if the user tries to combine thread pools
+            and persistence, an InvalidPolicy exception is thrown.
+
+          - Makes sure that for POAs using thread pools, the user can
+            specify the protocol selection, protocol version, and
+            other protocol specific options (basically everything
+            other than the endpoint address) through the -ORBEndpoint
+            option.
+
 	* tests/RTCORBA/Banded_Connections:
 
 	  - server.cpp: 
@@ -859,7 +888,7 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tests/RTCORBA/Makefile.bor: 
 
 	  Added new tests ORB_init, Policy_Combinations,
-	  Destroy_Thread_Pool, and Linear_Priority.
+	  Destroy_Thread_Pool, Persistent_IOR, and Linear_Priority.
 
         * tests/RTCORBA/Banded_Connections/Makefile:
         * tests/RTCORBA/Banded_Connections/client.bor:

@@ -77,6 +77,9 @@ private:
   void validate_thread_pool (TAO_Policy_Set &policies,
                              CORBA::Environment &ACE_TRY_ENV);
 
+  void validate_lifespan (TAO_Policy_Set &policies,
+                          CORBA::Environment &ACE_TRY_ENV);
+
   TAO_Acceptor_Registry *acceptor_registry (void);
 
   TAO_Acceptor_Registry *acceptor_registry_;

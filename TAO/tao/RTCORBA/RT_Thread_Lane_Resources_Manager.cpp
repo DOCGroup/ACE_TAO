@@ -16,7 +16,6 @@ ACE_RCSID(RTCORBA, RT_Thread_Lane_Resources_Manager, "$Id$")
 
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
-    open_called_ (0),
     default_lane_resources_ (0),
     tp_manager_ (0)
 {
@@ -42,34 +41,12 @@ TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (voi
 int
 TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (CORBA_Environment &ACE_TRY_ENV)
 {
-  // Check if we have been already opened.
-  if (this->open_called_ == 1)
-    return 1;
-
-  // Double check pattern
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
-
-  if (this->open_called_ == 1)
-    return 1;
-
-  // Get a reference to the acceptor_registry.
-  TAO_Acceptor_Registry &ar =
-    this->default_lane_resources_->acceptor_registry ();
-
-  // Open it.
-  int ret =
-    ar.open (this->orb_core_,
-             this->default_lane_resources_->leader_follower ().reactor (),
-             ACE_TRY_ENV);
+  int result =
+    this->default_lane_resources_->open_acceptor_registry (0,
+                                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (ret == -1)
-    return -1;
-
-  // Remember that the acceptor registry has already been opened.
-  this->open_called_ = 1;
-
-  return 0;
+  return result;
 }
 
 void
