@@ -69,7 +69,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   ACEXML_DefaultHandler *handler = 0;
-  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
   ACEXML_CharStream *stm = 0;
   ACEXML_FileCharStream *fstm = 0;
   ACEXML_HttpCharStream *ustm = 0;
@@ -125,10 +124,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_NEW_RETURN (handler,
                     ACEXML_SAXPrint_Handler (name),
                     -1);
+  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
 
   ACEXML_Parser parser;
-  ACEXML_InputSource* input = 0;
-  ACE_NEW_RETURN (input, ACEXML_InputSource (stm), -1);
+  //  ACEXML_InputSource* input = 0;
+  ACEXML_InputSource input (stm);
 
   parser.setContentHandler (handler);
   parser.setDTDHandler (handler);
@@ -137,7 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACEXML_TRY_NEW_ENV
     {
-      parser.parse (input ACEXML_ENV_ARG_PARAMETER);
+      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
       ACEXML_TRY_CHECK;
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
@@ -146,6 +146,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
     }
   ACEXML_ENDTRY;
-  delete handler;
   return 0;
 }

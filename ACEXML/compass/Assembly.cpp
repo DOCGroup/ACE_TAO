@@ -28,4 +28,4 @@ Assembly::get_state()
 
 void
 Assembly::build (void)
-{
+{}
