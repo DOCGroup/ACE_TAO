@@ -1,3 +1,31 @@
+Tue Apr 20 11:09:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Removed several memory leaks, including the ORB_Core itself: it
+	  wasn't destroyed when the last ORB reference went away.
+
+	* tao/ORB.cpp:
+	  Fixed resource leak in file_string_to_object()
+
+	* tao/default_resource.h:
+	* tao/default_resource.i:
+	* tao/default_resource.cpp:
+	  Merged the App_Allocated and Pre_Allocated classes into a single 
+	  class, it is easier to control their lifetime and it didn't make 
+	  sense to have two.
+
+	* tao/IIOP_Connector.cpp:
+	  Fixed comment.
+
+	* tests/MT_Client/client.global.conf:
+	* tests/MT_Client/client.tss.conf:
+	  Use static services.
+
+	* tests/MT_Client/orb_creation.cpp:
+	* tests/MT_Client/server.cpp:
+	* tests/MT_Client/client.cpp:
+	  Use the ACE macros to print out exceptions.
+
 Tue Apr 20 02:47:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/param_test_i.cpp (test_exception): It was still
