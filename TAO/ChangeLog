@@ -1,4 +1,12 @@
 
+Thu May 7 2:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Tests_Multiple.mpc:
+          moved to CosEC_RtEC_Based_Mult.mpc, project names changed from
+          *Supplier, *Consumer to resp. *Supp, *Cons
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+          moved to Thread_Per_Conn.mpc. Project names *Sequence* changed to *Seq*.
+
 Thu May 7 1:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* orbsvcs/tests/Notify/*.mpc:
