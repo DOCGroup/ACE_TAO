@@ -1,30 +1,30 @@
 Thu Jul  2 12:36:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader[_T].{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
-	For the 'in' operator in the standard OMG constraint language, the 	
-	Constraint Interpreter needs to identify and extract from Anys
-	sequences of primitive types, regardless of how many times the
-	sequence has been typedef'd. Added code to do this.
+        * orbsvcs/orbsvcs/Trader/Trader[_T].{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+        For the 'in' operator in the standard OMG constraint language, the
+        Constraint Interpreter needs to identify and extract from Anys
+        sequences of primitive types, regardless of how many times the
+        sequence has been typedef'd. Added code to do this.
 
-	* orbsvcs/tests/Trading/TTest.idl:
-	* orbsvcs/tests/Trading/TT_Info.cpp:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	Now sends aliased sequences to the Trader to test the above
-	enhancement.
+        * orbsvcs/tests/Trading/TTest.idl:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        Now sends aliased sequences to the Trader to test the above
+        enhancement.
 
 Thu Jul  2 12:29:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	The Next round of changes for GPERF + TAO_IDL integration. NT
-	related stuff have been taken care of. attributes also should work
-	now. 
-	* TAO_IDL/driver/drv_args.cpp: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be_include/be_codegen.h: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_helper.cpp: 
-	* TAO_IDL/be/be_codegen.cpp: 
+        The Next round of changes for GPERF + TAO_IDL integration. NT
+        related stuff have been taken care of. attributes also should work
+        now.
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
 Thu Jul 02 09:17:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -39,6 +39,10 @@ Thu Jul 02 09:17:57 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/POA/On_Demand_Activation/Servant_Locator.cpp (postinvoke):
           added ACE_UNUSED_ARG (my_servant) to avoid compile warning about
           unused variable with ACE_NDEBUG.
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client (run_tests): use
+          ACE_OS::fprintf instead of fprintf, and fixed the format
+          specifier to match the argument type.
 
 Thu Jul 02 01:50:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
