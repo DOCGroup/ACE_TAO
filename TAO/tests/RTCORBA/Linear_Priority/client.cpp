@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Task.h"
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
@@ -9,7 +10,7 @@ static const char *ior = 0;
 static int iterations = 5;
 static int shutdown_server = 0;
 static RTCORBA::Priority default_thread_priority =
-  RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
 
 static int
 parse_args (int argc, char **argv)
@@ -52,6 +53,54 @@ parse_args (int argc, char **argv)
   return 0;
 }
 
+class Worker_Thread : public ACE_Task_Base
+{
+public:
+  Worker_Thread (test_ptr test,
+                 RTCORBA::Current_ptr current,
+                 CORBA::Short priority);
+
+  int svc (void);
+
+private:
+  test_var test_;
+  RTCORBA::Current_var current_;
+  CORBA::Short priority_;
+};
+
+Worker_Thread::Worker_Thread (test_ptr test,
+                              RTCORBA::Current_ptr current,
+                              CORBA::Short priority)
+  : test_ (test::_duplicate (test)),
+    current_ (RTCORBA::Current::_duplicate (current)),
+    priority_ (priority)
+{
+}
+
+int
+Worker_Thread::svc (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      this->current_->the_priority (this->priority_,
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      for (int i = 0; i < iterations; i++)
+        {
+          this->test_->method (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Worker Thread (%t) exception:");
+    }
+  ACE_ENDTRY;
+  return 0;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -59,9 +108,7 @@ main (int argc, char **argv)
   // for this test.
   check_supported_priorities ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
@@ -85,10 +132,6 @@ main (int argc, char **argv)
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      current->the_priority (default_thread_priority,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       object =
         orb->string_to_object (ior,
                                ACE_TRY_ENV);
@@ -99,11 +142,44 @@ main (int argc, char **argv)
                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      for (int i = 0; i < iterations; i++)
+      long flags =
+        THR_NEW_LWP | THR_JOINABLE;
+
+      u_long number_of_threads = 2;
+      u_long i = 0;
+
+      // Workers.
+      Worker_Thread **workers = 0;
+
+      ACE_NEW_RETURN (workers,
+                      Worker_Thread *[number_of_threads],
+                      -1);
+
+      for (i = 0;
+           i < number_of_threads;
+           ++i)
         {
-          test->method (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_NEW_RETURN (workers[i],
+                          Worker_Thread (test.in (),
+                                         current.in (),
+                                         default_thread_priority),
+                          -1);
+
+          result =
+            workers[i]->activate (flags);
+          if (result != 0)
+            return result;
         }
+
+      ACE_Thread_Manager::instance ()->wait ();
+
+      for (i = 0;
+           i < number_of_threads;
+           ++i)
+        {
+          delete workers[i];
+        }
+      delete[] workers;
 
       if (shutdown_server)
         {

@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "../check_supported_priorities.cpp"
 
 class test_i :
   public POA_test,
@@ -71,24 +72,34 @@ static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
 static CORBA::Boolean allow_borrowing = 0;
 
-static CORBA::ULong number_of_lanes = 1;
-static CORBA::Short lane_priority[1];
-static CORBA::ULong number_of_bands = 1;
-static RTCORBA::PriorityBands band_priority;
+static const char *bands_file = "bands";
+static const char *lanes_file = "lanes";
+
+#include "./readers.cpp"
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "");
+  ACE_Get_Opt get_opts (argc, argv, "b:l:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'b':
+        bands_file = get_opts.optarg;
+        break;
+
+      case 'l':
+        lanes_file = get_opts.optarg;
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
+                           "-b <bands_file> "
+                           "-l <lanes_file> "
                            "\n",
                            argv [0]),
                           -1);
@@ -126,20 +137,11 @@ write_iors_to_file (CORBA::Object_ptr object,
 int
 main (int argc, char **argv)
 {
-  lane_priority[0] =
-    default_thread_priority;
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
 
-  band_priority.length (number_of_bands);
-
-  band_priority[0].low =
-    default_thread_priority;
-
-  band_priority[0].high =
-    default_thread_priority;
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
@@ -177,50 +179,25 @@ main (int argc, char **argv)
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::ULong i = 0;
+      CORBA::PolicyList policies;
 
-      RTCORBA::ThreadpoolLanes lanes;
-      lanes.length (number_of_lanes);
-
-      for (i = 0;
-           i < number_of_lanes;
-           ++i)
-        {
-          lanes[i].lane_priority = lane_priority[i];
-          lanes[i].static_threads = static_threads;
-          lanes[i].dynamic_threads = dynamic_threads;
-        }
-
-      RTCORBA::ThreadpoolId threadpool_id =
-        rt_orb->create_threadpool_with_lanes (stacksize,
-                                              lanes,
-                                              allow_borrowing,
-                                              allow_request_buffering,
-                                              max_buffered_requests,
-                                              max_request_buffer_size,
-                                              ACE_TRY_ENV);
+      result =
+        get_priority_bands (bands_file,
+                            rt_orb.in (),
+                            policies,
+                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      if (result != 0)
+        return result;
 
-      CORBA::Policy_var threadpool_policy =
-        rt_orb->create_threadpool_policy (threadpool_id,
-                                          ACE_TRY_ENV);
+      result =
+        get_priority_lanes (lanes_file,
+                            rt_orb.in (),
+                            policies,
+                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      RTCORBA::PriorityBands bands;
-      bands.length (number_of_bands);
-
-      for (i = 0;
-           i < number_of_bands;
-           ++i)
-        {
-          bands[i].low = band_priority[i].low;
-          bands[i].high = band_priority[i].high;
-        }
-
-      CORBA::Policy_var banded_connection_policy =
-        rt_orb->create_priority_banded_connection_policy (bands,
-                                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (result != 0)
+        return result;
 
       CORBA::Policy_var priority_model_policy =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
@@ -234,19 +211,12 @@ main (int argc, char **argv)
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::PolicyList policies;
-      policies.length (4);
-
-      policies[0] =
-        threadpool_policy;
-
-      policies[1] =
-        banded_connection_policy;
-
-      policies[2] =
+      policies.length (policies.length () + 1);
+      policies[policies.length () - 1] =
         priority_model_policy;
 
-      policies[3] =
+      policies.length (policies.length () + 1);
+      policies[policies.length () - 1] =
         implicit_activation_policy;
 
       PortableServer::POA_var poa =
