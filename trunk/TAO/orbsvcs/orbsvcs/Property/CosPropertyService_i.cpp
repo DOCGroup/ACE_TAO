@@ -1672,7 +1672,7 @@ TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes 
   size_t sequence_length = property_modes.length ();
 
   // Multiple exception variable to keep track of exceptions.
-  MultipleExceptions multi_ex;
+  CosPropertyService::MultipleExceptions multi_ex;
 
   // Set  modes one by one.
   for (size_t i = 0; i < sequence_length; i++)
@@ -1738,7 +1738,7 @@ TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes 
   if (multi_ex.exceptions.length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG, "set_property_modes:- Raising multi_ex\n"));
-      TAO_THROW (MultipleExceptions (multi_ex));
+      TAO_THROW (CosPropertyService::MultipleExceptions (multi_ex));
     }
 }
 
