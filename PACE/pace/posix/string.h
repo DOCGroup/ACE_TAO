@@ -22,18 +22,6 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  PACE_INLINE void * pace_memccpy (void * s1, const void * s2, int c, size_t n);
-
-  PACE_INLINE const void * pace_memchr (const void * s, int c, size_t n);
-
-  PACE_INLINE int pace_memcmp (const void * s1, const void * s2, size_t n);
-
-  PACE_INLINE void * pace_memcpy (void * s1, const void * s2, size_t n);
-
-  PACE_INLINE void * pace_memmove (void * s1, const void * s2, size_t n);
-
-  PACE_INLINE void * pace_memset (void * s, int c, size_t n);
-
   PACE_INLINE char * pace_strcat (char * s1, const char * s2);
 
   PACE_INLINE char * pace_strncat (char * s1, const char * s2, size_t n);
@@ -53,8 +41,6 @@ extern "C" {
   PACE_INLINE size_t pace_strcspn (const char * s1, const char * s2);
 
   PACE_INLINE size_t pace_strspn (const char * s1, const char * s2);
-
-  PACE_INLINE char * pace_strdup (const char * s1);
 
   PACE_INLINE size_t pace_strlen (const char * s);
 

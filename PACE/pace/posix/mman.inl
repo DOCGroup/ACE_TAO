@@ -86,12 +86,12 @@ pace_shm_open (const char * name,
 {
 # if (PACE_POSIX_C_SOURCE > 2)
   return shm_open (name, oflag, mode);
-# else /* !PACE_POSIX_C_SOURCE */
+# else /* ! PACE_POSIX_C_SOURCE */
   PACE_UNUSED_ARG (name);
   PACE_UNUSED_ARG (oflag);
   PACE_UNUSED_ARG (mode);
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_POSIX_C_SOURCE);
-# endif /* !PACE_POSIX_C_SOURCE */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+# endif /* ! PACE_POSIX_C_SOURCE */
 }
 
 PACE_INLINE
@@ -100,15 +100,8 @@ pace_shm_unlink (const char * name)
 {
 # if (PACE_POSIX_C_SOURCE > 2)
   return shm_unlink (name);
-# else /* !PACE_POSIX_C_SOURCE */
+# else /* ! PACE_POSIX_C_SOURCE */
   PACE_UNUSED_ARG (name);
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_POSIX_C_SOURCE);
-# endif /* !PACE_POSIX_C_SOURCE */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+# endif /* ! PACE_POSIX_C_SOURCE */
 }
-
-
-
-
-
-
-

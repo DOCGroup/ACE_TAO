@@ -45,7 +45,7 @@ extern "C" {
   PACE_INLINE int pace_tolower (int c);
 
   PACE_INLINE int pace_toupper (int c);
-  
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
