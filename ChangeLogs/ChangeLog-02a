@@ -1,3 +1,19 @@
+Wed Oct 17 10:40:17 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+
+	  If errno is set to EWOULDBLOCK for the SSL_ERROR_SYSCALL case,
+	  then continue the connection establishment loop.  Do not return
+	  right away.  Fixes non-blocking connection establishment on AIX.
+	  Thanks to Vladimir Chovanec  <Vladimir.CHOVANEC@asset.sk> for
+	  providing this fix.
+
+	* ace/SSL/SSL_SOCK_Stream.h (notify):
+
+	  Made this method protected.  It isn't intended to be used
+	  internally by the ACE_SSL_SOCK_Stream class.
+
 Wed Oct 17 12:15:15 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/Select_Reactor_T.cpp (handle_error, check_handles): Add
