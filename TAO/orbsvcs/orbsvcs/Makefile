@@ -61,7 +61,8 @@ ifndef TAO_ORBSVCS
   endif # ssl
 
   ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    TAO_ORBSVCS += Notify
+    TAO_ORBSVCS += Notify \
+	           FaultTolerance
   endif # ACE_HAS_GNUG_PRE_2_8
 
 endif # TAO_ORBSVCS
