@@ -227,7 +227,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   // grab the sequence node
   be_sequence *sequence = this->ctx_->be_node_as_sequence ();
 
-  if (!node)
+  if (!sequence)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cdr_op_cs::"
@@ -235,12 +235,62 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                          "bad sequence node\n"),
                         -1);
     }
-
-  // we generate optimized code based on an optimized interface available from
-  // the CDR class. These optimizations are applicable only to primitive
-  // types. 
-  *os << " return strm."; 
-
+  
+  // handle octet sequences using the optimizations provided by the TAO ORB
+  // Core. If these optimizations are not available, then use the normal form
+  
+  if (node->pt () == AST_PredefinedType::PT_octet)
+    {
+      *os << "\n#if defined (TAO_NO_COPY_OCTET_SEQUENCES)" << be_nl;
+      switch (this->ctx_->sub_state ())
+        {
+        case TAO_CodeGen::TAO_CDR_INPUT:
+          {
+            *os << "if (ACE_BIT_DISABLED (strm.start ()->flags (),"
+                << "ACE_Message_Block::DONT_DELETE))" << be_nl
+                << "{" << be_idt_nl
+                << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
+                << "  ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "&_tao_sequence);" << be_nl;
+            *os << "oseq->replace (_tao_seq_len, strm.start ());" 
+                << be_nl
+                << "oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + "
+                << "_tao_seq_len);" << be_nl
+                << "strm.skip_bytes (_tao_seq_len);" << be_uidt_nl
+                << "}" << be_nl
+                << "else" << be_idt_nl
+                << "return strm.read_octet_array ("
+                << "_tao_sequence.get_buffer (), _tao_seq_len);"
+                << be_uidt_nl;
+          }
+          break;
+        case TAO_CodeGen::TAO_CDR_OUTPUT:
+          {
+            *os << "{" << be_idt_nl
+                << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
+                << "  ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl;
+            *os << "if (oseq->mb ())" << be_idt_nl
+                << "return strm.write_octet_array_mb (oseq->mb ());" 
+                << be_uidt_nl
+                << "else" << be_idt_nl
+                << "return strm.write_octet_array ("
+                << "_tao_sequence.get_buffer (), _tao_sequence.length ());"
+                << be_uidt << be_uidt_nl
+                << "}" << be_nl;
+          }
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                             "visit_predefined_type - "
+                             "bad sub state\n"),
+                            -1);
+        }
+      *os << "\n#else /* TAO_NO_COPY_OCTET_SEQUENCES */" << be_nl;
+    }
+  
+  *os << "return strm.";
   // based on our substate, we may be reading from a stream or writing into a
   // stream 
   switch (this->ctx_->sub_state ())
@@ -258,7 +308,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                          "bad sub state\n"),
                         -1);
     }
-
+  
   // determine what kind of sequence are we reading/writing
   switch (node->pt ())
     {
@@ -309,7 +359,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                          "bad primitive type for optimized code gen\n"),
                         -1);
     }
-
+  
   // handle special case to avoid compiler errors
   switch (node->pt ())
     {
@@ -328,9 +378,11 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       *os << " (_tao_sequence.get_buffer (), ";
       break;
     }
-
+  
   *os << "_tao_sequence.length ());" << be_uidt_nl;
-
+  
+  if (node->pt () == AST_PredefinedType::PT_octet)
+    *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCES */" << be_nl;
   return 0;
 }
 
