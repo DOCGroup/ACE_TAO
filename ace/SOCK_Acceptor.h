@@ -28,9 +28,16 @@
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
   // = TITLE
-  //     Defines a factory that creates new <ACE_Stream>s passively. 
+  //   Defines a factory that creates new <ACE_Stream>s passively. 
+  //
+  // = DESCRIPTION
+  //   The <ACE_SOCK_Acceptor> has its own "passive-mode" socket.
+  //   This serves as a factory to create so-called "data-mode"
+  //   sockets, which are what the <ACE_SOCK_Stream> encapsulates.
+  //   Therefore, by inheriting from <ACE_SOCK>, <ACE_SOCK_Acceptor>
+  //   gets its very own socket.
 public:
-  // = Initialization methods.
+  // = Initialization and termination methods.
   ACE_SOCK_Acceptor (void);
   // Default constructor.
 
@@ -41,15 +48,15 @@ public:
                      int protocol = 0);
     // Initiate a passive mode socket.
 
-  ~ACE_SOCK_Acceptor (void);
-  // Default dtor.
-
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
   // Initiate a passive mode socket.
+
+  ~ACE_SOCK_Acceptor (void);
+  // Default dtor.
 
   // = Passive connection <accept> methods.
   int accept (ACE_SOCK_Stream &new_stream,
