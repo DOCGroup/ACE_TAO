@@ -255,6 +255,11 @@ namespace CORBA
     /// value.
     static CORBA::ULong _tao_errno (int errno_value);
 
+    /// Overridden base class method to help compilers that use
+    /// explicit template instantiations going
+    virtual CORBA::Exception *_tao_duplicate (void) const {return 0;}
+    virtual void _raise (void) {}
+
   protected:
 
     /// Constructor using a repository id.

@@ -1,3 +1,14 @@
+Sun Jul 27 07:29:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp: Fixed compiation errors and warnings in
+	  SunC++  builds. These were caused due to the following 
+
+	  - string literal being converted to char *
+	  - explicit template instantiations required that the
+	  CORBA::SystemException not be an abstract base class. Hence
+	  provided default implementations for them.
+
 Sat Jul 26 19:03:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
