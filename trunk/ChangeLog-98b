@@ -1,18 +1,18 @@
 Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Replaced the use of ACE_SUCCESS and ACE_FAILURE to be 0 and -1
- 	  respectively.  This should fix a bunch of niggling problems...
+        * Replaced the use of ACE_SUCCESS and ACE_FAILURE to be 0 and -1
+          respectively.  This should fix a bunch of niggling problems...
 
-	* netsvcs/lib/TS_Server_Handler.cpp (abandon): changed the use of
- 	  FAILURE to -1 to be consistent with the following change.
+        * netsvcs/lib/TS_Server_Handler.cpp (abandon): changed the use of
+          FAILURE to -1 to be consistent with the following change.
 
-	* ace/Time_Request_Reply: Removed the FAILURE constant enum.  This
- 	  was rather pointless...
+        * ace/Time_Request_Reply: Removed the FAILURE constant enum.  This
+          was rather pointless...
 
-	* ace/Name_Request_Reply.h (ACE_Name_Reply): Changed the type of
- 	  ACE_UINT32 type_ to ACE_INT32 so that it can hold values 0 and
- 	  -1.  This will allow us to get rid of the horrible "SUCCESS" and
- 	  "FAILURE" macros...
+        * ace/Name_Request_Reply.h (ACE_Name_Reply): Changed the type of
+          ACE_UINT32 type_ to ACE_INT32 so that it can hold values 0 and
+          -1.  This will allow us to get rid of the horrible "SUCCESS" and
+          "FAILURE" macros...
 
 Wed Sep 02 10:07:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -22,6 +22,9 @@ Wed Sep 02 10:07:15 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Object_Manager.cpp (~ACE_Object_Manager_Base): moved
           internal_lock_ deletion inside ACE_MT_SAFE protection.  Thanks
           to Dongwook Kim <baksoo@dbserver.kaist.ac.kr> for reporting this.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: updated comments
+          to recommend not using Sun C++ 4.1.
 
 Wed Sep 02 09:34:32 1998  Oliver M. Kellogg <Oliver.Kellogg@vs.dasa.de>
 
