@@ -185,7 +185,7 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
   else
-    return this->open_i (orb_core, address);
+    return this->open_i (address);
 }
 
 int
@@ -215,13 +215,11 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (tempname.get () == 0)
     return -1;
 
-  return this->open_i (orb_core,
-                       tempname.get ());
+  return this->open_i (tempname.get ());
 }
 
 int
-TAO_UIOP_Acceptor::open_i (TAO_ORB_Core *orb_core,
-                           const char *rendezvous)
+TAO_UIOP_Acceptor::open_i (const char *rendezvous)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_,

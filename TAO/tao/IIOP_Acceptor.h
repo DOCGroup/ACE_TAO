@@ -81,8 +81,7 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 private:
-  int open_i (TAO_ORB_Core *orb_core,
-              const ACE_INET_Addr &addr);
+  int open_i (const ACE_INET_Addr &addr);
   // Implement the common part of the open*() methods.
 
   int hostname (TAO_ORB_Core *orb_core,

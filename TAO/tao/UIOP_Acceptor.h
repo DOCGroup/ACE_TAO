@@ -80,7 +80,7 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 private:
-  int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);
+  int open_i (const char *rendezvous);
   // Implement the common part of the open*() methods
 
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);

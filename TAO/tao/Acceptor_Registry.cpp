@@ -90,6 +90,8 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
 
 #else /* TAO_HAS_RT_CORBA == 1 */
 
+  ACE_UNUSED_ARG (poa);
+
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     if ((*i)->create_mprofile (object_key,
                                mprofile) == -1)
