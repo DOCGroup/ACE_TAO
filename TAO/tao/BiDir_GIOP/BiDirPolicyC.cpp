@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for BiDirPolicy::BidirectionalPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 BiDirPolicy::BidirectionalPolicy_ptr
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::duplicate (
     BiDirPolicy::BidirectionalPolicy_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::duplicate (
   return BiDirPolicy::BidirectionalPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::release (
     BiDirPolicy::BidirectionalPolicy_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 BiDirPolicy::BidirectionalPolicy_ptr
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::nil (void)
 {
   return BiDirPolicy::BidirectionalPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::marshal (
     BiDirPolicy::BidirectionalPolicy_ptr p,
@@ -141,6 +137,12 @@ BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
   return obj;
 }
 
+void
+BiDirPolicy::BidirectionalPolicy::_tao_release (BidirectionalPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 BiDirPolicy::BidirectionalPolicy::_is_a (
     const char *value
@@ -186,7 +188,7 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
