@@ -17,7 +17,8 @@ CFG=CC_client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "CC_client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "CC_client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE "CC_client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -90,6 +91,22 @@ SOURCE=.\CC_client.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CC_command.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CC_command.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CC_command.tab.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CC_command.tab.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CC_naming_service.cpp
 # End Source File
 # Begin Source File
@@ -103,6 +120,10 @@ SOURCE=.\CC_tests.cpp
 # Begin Source File
 
 SOURCE=.\CC_tests.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\lex.CC_command.cpp
 # End Source File
 # Begin Source File
 
