@@ -36,7 +36,7 @@ CC_LockSetFactory::create (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
-  TAO_IN_ENV.exception (new CORBA::NO_MEMORY ());
+  ACE_TRY_ENV.exception (new CORBA::NO_MEMORY ());
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet,
                     CORBA::NO_MEMORY());
