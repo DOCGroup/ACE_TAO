@@ -1,3 +1,8 @@
+Sat Jan 23 23:26:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/High_Res_Timer.{h,cpp} (elapsed_time_incr): Added a new
+	  function to access the incremental timer in nanosecond.
+
 Sat Jan 23 23:08:27 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR.{h,i,cpp}:
@@ -18,7 +23,7 @@ Sat Jan 23 21:13:47 1999  Jeff Parsons <jp4@cs.wustl.edu>
         * ace/CDR.{h,i,cpp}:
         * ace/OS.h:
         * ace/Basic_Types.h:
-          CDR stuff modified from TAO library. Typedefs, default 
+          CDR stuff modified from TAO library. Typedefs, default
           constants and macros added to OS.h and Basic_Types.h.
           There is now complete CDR functionality in ACE, except
           for the interpreter, and thus also no handling of Any
@@ -38,7 +43,7 @@ Sat Jan 23 17:25:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/Hash_Map_Manager_T.{h,cpp}: Reverted changes made since the
           ACE_Hash_Map_Manager_Ex was getting used in shared memory and
 	  hence could not have "virtual" methods.
-	
+
 Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Active_Map_Manager: Added a new associative container (map
@@ -50,7 +55,7 @@ Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  part of the key, lookups are super fast and predictable.
 
 	  This performance of this map is truely awesome:
-	  
+
 	  - inserts O(1)
 	  - lookups O(1)
 	  - deletes O(1)
@@ -86,23 +91,23 @@ Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri Jan 22 21:27:14 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h 
+	* ace/Hash_Map_Manager_T.h
 	  (class ACE_Hash_Map_Entry): Modified the destructor to be
 	  "virtual" so that it gets invoked on the destruction of its
 	  derived class objects.
           (class ACE_Hash_Map_Manager_Ex): Modified the destructor to be
 	  "virtual" so that it gets invoked on the destruction of its
-	  derived class objects. 
+	  derived class objects.
 	  Modified shared_find () to be "virtual" so that it can be
 	  defined in its derived classes.
           Declared a virtual method for creating new entries for the map
 	  called create_entry ().
-	
+
 	* ace/Hash_Map_Manager_T.cpp
 	  (create_entry): Added this virtual method which creates a new
 	  map entry. This is necessary to allow the map to contain various
 	  types of map entries.
-	  (bind_i): 
+	  (bind_i):
 	  (trybind_i):
           (unbind_i):
 	  Used create_entry () to obtain a new entry object.
@@ -130,7 +135,7 @@ Fri Jan 22 21:27:14 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           illustrates the use of the Hash_Purgable_Map_Manager to maintain
 	  a cache map. Also displays the change in the map size on
 	  purging.
-	
+
 Fri Jan 22 16:10:35 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_Base.cpp (ACE_Select_Reactor_Notify::handle_input)
@@ -168,7 +173,7 @@ Thu Jan 21 20:45:09 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
         * docs/tutorials/006/page04.html
         * docs/tutorials/006/page05.html
 	  Integrated changes from Vishal and Kirthika
-	
+
         * docs/tutorials/008/combine.shar
         * docs/tutorials/008/page02.html
         * docs/tutorials/008/page03.html
