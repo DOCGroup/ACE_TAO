@@ -32,7 +32,7 @@ ACE_Sub_Barrier::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Sub_Barrier::ACE_Sub_Barrier (u_int count,
+ACE_Sub_Barrier::ACE_Sub_Barrier (unsigned int count,
                                   ACE_Thread_Mutex &lock,
                                   const ACE_TCHAR *name,
                                   void *arg)
@@ -60,7 +60,7 @@ ACE_Barrier::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Barrier::ACE_Barrier (u_int count,
+ACE_Barrier::ACE_Barrier (unsigned int count,
                           const ACE_TCHAR *name,
                           void *arg)
   : lock_ (name, (ACE_mutexattr_t *) arg),
@@ -112,7 +112,8 @@ ACE_Barrier::wait (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Barrier)
 
-ACE_Thread_Barrier::ACE_Thread_Barrier (u_int count, const ACE_TCHAR *name)
+ACE_Thread_Barrier::ACE_Thread_Barrier (unsigned int count,
+                                        const ACE_TCHAR *name)
   : ACE_Barrier (count, name)
 {
 // ACE_TRACE ("ACE_Thread_Barrier::ACE_Thread_Barrier");
@@ -130,7 +131,8 @@ ACE_Thread_Barrier::dump (void) const
 #if 0
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Barrier)
 
-ACE_Process_Barrier::ACE_Process_Barrier (u_int count, const ACE_TCHAR *name)
+ACE_Process_Barrier::ACE_Process_Barrier (u_int count,
+                                          const ACE_TCHAR *name)
   : ACE_Barrier (count, USYNC_PROCESS, name)
 {
 // ACE_TRACE ("ACE_Process_Barrier::ACE_Process_Barrier");
