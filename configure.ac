@@ -392,8 +392,8 @@ ACE_CHECK_ASYNCH_IO
 
 dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
-AC_SEARCH_LIBS([clock_gettime],
-  [rt posix4],[AC_DEFINE(ACE_HAS_CLOCK_GETTIME)],)
+dnl AC_SEARCH_LIBS([clock_gettime],
+dnl   [rt posix4],[AC_DEFINE(ACE_HAS_CLOCK_GETTIME)],)
 
 
 dnl SECTION 5: checks for header files
@@ -3335,6 +3335,8 @@ AC_CHECK_FUNC([bsearch],
   ,
   [AC_DEFINE([ACE_LACKS_BSEARCH])])
 AC_LANG_POP([C])
+
+AC_CHECK_FUNC([clock_gettime], [AC_DEFINE([ACE_HAS_CLOCK_GETTIME])],)
 
 dnl Temporarily select C as the test language to work around a bug in
 dnl some versions of Autoconf when C++ is selected as the test
@@ -7105,7 +7107,7 @@ and the following information:
 
   ACE 'configure' Script Information
   ==================================
-  [RCS] translit([$Id$], [$\"])
+  [RCS] translit([$Id$], [$"])
 
 
   ACE Version:        $ACE_VERSION

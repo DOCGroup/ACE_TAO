@@ -52,7 +52,7 @@ AC_DEFUN([ACE_CHECK_FOR_CVS_DIR],
           ../configure
           make
 
-      This will create a build space in the directory \`objdir' and
+      This will create a build space in the directory `objdir' and
       start a build in that directory.
      ])
  fi
@@ -84,7 +84,7 @@ AC_DEFUN([ACE_CHECK_TOP_SRCDIR],
           ../configure
           make
 
-      This will create a build space in the directory \`objdir' and
+      This will create a build space in the directory `objdir' and
       start a build in that directory.
      ])
  fi
