@@ -272,6 +272,8 @@ module PortableInterceptor
 <ul>
   <li>We will change the temporary interceptor implementation to
       conform with the proposed spec. shortly.
+  <li>The current implementation does not go through the interceptor chain
+      when using collocation optimizations such as "direct" or "ThruPOA".
 </ul>
 
 <Hr><P>
@@ -282,6 +284,9 @@ module PortableInterceptor
   <li><p>Add support for <em>local</em> keyword.</p></li>
 
   <li><p>Add support for "standard" portable interceptors.</p></li>
+  <li>Add support for the interceptor chain to "ThruPOA" collocation
+      optimization; the "Direct" collocation optimization will not go
+      through the interceptor chain.
 </ol>
 
 <Hr><P>
