@@ -1,3 +1,38 @@
+Wed Jan 26 18:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdAssignmentPolicyFactory.h
+        * tao/PortableServer/IdAssignmentPolicyFactoryImpl.cpp
+        * tao/PortableServer/IdAssignmentPolicyFactoryImpl.h
+        * tao/PortableServer/IdUniquenessPolicyFactory.h
+        * tao/PortableServer/IdUniquenessPolicyFactoryImpl.cpp
+        * tao/PortableServer/IdUniquenessPolicyFactoryImpl.h
+        * tao/PortableServer/ImplicitActivationPolicyFactory.h
+        * tao/PortableServer/ImplicitActivationPolicyFactoryImpl.cpp
+        * tao/PortableServer/ImplicitActivationPolicyFactoryImpl.h
+        * tao/PortableServer/LifespanPolicy.cpp
+        * tao/PortableServer/LifespanPolicy.h
+        * tao/PortableServer/LifespanPolicyFactory.h
+        * tao/PortableServer/LifespanPolicyFactoryImpl.cpp
+        * tao/PortableServer/LifespanPolicyFactoryImpl.h
+        * tao/PortableServer/RequestProcessingPolicyFactory.h
+        * tao/PortableServer/RequestProcessingPolicyFactoryImpl.cpp
+        * tao/PortableServer/RequestProcessingPolicyFactoryImpl.h
+        * tao/PortableServer/ServantRetentionPolicyFactory.h
+        * tao/PortableServer/ServantRetentionPolicyFactoryImpl.cpp
+        * tao/PortableServer/ServantRetentionPolicyFactoryImpl.h
+        * tao/PortableServer/ThreadPolicy.cpp
+        * tao/PortableServer/ThreadPolicy.h
+        * tao/PortableServer/ThreadPolicyFactory.h
+        * tao/PortableServer/ThreadPolicyFactoryImpl.cpp
+        * tao/PortableServer/ThreadPolicyFactoryImpl.h
+          Use ACE_NEW_THROW_EX instead of ACE_RETURN to allocate the policies
+          and updated exception variables and specification for this.
+
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Policy_Creator_T.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Updated to pass environment argument for change above
+
 Mon Jan 24 17:30:06 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/Active_Policy_Strategies.cpp:
@@ -17,7 +52,7 @@ Mon Jan 24 17:30:06 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableServer/ImplicitActivationPolicyValueImplicit.cpp:
 
 	  Cosmetic fixes and @@ comments for Johnny. Looks like there is a
-	  race condition that Johnny may have to address. 
+	  race condition that Johnny may have to address.
 
 Mon Jan 24 11:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
