@@ -523,7 +523,8 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
   :  byte_order_ (byte_order),
      request_id_ (request_id),
      request_size_ (request_size),
-     fragment_count_ (fragment_count)
+     fragment_count_ (fragment_count),
+     timeout_counter_ (0)
 {
   ACE_CDR::grow (&this->payload_, this->request_size_);
   this->payload_.wr_ptr (request_size_);
@@ -1092,9 +1093,10 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
     ACE_CHECK_RETURN (-1);
   }
 
-  if (this->reactor ()->remove_handler (this,
-                                        ACE_Event_Handler::READ_MASK) == -1)
-    return -1;
+  // Ignore the result, the handler could have been removed by a call
+  // to update_consumer() or something similar.
+  (void) this->reactor ()->remove_handler (this,
+                                           ACE_Event_Handler::READ_MASK);
 
   if (this->dgram_.close () == -1)
     return -1;

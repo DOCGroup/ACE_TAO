@@ -176,10 +176,10 @@ main (int argc, char* argv[])
       RtecEventChannelAdmin::ConsumerQOS sub;
       sub.is_gateway = 1;
 
-      sub.dependencies.length (2);
+      sub.dependencies.length (1);
       sub.dependencies[0].event.header.type =
         ACE_ES_EVENT_ANY;        // first free event type
-      sub.dependencies[0].event.header.type =
+      sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
       sender.open (sub, ACE_TRY_ENV);
@@ -312,7 +312,9 @@ main (int argc, char* argv[])
       receiver.close (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (mcast_eh.close () == -1)
+      r = mcast_eh.close (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (r == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Closing MCast event handler\n"), 1);
@@ -335,7 +337,7 @@ main (int argc, char* argv[])
         // access to that POA to deactivate the object.
         // Notice that we 'know' that the default POA for this servant
         // is the root POA, but the code is more robust if we don't
-        // rely on that. 
+        // rely on that.
         PortableServer::POA_var poa =
           ec_impl._default_POA (ACE_TRY_ENV);
         ACE_TRY_CHECK;
