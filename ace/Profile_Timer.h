@@ -1,18 +1,17 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Profile_Timer.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_PROFILE_TIMER_H)
@@ -22,28 +21,8 @@
 #include "ace/Time_Value.h"
 #include "ace/High_Res_Timer.h"
 
-#if !(defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE))
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
 
-class ACE_Export ACE_Profile_Timer
-{
-public:
-  struct ACE_Elapsed_Time
-    {
-      double real_time;
-      double user_time;
-      double system_time;
-    };
-
-  ACE_Profile_Timer (void);
-  ~ACE_Profile_Timer (void) {}
-  int  start (void);
-  int  stop (void);
-  int  elapsed_time (ACE_Elapsed_Time &et);
-
-private:
-  ACE_High_Res_Timer timer_;
-};
-#else
 class ACE_Export ACE_Profile_Timer
 {
   // = TITLE
@@ -65,7 +44,7 @@ public:
   // = Initialization and termination methods.
   ACE_Profile_Timer (void);
   // Default constructor.
-  
+
   ~ACE_Profile_Timer (void);
   // Shutdown the timer.
 
@@ -81,8 +60,8 @@ public:
   // Compute the time elapsed since <start>.
 
   void elapsed_rusage (ACE_Profile_Timer::Rusage &rusage);
-  // Compute the amount of resource utilization since the start time. 
-  
+  // Compute the amount of resource utilization since the start time.
+
   void get_rusage (ACE_Profile_Timer::Rusage &rusage);
   // Return the resource utilization (don't recompute it).
 
@@ -137,10 +116,38 @@ private:
 #endif /* ACE_HAS_PRUSAGE_T */
 };
 
-#endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
+#else  /* ! ACE_HAS_PRUSAGE_T && ! ACE_HAS_GETRUSAGE */
+
+class ACE_Export ACE_Profile_Timer
+{
+public:
+  struct ACE_Elapsed_Time
+    {
+#if defined (ACE_LACKS_FLOATING_POINT)
+      ACE_UINT64 real_time;
+      ACE_UINT64 user_time;
+      ACE_UINT64 system_time;
+#else  /* ! ACE_LACKS_FLOATING_POINT */
+      double real_time;
+      double user_time;
+      double system_time;
+#endif /* ! ACE_LACKS_FLOATING_POINT */
+    };
+
+  ACE_Profile_Timer (void);
+  ~ACE_Profile_Timer (void) {}
+  int start (void);
+  int stop (void);
+  int elapsed_time (ACE_Elapsed_Time &et);
+
+private:
+  ACE_High_Res_Timer timer_;
+};
+
+#endif /* ! ACE_HAS_PRUSAGE_T && ! ACE_HAS_GETRUSAGE */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Profile_Timer.i"
+# include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_PROFILE_TIMER_H */

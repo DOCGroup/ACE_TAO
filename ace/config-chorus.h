@@ -29,6 +29,7 @@
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
+# define ACE_LACKS_FLOATING_POINT
 #else  /* ! __GNUG__ && ! ghs */
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
