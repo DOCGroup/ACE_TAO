@@ -18,7 +18,7 @@ ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
-ifeq ($(shell /bin/uname -i),i86pc)
+ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
   DCFLAGS         += -gstabs+
 else  # ! i86pc
