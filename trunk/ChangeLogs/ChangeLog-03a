@@ -1,3 +1,10 @@
+Sun Apr  2 21:32:20 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/SOCK.cpp: removed the extra #ifdef 
+	  ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+	* ace/QoS_Manager.{h,cpp}: removed the obsolete #pragma once.
+	* ace/QoS_Session_Impl.i: fully qualified the ACE_End_Point_Type.	  
+
 Sun Apr  2 20:19:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/QoS_Manager.{h,cpp}: Added these two files. They define
