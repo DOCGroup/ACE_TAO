@@ -2478,17 +2478,33 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+// It would be really cool to add another version of select that would
+// function like the one we're defending against below!
 ACE_INLINE int 
 ACE_OS::select (int width, 
 		fd_set *rfds, fd_set *wfds, fd_set *efds, 
 		const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE_OS::select");
+#ifdef ACE_HAS_NONCONST_SELECT_TIMEVAL
+#  define ___ACE_TIMEOUT copyptr
+  // We must defend against non-conformity!
+  ACE_Time_Value* copyptr = timeout;
+  ACE_Time_Value copy;
+  if (timeout != NULL)
+    {
+      copy = *timeout;
+      copyptr = &copy;
+    }
+#else
+#  define ___ACE_TIMEOUT timeout
+#endif
   ACE_SOCKCALL_RETURN (::select (width, 
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
 				 (ACE_FD_SET_TYPE *) efds, 
-				 (timeval *) timeout) , int, -1);
+				 (timeval *) ___ACE_TIMEOUT) , int, -1);
+#undef ___ACE_TIMEOUT
 }
 
 ACE_INLINE int 
@@ -2497,11 +2513,18 @@ ACE_OS::select (int width,
 		const ACE_Time_Value &timeout)
 {
   // ACE_TRACE ("ACE_OS::select");
+#ifdef ACE_HAS_NONCONST_SELECT_TIMEVAL
+#  define ___ACE_TIMEOUT copy
+  ACE_Time_Value copy(timeout);
+#else
+#  define ___ACE_TIMEOUT timeout
+#endif
   ACE_SOCKCALL_RETURN (::select (width, 
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
 				 (ACE_FD_SET_TYPE *) efds, 
-				 (timeval *) &timeout) , int, -1);
+				 (timeval *) &___ACE_TIMEOUT) , int, -1);
+#undef ___ACE_TIMEOUT
 }
 
 ACE_INLINE int 
@@ -3921,14 +3944,14 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   int result;
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), 
-                                ace_result_),
-              int, -1, retval);
+                                result), // not sure if use of result here is cool, cjc
+              int, -1, result);
   if (result == -1) 
     return result; // error in pthread_getschedparam
   param.sched_priority = prio;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param), 
                                        result),
-                     int, -1, result);
+                     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
 				       ace_result_), 
