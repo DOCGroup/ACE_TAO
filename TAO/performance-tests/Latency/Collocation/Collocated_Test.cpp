@@ -3,14 +3,13 @@
 #include "Server_Task.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/Manual_Event.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
-const char *ior_file  = "test.ior";
-int niterations = 100;
+int niterations = 250000;
 
 int
 parse_args (int argc, char *argv[])
@@ -21,13 +20,10 @@ parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'k':
-        ior_file = get_opts.opt_arg ();
-        break;
       case 'n':
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case '?':
+
       default:
         // This is a hack but that is okay!
         return 0;
@@ -65,28 +61,22 @@ set_priority()
 int
 main (int argc, char *argv[])
 {
-  if (parse_args (argc,argv) == -1)
-    return -1;
-
   //Use Real-time Scheduling class if possible
   set_priority();
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv (),
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-
+        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Null_Mutex mutex;
-      ACE_Null_Condition wait_for_event (mutex);
-      Server_Task server_task (ior_file,
-                               sorb.in (),
+      if (parse_args (argc,argv) == -1)
+        return -1;
+
+      ACE_Manual_Event wait_for_event;
+
+      Server_Task server_task (sorb.in (),
                                wait_for_event,
                                ACE_Thread_Manager::instance ());
 
@@ -100,17 +90,11 @@ main (int argc, char *argv[])
       // Wait for the server thread to do some processing
       wait_for_event.wait ();
 
-      ACE_Argv_Type_Converter catc (argc, argv);
-      CORBA::ORB_var corb =
-        CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv (),
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // Obtain the object reference
+      Test::Roundtrip_var reference = server_task.get_reference ();
 
-      Client_Task client_task (ior_file,
+      Client_Task client_task (reference.in (),
                                niterations,
-                               corb.in (),
                                ACE_Thread_Manager::instance ());
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
