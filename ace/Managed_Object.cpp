@@ -23,7 +23,7 @@ ACE_Managed_Cleanup<TYPE>::object (void)
 
 template <class TYPE>
 int
-ACE_Managed_Object<TYPE>::get_object (u_int &id, TYPE *&object)
+ACE_Managed_Object<TYPE>::get_object (int &id, TYPE *&object)
 {
   // Use the ACE_Object_Manager instance's lock.
   ACE_MT (ACE_Thread_Mutex &lock = *ACE_Object_Manager::instance ()->lock_);
@@ -43,6 +43,7 @@ ACE_Managed_Object<TYPE>::get_object (u_int &id, TYPE *&object)
             }
           else
             {
+              id = ACE_Object_Manager::next_managed_object;
               ACE_Object_Manager::managed_object[
                 ACE_Object_Manager::next_managed_object++] = object;
               return 0;
@@ -56,9 +57,9 @@ ACE_Managed_Object<TYPE>::get_object (u_int &id, TYPE *&object)
           return -1;
         }
     }
-  else if (id >= ACE_Object_Manager::next_managed_object)
+  else if (id < 0  ||  (u_int) id >= ACE_Object_Manager::next_managed_object)
     {
-      // Unknown, non-zero id.
+      // Unknown, non-zero, or negative id.
       object = 0;
       errno = ENOENT;
       return -1;
@@ -67,22 +68,22 @@ ACE_Managed_Object<TYPE>::get_object (u_int &id, TYPE *&object)
     {
       // id is known, so return the object.  Cast its type based
       // on the type of the function template parameter.
-      object = (TYPE *) ACE_Object_Manager::managed_object[id];
+      object = (TYPE *) ACE_Object_Manager::managed_object[id - 1];
       return 0;
     }
 }
 
 template <class TYPE>
 TYPE *
-ACE_Managed_Object<TYPE>::get_object (u_int &id)
+ACE_Managed_Object<TYPE>::get_object (int id)
 {
   // Use the ACE_Object_Manager instance's lock.
   ACE_MT (ACE_Thread_Mutex &lock = *ACE_Object_Manager::instance ()->lock_);
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0));
 
-  if (id == 0 || id >= ACE_Object_Manager::next_managed_object)
+  if (id <= 0  ||  (u_int) id > ACE_Object_Manager::next_managed_object)
     {
-      // Unknown managed object id.
+      // Unknown or invalid managed object id.
       errno = ENOENT;
       return 0;
     }
@@ -91,7 +92,7 @@ ACE_Managed_Object<TYPE>::get_object (u_int &id)
       // id is known, so return the object.  Cast its type based
       // on the type of the function template parameter.
       return &((ACE_Managed_Cleanup<TYPE> *)
-               ACE_Object_Manager::managed_object[id])->object ();
+               ACE_Object_Manager::managed_object[id - 1])->object ();
     }
 }
 
