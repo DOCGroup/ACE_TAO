@@ -155,9 +155,9 @@ typedef Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
 // These might be already instantiated in ace/stats.cpp 
 // (if ACE_HANDLE == int && ACE_INT32 == int)
 template class ACE_Node<ACE_HANDLE>;
+#endif /* ACE_SIZEOF_INT != 4 && !ACE_WIN32 */
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-#endif /* ACE_SIZEOF_INT != 4 && !ACE_WIN32 */
 
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
