@@ -57,6 +57,8 @@
 #define ACE_LACKS_NET_IF_H
 #define ACE_LACKS_SYS_IPC_H
 #define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_SYS_IOCTL_H
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.
