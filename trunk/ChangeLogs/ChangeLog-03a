@@ -1,3 +1,20 @@
+Thu Jan 25 20:10:24 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.x_sgic++.GNU: 
+	* include/makeinclude/platform_irix5.3_sgic++.GNU: 
+
+	  Removed -rpath "$(ACE_ROOT)/ace" from LDFLAGS.
+
+	* ace/Message_Queue_T.{h,i}: Moved code from .i to .h to work
+	  around a compiler bug.  The Sun Forte 6 (CC 5.1) compiler is
+	  only happy if this is in the header file.
+
+	* ace/Message_Block_T.cpp: Fixed template parameter name mismatch
+	  between declaration and definition.
+
+	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+	  for contributing the above patches.
+
 Thu Jan 25 10:50:35 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Add comments to schedule_wakeup/cancel_wakeup that

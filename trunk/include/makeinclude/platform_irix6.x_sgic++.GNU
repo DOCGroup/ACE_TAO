@@ -45,7 +45,6 @@ CCFLAGS		+= -ptnone -no_prelink
 # Instantiate used templates, but do not run prelinker
 #CCFLAGS		+= -ptused
 
-LDFLAGS		+= -rpath "$(ACE_ROOT)/ace"
 LDFLAGS		+= -Wl,-woff,15
 LDFLAGS		+= -Wl,-woff,84
 LDFLAGS		+= -Wl,-woff,85

@@ -15,7 +15,6 @@ DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 CPPFLAGS        += -ptused -prelink +pp -woff 3203,3209,3161,3262,3665
-LDFLAGS		+= -rpath "$(ACE_ROOT)/ace"
 LIBS		= 
 PIC		= -KPIC
 AR		= ar

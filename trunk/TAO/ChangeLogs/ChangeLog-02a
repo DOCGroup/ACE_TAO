@@ -1,3 +1,11 @@
+Thu Jan 25 20:10:24 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.i: Fixed template
+	  parameter name mismatch between declaration and definition.
+
+	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+	  for contributing the above patches.
+
 Thu Jan 25 17:31:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/README:
