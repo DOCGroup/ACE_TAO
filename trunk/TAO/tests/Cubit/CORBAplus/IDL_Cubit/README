@@ -14,20 +14,41 @@ The server cubit factory maintained num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
 
 When the server is started and you have used the -d flag, you should
-see as the first line of output something that looks like
-pbkr://128.252.165.140:35158/repid=IDL:Cubit_Factory:1.0;uid=80FCA58C00004F49348220C300000000;
+see a line of output that looks something like:
+XpsIiopServerProfileFactory::XpsIiopServerProfileFactory() : new tcp server listening at port 45372
 
 Using -d turns on debugging messages.  It is additive, i.e., the more
 -d options provided, the more debugging you can get.  At the moment,
 only 2 levels of debugging are implemented, and more than 2 -d options
 are ignored.
 
+NOTE:  
+
+0. $PBHOME is the directory where CORBAplus is installed.
+
+1. Set the appropriate environment variables for CORBAplus to work.  Look at the example script at
+$PBHOME/.cshrc_pb   You can append this script to your .cshrc.mine file assuming you run a csh shell.
+You can also execute it, like:
+
+	source $PBHOME/.cshrc_pb
+
+2.  Make sure the CORBAplus BOA server is running, before trying to run the server example.  
+
+	To run the BOA server execute:
+
+	$PBHOME/bin/pbboad -pbtrace
+
 client:
 -------
 
-% clnt [-d] [-k <cubit key>] [-n <iterations>] -pbinit Cubit_Factory <Object_Reference>
+% clnt [-d] [-k <cubit key>] [-n <iterations>] -pbinit Cubit_Factory iiop://<host>:<port>/cubit_factory
 
-Object_Reference corresponds to the output from the server that might look like this:
-pbkr://128.252.165.140:35158/repid=IDL:Cubit_Factory:1.0;uid=80FCA58C00004F49348220C300000000;
+  where 
+	<host> is the machine where the server is running.
+	<port> is the port number that was displayed when the server was run.  See example output above.
 
-cubit_key corresponds to "key0", "key1", ...
+<cubit_key> corresponds to "key0", "key1", ...
+
+<iterations> are the number of times you want to execute a call.
+
+-d : see same option for server above.
