@@ -1,3 +1,9 @@
+Mon Mar 11 14:23:00 2002  Si Mong Park  <spark@ociweb.com>
+
+ 	* tests/Config_Test.cpp:
+ 	  Removed one of the delete statement that deletes twice and thus
+ 	  causing an invalid access violation.
+
 Mon Mar 11 10:28:45 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/vxworks_modify.pl:
