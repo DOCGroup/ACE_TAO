@@ -45,7 +45,7 @@ static int Test_Result = 0;
 // For some odd reason, NT will try to send a single large buffer, but not
 // multiple smaller ones that add up to the large size.
 const size_t Test3_Send_Size = 4*1024;
-const int    Test3_Loops = 10;
+const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
 
@@ -272,12 +272,13 @@ server (void *arg)
   ACE_OS::sleep (8);
   // Keep reading until the peer closes.
   sock_str.disable (ACE_NONBLOCK);
-  ssize_t got = 1, total_recv = 0;
+  ssize_t got = 1;
+  size_t total_recv = 0;
   while (got != 0)
     {
       errno = 0;
       got = sock_str.recv (buffer, sizeof (buffer));
-      if (got == -1)
+      if (got < 0)
           break;
       total_recv += got;
     }
