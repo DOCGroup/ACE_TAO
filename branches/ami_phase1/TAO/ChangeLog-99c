@@ -1,3 +1,11 @@
+Sat May 29 22:35:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/Reactor/Makefile:
+	* tests/NestedUpcall/Reactor/mt_client.cpp:
+	* tests/NestedUpcall/Reactor/mt_client.h:
+	  New test for nested upcalls, based on the reactor, but using
+	  multiple threads on the client side.
+
 Sat May 29 17:56:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Wait_Strategy.cpp:
