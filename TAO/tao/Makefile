@@ -2325,7 +2325,8 @@ realclean:
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.i
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/debug.h
 .obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2624,7 +2625,8 @@ realclean:
  $(TAO_ROOT)/tao/Tagged_Components.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/debug.h
 .obj/Acceptor_Registry.o .obj/Acceptor_Registry.so .shobj/Acceptor_Registry.o .shobj/Acceptor_Registry.so: Acceptor_Registry.cpp \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2835,6 +2837,7 @@ realclean:
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -7792,7 +7795,8 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/debug.h
 .obj/deep_free.o .obj/deep_free.so .shobj/deep_free.o .shobj/deep_free.so: deep_free.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -7961,7 +7965,8 @@ realclean:
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/Union.h
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/debug.h
 .obj/encode.o .obj/encode.so .shobj/encode.o .shobj/encode.so: encode.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -8130,7 +8135,8 @@ realclean:
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/Union.h
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/debug.h
 .obj/CDR_Interpreter.o .obj/CDR_Interpreter.so .shobj/CDR_Interpreter.o .shobj/CDR_Interpreter.so: CDR_Interpreter.cpp \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -9953,6 +9959,7 @@ realclean:
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -10333,6 +10340,7 @@ realclean:
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/CDR_Interpreter.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/TAO_Internal.h \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Principal.h \
@@ -11994,6 +12002,7 @@ realclean:
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -13579,6 +13588,7 @@ realclean:
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Connector_Registry.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h

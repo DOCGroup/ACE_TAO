@@ -18,6 +18,7 @@
 #include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/debug.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -68,11 +69,12 @@ TAO_Stub::TAO_Stub (char *repository_id,
     profile_in_use_ (0),
     profile_lock_ptr_ (0),
     profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_lock_ (),
     refcount_ (1),
     use_locate_request_ (0),
     first_locate_request_ (0),
     orb_core_ (orb_core),
+    orb_ (),
     servant_orb_ ()
 #if defined (TAO_HAS_CORBA_MESSAGING)
     , policies_ (0)
