@@ -265,7 +265,11 @@ public:
                                void **ppv);
 
 private:
+#if !defined (TAO_COPY_OPNAME)
+  char* operation_;
+#else
   CORBA::String_var operation_;
+#endif
   // Operation name.
 
   TAO_InputCDR *incoming_;
