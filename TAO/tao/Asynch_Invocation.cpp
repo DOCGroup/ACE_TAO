@@ -94,7 +94,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (1, 
+  retval = TAO_GIOP_Invocation::invoke (0,
                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
@@ -157,7 +157,7 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (1, 
+  retval = TAO_GIOP_Invocation::invoke (0,
                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
@@ -170,4 +170,3 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-

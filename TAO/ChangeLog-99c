@@ -1,3 +1,25 @@
+Tue Dec 21 15:55:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Buffered_AMI: New test that illustrates how to use
+	  buffered AMI calls.  This is similar to the buffered oneway
+	  example, but the following difference were enough to motivate
+	  the creation of a new example:
+
+	  - fewer options to play with buffering constraints.
+	  - AMI callback handler.
+	  - different requirements of running the event loop.
+	  - different TAO subset components are used.
+
+	* tao/Asynch_Invocation.cpp (invoke_i): DII deferred and AMI calls
+	  were changed to just send the request, without trying to wait
+	  for the reply.
+
+	* examples/Makefile:
+	* version_tests.dsw:
+
+	  Added new Buffered_AMI test to the NT project files and UNIX
+	  makefiles.
+
 Tue Dec 21 17:29:02 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_Internal.cpp:
@@ -36,7 +58,7 @@ Mon Dec 20 12:59:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  MFC-based CosNaming viewer that that allows users to manipulate
  	  a Naming Context visually.  Thanks to Chris Hafey
  	  <chris@stentorsoft.com> for contributing this.
-  
+
 Tue Dec 21 11:34:45 1999  bala  <bala@cs.wustl.edu>
 
         * TAO version 1.0.10 released.
@@ -100,7 +122,7 @@ Mon Dec 20 18:25:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Dec 20 14:22:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.cpp:
@@ -109,7 +131,7 @@ Mon Dec 20 14:22:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp: Fixed
-	  warnings on SunOS_EGCS. 
+	  warnings on SunOS_EGCS.
 
 Mon Dec 20 13:52:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 

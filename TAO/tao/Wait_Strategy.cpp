@@ -158,7 +158,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::~TAO_Exclusive_Wait_On_Leader_Follower (v
 //    at this level since this is common for AMI also. (Alex).
 int
 TAO_Exclusive_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
-                                              int two_way)
+                                                        int two_way)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
