@@ -1,3 +1,12 @@
+Fri Feb 16 11:09:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Makefile:
+
+          Moved IFR_Client_Adapter from INTERFACE_REPO_FILES
+          to ORB_CORE_FILES, since Object and LocalObject use
+          the adapter, and the IFR is forcefully disabled on
+          some platforms. Thanks to Carlos for the suggestion.
+
 Fri Feb 16 10:53:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/nested_scope.idl:
