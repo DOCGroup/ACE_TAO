@@ -33,6 +33,7 @@ DIRS = \
 	..\netsvcs \
 	..\tests \
         ..\examples \
+        ..\performance-tests \
 	tao \
 	TAO_IDL	\
 	orbsvcs	\
