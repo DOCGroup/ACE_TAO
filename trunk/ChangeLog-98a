@@ -9,7 +9,7 @@ Sun Apr 05 10:20:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_lynxos.GNU: only define
           CROSS-COMPILE if not building on LynxOS.
 
-        * ace/OS.h: fxied ACE_CAST_CONST definition with Sun CC.
+        * ace/OS.h: fixed ACE_CAST_CONST definition with Sun CC.
 
 Sun Apr 05 00:20:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
