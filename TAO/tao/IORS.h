@@ -54,7 +54,9 @@ TAO_NAMESPACE  POA_TAO_IOP
 
     virtual const char* _interface_repository_id (void) const;
 
-virtual void* _create_collocated_objref(CORBA::ULong type, TAO_Stub *sobj);
+    virtual void* _create_collocated_objref(const char *repository_id,
+                                            CORBA::ULong type,
+                                            TAO_Stub *sobj);
 
         virtual CORBA::Object_ptr merge_iors (
         const TAO_IOP::TAO_IOR_Manipulation::IORList & iors,

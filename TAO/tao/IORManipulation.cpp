@@ -35,6 +35,10 @@ CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors,
     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+                       TAO_IOP::TAO_IOR_Manipulation::Duplicate,
+                       TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR))
 {
   // we need to create a new CORBA::Object which has the union of the
   // two profile lists.  However, if any profiles are duplicates (i.e. in
@@ -133,6 +137,12 @@ TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2,
     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+        TAO_IOP::TAO_IOR_Manipulation::Duplicate,
+        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
+      ))
 {
 
   // Get an estimate of the number of profiles
@@ -148,6 +158,12 @@ TAO_IOR_Manipulation_impl::remove_profiles (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2,
     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR,
+        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
+        TAO_IOP::TAO_IOR_Manipulation::NotFound
+      ))
 {
   // First verify they are the same type!
   CORBA::String_var type_id = ior1->_stubobj ()->type_id;
@@ -221,6 +237,10 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2,
     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        TAO_IOP::TAO_IOR_Manipulation::NotFound
+      ))
 {
   CORBA::ULong count=0;
   TAO_Profile *pfile1, *pfile2;
@@ -249,6 +269,10 @@ CORBA::ULong
 TAO_IOR_Manipulation_impl::get_profile_count (
     CORBA::Object_ptr ior,
     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
+      ))
 {
   CORBA::ULong count;
   count = ior->_stubobj ()->get_base_profiles ().profile_count ();

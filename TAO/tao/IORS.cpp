@@ -69,9 +69,18 @@ POA_TAO_IOP::TAO_IOR_Manipulation::_this (CORBA_Environment &ACE_TRY_ENV)
 }
 
 void*
-POA_TAO_IOP::TAO_IOR_Manipulation::_create_collocated_objref (CORBA::ULong type, TAO_Stub *stub)
+POA_TAO_IOP::TAO_IOR_Manipulation::_create_collocated_objref (
+    const char* repository_id,
+    CORBA::ULong type,
+    TAO_Stub *stub)
 {
-  return new POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, stub);
+  ACE_UNUSED_ARG (type);
+  if (!strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0",repository_id))
+    return ACE_static_cast (
+        TAO_IOP::TAO_IOR_Manipulation_ptr,
+        new POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, stub)
+      );
+  return 0;
 }
 
 POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation::_tao_collocated_TAO_IOR_Manipulation (
