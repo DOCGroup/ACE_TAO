@@ -1,3 +1,11 @@
+Wed Jun 24 00:00:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Cleaned
+ 	  up the Event_Transceiver code a bit.
+
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp (main):
+ 	  Cleaned up the code a bit.
+
 Wed Jun 24 06:54:00 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 	* Attached "CLASSIX_" to all the file names in ace/CLASSIX.
         * Modified include statments in ace/CLASSIX/* to reflect the
