@@ -1647,6 +1647,7 @@ CORBA_ORB::string_to_object (const char *str,
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
+  
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1741,7 +1742,6 @@ CORBA_ORB::ior_string_to_object (const char *str,
   ACE_CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
-
   const char *tmp = str;
   size_t len = 0;
 
@@ -1767,7 +1767,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
-
+  
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
@@ -1775,7 +1775,6 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;
-
   return objref;
 }
 

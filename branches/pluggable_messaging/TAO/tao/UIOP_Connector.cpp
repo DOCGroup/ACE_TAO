@@ -488,6 +488,17 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       return -1;
     }
 
+  const TAO_GIOP_Version& version = uiop_profile->version ();
+  
+  if (uiop_profile->hint ()->init_mesg_protocol (version.major,
+                                                 version.minor) == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+        }
+    }
   transport = result->transport ();
 
   return 0;
@@ -652,6 +663,7 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK;
+  
 }
 
 int
