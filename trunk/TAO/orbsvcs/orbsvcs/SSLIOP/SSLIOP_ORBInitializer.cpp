@@ -1,8 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "SSLIOP_ORBInitializer.h"
+#include "SSLIOP_Vault.h"
 
 #include "tao/debug.h"
 
@@ -15,6 +14,7 @@ ACE_RCSID (TAO_SSLIOP,
 #include "orbsvcs/SSLIOPC.h"
 
 #include "orbsvcs/Security/Security_Current.h"
+#include "orbsvcs/Security/PrincipalAuthenticator.h"
 
 #include "tao/Exception.h"
 #include "tao/ORBInitInfo.h"
@@ -129,6 +129,38 @@ TAO_SSLIOP_ORBInitializer::post_init (
   // with the ORB.
   info->add_server_request_interceptor (si_interceptor.in ()
                                         TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Register the SSLIOP-specific vault with the
+  // PrincipalAuthenticator.
+  obj = info->resolve_initial_references ("SecurityManager"
+                                          TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  SecurityLevel2::SecurityManager_var manager =
+    SecurityLevel2::SecurityManager::_narrow (obj.in ()
+                                              TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  SecurityLevel2::PrincipalAuthenticator_var pa =
+    manager->principal_authenticator (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_PrincipalAuthenticator_var tao_pa =
+    TAO_PrincipalAuthenticator::_narrow (pa.in ()
+                                         TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  SecurityReplaceable::Vault_ptr vault;
+  ACE_NEW_THROW_EX (vault,
+                    TAO_SSLIOP_Vault,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
+  SecurityReplaceable::Vault_var safe_vault = vault;       // :-)
+
+  tao_pa->register_vault (vault
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

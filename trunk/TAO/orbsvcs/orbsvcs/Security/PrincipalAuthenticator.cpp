@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 #include "PrincipalAuthenticator.h"
-#include "PrincipalAuthenticator_Impl.h"
+//#include "PrincipalAuthenticator_Impl.h"
 
 ACE_RCSID (Security,
            PrincipalAuthenticator,
@@ -9,12 +9,17 @@ ACE_RCSID (Security,
 
 
 TAO_PrincipalAuthenticator::TAO_PrincipalAuthenticator (void)
-  : authenticators_ ()
+  : vaults_ ()
 {
 }
 
 TAO_PrincipalAuthenticator::~TAO_PrincipalAuthenticator (void)
 {
+  size_t count = this->vaults_.size ();
+
+  for (size_t i = 0; i < count; ++i)
+    CORBA::release (ACE_static_cast (SecurityReplaceable::Vault_ptr,
+                                     this->vaults_[i]));
 }
 
 Security::AuthenticationMethodList *
@@ -36,13 +41,13 @@ TAO_PrincipalAuthenticator::get_supported_authen_methods (
 
   Security::AuthenticationMethodList_var list = tmp;
 
-WHAT DO WE DO WITH THE "mechanism" paremter!
+WHAT DO WE DO WITH THE "mechanism" parameter!
 
-//   CORBA::ULong count = this->authenticators_.size ();
+//   CORBA::ULong count = this->vaults_.size ();
 //   list->length (count);
 
 //   for (CORBA::ULong i = 0; i < count; ++i)
-//     list[i] = this->authenticators_[i]->authentication_method ();
+//     list[i] = this->vaults_[i]->authentication_method ();
 
 //   return list._retn ();
 #else
@@ -68,56 +73,88 @@ TAO_PrincipalAuthenticator::authenticate (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  size_t count = this->authenticators_.size ();
+  Security::AuthenticationStatus status = Security::SecAuthFailure;
 
+  size_t count = this->vaults_.size ();
+
+  // Iterate over the registered vaults until one that can
+  // authenticate the credentials is found.
   for (size_t i = 0; i < count; ++i)
     {
-      TAO_PrincipalAuthenticator_Impl *authenticator =
-        this->authenticators_[i];
+      SecurityReplaceable::Vault_ptr vault =
+        ACE_static_cast (SecurityReplaceable::Vault_ptr,
+                         this->vaults_[i]);
 
-      if (ACE_OS::strcmp (mechanism,
-                          authenticator->mechanism ()) == 0)
-          return
-            authenticator->authenticate (method,
-                                         security_name,
-                                         auth_data,
-                                         privileges,
-                                         creds,
-                                         continuation_data,
-                                         auth_specific_data
-                                         TAO_ENV_ARG_PARAMETER);
+      status = vault->acquire_credentials (method,
+                                           mechanism,
+                                           security_name,
+                                           auth_data,
+                                           privileges,
+                                           creds,
+                                           continuation_data,
+                                           auth_specific_data
+                                           TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (Security::SecAuthFailure);
+
+      if (status == Security::SecAuthSuccess
+          || status == Security::SecAuthContinue)
+        break;
     }
 
-  return Security::SecAuthFailure;
+  return status;
 }
 
 Security::AuthenticationStatus
 TAO_PrincipalAuthenticator::continue_authentication (
-    const CORBA::Any & /* response_data */,
-    SecurityLevel2::Credentials_ptr /* creds */,
-    CORBA::Any_out /* continuation_data */,
-    CORBA::Any_out /* auth_specific_data */
+    const CORBA::Any & response_data,
+    SecurityLevel2::Credentials_ptr creds,
+    CORBA::Any_out continuation_data,
+    CORBA::Any_out auth_specific_data
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    Security::SecAuthFailure);
+  Security::AuthenticationStatus status = Security::SecAuthFailure;
+
+  size_t count = this->vaults_.size ();
+
+  // Iterate over the registered vaults until one that can
+  // authenticate the credentials is found.
+  for (size_t i = 0; i < count; ++i)
+    {
+      SecurityReplaceable::Vault_ptr vault =
+        ACE_static_cast (SecurityReplaceable::Vault_ptr,
+                         this->vaults_[i]);
+
+      status =
+        vault->continue_credentials_acquisition (response_data,
+                                                 creds,
+                                                 continuation_data,
+                                                 auth_specific_data
+                                                 TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (Security::SecAuthFailure);
+
+      if (status == Security::SecAuthSuccess
+          || status == Security::SecAuthContinue)
+        break;
+    }
+
+  return status;
 }
 
 void
-TAO_PrincipalAuthenticator::register_principal_authenticator (
-  TAO_PrincipalAuthenticator_Impl *authenticator)
+TAO_PrincipalAuthenticator::register_vault (
+  SecurityReplaceable::Vault_ptr vault
+  TAO_ENV_ARG_DECL)
 {
-  if (authenticator != 0)
+  if (!CORBA::is_nil (vault))
     {
-      size_t old_size = this->authenticators_.size ();
-      this->authenticators_.size (old_size + 1);
-      this->authenticators_[old_size] = authenticator;
+      size_t old_size = this->vaults_.size ();
+      this->vaults_.size (old_size + 1);
+      this->vaults_[old_size] =
+        SecurityReplaceable::Vault::_duplicate (vault);
     }
+  else
+    ACE_THROW (CORBA::BAD_PARAM ());
 }
 
 int TAO_PrincipalAuthenticator::_tao_class_id = 0;
@@ -214,7 +251,7 @@ TAO_PrincipalAuthenticator_var::operator const ::TAO_PrincipalAuthenticator_ptr 
   return this->ptr_;
 }
 
-TAO_PrincipalAuthenticator_var::operator ::TAO_PrincipalAuthenticator_ptr &() // cast 
+TAO_PrincipalAuthenticator_var::operator ::TAO_PrincipalAuthenticator_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -348,8 +385,8 @@ TAO_PrincipalAuthenticator_out::operator-> (void)
   return this->ptr_;
 }
 
-  
-TAO_PrincipalAuthenticator_ptr 
+
+TAO_PrincipalAuthenticator_ptr
 TAO_PrincipalAuthenticator::_narrow (
     CORBA::Object_ptr obj
     TAO_ENV_ARG_DECL)
@@ -358,7 +395,7 @@ TAO_PrincipalAuthenticator::_narrow (
     TAO_PrincipalAuthenticator::_unchecked_narrow (obj
                                                    TAO_ENV_ARG_PARAMETER);
 }
-  
+
 TAO_PrincipalAuthenticator_ptr
 TAO_PrincipalAuthenticator::_unchecked_narrow (
       CORBA::Object_ptr obj
@@ -413,7 +450,7 @@ TAO_PrincipalAuthenticator::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
