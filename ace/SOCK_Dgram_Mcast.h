@@ -10,8 +10,9 @@
 //    SOCK_Dgram_Mcast.h
 //
 // = AUTHORS
-//    Irfan Pyrali (ip1@cs.wustl.edu)
-//    Tim Harrison (harrison@cs.wustl.edu)
+//    Irfan Pyrali <irfan@cs.wustl.edu>,
+//    Tim Harrison <harrison@cs.wustl.edu>, and
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,15 +30,15 @@
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
   // = TITLE
-  //     Defines the member functions for the ACE SOCK wrapper
-  //     multicast abstraction.
+  //     Defines the member functions for the ACE socket wrapper
+  //     for UDP/IP multicast.
 public:
   // = Initialization routine.
   ACE_SOCK_Dgram_Mcast (void);
-  // Note that there is no <open>.  This cannot be used unless you
-  // subscribe to the multicast group.  If you just want to send (and
-  // not listen) to the multicast group, use ACE_SOCK_Dgram or
-  // ACE_SOCK_CODgram.
+  // Note that there is no public <open> method.  Therefore, this
+  // class cannot be used unless you <subscribe> to a multicast group.
+  // If you just want to send (and not listen) to a multicast group,
+  // use <ACE_SOCK_Dgram> or <ACE_SOCK_CODgram> instead.
 
   ~ACE_SOCK_Dgram_Mcast (void);
   // Default dtor.
@@ -46,41 +47,62 @@ public:
 
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,
-#if defined (ACE_PSOS)
-                 // pSOS supports numbers, not names for network interfaces
-                 long net_if = 0,
-#else
                  const ASYS_TCHAR *net_if = 0,
-#endif /* defined (ACE_PSOS) */
                  int protocol_family = PF_INET,
                  int protocol = 0);
-  // Join a multicast group by telling the network interface device
-  // driver to accept datagrams with ACE_INET_Addr &mcast_addr
-  // multicast addresses.
+  // This is a BSD-style method for joining a multicast group (i.e.,
+  // no QoS).  The network interface device driver is instructed to
+  // accept datagrams with <mcast_addr> multicast addresses.  If the
+  // socket has already been opened, <subscribe> closes the socket and
+  // opens a new socket bound to the <mcast_addr>.
   //
-  // If you have called open already, subscribe closes the socket and
-  // opens a new socket bound to the mcast_addr.
+  // The <net_if> interface is hardware specific, e.g., use "netstat
+  // -i" to find whether your interface is, such as "le0" or something
+  // else.  If net_if == 0, <subscribe> uses the default mcast
+  // interface.  Returns: -1 on error, else 0.
+  // 
+  // Note that some platforms, such as pSoS, support only number, not
+  // names, for network interfaces.  For these platforms, just give
+  // these numbers in alphanumeric form and <subscribe> will convert
+  // them into numbers via <ACE_OS::atoi>.
+
+  int subscribe (const ACE_INET_Addr &mcast_addr,
+		 ACE_Connect_QoS_Params qos_params,
+                 int reuse_addr = 1,
+                 const ASYS_TCHAR *net_if = 0,
+                 int protocol_family = PF_INET,
+                 int protocol = 0);
+  // This is a QoS-enabled method for joining a multicast group, which
+  // passes <qos_params> via <ACE_OS::join_leaf>.  The network
+  // interface device driver is instructed to accept datagrams with
+  // <mcast_addr> multicast addresses.  If the socket has already been
+  // opened, <subscribe> closes the socket and opens a new socket
+  // bound to the <mcast_addr>.
   //
-  // Interface is hardware specific. use netstat -i to find whether
-  // your interface is, say, le0 or something else.  If net_if == 0,
-  // subscribe uses the default mcast interface.
-  // Returns: -1 on error, else 0.
+  // The <net_if> interface is hardware specific, e.g., use "netstat
+  // -i" to find whether your interface is, such as "le0" or something
+  // else.  If net_if == 0, <subscribe> uses the default mcast
+  // interface.  Returns: -1 on error, else 0.
+  // 
+  // Note that some platforms, such as pSoS, support only number, not
+  // names, for network interfaces.  For these platforms, just give
+  // these numbers in alphanumeric form and <subscribe> will convert
+  // them into numbers via <ACE_OS::atoi>.
 
   int unsubscribe (const ACE_INET_Addr &mcast_addr,
-#if defined (ACE_PSOS)
-                   // pSOS supports numbers, not names for network interfaces
-                   long net_if = 0,
-#else
                    const ASYS_TCHAR *net_if = 0,
-#endif /* defined (ACE_PSOS) */
                    int protocol_family = PF_INET,
                    int protocol = 0);
-  // Leave a multicast group.
-  //
-  // Interface is hardware specific. use netstat -i to find whether
-  // your interface is, say, le0 or something else.  If net_if == 0,
-  // subscribe uses the default mcast interface.
-  // Returns: -1 on error, else 0.
+  // Leave a multicast group identified by <mcast_addr>.  The <net_if>
+  // interface is hardware specific.  Use something like "netstat -i"
+  // to find whether your interface is, such as "le0" or something
+  // else.  If <net_if> == 0, <subscribe> uses the default mcast
+  // interface.  Returns: -1 on error, else 0.
+  // 
+  // Note that some platforms, such as pSoS, support only number, not
+  // names, for network interfaces.  For these platforms, just give
+  // these numbers in alphanumeric form and <subscribe> will convert
+  // them into numbers via <ACE_OS::atoi>.
 
   int unsubscribe (void);
   // Unsubscribe from a multicast group.  Returns 0 on success, -1 on
@@ -98,11 +120,12 @@ public:
   // Send <n> <iovecs>.
 
   // = Options.
-  int set_option (int option, char optval);
-  // Set an ip option that takes a char as input.
-  // e.g. IP_MULTICAST_LOOP.  This is just a nice interface to a
-  // subset of possible setsockopt/ACE_SOCK::set_option calls Returns
-  // 0 on success, -1 on failure.
+  int set_option (int option, 
+		  char optval);
+  // Set an ip option that takes a char as input, such as
+  // <IP_MULTICAST_LOOP>.  This is just a more concise nice interface
+  // to a subset of possible <ACE_SOCK::set_option> calls.  Returns 0
+  // on success, -1 on failure.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -114,10 +137,24 @@ private:
   ACE_HANDLE open (const ACE_Addr &local,
                    int protocol_family = PF_INET,
                    int protocol = 0);
-  // disable public use of ACE_SOCK_Dgram::open ()
+  // Disable public use of <ACE_SOCK_Dgram::open> to ensure the class
+  // is used properly.
 
-  // = Disable public use of ACE_SOCK_Dgram::sends and force
-  // ACE_SOCK_Dgram_Mcast::sends inline
+  int subscribe_i (const ACE_INET_Addr &mcast_addr,
+		   int reuse_addr = 1,
+		   const ASYS_TCHAR *net_if = 0,
+		   int protocol_family = PF_INET,
+		   int protocol = 0);
+  // Implementation method of <subscribe>.
+
+  int unsubscribe_i (const ACE_INET_Addr &mcast_addr,
+		     const ASYS_TCHAR *net_if = 0,
+		     int protocol_family = PF_INET,
+		     int protocol = 0);
+  // Implementation method of <unsubscribe>.
+
+  // = Disable public use of <ACE_SOCK_Dgram::send>s and force
+  // <ACE_SOCK_Dgram_Mcast::send>s inline.
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
@@ -128,37 +165,25 @@ private:
                 int flags = 0) const;
 
   int make_multicast_address (const ACE_INET_Addr &mcast_addr,
-#if defined (ACE_PSOS)
-                              // pSOS supports numbers, not
-                              // names for network interfaces
-                              long net_if = 0
-#else
-                              const ASYS_TCHAR *net_if = ASYS_TEXT ("le0")
-#endif /* defined (ACE_PSOS) */
-                             );
-  // Initialize the <multicast_addres_ field>
+                              const ASYS_TCHAR *net_if = ASYS_TEXT ("le0"));
+  // Initialize the <multicast_address_> IP address.
 
   int make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
                                 ip_mreq& multicast_address,
-#if defined (ACE_PSOS)
-                                // pSOS supports numbers, not
-                                // names for network interfaces
-                                long net_if = 0
-#else
-                                const ASYS_TCHAR *net_if = ASYS_TEXT ("le0")
-#endif /* defined (ACE_PSOS) */
-                                );
-  // Initialize a multicast address.
+                                const ASYS_TCHAR *net_if = ASYS_TEXT ("le0"));
+  // Initialize a multicast address.  This method factors out common
+  // code called by <make_multicast_address> and <subscribe>.
 
   ACE_INET_Addr mcast_addr_;
-  // Multicast group address.
+  // A copy of the address that we use to <send> multicasts.
 
-  ip_mreq multicast_address_;
-  // IP address.
+  ip_mreq mcast_request_if_;
+  // IP address of the interface upon which we're receiving
+  // multicasts.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram_Mcast.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SOCK_DGRAM_MCAST_H */

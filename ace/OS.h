@@ -4762,11 +4762,14 @@ private:
   int error_;
 };
 
-// @@ We might want a smarter way to do this...
-#if !defined (SERVICETYPE)
-typedef u_long ACE_SERVICE_TYPE;
-#else
+#if defined (ACE_HAS_WINNT5)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
+typedef GROUP ACE_SOCK_GROUP;
+typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
+#else
+typedef u_long ACE_SOCK_GROUP;
+typedef u_long ACE_SERVICE_TYPE;
+typedef u_long ACE_Protocol_Info;
 #endif /* SERVICETYPE */
 
 class ACE_Export ACE_Flow_Spec
@@ -4903,7 +4906,7 @@ typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
 				       ACE_QoS *group_socket_qos,
 				       iovec *callee_id,
 				       iovec *callee_data,
-				       u_long *g, /* unused */
+				       ACE_SOCK_GROUP *g,
 				       u_long callbackdata);
 
 // Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
@@ -5706,7 +5709,9 @@ public:
                             struct sockaddr *addr,
                             int *addrlen,
 			    ACE_Accept_QoS_Params qos_params);
-  // QoS-enabled <accept>.
+  // QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
+  // the OS platform doesn't support QoS-enabled <accept> then the
+  // <qos_params> are ignored and the BSD-style <accept> is called.
   static int bind (ACE_HANDLE s,
                    struct sockaddr *name,
                    int namelen);
@@ -5718,7 +5723,9 @@ public:
                       const sockaddr *addr,
                       int addrlen,
 		      ACE_Connect_QoS_Params qos_params);
-  // QoS-enabled <connect>.
+  // QoS-enabled <connect>, which passes <qos_params> to <connect>.
+  // If the OS platform doesn't support QoS-enabled <connect> then the
+  // <qos_params> are ignored and the BSD-style <connect> is called.
 
   static int closesocket (ACE_HANDLE s);
   static struct hostent *gethostbyaddr (const char *addr,
@@ -5813,6 +5820,16 @@ public:
   static ACE_HANDLE socket (int domain,
                             int type,
                             int proto);
+  // Create a BSD-style socket (no QoS).
+  static ACE_HANDLE socket (int domain,
+                            int type,
+                            int proto,
+			    ACE_Protocol_Info *protocolinfo,
+			    ACE_SOCK_GROUP g,
+			    u_long flags);
+  // Create a QoS-enabled socket.  If the OS platform doesn't support
+  // QoS-enabled <socket> then the BSD-style <socket> is called.
+
   static int socketpair (int domain,
                          int type,
                          int protocol,
