@@ -354,7 +354,8 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
 {
   // @@ TODO this method will require some modifications once the
   // interface repository is implemented. The modifications are
-  // documented with @@ comments.
+  // documented with @@ comments. Right now we raise a
+  // MARSHAL exception....
 
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_CORBA::ConstructionPolicy *_tao_impl = (POA_CORBA::ConstructionPolicy *)_tao_object_reference;
@@ -377,6 +378,10 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
   );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
+#else /* 0 */
+  ACE_UNUSED_ARG (_tao_in);
+  ACE_UNUSED_ARG (_tao_impl);
+  ACE_THROW (CORBA::MARSHAL ());
 #endif /* 0 */
 }
 
