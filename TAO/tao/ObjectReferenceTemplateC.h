@@ -32,13 +32,8 @@
 
 #include "IOPC.h"
 
-#if TAO_HAS_MINIMUM_CORBA == 1
-
 #include "ValueBase.h"
 #include "ValueFactory.h"
-
-#endif  /* TAO_HAS_MINIMUM_CORBA == 1 */
-
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
