@@ -59,13 +59,13 @@ JAWS_Server::init (int argc, char *argv[])
       this->policy_.concurrency (JAWS_Thread_Pool_Singleton::instance ());
     }
 
-#if !defined (ACE_WIN32)
+#if !(defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS))
   this->dispatch_ = 0;
 #endif /* !defined (ACE_WIN32) */
 
   if (this->dispatch_ == 1)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
       this->policy_.io (JAWS_Asynch_IO_Singleton::instance ());
       this->policy_.ioh_factory
         (JAWS_Asynch_IO_Handler_Factory_Singleton::instance ());
