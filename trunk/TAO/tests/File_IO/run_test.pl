@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Idrun_test.pl,v 1.9 2001/03/02 02:31:02 brunsch Exp$
 # -*- perl -*-
 
-use lib "../../../../bin";
+use lib "../../../bin";
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
@@ -24,7 +24,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (120);
 $server = $SV->TerminateWaitKill (10);
 
 unlink $iorfile;
