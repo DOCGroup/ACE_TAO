@@ -46,7 +46,7 @@
 #include "../mpeg_shared/fileio.h"
 #include "../mpeg_shared/com.h"   
 #include "../mpeg_shared/sendpt.h"
-#include "proto.h"
+#include "server_proto.h"
 
 
 // %% Move all these functions to the VIDEO_SINGLETON class and remove

@@ -41,7 +41,7 @@
 
 #include "../include/common.h"
 #include "../mpeg_shared/routine.h"
-#include "proto.h"
+#include "server_proto.h"
 
 #ifdef LIVE_VIDEO
 #include "lvs_shared.h"

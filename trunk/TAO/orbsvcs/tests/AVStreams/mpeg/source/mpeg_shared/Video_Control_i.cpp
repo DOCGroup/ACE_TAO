@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Video_Control_i.h"
+#include "../mpeg_server/Video_Server.h"
 
 Video_Control_i::Video_Control_i (void)
 {

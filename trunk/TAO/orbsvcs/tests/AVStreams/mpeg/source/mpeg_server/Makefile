@@ -65,8 +65,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  ../mpeg_shared/fileio.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h ../mpeg_shared/com.h proto.h \
- Globals.h $(ACE_ROOT)/ace/Singleton.h \
+ ../mpeg_shared/../include/common.h ../mpeg_shared/com.h \
+ server_proto.h Globals.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -244,8 +245,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i proto.h \
- Globals.h $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ server_proto.h Globals.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -425,8 +427,9 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h proto.h \
- Globals.h $(ACE_ROOT)/ace/Singleton.h \
+ ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
+ server_proto.h Globals.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -607,7 +610,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.i \
  ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
  ../mpeg_shared/fileio.h ../mpeg_shared/com.h ../mpeg_shared/sendpt.h \
- proto.h Globals.h \
+ server_proto.h Globals.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -803,8 +806,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Singleton.i \
  ../include/common.h ../mpeg_shared/routine.h \
  ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
- ../mpeg_shared/com.h ../mpeg_shared/sendpt.h proto.h Video_Server.h \
- $(ACE_ROOT)/ace/Reactor.h \
+ ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h \
+ Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -1130,7 +1133,7 @@ realclean: clean
  $(TAO_ROOT)/tao/singletons.h \
  Globals.h ../include/common.h ../mpeg_shared/routine.h \
  ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
- ../mpeg_shared/com.h ../mpeg_shared/sendpt.h proto.h \
+ ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h \
  Video_Control_State.h
 .obj/Video_Control_State.o .obj/Video_Control_State.so .shobj/Video_Control_State.o .shobj/Video_Control_State.so: Video_Control_State.cpp Video_Control_State.h \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -1311,6 +1314,6 @@ realclean: clean
  $(TAO_ROOT)/tao/singletons.h \
  Globals.h ../include/common.h ../mpeg_shared/routine.h \
  ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
- ../mpeg_shared/com.h ../mpeg_shared/sendpt.h proto.h
+ ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -44,7 +44,7 @@
 #include "../mpeg_shared/fileio.h"
 #include "../mpeg_shared/routine.h"
 #include "../mpeg_shared/com.h"
-#include "proto.h"
+#include "server_proto.h"
 
 //extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;
 

@@ -40,7 +40,7 @@
 #include "../include/common.h"
 #include "../mpeg_shared/routine.h"
 #include "../mpeg_shared/sendpt.h"
-#include "proto.h"
+#include "server_proto.h"
 #include "Video_Control_State.h"
 
 class Video_Control_Handler : public virtual ACE_Event_Handler
