@@ -30,11 +30,12 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor, objreftemplate, valuetype, ifr_client {
+project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client {
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
-  idlflags  += -Sc -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
+  idlflags   += -Sc -Wb,export_include=CIAO_Container_Export.h 
+  idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
 
   IDL_Files {
@@ -59,7 +60,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
   }
 }
 
-project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftemplate, valuetype, ifr_client, security {
+project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security {
   after += CIAO_Container
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client CIAO_Container
