@@ -1,6 +1,38 @@
+Sun Jan  4 06:06:28 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/typecode.*: Some modifications in the destruction
+	strategy to eliminate fatal errors such as FNH (freeing non-heap
+	memory) or FMW (freed memory write). Most of these errors were
+	occuring because we were trying to delete our private typecode
+	stuff that was not allocated from heap. For example, in case of
+	sequences of strings the private member tc_content_type used to
+	point to a statically preallocated "tc_string" typecode.
+
+	Also, preliminary support for checking for typecode equality and
+	the "member_name" method added.
+
+	Looking at the current private_* methods, it looks like a lot of
+	stuff can be abstracted into a few methods. So the next attempt
+	will be to eliminate as many of the private_* methods (that do
+	repititive work) and replace them with a couple of helper
+	methods. In addition, we may not need all those tc_*_known_
+	boolean variables. Only one may suffice. All this will be done in
+	the next pass.
+
+	* TAO/tao/{except.h, except.cpp, giop.cpp, object.cpp}: Removed
+	the TAO_CONST CORBA::String insanity and replaced by const
+	char*. This is also in accordance with the mapping as well as
+	eliminates strange compiler warnings about assigning const char*
+	to char*.
+
+	* TAO_IDL/be/be_sequence.cpp: We now generate #if defined (..)
+	macros for sequences and their managed types to avoid multiple
+	declaration/definition errors.
+
 Sat Jan  3 14:58:21 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* Task_Client.h, Util_Thread.cpp, Util_Thread.h, client.cpp, Task_Client.cpp, Makefile:
+	* Task_Client.h, Util_Thread.cpp, Util_Thread.h, client.cpp,
+	Task_Client.cpp, Makefile:
 	The Util_Thread class basically computes CPU usage. Integrated
 	this class with the MT_Cubit test, so that the Util_Thread
 	performs computation in the background while the test is
