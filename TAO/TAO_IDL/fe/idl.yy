@@ -2763,8 +2763,10 @@ element_spec :
           if ($1 != 0 
               && AST_illegal_recursive_type ($1))
             {
-            idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, 
-                                       $1);
+              idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, 
+                                         $1);
+                     
+              $$ = 0;                  
             }
           /*
            * Create a field in a union branch
