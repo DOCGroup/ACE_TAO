@@ -1,3 +1,19 @@
+Tue Nov  4 10:33:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL compiler: Fixed the following problems
+
+	(1) Removed the extra call to Release in the generated _narrow
+	method  in be_interface.cpp
+
+	(2) Used ACE_CORBA_1 (Object) instead of CORBA::Object in the
+	class declaration for interfaces - in be_interface.cpp
+
+	(3) be_interface_fwd.cpp - var_impl had to be updated to generate
+	code that uses the ptr () method in the calls to _duplicate
+
+	* TAO/tests/Cubit/TAO/IDL_Cubit: Fixed some outstanding issues and
+	made sure that it works. Updated the README file.
+
 Tue Nov 04 09:48:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * except.h (line 118): removed backslash at end of comment line.
