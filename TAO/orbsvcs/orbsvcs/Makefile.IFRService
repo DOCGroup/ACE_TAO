@@ -33,7 +33,7 @@ override TAO_IDLFLAGS += \
 	-Wb,export_include=IFRService/ifr_service_export.h \
 	-Wb,pre_include=ace/pre.h \
 	-Wb,post_include=ace/post.h
-	 
+
 CPP_SRCS += \
         IFRService/AbstractInterfaceDef_i \
         IFRService/AliasDef_i \
@@ -103,6 +103,17 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_IFRSERVICE_BUILD_DLL
+endif
+endif
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
 
 # Extra dependencies not caught by make depend.
 
