@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="DOVEMIBx" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -65,7 +65,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /I "..\..\..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\..\..\..\\" /I "..\..\..\\" /I "..\..\..\tao" /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "TAO_ORBSVCS_HAS_DLL" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\..\..\..\\" /I "..\..\..\\" /I "..\..\..\tao" /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "TAO_ORBSVCS_HAS_DLL" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -95,7 +95,7 @@ InputPath=.\any_test.idl
 InputName=any_test
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -139,7 +139,9 @@ InputPath=.\NavWeap.idl
 InputName=NavWeap
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	xcopy ..\$(InputName).idl . \
+	..\..\..\..\..\bin\tao_idl $(InputName).idl \
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
