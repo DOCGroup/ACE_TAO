@@ -15,6 +15,7 @@ MAKEFILE = Makefile
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
@@ -197,38 +198,39 @@ endif
 #       Local rules
 #----------------------------------------------------------------------------
 
-all: ORBSVCS_COMPONENTS
+## If parallel makes (-j) are invoked , we want to make sure that the order
+## of the Makefiles invoked from this Makefile is preserved.
+## Recursively invoked makes from this file will still be run in parallel.
+.NOTPARALLEL:
 
-realclean::
-ifneq ($(MKLIST),)
-  ifeq (Windows,$(findstring Windows,$(OS)))
-	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
-  else  # ! Windows
-	@for m in $(MKLIST); do \
-	echo $$m; \
-        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
-        done
-  endif # ! Windows
-endif # MKLIST
+all: ORBSVCS_COMPONENTS 
 
-all debug profile optimize install deinstall clean clobber depend rcs_info idl_stubs:
+realclean: ORBSVCS_COMPONENTS_realclean
+
+## Makefile.Svc_Utils.mkfile is a dummy target which will cause
+## $(MAKE) -f Makefile.Svc_Utils to be invoked
+%.mkfile: %
+	@echo $(MAKE) -f $< $(MKFILE_TARGET)
+	@$(MAKE) -f $< $(MKFILE_TARGET)
+
+# This rule invokes make again with the list of .mkfile targets as a 
+# parameter.  For example, if the all target is being made, make is invoked
+# as follows:
+#
+# make -f Makefile MKFILE_TARGET=all Makefile.Svc_Utils.mkfile \
+#                                    Makefile.CosNaming.mkfile ..... 
+all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean:
 ifneq ($(MKLIST),)
-  ifeq (Windows,$(findstring Windows,$(OS)))
-	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
-  else  # ! Windows
-	@for m in $(MKLIST); do \
-	echo $$m; \
-        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
-        done
-  endif # ! Windows
-endif # MKLIST
+	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+	@$(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+endif
 
 .PHONY: ORBSVCS_COMPONENTS
 ORBSVCS_COMPONENTS:
 	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --set ' $(TAO_ORBSVCS) '
 
-
-realclean::
+.PHONY: ORBSVCS_COMPONENTS_realclean
+ORBSVCS_COMPONENTS_realclean:
 	-$(RM) ORBSVCS_COMPONENTS.list
 
 #----------------------------------------------------------------------------
