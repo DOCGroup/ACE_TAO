@@ -31,6 +31,7 @@ Sat Feb 22 09:06:45 2003  Ossama Othman  <ossama@uci.edu>
 Sat Feb 22 08:52:13 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
 	  Include "tao/Wait_Strategy.h".  Necessitated by inter-header
 	  dependency reductions.
