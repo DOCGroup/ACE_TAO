@@ -4,6 +4,9 @@ Sun Apr 05 10:04:57 1998  David L. Levine  <levine@cs.wustl.edu>
           Instead, always use what's in our CVS repository, or in the TAO
           distribution.
 
+        * tao/Makefile: use fakesvcconf = 1 if shared_libs is not defined,
+          instead of if CROSS-COMPILE is not defined.
+
 Sat Apr 04 21:25:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.12, released Sat Apr 04 21:25:43 1998.
