@@ -149,19 +149,23 @@ TAO::PG_Object_Group::~PG_Object_Group ()
 }
 
 
-void dump_ior (const char * base, const char * ext, unsigned long version, const char * iogr)
+/////////////////////
+// q&d debug function
+static void dump_ior (const char * base, const char * ext, unsigned long version, const char * iogr)
 {
   char filename[1000];
-  sprintf(filename, "%s_%lu.%s", base, version, ext );
+  ACE_OS::sprintf(filename, "%s_%lu.%s", base, version, ext );
 
-  FILE * iorfile = fopen(filename, "w");
-  fwrite (iogr, 1, strlen(iogr), iorfile);
-  fclose (iorfile);
+  FILE * iorfile = ACE_OS::fopen(filename, "w");
+  ACE_OS::fwrite (iogr, 1, ACE_OS::strlen(iogr), iorfile);
+  ACE_OS::fclose (iorfile);
 }
 
 
 PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group::reference()const
 {
+  // const cast to simulate mutable
+  InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
   return PortableGroup::ObjectGroup::_duplicate (this->reference_);
 }
 
@@ -171,20 +175,20 @@ void TAO::PG_Object_Group::set_membership_style (PortableGroup::MembershipStyleV
   this->membership_style_ = style;
 }
 
-PortableGroup::MembershipStyleValue TAO::PG_Object_Group::membership_style () const
+PortableGroup::MembershipStyleValue TAO::PG_Object_Group::get_membership_style () const
 {
   // const cast to simulate mutable
   InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
   return this->membership_style_;
 }
 
-void TAO::PG_Object_Group::initial_number_members (PortableGroup::InitialNumberMembersValue count)
+void TAO::PG_Object_Group::set_initial_number_members (PortableGroup::InitialNumberMembersValue count)
 {
   InternalGuard guard(this->internals_);
   this->initial_number_members_ = count;
 }
 
-PortableGroup::InitialNumberMembersValue TAO::PG_Object_Group::initial_number_members () const
+PortableGroup::InitialNumberMembersValue TAO::PG_Object_Group::get_initial_number_members () const
 {
   // const cast to simulate mutable
   InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
@@ -197,8 +201,10 @@ void TAO::PG_Object_Group::set_minimum_number_members (PortableGroup::MinimumNum
   this->minimum_number_members_ = count;
 }
 
-PortableGroup::MinimumNumberMembersValue TAO::PG_Object_Group::minimum_number_members ()const
+PortableGroup::MinimumNumberMembersValue TAO::PG_Object_Group::get_minimum_number_members ()const
 {
+  // const cast to simulate mutable
+  InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
   return this->minimum_number_members_;
 }
 
@@ -209,7 +215,7 @@ void TAO::PG_Object_Group::set_group_specific_factories (const PortableGroup::Fa
 }
 
 
-void TAO::PG_Object_Group::group_specific_factories (PortableGroup::FactoryInfos & result) const
+void TAO::PG_Object_Group::get_group_specific_factories (PortableGroup::FactoryInfos & result) const
 {
   // const cast to simulate mutable
   InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
@@ -295,9 +301,9 @@ void TAO::PG_Object_Group::add_member (
   }
 
   this->reference_ = new_reference; // note var-to-var assignment does a duplicate
-  if (increment_version ())
+  if (this->increment_version ())
   {
-    distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
   else
@@ -357,26 +363,36 @@ int TAO::PG_Object_Group::set_primary_member (
           ACE_TEXT ("%T %n (%P|%t) - Can't set primary in IOGR .\n")
           ));
       }
+//@@: ACE_THROW (FT::PrimaryNotSet());
+      result = 0;
     }
-    if (result )
+
+    if (result && this->increment_version())
     {
-      if (increment_version())
+      this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+    else
+    {
+      if (TAO_debug_level > 3)
       {
-        distribute_iogr ();
-        ACE_CHECK_RETURN (0);
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT("TAO-PG (%P|%t) - set_primary_location throwing PrimaryNotSet because increment version failed.\n")
+          ));
       }
+//@@: ACE_THROW (FT::PrimaryNotSet());
+      result = 0;
     }
   }
   else
   {
     if (TAO_debug_level > 3)
     {
-
       ACE_DEBUG ((LM_DEBUG,
-        "TAO-PG (%P|%t) - set_primary_location throwing MemberNotFound.\n"
+        ACE_TEXT ("TAO-PG (%P|%t) - set_primary_location throwing MemberNotFound.\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::MemberNotFound(), 0);
+    ACE_THROW (PortableGroup::MemberNotFound());
   }
   return result;
 }
@@ -410,9 +426,9 @@ void TAO::PG_Object_Group::remove_member (
       this->primary_location_.length(0);
     }
 
-    if (increment_version ())
+    if (this->increment_version ())
     {
-      distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -590,8 +606,6 @@ void TAO::PG_Object_Group::dump_membership (TAO_IOP::TAO_IOR_Manipulation_ptr io
   }
 }
 #endif // debug code
-
-
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

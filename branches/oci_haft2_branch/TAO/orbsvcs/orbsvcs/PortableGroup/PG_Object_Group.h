@@ -134,22 +134,22 @@ namespace TAO
   public:
 
     /// Set object group id
-    void set_oid (PortableGroup::ObjectGroupId oid);
-    /// Set type ID
+    void set_object_group_id (PortableGroup::ObjectGroupId oid);
 
+    /// Set type ID
     void set_typeid (PortableGroup::TypeId type_id);
 
     /// return a duplicated reference to this group (IOGR)
     PortableGroup::ObjectGroup_ptr reference()const;
 
     void set_membership_style (PortableGroup::MembershipStyleValue style);
-    PortableGroup::MembershipStyleValue membership_style () const;
+    PortableGroup::MembershipStyleValue get_membership_style () const;
 
-    void initial_number_members (PortableGroup::InitialNumberMembersValue count);
-    PortableGroup::InitialNumberMembersValue initial_number_members () const;
+    void set_initial_number_members (PortableGroup::InitialNumberMembersValue count);
+    PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
 
     void set_minimum_number_members (PortableGroup::MinimumNumberMembersValue count);
-    PortableGroup::MinimumNumberMembersValue minimum_number_members ()const;
+    PortableGroup::MinimumNumberMembersValue get_minimum_number_members ()const;
 
     void set_group_specific_factories (const PortableGroup::FactoryInfos & infos);
 
@@ -157,7 +157,7 @@ namespace TAO
      * Note the caller receives a copy of the factoryinfos in the result argument.
      * inefficient, but thread safe.
      */
-    void group_specific_factories (PortableGroup::FactoryInfos & result) const;
+    void get_group_specific_factories (PortableGroup::FactoryInfos & result) const;
 
     /**
      * get location of primary member
@@ -183,9 +183,8 @@ namespace TAO
 
     /**
      * Add a new member to the group.
-     * @param reference  a group that the ObjectManager has already operated upon.
      * @param the_location the location for the new member
-     * @param member_ior_string the IOR for the new memeber (expressed as a string.)
+     * @param member the member to be added
      */
     void add_member (
         const PortableGroup::Location & the_location,
@@ -195,6 +194,14 @@ namespace TAO
                        PortableGroup::ObjectNotAdded));
 
 
+
+    /**
+     * set the replica at the given location to be primary.
+     * Note: This should return void and throw FT::PrimaryNotSet
+     * but to avoid dependancies between PortableGroup and FaultTolerance
+     * it returns a boolean result.  A false return means caller should
+     * throw FT::PrimaryNot_Set.
+     */
     int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
       const PortableGroup::Location & the_location
@@ -233,9 +240,9 @@ namespace TAO
     /**
      * Set the poa to be used to manage object groups
      * Note: this is NOT the poa used to create object group members.
-     * @param poa a reference to a var to avoid reference count confusion.
+     * @param poa the poa to use
      */
-    void set_poa (PortableServer::POA_var & poa);
+    static void set_poa (PortableServer::POA_ptr poa);
 
     ///////////////
     // Static Data

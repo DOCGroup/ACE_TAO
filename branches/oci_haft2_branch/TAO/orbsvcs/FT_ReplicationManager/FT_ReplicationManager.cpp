@@ -719,7 +719,7 @@ TAO::FT_ReplicationManager::add_member (
           the_location,
           member
           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (result);
+    ACE_CHECK_RETURN (result._retn ());
 
     ///////////////////////
     // Now we do it again using
@@ -743,7 +743,7 @@ TAO::FT_ReplicationManager::add_member (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::add_member to unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result);
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
   }
   METHOD_RETURN (TAO::FT_ReplicationManager::add_member) result._retn ();
 
@@ -765,7 +765,7 @@ TAO::FT_ReplicationManager::remove_member (
   if (this->object_group_map_.find_group (object_group, group))
   {
     group->remove_member(the_location ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (result);
+    ACE_CHECK_RETURN (result._retn ());
     result = group->reference ();
 
     // @@ warning: if the remove_member call below is unsuccessful
@@ -780,9 +780,9 @@ TAO::FT_ReplicationManager::remove_member (
   }
   else
   {
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result);
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
   }
-  return result;
+  return result._retn ();
 }
 
 PortableGroup::Locations *
