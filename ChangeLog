@@ -1,3 +1,118 @@
+Tue Nov 12 19:48:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/parser/parser/ParserContext.cpp:
+        * ACEXML/parser/parser/ParserContext.h:
+        * ACEXML/parser/parser/ParserContext.inl:
+
+          New files which hold the ParserContext needed to handle the
+          switching of input streams on the fly.
+
+        * ACEXML/parser/parser/ParserInternals.cpp:
+        * ACEXML/parser/parser/ParserInternals.h:
+
+          Moved some generic code from Parser.cpp to here.
+
+        * ACEXML/apps/svcconf/Makefile:
+        * ACEXML/common/Makefile:
+        * ACEXML/parser/parser/Makefile:
+
+          Updated dependencies.
+
+        * ACEXML/common/Attributes_Def_Builder.h:
+
+          No need to typedef in C++.
+
+        * ACEXML/common/DefaultHandler.cpp:
+
+          Minor typos.
+
+        * ACEXML/common/Encoding.cpp:
+
+          If auto-detection of encoding fails, assume that it is UTF-8.
+
+        * ACEXML/common/Exception.cpp:
+
+          Change the error message from ACE_DEBUG to ACE_ERROR.
+
+        * ACEXML/common/FileCharStream.cpp: Handle BOM of UTF-8 in
+          addition to UTF-16. Cleanup unnecessary parens.
+
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/HttpCharStream.h:
+
+          Add support for auto-detection of encoding.
+
+        * ACEXML/common/InputSource.cpp:
+        * ACEXML/common/InputSource.h:
+
+          Fixes for use with ACEXML_Parser_Context.
+
+        * ACEXML/common/LocatorImpl.cpp:
+        * ACEXML/common/LocatorImpl.h:
+
+          Fixed bug in copy constructor which resulted in locator
+          information not getting set properly.
+
+        * ACEXML/common/NamespaceSupport.cpp:
+        * ACEXML/common/NamespaceSupport.h:
+
+          Implement reset() method.
+
+        * ACEXML/common/SAXExceptions.cpp:
+
+        Change the error message from ACE_DEBUG to ACE_ERROR.
+
+        * ACEXML/common/StrCharStream.cpp:
+
+          Handle copying of bytes according to sizeof (ACE_WCHAR).
+
+        * ACEXML/common/StreamFactory.cpp: Create the appropriate stream
+          given an URI. We don't try to normalize the URI here. It is done
+          in the Parser.
+
+        * ACEXML/common/Transcode.cpp:
+        * ACEXML/common/Transcode.i:
+
+          Moved some very big functions from .i to .cpp.
+
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Updates to reflect the new calling convention in the Parser.
+
+        * ACEXML/parser/parser/Entity_Manager.cpp:
+        * ACEXML/parser/parser/Entity_Manager.h:
+        * ACEXML/parser/parser/Entity_Manager.i:
+
+          Implemented support for resolving SYSTEM and PUBLIC ids  from
+          the Entity_Manager.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+        * ACEXML/parser/parser/Parser.i:
+
+          Implemented support for external parameter and entity
+          references. Rewrote a lot of the basic parsing functionality to
+          adhere to the standard. Implment partial support for validation
+          of XML files.
+
+
+Fri Oct 25 15:44:04 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/parser/parser/Parser.i: Handle end-of-line as required by
+          the spec. Specifically any sequence of 0x0D or 0x0D 0x0A should
+          be normalized to a 0x0A before passing to the XML processor.
+
+        * ACEXML/parser/parser/Parser.cpp: Remove checks for 0x0D as it is
+          handled tranparently now.
+
+Thu Oct 24 21:06:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/NamespaceSupport.cpp: Define strings normally and
+          not as an array.
+
+        * ACEXML/common/Attributes_Def_Builder.h: No need to typedef in C++.
+
 Thu Oct 24 01:52:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML\parser\parser\Parser.cpp: Moved out the declaration of

@@ -110,7 +110,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
 
     ACEXML_Parser parser;
-    ACEXML_InputSource input(stm);
+    ACEXML_InputSource* input = 0;
+    ACE_NEW_RETURN (input, ACEXML_InputSource (stm), -1);
 
     parser.setContentHandler (handler);
     parser.setDTDHandler (handler);
@@ -119,7 +120,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACEXML_TRY_NEW_ENV
     {
-      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+      parser.parse (input ACEXML_ENV_ARG_PARAMETER);
       ACEXML_TRY_CHECK;
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)

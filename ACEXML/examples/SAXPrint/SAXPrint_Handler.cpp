@@ -206,7 +206,8 @@ ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex
                                 ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ",
+              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -217,7 +218,8 @@ ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex
                                      ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ",
+              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -228,7 +230,8 @@ ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex
                                   ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ",
+              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();

@@ -50,22 +50,22 @@ ACEXML_FileCharStream::determine_encoding (void)
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (!temp)
     return -1;
-  if (ACE_OS::strcmp (temp,
-                      ACEXML_Encoding::encoding_names_[ACEXML_Encoding::OTHER]) == 0)
-    return -1;
   else
     {
       this->encoding_ = ACE::strnew (temp);
-      ACE_DEBUG ((LM_DEBUG, "File's encoding is %s\n", this->encoding_));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
+                  this->encoding_));
     }
   // Rewind the stream
   this->rewind();
   // Move over the byte-order-mark if present.
   char ch;
-  for (int j = 0; j < 2; ++j)
+  for (int j = 0; j < 3; ++j)
     {
-      this->getchar_i (ch);
-      if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF')
+      if (this->getchar_i (ch) < 0)
+        return -1;
+      if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF' || ch == '\xBB' ||
+          ch == '\xBF')
         continue;
       else
         {
@@ -115,7 +115,7 @@ int
 ACEXML_FileCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
-  return ACE_OS::fread (str, len, 1, this->infile_);
+  return ACE_OS::fread (str, len, sizeof (ACEXML_Char), this->infile_);
 }
 
 int
@@ -159,7 +159,7 @@ ACEXML_FileCharStream::get_i (ACEXML_Char& ch)
       ch = 0;
       return -1;
     }
-  ch = (BE) ? (input[0] << 8) | input[1] : (input[1] << 8) | input[0];
+  ch = BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0];
   return 0;
 }
 #endif /* ACE_USES_WCHAR */
@@ -208,7 +208,7 @@ ACEXML_FileCharStream::peek_i (void)
       this->peek_ = 0;
       return -1;
     }
-  this->peek_ = (BE) ? (input[0] << 8) | input[1] : (input[1] << 8) | input[0];
+  this->peek_ = BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0];
   return this->peek_;
 }
 #endif /* ACE_USES_WCHAR */
