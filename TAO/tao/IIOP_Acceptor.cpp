@@ -48,6 +48,7 @@ template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTO
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_IIOP_PROFILE),
     addrs_ (0),
+    port_span_ (1),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -420,18 +421,62 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
                   TAO_IIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
 
-  if (this->base_acceptor_.open (addr,
-                                 this->orb_core_->reactor (this),
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
+  u_short requested_port = addr.get_port_number ();
+  if (requested_port == 0)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot open acceptor")));
-      return -1;
+      // don't care, i.e., le tthe OS choose an ephemeral port
+      if (this->base_acceptor_.open (addr,
+                                     this->orb_core_->reactor (this),
+                                     this->creation_strategy_,
+                                     this->accept_strategy_,
+                                     this->concurrency_strategy_) == -1)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("cannot open acceptor")));
+          return -1;
+        }
+    }
+  else
+    {
+      ACE_INET_Addr a(addr);
+
+      int found_a_port = 0;
+      u_short last_port = requested_port + this->port_span_;
+
+      for (u_short p = requested_port; p < last_port; p++)
+        {
+          if (TAO_debug_level > 5)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
+                        ACE_TEXT ("trying to listen on port %d\n"), p));
+
+          // Now try to actually open on that port
+          a.set_port_number (p);
+          if (this->base_acceptor_.open (a,
+                                         this->orb_core_->reactor (this),
+                                         this->creation_strategy_,
+                                         this->accept_strategy_,
+                                         this->concurrency_strategy_) != -1)
+            {
+              found_a_port = 1;
+              break;
+            }
+        }
+
+      // Now, if we couldn't locate a port, we punt
+      if (! found_a_port)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                        ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
+                        ACE_TEXT ("- %p\n\n"),
+                        requested_port, last_port, ACE_TEXT("")));
+          return -1;
+        }
     }
 
   ACE_INET_Addr address;

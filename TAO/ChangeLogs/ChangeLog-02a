@@ -1,3 +1,23 @@
+Tue Mar  6 21:21:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/IIOP_Acceptor.h (port_span_): Added data member to track the
+ 	span of ports the user wishes a server-side ORB to search for an
+ 	open port. [Bug 817]
+	
+        * tao/IIOP_Acceptor.cpp (parse_options): Added code to parse a new
+ 	"portspan" endpoint option to set the port_span_ data member. [Bug
+ 	817]
+
+        * tao/IIOP_Acceptor.cpp (CTOR): Default the port_span_ to 1. [Bug 817]
+
+        * tao/IIOP_Acceptor.cpp (open_i): Added code to search for a port
+	starting at the port specified in the -ORBEndpoint option, over a
+	span of port_span_ ports looking for an available port on which to 
+	listen for requests.  Search is in-order linear.  If there are
+	multiple endpoints, then only the first endpoint gets search, and
+	all other endpoints use whatever port was found for that one.
+	This is identical to the behavior used for ephemeral ports. [Bug 817]
+
 Tue Mar  6 18:32:34 PST 2001 Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* docs/tutorials/Quoter/Makefile (Repository): 
@@ -1906,9 +1926,6 @@ Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
           Thanks to Craig Rodrigues <crodrigu@bbn.com> for reporting these
           bugs.
 
-
-
->>>>>>> 1.2717
 Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
