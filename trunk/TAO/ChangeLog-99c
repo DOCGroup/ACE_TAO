@@ -12,23 +12,24 @@ Fri May 21 16:34:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri May 21 16:19:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/param_test/param_test.idl:
-	* TAO/tests/param_test/complex_any.h:
-	* TAO/tests/param_test/complex_any.cpp:
-	* TAO/tests/param_test/options.h:
-	* TAO/tests/param_test/options.cpp:
-	* TAO/tests/param_test/driver.cpp:
-	* TAO/tests/param_test/param_test_i.h:
-	* TAO/tests/param_test/param_test_i.cpp:
-	* TAO/tests/param_test/tests.h:
-	* TAO/tests/param_test/client.dsp:
+	* TAO/tests/Param_Test/param_test.idl:
+	* TAO/tests/Param_Test/complex_any.h:
+	* TAO/tests/Param_Test/complex_any.cpp:
+	* TAO/tests/Param_Test/options.h:
+	* TAO/tests/Param_Test/options.cpp:
+	* TAO/tests/Param_Test/driver.cpp:
+	* TAO/tests/Param_Test/param_test_i.h:
+	* TAO/tests/Param_Test/param_test_i.cpp:
+	* TAO/tests/Param_Test/tests.h:
+	* TAO/tests/Param_Test/client.dsp:
+	* TAO/tests/Param_Test/Makefile:
 	  Added new test. The data type is a complex Any, suggested
 	  by a real-world use case submitted by
 	  Frank Buschmann <Frank.Buschmann@mchp.siemens.de>. See
 	  comment in complex_any.cpp above reset_parameters for
 	  the Any structure.
 
-	* TAO/tests/param_test/any.cpp:
+	* TAO/tests/Param_Test/any.cpp:
 	  Fixed some indentation and removed a memory leak related
 	  to gen_string.
 
