@@ -12,6 +12,10 @@ int yylineno = 1;
 // Keeps track of the number of errors encountered so far.
 int yyerrno = 0;
 
+// Used to parse service configurator directives from a string rather
+// than from a svc.conf file.
+char *yydirective = 0;
+
 #define token(x)  x
 %}
 
@@ -73,5 +77,8 @@ yywrap (void)
   ::fflush (yyin);
   yytext[0] = '#';
   yyleng = 0;    
+
+  // This needs to be freed to prevent a memory leak.
+  yy_delete_buffer (yy_current_buffer);
   return 1;
 }
