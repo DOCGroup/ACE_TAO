@@ -300,10 +300,14 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
                       -1);
   else if (srp->type ()->init (args.argc (),
                                args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("static initialization failed, %p\n"),
-                       svc_name),
-                      -1);
+    {
+      // Remove this entry.
+      ACE_ERROR ((LM_ERROR,
+                         ASYS_TEXT ("static initialization failed, %p\n"),
+                         svc_name));
+      ACE_Service_Repository::instance ()->remove (svc_name);
+      return -1;
+    }
   else
     {
       srp->active (1);
@@ -333,10 +337,13 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                       -1);
   else if (sr->type ()->init (args.argc (),
                               args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("dynamic initialization failed for %s\n"),
-                       sr->name ()),
-                      -1);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("dynamic initialization failed for %s\n"),
+                  sr->name ()));
+      ACE_Service_Repository::instance ()->remove (sr->name ());
+      return -1;
+    }
   else
     return 0;
 }
