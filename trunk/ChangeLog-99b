@@ -1,3 +1,13 @@
+Fri Jul  9 12:43:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Based_Pointer_Repository.cpp (unbind): Fixed a
+	  bug in the unbind() loop.  Thanks to David Levine and DEC UNIX
+ 	  C++ for noticing this!
+  
+	* ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
+	  of Event_Handler->reator ().  Thanks to Carlos for reporting
+ 	  this.
+
 Fri Jul  9 13:28:41 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_Reactor_Timer_Test.h (Dispatch_Count_Handler): Changed
@@ -14,12 +24,6 @@ Fri Jul 09 13:11:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  UNICODE compilation.  Thanks to Steve for reporting this.
 
 	  Added more WinCE/UNICODE fixes.
-
-Fri Jul  9 12:43:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
-	  of Event_Handler->reator ().  Thanks to Carlos for reporting
- 	  this.
 
 Fri Jul  9 12:16:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
