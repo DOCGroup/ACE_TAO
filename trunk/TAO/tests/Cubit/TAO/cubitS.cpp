@@ -22,6 +22,7 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
   IIOP_Object *data;
 
   CORBA_BOA_ptr oa = TAO_OA_Parameters::instance ()->oa ();
+
   if (oa == 0)
     {
       // We just have to assume that oa will be good, or we have to
@@ -50,13 +51,10 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
   this->sub_ = this;
 
   if (oa->bind (data->profile.object_key, this) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  " (%P|%t) %s Unable to bind object to key '%s': %p\n",
-		  mn,
-		  data->profile.object_key.buffer));
-      return;
-    }
+    ACE_ERROR ((LM_ERROR,
+		" (%P|%t) %s Unable to bind object to key '%s': %p\n",
+		mn,
+		data->profile.object_key.buffer));
 }
 
 void
@@ -64,27 +62,27 @@ _skel_Cubit::_cube_octet_skel (CORBA_ServerRequest &req,
 			       CORBA_Object_ptr    obj,
 			       CORBA_Environment   &env)
 {
-   CORBA_NVList_ptr nvlist;
-   CORBA_NamedValue_ptr	nv;
-   CORBA_Any temp_value (_tc_CORBA_Octet);
+  CORBA_NVList_ptr nvlist;
+  CORBA_NamedValue_ptr	nv;
+  CORBA_Any temp_value (_tc_CORBA_Octet);
    
-   req.orb ()->create_list (0, nvlist);
-   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
-   dexc (env, "cube_octet, add value");
+  req.orb ()->create_list (0, nvlist);
+  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  dexc (env, "cube_octet, add value");
    
-   req.params (nvlist, env);
-   dexc (env, "cube_octet, get params");
+  req.params (nvlist, env);
+  dexc (env, "cube_octet, get params");
    
-   // Call Implementation
-   CORBA_Octet *value = new CORBA_Octet;
-   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
+  // Call Implementation
+  CORBA_Octet *value = new CORBA_Octet;
+  Cubit *the_cubit = (Cubit *) obj->get_subclass ();
 
-   *value = the_cubit->Cubit_cube_octet (*(CORBA_Octet *) nv->value ()->value (), env);
+  *value = the_cubit->Cubit_cube_octet (*(CORBA_Octet *) nv->value ()->value (), env);
 
-   CORBA_Any *any = new CORBA_Any (_tc_CORBA_Octet, value, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any (_tc_CORBA_Octet, value, CORBA_B_TRUE);
    
-   req.result (any, env);
-   dexc (env, "cube_octet, result");
+  req.result (any, env);
+  dexc (env, "cube_octet, result");
 }
 
 void
@@ -92,26 +90,26 @@ _skel_Cubit::_cube_short_skel (CORBA_ServerRequest &req,
                                CORBA_Object_ptr    obj,
                                CORBA_Environment   &env)
 {
-   CORBA_NVList_ptr		nvlist;
-   CORBA_NamedValue_ptr	nv;
-   CORBA_Any			temp_value (_tc_CORBA_Short);
+  CORBA_NVList_ptr nvlist;
+  CORBA_NamedValue_ptr nv;
+  CORBA_Any temp_value (_tc_CORBA_Short);
    
-   req.orb ()->create_list (0, nvlist);
-   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
-   dexc (env, "cube_short, add_value");
+  req.orb ()->create_list (0, nvlist);
+  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  dexc (env, "cube_short, add_value");
    
-   req.params (nvlist, env);
-   dexc (env, "cube_short, get params");
+  req.params (nvlist, env);
+  dexc (env, "cube_short, get params");
    
-   // Call Implementation
-   CORBA_Short *value = new CORBA_Short;
-   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
-   *value = the_cubit->Cubit_cube_short (*(CORBA_Short *) nv->value ()->value (), env);
+  // Call Implementation
+  CORBA_Short *value = new CORBA_Short;
+  Cubit *the_cubit = (Cubit *) obj->get_subclass ();
+  *value = the_cubit->Cubit_cube_short (*(CORBA_Short *) nv->value ()->value (), env);
    
-   CORBA_Any *any = new CORBA_Any (_tc_CORBA_Short, value, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any (_tc_CORBA_Short, value, CORBA_B_TRUE);
    
-   req.result (any, env);
-   dexc (env, "cube_short, result");
+  req.result (any, env);
+  dexc (env, "cube_short, result");
 }
 
 void
@@ -119,27 +117,27 @@ _skel_Cubit::_cube_long_skel (CORBA_ServerRequest &req,
                               CORBA_Object_ptr    obj,
                               CORBA_Environment   &env)
 {
-   CORBA_NVList_ptr		nvlist;
-   CORBA_NamedValue_ptr	nv;
-   CORBA_Any			temp_value (_tc_CORBA_Long);
+  CORBA_NVList_ptr nvlist;
+  CORBA_NamedValue_ptr nv;
+  CORBA_Any temp_value (_tc_CORBA_Long);
    
-   req.orb ()->create_list (0, nvlist);
-   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
-   dexc (env, "cube_long, add_value");
+  req.orb ()->create_list (0, nvlist);
+  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  dexc (env, "cube_long, add_value");
    
-   req.params (nvlist, env);
-   dexc (env, "cube_long, get params");
+  req.params (nvlist, env);
+  dexc (env, "cube_long, get params");
    
-   // Call Implementation
-   CORBA_Long		*value = new CORBA_Long;
-   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
-   *value = the_cubit->Cubit_cube_long (*(CORBA_Long *) nv->value ()->value (), env);
+  // Call Implementation
+  CORBA_Long *value = new CORBA_Long;
+  Cubit *the_cubit = (Cubit *) obj->get_subclass ();
+  *value = the_cubit->Cubit_cube_long (*(CORBA_Long *) nv->value ()->value (), env);
    
-   CORBA_Any  		*any =
-      new CORBA_Any (_tc_CORBA_Long, value, CORBA_B_TRUE);
+  CORBA_Any  		*any =
+    new CORBA_Any (_tc_CORBA_Long, value, CORBA_B_TRUE);
    
-   req.result (any, env);
-   dexc (env, "cube_long, result");
+  req.result (any, env);
+  dexc (env, "cube_long, result");
 }
 
 void
@@ -159,11 +157,11 @@ _skel_Cubit::_cube_struct_skel (CORBA_ServerRequest &req,
   dexc (env, "cube_struct, get params");
    
   // Call Implementation
-  Cubit_Many  *value;
+  Cubit_Many *value;
   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
   value = the_cubit->Cubit_cube_struct (*(Cubit_Many *) nv->value ()->value (), env);
    
-  Cubit_Many  *retval = new Cubit_Many;
+  Cubit_Many *retval = new Cubit_Many;
   retval->o = (CORBA_Octet)value->o;
   retval->s = (CORBA_Short)value->s;
   retval->l = value->l;
@@ -195,11 +193,11 @@ _skel_Cubit::_cube_union_skel (CORBA_ServerRequest	&req,
   dexc (env, "cube_union_3rd, get params");
    
   // Call Implementation
-  Cubit_oneof    *v;
-  Cubit *the_cubit = (Cubit *)obj->get_subclass ();
+  Cubit_oneof *v;
+  Cubit *the_cubit = (Cubit *) obj->get_subclass ();
   v = the_cubit->Cubit_cube_union (*(Cubit_oneof *) nv->value ()->value (), env);
 
-  Cubit_oneof    *r = new Cubit_oneof;
+  Cubit_oneof *r = new Cubit_oneof;
   r->_disc = v->_disc;
   r->o = (CORBA_Octet) (v->o);
   r->s = (CORBA_Short) (v->s);

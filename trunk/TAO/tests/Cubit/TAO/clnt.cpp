@@ -20,7 +20,7 @@ static const char *TAO_arg_ior = 0;
 static u_int loop_count = 1;
 static int exit_later = 0;
 
-// Parses the command line arguments and returns an error status
+// Parses the command line arguments and returns an error status.
 
 static int 
 parse_args (int argc, char *argv[])
@@ -33,22 +33,16 @@ parse_args (int argc, char *argv[])
       {
       case 'd':  // debug flag
 	TAO_debug_level++;
-	continue;
-   
+	break;
       case 'n':			// loop count
 	loop_count = (u_int) ACE_OS::atoi (opts.optarg);
-	continue;
-   
+	break;
       case 'O':			// stringified objref
-	{
-	  TAO_arg_ior = ACE_OS::strdup (opts.optarg);
-	}
-      continue;
-   
+	TAO_arg_ior = ACE_OS::strdup (opts.optarg);
+	break;
       case 'x':
 	exit_later++;
-	continue;
-   
+	break;
       case '?':
       default:
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -65,10 +59,10 @@ parse_args (int argc, char *argv[])
 }
 
 static void
-cube_union_stub (u_int          i,
-		 u_int          &call_count,
-		 u_int          &error_count,
-		 CORBA_Object_ptr  objref,
+cube_union_stub (u_int i,
+		 u_int &call_count,
+		 u_int &error_count,
+		 CORBA_Object_ptr objref,
 		 CORBA_Environment &env)
 {
   Cubit_ptr cubit = Cubit::_narrow (objref);
@@ -91,7 +85,7 @@ cube_union_stub (u_int          i,
   else 
     {
       dmsg ("cube union ...");
-      u.l = u.l  * u.l * u.l ;
+      u.l = u.l * u.l * u.l ;
       
       if (u.l != r->l) 
 	{
@@ -141,9 +135,9 @@ cube_union_stub (u_int          i,
 }
 
 static void
-cube_union_dii (u_int          &call_count,
-                u_int          &error_count,
-                CORBA_Object_ptr  objref,
+cube_union_dii (u_int &call_count,
+                u_int &error_count,
+                CORBA_Object_ptr objref,
                 CORBA_Environment &env)
 {
   // Create the request ...
@@ -191,9 +185,10 @@ cube_union_dii (u_int          &call_count,
       return;
     }
 
-  // Make the invocation, verify the result
+  // Make the invocation, verify the result.
 
   req->invoke ();
+
   if (req->env ()->exception () != 0) 
     {
       error_count++;
@@ -222,6 +217,7 @@ main (int argc, char *argv[])
   CORBA_Environment env;
 
   CORBA_ORB_ptr orb_ptr = CORBA_ORB_init (argc, argv, "internet", env);
+
   if (env.exception () != 0)
     {
       print_exception (env.exception (), "ORB initialization");
@@ -255,7 +251,7 @@ main (int argc, char *argv[])
 		      1);
 
   // Narrow the CORBA_Object reference to the stub object, checking
-  // the type along the way using _is_a
+  // the type along the way using _is_a.
   Cubit_ptr cubit = Cubit::_narrow (objref);
 
   if (cubit == 0)
@@ -272,8 +268,8 @@ main (int argc, char *argv[])
   error_count = 0;
 
   ACE_Time_Value before;
-  ACE_Time_Value after;
 
+  // @@ We should use an ACE_Profile_Timer here...
   before = ACE_OS::gettimeofday ();
 
   for (i = 0; i < loop_count; i++)
@@ -394,14 +390,14 @@ main (int argc, char *argv[])
        
     }
     
-  after = ACE_OS::gettimeofday ();
+  ACE_Time_Value after = ACE_OS::gettimeofday ();
     
   if (call_count > 0) 
     {
       if (error_count == 0)
         {
           ACE_Time_Value diff = after - before;
-          u_int long	us = diff.sec () * 1000 * 1000 + diff.usec ();
+          u_int long us = diff.sec () * 1000 * 1000 + diff.usec ();
           
           us /= call_count;
           
@@ -418,7 +414,7 @@ main (int argc, char *argv[])
 
   // Simple test for DII: call "cube_struct". (It's not timed since
   // the copious mallocation of DII would bias numbers against typical
-  // stub-based calls.)
+  // stub-based calls).
   do 
     {
       // Create the request ...
@@ -435,7 +431,9 @@ main (int argc, char *argv[])
       // ... initialise the argument list and result ...
       Cubit_Many arg, *result;
        
-      arg.o = 3; arg.l = 5; arg.s = -7;
+      arg.o = 3;
+      arg.l = 5;
+      arg.s = -7;
        
       CORBA_Any	tmp_arg (TC_Cubit_Many, &arg, CORBA_B_FALSE);
        
@@ -499,6 +497,6 @@ main (int argc, char *argv[])
     
   CORBA_release (objref);
     
-  return (error_count == 0) ? 0 : 1;
+  return error_count == 0 ? 0 : 1;
 }
 

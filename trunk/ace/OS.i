@@ -627,7 +627,7 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 #else
   ACE_UNUSED_ARG (seed);
   ACE_OSCALL_RETURN (::rand (), int, -1);
-#endif
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE pid_t 
@@ -2636,7 +2636,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
     ACE_OS::mutex_unlock (&rw->lock_);
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
-#endif
+#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3266,12 +3266,12 @@ ACE_OS::select (int width,
 		const ACE_Time_Value &timeout)
 {
   // ACE_TRACE ("ACE_OS::select");
-#ifdef ACE_HAS_NONCONST_SELECT_TIMEVAL
-#  define ___ACE_TIMEOUT copy
+#if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
+#define ___ACE_TIMEOUT copy
   ACE_Time_Value copy(timeout);
 #else
-#  define ___ACE_TIMEOUT timeout
-#endif
+#define ___ACE_TIMEOUT timeout
+#endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width, 
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
@@ -4301,11 +4301,11 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   *sig = ::sigwait (set);
   return *sig;
 #else /* ACE_HAS_SETKIND_NP */
-  #if defined(DIGITAL_UNIX)
-    errno = ::__sigwaitd10 (set, sig);
-  #else
-    errno = ::sigwait (set, sig);
-  #endif
+#if defined (DIGITAL_UNIX)
+  errno = ::__sigwaitd10 (set, sig);
+#else
+  errno = ::sigwait (set, sig);
+#endif /* DIGITAL_UNIX */
   if (errno == -1)
     return -1;
   else
@@ -6064,7 +6064,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_UNUSED_ARG (res);
 	
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
-#endif
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE struct tm *
@@ -6080,19 +6080,19 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   // ACE_TRACE ("ACE_OS::localtime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if defined (DIGITAL_UNIX)
-  ACE_OSCALL_RETURN (::_Pgmtime_r(t, res), struct tm *, 0);
+  ACE_OSCALL_RETURN (::_Pgmtime_r (t, res), struct tm *, 0);
 #elif defined (HPUX_10)
-  return (::gmtime_r(t, res) == 0 ? res : (struct tm *)0);
+  return (::gmtime_r (t, res) == 0 ? res : (struct tm *) 0);
 #else
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
 #endif /* DIGITAL_UNIX */
 #else
-  struct tm * result ;
+  struct tm *result;
   ACE_OSCALL (::gmtime (t), struct tm *, 0, result) ;
   if (result != 0)
     *res = *result ;
   return result ;
-#endif
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE char *
@@ -6110,7 +6110,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 #if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result;
 #if defined (DIGITAL_UNIX)
-  ACE_OSCALL (::_Pasctime_r(t, buf), char *, 0, result);
+  ACE_OSCALL (::_Pasctime_r (t, buf), char *, 0, result);
 #else
   ACE_OSCALL (::asctime_r (t, buf), char *, 0, result);
 #endif /* DIGITAL_UNIX */

@@ -31,35 +31,31 @@ static int num_of_objs = 1;
 static int 
 parse_args (int argc, char *argv[])
 {
-   ACE_Get_Opt opts (argc, argv, "dk:n:");
-   int			c;
+  ACE_Get_Opt opts (argc, argv, "dk:n:");
+  int			c;
    
-   while ((c = opts ()) != -1)
-      switch (c) 
-	{
-	case 'd':  // debug flag
-	  TAO_debug_level++;
-	  continue;
-   
-	case 'k':			// key (str)
-	  key = (CORBA_String) opts.optarg;
-	  continue;
-   
-	case 'n':			// idle seconds b4 exit
-	  num_of_objs = ACE_OS::atoi (opts.optarg);
-	  continue;
-
-	case '?':
-	default:
-	  ACE_OS::fprintf (stderr, "usage:  %s"
+  while ((c = opts ()) != -1)
+    switch (c) 
+      {
+      case 'd':  // debug flag
+	TAO_debug_level++;
+	break;
+      case 'k':			// key (str)
+	key = (CORBA_String) opts.optarg;
+	break;
+      case 'n':			// idle seconds b4 exit
+	num_of_objs = ACE_OS::atoi (opts.optarg);
+	break;
+      case '?':
+      default:
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "usage:  %s"
 			   " [-d]"
 			   " [-k {object_key}]"
-			   "\n", argv [0]
-			   );
-	  return 1;
-	}
+			   "\n", argv [0]), 1);
+      }
    
-   return 0;  // Indicates successful parsing of command line
+  return 0;  // Indicates successful parsing of command line
 }
 
 // Standard command line parsing utilities used.
@@ -109,6 +105,7 @@ main (int argc, char *argv[])
 	{
 	  // Why are we getting the BOA_ptr from here when we've
 	  // already got it above?
+
 	  CORBA_OctetSeq obj_key;
 	  obj_key.buffer = (CORBA_Octet *) obj_str;
 	  obj_key.length = obj_key.maximum = ACE_OS::strlen (obj_str);
@@ -117,7 +114,9 @@ main (int argc, char *argv[])
 
 	  if (oa_ptr->find (obj_key, obj) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
-			       " (%P|%t) Unable to locate object with key '%s', %p\n", key), 3);
+			       " (%P|%t) Unable to locate object with key '%s', %p\n", 
+			       key),
+			      3);
      
 	  // Stringify the objref we'll be implementing, and print it
 	  // to stdout.  Someone will take that string and give it to
@@ -149,6 +148,7 @@ main (int argc, char *argv[])
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
 
+  // @@ Do we need the HOMEBREW_EVENT_LOOP stuff?  If not, can we remove it please?
 #if !defined (USE_HOMEBREW_EVENT_LOOP)
   ACE_Reactor::run_event_loop ();
 #else
