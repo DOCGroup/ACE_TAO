@@ -1395,7 +1395,7 @@ TAO_YY_RULE_SETUP
 #line 241 "fe/idl.ll"
 {
 		  /* Skip the bookends */
-		  char *tmp = ace_tao_yytext;
+		  char *tmp = ACE_OS::strdup (ace_tao_yytext);
 		  tmp[strlen (tmp) - 1] = '\0';
 		  tao_yylval.wsval = idl_wstring_escape_reader(tmp + 2);
 		  return IDL_WSTRING_LITERAL;
