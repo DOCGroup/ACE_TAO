@@ -529,6 +529,11 @@ public:
   int close (void);
   // Close the datagram and unregister with the reactor.
 
+  ACE_SOCK_Dgram &dgram (void);
+  // Obtain the dgram, this is one of those "controlled violations of
+  // type safety", allowing the user to setup options and gain access
+  // to low-level features.
+
   // Reactor callbacks
   virtual int handle_input (ACE_HANDLE fd);
   virtual ACE_HANDLE get_handle (void) const;
@@ -569,6 +574,11 @@ public:
   // Remove ourselves from the event channel, unsubscribe from the
   // multicast groups, close the sockets and unsubscribe from the
   // reactor.
+
+  ACE_SOCK_Dgram &dgram (void);
+  // Obtain the dgram, this is one of those "controlled violations of
+  // type safety", allowing the user to setup options and gain access
+  // to low-level features.
 
   virtual int handle_input (ACE_HANDLE fd);
   virtual ACE_HANDLE get_handle (void) const;

@@ -86,3 +86,19 @@ TAO_ECG_UDP_Request_Entry::get_timeout (void) const
 {
   return this->timeout_counter_;
 }
+
+// ****************************************************************
+
+ACE_INLINE ACE_SOCK_Dgram&
+TAO_ECG_UDP_EH::dgram (void)
+{
+  return this->dgram_;
+}
+
+// ****************************************************************
+
+ACE_INLINE ACE_SOCK_Dgram&
+TAO_ECG_Mcast_EH::dgram (void)
+{
+  return this->dgram_;
+}
