@@ -1,29 +1,29 @@
 Release 1.0 - January 2003
 
-SCTP Features Accessable Within ACE
+SCTP Features Accessible Within ACE
 -----------------------------------
 
  * SOCK_STREAM (byte stream oriented) data transport service
 
  * SOCK_SEQPACKET (message oriented) data transport service (this is
-   service used by TAO's SCIOP pluggable protocol)
+   the service used by TAO's SCIOP pluggable protocol)
 
  * Explicit control of binding network interfaces (all, one, or any
-   subset) to server-side passive and active mode sockets on 
-   multi-homed machines. (for SOCK_SEQPACKET service only, to avoid
-   changing the interface of the ACE_SOCK_* wrapper-facade SOCK_STREAM
-   may only bind one or all interfaces)
+   subset) to server-side passive- and active- mode sockets on
+   multi-homed machines. (for SOCK_SEQPACKET service only.  The
+   SOCK_STREAM service may only bind one or all interfaces because we
+   avoided changing the interface of ACE_SOCK_Acceptor.)
 
  * Setting and getting of all parameters exposed by SCTP 
    (e.g. retransmission timeout (RTO)) via ACE_SOCK::set_option(...)
    and ACE_SOCK::get_option(...) for both SOCK_STREAM and
    SOCK_SEQPACKET sockets
 
- * Multiplexing of lightweight "SCTP Streams" over and "SCTP
-   Association" for both SOCK_STREAM and SOCK_SEQPACKET sockets via
-   ACE_SOCK::set_option(...)
+ * Multiplexing of lightweight "SCTP Streams" and "SCTP Associations"
+   (over the SOCK_STREAM and SOCK_SEQPACKET services, respectively)
+   via ACE_SOCK::set_option(...)
 
- * Network path multiplexing (provided opauqely by the protocol no
+ * Network path multiplexing (provided opaquely by the protocol---no
    explicit support required in ACE other than the ability to
    configure various parameters and the set of interfaces as described
    above)
@@ -32,125 +32,94 @@ SCTP Features Accessable Within ACE
 Supported SCTP Implementations
 ------------------------------
 
- * OpenSS7's Linux Implementation (Berkely UNIX Network API) 
+ * OpenSS7's Linux Implementation (Berkeley UNIX Network API) 
    (www.openss7.org) 
 
 
 BUGS
 ----
 
- * Potential a memory corruption error in ACE_INET_Addr that is caused
-   by SCTP. In the past we experienced segmentation violations that
-   resulted because sa.get_size() in the memcpy call below return a
-   size larger than the single sockaddr_in pointed to by
-   &this->inet_addr_ in the same memcpy call list below
-
-     // from line 102 of INET_Addr.cpp
-     int ACE_INET_Addr::set (const ACE_INET_Addr &sa)
-      {
-       ACE_TRACE ("ACE_INET_Addr::set");
-
-      if (sa.get_type () == AF_ANY)
-       // Ugh, this is really a base class, so don't copy it.
-       ACE_OS::memset (&this->inet_addr_, 
-                       0, 
-                       sizeof (this->inet_addr_));
-      else
-       // It's ok to make the copy.
-       ACE_OS::memcpy (&this->inet_addr_, 
-                       &sa.inet_addr_, 
-                       sa.get_size());
-
-      return 0;
-     }
-
-   We thought this error was caused by SCTP returning a list of
-   sockaddr_in structures for the bound interfaces and a corresponding
-   size that is greater than one sockaddr_in structure. We originally
-   made a fix so that the size of the memcpy was
-   sizeof(this->inet_addr_). This eliminated the segmentation
-   violations. However, we never really verified that was the real
-   problem. And we have more doubt because we no longer get the crashes
-   when using an INET_Addr implementation with out the fix.
- 
  * OpenSS7 BUGS 
+
     - implementation is flaky for message sizes greater than PATH MTU 
-      SIZE where message size include SCTP and IP headers and data.
+      SIZE where message size includes SCTP and IP headers and data.
 
     - Variably long delays in data transmission when 
-      RTO_Init = RTO_Min = 0 and link failures are occuring.
+      RTO_Init = RTO_Min = 0 and link failures are occurring.
 
-    - Strange connection refused errors (even though link and server 
-      are up) when RTO_Min = RTO_Init = 0. 
+    - Strange "connection refused" errors (even though link and server
+      are up) when RTO_Min = RTO_Init = 0.
 
-
-TODO
+TO-DO
 ----
 
- * Explicit control of binding network interfaces to client-side
-   active mode sockets on multi-homed machines. Current implementation
-   supports all interfaces but not restriction to one or an arbitrary
-   subset. (This will be done for SOCK_SEQPACKET service only, to
-   avoid changing the interface of the ACE_SOCK_* wrapper-facade
-   SOCK_STREAM may only bind one or all interfaces)
+ * Provide explicit control of binding network interfaces to
+   client-side active-mode sockets on multi-homed machines. Current
+   implementation supports all interfaces but not restriction to one
+   or to an arbitrary subset. (This will be done for SOCK_SEQPACKET
+   service only. We want to avoid changing the existing interfaces for
+   the SOCK_STREAM service).
 
- * Management and use of "SCTP Streams" integrated into the
-   ACE_SOCK_SEQPACK_* wrapper-facade. (cuurrently they can only be
+ * Integrate management and use of "SCTP Associations" into the
+   ACE_SOCK_SEQPACK_* wrapper-facade. (currently they can only be
    accessed indirectly through ACE_SOCK::set_option(...))
 
  * Support the Draft-API Standard for SCTP. Current implementation is
-   written to the Berkely Unix Networking API that is used by the
+   written to the Berkeley Unix Networking API that is used by the
    OpenSS7 implementation for Linux. 
 
- * Support SOCK_RDM service within ACE
+ * Support SOCK_RDM service within ACE.
 
 Usage
 -----
 
  SOCK_STREAM - Use the ACE_SOCK_Connector, ACE_SOCK_Stream and
-               ACE_SOCK_Acceptor classess. In ACE_SOCK_Connector pass
+               ACE_SOCK_Acceptor classes. In ACE_SOCK_Connector pass
                the value IPPROTO_SCTP for the protocol parameter in
-               either the constructor or the connect(...) method call
+               either the constructor or the connect(...) method
                as shown in SOCK_STREAM_clt.cpp. In ACE_SOCK_Acceptor
                pass the value IPPROTO_SCTP for the protocol parameter
-               in either the constructor or the open(...) method call
-               as shown in SOCK_STREAM_srv.cpp. You must include the
-               file sctp.h to IPPROTO_SCTP to be defined. 
-               The OpenSS7 implementation for linux places this file
-               in /usr/include/netinet. Other than these changes, 
-               the classes can be used as they are under TCP (the
-               protocol they use by default). Be cautious to use 
-               SCTP protocol options when setting socket options 
-               on SCTP sockets (e.g. use SCTP_NODELAY not TCP_NODELAY)
-               to disable Nagle's algorithm on an SCTP socket.
+               in either the constructor or the open(...) method
+               as shown in SOCK_STREAM_srv.cpp.
 
- SOCK_SEQPACKET - Use the ACE_SOCK_SEQPACK_Connector, 
-                  ACE_SOCK_SEQPACK_Association, and 
-                  ACE_SOCK_SEQPACK_Acceptor classes. Use the 
-                  ACE_Multihomed_INET_Addr class to specify a set 
-                  of interfaces (other than one or all) to bind to 
-                  the server passive and active mode sockets. To
-                  bind all or one address an ACE_INET_Addr may 
-                  alternately used with the value of 
-                  ACE_Addr::sap_any for all interfaces (the default
-                  value for ACE_INET_Addr or any valid hostname or
-                  IP address for one. (See
-                  Multihomed_INET_Addr_Test.cpp under
-		  $(ACE_ROOT)/tests for an example). SCTP 
-                  associtations may have more than one local and
-                  more than one remote address bound to them. 
-                  ACE_SOCK_SEQPACK_Association provides to a
-                  get_local_addrs(...) method and a 
-                  get_remote_addrs(...) method. These methods return
-                  the list of local and remote addresses bound to 
-                  an active mode SCTP socket. The get_local_addr(...)
-                  and the get_remote_addr(...) methods on ACE_SOCK
-                  will work properly with an active mode SCTP
-                  socket but they will only return a single address.
-                  Otherwise these classes are used similarly to the
-                  ACE_SOCK_* wrapper-facade for TCP. See
-                  SOCK_SEQPACK_clt.cpp and SOCK_SEQPCK_srv.cpp 
-                  for more details.
+               You must include the file sctp.h in order for
+               IPPROTO_SCTP to be defined.  The OpenSS7 implementation
+               for Linux places this file in
+               /usr/include/netinet.
+
+               Aside from these changes, the classes can be used as
+               they are under TCP (the protocol they use by
+               default). Be cautious to use SCTP protocol options when
+               setting socket options on SCTP sockets (e.g., use
+               SCTP_NODELAY, not TCP_NODELAY, to disable Nagle's
+               algorithm on an SCTP socket.)
+
+ SOCK_SEQPACKET - Use the ACE_SOCK_SEQPACK_Connector,
+                  ACE_SOCK_SEQPACK_Association, and
+                  ACE_SOCK_SEQPACK_Acceptor classes, which parallel
+                  the familiar ACE_SOCK_Connector, ACE_SOCK_Stream,
+                  and ACE_SOCK_Acceptor classes, respectively.  Please
+                  see SOCK_SEQPACK_clt.cpp and SOCK_SEQPACK_srv.cpp for
+                  more details.
+
+                  In the special case where you want to specify a set
+                  of interfaces---other than one or all
+                  interfaces---for an ACE_SOCK_SEQPACK_Acceptor, use
+                  an ACE_Multihomed_INET_Addr in place of the familiar
+                  ACE_INET_Addr.  (See SOCK_SEQPACK_srv.cpp for an
+                  example.)
+
+                  SCTP associations may have more than one local and
+                  more than one remote address bound to them.
+                  Accordingly, ACE_SOCK_SEQPACK_Association provides
+                  methods get_local_addrs(...) and
+                  get_remote_addrs(...). These methods return the list
+                  of local and remote addresses bound to an active
+                  mode SCTP socket. Alternately, the familiar
+                  ACE_SOCK::get_local_addr(...)  and
+                  ACE_SOCK::get_remote_addr(...) methods will work
+                  properly with an active mode SCTP socket, but each
+                  will only return a single address.
 
 
 DESIGN
