@@ -1,8 +1,13 @@
-Tue Dec 30 12:41:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Dec 30 12:46:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h:
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
           Removed not needed ; after c++ namespace closure.
+
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h:
+          Removed not needed ; to fix Tru64 warning
 
 Tue Dec 30 12:38:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
