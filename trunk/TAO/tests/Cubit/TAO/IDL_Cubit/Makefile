@@ -17,7 +17,7 @@ LDLIBS = -lorbsvcs -lTAO
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = Cubit_Server.cpp \
 	    server.cpp \
-            client_i.cpp \
+            Cubit_Client.cpp \
             collocation_test.cpp \
 	    client.cpp \
 	    Cubit_Client.cpp \
@@ -35,7 +35,7 @@ CUBIT_SVR_OBJS = cubitC.o \
 		 tmplinst.o
 CUBIT_CLT_OBJS = cubitC.o \
 		 cubitS.o \
-		 client_i.o \
+		 Cubit_Client.o \
 		 client.o \
 		 RTI_IO.o \
 		 tmplinst.o
@@ -43,7 +43,7 @@ COLLOCATION_OBJS = cubitC.o \
 		   cubitS.o \
 		   Cubit_Server.o \
 		   Cubit_Client.o \
-		   client_i.o \
+		   Cubit_Client.o \
 		   collocation_test.o \
 		   RTI_IO.o \
 		   tmplinst.o
@@ -1043,7 +1043,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
-.obj/client_i.o .obj/client_i.so .shobj/client_i.o .shobj/client_i.so: client_i.cpp RTI_IO.h \
+.obj/Cubit_Client.o .obj/Cubit_Client.so .shobj/Cubit_Client.o .shobj/Cubit_Client.so: Cubit_Client.cpp RTI_IO.h \
  $(ACE_ROOT)/ace/Env_Value_T.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1102,7 +1102,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- client_i.h $(ACE_ROOT)/ace/Get_Opt.h \
+ Cubit_Client.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1328,7 +1328,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp client_i.h \
+ $(ACE_ROOT)/ace/Synch_T.cpp Cubit_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Profile_Timer.h \
@@ -1548,7 +1548,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  Cubit_Server.h $(TAO_ROOT)/tao/TAO.h \
  Cubit_Client.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client_i.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Cubit_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
