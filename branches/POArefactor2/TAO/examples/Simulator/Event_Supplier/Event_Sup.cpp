@@ -25,7 +25,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -35,8 +35,8 @@
 
 #include "ace/os_include/os_ctype.h"
 
-ACE_RCSID (Event_Supplier, 
-           Event_Sup, 
+ACE_RCSID (Event_Supplier,
+           Event_Sup,
            "$Id$")
 
 static const char usage [] =

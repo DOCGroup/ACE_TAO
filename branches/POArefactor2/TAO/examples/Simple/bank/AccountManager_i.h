@@ -27,13 +27,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Account_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/OS.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+
+class TAO_ORB_Manager;
 
 class AccountManager_i : public POA_Bank::AccountManager
 {
@@ -86,9 +87,6 @@ private:
 
   PortableServer::POA_ptr poa_;
   // POA pointer.
-
-  //TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
 
   ACE_Hash_Map_Manager<ACE_CString,
                        Account_i *,

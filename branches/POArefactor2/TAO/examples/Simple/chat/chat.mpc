@@ -1,10 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server) : taoexe, portableserver, iortable {
+project(*server) : taoexe, utils, portableserver, iortable {
   IDL_Files {
     Receiver.idl
-    Broadcaster.idl 
+    Broadcaster.idl
   }
   Source_Files {
     Broadcaster_i.cpp
