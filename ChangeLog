@@ -1,3 +1,8 @@
+Wed Jun  4 12:43:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Stream.cpp: Removed a duplicate semicolon. Thanks to Rob
+	  Andzik <andzik@rtlogic.com> for catching this.
+
 Wed Jun  4 10:30:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
