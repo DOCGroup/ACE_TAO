@@ -16,7 +16,6 @@
 #ifndef PACE_SYS_UTSNAME_H
 #define PACE_SYS_UTSNAME_H
 
-#include "pace/defines.h"
 #include <sys/utsname.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

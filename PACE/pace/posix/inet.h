@@ -16,7 +16,6 @@
 #ifndef PACE_ARPA_INET_H
 #define PACE_ARPA_INET_H
 
-#include "pace/defines.h"
 #include <arpa/inet.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

@@ -1,3 +1,44 @@
+Tue Jun 20 15:31:43 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/mman.h:
+	* pace/posix/socket.h:	
+	* pace/posix/stat.h:
+	* pace/posix/termios.h:
+	* pace/posix/times.h:
+	* pace/posix/types.h:
+	* pace/posix/utsname.h:	
+	* pace/posix/in.h:
+	* pace/posix/inet.h:
+	* pace/posix/aio.h:
+	* pace/posix/assert.h:
+	* pace/posix/defines.h:
+	* pace/posix/dirent.h:
+	* pace/posix/fnctl.h:
+	* pace/posix/grp.h:
+	* pace/posix/limits.h:
+	* pace/posix/locale.h:
+	* pace/posix/mqueue.h:
+	* pace/posix/netdb.h:
+	* pace/posix/pthread.h:
+	* pace/posix/pwd.h:
+	* pace/posix/sched.h:
+	* pace/posix/semaphore.h:
+	* pace/posix/setjmp.h:
+	* pace/posix/signal.h:
+	* pace/posix/stdio.h:
+	* pace/posix/stdlib.h:
+	* pace/posix/string.h:
+	* pace/posix/strings.h:
+	* pace/posix/thread.h:
+	* pace/posix/time.h:
+	* pace/posix/unistd.h:
+	* pace/posix/utime.h:
+	* pace/posix/wait.h:
+
+	  Edited for consistency with previous entry.
+
+	  Removed #include "pace/defines.h".
+
 Tue Jun 20 15:14:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/mman.h:

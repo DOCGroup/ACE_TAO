@@ -16,7 +16,6 @@
 #ifndef PACE_SETJMP_H
 #define PACE_SETJMP_H
 
-#include "pace/defines.h"
 #include <setjmp.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

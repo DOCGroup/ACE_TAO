@@ -16,7 +16,6 @@
 #ifndef PACE_PWD_H
 #define PACE_PWD_H
 
-#include "pace/defines.h"
 #include <pwd.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

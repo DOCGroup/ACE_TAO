@@ -18,12 +18,10 @@
 #ifndef PACE_SYS_TYPES_H
 #define PACE_SYS_TYPES_H
 
-
 #include <sys/types.h>
 
 /* specific to SunOS 5.7 ace.cs <luther@cs.wustl.edu> */
 #include <inttypes.h>
-
 
 /* Wrap a handle. */
 # define PACE_HANDLE int

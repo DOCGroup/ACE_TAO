@@ -16,7 +16,6 @@
 #ifndef PACE_NETINET_IN_H
 #define PACE_NETINET_IN_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)

@@ -16,7 +16,6 @@
 #ifndef PACE_STDIO_H
 #define PACE_STDIO_H
 
-#include "pace/defines.h"
 #include <stdio.h>
 #include <stdarg.h>
 

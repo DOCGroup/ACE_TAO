@@ -16,7 +16,6 @@
 #ifndef PACE_STDLIB_H
 #define PACE_STDLIB_H
 
-#include "pace/defines.h"
 #include "pace/unistd.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)

@@ -16,7 +16,6 @@
 #ifndef PACE_FCNTL_H
 #define PACE_FCNTL_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include "pace/unistd.h"
 #include <sys/stat.h>
