@@ -1,3 +1,26 @@
+Sun Feb 11 14:44:24 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/orbconf.h:
+
+	  On AIX, define TAO_USE_SEQUENCE_TEMPLATES.  Thanks to Scott Bolin
+          <scott.bolin@pgs.com> for the fix.  [Bug 767]
+
+        * tao/Exception.cpp:
+        * tao/corbafwd.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+          Changed the minor code TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION to
+          TAO_IMPLREPO_MINOR_CODE, so I can now use it for ImR exceptions in
+          general.
+
+        * tao/PortableServer/POA.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+          As reported by Mark L Boriack <mboriack@std.saic.com> in [Bug 724],
+          the ImplRepo_Service and POA code was letting through ImR specific
+          exceptions, even when throw specs didn't allow it.  I added catch
+          blocks to translate to TRANSIENT exceptions, when appropriate.
+
 Fri Feb  9 18:11:35 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/README.txt:

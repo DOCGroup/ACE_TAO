@@ -189,8 +189,8 @@ ImplRepo_i::activate_server_i (const char *server,
       // Make sure the activation allows us to start it up.
       if (activation == ImplementationRepository::MANUAL && check_startup)
         ACE_THROW_RETURN (CORBA::TRANSIENT (
-            CORBA_SystemException::_tao_minor_code (
-              TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION, 0),
+            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 
+                                                    0),
             CORBA::COMPLETED_NO),
           "");
 

@@ -4324,10 +4324,25 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Informing IMR that we are running at: %s\n", curr_addr.in ()));
 
-  imr_admin->server_is_running (this->name ().c_str (),
-                                curr_addr.in (),
-                                svr.in (),
-                                ACE_TRY_ENV);
+  ACE_TRY
+    {
+      imr_admin->server_is_running (this->name ().c_str (),
+                                    curr_addr.in (),
+                                    svr.in (),
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      ACE_RE_THROW;
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_THROW (CORBA::TRANSIENT (
+          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+          CORBA::COMPLETED_NO));
+    }
+  ACE_ENDTRY;
   ACE_CHECK;
 
   if (TAO_debug_level > 0)

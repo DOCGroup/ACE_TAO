@@ -69,36 +69,55 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
+
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
-  // Activate.
-
   ACE_TString ior;
+  CORBA::Object_ptr forward_obj;
 
-  ior = this->imr_impl_->activate_server_i (poa->the_name (),
-                                            1,
-                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_TRY
+    {
+      // Activate.
+  
+      ior = this->imr_impl_->activate_server_i (poa->the_name (),
+                                                1,
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Add the key
+      // Add the key
 
-  char *key_str = 0;
+      char *key_str = 0;
 
-  // Unlike POA Current, this implementation cannot be cached.
-  TAO_POA_Current *tao_current = 
-    ACE_dynamic_cast(TAO_POA_Current*, this->poa_current_var_.in ());
-  TAO_POA_Current_Impl *impl = tao_current->implementation ();
-  TAO_ObjectKey::encode_sequence_to_string (key_str,
-                                            impl->object_key ());
+      // Unlike POA Current, this implementation cannot be cached.
+      TAO_POA_Current *tao_current = 
+        ACE_dynamic_cast(TAO_POA_Current*, this->poa_current_var_.in ());
+      TAO_POA_Current_Impl *impl = tao_current->implementation ();
+      TAO_ObjectKey::encode_sequence_to_string (key_str,
+                                                impl->object_key ());
 
-  ior += key_str;
-  CORBA::string_free (key_str);
+      ior += key_str;
+      CORBA::string_free (key_str);
 
-  if (OPTIONS::instance()->debug () >= 2)
-    ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
+      if (OPTIONS::instance()->debug () >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
 
-  CORBA::Object_ptr forward_obj =
-    orb->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      forward_obj = orb->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      ACE_PRINT_EXCEPTION (sysex, "Forwarder system exception");
+      ACE_RE_THROW;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Forwarder exception");
+      ACE_TRY_THROW (CORBA::TRANSIENT (
+          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+          CORBA::COMPLETED_NO));
+    }
+  ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
   if (!CORBA::is_nil (forward_obj))
