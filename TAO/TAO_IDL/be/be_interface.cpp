@@ -27,6 +27,7 @@
 
 // default constructor
 be_interface::be_interface (void)
+  : full_skel_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -36,7 +37,8 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
                             UTL_StrList *p)
   : AST_Interface (n, ih, nih, p),
     AST_Decl (AST_Decl::NT_interface, n, p),
-    UTL_Scope (AST_Decl::NT_interface)
+    UTL_Scope (AST_Decl::NT_interface),
+    full_skel_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 
