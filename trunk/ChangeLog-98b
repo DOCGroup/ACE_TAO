@@ -5,7 +5,9 @@ Thu Jul 16 08:55:48 1998  David L. Levine  <levine@cs.wustl.edu>
           isn't const.  Sun C++ caught this.
 
         * STL,Makefile: removed STL from ACE, for good this time.  There
-          are no more STL dependencies in TAO's AVStreams.
+ 	  are no more STL dependencies in TAO's AVStreams.  However, if
+ 	  you still want to use the version of STL that was in ACE, you
+ 	  can obtain it at www.cs.wustl.edu/~schmidt/ACE_wrappers/STL.
 
         * ACE-INSTALL.html: added note on enabling multicast on Linux for
           TAO's NameService.
