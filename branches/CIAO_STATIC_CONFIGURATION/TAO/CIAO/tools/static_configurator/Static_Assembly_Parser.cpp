@@ -9,6 +9,7 @@
 char *config_filename = 0;
 char *cads_filename = 0;
 char *cad_filename = 0;
+char *installation_file = "CIAO_Installation_Data.ini";
 
 CIAO::Static_Config::Static_Config_Info static_config_info;
 
@@ -74,6 +75,7 @@ main (int argc, char *argv[])
         }
 
       CIAO::Static_Assembly_Builder_Visitor builder (assembly_spec.componentfiles_,
+                                                     installation_file,
                                                      static_config_info);
 
       int build_result = assembly_spec.partitioning_.accept (builder
@@ -83,6 +85,8 @@ main (int argc, char *argv[])
 
       builder.dump_static_config_info ();
       builder.generate_static_header_file ("Static_Assembly_Config.h");
+      builder.generate_static_app_driver ("Static_CCM_App.cpp");
+      builder.generate_static_app_mpc ("Static_CCM_App.mpc");
     }
   ACE_CATCHANY
     {
