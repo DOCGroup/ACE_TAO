@@ -79,11 +79,11 @@ operator << (ostream &os,
 
   os << "ULongLong 1st half: "
      << hex
-     << ACE_U64_TO_U32(hi)
+     << ACE_U64_TO_U32 (hi)
      << dec << endl
      << "ULongLong 2nd half: "
      << hex
-     << ACE_U64_TO_U32(lo)
+     << ACE_U64_TO_U32 (lo)
      << dec << endl
      << "Float:             " << t.fpoint_ << endl
      << "Double:            " << t.dprec_ << endl;
@@ -91,7 +91,7 @@ operator << (ostream &os,
 }
 
 CDR_Test::CDR_Test (void)
-  : char_  (0),
+  : char_ (0),
     word2_ (0),
     word4_ (0),
     word8_ (0),
@@ -198,7 +198,7 @@ run_test (int write_file,
 
       n = file.send (output_mb->rd_ptr (),
                      output_mb->length ());
-      if (n != (size_t) output_mb->length())
+      if (n != (size_t) output_mb->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("send failed on %p\n"),
                            filename),
@@ -281,13 +281,13 @@ run_test (int write_file,
 }
 
 static void
-usage(ACE_TCHAR* cmd)
+usage (ACE_TCHAR *cmd)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Usage: %s ")
               ACE_TEXT ("[-f filename [-w|-r]]"),
               cmd));
-  ACE_OS::exit(1);
+  ACE_OS::exit (1);
 }
 
 // Main function
@@ -299,9 +299,9 @@ main (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE::major_version(),
-              ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::major_version (),
+              ACE::minor_version (),
+              ACE::beta_version ()));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:rw"));
   int opt;
@@ -323,26 +323,20 @@ main (int argc, ACE_TCHAR *argv[])
           break;
         case '?':
         default:
-          usage(argv[0]);
+          usage (argv[0]);
         }
     }
 
   if ((!reading || !writing) && fn == 0)
-    {
-      usage(argv[0]);
-    }
+    usage (argv[0]);
 
   if (!reading && !writing)
-    {
-      usage(argv[0]);
-    }
+    usage (argv[0]);
 
   // Create a temporary filename.
-  ACE_FILE_Addr filename(ACE_sap_any_cast (ACE_FILE_Addr &));
+  ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
   if (fn != 0)
-    {
-      filename.set (fn);
-    }
+    filename.set (fn);
 
 
   ACE_FILE_Connector connector;
@@ -354,7 +348,7 @@ main (int argc, ACE_TCHAR *argv[])
                          0,
                          ACE_Addr::sap_any,
                          0,
-                         ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
+ ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
                          ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("connect failed for %p\n"),
@@ -366,7 +360,7 @@ main (int argc, ACE_TCHAR *argv[])
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
-#if defined(TEST_CAN_UNLINK_IN_ADVANCE)
+#if defined (TEST_CAN_UNLINK_IN_ADVANCE)
   if (fn == 0)
     {
       // Unlink this file right away so that it is automatically removed

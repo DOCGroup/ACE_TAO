@@ -283,12 +283,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::earliest_time");
 
-  if (this->is_empty ())
-    return ACE_Time_Value::zero;
-  else
-    return this->wheel_[this->earliest_pos_]->get_next ()->get_timer_value ();
+  return this->wheel_[this->earliest_pos_]->get_next ()->get_timer_value ();
 }
-
 
 /**
  * Creates a ACE_Timer_Node_T based on the input parameters.  Then inserts

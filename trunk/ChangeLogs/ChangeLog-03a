@@ -1,3 +1,34 @@
+Fri Jun  1 13:04:31 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+        * ace/Makefile:
+          Removed the moc compiler path definition from ace/Makefile
+ 	  since it is now in include/makeinclude/wrapper_macros.GNU
+	  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+	  reporting this. 
+  
+	* include/makeinclude/wrapper_macros.GNU (YACC): Added the moc
+	  compiler path definition to include/makeinclude/wrapper_macros.GNU 
+	  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+	  reporting this. 
+
+	* ace/Timer_Wheel_T.cpp: Removed check to see if Timer_Wheel was
+	  empty from earliest_time().
+
+	* ace/Timer_List_T.h,
+  	* ace/Timer_Hash_T.h,
+  	* ace/Timer_Heap_T.h,
+	* ace/Timer_Queue_T.h,
+	* ace/Timer_Wheel_T.h:
+	  Added a comment to point out that earliest_time() can only be
+ 	  called on a non-empty queue.  Thanks to Gil Rapaport
+ 	  <grapaport@comgates.co.il> for reporting this.
+
+Tue May 29 17:38:15 2001  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/OS.h: Moved the VMIN and VMAX macros to the right place.
+	  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+ 	  reporting this.
+
 Fri Jun  1 16:11:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Acceptor.cpp (open): Enabled the socket to be non-blocking
