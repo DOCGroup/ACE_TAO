@@ -8,6 +8,10 @@ ifndef GHS_DIR
   GHS_DIR=/project/doc/green68k/GreenHills/releases/chorus-m68k
 endif # GHS_DIR
 
+ifndef COOL_DIR
+  COOL_DIR=/project/doc/miniCOOL/minicool.r4.3/classix-r3-flm-mvme177-gh
+endif # COOL_DIR
+
 ifndef MVME_DIR
   MVME_DIR=/project/doc/mvme177/appl
 endif # MVME_DIR
@@ -41,8 +45,23 @@ DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 LDFLAGS = --no_auto_instantiation \
-          -L$(MVME_LIB)/classix -L$(MVME_LIB)/CC
+          -u __main -u __premain -u _abort -r \
+          -L$(MVME_LIB)/classix -L$(MVME_LIB)/CC \
+          -L$(COOL_DIR)/lib -lOrb  \
+          $(GHS_DIR)/ch68/libedg.a \
+          $(MVME_DIR)/lib/classix/libcx.s.a $(MVME_DIR)/lib/CC/libC.a
+
 OFLAGS  += -O -OM -OL
 AR      = $(GHS_DIR)/gnuch68/bin/ar
 ARFLAGS = rv
 RANLIB  = /bin/true
+
+
+POSTLINK = ; $(CC) -groot= -alttools=$(GHS_DIR) -68040 -O -nostartfiles \
+           -nostdlib -e __start -o $@.final \
+           $(MVME_DIR)/lib/crt/crth.s.o $(MVME_DIR)/lib/crt/crt0.o \
+           $(MVME_DIR)/lib/crt/crti.o $@ \
+           $(MVME_DIR)/lib/crt/crtn.o \
+           -locatedprogram -r -L$(COOL_DIR)/lib -lOrb; \
+           mv -f $@.final $@
+
