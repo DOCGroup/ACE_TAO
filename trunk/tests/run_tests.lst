@@ -6,6 +6,7 @@ CDR_File_Test
 CDR_Test
 Semaphore_Test
 TSS_Test
+Log_Msg_Test
 Timeprobe_Test
 Time_Value_Test
 High_Res_Timer_Test
