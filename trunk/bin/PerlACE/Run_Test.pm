@@ -83,7 +83,7 @@ sub check_n_cleanup_files
 
   if ($nfile != 0) {
     for (; $cntr < $nfile; $cntr++) {
-      print STDERR "ERROR: File <$flist[$cntr]> exists but should be cleaned up\n";
+      print STDERR "File <$flist[$cntr]> exists but should be cleaned up\n";
     }
     unlink @flist;
   }
