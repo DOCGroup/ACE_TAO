@@ -1,6 +1,9 @@
 # $Id$
 
 # Irix 6.[234] with SGI C++
+# In order to get the -n32 flag enabled please set the SGI_ABI
+# environment variable to -n32.  This causes a new compiler to be
+# invoked.
 
 debug = 1
 optimize = 1
