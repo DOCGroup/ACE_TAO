@@ -27,6 +27,11 @@ public:
 
 private:
 
+  /// Validate the connection
+  void validate_connection (void);
+
+private:
+
   /// Reference to the test interface
   Test::Big_Reply_var reply_gen_;
 
