@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS     =  -lTAO -lorbsvcs -lm
+LDLIBS     =  -lTAO -lorbsvcs 
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = server.cpp \
