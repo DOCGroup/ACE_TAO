@@ -9,14 +9,34 @@
 
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
+#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (ACE_HAS_EXCEPTIONS)
+# if defined (ACE_MVS)
+#   include /**/ <unexpect.h>
+# else
+#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#   include /**/ <exception>
+#   if !defined (_MSC_VER) \
+     && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
+     &&         (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+using std::set_unexpected;
+#   endif /* !_MSC_VER */
+#  else
+#   include /**/ <exception.h>
+#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+# endif /* ACE_MVS */
+#endif /* ACE_HAS_EXCEPTIONS */
+
+
 ACE_RCSID (tao,
            TAO_Singleton_Manager,
            "$Id$")
+
 
 extern "C" void
 TAO_Singleton_Manager_cleanup_destroyer (void *, void *)
@@ -36,8 +56,11 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
     exit_info_ (),
     registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  , internal_lock_ (new TAO_SYNCH_RECURSIVE_MUTEX)
+    , internal_lock_ (new TAO_SYNCH_RECURSIVE_MUTEX)
 # endif /* ACE_MT_SAFE */
+#if defined (ACE_HAS_EXCEPTIONS)
+    , old_unexpected_ (0)
+#endif  /* ACE_HAS_EXCEPTIONS */
 {
   // Be sure that no further instances are created via instance ().
   if (instance_ == 0)
@@ -140,6 +163,16 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       // been initialized.
       this->object_manager_state_ = OBJ_MAN_INITIALIZED;
 
+#if defined (ACE_HAS_EXCEPTIONS)
+      // Store a pointer to the old unexpected exception handler so
+      // that it can be restored when TAO is unloaded, for example.
+      // Otherwise, any unexpected exceptions will result in a call to
+      // TAO's unexpected exception handler which may no longer exist
+      // if TAO was unloaded.
+      this->old_unexpected_ =
+        set_unexpected (CORBA_ORB::_tao_unexpected_exception);
+#endif /* ACE_HAS_EXCEPTIONS */
+
       return 0;
     }
 
@@ -230,6 +263,13 @@ TAO_Singleton_Manager::fini (void)
   delete this->internal_lock_;
   this->internal_lock_ = 0;
 #endif /* ACE_MT_SAFE */
+
+#if defined (ACE_HAS_EXCEPTIONS)
+  // Restore the old unexpected exception handler since TAO will no
+  // longer be handling exceptions.  Allow the application to once
+  // again handle unexpected exceptions.
+  (void) set_unexpected (this->old_unexpected_);
+#endif /* ACE_HAS_EXCEPTIONS */
 
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;

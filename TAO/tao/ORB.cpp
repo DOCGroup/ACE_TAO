@@ -52,22 +52,6 @@ ACE_RCSID (tao,
 #include "ace/Reactor.h"
 #include "ace/Argv_Type_Converter.h"
 
-#if defined (ACE_HAS_EXCEPTIONS)
-# if defined (ACE_MVS)
-#   include /**/ <unexpect.h>
-# else
-#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#   include /**/ <exception>
-#   if !defined (_MSC_VER) \
-     && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
-     &&         (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-using std::set_unexpected;
-#   endif /* !_MSC_VER */
-#  else
-#   include /**/ <exception.h>
-#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-# endif /* ACE_MVS */
-#endif /* ACE_HAS_EXCEPTIONS */
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -1012,8 +996,8 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
            port = default_service_port[mcast_service_id];
        }
 
-     /// Set the port value in ORB_Params: modify the default mcast
-     /// value.
+     // Set the port value in ORB_Params: modify the default mcast
+     // value.
      const char prefix[] = "mcast://:";
 
      char port_char[256];
@@ -1043,7 +1027,7 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
 
       if ((ACE_OS::strncmp (default_init_ref.in (),
                             mcast_prefix,
-                            sizeof mcast_prefix -1) == 0))
+                            sizeof mcast_prefix - 1) == 0))
       {
          this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
       }
@@ -1110,20 +1094,20 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   // -----------------------------------------------------------------
 
-  /// Check ORBInitRef options.
+  // Check ORBInitRef options.
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
 
-  /// Is the service name in the IOR Table.
+  // Is the service name in the IOR Table.
   if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
     return this->string_to_object (ior.c_str ()
                                    ACE_ENV_ARG_PARAMETER);
 
-  /// May be trying the explicitly specified services and the well
-  /// known services should be tried first before falling on to default
-  /// services.
+  // May be trying the explicitly specified services and the well
+  // known services should be tried first before falling on to default
+  // services.
 
-  /// Set the timeout value.
+  // Set the timeout value.
   this->set_timeout (timeout);
 
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
@@ -1234,10 +1218,6 @@ CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   else
     CORBA::ORB::orb_init_count_++;
 
-#if defined(ACE_HAS_EXCEPTIONS)
-  set_unexpected (CORBA_ORB::_tao_unexpected_exception);
-#endif /* ACE_HAS_EXCEPTIONS */
-
   // initialize the system TypeCodes
   TAO_TypeCodes::init ();
 
@@ -1304,7 +1284,7 @@ CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var pi_initializer;
 
-  /// Register the PICurrent ORBInitializer.
+  // Register the PICurrent ORBInitializer.
   ACE_NEW_THROW_EX (temp_pi_initializer,
                     TAO_PICurrent_ORBInitializer,
                     CORBA::NO_MEMORY (
@@ -1774,7 +1754,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  /// Attempt to obtain the policy from the policy factory registry.
+  // Attempt to obtain the policy from the policy factory registry.
   return
     this->orb_core_->policy_factory_registry ()->create_policy (
       type,

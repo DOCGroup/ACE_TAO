@@ -29,11 +29,18 @@
 
 #include "ace/OS.h"
 
-// Adapter for cleanup, used to register cleanup function with the
-// ACE_Object_Manager.
+
+#if defined (ACE_HAS_EXCEPTIONS)
+typedef void (*TAO_unexpected_handler)(void);
+#endif  /* ACE_HAS_EXCEPTIONS */
+
+
+/// Adapter for cleanup, used to register cleanup function with the
+/// ACE_Object_Manager.
 extern "C"
 void
 TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
+
 
 /**
  * @class TAO_Singleton_Manager
@@ -189,6 +196,19 @@ private:
   /// Lock that is used to guard internal structures.
   TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
+
+#if defined (ACE_HAS_EXCEPTIONS)
+  /// The old unexpected exception handler.
+  /**
+   * A pointer to the old unexpected exception handler is stored so
+   * that it can be restored when TAO is unloaded, for example.
+   * Otherwise, any unexpected exceptions will result in a call to
+   * TAO's unexpected exception handler which may no longer exist if
+   * TAO was unloaded.
+   */
+  TAO_unexpected_handler old_unexpected_;
+#endif  /* ACE_HAS_EXCEPTIONS */
+
 };
 
 #if defined (__ACE_INLINE__)
