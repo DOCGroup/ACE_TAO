@@ -6,7 +6,7 @@ nto_version := $(shell uname -a | awk '{ gsub("\\.","", $$3 ); print $$3;}')
 
 inline = 1
 debug ?= 1
-optimize ?= 1
+optimize ?= 0
 exceptions ?= 1
 threads ?= 1
 ifeq ($(exceptions),1)
@@ -25,12 +25,11 @@ endif # inline
 
 ifeq ($(debug),1)
 	DCFLAGS += -gdwarf-2
-endif #debug
-
-ifeq ($(optimize),1)
+else # debug excludes optimize due to g++ internal compiler error
+  ifeq ($(optimize),1)
 	OCFLAGS += -O3
-endif #optimize
-
+  endif #optimize
+endif #debug
 CC      = gcc
 CXX     = g++
 
@@ -49,7 +48,7 @@ SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template  instantiation, add to SOFLAGS if SONAME set,   
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
