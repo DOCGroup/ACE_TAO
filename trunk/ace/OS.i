@@ -5054,15 +5054,31 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #   endif       /*  ACE_HAS_FSU_PTHREADS */
       return 0;
 # elif defined (ACE_HAS_WTHREADS)
-    int error = errno;
-    *data = ::TlsGetValue (key);
-    if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
-      return -1;
-    else
-      {
-        errno = error;
-        return 0;
-      }
+
+  // The following handling of errno is designed like this due to
+  // ACE_Log_Msg::instance calling ACE_OS::thr_getspecific.
+  // Basically, it is ok for a system call to reset the error to zero.
+  // (It really shouldn't, though).  However, we have to remember to
+  // store errno *immediately* after an error is detected.  Calling
+  // ACE_ERROR_RETURN((..., errno)) did not work because errno was
+  // cleared before being passed to the thread-specific instance of
+  // ACE_Log_Msg.  The workaround for was to make it so
+  // thr_getspecific did not have the side effect of clearing errno.
+  // The correct fix is for ACE_ERROR_RETURN to store errno
+  //(actually ACE_OS::last_error) before getting the ACE_Log_Msg tss
+  // pointer, which is how it is implemented now.  However, other uses
+  // of ACE_Log_Msg may not work correctly, so we're keeping this as
+  // it is for now.
+
+  int error = errno;
+  *data = ::TlsGetValue (key);
+  if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
+    return -1;
+  else
+    {
+      errno = error;
+      return 0;
+    }
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);
