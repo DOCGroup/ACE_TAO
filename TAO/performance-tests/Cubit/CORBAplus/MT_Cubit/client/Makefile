@@ -42,17 +42,13 @@ CPPFLAGS += -I$(PBHOME)/include
 
 $(IDL_SRC): cubit.idl
 	$(PBHOME)/bin/idlc cubit.idl
-	-/bin/mv cubit.C cubit.cpp
+	-mv cubit.C cubit.cpp
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/mtiiop_s.o $(VLDLIBS) $(POSTLINK)
 
-clean:	
-	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf cubit.cpp cubit.h cubit_s.*
-
+	-$(RM) cubit.cpp cubit.h cubit_s.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

@@ -66,7 +66,7 @@ client:	$(addprefix $(VDIR),$(PP_TEST_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf PP_TestC.* PP_TestS.* PP_TestS_T.*
+	-$(RM) PP_TestC.* PP_TestS.* PP_TestS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

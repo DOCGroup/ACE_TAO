@@ -45,8 +45,8 @@ CPPFLAGS += -I$(PBHOME)/include
 
 $(IDL_SRC): cubit.idl
 	$(PBHOME)/bin/idlc cubit.idl
-	-/bin/mv cubit.C cubit.cpp
-	-/bin/mv cubit_s.C cubit_s.cpp
+	-mv cubit.C cubit.cpp
+	-mv cubit_s.C cubit_s.cpp
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -82,8 +82,6 @@ check:	$(TESTS)
 	@./clnt -n250 -O `cat obj.5` -x
 	@echo ''
 
-clean:
-	-/bin/rm -rf *.o cubit.cpp cubit.h cubit_s.cpp cubit_s.h $(CUBIT_SVR_OBJS) $(CUBIT_CLT_OBJS) $(BIN) core
- 
-realclean: clean
+realclean:
+	-$(RM) *.o cubit.cpp cubit.h cubit_s.cpp cubit_s.h $(CUBIT_SVR_OBJS) $(CUBIT_CLT_OBJS) $(BIN) core
 

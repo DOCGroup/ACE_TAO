@@ -59,7 +59,7 @@ client: $(addprefix $(VDIR),$(FILE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf FooC.* FooS.* FooS_T.*
+	-$(RM) FooC.* FooS.* FooS_T.*
 
 endif # ! ACE_HAS_GNUG_PRE_2_8
 

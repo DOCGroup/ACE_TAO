@@ -40,7 +40,7 @@ Identity: $(addprefix $(VDIR),$(PROG_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf testC.* testS.* testS_T.*
+	-$(RM) testC.* testS.* testS_T.*
 
 #----------------------------------------------------------------------------
 #	Dependencies

@@ -41,9 +41,6 @@ include $(TAO_ROOT)/taoconfig.mk
 forward:	$(addprefix $(VDIR),$(OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-#realclean: clean
-#	-/bin/rm -rf 
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

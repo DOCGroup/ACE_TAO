@@ -95,11 +95,8 @@ client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
 .obj/pccTimer.o .obj/pccTimer.so .shobj/pccTimer.o .shobj/pccTimer.so: /project/doc/mvme/pccTimer.cpp
 	@$(COMPILE.cc) -o $@ $<
 
-clean:
-	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
+	-$(RM) cubitC.* cubitS.* cubitS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
