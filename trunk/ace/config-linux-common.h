@@ -162,6 +162,8 @@
 
 #define ACE_HAS_POSIX_TIME
 
+#define ACE_HAS_GPERF
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
