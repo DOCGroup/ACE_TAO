@@ -108,12 +108,6 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
 
-  int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
-
-  CIAO_REGISTER_VALUE_FACTORY (orb.in(), HUDisplay::tick_init,
-                               HUDisplay::tick);
-
   worker_ = new Worker(sizeof(argv)/sizeof(argv[0]), argv);
 
   if (worker_->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)

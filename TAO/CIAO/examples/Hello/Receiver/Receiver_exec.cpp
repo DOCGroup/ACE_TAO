@@ -76,24 +76,6 @@ Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_activate\n"));
 
-  // @@ This hack work around a missing feature in CIAO's assembly
-  // mechanism where a Softpkg descriptor can specify it's dependency
-  // to a valuetype factory and instruct the deployment framework to
-  // initialize and register the corresponding valuefactory in the
-  // component server.  Here, we are registering the valuefactory
-  // explicitly to work around this problem.
-  char *argv[1];
-  argv[0] = "Receiver_exec";
-  int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv,
-                                        ""
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CIAO_REGISTER_VALUE_FACTORY (orb.in(),
-                               Hello::timeout_init,
-                               Hello::timeout);
 }
 
 void
