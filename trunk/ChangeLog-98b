@@ -1,36 +1,41 @@
+Fri Dec 04 13:46:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Stats.cpp (std_dev): fixed difference calculation so
+          that it always calculates a non-negative value.
+
 Fri Dec  4 12:45:04 1998  James CE Johnson <jcej@lads.com>
 
-	* docs/tutorials/linify:
-	* docs/tutorials/combine:
-	* docs/tutorials/fixMakefile:
-		Ensure that perms are 755 and that #!/.../perl is not used
+        * docs/tutorials/linify:
+        * docs/tutorials/combine:
+        * docs/tutorials/fixMakefile:
+                Ensure that perms are 755 and that #!/.../perl is not used
 
 Wed Dec 02 14:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (fstat): This function needs to close down the c handle
- 	  opened by _open_osfhandle to avoid resource leaks on Win32.
-  	  Thanks to Christian Korn <korn@gate.qaqa.com> for reporting
- 	  this.
+        * ace/OS.i (fstat): This function needs to close down the c handle
+          opened by _open_osfhandle to avoid resource leaks on Win32.
+          Thanks to Christian Korn <korn@gate.qaqa.com> for reporting
+          this.
 
 Tue Dec 01 13:48:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added ACE_HAS_SIGWAIT.  Also added
-	  ifdef section to prevent threaded ACE from compiling on FreeBSD
-	  under 3.0 (excluded.)
+        * ace/config-freebsd-pthread.h: Added ACE_HAS_SIGWAIT.  Also added
+          ifdef section to prevent threaded ACE from compiling on FreeBSD
+          under 3.0 (excluded.)
 
 Tue Dec  1 22:22:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.h: Added a comment to clarify the semantics of
- 	  ACE_RW_Process_Mutex.  Thanks to Stanislav Meduna
- 	  <stanom@etm.co.at> for reporting this.
+        * ace/Synch.h: Added a comment to clarify the semantics of
+          ACE_RW_Process_Mutex.  Thanks to Stanislav Meduna
+          <stanom@etm.co.at> for reporting this.
 
 Tue Dec 01 17:22:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test: Added the .dsp and tests.dsw to the
- 	  repository.
+        * tests/DLL_Test: Added the .dsp and tests.dsw to the
+          repository.
 
-	* tests/run_tests.bat: Added an entry for DLL_Test.
-		
+        * tests/run_tests.bat: Added an entry for DLL_Test.
+
 Tue Dec 01 13:54:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added ESUCCESS definition (to 0), if not #defined.
@@ -42,9 +47,9 @@ Tue Dec 01 13:48:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           under 3.0 (excluded.)
 
         * ace/OS.i (sigwait): FreeBSD 3.0 supports sigwait.  Changed the
- 	  ifdef condition to support sigwait for 3.0 or above.  Thanks to
- 	  Bob McWhirter <bob@werken.com> and Russell L. Carter
- 	  <rcarter@dnstoo.consys.com> for helping to track this down.
+          ifdef condition to support sigwait for 3.0 or above.  Thanks to
+          Bob McWhirter <bob@werken.com> and Russell L. Carter
+          <rcarter@dnstoo.consys.com> for helping to track this down.
 
 Tue Dec 01 12:59:57 1998  James CE Johnson <jcej@lads.com>
 
