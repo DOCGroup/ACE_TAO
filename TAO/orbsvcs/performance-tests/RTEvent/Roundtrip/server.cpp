@@ -8,9 +8,10 @@
 #include "RTCORBA_Setup.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/PortableServer/PortableServer.h"
-// #include "tao/RTPortableServer/RTPortableServer.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
@@ -54,6 +55,8 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
+  TAO_EC_Default_Factory::init_svcs ();
+
   RT_Class test_scheduling;
 
   ACE_TRY_NEW_ENV

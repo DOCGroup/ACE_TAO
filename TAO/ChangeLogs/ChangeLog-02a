@@ -1,3 +1,15 @@
+Fri Mar  1 07:47:07 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	  Add TAO_Messaging to the list of libraries.
+	  Update dependencies.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+	  Include "RTPortableServer.h", otherwise the internal Service
+	  Configurator initialization may be incomplete on static builds.
+	  Initialize the event service default services.
+
 Fri Mar 01 13:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Makefile.bor:
