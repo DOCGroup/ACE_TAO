@@ -4831,7 +4831,7 @@ ACE_OS::truncate (const char *filename,
   else
     {
       if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != (unsigned) -1)
-        ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), 
+        ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle),
                                                 ace_result_), int, -1);
       else
         ACE_FAIL_RETURN (-1);
@@ -8626,20 +8626,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # else  /* ! ACE_LACKS_LONGLONG_T */
   return now;
 # endif /* ! ACE_LACKS_LONGLONG_T */
-#elif defined (__GNUG__)  &&  defined (ACE_HAS_POWERPC_TIMER)
-  unsigned int least, most;
-  asm volatile ("aclock:
-                 mftbu 5        /* upper time base register */
-                 mftb 6         /* lower time base register */
-                 mftbu 7        /* upper time base register */
-                 cmpw 5,7    /* check for rollover of upper */
-                 bne aclock
-                 stw 5,%0                           /* most */
-                 stw 6,%1"                         /* least */
-                : "=m" (most), "=m" (least)      /* outputs */
-                :                              /* no inputs */
-                : "5", "6", "7", "memory"    /* constraints */);
-  return 0x100000000llu * most  +  least;
 // #elif defined (linux) && defined (__alpha)
 // NOTE: the following don't seem to work on Linux.  Use ::gettimeofday
 //       instead.
@@ -8708,14 +8694,18 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
         }
     }
 
-#elif defined (ghs) && defined (ACE_HAS_POWERPC_TIMER)
-  // PowerPC w/ GreenHills compiler on VxWorks
+#elif defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
+  // PowerPC w/ GreenHills or g++.
 
   ACE_UNUSED_ARG (op);
   u_long most;
   u_long least;
   ACE_OS::readPPCTimeBase (most, least);
+#if defined (ACE_LACKS_LONGLONG_T)
   return ACE_U_LongLong (least, most);
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  return 0x100000000llu * most  +  least;
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
 #elif defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS)
   // e.g., VxWorks (besides POWERPC && GreenHills) . . .
@@ -10059,7 +10049,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 ACE_INLINE int
 ACE_OS::sigdelset (sigset_t *s, int signum)
 {
-#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS) 
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL) {
     errno = EFAULT ;
     return -1 ;
@@ -10103,7 +10093,7 @@ ACE_OS::sigemptyset (sigset_t *s)
   *s = 0 ;
 #   endif /* defined (ACE_PSOS) && defined (__DIAB) */
   return 0 ;
-#else  
+#else
   ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
@@ -10366,7 +10356,7 @@ ACE_OS::closedir (DIR *d)
   u_long result;
   result = ::close_dir (d);
   delete d;
-  if (result != 0) 
+  if (result != 0)
   {
     errno = result;
   }
@@ -10490,7 +10480,7 @@ ACE_OS::bsearch (const void *key,
 #endif /* ACE_LACKS_BSEARCH */
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_OS::qsort (void *base,
                size_t nel,
                size_t width,
