@@ -798,6 +798,202 @@ TAO_RTScheduler_Current_i::delete_all_currents (void)
 }
 
 
+// *************************************************************
+
+// *************************************************************
+// Operations for class TAO_RTScheduler_Current_var
+// *************************************************************
+
+TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (void) // default constructor
+  : ptr_ (TAO_RTScheduler_Current::_nil ())
+{}
+
+::TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (const ::TAO_RTScheduler_Current_var &p)
+  : TAO_Base_var (),
+    ptr_ (TAO_RTScheduler_Current::_duplicate (p.ptr ()))
+{}
+
+TAO_RTScheduler_Current_var::~TAO_RTScheduler_Current_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+TAO_RTScheduler_Current_var &
+TAO_RTScheduler_Current_var::operator= (TAO_RTScheduler_Current_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_RTScheduler_Current_var &
+TAO_RTScheduler_Current_var::operator= (const ::TAO_RTScheduler_Current_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::TAO_RTScheduler_Current::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+TAO_RTScheduler_Current_var::operator const ::TAO_RTScheduler_Current_ptr &() const
+{
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_var::operator ::TAO_RTScheduler_Current_ptr &()
+{
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::in (void) const
+{
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_ptr &
+TAO_RTScheduler_Current_var::inout (void)
+{
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_ptr &
+TAO_RTScheduler_Current_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::TAO_RTScheduler_Current::_nil ();
+  return this->ptr_;
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::TAO_RTScheduler_Current_ptr val = this->ptr_;
+  this->ptr_ = ::TAO_RTScheduler_Current::_nil ();
+  return val;
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::duplicate (TAO_RTScheduler_Current_ptr p)
+{
+  return ::TAO_RTScheduler_Current::_duplicate (p);
+}
+
+void
+TAO_RTScheduler_Current_var::release (TAO_RTScheduler_Current_ptr p)
+{
+  CORBA::release (p);
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::nil (void)
+{
+  return ::TAO_RTScheduler_Current::_nil ();
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current_var::narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ::TAO_RTScheduler_Current::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+TAO_RTScheduler_Current_var::upcast (void *src)
+{
+  TAO_RTScheduler_Current **tmp =
+    ACE_static_cast (TAO_RTScheduler_Current **, src);
+  return *tmp;
+}
+
+TAO_RTScheduler_Current_ptr TAO_RTScheduler_Current::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return TAO_RTScheduler_Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+TAO_RTScheduler_Current_ptr TAO_RTScheduler_Current::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return TAO_RTScheduler_Current::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          TAO_RTScheduler_Current_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &TAO_RTScheduler_Current::_narrow
+                  )
+              )
+        );
+}
+
+TAO_RTScheduler_Current_ptr
+TAO_RTScheduler_Current::_duplicate (TAO_RTScheduler_Current_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
+  return obj;
+}
+
+void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &TAO_RTScheduler_Current::_narrow))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &::PortableInterceptor::ORBInitInfo::_narrow))
+    retv = ACE_reinterpret_cast
+      (
+        void *,
+        ACE_static_cast
+          (
+            PortableInterceptor::ORBInitInfo_ptr,
+            this
+          )
+      );
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
+const char* TAO_RTScheduler_Current::_interface_repository_id (void) const
+{
+  return "IDL:TAO_RTScheduler_Current:1.0";
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -34,8 +34,15 @@ public:
 			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException, 
 		     PortableInterceptor::ForwardRequest));
-private:
-	RTScheduling::Current_var current_;
+
+  virtual char* name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+ private:
+  RTScheduling::Current_var current_;
 };
 
 class TAO_RTScheduler_Export Server_Interceptor:
@@ -64,6 +71,13 @@ public PortableInterceptor::ServerRequestInterceptor
 			   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
+
+  virtual char* name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
 };
 
 #endif /*REQUEST_INTERCEPTOR_H*/

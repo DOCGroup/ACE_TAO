@@ -3,6 +3,7 @@
 // $Id$
 
 #include "RTScheduler_Initializer.h"
+#include "Request_Interceptor.h"
 
 ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
@@ -73,6 +74,20 @@ void
   info->register_initial_reference ("RTScheduler_Current",
                                     current_obj
                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  Client_Interceptor *client_interceptor;
+  ACE_NEW_THROW_EX (client_interceptor,
+                    Client_Interceptor (this->current_),
+                    CORBA::NO_MEMORY (
+			CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+			CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  
+  info->add_client_request_interceptor (client_interceptor
+					ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Set the RTScheduler_Manager
