@@ -124,12 +124,12 @@ TAO_EC_RPT_Timer_Module::
 {
   if (CORBA::is_nil (scheduler))
     {
-      this->scheduler_ = 
+      this->scheduler_ =
         RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
     }
   else
     {
-      this->scheduler_ = 
+      this->scheduler_ =
         RtecScheduler::Scheduler::_duplicate (scheduler);
     }
   for (int i = 0; i < ACE_Scheduler_MAX_PRIORITIES; ++i)
@@ -267,8 +267,7 @@ TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                        "received act == 0!!!.\n"), 0);
 
   {
-//    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE);
-
+    ACE_FUNCTION_TIMEPROBE (TAO_EC_TIMER_MODULE_START_EXECUTE);
     act->execute ();
   }
 

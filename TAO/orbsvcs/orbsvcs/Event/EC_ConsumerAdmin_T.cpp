@@ -101,7 +101,7 @@ TAO_EC_ConsumerAdmin_Delayed<ACE_SYNCH_USE>::connected (
       ACE_NEW (command,
                TAO_EC_ConsumerAdmin::Connected_Command (this,
                                                         supplier));
-               
+
       ACE_DEBUG ((LM_DEBUG,
                   "EC (%P|%t) Delayed connection command = %x\n",
                   command));
@@ -132,7 +132,7 @@ TAO_EC_ConsumerAdmin_Delayed<ACE_SYNCH_USE>::disconnected (
       ACE_DEBUG ((LM_DEBUG,
                   "EC (%P|%t) Delayed disconnection command = %x\n",
                   command));
-               
+
       this->command_queue_.enqueue_tail (command);
     }
 }
