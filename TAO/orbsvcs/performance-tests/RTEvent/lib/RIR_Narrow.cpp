@@ -10,7 +10,10 @@
 #define TAO_PERF_RTEC_RIR_NARROW_CPP
 
 #include "RIR_Narrow.h"
+
 #include "tao/Environment.h"
+
+#include "ace/Log_Msg.h"
 
 template<class Interface> ACE_TYPENAME RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
