@@ -1,5 +1,5 @@
 project : taolib_with_idl {
   depends += CIAO_Client
   libs       += TAO TAO_IFR_Client CIAO_Client
-  include_dir += $(TAO_ROOT)/CIAO
+  includes += $(TAO_ROOT)/CIAO $(TAO_ROOT)/tao/IFR_Client
 }
