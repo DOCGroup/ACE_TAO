@@ -1,3 +1,12 @@
+Mon Aug 25 19:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp(gen_collocated_skel_body): Added a
+	  new line to prevent warnings with gcc 3.3.1
+	
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp: DO not
+	  generate variable names for forwarded object references. This
+	  prevents warnings with gcc 3.3.1.
+
 Mon Aug 25 19:15:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_SArgument_T.cpp:
