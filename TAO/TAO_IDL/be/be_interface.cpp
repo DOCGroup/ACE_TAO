@@ -1379,7 +1379,8 @@ be_interface::analyze_parentage (void)
         }
     }
 
-  if (this->has_mixed_parentage_ == 1)
+  if (this->has_mixed_parentage_ == 1
+      && this->node_type () == AST_Decl::NT_interface)
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }
