@@ -1,3 +1,10 @@
+Thu Jun 26 15:29:55 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp: Changed the random scheduling to use
+	  past times instead of future time.  This should fix some unusual
+	  behavior of this test.  Thanks to Gonzalo A. Diethelm 
+	  <gonzo@ing.puc.cl> for reporting this.
+
 Thu Jun 26 12:38:16 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.2.12, released Thu Jun 26 12:38:16 1997.
