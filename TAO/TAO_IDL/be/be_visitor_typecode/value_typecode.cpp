@@ -72,7 +72,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       std::string const fields_name (std::string ("_tao_fields_")
                                      + node->flat_name ());
 
-      // Generate array containing struct field characteristics.
+      // Generate array containing value field characteristics.
       os << "static TAO::TypeCode::Value_Field<char const *> "
          << fields_name.c_str ();
 
