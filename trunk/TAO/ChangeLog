@@ -1,3 +1,9 @@
+Sun Feb 29 08:26:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile*:
+
+	  Regenerated dependencies.
+
 Sun Feb 29 09:49:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO/orbsvcs/examples/ORT/ORT.mpc:
