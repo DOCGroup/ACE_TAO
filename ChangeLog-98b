@@ -5,6 +5,9 @@ Fri May 15 08:25:19 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Svc_Conf_y.cpp,etc/Svc_Conf_y.cpp.diff: removed compile
           warnings.
 
+        * include/makeinclude/platform_sunos5_g++.GNU: use PIC instead of pic,
+          because the TAO orbsvcs lib needs it.
+
 Fri May 15 02:47:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.5 released.
