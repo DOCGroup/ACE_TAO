@@ -121,7 +121,7 @@ be_exception::gen_client_stubs (void)
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
-      this->cli_stub_gen_;
+      this->cli_stub_gen_ = I_TRUE;
       cg->pop ();
     }
 

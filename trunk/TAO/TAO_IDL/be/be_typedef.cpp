@@ -104,14 +104,13 @@ be_typedef::gen_client_stubs (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_STRUCT_CS); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_TYPEDEF_CS); // set current code gen state
 
       cs = cg->client_stubs ();
       // pass info
       cg->outstream (cs);
       cg->node (this);
 
-#if 0
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -135,7 +134,6 @@ be_typedef::gen_client_stubs (void)
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
-#endif
       this->cli_stub_gen_;
       cg->pop ();
     }
