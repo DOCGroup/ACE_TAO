@@ -1,3 +1,12 @@
+Wed Mar 22 09:44:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Lite.cpp;
+	  Removed unreachable 'break' statements (occurre after
+	  'return' statement in a switch case. These were 
+	  causing warnings on kai3.3.
+
 Tue Mar 21 20:13:01 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
