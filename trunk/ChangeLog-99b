@@ -1,5 +1,16 @@
 Wed Jul  7 13:27:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* config-aix-4.x.h,
+	  config-lynxos.h,
+	  config-psos-diab-mips.h,
+	  config-psos-diab-ppc.h,
+	  config-psos-diab.h,
+	  config-psos-tm.h,
+	  config-psosim-g++.h,
+	  config-sunos5.5.h:
+	  Changed ACE_MALLOC_ALIGN to ACE_MALLOC_PADDING.  It's not clear
+	  if these macros are still needed however.
+
 	* ace/Malloc.h: Renamed the macro ACE_MALLOC_ALIGN to
 	  ACE_MALLOC_PADDING, which is more descriptive.  However, I've
  	  retained ACE_MALLOC_ALIGN for backwards compatibility to keep
