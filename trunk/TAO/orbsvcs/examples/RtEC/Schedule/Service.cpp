@@ -15,6 +15,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(EC_Examples, Service, "$Id$")
 
@@ -227,8 +228,10 @@ main (int argc, char* argv[])
       // lie to the scheduler to obtain right priorities; but we
       // don't care if the set is schedulable.
       tv.set (0, 10000);
-      TimeBase::TimeT rate;
-      ORBSVCS_Time::Time_Value_to_TimeT (rate, tv);
+      TimeBase::TimeT tmp;
+      ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
+      RtecScheduler::Period_t rate = ACE_U64_TO_U32(tmp);
+
       scheduler->set (supplier_rt_info1,
                       RtecScheduler::VERY_HIGH_CRITICALITY,
                       0, 0, 0,
@@ -249,7 +252,9 @@ main (int argc, char* argv[])
       // lie to the scheduler to obtain right priorities; but we
       // don't care if the set is schedulable.
       tv.set (0, 20000);
-      ORBSVCS_Time::Time_Value_to_TimeT (rate, tv);
+      ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
+      rate = ACE_U64_TO_U32(tmp);
+
       scheduler->set (supplier_rt_info2,
                       RtecScheduler::VERY_HIGH_CRITICALITY,
                       0, 0, 0,
@@ -399,7 +404,7 @@ int parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-c (config run)"
+                           "-c (config run)"
                            "\n",
                            argv [0]),
                           -1);

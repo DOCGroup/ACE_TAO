@@ -1,8 +1,58 @@
+Wed Feb 23 18:35:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Invoke the consumer control strategy as soon as an
+          exception is raised while pushing to a consumer.
+          This fixes [BUGID:434]
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          The comments explaining what we do when we detect a system
+          exception while pushing an event where very confusing, i think
+          it is better now.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+          Include support for detecting misbehaving pull suppliers and
+          pull consumers.
+          This fixes [BUGID:433]
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+          Invoke the consumer or supplier control strategies as soon as an
+          exception is raised while pushing an event to a push consumer or
+          while pulling an event from a pull supplier.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+          Provide access to the ConsumerControl and SupplierControl
+          interfaces.
+
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          There Pull_Push_Test had no header explaining its output.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+          Workaround apparent bugs in the GHS compiler.
+          It needs some extra #includes to instantiate the templates.
+          Thanks to Bill Tovrea <gwtovrea@west.raytheon.com> for reporting
+          this problem and testing potential fixes.
+
 Wed Feb 23 20:36:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/README: Updated this file to include brief descriptions of 
-	  all tests in the subdirectories.  Thanks to Rick Hess
- 	  <rick.hess@lmco.com> for reporting this.
+        * tests/README: Updated this file to include brief descriptions of
+          all tests in the subdirectories.  Thanks to Rick Hess
+          <rick.hess@lmco.com> for reporting this.
 
 Wed Feb 23 14:42:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -13,6 +13,7 @@
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_Reactive_SupplierControl.h"
 #include "orbsvcs/Event/EC_Proxy_Collection.h"
+#include "orbsvcs/Event/EC_Command.h" // Work around bug in GHS compiler
 #include "orbsvcs/Event/EC_Concrete_Proxy_Set.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"

@@ -4,6 +4,7 @@
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerAdmin.h"
 #include "CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPullSupplier.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Reactive_ConsumerControl.i"
@@ -32,8 +33,13 @@ void
 TAO_CEC_Reactive_ConsumerControl::query_consumers (
       CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_CEC_Ping_Consumer worker (this);
-  this->event_channel_->consumer_admin ()->for_each (&worker,
+  TAO_CEC_Ping_Push_Consumer push_worker (this);
+  this->event_channel_->consumer_admin ()->for_each (&push_worker,
+                                                     ACE_TRY_ENV);
+  ACE_CHECK;
+
+  TAO_CEC_Ping_Pull_Consumer pull_worker (this);
+  this->event_channel_->consumer_admin ()->for_each (&pull_worker,
                                                      ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -156,6 +162,25 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
 }
 
 void
+TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
+      TAO_CEC_ProxyPullSupplier *proxy,
+      CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      proxy->disconnect_pull_supplier (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Reactive_ConsumerControl::consumer_not_exist");
+      // Ignore all exceptions..
+    }
+  ACE_ENDTRY;
+}
+
+void
 TAO_CEC_Reactive_ConsumerControl::system_exception (
       TAO_CEC_ProxyPushSupplier *proxy,
       CORBA::SystemException & /* exception */,
@@ -163,8 +188,11 @@ TAO_CEC_Reactive_ConsumerControl::system_exception (
 {
   ACE_TRY
     {
-      // This is TAO's minor code for a failed connection, we may
-      // want to be more lenient in the future..
+      // The current implementation is very strict, and kicks out a
+      // client on the first system exception. We may
+      // want to be more lenient in the future, for example,
+      // this is TAO's minor code for a failed connection.
+      //
       // if (CORBA::TRANSIENT::_narrow (&exception) != 0
       //     && exception->minor () == 0x54410085)
       //   return;
@@ -200,8 +228,8 @@ TAO_CEC_ConsumerControl_Adapter::handle_timeout (
 // ****************************************************************
 
 void
-TAO_CEC_Ping_Consumer::work (TAO_CEC_ProxyPushSupplier *supplier,
-                             CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_Ping_Push_Consumer::work (TAO_CEC_ProxyPushSupplier *supplier,
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
@@ -223,9 +251,60 @@ TAO_CEC_Ping_Consumer::work (TAO_CEC_ProxyPushSupplier *supplier,
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
-      // This is TAO's minor code for a failed connection, we may
-      // want to be more lenient in the future..
-      // if (transient.minor () == 0x54410085)
+      // The current implementation is very strict, and kicks out a
+      // client on the first system exception. We may
+      // want to be more lenient in the future, for example,
+      // this is TAO's minor code for a failed connection.
+      //
+      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
+      //     && exception->minor () == 0x54410085)
+      //   return;
+
+      this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions
+    }
+  ACE_ENDTRY;
+}
+
+// ****************************************************************
+
+void
+TAO_CEC_Ping_Pull_Consumer::work (TAO_CEC_ProxyPullSupplier *supplier,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      CORBA::Boolean disconnected;
+      CORBA::Boolean non_existent =
+        supplier->consumer_non_existent (disconnected,
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (non_existent && !disconnected)
+        {
+          this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::TRANSIENT, transient)
+    {
+      // The current implementation is very strict, and kicks out a
+      // client on the first system exception. We may
+      // want to be more lenient in the future, for example,
+      // this is TAO's minor code for a failed connection.
+      //
+      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
+      //     && exception->minor () == 0x54410085)
+      //   return;
+
       this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

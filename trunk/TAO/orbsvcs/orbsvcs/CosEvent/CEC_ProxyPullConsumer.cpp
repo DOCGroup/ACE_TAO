@@ -3,6 +3,7 @@
 #include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerAdmin.h"
+#include "CEC_SupplierControl.h"
 #include "CEC_ProxyPullSupplier.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -65,10 +66,27 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
       any = supplier->try_pull (has_event, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      TAO_CEC_SupplierControl *control =
+        this->event_channel_->supplier_control ();
+
+      control->supplier_not_exist (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      TAO_CEC_SupplierControl *control =
+        this->event_channel_->supplier_control ();
+
+      control->system_exception (this,
+                                 sysex,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
   ACE_CATCHANY
     {
-      // @@ This is where the policies for misbehaving suppliers
-      //    should kick in.... for the moment just ignore them.
+      // @@ Should not happen
     }
   ACE_ENDTRY;
   return any._retn ();
