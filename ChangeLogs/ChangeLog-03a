@@ -1,3 +1,8 @@
+Sun Sep 17 19:17:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/build_example.bor:
+          Add the IORTable library to the Simple examples.
+
 Sun Sep 17 17:04:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/ace_flags.bor:
