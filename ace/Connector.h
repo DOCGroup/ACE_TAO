@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -29,7 +28,7 @@
 #define ACE_PEER_CONNECTOR_1 class PEER_CONNECTOR
 #define ACE_PEER_CONNECTOR_2 PEER_CONNECTOR
 #define ACE_PEER_CONNECTOR PEER_CONNECTOR
-#define ACE_PEER_CONNECTOR_ADDR PEER_CONNECTOR::PEER_ADDR
+#define ACE_PEER_CONNECTOR_ADDR ACE_TYPENAME PEER_CONNECTOR::PEER_ADDR
 #else
 #define ACE_PEER_CONNECTOR_1 class PEER_CONNECTOR, class PEER_ADDR
 #define ACE_PEER_CONNECTOR_2 PEER_CONNECTOR, PEER_ADDR
@@ -118,7 +117,7 @@ class ACE_Connector : public ACE_Service_Object
 public:
   // = Initialization and termination methods.
 
-  typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
+  // typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
 
   ACE_Connector (ACE_Reactor *r = ACE_Service_Config::reactor ());
   // Initialize a connector.
