@@ -605,4 +605,17 @@ template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_R
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
+#else
+
+int
+main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("Dev Poll and Event Poll are not supported")
+              ACE_TEXT ("on this platform\n")));
+  ACE_END_TEST;
+  return 0;
+}
+
 #endif  /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
