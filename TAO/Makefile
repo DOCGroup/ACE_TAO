@@ -62,7 +62,31 @@ clone:
 reverseclean:
 	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
 
-CONTROLLED_FILES = TAO
+CONTROLLED_FILES = TAO/COPYING* \
+	    	   TAO/ChangeLog* \
+	  	   TAO/LICENSE.sun \
+		   TAO/Makefile* \
+		   TAO/PROBLEM-REPORT-FORM \
+		   TAO/README* \
+		   TAO/TAO-INSTALL.html \
+		   TAO/TAOACE* \
+		   TAO/TAO_IDL \
+		   TAO/VERSION \
+		   TAO/docs \
+		   TAO/examples \
+		   TAO/orbsvcs \
+		   TAO/performance-tests \
+		   TAO/release.pl \
+		   TAO/rules.tao.GNU \
+		   TAO/tao \
+		   TAO/tao-config.1.in \
+		   TAO/tao-config.in \
+		   TAO/taoConf.sh.in \
+	           TAO/tao_targets.GNU \
+		   TAO/taoconfig.mk \
+		   TAO/tests \
+		   TAO/utils
+
 
 RELEASE_FILES = $(CONTROLLED_FILES) \
                 TAO/INSTALL \

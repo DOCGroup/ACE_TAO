@@ -1,3 +1,9 @@
+Sat May 31 10:26:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: Added a list of controlled files. With CIAO in picture
+	  we cannot ta everything underneath TAO with a single tag while
+	  making a release.
+
 Fri May 30 20:29:11 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* docs/configurations.html: Fixed a typo where we claimed
