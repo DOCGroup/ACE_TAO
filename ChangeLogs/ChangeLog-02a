@@ -1,6 +1,6 @@
 Mon Dec 03 07:54:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
-        * ace/Unbounded_Queue.{h,cpp}
+        * ace/Unbounded_Queue.{h,cpp}:
           Added const iterator for this container class
 
 Sun Dec 02 15:13:30 2001  Carlos O'Ryan  <coryan@uci.edu>
