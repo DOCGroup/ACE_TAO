@@ -20,6 +20,7 @@
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
 
+#include /**/ "ace/Containers.h"
 #include /**/ "ace/Synch.h"
 #include /**/ "ace/Strategies_T.h"
 
