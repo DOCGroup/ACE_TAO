@@ -101,6 +101,7 @@ $(BIN): $(OBJS) <%foreach(configurations)%><%foreach(platforms)%><%if(prelink)%>
 	$(LINK.cc) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
 
 <%endif%>
+<%foreach(configurations)%>
 <%foreach(platforms)%>
 <%if(soext)%>
 <%if(sharedname)%>
@@ -124,6 +125,7 @@ all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%>
 
 <%endif%>
 <%endif%>
+<%endfor%>
 <%endfor%>
 <%if(staticname)%>
 $(LIB): $(OBJS)

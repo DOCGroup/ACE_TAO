@@ -1,3 +1,10 @@
+Tue Feb  3 07:37:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Added a missing foreach for the configurations.  It's necessary in
+          order to access the platforms.
+
 Mon Feb  2 13:53:08 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/OutputMessage.pm:
