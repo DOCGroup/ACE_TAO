@@ -1,3 +1,40 @@
+Mon Nov 20 00:30:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL\be\be_visitor_interface\remote_proxy_broker_cs.h:
+	* TAO_IDL\be\be_visitor_interface\remote_proxy_broker_cs.cpp:
+
+	  Visitor to generate the remote proxy broker implementation.
+
+	* TAO_IDL\be\be_visitor_interface\strategized_proxy_broker_ss.h:
+	* TAO_IDL\be\be_visitor_interface\strategized_proxy_broker_ss.h:
+
+	  Visitor to generate the stategized  proxy broker implementation.
+
+	* TAO_IDL\be\be_visitor_interface\thru_poa_proxy_impl_ss.h:
+	* TAO_IDL\be\be_visitor_interface\thru_poa_proxy_impl_ss.cpp:
+
+	  Visitor that generated the thru poa proxy implementation.
+
+	* TAO_IDL\be\be_visitor_interface\direct_proxy_impl_ss.h:
+	* TAO_IDL\be\be_visitor_interface\direct_proxy_impl_ss.cpp:
+
+	  Visitor that generated the direct  proxy implementation.
+
+	* TAO_IDL\be_include\be_visitor_operation\remote_proxy_impl_cs.h:
+	* TAO_IDL\be_include\be_visitor_operation\remote_proxy_impl_cs.cpp:
+
+	* TAO_IDL\be_include\be_visitor_operation\thru_poa_proxy_impl_ss.h:
+	* TAO_IDL\be_include\be_visitor_operation\thru_poa_proxy_impl_ss.cpp:
+
+	* TAO_IDL\be_include\be_visitor_operation\direct_proxy_impl_ss.h:
+	* TAO_IDL\be_include\be_visitor_operation\direct_proxy_impl_ss.cpp:
+
+         Visitors that genetate the operation code for different kind
+	 of proxy implementation.
+	 NOTE: This file were not added in the previous commit, because
+	 for some weird reason the CVS did not seem to view this file
+	 as new for the repo.
+
 Mon Nov 20 00:19:13 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL\be_include\be_visitor_interface\remote_proxy_impl_cs.h:
