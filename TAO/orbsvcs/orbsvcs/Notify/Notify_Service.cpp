@@ -55,11 +55,11 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
         {
           int dispatching_threads = ACE_OS::atoi (current_arg);
 
-                  arg_shifter.consume_arg ();
-
+          arg_shifter.consume_arg ();
+                  
           if (dispatching_threads > 0)
             {
-              NotifyExt::ThreadPoolParams tp_params = {0, dispatching_threads, 0, ACE_DEFAULT_THREAD_PRIORITY, 0, 0, 0 };
+              NotifyExt::ThreadPoolParams tp_params = {0, (unsigned)dispatching_threads, 0, ACE_DEFAULT_THREAD_PRIORITY, 0, 0, 0 };
               CosNotification::QoSProperties ec_qos;
 
               ec_qos.length (1);
@@ -131,7 +131,7 @@ TAO_NS_Notify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   ACE_Sched_Params::Policy sched_policy;
   long thr_sched_policy = orb->orb_core ()->orb_params ()->sched_policy ();
 
-  long thr_scope_policy = orb->orb_core ()->orb_params ()->scope_policy ();
+  //long thr_scope_policy = orb->orb_core ()->orb_params ()->scope_policy ();
 
   if (thr_sched_policy == THR_SCHED_FIFO)
     {
