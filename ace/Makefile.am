@@ -14,14 +14,10 @@ SUBDIRS = \
         QoS \
         SSL
 
-CLEANFILES =
-BUILT_SOURCES =
-pkgconfig_DATA =
-lib_LTLIBRARIES =
 
 ## Makefile.ACE.am
 
-lib_LTLIBRARIES += libACE.la
+lib_LTLIBRARIES = libACE.la
 
 libACE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -1166,7 +1162,7 @@ nobase_include_HEADERS = \
   streams.h \
   svc_export.h
 
-pkgconfig_DATA += ACE.pc
+pkgconfig_DATA = ACE.pc
 
 ACE.pc: ${top_builddir}/config.status ${srcdir}/ACE.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/ACE.pc.in
@@ -1219,10 +1215,10 @@ EXTRA_DIST += \
 
 if BUILD_QT
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   QtReactor_moc.cpp
 
-CLEANFILES += \
+CLEANFILES = \
   QtReactor_moc.cpp
 
 QtReactor_moc.cpp: $(srcdir)/QtReactor.h
