@@ -49,7 +49,7 @@ ACE_INLINE void
 ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
   if (scale_factor_ > 0) {
-    usecs = (this->end_ - this->start_) / 1000L / scale_factor_;
+    usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / 1000L / scale_factor_);
   } else {
     usecs = (this->end_ - this->start_) / 1000L;
   }
