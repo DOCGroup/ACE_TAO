@@ -1,3 +1,21 @@
+Wed Aug 23 12:19:04 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Propagated/Client_Propagated.dsw
+	* tests/RTCORBA/Client_Propagated/Makefile
+	* tests/RTCORBA/Client_Propagated/Makefile.bor
+	* tests/RTCORBA/Client_Propagated/README
+	* tests/RTCORBA/Client_Propagated/client.bor
+	* tests/RTCORBA/Client_Propagated/client.cpp
+	* tests/RTCORBA/Client_Propagated/client.dsp
+	* tests/RTCORBA/Client_Propagated/run_test.pl
+	* tests/RTCORBA/Client_Propagated/server.bor
+	* tests/RTCORBA/Client_Propagated/server.cpp
+	* tests/RTCORBA/Client_Propagated/server.dsp
+	* tests/RTCORBA/Client_Propagated/test.idl:
+
+	  Added a unit test for RTCORBA CLIENT_PROPAGATED Priority Model
+	  support.
+
 Wed Aug 23 11:53:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:
@@ -243,7 +261,7 @@ Wed Aug 23 00:28:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.h: Made the policies() accessor public.
 
-	* tao/POA.cpp: 
+	* tao/POA.cpp:
 
 	  - server_protocol(): Call CORBA::release() rather than delete on
 	  <this->server_protocol_> since that way is politically correct.
@@ -258,7 +276,7 @@ Wed Aug 23 00:28:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Aug 22 16:41:02 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
-	  moved variable declaration of "for loop" to fix compile warning. 
+	  moved variable declaration of "for loop" to fix compile warning.
 
 Tue Aug 22 12:05:40 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
@@ -275,7 +293,7 @@ Tue Aug 22 11:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Dynamic::Paramlist by adding a check for whether the operation
 	  node had any in or inout args at all since the
 	  Dynamic::Paramlist does not consider the out args.
-	
+
 Tue Aug 22 10:01:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Makefiles in $TAO_ROOT/examples: Updated depenedncies.
