@@ -41,6 +41,10 @@ u_long
 ACE_Log_Record::priority (void) const
 {
   ACE_TRACE ("ACE_Log_Record::priority");
+
+  // Get the priority of the <Log_Record> <type_>.  This is computed
+  // as the base 2 logarithm of <type_> (which must be a power of 2,
+  // as defined by the enums in <ACE_Log_Priority>).
   return ACE::log2 (this->type_);
 }
 
@@ -48,6 +52,9 @@ void
 ACE_Log_Record::priority (u_long p)
 {
   ACE_TRACE ("ACE_Log_Record::priority");
+
+  // Set the priority of the <Log_Record> <type_> (which must be a
+  // power of 2, as defined by the enums in <ACE_Log_Priority>).
   this->type_ = p;
 }
 

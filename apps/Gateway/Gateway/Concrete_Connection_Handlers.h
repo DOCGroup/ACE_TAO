@@ -107,6 +107,9 @@ protected:
 
   virtual int svc (void);
   // Transmit peer messages.
+
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  // Called when peers shutdown. 
 };
 
 class Thr_Supplier_Handler : public Supplier_Handler
@@ -122,6 +125,9 @@ public:
 protected:
   virtual int svc (void);
   // Transmit peer messages.
+
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  // Called when peers shutdown.
 };
 
 #endif /* CONCRETE_CONNECTION_HANDLER */

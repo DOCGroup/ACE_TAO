@@ -882,7 +882,7 @@ Chris Leishman <chris_leishman@freeonline.com.au>
 Klemen Zagar <klemen.zagar@irj.si>
 Rick Ohnemus <rjohnemus@systemware-inc.com>
 Adamo, Vince <adamo@vignette.com>
-Defang Zhou <dzhou@zoo.uvm.edu>
+Defang Zhou <dzhou@inktomi.com>
 Dave Zumbro <zumbro_d@ociweb.com>
 Ted Nolan <ted@ags.ga.erg.sri.com>
 Jianfei Xu <jxu@yahoo.com>
@@ -1165,6 +1165,7 @@ Mike Snowy <snowymike@aol.com>
 John Mackenzie <John.Mackenzie.extern@icn.siemens.de>
 Ricky Marek <ricky@waveip.com>
 Patrick Maassen <patrick.maassen@meco.nl>
+Christian Schuhegger <Christian.Schuhegger@cern.ch>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
