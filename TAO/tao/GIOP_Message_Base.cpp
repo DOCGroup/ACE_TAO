@@ -91,8 +91,7 @@ TAO_GIOP_Message_Base::generate_request_header (
                    generator_parser);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REQUEST,
-                                    cdr))
+  if (!this->write_protocol_header (TAO_GIOP_REQUEST, cdr))
     {
       if (TAO_debug_level)
         {
@@ -240,6 +239,7 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport * /*transport*/,
 int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
+
   // Ptr to first buffer.
   char *buf = (char *) stream.buffer ();
 
@@ -268,7 +268,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
     ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
                                            &bodylen),
                      buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
-#endif /* ACE_ENABLE_SWAP_ON_WRITE */
+#endif /*ACE_ENABLE_SWAP_ON_WRITE */
 
   if (TAO_debug_level > 2)
     {
@@ -843,16 +843,6 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
                                               TAO_OutputCDR &msg)
 {
 
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-  static bool once = true;
-  static int header_length = 0;
-
-  if (once)
-    {
-      once = false;
-#endif
-
-  // Reset the message type
   // Reset the message type
   msg.reset ();
 
@@ -877,26 +867,12 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
   // octet we can have a virtual function do this for us as the
   // version info , Bala
   header[6] = (TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
-
   header[7] = CORBA::Octet(t);
 
   static int header_size = sizeof (header) / sizeof (header[0]);
   msg.write_octet_array (header, header_size);
 
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-  header_length = msg.total_length ();
-#endif
-
   return msg.good_bit ();
-
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-    }
-
-  // Skip the required set of bytes
-  msg.skip_from_start (header_length);
-  return msg.good_bit ();
-#endif
-
 }
 
 int

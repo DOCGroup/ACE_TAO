@@ -52,9 +52,25 @@ namespace TAO
     TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
                                    this->details_.reply_service_info ());
 
+#if !defined (TAO_HAS_HEADER_CACHING)
     TAO_Target_Specification tspec;
-    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+#else
+    static TAO_Target_Specification tspec;
+#endif
+
+#if defined (TAO_HAS_HEADER_CACHING)
+    static bool once = true;
+    if (once)
+      {
+#endif
+        once = false;
+
+        this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+#if defined (TAO_HAS_HEADER_CACHING)
+      }
+#endif
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
@@ -72,14 +88,33 @@ namespace TAO
     // ending interception flow if things go wrong. The purpose of the
     // try block is to do just this.
     ACE_TRY
-      {
-        TAO_OutputCDR &cdr =
-          this->resolver_.transport ()->out_stream ();
+    {
 
-        this->write_header (tspec,
-                            cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (s);
+#if defined (TAO_HAS_HEADER_CACHING)
+      TAO_OutputCDR cdr;
+#else
+      static TAO_OutputCDR &cdr;
+#endif
+
+#if defined (TAO_HAS_HEADER_CACHING)
+      static bool not_same_header = true;
+      if (not_same_header)
+        {
+          not_same_header = false;
+          static TAO_OutputCDR &cdr =
+#else
+          TAO_OutputCDR &cdr =
+#endif
+     this->resolver_.transport ()->out_stream ();
+
+     this->write_header (tspec,
+                          cdr
+                          ACE_ENV_ARG_PARAMETER);
+     ACE_CHECK_RETURN (s);
+
+#if defined (TAO_HAS_HEADER_CACHING)
+        }
+#endif
 
         this->marshal_data (cdr
                             ACE_ENV_ARG_PARAMETER);

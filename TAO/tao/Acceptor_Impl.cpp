@@ -28,9 +28,13 @@
 #include "Thread_Per_Connection_Handler.h"
 #include "Server_Strategy_Factory.h"
 #include "ORB_Core.h"
-#include "Transport_Cache_Manager.h"
+//#include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
-#include "Transport.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "Transport.h"
+#endif
+
 #include "debug.h"
 
 #if !defined(__ACE_INLINE__)
@@ -81,6 +85,9 @@ template <class SVC_HANDLER> int
 TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                                                              void *arg)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   sh->transport ()->opened_as (TAO::TAO_SERVER_ROLE);
 
   // Indicate that this transport was opened in the server role
@@ -189,6 +196,14 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Success: #REFCOUNT# is two at this point.
   return result;
+#else
+  ACE_UNUSED_ARG (sh);
+  ACE_UNUSED_ARG (arg);
+
+  // Return Dummy success
+  return 1;
+#endif
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,23 @@
+Mon Jan 10 10:51:18 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/Synch_Invocation.cpp:
+
+          Strategies for cacheing request headers and avoiding
+          re-marshaling of CORBA request header when sending remote
+          requests.
+
+        * tao/tao.mpc:
+          Added the appropriate flags TAO_HAS_NO_HEADER_REMARSHALL and
+          TAO_HAS_REQUEST_CACHING to the mpc file.
+
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+
+          Resolved compilation errors
+
 Thu Jan  6 13:05:25 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * Strategies/DIOP_Connection_Handler.cpp:

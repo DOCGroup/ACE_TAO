@@ -203,6 +203,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       timeout = &tmp_zero;
     }
 
+  TAO_IIOP_Connection_Handler *svc_handler = 0;
   int result =
     this->base_connector_.connect (svc_handler,
                                    remote_address,
