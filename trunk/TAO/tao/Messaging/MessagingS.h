@@ -51,8 +51,10 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+
 TAO_NAMESPACE  POA_Messaging
 {
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
   // Forward Classes Declaration
@@ -107,6 +109,7 @@ TAO_NAMESPACE  POA_Messaging
         ACE_ENV_ARG_DECL
       );
 
+
     ::Messaging::ReplyHandler *_this (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
@@ -115,8 +118,10 @@ TAO_NAMESPACE  POA_Messaging
 
 
   };
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
   
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
   ///////////////////////////////////////////////////////////////////////
   //               Strategized Proxy Broker Declaration 
   //
@@ -203,6 +208,7 @@ public:
 //                Direct  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 }
 TAO_NAMESPACE_CLOSE // module Messaging

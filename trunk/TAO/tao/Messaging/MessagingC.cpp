@@ -20,7 +20,6 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "MessagingC.h"
-#include "messaging_export.h"
 
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
@@ -5187,6 +5186,7 @@ TAO_NAMESPACE_END
 
 
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
 {
@@ -5420,7 +5420,6 @@ Messaging::ExceptionHolder_out::operator-> (void)
   return this->ptr_;
 }
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 Messaging::ExceptionHolder* Messaging::ExceptionHolder::_downcast (CORBA::ValueBase* v)
 {
@@ -7429,6 +7428,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 #  pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 TAO_Messaging_Export void
 operator<<= (CORBA::Any &any, Messaging::ExceptionHolder *value) // copying
 {
@@ -7641,7 +7642,6 @@ CORBA::remove_ref (Messaging::ExceptionHolder * vt)
 }
 TAO_NAMESPACE_CLOSE
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 //@@ Boris: end experimental
 CORBA::Boolean
