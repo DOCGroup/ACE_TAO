@@ -1,3 +1,8 @@
+Sat Apr 26 11:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a compile error in
+	  builds whenexceptions are turned off.
+
 Sat Apr 26 11:08:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Messaging_No_ImplC.cpp: Missing template
