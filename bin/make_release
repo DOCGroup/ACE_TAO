@@ -59,9 +59,9 @@ unless ("$hostname" eq 'ace') {
   die "$0: must run on host ace\n";
 }
 
-if (! "$ENV{'CVSROOT'}") {
-  $ENV{'CVSROOT'} = '/project/cvs-repository';
-}
+
+$ENV{'CVSROOT'} ||
+  die "$0: must set your CVSROOT environment variable\n";
 
 if (! "$ENV{'ACE_ROOT'}") {
   chop ($ENV{'ACE_ROOT'} = `/pkg/gnu/bin/pwd`);
@@ -87,7 +87,7 @@ if (-d '/pkg/gnu/bin') {
 my $gnu2 = '/project/danzon/pkg/gnu/bin';
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
-my $export_dir = '/project/ftp-doc/pub/ACE';
+my $export_dir = '/project/deuce/ftp/pub/ACE+TAO-distribution';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
 my $generate_man_pages = 0;
