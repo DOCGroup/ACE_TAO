@@ -24,7 +24,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
-static ACE_Test_Output Test_Output;
+ACE_Test_Output *ACE_Test_Output::instance_ = 0;
 
 ACE_Test_Output::ACE_Test_Output (void)
   : output_file_ (0)
@@ -145,7 +145,39 @@ ACE_Test_Output::close (void)
 ACE_Test_Output*
 ACE_Test_Output::instance ()
 {
-  return &Test_Output;
+  if (ACE_Test_Output::instance_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      if (ACE_Test_Output::instance_ == 0)
+        {
+          ACE_NEW_RETURN (ACE_Test_Output::instance_,
+                          ACE_Test_Output,
+                          0);
+          //ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Test_Output, ACE_Test_Output::instance_)
+        }
+    }
+  return ACE_Test_Output::instance_;
+}
+
+const ACE_TCHAR *
+ACE_Test_Output::dll_name (void)
+{
+  return ACE_TEXT ("Test_Output");
+}
+
+const ACE_TCHAR *
+ACE_Test_Output::name (void)
+{
+  return ACE_TEXT ("ACE_Test_Output");
+}
+
+void
+ACE_Test_Output::close_singleton (void)
+{
+  delete ACE_Test_Output::instance ();
 }
 
 void
@@ -171,3 +203,8 @@ randomize (int array[], size_t size)
     }
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+   template class ACE_Framework_Component_T<ACE_Test_Output>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate ACE_Framework_Component_T<ACE_Test_Output>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
