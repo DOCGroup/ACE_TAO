@@ -21,7 +21,7 @@ ACE_Dynamic::ACE_Dynamic (void)
 /* static */ ACE_Dynamic *
 ACE_Dynamic::instance (void)
 {
-  return DYNAMIC::instance ();
+  return ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX>::instance ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -51,9 +51,6 @@ public:
 
   static ACE_Dynamic *instance (void);
 
-  typedef ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX> DYNAMIC;
-  // Point of access to the ACE_Dynamic singleton.
-
 private:
   int is_dynamic_;
   // Flag that indicates that the object was dynamically created. This
