@@ -137,7 +137,7 @@ $CL->Arguments ("-k file://$middlefile -i 100 -s");
 $client = $CL->SpawnWaitKill (100);
 
 # since the client crashes, skip check for $client != 0
-if ($client != -1) {
+if ($client == -1) {
     $status = 1;
 }
 
