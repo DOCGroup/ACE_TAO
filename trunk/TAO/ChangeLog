@@ -1,3 +1,34 @@
+Thu Aug 12 21:00:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* orbsvcs/orbsvcs/SSLIOP.mpc:
+	* tao/BiDir_GIOP.mpc:
+	* tao/Domain.mpc:
+	* tao/DynamicAny.mpc:
+	* tao/DynamicInterface.mpc:
+	* tao/IFR_Client.mpc:
+	* tao/IORInterceptor.mpc:
+	* tao/IORManipulation.mpc:
+	* tao/IORTable.mpc:
+	* tao/Messaging.mpc:
+	* tao/ObjRefTemplate.mpc:
+	* tao/PortableServer.mpc:
+	* tao/RTCORBA.mpc:
+	* tao/RTPortableServer.mpc:
+	* tao/RTScheduler.mpc:
+	* tao/SmartProxies.mpc:
+	* tao/Strategies.mpc:
+	* tao/TypeCodeFactory.mpc:
+	* tao/Utils.mpc:
+	* tao/Valuetype.mpc:
+	* tao/tao.mpc:
+	  Use new PIDL_Files custom file type so that *.pidl files are
+	  known to MPC.  This will be used by the automake template so
+	  *.pidl files are installed.
+
 Thu Aug 12 19:21:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP.mpc:

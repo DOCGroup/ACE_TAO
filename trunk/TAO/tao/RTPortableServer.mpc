@@ -22,4 +22,8 @@ project : taolib, core, rtcorba, portableserver {
   Resource_Files {
     RTPortableServer
   }
+
+  PIDL_Files {
+    RTPortableServer
+  }
 }

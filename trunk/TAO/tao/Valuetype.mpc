@@ -22,4 +22,7 @@ project : taolib, core {
   Resource_Files {
     Valuetype
   }
+
+  PIDL_Files {
+  }
 }

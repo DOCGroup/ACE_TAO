@@ -22,4 +22,8 @@ project : taolib, core, ifr_client {
   Resource_Files {
     TypeCodeFactory
   }
+
+  PIDL_Files {
+    TypeCodeFactory
+  }
 }

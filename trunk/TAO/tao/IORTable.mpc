@@ -22,4 +22,8 @@ project : taolib, core {
   Resource_Files {
     IORTable
   }
+
+  PIDL_Files {
+    IORTable
+  }
 }

@@ -22,4 +22,8 @@ project : valuetype, taolib, core {
   Resource_Files {
     DynamicAny
   }
+
+  PIDL_Files {
+    DynamicAny
+  }
 }

@@ -22,4 +22,8 @@ project : taolib, core, objreftemplate, iorinterceptor {
   Resource_Files {
     PortableServer
   }
+
+  PIDL_Files {
+    PortableServer
+  }
 }
