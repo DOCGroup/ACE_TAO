@@ -1,84 +1,93 @@
+Mon Feb 16 13:40:34 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/openssl.mpb:
+        * bin/MakeProjectCreator/config/qos.mpb:
+        * bin/MakeProjectCreator/config/qt.mpb:
+        * bin/MakeProjectCreator/config/zlib.mpb:
+
+          Added bmake to the specific sections for these base projects.
+
 Sun Feb 15 16:34:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/os_include/sys/os_stat.h:
+        * ace/os_include/sys/os_stat.h:
 
-	  Fixed a typo that was causing compile errors on Win32.
+          Fixed a typo that was causing compile errors on Win32.
 
 Sun Feb 15 09:40:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/os_include/sys/os_stat.h: Added a #define for
-	  S_IFLNK for Windows platforms, which lack this #define.  Thanks
- 	  to Zvika Ashani for reporting this.
+        * ace/os_include/sys/os_stat.h: Added a #define for
+          S_IFLNK for Windows platforms, which lack this #define.  Thanks
+          to Zvika Ashani for reporting this.
 
 Sun Feb 15 10:00:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Dirent_Test.cpp:
+        * tests/Dirent_Test.cpp:
 
-	  Fixed unused function warnings.
+          Fixed unused function warnings.
 
 Sat Feb 14 11:41:27 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_sys_stat.inl: Implement lstat() so that it'll
-	  use stat() on platforms that don't support lstat().
+        * ace/OS_NS_sys_stat.inl: Implement lstat() so that it'll
+          use stat() on platforms that don't support lstat().
 
-	* tests/Dirent_Test.cpp: Updated this test so it will
-	  illustrate how to recurse through a hierarchical directory
- 	  structure.  Thanks to Zvika Ashani <zvika@aspectusvi.com> for
- 	  helping to motivate this example and for providing the initial
- 	  implementation.
+        * tests/Dirent_Test.cpp: Updated this test so it will
+          illustrate how to recurse through a hierarchical directory
+          structure.  Thanks to Zvika Ashani <zvika@aspectusvi.com> for
+          helping to motivate this example and for providing the initial
+          implementation.
 
 Sat Feb 14 09:22:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TMCast/Makefile:	
-	* ace/TMCast/TMCast.mpc:
+        * ace/TMCast/Makefile:
+        * ace/TMCast/TMCast.mpc:
 
-	  Needs threads=1 to compile.
+          Needs threads=1 to compile.
 
 Sat Feb 14 08:48:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TMCast/Group.cpp:
+        * ace/TMCast/Group.cpp:
 
-	  Fixed compile errors in daily builds.
+          Fixed compile errors in daily builds.
 
 Fri Feb 13 12:21:06 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
- 
-	* ace/Process_Manager.cpp (wait): If the
-	  ACE_Event_Handler::handle_exit() methods kills a managed
- 	  process, the process_table_ array is modified before
- 	  this->remove_proc (idx) is called. In this case the value of idx
- 	  is wrong, so we replace remove_proc(idx) with remove(pid).
-  	  Thanks to Carsten Prescher <carsten.prescher@sysde.eads.net> for
- 	  reporting this.  This fixes bugid 1743.
+
+        * ace/Process_Manager.cpp (wait): If the
+          ACE_Event_Handler::handle_exit() methods kills a managed
+          process, the process_table_ array is modified before
+          this->remove_proc (idx) is called. In this case the value of idx
+          is wrong, so we replace remove_proc(idx) with remove(pid).
+          Thanks to Carsten Prescher <carsten.prescher@sysde.eads.net> for
+          reporting this.  This fixes bugid 1743.
 
 Fri Feb 13 09:47:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/CDR_Stream.cpp (clone_from):
+        * ace/CDR_Stream.cpp (clone_from):
 
-	  The check that is done before we go for an allocation needs to
-	  include the CDR alignment. 
-	  
-	* ace/TMCast/Group.cpp:
-	 
-	  Use standard macros like ACE_SYNCH_MUTEX that can compile in
-	  single-threaded and multi-threaded builds. Thanks to Duane 
-	  Binder for providing the patches.
+          The check that is done before we go for an allocation needs to
+          include the CDR alignment.
+
+        * ace/TMCast/Group.cpp:
+
+          Use standard macros like ACE_SYNCH_MUTEX that can compile in
+          single-threaded and multi-threaded builds. Thanks to Duane
+          Binder for providing the patches.
 
 Fri Feb 13 10:50:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Timers/Task.cpp: In main(), interval should be
-	  initialized with 100000 usecs, not 1000, to be .1 sec as the
-	  comment indicates. Thanks to Norm Whitehead
-	  <Norm_Whitehead@raytheon.com> for reporting this.
+        * examples/APG/Timers/Task.cpp: In main(), interval should be
+          initialized with 100000 usecs, not 1000, to be .1 sec as the
+          comment indicates. Thanks to Norm Whitehead
+          <Norm_Whitehead@raytheon.com> for reporting this.
 
-	* THANKS: Added Norm Whitehead to the Hall of Fame.
+        * THANKS: Added Norm Whitehead to the Hall of Fame.
 
 Thu Feb 12 10:40:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/ACE-categories.html:
+        * docs/ACE-categories.html:
 
-	  Fixed the url location. But the file names will not work since
-	  we have broken the  name generation in doxygen. We will fix that
-	  next. 
+          Fixed the url location. But the file names will not work since
+          we have broken the  name generation in doxygen. We will fix that
+          next.
 
 Thu Feb 12 09:34:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -118,13 +127,13 @@ Wed Feb 11 13:14:39 2004  Steve Huston  <shuston@riverace.com>
           disambiguate it from a 0 char*. Fixes compile error on Windows.
 
 Wed Feb 11 15:39:29 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
-  
+
         * examples/APG/Signals/SigAction.cpp
 
           Added a reinterpret_cast to fix a build error with LynxOS.
 
 Wed Feb 11 15:31:06 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
-  
+
         * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/Makefile
         * TAO/orbsvcs/Logging_Service/Event_Logging_Service/Makefile
         * TAO/orbsvcs/Logging_Service/Notify_Logging_Service/Makefile

@@ -6,7 +6,7 @@ feature(zlib) {
   libpaths += $(ZLIB_ROOT)/lib
   macros   += ZLIB
 
-  specific(borland, nmake, em3, vc6, vc7, vc71) {
+  specific(borland, bmake, nmake, em3, vc6, vc7, vc71) {
     lit_libs += zlib
   }
 
