@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF___CI_)
 #define _CORBA_COMPONENTIR_EVENTDEF___CI_
@@ -63,7 +63,7 @@ CORBA::ComponentIR::EventDef::EventDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER___CI_)
 #define _CORBA_COMPONENTIR_CONTAINER___CI_
@@ -99,7 +99,7 @@ CORBA::ComponentIR::Container::Container (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF___CI_)
 #define _CORBA_COMPONENTIR_MODULEDEF___CI_
@@ -135,7 +135,7 @@ CORBA::ComponentIR::ModuleDef::ModuleDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY___CI_)
 #define _CORBA_COMPONENTIR_REPOSITORY___CI_
@@ -171,7 +171,7 @@ CORBA::ComponentIR::Repository::Repository (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF___CI_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF___CI_
@@ -207,7 +207,7 @@ CORBA::ComponentIR::ProvidesDef::ProvidesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF___CI_)
 #define _CORBA_COMPONENTIR_USESDEF___CI_
@@ -243,7 +243,7 @@ CORBA::ComponentIR::UsesDef::UsesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF___CI_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF___CI_
@@ -279,7 +279,7 @@ CORBA::ComponentIR::EventPortDef::EventPortDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF___CI_)
 #define _CORBA_COMPONENTIR_EMITSDEF___CI_
@@ -315,7 +315,7 @@ CORBA::ComponentIR::EmitsDef::EmitsDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF___CI_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF___CI_
@@ -351,7 +351,7 @@ CORBA::ComponentIR::PublishesDef::PublishesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF___CI_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF___CI_
@@ -387,7 +387,7 @@ CORBA::ComponentIR::ConsumesDef::ConsumesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF___CI_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF___CI_
@@ -423,7 +423,7 @@ CORBA::ComponentIR::ComponentDef::ComponentDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF___CI_)
 #define _CORBA_COMPONENTIR_FACTORYDEF___CI_
@@ -459,7 +459,7 @@ CORBA::ComponentIR::FactoryDef::FactoryDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF___CI_)
 #define _CORBA_COMPONENTIR_FINDERDEF___CI_
@@ -495,7 +495,7 @@ CORBA::ComponentIR::FinderDef::FinderDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF___CI_)
 #define _CORBA_COMPONENTIR_HOMEDEF___CI_
