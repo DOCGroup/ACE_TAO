@@ -11,11 +11,11 @@
 // = DESCRIPTION
 //      This is a simple test that illustrates the timer mechanism of
 //      the reactor scheduling timers, handling expired timers and
-//      cancelling scheduled timers from multiple threads.
-//      No command line arguments are needed to run the test.
+//      cancelling scheduled timers from multiple threads.  No command
+//      line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Steve Huston
+//    Steve Huston <shuston@riverace.com>
 // 
 // ============================================================================
 
@@ -51,7 +51,6 @@ Time_Handler::setup (void)
                                                     ACE_Time_Value (5));
 }
 
-
 // In the secondary thread, set a heartbeat timer to go off every
 // second.  The heartbeat checks the status of things to be sure
 // they're being set and expired correctly.
@@ -61,9 +60,9 @@ Time_Handler::svc (void)
 {
   ACE_Time_Value backstop (30);
 
-  this->timer_id_[2] = the_reactor->schedule_timer(this,
-                                                   (const void *) 2,
-                                                   ACE_Time_Value (3));
+  this->timer_id_[2] = the_reactor->schedule_timer (this,
+                                                    (const void *) 2,
+                                                    ACE_Time_Value (3));
   this->my_reactor_.owner (ACE_OS::thr_self ());
   this->my_reactor_.schedule_timer (this, (const void *) 0,
                                     ACE_Time_Value (1),
@@ -79,14 +78,24 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   long time_tag = long (arg);
   ACE_UNUSED_ARG(tv);
 
-  if (time_tag == 0) 
+  if (time_tag < 0)
+    {
+      // This case just tests to make sure the Reactor is counting
+      // timer expiration correctly.
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("%T (%t): expiration %d\n"),
+                  -time_tag));
+      return 0;
+    }
+  else if (time_tag == 0) 
     {	// Heartbeat.
       int i;
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("%T (%t): heartbeat\n")));
-      // See if all of the timers have fired.  If so, leave the thread's
-      // reactor loop which will exit the thread and end the test.
+      // See if all of the timers have fired.  If so, leave the
+      // thread's reactor loop which will exit the thread and end the
+      // test.
 
       for (i = 0; i < Time_Handler::TIMER_SLOTS; i++) 
         if (this->timer_id_[i] != -1)
@@ -118,7 +127,6 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 #endif /* ACE_HAS_THREADS */
 
-
 int
 main (int, ASYS_TCHAR *[])
 {
@@ -126,13 +134,27 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
 
+  the_reactor = ACE_Reactor::instance ();
   Time_Handler other_thread;
 
-  the_reactor = ACE_Reactor::instance ();
+  for (int i = ACE_MAX_TIMERS; i > 0; i--)
+    // Schedule a timeout to expire in 5 seconds.
+    if (the_reactor->schedule_timer (&other_thread,
+                                     (const void *) -i,
+                                     ACE_Time_Value (2)) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "schedule_timer"),
+                        1);
+  
+  int result = the_reactor->handle_events ();
+  // All <ACE_MAX_TIMERS> should be counted in the return value.
+  ACE_ASSERT (result == ACE_MAX_TIMERS);
 
   // Set up initial set of timers.
   other_thread.setup ();
 
+  // Schedule a timeout to expire in 5 seconds.
   the_reactor->schedule_timer (&other_thread,
                                (const void *) 1,
                                ACE_Time_Value (5));
@@ -141,7 +163,8 @@ main (int, ASYS_TCHAR *[])
   the_reactor->run_event_loop ();
   other_thread.wait ();
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
