@@ -1,3 +1,11 @@
+Sat Dec 14 17:08:17 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Timer_Queue.cpp: Reverted "Sat Dec 14
+	  09:19:30 2002  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>"  since the offending ACE
+	  change has been reverted. Thanks to Dr. Schmidt for reverting
+	  the ACE change.
+
 Sat Dec 14 09:19:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Timer_Queue.cpp: #included Reactor.h. No
