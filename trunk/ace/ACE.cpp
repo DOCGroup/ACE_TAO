@@ -2422,31 +2422,34 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     ACE_LIB_TEXT ("Sat")
   };
 
- static const char *month_name[] = {
-   ACE_LIB_TEXT ("Jan"),
-   ACE_LIB_TEXT ("Feb"),
-   ACE_LIB_TEXT ("Mar"),
-   ACE_LIB_TEXT ("Apr"),
-   ACE_LIB_TEXT ("May"),
-   ACE_LIB_TEXT ("Jun"),
-   ACE_LIB_TEXT ("Jul"),
-   ACE_LIB_TEXT ("Aug"),
-   ACE_LIB_TEXT ("Sep"),
-   ACE_LIB_TEXT ("Oct"),
-   ACE_LIB_TEXT ("Nov"),
-   ACE_LIB_TEXT ("Dec") };
+  static const char *month_name[] = {
+    ACE_LIB_TEXT ("Jan"),
+    ACE_LIB_TEXT ("Feb"),
+    ACE_LIB_TEXT ("Mar"),
+    ACE_LIB_TEXT ("Apr"),
+    ACE_LIB_TEXT ("May"),
+    ACE_LIB_TEXT ("Jun"),
+    ACE_LIB_TEXT ("Jul"),
+    ACE_LIB_TEXT ("Aug"),
+    ACE_LIB_TEXT ("Sep"),
+    ACE_LIB_TEXT ("Oct"),
+    ACE_LIB_TEXT ("Nov"),
+    ACE_LIB_TEXT ("Dec") };
 
-   ACE_OS::sprintf (date_and_time,
-                    ACE_LIB_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
-                    day_of_week_name[local.wDayOfWeek],
-                    month_name[local.wMonth - 1],
-                    (int) local.wDay,
-                    (int) local.wYear,
-                    (int) local.wHour,
-                    (int) local.wMinute,
-                    (int) local.wSecond,
-                    (int) (local.wMilliseconds * 1000));
-   return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+  SYSTEMTIME local;
+  ::GetLocalTime (&local);
+
+  ACE_OS::sprintf (date_and_time,
+                   ACE_LIB_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
+                   day_of_week_name[local.wDayOfWeek],
+                   month_name[local.wMonth - 1],
+                   (int) local.wDay,
+                   (int) local.wYear,
+                   (int) local.wHour,
+                   (int) local.wMinute,
+                   (int) local.wSecond,
+                   (int) (local.wMilliseconds * 1000));
+  return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
 #else  /* UNIX */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
