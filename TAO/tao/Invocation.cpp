@@ -78,30 +78,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     orb_core_ (orb_core),
     transport_ (0)
 {
-  // @@ Alex: this code here is broken, this is not the right way to
-  //    initialize the request_id, please fix it I know it is not your
-  //    fault. (coryan)
-
-  // @@ I am commenting this out. We will use the RMS object as a
-  //    factory to give us the unique request ids. (alex)
-
-  // @@ TODO The comments here are scary, can someone please give me a
-  // warm fuzzy feeling about this (coryan).
-
-  // The assumption that thread ids are ints is false and horribly
-  // implementation-dependent, so this code just sucks.  But, at least
-  // it will compile on multiple platforms through the magic of ACE
-  // :-/
-
-
-  //assert (sizeof (CORBA::ULong) == sizeof (ACE_thread_t));
-  // ACE_thread_t me = ACE_OS::thr_self ();
-
-  // Copy in only as many bytes are valid, or only as many as we have
-  // room for, whichever is less.  -------> What a friggin' HACK!?!?!
-  // ACE_OS::memcpy (&this->my_request_id_,
-  //             &me,
-  //              ACE_MIN (sizeof (me), sizeof (this->my_request_id_)));
 }
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
@@ -275,24 +251,20 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   switch (message_type)
     {
     case TAO_GIOP::Request:
-
-      // @@ Alex: could you move this to the GIOP module? I think we
-      //    should keep as little knowledge about GIOP as possible
-      //    here...
-      this->write_request_header (svc_ctx,
-                                  this->request_id_,
-                                  is_roundtrip,
-                                  key,
-                                  this->opname_,
-                                  principal);
+      TAO_GIOP::write_request_header (svc_ctx,
+                                      this->request_id_,
+                                      is_roundtrip,
+                                      key,
+                                      this->opname_,
+                                      principal,
+                                      this->out_stream_,
+                                      this->orb_core_);
       break;
 
     case TAO_GIOP::LocateRequest:
-      // @@ Alex: could you move this to the GIOP module? I think we
-      //    should keep as little knowledge about GIOP as possible
-      //    here...
-      this->out_stream_ << this->request_id_;
-      this->out_stream_ << key;
+      TAO_GIOP::write_locate_request_header (this->request_id_,
+                                             key,
+                                             this->out_stream_);
       break;
 
     default:
@@ -305,71 +277,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
 
-CORBA::Boolean
-TAO_GIOP_Invocation::write_request_header_std
-     (const TAO_GIOP_ServiceContextList& svc_ctx,
-      CORBA::ULong request_id,
-      CORBA::Boolean is_roundtrip,
-      const TAO_opaque& key,
-      const char* opname,
-      CORBA::Principal_ptr principal)
-{
-  this->out_stream_ << svc_ctx;
-  this->out_stream_ << request_id;
-  this->out_stream_ << CORBA::Any::from_boolean (is_roundtrip);
-  this->out_stream_ << key;
-  this->out_stream_ << opname;
-  this->out_stream_ << principal;
-  return 1;
-}
-
-CORBA::Boolean
-TAO_GIOP_Invocation::write_request_header_lite
-     (const TAO_GIOP_ServiceContextList&,
-      CORBA::ULong request_id,
-      CORBA::Boolean is_roundtrip,
-      const TAO_opaque& key,
-      const char* opname,
-      CORBA::Principal_ptr)
-{
-  this->out_stream_ << request_id;
-  this->out_stream_ << CORBA::Any::from_boolean (is_roundtrip);
-  this->out_stream_ << key;
-  this->out_stream_ << opname;
-  return 1;
-}
-
-CORBA::Boolean
-TAO_GIOP_Invocation::write_request_header
-     (const TAO_GIOP_ServiceContextList& svc_ctx,
-      CORBA::ULong request_id,
-      CORBA::Boolean is_roundtrip,
-      const TAO_opaque& key,
-      const char* opname,
-      CORBA::Principal_ptr principal)
-{
-  if (this->orb_core_->orb_params ()->use_lite_protocol ())
-    return this->write_request_header_lite (svc_ctx,
-                                            request_id,
-                                            is_roundtrip,
-                                            key,
-                                            opname,
-                                            principal);
-  else
-    return this->write_request_header_std (svc_ctx,
-                                           request_id,
-                                           is_roundtrip,
-                                           key,
-                                           opname,
-                                           principal);
-}
-
-
-// @@ Does this comment make sense?. We dont wait for reply, right?
-// (alex)
-// Send request, block until any reply comes back, and unmarshal reply
-// parameters as appropriate.
-
+// Send request.
 int
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                              CORBA::Environment &ACE_TRY_ENV)
