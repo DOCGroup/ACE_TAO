@@ -1,4 +1,3 @@
-
 //
 // $Id$
 //
@@ -173,12 +172,12 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
           // generate the _ptr_type and _var_type typedef
           // but we must protect against certain versions of g++
-          << "#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8"
+          << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_idt_nl
           << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
           << "typedef " << node->local_name () << "_var _var_type;"
           << be_uidt_nl
-          << "#endif /* __GNUC__ */\n" << be_idt_nl
+          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl
 
           // generate the static _downcast operation
           // (see OMG 20.17.{4,5})
