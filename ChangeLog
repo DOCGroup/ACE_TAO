@@ -1,3 +1,14 @@
+Sun Mar 28 13:39:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Capabilities.h:
+
+	  #included Functor_String.h to force compilers to use the
+	  specialization. 
+	
+	* ace/ace_dll.dsp:
+
+	  Added the new functor specializations into the project files.
+
 Sun Mar 28 19:07:44 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/config/notifytest.mpb:
