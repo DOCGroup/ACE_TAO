@@ -29,16 +29,16 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
+// Forward declarations
 class TAO_Profile;
-
-typedef CORBA::ULong TAO_PHandle;
-
 namespace CORBA
 {
   class PolicyList;
 
   class Environment;
 }
+
+typedef CORBA::ULong TAO_PHandle;
 
 /**
  * @class TAO_MProfile

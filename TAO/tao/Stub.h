@@ -47,33 +47,6 @@ namespace TAO
   class ObjectKey;
 }
 
-// Function pointer returning a pointer to CORBA::Exception. This is used to
-// describe the allocator for user-defined exceptions that are used internally
-// by the interpreter.
-typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
-
-/**
- * @struct TAO_Exception_Data
- *
- * @brief Description of a single exception.
- *
- * The interpreter needs a way to allocate memory to hold the exception
- * that was raised by the stub. This data structure provides the typecode
- * for the exception as well as a static function pointer that
- * does the job of memory allocation.
- */
-struct TAO_Exception_Data
-{
-  /// Repository id of the exception.
-  const char *id;
-
-  /// The allocator for this exception.
-  TAO_Exception_Alloc alloc;
-
-  /// The typecode pointer for this exception.
-  CORBA::TypeCode_ptr tc_ptr;
-};
-
 /**
  * @class TAO_Stub
  *

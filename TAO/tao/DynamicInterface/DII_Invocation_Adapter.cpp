@@ -105,7 +105,7 @@ namespace TAO
 
   void
   DII_Deferred_Invocation_Adapter::invoke (
-      TAO_Exception_Data *ex,
+      TAO::Exception_Data *ex,
       unsigned long ex_count
       ACE_ENV_ARG_DECL)
   {

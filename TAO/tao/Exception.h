@@ -15,9 +15,11 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
+#include /**/ "ace/pre.h"
 
-#include "ace/pre.h"
-#include "ace/CORBA_macros.h"
+// Do not try removing this. If you remove this for subsetting lots of
+// things go wrong in TAO.
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +34,7 @@
 
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
-
+#include "ace/CORBA_macros.h"
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 

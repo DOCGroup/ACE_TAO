@@ -41,7 +41,7 @@ namespace  CORBA
 namespace TAO
 {
   class Argument;
-
+  class Exception_Data;
   class Collocation_Proxy_Broker;
   class Profile_Transport_Resolver;
 
@@ -114,7 +114,7 @@ namespace TAO
      *
      * @param ex_count Number of elements in the array.
      */
-    virtual void invoke (TAO_Exception_Data *ex,
+    virtual void invoke (TAO::Exception_Data *ex,
                          unsigned long ex_count
                          ACE_ENV_ARG_DECL);
   protected:

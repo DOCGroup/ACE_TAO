@@ -8,7 +8,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::Boolean argument_flag,
                                               TAO::Argument **args,
                                               CORBA::ULong num,
-                                              TAO_Exception_Data *data,
+                                              TAO::Exception_Data *data,
                                               CORBA::Long count)
   : opname_ (name)
     , opname_len_ (len)
@@ -111,12 +111,6 @@ TAO_Operation_Details::modify_request_id (int originator)
   if ((originator == 1 && ACE_ODD (this->request_id_))
       || (originator == 0 && ACE_EVEN (this->request_id_)))
     ++(this->request_id_);
-}
-
-ACE_INLINE CORBA::ULong
-TAO_Operation_Details::request_id (void)
-{
-  return this->request_id_;
 }
 
 ACE_INLINE CORBA::ULong

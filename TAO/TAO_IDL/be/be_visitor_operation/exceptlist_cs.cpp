@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           exceptlist_cs, 
+ACE_RCSID (be_visitor_operation,
+           exceptlist_cs,
            "$Id$")
 
 // ****************************************************************************
@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   if (node->exceptions ())
     {
       *os << be_nl << be_nl
-          << "static TAO_Exception_Data" << be_nl
+          << "static TAO::Exception_Data" << be_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata [] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
