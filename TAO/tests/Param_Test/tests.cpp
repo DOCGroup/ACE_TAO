@@ -41,21 +41,27 @@ Test_Short::opname (void) const
   return this->opname_;
 }
 
-void
-Test_Short::init_parameters (void)
+int
+Test_Short::init_parameters (Param_Test_ptr objref,
+                             CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
+
   this->in_ = gen->gen_short ();
   this->inout_ =  0;
+  return 0;
 }
 
-void
+int
 Test_Short::reset_parameters (void)
 {
   this->inout_ =  0;
   this->out_ =  0;
   this->ret_ =  0;
+  return 0;
 }
 
 int
@@ -158,10 +164,14 @@ Test_Unbounded_String::opname (void) const
   return this->opname_;
 }
 
-void
-Test_Unbounded_String::init_parameters (void)
+int
+Test_Unbounded_String::init_parameters (Param_Test_ptr objref,
+                                        CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
+
   // release any previously occupied values
   CORBA::string_free (this->in_);
   CORBA::string_free (this->inout_);
@@ -174,9 +184,10 @@ Test_Unbounded_String::init_parameters (void)
 
   this->in_ = gen->gen_string ();
   this->inout_ = CORBA::string_dup (this->in_);
+  return 0;
 }
 
-void
+int
 Test_Unbounded_String::reset_parameters (void)
 {
   // release any previously occupied values
@@ -185,6 +196,7 @@ Test_Unbounded_String::reset_parameters (void)
   this->ret_ = 0;
 
   this->inout_ = CORBA::string_dup (this->in_);
+  return 0;
 }
 
 int
@@ -284,21 +296,27 @@ Test_Fixed_Struct::opname (void) const
   return this->opname_;
 }
 
-void
-Test_Fixed_Struct::init_parameters (void)
+int
+Test_Fixed_Struct::init_parameters (Param_Test_ptr objref,
+                                    CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
+
   this->in_ = gen->gen_fixed_struct ();
   ACE_OS::memset (&this->inout_, 0, sizeof (Param_Test::Fixed_Struct));
+  return 0;
 }
 
-void
+int
 Test_Fixed_Struct::reset_parameters (void)
 {
   ACE_OS::memset (&this->inout_, 0, sizeof (Param_Test::Fixed_Struct));
   ACE_OS::memset (&this->out_, 0, sizeof (Param_Test::Fixed_Struct));
   ACE_OS::memset (&this->ret_, 0, sizeof (Param_Test::Fixed_Struct));
+  return 0;
 }
 
 int
@@ -471,10 +489,14 @@ Test_String_Sequence::opname (void) const
   return this->opname_;
 }
 
-void
-Test_String_Sequence::init_parameters (void)
+int
+Test_String_Sequence::init_parameters (Param_Test_ptr objref,
+                                       CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
+
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
@@ -489,14 +511,16 @@ Test_String_Sequence::init_parameters (void)
       char *str = gen->gen_string ();
       this->in_[i] = str;
     }
+  return 0;
 }
 
-void
+int
 Test_String_Sequence::reset_parameters (void)
 {
   this->inout_ = new Param_Test::StrSeq; // delete the previous one
   this->out_ = 0;
   this->ret_ = 0;
+  return 0;
 }
 
 int
@@ -616,10 +640,14 @@ Test_Var_Struct::opname (void) const
   return this->opname_;
 }
 
-void
-Test_Var_Struct::init_parameters (void)
+int
+Test_Var_Struct::init_parameters (Param_Test_ptr objref,
+                                  CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
+
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
@@ -634,14 +662,16 @@ Test_Var_Struct::init_parameters (void)
       char *str = gen->gen_string ();
       this->in_.seq[i] = str;
     }
+  return 0;
 }
 
-void
+int
 Test_Var_Struct::reset_parameters (void)
 {
   this->inout_ = new Param_Test::Var_Struct; // delete the previous one
   this->out_ = 0;
   this->ret_ = 0;
+  return 0;
 }
 
 int
@@ -761,10 +791,14 @@ Test_Nested_Struct::opname (void) const
   return this->opname_;
 }
 
-void
-Test_Nested_Struct::init_parameters (void)
+int
+Test_Nested_Struct::init_parameters (Param_Test_ptr objref,
+                                     CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
+
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
@@ -779,14 +813,16 @@ Test_Nested_Struct::init_parameters (void)
       char *str = gen->gen_string ();
       this->in_.vs.seq[i] = str;
     }
+  return 0;
 }
 
-void
+int
 Test_Nested_Struct::reset_parameters (void)
 {
   this->inout_ = new Param_Test::Nested_Struct; // delete the previous one
   this->out_ = 0;
   this->ret_ = 0;
+  return 0;
 }
 
 int
@@ -849,12 +885,13 @@ CORBA::Boolean
 Test_Nested_Struct::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
-  this->inout_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *) req->arguments
-                                         ()->item (1, env)->value ()->value ());
+  this->inout_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *)
+                                                req->arguments ()->item
+                                                (1, env)->value ()->value ());
   this->out_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *) req->arguments
-                                       ()->item (2, env)->value ()->value ());
+                                              ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *)req->result
-                                       ()->value ()->value ());
+                                              ()->value ()->value ());
   return this->check_validity ();
 }
 
@@ -879,4 +916,248 @@ Test_Nested_Struct::print_values (void)
                   this->ret_->vs.seq.length (),
                   (this->ret_->vs.seq.length ()? (char *)this->ret_->vs.seq[i]:"<nul>")));
     }
+}
+
+// ************************************************************************
+//               Test_ObjRef
+// ************************************************************************
+
+Test_ObjRef::Test_ObjRef (void)
+  : opname_ (CORBA::string_dup ("test_objref"))
+{
+}
+
+Test_ObjRef::~Test_ObjRef (void)
+{
+  CORBA::string_free (this->opname_);
+  this->opname_ = 0;
+}
+
+const char *
+Test_ObjRef::opname (void) const
+{
+  return this->opname_;
+}
+
+static char *Coffee_Flavor [] = {
+  "Italian Roast",
+  "Irish Creme",
+  "Costa Rican",
+  "Colombian Supremo",
+  "Macademia Nut",
+  "Swiss Chocolate Mocha"
+};
+
+int
+Test_ObjRef::init_parameters (Param_Test_ptr objref,
+                              CORBA::Environment &env)
+{
+  Coffee::Desc desc;
+  Generator *gen = GENERATOR::instance (); // value generator
+
+  // first get a Coffee object
+  this->in_ = objref->make_coffee (env);
+  if (env.exception ())
+    {
+      env.print_exception ("make_coffee");
+      return -1;
+    }
+
+  // get some sequence length (not more than 10)
+  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+  desc.name = Coffee_Flavor [index];
+  // set the attribute of the object
+  this->in_->description (desc, env); // set the attribute for the in object
+  if (env.exception ())
+    {
+      env.print_exception ("set coffee attribute");
+      return -1;
+    }
+  return 0;
+}
+
+int
+Test_ObjRef::reset_parameters (void)
+{
+  CORBA::Environment env;
+  Coffee::Desc desc;
+  Generator *gen = GENERATOR::instance (); // value generator
+
+  // get some sequence length (not more than 10)
+  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+  desc.name = Coffee_Flavor [index];
+  // set the attribute of the object
+  this->in_->description (desc, env); // set the attribute for the in object
+  if (env.exception ())
+    {
+      env.print_exception ("set coffee attribute");
+      return -1;
+    }
+
+  this->inout_ = Coffee::_nil ();
+  this->out_ =  Coffee::_nil ();
+  this->ret_ =  Coffee::_nil ();
+  return 0;
+}
+
+int
+Test_ObjRef::run_sii_test (Param_Test_ptr objref,
+                          CORBA::Environment &env)
+{
+  Coffee_out out (this->out_.out ());
+  this->ret_ = objref->test_objref (this->in_.in (),
+                                    this->inout_.inout (),
+                                    out,
+                                    env);
+  return (env.exception () ? -1:0);
+}
+
+int
+Test_ObjRef::add_args (CORBA::NVList_ptr &param_list,
+                      CORBA::NVList_ptr &retval,
+                      CORBA::Environment &env)
+{
+  CORBA::Any in_arg (_tc_Coffee, &this->in_, 0);
+  CORBA::Any inout_arg (_tc_Coffee, &this->inout_, 0);
+  CORBA::Any out_arg (_tc_Coffee, &this->out_, 0);
+
+  // add parameters
+  (void)param_list->add_value ("o1", in_arg, CORBA::ARG_IN, env);
+  (void)param_list->add_value ("o2", inout_arg, CORBA::ARG_INOUT, env);
+  (void)param_list->add_value ("o3", out_arg, CORBA::ARG_OUT, env);
+
+  // add return value
+  (void)retval->item (0, env)->value ()->replace (_tc_Coffee,
+                                                  &this->ret_,
+                                                  0, // does not own
+                                                  env);
+  return 0;
+}
+
+CORBA::Boolean
+Test_ObjRef::check_validity (void)
+{
+  CORBA::Environment env;
+  char   // attribute names
+    *in,
+    *inout,
+    *out,
+    *ret;
+
+  in = this->in_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return 0;
+    }
+
+  inout = this->inout_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return 0;
+    }
+
+  out = this->out_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return 0;
+    }
+
+  ret = this->ret_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return 0;
+    }
+
+  // now compare them
+  if (!ACE_OS::strcmp (in, inout) &&
+      !ACE_OS::strcmp (in, out) &&
+      !ACE_OS::strcmp (in, ret))
+    return 1; // success
+  else
+    return 0;
+}
+
+CORBA::Boolean
+Test_ObjRef::check_validity (CORBA::Request_ptr req)
+{
+  CORBA::Environment env;
+  this->inout_ = Coffee::_narrow ((CORBA::Object_ptr) req->arguments ()->item
+                                  (1, env)->value ()->value (), env);
+  if (env.exception ())
+    {
+      env.print_exception ("_narrow from DII result");
+      return 0;
+    }
+
+  this->out_ = Coffee::_narrow ((CORBA::Object_ptr) req->arguments ()->item
+                                (2, env)->value ()->value (), env);
+  if (env.exception ())
+    {
+      env.print_exception ("_narrow from DII result");
+      return 0;
+    }
+
+  this->ret_ = Coffee::_narrow ((CORBA::Object_ptr)req->result ()->value
+                                ()->value (), env);
+  if (env.exception ())
+    {
+      env.print_exception ("_narrow from DII result");
+      return 0;
+    }
+
+  return this->check_validity ();
+}
+
+void
+Test_ObjRef::print_values (void)
+{
+  CORBA::Environment env;
+  char   // attribute names
+    *in,
+    *inout,
+    *out,
+    *ret;
+
+  in = this->in_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return;
+    }
+
+  inout = this->inout_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return;
+    }
+
+  out = this->out_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return;
+    }
+
+  ret = this->ret_->description (env)->name;
+  if (env.exception ())
+    {
+      env.print_exception ("retrieving description");
+      return;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n=*=*=*=*=*=*"
+              "in = %s, "
+              "inout = %s, "
+              "out = %s, "
+              "ret = %s*=*=*=*=*=\n",
+              in,
+              inout,
+              out,
+              ret));
 }

@@ -1452,6 +1452,17 @@ int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen
   ACE_Unbounded_Queue <be_interface*> queue; // Queue data structure needed for
                                             // breadth-first traversal of
                                             // inheritance tree
+
+  // For a special case of a deeply nested inheritance graph and one specific
+  // way of inheritance in which a node that was already visited, but is not present in
+  // the queue, gets inserted at the tail. This sitation arises when a node
+  // multiply inherits from two or more interfaces in which the first parent is
+  // higher up in the tree than the second parent. In addition, if the second
+  // parent turns out to be a child of the first .
+
+  ACE_Unbounded_Queue <be_interface*> del_queue; // queue of dequeued nodes to
+                                                 // be searched for the above case
+
   // insert ourselves in the Queue
   if (queue.enqueue_tail (this) == -1)
     {
@@ -1476,6 +1487,13 @@ int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
                              "dequeue_head failed\n"), -1);
+        }
+
+      // insert the dequeued element in the del_queue
+      if (del_queue.enqueue_tail (bi) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::gen_operation_table - "
+                             "error generating entries\n"), -1);
         }
 
       // use the helper method to generate code for ourself using the
@@ -1523,6 +1541,25 @@ int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen
                 break;
               (void) q_iter.advance ();
             } // end of while
+
+          // initialize an iterator to search the del_queue for duplicates
+          ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (del_queue);
+
+          while (!found && !del_q_iter.done ())
+            {
+              be_interface **temp;  // queue element
+
+              (void) del_q_iter.next (temp);
+              if (!ACE_OS::strcmp (parent->fullname (), (*temp)->fullname ()))
+                {
+                  // we exist in this del_queue and cannot be inserted
+                  found = 1;
+                }
+              if (found)
+                break;
+              (void) del_q_iter.advance ();
+            } // end of while
+
           if (!found)
             {
               // insert the parent in the queue

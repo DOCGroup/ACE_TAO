@@ -310,7 +310,7 @@ be_attribute::gen_client_stubs (void)
   *cs << "1, "; // always a twoway call
   *cs << "2, "; // size is 2
   // insert the address of the paramdata table
-  *cs << "_get_" << this->flatname () << "_paramdata, ";
+  *cs << "_set_" << this->flatname () << "_paramdata, ";
   // XXXASG - Exception list goes here (if it exists) - TODO
   *cs << "0, 0};\n\n";
 

@@ -59,7 +59,14 @@ Param_Test_Client<T>::run_sii_test (void)
   this->results_.iterations (opt->loop_count ());
 
   // initialize parameters for the test
-  this->test_object_->init_parameters ();
+  if (this->test_object_->init_parameters (this->param_test_, env) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) client.cpp - run_sii_test:"
+                  "init_parameters failed for opname - %s",
+                  opname));
+      return -1;
+    }
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
@@ -94,6 +101,7 @@ Param_Test_Client<T>::run_sii_test (void)
           ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
           this->test_object_->print_values ();
         }
+
       if (!this->test_object_->check_validity ())
         {
           this->results_.error_count (this->results_.error_count () + 1);
@@ -104,7 +112,14 @@ Param_Test_Client<T>::run_sii_test (void)
           continue;
         }
       // reset parameters for the test
-      this->test_object_->reset_parameters ();
+      if (this->test_object_->reset_parameters () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) client.cpp - run_dii_test:"
+                      "init_parameters failed for opname - %s",
+                      opname));
+          return -1;
+        }
     }
 
   // print statistics
@@ -130,7 +145,14 @@ Param_Test_Client<T>::run_dii_test (void)
   this->results_.iterations (opt->loop_count ());
 
   // initialize parameters for the test
-  this->test_object_->init_parameters ();
+  if (this->test_object_->init_parameters (this->param_test_, env) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) client.cpp - run_dii_test:"
+                  "init_parameters failed for opname - %s",
+                  opname));
+      return -1;
+    }
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)

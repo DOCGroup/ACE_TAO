@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -460,6 +460,49 @@ AST_EnumVal *AST_Interface::fe_add_enum_val(AST_EnumVal *t)
  * Add an AST_Typedef (a typedef) to the current scope
  */
 AST_Typedef *AST_Interface::fe_add_typedef(AST_Typedef *t)
+{
+  AST_Decl *d;
+
+  /*
+   * Can't add to interface which was not yet defined
+   */
+  if (!is_defined()) {
+    idl_global->err()->error2(UTL_Error::EIDL_DECL_NOT_DEFINED, this, t);
+    return NULL;
+  }
+  /*
+   * Already defined and cannot be redefined? Or already used?
+   */
+  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
+    if (!can_be_redefined(d)) {
+      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
+      return NULL;
+    }
+    if (referenced(d)) {
+      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
+      return NULL;
+    }
+    if (t->has_ancestor(d)) {
+      idl_global->err()->redefinition_in_scope(t, d);
+      return NULL;
+    }
+  }
+  /*
+   * Add it to scope
+   */
+  add_to_scope(t);
+  /*
+   * Add it to set of locally referenced symbols
+   */
+  add_to_referenced(t, I_FALSE);
+
+  return t;
+}
+
+/*
+ * Add an AST_Native (a native declaration) to this scope
+ */
+AST_Native *AST_Interface::fe_add_native (AST_Native *t)
 {
   AST_Decl *d;
 

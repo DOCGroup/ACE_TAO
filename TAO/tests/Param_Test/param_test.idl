@@ -19,7 +19,6 @@
 //
 // ============================================================================
 
-/*
 interface Coffee
 {
   struct Desc
@@ -27,9 +26,8 @@ interface Coffee
     string name;
   };
 
-  readonly attribute Desc description;
+  attribute Desc description; // provides us the coffee object type
 };
-  */
 
 interface Param_Test
 {
@@ -89,11 +87,11 @@ interface Param_Test
   Nested_Struct test_nested_struct (in Nested_Struct s1,
                                     inout Nested_Struct s2,
                                     out Nested_Struct s3);
-  /*
   // object references
   Coffee make_coffee (); // make a Coffee object
-  Coffee test_Coffee (in Coffee o1, inout Coffee o2, out Coffee o3);
+  Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
 
+  /*
   long test_long (in long l1,
                   inout long l2,
                   out long l3);
