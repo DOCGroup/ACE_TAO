@@ -1,3 +1,16 @@
+Wed Jan 22 18:03:35 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_linux.GNU:
+	* include/makeinclude/platform_linux_icc.GNU:
+	* include/makeinclude/platform_linux_kcc.GNU:
+	  Remove defines of _POSIX_THREADS and _POSIX_THREAD_SAFE_FUNCTIONS.
+	  These POSIX constants are not meant to be defined by
+	  the user.  The user must include <unistd.h> and *check*
+	  the value of these constants.  On Linux glibc systems,
+	  after including <unistd.h>, the header <bits/posix_opt.h>
+	  will be eventually be included...these constants are
+	  defined by the glibc implementation in that header.
+
 Wed Jan 22 10:55:39 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/config-tru64.h: Added ACE_HAS_SNPRINTF. Thanks to Vladimir
