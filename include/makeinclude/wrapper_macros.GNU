@@ -524,13 +524,13 @@ else  # exceptions
     #### Enable exception handling with g++ < 2.8.0.  Not recommended,
     #### but provided here for completeness.
     CCFLAGS += -fhandle-exceptions
-  else  # ! ACE_HAS_GNUG_PRE_2_8
-  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
-    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
-    #### it gets confused and reports too many bogus warnings.
-    CFLAGS += -Wno-uninitialized
-  endif # g++ > 2.8.0
-  endif # ! ACE_HAS_GNUG_PRE_2_8
+#  else  # ! ACE_HAS_GNUG_PRE_2_8
+#  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+#    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
+#    #### it gets confused and reports too many bogus warnings.
+#    CCFLAGS += -Wno-uninitialized
+#  endif # g++ > 2.8.0
+#  endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # exceptions
 
 ifeq ($(profile),0)
