@@ -1,3 +1,9 @@
+Thu Oct 15 22:05:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp (unique_name): Moved the arguments around in the
+ 	  sprintf() in order to generate a better "unique name".  Thanks
+ 	  to Bob McWhirter for suggesting this.
+
 Thu Oct 15 21:20:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (operator-- and operator++): 
