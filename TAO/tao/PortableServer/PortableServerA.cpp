@@ -26,6 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "PortableServerC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
