@@ -1,3 +1,23 @@
+Fri Sep  1 13:25:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/Configuration.cpp:
+        * ace/Configuration.h:
+
+	  Checked in some fixes to ACE_Configuration sent in by
+	  Chris Hafey <chafey@stentorsoft.com>. Chris writes:
+	
+	  Fixed a handle leak in export_config().
+          Thanks to Matthew Adams <madams@bexusa.com> for reporting the bug.
+
+          Fixed a memory leak in export_section() for binary types.  Fixed a
+          bug in get_binary_data() for the registry version where binary
+          values > ACE_DEFAULT_BUFSIZE wouldn't be retrieved correctly.  For
+          win32 versions, we now export unrecognized types as BINARY values
+          rather than fail entirely.  Fixed a bug where the size of a new
+          section name was calculated incorrectly for unicode builds.
+	  Thanks to Vijay Aswadhati <wyseman@planetbazaar.com> for reporting
+          this.  [Bug 649]
+
 Fri Sep 01 03:08:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Task.h:
