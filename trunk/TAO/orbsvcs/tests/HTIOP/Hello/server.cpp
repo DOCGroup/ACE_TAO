@@ -6,7 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTableC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 ACE_RCSID (Hello,
            server,
