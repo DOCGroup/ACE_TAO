@@ -565,10 +565,10 @@ CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
 
       if (implrepo_service_ior.length () != 0)
         {
-          ACE_TRY 
+          ACE_TRY
             {
               this->implrepo_service_ =
-                this->string_to_object (implrepo_service_ior.c_str (), 
+                this->string_to_object (implrepo_service_ior.c_str (),
                                         ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
@@ -855,13 +855,13 @@ CORBA_ORB::resolve_initial_references (const char *name,
               list_of_profiles += ACE_CString (str);
               // @@ Make sure that default initial reference doesn't
               //    end with the object key delimiter character.
-              //    Currently, this only works for pluggable protocols 
+              //    Currently, this only works for pluggable protocols
               //    that use a forward slash '/' as the object key
               //    delimiter.  However, this will not work for
-              //    pluggable protocols that do not use a '/' as their 
+              //    pluggable protocols that do not use a '/' as their
               //    object key delimiter, such as UIOP.  This parsing
-              //    code should be merged with or use the parsing code 
-              //    used during MProfile creation in the TAO_Connector 
+              //    code should be merged with or use the parsing code
+              //    used during MProfile creation in the TAO_Connector
               //    base class.
               //            -Ossama
               if (list_of_profiles[list_of_profiles.length() - 1] != '/')
@@ -1846,7 +1846,7 @@ CORBA_ORB::unregister_value_factory (const char * /* repository_id */,
 
 CORBA::ValueFactory_ptr
 CORBA_ORB::lookup_value_factory (const char *repository_id,
-                                 CORBA_Environment &ACE_TRY_ENV)
+                                 CORBA_Environment &)
 {
 // %! guard
 // do _add_ref here not in map->find
