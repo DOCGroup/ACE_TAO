@@ -123,10 +123,10 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
     FtRtecEventComm::ObjectId supplier_admin_object_id(consumer_admin_object_id);
     supplier_admin_object_id[9]++;
 
-    ec->activate(orb_,
-                 supplier_admin_object_id,
-                 consumer_admin_object_id
-                 ACE_ENV_ARG_PARAMETER);
+    ec->activate_object(orb_,
+                        supplier_admin_object_id,
+                        consumer_admin_object_id
+                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
     FtRtecEventChannelAdmin::EventChannel_var result;

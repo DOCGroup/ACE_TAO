@@ -28,7 +28,6 @@ class AMI_Primary_Replication_Strategy : public Replication_Strategy
 public:
     AMI_Primary_Replication_Strategy();
     virtual ~AMI_Primary_Replication_Strategy();
-    virtual int init();
     virtual void replicate_request(const FTRT::State& state,
                                    RollbackOperation rollback,
                                    const FtRtecEventChannelAdmin::ObjectId& oid

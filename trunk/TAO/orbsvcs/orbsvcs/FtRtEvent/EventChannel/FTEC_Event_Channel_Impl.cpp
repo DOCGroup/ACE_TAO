@@ -6,7 +6,7 @@
 #include "FTEC_ConsumerAdmin.h"
 #include "FTEC_ProxyConsumer.h"
 #include "FTEC_ProxySupplier.h"
-#include "../Utils/ScopeGuard.h"
+//#include "../Utils/ScopeGuard.h"
 #include "FtEventServiceInterceptor.h"
 #include "FT_ProxyAdmin_Base.h"
 #include "IOGR_Maker.h"
@@ -45,14 +45,17 @@ void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
 
   ACE_CHECK;
 
-  ScopeGuard guard = MakeObjGuard(*ec->supplier_admin(),
-                                  &TAO_FTEC_SupplierAdmin::disconnect,
-                                  consumer.in());
-
-  consumer->connect_push_supplier(push_supplier, qos
-                                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY {
+    consumer->connect_push_supplier(push_supplier, qos
+      ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHALL {
+    ec->supplier_admin()->disconnect(consumer.in());
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
   ACE_CHECK;
-  guard.Dismiss();
 }
 
 
@@ -96,14 +99,17 @@ void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
 
   ACE_CHECK;
 
-  ScopeGuard guard = MakeObjGuard(*ec->consumer_admin(),
-                                  &TAO_FTEC_ConsumerAdmin::disconnect,
-                                  supplier.in());
-
-  supplier->connect_push_consumer(push_consumer, qos
-                                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY {
+    supplier->connect_push_consumer(push_consumer, qos
+                                    ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHALL {
+    ec->consumer_admin()->disconnect(supplier.in());
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
   ACE_CHECK;
-  guard.Dismiss();
 }
 
 
@@ -244,7 +250,7 @@ TAO_FTEC_Event_Channel_Impl::factory()
 /// Start the internal threads (if any), etc.
 /// After this call the EC can be used.
 void
-TAO_FTEC_Event_Channel_Impl::activate (
+TAO_FTEC_Event_Channel_Impl::activate_object (
   CORBA::ORB_var orb,
   const FtRtecEventComm::ObjectId& supplier_admin_oid,
   const FtRtecEventComm::ObjectId& consumer_admin_oid

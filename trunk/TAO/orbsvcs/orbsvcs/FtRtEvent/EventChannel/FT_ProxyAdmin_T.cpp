@@ -27,23 +27,21 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface,State>::obtain_proxy (
     =  admin_->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ScopeGuard guard = MakeObjGuard(*admin_,
-    &EC_PROXY_ADMIN::disconnect,
-    result.in());
-
-  ACE_CHECK;
-
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-  {
+  ACE_TRY   {
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(op,
       Proxy::rollback_obtain
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
   }
-
-  guard.Dismiss();
+  ACE_CATCHALL {
+    admin_->disconnect(result.in());
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 template <class EC_PROXY_ADMIN, class Proxy,
@@ -72,28 +70,26 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_E
     =  admin_->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
 
-  ScopeGuard guard =
-    MakeObjGuard(*admin_,
-                &EC_PROXY_ADMIN::disconnect,
-                result.in());
-  ACE_CHECK_RETURN(0);
-
-  FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-  ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
-  {
+  ACE_TRY {
+    FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
+    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
     obj = IOGR_Maker::instance()->forge_iogr(result.in()
       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN(0);
+    ACE_TRY_CHECK;
 
     result = ProxyInterface::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    ACE_TRY_CHECK;
 
     svc->replicate_request(update,
       Proxy::rollback_obtain
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    ACE_TRY_CHECK;
   }
-  guard.Dismiss();
+  ACE_CATCHALL {
+    admin_->disconnect(result.in());
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
 
   return result._retn();
 }

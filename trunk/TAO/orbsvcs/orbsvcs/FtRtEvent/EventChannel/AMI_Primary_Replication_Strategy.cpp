@@ -41,10 +41,6 @@ int  AMI_Primary_Replication_Strategy::release (void)
 }
 
 
-int AMI_Primary_Replication_Strategy::init()
-{
-    return this->activate();
-}
 
 int AMI_Primary_Replication_Strategy::svc()
 {
@@ -132,14 +128,11 @@ AMI_Primary_Replication_Strategy::replicate_request(
    ACE_CHECK;
 
    for (size_t i = 0; i < num_backups; ++i)  {
-       ACE_TRY_EX(block1) {
-         PortableServer::ObjectId oid;
+      PortableServer::ObjectId oid;
+      ACE_TRY_EX(block1) {
           FTRT::AMI_UpdateableHandler_ptr handler = handler_.activate(manager, i, oid
                                                                    ACE_ENV_ARG_PARAMETER);
 
-          ScopeGuard guard = MakeObjGuard(*poa_.in(),
-                                          &PortableServer::POA::deactivate_object,
-                                          oid);
           ACE_TRY_CHECK_EX(block1);
           FtRtecEventChannelAdmin::EventChannel_ptr obj = backups[i];
           // send set_update request to all the backup replicas
@@ -147,11 +140,12 @@ AMI_Primary_Replication_Strategy::replicate_request(
           obj->sendc_set_update(handler, state
                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX(block1);
-          guard.Dismiss();
        }
        ACE_CATCHANY {
          ACE_PRINT_EXCEPTION(ex, "AMI_Primary_Replication_Strategy::replicate_request : ");
          manager->handle_exception(i);
+         if (oid.length())
+           poa_->deactivate_object(oid);
        }
        ACE_ENDTRY;
    }
