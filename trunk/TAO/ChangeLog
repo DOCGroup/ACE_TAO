@@ -1,3 +1,9 @@
+Sun Dec 14 08:47:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1639_Regression/test.mpc:
+
+	  This test should not be compiled if minimum_corba=1
+
 Sun Dec 14 08:43:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:

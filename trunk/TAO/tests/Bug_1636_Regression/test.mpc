@@ -1,4 +1,5 @@
 project (bug_1636_testclient) : taoexe, dynamicany, dynamicinterface, portableserver {
+   avoids += minimum_corba
    exename = client
 
    IDL_Files {
