@@ -164,10 +164,6 @@ SOURCE=.\interp.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\invoke.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\marshal.cpp
 # End Source File
 # Begin Source File
