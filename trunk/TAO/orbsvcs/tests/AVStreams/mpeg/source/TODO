@@ -13,7 +13,8 @@ Things to do
 
 - Seg fault wile exiting
   Destructor of reactor crashes the server
-  -- I think I've fixed this! Naga, can you confirm?!
+  -- I think I've fixed this! Naga, can you confirm that it doesnt crash
+     anymore ?
 
 - Parent-Child relationship
    -- parent goes back and listens for new connections
