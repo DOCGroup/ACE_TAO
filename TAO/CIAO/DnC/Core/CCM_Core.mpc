@@ -81,7 +81,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
   }
 }
 
-project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server {
+project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server_dnc {
   requires     += dnc
   sharedname   =  Deployment_stub
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export -Wb,stub_export_include=Deployment_stub_export.h -Wb,skel_export_macro=Deployment_svnt_Export -Wb,skel_export_include=Deployment_svnt_export.h
@@ -96,14 +96,13 @@ project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server {
   }
 }
 
-project(Deployment_svnt) : taolib_with_idl, portableserver, ciao_server {
+project(Deployment_svnt) : taolib_with_idl, portableserver, ciao_server_dnc {
   requires     += dnc
   after        += Deployment_stub
   sharedname   =  Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
   libs         += Deployment_stub
   idlflags     +=  -Wb,export_macro=Deployment_svnt_Export -Wb,export_include=Deployment_svnt_export.h
-  libpaths     += $(ACE_ROOT)/lib
 
   IDL_Files {
     NodeApplication_CallBack.idl
