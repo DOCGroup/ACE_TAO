@@ -1,3 +1,13 @@
+Tue Jun 15 20:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Removed a comment to me that I had left after fixing
+	  what the comment referred to.
+
+	* TAO/performance-tests/Pluggable/PP_Test_Server.cpp:
+	* TAO/performace-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
+	  Added a check of the return value of parse_args().
+
 Tue Jun 15 20:15:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
