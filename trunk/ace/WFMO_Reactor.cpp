@@ -755,6 +755,50 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
   return 0;
 }
 
+void 
+ACE_WFMO_Reactor_Handler_Repository::dump (void) const
+{
+  int i = 0;
+
+  ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Max size = %d\n"),
+              this->max_size_));
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Current info table\n\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tSize = %d\n"), this->max_handlep1_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tHandles to be suspended = %d\n"), this->handles_to_be_suspended_));
+  for (i = 0; i < this->max_handlep1_; i++)
+    {
+      this->current_info_[i].dump (this->current_handles_[i]);
+    }
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("To-be-added info table\n\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tSize = %d\n"), this->handles_to_be_added_));
+  for (i = 0; i < this->handles_to_be_added_; i++)
+    {
+      this->to_be_added_info_[i].dump ();
+    }
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Suspended info table\n\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tSize = %d\n"), this->suspended_handles_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tHandles to be resumed = %d\n"), this->handles_to_be_resumed_));
+  for (i = 0; i < this->suspended_handles_; i++)
+    {
+      this->current_suspended_info_[i].dump ();
+    }
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Total handles to be deleted = %d\n"), this->handles_to_be_deleted_));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+  
 /************************************************************/
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
@@ -1566,6 +1610,28 @@ ACE_WFMO_Reactor::update_state (void)
     this->wakeup_all_threads_.reset ();
 
   return 0;
+}
+
+void
+ACE_WFMO_Reactor::dump (void) const
+{
+  ACE_TRACE ("ACE_WFMO_Reactor::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Count of currently active threads = %d\n"),
+              this->active_threads_));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("ID of owner thread = %d\n"),
+              this->owner_));
+
+  this->handler_rep_.dump ();
+  this->signal_handler_->dump ();
+  this->timer_queue_->dump ();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 // ************************************************************

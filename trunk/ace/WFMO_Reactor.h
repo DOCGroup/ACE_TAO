@@ -108,6 +108,9 @@ public:
 
     void set (Common_Info &common_info);
     // Set the structure to these new values
+
+    void dump (void) const;
+    // Dump the state of an object.
   };
 
   class Current_Info : public Common_Info
@@ -140,6 +143,9 @@ public:
     void set (Common_Info &common_info,
 	      int suspend_entry = 0);
     // Set the structure to these new values
+
+    void dump (HANDLE event_handle) const;
+    // Dump the state of an object.
   };
 
   class To_Be_Added_Info : public Common_Info
@@ -177,6 +183,9 @@ public:
 	      Common_Info &common_info,
 	      int suspend_entry = 0);
     // Set the structure to these new values
+
+    void dump (void) const;
+    // Dump the state of an object.
   };
 
   class Suspended_Info : public Common_Info
@@ -214,6 +223,9 @@ public:
 	      Common_Info &common_info,
 	      int resume_entry = 0);
     // Set the structure to these new values
+
+    void dump (void) const;
+    // Dump the state of an object.
   };
 
   ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor);
