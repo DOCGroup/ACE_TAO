@@ -1,3 +1,12 @@
+Tue Apr 20 22:57:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  <<= was causing a memory leak. Removed the ->clone ()
+	  from the message block being inserted into the Any.
+	  Tested both copying and non-copying versions of <<=,
+	  over the wire, with a dynamically allocated type inside
+	  the union. All worked ok, and the leak was gone.
+
 Tue Apr 20 20:43:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h: Added a
