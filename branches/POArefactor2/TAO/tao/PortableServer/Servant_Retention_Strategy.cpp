@@ -54,13 +54,26 @@ namespace TAO
       Servant_Retention_Strategy::strategy_init (poa);
 
       // Create the active object map to be used
-      ACE_NEW_THROW_EX (active_object_map_,
+      TAO_Active_Object_Map *active_object_map = 0;
+      ACE_NEW_THROW_EX (active_object_map,
                         TAO_Active_Object_Map (!poa->system_id (),
                                                poa->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID,
                                                poa->active_policy_strategies().lifespan_strategy()->persistent (),
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                                ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
+
+      // Give ownership of the new map to the auto pointer.  Note, that it
+      // is important for the auto pointer to take ownership before
+      // checking for exception since we may need to delete the new map.
+      auto_ptr<TAO_Active_Object_Map> new_active_object_map (active_object_map);
+
+      // Check for exception in construction of the active object map.
+      ACE_CHECK;
+
+      // Finally everything is fine.  Make sure to take ownership away
+      // from the auto pointer.
+      this->active_object_map_ = new_active_object_map.release ();
     }
 
     void
@@ -1593,3 +1606,24 @@ namespace TAO
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class auto_ptr<TAO_Active_Object_Map>;
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<TAO_Active_Object_Map>
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

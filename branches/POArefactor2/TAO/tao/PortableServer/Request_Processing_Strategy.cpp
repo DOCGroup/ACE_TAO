@@ -513,7 +513,7 @@ namespace TAO
       if (!error && !wait_occurred_restart_call)
         {
           TAO_Active_Object_Map::Map_Entry *entry = 0;
-          int result = this->poa_->active_object_map ().
+          int result = this->poa_->active_policy_strategies().servant_retention_strategy()->get_aom ()->
             rebind_using_user_id_and_system_id (servant,
                                                 poa_current_impl.object_id (),
                                                 system_id,
@@ -528,7 +528,7 @@ namespace TAO
       if (error || wait_occurred_restart_call)
         {
           CORBA::Boolean remaining_activations =
-            this->poa_->active_object_map ().remaining_activations (servant);
+            this->poa_->active_policy_strategies().servant_retention_strategy()->get_aom ()->remaining_activations (servant);
 
           // A recursive thread lock without using a recursive
           // thread lock.  Non_Servant_Upcall has a magic

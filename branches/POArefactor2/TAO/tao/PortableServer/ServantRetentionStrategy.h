@@ -53,7 +53,7 @@ namespace TAO
 
       virtual void strategy_init (TAO_POA *poa);
 
-      //virtual TAO_Active_Object_Map* get_aom() const = 0;
+      virtual TAO_Active_Object_Map* get_aom() const = 0;
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                       int &wait_occurred_restart_call) = 0;

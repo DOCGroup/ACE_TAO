@@ -210,7 +210,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     profile_id_array_ (0),
     policies_ (policies),
     parent_ (parent),
-    active_object_map_ (0),
     ort_adapter_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
 
@@ -268,24 +267,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // Set the folded name of this POA.
   this->set_folded_name ();
 
-  // Create the active object map.
-  TAO_Active_Object_Map *active_object_map = 0;
-  ACE_NEW_THROW_EX (active_object_map,
-                    TAO_Active_Object_Map (!this->system_id (),
-                                           this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID,
-                                           this->active_policy_strategies_.lifespan_strategy()->persistent (),
-                                           this->orb_core_.server_factory ()->active_object_map_creation_parameters ()
-                                           ACE_ENV_ARG_PARAMETER),
-                    CORBA::NO_MEMORY ());
-
-  // Give ownership of the new map to the auto pointer.  Note, that it
-  // is important for the auto pointer to take ownership before
-  // checking for exception since we may need to delete the new map.
-  auto_ptr<TAO_Active_Object_Map> new_active_object_map (active_object_map);
-
-  // Check for exception in construction of the active object map.
-  ACE_CHECK;
-
   // Register self with manager.
   int result = this->poa_manager_.register_poa (this);
   if (result != 0)
@@ -309,10 +290,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
   // Set the id for this POA.
   this->set_id ();
-
-  // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
-  this->active_object_map_ = new_active_object_map.release ();
 
   // Notify the Lifespan strategy of our startup
   ACE_TRY
@@ -341,10 +318,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   // No longer awaiting destruction.
   this->waiting_destruction_ = 0;
-
-  // Delete the active object map.
-  delete this->active_object_map_;
-  active_object_map_ = 0;
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
@@ -2740,14 +2713,6 @@ template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Array_Base <IOP::ProfileId>;
 
-template class auto_ptr<TAO_Active_Object_Map>;
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
 template class ACE_Node<TAO_POA *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -2765,14 +2730,6 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
-
-#pragma instantiate auto_ptr<TAO_Active_Object_Map>
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
-#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #pragma instantiate ACE_Node<TAO_POA *>
 #pragma instantiate ACE_Array_Base <IOP::ProfileId>

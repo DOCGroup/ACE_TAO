@@ -23,12 +23,6 @@ TAO_POA::policies (void)
   return this->policies_;
 }
 
-ACE_INLINE TAO_Active_Object_Map &
-TAO_POA::active_object_map (void) const
-{
-  return *this->active_object_map_;
-}
-
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))

@@ -38,8 +38,6 @@
 // POAManager
 #include "POAManager.h"
 
-#include "Active_Object_Map.h"
-
 // POA Policy Set
 #include "POA_Policy_Set.h"
 
@@ -215,6 +213,8 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// @todo At the moment to POAManagerFactory is implemented and the POAManager
+  /// has the get_id method this can be zapped, IORInfo can then just call get_id
   PortableInterceptor::AdapterManagerId get_manager_id (
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -454,8 +454,6 @@ public:
   CORBA::ULong outstanding_requests (void) const;
 
   const ACE_CString &name (void) const;
-
-  TAO_Active_Object_Map &active_object_map (void) const;
 
   CORBA::Boolean waiting_destruction (void) const;
 
@@ -804,10 +802,6 @@ protected:
 
   /// The parent of this POA, zero in case this is the Root POA
   TAO_POA *parent_;
-
-  /// @todo This has to be moved out to the retain file, is already there but some methods
-  /// in the poa still use this
-  TAO_Active_Object_Map *active_object_map_;
 
   TAO_Object_Adapter::poa_name folded_name_;
 
