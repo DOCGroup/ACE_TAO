@@ -37,6 +37,7 @@
 #include <string.h>
 
 #include "orb.h"
+#include "cdr.h"
 
 #include <initguid.h>
 
@@ -318,11 +319,15 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   size = _type->size (env);           // XXX check error status
   _value = (char *) calloc (1, size);
 
+#if 0
   (void) _type->traverse (src._value, 
 			  _value,
 			  (CORBA_TypeCode::VisitRoutine) deep_copy, 
 			  0, 
 			  env);
+#endif // replaced by our optimizations
+
+  (void) DEEP_COPY(_type, src._value, _value, env);
 }
 
 // Helper routine for "Any" destructor.
@@ -469,7 +474,8 @@ CORBA_Any::~CORBA_Any (void)
 
   if (_orb_owns_data) 
     {
-      (void) deep_free (_type, _value, 0, 0, env);
+      //      (void) deep_free (_type, _value, 0, 0, env);
+      DEEP_FREE(_type, _value, 0, env);
       delete _value;
     }
 
@@ -487,7 +493,8 @@ CORBA_Any::replace (CORBA_TypeCode_ptr tc,
 {
   if (_orb_owns_data) 
     {
-      (void) deep_free (_type, _value, 0, 0, env);
+      //      (void) deep_free (_type, _value, 0, 0, env);
+      DEEP_FREE(_type, _value, 0, env);
       delete _value;
     }
 

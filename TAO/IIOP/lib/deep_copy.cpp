@@ -53,7 +53,7 @@ extern CORBA_TypeCode TC_opaque;
   //
 
 
-static CORBA_TypeCode::traverse_status
+CORBA_TypeCode::traverse_status
 DEEP_COPY(
 	  CORBA_TypeCode_ptr  param,
 	  const void		*source,

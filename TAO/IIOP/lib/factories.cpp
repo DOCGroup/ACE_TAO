@@ -25,6 +25,16 @@ TAO_Client_Connection_Handler::open(void *)
 {
   // Here is where we could enable all sorts of things such as
   // nonblock I/O, sock buf sizes, TCP no-delay, etc.
+  
+  const int MAX_SOCK_BUF_SIZE = 65536;
+  if (this->peer ().set_option(SOL_SOCKET, SO_SNDBUF, (void
+						       *)&MAX_SOCK_BUF_SIZE,
+			       sizeof(MAX_SOCK_BUF_SIZE)) == -1) 
+    return -1;
+  if (this->peer ().set_option(SOL_SOCKET, SO_RCVBUF, (void
+						       *)&MAX_SOCK_BUF_SIZE,
+			       sizeof (MAX_SOCK_BUF_SIZE)) == -1)
+    return -1;
 
   // For now, we just return success
   return 0;
