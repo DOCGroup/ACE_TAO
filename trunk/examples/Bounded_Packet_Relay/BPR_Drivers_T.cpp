@@ -141,20 +141,24 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
           if (duration_limit_cmd_->execute ((void *) &usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
-                               "set duration limit failed"),
+                               "\nSet duration limit failed."),
                               -1);
           break;
         }
       case 5:  // Set logging level.
         {
-          u_long level;
+          int level;
 
           // We just reread the option, this simplies parsing (since
           // sscanf can do it for us).
-          if (::sscanf (buf, "%d %lu", &option, &level) < 2)
-            // If there was not enough information on the line, ignore
-            // option and try the next line.
-            return 0;
+          if ((::sscanf (buf, "%d %d", &option, &level) < 2) || 
+              (level < 0) || (level > 7))
+            {
+              // If there was not enough information on the line, or the
+              // passed value was invalid, ignore and try again.
+              return 0;
+            }
+
           if (logging_level_cmd_->execute ((void *) &level) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
@@ -207,9 +211,6 @@ Bounded_Packet_Relay_Driver<TQ>::get_next_request (void)
   char buf[BUFSIZ];
 
   this->display_menu ();
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Please enter your choice: "));
 
   // Reads input from the user.
   if (this->read_input (buf, sizeof buf) <= 0)
@@ -296,7 +297,7 @@ Bounded_Packet_Relay_Driver<TQ>::duration_limit (u_long dl)
 }
 // Get logging level.
 
-template <class TQ> u_long 
+template <class TQ> int
 Bounded_Packet_Relay_Driver<TQ>::logging_level (void)
 {
   return logging_level_;
@@ -305,7 +306,7 @@ Bounded_Packet_Relay_Driver<TQ>::logging_level (void)
 // Set logging level.
 
 template <class TQ> void 
-Bounded_Packet_Relay_Driver<TQ>::logging_level (u_long ll)
+Bounded_Packet_Relay_Driver<TQ>::logging_level (int ll)
 {
   logging_level_ = ll;
 }

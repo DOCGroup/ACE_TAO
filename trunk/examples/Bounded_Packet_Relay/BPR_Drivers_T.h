@@ -130,10 +130,10 @@ public:
   void duration_limit (u_long dl);
   // Set limit on the duration of the transmission (usec).
 
-  u_long logging_level (void);
+  int logging_level (void);
   // Get logging level.
 
-  void logging_level (u_long ll);
+  void logging_level (int ll);
   // Set logging level.
 
 protected:
@@ -184,7 +184,7 @@ private:
   u_long duration_limit_;
   // Limit on the duration of the transmission (usec).
 
-  u_long logging_level_;
+  int logging_level_;
   // Logging level.
 };
 

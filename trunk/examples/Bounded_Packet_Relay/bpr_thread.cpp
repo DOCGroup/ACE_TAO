@@ -37,7 +37,7 @@ typedef Command<Bounded_Packet_Relay, Bounded_Packet_Relay::ACTION>
 // A snippet from Andrew Marvell (Oliver Cromwell's poet laureate)
 static const char input_text [] =
 "But ever at my back I hear\n"
-"Time's winged chariot hurrying near.\n";
+" Time's winged chariot hurrying near.";
 
 int
 main (int, char *[])

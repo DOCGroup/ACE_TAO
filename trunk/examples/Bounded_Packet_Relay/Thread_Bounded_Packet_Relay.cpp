@@ -36,11 +36,15 @@ ACE_RCSID(Bounded_Packet_Relay, Thread_Bounded_Packet_Relay, "$Id$")
 
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                                                       size_t read_length, 
-                                                      const char* text)
+                                                      const char* text,
+                                                      int logging)
   : Input_Device_Wrapper_Base (input_task_mgr),
     read_length_ (read_length),
     text_ (text),
-    index_ (0)
+    index_ (0),
+    logging_ (logging),
+    packet_count_ (0)
+
 {
 }
 
@@ -49,6 +53,24 @@ Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_
 Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper (void)
 {
 }
+
+// Modifies device settings based on passed pointer to a u_long.
+
+int 
+Text_Input_Device_Wrapper::modify_device_settings (void *logging)
+{
+  packet_count_ = 0;
+
+  if (logging)
+    logging_ = *ACE_static_cast (int *, logging);
+  else
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Text_Input_Device_Wrapper::modify_device_settings: "
+                       "null argument"),
+                      -1);
+  return 0;
+}
+
 
 // Creates a new message block, carrying data
 // read from the underlying input device.
@@ -83,6 +105,15 @@ Text_Input_Device_Wrapper::create_input_message (void)
                          "read buffer copy failed"),
                         0);
     }
+  
+  // log packet creation if logging is turned on
+  if (logging_ & Text_Input_Device_Wrapper::LOG_MSGS_CREATED)
+    {
+      ++packet_count_;
+      ACE_DEBUG ((LM_DEBUG, "input message %d created\n", 
+                  packet_count_));
+    }
+
   return mb;
 }
 
@@ -100,10 +131,18 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
 {
   if (message)
     {
-      if (logging_)
-        ACE_DEBUG ((LM_DEBUG, "%s", 
+      ++packet_count_;
+
+      if (logging_ & Text_Output_Device_Wrapper::LOG_MSGS_RCVD)
+        ACE_DEBUG ((LM_DEBUG, "output message %d received\n", 
+                    packet_count_));
+
+      if (logging_ & Text_Output_Device_Wrapper::PRINT_MSGS_RCVD)
+        ACE_DEBUG ((LM_DEBUG, "output message %d:\n[%s]\n",
+		            packet_count_,
                     ACE_static_cast (ACE_Message_Block *, message)->
-                    rd_ptr ()));
+                      rd_ptr ()));
+
       delete ACE_static_cast (ACE_Message_Block *,
                               message);
       return 0;
@@ -113,18 +152,19 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
                      "write_output_message: null argument"), -1);
 }
 
-// Modifies device settings based on passed pointer to a u_long turns
-// logging on if u_long is non-zero, off if u_long is zero, and does
-// nothing if the pointer is null.
+// Modifies device settings based on passed pointer to a u_long.
 
 int 
 Text_Output_Device_Wrapper::modify_device_settings (void *logging)
 {
+  packet_count_ = 0;
+
   if (logging)
     logging_ = *ACE_static_cast (int *, logging);
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "null logging level pointer"),
+                       "Text_Output_Device_Wrapper::modify_device_settings: "
+                       "null argument"),
                       -1);
   return 0;
 }
@@ -267,7 +307,8 @@ User_Input_Task::run_transmission (void *)
                               Send_Handler (driver_.packet_count (), 
                                             send_every,
                                             *relay_,
-                                            *queue_), 
+                                            *queue_,
+                                            driver_), 
                               -1);
               if (queue_->schedule (send_handler, 0, send_at) < 0)
                 ACE_ERROR_RETURN ((LM_ERROR, 
@@ -283,7 +324,8 @@ User_Input_Task::run_transmission (void *)
 
                   ACE_NEW_RETURN (termination_handler, 
                                   Termination_Handler (*relay_,
-                                                       *queue_), 
+                                                       *queue_, 
+                                                       driver_), 
                                   -1);
                   if (queue_->schedule (termination_handler, 
                                         0, terminate_at) < 0)
@@ -435,10 +477,12 @@ BPR_Handler_Base::clear_all_timers (void)
 Send_Handler::Send_Handler (u_long send_count, 
                             const ACE_Time_Value &duration,
                             Bounded_Packet_Relay &relay,
-                            Thread_Timer_Queue &queue)
+                            Thread_Timer_Queue &queue,
+                            Thread_Bounded_Packet_Relay_Driver &driver)
   : BPR_Handler_Base (relay, queue),
     send_count_ (send_count),
-    duration_ (duration)
+    duration_ (duration),
+    driver_ (driver)
 {
 }
 
@@ -475,10 +519,11 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
           }
         else
           {
-            // All packets are sent, time to cancel any other timers,
-            // end the transmission, and go away.
+            // All packets are sent, time to cancel any other timers, end
+            // the transmission, redisplay the user menu, and go away.
             this->clear_all_timers ();
             relay_.end_transmission (Bounded_Packet_Relay::COMPLETED);
+            driver_.display_menu ();
             delete this;
             return 0;
           }
@@ -500,8 +545,10 @@ Send_Handler::cancelled (void)
 // Constructor.
 
 Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
-                                          Thread_Timer_Queue &queue)
-  : BPR_Handler_Base (relay, queue)
+                                          Thread_Timer_Queue &queue,
+                                          Thread_Bounded_Packet_Relay_Driver &driver)
+  : BPR_Handler_Base (relay, queue), 
+    driver_ (driver)
 {
 }
 
@@ -517,10 +564,11 @@ int
 Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
                                      const void *arg)
 {
-  // Transmission timed out, so cancel any other
-  // timers, end the transmission, and go away.
+  // Transmission timed out, so cancel any other timers,
+  // end the transmission, display the user menu, and go away.
   this->clear_all_timers ();
   relay_.end_transmission (Bounded_Packet_Relay::TIMED_OUT);
+  driver_.display_menu ();
   delete this;
   return 0;
 }
@@ -563,14 +611,22 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
     "     min = 1.\n"
     "  4 <limit on duration of transmission (in usec) = %d>\n"
     "     min = 1, no limit = 0.\n"
-    "  5 <logging level = %d>\n"
-    "     no logging = 0, logging = non-zero.\n"
+    "  5 <logging level flags = %d>\n"
+    "     no logging =                                              0,\n"
+    "     log packets created by input device =                     1,\n"
+    "     log packets consumed by output device =                   2,\n"
+    "     logging options 1,2 =                                     3,\n"
+    "     print contents of packets consumed by output put device = 4,\n"
+    "     logging options 1,4 =                                     5,\n"
+    "     logging options 2,4 =                                     6,\n"
+    "     logging options 1,2,4 =                                   7.\n"
     "  ----------------------------------------------------------------------\n"
-    "  6 - run a transmission using the current settings\n"
-    "  7 - cancel transmission (if there is one running)\n"
-    "  8 - report statistics from the most recent transmission\n"
-    "  9 - quit the program\n"
-    "  ----------------------------------------------------------------------\n";
+    "  6 - runs a transmission using the current settings\n"
+    "  7 - cancels a transmission (if there is one running)\n"
+    "  8 - reports statistics from the most recent transmission\n"
+    "  9 - quits the program\n"
+    "  ----------------------------------------------------------------------\n"
+    "  Please enter your choice: ";
 
   ACE_DEBUG ((LM_DEBUG, 
 	          menu, 
