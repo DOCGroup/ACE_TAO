@@ -1,3 +1,9 @@
+Thu Sep 30 17:32:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/parser/parser/Makefile.am:
+
+	  Fix typo in includedir definition.
+
 Thu Sep 30 14:02:26 2004  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Added the same kernel version-checking code to the
