@@ -1,3 +1,21 @@
+Tue May  6 14:06:49 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/boa.hh: the register_obj's 2nd argument is changed from
+	CORBA_Object_ptr& to CORBA_Object_ptr
+
+	* IIOP/lib/object.hh: the return type for register_op method on
+	CORBA_Object is changed from void to int to be consistent.
+
+	Added a new method "get_subclass" to CORBA_Object that returns a
+	pointer to the subclass. Typeically, this would be pointer to an
+	object that implements an interface.
+
+	* IIOP/lib/objtable.{hh,cpp}: @nd argument of register_obj changed
+	from CORBA_Object_ptr& to CORBA_Object_ptr.
+
+	* IIOP/lib/orb.hh: the type signature of "skeleton" is changed to
+	take CORBA_Object_ptr rather than CORBA_Object_ptr& as its 2nd argument.
+
 Mon May  5 20:28:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/boa.cpp: commented out code that uses the "void
