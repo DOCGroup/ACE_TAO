@@ -1,5 +1,12 @@
-Wed Mar 08 22:19:26 2000  David L. Levine  <levine@cs.wustl.edu>
+Thu Mar 09 10:41:24 2000  Steve Huston  <shuston@riverace.com>
 
+        * ace/NT_Service.(h cpp): Added !defined(ACE_HAS_PHARLAP) to the
+          if defined (ACE_HAS_WIN32) to prevent this feature from being
+          built on PharLap. Thanks to David Hauck <davidh@realtimeint.com>
+          for reporting this and suggesting a fix.
+
+Wed Mar 08 22:19:26 2000  David L. Levine  <levine@cs.wustl.edu>
+  
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
           moved VxWorks 5.4 (Tornado II) auto detection to
           before CCFLAGS definition, so that it gets set
