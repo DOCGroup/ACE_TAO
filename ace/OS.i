@@ -5847,7 +5847,7 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   struct tm * result ;
   ACE_OSCALL (::gmtime (t), struct tm *, 0, result) ;
   if (result != 0)
-    ACE_OS::memcpy (res, result, sizeof (res)) ;
+    *res = *result ;
   return result ;
 #endif
 }
