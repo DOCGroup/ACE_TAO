@@ -33,23 +33,19 @@
 #if defined (TAO_HAS_EXCEPTIONS)
 
 #define TAO_TRY_ENV __env
+
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 // These are all on one line so the keywords don't confuse compilers.
 #define TAO_TRY do { CORBA_Environment TAO_TRY_ENV; try {
 #define TAO_TRY_VAR(X) do { CORBA_Environment &TAO_TRY_ENV = X; try {
-// TAO_*_SYS macros don't declare a new environment variable but use
-// existing ones.
-#define TAO_TRY_SYS do { try {
-#define TAO_TRY_SYS_EX(LABEL) do { try {
+
 #define TAO_TRY_EX(LABEL) do { CORBA_Environment TAO_TRY_ENV; try {
 #define TAO_TRY_VAR_EX(X,LABEL) do { CORBA_Environment &TAO_TRY_ENV = X; try {
 
 #define TAO_CATCH(TYPE,VAR) } catch (TYPE & VAR) { ACE_UNUSED_ARG (VAR);
-#define TAO_CATCH_SYS(TYPE,VAR) TAO_CATCH(TYPE,VAR)
 
 #define TAO_CATCHANY } catch (...) {
-#define TAO_CATCHANY_SYS TAO_CATCHANY
 
 #define TAO_ENDTRY }} while (0)
 
@@ -59,12 +55,9 @@
 
 // No need to do checking, exception handling does it for us.
 #define TAO_CHECK_ENV
-#define TAO_CHECK_ENV_SYS
-#define TAO_CHECK_ENV_SYS_EX(LABEL)
 #define TAO_CHECK_ENV_EX(LABEL)
 #define TAO_CHECK_ENV_RETURN(X, Y)
 #define TAO_CHECK_CONDITION_ENV_RETURN(X, COND, Y)
-#define TAO_CHECK_ENV_SYS_RETURN(X, Y)
 
 #define TAO_THROW(EXCEPTION) throw EXCEPTION
 #define TAO_THROW_ENV(EXCEPTION, ENV) throw EXCEPTION
@@ -133,13 +126,6 @@ TAO_TRY_LABEL: \
 if (TAO_TRY_FLAG) \
 do {
 
-#define TAO_TRY_SYS \
-do { \
-int TAO_TRY_FLAG = 1; \
-TAO_TRY_LABEL: \
-if (TAO_TRY_FLAG) \
-do {
-
 // This serves a similar purpose as the macro above,
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY_EX(LABEL) \
@@ -158,35 +144,22 @@ TAO_TRY_LABEL ## LABEL: \
 if (TAO_TRY_FLAG) \
 do {
 
-#define TAO_TRY_SYS_EX(LABEL) \
-do { \
-int TAO_TRY_FLAG = 1; \
-TAO_TRY_LABEL ## LABEL: \
-if (TAO_TRY_FLAG) \
-do {
-
 // Each CATCH statement ends the previous scope and starts a new one.
 // Since all CATCH statements can end the TAO_TRY macro, they must all
 // start a new scope for the next potential TAO_CATCH.  The TAO_ENDTRY
 // will finish them all.  Cool, eh?
-#define TAO_CATCH_BASE(TYPE,VAR,ENV) \
+#define TAO_CATCH(TYPE,VAR) \
 } while (0); \
 do \
-if (ENV.exception () != 0 && \
-    TYPE::_narrow(ENV.exception ()) != 0) { \
-  TYPE &VAR = *TYPE::_narrow (ENV.exception ()); \
+if (TAO_TRY_ENV.exception () != 0 && \
+    TYPE::_narrow(TAO_TRY_ENV.exception ()) != 0) { \
+  TYPE &VAR = *TYPE::_narrow (TAO_TRY_ENV.exception ()); \
   ACE_UNUSED_ARG (VAR);
 
-#define TAO_CATCH(TYPE,VAR) TAO_CATCH_BASE(TYPE,VAR,TAO_TRY_ENV)
-#define TAO_CATCH_SYS(TYPE,VAR) TAO_CATCH_BASE(TYPE,VAR,env)
-
-#define TAO_CATCHANY_BASE(ENV) \
+#define TAO_CATCHANY \
 } while (0); \
 do { \
-if (ENV.exception () != 0)
-
-#define TAO_CATCHANY TAO_CATCHANY_BASE(TAO_TRY_ENV)
-#define TAO_CATCHANY_SYS TAO_CATCHANY_BASE(env)
+if (TAO_TRY_ENV.exception () != 0)
 
 // The first "while" closes the local scope.  The second "while"
 // closes the TAO_TRY_ENV scope.
@@ -200,37 +173,24 @@ if (ENV.exception () != 0)
 
 // If continue is called, control will skip to the next TAO_CATCHANY
 // statement.
-#define TAO_CHECK_ENV_BASE(ENV) \
+#define TAO_CHECK_ENV(TAO_TRY_ENV) \
 {\
-if (ENV.exception () != 0) \
+if (TAO_TRY_ENV.exception () != 0) \
   { \
     TAO_TRY_FLAG = 0; \
     goto TAO_TRY_LABEL; \
   } \
 }
 
-#define TAO_CHECK_ENV_BASE_EX(ENV,LABEL) \
-{\
-if (ENV.exception () != 0) \
-  { \
-    TAO_TRY_FLAG = 0; \
-    goto TAO_TRY_LABEL ## LABEL; \
-  } \
-}
-
-#define TAO_CHECK_ENV TAO_CHECK_ENV_BASE(TAO_TRY_ENV)
-#define TAO_CHECK_ENV_SYS TAO_CHECK_ENV_BASE(env)
-#define TAO_CHECK_ENV_SYS_EX(LABEL) TAO_CHECK_ENV_BASE_EX(env,LABEL)
-
 // Same as above but for TAO_TRY_EX
 #define TAO_CHECK_ENV_EX(LABEL) \
-do {\
+{\
 if (TAO_TRY_ENV.exception () != 0) \
   { \
     TAO_TRY_FLAG = 0; \
     goto TAO_TRY_LABEL ## LABEL; \
   } \
-} while (0)
+}
 
 #define TAO_CHECK_ENV_RETURN(X, Y) \
  if ( X . exception () != 0) return Y
