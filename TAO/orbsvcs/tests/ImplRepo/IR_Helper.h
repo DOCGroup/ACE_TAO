@@ -22,8 +22,7 @@
 
 #include "tao/TAO.h"
 #include "orbsvcs/ImplRepoC.h"
-
-class POA_Ping_Object;
+#include "orbsvcs/ImplRepoS.h"
 
 class IR_Helper
   // = TITLE
@@ -55,19 +54,19 @@ public:
                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Convert an object into a IR controlled object.
 private:
-  int read_ir_ior (CORBA_Environment &_env = CORBA_Environment::default_environment ());
-
   char *name_;
-  char *ir_key_;
+  
+  ImplementationRepository::Address *ir_addr_;
+  
+  POA_ImplementationRepository::ServerObject *server_object_;  
+  // Pointer to our implementation of the server object
 
-  Implementation_Repository::INET_Addr *ir_addr_;
+  ImplementationRepository::ServerObject_ptr server_object_ptr_;
+  // Object pointer to <server_object>
   
-  POA_Ping_Object *ping_;  
-  CORBA::Object_ptr ping_ptr_;
-  
-  Implementation_Repository *implrepo_;
-  PortableServer::POA_var poa_;
+  ImplementationRepository::Administration *implrepo_;
   CORBA::ORB_var orb_;
+  PortableServer::POA_var poa_;
   int debug_; 
 };
 
