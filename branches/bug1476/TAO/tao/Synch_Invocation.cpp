@@ -678,6 +678,7 @@ namespace TAO
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
+// can the following line work when transport not connected?
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
 
@@ -704,11 +705,23 @@ namespace TAO
           }
         else
           {
+ //      if (this->resolver_.transport ()->is_connected())
+//     {
+// buffer when transport not connected
+ //  this is now handled in TAO_Transport::send_message_shared_i, we buffer
+// there if not connected, what todo with interceptors
             s = this->send_message (cdr,
                                     TAO_Transport::TAO_ONEWAY_REQUEST,
                                     max_wait_time
                                     ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
+//     }
+//     else
+			{
+//       this->resolver_.transport ()->queue_message(cdr.begin());
+                  //buffer
+
+			}
           }
 
 #if TAO_HAS_INTERCEPTORS == 1

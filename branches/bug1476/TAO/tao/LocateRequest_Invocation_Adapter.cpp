@@ -57,7 +57,7 @@ namespace TAO
                 ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            resolver.resolve (max_wait_time
+            resolver.resolve (max_wait_time, true
                               ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 

@@ -339,6 +339,14 @@ TAO_Transport::handle_output (void)
 }
 
 int
+TAO_Transport::queue_message (const ACE_Message_Block *message_block)
+{
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+  return this->queue_message_i (message_block);
+}
+
+int
 TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
                                          size_t &bytes_transferred,
                                          ACE_Time_Value *max_wait_time)
@@ -1004,6 +1012,11 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
     {
       try_sending_first = 0;
     }
+  else if (!this->is_connected_)
+  {
+      // If we are not connected, then we can't just send data, so queue
+      try_sending_first = 0;
+  }
 
   ssize_t n;
 
@@ -1095,13 +1108,15 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                   this->id ()));
     }
 
-  TAO_Queued_Message *queued_message = 0;
-  ACE_NEW_RETURN (queued_message,
-                  TAO_Asynch_Queued_Message (message_block,
-                                             0,
-                                             1),
-                  -1);
-  queued_message->push_back (this->head_, this->tail_);
+  if (this->queue_message_i(message_block) == -1)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                "cannot queue message for "
+                " - %m\n",
+                this->id ()));
+    return -1;
+  }
 
   // ... if the queue is full we need to activate the output on the
   // queue ...
@@ -1114,12 +1129,12 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   // sent.... Plus, when we use the blocking flushing strategy the
   // queue is flushed as a side-effect of 'schedule_output()'
 
-  if (constraints_reached || try_sending_first)
+  if ((constraints_reached || try_sending_first) && this->is_connected_)
     {
       (void) flushing_strategy->schedule_output (this);
     }
 
-  if (must_flush)
+  if (must_flush && this->is_connected_)
     {
       typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
@@ -1127,6 +1142,20 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
       (void) flushing_strategy->flush_transport (this);
     }
+
+  return 0;
+}
+
+int
+TAO_Transport::queue_message_i(const ACE_Message_Block *message_block)
+{
+  TAO_Queued_Message *queued_message = 0;
+  ACE_NEW_RETURN (queued_message,
+                  TAO_Asynch_Queued_Message (message_block,
+                                             0,
+                                             1),
+                  -1);
+  queued_message->push_back (this->head_, this->tail_);
 
   return 0;
 }

@@ -66,7 +66,8 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
+  Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val,
+                                       bool block
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -77,8 +78,9 @@ namespace TAO
           ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
+// here we select a connection
     es->select_endpoint (this,
-                         max_time_val
+                         max_time_val, block
                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -108,10 +110,13 @@ namespace TAO
       }
   }
 
+
+// need a bool here
   bool
   Profile_Transport_Resolver::try_connect (
       TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *max_time_value
+       ACE_Time_Value *max_time_value,
+       bool block
        ACE_ENV_ARG_DECL
      )
   {
@@ -148,12 +153,16 @@ namespace TAO
         max_wait_time = max_time_value;
       }
 
+
+// here to pass a boolean or not, so
+//      bool block = true;
     // Obtain a connection.
     this->transport_ =
       conn_reg->get_connector (desc->endpoint ()->tag ())->connect (
         this,
         desc,
-        max_wait_time
+        max_wait_time,
+        block
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (false);
 

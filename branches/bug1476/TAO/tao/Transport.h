@@ -451,7 +451,14 @@ public:
    */
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
 
-protected:
+  /// Is this transport really connected
+  bool is_connected (void) const;
+
+  /// Modifier for the is_connected_ member
+  void is_connected (bool connect);
+
+  public:
+//protected: // for test
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
 
@@ -634,7 +641,12 @@ protected:
                              const ACE_Message_Block *message_block,
                              ACE_Time_Value *max_wait_time);
 
+  /// Queue a message for @a message_block
+  int queue_message_i (const ACE_Message_Block *message_block);
+
 public:
+  /// Queue a message for @a message_block
+  int queue_message (const ACE_Message_Block *message_block);
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
@@ -904,6 +916,11 @@ protected:
 
   /// Number of bytes sent.
   size_t sent_byte_count_;
+
+  /// Is this transport really connected or not. In case of oneways with
+  /// SYNC_NONE Policy we don't wait until the connection is ready and we
+  /// buffer the requests in this transport until the connection is ready
+  bool is_connected_;
 
 private:
 

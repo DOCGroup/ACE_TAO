@@ -37,7 +37,7 @@ namespace TAO
   /**
    * @class LocateRequest_Invocation
    *
-   * @brief Object created bu TAO::LocateRequest_Invocation_Adapter to
+   * @brief Object created by TAO::LocateRequest_Invocation_Adapter to
    * create and send LocateRequest invocation.
    *
    */
@@ -46,7 +46,7 @@ namespace TAO
   {
   public:
     /**
-     * @param target The target on which this invocation was
+     * @param otarget The target on which this invocation was
      *  started.
      *
      * @param resolver Container of the profile and transport on

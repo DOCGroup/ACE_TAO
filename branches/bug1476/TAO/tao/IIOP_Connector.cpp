@@ -134,7 +134,8 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 TAO_Transport *
 TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                      TAO_Transport_Descriptor_Interface &desc,
-                                     ACE_Time_Value *max_wait_time)
+                                     ACE_Time_Value *timeout,
+                                     bool block)
 {
   TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (desc.endpoint ());
 
@@ -155,10 +156,20 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (max_wait_time,
+  this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
+// if we don't block, then we should have reactor and not time when calling
+// connect.
+   if (!block)
+   {
+      synch_options.set (ACE_Synch_Options::USE_REACTOR,
+  ACE_Time_Value::zero);
+   }
+
   TAO_IIOP_Connection_Handler *svc_handler = 0;
+
+// @todo JW handlhere here the block
 
   // Connect.
   int result =
@@ -196,10 +207,20 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       svc_handler->get_handle ()));
         }
 
+if (block)
+{
       // Wait for connection completion.
       result =
         this->active_connect_strategy_->wait (svc_handler,
                                               max_wait_time);
+}
+else
+{
+
+  // call method above according to bala with ace_time_value zeor
+  result =0;
+   svc_handler->transport ()->is_connected(false);
+}
 
       if (TAO_debug_level > 2)
         {
@@ -223,7 +244,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       // In case of failures and close() has not be called.
       if (result == -1 && !closed)
         {
-          // First, cancel from connector.
+         // First, cancel from connector.
           this->base_connector_.cancel (svc_handler);
 
           // Double check to make sure the handler has not been closed
@@ -256,7 +277,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                   svc_handler->close ();
                 }
             }
-        }
+    }
+    }
+
+  if (!block)
+    {
+      // We shouldn't block, so it can be that the connection is not
+      // established yet
+
+      // todo
     }
 
   // Irrespective of success or failure, remove the extra #REFCOUNT#.
@@ -316,6 +345,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // If the wait strategy wants us to be registered with the reactor
   // then we do so. If registeration is required and it succeeds,
   // #REFCOUNT# becomes two.
+// this also gives problems when we do it on a not connected trasnport
+  if (transport->is_connected())
   retval =  transport->wait_strategy ()->register_handler ();
 
   // Registration failures.

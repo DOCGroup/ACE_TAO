@@ -75,7 +75,8 @@ namespace TAO
      * the ORB_Core to decide on the strategy to be used for selecting
      * the profile.
      */
-    void resolve (ACE_Time_Value *val
+    void resolve (ACE_Time_Value *val,
+                  bool block
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -110,7 +111,8 @@ namespace TAO
     /// delegate the responsibility of reserving a transport from the
     /// connection cache for this invocation.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
-                      ACE_Time_Value *val
+                      ACE_Time_Value *val,
+                      bool block
                       ACE_ENV_ARG_DECL);
 
     /// Initialize the inconsistent policy list that this object has

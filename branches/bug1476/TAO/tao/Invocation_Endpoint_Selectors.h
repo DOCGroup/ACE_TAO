@@ -63,7 +63,7 @@ public:
 
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
+                                ACE_Time_Value *val, bool block
                                 ACE_ENV_ARG_DECL) = 0;
 
 };
@@ -93,7 +93,7 @@ public:
   virtual ~TAO_Default_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
+                                ACE_Time_Value *val, bool block
                                 ACE_ENV_ARG_DECL);
 };
 

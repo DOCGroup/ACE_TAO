@@ -202,12 +202,29 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
+// bool, need to say here it is must block
+
+// the code here can go to a seperate method, this can then also set the details, which is now done in the invoke_oneway method
+    bool block = true;
+    if (this->type_ == TAO_ONEWAY_INVOCATION)
+    {
+       // Grab the syncscope policy from the ORB.
+       bool has_synchronization = false;
+       Messaging::SyncScope sync_scope;
+
+       stub->orb_core ()->call_sync_scope_hook (stub,
+                                                     has_synchronization,
+                                                     sync_scope);
+      if (has_synchronization && sync_scope == Messaging::SYNC_NONE)
+      block = false;
+    }
+
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
     Profile_Transport_Resolver resolver (effective_target,
-                                         stub);
-
-    resolver.resolve (max_wait_time
+                                         stub );
+// pass bool
+    resolver.resolve (max_wait_time, block
                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 

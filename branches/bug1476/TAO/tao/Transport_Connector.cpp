@@ -213,7 +213,8 @@ TAO_Connector::make_mprofile (const char *string,
 TAO_Transport*
 TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Transport_Descriptor_Interface *desc,
-                        ACE_Time_Value *timeout
+                        ACE_Time_Value *timeout,
+                        bool block
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   if ((this->set_validate_endpoint (desc->endpoint ()) == -1) || desc == 0)
@@ -239,6 +240,18 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                       base_transport->id ()));
         }
 
+// todo block
+      if (!base_transport->is_connected())
+      {
+        // We have a tranport that is not connected, we have to do something
+        // here
+		  this->active_connect_strategy_->wait(base_transport->connection_handler_i(), 0);
+// todo
+// what now then thsi is closed, then we should close it, zap it from the cache and make
+		  // a new connection
+
+      }
+
       // No need to _duplicate since things are taken care within the
       // cache manager.
       return base_transport;
@@ -248,9 +261,20 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // Purge connections (if necessary)
   this->orb_core_->lane_resources ().transport_cache ().purge ();
 
-  return this->make_connection (r,
-                                *desc,
-                                timeout);
+// todo pass block
+//  bool block = true;
+  TAO_Transport* transport = 0;
+  transport = this->make_connection (r,
+                                     *desc,
+                                     timeout,
+                                     block);
+      if (transport == 0 && !block)
+      {
+        // We didn't wait until the connection was ready, and we have now a
+        // transport
+      }
+
+   return transport;
 }
 
 
