@@ -256,7 +256,7 @@ typedef unsigned __int64 ACE_UINT64;
         // must have _MT defined to include multithreading
         // features from win32 headers
         #if !defined(_MT)
-                #define _MT
+                #error You must link ACE against multi-threaded libraries.
         #endif
 #endif
 
