@@ -51,6 +51,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CCM_Container.idl
     CCM_Container_Ex.idl
     SwapExec.idl
+    UpgradeableContext.idl
   }
 
   Source_Files {
@@ -62,6 +63,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CCM_EventS.cpp
     CCM_ComponentS.cpp
     SwapExecC.cpp
+    UpgradeableContextC.cpp
     Cookies.cpp
   }
 
@@ -167,6 +169,7 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, ifr_client, u
 
   Template_Files {
     Context_Impl_T.cpp
+    Upgradeable_Context_Impl_T.cpp
     Home_Servant_Impl_T.cpp
     Swapping_Servant_Home_Impl_T.cpp
     Dynamic_Component_Servant_T.cpp
