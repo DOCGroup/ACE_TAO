@@ -61,8 +61,8 @@ main (int argc, ACE_TCHAR *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, argv[0]);
-      return -1;
     }
   ACE_ENDTRY;
-  return 0;
+
+  return -1;
 }
