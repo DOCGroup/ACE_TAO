@@ -21,12 +21,30 @@
 
 #include "ace/config.h"
 
-// Force test of ACE_U_LongLong class.
-#undef ACE_HAS_HI_RES_TIMER
-#undef ACE_HAS_LONGLONG_T
+// Force test of ACE_U_LongLong class on all platforms.
+#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_LONGLONG_T) || defined (ACE_WIN32)
+
+# if defined (ACE_HAS_HI_RES_TIMER)
+#   undef ACE_HAS_HI_RES_TIMER
+# endif /* ACE_HAS_HI_RES_TIMER */
+
+# if defined (ACE_HAS_LONGLONG_T)
+#   undef ACE_HAS_LONGLONG_T
+# endif /* ACE_HAS_LONGLONG_T */
+
+# if defined (ACE_WIN32)
+#   undef ACE_WIN32
+# endif /* ACE_WIN32 */
+
+  // Force inlining, in case ACE_U_LongLong member function
+  // definitions are not in libACE.
+# define __ACE_INLINE__
+
+#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_LONGLONG_T || ACE_WIN32 */
 
 #include "ace/ACE.h"
 #include "test_config.h"
+
 
 u_long
 test_ace_u_longlong ()
