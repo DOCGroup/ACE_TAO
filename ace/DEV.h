@@ -33,7 +33,7 @@
 #define ACE_DEV_STREAM ACE_DEV_IO
 #else /* TEMPLATES are broken (must be a cfront-based compiler...) */
 #define ACE_DEV_CONNECTOR ACE_DEV_Connector, ACE_DEV_Addr
-#define ACE_DEV_STREAM ACE_DEV_Stream, ACE_DEV_Addr
+#define ACE_DEV_STREAM ACE_DEV_IO, ACE_DEV_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
 /**
