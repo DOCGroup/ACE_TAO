@@ -22,7 +22,6 @@
 
 #include "ace/Activation_Queue.h"
 #include "ace/Bound_Ptr.h"
-#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Mutex.h"
 
