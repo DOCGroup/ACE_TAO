@@ -1,15 +1,15 @@
 Tue Aug 25 10:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
-	  Added orbsvcs/test/Property/run_test.pl.
-	  The Simple test was moved to Simple/time.
+        * bin/auto_compile:
+          Added orbsvcs/test/Property/run_test.pl.
+          The Simple test was moved to Simple/time.
 
 Tue Aug 25 10:45:50 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Aio_Platform_Test.cpp: Fixed the SunCC errors about
-		missing function prototypes. Also put the various
-		<sysconf> routines under "#if defined <SYMBOL>"
-		statements. 
+        * tests/Aio_Platform_Test.cpp: Fixed the SunCC errors about
+                missing function prototypes. Also put the various
+                <sysconf> routines under "#if defined <SYMBOL>"
+                statements.
 
 Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -27,6 +27,12 @@ Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
           examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp:
           removed explicit ACE_Auto_Basic_Array_Ptr <char> instantiation
           because it's now in libACE.
+
+        * include/makeinclude/wrapper_macros.GNU: added BUILD
+          definition when building static libs only.  This was necessary
+          to allow the TAO/orbsvcs/tests/Simulator/{EventSup,DOVEMIB}
+          makes to work properly on both Solaris and VxWorks.
+          It also means that BUILD is no longer necessary in most Makefiles.
 
 Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
