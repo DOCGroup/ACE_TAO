@@ -3802,6 +3802,10 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
         // <::_Psigwait> works with cxx -pthread.  g++ does _not_ need
         // it.
         extern "C" int _Psigwait __((const sigset_t *set, int *sig));
+#     elif defined (__KCC)
+#       undef sigwait
+        inline int sigwait (const sigset_t* set, int* sig)
+          { return _Psigwait (set, sig); }
 #     endif /* __DECCXX_VER */
 #   elif !defined (ACE_HAS_SIGWAIT)
   extern "C" int sigwait (sigset_t *set);
@@ -3832,7 +3836,7 @@ extern "C" {
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
-#   if defined (__KCC) && !defined(linux)
+#   if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
 #   else
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
