@@ -1,3 +1,10 @@
+Thu Nov 20 20:24:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/VarOut_T.h:
+
+	  Moved a header file inclusion from below the pragma directive to
+	  the top of the file.
+
 Thu Nov 20 20:12:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:

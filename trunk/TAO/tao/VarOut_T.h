@@ -15,11 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/OS_Memory.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Memory.h"
 
 /**
  * @class TAO_Var_Base_T
