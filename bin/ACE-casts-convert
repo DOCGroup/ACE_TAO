@@ -13,6 +13,10 @@
 #  Use this script at your own risk.  It appears to work correctly for
 #  all cases, but verify the results "just in case".
 #
+#  @note Wildcards may be supplied as the "FILE" arguments to this
+#        script since the shell should expand the wildcards before
+#        executing the script.
+#
 #  @author Ossama Othman
 #
 # =============================================================================
