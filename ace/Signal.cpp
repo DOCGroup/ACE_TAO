@@ -858,6 +858,7 @@ ACE_MT (template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>);
 ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
 template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
+template class ACE_Fixed_Set_Iterator_Base<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #pragma instantiate ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>
@@ -865,6 +866,7 @@ template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLE
 #endif /* ACE_MT_SAFE */
 #pragma instantiate ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
 #pragma instantiate ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
+#pragma instantiate ACE_Fixed_Set_Iterator_Base<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
