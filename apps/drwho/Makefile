@@ -71,6 +71,15 @@ VBIN    = $(BIN:%=%$(VAR))
 #----------------------------------------------------------------------------
 
 include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifeq (1,$(VXWORKS))
+   # since protocols/rwhod.h is not available under VxWorks
+   # drwho will not build on vxworks
+ all clean realclean:
+	@echo drwho will not build on vxworks
+ 
+else # VXWORKS
+
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -87,6 +96,8 @@ drwho-client: $(addprefix $(VDIR),$(CLIENT-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
 drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OBJ))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
+endif #VxWorks
+ 
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
