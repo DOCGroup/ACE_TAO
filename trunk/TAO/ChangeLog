@@ -1,3 +1,13 @@
+Tue Dec 31 23:53:17 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/include/idl_global.h: Added missing include to get it
+	  compiling on AIX. 
+
+	* tests/Bug_1269_Regression/ORB_Task.cpp: #included
+	  tao/Environment.h to get it compiling on AIX. 
+
+	  Thanks to Jon Wackley for the patches.
+	
 Tue Dec 31 21:03:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* performance-tests/Makefile: Added the new directory to the list
