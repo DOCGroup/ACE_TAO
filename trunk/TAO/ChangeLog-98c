@@ -1,4 +1,9 @@
-Tue Aug  4 21:20:35 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+Tue Aug  4 22:23:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: Cleaned up some of the code
+	  and the comments.
+
+Tue Aug  4 21:20:35 1998  Nagarajan Surendrany  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
 	  Replaced 3*BUFSIZ with ACE_DEFAULT_ARGV_BUFSIZ and
