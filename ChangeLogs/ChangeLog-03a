@@ -1,3 +1,11 @@
+Tue Feb  8 16:29:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ltcf-cxx.sh:
+	* ltconfig:
+	* ltmain.sh:
+
+	  Updated from latest libtool multi-language branch versions.
+
 Tue Feb  8 14:25:46 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-sunos5.5.h (ACE_HAS_TYPENAME_KEYWORD):
