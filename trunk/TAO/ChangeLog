@@ -1,3 +1,12 @@
+Sun Jul 27 09:06:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Stub.cpp (get_policy): Removed the check for this->policies_
+	  == 0. This is actually bogus since the get_client_policy () does
+	  all the checks. Moreover, if the policy is set on Current or on
+	  the PolicyManager, we could by mistake a return a null
+	  policy. Thanks to Chris <xfrog2000@yahoo.com> for reporting this
+	  problem. 
+
 Sun Jul 27 07:29:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h:
