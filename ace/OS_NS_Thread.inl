@@ -3702,17 +3702,13 @@ ACE_OS::thr_getprio (ACE_hthread_t id, int &priority, int &policy)
 
   priority = ::GetThreadPriority (id);
 
-  if (priority == THREAD_PRIORITY_ERROR_RETURN
-      && (error = ::GetLastError ()) != NO_ERROR)
+  DWORD priority_class = ::GetPriorityClass (::GetCurrentProcess());
+  if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
 
   policy =
-    ((::GetPriorityClass (id)) ==
+    (priority_class ==
      REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
-
-  if (policy == 0 && (error = ::GetLastError ()) != NO_ERROR)
-    ACE_FAIL_RETURN (-1);
-
 
   return 0;
 # elif defined (ACE_PSOS)
