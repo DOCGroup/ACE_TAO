@@ -23,6 +23,13 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Malloc.cpp,Reactor.cpp,Service_Repository.cpp: added
 	  #include "ace/Object_Manager.h" for ACE_Static_Object_Lock.
 
+	* ace/Thread_Manager.h: moved ACE_Thread_Manager::THR_FUNC typedef
+	  outside the class declaration to avoid compilation problems on
+	  g++/VxWorks/i960 with -g.  THR_FUNC is only used by protected
+	  ACE_Thread_Manager methods so this doesn't widen the public
+	  interface.  Thanks to Aaron Valdivia <avaldivia@hns.com> for
+	  reporting this and verifying the fix.
+
 	* tests/IOStream_Test.cpp (client): multiply floats by 1.0 instead
 	  of 1 to avoid bad code generation on g++/VxWorks/i960.  Thanks to
 	  Aaron Valdivia <avaldivia@hns.com> for reporting this.
