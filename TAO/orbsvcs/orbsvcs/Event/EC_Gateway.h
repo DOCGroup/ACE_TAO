@@ -34,10 +34,11 @@
 #define TAO_EC_GATEWAY_H
 #include "ace/pre.h"
 
+#include "orbsvcs/Event/event_export.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients.h"
-#include "orbsvcs/Event/event_export.h"
+#include "ace/Map_Manager.h"
 
 class TAO_RTEvent_Export TAO_EC_Gateway : public POA_RtecEventChannelAdmin::Observer
 {
