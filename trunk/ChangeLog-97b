@@ -2,11 +2,13 @@ Fri Nov  7 18:53:13 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* ace/config-netbsd.h: Added file for NetBSD 1.2G.
 
-Fri Nov  7 18:50:51 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
+ 	  Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
 
 	* ace/OS.i (msync): msync on NetBSD takes only two parameters as
-	opposed to the usual two. (It doesnt have the "flags" parameter.)
-	The ACE_HAS_BROKEN_NETBSD_MSYNC flag works around that.
+ 	  opposed to the usual three. (It doesnt have the "flags"
+ 	  parameter.)  The ACE_HAS_BROKEN_NETBSD_MSYNC flag works around
+ 	  that.
 
 Fri Nov  7 16:04:35 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -19,11 +21,6 @@ Fri Nov  7 16:04:35 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  ACE_CLASS_IS_NAMESPACE doesn't have constructors, which is why
  	  they work.  Thanks to Torbjorn Lindgren <tl@funcom.no> for
  	  reporting this.
-
-Fri Nov  7 16:03:13 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
-
-	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
- 	  Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
 
 Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
