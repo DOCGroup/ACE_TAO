@@ -321,6 +321,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   TAO_AV_TransportFactorySetItor transport_factory_end =
                     av_core->transport_factories ()->end ();
 
+		  //int i = 1;
                   for (TAO_AV_TransportFactorySetItor transport_factory =
                          av_core->transport_factories ()->begin ();
                        transport_factory != transport_factory_end;
@@ -681,6 +682,12 @@ TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
   this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
                                                                 0,
                                                                 *timeout);
+  return 0;
+}
+
+int
+TAO_AV_Flow_Handler::change_qos (AVStreams::QoS)
+{
   return 0;
 }
 
