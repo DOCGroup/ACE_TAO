@@ -286,7 +286,7 @@ public:
     persistent_poa_system_map persistent_poa_system_map_;
   };
 
-  friend Active_Hint_Strategy;
+  friend TAO_Object_Adapter::Active_Hint_Strategy;
 
   /**
    * @class No_Hint_Strategy
@@ -316,7 +316,7 @@ public:
 
   };
 
-  friend No_Hint_Strategy;
+  friend TAO_Object_Adapter::No_Hint_Strategy;
 
 protected:
 

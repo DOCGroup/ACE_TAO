@@ -513,10 +513,3 @@ TAO_ServantBase_var::_retn (void)
   return retval;
 }
 
-void
-TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
-                                  void *
-                                  ACE_ENV_ARG_DECL)
-{
-  ACE_THROW (CORBA::BAD_OPERATION ());
-}
