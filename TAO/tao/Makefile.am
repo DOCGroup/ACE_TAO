@@ -705,7 +705,7 @@ nobase_include_HEADERS += \
   Default_Thread_Lane_Resources_Manager.i \
   DomainC.i \
   DoubleSeqC.inl \
-  DynamicC.i \
+  DynamicC.inl \
   Dynamic_ParameterC.i \
   Endpoint.i \
   Environment.i \
