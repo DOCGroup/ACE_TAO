@@ -18,18 +18,13 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+#include "test_config.h"
 
 static void *
 test (void *args)
 {
   ACE_Process_Mutex *pm = (ACE_Process_Mutex *) args;
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACE_OS::srand (ACE_OS::time (0));
 
   for (int i = 0; i < ACE_MAX_ITERATIONS; i++)

@@ -110,11 +110,6 @@ typedef size_t KEY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n", program)); \
   ace_file_stream.close ();
 
-#define ACE_NEW_THREAD \
-do {\
-      ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()) ;\
-} while (0)
-
 #define ACE_APPEND_LOG(NAME) \
   const char *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \

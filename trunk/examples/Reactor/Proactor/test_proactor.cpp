@@ -14,7 +14,7 @@
 //    operations.
 //
 // = AUTHOR
-//    Irfan Pyarali (irfan@cs.wusl.edu)
+//    Irfan Pyarali (irfan@cs.wustl.edu)
 // 
 // ============================================================================
 

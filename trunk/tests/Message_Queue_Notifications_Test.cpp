@@ -16,7 +16,7 @@
 //
 //      1. Multiple threads are not required.
 //      2. You do not have to explicitly notify the Reactor
-//      3. This code will work the same with Reactor and ReactorEx
+//      3. This code will work the same with any Reactor Implementation
 //      4. handle_input, handle_exception, handle_output are the only
 //         callbacks supported by this mechanism
 //      5. The notification mechanism need not notify the Reactor. You can

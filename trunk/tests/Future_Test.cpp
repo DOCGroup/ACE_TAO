@@ -213,8 +213,6 @@ Scheduler::close (u_long)
 int
 Scheduler::svc (void)
 {
-  ACE_NEW_THREAD;
-
   for (;;)
     {
       // Dequeue the next method object (we use an auto pointer in

@@ -20,7 +20,6 @@
 
 #include "test_config.h"
 #include "ace/Task.h"
-#include "ace/Service_Config.h"
 #include "ace/Malloc.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
@@ -82,10 +81,8 @@ Worker_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 Worker_Task::svc (void)
 {
-  ACE_NEW_THREAD;
   // The <ACE_Task::svc_run()> method automatically adds us to the
-  // <ACE_Service_Config>'s <ACE_Thread_Manager> when the thread
-  // begins.
+  // process-wide <ACE_Thread_Manager> when the thread begins.
 
   ACE_DEBUG ((LM_DEBUG, "(%t) starting svc() method\n"));
 

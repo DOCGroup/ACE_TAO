@@ -11,7 +11,7 @@
 // = DESCRIPTION
 //
 //    This example application shows how to write programs that
-//    combine the Proactor and ReactorEx event loops
+//    combine the Proactor and Reactor event loops
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -41,11 +41,11 @@ public:
 		  tv.sec ()));
 
       // Since there is only one thread that can do the timeouts in
-      // ReactorEx, lets keep the handle_timeout short for that
+      // Reactor, lets keep the handle_timeout short for that
       // thread.
       if (ACE_OS::strcmp ((char *) arg, "Proactor") == 0)
 	// Sleep for a while
-	ACE_OS::sleep (4);
+	ACE_OS::sleep (1);
     }
   virtual int handle_timeout (const ACE_Time_Value &tv,
 			      const void *arg)
@@ -63,13 +63,15 @@ class Worker : public ACE_Task <ACE_NULL_SYNCH>
 public:
   int svc (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "(%t) Worker started\n"));
+
     // Handle events for 13 seconds.
     ACE_Time_Value run_time (13);
 
     // Try to become the owner
-    ACE_ReactorEx::instance ()->owner (ACE_Thread::self ());
+    ACE_Reactor::instance ()->owner (ACE_Thread::self ());
 
-    if (ACE_ReactorEx::run_event_loop (run_time) == -1)
+    if (ACE_Reactor::run_event_loop (run_time) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "Worker::svc"), -1);
     else
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
@@ -84,7 +86,7 @@ main (int, char *[])
   Timeout_Handler handler;
   ACE_Proactor proactor (0, 0, 1);
 
-  ACE_ReactorEx::instance ()->register_handler (&proactor);
+  ACE_Reactor::instance ()->register_handler (&proactor);
   
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
@@ -96,10 +98,10 @@ main (int, char *[])
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  if (ACE_ReactorEx::instance ()->schedule_timer (&handler,
-							(void *) "ReactorEx",
-							ACE_Time_Value::zero,
-							bar_tv) == -1)
+  if (ACE_Reactor::instance ()->schedule_timer (&handler,
+						(void *) "Reactor",
+						ACE_Time_Value::zero,
+						bar_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   Worker worker;

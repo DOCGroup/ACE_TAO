@@ -17,10 +17,11 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
+#include "ace/INET_Addr.h"
+#include "ace/Thread_Manager.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
 
@@ -94,8 +95,6 @@ public:
 static int
 worker (void)
 {
-  ACE_NEW_THREAD;
-
   ACE_Reactor::instance()->owner (ACE_OS::thr_self());
 
   for (;;)

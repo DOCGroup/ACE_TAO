@@ -23,7 +23,7 @@
 #include "test_config.h"
 #include "ace/OS.h"
 #include "ace/Thread.h"
-#include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"                             
 #include "ace/Handle_Set.h"
@@ -31,10 +31,6 @@
 static void *
 client (void *arg)
 {
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
   ACE_SOCK_Stream cli_stream;
@@ -93,10 +89,6 @@ client (void *arg)
 static void *
 server (void *arg)
 {
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)

@@ -17,11 +17,10 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
-#include "ace/Service_Config.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
 
@@ -33,9 +32,6 @@ static ACE_UPIPE_Addr addr (__TEXT ("pattern"));
 static void *
 connector (void *)
 {
-  // Insert thread into thr_mgr.
-  ACE_NEW_THREAD;
-
   ACE_UPIPE_Stream c_stream;
 
   ACE_OS::sleep (5);
@@ -96,9 +92,6 @@ connector (void *)
 static void *
 acceptor (void *args)
 {
-  // Insert thread into thr_mgr.
-  ACE_NEW_THREAD;
-
   ACE_UPIPE_Acceptor *acceptor = (ACE_UPIPE_Acceptor *) args;
   ACE_UPIPE_Stream s_stream;
 

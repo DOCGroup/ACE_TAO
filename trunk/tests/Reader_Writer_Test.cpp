@@ -21,7 +21,7 @@
 #include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Thread.h"
-#include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -88,8 +88,6 @@ parse_args (int argc, char *argv[])
 static void *
 reader (void *)
 {
-  ACE_NEW_THREAD;
-
   ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
 
   // We use a random pause, around 2msec with 1msec jittering.
@@ -133,8 +131,6 @@ reader (void *)
 static void *
 writer (void *)
 {
-  ACE_NEW_THREAD;
-
   ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
 
   // We use a random pause, around 2msec with 1msec jittering.

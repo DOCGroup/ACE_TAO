@@ -19,7 +19,6 @@
 
 #include "test_config.h"
 #include "ace/Synch.h"
-#include "ace/Service_Config.h"
 #include "ace/Task.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -111,7 +110,7 @@ Test_Task::close (u_long)
 int 
 Test_Task::svc (void)
 {
-  ACE_NEW_THREAD;
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc\n"));
 
   for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
@@ -160,8 +159,6 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_NEW_THREAD;
-
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 
   // Make this thread the owner of the Reactor's event loop.
@@ -194,15 +191,11 @@ main (int, char *[])
   ACE_START_TEST ("Reactors_Test");
 
 #if defined (ACE_HAS_THREADS)
-  // We need this to make sure the Reactor Singleton gets deleted!
-  ACE_Service_Config daemon; 
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   tm = ACE_Thread_Manager::instance ();
 
-  ACE_Reactor *reactor;
-
-  ACE_NEW_RETURN (reactor, ACE_Reactor, -1);
+  ACE_Reactor reactor;
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   Test_Task tt1[MAX_TASKS];
@@ -213,7 +206,7 @@ main (int, char *[])
   for (int i = 0; i < MAX_TASKS; i++)
     {
       tt1[i].open (ACE_Reactor::instance ());
-      tt2[i].open (reactor);
+      tt2[i].open (&reactor);
     }
 
   // Spawn two threads each running a different reactor.
@@ -225,17 +218,14 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   else if (ACE_Thread_Manager::instance ()->spawn 
-      (ACE_THR_FUNC (worker), (void *) reactor, 
+      (ACE_THR_FUNC (worker), (void *) &reactor, 
        THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   if (ACE_Thread_Manager::instance ()->wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "wait"), -1);
 
-  reactor->close ();
-  delete reactor;
-  // Note that the destructor of ACE_Service_Config daemon will close
-  // down the ACE_Reactor::instance().
+  ACE_DEBUG ((LM_DEBUG, "(%t) all threads are finished \n"));
 
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

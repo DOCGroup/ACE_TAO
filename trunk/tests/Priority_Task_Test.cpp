@@ -17,12 +17,9 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
-
-#if defined (ACE_HAS_THREADS)
+#include "test_config.h"
 
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -78,9 +75,6 @@ Priority_Task::open (void *arg)
 int
 Priority_Task::svc (void)
 {
-  // Set up logging for this thread.
-  ACE_NEW_THREAD;
-
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;

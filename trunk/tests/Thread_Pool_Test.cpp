@@ -22,10 +22,8 @@
 //
 // ============================================================================
 
+#include "ace/Task.h"
 #include "test_config.h"
-#include "ace/Task.h"
-#include "ace/Service_Config.h"
-#include "ace/Task.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -92,11 +90,6 @@ Thread_Pool::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 Thread_Pool::svc (void)
 {
-  ACE_NEW_THREAD;
-  // The <ACE_Task::svc_run()> method automatically adds us to the
-  // <ACE_Service_Config>'s <ACE_Thread_Manager> when the thread
-  // begins.
-
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 

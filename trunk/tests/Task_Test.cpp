@@ -18,9 +18,8 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Task.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -70,10 +69,6 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 int 
 Barrier_Task::svc (void) 
 {  
-  // Note that the ACE_Task::svc_run() method automatically adds us to
-  // the Thread_Manager when the thread begins.
-  ACE_NEW_THREAD;
-
   for (int iterations = 1; 
        iterations <= this->n_iterations_;
        iterations++)

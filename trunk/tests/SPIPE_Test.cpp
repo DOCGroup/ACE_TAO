@@ -35,9 +35,6 @@ static const char *PIPE_NAME = "ace_pipe_name";
 static void *
 client (void *)
 {
-#if defined (ACE_WIN32)
-  ACE_NEW_THREAD;
-#endif
   const char *rendezvous = PIPE_NAME;
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
@@ -63,9 +60,6 @@ client (void *)
 static void *
 server (void *)
 {
-#if defined (ACE_WIN32)
-  ACE_NEW_THREAD;
-#endif
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];

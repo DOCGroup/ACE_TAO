@@ -20,7 +20,6 @@
 #include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Service_Config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -46,8 +45,6 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  ACE_NEW_THREAD;
-
   for (int iterations = 1; 
        iterations <= args->n_iterations_;
        iterations++)
