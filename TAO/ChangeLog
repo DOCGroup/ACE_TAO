@@ -1,3 +1,15 @@
+Tue Jan  4 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ShortSeqA.cpp:
+        * tao/ShortSeqS.h:
+          Regenerated
+
+        * tao/ShortSeqC.{h,cpp,inl,i}:
+          Regenerated and replace .i with .inl files
+
+        * tao/Makefile.am:
+          Updated because of change above
+
 Tue Jan  4 12:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAOA.cpp:
