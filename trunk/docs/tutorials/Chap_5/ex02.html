@@ -39,7 +39,7 @@ Management)</FONT>
 <BR>&nbsp;int
 <BR>&nbsp;handle_input(ACE_HANDLE){
 <BR><FONT COLOR="#FF0000">&nbsp; //receive the data</FONT>
-<BR>&nbsp; peer().recv_n(data,12);
+<BR>&nbsp; peer_i().recv_n(data,12);
 <BR>&nbsp; ACE_DEBUG((LM_DEBUG,?%s\n?,data));
 <BR>&nbsp;
 <BR>&nbsp;<FONT COLOR="#FF0000"> // do something with the input received.</FONT>
