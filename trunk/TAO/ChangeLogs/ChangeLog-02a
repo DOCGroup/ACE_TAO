@@ -1,3 +1,9 @@
+Mon Jan 14 14:44:31 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.av:
+	  The dependencies for AV/md5c.c were not generated properly
+	  because the Makefile assumed all sources were .cpp files.
+
 Tue Jan 15 00:30:30 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be/be_valuetype.cpp:
