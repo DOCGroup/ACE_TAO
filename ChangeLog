@@ -1,3 +1,10 @@
+Thu Oct  3 17:29:36 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_Dirent.cpp (readdir_emulation): Don't do a FindNextFile()
+	  right after FindFirstFile() to avoid overwriting the existing
+ 	  data!  Thanks to Dmitry Botcharnikov <dimab@garant.ru> for
+ 	  reporting this.
+
 Wed Oct  2 20:44:19 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Scatter_Gather_Test.cpp: Added some more diagnostic
