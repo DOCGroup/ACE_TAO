@@ -1,3 +1,12 @@
+Wed Nov 26 18:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+	  It should be libs instead of lib, stupid typo made which I now correct
+
 Wed Nov 26 12:04:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Content_Server/SMI_Iterator/Makefile:
@@ -11,8 +20,8 @@ Wed Nov 26 11:48:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/Scheduling_Service/Makefile:
 	* orbsvcs/Dump_Schedule/Makefile:
 
-	  Check for RTSched instead of Sched before going ahead to build. 
-	
+	  Check for RTSched instead of Sched before going ahead to build.
+
 	* orbsvcs/tests/ImplRepo/NameService/Makefile:
 	* orbsvcs/tests/Notify/Blocking/Makefile:
 	* orbsvcs/tests/Notify/Discarding/Makefile:
@@ -72,7 +81,7 @@ Wed Nov 26 14:32:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
 	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
 	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
-	  Add missing lib to fix link erros in our SunForte 8 build.
+	  Add missing lib to fix link errors in our SunForte 8 build.
 
 Wed Nov 26 14:21:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
