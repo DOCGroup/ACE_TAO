@@ -18,11 +18,11 @@
 #ifndef TAO_NOTIFY_QOSADMIN_I_H
 #define TAO_NOTIFY_QOSADMIN_I_H
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "orbsvcs/orbsvcs/CosNotificationS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class  TAO_Notify_QoSAdmin_i : public virtual POA_CosNotification::QoSAdmin
 {
