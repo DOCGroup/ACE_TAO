@@ -1,3 +1,14 @@
+Mon Apr  9 08:28:47 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SString.{h,i,cpp}: Added improved support for ACE_WString:
+	  . The magic number 32 has been changed to ACE_DEFAULT_GROWSIZE.
+	  . ACE_WString only allocates memory when it is needed.
+	  . The grow strategy can be modified by setting the ACE_GROW_LINEAR define.
+	    the string does not double the memory then, but increases the memory by
+	    ACE_DEFAULT_GROWSIZE.
+	  Thanks to Eric Zuur <Eric.Zuur@meco.nl> for contributing these
+ 	  enhancements.
+	
 Mon Apr  9 07:50:08 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:

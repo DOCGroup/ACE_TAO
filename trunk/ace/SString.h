@@ -26,6 +26,10 @@ typedef wchar_t ACE_WSTRING_TYPE;
 typedef ACE_USHORT16 ACE_WSTRING_TYPE;
 #endif /* ACE_HAS_WCHAR */
 
+#if !defined (ACE_DEFAULT_GROWSIZE)
+#define ACE_DEFAULT_GROWSIZE 32
+#endif /* ACE_DEFAULT_GROWSIZE */
+
 // Forward decl.
 class ACE_Allocator;
 
@@ -402,6 +406,9 @@ private:
 
   /// Pointer to data.
   ACE_WSTRING_TYPE *rep_;
+
+  /// Represents the "NULL" string to simplify the internal logic.
+  static ACE_WSTRING_TYPE NULL_WString_;
 };
 
 ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &,
