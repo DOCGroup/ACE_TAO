@@ -212,19 +212,6 @@ TAO_LF_Leader_Thread_Helper::~TAO_LF_Leader_Thread_Helper (void)
 }
 
 ACE_INLINE int
-TAO_LF_Server_Thread_Helper::reset_server_thread (void)
-{
-  // Reset has been called explicitly, no need to auto reset.
-  this->auto_reset_ = 0;
-
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
-
-  this->leader_follower_.reset_server_thread ();
-
-  return this->leader_follower_.elect_new_leader ();
-}
-
-ACE_INLINE int
 TAO_LF_Server_Thread_Helper::set_server_thread (ACE_Time_Value *max_wait_time)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
@@ -234,7 +221,7 @@ TAO_LF_Server_Thread_Helper::set_server_thread (ACE_Time_Value *max_wait_time)
 
   // If successful, reset has to be called.
   if (result == 0)
-    this->auto_reset_ = 1;
+    this->call_reset_ = 1;
 
   return result;
 }
@@ -242,13 +229,22 @@ TAO_LF_Server_Thread_Helper::set_server_thread (ACE_Time_Value *max_wait_time)
 ACE_INLINE
 TAO_LF_Server_Thread_Helper::TAO_LF_Server_Thread_Helper (TAO_Leader_Follower &leader_follower)
   : leader_follower_ (leader_follower),
-    auto_reset_ (0)
+    call_reset_ (0)
 {
 }
 
 ACE_INLINE
 TAO_LF_Server_Thread_Helper::~TAO_LF_Server_Thread_Helper (void)
 {
-  if (this->auto_reset_)
-    this->reset_server_thread ();
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock ());
+
+  if (this->call_reset_)
+    this->leader_follower_.reset_server_thread ();
+
+  int result = this->leader_follower_.elect_new_leader ();
+
+  if (result == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("TAO (%P|%t) Failed to wake up ")
+                ASYS_TEXT ("a follower thread\n")));
 }

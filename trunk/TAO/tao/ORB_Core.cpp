@@ -1717,14 +1717,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
         break;
     }
 
-  if (server_thread_helper.reset_server_thread () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) Failed to wake up ")
-                         ASYS_TEXT ("a follower thread\n")),
-                        -1);
-    }
-
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run/perform_work %d\n"), result));
 
