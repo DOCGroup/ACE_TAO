@@ -169,9 +169,10 @@ Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
 	  Concept of "owner" thread is introduced in ReactorEx. The owner
  	  concept is used because we don't want multiple threads to try to
  	  expire timers. Therefore the "owner" thread is the only one
- 	  allowed to expire timers. Initially, the creator thread of
- 	  ReactorEx becomes the "owner" thread. Ownership can later be
- 	  transferred among threads.
+ 	  allowed to expire timers. Also, the owner thread is the only
+ 	  thread which waits on the notify handle. Initially, the creator
+ 	  thread of ReactorEx becomes the "owner" thread. Ownership can
+ 	  later be transferred among threads.
 
 	  The Handler Repository also went through major changes as it now
  	  keeps track of <handle, event_handler> tuples to be added and
