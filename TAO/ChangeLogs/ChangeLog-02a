@@ -28,6 +28,8 @@ Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	feature in TAO.  
 	* docs/Smart_Proxies.html: Describes these new options of the
 	smart proxy feature.
+	Thanks to Doug and Nanbor for motivating me to get these policies
+	in place. ;)
 	
 Thu Aug 10 18:39:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
