@@ -10,12 +10,31 @@
 #include "ace/INET_Addr.h"
 #include "ace/SString.h"
 #include "ace/Process.h"
+#include "ace/Version.h"
 
 // Hex characters.
 const char ACE::hex_chars_[] = "0123456789abcdef";
 
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
+
+u_int
+ACE::major_version (void)
+{
+  return ACE_MAJOR_VERSION;
+}
+
+u_int
+ACE::minor_version (void)
+{
+  return ACE_MINOR_VERSION;
+}
+
+u_int
+ACE::beta_version (void)
+{
+  return ACE_BETA_VERSION;
+}
 
 void
 ACE::unique_name (const void *object,

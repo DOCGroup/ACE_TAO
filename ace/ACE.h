@@ -19,8 +19,6 @@
 #if !defined (ACE_ACE_H)
 #define ACE_ACE_H
 
-#include "ace/Version.h"
-
 // Forward declarations.
 class ACE_Time_Value;
 class ACE_Thread_Manager;
