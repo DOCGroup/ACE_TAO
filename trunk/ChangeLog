@@ -1,3 +1,9 @@
+Thu Mar 28 13:31:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/POSIX_Asynch_IO.cpp (handle_close): 
+	  Fixed the warnings on Debian_Core build that were caused by the
+	  changes earlier today.
+
 Thu Mar 28 16:14:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h (ACE_Time_Value::dump): Added comments that'll go to
