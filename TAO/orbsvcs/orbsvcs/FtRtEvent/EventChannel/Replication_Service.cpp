@@ -70,7 +70,7 @@ namespace FTRTEC
       TAO_FTRTEC::Log(3, "Basic replication strategy\n");
     }
 
-    ACE_AUTO_PTR_RESET(replication_strategy, strategy);
+    ACE_AUTO_PTR_RESET(replication_strategy, strategy, Replication_Strategy);
 
     ACE_TRY_NEW_ENV
     {
