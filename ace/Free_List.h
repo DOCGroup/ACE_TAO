@@ -19,6 +19,17 @@
 #include "ace/OS.h"
 #include "ace/Synch_T.h"
 
+enum ACE_Free_List_Op_Mode
+{
+  ACE_FREE_LIST_WITH_POOL,
+  ACE_PURE_FREE_LIST
+};
+// Free list operation mode, 
+// ACE_FREE_LIST_WITH_POOL: A free list which create more elements when
+//                          there aren't enough elements.
+// ACE_PURE_FREE_LIST: A simple free list which doen't allocate/deallocate
+//                     elements.  
+
 template <class T>
 class ACE_Free_List  
   // = TITLE
@@ -56,16 +67,6 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
   //      a mutex so the freelist can be used in a multithreaded program .
 {
 public:
-  enum ACE_Free_List_Op_Mode
-  {
-    ACE_FREE_LIST_WITH_POOL,
-    ACE_PURE_FREE_LIST
-  };
-  // Free list operation mode, 
-  // ACE_FREE_LIST_WITH_POOL: A free list which create more elements when
-  //                          there aren't enough elements.
-  // ACE_PURE_FREE_LIST: A simple free list which doen't allocate/deallocate
-  //                     elements.  
 
   ACE_Locked_Free_List (ACE_Free_List_Op_Mode mode = ACE_FREE_LIST_WITH_POOL,
 			size_t prealloc = ACE_DEFAULT_FREE_LIST_PREALLOC, 
