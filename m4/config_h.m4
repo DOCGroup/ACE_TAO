@@ -219,6 +219,19 @@ AH_TEMPLATE([ACE_SIZEOF_FLOAT],[Size of the native "float" type])
 AH_TEMPLATE([ACE_SIZEOF_DOUBLE],[Size of the native "double" type])
 AH_TEMPLATE([ACE_SIZEOF_LONG_DOUBLE],[Size of the native "long double" type])
 
+AH_VERBATIM([ACE_INT64_TYPEDEF],
+[
+/*
+   typedef for ACE_INT64
+
+   We only make the typedef if ACE_INT64_TYPEDEF is defined.  Otherwise,
+   let ace/Basic_Types.h do the work for us.
+*/
+#undef ACE_INT64_TYPEDEF
+#ifdef ACE_INT64_TYPEDEF
+   typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
+])
 
 AH_VERBATIM([ACE_UINT64_TYPEDEF],
 [

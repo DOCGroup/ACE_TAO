@@ -1,3 +1,10 @@
+Mon Dec 13 10:07:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+
+	  Changed to provide ACE_INT64 typedef.
+
 Mon Dec 13 10:16:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
