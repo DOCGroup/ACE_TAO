@@ -1,3 +1,43 @@
+Fri Sep 29 01:41:05 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer: New files were added to support the RT POA
+	  interface:
+
+	  RTPortableServer.pidl
+	  RTPortableServerC.cpp
+	  RTPortableServerC.h
+	  RTPortableServerC.i
+
+	* tao/PortableServer/PortableServer.pidl: Improved IDL code
+	  generation and patching information and comments.
+
+	* tao/PortableServer/TAO_PortableServer.dsp: 
+	* tao/PortableServer/Makefile: 
+
+	  Added RTPortableServerC.* files.
+
+	* tao/PortableServer/PortableServerC.cpp: Exception id for local
+	  exceptions was not being set in the constructor.  I fixed this
+	  by hand.  Jeff should be able to fix this in the IDL compiler so
+	  that we don't have to fix this on every regeneration of the IDL
+	  code.
+
+	* tao/PortableServer/POA.h: Derive TAO_POA from
+	  RTPortableServer::POA or PortableServer::POA depending on
+	  TAO_HAS_RT_CORBA.
+
+	* tao/PortableServer/PortableServer.h: 
+	* tao/PortableServer/Object_Adapter.h: 
+
+	  #include "RTPortableServerC.h" instead of 
+	  #include "PortableServerC.h".  
+
+	  RTPortableServerC.h includes PortableServerC.h.
+
+	* tests/Exposed_Policies/Policy_Tester: Changed type of
+	  <child_poa> to be of type RTPortableServer::POA from
+	  PortableServer::POA.
+
 Fri Sep 29 01:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Acceptor.h

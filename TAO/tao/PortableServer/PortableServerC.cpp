@@ -1096,6 +1096,7 @@ const char* PortableServer::POAManager::_interface_repository_id (void) const
 
 // default constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
+  : CORBA_UserException ("IDL:PortableServer/POAManager/AdapterInactive:1.0")
 {
 }
 
@@ -1506,6 +1507,7 @@ PortableServer::POA::_duplicate (POA_ptr obj)
 
 // default constructor
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/AdapterAlreadyExists:1.0")
 {
 }
 
@@ -1571,6 +1573,7 @@ CORBA::Exception *PortableServer::POA::AdapterAlreadyExists::_alloc (void)
 
 // default constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/AdapterNonExistent:1.0")
 {
 }
 
@@ -1636,6 +1639,7 @@ CORBA::Exception *PortableServer::POA::AdapterNonExistent::_alloc (void)
 
 // default constructor
 PortableServer::POA::InvalidPolicy::InvalidPolicy (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/InvalidPolicy:1.0")
 {
 }
 
@@ -1712,6 +1716,7 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (
 
 // default constructor
 PortableServer::POA::NoServant::NoServant (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/NoServant:1.0")
 {
 }
 
@@ -1779,6 +1784,7 @@ CORBA::Exception *PortableServer::POA::NoServant::_alloc (void)
 
 // default constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/ObjectAlreadyActive:1.0")
 {
 }
 
@@ -1844,6 +1850,7 @@ CORBA::Exception *PortableServer::POA::ObjectAlreadyActive::_alloc (void)
 
 // default constructor
 PortableServer::POA::ObjectNotActive::ObjectNotActive (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/ObjectNotActive:1.0")
 {
 }
 
@@ -1909,6 +1916,7 @@ CORBA::Exception *PortableServer::POA::ObjectNotActive::_alloc (void)
 
 // default constructor
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/ServantAlreadyActive:1.0")
 {
 }
 
@@ -1974,6 +1982,7 @@ CORBA::Exception *PortableServer::POA::ServantAlreadyActive::_alloc (void)
 
 // default constructor
 PortableServer::POA::ServantNotActive::ServantNotActive (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/ServantNotActive:1.0")
 {
 }
 
@@ -2039,6 +2048,7 @@ CORBA::Exception *PortableServer::POA::ServantNotActive::_alloc (void)
 
 // default constructor
 PortableServer::POA::WrongAdapter::WrongAdapter (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/WrongAdapter:1.0")
 {
 }
 
@@ -2104,6 +2114,7 @@ CORBA::Exception *PortableServer::POA::WrongAdapter::_alloc (void)
 
 // default constructor
 PortableServer::POA::WrongPolicy::WrongPolicy (void)
+  : CORBA_UserException ("IDL:PortableServer/POA/WrongPolicy:1.0")
 {
 }
 
@@ -2237,6 +2248,7 @@ PortableServer::Current::_duplicate (Current_ptr obj)
 
 // default constructor
 PortableServer::Current::NoContext::NoContext (void)
+  : CORBA_UserException ("IDL:PortableServer/Current/NoContext:1.0")
 {
 }
 

@@ -393,8 +393,14 @@ protected:
 // Forward Declaration
 class ServerObject_i;
 
+#if (TAO_HAS_RT_CORBA == 1)
+  typedef RTPortableServer::POA TAO_POA_Base;
+#else
+  typedef PortableServer::POA TAO_POA_Base;
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 class TAO_PortableServer_Export TAO_POA :
-  public PortableServer::POA,
+  public TAO_POA_Base,
   public TAO_Local_RefCounted_Object
 {
 public:

@@ -27,7 +27,7 @@
 
 #include "poa_macros.h"
 // Stubs
-#include "PortableServerC.h"
+#include "RTPortableServerC.h"
 
 // Servant
 #include "Servant_Base.h"
