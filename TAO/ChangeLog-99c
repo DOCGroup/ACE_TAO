@@ -1,3 +1,9 @@
+Mon Oct 03 08:40:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+	  Removed a superfluous ";" after the method implementation.
+
 1999-10-03  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Vic/Makefile: 
