@@ -656,24 +656,6 @@ TC_Private_State::~TC_Private_State (void)
     }
 }
 
-CORBA::ULong
-CORBA_TypeCode::_incr_refcnt (void)
-{
-  return this->refcount_++;
-}
-
-CORBA::ULong
-CORBA_TypeCode::_decr_refcnt (void)
-{
-  {
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-  delete this;
-  return 0;
-}
-
 // check if typecodes are equal. Equality is based on a mix of structural and
 // name equivalence i.e., if names are provided, we also check for name
 // equivalence, else resort simply to structural equivalence.
@@ -1230,6 +1212,12 @@ CORBA_TypeCode::private_id (CORBA::Environment &env) const
     case CORBA::tk_alias:
     case CORBA::tk_except:
       {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_id_known_)
+          return this->private_state_->tc_id_;
+
         this->private_state_->tc_id_known_ = 1;
         this->private_state_->tc_id_ = (CORBA::String) (buffer_
                                                  + 4    // skip byte order flag
@@ -1265,8 +1253,14 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
     case CORBA::tk_alias:
     case CORBA::tk_except:
       {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_name_known_)
+          return this->private_state_->tc_name_;
+
         // setup an encapsulation.
-        TAO_InputCDR stream (this->buffer_ + 4, 
+        TAO_InputCDR stream (this->buffer_ + 4,
                              this->length_ - 4,
                              this->byte_order_);
 
@@ -1312,6 +1306,12 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
     case CORBA::tk_except:
     case CORBA::tk_struct:
       {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_member_count_known_)
+          return this->private_state_->tc_member_count_;
+
         CORBA::ULong members;
         // setup an encapsulation
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
@@ -1333,6 +1333,12 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
       }
     case CORBA::tk_union:
       {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_member_count_known_)
+          return this->private_state_->tc_member_count_;
+
         CORBA::ULong members;
         // setup an encapsulation
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
@@ -1390,6 +1396,18 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
       mcount = this->member_count (env);                // clears env
       if (env.exception () == 0)
         {
+          // Double checked locking...
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                            this->private_state_->mutex_, 0);
+          if (this->private_state_->tc_member_type_list_known_)
+            if (index < mcount)
+              return  this->private_state_->tc_member_type_list_[index];
+            else
+              {
+                env.exception (new CORBA::TypeCode::Bounds ());
+                return CORBA::TypeCode::_nil ();
+              }
+
           // the first time in. Precompute and store types of all members
 
           // Allocate a list to hold the member typecodes
@@ -1456,10 +1474,23 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
           return (CORBA::TypeCode_ptr)0;
         }
       ACE_NOTREACHED (break;)
+
     case CORBA::tk_union:            // index from 0
       mcount = this->member_count (env);                // clears env
       if (env.exception () == 0)
         {
+          // Double checked locking...
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                            this->private_state_->mutex_, 0);
+          if (this->private_state_->tc_member_type_list_known_)
+            if (index < mcount)
+              return  this->private_state_->tc_member_type_list_[index];
+            else
+              {
+                env.exception (new CORBA::TypeCode::Bounds ());
+                return CORBA::TypeCode::_nil ();
+              }
+
           // the first time in. Precompute and store types of all members
           this->private_state_->tc_member_type_list_ = new CORBA::TypeCode_ptr [mcount];
           if (this->private_state_->tc_member_type_list_)
@@ -1556,6 +1587,18 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
       mcount = this->member_count (env);                // clears env
       if (env.exception () == 0)
         {
+          // Double checked locking...
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                            this->private_state_->mutex_, 0);
+          if (this->private_state_->tc_member_name_list_known_)
+            if (index < mcount)
+              return this->private_state_->tc_member_name_list_[index];
+            else
+              {
+                env.exception (new CORBA::TypeCode::Bounds ());
+                return 0;
+              }
+
           // the first time in. Precompute and store names of all members
           // Allocate a list to hold the member names
           this->private_state_->tc_member_name_list_ = new char* [mcount];
@@ -1608,11 +1651,24 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
           return (char *)0;
         }
       ACE_NOTREACHED (break;)
+
     case CORBA::tk_except:
     case CORBA::tk_struct:              // index from 0
       mcount = this->member_count (env);                // clears env
       if (env.exception () == 0)
         {
+          // Double checked locking...
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                            this->private_state_->mutex_, 0);
+          if (this->private_state_->tc_member_name_list_known_)
+            if (index < mcount)
+              return this->private_state_->tc_member_name_list_[index];
+            else
+              {
+                env.exception (new CORBA::TypeCode::Bounds ());
+                return 0;
+              }
+
           // the first time in. Precompute and store names of all members
           // Allocate a list to hold the member names
           this->private_state_->tc_member_name_list_ = new char* [mcount];
@@ -1662,10 +1718,23 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
           return (char *)0;
         }
       ACE_NOTREACHED (break;)
+
     case CORBA::tk_union:            // index from 0
       mcount = this->member_count (env);                // clears env
       if (env.exception () == 0)
         {
+          // Double checked locking...
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                            this->private_state_->mutex_, 0);
+          if (this->private_state_->tc_member_name_list_known_)
+            if (index < mcount)
+              return this->private_state_->tc_member_name_list_[index];
+            else
+              {
+                env.exception (new CORBA::TypeCode::Bounds ());
+                return 0;
+              }
+
           // the first time in. Precompute and store names of all members
           // Allocate a list to hold the member names
           this->private_state_->tc_member_name_list_ = new char* [mcount];
@@ -1739,6 +1808,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
           return (char *)0;
         }
       ACE_NOTREACHED (break;)
+
     default:
       // bad kind
       env.exception (new CORBA::TypeCode::BadKind ());
@@ -1781,6 +1851,18 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
           dmsg ("TypeCode::private_member_label -- error reading from stream");
           return 0;
         }
+
+      // Double checked locking...
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                        this->private_state_->mutex_, 0);
+      if (this->private_state_->tc_member_label_list_known_)
+        if (n < member_count)
+          return this->private_state_->tc_member_label_list_[n];
+        else
+          {
+            env.exception (new CORBA::TypeCode::Bounds ());
+            return 0;
+          }
 
       // member labels are of type Any. However, the actual types are
       // restricted to simple types
@@ -1839,6 +1921,12 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 CORBA::TypeCode_ptr
 CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
 {
+  // Double checked locking...
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 0);
+  if (this->private_state_->tc_discriminator_type_known_)
+    return this->private_state_->tc_discriminator_type_;
+
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
 
@@ -1863,6 +1951,12 @@ CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
 CORBA::Long
 CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
 {
+  // Double checked locking...
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 0);
+  if (this->private_state_->tc_default_index_used_known_)
+    return this->private_state_->tc_default_index_used_;
+
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
 
@@ -1893,6 +1987,12 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
     case CORBA::tk_sequence:
     case CORBA::tk_array:
       {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_length_known_)
+          return this->private_state_->tc_length_;
+
         // skip the typecode of the element and get the bounds
         if (!skip_typecode (stream) // skip typecode
             || !stream.read_ulong (this->private_state_->tc_length_))
@@ -1905,24 +2005,32 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
             this->private_state_->tc_length_known_ = 1;
             return this->private_state_->tc_length_;
           }
-      case CORBA::tk_string:
-      case CORBA::tk_wstring:
-        {
-          if (stream.read_ulong (this->private_state_->tc_length_))
-            {
-              this->private_state_->tc_length_known_ = 1;
-              return this->private_state_->tc_length_;
-            }
-          else
-            {
-              env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-              return 0;
-            }
-        }
-      default:
-        env.exception (new CORBA::TypeCode::BadKind);
-        return 0;
       }
+
+    case CORBA::tk_string:
+    case CORBA::tk_wstring:
+      {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_length_known_)
+          return this->private_state_->tc_length_;
+
+        if (stream.read_ulong (this->private_state_->tc_length_))
+          {
+            this->private_state_->tc_length_known_ = 1;
+            return this->private_state_->tc_length_;
+          }
+        else
+          {
+            env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+            return 0;
+          }
+      }
+
+    default:
+      env.exception (new CORBA::TypeCode::BadKind);
+      return 0;
     }
 }
 
@@ -1937,6 +2045,12 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
     case CORBA::tk_sequence:
     case CORBA::tk_array:
       {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_content_type_known_)
+          return this->private_state_->tc_content_type_;
+
         // retrieve the content type
         if (stream.decode (CORBA::_tc_TypeCode,
                            &this->private_state_->tc_content_type_,
@@ -1951,33 +2065,49 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
             this->private_state_->tc_content_type_known_ = 1;
             return this->private_state_->tc_content_type_;
           }
-      case CORBA::tk_alias:
-        {
-          if (!stream.skip_string ()  // typeID
-              || !stream.skip_string () // name
-              || stream.decode (CORBA::_tc_TypeCode,
-                                &this->private_state_->tc_content_type_, this,
-                                env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-            {
-              env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-              return 0;
-            }
-          else
-            {
-              this->private_state_->tc_content_type_known_ = 1;
-              return this->private_state_->tc_content_type_;
-            }
-        }
-      default:
-        env.exception (new CORBA::TypeCode::BadKind);
-        return 0;
       }
+      /*NOTREACHED*/
+
+    case CORBA::tk_alias:
+      {
+        // Double checked locking...
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                          this->private_state_->mutex_, 0);
+        if (this->private_state_->tc_content_type_known_)
+          return this->private_state_->tc_content_type_;
+
+        if (!stream.skip_string ()  // typeID
+            || !stream.skip_string () // name
+            || stream.decode (CORBA::_tc_TypeCode,
+                              &this->private_state_->tc_content_type_, this,
+                              env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+          {
+            env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+            return 0;
+          }
+        else
+          {
+            this->private_state_->tc_content_type_known_ = 1;
+            return this->private_state_->tc_content_type_;
+          }
+      }
+      /*NOTREACHED*/
+
+    default:
+      env.exception (new CORBA::TypeCode::BadKind);
+      return 0;
     }
 }
 
 CORBA::ULong
 CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
 {
+  // Double checked locking...
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 0);
+  if (this->private_state_->tc_discrim_pad_size_known_)
+    return this->private_state_->tc_discrim_pad_size_;
+
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
 
@@ -2048,6 +2178,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 
         return 3 + 2 * members;
       }
+
     case CORBA::tk_enum:
       {
         CORBA::ULong members;
@@ -2066,6 +2197,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 
         return 3 + members;
       }
+
     case CORBA::tk_union:
       {
         CORBA::ULong members;
@@ -2341,6 +2473,12 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
     }
   env.clear ();
 
+  // Double checked locking...
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 0);
+  if (this->private_state_->tc_size_known_)
+    return this->private_state_->tc_size_;
+
   if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
     {
       private_state_->tc_size_known_ = 1;
@@ -2372,6 +2510,12 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
       return 0;
     }
   env.clear ();
+
+  // Double checked locking...
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 0);
+  if (this->private_state_->tc_alignment_known_)
+    return this->private_state_->tc_alignment_;
 
   if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
     {

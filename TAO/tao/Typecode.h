@@ -333,6 +333,10 @@ private:
   CORBA::ULong refcount_;
   // if refcount reaches 0, free this typecode
 
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Protect the reference count, this is OK because we do no
+  // duplicates or releases on the critical path.
+
   CORBA::Boolean orb_owns_;
   // TAO's approach differs from the SunSoft IIOP. Constant typecodes
   // are owned by the ORB and get freed only when the ORB dies.
@@ -376,6 +380,8 @@ public:
 
   ~TC_Private_State (void);
   // destructor
+
+  ACE_SYNCH_MUTEX mutex_;
 
   CORBA::TCKind  tc_kind_;
   // our kind that will determine what kind of children we may have
