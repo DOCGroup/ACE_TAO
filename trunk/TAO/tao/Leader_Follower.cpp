@@ -1,10 +1,12 @@
 // $Id$
 
-#include "tao/Leader_Follower.h"
-#include "tao/Resource_Factory.h"
+#include "Leader_Follower.h"
+#include "Resource_Factory.h"
+
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Leader_Follower.i"
+# include "Leader_Follower.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Leader_Follower, "$Id$")
