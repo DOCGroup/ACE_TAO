@@ -14,6 +14,7 @@
 #endif
 
 #include "resource.h"		// main symbols
+#include "ace/OS.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CWindozeCEApp:
@@ -39,6 +40,8 @@ public:
 		//    DO NOT EDIT what you see in these blocks of generated code !
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+          private:
+            ACE_Object_Manager obj_mgr_;
 };
 
 
