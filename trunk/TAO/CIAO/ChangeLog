@@ -1,3 +1,12 @@
+Tue Feb 24 18:00:44 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Deployment.idl:          Removed
+	* DnC/DnC_Deployment.idl
+	* DnC/DnC_Element.idl
+	* DnC/DnC_Resource.idl
+
+	  Deployment.idl is splited into 3 parts now.
+
 Mon Feb 23 15:04:26 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ServantHeaderGenerator.cpp:
