@@ -1,3 +1,9 @@
+Thu Aug 26 21:12:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_string.cpp:
+	  Made sure all paths initialize the return value in
+	  compare_quiet(). Pointed out by a Linux warning.
+
 Thu Aug 26 20:34:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.h:
