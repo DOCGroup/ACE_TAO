@@ -5,6 +5,11 @@ Wed Apr 07 09:54:28 1999  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Keith Rohrer <KRohrer@hnv.com> for reporting that
           Solaris' ln -f doesn't work.
 
+        * ace/config-vxworks_5.x.h: added ACE_HAS_RECURSIVE_MUTEXES.
+          Thanks to Tom Venturella <Thomas.Venturella@MW.Boeing.com>
+          for suggesting this, because the VxWorks semaphores that
+          ACE uses for mutexes are recursive.
+
 Wed Apr 07 09:37:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU: disable warning
