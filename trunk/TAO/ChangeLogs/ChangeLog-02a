@@ -1,3 +1,25 @@
+Fri Jun 15 20:49:10 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* tao/Any.cpp
+	* tao/Asynch_Reply_Dispatcher.cpp
+	* tao/CDR.cpp
+	* tao/CDR.h
+	* tao/CDR.i
+	* tao/GIOP_Message_Base.cpp
+	* tao/GIOP_Message_Lite.cpp
+	* tao/IIOP_Profile.cpp
+	* tao/Invocation.cpp
+	* tao/ORB.cpp
+	* tao/Pluggable_Messaging_Utils.cpp
+	* tao/Synch_Reply_Dispatcher.cpp
+	* tao/TAO_Server_Request.cpp
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+	* tao/Strategies/SHMIOP_Profile.cpp
+	* tao/Strategies/UIOP_Profile.cpp
+	* examples/PluggableUDP/DIOP/DIOP_Profile.cpp
+
+	  Made changes relating to WChar implementation of GIOP 1.2.
+
 Fri Jun 15 15:13:20 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:

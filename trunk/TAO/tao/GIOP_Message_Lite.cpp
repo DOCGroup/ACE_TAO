@@ -37,6 +37,8 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
       ),
    input_cdr_ (orb_core->create_input_cdr_data_block (input_cdr_size),
                TAO_ENCAP_BYTE_ORDER,
+               TAO_DEF_GIOP_MAJOR,
+               TAO_DEF_GIOP_MINOR,
                orb_core),
    current_offset_ (0)
 {
@@ -53,6 +55,8 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
                           this->cdr_dblock_alloc_,
                           this->cdr_msgblock_alloc_,
                           orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                          TAO_DEF_GIOP_MAJOR,
+                          TAO_DEF_GIOP_MINOR,
                           orb_core->to_iso8859 (),
                           orb_core->to_unicode ()));
 }
@@ -442,7 +446,7 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
 
   // Steal the input CDR from the message state.
   TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (this->input_cdr_),
-                          orb_core);
+                                                        orb_core);
 
   // Send the message state for the service layer like FT to log the
   // messages
@@ -1256,6 +1260,8 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                         orb_core->output_cdr_dblock_allocator (),
                         orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                        TAO_DEF_GIOP_MAJOR,
+                        TAO_DEF_GIOP_MINOR,
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
 

@@ -285,6 +285,8 @@ CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
 
   TAO_InputCDR in (this->cdr_,
                    this->byte_order_,
+                   TAO_DEF_GIOP_MAJOR,
+                   TAO_DEF_GIOP_MINOR,
                    orb_core);
   TAO_Marshal_Object::perform_append (this->type_.in (),
                                       &in,
@@ -675,7 +677,7 @@ CORBA_Any::operator<<= (from_wstring ws)
       static CORBA::Long _oc_wstring [] =
       {
         TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
-        ACE_static_cast (CORBA::Long, ws.bound_) 
+        ACE_static_cast (CORBA::Long, ws.bound_)
       };
 
       CORBA::TypeCode_ptr tc = 0;
@@ -1599,6 +1601,8 @@ CORBA_Any::operator>>= (to_object obj) const
       // object), but the Any does not belong to any ORB.
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_,
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
                            TAO_ORB_Core_instance ());
 
       if (stream >> obj.ref_)
