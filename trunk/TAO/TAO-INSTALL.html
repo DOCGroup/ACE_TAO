@@ -297,12 +297,6 @@ standard include in your IDL code.  Notice that some of the TAO services
 use this feature, so you are better off definining the environment variable
 in all cases.  </P>
 
-<p><a href="http://www.torus-software.com/">Barry
-Hoggard</a> maintains a <a
-href="http://www.torus-software.com/corba/">CORBA Page</a>
-which contains very helpful information on setting MSVC project
-settings for TAO applications.</P>
-
 Remember to <a href="../ACE-INSTALL.html">set
 up ACE</A> before building TAO.
 
@@ -485,7 +479,7 @@ compiler flags must also be given to the compiler to enable them.</P>
 <H3>minimumTAO</H3>
 
 <P>By default, all components in TAO will be compiled.  If you only
-want support for <A HREF="docs/minimumTAO.html">minimumTAO</A>, define
+want support for <A HREF="../docs/minimumTAO.html">minimumTAO</A>, define
 TAO_HAS_MINIMUM_CORBA. This can be accomplished in two ways: by
 defining TAO_HAS_MINIMUM_CORBA in the config.h or orbconf.h files or
 by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
