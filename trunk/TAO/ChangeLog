@@ -1,3 +1,9 @@
+Thu Mar 10 20:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PolicyS.{h,cpp,inl}:
+        * tao/PortableServer/PolicyS_T.{h,cpp,inl}:
+          Regenerated
+
 Thu Mar 10 20:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
