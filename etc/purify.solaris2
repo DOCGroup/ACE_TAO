@@ -36,6 +36,7 @@ suppress umr _lwp_in_syscall; _thrp_suspend
 ####
 suppress umr __sigprocmask; _thrp_exit; _t_cancel; _thr_exit_common
 suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; thr_yield
+suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; _lwp_start
 suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; _qswtch
 
 ####
