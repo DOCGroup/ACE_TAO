@@ -1,3 +1,9 @@
+Thu May 17 10:00:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu> 
+
+	* ace/Proactor_Impl.h:
+          Added interfaces for create_asynch_read_dgram_result and
+          create_asynch_write_dgram_result.
+
 Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
 
 	* ace/Asynch_IO.cpp
