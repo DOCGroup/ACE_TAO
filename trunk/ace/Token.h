@@ -83,14 +83,14 @@ public:
   // does *not* call <sleep_hook>).
 
   int acquire (ACE_Time_Value *timeout = 0);
-  // This behaves just like the previous <acquire> method, except
-  // that it invokes the virtual function called <sleep_hook>
-  // that can be overridden by a subclass of ACE_Token.
+  // This behaves just like the previous <acquire> method, except that
+  // it invokes the virtual function called <sleep_hook> that can be
+  // overridden by a subclass of ACE_Token.
 
   virtual void sleep_hook (void);
-  // This should be overridden by a subclass to define
-  // the appropriate behavior before <acquire> goes to sleep.
-  // By default, this is a no-op...
+  // This should be overridden by a subclass to define the appropriate
+  // behavior before <acquire> goes to sleep.  By default, this is a
+  // no-op...
 
   int renew (int requeue_position = 0,
              ACE_Time_Value *timeout = 0);
@@ -107,9 +107,9 @@ public:
   // waiting threads it will give up the token even if the
   // nesting_level_ > 1.  I'm not sure if this is really the right
   // thing to do (since it makes it possible for shared data to be
-  // changed unexpectedly) so use with caution...
-  // This method maintians the original token priority.
-  // As in <acquire>, the <timeout> value is an absolute time.
+  // changed unexpectedly) so use with caution...  This method
+  // maintians the original token priority.  As in <acquire>, the
+  // <timeout> value is an absolute time.
 
   int tryacquire (void);
   // Become interface-compliant with other lock mechanisms (implements
@@ -127,16 +127,16 @@ public:
   // be called acquire_yield.
 
   int acquire_read (void (*sleep_hook)(void *),
-               void *arg = 0,
-               ACE_Time_Value *timeout = 0);
+                    void *arg = 0,
+                    ACE_Time_Value *timeout = 0);
   // More sophisticate version of acquire_read.
 
   int acquire_write (void);
   // Just calls <acquire>.
 
   int acquire_write (void (*sleep_hook)(void *),
-               void *arg = 0,
-               ACE_Time_Value *timeout = 0);
+                     void *arg = 0,
+                     ACE_Time_Value *timeout = 0);
   // More sophisticate version of acquire_write.
 
   int tryacquire_read (void);
