@@ -1,0 +1,309 @@
+Mon Aug  9 15:25:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/: 
+          Split the Transport files for different protocols like UDP and
+	  TCP seperate files. Also added a new Protocol_Factory.{h,cpp}
+	  which contains the factory information. Added new flow protocol
+	  classes and remodelled the architecture with true layering
+	  between the Protocol_Object and the Transport class. 
+
+Tue Aug  3 14:24:21 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} : Defined the
+	  TAO_String_Hash_Key from Trader.{h,cpp} with TAO_Has_Trader
+	  flags so it gets defined if Trader is not defined. Added code to
+	  set the source ids for flow producers. Fixed a bug in
+	  add_producer code which wont add a second producer. 
+
+	* orbsvcs/orbsvcs/AV/Flows_T.{h,cpp}: Templatized the FDev by the
+	  concrete producer and consumer and also moved them to the
+	  separate files.
+
+	* orbsvcs/orbsvcs/AV/AV_Core.{h,cpp}: Moved the AV_Core class
+	  to this file.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i: Inlined all the small
+	  functions in TAO_AV_Qos class.
+
+	* orbsvcs/orbsvcs/AV/Transport.i: Moved all inline functions to
+	  this file.
+
+	* orbsvcs/orbsvcs/AV/Policy.h: Added a new send_frame on the
+	  protocol object to send iovecs. 
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}: Added an implementation for
+	  send_frame using iovecs. Also fixed a bug in the creation of
+	  RTCP_Flow_Handler in the UDP_MCast_Connector.
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.{h,i,cpp}: Moved all the
+	  FlowSpec_Entry class code to a separate file.
+	
+Mon Jul 26 18:27:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTCP.{h,cpp}: 
+	  These 2 new files contain all the classes for TAO AV's RTCP
+	  implementation. Applications now dont have to write RTCP
+	  code. The AV framework also gives hooks to get to the statistics
+	  for a particular section. There'll be one RTCP object per flow.
+
+	* orbsvcs/orbsvcs/AV/media-timer.h:
+	* orbsvcs/orbsvcs/AV/ntp-time.h:
+	  These files contain the media specific timestamp classes. These
+	  provide default implementations for RTCP. Application objects
+	  can override this behavior.
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}:
+	  Added RTP over UDP Multicast classes. Now the RTP layer
+	  interacts with the source Manager to collect RTP statistics.
+
+	* orbsvcs/orbsvcs/AV/source.{h,cpp}:
+	  These files provide a RTP source class. Applications should
+	  derive if they want to extend the behavior.
+
+	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
+	  Added a new TAO_AV_frame_info struct which contains information
+	  for a frame. This helps resolve the differences between the
+	  different framing layer protocols like RTP and SFP.
+	  
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	  Added support for RTP_UDP_MCAST.
+	
+Tue Jul 20 14:50:52 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/:
+	  Changed the unit of fread in all ftp.cpp files from BUFSIZ to 1
+	  so that the entire file is transferred.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Updated destroy methods to
+	  called end_stream on the protocol object.
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp: Added a multicast_loop disable by
+	  default. This should probably be moved as a policy. Also added
+	  code to set send and recv buf sizes to 80k by default. Again
+	  this should probably be a policy set by the application. Added a
+	  get_local_addr method to get the multicast address on which it
+	  is listening.
+	
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}: Added set/get methods on
+	  the TAO_AV_Callback class for transport object.
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp: Removed the commented call to
+	  TAO_SFP_Base::instance since this allowed the setting of the
+	  static variables. 
+	
+Thu Jul 15 22:43:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Policy.i:
+	* orbsvcs/orbsvcs/AV/MCast.i:
+	  Moved all the inline methods to the new .i files.
+			
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	* orbsvcs/orbsvcs/AV/MCast.h:
+	* orbsvcs/orbsvcs/AV/Nil.cpp:
+	* orbsvcs/orbsvcs/AV/Nil.h
+	* orbsvcs/orbsvcs/AV/Policy.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.h:
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/RTP.h:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.h: Fixed warnings in EGCS
+
+Wed Jul 14 20:29:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:Changed the inheritance
+	  structure.. Made the UDP_Flow_Handler classes have the
+	  SOCK_Dgram as a memebr rather than inheriting from it..
+	  Fixed warnings with g++ in other files listed below
+	* orbsvcs/orbsvcs/AV/Nill.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp
+	* orbsvcs/orbsvcs/AV/RTP.cpp
+
+Wed Jul 14 00:27:00 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	  Added this directory and files for testing the multipoint
+	  binding in AVStreams in the full profile. This code is hardcoded
+	  with 2 servers and a single ftp program streaming a file. The
+	  servers store the streamed file received thru the multipoint
+	  binding as 2 different files. 
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	  Added code so that the multipoint binding work in the full
+	  profile. Now the users can use full profile object like FDevs
+	  inside MMDevice to create flow producers and flow
+	  consumers. Right now the case of one multipoint source and
+	  multiple multipoint sinks has been tested with the Full
+	  profile. 
+	
+Tue Jul 13 12:18:44 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast/Makefile: 
+	* orbsvcs/tests/AVStreams/Multicast/server.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.{h,cpp}: 
+	  Added all the new files to test the Multipoint binding in
+	  AVStreams. Two instances of server receive the same file from
+	  the ftp program and save them under 2 different filenames using
+	  the multipoint bindings of TAO_StreamCtrl in the light profile.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  Fixed a few a error in the multipoint bind_devs case. It works
+	  now with one multicast source and multiple multicast sinks in
+	  the light profile i.e with no FlowEndPoint interfaces.
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	  Added code to set the local address on the TAO_FlowSpec_Entry
+	  upon accepting/connecting to a connection so that multiconnect
+	  call can extract the multicast address being used for this
+	  flow.
+			
+Mon Jul 12 16:15:20 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	  Removed the flowname from the flowspec for start and stop and
+	  made use of the "empty flowspec will start all flows" feature of
+	  the Streamctrl.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  Fixed the empty flowspec case for StreamCtrl::start,stop and
+	  destroy operations. Now the user can specify an empty flowspec
+	  and the operation will be done for all the flows.
+
+Sun Jul 11 20:10:13 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  Added code for the FlowEndPoint to make use of the Pluggable
+	  Data Protocols. Also fixed a few bugs in the full profile
+	  TAO_StreamCtrl::bind and other full profile classes like
+	  TAO_FlowConnection. Now the AV application can make use of FDev
+	  in MMDevices for each flow and automagically the appropriate
+	  protocols will be chosen depending on the common protocol
+	  between 2 flow endpoints. 
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.{h,cpp}:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.{h,cpp}:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	  Added a new test similar to the file transfer program under
+	  Pluggable directory. This test make use of the full profile
+	  classes. A FDev create flow consumers and flow producers and is
+	  added to the MMDevice. During streamconnection this fdev creates
+	  the consumer/producer depending on whether its a client or a
+	  server. The flow endpoint is also a base_streamendpoint ensuring
+	  that the pluggable data protocols can set the protocol object.
+
+Wed Jul  7 22:05:22 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}: 
+	  Added RTP over UDP support to the pluggable data protocols
+	  framework in AV. The RTCP part is not complete yet.
+
+	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
+	  Defines the policy class to resolve differences in behavior
+	  between the different framing protocols like SFP and RTP. For
+	  eg RTP needs the Payload Type for all frames whereas in SFP its
+	  optional. 
+
+	* orbsvcs/orbsvcs/AV/Nil.{h,cpp}:
+	  Defines Nil Framing protocols for TCP,UDP and UDP_MCast which
+	  just sends the frames over the underlying transport.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	  The protocol specific upcalls have been removed and there is a
+	  generic upcall for setting the protocol object and getting the
+	  callback for a flow.
+
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}:
+	  All the transport handlers for udp,tcp,sfp now create protocol
+	  objects and makes an upcall to the application to set them.
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}:
+	  The application now uses a generic TAO_AV_Protocol_Object to
+	  send the frames except for RTP for which it sets the
+	  synchronization source and payload type policies.
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.{h,cpp}:
+	  The server side defines a generic TAO_AV_Callback which is
+	  called by all the different framing protocols to give the
+	  received frame.
+	
+Sun Jul  4 17:59:10 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp: 
+	  Added Multicast Pluggable Data Protocol classes.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/sfp.h:
+	  Added support for the Multicast data protocols.
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Pluggable/server.{h,cpp}: 
+	  Added handler for Multicast Pluggable Data Protocol and if given
+	  a multicast address on the command line to ftp it will multicast
+	  the file to that address. 
+
+Sun Jul  4 13:59:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}: 
+	  This is a simple file transfer example to test the Pluggable
+	  Data protocols feature provided by the AV service. It currently
+	  implements handler for UDP,TCP and SFP_UDP. This streams a given
+	  file at the rate of 0.5kbytes/sec. 
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.{h,cpp}: 
+	  This is the receiver side of the file transfer example and also
+	  provides protocol specific handler to receive data from the
+	  client and saves it to a file.
+	
+	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}: 
+	  The SFP implementation has been remodelled similar to the GIOP
+	  implementation since it plays a similar role in AV framework as
+	  GIOP in the ORB. There is a TAO_SFP_Base class which contains
+	  only static methods and works on generic TAO_AV_Transport
+	  classes so that the SFP specific code can be reused for
+	  mappings over different transport like TCP and UDP. This design
+	  may not entirely work out since the mapping of SFP over
+	  different transport especially protocols like RTP may differ
+	  unlike GIOP which imposes a uniform restriction on the transport.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  The TAO_Client_StreamEndPoint and TAO_Server_StreamEndPoint have
+	  been renamed to TAO_StreamEndPoint_A and TAO_StreamEndPoint_B as
+	  there is no notion of client and server in the streaming model,
+	  rather both are identical except in the multicast case. Also
+	  they're distinguished for type identification to the user. 
+
+	  The TAO_StreamEndPoint class now makes use of the Pluggable Data
+	  Protocols to instantiate a given protocol handler and has hooks
+	  for the user to supply a user-defined handler. Right now the
+	  user has to supply different handlers for different protocols
+	  but can use the same code to send and receive data using the
+	  generic TAO_AV_Transport class interface.
+
+	  Also in the case of SFP the SFP_Object is the interface to be
+	  used by the sender and TAO_SFP_Callback is the interface on the
+	  receiver side to which the framework makes an upcall when a
+	  frame is received.
+		
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}: 
+	  These new files contain all the classes necessary for the A/V
+	  Service's Pluggable Data protocols used by the
+	  TAO_StreamEndPoint classes. This architecture is very similar to
+	  the ORB Pluggable protocols architecture except for the Profile
+	  specific and ORB specific code. The equivalent of a Profile in
+	  AV is the TAO_AV_FlowSpec_Entry which can either be a forward or
+	  reverse entry.
+
+	  Currently this file contains the TCP and UDP Pluggable Data
+	  protocols implementation. It also contains the implementation of
+	  a TAO_AV_Core class similar in spirit to the ORB_Core class so
+	  as to centralize all the Pluggable Protocol data structures. 
