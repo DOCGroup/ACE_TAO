@@ -277,6 +277,19 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
   bytes_transferred = 0;
 
+  // Calculate the bytes to send.  This value is only used for
+  // error conditions to fake a good return.  We do this for 
+  // semantic consistency with DIOP, and since errors aren't
+  // handled correctly from send_i (our fault).  If these 
+  // semantics are not desirable, the error handling problems
+  // that need to be fixed can be found in 
+  // UIPMC_Connection_Handler::decr_refcount which will need to
+  // deregister the connection handler from the UIPMC_Connector
+  // cache.
+  ssize_t bytes_to_send = 0;
+  for (int i = 0; i < iovcnt; i++)
+     bytes_to_send += iov[i].iov_len;
+
   MIOP_Packet fragments[MIOP_MAX_FRAGMENTS];
   MIOP_Packet *current_fragment;
   int num_fragments = 1;
@@ -323,7 +336,9 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
                               MIOP_MAX_FRAGMENTS));
                 }
 
-              return 1;                 // Pretend it is o.k.
+              // Pretend it is o.k.  See note by bytes_to_send calculation.
+              bytes_transferred = bytes_to_send;
+              return 1;                 
             }
 
           // Otherwise, initialize another fragment.
@@ -404,7 +419,10 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
                           ACE_TEXT (" %p\n\n"),
                           ACE_TEXT ("Error returned from transport:")));
             }
-          return 1; // Fake a good return.
+
+            // Pretend it is o.k.  See note by bytes_to_send calculation.
+            bytes_transferred = bytes_to_send;
+            return 1;                 
         }
 
       // Increment the number of bytes transferred, but don't
