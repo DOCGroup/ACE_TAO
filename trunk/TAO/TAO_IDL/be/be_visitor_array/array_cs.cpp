@@ -355,14 +355,16 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  this->gen_tmplinst (node);
+  this->gen_tmplinst (node,
+                      fname);
 
   node->cli_stub_gen (I_TRUE);
   return 0;
 }
 
 void
-be_visitor_array_cs::gen_tmplinst (be_array *node)
+be_visitor_array_cs::gen_tmplinst (be_array *node,
+                                   char *fname)
 {
   AST_Type::SIZE_TYPE st = node->size_type ();
   TAO_OutStream *os = this->ctx_->stream ();
@@ -375,7 +377,7 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
           *os << be_nl << be_nl
               << "template class" << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
-              << node->name () << "_slice," << be_nl
+              << fname << "_slice," << be_nl
               << node->fwd_helper_name () << "_life" << be_uidt_nl
               << ">;" << be_uidt << be_uidt;
         }
@@ -384,15 +386,15 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
           *os << be_nl << be_nl
               << "template class" << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
-              << node->name () << "_slice," << be_nl
+              << fname << "_slice," << be_nl
               << node->fwd_helper_name () << "_life" << be_uidt_nl
               << ">;" << be_uidt << be_uidt;
 
           *os << be_nl << be_nl
               << "template class" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
-              << node->name () << "_var," << be_nl
-              << node->name () << "_slice," << be_nl
+              << fname << "_var," << be_nl
+              << fname << "_slice," << be_nl
               << node->fwd_helper_name () << "_life" << be_uidt_nl
               << ">;" << be_uidt << be_uidt;
         }
@@ -400,7 +402,7 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
       *os << be_nl << be_nl
           << "template class" << be_idt_nl
           << "TAO_Array_Var_Base_T<" << be_idt << be_idt_nl
-          << node->name () << "_slice," << be_nl
+          << fname << "_slice," << be_nl
           << node->fwd_helper_name () << "_life" << be_uidt_nl
           << ">;" << be_uidt << be_uidt;
     }
@@ -408,7 +410,7 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
   *os << be_nl << be_nl
       << "template class" << be_idt_nl
       << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
-      << node->name () << "_slice," << be_nl
+      << fname << "_slice," << be_nl
       << node->fwd_helper_name () << "_life" << be_uidt_nl
       << ">;" << be_uidt << be_uidt;
 
@@ -421,7 +423,7 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
           *os << be_nl << be_nl
               << "# pragma instantiate \\" << be_idt << be_idt_nl
               << "TAO_FixedArray_Var_T< \\" << be_idt << be_idt_nl
-              << node->name () << "_slice, \\" << be_nl
+              << fname << "_slice, \\" << be_nl
               << node->fwd_helper_name () << "_life \\" << be_uidt_nl
               << ">" << be_uidt << be_uidt << be_uidt;
         }
@@ -430,15 +432,15 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
           *os << be_nl << be_nl
               << "# pragma instantiate \\" << be_idt << be_idt_nl
               << "TAO_VarArray_Var_T< \\" << be_idt << be_idt_nl
-              << node->name () << "_slice, \\" << be_nl
+              << fname << "_slice, \\" << be_nl
               << node->fwd_helper_name () << "_life \\" << be_uidt_nl
               << ">" << be_uidt << be_uidt << be_uidt;
 
           *os << be_nl << be_nl
               << "# pragma instantiate \\" << be_idt << be_idt_nl
               << "TAO_Array_Out_T< \\" << be_idt << be_idt_nl
-              << node->name () << "_var, \\" << be_nl
-              << node->name () << "_slice, \\" << be_nl
+              << fname << "_var, \\" << be_nl
+              << fname << "_slice, \\" << be_nl
               << node->fwd_helper_name () << "_life \\" << be_uidt_nl
               << ">" << be_uidt << be_uidt << be_uidt;
         }
@@ -446,7 +448,7 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
       *os << be_nl << be_nl
           << "# pragma instantiate \\" << be_idt << be_idt_nl
           << "TAO_Array_Var_Base_T< \\" << be_idt << be_idt_nl
-          << node->name () << "_slice, \\" << be_nl
+          << fname << "_slice, \\" << be_nl
           << node->fwd_helper_name () << "_life \\" << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt;
     }
@@ -454,7 +456,7 @@ be_visitor_array_cs::gen_tmplinst (be_array *node)
   *os << be_nl << be_nl
       << "# pragma instantiate \\" << be_idt << be_idt_nl
       << "TAO_Array_Forany_T< \\" << be_idt << be_idt_nl
-      << node->name () << "_slice, \\" << be_nl
+      << fname << "_slice, \\" << be_nl
       << node->fwd_helper_name () << "_life \\" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt;
 
