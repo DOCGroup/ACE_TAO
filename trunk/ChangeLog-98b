@@ -1,3 +1,10 @@
+Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/[Hash_]Map_Manager: Removed the use of locking for the
+ 	  iterators.  This is totally broken when using STL-style
+ 	  iterators, so it's better to let users figure out their usecase,
+ 	  rather than guess wrong and screwing up their code.
+
 Fri Oct 16 14:57:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager and Map_Manager: Fixed the operator++ and
