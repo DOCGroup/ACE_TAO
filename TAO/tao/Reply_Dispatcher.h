@@ -122,7 +122,7 @@ private:
 };
 
 // *********************************************************************
-
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
   // = TITLE
@@ -181,7 +181,7 @@ private:
   Messaging::ReplyHandler_ptr reply_handler_;
   // Reply Handler passed in the Asynchronous Invocation.
 };
-
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 // *********************************************************************
 
 #if defined (__ACE_INLINE__)

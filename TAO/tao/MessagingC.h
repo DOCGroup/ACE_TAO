@@ -1839,7 +1839,7 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Poller;
-#endif /* 0 */
+#endif /* TAO_POLLER */
 
 }; // module Messaging
 
@@ -1848,11 +1848,13 @@ TAO_NAMESPACE  Messaging
 
 class TAO_InputCDR;
 
+#if defined (TAO_POLLER)
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler *,
     CORBA::Environment &
     );
+#endif /* TAO_POLLER */
 
 void TAO_Export operator<<= (CORBA::Any &, Messaging::PriorityRange*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PriorityRange *&);
