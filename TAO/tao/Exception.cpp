@@ -118,6 +118,19 @@ CORBA_UserException::~CORBA_UserException (void)
 {
 }
 
+CORBA_UserException &
+CORBA_UserException::operator = (const CORBA_UserException &src)
+{
+  if (this->type_)
+    this->type_->Release ();
+  this->type_ = src.type_;
+  if (this->type_)
+    this->type_->AddRef ();
+  assert (this->type_ != 0);
+
+  return *this;
+}
+
 int
 CORBA_UserException::_is_a (const char* interface_id) const
 {

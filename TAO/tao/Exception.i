@@ -19,6 +19,12 @@ CORBA_Exception::operator delete (void *p)
   ::operator delete (p);
 }
 
+ACE_INLINE
+CORBA_UserException::CORBA_UserException (const CORBA_UserException &src)
+  : CORBA_Exception (src)
+{
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_SystemException::minor (void) const
 {
