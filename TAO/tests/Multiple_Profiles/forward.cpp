@@ -178,8 +178,8 @@ roundtrip_continue_label:
     // TAO_GIOP_SYSTEM_EXCEPTION
     // ** TAO_GIOP_LOCATION_FORWARD
     // Exceptions
-    // CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE)
-    // CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE)
+    // CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)
+    // CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)
     int result = myinvoke (); // this is call.invoke (...)
 
     if (result == 0)

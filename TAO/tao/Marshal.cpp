@@ -86,7 +86,7 @@ TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
 {
   if (tc && tc->kind_ >= 0 && tc->kind_ < CORBA::TC_KIND_COUNT)
     return this->mobj_table_[tc->kind_].obj_;
-  TAO_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 0);
+  TAO_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
 }
 
 

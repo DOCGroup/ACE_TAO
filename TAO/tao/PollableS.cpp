@@ -129,7 +129,7 @@ void POA_CORBA::Pollable::is_ready_skel (
   if (!(
     (_tao_in >> timeout)
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
   _tao_retval = _tao_impl->is_ready (
     timeout,
@@ -142,7 +142,7 @@ void POA_CORBA::Pollable::is_ready_skel (
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
 }
 
@@ -165,7 +165,7 @@ void POA_CORBA::Pollable::create_pollable_set_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
 }
 
@@ -256,7 +256,7 @@ void POA_CORBA::Pollable::_dispatch (CORBA::ServerRequest &req, void *context, C
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -501,7 +501,7 @@ void POA_CORBA::DIIPollable::_dispatch (CORBA::ServerRequest &req, void *context
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -657,7 +657,7 @@ void POA_CORBA::PollableSet::create_dii_pollable_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
 }
 
@@ -674,7 +674,7 @@ void POA_CORBA::PollableSet::add_pollable_skel (
   if (!(
     (_tao_in >> potential.out ())
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
   _tao_impl->add_pollable (
     potential.in (),
@@ -698,7 +698,7 @@ void POA_CORBA::PollableSet::poll_skel (
   if (!(
     (_tao_in >> timeout)
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
   _tao_retval = _tao_impl->poll (
     timeout,
@@ -711,7 +711,7 @@ void POA_CORBA::PollableSet::poll_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
 }
 
@@ -728,7 +728,7 @@ void POA_CORBA::PollableSet::remove_skel (
   if (!(
     (_tao_in >> potential.out ())
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
   _tao_impl->remove (
     potential.in (),
@@ -757,7 +757,7 @@ void POA_CORBA::PollableSet::number_left_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
 
 }
 
@@ -848,7 +848,7 @@ void POA_CORBA::PollableSet::_dispatch (CORBA::ServerRequest &req, void *context
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);

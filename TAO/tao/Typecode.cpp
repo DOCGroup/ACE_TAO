@@ -1240,7 +1240,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
             return this->private_state_->tc_name_;
           }
         else
-          TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, (CORBA::String)0);
+          TAO_THROW_ENV_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (CORBA::String)0);
       }
     // No other typecodes ever have type IDs.
     default:
@@ -1284,7 +1284,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // struct name
             || !stream.read_ulong (members))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         this->private_state_->tc_member_count_known_ = 1;
         this->private_state_->tc_member_count_ = members;
@@ -1310,14 +1310,14 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
             || !skip_typecode (stream)          // discriminant TC
             || !stream.read_ulong (members)      // default used
             || !stream.read_ulong (members))     // real member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         this->private_state_->tc_member_count_known_ = 1;
         this->private_state_->tc_member_count_ = members;
         return this->private_state_->tc_member_count_;
       }
     default:
-      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
     }
   ACE_NOTREACHED (return 0);
 }
@@ -1369,13 +1369,13 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
         this->private_state_->tc_member_type_list_ = new CORBA::TypeCode_ptr [mcount];
 
         if (this->private_state_->tc_member_type_list_ == 0)
-          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
+          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
 
         // skip the id, name, and member_count part
         if (!stream.skip_string ()        // type ID, hidden
             || !stream.skip_string ()     // typedef name
             || !stream.read_ulong (temp))  // member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
 
         // compute the typecodes for all the members and
         // return the required one.
@@ -1383,7 +1383,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
           // the ith entry will have the typecode of the ith guy
           {
             if (!stream.skip_string ())  // skip the name
-              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
             CORBA::TypeCode::traverse_status status =
               stream.decode (CORBA::_tc_TypeCode,
                              // the typecode will be
@@ -1404,7 +1404,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
             TAO_CHECK_ENV_RETURN (env, 0);
 
             if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
           }
 
         this->private_state_->tc_member_type_list_known_ = 1;
@@ -1436,16 +1436,16 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
       // @@EXC@@ Need to check allocation failure.
         this->private_state_->tc_member_type_list_ = new CORBA::TypeCode_ptr [mcount];
         if (this->private_state_->tc_member_type_list_ == 0)
-          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
+          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
 
       // skip the id, name, and discrimant type part
         if (!stream.skip_string ()        // type ID, hidden
             || !stream.skip_string ()     // typedef name
             || !skip_typecode (stream))   // skip typecode for discriminant
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (CORBA::TypeCode_ptr)0);
         else if (!stream.read_ulong (temp)     // default used
                  || !stream.read_ulong (temp)) // member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         // Always big enough because labels can only be of a
         // few different types of which "long" has the
         // largest size.
@@ -1467,7 +1467,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 
             if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
                 || !stream.skip_string ())  // skip the name
-              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
             status =  stream.decode (CORBA::_tc_TypeCode,  // get the typecode
                                      &private_state_->tc_member_type_list_[i],
@@ -1476,7 +1476,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
             TAO_CHECK_ENV_RETURN (env, 0);
 
             if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
           }
         this->private_state_->tc_member_type_list_known_ = 1;
 
@@ -1533,20 +1533,20 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 
         if (this->private_state_->tc_member_name_list_ == 0)
           // no memory for the member_list
-          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), env, (char *)0);
+          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (char *)0);
 
         // skip the id, name, and member_count part
         if (!stream.skip_string ()     // type ID, hidden
             || !stream.skip_string ()     // enum name
             || !stream.read_ulong (temp)) // member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, (char *)0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (char *)0);
 
       // compute the typecodes for all the members and
       // return the required one.
         for (CORBA::ULong i = 0; i < mcount; i++)
           // now skip this name
           if (!stream.read_string (this->private_state_->tc_member_name_list_ [i]))
-            TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, (char *)0);
+            TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (char *)0);
 
         this->private_state_->tc_member_name_list_known_ = 1;
 
@@ -1580,20 +1580,20 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 
         if (this->private_state_->tc_member_name_list_ == 0)
           // no memory for the member_list
-          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), env, (char *)0);
+          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (char *)0);
 
         // skip the id, name, and member_count part
         if (!stream.skip_string ()     // type ID, hidden
             || !stream.skip_string ()     // struct/except name
             || !stream.read_ulong (temp)) // member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, (char *)0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (char *)0);
 
           // compute the typecodes for all the members and
           // return the required one.
         for (CORBA::ULong i = 0; i < mcount; i++)
           if (!stream.read_string (this->private_state_->tc_member_name_list_ [i])
               || !skip_typecode (stream))
-            TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+            TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         this->private_state_->tc_member_name_list_known_ = 1;
 
@@ -1626,16 +1626,16 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 
         if (this->private_state_->tc_member_name_list_ == 0)
           // no memory for the member_list
-          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         // skip the id, name, and discrimant type part
         if (!stream.skip_string ()        // type ID, hidden
             || !stream.skip_string ()     // typedef name
             || !skip_typecode (stream))   // skip typecode for discriminant
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, (char *)0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, (char *)0);
         else if (!stream.read_ulong (temp)     // default used
                  || !stream.read_ulong (temp)) // member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         else
           {
             CORBA::Long scratch; // always big enough because labels can
@@ -1656,12 +1656,12 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                 TAO_CHECK_ENV_RETURN (env, 0);
 
                 if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-                  TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+                  TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
                 // skip typecode for member
                 if (!stream.read_string (this->private_state_->tc_member_name_list_ [i])
                     || (!skip_typecode (stream))) // skip typecode
-                  TAO_THROW_ENV_RETURN ( CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+                  TAO_THROW_ENV_RETURN ( CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
               }
 
             this->private_state_->tc_member_name_list_known_ = 1;
@@ -1709,7 +1709,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       ACE_DEBUG ((LM_DEBUG,
                   "TypeCode::private_member_label -- "
                   "error reading from stream"));
-    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 0);
+    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
     }
 
   // Double checked locking...
@@ -1730,7 +1730,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   CORBA::Any_ptr* label_list;
   ACE_NEW_THROW_EX (label_list,
                     CORBA::Any_ptr [member_count],
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
   // get the discriminant TC
@@ -1775,7 +1775,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       // @@EXC@@ Need to check memory allocation failure.
       ACE_NEW_THROW_EX (label_list[i],
                         CORBA::Any (tc, out.begin ()),
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
       if (stream.skip_string () == 0
@@ -1786,7 +1786,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
                         "TypeCode::private_member_label "
                         "error getting typecode for member %d\n",
                         i));
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO),
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                             0);
         }
     }
@@ -1821,7 +1821,7 @@ CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
       || stream.decode (CORBA::_tc_TypeCode,
                         &this->private_state_->tc_discriminator_type_, this,
                         env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
   this->private_state_->tc_discriminator_type_known_ = 1;
   return this->private_state_->tc_discriminator_type_;
@@ -1845,7 +1845,7 @@ CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
       || !stream.skip_string ()         // typedef name
       || !skip_typecode (stream)        // skip discriminant
       || !stream.read_long (this->private_state_->tc_default_index_used_))
-    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
   this->private_state_->tc_default_index_used_known_ = 1;
   return this->private_state_->tc_default_index_used_;
@@ -1870,7 +1870,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
         // skip the typecode of the element and get the bounds
         if (!skip_typecode (stream) // skip typecode
             || !stream.read_ulong (this->private_state_->tc_length_))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         else
           {
             this->private_state_->tc_length_known_ = 1;
@@ -1894,7 +1894,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
             return this->private_state_->tc_length_;
           }
         else
-          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
       }
       ACE_NOTREACHED (break);
 
@@ -1929,7 +1929,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
         TAO_CHECK_ENV_RETURN (env, 0);
 
         if (status != CORBA::TypeCode::TRAVERSE_CONTINUE) // element type
-          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         else
           {
             this->private_state_->tc_content_type_known_ = 1;
@@ -1948,7 +1948,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
 
         if (!stream.skip_string ()  // typeID
             || !stream.skip_string ()) // name
-          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         status = stream.decode (CORBA::_tc_TypeCode,
                                 &this->private_state_->tc_content_type_, this,
@@ -1956,7 +1956,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
         TAO_CHECK_ENV_RETURN (env, 0);
 
         if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         else
           {
             this->private_state_->tc_content_type_known_ = 1;
@@ -2040,7 +2040,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
         if (!stream.skip_string ()                  // ID
             || !stream.skip_string ()       // struct name
             || !stream.read_ulong (members))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         return 3 + 2 * members;
       }
@@ -2056,7 +2056,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
         if (!stream.skip_string ()                      // ID
             || !stream.skip_string ()           // typedef name
             || !stream.read_ulong (members))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         return 3 + members;
       }
@@ -2074,7 +2074,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
             || !skip_typecode (stream)          // discriminant TC
             || !stream.read_ulong (members)      // default used
             || !stream.read_ulong (members))     // real member count
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         return 5 + 3 * members;
       }
@@ -2118,11 +2118,11 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
                              this->byte_order_);
 
         if (!skip_typecode (stream))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
         // Then comes the "bounds" parameter.
         if (!stream.read_ulong (temp))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         return temp;
       }
 
@@ -2134,7 +2134,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
         break;
       return this->length_;
     }
-  TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+  TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 }
 
 // Internal hack, used until member_type (), discriminator_type (),
@@ -2183,7 +2183,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       TAO_CHECK_ENV_RETURN (env, 0);
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
       return tc;
 
     case CORBA::tk_alias:               // #1 is a tc
@@ -2191,13 +2191,13 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
         break;
       if (!stream.skip_string ()        // type ID, hidden
           || !stream.skip_string ())    // typedef name
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env,  0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env,  0);
 
       status = stream.decode (CORBA::_tc_TypeCode, &tc, this,  env);
       TAO_CHECK_ENV_RETURN (env, 0);
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
       return tc;
 
     case CORBA::tk_except:
@@ -2210,7 +2210,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
           || !stream.skip_string ()     // typedef name
           || !stream.read_ulong (temp))
        // member count
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
       temp = (n - 3) / 2;
 
@@ -2219,10 +2219,10 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
         // skip to the member being asked
         if (!stream.skip_string ()        // member name
             || !skip_typecode (stream))
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
       if (!stream.skip_string ())
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
       status = stream.decode (CORBA::_tc_TypeCode,
                               &tc,
@@ -2231,7 +2231,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       TAO_CHECK_ENV_RETURN (env, 0);
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
       return tc;
 
     case CORBA::tk_union:            // #6 and up are tc, index from 0
@@ -2240,7 +2240,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
       if (!stream.skip_string ()                // type ID, hidden
           || !stream.skip_string ())           // typedef name
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
       status = stream.decode (CORBA::_tc_TypeCode,
                               &tc, this,
@@ -2248,12 +2248,12 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       TAO_CHECK_ENV_RETURN (env, 0);
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)  // TC
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
       if (!stream.read_ulong (temp) // default used
           || !stream.read_ulong (temp))   // member count
         {
           CORBA::release (tc);
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
         }
 
       if (n == 2)
@@ -2268,7 +2268,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       for (i = 0; i < temp; i++)
         {
           status = stream.decode (tc, &scratch, this,  env); // member label
-          // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+          // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
           TAO_CHECK_ENV_RETURN (env, 0);
 
           if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
@@ -2276,7 +2276,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
               || !skip_typecode (stream))
             {   // member typecode
               CORBA::release (tc);
-              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+              TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
             }
         }
       // member label
@@ -2289,7 +2289,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
           if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
               || !stream.skip_string ())            // member name
-            TAO_TRY_THROW (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+            TAO_TRY_THROW (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         }
       TAO_CATCHANY
         {
@@ -2306,11 +2306,11 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       TAO_CHECK_ENV_RETURN (env, 0);
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+        TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
       return tc;
     }
 
-  TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), env, 0);
+  TAO_THROW_ENV_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 }
 
 // Tell user the size of an instance of the data type described by
@@ -2320,7 +2320,7 @@ size_t
 CORBA::TypeCode::private_size (CORBA::Environment &env)
 {
   if (kind_ >= CORBA::TC_KIND_COUNT)
-    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
   env.clear ();
 
@@ -2358,7 +2358,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
   env.clear ();
 
   if (kind_ >= CORBA::TC_KIND_COUNT)
-    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, 0);
 
   // Double checked locking...
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,

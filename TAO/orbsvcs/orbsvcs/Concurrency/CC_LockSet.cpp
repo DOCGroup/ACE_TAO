@@ -65,7 +65,7 @@ CC_LockSet::Init (CORBA::Environment &TAO_IN_ENV)
 
   // Acquire the semaphore in order to be able to put requests on hold
   if (semaphore_.acquire () == -1)
-    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 }
 
 // Destructor
@@ -104,7 +104,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
   // the FIFO properties of ACE_Token!
   if (this->lock_i (lm) == 1)
     if (semaphore_.acquire () == -1)
-      TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 }
 
 // Tries to lock. If it is not possible false is returned.
@@ -181,7 +181,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
           if (compatible (lock_on_queue) == 1)
             {
               if (semaphore_.release () == -1)
-                TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+                TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
               lock_[lock_on_queue]++;
             }
           else
@@ -221,7 +221,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
           TAO_CHECK_ENV;
 
           if (semaphore_.acquire () == -1)
-            TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+            TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         }
     }
   TAO_CATCHANY

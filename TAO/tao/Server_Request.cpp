@@ -122,7 +122,7 @@ IIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
     }
 
   if (!hdr_status)
-    ACE_THROW (CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
 }
 
@@ -164,7 +164,7 @@ IIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
     }
 
   if (!hdr_status)
-    ACE_THROW (CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 }
 
 
@@ -317,7 +317,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       ACE_ERROR ((LM_ERROR,
                   "IIOP_ServerRequest::arguments - "
                   "%d bytes left in buffer\n", incoming_->length ()));
-      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+      env.exception (new CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
 }
 
@@ -334,7 +334,7 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
   // setting a result when another result already exists or if an exception
   // exists is an error
   if (this->retval_ || this->exception_)
-    env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
+    env.exception (new CORBA::BAD_INV_ORDER (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   else
     {
       this->retval_ = new CORBA::Any (value);
@@ -348,7 +348,7 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
                                    CORBA::Environment &env)
 {
   if (this->retval_ || this->exception_)
-    env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
+    env.exception (new CORBA::BAD_INV_ORDER (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   else
   {
     // Try to narrow to ForwardRequest
