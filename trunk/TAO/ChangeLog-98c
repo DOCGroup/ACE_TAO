@@ -1,3 +1,32 @@
+Fri Jul 31 13:51:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.h:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.h:
+	Added comments and made other cosmetic changes.
+	
+	* orbsvcs/tests/AVStreams/server_discovery/Makefile:
+	* orbsvcs/tests/AVStreams/server_discovery/Queue.java:
+	* orbsvcs/tests/AVStreams/server_discovery/README:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_0005fDiscovery_0005fUtil.h:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Browser.java:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Perf.java:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Util.java:
+	* orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java:
+	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
+	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.h:
+	* orbsvcs/tests/AVStreams/server_discovery/main.cpp:
+	This is the A/V Demo on the client side. The README file in this
+	directory details its design and current status, and includes a
+	description of the work that remains.
+	
 Fri Jul 31 14:06:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
          
       * tao_idl/be/be_visitor_argument/post_upcal_ss.cpp:
