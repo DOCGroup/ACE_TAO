@@ -84,9 +84,6 @@ public:
   /// Get the underlying handle
   virtual ACE_HANDLE fetch_handle (void) = 0;
 
-  /// Need to be implemented by the underlying protocol objects
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0) = 0;
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -104,9 +101,9 @@ protected:
   /// Object.
   int svc_i (void);
 
-#if !defined (TAO_CONNECTION_HANDLER_BUF_SIZE)
-#   define TAO_CONNECTION_HANDLER_BUF_SIZE 1024
-#endif /*TAO_CONNECTION_HANDLER_BUF_SIZE*/
+  /// Need to be implemented by the underlying protocol objects
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0) = 0;
 
 private:
 
@@ -118,6 +115,9 @@ private:
 
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
+
+  /// Are we registered with the reactor?
+  // CORBA::Boolean is_registered_;
 };
 
 #if defined (__ACE_INLINE__)

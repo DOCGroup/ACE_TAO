@@ -176,7 +176,7 @@ TAO_IIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                     ACE_TEXT ("making a new connection\n")));
 
       // Purge connections (if necessary)
-      // this->orb_core ()->transport_cache ()->purge ();
+      this->orb_core ()->transport_cache ()->purge ();
 
       // @@ This needs to change in the next round when we implement a
       // policy that will not allow new connections when a connection
