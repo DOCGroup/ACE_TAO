@@ -38,12 +38,16 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # g++ < 2.8
 endif # g++
 
-######
-##### Interface Repository stuff..
-#####
+ifeq ($(minimum_corba),1)
+  CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA
+else  # ! minimum_corba
+  override minimum_corba =
+endif # ! minimum_corba
+
 ifneq ($(interface_repo),1)
   CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY
-endif #interface_repo
+endif # interface_repo
+
 
 ####
 #### Build rules.
