@@ -1,3 +1,11 @@
+Tue Feb 10 07:29:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_wchar.h:
+
+	  #included ace/os_include/os_errno.h. Needed for builds where
+	  ACE_HAS_SIGNAL_SAFE_OS_CALLS is defined. Thanks to Kobi
+	  Cohen-Arazi for the patch.
+
 Mon Feb  9 18:21:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Naming/Name_Binding.h: The Name_Binding destructor
