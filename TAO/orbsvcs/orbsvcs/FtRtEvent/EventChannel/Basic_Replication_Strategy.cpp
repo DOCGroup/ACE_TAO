@@ -81,6 +81,7 @@ Basic_Replication_Strategy::replicate_request(
     Request_Context_Repository().set_transaction_depth(transaction_depth-1 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
+    TAO_FTRTEC::Log(3, " --> state message length = %d\n", state.length());
     if (transaction_depth > 1) {
       successor->set_update(state ACE_ENV_ARG_PARAMETER);
     }
