@@ -711,6 +711,10 @@ SOURCE=.\RT_Endpoint_Selector_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Endpoint_Utils.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -740,6 +744,14 @@ SOURCE=.\RT_PolicyFactory.cpp
 # Begin Source File
 
 SOURCE=.\RT_Protocols_Hooks.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Stub.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Stub_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -784,6 +796,10 @@ SOURCE=.\StringSeqC.cpp
 # Begin Source File
 
 SOURCE=.\Stub.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Stub_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -1515,6 +1531,10 @@ SOURCE=.\RT_Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Endpoint_Utils.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -1544,6 +1564,14 @@ SOURCE=.\RT_PolicyFactory.h
 # Begin Source File
 
 SOURCE=.\RT_Protocols_Hooks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Stub.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Stub_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1600,6 +1628,10 @@ SOURCE=.\StringSeqC.h
 # Begin Source File
 
 SOURCE=.\stub.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Stub_Factory.h
 # End Source File
 # Begin Source File
 
