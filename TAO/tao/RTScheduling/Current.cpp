@@ -2,9 +2,10 @@
 #include "Current.h"
 #include "ORB_Core.h"
 
-TAO_Scheduler_Current::TAO_Scheduler_Current (void)
+void
+TAO_RTScheduler_Current::rt_current (RTCORBA::Current_ptr rt_current)
 {
-  this->rt_current_ = 
+	this->rt_current_ = RTCORBA::Current::_duplicate (rt_current);
 }
 
 void
@@ -17,8 +18,8 @@ TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
-  if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+	  if (impl == 0)
+		ACE_THROW (CORBA::NO_IMPLEMENT ());
   
   impl->begin_scheduling_segment (name,
 				  sched_param,
@@ -149,7 +150,7 @@ RTCORBA::Priority
 TAO_RTScheduler_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	return RTCORBA::Current::the_priority ();
+	return this->rt_current_->the_priority ();
 }
 
 void 
@@ -157,7 +158,7 @@ TAO_RTScheduler_Current::the_priority (RTCORBA::Priority the_priority
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	this->RTScheduling::Current::the_priority(the_priority);
+	this->rt_current_->the_priority(the_priority);
 }
 
 TAO_RTScheduler_Current_i*

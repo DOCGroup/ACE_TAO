@@ -36,14 +36,16 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_RTScheduler_Current;
+
 /// RTCORBA ORB initializer.
-class TAO_RTScheduler_Export TAO_RTScheduler_Initializer :
+class TAO_RTScheduler_Export TAO_RTScheduler_ORB_Initializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
 {
 public:
 
-  TAO_RTScheduler_Initializer (void);
+  
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -52,6 +54,8 @@ public:
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+private:
+	TAO_RTScheduler_Current* current_;
   
 };
 

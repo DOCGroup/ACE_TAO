@@ -18,7 +18,7 @@ public RTScheduling::Current,
   public TAO_Local_RefCounted_Object
 {
  public:
-  TAO_Scheduler_Current (void);
+  //TAO_Scheduler_Current (void);
   
   
   virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -86,6 +86,9 @@ public RTScheduling::Current,
   TAO_RTScheduler_Current_i* implementation (void);
 
   TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
+
+ private:
+	 RTCORBA::Current_var rt_current_;
   
 };
 

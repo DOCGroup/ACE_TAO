@@ -6,10 +6,10 @@
 
 ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
-#define TAO_RTSCHEDULER_SAFE_INCLUDE
+//#define TAO_RTSCHEDULER_SAFE_INCLUDE
 #include "tao/RTScheduling/RTSchedulerC.h"
 #include "tao/RTScheduling/Current.h"
-#undef TAO_RTSCHEDULER_SAFE_INCLUDE
+//#undef TAO_RTSCHEDULER_SAFE_INCLUDE
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
@@ -18,12 +18,11 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
 
-TAO_RTScheduler_Initializer::TAO_RTScheduler_Initializer (void)
-{
-}
+
+
 
 void
-TAO_RTScheduler_Initializer::pre_init (
+ TAO_RTScheduler_ORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -33,8 +32,9 @@ TAO_RTScheduler_Initializer::pre_init (
   //
 
   // Create the RT_Current.
-  CORBA::Object_ptr current;
-  ACE_NEW_THROW_EX (current,
+  
+  
+  ACE_NEW_THROW_EX (this->current_,
                     TAO_RTScheduler_Current,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
@@ -43,49 +43,66 @@ TAO_RTScheduler_Initializer::pre_init (
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  TAO_RTScheduler_Current_var safe_current = current;
+  CORBA::Object_ptr current_obj = RTScheduling::Current::_narrow (this->current_
+																ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::Object_var safe_current = current_obj;
 
   info->register_initial_reference ("RTScheduler_Current",
-                                    current
+                                    current_obj
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
 
 void
-TAO_RTScheduler_Initializer::post_init (
+ TAO_RTScheduler_ORB_Initializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_ptr rt_current_obj = info->resolve_initial_reference ("RT_Current"
+
+  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
+  //    counting.
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  //TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
+//                                                           ACE_ENV_ARG_PARAMETER);
+  //ACE_CHECK;
+
+  CORBA::Object_ptr rt_current_obj = info->resolve_initial_references ("RT_Current"
 								      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
   
-  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ()
+  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj
 							       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
   if (CORBA::is_nil (rt_current.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) TAO_RTScheduler_Initializer::post_init \n"
+		  "(%P|%t) ::post_init \n"
 		  "(%P|%t) Unable to narrow to RTCORBA::Current\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
   
-  CORBA::Object_ptr rtscheduler_current_obj = info->resolve_initial_reference ("RTScheduler_Current");
-  TAO_RTScheduler_Current_var rtscheduler_current = TAO_RTScheduler_Current::_narrow (rtscheduler_current_obj);
+  //CORBA::Object_ptr rtscheduler_current_obj = info->resolve_initial_references ("RTScheduler_Current");
+  //TAO_RTScheduler_Current* rtscheduler_current = TAO_RTScheduler_Current::_narrow (rtscheduler_current_obj
+	//																		ACE_ENV_ARG_PARAMETER);
+  //ACE_CHECK;
   
-  if (CORBA::is_nil (rtscheduler_current.in ()))
+  /*
+  if (CORBA::is_nil (rtscheduler_current))
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) TAO_RTScheduler_Initializer::post_init \n"
+		  "(%P|%t) TAO_RTScheduler_ORB_Initializer::post_init \n"
 		  "(%P|%t) Unable to narrow to TAO_RTScheduler::Current\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
+	*/
   
-  rtscheduler_current->rt_current (rt_current.in ());
+  this->current_->rt_current (rt_current.in ());
 }
 

@@ -160,6 +160,22 @@ SOURCE=.\Current.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Distributable_Thread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTScheduler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTScheduler_Initializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTScheduler_Loader.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTSchedulerC.cpp
 # End Source File
 # End Group
@@ -172,7 +188,23 @@ SOURCE=.\Current.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Distributable_Thread.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTScheduler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\rtscheduler_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTScheduler_Initializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTScheduler_Loader.h
 # End Source File
 # Begin Source File
 
