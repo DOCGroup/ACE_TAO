@@ -63,6 +63,7 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const char *fifo_name,
 			      int flags,
 			      int perms,
 			      int persistent)
+  : aux_handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");
 

@@ -206,16 +206,13 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Service_Manager::handle_input");
 
-  int reset_new_handle = 0;
-#if defined (ACE_WIN32)
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  reset_new_handle = ACE_Reactor::instance ()->reset_new_handle ();
-#endif /* ACE_WIN32 */
-  
+  int reset_new_handle = ACE_Reactor::instance ()->uses_event_associations ();
+
   if (this->acceptor_.accept (this->client_stream_, // stream
                               0, // remote address
                               0, // timeout

@@ -431,16 +431,13 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
 
-  int reset_new_handle = 0;
-#if defined (ACE_WIN32)
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  reset_new_handle = this->reactor_->reset_new_handle ();
-#endif /* ACE_WIN32 */
-  
+  int reset_new_handle = this->reactor_->uses_event_associations ();
+
   if (this->acceptor_.accept (svc_handler->peer (), // stream
                               0, // remote address
                               0, // timeout

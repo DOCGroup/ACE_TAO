@@ -1,3 +1,11 @@
+Thu Oct 02 15:38:34 1997    <irfan@TWOSTEP>
+
+	* Reactor: Renamed reset_new_handle to uses_event_associations.
+
+	* ace/FIFO_Recv.cpp (ACE_FIFO_Recv): aux_handle_ must correctly be
+ 	  initialized to ACE_INVALID_HANDLE. Thanks to Sandro Doro
+ 	  <doros@aureus> for reporting this.
+
 Thu Oct 02 11:21:37 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_{aix aix4.2}.GNU: added the
@@ -35,7 +43,9 @@ Wed Oct 01 12:45:51 1997  David L. Levine  <levine@cs.wustl.edu>
 	  "__unix" because DEC CXX doesn't #define "unix".  Thanks to
 	  Billy Quinn <bquinn@lads.com> for reporting this.
 
-	* ace/High_Res_Timer.h: added comment from Gabe <begeddov@proaxis.com>           about ACE_OS::gethrtime () drift on MP machines.
+	* ace/High_Res_Timer.h: added comment from Gabe
+ 	  <begeddov@proaxis.com> about ACE_OS::gethrtime () drift on MP
+ 	  machines.
 
 	* ace/OS.i (gethrtime, Solaris only): removed ACE_OSCALL_RETURN
 	  wrapper around ::gethrtime () because it was broken (the type

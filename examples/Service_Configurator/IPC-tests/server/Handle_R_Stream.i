@@ -84,16 +84,13 @@ Handle_R_Stream::handle_input (int)
   char buf[BUFSIZ];
   int  bytes;
 
-  int reset_new_handle = 0;
-#if defined (ACE_WIN32)
   // Try to find out if the implementation of the reactor that we are
-  // using is the WFMO_Reactor. If so we need to reset the event
-  // association for the newly created handle. This is because the
-  // newly created handle will inherit the properties of the listen
-  // handle, including its event associations.
-  reset_new_handle = ACE_Reactor::instance ()->reset_new_handle ();
-#endif /* ACE_WIN32 */
-  
+  // using requires us to reset the event association for the newly
+  // created handle. This is because the newly created handle will
+  // inherit the properties of the listen handle, including its event
+  // associations.
+  int reset_new_handle = ACE_Reactor::instance ()->uses_event_associations ();
+
   if (this->accept (this->new_remote_stream, // stream
                     0, // remote address
                     0, // timeout
