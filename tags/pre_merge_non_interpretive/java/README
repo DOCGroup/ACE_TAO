@@ -1,0 +1,40 @@
+Java ACE Version 1.5
+
+JACE is compatible with Java 1.1 and higher.
+
+Directory information:
+
+JACE/     All main, network service, and test source files
+
+classes/  Output directory for all the .class files.  This may
+          need to be added to your classpath.
+
+doc/      If you generate the javadoc documentation, it will be
+          placed here.  Requires javadoc 1.2 or later.  I think
+          1.2.2 is the first version that correctly "inherits"
+          comments.
+
+Notes on building Java ACE:
+
+UNIX:
+
+Use GNU make on the Makefile in the JACE subdirectory.  That will
+build the main and network service sources.  To build the tests,
+use the Makefile in the JACE/tests subdirectory.
+
+Generate the javadoc documentation with the command "make doc" with
+the Makefile in the JACE subdirectory.
+
+Windows:
+
+Visual J++ 6.0 solution and project files are provided.  The main
+JACE solution file compiles all the source files (main, network
+service, and test).  The solutions and projects are in
+MSVJProjects.zip.
+
+If you don't have VJ++ and are using the JDK from the command line,
+you can compile JACE with the batch files in makebat.zip in the JACE
+subdirectory.
+
+Generate the javadoc documentation with the makedoc.bat file (also
+in makebat.zip).

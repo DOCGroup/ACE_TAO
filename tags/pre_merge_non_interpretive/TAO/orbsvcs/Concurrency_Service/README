@@ -1,0 +1,129 @@
+$Id$
+
+This file describes how to run the TAO Concurrency Service and its
+accompanying tests.  In addition, it describes the locations of the
+files that make up the service and tests.  For a general description
+of the directory structure for the services please consult
+
+        $TAO_ROOT/docs/orbsvcs.html
+
+----------------------------------------
+
+HOW TO RUN THE SERVICE
+
+The Concurrency Service server runs in a thread-per-connection
+concurrency model, which is specified by the svc.conf file.  This
+model is necessary to enable the server to block in a dedicated
+thread, i.e., one for each client.  The concurrency service will not
+run in the reactive model.
+
+The server itself is located in the
+
+$TAO_ROOT/orbsvcs/Concurrency_Service
+
+directory.
+
+The server accepts the folowing options:
+
+        usage:  ./Concurrency_Service [-d] [-o] <ior_output_file>
+        [-d] is the debug option
+        [-o] <ior_output_file> outputs the IOR of the lock set factory
+             to the file
+        [-s] Prevents the concurency server from using the naming server
+
+The lock set factory is registered in the naming service in the
+CosConcurrency context with the name "LockSetFactory".
+
+----------------------------------------
+
+THE IMPLEMENTATION
+
+The implementation of the concurrency service objects is located in
+the $TAO_ROOT/orbsvcs/orbsvcs/Concurrency directory and consists of
+the following files:
+
+        CC_LockSet.{h,cpp} Implementation of the lock set. At present
+		there is only one implementation of the lock set which
+		implements multiple possesion semantics for both
+		transactional (which is not otherwise supported) and
+		non-transactional clients. Please see the comments in
+		the CC_LockSet.h file for further details.
+
+        CC_LockSetFactory.{h,cpp} Iplementation of the lock set
+                factory
+
+        Concurrency_Utils.{h,cpp} Wrapper around the concurrency
+                server.
+
+The current implementation does not support transactions.  If you'd
+like to add support for transactions to TAO please let us know.
+
+----------------------------------------
+
+THE TESTS
+
+The tests are located in the $TAO_ROOT/orbsvcs/tests/Concurrency
+directory.  There are two types of tests:
+
+        . A simple test -- which tests that it is possible to create
+          locks and lock them in all the different lock modes
+
+        . A more extended test which requires two (or more)
+          processes.
+
+The client accepts the following options:
+
+        usage:  ./CC_client [-b] [-d]
+                        [-c] <stdin|testscriptname>
+                        [-e] <test;arg1;arg2>
+                        [-f cc_factory-obj-ref-key-file]
+                        [-k cc-obj-ref-key] [-x] [-s]
+
+        . The [-b] option runs the basic tests.
+        . The [-c] option runs a test script against the concurrency
+          service server. This option is described in more detail in
+          the $TAO_ROOT/orbsvcs/tests/Concurrency/README file. It is
+          the intent that this type of testing will be used instead of
+          the [-b] and [-e] tests. These tests are retained for
+          backwards compatibility.
+        . The [-d] option is the debug option.
+        . The [-e] option is for running one of the extended tests. The
+          format of the argument to the -e option is <test;arg1;arg2>
+          where test is the name of the test (at present test =
+          {1,2,3}) and arg1 and arg2 are arguments to the test.  See
+          the example below.
+
+        . The [-f] option reads the factory IOR from a file. This is
+          currently not supported.
+
+        . The [-k] option takes the factory IOR as argument on the
+          commandline. This is currently not supported.
+
+        . The [-x] option tells the server to shut down
+          gracefully. Currently this has no effect.
+
+        . The [-s] option tells the test not to use the naming
+          service. This is currently not supported.
+
+----------------------------------------
+
+EXAMPLE TEST RUN
+
+        Window-1> ./Concurrency_Service -d
+        Window-2> ./CC_client -b
+        Window-2> ./CC_client -e '1;Name'
+        Window-2> ./CC_client -e '2;Name'
+        Window-3> ./CC_client -e '3;Name'
+
+NOTE: It seems that there is a problem using the naming service the
+      first time the client is run. This error does not appear if the
+      environment variable 'NameService' is set to the IOR of the naming
+      service (the IOR of the naming service is printed when the
+      Concurrency_Control server is started).
+
+----------------------------------------
+
+CONTACT POINT
+
+If you have any questions about this service, please contact Torben
+Worm at <tworm@cs.wustl.edu>.
