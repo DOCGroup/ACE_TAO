@@ -33,6 +33,9 @@
 
 #define ACE_HAS_MEMCHR
 
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_SYS_MSG_H
+//
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
 
