@@ -2,7 +2,7 @@
 #
 #       $Id$
 #
-#       Makefile for the TAO examples
+#       Makefile for the TAO Content_Server set of examples.
 #
 #----------------------------------------------------------------------------
 
@@ -10,21 +10,13 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Callback_Quoter \
-        POA \
-        Logging \
-        Simple \
-        Event_Comm \
-        OBV \
-        Load_Balancing \
-	Persistent_Grid \
-	AMI \
-	Quoter \
-	Buffered_Oneways \
-	Buffered_AMI \
-	Load_Balancing_persistent \
-	Simulator \
-	Content_Server
+DIRS  = SMI_Iterator
+
+ifneq ($(ami),)
+  DIRS += \
+	AMI_Iterator \
+	AMI_Observer
+endif  # ami
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -8,6 +8,8 @@
 
 #include "Iterator_Factory_i.h"
 
+ACE_RCSID(SMI_Iterator, server, "$Id$")
+
 int
 main (int argc, char *argv[])
 {
@@ -17,8 +19,8 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Ossama's Mighty ORB",
-                                            ACE_TRY_ENV); 
+                                            "Mighty ORB",
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get the Root POA.

@@ -118,13 +118,13 @@ SOURCE=.\Web_Server.idl
 !IF  "$(CFG)" == "Web Server Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__WEB_S="..\..\..\ACE_wrappers\bin\Release\tao_idl.exe"	
+USERDEP__WEB_S="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Web_Server.idl
 InputName=Web_Server
 
 BuildCmds= \
-	..\..\..\ACE_wrappers\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -157,13 +157,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Web Server Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__WEB_S="..\..\..\ACE_wrappers\bin\tao_idl.exe"	
+USERDEP__WEB_S="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Web_Server.idl
 InputName=Web_Server
 
 BuildCmds= \
-	..\..\..\ACE_wrappers\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -21,6 +21,8 @@
 #ifndef CONTENT_ITERATOR_I_H
 #define CONTENT_ITERATOR_I_H
 
+#include "ace/FILE_Addr.h"
+#include "ace/FILE_IO.h"
 #include "Web_ServerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -32,10 +34,11 @@ class Content_Iterator_i :
   public virtual POA_Web_Server::Content_Iterator,
   public virtual PortableServer::RefCountServantBase
 {
+  friend class Iterator_Factory_i;
 public:
 
   // Constructor
-  Content_Iterator_i (ACE_HANDLE handle, CORBA::ULong file_size);
+  Content_Iterator_i (const char *filename, CORBA::ULong file_size);
 
   // Destructor
   ~Content_Iterator_i (void);
@@ -53,8 +56,16 @@ public:
 
 private:
 
-  ACE_HANDLE handle_;
-  // The file descriptor of the open file being iterated over.
+  int init (void);
+  // Initialize the Content_Iterator.
+
+private:
+
+  ACE_FILE_Addr file_;
+  // The Addr representing the requested file.
+
+  ACE_FILE_IO file_io_;
+  // Object that handles all IO operations on the requested file.
 
   CORBA::ULong file_size_;
   // The size of the file being iterated over.
@@ -62,6 +73,10 @@ private:
   CORBA::ULong chunk_index_;
   // The number of the current chunk of data being sent.  (Used only
   // for debugging purposes.)
+
+  int initialized_;
+  // Flag that denotes that the Content Iterator has not been
+  // initialized.
 };
 
 
