@@ -96,7 +96,7 @@ int main (int, char *argv[])
         /*
           Let's see what the client did to the segment...
         */
-    for (char *s = shm; *s != '\0'; s++)
+    for (s = shm; *s != '\0'; s++)
     {
         putchar (*s);
     }
