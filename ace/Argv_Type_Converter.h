@@ -39,10 +39,10 @@ class ACE_Export ACE_Argv_Type_Converter
 {
 public:
 
-  ACE_Argv_Type_Converter (int& argc, char** argv);
+  ACE_Argv_Type_Converter (int argc, char** argv);
 
 #if defined (ACE_USES_WCHAR)
-  ACE_Argv_Type_Converter (int& argc, wchar_t** argv);
+  ACE_Argv_Type_Converter (int argc, wchar_t** argv);
 #endif  // ACE_USES_WCHAR
 
   ~ACE_Argv_Type_Converter (void);

@@ -1,3 +1,22 @@
+Mon Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h (main): For WinCE, eVC can't grok the #include within the
+          'main' macro expansion, so #include "ace/Argv_Type_Converter.h" is
+          moved outside the macro definition.
+
+        * ace/Argv_Type_Converter.{h cpp} (ctor): Change argc from int& to
+          int, else it can't be used in the way it's already coded into use
+          in the 'main' definition (above, OS.h).
+
+        * tests/Dev_Poll_Reactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp: Changed main() to
+          ACE_TMAIN().
+
+        * tests/FlReactor_Test.cpp:
+        * tests/XtReactor_Test.cpp: Add /**/ between #include and filename
+          to silence MS warnings about missing files during dependency updates.
+
 Mon Dec 23 16:16:05 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added
@@ -65,7 +84,7 @@ Sun Dec 22 11:41:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Sun Dec 22 11:37:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Danile White to the hall of fame!
+	* THANKS: Added Daniel White to the hall of fame!
 
 Sun Dec 22 11:31:53 2002  Craig Rodrigues  <crodrigu@bbn.com>
 

@@ -483,7 +483,7 @@ server_worker (void *p)
 // ----------------------------------------------------
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
 
@@ -595,7 +595,7 @@ template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_R
 #else
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
   ACE_ERROR ((LM_INFO,
