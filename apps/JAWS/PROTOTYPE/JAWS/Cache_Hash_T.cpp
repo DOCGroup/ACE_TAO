@@ -85,8 +85,18 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash (void)
         {
           if (this->hashtable_[i])
             {
-              ACE_DES_FREE (this->hashtable_[i], this->allocator_->free,
-                            CACHE_BUCKET_MANAGER);
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
+              ACE_DES_FREE_TEMPLATE3(this->hashtable_[i],
+                                     this->allocator_->free,
+                                     JAWS_Hash_Bucket_Manager,
+                                     EXT_ID,
+                                     JAWS_Cache_Object *,
+                                     EQ_FUNC);
+#else
+              ACE_DES_FREE(this->hashtable_[i],
+                           this->allocator_->free,
+                           CACHE_BUCKET_MANAGER);
+#endif
               this->hashtable_[i] = 0;
             }
         }

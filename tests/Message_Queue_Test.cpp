@@ -45,7 +45,7 @@ static const int MAX_MESSAGES = 10000;
 static const int MAX_MESSAGE_SIZE = 32;
 static const char test_message[] = "ACE_Message_Queue Test Message";
 
-static int messages = MAX_MESSAGES;
+static int max_messages = MAX_MESSAGES;
 
 // Dynamically allocate to avoid a static.
 static ACE_High_Res_Timer *timer = 0;
@@ -197,7 +197,7 @@ single_thread_performance_test (int queue_type = 0)
   else
     {
       ACE_NEW_RETURN (msgq,
-                      ACE_Message_Queue_Vx (messages,
+                      ACE_Message_Queue_Vx (max_messages,
                                             MAX_MESSAGE_SIZE),
                       -1);
       message = "ACE_Message_Queue_Vx, single thread test";
@@ -216,10 +216,10 @@ single_thread_performance_test (int queue_type = 0)
   // is large relative to the amount of stack space available.
   ACE_Message_Block **send_block;
   ACE_NEW_RETURN (send_block,
-                  ACE_Message_Block *[messages],
+                  ACE_Message_Block *[max_messages],
                   -1);
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
                     ACE_Message_Block (test_message,
                                        MAX_MESSAGE_SIZE),
@@ -227,7 +227,7 @@ single_thread_performance_test (int queue_type = 0)
 
   ACE_Message_Block **receive_block_p;
   ACE_NEW_RETURN (receive_block_p,
-                  ACE_Message_Block *[messages],
+                  ACE_Message_Block *[max_messages],
                   -1);
 
 #if defined (VXWORKS)
@@ -236,10 +236,10 @@ single_thread_performance_test (int queue_type = 0)
   // stack space available.
   ACE_Message_Block *receive_block;
   ACE_NEW_RETURN (receive_block,
-                  ACE_Message_Block[messages],
+                  ACE_Message_Block[max_messages],
                   -1);
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     {
       receive_block[i].init (MAX_MESSAGE_SIZE);
 
@@ -252,7 +252,7 @@ single_thread_performance_test (int queue_type = 0)
   timer->start ();
 
   // Send/receive the messages.
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     {
       if (msgq->enqueue_tail (send_block[i]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -274,9 +274,9 @@ single_thread_performance_test (int queue_type = 0)
   ACE_DEBUG ((LM_INFO,
               ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
               message,
-              messages,
+              max_messages,
               tv.msec (),
-              (double) tv.msec () / messages));
+              (double) tv.msec () / max_messages));
   timer->reset ();
 
   delete [] receive_block_p;
@@ -284,7 +284,7 @@ single_thread_performance_test (int queue_type = 0)
   delete [] receive_block;
 #endif /* VXWORKS */
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     delete send_block[i];
   delete [] send_block;
   delete msgq;
@@ -302,7 +302,7 @@ receiver (void *arg)
 
   ACE_Message_Block **receive_block_p;
   ACE_NEW_RETURN (receive_block_p,
-                  ACE_Message_Block *[messages],
+                  ACE_Message_Block *[max_messages],
                   (void *) -1);
 
 #if defined (VXWORKS)
@@ -311,10 +311,10 @@ receiver (void *arg)
   // space available.
   ACE_Message_Block *receive_block;
   ACE_NEW_RETURN (receive_block,
-                  ACE_Message_Block[messages],
+                  ACE_Message_Block[max_messages],
                   (void *) -1);
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     {
       receive_block[i].init (MAX_MESSAGE_SIZE);
 
@@ -324,7 +324,7 @@ receiver (void *arg)
     }
 #endif /* VXWORKS */
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("%p\n"),
@@ -350,7 +350,7 @@ sender (void *arg)
   timer->start ();
 
   // Send the messages.
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     if (queue_wrapper->q_->
         enqueue_tail (queue_wrapper->send_block_[i]) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -375,10 +375,10 @@ performance_test (int queue_type = 0)
   // the _receiver_ is done.
   ACE_Message_Block **send_block = 0;
   ACE_NEW_RETURN (send_block,
-                  ACE_Message_Block *[messages],
+                  ACE_Message_Block *[max_messages],
                   -1);
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
                     ACE_Message_Block (test_message,
                                        MAX_MESSAGE_SIZE),
@@ -394,7 +394,7 @@ performance_test (int queue_type = 0)
   else
     {
       ACE_NEW_RETURN (queue_wrapper.q_,
-                      ACE_Message_Queue_Vx (messages,
+                      ACE_Message_Queue_Vx (max_messages,
                                             MAX_MESSAGE_SIZE),
                       -1);
       message = "ACE_Message_Queue_Vx";
@@ -430,15 +430,15 @@ performance_test (int queue_type = 0)
   timer->elapsed_time (tv);
   ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
               message,
-              messages,
+              max_messages,
               tv.msec (),
-              (double) tv.msec () / messages));
+              (double) tv.msec () / max_messages));
   timer->reset ();
 
   delete queue_wrapper.q_;
   queue_wrapper.q_ = 0;
 
-  for (i = 0; i < messages; ++i)
+  for (i = 0; i < max_messages; ++i)
     delete send_block[i];
   delete [] send_block;
 
@@ -459,7 +459,7 @@ main (int argc, ASYS_TCHAR *argv[])
                   ASYS_TEXT ("%s/n"),
                   usage));
     else
-      messages = ACE_OS::atoi (argv[1]);
+      max_messages = ACE_OS::atoi (argv[1]);
 
 #if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on
