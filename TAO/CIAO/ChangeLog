@@ -1,3 +1,69 @@
+Fri Nov 28 14:32:58 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
+	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.h:
+	* tests/RTCCM/Priority_Test/Controllers/Pulser.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/Pulser.h: Added a new rate
+	  generating component implementation and provide 3 components
+	  generating 25, 50, and 75 hz "trigger" using 3 different entry
+	  points to the component executor.
+
+	* tests/RTCCM/Priority_Test/Controllers/client.cpp: Changed to
+	  perform the test with on/off method invocation.
+
+	* tests/RTCCM/Priority_Test/descriptors/basic_test.pl: Made the
+	  script most robust by extracting cad file, deployment
+	  configuration etc into variables.
+
+	* tests/RTCCM/Priority_Test/descriptors/CIAO_Installation_Data.ini:
+	* tests/RTCCM/Priority_Test/descriptors/Controller25.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Controller50.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Controller75.csd:
+	* tests/RTCCM/Priority_Test/descriptors/demo-25.cad:
+	* tests/RTCCM/Priority_Test/descriptors/demo-50.cad: Added the
+	  meta information for the new rate geneartion components.
+
+Mon Nov 24 23:56:49 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.h:
+	* tests/RTCCM/Priority_Test/Controllers/client.cpp: Changed the
+	  Op_Mode interface from a single perform_work operation to
+	  start/stop operations for triggering and stopping controller.
+	  The new start operation also pass an argument into the
+	  controller.
+
+	* tests/RTCCM/Priority_Test/descriptors/basic_test.pl: Changed the
+	  script to run the test over a range of work load to test the
+	  rate a system can handle over a range of work load.
+
+
+Sun Nov 23 20:45:24 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tools/Daemon/CIAO_Daemon.cpp: A small test for the existance of
+	  component server executable but commented out because the test
+	  didn't take into account of the executable extension on win32.
+	  It was left in the code to make sure we don't forget to add the
+	  check back later.
+
+	* tests/RTCCM/Priority_Test/descriptors/NOTE-win.txt:
+	  Notes on running the Priority_Test in a demo setting.
+
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp:  Changed the
+	  deployer to become a controller like command line tool.  Now,
+	  instead of building an assembly and wait for user input to tear
+	  down the assembly and detroy the component server, this tool now
+	  perform a single task, according to its command line flag.  By
+	  removing the need of user intervention, it makes it possible to
+	  write clean auto-test scripts.
+
+	* tests/RTCCM/Priority_Test/descriptors/basic_test.pl: Took
+	  advantage of the new Assembly_Deployer and wrote this run_test
+	  example that does not left stray component server process
+	  behind.
+
 Wed Nov 19 00:56:46 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* tools/Assembly_Deployer/README:

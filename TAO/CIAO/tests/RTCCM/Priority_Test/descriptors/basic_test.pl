@@ -12,19 +12,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 
-$status = 0;
-$assembly = PerlACE::LocalFile ("demo.cad");
-$daemon_ior = PerlACE::LocalFile ("daemon.ior");
-$am_ior = PerlACE::LocalFile ("am.ior");
-$controller_ior = PerlACE::LocalFile ("controller.ior");
-$cookie = PerlACE::LocalFile ("ck_demo_deployment");
-
+## Source in the environment setting
 $ACE_ROOT=$ENV{'ACE_ROOT'};
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
 if ($CIAO_ROOT eq "") {
     $CIAO_ROOT="$ACE_ROOT/TAO/CIAO";
 }
+
+
+$status = 0;
+$assembly = PerlACE::LocalFile ("demo-50.cad");
+$deploy_config = PerlACE::LocalFile ("test.dat");
+$daemon_ior = PerlACE::LocalFile ("daemon.ior");
+$am_ior = PerlACE::LocalFile ("am.ior");
+$controller_ior = PerlACE::LocalFile ("controller.ior");
+$cookie = PerlACE::LocalFile ("ck_demo_deployment");
+
+## The following control how to iterate thru various work amount
+$start_work = 10;
+$end_work = 300;
+$work_step = 300;
 
 unlink $daemon_ior;
 unlink $am_ior;
@@ -34,9 +42,9 @@ unlink $cookie;
 # CIAO Daemon command line arguments
 $daemon_args1 = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
 
-$assembly_manager_args = "-o $am_ior -c test.dat";
+$assembly_manager_args = "-o $am_ior -c $deploy_config";
 
-$ad_deploy = " -k file://$am_ior -o $cookie -a demo.cad";
+$ad_deploy = " -k file://$am_ior -o $cookie -a $assembly";
 
 $ad_teardown = " -k file://$am_ior -d $cookie -x";
 
@@ -81,7 +89,7 @@ if (PerlACE::waitforfile_timed ($controller_ior, 15) == -1) {
     exit 1;
 }
 
-for ($work = 20; $work < 400; $work += 20)
+for ($work = $start_work; $work < $end_work; $work += $work_step)
 {
     printf "Test work: $work\n";
 
@@ -92,7 +100,12 @@ for ($work = 20; $work < 400; $work += 20)
 
 ## Now wait for the test to complete.  Need to figure out a way to
 ## detect this.
-    sleep (3);
+    sleep (30);
+
+#Start the client to send the trigger message
+    $CL = new PerlACE::Process ("../Controllers/client",
+                                "-k file://$controller_ior -f");
+    $CL->SpawnWaitKill(60);
 }
 
 ## Now teardown the application
@@ -110,7 +123,7 @@ if ($AD->SpawnWaitKill (60) == -1) {
 #$AM->WaitKill(5);
 #$AD->WaitKill(5);
 
-$AM->WaitKill (40);
+$AM->WaitKill (2);
 $DS->Kill ();
 
 
