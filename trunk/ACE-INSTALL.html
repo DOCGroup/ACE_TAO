@@ -72,7 +72,7 @@ an enhancement, then use our
     <td><b>Partially supported, i.e., infrequently tested</b></td>
     <td> Windows NT (Borland C++ Builder 4.0 and IBM VisualAge C++),
          Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC,
-         and QNX Neutrino 2.0.
+         QNX Neutrino 2.0 and QNX RTP.
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -653,6 +653,26 @@ make: *** [libACE.so] Error 8
       fail.  As the porting effort progresses, we hope to eliminate
       these failures.  If you know of fixes, please send them to
       us.<p>
+      
+<li><strong>QNX RTP</strong><p>
+
+      ACE has been ported to <a
+      href="http://get.qnx.com/">QNX RTP
+      </a>. We compile for QNX RTP using the GCC compiler shipped with the 
+      distribution, using the <a
+      href="ace/config-qnx-rtp.h">ace/config-qnx-neutrino.h</a>
+      and <a
+      href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
+      configuration files.  
+      Many of the ACE tests succeed, though some
+      fail.  As the porting effort progresses, we hope to eliminate
+      these failures.  If you know of fixes, please send them to
+      us.<p>
+      
+      <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+      Under the current version of QNX RTP ACE fails if compiled with
+      debug=1 (i.e. "-g" option in GCC). <p>
+
 
   <li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
 
