@@ -29,8 +29,13 @@
 </Event>
 
 <!-- Configure the ECs -->
-<RemoteEventChannel name="Middle" >
+<RemoteEventChannel name="Middle" connection="Output">
   <IORFile>Middle.ior</IORFile>
+</RemoteEventChannel>
+<RemoteEventChannel name="Client" connection="Output">
+<!-- we don't actually push to this EC, but we need to be connected so -->
+<!-- we can set its start time -->
+  <IORFile>Client.ior</IORFile>
 </RemoteEventChannel>
 
 <LocalEventChannel name="Server" >
@@ -61,7 +66,7 @@
 <!-- Configure the driver -->
 <TestDriver>
   <StartCondition type="DelayAfterConnect" master="yes" >
-    <Time>30000</Time> <!-- in msecs -->
+    <Time>10000</Time> <!-- in msecs -->
   </StartCondition>
   <StopCondition type="Duration" >
     <Value>340000</Value> <!-- duration in msecs -->

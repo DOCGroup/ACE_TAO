@@ -24,6 +24,7 @@
 #include "tao/PortableServer/PortableServer.h"
 
 #include <vector>
+#include <pair.h>
 
 // Forward decls
 class ECDriver;
@@ -128,9 +129,10 @@ public:
 
   typedef ACE_Hash_Map_Manager<ACE_CString,RtEventChannelAdmin::SchedInfo,ACE_Null_Mutex> QoSTable;
 
-  typedef std::vector<RtEventChannelAdmin::RtSchedEventChannel_var> ECVector;
   typedef std::vector<Kokyu_EC*> KokyuECVector;
   typedef std::vector<Gateway_Initializer*> GatewayInitVector;
+  typedef RemoteEventChannel::CONNECTION ConnectionType;
+  typedef std::vector<pair<ConnectionType,const char*> > ConnectionVector;
 
   typedef ACE_Hash_Map_Manager<ACE_CString,ECSupplier*,ACE_Null_Mutex> SupplierMap;
   typedef ACE_Hash_Map_Manager<ACE_CString,ECConsumer*,ACE_Null_Mutex> ConsumerMap;
@@ -150,8 +152,6 @@ private:
 
   // EC stuff
   KokyuECVector kokyuECs; // for convenience
-  ECVector localECs;
-  ECVector remoteECs;
   GatewayInitVector ginitv;
 
   // Consumer/Supplier stuff

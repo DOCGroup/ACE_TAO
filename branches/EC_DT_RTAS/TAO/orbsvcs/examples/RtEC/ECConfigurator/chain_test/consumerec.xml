@@ -13,6 +13,15 @@
 </Event>
 
 <!-- Configure the ECs -->
+<RemoteEventChannel name="Middle" connection="Input">
+  <IORFile>Middle.ior</IORFile>
+</RemoteEventChannel>
+<RemoteEventChannel name="Server" connection="Input">
+<!-- we don't actually receive from this EC, but it needs to be -->
+<!-- connected so it can set our start time -->
+  <IORFile>Server.ior</IORFile>
+</RemoteEventChannel>
+
 <LocalEventChannel name="Client" >
   <SchedulingStrategy type="EDF" enableRG="true" />
   <Consumer name="Subtask3 Executor" >
@@ -26,7 +35,7 @@
 <!-- there should only be one Driver -->
 <TestDriver>
   <StartCondition type="DelayAfterConnect">
-    <Time>30000</Time> <!-- in msecs -->
+    <Time>10000</Time> <!-- in msecs -->
   </StartCondition>
   <StopCondition type="Duration" >
     <Value>340000</Value> <!-- duration in msecs -->
