@@ -2,9 +2,9 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (x86) Console Application" 0x0103
+# TARGTYPE "Win32 Static (x86) Console Application" 0x0103
 
-CFG=Simple Time Server Static - Win32 Debug
+CFG=Simple Time Server Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Simple Time Server Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server_static.mak" CFG="Simple Time Server Static - Win32 Debug"
+!MESSAGE NMAKE /f "server_static.mak" CFG="Simple Time Server Static - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Server Static - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server Static - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Static Debug" (based on "Win32 Static (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Static Release" (based on "Win32 Static (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Simple Time Server Static - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Simple Time Server Static - Win32 Debug"
+!IF  "$(CFG)" == "Simple Time Server Static - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -55,7 +55,7 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 advapi32.lib user32.lib acesd.lib TAOsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
-!ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Release"
+!ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -86,8 +86,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Simple Time Server Static - Win32 Debug"
-# Name "Simple Time Server Static - Win32 Release"
+# Name "Simple Time Server Static - Win32 Static Debug"
+# Name "Simple Time Server Static - Win32 Static Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -123,7 +123,7 @@ SOURCE=.\Time_i.h
 
 SOURCE=.\Time.idl
 
-!IF  "$(CFG)" == "Simple Time Server Static - Win32 Debug"
+!IF  "$(CFG)" == "Simple Time Server Static - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler
@@ -161,7 +161,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Release"
+!ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Static Release"
 
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl

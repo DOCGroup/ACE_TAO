@@ -165,7 +165,6 @@ SOURCE=.\server.cpp
 DEP_CPP_SERVE=\
 	"..\..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\..\ace\Acceptor.h"\
-	"..\..\..\..\ace\Acceptor.i"\
 	"..\..\..\..\ace\ACE.h"\
 	"..\..\..\..\ace\ACE.i"\
 	"..\..\..\..\ace\Addr.h"\
@@ -183,7 +182,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\..\ace\config.h"\
 	"..\..\..\..\ace\Connector.cpp"\
 	"..\..\..\..\ace\Connector.h"\
-	"..\..\..\..\ace\Connector.i"\
 	"..\..\..\..\ace\Containers.cpp"\
 	"..\..\..\..\ace\Containers.h"\
 	"..\..\..\..\ace\Containers.i"\
@@ -202,7 +200,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\..\ace\Handle_Set.i"\
 	"..\..\..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\INET_Addr.h"\
 	"..\..\..\..\ace\INET_Addr.i"\
 	"..\..\..\..\ace\IO_Cntl_Msg.h"\
@@ -280,7 +277,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\..\ace\Strategies_T.i"\
 	"..\..\..\..\ace\Stream_Modules.cpp"\
 	"..\..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\..\ace\streams.h"\
 	"..\..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\..\ace\SV_Semaphore_Complex.i"\
@@ -289,7 +285,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\..\ace\Svc_Conf_Tokens.h"\
 	"..\..\..\..\ace\Svc_Handler.cpp"\
 	"..\..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\..\ace\Synch.h"\
 	"..\..\..\..\ace\Synch.i"\
 	"..\..\..\..\ace\Synch_Options.h"\
@@ -373,18 +368,18 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Server_Request.h"\
 	"..\..\..\tao\Server_Request.i"\
 	"..\..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\..\tao\singletons.h"\
 	"..\..\..\tao\Stub.h"\
 	"..\..\..\tao\Stub.i"\
 	"..\..\..\tao\TAO.h"\
 	"..\..\..\tao\Typecode.h"\
 	"..\..\..\tao\Typecode.i"\
-	"..\..\..\tao\Union.h"\
-	"..\..\..\tao\varout.cpp"\
-	"..\..\..\tao\varout.h"\
-	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_SERVE=\
+	"..\..\..\..\ace\Acceptor.i"\
+	"..\..\..\..\ace\Connector.i"\
+	"..\..\..\..\ace\inc_user_config.h"\
+	"..\..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Connect.h"\
@@ -400,6 +395,11 @@ NODEP_CPP_SERVE=\
 	"..\..\..\tao\ORB_Strategies_T.cpp"\
 	"..\..\..\tao\ORB_Strategies_T.h"\
 	"..\..\..\tao\ORB_Strategies_T.i"\
+	"..\..\..\tao\singletons.h"\
+	"..\..\..\tao\Union.h"\
+	"..\..\..\tao\varout.cpp"\
+	"..\..\..\tao\varout.h"\
+	"..\..\..\tao\varout.i"\
 	".\Server_impl.h"\
 	".\Time_impl.h"\
 	".\TimeC.h"\
@@ -444,7 +444,6 @@ SOURCE=.\TimeC.cpp
 DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\..\ace\Acceptor.h"\
-	"..\..\..\..\ace\Acceptor.i"\
 	"..\..\..\..\ace\ACE.h"\
 	"..\..\..\..\ace\ACE.i"\
 	"..\..\..\..\ace\Addr.h"\
@@ -462,7 +461,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\config.h"\
 	"..\..\..\..\ace\Connector.cpp"\
 	"..\..\..\..\ace\Connector.h"\
-	"..\..\..\..\ace\Connector.i"\
 	"..\..\..\..\ace\Containers.cpp"\
 	"..\..\..\..\ace\Containers.h"\
 	"..\..\..\..\ace\Containers.i"\
@@ -481,7 +479,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Handle_Set.i"\
 	"..\..\..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\INET_Addr.h"\
 	"..\..\..\..\ace\INET_Addr.i"\
 	"..\..\..\..\ace\IO_Cntl_Msg.h"\
@@ -559,7 +556,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Strategies_T.i"\
 	"..\..\..\..\ace\Stream_Modules.cpp"\
 	"..\..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\..\ace\streams.h"\
 	"..\..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\..\ace\SV_Semaphore_Complex.i"\
@@ -568,7 +564,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Svc_Conf_Tokens.h"\
 	"..\..\..\..\ace\Svc_Handler.cpp"\
 	"..\..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\..\ace\Synch.h"\
 	"..\..\..\..\ace\Synch.i"\
 	"..\..\..\..\ace\Synch_Options.h"\
@@ -652,17 +647,17 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Server_Request.h"\
 	"..\..\..\tao\Server_Request.i"\
 	"..\..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\..\tao\singletons.h"\
 	"..\..\..\tao\Stub.h"\
 	"..\..\..\tao\Stub.i"\
 	"..\..\..\tao\Typecode.h"\
 	"..\..\..\tao\Typecode.i"\
-	"..\..\..\tao\Union.h"\
-	"..\..\..\tao\varout.cpp"\
-	"..\..\..\tao\varout.h"\
-	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_TIMEC=\
+	"..\..\..\..\ace\Acceptor.i"\
+	"..\..\..\..\ace\Connector.i"\
+	"..\..\..\..\ace\inc_user_config.h"\
+	"..\..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Connect.h"\
@@ -678,6 +673,11 @@ NODEP_CPP_TIMEC=\
 	"..\..\..\tao\ORB_Strategies_T.cpp"\
 	"..\..\..\tao\ORB_Strategies_T.h"\
 	"..\..\..\tao\ORB_Strategies_T.i"\
+	"..\..\..\tao\singletons.h"\
+	"..\..\..\tao\Union.h"\
+	"..\..\..\tao\varout.cpp"\
+	"..\..\..\tao\varout.h"\
+	"..\..\..\tao\varout.i"\
 	".\TimeC.h"\
 	".\TimeC.i"\
 	".\TimeS.h"\
@@ -705,7 +705,6 @@ SOURCE=.\TimeS.cpp
 DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\..\ace\Acceptor.h"\
-	"..\..\..\..\ace\Acceptor.i"\
 	"..\..\..\..\ace\ACE.h"\
 	"..\..\..\..\ace\ACE.i"\
 	"..\..\..\..\ace\Addr.h"\
@@ -723,7 +722,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\config.h"\
 	"..\..\..\..\ace\Connector.cpp"\
 	"..\..\..\..\ace\Connector.h"\
-	"..\..\..\..\ace\Connector.i"\
 	"..\..\..\..\ace\Containers.cpp"\
 	"..\..\..\..\ace\Containers.h"\
 	"..\..\..\..\ace\Containers.i"\
@@ -742,7 +740,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Handle_Set.i"\
 	"..\..\..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\INET_Addr.h"\
 	"..\..\..\..\ace\INET_Addr.i"\
 	"..\..\..\..\ace\IO_Cntl_Msg.h"\
@@ -820,7 +817,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Strategies_T.i"\
 	"..\..\..\..\ace\Stream_Modules.cpp"\
 	"..\..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\..\ace\streams.h"\
 	"..\..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\..\ace\SV_Semaphore_Complex.i"\
@@ -829,7 +825,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Svc_Conf_Tokens.h"\
 	"..\..\..\..\ace\Svc_Handler.cpp"\
 	"..\..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\..\ace\Synch.h"\
 	"..\..\..\..\ace\Synch.i"\
 	"..\..\..\..\ace\Synch_Options.h"\
@@ -913,17 +908,17 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Server_Request.h"\
 	"..\..\..\tao\Server_Request.i"\
 	"..\..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\..\tao\singletons.h"\
 	"..\..\..\tao\Stub.h"\
 	"..\..\..\tao\Stub.i"\
 	"..\..\..\tao\Typecode.h"\
 	"..\..\..\tao\Typecode.i"\
-	"..\..\..\tao\Union.h"\
-	"..\..\..\tao\varout.cpp"\
-	"..\..\..\tao\varout.h"\
-	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_TIMES=\
+	"..\..\..\..\ace\Acceptor.i"\
+	"..\..\..\..\ace\Connector.i"\
+	"..\..\..\..\ace\inc_user_config.h"\
+	"..\..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Connect.h"\
@@ -939,6 +934,11 @@ NODEP_CPP_TIMES=\
 	"..\..\..\tao\ORB_Strategies_T.cpp"\
 	"..\..\..\tao\ORB_Strategies_T.h"\
 	"..\..\..\tao\ORB_Strategies_T.i"\
+	"..\..\..\tao\singletons.h"\
+	"..\..\..\tao\Union.h"\
+	"..\..\..\tao\varout.cpp"\
+	"..\..\..\tao\varout.h"\
+	"..\..\..\tao\varout.i"\
 	".\TimeC.h"\
 	".\TimeC.i"\
 	".\TimeS.h"\

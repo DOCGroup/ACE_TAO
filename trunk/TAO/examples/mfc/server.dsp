@@ -2,9 +2,9 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (x86) Application" 0x0101
+# TARGTYPE "Win32 MFC (x86) Application" 0x0101
 
-CFG=server - Win32 Debug
+CFG=server - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="server - Win32 MFC Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "server - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "server - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "server - Win32 MFC Release" (based on "Win32 MFC (x86) Application")
+!MESSAGE "server - Win32 MFC Debug" (based on "Win32 MFC (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "server - Win32 Release"
+!IF  "$(CFG)" == "server - Win32 MFC Release"
 
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 0
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
 # ADD LINK32 acemfc.lib TAOmfc.lib TAO_CosNaming.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs"
 
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "server - Win32 MFC Debug"
 
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 1
@@ -87,8 +87,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "server - Win32 Release"
-# Name "server - Win32 Debug"
+# Name "server - Win32 MFC Release"
+# Name "server - Win32 MFC Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -193,7 +193,7 @@ SOURCE=.\res\Toolbar.bmp
 
 SOURCE=.\w32_test.idl
 
-!IF  "$(CFG)" == "server - Win32 Release"
+!IF  "$(CFG)" == "server - Win32 MFC Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__W32_T="..\..\..\bin\Release\tao_idl.exe"	
@@ -232,7 +232,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "server - Win32 MFC Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__W32_T="..\..\..\bin\tao_idl.exe"	

@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="TradingLib" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Trading Test Library" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=TradingLib - Win32 Debug
+CFG=Trading Test Library -Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=TradingLib - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TradingLib.mak" CFG="TradingLib - Win32 Debug"
+!MESSAGE NMAKE /f "TradingLib.mak" CFG="Trading Test Library -Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TradingLib - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "TradingLib - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "Trading Test Library -Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "Trading Test Library -Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=TradingLib - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "TradingLib - Win32 Release"
+!IF  "$(CFG)" == "Trading Test Library -Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "TradingLib - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Trading Test Library -Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -80,8 +80,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "TradingLib - Win32 Release"
-# Name "TradingLib - Win32 Debug"
+# Name "Trading Test Library -Win32 Release"
+# Name "Trading Test Library -Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -153,7 +153,7 @@ SOURCE=.\TTestS_T.h
 
 SOURCE=.\TTest.idl
 
-!IF  "$(CFG)" == "TradingLib - Win32 Release"
+!IF  "$(CFG)" == "Trading Test Library -Win32 Release"
 
 USERDEP__TTEST="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
@@ -191,7 +191,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "TradingLib - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Trading Test Library -Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TTEST="..\..\..\..\bin\tao_idl.exe"	
@@ -241,9 +241,9 @@ BuildCmds= \
 
 SOURCE=.\Simple_Dynamic.cpp
 
-!IF  "$(CFG)" == "TradingLib - Win32 Release"
+!IF  "$(CFG)" == "Trading Test Library -Win32 Release"
 
-!ELSEIF  "$(CFG)" == "TradingLib - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Trading Test Library -Win32 Debug"
 
 # PROP Exclude_From_Build 1
 
