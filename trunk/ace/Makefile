@@ -55,7 +55,9 @@ THREADS_FILES = \
   Token
 DEMUX_FILES = \
   Event_Handler \
+  FlReactor \
   Handle_Set \
+  Msg_WFMO_Reactor \
   POSIX_Proactor \
   Priority_Reactor \
   Proactor \
@@ -63,12 +65,14 @@ DEMUX_FILES = \
   Select_Reactor \
   Select_Reactor_Base \
   TP_Reactor \
-  WFMO_Reactor
+  TkReactor \
+  WFMO_Reactor \
+  XtReactor
 CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
   POSIX_Asynch_IO \
-  Strategies 
+  Strategies
 SOCKETS_FILES = \
   IPC_SAP \
   LSOCK \
@@ -163,16 +167,12 @@ OTHER_FILES = \
   CORBA_Handler \
   CORBA_Ref \
   Local_Name_Space \
-  Msg_WFMO_Reactor \
   Name_Proxy \
   Name_Request_Reply \
   Name_Space \
   Naming_Context \
   Registry_Name_Space \
-  Remote_Name_Space \
-  XtReactor \
-  FlReactor \
-  TkReactor
+  Remote_Name_Space
 
 TEMPLATE_FILES = \
            Acceptor \
@@ -181,7 +181,7 @@ TEMPLATE_FILES = \
            Auto_Ptr \
            Connector \
            Containers_T \
-	   Cache_Map_Manager_T \
+           Cache_Map_Manager_T \
            Cached_Connect_Strategy_T \
            Caching_Strategies_T \
            Caching_Strategy_Utility_T \
