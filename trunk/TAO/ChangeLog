@@ -1,3 +1,27 @@
+Sun Sep  8 11:57:47 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/CDR_Encaps_Codec.cpp (decode): In methods decode () and
+	  decode_value (), the incoming buffer was used to create a CDR
+	  stream and it was not aligned on an 8 byte boundary on some
+	  platforms. There was no check performed to make sure that the
+	  buffer is aligned before extraction. 
+
+	  The methods have been changed to do the following 
+	  
+	  - A message block is created and after proper alignment the
+	    buffer is copied. 
+	  
+	  - The message block thus created is used to create a CDR stream
+	    for extraction. This helps to circumvent the problem seen. 
+
+	* tests/Codec/test.idl:
+	* tests/Codec/client.cpp: Added a 8 byte variable to the struct
+	  that is used in the test. Adding this one opened up the problem
+	  mentioned above. 
+
+	  Thanks to Oleg Kraynov <mustafa@gema.ru> for reporting this and
+	  helping us debug the problem.
+	
 Fri Sep  6 09:03:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/ImplRepo_Service/Options.h:

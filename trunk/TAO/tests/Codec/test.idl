@@ -17,9 +17,10 @@ module Foo
 
   struct Bar
   {
-    string A;
+    long A;
     long B;
-    string C;
+    long long C;
+    string D;
   };
 
 };
