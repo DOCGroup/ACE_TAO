@@ -907,6 +907,7 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
   int send_buffer_size = this->orb_core_->orb_params ()->sock_sndbuf_size ();
   int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
   int no_delay = this->orb_core_->orb_params ()->nodelay ();
+  int enable_network_priority = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -920,6 +921,7 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
         tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
+					 enable_network_priority,
                                          protocol_type);
 
       if (hook_return == -1)
@@ -932,6 +934,9 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
     recv_buffer_size;
   this->tcp_properties_.no_delay =
     no_delay;
+ this->tcp_properties_.enable_network_priority  =
+   enable_network_priority;
+
 
   // @@ NOTE.  RTCORBA treats a combination of transport+messaging
   // as a single protocol.  Keep this in mind for when we adopt
