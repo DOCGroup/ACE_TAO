@@ -1,3 +1,16 @@
+Sat Dec 27 09:13:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.bor:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile.bor:
+	* orbsvcs/tests/Miop/McastHello/Makefile:
+	* orbsvcs/tests/Miop/McastHello/server.bor:
+
+	  They need the IORManipulation library to be linked in.
+
 Sat Dec 27 09:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.bor:
