@@ -642,7 +642,7 @@ CIAO_GLUE_BasicSP::EC_Servant::start (ACE_ENV_SINGLE_ARG_DECL)
 {
   cout << "Amba Here ?? " << endl;
   // Simply relay to executor.  May not need to return the result...
-  return this->executor_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->executor_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
