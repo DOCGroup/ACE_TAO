@@ -68,7 +68,6 @@ Client_i::parse_args (int argc, char *argv[])
 			   "\n",
 			   argv [0]),
 			  -1);
-	break;
       }
   if (specified_options == 0)
     ACE_DEBUG ((LM_DEBUG,
