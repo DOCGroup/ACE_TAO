@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO/tests/NestedUpCalls
-// 
+//
 // = FILENAME
 //    NestedUpCalls_Test.cpp
 //
@@ -18,7 +18,7 @@
 //
 // = AUTHOR
 //    Nagarajan Surendran
-// 
+//
 // ============================================================================
 
 #include "tests/test_config.h"

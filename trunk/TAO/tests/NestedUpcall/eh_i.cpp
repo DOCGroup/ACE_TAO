@@ -19,11 +19,11 @@ EventHandler_i::peer (CORBA::Environment &env)
 {
   // Doesn't matter what value we return!
   CORBA::Long val = 6;
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "EventHandler_i::peer() returning %d\n",
               val));
-  
+
   return val;
 }
 
@@ -33,7 +33,7 @@ EventHandler_i::decrement (Reactor_ptr eh,
                       CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, "%{%I(%P|%t) EventHandler::decrement (%d)%$", num));
-  
+
   CORBA::UShort ret;
   if (--num <= 0)
     ret = 0;
@@ -45,4 +45,3 @@ EventHandler_i::decrement (Reactor_ptr eh,
   ACE_DEBUG ((LM_DEBUG, "%}(%P|%t) EventHandler::decrement() returning %d%$", ret));
   return ret;
 }
-

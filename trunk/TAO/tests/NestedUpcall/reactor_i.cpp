@@ -56,7 +56,7 @@ Reactor_i::decrement (EventHandler_ptr eh,
                       CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, "%{%I(%P|%t) Reactor::decrement (%d)%$", num));
-  
+
   CORBA::UShort ret;
   if (--num <= 0)
     ret = 0;

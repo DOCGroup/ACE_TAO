@@ -71,7 +71,7 @@ NestedUpCalls_Client::parse_args (void)
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
-	  case 'f': // read the IOR from the file.
+          case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -150,8 +150,8 @@ NestedUpCalls_Client::run (void)
       TAO_CHECK_ENV;
 
       if (this->shutdown_)
-	  {	
-		  dexc (this->env_, "server, please ACE_OS::exit");
+          {
+                  dexc (this->env_, "server, please ACE_OS::exit");
       }
     }
   TAO_CATCHANY
@@ -260,7 +260,7 @@ NestedUpCalls_Client::init (int argc, char **argv)
           TAO_CHECK_ENV;
 
           this->reactor_ =
-	        Reactor::_narrow (reactor_object.in(), TAO_TRY_ENV);
+                Reactor::_narrow (reactor_object.in(), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (CORBA::is_nil (this->reactor_.in ()))
@@ -296,4 +296,3 @@ main (int argc, char **argv)
   else
     return nestedupcalls_client.run ();
 }
-
