@@ -228,6 +228,7 @@ be_decl::compute_flatname (void)
       delete i;
 
       this->flatname_ = new char [namelen+1];
+      this->flatname_[0] = '\0';
       first = I_TRUE;
       second - I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
