@@ -1,5 +1,25 @@
 Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* TAO_IDL/util/utl_global.cpp : 
+	* TAO_IDL/driver/drv_args.cpp: Made changes to generate code
+	  according to the following rules.
+	  
+	  - If the compilation is on a platform with native C++ exceptions
+	  like NT, we may not want the ACE_TRY_ENV variables by default. 
+	  
+	  - If the compilation is on a platform with NO native C++
+	  exceptions like say g++, the compiler  generates the environment
+	  variables.
+
+	  - cross platform compilation wherein he may compile on SUN CC
+	  with native exceptions but for VxWorks which does not have that
+	  capability.. In which case a handle is needed to generate the
+	  environment variables. This handle is denoted as a command line
+	  option to IDL as -Ge 1
+
+	  - A case that is vice-versa to the above. THe option for such a
+	  case id -Ge 0
+	
 	* docs/compiler.html: Added documentation for the -u option in the
 	  IDL compiler
 	
