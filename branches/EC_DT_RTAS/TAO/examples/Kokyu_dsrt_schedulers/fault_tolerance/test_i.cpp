@@ -48,7 +48,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration, CORBA::Long need_ft ACE
   oid.tid=sched_param->tid;
   oid.task_id=sched_param->task_id;
   oid.guid=guid;
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -170,11 +170,11 @@ Simple_Server_i::test_method (CORBA::Long exec_duration, CORBA::Long need_ft ACE
                                                     implicit_sched_param.in ()
                                                     ACE_ENV_ARG_PARAMETER);
 
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);  
+  DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);  
   this->server_->test_method2(exec_duration,need_ft);
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
   this->current_->end_scheduling_segment (name); 
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void

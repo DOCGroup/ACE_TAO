@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 #include <datastream_common.h>
 #include <dsui_types.h>
 #include "kokyu_dsui_families.h"

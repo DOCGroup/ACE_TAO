@@ -59,16 +59,16 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
   //when event is pushed by client.
 
-  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
+  //DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
-  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
+  //DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
@@ -106,7 +106,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
   //timeout occurs to trigger event push. Roughly equivalent to the
   //scheduling segments started for each one-way call of the DTs.
-  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
+  //DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),tv.msec()));
@@ -118,16 +118,16 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   oid.queue_id = events[0].header.eid.queue_id;
   oid.type = events[0].header.type;
 
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
-  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
+  //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
@@ -151,7 +151,7 @@ Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
   //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
   //timeout occurs to trigger event push. Roughly equivalent to the
   //scheduling segments started for each one-way call of the DTs.
-  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
+  //DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),tv.msec()));
@@ -163,16 +163,16 @@ Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
   //oid.queue_id = events[0].header.eid.queue_id;
   //oid.type = events[0].header.type;
 
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
-  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
+  //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 } //Supplier_Timeout_Handler::handle_timeout()
 
 // ****************************************************************

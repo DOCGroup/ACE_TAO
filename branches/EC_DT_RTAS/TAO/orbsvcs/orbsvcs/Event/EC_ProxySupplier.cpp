@@ -301,7 +301,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
     oid.queue_id = event[0].header.eid.queue_id;
     oid.type = event[0].header.type;
 
-    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+    DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
     this->event_channel_->dispatching ()->push (this,
                                                 consumer.in (),
@@ -367,7 +367,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
     oid.queue_id = event[0].header.eid.queue_id;
     oid.type = event[0].header.type;
 
-    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+    DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
     this->event_channel_->dispatching ()->push_nocopy (this,
                                                        consumer.in (),
@@ -411,7 +411,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
       oid.queue_id = event[0].header.eid.queue_id;
       oid.type = event[0].header.type;
 
-      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -476,7 +476,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
       oid.queue_id = event[0].header.eid.queue_id;
       oid.type = event[0].header.type;
 
-      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

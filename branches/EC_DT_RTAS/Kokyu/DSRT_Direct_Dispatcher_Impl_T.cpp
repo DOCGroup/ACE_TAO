@@ -209,7 +209,7 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
     int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
     schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
     {
-      DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, SCHEDULE_ENTER, 0,0,NULL);
+      DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, SCHEDULE_ENTER, 0,0,NULL);
       ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -293,7 +293,7 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T):schedule_i exit\n"));
 #endif
-      DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, SCHEDULE_EXIT, 0,0,NULL);
+      DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, SCHEDULE_EXIT, 0,0,NULL);
       return 0;
     }
 
@@ -308,7 +308,7 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 
       Object_ID tmp;
       tmp.guid = int_guid;
-      DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RELEASE_GUARD_START, 0 , sizeof(Object_ID), (char*)&tmp);
+      DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, RELEASE_GUARD_START, 0 , sizeof(Object_ID), (char*)&tmp);
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id,qos.period_));
 #endif
@@ -337,10 +337,10 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 #endif
               this->release_map_.rebind(qos.task_id, cur_time);
               /*DTTIME:
-                Release time on the server side. please record the guid in your DSUI_EVENT_LOG
+                Release time on the server side. please record the guid in your DSTRM_EVENT
               */
               tmp.task_id = qos.task_id;
-              DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RG_EVENT_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
+              DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, RG_EVENT_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
               this->schedule_i (guid, qos);
             }
           else
@@ -381,9 +381,9 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 
               this->release_map_.rebind(qos.task_id, cur_time);
               /*DTTIME:
-                Release time on the server side. please record the guid in your DSUI_EVENT_LOG
+                Release time on the server side. please record the guid in your DSTRM_EVENT
               */
-              DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
+              DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
 
               this->schedule_i (guid, qos);
             }
@@ -397,14 +397,14 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 
           this->release_map_.bind(qos.task_id, cur_time);
           /*DTTIME:
-            Release time on the server side. please record the guid in your DSUI_EVENT_LOG
+            Release time on the server side. please record the guid in your DSTRM_EVENT
           */
-          DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, NONRG_EVENT_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
+          DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, NONRG_EVENT_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
 
           this->schedule_i (guid, qos);
         }
 
-      DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RELEASE_GUARD_END, 0, sizeof(Object_ID), (char*)&tmp);
+      DSTRM_EVENT (DSRT_DIRECT_DISPATCH_FAM, RELEASE_GUARD_END, 0, sizeof(Object_ID), (char*)&tmp);
       return 0;
     }
 

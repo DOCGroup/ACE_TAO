@@ -1,9 +1,9 @@
 // $Id$
-// Automatically generated header file "ec_dsui_families.h"  by dsui-parse.py
+// Automatically generated header file "ec_dsui_families.h"  by dsui-parse.py 
 #ifndef _ec_DSUI_FAMILIES_H
 #define _ec_DSUI_FAMILIES_H
 
-#define NUM_FAMILIES 2
+#define ec_NUM_FAMILIES 2
 
 /* DSUI Family: EC2_GROUP
  * "EC DSUI group"
@@ -36,20 +36,20 @@
 
 
 #ifdef CONFIG_DSTREAM_EC2_GROUP
-#define DSUI_EVENT_LOG_EC2_GROUP_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_EC2_GROUP_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(EC2_GROUP_FAM, (event) ) ) \
             dsui_event_log( EC2_GROUP_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_EC2_GROUP_FAM( event, tag , len, data )
+#define DSTRM_EVENT_EC2_GROUP_FAM( event, tag , len, data )
 #endif
 
 #ifdef CONFIG_DSTREAM_TIMEOUT
-#define DSUI_EVENT_LOG_TIMEOUT_FAM( event,tag, len, data ) { \
+#define DSTRM_EVENT_TIMEOUT_FAM( event,tag, len, data ) { \
     if( dsui_event_enabled(TIMEOUT_FAM, (event) ) ) \
             dsui_event_log( TIMEOUT_FAM, event, tag, len, data ); \
 }
 #else
-#define DSUI_EVENT_LOG_TIMEOUT_FAM( event, tag , len, data )
+#define DSTRM_EVENT_TIMEOUT_FAM( event, tag , len, data )
 #endif
 #endif /* _DSUI_FAMILIES_H */

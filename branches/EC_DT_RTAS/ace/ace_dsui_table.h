@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 // Automatically generated header file "ace_dsui_table.h" by dsui-parse.py 
 #ifndef _ace_DSUI_TABLE_H
 #define _ace_DSUI_TABLE_H

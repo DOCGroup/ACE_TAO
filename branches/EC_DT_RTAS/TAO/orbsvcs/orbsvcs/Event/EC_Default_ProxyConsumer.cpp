@@ -117,7 +117,7 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
   tmp_event[0].header.eid.queue_id = oid.queue_id;
   oid.type = tmp_event[0].header.type;
 
-  DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(Object_ID), (char*)&oid);
 
   ace_mon.filter->push (event, this
                         ACE_ENV_ARG_PARAMETER);
