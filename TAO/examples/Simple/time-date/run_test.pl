@@ -24,7 +24,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL  = Process::Create ($EXEPREFIX."client$EXE_EXT",
-                            "-f $iorfile -ORBSkipServiceConfigOpen");
+                            "-f $iorfile -ORBSvcConf client.conf");
 
 if ($CL->TimedWait (60) == -1) {
   print STDERR "ERROR: client timedout\n";
