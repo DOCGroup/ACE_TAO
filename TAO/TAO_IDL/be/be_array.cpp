@@ -175,9 +175,7 @@ be_array::create_name (void)
       n = (UTL_ScopedName *)scope->name ()->copy () ;
 
       // add our local name as the last component
-      n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                    (namebuf), 1,
-                                                    0, I_FALSE),
+      n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup (namebuf)),
                                     NULL));
       // set the fully scoped name
       this->set_name (n);

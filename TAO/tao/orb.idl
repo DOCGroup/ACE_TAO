@@ -30,10 +30,8 @@ module CORBA
     SYSTEM_EXCEPTION
   };
 
-  interface Object;
   interface Request;
   interface NVList;
-  interface Exception;
 
   typedef sequence<Request> RequestSeq;
 

@@ -728,7 +728,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 2 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.51 2001/01/24 21:35:31 parsons Exp $
+/*  $Id: idl.ll,v 1.52 2001/01/24 22:41:00 parsons Exp $
 
 COPYRIGHT
 
@@ -1341,23 +1341,21 @@ TAO_YY_RULE_SETUP
   // keyword and grab the mapping.  BTW, the reason for the odd
   // regular expression is to handle EBCDIC, as well as ASCII.
 
-  char *tmp = (ace_tao_yytext[0] == '_' ? ace_tao_yytext + 1 : ace_tao_yytext);
-
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
   const TAO_IDL_CPP_Keyword_Entry *entry =
-    cpp_key_tbl.lookup (tmp,
-                        ACE_OS::strlen (tmp));
+    cpp_key_tbl.lookup (ace_tao_yytext,
+                        ACE_OS::strlen (ace_tao_yytext));
   if (entry)
     tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
   else
-    tao_yylval.strval = ACE_OS::strdup (tmp);
+    tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
 
   return IDENTIFIER;
 }
 	TAO_YY_BREAK
 case 51:
 TAO_YY_RULE_SETUP
-#line 204 "fe/idl.ll"
+#line 202 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof(ace_tao_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -1365,7 +1363,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 52:
 TAO_YY_RULE_SETUP
-#line 208 "fe/idl.ll"
+#line 206 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof(ace_tao_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -1373,7 +1371,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 53:
 TAO_YY_RULE_SETUP
-#line 213 "fe/idl.ll"
+#line 211 "fe/idl.ll"
 {
 		  tao_yylval.ival = idl_atoi(ace_tao_yytext, 10);
 		  return IDL_INTEGER_LITERAL;
@@ -1381,7 +1379,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 54:
 TAO_YY_RULE_SETUP
-#line 217 "fe/idl.ll"
+#line 215 "fe/idl.ll"
 {
 		  tao_yylval.uival = idl_atoui(ace_tao_yytext, 10);
 		  return IDL_UINTEGER_LITERAL;
@@ -1389,7 +1387,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 55:
 TAO_YY_RULE_SETUP
-#line 221 "fe/idl.ll"
+#line 219 "fe/idl.ll"
 {
 		  tao_yylval.ival = idl_atoi(ace_tao_yytext, 16);
 		  return IDL_INTEGER_LITERAL;
@@ -1397,7 +1395,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 56:
 TAO_YY_RULE_SETUP
-#line 225 "fe/idl.ll"
+#line 223 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui(ace_tao_yytext, 16);
 		  return IDL_UINTEGER_LITERAL;
@@ -1405,7 +1403,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 57:
 TAO_YY_RULE_SETUP
-#line 229 "fe/idl.ll"
+#line 227 "fe/idl.ll"
 {
 		  tao_yylval.ival = idl_atoi(ace_tao_yytext, 8);
 		  return IDL_INTEGER_LITERAL;
@@ -1413,7 +1411,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 58:
 TAO_YY_RULE_SETUP
-#line 233 "fe/idl.ll"
+#line 231 "fe/idl.ll"
 {
 		  tao_yylval.uival = idl_atoui(ace_tao_yytext, 8);
 		  return IDL_UINTEGER_LITERAL;
@@ -1421,7 +1419,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 59:
 TAO_YY_RULE_SETUP
-#line 238 "fe/idl.ll"
+#line 236 "fe/idl.ll"
 {
 		  /* Skip the quotes */
 		  char *tmp = ace_tao_yytext;
@@ -1432,7 +1430,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 60:
 TAO_YY_RULE_SETUP
-#line 245 "fe/idl.ll"
+#line 243 "fe/idl.ll"
 {
 		  /* Skip the bookends */
 		  char *tmp = ACE_OS::strdup (ace_tao_yytext);
@@ -1443,7 +1441,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 61:
 TAO_YY_RULE_SETUP
-#line 252 "fe/idl.ll"
+#line 250 "fe/idl.ll"
 {
 		  tao_yylval.cval = ace_tao_yytext [1];
 		  return IDL_CHARACTER_LITERAL;
@@ -1451,7 +1449,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 62:
 TAO_YY_RULE_SETUP
-#line 256 "fe/idl.ll"
+#line 254 "fe/idl.ll"
 {
 		  // octal character constant
 		  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
@@ -1460,7 +1458,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 63:
 TAO_YY_RULE_SETUP
-#line 261 "fe/idl.ll"
+#line 259 "fe/idl.ll"
 {
 		  // hexadecimal character constant
 		  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
@@ -1469,7 +1467,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 64:
 TAO_YY_RULE_SETUP
-#line 266 "fe/idl.ll"
+#line 264 "fe/idl.ll"
 {
 		  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
@@ -1477,7 +1475,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 65:
 TAO_YY_RULE_SETUP
-#line 270 "fe/idl.ll"
+#line 268 "fe/idl.ll"
 {
 		  // wide character constant
 		  tao_yylval.wcval = ace_tao_yytext [2];
@@ -1486,7 +1484,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 66:
 TAO_YY_RULE_SETUP
-#line 275 "fe/idl.ll"
+#line 273 "fe/idl.ll"
 {
 		  // hexadecimal wide character constant
 		  tao_yylval.wcval = idl_wchar_escape_reader(ace_tao_yytext + 2);
@@ -1494,65 +1492,65 @@ TAO_YY_RULE_SETUP
 		}
 	TAO_YY_BREAK
 case 67:
-#line 281 "fe/idl.ll"
+#line 279 "fe/idl.ll"
 case 68:
 TAO_YY_RULE_SETUP
-#line 281 "fe/idl.ll"
+#line 279 "fe/idl.ll"
 {/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_tao_yytext);
 		}
 	break;
 case 69:
-#line 286 "fe/idl.ll"
+#line 284 "fe/idl.ll"
 case 70:
 TAO_YY_RULE_SETUP
-#line 286 "fe/idl.ll"
+#line 284 "fe/idl.ll"
 {/* ignore file */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 	TAO_YY_BREAK
 case 71:
-#line 290 "fe/idl.ll"
+#line 288 "fe/idl.ll"
 case 72:
 TAO_YY_RULE_SETUP
-#line 290 "fe/idl.ll"
+#line 288 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
 	break;
 case 73:
-#line 294 "fe/idl.ll"
+#line 292 "fe/idl.ll"
 case 74:
 TAO_YY_RULE_SETUP
-#line 294 "fe/idl.ll"
+#line 292 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
 	break;
 case 75:
-#line 298 "fe/idl.ll"
+#line 296 "fe/idl.ll"
 case 76:
 TAO_YY_RULE_SETUP
-#line 298 "fe/idl.ll"
+#line 296 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
 	break;
 case 77:
-#line 302 "fe/idl.ll"
+#line 300 "fe/idl.ll"
 case 78:
 TAO_YY_RULE_SETUP
-#line 302 "fe/idl.ll"
+#line 300 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 	        }
 	break;
 case 79:
-#line 306 "fe/idl.ll"
+#line 304 "fe/idl.ll"
 case 80:
 TAO_YY_RULE_SETUP
-#line 306 "fe/idl.ll"
+#line 304 "fe/idl.ll"
 {
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1560,7 +1558,7 @@ TAO_YY_RULE_SETUP
 	TAO_YY_BREAK
 case 81:
 TAO_YY_RULE_SETUP
-#line 310 "fe/idl.ll"
+#line 308 "fe/idl.ll"
 {
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1568,7 +1566,7 @@ TAO_YY_RULE_SETUP
 	break;
 case 82:
 TAO_YY_RULE_SETUP
-#line 314 "fe/idl.ll"
+#line 312 "fe/idl.ll"
 {
 		  for(;;) {
 		    char c = tao_yyinput();
@@ -1586,24 +1584,24 @@ TAO_YY_RULE_SETUP
 	break;
 case 83:
 TAO_YY_RULE_SETUP
-#line 328 "fe/idl.ll"
+#line 326 "fe/idl.ll"
 ;
 	break;
 case 84:
 TAO_YY_RULE_SETUP
-#line 329 "fe/idl.ll"
+#line 327 "fe/idl.ll"
 {
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 	break;
 case 85:
 TAO_YY_RULE_SETUP
-#line 332 "fe/idl.ll"
+#line 330 "fe/idl.ll"
 return ace_tao_yytext [0];
 	TAO_YY_BREAK
 case 86:
 TAO_YY_RULE_SETUP
-#line 334 "fe/idl.ll"
+#line 332 "fe/idl.ll"
 TAO_YY_ECHO;
 	break;
 case TAO_YY_STATE_EOF(INITIAL):
@@ -2493,7 +2491,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 334 "fe/idl.ll"
+#line 332 "fe/idl.ll"
 
 	/* subroutines */
 

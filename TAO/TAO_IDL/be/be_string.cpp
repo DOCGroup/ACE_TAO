@@ -34,10 +34,7 @@ be_string::be_string (void)
 be_string::be_string (AST_Expression *v)
   : AST_String (v),
     AST_Decl (AST_Decl::NT_string,
-              new UTL_ScopedName (new Identifier ("string", 
-                                                  1, 
-                                                  0, 
-                                                  I_FALSE),
+              new UTL_ScopedName (new Identifier ("string"),
                                   0),
               0,
               I_TRUE)
@@ -53,15 +50,9 @@ be_string::be_string (AST_Expression *v,
                 ? AST_Decl::NT_string
                 : AST_Decl::NT_wstring,
               wide == (long) sizeof (char)
-                ? new UTL_ScopedName (new Identifier ("string",
-                                                      1,
-                                                      0,
-                                                      I_FALSE),
+                ? new UTL_ScopedName (new Identifier ("string"),
                                       0)
-                : new UTL_ScopedName (new Identifier ("wstring",
-                                                      1,
-                                                      0,
-                                                      I_FALSE),
+                : new UTL_ScopedName (new Identifier ("wstring"),
                                       0),
               0,
               I_TRUE)
@@ -77,10 +68,7 @@ be_string::compute_tc_name (void)
   // Start with the head as the CORBA namespace.
   Identifier *corba_id = 0;
   ACE_NEW (corba_id,
-           Identifier ("CORBA", 
-                       1, 
-                       0, 
-                       I_FALSE));
+           Identifier ("CORBA"));
 
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (corba_id,
@@ -88,10 +76,7 @@ be_string::compute_tc_name (void)
 
   Identifier *id = 0;
   ACE_NEW (id,
-           Identifier ("_tc_string",
-                       1,
-                       0,
-                       I_FALSE));
+           Identifier ("_tc_string"));
 
   UTL_ScopedName *conc_name = 0;
   ACE_NEW (conc_name,

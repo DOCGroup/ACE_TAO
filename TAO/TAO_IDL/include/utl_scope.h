@@ -238,12 +238,13 @@ protected:
   // interface.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *,
                                        idl_bool treat_as_ref);
-protected:
-  // Operations.
-
   // Lookup based on the local name.
   virtual AST_Decl *lookup_for_add (AST_Decl *d,
                                     idl_bool treat_as_ref);
+
+  // Is there a (case-insensitive) clash between a local name
+  // and an IDL keyword?
+  int idl_keyword_clash (Identifier *e);
 
 private:
   // Data.

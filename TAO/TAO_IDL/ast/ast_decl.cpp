@@ -748,10 +748,7 @@ AST_Decl::compute_name (const char *prefix,
   // Identifier for the resulting local name.
   Identifier *result_local_id = 0;
   ACE_NEW_RETURN (result_local_id,
-                  Identifier (result_local_str.c_str (),
-                              1,
-                              0,
-                              I_FALSE),
+                  Identifier (result_local_str.c_str ()),
                   0);
 
   // UTL_Scoped name for the resulting local name.
@@ -837,10 +834,7 @@ AST_Decl::compute_local_name (const char *prefix,
   // Identifier for the resulting local name.
   Identifier *result_id = 0;
   ACE_NEW_RETURN (result_id,
-                  Identifier (result_str.c_str (),
-                              1,
-                              0,
-                              I_FALSE),
+                  Identifier (result_str.c_str ()),
                   0);
 
   return result_id;
@@ -868,10 +862,7 @@ AST_Decl::original_local_name (Identifier *local_name)
 
       // Assign to the Identifier variable.
       ACE_NEW (this->pd_original_local_name,
-               Identifier (name_str.c_str (),
-               1,
-               0,
-               I_FALSE));
+               Identifier (name_str.c_str ()));
     }
   else
     {

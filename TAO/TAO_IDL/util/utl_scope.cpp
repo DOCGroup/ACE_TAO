@@ -92,20 +92,14 @@ is_global_name (Identifier *i)
   if (_global_scope_name == 0)
     {
       ACE_NEW_RETURN (_global_scope_name,
-                      Identifier ("::", 
-                                  1, 
-                                  0, 
-                                  I_FALSE),
+                      Identifier ("::"),
                       0);
     }
 
   if (_global_scope_root_name == 0)
     {
       ACE_NEW_RETURN (_global_scope_root_name,
-                      Identifier ("", 
-                                  1, 
-                                  0, 
-                                  I_FALSE),
+                      Identifier (""),
                       0);
     }
 
@@ -317,8 +311,52 @@ UTL_Scope::lookup_for_add (AST_Decl *d,
       return 0;
     }
 
-  return lookup_by_name_local (d->local_name (), 
+  Identifier *id = d->local_name ();
+
+  if (this->idl_keyword_clash (id) != 0)
+    {
+      return 0;
+    }
+
+  return lookup_by_name_local (id, 
                                0);
+}
+
+int
+UTL_Scope::idl_keyword_clash (Identifier *e)
+{
+  if (e->escaped ())
+    {
+      return 0;
+    }
+
+  char *tmp = e->get_string ();
+
+  UTL_String utl_tmp (tmp);
+
+  ACE_CString ext_id (utl_tmp.get_canonical_rep (),
+                      0,
+                      0);
+
+  int status = idl_global->idl_keywords ().find (ext_id);
+
+  utl_tmp.destroy ();
+
+  if (status == 0)
+    {
+      if (idl_global->case_diff_error ())
+        {
+          idl_global->err ()->idl_keyword_error (tmp);
+        }
+      else
+        {
+          idl_global->err ()->idl_keyword_warning (tmp);
+        }
+
+      return -1;
+    }
+
+  return 0;
 }
 
 // Public operations.
@@ -1086,21 +1124,6 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                                  long index)
 {
   if (index > 0 && index == (long )this->nmembers ())
-    {
-      return 0;
-    }
-
-  // Temporary hack to disallow 'fixed' without 
-  // implementing all the classes for it.
-  UTL_String arg (e->get_string ());
-  UTL_String test ("fixed");
-
-  long equal = arg.compare (&test);
-
-  arg.destroy ();
-  test.destroy ();
-
-  if (equal)
     {
       return 0;
     }

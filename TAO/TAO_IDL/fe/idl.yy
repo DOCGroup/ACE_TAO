@@ -322,7 +322,7 @@ module  : IDL_MODULE
           IDENTIFIER
           {
             UTL_ScopedName      *n =
-                new UTL_ScopedName(new Identifier($3, 1, 0, I_FALSE), NULL);
+                new UTL_ScopedName(new Identifier($3), NULL);
             AST_Module          *m = NULL;
             UTL_Scope           *s = idl_global->scopes()->top_non_null();
             UTL_StrList         *p = idl_global->pragmas();
@@ -857,7 +857,7 @@ scoped_name
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
-          $$ = new UTL_IdList(new Identifier($1, 1, 0, I_FALSE),
+          $$ = new UTL_IdList(new Identifier($1),
                               new UTL_IdList($3, NULL));
         }
         | scoped_name
@@ -876,7 +876,7 @@ scoped_name
 
 id: IDENTIFIER
         {
-            $$ = new Identifier($1, 1, 0, I_FALSE);
+            $$ = new Identifier($1);
         }
         ;
 
@@ -2109,7 +2109,7 @@ enumerator :
         {
           UTL_Scope             *s = idl_global->scopes()->top_non_null();
           UTL_ScopedName        *n =
-                new UTL_ScopedName(new Identifier($1, 1, 0, I_FALSE), NULL);
+                new UTL_ScopedName(new Identifier($1), NULL);
           AST_EnumVal           *e = NULL;
           AST_Enum              *c = NULL;
           UTL_StrList           *p = idl_global->pragmas();
@@ -2521,7 +2521,7 @@ operation :
         {
           UTL_Scope             *s = idl_global->scopes()->top_non_null();
           UTL_ScopedName        *n =
-                new UTL_ScopedName(new Identifier($4, 1, 0, I_FALSE), NULL);
+                new UTL_ScopedName(new Identifier($4), NULL);
           AST_Operation         *o = NULL;
           UTL_StrList           *p = idl_global->pragmas();
 
