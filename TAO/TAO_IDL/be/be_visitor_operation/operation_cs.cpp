@@ -457,6 +457,12 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
+  if (node->flags () != AST_Operation::OP_oneway)
+     {
+       *os << be_nl;
+       *os << "_tao_call.reset_reply_received();\n";
+     }
+
   *os << "_tao_call.start (ACE_TRY_ENV);\n";
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
