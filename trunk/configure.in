@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.71 $)dnl
+AC_REVISION($Revision 0.72 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -4204,6 +4204,40 @@ dnl We need to add other library checks in this script's "check libraries"
 dnl section if it is in another library.
 dnl  AC_CHECK_FUNC(sched_yield,,) dnl
 dnl We already check for this during the library checks.
+
+dnl Check for Unix98 pthreads extensions
+  ACE_CHECK_STRUCT(pthread_rwlock_t,,)dnl
+  ACE_CHECK_STRUCT(pthread_rwlockattr_t,,)dnl
+  AC_CHECK_FUNC(pthread_continue,,)dnl
+  AC_CHECK_FUNC(pthread_suspend,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_init,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_destroy,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_rdlock,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_wrlock,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_unlock,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_tryrdlock,,)dnl
+  AC_CHECK_FUNC(pthread_rwlock_trywrlock,,)dnl
+  AC_CHECK_FUNC(pthread_rwlockattr_init,,)dnl
+  AC_CHECK_FUNC(pthread_rwlockattr_destroy,,)dnl
+  AC_CHECK_FUNC(pthread_rwlockattr_setpshared,,)dnl
+
+  if test "$ace_cv_struct_pthread_rwlock_t" = yes &&
+     test "$ace_cv_struct_pthread_rwlockattr_t" = yes &&
+     test "$ac_cv_func_pthread_continue" = yes &&
+     test "$ac_cv_func_pthread_continue" = yes &&
+     test "$ac_cv_func_pthread_suspend" = yes &&
+     test "$ac_cv_func_pthread_rwlock_init" = yes &&
+     test "$ac_cv_func_pthread_rwlock_destroy" = yes &&
+     test "$ac_cv_func_pthread_rwlock_rdlock" = yes &&
+     test "$ac_cv_func_pthread_rwlock_wrlock" = yes &&
+     test "$ac_cv_func_pthread_rwlock_unlock" = yes &&
+     test "$ac_cv_func_pthread_rwlock_tryrdlock" = yes &&
+     test "$ac_cv_func_pthread_rwlock_trywrlock" = yes &&
+     test "$ac_cv_func_pthread_rwlockattr_init" = yes &&
+     test "$ac_cv_func_pthread_rwlockattr_destroy" = yes &&
+     test "$ac_cv_func_pthread_rwlockattr_setpshared" = yes; then
+    AC_DEFINE(ACE_HAS_PTHREADS_UNIX98_EXT)dnl
+  fi  dnl Unix98 pthreads extensions
 
 dnl Check if platform has thread_self() rather than pthread_self()
   ACE_CHECK_FUNC(pthread_self, pthread.h, dnl

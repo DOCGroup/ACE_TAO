@@ -2565,7 +2565,7 @@ struct ACE_Export ACE_condattr_t
 };
 #   endif /* ACE_LACKS_COND_T */
 
-#   if defined (ACE_LACKS_RWLOCK_T)
+#   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 struct ACE_Export ACE_rwlock_t
 {
   // = TITLE
