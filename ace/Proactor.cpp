@@ -161,6 +161,19 @@ ACE_Proactor_Handle_Timeout_Upcall::cancellation (TIMER_QUEUE &timer_queue,
   return 0;
 }
 
+int 
+ACE_Proactor_Handle_Timeout_Upcall::deletion (TIMER_QUEUE &timer_queue,
+                                              ACE_Handler *handler,
+                                              const void *arg)
+{
+  ACE_UNUSED_ARG (timer_queue);
+  ACE_UNUSED_ARG (handler);
+  ACE_UNUSED_ARG (arg);
+
+  // Do nothing
+  return 0;
+}
+
 int
 ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 {
