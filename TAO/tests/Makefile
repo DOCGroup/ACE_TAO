@@ -15,10 +15,10 @@ DIRS  =	Cubit \
 	Param_Test \
 	Thruput \
 	CDR \
-	OctetSeq \
-	Quoter
+	OctetSeq 
 
 # The following tests have not been updated yet
+#	Quoter
 # 	Demux_Test
 
 #----------------------------------------------------------------------------
