@@ -8,6 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_QoS.h"
 #include "ace/Global_Macros.h"
+#include "ace/os_include/netinet/os_in.h"
 
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;
@@ -177,17 +178,59 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
                      int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::getpeername");
-#if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
+
+#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+  int result;
+#  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
+  ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
+                               (struct sockaddr_in *) addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+                int,
+                -1,
+                result);
+#  else
+  ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
+                               addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+               int,
+                -1,
+                result);
+#  endif /* defined (ACE_PSOS) */
+
+  // Some platforms, like older versions of the Linux kernel, do not
+  // initialize the sin_zero field since that field is generally only
+  // used for padding/alignment purposes.  On those platforms
+  // memcmp()-based comparisons of the sockaddr_in structure, such as
+  // the one in the ACE_INET_Addr equality operator, may fail due to
+  // random bytes in the sin_zero field even though that field is
+  // unused.  Prevent equality comparison of two different sockaddr_in
+  // instances that refer to the same socket from failing by
+  // explicitly initializing the sockaddr_in::sin_zero field to a
+  // consistent value, e.g. zero.
+  if (result != -1 && addr->sa_family == AF_INET)
+    {
+      ACE_OS::memset (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero,
+                      0,
+                      sizeof (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero));
+    }
+
+  return result;
+#else
+#  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
                                       (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#else
+                       int,
+                       -1);
+#  else
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
                                       addr,
                                       (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#endif /* defined (ACE_PSOS) */
+                       int,
+                       -1);
+#  endif /* defined (ACE_PSOS) */
+#endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
 ACE_INLINE int
@@ -196,17 +239,54 @@ ACE_OS::getsockname (ACE_HANDLE handle,
                      int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::getsockname");
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
+#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+  int result;
+#  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
+  ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
+                               (struct sockaddr_in *) addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+                int,
+                -1,
+                result);
+#  else
+  ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
+                               addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+               int, -1, result);
+#  endif /* defined (ACE_PSOS) */
+
+  // Some platforms, like older versions of the Linux kernel, do not
+  // initialize the sin_zero field since that field is generally only
+  // used for padding/alignment purposes.  On those platforms
+  // memcmp()-based comparisons of the sockaddr_in structure, such as
+  // the one in the ACE_INET_Addr equality operator, may fail due to
+  // random bytes in the sin_zero field even though that field is
+  // unused.  Prevent equality comparison of two different sockaddr_in
+  // instances that refer to the same socket from failing by
+  // explicitly initializing the sockaddr_in::sin_zero field to a
+  // consistent value, e.g. zero.
+  if (result != -1 && addr->sa_family == AF_INET)
+    {
+      ACE_OS::memset (reinterpret_cast<struct sockaddr_in *> (addr),
+                      0,
+                      sizeof (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero));
+    }
+
+  return result;
+#else
+#  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
                                       (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#else
+#  else
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
                                       addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#endif /* defined (ACE_PSOS) */
+#  endif /* defined (ACE_PSOS) */
+#endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
 ACE_INLINE int
