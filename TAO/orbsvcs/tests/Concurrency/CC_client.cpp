@@ -86,6 +86,12 @@ CC_Client::parse_args (void)
   int c;
   int result;
 
+  if(argc_==1) // No arguments given on command line
+    {
+      print_usage();
+      return -1;
+    }
+
   while ((c = get_opts ()) != -1)
     switch (c)
       {
