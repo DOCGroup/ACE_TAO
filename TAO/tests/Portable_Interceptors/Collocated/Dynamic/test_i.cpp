@@ -11,7 +11,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   // ctor
 
 void
-Visual_i::normal (CORBA::Long 
+Visual_i::normal (CORBA::Long
                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45,9 +45,11 @@ Visual_i::system (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Visual_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Visual_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->_remove_ref ();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->orb_->shutdown ();
 }
