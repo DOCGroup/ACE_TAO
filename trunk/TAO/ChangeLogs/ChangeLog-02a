@@ -35,10 +35,11 @@ Fri Jul 27 12:25:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  dispatching.  The situation where it can create problems can be
 	  easily seen in $TAO_ROOT/tests/LongUpcalls/run_ami_test.pl.
 
-	  Further, the fix that was done earlier was for a race
-	  condition. I had a long discussion with Irfan yesterday, and
-	  looks like the possibility of the race condition seems to be
-	  almost zero.
+	  Further, the fix that was done earlier was to resume the handle
+	  after dispatching the reply. It was thought that it would fix a
+	  race condition. I had a long discussion with Irfan yesterday,
+	  and looks like the possibility of a race condition is not
+	  there at all. 
 
 Fri Jul 27 11:09:25 2001  Chad Elliott  <elliott_c@ociweb.com>
 
