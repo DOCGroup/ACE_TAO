@@ -39,35 +39,35 @@ TAO_Dynamic_Adapter::request (CORBA::Object_ptr /* obj */,
 }
 
 CORBA::Boolean 
-TAO_Dynamic_Adapter::context_is_nil (CORBA::Context_ptr ctx)
+TAO_Dynamic_Adapter::context_is_nil (CORBA::Context_ptr)
 {
   return 0;
 }
 
 CORBA::Boolean 
-TAO_Dynamic_Adapter::request_is_nil (CORBA::Request_ptr req)
+TAO_Dynamic_Adapter::request_is_nil (CORBA::Request_ptr)
 {
   return 0;
 }
 
 CORBA::Boolean 
-TAO_Dynamic_Adapter::server_request_is_nil (CORBA::ServerRequest_ptr req)
+TAO_Dynamic_Adapter::server_request_is_nil (CORBA::ServerRequest_ptr)
 {
   return 0;
 }
 
 void 
-TAO_Dynamic_Adapter::context_release (CORBA::Context_ptr ctx)
+TAO_Dynamic_Adapter::context_release (CORBA::Context_ptr)
 {
 }
 
 void 
-TAO_Dynamic_Adapter::request_release (CORBA::Request_ptr req)
+TAO_Dynamic_Adapter::request_release (CORBA::Request_ptr)
 {
 }
 
 void 
-TAO_Dynamic_Adapter::server_request_release (CORBA::ServerRequest_ptr req)
+TAO_Dynamic_Adapter::server_request_release (CORBA::ServerRequest_ptr)
 {
 }
 
