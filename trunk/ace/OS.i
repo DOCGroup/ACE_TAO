@@ -6055,6 +6055,24 @@ ACE_OS::fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode)
 }
 #endif /* ACE_WIN32 */
 
+ACE_INLINE FILE *
+ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
+{
+  ACE_OS_TRACE ("ACE_OS::freopen");
+#if defined (ACE_HAS_PACE)
+  ACE_OSCALL_RETURN (::pace_freopen (filename, mode, stream), FILE*, 0);
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_UNUSED_ARG (stream);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wfreopen (filename, mode, stream), FILE *, 0);
+#else
+  ACE_OSCALL_RETURN (::freopen (filename, mode, stream), FILE *, 0);
+#endif /* defined (ACE_HAS_PACE) */
+}
+
 ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {

@@ -4971,6 +4971,7 @@ public:
   static int fsync (ACE_HANDLE handle);
 
   static FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
+  static FILE *freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream);
 # if defined (fdopen)
 #   undef fdopen
 # endif /* fdopen */
