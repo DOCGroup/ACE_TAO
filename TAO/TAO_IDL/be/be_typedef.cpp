@@ -88,6 +88,9 @@ be_typedef::gen_client_stubs (void)
   TAO_NL  nl;        // end line
   be_type *bt;
   be_state *s;       // state based code gen object
+  
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
 
   if (!this->cli_stub_gen_)
     {
