@@ -67,6 +67,39 @@ Package=<4>
 }}}
 
 ###############################################################################
+Project: "Svc Utils"=..\..\orbsvcs\Svc_Utils.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+Project: "IORTable"=..\..\..\tao\IORTable\TAO_IORTable.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+#####################################################################################################
+Project: "PortableServer"=..\..\..\tao\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
 
 Project: "Trading Test Library"=.\TradingLib.dsp - Package Owner=<4>
 
@@ -76,6 +109,15 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosTrading
     End Project Dependency
