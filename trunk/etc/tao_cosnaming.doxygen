@@ -3,7 +3,7 @@
 # $Id$
 #
 
-PROJECT_NAME          = TAO_CosNotification
+PROJECT_NAME          = TAO_CosNaming
 PROJECT_NUMBER        = Snapshot
 OUTPUT_DIRECTORY      = .
 OUTPUT_LANGUAGE       = English
@@ -48,13 +48,9 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = \
-	TAO/orbsvcs/orbsvcs/CosNotification.idl \
-	TAO/orbsvcs/orbsvcs/CosNotifyFilter.idl \
-	TAO/orbsvcs/orbsvcs/CosNotifyComm.idl \
-	TAO/orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl \
-	TAO/orbsvcs/orbsvcs/Notify
-FILE_PATTERNS         = *.cpp *.h CEC_*.i CEC_*.inl CEC_*.pidl *.idl
+INPUT                 = TAO/orbsvcs/orbsvcs/CosNaming.idl \
+                TAO/orbsvcs/orbsvcs/Naming
+FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
@@ -76,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/cosnotification
+HTML_OUTPUT           = html/tao/cosnaming
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -134,11 +130,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 #---------------------------------------------------------------------------
 
 TAGFILES              = html/ace/ACE.tag=../../ace \
-	html/tao/TAO.tag=.. \
-	html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
-	html/tao/cosevent/TAO_CosEvent.tag=../cosevent \
-	html/tao/esf/TAO_ESF.tag=../esf
-GENERATE_TAGFILE      = html/tao/cosnotification/TAO_CosNotification.tag
+        html/tao/TAO.tag=..
+GENERATE_TAGFILE      = html/tao/cosnaming/TAO_CosNaming.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
