@@ -1,15 +1,13 @@
 // $Id$
 
-#ifndef ACE_TEST_AND_SET_H
-#define ACE_TEST_AND_SET_H
+#ifndef ACE_TEST_AND_SET_C
+#define ACE_TEST_AND_SET_C
 
-#include "ace/Thread.h"
+#include "Test_and_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "Test_and_Set.h"
 
 ACE_RCSID(ace, Test_and_Set, "$Id$")
 
@@ -46,3 +44,5 @@ ACE_Test_and_Set<ACE_LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
   this->set (1);
   return 0;
 }
+
+#endif /* ACE_TEST_AND_SET_C */

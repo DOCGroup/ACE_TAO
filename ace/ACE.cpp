@@ -443,25 +443,6 @@ ACE::crc32 (const char *buffer, ACE_UINT32 len)
 
 #undef COMPUTE
 
-#if defined (ACE_HAS_WCHAR)
-size_t
-ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
-{
-  ACE_TRACE ("ACE::strrepl");
-
-  size_t replaced = 0;
-
-  for (size_t i = 0; s[i] != '\0'; i++)
-    if (s[i] == search)
-      {
-        s[i] = replace;
-        replaced++;
-      }
-
-  return replaced;
-}
-#endif /* ACE_HAS_WCHAR */
-
 #if !defined (ACE_HAS_WINCE)
 ACE_TCHAR *
 ACE::strenvdup (const ACE_TCHAR *str)

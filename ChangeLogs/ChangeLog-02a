@@ -1,3 +1,26 @@
+Thu Oct 12 22:58:13 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/ACE_Lib_Find.h:
+        * ace/ACE_Lib_Find.cpp:
+        * ace/ACE.cpp:
+          Move the wchar version of strrepl and strsplit_r to the
+          ACE_Lib_Find class, the other versions where there already.
+
+        * ace/FILE_IO.h:
+        * ace/FILE_Connector.cpp:
+          Add missing #include in FILE_IO.h that is used in FILE_IO.i
+
+        * ace/Test_and_Set.h:
+        * ace/Test_and_Set.cpp:
+          Fixed the guards for the .cpp file. Add the #include for
+          platforms that requires template source visible, and add the
+          #pragma implementation for (really) old g++ versions.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Move Test_and_Set.cpp to the "Template Files" folder, and
+          disable compilation for it.
+
 Thu Oct 12 23:09:17 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/OS.i:
@@ -8,135 +31,135 @@ Thu Oct 12 23:09:17 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Oct 12 19:38:00 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
 
-	  Added new files introduced by Priyanka's footprint reduction
-	  effort.
+          Added new files introduced by Priyanka's footprint reduction
+          effort.
 
 Thu Oct 12 18:19:46 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Makefile: 
-	  Made the corresponding changes.
+        * ace/Makefile:
+          Made the corresponding changes.
 
-	* ace/System_Time.cpp: 
-	* ace/UPIPE_Connector.cpp : 
-	* ace/Timer_Queue_T.h : 
-	* ace/Task.cpp : 
-	* ace/POSIX_Asynch_IO.cpp: 
-	* ace/OS.h: 
-	* ace/Memory_Pool.cpp: 
-	* ace/MEM_SAP.h: 
-	* ace/MEM_Acceptor.cpp: 
-	* ace/Logging_Strategy.cpp:
-	* ace/FIFO.h: 
-	* ace/DLL.cpp: 
-	* ace/IO_SAP.h: 
-	* ace/Malloc_T.h : 
+        * ace/System_Time.cpp:
+        * ace/UPIPE_Connector.cpp :
+        * ace/Timer_Queue_T.h :
+        * ace/Task.cpp :
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/OS.h:
+        * ace/Memory_Pool.cpp:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Acceptor.cpp:
+        * ace/Logging_Strategy.cpp:
+        * ace/FIFO.h:
+        * ace/DLL.cpp:
+        * ace/IO_SAP.h:
+        * ace/Malloc_T.h :
           Cosmetic changes. Ex: Change the included header files to the
-	  new header files and similar changes.
-	
-	* ace/Naming_Context.h: 
-	* ace/Naming_Context.cpp:
-	* ace/Object_Manager.cpp: 
-	  
-	  Removed the dependency of Object_Manager on Naming_Context.
-	
-	* ace/Test_and_Set.h: 
-	* ace/Test_and_Set.cpp: 
-	* ace/Test_and_Set.i: 
+          new header files and similar changes.
 
-	  Moved the class Test_and_Set from Synch_T to here. This helped
-	  remove the dependency on Event_Handler.
+        * ace/Naming_Context.h:
+        * ace/Naming_Context.cpp:
+        * ace/Object_Manager.cpp:
 
-	* ace/Service_Templates.h: 
-	* ace/Service_Templates.cpp: 
-	  
-	  Moved the template instantiations from Service_Config.cpp and
-	  Service_Types.cpp since these templates were not needed by the
-	  respective files.
-	
-	* ace/Malloc_Allocator.h :
-	* ace/Malloc_Allocator.cpp: 
-	* ace/Malloc_Allocator.i : 
+          Removed the dependency of Object_Manager on Naming_Context.
 
-	* ace/PI_Malloc.h  : 
-	* ace/PI_Malloc.cpp: 
-	* ace/PI_Malloc.i  : 
-	
-	* ace/Malloc.h   : 
-	* ace/Malloc.cpp :
-	* ace/Malloc.i   : 
+        * ace/Test_and_Set.h:
+        * ace/Test_and_Set.cpp:
+        * ace/Test_and_Set.i:
 
-	  Moved the ACE_PI_Control_Block, ACE_New_Allocator and
-	  ACE_Static_Allocator_Base classes to new files: PI_Malloc and
-	  Malloc_Allocator. 
-	  
-	  This move helps in reduction in size of Malloc.i since the
-	  template instantiations which were included only for
-	  ACE_PI_Control_Block are now moved to the new file: PI_Malloc.
-	  In addition, is the effect of clear and minimized dependencies.
-	
-	* ace/ACE.h   : 
-	* ace/ACE.cpp : 
-	* ace/ACE.i   : 
+          Moved the class Test_and_Set from Synch_T to here. This helped
+          remove the dependency on Event_Handler.
 
-	  Moved several functions in ACE to new classes to minimize the
-	  dependencies on and by ACE. Each of the following files
-	  have the listed functions.
-	
-	* ace/Malloc_Instantiations.cpp: 
-	  Moved the template instantiations to this file.
+        * ace/Service_Templates.h:
+        * ace/Service_Templates.cpp:
 
-	* ace/ACE_Sock_Connect.h   : 
-	* ace/ACE_Sock_Connect.cpp : 
-	* ace/ACE_Sock_Connect.i   :
+          Moved the template instantiations from Service_Config.cpp and
+          Service_Types.cpp since these templates were not needed by the
+          respective files.
 
-	  Has the socket connection establishment function calls :
-	  bind_port, get_bcast_addr, get_ip_interfaces, count_interfaces
-	  and get_handle.
+        * ace/Malloc_Allocator.h :
+        * ace/Malloc_Allocator.cpp:
+        * ace/Malloc_Allocator.i :
 
-	  Helps remove the dependency on INET_Addr.
-	
-	* ace/ACE_Handle_Ops.h: 
-	* ace/ACE_Handle_Ops.cpp: 
-	* ace/ACE_Handle_Ops.i: 
-	  
-	  Has the <handle_timed_open> operation on handles.
-	  Helps remove the dependency of FILE_Connector, SPIPE_COnenctor,
-	  UPIPE_Conenctpr and DEV_Connector on ACE.
-	  
-	* ace/ACE_Lib_Find.h   : 
-	* ace/ACE_Lib_Find.cpp : 
-	* ace/ACE_Lib_Find.i   : 
+        * ace/PI_Malloc.h  :
+        * ace/PI_Malloc.cpp:
+        * ace/PI_Malloc.i  :
 
-	  Includes all the functions to search and open shared 
-	  libraries and realted functions :
-	  ldfind, ldopen, ldname, get_temp_dir, open_temp_file,
-	  strrepl, strsplit_r.
+        * ace/Malloc.h   :
+        * ace/Malloc.cpp :
+        * ace/Malloc.i   :
 
-	  Removes the dependency of DLL, Logging_Strategy and FILE_Addr on
-	  ACE. Effects few other classes too but doesnt remove the
-	  dependency on ACE for those classes.
-	
-	* ace/ACE_Flag_Manip.h  : 	
-	* ace/ACE_Flag_Manip.cpp: 
-	* ace/ACE_Flag_Manip.i  :
-	  
-	  The Flag Manipulation functions: 
-	  set_flags (), clr_flags () and get_flags ().
+          Moved the ACE_PI_Control_Block, ACE_New_Allocator and
+          ACE_Static_Allocator_Base classes to new files: PI_Malloc and
+          Malloc_Allocator.
 
-	  Removes the dependency of IO_SAP and IPC_SAP on ACE.
+          This move helps in reduction in size of Malloc.i since the
+          template instantiations which were included only for
+          ACE_PI_Control_Block are now moved to the new file: PI_Malloc.
+          In addition, is the effect of clear and minimized dependencies.
 
-	* ace/ACE_Init.h  : 
-	* ace/ACE_Init.cpp: 
-	* ace/ACE_Init.i  : 
+        * ace/ACE.h   :
+        * ace/ACE.cpp :
+        * ace/ACE.i   :
 
-	  The init () and fini () functions which are used
-	  for the initialization and shutting down of ACE.
+          Moved several functions in ACE to new classes to minimize the
+          dependencies on and by ACE. Each of the following files
+          have the listed functions.
 
-	  Removes dependency on Object_Manager.
-	
+        * ace/Malloc_Instantiations.cpp:
+          Moved the template instantiations to this file.
+
+        * ace/ACE_Sock_Connect.h   :
+        * ace/ACE_Sock_Connect.cpp :
+        * ace/ACE_Sock_Connect.i   :
+
+          Has the socket connection establishment function calls :
+          bind_port, get_bcast_addr, get_ip_interfaces, count_interfaces
+          and get_handle.
+
+          Helps remove the dependency on INET_Addr.
+
+        * ace/ACE_Handle_Ops.h:
+        * ace/ACE_Handle_Ops.cpp:
+        * ace/ACE_Handle_Ops.i:
+
+          Has the <handle_timed_open> operation on handles.
+          Helps remove the dependency of FILE_Connector, SPIPE_COnenctor,
+          UPIPE_Conenctpr and DEV_Connector on ACE.
+
+        * ace/ACE_Lib_Find.h   :
+        * ace/ACE_Lib_Find.cpp :
+        * ace/ACE_Lib_Find.i   :
+
+          Includes all the functions to search and open shared
+          libraries and realted functions :
+          ldfind, ldopen, ldname, get_temp_dir, open_temp_file,
+          strrepl, strsplit_r.
+
+          Removes the dependency of DLL, Logging_Strategy and FILE_Addr on
+          ACE. Effects few other classes too but doesnt remove the
+          dependency on ACE for those classes.
+
+        * ace/ACE_Flag_Manip.h  :
+        * ace/ACE_Flag_Manip.cpp:
+        * ace/ACE_Flag_Manip.i  :
+
+          The Flag Manipulation functions:
+          set_flags (), clr_flags () and get_flags ().
+
+          Removes the dependency of IO_SAP and IPC_SAP on ACE.
+
+        * ace/ACE_Init.h  :
+        * ace/ACE_Init.cpp:
+        * ace/ACE_Init.i  :
+
+          The init () and fini () functions which are used
+          for the initialization and shutting down of ACE.
+
+          Removes dependency on Object_Manager.
+
 Thu Oct 12 15:41:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/rules.bin.GNU:
