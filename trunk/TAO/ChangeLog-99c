@@ -1,3 +1,11 @@
+Wed Apr 14 15:33:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Added missing instantiation
+	  for TAO_PropertySet<POA_AVStreams::StreamEndPoint>.
+
+	* tao/Object_Adapter.cpp: Removed trailing semi-colon from #pragma
+	  instantiate.
+
 Wed Apr 14 16:43:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:

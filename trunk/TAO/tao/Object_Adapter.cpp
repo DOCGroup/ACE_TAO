@@ -818,7 +818,7 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 
 // Hash Map Manager related.
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, TAO_Incremental_Key_Generator>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, noop_key_generator>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, noop_key_generator>
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<value_type, key, value, hash_key, compare_keys>
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<value_type, key, value, hash_key, compare_keys>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>
@@ -834,7 +834,7 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate ACE_Map_Manager_Iterator_Adapter<value_type, key, value>
 #pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<value_type, key, value>
 #pragma instantiate ACE_Map_Manager_Adapter<key, value, TAO_Incremental_Key_Generator>
-#pragma instantiate ACE_Map_Manager_Adapter<key, value, noop_key_generator>;
+#pragma instantiate ACE_Map_Manager_Adapter<key, value, noop_key_generator>
 #pragma instantiate ACE_Map_Manager<key, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<key, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<key, value, ACE_Null_Mutex>
