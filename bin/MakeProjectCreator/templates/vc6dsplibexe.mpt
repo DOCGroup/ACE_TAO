@@ -8,7 +8,6 @@ type_is_binary        = 1
 common_defines        = WIN32 _CONSOLE
 subsystem             = console
 ssl_libs              = libeay32 ssleay32
-zzip_libs             = z zzip
 need_staticflags         = 1
 pdb                   = 1
 
@@ -60,4 +59,3 @@ MFC Debug {
 }
 
 conditional_include "vcpartialmacros"
-conditional_include "zziplib"
