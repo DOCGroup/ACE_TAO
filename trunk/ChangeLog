@@ -1,3 +1,8 @@
+Thu Apr 15 08:54:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_stat.inl:
+          Changed order of inline methods to fix warnings in Tru64 build.
+
 Thu Apr 15 08:37:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
