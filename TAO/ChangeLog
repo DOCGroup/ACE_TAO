@@ -1,3 +1,8 @@
+Tue Mar 08 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Collocated/Forward/OBV_Forward.mpc:
+          Removed taoclient as base project
+
 Tue Mar 08 09:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
