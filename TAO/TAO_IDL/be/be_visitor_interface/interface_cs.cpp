@@ -130,15 +130,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "if (collocated)" << be_idt_nl //idt = 2
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl // idt = 3
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "::" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
           << "_Factory_function_pointer (this);"
           << be_uidt << be_uidt_nl // idt = 1
           << "else" << be_idt_nl // idt = 2
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl  // idt = 3
-          << node->full_remote_proxy_broker_name () << "::"
+          << "::" << node->full_remote_proxy_broker_name () << "::"
           << "the" << node->remote_proxy_broker_name ()
-        // << "::" << node->client_enclosing_scope () <<  "the" << node->remote_proxy_broker_name ()
           << " ();" << be_uidt << be_uidt << be_nl << be_nl; // idt = 1
 
       // Now we setup the immediate parents.
@@ -148,7 +148,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
             {
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
-              *os << inherited->local_name ()<< "::setup_collocation" << " (collocated);" << be_nl;
+              if (inherited->is_nested ())
+                {
+                  be_decl* scope =
+                    be_scope::narrow_from_scope (inherited->defined_in ())->decl ();
+                  *os << "ACE_NESTED_CLASS ("
+                      << scope->name () << ","
+                      << inherited->local_name ()
+                      << ")";
+                }
+              else
+                *os << node->name ();
+              *os << "::setup_collocation" << " (collocated);" << be_nl;
             }
         }
 
