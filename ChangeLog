@@ -1,3 +1,12 @@
+Tue May 18 16:55:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_dirent.cpp (ACE_SCANDIR_COMPARATOR):
+	* ace/OS_NS_stdlib.h (ACE_COMPARE_FUNC): For Windows with Microsoft
+	  Visual C++ compiler, explicitly specify __cdecl calling convention
+	  so it remains correct even if built with a different default
+	  calling convention. Thanks to Ivan Murphy <Ivan.Murphy@siemens.com>
+	  for this fix.
+
 Tue May 18 11:26:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mpc: Replaced the "exename" lines for ACE_Test,

@@ -14,10 +14,19 @@ ACE_RCSID(ace, OS_NS_dirent, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
 
+// On Windows, we explicitly set this up as __cdecl so it's correct even
+// if building with another calling convention, such as __stdcall.
+#if defined (ACE_WIN32) && defined (_MSC_VER)
+extern "C"
+{
+  typedef int (__cdecl *ACE_SCANDIR_COMPARATOR) (const void *, const void *);
+}
+#else
 extern "C"
 {
   typedef int (*ACE_SCANDIR_COMPARATOR) (const void *, const void *);
 }
+#endif /* ACE_WIN32 && _MSC_VER */
 
 /*
    These definitions are missing on the original VC6 distribution.  The new
