@@ -7,7 +7,7 @@ project (DomainApplicationManager): taolib, ciao_deployment_stub, ciao_deploymen
   
   sharedname = DomainApplicationManager
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
-  libs += TAO_Valuetype CIAO_Server Config_Handlers
+  libs += TAO_Valuetype CIAO_Client CIAO_Server Config_Handlers
  
   Source_Files {
     DomainApplicationManager_Impl.cpp
