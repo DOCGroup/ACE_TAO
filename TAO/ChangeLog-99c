@@ -1,3 +1,8 @@
+Thu Feb 04 10:55:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Strategies_T.cpp (activate_svc_handler): Fixed unmatched
+	  ACE_TRACE message.
+
 Thu Feb  4 00:02:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orbconf.h: Made sure _WIN32 doesn't get redefined.  Thanks
