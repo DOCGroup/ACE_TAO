@@ -14,6 +14,21 @@
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
 
+void 
+ACE::unique_name (const void *object,
+		  LPTSTR name, 
+		  size_t length)
+{
+  // The process ID will provide uniqueness between processes on the
+  // same machine. The "this" pointer of the <object> will provide
+  // uniqueness between other "live" objects in the same process. The
+  // uniqueness of this name is therefore only valid for the life of
+  // <object>.
+  TCHAR temp_name[100];  
+  ACE_OS::sprintf (temp_name, "%d %d", ACE_OS::getpid (), object);
+  ACE_OS::strncpy (name, temp_name, length);
+}
+
 int
 ACE::terminate_process (pid_t pid)
 {
