@@ -14,14 +14,7 @@ $status = 0;
 $ifr_service_bin = "../../IFR_Service";
 
 # The location of the tao_ifr utility binary
-if ($^O eq "MSWin32") 
-{
-   $tao_ifr_bin = "../../../../bin";
-}
-else 
-{
-   $tao_ifr_bin = $ifr_service_bin;
-}
+$tao_ifr_bin = "../../../../bin";
 
 # The location of the tao_idl utility binary
 $tao_idl_bin = "../../../../bin";

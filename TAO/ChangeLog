@@ -1,3 +1,14 @@
+Wed Dec 15 11:37:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        
+          My previous checkin
+          
+          Tue Dec  7 16:35:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          actually fixed the path to tao_idl (which was also incorrect).
+          This fix changes the path to tao_ifr, as the above entry stated.
+
 Wed Dec 15 10:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/include/idl_uns_long.h:
