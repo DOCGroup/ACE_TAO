@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SSLIOP_Factory.h"
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
@@ -63,6 +61,12 @@ int
 TAO_SSLIOP_Protocol_Factory::init (int argc,
                                    char* argv[])
 {
+  char *certificate_path = 0;
+  char *private_key_path = 0;
+
+  int certificate_type = -1;
+  int private_key_type = -1;
+
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
@@ -96,28 +100,16 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               char *lasts = 0;
               const char *type_name =
                 ACE_OS::strtok_r (argv[curarg], ":", &lasts);
-              const char *path =
+              certificate_path =
                 ACE_OS::strtok_r (0, ":", &lasts);
-              int type = -1;
 
               if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
                 {
-                  type = SSL_FILETYPE_ASN1;
+                  certificate_type = SSL_FILETYPE_ASN1;
                 }
               else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
                 {
-                  type = SSL_FILETYPE_PEM;
-                }
-
-              if (ACE_SSL_Context::instance ()->certificate (path, type) != 0)
-                {
-                  if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) Unable to set ")
-                                ACE_TEXT ("SSL certificate in SSLIOP ")
-                                ACE_TEXT ("factory.\n")));
-
-                  return -1;
+                  certificate_type = SSL_FILETYPE_PEM;
                 }
             }
         }
@@ -131,29 +123,17 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               char *lasts = 0;
               const char *type_name =
                 ACE_OS::strtok_r (argv[curarg], ":", &lasts);
-              const char *path =
+              private_key_path =
                 ACE_OS::strtok_r (0, ":", &lasts);
-              int type = -1;
+
               if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
                 {
-                  type = SSL_FILETYPE_ASN1;
+                  private_key_type = SSL_FILETYPE_ASN1;
                 }
               else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
                 {
-                  type = SSL_FILETYPE_PEM;
+                  private_key_type = SSL_FILETYPE_PEM;
                 }
-
-              if (ACE_SSL_Context::instance ()->private_key (path, type) != 0)
-                {
-                  if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) Unable to set ")
-                                ACE_TEXT ("SSL private key in SSLIOP ")
-                                ACE_TEXT ("factory.\n")));
-
-                  return -1;
-                }
-
             }
         }
 
@@ -182,6 +162,40 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               ACE_SSL_Context::instance ()->default_verify_mode (mode);
             }
         }
+    }
+
+  // The certificate must be set before the private key since the
+  // ACE_SSL_Context attempts to check the private key for
+  // consistency.  That check requires the certificate to be available
+  // in the underlying SSL_CTX.
+  if (certificate_path != 0
+      && ACE_SSL_Context::instance ()->certificate (certificate_path,
+                                                    certificate_type) != 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Unable to set ")
+                    ACE_TEXT ("SSL certificate <%s> ")
+                    ACE_TEXT ("in SSLIOP factory.\n"),
+                    certificate_path));
+
+                  return -1;
+    }
+
+  if (private_key_path != 0
+      && ACE_SSL_Context::instance ()->private_key (private_key_path,
+                                                    private_key_type) != 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Unable to set ")
+                      ACE_TEXT ("SSL private key ")
+                      ACE_TEXT ("<%s> in SSLIOP factory.\n"),
+                      private_key_path));
+        }
+
+      return -1;
     }
 
   if (this->register_orb_initializer () != 0)
