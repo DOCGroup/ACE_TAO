@@ -371,28 +371,6 @@ int be_interface::gen_client_stubs (void)
     "CORBA::Environment &env)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
-#if 0
-  *cs << "CORBA::ORB_ptr orb = 0;" << nl;
-  *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl;
-  *cs << "char IOR [TAO_MAXBUFSIZE];" << nl;
-  *cs << "size_t iorsize; // size of the actual IOR string" << nl;
-  *cs << "char *buffer; // holds the IOR\n";
-  *cs << "#if defined (ACE_HAS_ALLOCA)" << nl;
-  *cs << "buffer = (char *) alloca (iorsize);\n";
-  *cs << "#else" << nl;
-  *cs << "if (iorsize < TAO_MAXBUFSIZE)" << nl;
-  *cs << "\tbuffer = IOR; // use stack allocated storage" << nl;
-  *cs << "else" << nl;
-  *cs << "\tACE_NEW (buffer, char[size]);\n";
-  *cs << "orb =  TAO_ORB_Core_instance ()->orb (); // access the ORB" << nl;
-  *cs << "if (!orb) return " << this->name () <<
-    "::_nil (); // return null obj" << nl << nl;
-  *cs << "ACE_OS::memset (IOR, '\\0', 256);" << nl;
-  // @@ XXXASG - What if we start supporting IIOP:1.1
-  *cs << "ACE_OS::sprintf (IOR, \"iiop:1.0//%s:%d/%s\", host, port, key);" <<
-    nl;
-  *cs << "objref = orb->string_to_object (IOR, env);" << nl;
-#endif
   *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl;
   *cs << "IIOP_Object *data = new IIOP_Object (host, port, key);" << nl;
   *cs << "if (!data) return " << this->name () << "::_nil ();" << nl;
@@ -409,8 +387,8 @@ int be_interface::gen_client_stubs (void)
   *cs << "if (CORBA::is_nil (objref))" << nl;
   *cs << "\treturn " << this->name () << "::_nil ();" << nl;
   *cs << "else // narrow it" << nl;
-  *cs << "\treturn " << this->name () << "::_narrow (objref, env);" << nl;
-  cs->decr_indent (0);
+  *cs << "\treturn " << this->name () << "::_narrow (objref, env);\n";
+  cs->decr_indent ();
   *cs << "}\n\n";
 
   // generate code for the elements of the interface
@@ -635,6 +613,9 @@ int be_interface::gen_server_skeletons (void)
     "CORBA::Object_ptr obj, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
+  // the obj parameter is not used in this case. Hence we must use the
+  // ACE_UNUSED_ARG macro
+  *ss << "ACE_UNUSED_ARG (obj); // argument not used" << nl;
   *ss << "const CORBA::String type_id = \"" << this->repoID () <<
     "\"; // repository ID" << nl;
   *ss << "CORBA::NVList_ptr nvlist;" << nl;
