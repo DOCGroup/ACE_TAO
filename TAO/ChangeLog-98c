@@ -33,6 +33,8 @@ Thu Aug 20 11:41:03 1998  David L. Levine  <levine@cs.wustl.edu>
           to be done manually.  And, added the .idl and generated
           files to the realclean target.
 
+        * orbsvcs/tests/Simulator/Makefile: added.
+
 Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
