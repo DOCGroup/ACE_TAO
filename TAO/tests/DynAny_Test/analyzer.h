@@ -32,8 +32,8 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  int level_;
   DynamicAny::DynAnyFactory_var dynany_factory_;
+  int level_;
   int debug_;
 };
 

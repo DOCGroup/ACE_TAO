@@ -199,7 +199,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
          CORBA::Any_var any = da->get_any();
 
          dynany = dynany_factory_->create_dyn_any(any.in() ACE_ENV_ARG_PARAMETER);
-         ACE_CHECK
+         ACE_CHECK;
 
          if (!CORBA::is_nil (dynany.in ()))
            {
