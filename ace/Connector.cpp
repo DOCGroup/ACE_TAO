@@ -805,6 +805,24 @@ ACE_Strategy_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_hand
   return this->concurrency_strategy_->activate_svc_handler (svc_handler, this);
 }
 
+template <class SH, PR_CO_1> ACE_Creation_Strategy<SVC_HANDLER> *
+ACE_Strategy_Connector<SH, PR_CO_2>::creation_strategy (void) const
+{
+  return this->creation_strategy_;
+}
+
+template <class SH, PR_CO_1> ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *
+ACE_Strategy_Connector<SH, PR_CO_2>::connect_strategy (void) const
+{
+  return this->connect_strategy_;
+}
+
+template <class SH, PR_CO_1> ACE_Concurrency_Strategy<SVC_HANDLER> *
+ACE_Strategy_Connector<SH, PR_CO_2>::concurrency_strategy (void) const
+{
+  return this->concurrency_strategy_;
+}
+
 #undef SH
 #undef PR_CO_1
 #undef PR_CO_2

@@ -1,3 +1,10 @@
+Tue Sep 29 16:13:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T: 
+	* ace/Connector: 
+
+	  Added accessors for the strategy.
+	
 Tue Sep 29 13:09:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp:	

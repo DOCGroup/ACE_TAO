@@ -12,6 +12,8 @@ $iorfile = "ior";
 $oneway = "";
 $iterations = 100;
 
+$extra_args = "";
+
 # Parse the arguments
 for ($i = 0; $i <= $#ARGV; $i++)
 {
@@ -44,7 +46,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       $i++;
       last SWITCH;
     }
-    print "run_test: Unknown Option: ".$ARGV[$i]."\n";
+    $extra_args .= " " . $ARGV[$i];
   }
 }
 
@@ -52,15 +54,15 @@ $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
 $iorfile_3 = $iorfile."_3";
 
-$SV = Process::Create ("server$Process::EXE_EXT", "-f $iorfile -ORBobjrefstyle URL");
+$SV = Process::Create ("server$Process::EXE_EXT", "-f $iorfile $extra_args");
 
 ACE::waitforfile ($iorfile_1);
 ACE::waitforfile ($iorfile_2);
 ACE::waitforfile ($iorfile_3);
 
-$status  = system ("../Generic_Servant/client$Process::EXE_EXT -ORBobjrefstyle URL $oneway -i $iterations -f $iorfile_1");
-$status  = system ("../Generic_Servant/client$Process::EXE_EXT -ORBobjrefstyle URL $oneway -i $iterations -f $iorfile_2");
-$status  = system ("../Generic_Servant/client$Process::EXE_EXT -ORBobjrefstyle URL $oneway -i $iterations -f $iorfile_3 -x");
+$status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $oneway -i $iterations -f $iorfile_1");
+$status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $oneway -i $iterations -f $iorfile_2");
+$status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $oneway -i $iterations -f $iorfile_3 -x");
 
 unlink $iorfile_1;
 unlink $iorfile_2;
