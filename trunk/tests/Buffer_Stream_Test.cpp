@@ -161,13 +161,6 @@ Consumer::svc (void)
 
   for (;;)
     {
-#if defined (__Lynx__)
-      // ACE_OS::pthread_cond_timedwait () doesn't work on LynxOS.  Until
-      // we figure that out, this thr_yield () pertrubs the test enough
-      // so that it is never called.
-      ACE_OS::thr_yield ();
-#endif /* __Lynx__ */
-
       this->timeout_.sec (ACE_OS::time (0) + 4); // Wait for upto 4 seconds
 
       result = this->getq (mb, &this->timeout_);
