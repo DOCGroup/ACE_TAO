@@ -1,3 +1,13 @@
+Sat Mar 19 13:17:37 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+
+          Made changes to reflect changes made to the infrastructure
+          to provide the capability in the NodeApplication
+          to support multiple containers.
+
 Sat Mar 19 13:13:13 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
