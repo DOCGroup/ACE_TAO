@@ -1,3 +1,10 @@
+Fri May 18 06:11:49 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-tru64.h: Changed 0x40E to 0x40D in the check for
+	  DIGITAL_UNIX to disable the use of systime.h.  Thanks to
+	  Steve Vranyes <steve.vranyes@veritas.com> for reporting this
+	  and for David Levine for suggesting the fix.
+
 Thu May 17 23:36:18 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:

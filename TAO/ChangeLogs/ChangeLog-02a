@@ -1,3 +1,11 @@
+Fri May 18 06:53:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage,
+  	* orbsvcs/tests/AVStreams/Simple_Three_Stage,
+  	* orbsvcs/tests/AVStreams/Component_Switching:
+	  Added makefiles for BCB.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+	  for contributing this.
+
 Thu May 17 23:37:04 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
@@ -324,7 +332,7 @@ Thu May 17 07:34:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Leader_Follower.cpp: Fixed a fuzz error.
 
-Thu May 17 13:42:12 2001  Johnny Willemsen
+Thu May 17 13:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor
         * tao/PortableServer/Makefile.bor
