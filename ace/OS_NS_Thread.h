@@ -1677,7 +1677,7 @@ namespace ACE_OS {
                    int priority,
                    int policy = -1);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int thr_setprio (const ACE_Sched_Priority prio);
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
