@@ -2,20 +2,6 @@
 //
 // $Id$
 
-//
-//   This file was used to generate the code in
-//   IIOP*.* The command used to generate code
-//   is:
-//
-//     tao_idl \
-//        -Gp -Gd -Ge 1 -GT -GA -Sc
-//          -Wb,export_macro=HTIOP_Export \
-//          -Wb,export_include="orbsvcs/HTIOP/HTIOP_Export.h" \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          HTIOP.idl
-//
-
 #ifndef HTIOP_IDL
 #define HTIOP_IDL
 
