@@ -1,3 +1,10 @@
+Wed Mar 30 12:01:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Fixed unused variable warnings.
+
 Wed Mar 30 19:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.{h,cpp,i}:

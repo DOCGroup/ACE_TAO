@@ -55,8 +55,13 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
     << "\"" << node->original_local_name () << "\"," << be_nl
     << "&";
 
-  int const success = this->gen_base_typecode_name (base);
-  ACE_ASSERT (success == 0);
+  if (this->gen_base_typecode_name (base) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                       ACE_TEXT ("visit_sequence - problem generating base ")
+                       ACE_TEXT ("TypeCode name.\n")),
+                       -1);
+
 
   os << ");" << be_uidt_nl
      << be_uidt_nl;
