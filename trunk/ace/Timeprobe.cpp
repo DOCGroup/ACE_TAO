@@ -16,13 +16,13 @@
 template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
                                         ACE_Allocator *alloc)
-  : allocator_ (alloc != 0 ? alloc : ACE_Allocator::instance ()),
-    timeprobes_ (0),
+  : timeprobes_ (0),
+    allocator_ (alloc != 0 ? alloc : ACE_Allocator::instance ()),
     lock_ (),
     max_size_ (size),
     current_size_ (0)
 {
-  void *space = this->allocator_->malloc ((sizeof timeprobe_t) * this->max_size_);
+  void *space = this->allocator_->malloc ((sizeof(timeprobe_t)) * this->max_size_);
   this->timeprobes_ = new ((timeprobe_t *) space) timeprobe_t[this->max_size_];
 }
 
