@@ -1,3 +1,9 @@
+Thu May 13 15:28:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_MUTEXATTR_PSHARED, Cygwin export this function but
+          it doesn't work at this moment.
+
 Thu May 13 07:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cache_Map_Manager_T.{h,cpp,i}:
