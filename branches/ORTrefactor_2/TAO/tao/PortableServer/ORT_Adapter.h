@@ -90,10 +90,10 @@ namespace TAO
 
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
-   *
-   * Methods required by the
-   * PortableInterceptor::ObjectReferenceFactory ValueType.
-   */
+     *
+     * Methods required by the
+     * PortableInterceptor::ObjectReferenceFactory ValueType.
+     */
     //@{
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
