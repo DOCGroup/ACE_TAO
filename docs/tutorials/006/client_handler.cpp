@@ -103,7 +103,7 @@ Client_Handler::open (void *void_acceptor)
     use the reactor which means that handle_input() and it's fellows
     are not invoked.  */
   if (acceptor->thread_per_connection ())
-    return this->activate ();
+    return this->activate (THR_DETACHED);
 
   // ************************************************************************
   // From here on, we're doing the traditional reactor thing.  If
