@@ -74,6 +74,7 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
                             ),
                           TAO_INVOKE_EXCEPTION);
 
+          any.replace (unk);
           ACE_THROW_RETURN (CORBA::UnknownUserException (any),
                             TAO_INVOKE_EXCEPTION);
         }
