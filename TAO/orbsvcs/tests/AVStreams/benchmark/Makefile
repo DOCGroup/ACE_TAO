@@ -9,7 +9,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     = -lAVsvc -lorbsvcs -lTAO
+LDLIBS     = -lAVsvc -lTAO_CosNaming -lTAO
 
 SERVER_OBJS = server.o child.o
 CLIENT_OBJS = client.o

@@ -14,7 +14,7 @@ endif
 
 SRC = Concurrency_Service.cpp
 
-LDLIBS  = -lorbsvcs -lTAO
+LDLIBS  = -lTAO_CosNaming -lTAO
 
 BIN2 = Concurrency_Service
 

@@ -15,7 +15,7 @@ FILES = vcr
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-LDLIBS 	= -lorbsvcs -lTAO
+LDLIBS 	= -lTAO_CosNaming -lTAO
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 

@@ -1,3 +1,66 @@
+Thu Mar 23 11:06:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/orbsvcs/Makefile.av:
+          Generate separate libraries for each ORB service.  The split is
+          along the same lines that the MSVC split was made.  This
+          eliminates the need to do subsetting for orbsvcs, but you can
+          still select a subset of the libraries that are compiled using
+          TAO_ORBSVCS
+
+        * */Makefile:
+          Changed all the link rules that were using -lorbsvcs to use the
+          right libraries instead.
+          Updated all the dependencies.
+
+        * rules.tao.GNU:
+          Changed the rules to generate files from IDL. The previous
+          version boiled down to:
+
+          foo{C,S,S_T}.{h,i,cpp}: foo.idl
+
+          that is actually 9 rules rolled into one, not a rule with
+          multiple outputs. Thus it can result in multiple parallel
+          invocations of the IDL compiler to generate some of the files.
+          The new rule is:
+
+          fooC.h: foo.idl
+             # Invoke the IDL compiler.
+
+          fooC.{i,cpp} foo{S,S_T}.{h,i,cpp}: fooC.h
+             # Do dummy thing (/bin/true)
+
+          Now things work right, the IDL compiler is invoked only once (to
+          generate fooC.h), all the other files are satisfied by
+          invocations to the dummy rule.  This problem was present before
+        the split of the orbsvcs library, it just became more apparent
+        after the split.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+          Upgraded to use the CDR insertion and extraction operators
+          instead of interpretive marshaling.  It should have been fixed
+          in the non_interpretive branch, but AV is not compiled by
+          default!
+          Also fixed several problems with the use of >>= operators with
+          Anys.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/tests/Event/Performance/Inversion.cpp:
+          Fixed warnings due to ambigous conversion from T_var to T_ptr.
+
 Thu Mar 23 08:45:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:

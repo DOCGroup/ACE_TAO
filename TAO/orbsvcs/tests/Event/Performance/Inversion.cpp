@@ -47,7 +47,7 @@ EC_Inversion::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
   qos0.insert_type (ACE_ES_EVENT_UNDEFINED, 0);
   qos0.insert_type (ACE_ES_EVENT_UNDEFINED + 1, 0);
 
-  this->consumers_[0]->connect (consumer_admin,
+  this->consumers_[0]->connect (consumer_admin.in (),
                                 qos0.get_ConsumerQOS (),
                                 ACE_ES_EVENT_UNDEFINED + 1,
                                 ACE_TRY_ENV);
@@ -57,7 +57,7 @@ EC_Inversion::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
   qos1.insert_type (ACE_ES_EVENT_UNDEFINED + 2, 0);
   qos1.insert_type (ACE_ES_EVENT_UNDEFINED + 3, 0);
 
-  this->consumers_[1]->connect (consumer_admin,
+  this->consumers_[1]->connect (consumer_admin.in (),
                                 qos1.get_ConsumerQOS (),
                                 ACE_ES_EVENT_UNDEFINED + 3,
                                 ACE_TRY_ENV);
@@ -76,7 +76,7 @@ EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
   qos0.insert (1, ACE_ES_EVENT_UNDEFINED, 0, 1);
   qos0.insert (1, ACE_ES_EVENT_UNDEFINED + 1, 0, 1);
 
-  this->suppliers_[0]->connect (supplier_admin,
+  this->suppliers_[0]->connect (supplier_admin.in (),
                                 qos0.get_SupplierQOS (),
                                 ACE_ES_EVENT_UNDEFINED + 1,
                                 ACE_TRY_ENV);
@@ -87,7 +87,7 @@ EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
       qos1.insert (1, ACE_ES_EVENT_UNDEFINED + 2, 0, 1);
       qos1.insert (1, ACE_ES_EVENT_UNDEFINED + 3, 0, 1);
 
-      this->suppliers_[j]->connect (supplier_admin,
+      this->suppliers_[j]->connect (supplier_admin.in (),
                                     qos1.get_SupplierQOS (),
                                     ACE_ES_EVENT_UNDEFINED + 3,
                                     ACE_TRY_ENV);

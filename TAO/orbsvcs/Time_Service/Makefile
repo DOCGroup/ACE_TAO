@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO_CosTime -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 PROG_SRCS = \
         Time_Service_Server.cpp \
@@ -78,9 +78,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -364,7 +361,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
@@ -388,7 +385,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -404,12 +400,12 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i
 
 .obj/Time_Service_Clerk.o .obj/Time_Service_Clerk.so .shobj/Time_Service_Clerk.o .shobj/Time_Service_Clerk.so: Time_Service_Clerk.cpp Clerk_i.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -417,9 +413,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -703,7 +696,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
@@ -727,7 +720,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -743,13 +735,13 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h
 
 .obj/Clerk_i.o .obj/Clerk_i.so .shobj/Clerk_i.o .shobj/Clerk_i.so: Clerk_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -757,9 +749,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -821,8 +810,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Clerk_i.h \
- $(TAO_ROOT)/tao/TAO.h \
+ Clerk_i.h $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1046,7 +1034,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
@@ -1070,7 +1058,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -1086,13 +1073,13 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h
 
 .obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -1100,9 +1087,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1115,8 +1099,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i \
- Server_i.h \
+ $(ACE_ROOT)/ace/Get_Opt.i Server_i.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1387,7 +1370,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
@@ -1411,7 +1394,6 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -1427,11 +1409,11 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
