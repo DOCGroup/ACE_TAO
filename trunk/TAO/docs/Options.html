@@ -100,6 +100,9 @@ If not specified, the system-dependent default is used.</TD></TR>
 <TD><CODE>-ORBnameserviceior</CODE> <EM>ior</EM></TD>
 <TD>Specifies the IOR for the Naming Service.</TD></TR>
 <TR>
+<TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
+<TD>Specifies the use of collocation object optimization.  Default if yes.</TD></TR>
+<TR>
 <TD><CODE>-ORBpreconnect</CODE> <EM>host</EM><STRONG>:</STRONG><EM>port</em>[<STRONG>,</STRONG><EM>host</EM><STRONG>:</STRONG><EM>port</em>...]</TD>
 <TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to each listed
 <em>host</em>:<em>port</em> combination.  If a connection cannot
@@ -134,12 +137,12 @@ properly establish multiple connections to that endpoint.</TD></TR>
 <TH WIDTH="57%">Description</TH></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBresources</CODE> <EM>which</EM></TD>
-<TD>Specify whether each thread uses a global 
+<TD>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBpoa</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBpoa"></a>Specify whether each thread uses a global 
+<TD><a name="-ORBpoa"></a>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the Root POA.</TD></TR>
 </TABLE>
