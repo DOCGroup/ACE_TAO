@@ -82,7 +82,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/streams.h"
 
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID (driver,
            drv_preproc,

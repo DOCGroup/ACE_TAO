@@ -39,6 +39,8 @@
 
 #include "ace/Process.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID (be,
            be_interface,
