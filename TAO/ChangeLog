@@ -1,9 +1,15 @@
+Sun Jun 20 09:10:37 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+  	* docs/index.html: Added libraries.html.
+    
+	* docs/libraries.html: Updated the documentation to be more consistent.
+
 Sun Jun 20 00:34:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* docs/LocalObject.html:
 	* docs/Tags.html:
 
-	  Updated deocumentation.
+	  Updated documentation.
 	
 	* docs/libraries.html:
 
