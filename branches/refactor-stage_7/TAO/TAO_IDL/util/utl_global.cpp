@@ -105,6 +105,7 @@ IDL_GlobalData::dsf::dsf (void)
     pseudo_seq_seen_ (0),
     string_seq_seen_ (0),
     wstring_seq_seen_ (0),
+    octet_seq_seen_ (0),
 
     basic_arg_seen_ (0),
     bd_string_arg_seen_ (0),
@@ -241,6 +242,7 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 25);
   ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 26);
   ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 27);
+  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 28);
 
   ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 32);
   ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 33);

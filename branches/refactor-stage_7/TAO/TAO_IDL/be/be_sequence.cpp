@@ -121,6 +121,31 @@ be_sequence::be_sequence (AST_Expression *v,
       default:
         break;
     }
+
+  AST_Decl::NodeType nt = t->node_type ();
+  AST_Typedef *td = 0;
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      td = AST_Typedef::narrow_from_decl (t);
+      nt = td->primitive_base_type ()->node_type ();
+    }
+
+  if (nt == AST_Decl::NT_pre_defined)
+    {
+      AST_PredefinedType *pdt = 
+        AST_PredefinedType::narrow_from_decl (td ? td : t);
+
+      switch (pdt->pt ())
+        {
+          case AST_PredefinedType::PT_octet:
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.octet_seq_seen_);
+            break;
+          default:
+            break;
+        }
+    }
 }
 
 // Helper to create_name.

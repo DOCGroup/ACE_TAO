@@ -157,7 +157,36 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // Generate the array traits specialization definitions.
+  // Generate the array traits specialization definitions,
+  // guarded by #ifdef on unaliased array element type and length.
+
+  ACE_CString unique;
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      unique = td->primitive_base_type ()->flat_name ();
+    }
+  else
+    {
+      unique = bt->flat_name ();
+    }
+
+  char buf[NAMEBUFSIZE];
+
+  for (unsigned long i = 0; i < node->n_dims (); ++i)
+    {
+      ACE_OS::memset (buf,
+                      '\0',
+                      NAMEBUFSIZE);
+      ACE_OS::sprintf (buf,
+                       "_%d",
+                       node->dims ()[i]->ev ()->u.ulval);
+      unique += buf;
+    }
+
+  unique += "_traits";
+  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
@@ -204,6 +233,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";
+
+  os->gen_endif ();
 
   node->cli_inline_gen (1);
   return 0;

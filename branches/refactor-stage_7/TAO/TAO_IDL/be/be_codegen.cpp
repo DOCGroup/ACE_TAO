@@ -1371,6 +1371,14 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Object_T.h");
     }
 
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.octet_seq_seen_))
+    {
+      // Include this for _narrow().
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/ORB_Core.h");
+    }
+
   if (be_global->gen_amh_classes () == I_TRUE)
     {
       // Necessary for the AIX compiler.
