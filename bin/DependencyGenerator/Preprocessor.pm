@@ -20,15 +20,13 @@ use FileHandle;
 sub new {
   my($class)   = shift;
   my($macros)  = shift;
-  my($options) = shift;
   my($ipaths)  = shift;
-  my($self)    = bless {'macros'  => $macros,
-                        'options' => $options,
-                        'ipaths'  => $ipaths,
-                        'files'   => {},
-                        'recurse' => 0,
-                       }, $class;
-  return $self;
+  return bless {'macros'  => $macros,
+                'ipaths'  => $ipaths,
+                'files'   => {},
+                'ifound'  => {},
+                'recurse' => 0,
+               }, $class;
 }
 
 
@@ -36,27 +34,35 @@ sub locateFile {
   my($self) = shift;
   my($file) = shift;
 
-  foreach my $dir ('.', @{$self->{'ipaths'}}) {
-    if (-r "$dir/$file") {
-      return "$dir/$file";
+  if (defined $self->{'ifound'}->{$file}) {
+    return $self->{'ifound'}->{$file};
+  }
+  else {
+    foreach my $dir ('.', @{$self->{'ipaths'}}) {
+      if (-r "$dir/$file") {
+        $self->{'ifound'}->{$file} = "$dir/$file";
+        return $self->{'ifound'}->{$file};
+      }
     }
   }
-
   return undef;
 }
 
 
 sub getFiles {
-  my($self)   = shift;
-  my($file)   = shift;
-  my($ifiles) = $self->{'ifiles'};
+  my($self)   = $_[0];
+  my(@files)  = ($_[1]);
+  my(%ifiles) = ();
 
-  foreach my $inc (@{$self->{'files'}->{$file}}) {
-    if (!defined $$ifiles{$inc}) {
-      $$ifiles{$inc} = 1;
-      $self->getFiles($inc);
+  for(my $i = 0; $i <= $#files; ++$i) {
+    foreach my $inc (@{$self->{'files'}->{$files[$i]}}) {
+      if (!defined $ifiles{$inc}) {
+        $ifiles{$inc} = 1;
+        push(@files, $inc);
+      }
     }
   }
+  $self->{'ifiles'} = \%ifiles;
 }
 
 
@@ -87,22 +93,22 @@ sub process {
         $_ =~ s/\/\/.*//;
         $_ =~ s/\/\*.*\*\///;
 
-        if (/#\s*if\s+0/) {
+        if (/#\s*endif/) {
+          --$ifcount;
+          if (defined $zero[0] && $ifcount == $zero[$#zero]) {
+            pop(@zero);
+          }
+        }
+        elsif (/#\s*if\s+0/) {
           push(@zero, $ifcount);
           ++$ifcount;
         }
         elsif (/#\s*if/) {
           ++$ifcount;
         }
-        elsif (/#\s*endif/) {
-          --$ifcount;
-          if (defined $zero[0] && $ifcount == $zero[$#zero]) {
-            pop(@zero);
-          }
-        }
         elsif (!defined $zero[0] &&
-               /#\s*include\s+(\/\*\*\/\s*)?[<"]([^">]+)[">]/) {
-          my($inc) = $self->locateFile($2);
+               /#\s*include\s+[<"]([^">]+)[">]/) {
+          my($inc) = $self->locateFile($1);
           if (defined $inc) {
             $inc =~ s/\\/\//g;
             if (!$noinline ||
@@ -126,7 +132,6 @@ sub process {
   ## If the last file to be processed isn't accessable then
   ## we still need to return the array reference of includes.
   if (!$noincs) {
-    $self->{'ifiles'} = {};
     $self->getFiles($file);
     my(@incs) = keys %{$self->{'ifiles'}};
     return \@incs;

@@ -1,7 +1,25 @@
+Tue Dec  9 13:00:30 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/DependencyWriter.pm:
+        * bin/DependencyGenerator/DependencyWriterFactory.pm:
+        * bin/DependencyGenerator/GNUDependencyWriter.pm:
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+        * bin/DependencyGenerator/NMakeDependencyWriter.pm:
+        * bin/DependencyGenerator/NMakeObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGeneratorFactory.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+        * bin/depgen.pl:
+
+          Performance optimizations that decrease dependency generation
+          times by up to 10%.
+
 Tue Dec  9 17:49:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
-	  Added #include of ace/OS_NS_strings.h to get ACE_OS::strcasecmp
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+          Added #include of ace/OS_NS_strings.h to get ACE_OS::strcasecmp
 
 Tue Dec  9 16:33:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

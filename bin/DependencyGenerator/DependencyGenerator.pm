@@ -22,33 +22,22 @@ use DependencyWriterFactory;
 sub new {
   my($class)    = shift;
   my($macros)   = shift;
-  my($options)  = shift;
   my($ipaths)   = shift;
   my($replace)  = shift;
   my($type)     = shift;
   my($noinline) = shift;
-  my($self)     = bless {'pre'      => new Preprocessor($macros,
-                                                        $options, $ipaths),
+  my($self)     = bless {'pre'      => new Preprocessor($macros, $ipaths),
                          'replace'  => $replace,
                          'dwrite'   => DependencyWriterFactory::create($type),
                          'noinline' => $noinline,
-                         'cwd'      => undef,
                         }, $class;
 
   ## Set the current working directory, but
   ## escape regular expression special characters
-  $self->{'cwd'} = $self->escape_regex_special(Cwd::getcwd()) . '/';
+  $self->{'cwd'} = Cwd::getcwd() . '/';
+  $self->{'cwd'} =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
 
   return $self;
-}
-
-
-sub escape_regex_special {
-  my($self) = shift;
-  my($name) = shift;
-
-  $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
-  return $name;
 }
 
 
