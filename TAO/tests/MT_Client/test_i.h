@@ -34,9 +34,6 @@ public:
   void test_method (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long get_number (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
