@@ -1,3 +1,8 @@
+Fri Dec 29 12:05:02 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional/test_i.cpp: Changed the wrong usage of
+	  ACE_ASSERT statement. Thanks to Darrel for pointing this out.  
+
 Fri Dec 29 09:10:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Portable_Interceptors/IORInterceptor/client.dsp:
