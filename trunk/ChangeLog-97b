@@ -1,3 +1,15 @@
+Fri Sep 12 13:46:04 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.[hi],Log_Msg.h,config-lynxos.h,
+	  include/makeinclude/platform_lynxos.GNU: added LynxOS port,
+ 	  provided by Dave Mayerhoefer <davem@lynx.com>.  Note how few
+ 	  files were affected.  What's even more amazing is the very small
+ 	  number, 8, of very minor code changes to OS.[hi] and Log_Msg.h.
+  	  This is a tribute to the maturity of
+	  <a href="http://www.lynx.com>LynxOS</a>, a POSIX-conforming,
+	  multiprocess, and multithreaded real-time operating system.
+	  And to the maturity of ACE.
+
 Fri Sep 12 12:53:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-osf1-4.0.h: added
