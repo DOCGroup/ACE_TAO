@@ -1,3 +1,10 @@
+Tue Dec 22 13:43:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array): We
+	  should use TAO_NAMESPACE_STORAGE_CLASS to decorate the array
+	  memory management functions only when the array is directly
+	  within a module.  Otherwise, "static" should always be used.
+
 Tue Dec 22 09:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/chat/README: updated VxWorks information.
