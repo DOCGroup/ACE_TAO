@@ -11,7 +11,7 @@ public RTScheduling::Scheduler,
 {
  public:
 
-  TAO_Scheduler (CORBA::ORB_ptr orb);
+  TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   ~TAO_Scheduler (void);
 
