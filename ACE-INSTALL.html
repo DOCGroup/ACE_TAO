@@ -2464,7 +2464,7 @@ libraries.
   <h4> Using GUI Reactor Library </h4>
     MPC-based application projects depending on specific [Gui]Reactor may inherit settings from
     <code>ace_[gui]reactor.mpb</code> base projects. These base projects ensure that all necessary libraries
-    are linked to the aplpication, specifies features necessary to build a project and moreover impose a
+    are linked to the aplpication, specifies feature necessary to build a project and moreover impose a
     build order consistant with ACE. For example, the application project using <code>XtReactor</code> should be
     derived from <code>ace_xtreactor.mpb</code>.
   <h4>Notes on specific GUI Reactors</h4>
@@ -2473,20 +2473,24 @@ libraries.
         The build is controlled by <code>ace_glreactor</code> feature.
         To build this reactor one has to provide feature <code>qt</code> (Qt library). Moreover,
         it is assumed that <code>Qt</code> was installed in a standard way
-        and <code>QTDIR</code> points to <code>Qt</code> installation folder.
+        and <code>QTDIR</code> points to <code>Qt</code> installation folder. To build TAO
+        support for <code>Qt</code> one should use <code>tao_qtreactor</code> feature.
       <li> <code>XtReactor</code></li>
         The build is controlled by <code>ace_xtreactor</code> feature.
         To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries) and
         <code>xt</code> (X11 Toolkit). Moreover, some examples and tests related with <code>XtReactor</code>
         needs additionall features namely either <code>motif</code> (Motif/Lesstif libraries) or
-        <code>athena</code> (Athena widgets).
+        <code>athena</code> (Athena widgets). To build TAO
+        support for <code>xt</code> one should use <code>tao_xtreactor</code> feature.
       <li> <code>TkReactor</code></li>
         The is controlled by <code>ace_tkreactor</code> feature. To build this reactor one has to provide
-        <code>tk</code> (Tcl libraries) feature.
+        <code>tk</code> (Tcl libraries) feature. To build TAO
+        support for <code>Tk</code> one should use <code>tao_tkreactor</code> feature.
       <li> <code>FlReactor</code></li>
         The  build is controlled by <code>ace_flreactor</code> feature.
         To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries),
-        <code>gl</code> (OpenGl) and <code>fl</code> (Fast Light Toolkit).
+        <code>gl</code> (OpenGl) and <code>fl</code> (Fast Light Toolkit). To build TAO
+        support for <code>Fl</code> one should use <code>tao_flreactor</code> feature.
     </ul>
 
 <hr><p>
@@ -2962,7 +2966,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Sat Dec 11 17:34:25 CET 2004
+Last modified: Sun Dec 12 02:56:14 CET 2004
 <!-- hhmts end -->
 
 
