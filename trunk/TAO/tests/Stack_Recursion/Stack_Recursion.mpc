@@ -11,7 +11,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

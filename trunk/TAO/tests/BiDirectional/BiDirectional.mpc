@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
+project(*Server): taoserver, minimum_corba, bidir_giop {
   Source_Files {
     test_i.cpp
     server.cpp
