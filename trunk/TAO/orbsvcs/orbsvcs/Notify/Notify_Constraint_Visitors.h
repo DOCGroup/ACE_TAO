@@ -40,7 +40,7 @@ class TAO_Notify_Export TAO_Notify_Constraint_Evaluator : public TAO_Constraint_
 
  private:
   ACE_Hash_Map_Manager <ACE_CString, const CORBA::Any*,
-    ACE_SYNCH_MUTEX> property_lookup_;
+    TAO_SYNCH_MUTEX> property_lookup_;
   // Used to lookup property name and values
 };
 

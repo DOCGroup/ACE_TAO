@@ -51,7 +51,7 @@ private:
   ACE_Allocator *allocator_;
   // An per-task allocator
 
-  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
+  ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> > data_block_;
   // Helper data structure to minimize memory allocations...
 };
 

@@ -121,7 +121,7 @@ main (int argc, char *argv [])
 
       // Now create the history
       ACE_Sample_History history (iterations);
-      ACE_SYNCH_MUTEX history_mutex;
+      TAO_SYNCH_MUTEX history_mutex;
 
       // The consumer
       EC_Latency_Consumer consumer (&history,
@@ -289,7 +289,7 @@ parse_args (int argc, char *argv[])
 // ****************************************************************
 
 EC_Latency_Consumer::EC_Latency_Consumer (ACE_Sample_History *history,
-                                          ACE_SYNCH_MUTEX *mutex,
+                                          TAO_SYNCH_MUTEX *mutex,
                                           int message_count)
   : history_ (history)
   , mutex_ (mutex)
@@ -300,7 +300,7 @@ EC_Latency_Consumer::EC_Latency_Consumer (ACE_Sample_History *history,
 int
 EC_Latency_Consumer::done (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, *this->mutex_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_, -1);
   return this->remaining_messages_ <= 0;
 }
 
@@ -314,7 +314,7 @@ EC_Latency_Consumer::push (const RtecEventComm::EventSet& events,
                                  events[0].header.creation_time);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   this->history_->sample (now - creation);
   this->remaining_messages_--;
 }
@@ -349,7 +349,7 @@ Task::Task (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
 int
 Task::done (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
   return this->remaining_messages_ == 0;
 }
 
@@ -375,7 +375,7 @@ Task::svc (void)
           // ACE_Time_Value tv (0, 5000);
           // ACE_OS::sleep (tv);
 
-          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
           if (this->remaining_messages_ % 1000 == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Only %d messages to go\n",

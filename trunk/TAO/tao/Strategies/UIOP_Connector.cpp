@@ -480,11 +480,11 @@ template class ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNE
 template class ACE_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>;
 
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
 template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -503,11 +503,11 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler*>;
 #pragma instantiate ACE_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>
 
-#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -34,7 +34,7 @@ CC_LockSetFactory::create (CORBA::Environment &ACE_TRY_ENV)
 {
   CC_LockSet *ls = 0;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet,
@@ -51,7 +51,7 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which,
 {
   CC_LockSet *ls = 0;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
   // @@ I commented out the following statement becuase it doesn't make any
   //    sense at all.    -- Nanbor

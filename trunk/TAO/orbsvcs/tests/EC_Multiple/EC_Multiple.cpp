@@ -542,7 +542,7 @@ Test_ECG::run (int argc, char* argv[])
 
       // Acquire the mutex for the ready mutex, blocking any supplier
       // that may start after this point.
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ready_mtx_, 1);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ready_mtx_, 1);
       this->ready_ = 1;
       this->test_start_ = ACE_OS::gethrtime ();
       this->ready_cnd_.broadcast ();
@@ -992,7 +992,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
 void
 Test_ECG::wait_until_ready (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ready_mon, this->ready_mtx_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ready_mon, this->ready_mtx_);
   while (!this->ready_)
     this->ready_cnd_.wait ();
 }

@@ -77,7 +77,7 @@ private:
   RtecEventComm::Event* buffer_;
   // The buffer.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synchronize access to the class internals.
 
   CORBA::ULong refcnt_;

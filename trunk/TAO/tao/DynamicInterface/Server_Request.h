@@ -134,7 +134,7 @@ private:
   CORBA::ULong refcount_;
   // Reference counting.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Protect the refcount_ and response_receieved_.
 
   TAO_ServerRequest &orb_server_request_;

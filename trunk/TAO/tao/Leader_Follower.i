@@ -39,7 +39,7 @@ TAO_Leader_Follower::elect_new_leader (void)
         }
       else if (this->follower_available ())
         {
-          ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+          TAO_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
           if (condition_ptr == 0 || condition_ptr->signal () == -1)
             return -1;
         }
@@ -104,7 +104,7 @@ TAO_Leader_Follower::reset_event_loop_thread (void)
     this->reset_event_loop_thread_i (tss);
 }
 
-ACE_INLINE ACE_SYNCH_MUTEX &
+ACE_INLINE TAO_SYNCH_MUTEX &
 TAO_Leader_Follower::lock (void)
 {
   return this->lock_;
@@ -117,7 +117,7 @@ TAO_Leader_Follower::set_upcall_thread (void)
 
   if (tss->event_loop_thread_ > 0)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock ());
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock ());
       this->reset_event_loop_thread_i (tss);
 
       this->elect_new_leader ();
@@ -156,18 +156,18 @@ TAO_Leader_Follower::is_client_leader_thread (void) const
 }
 
 ACE_INLINE int
-TAO_Leader_Follower::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
+TAO_Leader_Follower::add_follower (TAO_SYNCH_CONDITION *follower_ptr)
 {
   return this->follower_set_.insert (follower_ptr);
 }
 
 ACE_INLINE int
-TAO_Leader_Follower::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
+TAO_Leader_Follower::remove_follower (TAO_SYNCH_CONDITION *follower_ptr)
 {
   return this->follower_set_.remove (follower_ptr);
 }
 
-ACE_INLINE ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &
+ACE_INLINE ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &
 TAO_Leader_Follower::reverse_lock (void)
 {
   return this->reverse_lock_;
@@ -208,7 +208,7 @@ TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper (void)
 ACE_INLINE int
 TAO_LF_Event_Loop_Thread_Helper::set_event_loop_thread (ACE_Time_Value *max_wait_time)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
 
   int result =
     this->leader_follower_.set_event_loop_thread (max_wait_time);
@@ -230,7 +230,7 @@ TAO_LF_Event_Loop_Thread_Helper::TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Fol
 ACE_INLINE
 TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock ());
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock ());
 
   if (this->call_reset_)
     this->leader_follower_.reset_event_loop_thread ();

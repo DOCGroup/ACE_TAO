@@ -214,7 +214,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factor
      CORBA::Environment &ACE_TRY_ENV
       )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   // Remove any existing <proxy_factory_> and replace with the new one.
   this->unregister_proxy_factory (ACE_TRY_ENV);
@@ -228,7 +228,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factor
   CORBA::Environment &
     )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
@@ -248,7 +248,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factor
     CORBA::Environment &
   )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
@@ -297,9 +297,9 @@ void ImplementationRepository::TAO_ImplementationRepository_ServerObject_Smart_P
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
@@ -1790,7 +1790,7 @@ ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Fact
      CORBA::Environment &ACE_TRY_ENV
       )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   // Remove any existing <proxy_factory_> and replace with the new one.
   this->unregister_proxy_factory (ACE_TRY_ENV);
@@ -1804,7 +1804,7 @@ ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Fact
   CORBA::Environment &
     )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
@@ -1824,7 +1824,7 @@ ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Fact
     CORBA::Environment &
   )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
@@ -2004,9 +2004,9 @@ void ImplementationRepository::TAO_ImplementationRepository_Administration_Smart
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_ImplementationRepository_Administration[] =
@@ -2242,7 +2242,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator
      CORBA::Environment &ACE_TRY_ENV
       )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   // Remove any existing <proxy_factory_> and replace with the new one.
   this->unregister_proxy_factory (ACE_TRY_ENV);
@@ -2256,7 +2256,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator
   CORBA::Environment &
     )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
@@ -2276,7 +2276,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator
     CORBA::Environment &
   )
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
@@ -2329,9 +2329,9 @@ void ImplementationRepository::TAO_ImplementationRepository_ServerInformationIte
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[] =

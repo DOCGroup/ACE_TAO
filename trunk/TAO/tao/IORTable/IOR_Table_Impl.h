@@ -99,7 +99,7 @@ private:
   IORTable::Locator_var locator_;
 
   /// Synchronization
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -35,6 +35,23 @@
 #define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
+// Define this to modify the default mutex type used throughout TAO.
+#if !defined (TAO_SYNCH_MUTEX)
+#define TAO_SYNCH_MUTEX ACE_SYNCH_MUTEX
+#endif /* TAO_SYNCH_MUTEX */
+
+#if !defined (TAO_SYNCH_RECURSIVE_MUTEX)
+#define TAO_SYNCH_RECURSIVE_MUTEX ACE_SYNCH_RECURSIVE_MUTEX
+#endif /* TAO_SYNCH_RECURSIVE_MUTEX */
+
+#if !defined (TAO_SYNCH_RW_MUTEX)
+#define TAO_SYNCH_RW_MUTEX ACE_SYNCH_RW_MUTEX
+#endif /* TAO_SYNCH_RW_MUTEX */
+
+#if !defined (TAO_SYNCH_CONDITION)
+#define TAO_SYNCH_CONDITION ACE_SYNCH_CONDITION
+#endif /* TAO_SYNCH_CONDITION */
+
 // Define this if you don't want POA timestamps in the IOR.  Remember,
 // without timestamps, transient and persistent POA cannot be
 // distinguished

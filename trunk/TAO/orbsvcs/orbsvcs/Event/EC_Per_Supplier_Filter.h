@@ -77,7 +77,7 @@ private:
   CORBA::ULong refcnt_;
 
   /// Locking
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 // ****************************************************************

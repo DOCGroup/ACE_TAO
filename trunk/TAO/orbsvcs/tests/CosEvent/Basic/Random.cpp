@@ -353,7 +353,7 @@ RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin,
 {
   CosEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     if (CORBA::is_nil (this->proxy_.in ()))
       {
@@ -374,7 +374,7 @@ RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin,
 void
 RND_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
     return;
@@ -406,7 +406,7 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin,
 {
   CosEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     if (CORBA::is_nil (this->proxy_.in ()))
       {
@@ -433,7 +433,7 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin,
 void
 RND_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
     return;
@@ -459,7 +459,7 @@ RND_Supplier::push (CORBA::Any &event,
 {
   CosEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     if (CORBA::is_nil (this->proxy_.in ()))
       return;

@@ -123,7 +123,7 @@ private:
 
 private: // data
   CORBA::ULong _tao_reference_count_;
-  ACE_SYNCH_MUTEX _tao_reference_count_lock_;
+  TAO_SYNCH_MUTEX _tao_reference_count_lock_;
 }; // CORBA_DefaultValueRefCountBase
 
 // %! which lock has the lowest memory overhead ?

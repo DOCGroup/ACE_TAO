@@ -116,7 +116,7 @@ private:
 
   TAO_EC_Gateway_IIOP *gwys_;
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // lock internal state
 };
 

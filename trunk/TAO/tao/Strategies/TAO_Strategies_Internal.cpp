@@ -33,7 +33,7 @@ TAO_Strategies_Internal::open_services (int &argc,
                                         int ignore_default_svc_conf_file,
                                         int skip_service_config_open)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
   ignore_default_svc_conf_file = 1;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
@@ -83,7 +83,7 @@ TAO_Strategies_Internal::TAO_Strategies_Internal (void)
 int
 TAO_Strategies_Internal::close_services (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), -1));
   --service_open_count_;
   return 0;

@@ -650,7 +650,7 @@ public:
            const TAO_POA_Policies &policies,
            TAO_POA *parent,
            ACE_Lock &lock,
-           ACE_SYNCH_MUTEX &thread_lock,
+           TAO_SYNCH_MUTEX &thread_lock,
            TAO_ORB_Core &orb_core,
            TAO_Object_Adapter *object_adapter,
            CORBA_Environment &ACE_TRY_ENV);
@@ -1023,13 +1023,13 @@ protected:
 
   CORBA::ULong outstanding_requests_;
 
-  ACE_SYNCH_CONDITION outstanding_requests_condition_;
+  TAO_SYNCH_CONDITION outstanding_requests_condition_;
 
   CORBA::Boolean wait_for_completion_pending_;
 
   CORBA::Boolean waiting_destruction_;
 
-  ACE_SYNCH_CONDITION servant_deactivation_condition_;
+  TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
 };

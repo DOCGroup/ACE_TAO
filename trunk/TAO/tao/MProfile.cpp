@@ -235,7 +235,7 @@ TAO_MProfile::policy_list (void)
 {
   if (!this->is_policy_list_initialized_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+      ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                         guard,
                         this->mutex_,
                         0);

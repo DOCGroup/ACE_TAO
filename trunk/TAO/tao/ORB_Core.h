@@ -153,7 +153,7 @@ public:
   int client_leader_thread_;
 
   /// Condition variable for the leader follower model.
-  ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
+  TAO_SYNCH_CONDITION* leader_follower_condition_variable_;
 
   /// The Reactor Holder that we should callback when destroying the
   /// cookie.
@@ -666,7 +666,7 @@ public:
 
   /// Condition variable used in the Leader Follower Wait Strategy, on
   /// which the follower thread blocks.
-  ACE_SYNCH_CONDITION* leader_follower_condition_variable (void);
+  TAO_SYNCH_CONDITION* leader_follower_condition_variable (void);
 
   /// Makes sure that the ORB is open and then creates a TAO_Stub
   /// based on the endpoint.
@@ -936,7 +936,7 @@ private:
 protected:
 
   /// Synchronize internal state...
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   /// The connector registry which all active connectors must register
   /// themselves with.
@@ -1096,7 +1096,7 @@ protected:
   ACE_Thread_Manager tm_;
 
   /// The data block reference counts are locked using this mutex
-  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> data_block_lock_;
+  ACE_Lock_Adapter<TAO_SYNCH_MUTEX> data_block_lock_;
 
 
   /// Codeset translators for simple implementations.
@@ -1139,7 +1139,7 @@ protected:
 
 
   /// Mutual exclusion for calling open.
-  ACE_SYNCH_MUTEX open_lock_;
+  TAO_SYNCH_MUTEX open_lock_;
 
   /// Flag which denotes that the open method was called.
   int open_called_;
@@ -1165,6 +1165,9 @@ protected:
 
   /// Manager for setting priority mapping.
   static CORBA::Object_ptr priority_mapping_manager_;
+
+  // RT ORB specific command line argument parsing.
+  int RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -1312,7 +1315,7 @@ public:
 /**
  * @todo TAO_TSS_RESOURCES singleton typedef should go away.
  */
-typedef TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
         TAO_TSS_RESOURCES;
 
 // ****************************************************************

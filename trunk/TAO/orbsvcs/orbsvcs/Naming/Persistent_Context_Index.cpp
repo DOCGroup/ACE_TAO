@@ -40,7 +40,7 @@ template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_With_Allocator<TAO_Persistent_Ind
 int
 TAO_Persistent_Context_Index::unbind (const char *poa_id)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   TAO_Persistent_Index_ExtId name (poa_id);
   TAO_Persistent_Index_IntId entry;
@@ -59,7 +59,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
                                     ACE_UINT32 *&counter,
                                     TAO_Persistent_Context_Index::CONTEXT *hash_map)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   // Allocate memory for items to be stored in the table.
   size_t poa_id_len = ACE_OS::strlen (poa_id) + 1;

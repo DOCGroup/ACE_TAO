@@ -25,7 +25,7 @@ TAO_IOR_Table_Impl::find (const char *object_key,
   ACE_CString key (object_key);
   ACE_CString ior;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   if (this->map_.find (key, ior) == 0)
     {
       return CORBA::string_dup (ior.c_str ());
@@ -47,7 +47,7 @@ TAO_IOR_Table_Impl::bind (
         IORTable::AlreadyBound
       ))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.bind (object_key, IOR) != 0)
     ACE_THROW (IORTable::AlreadyBound ());
 }
@@ -62,7 +62,7 @@ TAO_IOR_Table_Impl::rebind (
         CORBA::SystemException
       ))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->map_.rebind (object_key, IOR);
 }
 
@@ -76,7 +76,7 @@ TAO_IOR_Table_Impl::unbind (
         IORTable::NotFound
       ))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.unbind (object_key) != 0)
     ACE_THROW (IORTable::NotFound ());
 }
@@ -90,6 +90,6 @@ TAO_IOR_Table_Impl::set_locator (
         CORBA::SystemException
       ))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->locator_ = IORTable::Locator::_duplicate (locator);
 }

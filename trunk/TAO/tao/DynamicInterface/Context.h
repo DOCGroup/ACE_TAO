@@ -103,7 +103,7 @@ private:
   CORBA::ULong refcount_;
   // Reference counting.
 
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
   // Protect the reference count.
 };
 
@@ -236,7 +236,7 @@ private:
   CORBA_ContextList (const CORBA_ContextList &);
   CORBA_ContextList &operator= (const CORBA_ContextList &);
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
   // Reference counter.
 
   ACE_Unbounded_Queue<char *> ctx_list_;

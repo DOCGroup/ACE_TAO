@@ -436,7 +436,7 @@ private:
 
 private:
   /// lock required for mutual exclusion between multiple threads.
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   /// Maintains a reference count of number of instantiations of the
   /// ORB.

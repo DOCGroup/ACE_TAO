@@ -23,6 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 #include "tao/TAO_Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -46,7 +47,7 @@ class TAO_ORB_Core;
  */
 class TAO_Export TAO_ORB_Table
 {
-  friend class TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>;
+  friend class TAO_Singleton<TAO_ORB_Table, TAO_SYNCH_MUTEX>;
 
 public:
   /// destructor

@@ -145,7 +145,7 @@ TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event,
   if (this->is_connected () == 0)
     return;
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
 
   // Ignore errors
   (void) this->queue_.enqueue_tail (event);
@@ -161,7 +161,7 @@ TAO_CEC_ProxyPullSupplier::pull (CORBA::Environment &ACE_TRY_ENV)
   if (this->is_connected () == 0)
     ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
   while (this->queue_.is_empty ())
     {
       this->wait_not_empty_.wait ();
@@ -183,7 +183,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event,
   if (this->is_connected () == 0)
     ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
   CORBA::Any any;
   if (this->queue_.is_empty ())
     {

@@ -263,8 +263,8 @@ private:
   typedef ACE_CString EXT;
   typedef RT_Info **INT;
 
-  typedef ACE_Map_Manager<EXT, INT, ACE_SYNCH_MUTEX> Info_Collection;
-  typedef ACE_Map_Iterator<EXT, INT, ACE_SYNCH_MUTEX> Info_Collection_Iterator;
+  typedef ACE_Map_Manager<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection;
+  typedef ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection_Iterator;
   typedef ACE_Map_Entry<EXT, INT> Info_Collection_Entry;
 
   Info_Collection info_collection_;

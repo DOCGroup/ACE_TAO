@@ -1621,7 +1621,7 @@
    public:
 -    
 +
-     friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+     friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 -    
 +
      int register_proxy_factory (
@@ -1653,12 +1653,12 @@
 @@ -2502,11 +2569,11 @@
      TAO_Messaging_ReplyHandler_Default_Proxy_Factory *proxy_factory_;
      int delete_proxy_factory_;
-     ACE_SYNCH_RECURSIVE_MUTEX lock_;
+     TAO_SYNCH_RECURSIVE_MUTEX lock_;
 -    
 +
    };
  
-   typedef ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
+   typedef ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
 -  
 +
    class TAO_Export TAO_Messaging_ReplyHandler_Smart_Proxy_Base

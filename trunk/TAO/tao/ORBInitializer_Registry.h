@@ -33,7 +33,7 @@
  */
 class TAO_Export TAO_ORBInitializer_Registry
 {
-  friend class TAO_Singleton<TAO_ORBInitializer_Registry, ACE_SYNCH_MUTEX>;
+  friend class TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
   friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init,
                                   CORBA::Environment &);

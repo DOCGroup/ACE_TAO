@@ -245,7 +245,7 @@ public:
 
 private:
   /// Protect access
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// The implementation.
   TAO_Policy_Manager_Impl impl_;

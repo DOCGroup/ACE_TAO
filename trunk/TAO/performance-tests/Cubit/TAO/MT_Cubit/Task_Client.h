@@ -141,7 +141,7 @@ public:
   Cubit_Datatypes datatype_;
   // Which datatype to use to make the calls.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock to protect access to this object.
 
   u_int thread_per_rate_;
@@ -216,10 +216,10 @@ public:
   // ready flag used by the high priority thread to wake up the low
   // priority threads after it's parsed the arguments.
 
-  ACE_SYNCH_MUTEX ready_mtx_;
+  TAO_SYNCH_MUTEX ready_mtx_;
   // mutex for the condition variable.
 
-  ACE_SYNCH_CONDITION ready_cnd_;
+  TAO_SYNCH_CONDITION ready_cnd_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 

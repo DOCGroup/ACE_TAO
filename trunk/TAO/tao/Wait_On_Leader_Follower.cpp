@@ -56,7 +56,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
     orb_core->leader_follower ();
 
   // Obtain the lock.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
                     leader_follower.lock (), -1);
 
   // Optmize the first iteration [no access to errno]
@@ -82,7 +82,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
         // = Wait as a follower.
 
         // Grab the condtion variable.
-        ACE_SYNCH_CONDITION* cond =
+        TAO_SYNCH_CONDITION* cond =
           orb_core->leader_follower_condition_variable ();
 
         if (TAO_debug_level >= 5)
@@ -194,7 +194,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
     ACE_UNUSED_ARG (client_leader_thread_helper);
 
     {
-      ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
+      ACE_GUARD_RETURN (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>, rev_mon,
                         leader_follower.reverse_lock (), -1);
 
       // Become owner of the reactor.
@@ -284,7 +284,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   return result;
 }
 
-ACE_SYNCH_CONDITION *
+TAO_SYNCH_CONDITION *
 TAO_Wait_On_Leader_Follower::leader_follower_condition_variable (void)
 {
   return this->transport_->orb_core ()->leader_follower_condition_variable ();
@@ -292,7 +292,7 @@ TAO_Wait_On_Leader_Follower::leader_follower_condition_variable (void)
 
 int
 TAO_Wait_On_Leader_Follower::reply_dispatched (int &reply_received_flag,
-                                               ACE_SYNCH_CONDITION *condition)
+                                               TAO_SYNCH_CONDITION *condition)
 {
   if (condition == 0)
     return 0;
@@ -301,7 +301,7 @@ TAO_Wait_On_Leader_Follower::reply_dispatched (int &reply_received_flag,
     this->transport_->orb_core ()->leader_follower ();
 
   // Obtain the lock.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
                     leader_follower.lock (),
                     -1);
 
@@ -324,7 +324,7 @@ TAO_Wait_On_Leader_Follower::reply_dispatched (int &reply_received_flag,
 
 void
 TAO_Wait_On_Leader_Follower::connection_closed (int &reply_received_flag,
-                                                ACE_SYNCH_CONDITION *condition)
+                                                TAO_SYNCH_CONDITION *condition)
 {
   if (condition == 0)
     return;
@@ -333,7 +333,7 @@ TAO_Wait_On_Leader_Follower::connection_closed (int &reply_received_flag,
     this->transport_->orb_core ()->leader_follower ();
 
   // Obtain the lock.
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, leader_follower.lock ());
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, leader_follower.lock ());
 
   reply_received_flag = -1;
 

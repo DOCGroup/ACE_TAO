@@ -28,7 +28,7 @@
 #include "Notify_Listeners.h"
 #include "notify_export.h"
 
-typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX,CORBA::Long> TAO_Notify_Property_Long;
+typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX,CORBA::Long> TAO_Notify_Property_Long;
 
 class TAO_Notify_Export TAO_Notify_AdminProperties
 {

@@ -32,6 +32,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Singleton.h"
 
+#include "tao/orbconf.h"
+
 #if defined (VXWORKS) && defined (VME_DRIVER)
 #define VX_VME_INIT \
 STATUS status = vmeDrv ();\
@@ -150,10 +152,10 @@ public:
   // ready flag used by the high priority thread to wake up the low
   // priority threads after it's parsed the arguments.
 
-  ACE_SYNCH_MUTEX ready_mtx_;
+  TAO_SYNCH_MUTEX ready_mtx_;
   // mutex for the condition variable.
 
-  ACE_SYNCH_CONDITION ready_cnd_;
+  TAO_SYNCH_CONDITION ready_cnd_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 

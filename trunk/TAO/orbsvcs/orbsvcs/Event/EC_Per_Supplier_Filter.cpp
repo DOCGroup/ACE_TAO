@@ -40,7 +40,7 @@ TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)
 void
 TAO_EC_Per_Supplier_Filter::bind (TAO_EC_ProxyPushConsumer* consumer)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->consumer_ != 0)
     return;
@@ -51,7 +51,7 @@ TAO_EC_Per_Supplier_Filter::bind (TAO_EC_ProxyPushConsumer* consumer)
 void
 TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->consumer_ == 0 || this->consumer_ != consumer)
     return;
@@ -74,7 +74,7 @@ void
 TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->consumer_ == 0)
     return;
@@ -112,7 +112,7 @@ void
 TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->consumer_ == 0)
     return;
@@ -170,7 +170,7 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
         // disconnected.
         // @@ This lock could be optimized if we knew that the
         // scheduling strategy is trivial...
-        ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
         if (this->consumer_ == 0)
           return;
@@ -197,7 +197,7 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
 CORBA::ULong
 TAO_EC_Per_Supplier_Filter::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
   this->refcnt_++;
   return this->refcnt_;
@@ -207,7 +207,7 @@ CORBA::ULong
 TAO_EC_Per_Supplier_Filter::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
     this->refcnt_--;
     if (this->refcnt_ != 0)

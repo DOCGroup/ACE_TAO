@@ -101,7 +101,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                   const TAO_POA_Policies &policies,
                   TAO_POA *parent,
                   ACE_Lock &lock,
-                  ACE_SYNCH_MUTEX &thread_lock,
+                  TAO_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
                   TAO_Object_Adapter *object_adapter,
                   CORBA::Environment &ACE_TRY_ENV)

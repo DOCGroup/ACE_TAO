@@ -125,7 +125,7 @@ TAO_Notify_Event::TAO_Notify_Event (void)
    // stop_time_ (0),
    timeout_ (0)
 {
-  ACE_NEW (lock_, ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ());
+  ACE_NEW (lock_, ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ());
 }
 
 TAO_Notify_Event::~TAO_Notify_Event ()

@@ -17,7 +17,7 @@ TAO_LB_Minimum_Dispersion_Strategy::TAO_LB_Minimum_Dispersion_Strategy (void)
 
 TAO_LB_Minimum_Dispersion_Strategy::~TAO_LB_Minimum_Dispersion_Strategy (void)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->lock_));
 
@@ -41,7 +41,7 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 {
   for ( ; ; )
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
                         this->lock_,
                         CORBA::Object::_nil ());
@@ -73,9 +73,9 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
         proxy->replica ();
 
       {
-        ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock (this->lock_);
+        ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->lock_);
 
-        ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>,
+        ACE_GUARD_RETURN (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
                           reverse_guard,
                           reverse_lock,
                           CORBA::Object::_nil ());
@@ -109,7 +109,7 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_LB_Minimum_Dispersion_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
                             -1));
@@ -120,7 +120,7 @@ TAO_LB_Minimum_Dispersion_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 int
 TAO_LB_Minimum_Dispersion_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
                             -1));
@@ -135,7 +135,7 @@ TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
   int send_load_advisory = 0;
 
   {
-    ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+    ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                        guard,
                        this->lock_));
 

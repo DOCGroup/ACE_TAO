@@ -34,7 +34,7 @@
 #else
   // Use the same object for each thread.  Therefore, we have to use
   // real synchronization.
-  typedef ACE_Thread_Mutex ACE_MEMORY_POOL_MUTEX;
+  typedef TAO_SYNCH_MUTEX ACE_MEMORY_POOL_MUTEX;
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION || !ACE_HAS_THREADS */
 
 typedef char
@@ -57,7 +57,7 @@ public:
 
 // ************************************************************
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> ACE_ES_Event_Allocator;
+typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, TAO_SYNCH_MUTEX> ACE_ES_Event_Allocator;
 
 class TAO_RTOLDEvent_Export ACE_ES_Memory_Pools
 // = TITLE
@@ -76,7 +76,7 @@ public:
   static void *new_Dispatch_Request (void);
   static void delete_Dispatch_Request (void *);
 
-  typedef ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_SYNCH_MUTEX> Dispatch_Request_;
+  typedef ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,TAO_SYNCH_MUTEX> Dispatch_Request_;
 };
 
 #if defined (__ACE_INLINE__)

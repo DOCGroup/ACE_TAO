@@ -50,7 +50,7 @@ Throughput_StructuredPushConsumer::push_structured_event (const CosNotification:
   ORBSVCS_Time::TimeT_to_hrtime (Throughput_base,
                                  Throughput_base_recorded);
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->push_count_ == 0)
     this->throughput_start_ = ACE_OS::gethrtime ();

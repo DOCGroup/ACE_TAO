@@ -124,7 +124,7 @@ private:
   int last_chunk_;
   // Flag that indicates entire data content has been received.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock used to prevent race conditions when checking to see if
   // metadata or entire content has been received.
 

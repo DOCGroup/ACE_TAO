@@ -109,7 +109,7 @@ CEC_Counting_Supplier_Task::svc ()
 void
 CEC_Counting_Supplier_Task::stop (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->stop_flag_ = 1;
 }
 
@@ -141,7 +141,7 @@ CEC_Counting_Supplier_Task::run (CORBA::Environment &ACE_TRY_ENV)
         ACE_OS::sleep (0);
       }
 
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     this->push_count_++;
 

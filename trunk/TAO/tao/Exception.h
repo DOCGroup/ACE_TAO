@@ -122,7 +122,7 @@ private:
    * expensive, because uses of this class should never be on the
    * critical path.
    */
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

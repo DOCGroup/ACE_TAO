@@ -110,7 +110,7 @@ private:
   const char* pid_file_name_;
   // The name of a file where the process stores its pid
 
-  ACE_SYNCH_MUTEX recv_count_mutex_;
+  TAO_SYNCH_MUTEX recv_count_mutex_;
   int recv_count_;
   // How many events we have received.
 };

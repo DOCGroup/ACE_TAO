@@ -139,7 +139,7 @@ protected:
 
 protected:
   /// Lock to synchronize internal changes
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   /// How many threads are running push() we cannot make changes until
   /// that reaches 0

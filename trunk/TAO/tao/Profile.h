@@ -213,7 +213,7 @@ private:
   TAO_MProfile* forward_to_;
 
   /// Mutex to protect reference count.
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;

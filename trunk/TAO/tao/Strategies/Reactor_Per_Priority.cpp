@@ -142,7 +142,7 @@ TAO_Reactor_Per_Priority::shutdown_all (void)
       TAO_Leader_Follower &leader_follower =
         *((*i).int_id_);
 
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         ace_mon,
                         leader_follower.lock (),
                         -1);
@@ -172,18 +172,18 @@ TAO_Reactor_Per_Priority::shutdown_all (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Map_Manager<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>;
-template class ACE_Map_Iterator<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>;
-template class ACE_Map_Iterator_Base<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>;
-template class ACE_Map_Reverse_Iterator<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>;
+template class ACE_Map_Manager<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>;
+template class ACE_Map_Iterator<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>;
+template class ACE_Map_Iterator_Base<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>;
+template class ACE_Map_Reverse_Iterator<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>;
 template class ACE_Map_Entry<CORBA::Short,TAO_Leader_Follower*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Map_Manager<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Manager<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Iterator<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Entry<CORBA::Short,TAO_Leader_Follower*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

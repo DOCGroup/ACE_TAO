@@ -208,7 +208,7 @@ protected:
   // all client CosNaming::NamingContext CORBA calls.
   // We need this pointer for reference counting.
 
-  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX lock_;
   // Lock used to serialize access to the underlying data structure.
 
   int destroyed_;

@@ -47,7 +47,7 @@ private:
   // After this number of events the consumer disconnects from the
   // event service.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synchronize access to the counter
 };
 

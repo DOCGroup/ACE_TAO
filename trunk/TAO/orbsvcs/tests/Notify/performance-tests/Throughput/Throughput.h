@@ -74,7 +74,7 @@ public:
 protected:
   Notify_Throughput * test_client_;
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Protect internal state
 
   ACE_hrtime_t throughput_start_;
@@ -148,7 +148,7 @@ protected:
   void create_EC (CORBA::Environment &ACE_TRY_ENV);
   // Create participants.
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> result_count_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
   // Number of events received so far.
 
   CORBA::Boolean colocated_ec_;
@@ -186,7 +186,7 @@ protected:
   Throughput_StructuredPushSupplier** suppliers_;
   // Suppliers
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_consumer_done_count;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_consumer_done_count;
   // consumer count;
 
   int nthreads_;

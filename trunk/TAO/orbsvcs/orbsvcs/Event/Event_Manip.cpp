@@ -42,7 +42,7 @@ TAO_EC_Event_Set::_create (RtecEventComm::EventSet& event_set)
 CORBA::ULong
 TAO_EC_Event_Set::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   return this->refcnt_++;
 }
 
@@ -50,7 +50,7 @@ CORBA::ULong
 TAO_EC_Event_Set::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
     this->refcnt_--;
     if (this->refcnt_ != 0)
       return this->refcnt_;

@@ -263,7 +263,7 @@ public:
 
   ACE_Lock &lock (void);
 
-  ACE_SYNCH_MUTEX &thread_lock (void);
+  TAO_SYNCH_MUTEX &thread_lock (void);
 
   ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
 
@@ -343,7 +343,7 @@ protected:
                              const poa_name &system_name);
 
   static ACE_Lock *create_lock (int enable_locking,
-                                ACE_SYNCH_MUTEX &thread_lock);
+                                TAO_SYNCH_MUTEX &thread_lock);
 
 public:
 
@@ -508,7 +508,7 @@ protected:
 
   int enable_locking_;
 
-  ACE_SYNCH_MUTEX thread_lock_;
+  TAO_SYNCH_MUTEX thread_lock_;
 
   ACE_Lock *lock_;
 
@@ -776,7 +776,7 @@ public:
 
 private:
 
-  ACE_SYNCH_CONDITION non_servant_upcall_condition_;
+  TAO_SYNCH_CONDITION non_servant_upcall_condition_;
   // Condition variable for waiting on non-servant upcalls to end.
 
   Non_Servant_Upcall *non_servant_upcall_in_progress_;

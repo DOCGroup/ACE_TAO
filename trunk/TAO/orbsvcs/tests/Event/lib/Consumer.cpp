@@ -119,7 +119,7 @@ EC_Consumer::push (const RtecEventComm::EventSet& events,
       return;
     }
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->push_count_ == 0)
     this->throughput_start_ = ACE_OS::gethrtime ();
 

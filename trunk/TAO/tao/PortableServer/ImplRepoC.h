@@ -204,7 +204,7 @@ class TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter
 {
 public:
 
-  friend class TAO_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory *df,
@@ -231,10 +231,10 @@ protected:
     );
   TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
-  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef TAO_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerObject_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerObject_PROXY_FACTORY_ADAPTER;
   class TAO_ImplementationRepository_ServerObject_Smart_Proxy_Base : public virtual ACE_NESTED_CLASS (ImplementationRepository, ServerObject)
   {
   public:
@@ -1195,7 +1195,7 @@ class TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter
 {
 public:
 
-  friend class TAO_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_ImplementationRepository_Administration_Default_Proxy_Factory *df,
@@ -1222,10 +1222,10 @@ protected:
     );
   TAO_ImplementationRepository_Administration_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
-  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef TAO_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_Administration_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_Administration_PROXY_FACTORY_ADAPTER;
   class TAO_ImplementationRepository_Administration_Smart_Proxy_Base : public virtual ACE_NESTED_CLASS (ImplementationRepository, Administration)
   {
   public:
@@ -1490,7 +1490,7 @@ class TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapt
 {
 public:
 
-  friend class TAO_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  friend class TAO_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
       TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory *df,
@@ -1517,10 +1517,10 @@ protected:
     );
   TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
-  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
-  typedef TAO_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerInformationIterator_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerInformationIterator_PROXY_FACTORY_ADAPTER;
   class TAO_ImplementationRepository_ServerInformationIterator_Smart_Proxy_Base : public virtual ACE_NESTED_CLASS (ImplementationRepository, ServerInformationIterator)
   {
   public:

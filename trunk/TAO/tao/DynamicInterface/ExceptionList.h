@@ -99,7 +99,7 @@ private:
   CORBA_ExceptionList (const CORBA_ExceptionList &);
   CORBA_ExceptionList &operator= (const CORBA_ExceptionList &);
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
   // Reference counter.
 
   ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;

@@ -188,7 +188,7 @@ protected:
   RedGreen_Test* RedGreen_Test_;
   // callback <done>
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Protect internal state
 
   int push_count_;

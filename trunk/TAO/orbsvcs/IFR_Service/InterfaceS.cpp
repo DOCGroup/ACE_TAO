@@ -191,7 +191,7 @@ _TAO_IRObject_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -669,7 +669,7 @@ POA_IR::_TAO_Contained_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -1678,7 +1678,7 @@ POA_IR::_TAO_Container_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -3229,7 +3229,7 @@ POA_IR::_TAO_IDLType_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -3671,7 +3671,7 @@ POA_IR::_TAO_Repository_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -4596,7 +4596,7 @@ POA_IR::_TAO_ComponentRepository_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -5166,7 +5166,7 @@ POA_IR::_TAO_ModuleDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -5550,7 +5550,7 @@ POA_IR::_TAO_ConstantDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -6210,7 +6210,7 @@ POA_IR::_TAO_TypedefDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -6608,7 +6608,7 @@ POA_IR::_TAO_StructDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -7132,7 +7132,7 @@ POA_IR::_TAO_UnionDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -7806,7 +7806,7 @@ POA_IR::_TAO_EnumDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -8306,7 +8306,7 @@ POA_IR::_TAO_AliasDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -8804,7 +8804,7 @@ POA_IR::_TAO_NativeDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -9158,7 +9158,7 @@ POA_IR::_TAO_PrimitiveDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -9580,7 +9580,7 @@ POA_IR::_TAO_StringDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -10060,7 +10060,7 @@ POA_IR::_TAO_WstringDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -10542,7 +10542,7 @@ POA_IR::_TAO_FixedDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -11139,7 +11139,7 @@ POA_IR::_TAO_SequenceDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -11792,7 +11792,7 @@ POA_IR::_TAO_ArrayDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -12470,7 +12470,7 @@ POA_IR::_TAO_ExceptionDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -13007,7 +13007,7 @@ POA_IR::_TAO_AttributeDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -13727,7 +13727,7 @@ POA_IR::_TAO_OperationDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -14755,7 +14755,7 @@ POA_IR::_TAO_InterfaceDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -15745,7 +15745,7 @@ POA_IR::_TAO_ValueMemberDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -16442,7 +16442,7 @@ POA_IR::_TAO_ValueDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -17971,7 +17971,7 @@ POA_IR::_TAO_ValueBoxDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -18469,7 +18469,7 @@ POA_IR::_TAO_ProvidesDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -18902,7 +18902,7 @@ POA_IR::_TAO_UsesDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -19391,7 +19391,7 @@ POA_IR::_TAO_EventDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -19889,7 +19889,7 @@ POA_IR::_TAO_EmitsDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -20270,7 +20270,7 @@ POA_IR::_TAO_PublishesDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -20651,7 +20651,7 @@ POA_IR::_TAO_ConsumesDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -21072,7 +21072,7 @@ POA_IR::_TAO_ComponentDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -22372,7 +22372,7 @@ POA_IR::_TAO_PrimaryKeyDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -22928,7 +22928,7 @@ POA_IR::_TAO_FactoryDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -23367,7 +23367,7 @@ POA_IR::_TAO_FinderDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -23784,7 +23784,7 @@ POA_IR::_TAO_HomeDef_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->proxy_cache_[strategy] == 0)
     {

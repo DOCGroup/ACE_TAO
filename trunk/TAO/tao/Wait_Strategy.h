@@ -71,7 +71,7 @@ public:
    * passes this condition variable back to Waiting_Strategy, that can
    * then signal the waiting thread if needed.
    */
-  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
 
   /**
    * This is the callback used by the Reply_Dispatcher to inform the
@@ -82,7 +82,7 @@ public:
    * whatever locks it needs.
    */
   virtual int reply_dispatched (int &reply_received_flag,
-                                ACE_SYNCH_CONDITION *);
+                                TAO_SYNCH_CONDITION *);
 
   /**
    * The connection has been closed by the lower level components in
@@ -90,7 +90,7 @@ public:
    * The wait has finished and must result in an error.
    */
   virtual void connection_closed (int &reply_received_flag,
-                                  ACE_SYNCH_CONDITION*);
+                                  TAO_SYNCH_CONDITION*);
 
 protected:
   /// Transport object.

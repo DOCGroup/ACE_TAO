@@ -127,7 +127,7 @@ private:
   CORBA::ULong refcount_;
 
   /// Protect the reference count.
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 };
 
 /**

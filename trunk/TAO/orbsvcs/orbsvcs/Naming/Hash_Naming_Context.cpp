@@ -111,7 +111,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
                                CORBA::Object_ptr obj,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon, this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK;
@@ -165,7 +165,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
                                  CORBA::Object_ptr obj,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK;
@@ -221,7 +221,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
                                        CosNaming::NamingContext_ptr nc,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK;
@@ -279,7 +279,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
                                          CosNaming::NamingContext_ptr nc,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK;
@@ -334,7 +334,7 @@ CORBA::Object_ptr
 TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -428,7 +428,7 @@ void
 TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK;
@@ -474,7 +474,7 @@ CosNaming::NamingContext_ptr
 TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n,
                                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
@@ -519,7 +519,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n,
 void
 TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());

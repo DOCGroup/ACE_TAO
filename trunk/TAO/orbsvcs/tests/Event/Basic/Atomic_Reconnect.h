@@ -55,7 +55,7 @@ private:
   int event_base_type_;
   // Base event type
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synchronize access to the counter
 };
 

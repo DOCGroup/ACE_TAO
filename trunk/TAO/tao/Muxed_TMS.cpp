@@ -26,7 +26,7 @@ CORBA::ULong
 TAO_Muxed_TMS::request_id (void)
 {
   // @@ What is a good error return value?
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
                     this->lock_, 0);
   return this->request_id_generator_++;
 }
@@ -56,7 +56,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 void
 TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   TAO_Reply_Dispatcher *rd = 0;
   (void) this->dispatcher_table_.unbind (request_id, rd);
 }
@@ -74,7 +74,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
   // Grab the reply dispatcher for this id.
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
     result = this->dispatcher_table_.unbind (params.request_id_, rd);
   }
 
@@ -137,7 +137,7 @@ TAO_Muxed_TMS::idle_after_reply (void)
 void
 TAO_Muxed_TMS::connection_closed (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   // @@ This should be done using a mutex, the table
 

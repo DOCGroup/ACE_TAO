@@ -185,7 +185,7 @@ Consumer::push (const RtecEventComm::EventSet& events,
     }
 
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     this->event_count++;
 
     if (this->event_count != this->shutdown_count_)

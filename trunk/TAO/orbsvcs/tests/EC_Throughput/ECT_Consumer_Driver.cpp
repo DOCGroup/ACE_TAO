@@ -172,7 +172,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
           ACE_Time_Value tv (0, 10000);
           this->orb_->perform_work (tv, ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 1);
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
           if (this->active_count_ <= 0)
             break;
         }
@@ -211,7 +211,7 @@ ECT_Consumer_Driver::shutdown_consumer (void*,
   //
   // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
 }
 
@@ -222,7 +222,7 @@ ECT_Consumer_Driver::connect_consumers
       CORBA::Environment &ACE_TRY_ENV)
 {
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     this->active_count_ = this->n_consumers_;
   }
   for (int i = 0; i < this->n_consumers_; ++i)

@@ -44,7 +44,7 @@ TAO_Policy_Manager::get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->impl_.get_policy (policy, ACE_TRY_ENV);
 }
 
@@ -56,7 +56,7 @@ TAO_Policy_Manager::get_policy_overrides (
                        CORBA::SystemException
                        ))
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->impl_.get_policy_overrides (ts, ACE_TRY_ENV);
 }
 
@@ -70,7 +70,7 @@ TAO_Policy_Manager::set_policy_overrides (
                        CORBA_InvalidPolicies
                        ))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
@@ -80,7 +80,7 @@ TAO_Policy_Manager::relative_roundtrip_timeout (void)
   // Double-checked locking.
   if (this->impl_.relative_roundtrip_timeout_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.relative_roundtrip_timeout ();
     }
   return 0;
@@ -94,7 +94,7 @@ TAO_Policy_Manager::client_priority (void)
   // Double-checked locking.
   if (this->impl_.client_priority_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.client_priority ();
    }
   return 0;
@@ -108,7 +108,7 @@ TAO_Policy_Manager::sync_scope (void)
   // Double-checked locking.
   if (this->impl_.sync_scope_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.sync_scope ();
     }
   return 0;
@@ -122,7 +122,7 @@ TAO_Policy_Manager::buffering_constraint (void)
   // Double-checked locking.
   if (this->impl_.buffering_constraint_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.buffering_constraint ();
     }
   return 0;
@@ -138,7 +138,7 @@ TAO_Policy_Manager::priority_model (void)
   // Double-checked locking.
   if (this->impl_.priority_model_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.priority_model ();
     }
   return 0;
@@ -150,7 +150,7 @@ TAO_Policy_Manager::threadpool (void)
   // Double-checked locking.
   if (this->impl_.threadpool_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.threadpool ();
     }
   return 0;
@@ -162,7 +162,7 @@ TAO_Policy_Manager::private_connection (void)
   // Double-checked locking.
   if (this->impl_.private_connection_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.private_connection ();
     }
   return 0;
@@ -174,7 +174,7 @@ TAO_Policy_Manager::priority_banded_connection (void)
   // Double-checked locking.
   if (this->impl_.priority_banded_connection_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.priority_banded_connection ();
     }
   return 0;
@@ -186,7 +186,7 @@ TAO_Policy_Manager::server_protocol (void)
   // Double-checked locking.
   if (this->impl_.server_protocol_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.server_protocol ();
     }
   return 0;
@@ -198,7 +198,7 @@ TAO_Policy_Manager::client_protocol (void)
   // Double-checked locking.
   if (this->impl_.client_protocol_)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.client_protocol ();
     }
   return 0;

@@ -28,7 +28,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
       if (OPTIONS::instance ()->enable_locking ())
         {
           ACE_NEW_THROW_EX (this->lock_,
-                            ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                            ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                             CORBA::NO_MEMORY ());
         }
       else

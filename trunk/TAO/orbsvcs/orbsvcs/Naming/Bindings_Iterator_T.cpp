@@ -13,7 +13,7 @@ template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
                                                                      ITERATOR *hash_iter,
                                                                      PortableServer::POA_ptr poa,
-                                                                     ACE_SYNCH_RECURSIVE_MUTEX &lock)
+                                                                     TAO_SYNCH_RECURSIVE_MUTEX &lock)
   : destroyed_ (0),
     context_ (context),
     hash_iter_ (hash_iter),
@@ -57,7 +57,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (CosNaming::Binding_out b
 
   b = binding;
 
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
@@ -111,7 +111,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (CORBA::ULong how_many,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
   // Obtain the lock.
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
@@ -170,7 +170,7 @@ template <class ITERATOR, class TABLE_ENTRY> void
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());

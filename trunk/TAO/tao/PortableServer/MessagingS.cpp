@@ -179,7 +179,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 
   if (this->proxy_cache_[strategy] == 0)
     {

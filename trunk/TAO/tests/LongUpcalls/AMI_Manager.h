@@ -68,7 +68,7 @@ class Controller_Handler
   ,  public virtual PortableServer::RefCountServantBase
 {
 public:
-  Controller_Handler (ACE_SYNCH_MUTEX *mutex,
+  Controller_Handler (TAO_SYNCH_MUTEX *mutex,
                       int *pending_replies);
   // Constructor
 
@@ -84,7 +84,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  ACE_SYNCH_MUTEX *mutex_;
+  TAO_SYNCH_MUTEX *mutex_;
   int *pending_replies_;
   // The pending replies is decremented each time a reply is
   // received.

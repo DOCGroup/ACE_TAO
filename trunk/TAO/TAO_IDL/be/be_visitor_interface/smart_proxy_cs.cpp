@@ -155,7 +155,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << ")" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN ("
-          << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
+          << "TAO_SYNCH_RECURSIVE_MUTEX, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl
           << "// Remove any existing <proxy_factory_> and replace with the new one."<<be_nl
           << "this->unregister_proxy_factory (ACE_TRY_ENV);" << be_nl
@@ -178,7 +178,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN ("
-          << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
+          << "TAO_SYNCH_RECURSIVE_MUTEX, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl
           << "if (this->one_shot_factory_ == 1)"<<be_idt_nl
           << "this->disable_factory_ = 1;"<<be_uidt_nl <<be_nl
@@ -208,7 +208,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN ("
-          << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
+          << "TAO_SYNCH_RECURSIVE_MUTEX, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl<<be_nl
           << "// To take care of those <unchecked_narrow> methods where we "<<be_nl
           << "// want to override the smart proxy factory if there exists one."<<be_nl
@@ -319,7 +319,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       if (node->is_nested ())
         *os << "::";
       *os <<"TAO_" <<node->flat_name ()
-          << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
+          << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
           << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)"
           << be_nl
           << "#pragma instantiate TAO_Singleton<";
@@ -329,7 +329,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       if (node->is_nested ())
         *os << "::";
       *os << "TAO_"<<node->flat_name ()
-          << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>"<<be_nl
+          << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>"<<be_nl
           << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */"<<be_nl<<be_nl;
     }
   else

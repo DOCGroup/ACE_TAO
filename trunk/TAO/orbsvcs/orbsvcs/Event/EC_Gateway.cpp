@@ -72,7 +72,7 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->init_i (rmt_ec, lcl_ec, ACE_TRY_ENV);
 }
@@ -94,7 +94,7 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
 void
 TAO_EC_Gateway_IIOP::close (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->close_i (ACE_TRY_ENV);
 }
@@ -151,7 +151,7 @@ TAO_EC_Gateway_IIOP::update_consumer (
   if (c_qos.dependencies.length () <= 1)
     return;
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->busy_count_ != 0)
     {
@@ -396,7 +396,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
     }
 
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     this->busy_count_++;
   }
@@ -433,7 +433,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
     }
 
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     this->busy_count_--;
 
@@ -449,7 +449,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
 int
 TAO_EC_Gateway_IIOP::shutdown (CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   this->close_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);

@@ -666,8 +666,8 @@ YY_DECL
 
 #line 50 "ETCL/ETCL.ll"
 
-        static ACE_SYNCH_MUTEX mutex;
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, mutex, -1);
+        static TAO_SYNCH_MUTEX mutex;
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, mutex, -1);
 
         TAO_ETCL_Lex_State_Guard lex_helper (state);
 

@@ -2293,7 +2293,7 @@
 -  CORBA::Any *result_any =
 -    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
 -  ACE_CHECK_RETURN (0);
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  return result_any;
 -}
@@ -3892,7 +3892,7 @@
 -  )
 +)
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -5177,7 +5177,7 @@
 -      _tao_server_request.orb_core ()->server_request_interceptors (),
 -      _tao_server_request.interceptor_count ()
 -    );
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  POA_IR::Container::TAO_ServerRequestInfo_IR_Container_contents ri (
 -      _tao_server_request,
@@ -6144,7 +6144,7 @@
 -      _tao_server_request.orb_core ()->server_request_interceptors (),
 -      _tao_server_request.interceptor_count ()
 -    );
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  POA_IR::Container::TAO_ServerRequestInfo_IR_Container_create_union ri (
 -      _tao_server_request,
@@ -8848,7 +8848,7 @@
 -  CORBA::ULong length_base_interfaces = parameter_list->length ();
 -  parameter_list->length (length_base_interfaces + 1);
 -  (*parameter_list)[length_base_interfaces].argument <<=  this->base_interfaces_;
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  (*parameter_list)[length_base_interfaces].mode = Dynamic::PARAM_IN;
 -    
@@ -9799,7 +9799,7 @@
 +    const char* logical_type_id
    )
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -10234,7 +10234,7 @@
 -  POA_IR::IDLType *_tao_impl = (POA_IR::IDLType *) _tao_object_reference;
 -  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
 -  ACE_CHECK;
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  _tao_server_request.init_reply ();
 -  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -12410,7 +12410,7 @@
 -  Dynamic::ParameterList *parameter_list =
 -    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
 -  ACE_CHECK_RETURN (0);
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 +  if (this->proxy_cache_[strategy] == 0)
@@ -21599,7 +21599,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -26727,7 +26727,7 @@
 -  Dynamic::ParameterList *parameter_list =
 -    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
 -  ACE_CHECK_RETURN (0);
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  return parameter_list;
 +  if (this->proxy_cache_[strategy] == 0)
@@ -27396,7 +27396,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -30484,7 +30484,7 @@
      CORBA::Environment &ACE_TRY_ENV
    )
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -30790,7 +30790,7 @@
 +    CORBA::Environment &ACE_TRY_ENV
 +  )
 +{
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 +  
 +  if (this->proxy_cache_[strategy] == 0)
 +    {
@@ -31992,7 +31992,7 @@
 -  CORBA::Any *result_any =
 -    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
 -  ACE_CHECK_RETURN (0);
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  return result_any;
 -}
@@ -32547,7 +32547,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -34995,7 +34995,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -37291,7 +37291,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -38633,7 +38633,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -42672,7 +42672,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -43429,7 +43429,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -43993,7 +43993,7 @@
 -    CORBA::Environment &ACE_TRY_ENV
 -  )
 -{
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -44944,7 +44944,7 @@
 +    CORBA::SystemException
 +  ))
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -46225,7 +46225,7 @@
 -  )
 +)
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -48547,7 +48547,7 @@
 -        interface_type,
 -        ACE_TRY_ENV
 -      );
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 +  
 +  if (this->proxy_cache_[strategy] == 0)
 +    {
@@ -50207,7 +50207,7 @@
  {
 -  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
 -  POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 +  
 +  if (this->proxy_cache_[strategy] == 0)
 +    {
@@ -51064,7 +51064,7 @@
 -  Dynamic::ParameterList *parameter_list =
 -    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
 -  ACE_CHECK_RETURN (0);
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  return parameter_list;
 +  if (this->proxy_cache_[strategy] == 0)
@@ -51893,7 +51893,7 @@
 -    TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
 -  ACE_CHECK_RETURN (0);
 +{
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
    
 -  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 -    
@@ -52611,7 +52611,7 @@
 +    CORBA::Environment &ACE_TRY_ENV
 +  )
 +{
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 +  
 +  if (this->proxy_cache_[strategy] == 0)
 +    {
@@ -53000,7 +53000,7 @@
 +    CORBA::SystemException
 +  ))
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -54164,7 +54164,7 @@
 -  )
 +)
  {
--  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 -  
 -  if (this->proxy_cache_[strategy] == 0)
 -    {
@@ -56276,7 +56276,7 @@
 -        exceptions,
 -        ACE_TRY_ENV
 -      );
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 +  
 +  if (this->proxy_cache_[strategy] == 0)
 +    {
@@ -56915,7 +56915,7 @@
    )
  {
 -  POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
-+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
++  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
 +  
 +  if (this->proxy_cache_[strategy] == 0)
 +    {

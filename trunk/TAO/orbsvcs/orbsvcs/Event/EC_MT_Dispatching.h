@@ -81,7 +81,7 @@ private:
   TAO_EC_Dispatching_Task task_;
 
   /// Synchronize access to internal data
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   /// Are the threads running?
   int active_;

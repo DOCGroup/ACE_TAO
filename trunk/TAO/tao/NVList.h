@@ -72,7 +72,7 @@ private:
   CORBA::ULong refcount_;
 
   /// Protects the reference count.
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 
   /// holds the value
   CORBA::Any any_;
@@ -308,7 +308,7 @@ private:
   CORBA::ULong refcount_;
 
   /// Protects the reference count.
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 
   /**
    * When the NVList is used as part of a Server Request we can simply

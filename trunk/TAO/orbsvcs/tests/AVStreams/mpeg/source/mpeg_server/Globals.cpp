@@ -2950,9 +2950,9 @@ Audio_Global::on_exit_routine(void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Video_Global, ACE_Thread_Mutex>;
-template class ACE_Singleton<Audio_Global, ACE_Thread_Mutex>;
+template class ACE_Singleton<Video_Global, TAO_SYNCH_MUTEX>;
+template class ACE_Singleton<Audio_Global, TAO_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Video_Global, ACE_Thread_Mutex>
-#pragma instantiate ACE_Singleton<Audio_Global, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Video_Global, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<Audio_Global, TAO_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -105,7 +105,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << be_uidt_nl // idt = 0
       << "{"
       << be_idt_nl // idt = 1
-      << "ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);"
+      << "ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);"
       << be_nl << be_nl
       << "if (this->proxy_cache_[strategy] == 0)"
       << be_idt_nl // idt = 2
