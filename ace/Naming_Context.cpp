@@ -103,6 +103,8 @@ ACE_Naming_Context::close (void)
 
   delete this->name_space_;
   this->name_space_ = 0;
+  delete this->name_options_;
+  this->name_options_ = 0;
 
   return 0;
 }
@@ -112,6 +114,7 @@ ACE_Naming_Context::ACE_Naming_Context (void)
     name_space_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
+
   ACE_NEW (this->name_options_, ACE_Name_Options);
 }
 
@@ -321,8 +324,8 @@ ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
 ACE_Naming_Context::~ACE_Naming_Context (void)
 {
   ACE_TRACE ("ACE_Naming_Context::~ACE_Naming_Context");
-  delete this->name_space_;
-  delete this->name_options_;
+
+  this->close ();
 }
 
 void
@@ -344,6 +347,9 @@ int
 ACE_Naming_Context::fini (void)
 {
   ACE_DEBUG ((LM_DEBUG, "ACE_Naming_Context::fini\n"));
+
+  this->close ();
+
   return 0;
 }
 
