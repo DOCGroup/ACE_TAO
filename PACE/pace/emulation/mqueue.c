@@ -42,7 +42,7 @@ typedef struct
   pace_size_t length;
 } message_header;
 
-struct mq_attr attrdefault = { 0, 32, 256, 0 };
+static struct mq_attr pace_attrdefault = { 0, 32, 256, 0 };
 #define PACE_MQ_LOCKPOSTFIX "mqlock9587"
 #define PACE_MQ_DATAPOSTFIX "mqdata2355"
 
@@ -71,7 +71,7 @@ pace_mqd_t mq_open (const char* name,
 retry:
   if (attr == 0)
   {
-    attr = &attrdefault;
+    attr = &pace_attrdefault;
   }
   else
   {
@@ -295,7 +295,15 @@ int mq_close (pace_mqd_t mqdes)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_unlink (const char* name)
 {
-  return pace_unlink (name);
+  int result1, result2;
+  char* new_name;
+  new_name = malloc (256);
+  snprintf (new_name, 256, "/tmp%s%s", name, PACE_MQ_DATAPOSTFIX);
+  result1 = pace_unlink (new_name);
+  snprintf (new_name, 256, "/tmp%s%s", name, PACE_MQ_LOCKPOSTFIX);
+  result2 = pace_unlink (new_name);
+  free (new_name);
+  return (result1 == -1 || result2 == -1 ? -1 : 0);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -559,36 +567,5 @@ int mq_notify (pace_mqd_t mqd, const pace_sigevent* notification)
   pthread_mutex_unlock (&queue->mutex);
 
   return 0;
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-void print_queue (pace_mqd_t mqd)
-{
-
-  mqfile* queue = ((mqfile*)(mqd->mptr));
-  pace_size_t i, index;
-  i=0;
-  index = queue->freelist;
-  while (index != 0)
-    {
-      i++;
-      index = ((message_header*)(&mqd->mptr[index]))->next;
-    }
-  printf ("There are %li total blacks of size %li.\n", queue->attr.mq_maxmsg, queue->attr.mq_msgsize);
-  printf ("There are %i free blocks left.\n", i);
-  printf ("There are %li messages on the queue.\n", queue->attr.mq_curmsgs);
-
-  i=0;
-  index = queue->head;
-  while (index != 0)
-    {
-      i++;
-      printf ("Message %i has a prio of %i and len of %i.\n", i,
-              ((message_header*)(&mqd->mptr[index]))->priority,
-              ((message_header*)(&mqd->mptr[index]))->length);
-      index = ((message_header*)(&mqd->mptr[index]))->next;
-    }
-  printf ("\n");
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */

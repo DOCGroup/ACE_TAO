@@ -1,3 +1,10 @@
+Wed Jul 26 17:13:51 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/emulation/mqueue.c:
+	  Removed print_queue(), qualified attrdefault
+	  with pace_, fixed memory leaks, and fixed
+	  the totally broken mq_unlink.
+
 Tue Jul 25 17:09:13 2000  Luther J Baker   <luther@cs.wustl.edu>
 
 	* pace/win32/mman.c:
