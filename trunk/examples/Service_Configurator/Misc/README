@@ -7,9 +7,10 @@ application would usually define different services.
 
 Windows CE:
 -----------
-When using WCE emulator, make sure that you use the following command
-to copy the svc.conf? files into the top-level directory in CE
-emulator.
+
+When using Windows CE (WCE) emulator, make sure that you use the
+following command to copy the svc.conf files into the top-level
+directory in CE emulator.
 
   empfile -c svc.conf1 wce:\svc.conf1
   empfile -c svc.conf2 wce:\svc.conf2
