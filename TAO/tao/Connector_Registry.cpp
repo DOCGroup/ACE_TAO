@@ -115,16 +115,16 @@ TAO_Connector_Registry::preconnect (TAO_EndpointSet &preconnections)
 
 int
 TAO_Connector_Registry::connect (TAO_Profile *&profile,
-                                 TAO_Transport *&transport)
+                                 TAO_Transport *&transport,
+                                 ACE_Time_Value *max_wait_time)
 {
-
   // Find the appropriate connector object
   TAO_Connector *connector =
     this->get_connector (profile->tag ());
   if (connector == 0)
     return -1;
 
-  return connector->connect (profile, transport);
+  return connector->connect (profile, transport, max_wait_time);
 }
 
 int

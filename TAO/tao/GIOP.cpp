@@ -67,8 +67,11 @@ ACE_RCSID(tao, GIOP, "$Id$")
 
 static const char *TAO_GIOP_Timeprobe_Description[] =
 {
-  "GIOP::send_request - start",
-  "GIOP::send_request - end",
+  "GIOP::send_message - start",
+  "GIOP::send_message - end",
+
+  "GIOP::recv_message - start",
+  "GIOP::recv_message - end",
 
   "GIOP::read_buffer - start",
   "GIOP::read_buffer - end",
@@ -80,8 +83,8 @@ static const char *TAO_GIOP_Timeprobe_Description[] =
 enum
 {
   // Timeprobe description table start key
-  TAO_GIOP_SEND_REQUEST_START = 100,
-  TAO_GIOP_SEND_REQUEST_END,
+  TAO_GIOP_SEND_MESSAGE_START = 100,
+  TAO_GIOP_SEND_MESSAGE_END,
 
   TAO_GIOP_RECV_MESSAGE_START,
   TAO_GIOP_RECV_MESSAGE_END,
@@ -95,7 +98,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description,
-                                  TAO_GIOP_SEND_REQUEST_START);
+                                  TAO_GIOP_SEND_MESSAGE_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
@@ -382,10 +385,11 @@ TAO_GIOP::write_locate_request_header (CORBA::ULong request_id,
 int
 TAO_GIOP::send_message (TAO_Transport *transport,
                         TAO_OutputCDR &stream,
-                        TAO_ORB_Core *orb_core)
+                        TAO_ORB_Core *orb_core,
+                        ACE_Time_Value *max_wait_time)
 {
 
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_SEND_MESSAGE_START);
 
   // Ptr to first buffer.
   char *buf = (char *) stream.buffer ();
@@ -447,7 +451,7 @@ TAO_GIOP::send_message (TAO_Transport *transport,
                       stream.length ());
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = transport->send (stream.begin ());
+  ssize_t n = transport->send (stream.begin (), max_wait_time);
 
   if (n == -1)
     {
@@ -455,7 +459,7 @@ TAO_GIOP::send_message (TAO_Transport *transport,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO: (%P|%t) closing conn %d after fault %p\n",
                     transport->handle (),
-                    "GIOP::send_request ()"));
+                    "GIOP::send_message ()"));
 
     return -1;
   }
@@ -465,7 +469,7 @@ TAO_GIOP::send_message (TAO_Transport *transport,
     {
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO: (%P|%t) GIOP::send_request () "
+                    "TAO: (%P|%t) GIOP::send_message () "
                     "EOF, closing conn %d\n",
                     transport->handle()));
       return -1;

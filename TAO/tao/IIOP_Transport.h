@@ -94,7 +94,8 @@ public:
 
   virtual int send_request (TAO_ORB_Core *orb_core ,
                             TAO_OutputCDR &stream,
-                            int twoway);
+                            int twoway,
+                            ACE_Time_Value *max_wait_time);
   // Default action to be taken for send request.
 
 protected:
@@ -146,7 +147,8 @@ public:
 
   int send_request (TAO_ORB_Core *orb_core,
                     TAO_OutputCDR &stream,
-                    int twoway);
+                    int twoway,
+                    ACE_Time_Value *max_wait_time);
   // This is a bridge method for the connection handlers
   // <send_request> method.  The connection handler is responsible for
   // concurrency strategies, typically using the leader-follower

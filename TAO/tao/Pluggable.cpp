@@ -232,9 +232,9 @@ TAO_Transport::register_handler (void)
 }
 
 int
-TAO_Transport::wait_for_reply (void)
+TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time)
 {
-  return this->ws_->wait ();
+  return this->ws_->wait (max_wait_time);
 }
 
 void

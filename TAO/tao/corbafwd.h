@@ -969,6 +969,9 @@ TAO_NAMESPACE CORBA
 #define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x08U << 4)
 #define TAO_NULL_POINTER_MINOR_CODE                (0x09U << 4)
 #define TAO_MPROFILE_CREATION_ERROR                (0x0AU << 4)
+#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0BU << 4)
+#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0CU << 4)
+#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0DU << 4)
 
 // errno encoding:  bottom 4 bits.
 #define TAO_UNSPECIFIED_MINOR_CODE  0x0U

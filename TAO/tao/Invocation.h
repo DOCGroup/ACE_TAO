@@ -140,6 +140,11 @@ protected:
 
   TAO_Profile *profile_;
   // This invocation is using this transport, may change...
+
+  ACE_Time_Value max_wait_time_value_;
+  ACE_Time_Value *max_wait_time_;
+  // The timeout remaining for this request, it is initialized in
+  // start() and updated as required.
 };
 
 class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation

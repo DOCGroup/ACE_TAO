@@ -1897,6 +1897,8 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_RepositoryId);
 
+  CORBA::release (CORBA::ORB::_tc_InvalidName);
+
   CORBA::release (CORBA::_tc_ORBid);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

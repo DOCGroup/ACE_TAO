@@ -200,7 +200,8 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
 int
 TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
-                                         int two_way)
+                                         int two_way,
+                                         ACE_Time_Value *max_wait_time)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
@@ -210,7 +211,8 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 
   return TAO_GIOP::send_message (this,
                                  stream,
-                                 orb_core);
+                                 orb_core,
+                                 max_wait_time);
 }
 
 // Return 0, when the reply is not read fully, 1 if it is read fully.
@@ -293,11 +295,14 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */)
       return -1;
     }
 
-  if (this->tms_->dispatch_reply (request_id,
-                                  reply_status,
-                                  message_state->giop_version,
-                                  reply_ctx,
-                                  message_state) != 0)
+  result = 
+    this->tms_->dispatch_reply (request_id,
+                                reply_status,
+                                message_state->giop_version,
+                                reply_ctx,
+                                message_state);
+
+  if (result == -1)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -308,12 +313,18 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */)
       return -1;
     }
 
+  if (result == 0)
+    {
+      message_state->reset ();
+      return 0;
+    }
+
   // This is a NOOP for the Exclusive request case, but it actually
   // destroys the stream in the muxed case.
   this->tms_->destroy_message_state (message_state);
 
   // Return something to indicate the reply is received.
-  return 1;
+  return result;
 }
 
 int
@@ -386,7 +397,8 @@ TAO_UIOP_Client_Transport::check_unexpected_data (void)
 // ****************************************************************
 
 ssize_t
-TAO_UIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_UIOP_Transport::send (const ACE_Message_Block *mblk,
+                          ACE_Time_Value *max_time_wait)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
@@ -417,9 +429,15 @@ TAO_UIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
           // we should set IOV_MAX to that limit.
           if (iovcnt == IOV_MAX)
             {
-              n = this->handler_->peer ().sendv_n ((const iovec *) iov,
-                                                   iovcnt);
-              if (n < 1)
+              if (max_time_wait == 0)
+                n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+                                                     iovcnt);
+              else
+                n = ACE::writev (this->handler_->peer ().get_handle (),
+                                 (const iovec*) iov,
+                                 iovcnt,
+                                 max_time_wait);
+              if (n <= 0)
                 return n;
 
               nbytes += n;
@@ -500,7 +518,8 @@ TAO_UIOP_Transport::recv (iovec *iov,
 int
 TAO_UIOP_Transport::send_request (TAO_ORB_Core *  /* orb_core */,
                                   TAO_OutputCDR & /* stream   */,
-                                  int             /* twoway   */)
+                                  int             /* twoway   */,
+                                  ACE_Time_Value * /* max_wait_time */)
 {
   return -1;
 }
