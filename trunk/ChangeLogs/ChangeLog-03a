@@ -1,6 +1,13 @@
 Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
+          When AIO support is found, set the right define but also add the
+          library liblrt to the lists to link with. Only when building with
+          threading support link with the pthread library.
+
+Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
           Don't set any BUILD_DLL defines in this file, the BUILD_DLL defines
           are set in the specific makefiles.
 

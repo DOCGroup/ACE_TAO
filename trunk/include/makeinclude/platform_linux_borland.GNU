@@ -23,8 +23,17 @@ ifeq (,$(threads))
   threads = 1
 endif
 
+PLATFORM_AIO_SUPPORT := \
+       $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
+
 ifeq ($(threads),0)
   CPPFLAGS += -DACE_MT_SAFE=0
+else
+  LIBS += libpthread
+  ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
+    CPPFLAGS += -DACE_HAS_AIO_CALLS
+    LIBS += liblrt
+  endif
 endif # threads
 
 PLATFORM_XT_CPPFLAGS=
@@ -50,9 +59,6 @@ PLATFORM_GTK_LDFLAGS=
 PLATFORM_WX_CPPFLAGS= $(shell wx-config --cflags) $(PLATFORM_GTK_CPPFLAGS)
 PLATFORM_WX_LIBS    = $(shell wx-config --libs)   $(PLATFORM_GTK_LIBS)
 PLATFORM_WX_LDFLAGS =
-
-PLATFORM_AIO_SUPPORT := \
-       $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
 ifeq ($(insure),1)
 CC  = insure
@@ -98,8 +104,7 @@ CPPFLAGS += #$(CFLAGS)
 CCFLAGS += $(CFLAGS)
 BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v -L$(LIBPATH):$(ACELIBPATH)
 BORINITOBJ = borinitso.o borinit.o crt1.o
-BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so \
-	libpthread.so libc.so libm.so libdl.so
+BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so
 
 PRELINK=
 SOFLAGS= $(BORSHAREDOBJ) borinitso.o -Tpd
