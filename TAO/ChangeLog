@@ -1,3 +1,8 @@
+Fri Jan 24 11:42:57 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed yet another
+          possible race conditions.
+
 Fri Jan 24 10:59:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface_strategy.cpp:
