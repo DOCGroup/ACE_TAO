@@ -1,3 +1,8 @@
+Sun Apr 27 20:08:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a typo that blasted
+	  the builds.
+
 Sun Apr 27 17:50:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Makefile: Updated dependencies.
