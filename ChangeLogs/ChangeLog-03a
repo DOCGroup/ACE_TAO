@@ -1,3 +1,9 @@
+Fri Aug  9 12:13:21 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* bin/nightlybuilds/builds.1st:
+	  Moved the Debian_Core builds to the new scoreboard.
+	  Thanks to CRaig Rodrigues <crodrigu@bbn.com> for the fix.
+
 Fri Aug  9 09:24:08 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Time_Value.{inl,cpp}: Make sure to normalize the set() methods...
