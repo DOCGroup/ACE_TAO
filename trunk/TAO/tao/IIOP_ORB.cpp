@@ -1,6 +1,5 @@
 // $Id$
-//
-// @(#)iioporb.cpp      1.8 95/09/19
+
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -187,10 +186,6 @@ iiop_string_to_object (const char *string,
   // expensive, though it does ensure that type-safe narrowing code
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
-  
-  ACE_DEBUG ((LM_DEBUG,
-	      "string = %s\n",
-	      string));
   
   TAO_IIOP_Profile *pfile;
   
