@@ -927,8 +927,18 @@ public:
 };
 
 // ACE platform supports some form of threading.
-#if defined (ACE_HAS_THREADS)
-
+#if !defined (ACE_HAS_THREADS)
+class ACE_Barrier
+{
+  // = TITLE
+  //   This is a no-op to make ACE "syntactically consistent."
+public:
+  ACE_Barrier (u_int, LPCTSTR = 0, void * = 0) {}
+  ~ACE_Barrier (void) {}
+  int wait (void) { ACE_NOTSUP_RETURN (-1); }
+  void dump (void) const {}
+};
+#else
 class ACE_Export ACE_Thread_Mutex
 {
   // = TITLE
@@ -1445,7 +1455,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
-
 #endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)
