@@ -1,3 +1,26 @@
+Mon Oct 25 14:18:26 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\RTCORBA\RT_ORBInitializer.cpp: 
+
+	  Fixed the <rt_poa_factory_name_> and the
+	  <rt_poa_factory_directive_> from "TAO_RT_POA" to
+	  "TAO_RT_Object_Adapter_Factory".
+
+	* tao\ORB_Core.cpp: 
+
+	  Fixed the <poa_factory_name_> and the <poa_factory_directive_>
+	  from "TAO_POA" to "TAO_Object_Adapter_Factory".
+
+        * tao/PortableServer/Object_Adapter.cpp:
+
+          Service name of TAO_Object_Adapter_Factory was changed from
+	  "PortableServer" to "TAO_Object_Adapter_Factory".
+
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+
+          Service name of TAO_RT_Object_Adapter_Factory was changed from
+	  "RTPortableServer" to "TAO_RT_Object_Adapter_Factory".
+
 Mon Oct 25 12:48:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
