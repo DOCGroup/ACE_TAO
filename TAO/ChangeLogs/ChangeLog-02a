@@ -1,3 +1,10 @@
+Fri Mar  9 14:27:00 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+        * tao/Makefile:
+
+          Modifications to make things build correctly with Chorus 4.0.1.
+
 Fri Mar 09 12:54:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (parse): Fixed

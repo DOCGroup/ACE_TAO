@@ -332,14 +332,11 @@ ifndef TAO_COMPONENTS
     Dynamic_Any \
     Ft_Corba \
 
-  ifeq (1,$(CROSS-COMPILE))
-  else
   ifeq (1,$(ACE_HAS_GNUG_PRE_2_8))
   else
     TAO_COMPONENTS += \
       Interface_repo
   endif # ! ACE_HAS_GNUG_PRE_2_8
-  endif # ! CROSS-COMPILE
 endif # TAO_COMPONENTS
 
 ####
