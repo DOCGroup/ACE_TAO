@@ -161,8 +161,9 @@ ACE::select (int width,
                                readfds.fdset (),
                                0,
                                0,
+                               timeout);
 
-#if !defined (ACE_WIN64)                               timeout);
+#if !defined (ACE_WIN64)
   if (result > 0)
     readfds.sync ((ACE_HANDLE) width);
 #endif /* ACE_WIN64 */
