@@ -1,3 +1,18 @@
+Thu Sep  2 07:54:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	  Fix to pointer alignment adjustment calculation in
+	  TAO_Marshal_Struct::*. The old one was failing with
+	  NT and Borland Builder, and of two fixes for Borland
+	  Builder, one didn't work with SunOS and one didn't
+	  work with NT/MSVC. This commit uses an
+	  #if defined (WIN32) to get all platforms happy. Thanks to
+	  Christopher Kohlhoff <chris_kohlhoff@yahoo.com> for 
+	  sending in the Borland fix and his efforts to find a
+	  single portable one.
+
 Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/ntp-time.h: 
