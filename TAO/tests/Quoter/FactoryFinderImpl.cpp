@@ -16,7 +16,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "QuoterFactoryFinderImpl.h"
+#include "FactoryFinderImpl.h"
 
 static const char usage [] = 
 "[-? |\n[-O[RBport] ORB port number]]";
