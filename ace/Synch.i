@@ -197,10 +197,15 @@ ACE_INLINE int
 ACE_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Mutex::remove");
-#if defined (CHORUS)
+#if defined(CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
    int result = 0;
-   // Are we the owner?
-   if (this->process_lock_ && this->lockname_)
+   // In the case of a interprocess mutex, the owner is the first process
+   // that created the shared memory object. In this case, the lockname_
+   // pointer will be non-zero (points to allocated memory for the name).
+   // Owner or not, the memory needs to be unmapped from the process.
+   // If we are the owner, the file used for shm_open needs to be deleted
+   // as well.
+   if (this->process_lock_)
      {
        if (this->removed_ == 0)
          {
@@ -208,20 +213,22 @@ ACE_Mutex::remove (void)
 
            // Only destroy the lock if we're the ones who initialized
            // it.
-           result = ACE_OS::mutex_destroy (this->process_lock_);
-           ACE_OS::munmap (this->process_lock_,
-                           sizeof (ACE_mutex_t));
-           ACE_OS::shm_unlink (this->lockname_);
-           ACE_OS::free (ACE_static_cast (void *,
-                                          ACE_const_cast (ACE_TCHAR *,
-                                                          this->lockname_)));
+           if (!this->lockname_)
+             {
+               ACE_OS::munmap (this->process_lock_,
+                               sizeof (ACE_mutex_t));
+             }
+           else
+             {
+               result = ACE_OS::mutex_destroy (this->process_lock_);
+               ACE_OS::munmap (this->process_lock_,
+                               sizeof (ACE_mutex_t));
+               ACE_OS::shm_unlink (this->lockname_);
+               ACE_OS::free (ACE_static_cast (void *,
+                                              ACE_const_cast (ACE_TCHAR *,
+                                                            this->lockname_)));
+             }
          }
-     }
-   else if (this->process_lock_)
-     {
-       ACE_OS::munmap (this->process_lock_,
-                       sizeof (ACE_mutex_t));
-       result = 0;
      }
    return result;
 #else /* !CHORUS */
