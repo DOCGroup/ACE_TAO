@@ -91,7 +91,6 @@ class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
   Cubit_Task (const char *args,
               const char* orbname,
               u_int num_of_objs,
-	      ACE_Barrier *barrier,
 	      Task_State *ts,
 	      ACE_Thread_Manager *thr_mgr,
 	      u_int task_id);
@@ -140,10 +139,6 @@ private:
   Cubit_i **servants_;
   // Array to hold the servants
 
-  ACE_Barrier *barrier_;
-  // Barrier for the multiple servants to synchronize after
-  // binding to the orb.
-
   CORBA::String *servants_iors_;
   // ior strings of the servants
 
@@ -166,7 +161,7 @@ class Server
 public:
   // default constructor
   int initialize (int argc, char **argv);
-  int start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts);
+  int start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts);
   Util_Thread * start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts);
  private:
   int argc_;
