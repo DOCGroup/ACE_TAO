@@ -276,7 +276,7 @@ ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out) cons
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::ull_shift (ACE_U_LongLong a, 
+ACE_U_LongLong::ull_shift (ACE_U_LongLong a,
                            ACE_UINT32 c_in,
                            ACE_UINT32 *c_out) const
 {
