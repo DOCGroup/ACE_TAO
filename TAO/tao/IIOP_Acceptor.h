@@ -32,6 +32,9 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 
+//Forward Declaration.
+class TAO_IIOP_Connector;
+
 // TAO IIOP_Acceptor concrete call defination
 
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
@@ -43,11 +46,12 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
   //   The IIOP-specific bridge class for the concrete acceptor.
   //
 public:
-  // TAO_IIOP_Acceptor (ACE_INET_Addr &addr);
-  // Create Acceptor object using addr.
-
+ 
   TAO_IIOP_Acceptor (void);
   // Create Acceptor object using addr.
+
+  ~TAO_IIOP_Acceptor (void);
+  // Destructor.
 
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
@@ -79,7 +83,10 @@ public:
   // @@ Helper method for the implementation repository, should go
   //    away
 
-  typedef TAO_Acceptor_Impl<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
+  typedef ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler> TAO_IIOP_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR, TAO_IIOP_Connector> TAO_IIOP_ACCEPT_STRATEGY;
 
 private:
   int open_i (TAO_ORB_Core* orb_core,
@@ -89,6 +96,11 @@ private:
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.
+
+  TAO_IIOP_CREATION_STRATEGY *creation_strategy_;
+  TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
+  TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
+  // Acceptor strategies.
 
   ACE_INET_Addr address_;
   ACE_CString host_;

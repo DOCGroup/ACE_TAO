@@ -32,9 +32,18 @@ ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
     base_acceptor_ (),
+    creation_strategy_ (0),
+    concurrency_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0)
 {
+}
+
+TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
+{
+  delete this->creation_strategy_;
+  delete this->concurrency_strategy_;
+  delete this->accept_strategy_;
 }
 
 // TODO =
@@ -141,8 +150,25 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_INET_Addr& addr)
 {
   this->orb_core_ = orb_core;
+ 
+  ACE_NEW_RETURN (this->creation_strategy_,
+                  TAO_IIOP_CREATION_STRATEGY (this->orb_core_),
+                  -1);
+  
+  ACE_NEW_RETURN (this->concurrency_strategy_,
+                  TAO_IIOP_CONCURRENCY_STRATEGY (this->orb_core_),
+                  -1);
 
-  if (this->base_acceptor_.open (orb_core, addr) == -1)
+  ACE_NEW_RETURN (this->accept_strategy_,
+                  TAO_IIOP_ACCEPT_STRATEGY (this->orb_core_, 
+                                            this->tag ()),
+                  -1);
+
+  if (this->base_acceptor_.open (addr,
+                                 this->orb_core_->reactor (),
+                                 this->creation_strategy_,
+                                 this->accept_strategy_,
+                                 this->concurrency_strategy_) == -1)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -211,12 +237,26 @@ TAO_IIOP_Acceptor::endpoint_count (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
-template class TAO_Acceptor_Impl<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>;
+template class ACE_Scheduling_Strategy<TAO_IIOP_Server_Connection_Handler>;
+template class TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>;
+template class TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>;
+template class TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR, TAO_IIOP_Connector>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
-#pragma instantiate TAO_Acceptor_Impl<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO_IIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR, TAO_IIOP_Connector>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
