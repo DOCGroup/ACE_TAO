@@ -1,3 +1,12 @@
+Thu Jun 15 14:23:53 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/diffs/PolicyC.h.diff:
+	* tao/diffs/PolicyC.cpp.diff:
+	* tao/diffs/RTCORBAC.h.diff:
+	* tao/diffs/RTCORBAC.cpp.diff:
+	  
+	  Created diffs file for modified pidl generated files.
+
 Thu Jun 15 13:39:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
