@@ -194,21 +194,9 @@ TAO_NS_Periodic_Supplier::activate (ACE_Barrier* barrier)
   return 0;
 }
 
-int
-TAO_NS_Periodic_Supplier::svc (void)
+void
+TAO_NS_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
-
-  // First, wait for other threads.
-  this->barrier_->wait ();
-
-  // first thread here inits the Base_Time.
-  stats_.base_time (BASE_TIME::instance ()->base_time_);
-
-  // now wait till the phase_ period expires.
-  ACE_OS::sleep (ACE_Time_Value (0, phase_));
-
   // populate event.
   // send the base time and max count.
   TimeBase::TimeT base_time;
@@ -222,29 +210,11 @@ TAO_NS_Periodic_Supplier::svc (void)
   buffer <<= this->iter_;
   zeroth_event.opt_header ("MaxCount", buffer);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
 
-  ACE_TRY
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
-
-      this->send_event (zeroth_event.event () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::UserException, ue)
-    {
-      ACE_PRINT_EXCEPTION (ue,
-                           "Periodic supplier: error sending event. ");
-      break;
-    }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "Periodic supplier: error sending event. ");
-      break;
-    }
-  ACE_ENDTRY;
+  this->send_event (zeroth_event.event () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
@@ -264,46 +234,22 @@ TAO_NS_Periodic_Supplier::svc (void)
 
       this->event_.payload (buffer);
 
-          if (this->run_time_ != 0 && ACE_OS::gettimeofday () > run_time)
+      if (this->run_time_ != 0 && ACE_OS::gettimeofday () > run_time)
         {
           // Time up, send a "Stop" event.
           CORBA::Any buffer;
-          buffer <<= (long) 1;
+          buffer <<= (CORBA::Long) 1;
           this->event_.opt_header ("Stop", buffer);
 
-                  i = iter_;  // Load the iter so that the loop exits.
+          i = iter_;  // Load the iter so that the loop exits.
         }
 
-      ACE_TRY
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
-                        this->proxy_name_.c_str (), i));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
+                    this->proxy_name_.c_str (), i));
 
-          this->send_event (this->event_.event () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCH (CORBA::UserException, ue)
-        {
-          ACE_PRINT_EXCEPTION (ue,
-                               "Periodic supplier: error sending event. ");
-          break;
-        }
-      ACE_CATCH (CORBA::SystemException, se)
-        {
-          ACE_PRINT_EXCEPTION (se,
-                               "Periodic supplier: error sending event. ");
-          break;
-        }
-      ACE_ENDTRY;
-
-      /*ACE_CATCHANY
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Periodic supplier: error sending event %s\n"));
-          break;
-        }
-      ACE_ENDTRY;*/
+      this->send_event (this->event_.event () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       after = ACE_OS::gethrtime ();
 
@@ -347,6 +293,39 @@ TAO_NS_Periodic_Supplier::svc (void)
 
   if (this->client_)
     this->client_->done (this);
+}
+
+int
+TAO_NS_Periodic_Supplier::svc (void)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
+
+  // First, wait for other threads.
+  this->barrier_->wait ();
+
+  // first thread here inits the Base_Time.
+  stats_.base_time (BASE_TIME::instance ()->base_time_);
+
+  // now wait till the phase_ period expires.
+  ACE_OS::sleep (ACE_Time_Value (0, phase_));
+
+  ACE_TRY_NEW_ENV
+    {
+      this->handle_svc (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::UserException, ue)
+    {
+      ACE_PRINT_EXCEPTION (ue,
+                           "Periodic supplier: error sending event. ");
+    }
+  ACE_CATCH (CORBA::SystemException, se)
+    {
+      ACE_PRINT_EXCEPTION (se,
+                           "Periodic supplier: error sending event. ");
+    }
+  ACE_ENDTRY;
 
   return 0;
 }

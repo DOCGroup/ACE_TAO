@@ -71,6 +71,10 @@ public:
   const char* proxy_name (void);
 
 protected:
+
+  /// svc method.
+  void handle_svc (ACE_ENV_SINGLE_ARG_DECL);
+
   /// The name of the proxy we connect to.
   ACE_CString proxy_name_;
 
