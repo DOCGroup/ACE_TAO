@@ -30,6 +30,14 @@ TAO_SSLIOP_Server_Invocation_Interceptor::name (
 }
 
 void
+TAO_SSLIOP_Server_Invocation_Interceptor::destroy (
+    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+
+void
 TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
     TAO_ENV_ARG_DECL)
