@@ -1,8 +1,15 @@
+Tue Sep 14 13:03:54 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosNotifyComm.idl:
+          Disable (via #ifdef) unimplemented "Pull" interfaces
+          to reduce footprint and compilation time.
+
 Tue Sep 14 06:27:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/compiler.html:
+        * docs/compiler.html:
 
-	  Fix typos.  Change *.i to *.inl.
+          Fix typos.  Change *.i to *.inl.
 
 Tue Sep 14 08:49:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
@@ -45,54 +52,54 @@ Tue Sep 14 08:41:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 Mon Sep 13 15:56:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Trading/Trading.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
 
           Changed import_test and export_test projects to inherit from
-	  trading_serv.  Needed by Borland CBuilderX.
+          trading_serv.  Needed by Borland CBuilderX.
 
 Mon Sep 13 12:18:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
 
-	  Changed to inherit from core.mpb so services will be installed.
+          Changed to inherit from core.mpb so services will be installed.
 
 Mon Sep 13 12:06:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
 
-	  Remove #include of Naming_Server.h and unused method
-	  name_server() to avoid introducing a dependency on the naming
-	  service implementation on some windows systems.
+          Remove #include of Naming_Server.h and unused method
+          name_server() to avoid introducing a dependency on the naming
+          service implementation on some windows systems.
 
 Mon Sep 13 11:47:13 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated.
+          Updated.
 
 Mon Sep 13 06:40:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
 
-	  Changed to inherit from dslogadmin_serv.
+          Changed to inherit from dslogadmin_serv.
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Changed to inherit from svc_utils.
+          Changed to inherit from svc_utils.
 
 Mon Sep 13 12:29:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
@@ -123,68 +130,68 @@ Mon Sep 13 09:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Sep 12 17:08:17 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/examples/Log/Event/Log_Event.mpc:
-	* orbsvcs/examples/Log/Notify/Log_Notify.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/examples/Log/Event/Log_Event.mpc:
+        * orbsvcs/examples/Log/Notify/Log_Notify.mpc:
 
           Update *.mpc files to reflect new libraries.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
-	* orbsvcs/orbsvcs/Log/EventLogConsumer.h:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/EventLogNotification.h:
-	* orbsvcs/orbsvcs/Log/EventLog_i.h:
-	* orbsvcs/orbsvcs/Log/Iterator_i.h:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/LogNotification.h:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
-	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Log/Log_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
-	* orbsvcs/orbsvcs/Log/PersistStore.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogNotification.h:
+        * orbsvcs/orbsvcs/Log/EventLog_i.h:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/LogNotification.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+        * orbsvcs/orbsvcs/Log/PersistStore.h:
 
           Changed #include "*_export.h" to "*_serv_export.h"; Renamed
           TAO_*_Export to TAO_*_Serv_Export.
 
-	* orbsvcs/orbsvcs/Log/eventlog_serv_export.h:
-	* orbsvcs/orbsvcs/Log/eventlog_skel_export.h:
-	* orbsvcs/orbsvcs/Log/log_serv_export.h:
-	* orbsvcs/orbsvcs/Log/log_skel_export.h:
-	* orbsvcs/orbsvcs/Log/notifylog_serv_export.h:
-	* orbsvcs/orbsvcs/Log/notifylog_skel_export.h:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.rc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.rc:
+        * orbsvcs/orbsvcs/Log/eventlog_serv_export.h:
+        * orbsvcs/orbsvcs/Log/eventlog_skel_export.h:
+        * orbsvcs/orbsvcs/Log/log_serv_export.h:
+        * orbsvcs/orbsvcs/Log/log_skel_export.h:
+        * orbsvcs/orbsvcs/Log/notifylog_serv_export.h:
+        * orbsvcs/orbsvcs/Log/notifylog_skel_export.h:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.rc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.rc:
 
-	  New files.
+          New files.
 
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
 
           Split Event Logging Service into three libraries:
-	  DsEventLogAdmin, DsEventLogAdmin_Skel, and
-	  DsEventLogAdmin_Serv for client stubs, servant skeletons, and
-	  service implementation respectively.
+          DsEventLogAdmin, DsEventLogAdmin_Skel, and
+          DsEventLogAdmin_Serv for client stubs, servant skeletons, and
+          service implementation respectively.
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
           Split Logging Service into three libraries:
-	  DsLogAdmin, DsLogAdmin_Skel, and DsLogAdmin_Serv for client
-	  stubs, servant skeletons, and service implementation
-	  respectively.
+          DsLogAdmin, DsLogAdmin_Skel, and DsLogAdmin_Serv for client
+          stubs, servant skeletons, and service implementation
+          respectively.
 
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
 
           Split Notify Logging Service into three libraries:
-	  DsNotifyLogAdmin, DsNotifyLogAdmin_Skel, and
-	  DsNotifyLogAdmin_Serv for client stubs, servant skeletons, and
-	  service implementation respectively.
+          DsNotifyLogAdmin, DsNotifyLogAdmin_Skel, and
+          DsNotifyLogAdmin_Serv for client stubs, servant skeletons, and
+          service implementation respectively.
 
 Sun Sep 12 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -194,12 +201,12 @@ Sun Sep 12 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Sep 11 19:43:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
-	* orbsvcs/tests/FT_App/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/tests/CosEvent/Basic/Makefile.am:
+        * orbsvcs/tests/FT_App/Makefile.am:
+        * tao/Makefile.am:
 
-	  Updated.
+          Updated.
 
 Sat Sep 11 12:41:22 2004  Steve Totten  <totten_s@ociweb.com>
 
@@ -233,14 +240,14 @@ Sat Sep 11 12:25:07 2004  Steve Totten  <totten_s@ociweb.com>
 
 Sat Sep 11 08:47:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
 
-	  Changed to use TAO_NOTIFY_SERV_SINGLETON_DECLARE.
+          Changed to use TAO_NOTIFY_SERV_SINGLETON_DECLARE.
 
-	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
 
-	  Removed #include of CosNamingC.h.  It isn't used, but requires
-	  linking with naming client library with some windows compilers.
+          Removed #include of CosNamingC.h.  It isn't used, but requires
+          linking with naming client library with some windows compilers.
 
 Sat Sep 11 00:44:34 2004  Olli Savia  <ops@iki.fi>
 
