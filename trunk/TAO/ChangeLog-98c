@@ -1,7 +1,68 @@
+Wed Aug  5 16:04:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+	* tests/CDR/basic_types.dsp:
+	* tests/CDR/growth.dsp:
+	* tests/CDR/tc.dsp:
+	* tests/Cubit/TAO/DII_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/MT_Cubit/client.dsp:
+	* tests/Cubit/TAO/MT_Cubit/server.dsp:
+	* tests/NestedUpcall/MT_Client_Test/client.dsp:
+	* tests/NestedUpcall/MT_Client_Test/server.dsp:
+	* tests/NestedUpcall/Reactor/client.dsp:
+	* tests/NestedUpcall/Reactor/server.dsp:
+	* tests/NestedUpcall/Triangle_Test/initiator.dsp:
+	* tests/NestedUpcall/Triangle_Test/server_A.dsp:
+	* tests/NestedUpcall/Triangle_Test/server_B.dsp:
+	* tests/OctetSeq/OctetSeq.dsp:
+	* tests/POA/DSI/client.dsp:
+	* tests/POA/DSI/server.dsp:
+	* tests/POA/Default_Servant/client.dsp:
+	* tests/POA/Default_Servant/server.dsp:
+	* tests/POA/Explicit_Activation/server.dsp:
+	* tests/POA/FindPOA/FindPOA.dsp:
+	* tests/POA/Forwarding/client.dsp:
+	* tests/POA/Forwarding/server.dsp:
+	* tests/POA/Generic_Servant/server.dsp:
+	* tests/POA/NewPOA/NewPOA.dsp:
+	* tests/POA/On_Demand_Activation/server.dsp:
+	* tests/POA/RootPOA/RootPOA.dsp:
+	* tests/POA/TIE/client.dsp:
+	* tests/POA/TIE/server.dsp:
+	* tests/POA/locking/locking.dsp:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/server.dsp:
+	* tests/Quoter/Factory_Finder.dsp:
+	* tests/Quoter/Generic_Factory.dsp:
+	* tests/Quoter/client.dsp:
+	* tests/Quoter/server.dsp:
+	* tests/Simple/client.dsp:
+	* tests/Simple/server.dsp:
+	  Updated all the Release versions of these projects.  I'll
+	  spend another session on converting the rest of the orbsvcs
+	  soon.  
+
+	  Note: Most of the run_test.pl's do not yet have support for
+	  running the Release version instead of the debug version.
+	
+	* tests/TAO_Tests.dsw: Inserted a dependency between DII_Cubit 
+	  and IDL_Cubit.
+
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: New and improved script
+	  that supports more useful options.
+
+	* tests/Cubit/TAO/IDL_Cubit/README:  Added a reference to 
+	  run_test.pl and updated the "output" here to what it looks like
+	  now.
+
 Wed Aug  5 16:02:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
-		Used TAO_ORB_Manager to do the ORB and POA 
+	  Used TAO_ORB_Manager to do the ORB and POA 
 	  initialization and activation of servants.
 
 Wed Aug  5 15:38:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
