@@ -1,3 +1,8 @@
+Tue Jun 17 05:50:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/implrepo/index.html:
+          Corrected link to doxygen documentation
+
 Mon Jun 16 11:14:15 2003  Chris Cleeland  <cleeland@ociweb.com>
 
         * TAO version 1.3.3 released.
@@ -21,12 +26,12 @@ Thu Jun 12 15:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" change
 	  in ACE, the explicit template instantiations for
 	  ACE_Unbounded_Queue<> is now removed. Thanks again to Rob Andzik
-	  for motivating these changes. 
+	  for motivating these changes.
 
 Thu Jun 12 14:53:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/BiDir_Policy_i.cpp: Fixed compilation errors on
-	  MSVC 6.0.  
+	  MSVC 6.0.
 
 Thu Jun 12 14:05:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -34,10 +39,10 @@ Thu Jun 12 14:05:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/OctetSeqC.cpp:
 	* tao/OctetSeqC.i: Regenerated code for OctetSeq due to the change
 	  "Tue Jun 10 10:05:34 2003  Jeff Parsons
-	  <j.parsons@vanderbilt.edu>". 
-	
-	* tao/diffs/OctetSeq.diff: Updated the diffs. 
-	
+	  <j.parsons@vanderbilt.edu>".
+
+	* tao/diffs/OctetSeq.diff: Updated the diffs.
+
 	* tao/PortableServer/PortableServerC.h: Removed duplicate
 	  instantiations of Any_Dual_Impl_T<>. Thanks to Rob Andzik for
 	  pointing this out.
@@ -64,7 +69,7 @@ Wed Jun 11 16:14:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Wed Jun 11 15:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG
-	  1528. Please see 
+	  1528. Please see
 
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1528
 
@@ -79,7 +84,7 @@ Wed Jun 11 15:08:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  class. With this change it is possible to hold a null-lock for
 	  single threaded applications. We can configure the profiles to
 	  have a null lock using -ORBProfileLock null. This fixes BUG
-	  1527. 
+	  1527.
 
 	* tao/Invocation.cpp: Fixed a stupid typo that caused the profile's
 	  refcount to be incremented twice in every call. This should fix
@@ -90,7 +95,7 @@ Wed Jun 11 12:15:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Added
 	  TAO_Abstract_ServantBase to the list of constructors that needs
 	  to be called. This will help to avoid warnings for simple
-	  cases. 
+	  cases.
 
 	  For deeply nested hierachies we still have a problem in that we
 	  are not calling the base class constructors with virtual
@@ -121,7 +126,7 @@ Wed Jun 11 11:44:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  particularly picky about this emitting up lots of warnings. What
 	  makes this particularly tricky is that gcc 3.3 is a bit
 	  inconsistent emitting warnings for only copy constructors. But
-	  that is besides the point.  
+	  that is besides the point.
 
 	  The fixes made are also for regular constructors and so they
 	  should just work fine. Thanks to Boris and Jeff Parsons for
@@ -174,7 +179,7 @@ Tue Jun 10 09:33:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
 
-          Added a specialization for the 
+          Added a specialization for the
           TAO_IFR_Desc_Utils<>::fill_desc_begin_ex() method when the
           template parameters are CORBA::OperationDescription and
           TAO_OperationDef_i, since this method, although not called
