@@ -11,11 +11,15 @@ ACE_RCSID(OctetSeq, test_i, "$Id$")
 void
 Database_i::set (Test::Index i,
                  const Test::OctetSeq& seq,
+                 CORBA::Double verification_token,
+                 CORBA::Double_out returned_token,
                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((Test::OutOfRange))
 {
   if (i >= this->max_range_)
     ACE_THROW (Test::OutOfRange (0, this->max_range_));
+
+  returned_token = verification_token;
 
   CORBA::ULong len = seq.length ();
   // CORBA::ULong max = seq.maximum ();

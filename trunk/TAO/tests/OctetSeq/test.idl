@@ -40,7 +40,9 @@ module Test
     //   a little trickier to ensure.
     //
     void set (in Index i,
-              in OctetSeq value)
+              in OctetSeq value,
+              in double verification_token,
+              out double returned_token)
       raises (OutOfRange);
 
     OctetSeq get (in Index i)

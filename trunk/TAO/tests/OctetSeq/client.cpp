@@ -101,13 +101,28 @@ main (int argc, char *argv[])
                   CORBA::ULong r = ACE_OS::rand_r (seed);
                   CORBA::ULong l = r % maxsize;
                   elements[j].length (l);
+                  CORBA::Double token = 0;
                   for (CORBA::ULong k = 0; k != l; ++k)
                     {
                       r = ACE_OS::rand_r (seed);
                       elements[j][k] = (r % 128);
+                      token += r;
                     }
-                  server->set (Test::Index (j), elements[j], ACE_TRY_ENV);
+                  CORBA::Double returned_token;
+                  server->set (Test::Index (j),
+                               elements[j],
+                               token,
+                               returned_token,
+                               ACE_TRY_ENV);
                   ACE_TRY_CHECK;
+
+                  if (token != returned_token)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  "ERROR - invalid token <%f> returned,"
+                                  " expecting %f in (%d,%d)\n",
+                                  returned_token, token, i, j));
+                    }
                 }
             }
 

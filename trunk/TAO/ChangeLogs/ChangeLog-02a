@@ -1,108 +1,117 @@
+Tue Apr 11 17:57:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/OctetSeq/test.idl:
+        * tests/OctetSeq/test_i.h:
+        * tests/OctetSeq/test_i.cpp:
+        * tests/OctetSeq/client.cpp:
+          Modified the test to check that alignment of doubles after a
+          variable length octet sequence works ok.
+
 Tue Apr 11 14:35:57 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Changed the RTEC and the CosEC to use the components defined in
-	  the ESF directory.  In this pass i basically moved the classes
-	  from orbsvcs/Event/EC_* to orbsvcs/ESF/ESF_*
-	  But I also added components that simplify the implementation of
-	  the Consumer and Supplier admin classes.
-	  This new mini-framework is desgined to facilitate the task of
-	  implementing event services, such as the Real-time Event
-	  Service, the COS Event Service or the Notification Service.
+        * Changed the RTEC and the CosEC to use the components defined in
+          the ESF directory.  In this pass i basically moved the classes
+          from orbsvcs/Event/EC_* to orbsvcs/ESF/ESF_*
+          But I also added components that simplify the implementation of
+          the Consumer and Supplier admin classes.
+          This new mini-framework is desgined to facilitate the task of
+          implementing event services, such as the Real-time Event
+          Service, the COS Event Service or the Notification Service.
 
-	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
-	  Fixed minor problems with the generic event service framework
-	  components.
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+          Fixed minor problems with the generic event service framework
+          components.
 
-	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i:
-	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
-	  Add new iteration strategy to the framework.
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+          Add new iteration strategy to the framework.
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
-	  Use the new components to implement the ConsumerAdmin and
-	  SupplierAdmin interfaces.
-	  Reuse the code in the framework for the collections.
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+          Use the new components to implement the ConsumerAdmin and
+          SupplierAdmin interfaces.
+          Reuse the code in the framework for the collections.
 
-	* orbsvcs/orbsvcs/Event/EC_Command.h:
-	* orbsvcs/orbsvcs/Event/EC_Command.i:
-	* orbsvcs/orbsvcs/Event/EC_Command.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
-	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
-	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Copy_On_Write.h:
-	* orbsvcs/orbsvcs/Event/EC_Copy_On_Write.i:
-	* orbsvcs/orbsvcs/Event/EC_Copy_On_Write.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
-	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i:
-	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Worker.h:
-	* orbsvcs/orbsvcs/Event/EC_Worker.i:
-	* orbsvcs/orbsvcs/Event/EC_Worker.cpp:
-	  Removed, they are implemented in the ESF directory.
+        * orbsvcs/orbsvcs/Event/EC_Command.h:
+        * orbsvcs/orbsvcs/Event/EC_Command.i:
+        * orbsvcs/orbsvcs/Event/EC_Command.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.h:
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.i:
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Worker.h:
+        * orbsvcs/orbsvcs/Event/EC_Worker.i:
+        * orbsvcs/orbsvcs/Event/EC_Worker.cpp:
+          Removed, they are implemented in the ESF directory.
 
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Performance/Makefile:
-	* orbsvcs/tests/Event/lib/Makefile:
-	* orbsvcs/CosEvent_Service/Makefile:
-	* orbsvcs/orbsvcs/Makefile.CosEvent:
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	  Updated dependencies
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+          Updated dependencies
 
 Tue Apr 11 16:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/orbconf.h: Commented out AMI aupport as default thus
-	  rectifying the mistake I committed when testing out the AMI and
-	  Smart Proxies combination. Thanks to Carlos O' Ryan
-	  <coryan@cs.wustl.edu> for pointing this out.
-		
+        * tao/orbconf.h: Commented out AMI aupport as default thus
+          rectifying the mistake I committed when testing out the AMI and
+          Smart Proxies combination. Thanks to Carlos O' Ryan
+          <coryan@cs.wustl.edu> for pointing this out.
+
 Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/AVStreams/benchmark/run_test.pl
@@ -128,16 +137,16 @@ Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
           tests/DSI_Gateway/run_test.pl
           tests/DynAny_Test/run_test.pl
           tests/Endpoint_Per_Priority/run_test.pl
-          tests/Explicit_Event_Loop/run_test.pl  
+          tests/Explicit_Event_Loop/run_test.pl
           tests/Faults/run_test.pl
           tests/IORManipulation/run_test.pl
-          tests/InterOp-Naming/run_test.pl 
-          tests/Interceptors/run_test.pl   
+          tests/InterOp-Naming/run_test.pl
+          tests/Interceptors/run_test.pl
           tests/Leader_Followers/run_test.pl
           tests/MT_Client/run_test.pl
           tests/MT_Server/run_test.pl
           tests/Multiple_Inheritance/run_test.pl
-          tests/Native_Exceptions/run_test.pl   
+          tests/Native_Exceptions/run_test.pl
           tests/NestedUpcall/MT_Client_Test/run_test.pl
           tests/NestedUpcall/Simple/run_test.pl
           tests/NestedUpcall/Triangle_Test/run_test.pl
@@ -145,12 +154,12 @@ Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
           tests/ORB_init/run_test.pl
           tests/OctetSeq/run_test.pl
           tests/POA/Deactivation/run_test.pl
-          tests/POA/Destruction/run_test.pl 
-          tests/POA/Identity/run_test.pl    
-          tests/Param_Test/run_test.pl      
+          tests/POA/Destruction/run_test.pl
+          tests/POA/Identity/run_test.pl
+          tests/Param_Test/run_test.pl
           tests/Smart_Proxies/run_test.pl
           tests/Smart_Proxies/On_Demand/run_test.pl
-          tests/Timed_Buffered_Oneways/run_test.pl 
+          tests/Timed_Buffered_Oneways/run_test.pl
           tests/Timeout/run_test.pl
 
           Refactor duplicate code into ACEutils.pm
@@ -158,44 +167,44 @@ Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Apr 11 09:02:33 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/corbafwd.h (TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-	  TAO_ORB_CORE_INIT_LOCATION_CODE):
+        * tao/corbafwd.h (TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+          TAO_ORB_CORE_INIT_LOCATION_CODE):
 
-	  Added these new exception location codes.  They are used in the
-	  TAO_Acceptor_Registry::open() and TAO_ORB_Core::init() methods,
-	  respectively.
+          Added these new exception location codes.  They are used in the
+          TAO_Acceptor_Registry::open() and TAO_ORB_Core::init() methods,
+          respectively.
 
-	* tao/Exception.cpp (_info):
+        * tao/Exception.cpp (_info):
 
-	  Added information entries for the newly added
-	  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE and
-	  TAO_ORB_CORE_INIT_LOCATION_CODE exception location codes.
+          Added information entries for the newly added
+          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE and
+          TAO_ORB_CORE_INIT_LOCATION_CODE exception location codes.
 
-	  Corrected typo: "EENOTSUP" should be "ENOTSUP."
+          Corrected typo: "EENOTSUP" should be "ENOTSUP."
 
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Updated all exceptions to utilize new
-	  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE location code to
-	  improve exception messages.
+          Updated all exceptions to utilize new
+          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE location code to
+          improve exception messages.
 
-	  (open_default):
+          (open_default):
 
-	  Return error if no default endpoints were opened.  This can
-	  occur if all loaded pluggable protocols require an explicit
-	  endpoint to be provided.  [Bug 491]
+          Return error if no default endpoints were opened.  This can
+          occur if all loaded pluggable protocols require an explicit
+          endpoint to be provided.  [Bug 491]
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Updated all exceptions to utilize new
-	  TAO_ORB_CORE_INIT_LOCATION_CODE location code to improve
-	  exception messages.  [Bug 487]
+          Updated all exceptions to utilize new
+          TAO_ORB_CORE_INIT_LOCATION_CODE location code to improve
+          exception messages.  [Bug 487]
 
-	* tao/IIOP_Profile.cpp (decode):
-	* tao/SHMIOP_Profile.cpp (decode):
-	* tao/UIOP_Profile.cpp (decode):
+        * tao/IIOP_Profile.cpp (decode):
+        * tao/SHMIOP_Profile.cpp (decode):
+        * tao/UIOP_Profile.cpp (decode):
 
-	  Cleaned up error message.
+          Cleaned up error message.
 
 Tue Apr 11 08:05:37 2000  Chad Elliott <elliott_c@ociweb.com>
 
@@ -204,111 +213,111 @@ Tue Apr 11 08:05:37 2000  Chad Elliott <elliott_c@ociweb.com>
 
 Mon Apr 10 23:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* rules.tao.GNU: Removed the verbose declaration of smart proxies
-	  been disabled during a build.
-	* tao/IIOP_Connector.{h,cpp}:
-	* tao/UIOP_Connector.{h,cpp}:
-	* tao/SHMIOP_Connector.{h,cpp}:
-	  Fixed the build warnings and errors due to adding
-	  TAO_HAS_MINIMUM_CONNECTION_CACHING definition.
-	
+        * rules.tao.GNU: Removed the verbose declaration of smart proxies
+          been disabled during a build.
+        * tao/IIOP_Connector.{h,cpp}:
+        * tao/UIOP_Connector.{h,cpp}:
+        * tao/SHMIOP_Connector.{h,cpp}:
+          Fixed the build warnings and errors due to adding
+          TAO_HAS_MINIMUM_CONNECTION_CACHING definition.
+
 Mon Apr 10 17:50:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Makefile:
-	  Update dependencies
+        * tao/Makefile:
+          Update dependencies
 
-	* tao/Object_Loader.cpp:
-	  Add missing template instantiation
+        * tao/Object_Loader.cpp:
+          Add missing template instantiation
 
-	* tao/GIOP_Message_Lite.cpp:
-	  Add minor comment for Bala
+        * tao/GIOP_Message_Lite.cpp:
+          Add minor comment for Bala
 
 Mon Apr 10 16:21:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Object_Loader/driver.dsp:
-	* tests/Object_Loader/Test_DLL.dsp:
-	  Fixed the project files, now the test builds on both Unix and
-	  NT.
+        * tests/Object_Loader/driver.dsp:
+        * tests/Object_Loader/Test_DLL.dsp:
+          Fixed the project files, now the test builds on both Unix and
+          NT.
 
 Mon Apr 10 16:11:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Object_Loader/Makefile:
-	  Fixed dependencies
+        * tests/Object_Loader/Makefile:
+          Fixed dependencies
 
-	* tests/Object_Loader/Loader.cpp:
-	* tests/Object_Loader/driver.cpp:
-	  Fixed several hacks for NT.  Will have to do more fixing to get
-	  NT to work again, but i think I know how to do it now.
+        * tests/Object_Loader/Loader.cpp:
+        * tests/Object_Loader/driver.cpp:
+          Fixed several hacks for NT.  Will have to do more fixing to get
+          NT to work again, but i think I know how to do it now.
 
 Mon Apr 10 17:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/orbconf.h: Diabled smart proxies by default.
-	* rules.tao.GNU: Set TAO_HAS_SMART_PROXIES flag if $smart_proxies
-	  is set.
-	* tests/Makefile: Only if smart proxies feature is enabled will 
-	  the Smart_Proxies test be included in the build.
-	
+        * tao/orbconf.h: Diabled smart proxies by default.
+        * rules.tao.GNU: Set TAO_HAS_SMART_PROXIES flag if $smart_proxies
+          is set.
+        * tests/Makefile: Only if smart proxies feature is enabled will
+          the Smart_Proxies test be included in the build.
+
 Mon Apr 10 13:17:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Makefile:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	* tao/Object_Loader.h:
-	* tao/Object_Loader.i:
-	* tao/Object_Loader.cpp:
-	  New style for object references, the application can invoke
-	  orb->string_to_object ("DLL:....")
-	  The purpose of this feature is twofold:
-	  - Allow application developers to choose, very late in the
-	    development cycle, if they want to dynamically load a
-	    service.
-	    For example they can use resolve_initial_references to resolve
-	    the service, and then use -ORBInitRef Service=DLL:... to
-	    dynamically load it or -ORBInitRef Service=corbaloc:... to use
-	    a remote version.
-	  - It can be used to dynamically load ORB components, such as the
-	    POA, the DynamicAnys, the IORManipulation interface, etc.
-	    All these components are accessed through the
-	    resolve_initial_references interface, so they could be loaded
-	    using the DLL-style IORs.
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/Object_Loader.h:
+        * tao/Object_Loader.i:
+        * tao/Object_Loader.cpp:
+          New style for object references, the application can invoke
+          orb->string_to_object ("DLL:....")
+          The purpose of this feature is twofold:
+          - Allow application developers to choose, very late in the
+            development cycle, if they want to dynamically load a
+            service.
+            For example they can use resolve_initial_references to resolve
+            the service, and then use -ORBInitRef Service=DLL:... to
+            dynamically load it or -ORBInitRef Service=corbaloc:... to use
+            a remote version.
+          - It can be used to dynamically load ORB components, such as the
+            POA, the DynamicAnys, the IORManipulation interface, etc.
+            All these components are accessed through the
+            resolve_initial_references interface, so they could be loaded
+            using the DLL-style IORs.
 
-	* tests/Makefile:
-	* tests/Object_Loader/Loader.cpp:
-	* tests/Object_Loader/Loader.h:
-	* tests/Object_Loader/Loader.i:
-	* tests/Object_Loader/Makefile:
-	* tests/Object_Loader/OLT_Export.h:
-	* tests/Object_Loader/Object_Loader.dsw:
-	* tests/Object_Loader/Test.idl:
-	* tests/Object_Loader/Test_DLL.dsp:
-	* tests/Object_Loader/Test_i.cpp:
-	* tests/Object_Loader/Test_i.h:
-	* tests/Object_Loader/Test_i.i:
-	* tests/Object_Loader/driver.cpp:
-	* tests/Object_Loader/driver.dsp:
-	* tests/Object_Loader/svc.conf:
-	  Add a very simple test that creates multiple ORBs and loads a
-	  different object into each one.
+        * tests/Makefile:
+        * tests/Object_Loader/Loader.cpp:
+        * tests/Object_Loader/Loader.h:
+        * tests/Object_Loader/Loader.i:
+        * tests/Object_Loader/Makefile:
+        * tests/Object_Loader/OLT_Export.h:
+        * tests/Object_Loader/Object_Loader.dsw:
+        * tests/Object_Loader/Test.idl:
+        * tests/Object_Loader/Test_DLL.dsp:
+        * tests/Object_Loader/Test_i.cpp:
+        * tests/Object_Loader/Test_i.h:
+        * tests/Object_Loader/Test_i.i:
+        * tests/Object_Loader/driver.cpp:
+        * tests/Object_Loader/driver.dsp:
+        * tests/Object_Loader/svc.conf:
+          Add a very simple test that creates multiple ORBs and loads a
+          different object into each one.
 
 Mon Apr 10 13:41:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/compiler.html:  Removed the entry about -Gc flag (compile
-	  marshaling.)
+        * docs/compiler.html:  Removed the entry about -Gc flag (compile
+          marshaling.)
 
-	* examples/OBV/Typed_Events/client.dsp:
-	* examples/OBV/Typed_Events/server.dsp: Removed -Gc flag from
-	  TAO_IDL command.  Compiled marshaling is now the only type of
-	  marshaling supported by TAO, so there's no longer any need for
-	  the -Gc option.
+        * examples/OBV/Typed_Events/client.dsp:
+        * examples/OBV/Typed_Events/server.dsp: Removed -Gc flag from
+          TAO_IDL command.  Compiled marshaling is now the only type of
+          marshaling supported by TAO, so there's no longer any need for
+          the -Gc option.
 
 Mon Apr 10 09:11:43 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (hostname):
+        * tao/IIOP_Acceptor.cpp (hostname):
 
-	  Simplified this method using the patch suggested by Rich Seibel
-	  <seibel_r@ociweb.com>.
+          Simplified this method using the patch suggested by Rich Seibel
+          <seibel_r@ociweb.com>.
 
 Fri Apr  7 11:12:07 2000  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -363,10 +372,10 @@ Tue Apr  4 10:45:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
 Mon Apr  3 23:19:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Makefile.bor (MAKEFILES): Include
-	  NT_Naming_Service.bor in the Makefile for BCB.  Thanks to
- 	  Christopher Kohlhoff <chris@kohlhoff.com> and Thaddeus Olczyk
- 	  <olczyk@interaccess.com> for this fix.
+        * orbsvcs/Naming_Service/Makefile.bor (MAKEFILES): Include
+          NT_Naming_Service.bor in the Makefile for BCB.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> and Thaddeus Olczyk
+          <olczyk@interaccess.com> for this fix.
 
 Mon Apr 03 16:06:55 2000  David L. Levine  <levine@cs.wustl.edu>
 
