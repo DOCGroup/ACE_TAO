@@ -106,7 +106,10 @@ private:
   // How many consumers are still receiving events.
 
   int reactive_ec_;
-  // If not zero then we use a remote EC.
+  // If not zero then we use a reactive EC.
+
+  int new_ec_;
+  // If not zero then we use the new EC implementation
 };
 
 #endif /* ECT_TRHOUGHPUT_H */
