@@ -3197,7 +3197,7 @@ Vector<void *> vpv;
       ])
   ], AC_DEFINE(ACE_HAS_STD_TEMPLATE_SPECIALIZATION),)
 
-if test $ace_cv_feature_cxx_std_template_specialization = yes; then
+if test "$ace_cv_feature_cxx_std_template_specialization" = yes; then
 
 dnl Check if platform needs *standard* template method specialization
 ACE_CACHE_CHECK(if platform needs standard template method specialization,
@@ -4380,9 +4380,14 @@ dnl name.
   dnl these functions so both must be present in order to prevent
   dnl ACE_LACKS_SETSCHED from being defined.
   AC_CHECK_FUNC(sched_setscheduler, dnl
-    AC_CHECK_FUNC(pthread_attr_setschedpolicy,,
+    [
+     AC_CHECK_FUNC(pthread_attr_setschedpolicy,,
       AC_CHECK_FUNC(pthread_attr_setsched,,
-        AC_DEFINE(ACE_LACKS_SETSCHED))))
+        AC_DEFINE(ACE_LACKS_SETSCHED)))
+    ],
+    [
+     AC_DEFINE(ACE_LACKS_SETSCHED)
+    ])
 
   AC_CHECK_FUNC(pthread_attr_setscope, dnl
     ,
