@@ -1,3 +1,11 @@
+Tue Jul  3 09:40:59 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_osf1_4.0.GNU:
+        * include/makeinclude/platform_osf1_4.0_g++.GNU:
+
+          Allow users to set options like debug, exceptions, ... without
+          using override.
+
 Tue Jul  3 08:38:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/Reactor/Proactor/test_dup_proactor.dsp:
