@@ -104,11 +104,11 @@ void Options::print_results (void)
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, "c:bdH:i:L:l:M:ns:t:T:v");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -146,9 +146,9 @@ Options::parse_args (int argc, char *argv[])
 	break;
       case 'T':
 #if defined (ACE_HAS_TRACE)
-	if (ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0)
+	if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("ON")) == 0)
 	  ACE_Trace::start_tracing ();
-	else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OFF") == 0)
+	else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("OFF")) == 0)
 	  ACE_Trace::stop_tracing ();
 #endif /* ACE_HAS_TRACE */
 	break;
@@ -172,12 +172,18 @@ Options::parse_args (int argc, char *argv[])
 		   "\t[-s supplier port]\n"
 		   "\t[-t number of threads]\n"
 		   "\t[-v] (verbose) \n",
-		   argv[0]);
+		   ACE_TEXT_ALWAYS_CHAR (argv[0]));
 	::exit (1);
 	/* NOTREACHED */
 	break;
       }
 
+  // This is a major hack to get the size_t format spec to be a narrow
+  // char, same as the other strings for printf() here. It only works
+  // because this is the end of the source file. It makes the
+  // ACE_SIZE_T_FORMAT_SPECIFIER not use ACE_LIB_TEXT, effectively.
+#undef ACE_LIB_TEXT
+#define ACE_LIB_TEXT(A) A
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
 	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"

@@ -64,7 +64,7 @@ protected:
   // the stream.
 
   // = Dynamic linking hooks.
-  virtual int info (char **info_string, size_t length) const;
+  virtual int info (ACE_TCHAR **info_string, size_t length) const;
   // Returns information about this service.
 };
 
