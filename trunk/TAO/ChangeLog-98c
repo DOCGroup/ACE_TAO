@@ -1,281 +1,287 @@
+Wed Dec 30 22:52:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: on ghs/VxWorks, removed -g suppression for
+          POA.cpp build.  It no longer seems to be necessary, and
+          for some reason confused the make on SunOS 5.7 host.
+
 Wed Dec 30 20:45:42 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
           moved initialization from contructor to the init method.
-	  added a shutdown method.
+          added a shutdown method.
 
-	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
-	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
-	  moved initialization from contructor to the init method.
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+          moved initialization from contructor to the init method.
 
-	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
-	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
-	  moved initialization from contructor to the init method.
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+          moved initialization from contructor to the init method.
 
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
-	  initialize the EventHeader using the SupplierQOS.
-	  added <connected> method.
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+          initialize the EventHeader using the SupplierQOS.
+          added <connected> method.
 
 Wed Dec 30 19:17:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Server_Manager.{h,cpp}:
+        * examples/POA/On_Demand_Loading/Server_Manager.{h,cpp}:
           Added these two files for the helper class Server_i used by the
-	  server application.
+          server application.
 
-	* examples/POA/On_Demand_Loading/server.cpp:
-	  This file has been totally revamped and now uses the Server_i
-	  class object.
+        * examples/POA/On_Demand_Loading/server.cpp:
+          This file has been totally revamped and now uses the Server_i
+          class object.
 
-	* examples/POA/On_Demand_Loading/Makefile:
-	  Added an extra entry for Server_Manager used by the server
-	  program.
+        * examples/POA/On_Demand_Loading/Makefile:
+          Added an extra entry for Server_Manager used by the server
+          program.
 
 Wed Dec 30 17:25:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	The following files have been added to the newly created
-	Time directory under orbsvcs/orbsvcs
+        The following files have been added to the newly created
+        Time directory under orbsvcs/orbsvcs
 
-	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp: This is the Time Interval
-	  Object. It represents a time interval and has operations to
-	  compare itself with a UTO or another TIO. It can also create
-	  a UTO from the value of it's time interval.
+        * orbsvcs/orbsvcs/Time/TAO_TIO.cpp: This is the Time Interval
+          Object. It represents a time interval and has operations to
+          compare itself with a UTO or another TIO. It can also create
+          a UTO from the value of it's time interval.
 
-	* orbsvcs/orbsvcs/Time/TAO_TIO.h: This is the Time Interval
-	  Object. It represents a time interval and has operations to
-	  compare itself with a UTO or another TIO. It can also create
-	  a UTO from the value of it's time interval.
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h: This is the Time Interval
+          Object. It represents a time interval and has operations to
+          compare itself with a UTO or another TIO. It can also create
+          a UTO from the value of it's time interval.
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Universal Time Object
-	  Implementation. This is an encapsulation of time. It provides
-	  the following operations on basic time.
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Universal Time Object
+          Implementation. This is an encapsulation of time. It provides
+          the following operations on basic time.
 
-      		- Construction of a UTO from piece parts, and extraction
-		of the parts from a UTO. The piece parts are the readonly
-	        attributes :
-        	              time
-                	      inaccuracy
-                      	      time displacement factor
+                - Construction of a UTO from piece parts, and extraction
+                of the parts from a UTO. The piece parts are the readonly
+                attributes :
+                              time
+                              inaccuracy
+                              time displacement factor
                               structure with all the above.
 
-	     	 - Comparison of time.
+                 - Comparison of time.
 
-      		 - Conversion from relative to absolute time, and conversion
-		   to an interval (TIO).
+                 - Conversion from relative to absolute time, and conversion
+                   to an interval (TIO).
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.h: Class definition for TAO_UTO.cpp
+        * orbsvcs/orbsvcs/Time/TAO_UTO.h: Class definition for TAO_UTO.cpp
 
-	* orbsvcs/orbsvcs/Time//TAO_Time_Service_Server.cpp:The server Object
-	implementation implements methods to retrieve current time as well
-	as secure current time. The times are retrieved as UTOs. The object
-	also allows creation of a TIO for a given time interval. The notion
-	of time returned here is the local time of the system.
+        * orbsvcs/orbsvcs/Time//TAO_Time_Service_Server.cpp:The server Object
+        implementation implements methods to retrieve current time as well
+        as secure current time. The times are retrieved as UTOs. The object
+        also allows creation of a TIO for a given time interval. The notion
+        of time returned here is the local time of the system.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h: Class definition
-	for TAO_Time_Service_Server.cpp
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h: Class definition
+        for TAO_Time_Service_Server.cpp
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp: The clerk Object
-	implementation implements methods to retrieve GLOBAL time as well as
-	secure GLOBAL time. The times are retrieved as UTOs. The object also
-	allows creation of a TIO for a given time interval. The notion of time
-	returned here is the globally synchronized time.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp: The clerk Object
+        implementation implements methods to retrieve GLOBAL time as well as
+        secure GLOBAL time. The times are retrieved as UTOs. The object also
+        allows creation of a TIO for a given time interval. The notion of time
+        returned here is the globally synchronized time.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h: Class definition
-	for TAO_Time_Service_Clerk.cpp
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h: Class definition
+        for TAO_Time_Service_Clerk.cpp
 
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp: This is the helper class used
-	by clerk to get globally syncronized time. This class is registered with
-	the reactor that calls the handle_timeout () on this preiodically. The
-	handle_timeout, in turn, gets time from the various servers in the network.
-	It then updates the clerks notion of time.
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp: This is the helper class used
+        by clerk to get globally syncronized time. This class is registered with
+        the reactor that calls the handle_timeout () on this preiodically. The
+        handle_timeout, in turn, gets time from the various servers in the network.
+        It then updates the clerks notion of time.
 
-	* orbsvcs/orbsvcs/Time/Timer_Helper.h: Class definition for the
-	Timer_Helper.cpp
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h: Class definition for the
+        Timer_Helper.cpp
 
 
 Wed Dec 30 17:03:16 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/TimeService.idl (CosTime): This is the IDL
-	  for the Time Service. It includes CosTimeBase.idl that
-	  defines the module TimeBase. This module has the IDL definition
-	  for the various data structures used in the time service.
-	  The separation of the two modules is required because the
-	  TimeBase module is being used in other TAO services.
+        * orbsvcs/orbsvcs/TimeService.idl (CosTime): This is the IDL
+          for the Time Service. It includes CosTimeBase.idl that
+          defines the module TimeBase. This module has the IDL definition
+          for the various data structures used in the time service.
+          The separation of the two modules is required because the
+          TimeBase module is being used in other TAO services.
 
-	* orbsvcs/orbsvcs/Makefile : Updated the makefile to now make
-	  the newly added Time Service to TAO. This includes generating
-	  the IDL stubs in orbsvcs/orbsvcs and adding all the implementation
-	  objects in /orbsvcs/orbsvcs/Time to liborbsvcs.
+        * orbsvcs/orbsvcs/Makefile : Updated the makefile to now make
+          the newly added Time Service to TAO. This includes generating
+          the IDL stubs in orbsvcs/orbsvcs and adding all the implementation
+          objects in /orbsvcs/orbsvcs/Time to liborbsvcs.
 
 Wed Dec 30 17:37:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	  Detecting if a fragment comes from the current process is harder
-	  than I thought: just using the local address of the seding
-	  socket is not enough, because in some platform this address has
-	  the ipaddr set to 0 (the source address is chosen by the kernel
-	  after routing considerations).
-	  We use the ACE facilities to find the list of local ipaddresses
-	  to work around this problem.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Detecting if a fragment comes from the current process is harder
+          than I thought: just using the local address of the seding
+          socket is not enough, because in some platform this address has
+          the ipaddr set to 0 (the source address is chosen by the kernel
+          after routing considerations).
+          We use the ACE facilities to find the list of local ipaddresses
+          to work around this problem.
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	  Adjusted the timeout value for the UDP fragments, it was too
-	  low.
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Adjusted the timeout value for the UDP fragments, it was too
+          low.
 
-	* orbsvcs/tests/EC_Mcast/README:
-	  Updated the documentation.
+        * orbsvcs/tests/EC_Mcast/README:
+          Updated the documentation.
 
 Wed Dec 30 16:43:35 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	The following files have been added to the newly created
-	Time_Service directory under orbsvcs/
+        The following files have been added to the newly created
+        Time_Service directory under orbsvcs/
 
-	* orbsvcs/Time_Service/Server_i.h: This is the server driver
-	  program for the Time Service. It registers the
-	  TAO_Time_Service_Server with the orb and listens infinitely
-	  within orb.run () for invocations from the clerk.
+        * orbsvcs/Time_Service/Server_i.h: This is the server driver
+          program for the Time Service. It registers the
+          TAO_Time_Service_Server with the orb and listens infinitely
+          within orb.run () for invocations from the clerk.
 
-	* orbsvcs/Time_Service/Server_i.cpp: This is the server driver
-	  program for the Time Service. It registers the
-	  TAO_Time_Service_Server with the orb and listens infinitely
-	  within orb.run () for invocations from the clerk.
+        * orbsvcs/Time_Service/Server_i.cpp: This is the server driver
+          program for the Time Service. It registers the
+          TAO_Time_Service_Server with the orb and listens infinitely
+          within orb.run () for invocations from the clerk.
 
-	* orbsvcs/Time_Service/Clerk_i.h : This is the clerk driver
-	  program for the Time Service. It registers the
-	  TAO_Time_Service_Clerk with the orb. It also gets the IORs
-	  of the various time servers in the network and passes them to
-	  the TAO_Time_Service_Clerk. It listens for invocations from
-	  the clients.
+        * orbsvcs/Time_Service/Clerk_i.h : This is the clerk driver
+          program for the Time Service. It registers the
+          TAO_Time_Service_Clerk with the orb. It also gets the IORs
+          of the various time servers in the network and passes them to
+          the TAO_Time_Service_Clerk. It listens for invocations from
+          the clients.
 
-	* orbsvcs/Time_Service/Clerk_i.cpp: This is the clerk driver
-	  program for the Time Service. It registers the
-	  TAO_Time_Service_Clerk with the orb. It also gets the IORs
-	  of the various time servers in the network and passes them to
-	  the TAO_Time_Service_Clerk. It listens for invocations from
-	  the clients.
+        * orbsvcs/Time_Service/Clerk_i.cpp: This is the clerk driver
+          program for the Time Service. It registers the
+          TAO_Time_Service_Clerk with the orb. It also gets the IORs
+          of the various time servers in the network and passes them to
+          the TAO_Time_Service_Clerk. It listens for invocations from
+          the clients.
 
-	* orbsvcs/Time_Service/server.cpp: This is the server wrapper
-	  program.
+        * orbsvcs/Time_Service/server.cpp: This is the server wrapper
+          program.
 
-	* orbsvcs/Time_Service/clerk.cpp: This is the clerk wrapper
-	  program.
+        * orbsvcs/Time_Service/clerk.cpp: This is the clerk wrapper
+          program.
 
-	* orbsvcs/Time_Service/Makefile: This is the Makefile for this
-	  directory that generates the server and the clerk binaries.
+        * orbsvcs/Time_Service/Makefile: This is the Makefile for this
+          directory that generates the server and the clerk binaries.
 
 
 Wed Dec 30 16:26:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	The following files have been added to the newly created Time
-	directory under orbsvcs/tests.
+        The following files have been added to the newly created Time
+        directory under orbsvcs/tests.
 
-	* orbsvcs/tests/Time/Makefile: This makefile compiles just the
-	  client test in this directory.
+        * orbsvcs/tests/Time/Makefile: This makefile compiles just the
+          client test in this directory.
 
-	* orbsvcs/tests/Time/client.cpp: This is the client wrapper.
+        * orbsvcs/tests/Time/client.cpp: This is the client wrapper.
 
-	* orbsvcs/tests/Time/Client_i.cpp: This class runs the various
-	  tests for the Time Service. It calls the TimeService clerk
- 	  running on the same machine and asserts the correctness of the
-	  various operations.
+        * orbsvcs/tests/Time/Client_i.cpp: This class runs the various
+          tests for the Time Service. It calls the TimeService clerk
+          running on the same machine and asserts the correctness of the
+          various operations.
 
-	* orbsvcs/tests/Time/Client_i.h: This class runs the various
-	  tests for the Time Service. It calls the TimeService clerk
- 	  running on the same machine and asserts the correctness of the
-	  various operations.
+        * orbsvcs/tests/Time/Client_i.h: This class runs the various
+          tests for the Time Service. It calls the TimeService clerk
+          running on the same machine and asserts the correctness of the
+          various operations.
 
 
 Wed Dec 30 16:19:06 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/tests/CosEC_Basic:
-	* orbsvcs/tests/CosEC_Basic/README:
-	* orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
-	* orbsvcs/tests/CosEC_Basic/CosECConsumer.h:
-	* orbsvcs/tests/CosEC_Basic/CosECSupplier.cpp:
-	* orbsvcs/tests/CosEC_Basic/CosECSupplier.h:
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
-	* orbsvcs/tests/CosEC_Basic/Makefile:
-	  Added the following files for the CosEC test to orbsvcs
+        * orbsvcs/tests/CosEC_Basic:
+        * orbsvcs/tests/CosEC_Basic/README:
+        * orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosECConsumer.h:
+        * orbsvcs/tests/CosEC_Basic/CosECSupplier.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosECSupplier.h:
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+        * orbsvcs/tests/CosEC_Basic/Makefile:
+          Added the following files for the CosEC test to orbsvcs
 
 1998-12-30  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_T.{cpp,h}:
-	  Fixed a couple of syntax errors in my last change that were
-	  caught by NT, but missed by the more liberal SunCC
-	  compiler. Ack!
+        * orbsvcs/orbsvcs/Trader/Trader_T.{cpp,h}:
+          Fixed a couple of syntax errors in my last change that were
+          caught by NT, but missed by the more liberal SunCC
+          compiler. Ack!
 
 Wed Dec 30 12:22:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Any.cpp (CORBA_Any): Removed sharing of <value_> in the copy
-	  constructor.  It'd nice to have it but according to CORBA spec.
-	  Any always performs a deep_copy and owns the object.
+        * tao/Any.cpp (CORBA_Any): Removed sharing of <value_> in the copy
+          constructor.  It'd nice to have it but according to CORBA spec.
+          Any always performs a deep_copy and owns the object.
 
 Wed Dec 30 02:47:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Object (Profile): Removed the 1001 different
- 	  constructors and set() methods of the Profile class.  We are now
- 	  down to a bare minimum.  Also did a complete make-over of this
-	  class to make it easier and simpler to use.
+        * tao/IIOP_Object (Profile): Removed the 1001 different
+          constructors and set() methods of the Profile class.  We are now
+          down to a bare minimum.  Also did a complete make-over of this
+          class to make it easier and simpler to use.
 
-	  The major change that improved the performance of creating new
- 	  objects was moving the calls to get_host_name() and
- 	  get_host_addr() out of the Profile class and into the ORB
- 	  initialization routine.  This way these functions are only
- 	  called once per ORB and not once per object.
+          The major change that improved the performance of creating new
+          objects was moving the calls to get_host_name() and
+          get_host_addr() out of the Profile class and into the ORB
+          initialization routine.  This way these functions are only
+          called once per ORB and not once per object.
 
-	* tao/Servant_Base.cpp (_create_stub): Removed the creation of an
- 	  extra STUB_Object.
+        * tao/Servant_Base.cpp (_create_stub): Removed the creation of an
+          extra STUB_Object.
 
-	* tao/params.h (TAO_ORB_Parameters): Did a complete make-over of
- 	  this class to make it easier and simpler to use (memory
- 	  management issues are now much simpler).
+        * tao/params.h (TAO_ORB_Parameters): Did a complete make-over of
+          this class to make it easier and simpler to use (memory
+          management issues are now much simpler).
 
-	* tao/ORB_Core.h (TAO_Resource_Factory): Removed the <addr_> from
- 	  the ORB_Core.  It was already in the orb parameters.
+        * tao/ORB_Core.h (TAO_Resource_Factory): Removed the <addr_> from
+          the ORB_Core.  It was already in the orb parameters.
 
-	* tao/Active_Object_Map.i (TAO_Active_Object_Map): Added the
- 	  deletion of the reverse map.
+        * tao/Active_Object_Map.i (TAO_Active_Object_Map): Added the
+          deletion of the reverse map.
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
-	  New test to measure the time it takes to register and activate
- 	  an object in the POA.
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+          New test to measure the time it takes to register and activate
+          an object in the POA.
 
-	* examples/POA/DSI/run_test.pl:
-	* examples/POA/Default_Servant/run_test.pl:
-	* examples/POA/On_Demand_Loading/run_test.pl:
-	* examples/POA/On_Demand_Activation/run_test.pl:
-	* examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/DSI/run_test.pl:
+        * examples/POA/Default_Servant/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
 
-	  Unlink ior files before starting the server.
+          Unlink ior files before starting the server.
 
 Wed Dec 30 01:17:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/DynAny_Test/basic_test.dsp: Fixed project configurations.
+        * tests/DynAny_Test/basic_test.dsp: Fixed project configurations.
 
-	* tests/DynAny_Test/test_dynsequence.cpp (run_test): Don't delete
-	  <out_str1>, it is owned by the any underneath.
+        * tests/DynAny_Test/test_dynsequence.cpp (run_test): Don't delete
+          <out_str1>, it is owned by the any underneath.
 
-	* tao/encode.cpp (TAO_Marshal_Any::encode): Try to reuse the cdr
-	  string in an any as long as it has one, which is almost always
-	  be the case.
+        * tao/encode.cpp (TAO_Marshal_Any::encode): Try to reuse the cdr
+          string in an any as long as it has one, which is almost always
+          be the case.
 
-	* tao/DynAny_i.cpp (from_any,to_any):  The correct way of making
-	  sure if an any contains any data is to check it's cdr ptr, not
-	  it's value.
+        * tao/DynAny_i.cpp (from_any,to_any):  The correct way of making
+          sure if an any contains any data is to check it's cdr ptr, not
+          it's value.
 
-	* tao/Any.cpp: Cleaned up the code and fixed many discrepencies
-	  between code and comments.  Make sure ownerships are well kept.
-	  (CORBA_Any): Always duplicates the cdr string.  <any_owns_data_>
-	  now only refers to ownership of <value_>.
-	  (CORBA_Any): (Copy ctor) Always duplicates the cdr string.  If
-	  <src> owns its data, then we borrow it.  Notice the copying any
-	  doesn't own the object.
+        * tao/Any.cpp: Cleaned up the code and fixed many discrepencies
+          between code and comments.  Make sure ownerships are well kept.
+          (CORBA_Any): Always duplicates the cdr string.  <any_owns_data_>
+          now only refers to ownership of <value_>.
+          (CORBA_Any): (Copy ctor) Always duplicates the cdr string.  If
+          <src> owns its data, then we borrow it.  Notice the copying any
+          doesn't own the object.
 
 Tue Dec 29 22:53:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
