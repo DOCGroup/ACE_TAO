@@ -125,5 +125,9 @@
 // instantiated and exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 
+// At least for ACE_UNIMPLEMENTED_FUNC in class templates, this is needed to
+// explicitly instantiate a template that has ACE_UNIMPLEMENTED_FUNC.
+# define ACE_NEEDS_FUNC_DEFINITIONS
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_7_H */
