@@ -90,4 +90,4 @@ $(IDLDIR)\CosLoadBalancingC.cpp $(IDLDIR)\CosLoadBalancingS.cpp: $(IDLDIR)\CosLo
 	-Wb,export_include=LoadBalancing/LoadBalancing_export.h
 
 $(IDLDIR)\LB_ORTC.cpp: $(IDLDIR)\LB_ORT.idl
-	$(TAO_IDL) $** -Gv -DCORBA3
+        $(TAO_IDL) $** -DCORBA3
