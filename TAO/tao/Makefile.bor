@@ -175,6 +175,10 @@ OBJFILES = \
 	$(OBJDIR)\UIOP_Lite_Factory.obj \
 	$(OBJDIR)\UIOP_Profile.obj \
 	$(OBJDIR)\UIOP_Transport.obj \
+	$(OBJDIR)\Connection_handler.obj \
+	$(OBJDIR)\Connection_Cache_Manager.obj \
+	$(OBJDIR)\Base_Connection_Property.obj \
+	$(OBJDIR)\Cache_Entries.obj \
 	$(OBJDIR)\ValueBase.obj \
 	$(OBJDIR)\ValueFactory.obj \
 	$(OBJDIR)\ValueFactory_Map.obj \
