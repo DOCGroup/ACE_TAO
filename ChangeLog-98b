@@ -1,3 +1,12 @@
+Tue Nov 03 13:17:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,i,cpp} (thread_desc_self): Changed this
+	  method to an inline function.  Removed outdated comments and
+	  instead of searching thru the list when the current thread's
+	  descriptor is not found in TSS cache, place an assertion there
+	  for this should never happen.  Thanks to Terry Rosenbaum
+	  <Terry.Rosenbaum@Radiology.MSU.edu> for motivating the change.
+
 Mon Nov  2 22:54:08 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/config-win32.h:
