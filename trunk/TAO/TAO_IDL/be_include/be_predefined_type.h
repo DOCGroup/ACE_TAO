@@ -58,6 +58,10 @@ protected:
   virtual void compute_tc_name (void);
   // overridden method
 
+  virtual UTL_ScopedName * compute_tc_name (const char *prefix,
+                                            const char *suffix);
+  // Compute and return the value.
+
   virtual void compute_repoID (void);
   // The object and TypeCode repository IDs have a mandatory omg.org
   // prefix, but the default compute_repoID() uses the #pragma's to
