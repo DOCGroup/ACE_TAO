@@ -3,6 +3,7 @@ Sat Dec 27 23:40:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FT_ClientORB.bor:
 	* orbsvcs/orbsvcs/FT_ServerORB.bor:
 	* orbsvcs/orbsvcs/Makefile.bor:
+	* orbsvcs/orbsvcs/PortableGroup.bor:
 
 	  Blind folded effort to fix some of the problems in the daily
 	  builds with borland.
