@@ -2731,17 +2731,6 @@ TAO_POA::locate_servant_i (const char *operation,
         // Don't retain servant
         //
         {
-          // A recursive thread lock without using a recursive thread
-          // lock.  Non_Servant_Upcall has a magic constructor and
-          // destructor.  We unlock the Object_Adapter lock for the
-          // duration of the servant activator upcalls; reacquiring
-          // once the upcalls complete.  Even though we are releasing
-          // the lock, other threads will not be able to make progress
-          // since <Object_Adapter::non_servant_upcall_in_progress_>
-          // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-          ACE_UNUSED_ARG (non_servant_upcall);
-
           // No serialization of invocations of preinvoke or
           // postinvoke may be assumed; there may be multiple
           // concurrent invocations of preinvoke for the same
@@ -2749,13 +2738,26 @@ TAO_POA::locate_servant_i (const char *operation,
           //
           // The same thread will be used to preinvoke the object,
           // process the request, and postinvoke the object.
-          //
+
+          // @@ Note that it is possible for some other thread to
+          // reset the servant locator once the lock is released.
+          // However, this possiblility also exists for postinvoke()
+          // which is also called outside the lock.
+
+          // Release the object adapter lock.
+          this->object_adapter_->lock ().release ();
+
+          // We have release the object adapater lock.  Record this
+          // for later use.
+          servant_upcall.state (TAO_Object_Adapter::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
+
           PortableServer::ServantLocator::Cookie cookie;
-          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current_impl.object_id (),
-                                                                               this,
-                                                                               operation,
-                                                                               cookie
-                                                                               ACE_ENV_ARG_PARAMETER);
+          PortableServer::Servant servant =
+            this->servant_locator_->preinvoke (poa_current_impl.object_id (),
+                                               this,
+                                               operation,
+                                               cookie
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (servant == 0)

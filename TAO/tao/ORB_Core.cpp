@@ -1252,6 +1252,12 @@ TAO_ORB_Core::set_poa_factory (const char *poa_factory_name,
   TAO_ORB_Core::poa_factory_directive_ = poa_factory_directive;
 }
 
+const ACE_CString &
+TAO_ORB_Core::poa_factory_name (void)
+{
+  return TAO_ORB_Core::poa_factory_name_;
+}
+
 void
 TAO_ORB_Core::set_endpoint_selector_factory (const char *endpoint_selector_factory_name)
 {

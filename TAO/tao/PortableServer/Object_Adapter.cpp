@@ -1299,12 +1299,15 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   if (this->active_object_map_entry ())
     this->current_context_.priority (this->active_object_map_entry ()->priority_);
 
-  // Release the object adapter lock.
-  this->object_adapter_->lock ().release ();
+  if (this->state_ != OBJECT_ADAPTER_LOCK_RELEASED)
+    {
+      // Release the object adapter lock.
+      this->object_adapter_->lock ().release ();
 
-  // We have release the object adapater lock.  Record this for later
-  // use.
-  this->state_ = OBJECT_ADAPTER_LOCK_RELEASED;
+      // We have release the object adapater lock.  Record this for
+      // later use.
+      this->state_ = OBJECT_ADAPTER_LOCK_RELEASED;
+    }
 
   // Serialize servants (if appropriate).
   this->single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_PARAMETER);

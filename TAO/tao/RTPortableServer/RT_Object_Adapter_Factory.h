@@ -19,21 +19,20 @@
 #include "ace/pre.h"
 
 #include "rtportableserver_export.h"
-#include "tao/Adapter.h"
+#include "tao/PortableServer/Object_Adapter.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_RTPortableServer_Export TAO_RT_Object_Adapter_Factory : public TAO_Adapter_Factory
+class TAO_RTPortableServer_Export TAO_RT_Object_Adapter_Factory : public TAO_Object_Adapter_Factory
 {
 public:
   TAO_RT_Object_Adapter_Factory (void);
   // Constructor
 
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
+  /// Create adapter.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
 

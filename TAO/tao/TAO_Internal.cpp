@@ -285,6 +285,12 @@ TAO_Internal::open_services_i (int &argc,
                                                ignore_default_svc_conf_file);
         }
 
+      // If available, allow the Adapter Factory to setup.
+      ACE_Service_Object *adapter_factory =
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name ().c_str());
+      if (adapter_factory != 0)
+        adapter_factory->init (0, 0);
+
       // Handle RTCORBA library special case.  Since RTCORBA needs
       // its init method call to register several hooks, call it here
       // if it hasn't already been called.
