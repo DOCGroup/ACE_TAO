@@ -64,8 +64,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
       if (!node->is_local ())
-        *os << "  : CORBA_UserException ("
-            << "::" << node->tc_name () << ")\n";
+        *os << "  : CORBA_UserException (\""
+            << node->repoID () << "\")\n";
       *os << "{" << be_nl;
       *os << "}\n\n";
 
@@ -93,23 +93,30 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::" << node->local_name () << " (const ::"
           << node->name () << " &_tao_excp)" << be_nl;
       *os << "  : CORBA_UserException ("
-          << "_tao_excp._type ())" << be_nl;
+          << "_tao_excp._id ())" << be_nl;
       *os << "{\n";
-      os->incr_indent ();
-      // assign each individual member
+
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      be_visitor *visitor = 0;
+
+      if (node->nmembers () > 0)
         {
+          os->incr_indent ();
+          // assign each individual member
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                "(%N:%l) be_visitor_exception_cs::"
+                                "visit_exception -"
+                                "codegen for scope failed\n"), -1);
+            }
           delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_cs::"
-                             "visit_exception -"
-                             "codegen for scope failed\n"), -1);
+          os->decr_indent ();
         }
-      delete visitor;
-      os->decr_indent ();
+
       *os << "}\n\n";
 
       // assignment operator
@@ -166,8 +173,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (!node->is_local ())
         {
           *os << "TAO_OutputCDR &cdr," << be_nl
-              << "CORBA::Environment &ACE_TRY_ENV) const"
-              << be_uidt << be_uidt_nl
+              << "CORBA::Environment &ACE_TRY_ENV"
+              << be_uidt_nl
+              << ") const" << be_uidt_nl
               << "{" << be_idt_nl
               << "if (cdr << *this)" << be_nl
               << "  return;" << be_nl;
@@ -197,8 +205,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (!node->is_local ())
         {
           *os << "TAO_InputCDR &cdr," << be_nl
-              << "CORBA::Environment &ACE_TRY_ENV)"
-              << be_uidt << be_uidt_nl
+              << "CORBA::Environment &ACE_TRY_ENV"
+              << be_uidt_nl
+              << ")" << be_uidt_nl
               << "{" << be_idt_nl
               << "if (cdr >> *this)" << be_nl
               << "  return;" << be_nl;
@@ -253,8 +262,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
           if (!node->is_local ())
             *os << "  : CORBA_UserException "
-                << " (CORBA::TypeCode::_duplicate (" << node->tc_name ()
-                << "))" << be_nl;
+                << " (CORBA::string_dup (\"" << node->repoID ()
+                << "\"))" << be_nl;
           *os << "{\n";
           os->incr_indent ();
           // assign each individual member. We need yet another state
@@ -295,6 +304,22 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                                  ), -1);
             }
         }
+
+      *os << "\n// TAO extension - the virtual _type method" << be_nl;
+      *os << "CORBA::TypeCode_ptr " << node->name ()
+          << "::_type (void) const" << be_nl;
+      *os << "{" << be_idt_nl;
+
+      if (!node->is_local () && idl_global->tc_support ())
+        {
+          *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "return CORBA::TypeCode::_nil ();" << be_uidt_nl;
+        }
+
+      *os << "}" << be_nl;
 
       node->cli_stub_gen (I_TRUE);
     }

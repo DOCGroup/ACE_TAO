@@ -116,7 +116,8 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
       *os << be_nl
           << "// = TAO extension" << be_nl
-          << "static CORBA::Exception *_alloc (void);\n" << be_uidt_nl
+          << "static CORBA::Exception *_alloc (void);" << be_nl
+          << "virtual CORBA::TypeCode_ptr _type (void) const;" << be_uidt_nl
           << "}; // exception " << node->name ()
           << "\n" << be_nl;
 
