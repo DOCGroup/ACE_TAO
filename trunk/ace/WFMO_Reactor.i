@@ -153,7 +153,7 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::reset (void)
 }
 
 ACE_INLINE void 
-ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (HANDLE event_handle) const
+ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle) const
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump");
 
