@@ -35,14 +35,14 @@ main (int, char *[])
   QUEUE queue;
   int i;
 
-  for (i = 1; i <= ITERATIONS; i++)
+  for (i = 0; i < ITERATIONS; i++)
     {
-      ACE_NEW_RETURN (buffer[i-1], char[BUFSIZ], -1);
-      ACE_OS::sprintf (buffer[i-1], "%d", i);
+      ACE_NEW_RETURN (buffer[i], char[BUFSIZ], -1);
+      ACE_OS::sprintf (buffer[i], "%d", i+1);
 
       ACE_Message_Block *entry;
 
-      ACE_NEW_RETURN (entry, ACE_Message_Block (buffer[i-1], sizeof buffer[i-1]), -1);
+      ACE_NEW_RETURN (entry, ACE_Message_Block (buffer[i], sizeof buffer[i]), -1);
 
       if (queue.enqueue_prio (entry) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue_prio\n"), -1);
