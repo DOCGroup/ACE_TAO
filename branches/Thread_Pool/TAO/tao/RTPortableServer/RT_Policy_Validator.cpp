@@ -8,8 +8,8 @@
 
 ACE_RCSID(tao, POA, "$Id$")
 
-TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core)
+TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core)
+  : TAO_POA_Policy_Validator (orb_core)
 {
   // No-Op.
 }
@@ -23,9 +23,6 @@ void
 TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
                                             CORBA::Environment &ACE_TRY_ENV)
 {
-  this->orb_core_->open (ACE_TRY_ENV);
-  ACE_CHECK;
-
   this->validate_server_protocol (policies, ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -68,7 +65,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies,
   RTCORBA::ProtocolList &protocols =
     server_protocol->protocols_rep ();
 
-  TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
+  TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
 
   for (CORBA::ULong j = 0; j < protocols.length (); ++j)
     {
@@ -161,7 +158,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
         }
 
       // Check 3.
-      TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
+      TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
       for (CORBA::ULong i = 0; i < bands.length (); ++i)
         {
           int match = 0;
@@ -190,7 +187,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
   // priority.
   if (rt_priority_model == RTCORBA::SERVER_DECLARED)
     {
-      TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
+      TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
 
       for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
         {

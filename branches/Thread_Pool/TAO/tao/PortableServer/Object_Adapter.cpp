@@ -123,6 +123,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     non_servant_upcall_in_progress_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
     root_ (0),
+    default_validator_ (orb_core),
     default_poa_policies_ ()
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);

@@ -23,7 +23,7 @@
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
-#include "Thread_Lane_Resources.h"
+#include "Default_Thread_Lane_Resources_Manager.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
