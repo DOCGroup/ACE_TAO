@@ -356,8 +356,14 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->object_lookup_strategy_for_user_id_policy_ = TAO_USER_DEFINED;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBsystemidpolicydemuxstrategy") == 0)
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBsystemidpolicydemuxstrategy") == 0
+             || ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
       {
+        // @@ -ORBdemuxstrategy is deprecated and should not be used anymore.
+        if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      "Warning: -ORBdemuxstrategy is deprecated.  Please use -ORBsystemidpolicydemuxstrategy instead.\n"));
+
         curarg++;
         if (curarg < argc)
           {
