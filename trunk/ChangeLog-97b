@@ -1,3 +1,9 @@
+Wed Nov  5 15:03:31 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,cpp}:  Changed the data type of
+	  terminated_thr_queue_ back to
+	  ACE_Unbounded_Queue<ACE_Thread_Descriptor>.
+
 Wed Nov 05 14:16:27 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.i (mutex_trylock): Fixed code for ACE_HAS_DCE_DRAFT4_THREADS
@@ -47,9 +53,9 @@ Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  ACE_DEFAULT_CLOSE_ALL_FILES to workaround a bug with SCO Unix.
   	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
  	  this.
-	
+
 	* The ACE developer's drinking song:
- 
+
           100 little bugs in the code,
 	  100 bugs in the code,
 	  fix one bug, compile it again,
@@ -86,11 +92,11 @@ Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Tue Nov  4 18:13:52 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp (cancel): 
-	Initialized act pointer variable to 0, which was causing 
-	core dump in linux.  In general, all pointers should be 
+	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp (cancel):
+	Initialized act pointer variable to 0, which was causing
+	core dump in linux.  In general, all pointers should be
 	initialized.  This should have been warned by the compiler.
-	Thanks to Sandro Doro <doros@aureus.sublink.org> for 
+	Thanks to Sandro Doro <doros@aureus.sublink.org> for
 	pointing this out.
 
 Tue Nov  4 11:14:35 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
