@@ -1,3 +1,11 @@
+Thu Feb  3 11:40:27 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/ACE-subsets.html:
+
+	  Added some notes about building ACE subsets using MSVC++.
+	  Thanks to Paul von Behren <vonbepd@lmy-deja.com> for providing
+	  the tips.
+
 Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i,
