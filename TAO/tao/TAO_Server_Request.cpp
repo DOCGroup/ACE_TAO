@@ -148,6 +148,23 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 {
   // Have to use a const_cast<>.  *sigh*
   this->profile_.object_key (const_cast<TAO::ObjectKey &> (target->_stubobj ()->object_key ()));
+
+  // Shallow copy the request service context list. This way the operation
+  // details and server request share the request context.
+  IOP::ServiceContextList & dest_request_contexts =
+    this->request_service_context_.service_info ();
+
+  IOP::ServiceContextList & src_request_contexts =
+    (const_cast <TAO_Operation_Details&> (details)).request_service_info ();
+
+  dest_request_contexts.replace (src_request_contexts.maximum (),
+                                 src_request_contexts.length (),
+                                 src_request_contexts.get_buffer (),
+                                 false /* Do not release. */);
+
+  // Don't shallow copy the reply service context. It is probably empty,
+  // when then during the request it is used, the buffer gets allocated and
+  // then the operation details don't get the reply service context
 }
 
 TAO_ServerRequest::~TAO_ServerRequest (void)
@@ -159,6 +176,20 @@ TAO_ServerRequest::orb (void)
 {
   return this->orb_core_->orb ();
 }
+
+TAO_Service_Context &
+TAO_ServerRequest::reply_service_context (void)
+{
+  if (!operation_details_)
+  {
+    return this->reply_service_context_;
+  }
+  else
+  {
+    return const_cast <TAO_Operation_Details*> (this->operation_details_)->reply_service_context ();
+  }
+}
+
 
 void
 TAO_ServerRequest::init_reply (void)
