@@ -1,16 +1,22 @@
+Fri Jun 09 15:45:01 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp
+          (visit_operation):
+          removed extraneous ; after closing } for the generated function.
+
 Fri Jun  9 13:16:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/POA.cpp:
-	  Just overallocate one more WChar instead of using ceil().
-	  It is simpler, it works in platforms without floating point,
-	  it avoids the loss of precision and it avoid code bloat.
+        * tao/POA.cpp:
+          Just overallocate one more WChar instead of using ceil().
+          It is simpler, it works in platforms without floating point,
+          it avoids the loss of precision and it avoid code bloat.
 
 Fri Jun 09 15:18:50 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp
           (visit_valuetype):
-          removed extraneous ; after closing } for the exception holder
-          ctor and dtor.
+          removed extraneous ; after closing } for the generated exception
+          holder ctor and dtor.
 
 Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -117,7 +123,7 @@ Fri Jun 09 10:55:33 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/
             ami_handler_reply_stub_operation_cs.cpp (visit_operation):
-          removed extraneous ; after closing } for the function.
+          removed extraneous ; after closing } for the generated function.
 
 Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
