@@ -508,7 +508,7 @@ TAO_NAMESPACE  IR
   typedef IR_Repository_out Repository_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Repository;
 
-  typedef IR_ComponentRepository RepoComponentRepositorysitory;
+  typedef IR_ComponentRepository ComponentRepository;
   typedef IR_ComponentRepository *ComponentRepository_ptr;
   typedef IR_ComponentRepository_var ComponentRepository_var;
   typedef IR_ComponentRepository_out ComponentRepository_out;
