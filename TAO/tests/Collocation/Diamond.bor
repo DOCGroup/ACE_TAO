@@ -25,6 +25,9 @@ LIBFILES = \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
 
+IDLFILES = \
+        $(IDLDIR)\Diamond.idl
+
 CPPDIR = .
 
 IDLDIR = .
