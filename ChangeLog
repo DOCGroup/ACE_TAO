@@ -1,3 +1,8 @@
+Wed Sep  1 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dump_T.cpp:
+          Added include of config-all.h to get ACE_TRACE
+
 Wed Sep  1 07:43:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/POSIX_Proactor.h: Updated the documentation to use
