@@ -1,3 +1,25 @@
+Wed Aug 04 02:10:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+	  There is no need to obtain a remote object reference for
+	  shutdown anymore.  Re-organized and simplified the client code
+	  so that it no longer contains TAO specific code.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+	  Modified the code to adapt to the change made to Cubit_Client.
+	  Changed to fake both the client side and the server side
+	  command lines all the way thru.  This allows much more
+	  flexibility in invoking the collocation tests.  Thanks to David
+	  for suggesting this.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/README:  Added
+	  docuemntation on how to use the new collocation test.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	  Changed the tao_idl custom build settings to always generate
+	  both THRU_POA and DIRECT collocated stubs.
+
 Wed Aug  4 00:30:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/orbconf.h:
@@ -6,7 +28,7 @@ Wed Aug  4 00:30:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* docs/Options.html:
 	  Added ORBConnectionCachingStrategy and ORBPurgePercentage
 	  options.
-		
+
 Wed Aug  4 00:23:34 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:
@@ -14,7 +36,7 @@ Wed Aug  4 00:23:34 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Aug  3 22:25:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile: 
+	* tao/Makefile:
 	* tao/corbafwd.h :
 	* tao/InterfaceC.h :
 	* tao/InterfaceC.cpp :
@@ -30,9 +52,9 @@ Tue Aug 03 18:40:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tao/IIOP_Connect.{h,cpp} (TAO_IIOP_Client_Connection_Handler):
 	* tao/UIOP_Connect.{h, cpp} (TAO_UIOP_Client_Connection_Handler):
 	  Added <handle_cleanup> method which abstracts the deregistration
-	  of the handler from the reactor. Added <handle_close_i> which is 
+	  of the handler from the reactor. Added <handle_close_i> which is
 	  a non-locking version of <handle_close>.
-	  
+
 	* tao/IIOP_Connector.{h,cpp}: (open):
 	* tao/UIOP_Connector.{h,cpp}: (open):
 	  Added auto_ptr as a safety measurement for the dynamically
@@ -51,7 +73,7 @@ Tue Aug 03 18:40:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/Connection_Purging/test.idl:
 	  This is a test which stress tests the connection management and
 	  the caching and purging of connections when the process runs out
-	  of handles. 
+	  of handles.
 
 Tue Aug 03 16:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
