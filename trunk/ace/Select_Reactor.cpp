@@ -560,7 +560,7 @@ ACE_Select_Reactor::renew (void)
 {
   ACE_TRACE ("ACE_Select_Reactor::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  if (this->supress_renew () == 0)
+  if (this->supress_notify_renew () == 0)
     this->token_.renew (this->requeue_position_);
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
@@ -627,8 +627,7 @@ ACE_Select_Reactor_Token::sleep_hook (void)
 #endif /* ACE_MT_SAFE */
 
 ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
-  : max_notify_iterations_ (-1),
-    supress_renew_ (0)
+  : max_notify_iterations_ (-1)
 {
 }
 
@@ -1097,7 +1096,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     token_ (*this),
 #endif /* ACE_MT_SAFE */
-    lock_adapter_ (token_)
+    lock_adapter_ (token_),
+    supress_renew_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
@@ -1132,7 +1132,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     token_ (*this),
 #endif /* ACE_MT_SAFE */
-    lock_adapter_ (token_)
+    lock_adapter_ (token_),
+    supress_renew_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
