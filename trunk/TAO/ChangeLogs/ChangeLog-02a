@@ -1,3 +1,7 @@
+Tue Apr 10 22:35:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Wait_Strategy.inl: Fixed a fuzz error.
+
 Tue Apr 10 22:27:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/PortableServer/Servant_Base.cpp (synchronous_upcall_dispatch):
