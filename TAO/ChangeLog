@@ -1,3 +1,41 @@
+Mon Jun 21 09:04:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_init.cpp:
+        * orbsvcs/IFR_Service/be_init.cpp:
+
+          New files, see below.
+
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_extern_ifr.h:
+        * orbsvcs/IFR_Servicedrv_preproc_ifr.cpp:
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+
+          Removed files, see below.
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_extern.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/IFR_Service/be_extern.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+
+          Refactored startup/initialization code of the
+          IDL compiler and IFR loader to eliminate
+          all duplicated code. Both executables now build
+          exactly the same files, and the differences in
+          initialization have all been moved into the
+          respective backend libraries.
+
 Mon Jun 21 13:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/CRC.{h,cpp}:

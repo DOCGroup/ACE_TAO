@@ -89,7 +89,6 @@ ACE_RCSID (driver,
            drv_preproc,
            "$Id$")
 
-
 static long argcount = 0;
 static long max_argcount = 128;
 static const char *arglist[128];

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include "idl_defines.h"
-#include "be_codegen.h"
-#include "be_generator.h"
 #include "be_extern.h"
 #include "global_extern.h"
 #include "fe_extern.h"
@@ -87,7 +85,7 @@ ACE_RCSID (TAO_IDL,
            tao_idl,
            "$Id$")
 
-#define IDL_CFE_VERSION "1.3.0"
+#define SUN_IDL_FE_VERSION "1.3.0"
 
 #if !defined (NFILES)
 # define NFILES 1024
@@ -97,117 +95,39 @@ const char *DRV_files[NFILES];
 long DRV_nfiles = 0;
 long DRV_file_index = -1;
 
-const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
-
-extern TAO_IDL_BE_Export void BE_produce (void);
-extern TAO_IDL_BE_Export void BE_abort (void);
-
-// Initialize the BE. The protocol requires only that this routine
-// return an instance of AST_Generator (or a subclass thereof).
-AST_Generator *
-BE_gen (void)
-{
-  tao_cg = TAO_CODEGEN::instance ();
-
-  AST_Generator *g = 0;
-  ACE_NEW_RETURN (g,
-                  be_generator (),
-                  0);
-
-  return g;
-}
-
-void
-BE_init (void)
-{
-  Identifier id ("void");
-  UTL_ScopedName n (&id,
-                    0);
-  AST_Decl *d =
-    idl_global->scopes ().bottom ()->lookup_primitive_type (
-                                          AST_Expression::EV_void
-                                        );
-  be_global->void_type (AST_PredefinedType::narrow_from_decl (d));
-  id.destroy ();
-}
-
-// Print out a version string for the BE.
-void
-BE_version (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "%s %s\n",
-              ACE_TEXT ("TAO C++ BE, version"),
-              ACE_TEXT (TAO_VERSION)));
-}
-
 void
 DRV_version (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n"
-              "%s %s\n",
+              "%s %s (%s %s)\n",
               idl_global->prog_name (),
-              ACE_TEXT ("FE: Based on Sun IDL CFE version"),
-              ACE_TEXT (IDL_CFE_VERSION)));
+              ACE_TEXT ("TAO_IDL_FE, version"),
+              ACE_TEXT (TAO_VERSION),
+              ACE_TEXT ("Based on Sun IDL FE, version"),
+              ACE_TEXT (SUN_IDL_FE_VERSION)));
 
   BE_version ();
 }
 
-void
-DRV_init (void)
+int
+DRV_init (int &argc, char *argv[])
 {
-  // Initialize FE global data object.
-  ACE_NEW (idl_global,
-           IDL_GlobalData);
-
-  // Initialize some of its data.
-  idl_global->set_root (0);
-  idl_global->set_gen (0);
-  idl_global->set_err (FE_new_UTL_Error ());
-  idl_global->set_err_count (0);
-  idl_global->set_indent (FE_new_UTL_Indenter ());
-  idl_global->set_filename (0);
-  idl_global->set_main_filename (0);
-  idl_global->set_real_filename (0);
-  idl_global->set_stripped_filename (0);
-  idl_global->set_import (I_TRUE);
-  idl_global->set_in_main_file (I_FALSE);
-  idl_global->set_lineno (-1);
-  idl_global->set_prog_name (0);
-
-#if defined (TAO_IDL_PREPROCESSOR)
-  idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
-#elif defined (ACE_CC_PREPROCESSOR)
-  idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
-#else
-  // Just default to cc
-  idl_global->set_cpp_location ("cc");
-#endif /* TAO_IDL_PREPROCESSOR */
-
-  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
-  ACE_OS::memset (&local_escapes,
-                  0,
-                  LOCAL_ESCAPES_BUFFER_SIZE);
-
-  idl_global->set_local_escapes (local_escapes);
-  idl_global->set_be ("");
-  idl_global->set_compile_flags (0);
-  idl_global->set_include_file_names (0);
-  idl_global->set_n_include_file_names (0);
-  idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-  idl_global->preserve_cpp_keywords(I_FALSE);
-
-  // Put an empty prefix on the stack for the global scope.
-  idl_global->pragma_prefixes ().push (ACE::strnew (""));
-
-  // Initialize BE global data object.
-  ACE_NEW (be_global,
-           BE_GlobalData);
-
+  // Initialize BE.
+  FE_init ();
+  
   // Initialize driver private data
   DRV_nfiles = 0;
   DRV_file_index = 0;
+  
+  // Initialize BE global data object.
+  ACE_NEW_RETURN (be_global,
+                  BE_GlobalData,
+                  -1);
+
+  // Does nothing for IDL compiler, stores -ORB args, initializes
+  // ORB and IFR for IFR loader.
+  return BE_init (argc, argv);
 }
 
 /*
@@ -247,15 +167,14 @@ DRV_drive (const char *s)
     }
 
   DRV_pre_proc (s);
-
-  // Initialize BE.
-  AST_Generator *gen = BE_gen ();
+  AST_Generator *gen = be_global->generator_init ();
 
   if (gen == 0)
     {
       ACE_ERROR ((
           LM_ERROR,
-          ACE_TEXT ("IDL: BE init failed to create generator, exiting\n")
+          ACE_TEXT ("IDL: DRV_generator_init() failed to create ")
+          ACE_TEXT ("generator, exiting\n")
         ));
 
       ACE_OS::exit (99);
@@ -263,12 +182,14 @@ DRV_drive (const char *s)
   else
     {
       idl_global->set_gen (gen);
-    }
+    } 
 
-  // Initialize FE.
-  FE_init ();
-  // Initialize BE.
-  BE_init ();
+  // Initialize AST and load predefined types.
+  FE_populate ();
+
+  // For the IDL compiler, this has to come after FE_populate().
+  // For the IFR loader, it does nothing.
+  BE_post_init ();
 
   // Parse.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
@@ -354,6 +275,10 @@ DRV_drive (const char *s)
 void
 DRV_fork (void)
 {
+  // We get this from the BE because it is implemented 
+  // differently in the IFR backend.
+  ACE_CString arg_string = be_global->spawn_options ();
+
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
@@ -363,7 +288,7 @@ DRV_fork (void)
       options.creation_flags (ACE_Process_Options::NO_EXEC);
       options.command_line ("%s %s %s",
                             idl_global->prog_name (),
-                            idl_global->idl_flags (),
+                            arg_string.c_str (),
                             DRV_files[DRV_file_index]);
       ACE_Process manager;
       pid_t child_pid = manager.spawn (options);
@@ -410,7 +335,12 @@ int
 main (int argc, char *argv[])
 {
   // Initialize driver and global variables.
-  DRV_init ();
+  int init_status = DRV_init (argc, argv);
+
+  if (init_status != 0)
+    {
+      ACE_OS::exit (init_status);
+    }
 
   // Parse arguments.
   DRV_parse_args (argc, argv);
