@@ -1,3 +1,15 @@
+Thu Sep  9 10:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOP_IOR.pid:
+          No need to include orb.idl
+
+        * tao/IOP_IORC.{h,cpp,i,inl}:
+        * tao/IOP_IORA.cpp:
+          Regenerated
+
+        * tao/diffs/IOP_IOR.diff:
+          Zapped this file, no diffs needed anymore
+
 Thu Sep  9 10:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RTPortableServerC.{h,cpp,i,inl}:
