@@ -1,3 +1,11 @@
+Sun May 25 14:53:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Cygwin has fcntl but this is not implemented, but has dll support.
+
+        * ace/OS.i:
+          Removed not needed cygwin specific include.
+
 Sun May 25 09:27:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Malloc_T.i (free): Added a check for a NULL ptr to prevent
