@@ -2,6 +2,8 @@
 #ifndef CPD_HPP
 #define CPD_HPP
 
+#include "vc6-4786.h"
+
 // Forward declarations.
 //
 namespace CIAO

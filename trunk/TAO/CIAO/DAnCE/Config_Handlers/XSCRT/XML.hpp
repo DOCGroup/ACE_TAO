@@ -2,6 +2,7 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
+
 #ifndef XSCRT_XML_HPP
 #define XSCRT_XML_HPP
 
@@ -10,12 +11,9 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
 
+
 //@@ VC6
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
-
-// This disables a warning thrown in debug  builds saying that
-// long names have been truncated. 
-#pragma warning(disable:4786)
 
 namespace std
 {
