@@ -114,6 +114,8 @@ endif # probe
 CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
 LDFLAGS += $(RLDFLAGS)
 
+.PRECIOUS: Object_KeyC.h Object_KeyC.i Object_KeyC.cpp
+.PRECIOUS: POAS.h POAS.i POAS.cpp POAC.h POAC.i POAC.cpp
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
