@@ -30,7 +30,13 @@ ifeq ($(KEEP_GOING),1)
 else
 	@$(MAKE) -f Makefile.Hello_Base_Sender_svnt -C . $(*);
 endif
-%.tgt2: %.tgt1
+%.tgt2: %.tgt0 %.tgt1
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.Hello_Starter -C . $(*);
+else
+	@$(MAKE) -f Makefile.Hello_Starter -C . $(*);
+endif
+%.tgt3: %.tgt1 %.tgt2
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Sender_exec -C . $(*);
 else
@@ -38,28 +44,28 @@ else
 endif
 
 
-all: all.tgt0 all.tgt1 all.tgt2
+all: all.tgt0 all.tgt1 all.tgt2 all.tgt3
 
-debug: debug.tgt0 debug.tgt1 debug.tgt2
+debug: debug.tgt0 debug.tgt1 debug.tgt2 debug.tgt3
 
-profile: profile.tgt0 profile.tgt1 profile.tgt2
+profile: profile.tgt0 profile.tgt1 profile.tgt2 profile.tgt3
 
-optimize: optimize.tgt0 optimize.tgt1 optimize.tgt2
+optimize: optimize.tgt0 optimize.tgt1 optimize.tgt2 optimize.tgt3
 
-install: install.tgt0 install.tgt1 install.tgt2
+install: install.tgt0 install.tgt1 install.tgt2 install.tgt3
 
-deinstall: deinstall.tgt0 deinstall.tgt1 deinstall.tgt2
+deinstall: deinstall.tgt0 deinstall.tgt1 deinstall.tgt2 deinstall.tgt3
 
-clean: clean.tgt0 clean.tgt1 clean.tgt2
+clean: clean.tgt0 clean.tgt1 clean.tgt2 clean.tgt3
 
-realclean: realclean.tgt0 realclean.tgt1 realclean.tgt2
+realclean: realclean.tgt0 realclean.tgt1 realclean.tgt2 realclean.tgt3
 
-clobber: clobber.tgt0 clobber.tgt1 clobber.tgt2
+clobber: clobber.tgt0 clobber.tgt1 clobber.tgt2 clobber.tgt3
 
-depend: depend.tgt0 depend.tgt1 depend.tgt2
+depend: depend.tgt0 depend.tgt1 depend.tgt2 depend.tgt3
 
-rcs_info: rcs_info.tgt0 rcs_info.tgt1 rcs_info.tgt2
+rcs_info: rcs_info.tgt0 rcs_info.tgt1 rcs_info.tgt2 rcs_info.tgt3
 
-idl_stubs: idl_stubs.tgt0 idl_stubs.tgt1 idl_stubs.tgt2
+idl_stubs: idl_stubs.tgt0 idl_stubs.tgt1 idl_stubs.tgt2 idl_stubs.tgt3
 
-reverseclean: realclean.tgt2 realclean.tgt1 realclean.tgt0
+reverseclean: realclean.tgt3 realclean.tgt2 realclean.tgt1 realclean.tgt0
