@@ -75,7 +75,7 @@ public:
   // This method is used when a connection has been reset, requiring
   // the hint to be cleaned up and reset to NULL.
 
-  virtual TAO_Endpoint *duplicate (void) = 0;
+  //virtual TAO_Endpoint *duplicate (void) = 0;
   // This method returns a copy of the corresponding endpoints by
   // allocation memory
 

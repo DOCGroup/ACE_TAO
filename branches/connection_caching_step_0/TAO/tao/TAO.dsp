@@ -499,6 +499,25 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Handler.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3466,6 +3485,10 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -4135,6 +4158,10 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
 

@@ -34,12 +34,10 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
-
+#include "tao/Connection_Handler.h"
 #include "tao/SHMIOP_Transport.h"
 
-// Forward Decls
-class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
+
 
 
 typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
@@ -56,7 +54,8 @@ public:
   virtual TAO_Transport *transport (void) = 0;
 };
 
-class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_Handler_Base
+class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_Handler_Base,
+                                                        public TAO_Connection_Handler
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
@@ -103,16 +102,18 @@ protected:
   TAO_SHMIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
 
-  TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  CORBA::Boolean lite_flag_;
-  // Are we using lite?
+private:
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0);
+  // Will not be called at all. As a matter of fact should not be
+  // called. This is just to override the pure virtual function in the
+  // TAO_Connection_Handler class
 };
 
 // ****************************************************************
 
-class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_Handler_Base
+class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_Handler_Base,
+                                                        public TAO_Connection_Handler
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
@@ -175,20 +176,11 @@ protected:
   TAO_Pluggable_Messaging *acceptor_factory_;
   // Messaging acceptor factory
 
-  TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  TAO_ORB_Core_TSS_Resources *tss_resources_;
-  // Cached tss resources of the ORB that activated this object.
-
   u_long refcount_;
   // Reference count.  It is used to count nested upcalls on this
   // svc_handler i.e., the connection can close during nested upcalls,
   // you should not delete the svc_handler until the stack unwinds
   // from the nested upcalls.
-
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP or GIOPlite
 };
 
 #if defined (__ACE_INLINE__)
