@@ -1,3 +1,10 @@
+Sun Jun  6 22:09:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	  Fixed duplicate template instantiations, IRIX does not like
+	  that.
+
 Sun Jun 06 21:42:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
