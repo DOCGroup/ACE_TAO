@@ -41,7 +41,7 @@ TAO_Notify_ProxyPushSupplier_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 
 void TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (
     CosEventComm::PushConsumer_ptr push_consumer,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -54,7 +54,7 @@ void TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (
   }
 
 void TAO_Notify_ProxyPushSupplier_i::suspend_connection (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -68,7 +68,7 @@ void TAO_Notify_ProxyPushSupplier_i::suspend_connection (
 
 void
 TAO_Notify_ProxyPushSupplier_i::resume_connection (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -82,7 +82,7 @@ TAO_Notify_ProxyPushSupplier_i::resume_connection (
 
 
 void
-TAO_Notify_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))

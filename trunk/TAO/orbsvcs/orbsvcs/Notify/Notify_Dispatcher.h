@@ -40,7 +40,7 @@ class TAO_Notify_Dispatcher
   TAO_Notify_Dispatcher (void);
   // Constructor
 
-  ~TAO_Notify_Dispatcher (void);
+  virtual ~TAO_Notify_Dispatcher (void);
   // Destructor
 
   static TAO_Notify_Dispatcher* create (CORBA::Environment &ACE_TRY_ENV);
