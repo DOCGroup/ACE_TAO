@@ -424,16 +424,16 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   char *last_addr = 0;
   ACE_Auto_Basic_Array_Ptr <char> addr_str (addrs.rep ());
 
-  char *astr = ACE_OS::strtok_r (addr_str.get (),
-                                 ",",
-                                 &last_addr);
+  const char *astr = ACE_OS::strtok_r (addr_str.get (),
+                                       ",",
+                                       &last_addr);
   if (astr == 0)
     astr = "";
 
   // Iterate over the addrs specified in the endpoint.
    
   for ( ;
-       astr != 0 ;
+       astr != 0;
        astr = ACE_OS::strtok_r (0,
                                 ",",
                                 &last_addr))
