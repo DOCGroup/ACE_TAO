@@ -150,8 +150,7 @@ Dispatcher_Task::svc (void)
             }
         }
 
-      ACE_Time_Value tv = ACE_OS::gettimeofday();
-      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : next command got from queue at %u\n",tv.msec()));
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : next command got from queue at %u\n",ACE_OS::gettimeofday().msec()));
 
       Dispatch_Queue_Item *qitem =
         ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
@@ -175,8 +174,7 @@ Dispatcher_Task::svc (void)
       //time to actually dispatch event
       DSTRM_EVENT (DISP_TASK_FAM, EVENT_START_DISPATCHING, 0, sizeof(Object_ID), (char*)&oid);
 
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",ACE_OS::gettimeofday().msec()));
 #endif //ACE_HAS_DSUI
 
       result = command->execute ();
@@ -186,8 +184,7 @@ Dispatcher_Task::svc (void)
       //Measure time to actually dispatch event
       DSTRM_EVENT (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, sizeof(Object_ID), (char*)&oid);
 
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",tv.msec()));
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",ACE_OS::gettimeofday().msec()));
 #endif //ACE_HAS_DSUI
 
       if (command->can_be_deleted ())
@@ -269,14 +266,12 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
       //between original dispatch and dispatch because of RG
       DSTRM_EVENT (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(Object_ID), (char*)&oid);
 
-      ACE_Time_Value tv = ACE_OS::gettimeofday();
-      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %i\n",tv.msec()));
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %i\n",ACE_OS::gettimeofday().msec()));
 #endif //ACE_HAS_DSUI
     }
   else
     {
       //release!
-      //ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : RG passed; enqueueing at %u\n",ACE_OS::gettimeofday().msec()));
 #endif //KOKYU_HAS_RELEASE_GUARD
 
