@@ -91,7 +91,8 @@ Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/rules.local.GNU: added show_statics and
 	  show_uninit targets.  They show the statics (that have static
 	  destructor calls) and uninitialized data in the object files
-	  in the current directory.
+	  in the current directory.  They work best (or at all) on object
+	  files compiled by g++.
 
 Wed Oct 22 05:04:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
