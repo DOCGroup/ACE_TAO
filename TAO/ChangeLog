@@ -1,3 +1,23 @@
+Thu Jun 26 17:35:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Removed busy_hwm and max_write_delay attributes. These can be set in
+          the ESF framework. The ones in the EC aren't used anymore when the
+          ESF framework was introduced. This fixes bugzilla entry [530].
+
 Wed Jun 25 17:54:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
@@ -15,15 +35,15 @@ Wed Jun 25 17:54:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jun 25 17:06:18 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl: 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf: 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf: 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README: 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h: 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp: 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/README: 
-	* orbsvcs/tests/Notify/lib/EventChannel_Command.h: 
-	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp: 
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/README:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
 
 	  Replaced misspelling word "colocated" with correctly spelled
 	  "collocated" throughout these files.  I did not change actual
@@ -60,7 +80,7 @@ Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 	* tao/RTCORBA/Multi_Priority_Mapping.h:
 	* tao/Valuetype/Valuetype.mpc:
 
-	  Fixes for various mpc generation problems. 
+	  Fixes for various mpc generation problems.
 	  Incorrect export macro used in the rtcorba header.
 
 Wed Jun 25 16:05:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>

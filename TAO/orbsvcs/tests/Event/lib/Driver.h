@@ -169,9 +169,6 @@ public:
   virtual void cleanup_suppliers (void);
   // Cleanup the resources
 
-  virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
-  // Allow modifications of the default EC attributes
-
   virtual int decode_consumer_cookie (void* cookie) const;
   // Returns the index of the consumer for <cookie>
 
@@ -326,9 +323,6 @@ protected:
   RtecEventChannelAdmin::EventChannel_var event_channel_;
   // The event channel object reference
 
-  int busy_hwm_;
-  int max_write_delay_;
-  // Control the concurrency inside the EC.
 };
 
 #if defined (__ACE_INLINE__)

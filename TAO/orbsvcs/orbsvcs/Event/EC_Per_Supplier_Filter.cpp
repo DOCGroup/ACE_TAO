@@ -24,11 +24,6 @@ TAO_EC_Per_Supplier_Filter::
      refcnt_ (1)
 {
   this->event_channel_->create_proxy_collection (this->collection_);
-  // @@
-  // @@ this->collection_->busy_hwm (this->event_channel_->busy_hwm ());
-  // @@ this->collection_->max_write_delay (
-  // @@           this->event_channel_->max_write_delay ()
-  // @@ );
 }
 
 TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)

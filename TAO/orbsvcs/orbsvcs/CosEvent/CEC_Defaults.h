@@ -39,17 +39,6 @@
 # define TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS 0
 #endif /* TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS */
 
-// Control the maximum degree of concurrency tolerated by the EC, some
-// kind of limit is required to avoid starvation of delayed write
-// operations.
-#ifndef TAO_CEC_DEFAULT_BUSY_HWM
-# define TAO_CEC_DEFAULT_BUSY_HWM 1024
-#endif /* TAO_CEC_DEFAULT_BUSY_HWM */
-
-#ifndef TAO_CEC_DEFAULT_MAX_WRITE_DELAY
-# define TAO_CEC_DEFAULT_MAX_WRITE_DELAY 2048
-#endif /* TAO_CEC_DEFAULT_MAX_WRITE_DELAY */
-
 // The defaults for the default factory.
 // The TAO_CEC_Default_Factory is a run-time configurable factory for
 // the event channel.  Using the service configurator the user can
