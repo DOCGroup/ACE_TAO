@@ -1,3 +1,9 @@
+Tue Aug 31 9:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/TAO.dsp:
+	  Added the files Linear_Priority_Mapping.{h,i,cpp}
+	  and Direct_Priority_Mapping.{h,i,cpp}
+
 Tue Aug 31 8:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_attribute/attribute.cpp
