@@ -219,10 +219,6 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL_ORB.h
 # End Source File
 # Begin Source File
@@ -360,10 +356,6 @@ SOURCE=.\IOR_Parser.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -927,10 +919,6 @@ SOURCE=.\default_server.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL_ORB.inl
 # End Source File
 # Begin Source File
@@ -1032,10 +1020,6 @@ SOURCE=.\IOR_Parser.i
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -1459,10 +1443,6 @@ SOURCE=.\default_server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL_ORB.cpp
 # End Source File
 # Begin Source File
@@ -1612,10 +1592,6 @@ SOURCE=.\IOR_Parser.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
