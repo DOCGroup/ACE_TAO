@@ -1,0 +1,61 @@
+#!/bin/sh
+
+VERSION=`cat VERSION`
+URL="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO.tar.gz"
+
+
+cat <<@EOM
+
+The first official beta release of The ACE ORB (TAO) has been released
+by the Distributed Object Computing (DOC) Group at Washington
+University in St. Louis.  TAO is a freely available CORBA
+2.x-compliant ORB with real-time extensions that can be downloaded
+from the Internet at
+
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO.tar.gz
+
+$VERSION
+
+TAO uses IIOP 1.0 as its inter-ORB communication protocol and provides
+the first implementation of the OMG's Portable Object Adapter (POA)
+specification and latest IDL->C++ mappings.  For more information
+about the POA, please see
+
+http://www.cs.wustl.edu/~schmidt/C++-report-col11.ps.gz
+http://www.cs.wustl.edu/~schmidt/C++-report-col12.ps.gz
+
+For more information on TAO, please see
+
+http://www.cs.wustl.edu/~schmidt/TAO.html
+
+TAO has been ported to a range of OS platforms including Windows NT
+4.x using MSVC++ 4.x and 5.x, several versions of UNIX (e.g., Solaris
+2.x, SGI IRIX 6.x, Linux, SCO, NetBSD, and FreeBSD), and Real-Time
+OS's (RTOSs) (e.g., VxWorks and Chorus).  Ultimately, TAO will be
+ported to all OS platforms on which ACE runs.  We have used TAO to
+interwork with other ORBs (e.g., Orbix, COOL, CORBAPlus, and
+VisiBroker), so we're confident that its IIOP implementation is robust
+and interoperable.
+
+For information on installation and system requirements, please see
+http://www.cs.wustl.edu/~schmidt/TAO-INSTALL.html (or INSTALL) in the
+root directory of the unpacked tar file.
+
+Note that ACE is required to build TAO.  Typically the most recent
+beta release is required, which you can obtain at
+
+http://www.cs.wustl.edu/~schmidt/ACE.html
+
+Please see the installation notes for more details.
+
+Other HTML documentation is available in the '$TAO_ROOT/docs/'
+directory.
+
+We welcome suggestions for improvement, bug fixes, portability
+enhancements, etc.  If you have any questions or problems with TAO,
+please post them to the ACE mailing list (ace-users@cs.wustl.edu) or
+send email to Douglas C. Schmidt (schmidt@cs.wustl.edu) and Chris
+Cleeland (cleeland@cs.wustl.edu).
+
+The TAO Team
+@EOM
