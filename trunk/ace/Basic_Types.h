@@ -159,7 +159,7 @@
 #     endif
 #   endif
 #   if !defined (ACE_SIZEOF_LONG_LONG)
-#     error: unsupported long size, must be updated for this platform!
+#     error: unsupported long long size, must be updated for this platform!
 #   endif
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
