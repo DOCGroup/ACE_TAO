@@ -12,6 +12,7 @@
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
+#define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif /* ! ACE_HAS_WINCE */
 
 #define ACE_LACKS_GETPGID
