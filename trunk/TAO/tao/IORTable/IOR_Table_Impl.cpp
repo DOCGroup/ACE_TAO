@@ -22,16 +22,20 @@ TAO_IOR_Table_Impl::find (const char *object_key,
         IORTable::NotFound
       ))
 {
-  ACE_CString key (object_key);
-  ACE_CString ior;
+  // We don't want the lock held during locate, so make it go out
+  // of scope before then. 
+  {
+    ACE_CString key (object_key);
+    ACE_CString ior;
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-  if (this->map_.find (key, ior) == 0)
-    {
-      return CORBA::string_dup (ior.c_str ());
-    }
-  if (CORBA::is_nil (this->locator_.in ()))
-    ACE_THROW_RETURN (IORTable::NotFound (), 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    if (this->map_.find (key, ior) == 0)
+      {
+        return CORBA::string_dup (ior.c_str ());
+      }
+    if (CORBA::is_nil (this->locator_.in ()))
+      ACE_THROW_RETURN (IORTable::NotFound (), 0);
+  }
 
   return this->locator_->locate (object_key, ACE_TRY_ENV);
 }
