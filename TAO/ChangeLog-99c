@@ -1,3 +1,38 @@
+Tue May  4 20:23:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.{h.cpp}:
+	  Change the signature of the constructor 
+	    CORBA_Any (CORBA::TypeCode_ptr type,
+		       const ACE_Message_Block* mb)
+
+	  to
+
+	    CORBA_Any (CORBA::TypeCode_ptr type,
+		       COREBA::UShort dummy,
+		       const ACE_Message_Block* mb)
+	 
+	  in order to avoid ambiguity with a call to
+
+	    CORBA_Any (CORBA::TypeCode_ptr type,
+             void *value = 0,
+             CORBA::Boolean any_owns_data = 0)
+
+	  where the second arg is NULL and the third arg
+	  is left out.
+	
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	* tao/Invocation.cpp:
+	* tao/Typecode.cpp:
+	  Changed the signature of all the calls to the above
+	  constructor.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  Fixed the '*/ outside of comment' warning.
+
 Tue May  4 20:17:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/CORBA.pidl: 
