@@ -1,3 +1,10 @@
+Fri Mar 09 16:16:56 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/FindPOA/FindPOA.cpp (main): Added additional test
+	  cases to make sure that the correct exception
+	  (PortableServer::POA::AdapterNonExistent) is raised when looking
+	  for a non-existant POA.
+
 Fri Mar  9 16:06:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
