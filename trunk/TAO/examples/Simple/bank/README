@@ -11,7 +11,7 @@ Accounts.  It also has a method to shutdown the server.
 run_test.pl : This is a perl script to run the server and client as :
 ------------
 	      server -o ior_file
-	      client -o ior_file
+	      client -f ior_file
 
 Passing the Server IOR to Clients:
 ---------------------------------
