@@ -14,6 +14,7 @@
 #define ACE_FILE_IO_H
 #include /**/ "ace/pre.h"
 
+#include "ace/OS_NS_stropts.h"
 #include "ace/FILE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
