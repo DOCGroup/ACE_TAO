@@ -261,6 +261,7 @@ ORB_CORE_FILES = \
   Fault_Tolerance_Service \
   Interceptor_List \
   IORInterceptor_Adapter \
+  IORInterceptor_Adapter_Factory \
   IFR_Client_Adapter \
   ORBInitInfo \
   ORBInitializer_Registry \
@@ -20957,6 +20958,7 @@ realclean:
   Thread_Lane_Resources_Manager.h \
   Thread_Lane_Resources_Manager.i \
   Protocols_Hooks.h IORInterceptor_Adapter.h \
+  IORInterceptor_Adapter_Factory.h \
   Buffering_Constraint_Policy.h \
   Buffering_Constraint_Policy.i \
   LF_Event_Loop_Thread_Helper.h \
@@ -33843,6 +33845,62 @@ realclean:
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IORInterceptor_Adapter.o .obj/IORInterceptor_Adapter.so .shobj/IORInterceptor_Adapter.o .shobj/IORInterceptor_Adapter.so: IORInterceptor_Adapter.cpp \
+  IORInterceptor_Adapter.h \
+  $(ACE_ROOT)/ace/pre.h \
+  corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  TAO_Export.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
+  Exception.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  Exception.i \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Dynamic_Service.h \
+  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+  $(ACE_ROOT)/ace/Dynamic_Service.i \
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp
+
+.obj/IORInterceptor_Adapter_Factory.o .obj/IORInterceptor_Adapter_Factory.so .shobj/IORInterceptor_Adapter_Factory.o .shobj/IORInterceptor_Adapter_Factory.so: IORInterceptor_Adapter_Factory.cpp \
+  IORInterceptor_Adapter_Factory.h \
+  IORInterceptor_Adapter.cpp \
   IORInterceptor_Adapter.h \
   $(ACE_ROOT)/ace/pre.h \
   corbafwd.h \

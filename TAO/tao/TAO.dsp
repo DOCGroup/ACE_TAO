@@ -547,6 +547,10 @@ SOURCE=.\IORInterceptor_Adapter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_Adapter_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
@@ -1433,6 +1437,10 @@ SOURCE=.\IOR_Parser.h
 # Begin Source File
 
 SOURCE=.\IORInterceptor_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IORInterceptor_Adapter_Factory.h
 # End Source File
 # Begin Source File
 
