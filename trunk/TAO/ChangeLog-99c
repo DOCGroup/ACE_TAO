@@ -1,3 +1,10 @@
+Tue Sep 28 14:50:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/DSI/Database.idl (Database): Renamed <flags> to
+	  <options>. The variable name <flags> only differed from the type
+	  <Flags> in case which is no longer acceptable.  Thanks to Jeff
+	  for pointing this out.
+
 Tue Sep 28 13:44:00 1999  Martin Botzler  <martin.botzler@mchp.siemens.de>
 
 	* examples/mfc/*:
@@ -69,7 +76,7 @@ Mon Sep 27 15:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
 	  In replace(), made creation of Any's message block member
-	  conditional on the void *value arg being non-zero. When 
+	  conditional on the void *value arg being non-zero. When
 	  a thing like this would happen (an OUT arg), a new message
 	  block gets created for the Any in the stub. Thanks to
 	  Philippe Merle <Philippe.Merle@lifl.fr> for sending in this
@@ -93,13 +100,13 @@ Mon Sep 27 15:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  In do_dynamic_call(), in the branch of INOUT/OUT arg
 	  processing where the Any's value is 0, there was a
 	  missing assignment of the write pointer in the new
-	  message block created for the Any. Thanks to 
+	  message block created for the Any. Thanks to
 	  Philippe Merle <Philippe.Merle@lifl.fr> for the example
 	  that uncovered this bug.
 
 	* Sequence_T.cpp:
-	  Added missing call to base class operator= in 
-	  TAO_Bounded_Array_Sequence operator=, which was 
+	  Added missing call to base class operator= in
+	  TAO_Bounded_Array_Sequence operator=, which was
 	  causing a param test to return incorrect results.
 
 Mon Sep 27 15:15:34 1999  Ossama Othman  <othman@cs.wustl.edu>
