@@ -130,6 +130,10 @@ void
 Test_ULongLong::print_values (void)
 {
 #if defined(ACE_LACKS_LONGLONG_T)
+  char bufferin[32];
+  char bufferinout[32];
+  char bufferout[32];
+  char bufferret[32];
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
               "in = %s, "
@@ -137,10 +141,10 @@ Test_ULongLong::print_values (void)
               "out = %s, "
               "ret = %s\n"
               "\n=*=*=*=*=*=*\n",
-              this->in_.as_string ().c_str (),
-              this->inout_.as_string ().c_str (),
-              this->out_.as_string ().c_str (),
-              this->ret_.as_string ().c_str ()));
+              this->in_.as_string (bufferin),
+              this->inout_.as_string (bufferinout),
+              this->out_.as_string (bufferout),
+              this->ret_.as_string (bufferret)));
 #else
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
