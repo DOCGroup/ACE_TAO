@@ -1,0 +1,326 @@
+<html>
+
+<head> 
+<title>
+TAO Reactivation Service
+</title>
+</head>
+
+<body>
+
+<hr>
+<h1>
+TAO Reactivation Service
+</h1>
+
+<hr>
+
+<h3>
+Goals of the Reactivation Service
+</h3>
+
+The Reactivation Service will add support to TAO's architecture so
+that servers using Persistent Object References (defined in the
+Portable Object Adapter (POA) specification) can be restarted. This
+service will allow servers to come and go without invalidating the
+Persistent Object References that they use.
+
+<h3>
+Constraints when using the Reactivation Service
+</h3>
+
+<ul>
+
+<li> 
+
+When a server is restarted by the Reactivation Service, it must be
+able to recreate enough state to deal correctly with the request
+issued by a client on the Persistent Object Reference. Therefore, the
+restarted server's endpoint must be the same endpoint specified in the
+Persistent Object Reference. Unless dynamic servant and POA activation
+is used, the restarted server must also recreate the POA in which the
+Persistent object was registered and register the persistent object
+with that POA.
+
+<li>
+
+The Reactivation Service will track all processes it has restarted. It
+will ensure that multiple instances of same server processes are not
+started simultaneously.
+
+<li>
+The use of the Reactivation Service in TAO will be optional. Real-time
+applications can choose not to use the Reactivation Service.
+
+</ul>
+
+<h3>
+Alternate Implementations
+</h3>
+
+
+Other ORB vendors use alternative techniques for Activation /
+Reactivation Services. These techniques usually require new naming
+techniques for persistent objects and new client-side APIs to bind to
+persistent objects. TAO's Reactivation Service will not require such
+extensions.
+<p>
+
+One implementation of an Activation / Reactivation Service is to use
+an Object Reference that points to the Activation Service instead of
+pointing directly to the persistent object. This extra level of
+indirection is used by the Activation Service to start the server, and
+then use the Location Forwarding mechanism to forward the client
+request to the server. This technique forces clients to use the
+Activation Service (at least once) even when the server is already
+running.
+<p>
+
+<h3>
+Design Constraints of the Reactivation Service
+</h3>
+
+This design makes TAO dependent on the Reactivation Service.
+<p>
+
+<hr>
+<h2>
+Implementation
+</h2>
+
+Here is a preliminary interface of the Reactivation Service in IDL:
+
+<code><pre>
+module TAO
+{
+  // ....
+
+  exception Already_Registered {};
+  // Object already bound in the Reactivator
+
+  exception Object_Not_Persistent {};
+  // Object is not persistent
+
+  exception Not_Found {};
+  // Object not found in the Reactivator
+
+  interface Reactivator
+    {
+      boolean reactivate_object (in Object obj)
+	raises (Not_Found);
+      // Restart server that will contain this persistent object
+      //
+      // The <Not_Found> exception is raised when <obj> is not found
+      // in the Reactivation Service.
+
+      void register_object (in Object obj,
+                            in string executable_name)
+	raises (Already_Registered,
+                Object_Not_Persistent);
+      // Restart server process <executable_name> when client is
+      // looking for <obj>.
+      //
+      // The <Already_Registered> exception is raised when <obj> has
+      // already been registered with the Reactivation Service.
+      //
+      // The <Object_Not_Persistent> exception is raised when <obj> is
+      // not a Persistent Object Reference.
+
+      typedef sequence<string> Command_Line_Options;
+      // Command line options
+
+      void register_object_with_options (in Object obj,
+                                         in string executable_name,
+                                         in Command_Line_Options executable_options)
+	raises (Already_Registered,
+                Object_Not_Persistent);
+      // Restart server process <executable_name> when client is
+      // looking for <obj>. Use <executable_options> as command line
+      // options to the server.
+
+      enum Host_Port_Options
+      {
+        NONE,
+        HOST,
+        PORT,
+        HOST_AND_PORT
+      };
+      //  NONE: Use no information from the Object Reference
+      //
+      //  HOST: Use the host information taken from the Object
+      //  Reference (-ORBhost)
+      //
+      //  PORT: Use the port information taken from the Object
+      //  Reference (-ORBport)
+      //
+      //  HOST_AND_PORT: Use both the host and port information from
+      //  the Object Reference (-ORBport) and (-ORBhost)
+
+      void register_object_using_info_in_ior (in Object obj,
+                                              in string executable_name,
+                                              in Host_Port_Options host_port_options)
+	raises (Already_Registered,
+                Object_Not_Persistent);
+      // Restart server process <executable_name> when client is
+      // looking for <obj>. Depending on the <host_port_options>,
+      // information from the <obj> object reference is used to
+      // specify (-ORBport) and (-ORBhost) options for the server.
+
+      void register_object_using_info_in_ior_with_options (in Object obj,
+                                                           in string executable_name,
+                                                           in Command_Line_Options executable_options,
+                                                           in Host_Port_Options host_port_options)
+	raises (Already_Registered,
+                Object_Not_Persistent);
+      // Restart server process <executable_name> when client is
+      // looking for <obj>. Use <executable_options> as command line
+      // options to the server. Depending on the <host_port_options>,
+      // information from the <obj> object reference is used to
+      // specify (-ORBport) and (-ORBhost) options for the server.
+
+      void remove (in Object obj)
+	raises (Not_Found);
+      // Remove <obj> from the Reactivation Service.
+      //
+      // The <Not_Found> exception is raised when <obj> is not found
+      // in the Reactivation Service.
+    };
+};
+</pre></code>
+
+<hr>
+<h2>
+Accessing the Reactivation Service
+</h2>
+
+Servers can use either of the following techniques to get access to
+the Reactivation Service. Remember that the Reactivation Service will
+be transparent to the clients.
+
+<ul>
+
+<li>
+Use ORB::resolve_initial_reference ("TAO Reactivation Service")
+<br>
+
+This works like the bootstrapping mechanism to obtain the Naming
+Service. This method will return the reference to a Reactivation
+Service.  
+<p>
+
+<li>
+Use a Helper Application
+<br>
+A helper application will be part of the Reactivation Service.  It
+will be a command-line utility that will assist users with adding and
+removing Persistent Object References from the Reactivation Service.
+<p>
+
+</ul>
+
+<h3>
+Locating an instance of Reactivation Service
+</h3>
+
+<h4>
+Server side
+</h4>
+
+The Reactivation Service will be located on the same host as the
+server.  If not, host information can be specified through command
+line options or environment variables.  The default port of the
+Reactivation Service can be overwriting through command line options
+or environment variables.
+
+<h4>
+Client side
+</h4>
+
+The correct Reactivation Service will be located by multicasting (on a
+default multicast group) the Persistent Object Reference the client is
+interested in. The default multicast group can be overwriting through
+command line options or environment variables. If multicasting is not
+preferred, the location of a the Reactivation Service will be assumed
+to be the same as the Persistent Object.  The default port of the
+Reactivation Service can be overwriting through command line options
+or environment variables.
+
+<hr>
+<h2>
+Reactivation algorithm used on the Client Side
+</h2>
+
+<ul>
+
+<li>
+Client obtains an Object Reference
+
+<li> 
+Then it makes a request on the Object Reference. If the IOR has
+multiple Object References, then it will try all of the Object
+References until one succeeds
+
+<li>
+
+If all of the Object References fail, then for each Object Reference
+in the IOR, the following steps will be taken to reactivate the
+server
+
+<li>
+The ORB examines the Object Reference
+
+<li>
+If it is a Transient Object Reference, then the call fails
+
+<li>
+If multicast is available:
+
+<ul>
+
+<li>
+Multicast the Object Reference to a group of Reactivation Services
+
+<li> 
+Wait until response or a timeout.  The response will contain the
+Object Reference of a Reactivation Service that knows about the Object
+Reference
+
+<p>
+</ul>
+
+<li>
+If no multicast:
+
+<ul>
+
+<li>
+Extract the host from the Persistent Object Reference
+
+<li>
+Manufacture an Object Reference for the Reactivation Service
+
+<p>
+</ul>
+
+<li>
+Now connect to the Reactivation Service
+
+<li>
+Call <i>reactivate ()</i> passing the Persistent Object Reference
+
+<li>
+Reactivation service sends back a yes / no response
+
+<li>
+If "yes", retry the request using the Persistent Object Reference
+again. If request fails, then fail (no more retries)
+
+<li>
+If "no", then fail
+
+</ul>
+
+<hr>
+</body>
+</html>
+
