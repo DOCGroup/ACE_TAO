@@ -184,7 +184,7 @@ fail_no_listener_nonblocking (void)
 
       if (status != -1)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Connect which should fail didn't\n")));
           status = -1;
         }
@@ -198,7 +198,7 @@ fail_no_listener_nonblocking (void)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_WARNING,
                   ACE_TEXT ("Test not executed fully; ")
                   ACE_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
                   ACE_TEXT ("not"), errno));
@@ -228,12 +228,19 @@ succeed_nonblocking (void)
   ACE_SOCK_Connector con;
   ACE_SOCK_Stream sock;
   ACE_Time_Value nonblock (0, 0);
+  u_short test_port = 7;          // Echo
 
   find_another_host (test_host);
+  if (ACE_OS::strcmp (ACE_TEXT ("localhost"), test_host) == 0)
+    {
+#if defined (ACE_WIN32)
+      test_port = 80;        // Echo not available on Win32; try web server
+#endif /* ACE_WIN32 */
+    }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing to host \"%s\"\n"),
-              test_host));
-  if (echo_server.set ((u_short) 7, test_host) == -1)
+              ACE_TEXT ("Testing to host \"%s\", port %d\n"),
+              test_host, test_port));
+  if (echo_server.set (test_port, test_host) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Host lookup for %s %p\n"),
@@ -246,7 +253,7 @@ succeed_nonblocking (void)
   // Need to test the call to 'complete' really.
   if (status == 0 || (status == -1 && errno != EWOULDBLOCK))
     {
-      ACE_DEBUG((LM_DEBUG,
+      ACE_DEBUG((LM_WARNING,
                  ACE_TEXT ("Immediate success/fail; test not completed\n")));
       status = 0;
     }
@@ -259,12 +266,18 @@ succeed_nonblocking (void)
         {
           // Reset the status _before_ doing the printout, in case the
           // printout overwrites errno.
-          if (errno == ECONNREFUSED) // ENOTCONN should not happen any more || errno == ENOTCONN)
-            status = 0;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("%p\n"),
-                      ACE_TEXT("connect:complete")));
+          if (errno == ECONNREFUSED)
+            {
+              status = 0;
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Should succeed, but refused: ok\n")));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("%p\n"),
+                          ACE_TEXT("connect should succeed, but")));
+            }
         }
       else
         ACE_DEBUG((LM_DEBUG,

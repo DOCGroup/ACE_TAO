@@ -2541,7 +2541,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
 
-  int need_to_check;
+  int need_to_check = 0;
+  int known_failure = 0;
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (int (h) + 1,
@@ -2579,8 +2580,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // any platform where we can't tell just from select() (e.g. AIX),
   // we also need to check for success/fail.
 #if defined (ACE_WIN32)
+  // On Win32, ex_handle set indicates a failure. We'll do the check
+  // to try and get an errno value, but the connect failed regardless of
+  // what getsockopt says about the error.
   if (ex_handles.is_set (h))
-    need_to_check = 1;
+    {
+      need_to_check = 1;
+      known_failure = 1;
+    }
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 
@@ -2618,7 +2625,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       int sock_err_len = sizeof (sock_err);
       ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
                           (char *)&sock_err, &sock_err_len);
-      if (sock_err != 0)
+      if (sock_err != 0 || known_failure)
         {
           h = ACE_INVALID_HANDLE;
           errno = sock_err;
