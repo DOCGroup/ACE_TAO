@@ -174,14 +174,21 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           // Set NIC
           dgram.set_nic (mcast_nic);
 
-          //Set TTL
-          dgram.ACE_SOCK::set_option (IPPROTO_IP,
-                                      IP_MULTICAST_TTL,
-                                      ACE_reinterpret_cast (void *,
-                                                            ACE_const_cast
-                                                            (char *,
-                                                             mcast_ttl)),
-                                      sizeof (mcast_ttl));
+          // Set TTL
+#if defined (ACE_WIN32)
+          // MS Windows expects an int.
+          int mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
+#else
+          // Apparently all other platforms expect an unsigned char
+          // (0-255).
+          unsigned char mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
+#endif  /* ACE_WIN32 */
+          if (dgram.ACE_SOCK::set_option (
+                IPPROTO_IP,
+                IP_MULTICAST_TTL,
+                ACE_reinterpret_cast (void *, mcast_ttl_optval),
+                sizeof (mcast_ttl_optval)) != 0)
+            result = -1;
 
           // Convert the acceptor port into network byte order.
           ACE_UINT16 response_port =
