@@ -770,7 +770,7 @@ nobase_include_HEADERS += \
   MProfile.i \
   Managed_Types.i \
   Marshal.i \
-  Messaging_PolicyValueC.i \
+  Messaging_PolicyValueC.inl \
   Messaging_SyncScopeC.inl \
   NVList.i \
   ORB.i \
