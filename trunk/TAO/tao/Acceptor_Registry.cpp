@@ -135,8 +135,6 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
   TAO_EndpointSet endpoint_set = orb_core->orb_params ()->endpoints ();
 
-  TAO_EndpointSetIterator endpoints = endpoint_set.begin ();
-
   if (endpoint_set.is_empty ())
     {
       // No endpoints were specified, we let each protocol pick its
@@ -153,12 +151,58 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                           -1);
     }
 
+  // Count the maximum number of endpoints in the set.  This will be
+  // the maximum number of acceptors that need to be created.
+  size_t acceptor_count = 0;
+  TAO_EndpointSetIterator endpts = endpoint_set.begin ();
+  for (ACE_CString *ep = 0;
+       endpts.next (ep) != 0;
+       endpts.advance ())
+    {
+      const ACE_CString &iop = (*ep);
+
+      // IOP://address1,address2
+      //    ^ slot
+      int slot = iop.find ("://", 0);
+
+      if (slot == iop.npos)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Invalid endpoint specification: ")
+                        ACE_TEXT ("<%s>.\n"),
+                        iop.c_str ()));
+
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+              CORBA_SystemException::_tao_minor_code (
+                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                EINVAL),
+              CORBA::COMPLETED_NO),
+            -1);
+        }
+
+      ++acceptor_count;  // We've got at least one acceptor so far.
+
+      // Now count the number of commas.  That number will be the
+      // remaining number of endpoints in the current endpoint
+      // specification.
+      const char *ep_end =
+        ep->c_str () + ACE_OS_String::strlen (ep->c_str ());
+      for (const char *e = ACE_OS_String::strchr (ep->c_str (), ',');
+           e != 0 && e != ep_end;
+           e = ACE_OS_String::strchr (e, ','))
+        {
+          ++acceptor_count;
+          ++e;
+        }
+    }
+
   // The array containing the TAO_Acceptors will never contain more
   // than the number of endpoints stored in TAO_ORB_Parameters.
   if (this->acceptors_ == 0)
     {
       ACE_NEW_THROW_EX (this->acceptors_,
-                        TAO_Acceptor *[endpoint_set.size ()],
+                        TAO_Acceptor *[acceptor_count],
                         CORBA::NO_MEMORY (
                           CORBA_SystemException::_tao_minor_code (
                             TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
@@ -167,11 +211,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       ACE_CHECK_RETURN (-1);
     }
 
+  TAO_EndpointSetIterator endpoints = endpoint_set.begin ();
   for (ACE_CString *endpoint = 0;
        endpoints.next (endpoint) != 0;
        endpoints.advance ())
     {
-      ACE_CString iop = (*endpoint);
+      const ACE_CString &iop = (*endpoint);
 
       // IOP://address1,address2
       //    ^ slot
