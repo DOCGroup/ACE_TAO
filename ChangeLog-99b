@@ -1,3 +1,13 @@
+Thu Aug 05 21:37:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.cpp (ACE_Static_Object_Lock_lock,
+          ACE_Static_Object_Lock::instance, cleanup_lock):
+          added support for ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK.
+          It's not (currently) used by ACE.  But, applications may
+          find it useful for avoiding recursive calls if they have
+          overridden operator new.  Thanks to Jody Hagins
+          <jody@atdesk.com> for contributing it.
+
 Thu Aug 05 21:04:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/streams.h: removed #includes of istream.h and ostream.h
