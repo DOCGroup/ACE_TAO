@@ -1,8 +1,13 @@
+Thu Feb 25 16:06:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* rules.tao.GNU: Added make commands to generate dummy *S_T.*
+ 	  files when building with Flick.
+
 Thu Feb 25 15:53:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be
 	  TAO_IDL/driver
-	Changed the TAO_TRY macros with ACE_TRY macros in the 
+	Changed the TAO_TRY macros with ACE_TRY macros in the
 	IDl generated stubs and skeletons
 
 Thu Feb 25 15:35:14 1999  David L. Levine  <levine@cs.wustl.edu>
