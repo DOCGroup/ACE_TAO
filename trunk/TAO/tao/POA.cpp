@@ -3437,10 +3437,10 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PriorityModelPolicy *priority_model =
+  RTCORBA::PriorityModelPolicy_var priority_model =
     orb_core.priority_model ();
 
-  if (priority_model != 0)
+  if (!CORBA::is_nil (priority_model.in ()))
     {
       RTCORBA::PriorityModel rt_priority_model =
         priority_model->priority_model (ACE_TRY_ENV);
@@ -3458,12 +3458,43 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
     orb_core.server_protocol ();
 
   if (server_protocol != 0)
-    this->server_protocol (server_protocol);
+    {
+      this->server_protocol (server_protocol);
+      server_protocol->_remove_ref ();
+    }
 
 #else
 
   ACE_UNUSED_ARG (orb_core);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+}
+
+TAO_POA_Policies::TAO_POA_Policies (const TAO_POA_Policies &rhs)
+  :  thread_ (rhs.thread ()),
+     lifespan_ (rhs.lifespan ()),
+     id_uniqueness_ (rhs.id_uniqueness ()),
+     id_assignment_ (rhs.id_assignment ()),
+     implicit_activation_ (rhs.implicit_activation ()),
+     servant_retention_ (rhs.servant_retention ()),
+     request_processing_ (rhs.request_processing ()),
+     priority_model_ (rhs.priority_model ()),
+     server_priority_ (rhs.server_priority ()),
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+     server_protocol_ (0),
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+     client_exposed_fixed_policies_ ()
+{
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  this->server_protocol (rhs.server_protocol ());
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -3788,20 +3819,14 @@ TAO_POA_Policies::server_protocol (TAO_ServerProtocolPolicy *policy)
   if (this->server_protocol_)
     {
       this->server_protocol_->destroy ();
-      delete this->server_protocol_;
+      CORBA::release (this->server_protocol_);
       this->server_protocol_ = 0;
     }
 
   if (policy)
     {
-      CORBA::Policy_ptr base_copy = policy->copy ();
-
-      RTCORBA::ServerProtocolPolicy_var copy
-        = RTCORBA::ServerProtocolPolicy::_narrow (base_copy);
-
-      this->server_protocol_ =
-        ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                          copy.in ());
+      ACE_NEW (this->server_protocol_,
+               TAO_ServerProtocolPolicy (*policy));
     }
 
 }

@@ -246,6 +246,8 @@ public:
   TAO_POA_Policies (TAO_ORB_Core &orb_core,
                     CORBA::Environment &ACE_TRY_ENV);
 
+  TAO_POA_Policies (const TAO_POA_Policies &rhs);
+
   ~TAO_POA_Policies (void);
 
   PortableServer::ThreadPolicyValue thread (void) const;
@@ -678,6 +680,8 @@ public:
 
   ACE_Lock &lock (void);
 
+  TAO_POA_Policies &policies (void);
+
 protected:
 
   const ACE_CString &name (void) const;
@@ -860,8 +864,6 @@ protected:
                          CORBA_Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-  TAO_POA_Policies &policies (void);
 
   TAO_Active_Object_Map &active_object_map (void) const;
 
