@@ -35,6 +35,9 @@
 #endif /* ACE_HAS_STRICT */
 #define ACE_HAS_STRICT 1
 
+// Non-static object manager does not quite work with CE (yet.)
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0
+
 // SH3 cross-compiler can't handle inline functions correctly (along with other bugs.)
 #if defined (SH3) && defined (DEBUG)
 #define ACE_LACKS_INLINE_FUNCTIONS
