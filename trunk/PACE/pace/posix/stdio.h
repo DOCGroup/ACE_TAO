@@ -1,4 +1,4 @@
-/* $Id$
+/* $Id$ -*- C -*-
 
  * ============================================================================
  *
@@ -33,11 +33,17 @@ extern "C" {
 
   #define pace_stdin stdin;
 
+  PACE_INLINE void pace_clearerr (FILE * stream);
+
   PACE_INLINE char * pace_ctermid (char * s);
 
   PACE_INLINE int pace_fclose (FILE * stream);
 
   PACE_INLINE FILE * pace_fdopen (int fildes, const char * type);
+
+  PACE_INLINE int pace_ferror (FILE * stream);
+
+  PACE_INLINE int pace_feof (FILE * stream);
 
   PACE_INLINE int pace_fflush (FILE * stream);
 
@@ -112,7 +118,7 @@ extern "C" {
   PACE_INLINE int pace_getchar_unlocked ();
   /* Requires PACE_HAS_REENTRANT. */
 
-  PACE_INLINE char *PACE_gets (char * s);
+  PACE_INLINE char *pace_gets (char * s);
 
   PACE_INLINE int pace_getw (FILE * stream);
   /* Not in POSIX spec. */
@@ -142,6 +148,8 @@ extern "C" {
   PACE_INLINE int pace_putw (int w, FILE * stream);
   /* Not in POSIX spec. */
 
+  PACE_INLINE int pace_remove (const char * path);
+
   PACE_INLINE int pace_rename (const char * old_name,
                                const char * new_name);
 
@@ -156,6 +164,8 @@ extern "C" {
    * This is a macro and requires an additional set of parenthesis
    * surrounding the arguments.
    */
+
+  PACE_INLINE void pace_setbuf (FILE * stream, char * buf);
 
   #define pace_sscanf(X) sscanf X
   /* int sscanf (const char *s, const char *format, ... );
@@ -173,11 +183,15 @@ extern "C" {
    * surrounding the arguments.
    */
 
+  PACE_INLINE FILE * pace_tmpfile ();
+
+  PACE_INLINE char * pace_tmpnam (char * s);
+
+  PACE_INLINE int pace_ungetc (int c, FILE * stream);
+
   PACE_INLINE int pace_vsprintf (char * buffer,
                                  const char * format,
                                  va_list argptr);
-
-  PACE_INLINE FILE * pace_tmpfile ();
 
 # if defined (PACE_HAS_CPLUSPLUS)
 }
