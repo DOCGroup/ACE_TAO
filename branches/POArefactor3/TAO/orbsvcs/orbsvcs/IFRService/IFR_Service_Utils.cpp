@@ -14,6 +14,7 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
+#include "tao/ValueModifierC.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFR_Service,

@@ -44,7 +44,6 @@ typedef enum
 
 /// Forward declarations.
 class TAO_MProfile;
-struct TAO_Dispatch_Context;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_InputCDR;

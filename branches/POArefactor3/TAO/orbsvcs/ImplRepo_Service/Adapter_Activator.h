@@ -15,6 +15,7 @@
 #define IMR_ADAPTER_ACTIVATOR_H
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/AdapterActivatorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
