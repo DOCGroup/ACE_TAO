@@ -35,6 +35,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-= (const TYPE &i)
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs)
+  : mutex_ (rhs.mutex_)
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex");
   *this = rhs; // Invoke the assignment operator.
