@@ -136,7 +136,6 @@ CONTROLLED_FILES = \
         TODO \
         VERSION \
 	ACEXML \
-        acconfig.h \
         ace \
         ace-config.1.in \
         ace-config.in \

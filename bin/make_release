@@ -55,7 +55,7 @@ my  $perl_path = '/usr/bin/perl';
 my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
 unless ("$hostname" eq 'deuce.doc.wustl.edu') {
-  #### For efficiency sake . . .
+#### For efficiency sake . . .
   die "$0: must run on host deuce\n";
 }
 
@@ -267,7 +267,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   if ("$ace_tag") {
     &ex ("$cvs -q export -r$ace_tag -kv ACE_wrappers > /dev/null")  &&
       die "$0: failed cvs export of $ace_tag in $stage_dir\n";
-      &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
+    &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
       die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
   }
 
@@ -843,9 +843,10 @@ sub create_kit () {
 	          "ACE.zip ACE-lib.zip ACE.tar.bz2 ACE-lib.tar.bz2 ";
   }
 
-  if ($kit eq 'ace+tao') {
+  if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
     my $tmp_rel_file = '';
     chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/Makefile show_release_files`);
+    $release_files .= ' ';
     $release_files .= $tmp_rel_file;
 
     print "RELEASE FILES are $release_files \n";
@@ -872,6 +873,7 @@ sub create_kit () {
   if ($kit eq 'ace+tao+ciao') {
     my $tmp_rel_file = '';
     chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/Makefile show_release_files`);
+    $release_files .= ' ';
     $release_files .= $tmp_rel_file;
 
     print "RELEASE FILES from CIAO are $release_files \n";
