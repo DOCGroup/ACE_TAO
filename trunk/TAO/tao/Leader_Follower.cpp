@@ -65,6 +65,9 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
         {
           if (condition_variable->wait () == -1)
             {
+              // Cleanup.
+              this->remove_follower (condition_variable);
+
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Condition variable wait failed\n"),
                                 -1);
@@ -77,10 +80,13 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           tv += *max_wait_time;
           if (condition_variable->wait (&tv) == -1)
             {
+              // Cleanup.
+              this->remove_follower (condition_variable);
+
               if (errno != ETIME)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Condition variable wait failed\n"),
-                                  -1);
+                ACE_ERROR ((LM_ERROR,
+                            "Condition variable wait failed\n"));
+
               return -1;
             }
         }
