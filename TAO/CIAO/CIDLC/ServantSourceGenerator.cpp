@@ -2259,10 +2259,7 @@ namespace
          << "this->context_" << endl
          << STRS[ENV_ARG] << ");"
          << "ACE_TRY_CHECK;"
-         << "}" << endl
-         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG]
-         << ");"
-         << "ACE_TRY_CHECK;"
+         << "}"
          << "}"
          << "ACE_CATCHANY" << endl
          << "{"
@@ -2971,7 +2968,12 @@ namespace
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
          << "{"
          << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");"
+//         << "ACE_CHECK;"
          << "}" << endl
+// @@@ JP - This is commented out for now until other issues in
+// DaNCe get resolved
+//         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG]
+//         << ");"
          << "}" << endl;
 
       os << "void" << endl
