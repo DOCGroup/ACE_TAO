@@ -73,6 +73,9 @@ public:
   // controlling the event loop (termination). Otherwise a
   // Recursive_Thread_Mutex or Thread_Mutex may be required.
 
+  virtual ACE_Lock *create_coltbl_lock (void);
+  // Creates and returns the lock for the global collocation table.
+
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
   // Initialize the ORB when it's linked dynamically.
@@ -118,6 +121,8 @@ private:
 
   Lock_Type event_loop_lock_type_;
   // The type of lock to be returned by <create_event_loop_lock()>.
+
+  Lock_Type coltbl_lock_type_;
 
   // = Strategies Used.
   TAO_Reactive_Strategy<TAO_Server_Connection_Handler> reactive_strategy_;
