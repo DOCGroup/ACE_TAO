@@ -35,7 +35,8 @@ extern "C" {
 #define JOIN_TERMINATED 2
 #define JOIN_DETATCHED 3
 
-#define PTHREAD_DEFAULT_STACK_SIZE 10000
+/* This needs to be pretty big for VxWorks according to ACE */
+#define PTHREAD_DEFAULT_STACK_SIZE 64000
 
 /* detach */
 #define PTHREAD_CREATE_DETACHED         0x40    /* = THR_DETACHED */

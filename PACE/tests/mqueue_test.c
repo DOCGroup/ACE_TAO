@@ -37,7 +37,7 @@ msg_handler (int handler_arg)
 int
 main (int argc, char** argv)
 {
-#if PACE_LYNXOS
+#if PACE_LYNXOS > 0
   pace_printf ("mqueue_test not supported on LynxOS.\n");
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);

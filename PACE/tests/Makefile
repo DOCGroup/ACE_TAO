@@ -14,11 +14,13 @@ CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 # Build POSIX_SP_Test conditionally. For some platforms, it doesn't build
 # (which is actually the test of support for the #defines). 
 BIN =	Cond_Var_Test \
-	mqueue_test \
+	Pthread_Storage_Test \
 	Pthreads_Test \
-	Stdio_Test
+	Stdio_Test \
+	Stat_Test
 
-BIN2 =  Posix_SP_Test
+BIN2 =  mqueue_test \
+	Posix_SP_Test
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.
@@ -32,6 +34,12 @@ PSRC=$(addsuffix .c,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ACELIB =
+
+# Don't include Posix_SP_Test and mqueue_test for a VxWorks build.
+# Posix_SP_Test doesn't compile (which is the test - seeing if the symbols
+# are available). So VxWorks obviously doesn't pass this test.
+# SA_RESTART is not defined for VxWorks so mqueue_test doesn't build
+# on that platform.
 ifdef VXWORKS
   ACELIB += -lPACE
   LDFLAGS += -L$(PACE_ROOT)/pace/
@@ -95,21 +103,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Stdio_Test.o .obj/Stdio_Test.so .shobj/Stdio_Test.o .shobj/Stdio_Test.so: Stdio_Test.c $(ACE_ROOT)/PACE/pace/stdio.h \
- $(ACE_ROOT)/PACE/pace/config/defines.h \
- $(ACE_ROOT)/PACE/pace/config/platform.h \
- $(ACE_ROOT)/PACE/pace/config/config.h \
- $(ACE_ROOT)/PACE/pace/config/compiler.h \
- $(ACE_ROOT)/PACE/pace/config/constants.h \
- $(ACE_ROOT)/PACE/pace/sys/types.h \
- $(ACE_ROOT)/PACE/pace/config/defaults.h \
- $(ACE_ROOT)/PACE/pace/config/utility.h \
- $(ACE_ROOT)/PACE/pace/errno.h \
- $(ACE_ROOT)/PACE/pace/config/features.h \
- $(ACE_ROOT)/PACE/pace/unistd.h \
- $(ACE_ROOT)/PACE/pace/string.h
-
-.obj/Posix_SP_Test.o .obj/Posix_SP_Test.so .shobj/Posix_SP_Test.o .shobj/Posix_SP_Test.so: Posix_SP_Test.c \
+.obj/Cond_Var_Test.o .obj/Cond_Var_Test.o .obj/Cond_Var_Test.o .obj/Cond_Var_Test.o: Cond_Var_Test.c \
  $(ACE_ROOT)/PACE/pace/stdio.h \
  $(ACE_ROOT)/PACE/pace/config/defines.h \
  $(ACE_ROOT)/PACE/pace/config/platform.h \
@@ -121,11 +115,11 @@ endif
  $(ACE_ROOT)/PACE/pace/config/utility.h \
  $(ACE_ROOT)/PACE/pace/errno.h \
  $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/stdlib.h \
  $(ACE_ROOT)/PACE/pace/unistd.h \
- $(ACE_ROOT)/PACE/pace/time.h \
- $(ACE_ROOT)/PACE/pace/sys/utsname.h
+ $(ACE_ROOT)/PACE/pace/pthread.h
 
-.obj/mqueue_test.o .obj/mqueue_test.so .shobj/mqueue_test.o .shobj/mqueue_test.so: mqueue_test.c \
+.obj/mqueue_test.o .obj/mqueue_test.o .obj/mqueue_test.o .obj/mqueue_test.o: mqueue_test.c \
  $(ACE_ROOT)/PACE/pace/stdio.h \
  $(ACE_ROOT)/PACE/pace/config/defines.h \
  $(ACE_ROOT)/PACE/pace/config/platform.h \
@@ -143,5 +137,68 @@ endif
  $(ACE_ROOT)/PACE/pace/stdlib.h \
  $(ACE_ROOT)/PACE/pace/unistd.h \
  $(ACE_ROOT)/PACE/pace/string.h
+
+.obj/Pthread_Storage_Test.o .obj/Pthread_Storage_Test.o .obj/Pthread_Storage_Test.o .obj/Pthread_Storage_Test.o: Pthread_Storage_Test.c \
+ $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/stdlib.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/time.h \
+ $(ACE_ROOT)/PACE/pace/pthread.h
+
+.obj/Pthreads_Test.o .obj/Pthreads_Test.o .obj/Pthreads_Test.o .obj/Pthreads_Test.o: Pthreads_Test.c \
+ $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/stdlib.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/pthread.h
+
+.obj/Stdio_Test.o .obj/Stdio_Test.o .obj/Stdio_Test.o .obj/Stdio_Test.o: Stdio_Test.c \
+ $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/string.h
+
+.obj/Stat_Test.o .obj/Stat_Test.o .obj/Stat_Test.o .obj/Stat_Test.o: Stat_Test.c $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/fcntl.h \
+ $(ACE_ROOT)/PACE/pace/sys/stat.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

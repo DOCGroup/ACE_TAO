@@ -12,12 +12,16 @@
 /*     This program simply creates some threads, waits on a condition    */
 /*     variable, joins the threads, and then exits.                      */
 /*                                                                       */
+/*     This test is largely taken from the O'Reilly _Pthreads            */
+/*     Programming_ book and accompanying example code.                  */
+/*                                                                       */
 /* = AUTHOR                                                              */
 /*    Joe Hoffert <joeh@cs.wustl.edu>                                    */
 /*                                                                       */
 /* ===================================================================== */
 
 #include "pace/stdio.h"
+#include "pace/stdlib.h"
 #include "pace/pthread.h"
 
 #if defined (PACE_VXWORKS) && PACE_VXWORKS != 0
@@ -45,29 +49,18 @@ pace_pthread_cond_t count_hit_threshold = PACE_PTHREAD_COND_INITIALIZER;
 void *inc_count(void *idp)
 {
   int i = 0;
-  int *my_id = idp;
-  pace_pthread_t pthread;
+  /*int *my_id = idp;*/
+  PACE_UNUSED_ARG (idp);
 
-  if ((pthread = pace_pthread_self()) == NULL)
-    {
-      printf("inc_count, pace_pthread_self - returning NULL.\n");
-    }
-  else
-    {
-      printf("inc_count, pace_pthread_self -> %ld.\n", (long)pthread);
-    }
-
-  printf("....Before pace_sleep.\n");
   pace_sleep(1);
-  printf("....After pace_sleep.\n");
 
   for (i = 0; i < TCOUNT; i++) {
     pace_pthread_mutex_lock(&count_lock);
     count++;
-    printf("inc_counter(): thread %d, count = %d, unlocking mutex\n", 
-	   *my_id, count);
+    /* pace_printf("inc_counter(): thread %d, count = %d, unlocking mutex\n", 
+	   *my_id, count); */
     if (count == COUNT_THRES) {
-      printf("inc_count(): Thread %d, count %d\n", *my_id, count);
+      /* pace_printf("inc_count(): Thread %d, count %d\n", *my_id, count); */
       pace_pthread_cond_signal(&count_hit_threshold);
     }
     pace_pthread_mutex_unlock(&count_lock);
@@ -78,25 +71,16 @@ void *inc_count(void *idp)
 
 void *watch_count(void *idp)
 {
-  int *my_id = idp;
-  pace_pthread_t pthread;
+  /*int *my_id = idp;*/
+  PACE_UNUSED_ARG (idp);
 
-  if ((pthread = pace_pthread_self()) == NULL)
-    {
-      printf("watch_count, pace_pthread_self - returning NULL.\n");
-    }
-  else
-    {
-      printf("watch_count, pace_pthread_self -> %ld.\n", (long)pthread);
-    }
-
-  printf("watch_count(): thread %d\n", *my_id);
+  /* pace_printf("watch_count(): thread %d\n", *my_id); */
 
   pace_pthread_mutex_lock(&count_lock);
 
   while (count < COUNT_THRES) {
     pace_pthread_cond_wait(&count_hit_threshold, &count_lock);
-    /*printf("watch_count(): thread %d, count %d\n", *my_id, count);*/
+    /* pace_printf("watch_count(): thread %d, count %d\n", *my_id, count); */
   }
 
   pace_pthread_mutex_unlock(&count_lock);
@@ -105,11 +89,10 @@ void *watch_count(void *idp)
 }
 
 int
-main(int argc, char *argv[])
+main()
 {
   int i;
   pace_pthread_t threads[3];
-  pace_pthread_t pthread;
 
 #if defined (PACE_VXWORKS) && PACE_VXWORKS != 0
   /* VxWorks does not handle the *_ININITALIZER values and we
@@ -120,25 +103,6 @@ main(int argc, char *argv[])
   pace_pthread_cond_init(&count_hit_threshold, 0);
 #endif
 
-  printf("argc = %d.\n", argc);
-  for (i = 0; i < argc; ++i)
-    {
-      printf("argv[%d] = %s.\n", i, argv[i]);
-    }
-
-  if ((pthread = pace_pthread_self()) == NULL)
-    {
-      printf("main, pace_pthread_self - returning NULL.\n");
-    }
-  else
-    {
-      printf("main, pace_pthread_self -> %ld.\n", (long)pthread);
-    }
-
-  printf("....Before pace_sleep.\n");
-  pace_sleep(1);
-  printf("....After pace_sleep.\n");
-
   pace_pthread_create(&threads[0], NULL, inc_count, (void *)&thread_ids[0]);
   pace_pthread_create(&threads[1], NULL, inc_count, (void *)&thread_ids[1]);
   pace_pthread_create(&threads[2], NULL, watch_count, (void *)&thread_ids[2]);
@@ -147,19 +111,26 @@ main(int argc, char *argv[])
     pace_pthread_join(threads[i], NULL);
   }
 
-  printf("main(): all finished\n");
+  if (count < COUNT_THRES)
+    {
+      pace_printf ("### ERROR ###: count should be >= %d.\n",
+                   COUNT_THRES);
+      pace_printf ("### ERROR ###: However, count == %d.\n",
+                   count);
+      pace_exit (-1);
+    }
+
+  /* pace_printf ("main(): This should be the last print statement.\n"); */
 
 #if defined (PACE_VXWORKS) && PACE_VXWORKS != 0
-/* VxWorks does not handle the *_ININITALIZER values and we
- * can not emulate it since it involves memory allocation for
- * VxWorks. We need to explicitly delete the mutex and condition
- * variable allocated by the init calls.
- */
-pace_pthread_mutex_destroy(&count_lock);
-pace_pthread_cond_destroy(&count_hit_threshold);
-#endif /* PACE_VXWORKS) && PACE_VXWORKS != 0 */
+  /* VxWorks does not handle the *_ININITALIZER values and we
+   * can not emulate it since it involves memory allocation for
+   * VxWorks. We need to explicitly delete the mutex and condition
+   * variable allocated by the init calls.
+   */
+  pace_pthread_mutex_destroy(&count_lock);
+  pace_pthread_cond_destroy(&count_hit_threshold);
+#endif /* PACE_VXWORKS && PACE_VXWORKS != 0 */
 
   return 0;
 }
-
-

@@ -33,7 +33,7 @@ static pthread_key_entry keyList[PTHREAD_KEYS_MAX];
  */
 static struct _PTHREAD_ATTR _pthread_attr_default_s =
 {
-  10000,          /* stacksize */
+  PTHREAD_DEFAULT_STACK_SIZE, /* stacksize */
   { '\0' },       /* name */
   {100},          /* priority */
   PTHREAD_SCOPE_SYSTEM,  /* scope */
@@ -164,7 +164,9 @@ pacevx_pthread_destructor_key (pace_pthread_key_t key, void * arg)
   if (pacevx_pthread_key_validate(key))
     {
       if (keyList[key].destructor != NULL)
-        (*(keyList[key].destructor))(arg);
+        {
+          (*(keyList[key].destructor))(arg);
+        }
     }
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
@@ -189,7 +191,9 @@ pacevx_pthread_destructor_thread (pace_pthread_t pthread)
   for (i = 0; i < PTHREAD_KEYS_MAX; i ++)
     {
       if (pthread->keyvaluelist[i] != NULL)
-        pacevx_pthread_destructor_key(i, pthread->keyvaluelist[i]);
+        {
+          pacevx_pthread_destructor_key(i, pthread->keyvaluelist[i]);
+        }
     }
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
@@ -320,8 +324,6 @@ pacevx_pthread_queue_add (pace_pthread_t pthread)
       entry->status = TRUE;
       entry->pthread = pthread;
 
-      pace_printf("pacevx_pthread_queue_add: first == %ld.\n", (long) first);
-
       if (first == NULL)
         {
           first = entry;
@@ -430,6 +432,12 @@ pacevx_pthread_cleanup_popall (pace_pthread_t thread)
   PACE_TRACE("pacevx_pthread_cleanup_popall");
 
   count = thread->rtnCount - 1;
+
+  /*
+   * We don't currently support any way
+   * to add cleanup routines since pace_pthread_cleanup_push and
+   * pace_pthread_cleanup_pop are undefined macros for VxWorks.
+   */
   for (i = count; i > 0 ; i--)
     {
       thread->rtnCount --;
@@ -617,7 +625,7 @@ pthread_create (pace_pthread_t * thread,
       return ERROR;
     }
 
-  pthread = (pace_pthread_t )malloc(sizeof(struct _PTHREAD_T));
+  pthread = (pace_pthread_t) malloc(sizeof(struct _PTHREAD_T));
 
   if (pthread == NULL)
     {
@@ -799,17 +807,18 @@ pthread_key_create (pace_pthread_key_t * key,
           keyList[i].destructor = NULL;
         } 
     }
-       
+
   /* find first available position */
   intkey = intLock();
   for (i = 0; i < PTHREAD_KEYS_MAX; i++)
     {
-      if(keyList[i].valid == FALSE)
+      if (keyList[i].valid == FALSE)
         {
           *key = (pace_pthread_key_t)keyList[i].index;
           keyList[i].valid = TRUE;
           keyList[i].destructor = destructor;
           intUnlock(intkey);
+
           return OK;
         }
     }
@@ -1350,3 +1359,18 @@ pthread_sigmask (int how,
   return 0;
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+pace_pthread_t
+pthread_self ()
+{
+  WIND_TCB *pTcb;
+
+  PACE_TRACE("pthread_self");
+
+  if ((pTcb = taskTcb(taskIdSelf())) == NULL)
+    return (pace_pthread_t)NULL;
+
+  return (pace_pthread_t)(pTcb->_USER_SPARE4);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
