@@ -1,3 +1,15 @@
+Tue Dec 16 09:31:18 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Thread_Semaphore.{h,cpp}:
+  	* ace/Process_Semaphore.{h,cpp}: Reverted the change 
+	  Sun Dec 14 15:26:46 2003 Douglas C. Schmidt
+ 	  <schmidt@ace.cs.wustl.edu> since this has too many side-effects
+ 	  that'll break user code.  The "Right Thing"[TM] here is simply
+ 	  to update the ACE_Malloc<> documentation to explain not to use
+ 	  the ACE_Process_Semaphore or ACE_Thread_Semaphore, but instead
+ 	  to use the ACE_Process_Mutex or ACE_Thread_Mutex.  Thanks to
+	  Don Hinton and Bala for motivating this change.
+
 Tue Dec 16 08:29:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:

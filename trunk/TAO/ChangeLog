@@ -1,10 +1,16 @@
-Tue Dec 16 08:11:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Tue Dec 16 07:52:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/default_resource.cpp:
-
-	  Instead of using errno, use reactor->initiliazed ()
-	  instead. Thanks to John Fletcher <john.fletcher@rd.bbc.co.uk>
-	  and Johnny for motivating this change.
+	* tao/default_resource.cpp (get_reactor): Changed
+	
+	  if (ACE_LOG_MSG->errnum ())
+	  
+	  to 
+	  
+	  if (!reactor->initialized ())
+	  
+	  since the latter is more robust.  Thanks to John Fletcher
+ 	  <john.fletcher@rd.bbc.co.uk> and Johnny Willemsen for motivating
+ 	  this.
 
 Tue Dec 16 12:08:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -16,8 +22,8 @@ Mon Dec 15 19:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
 
 	  #include Consumer.h to get arounda compile error in aCC. Thanks
-	  to Pierre Pacchioni <pierre.pacchioni@avisto.com> for suggesting
-	  the fix.
+ 	  to Pierre Pacchioni <pierre.pacchioni@avisto.com> for suggesting
+ 	  the fix.
 
 Mon Dec 15 13:34:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

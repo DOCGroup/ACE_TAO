@@ -45,12 +45,6 @@ public:
                          void * = 0,
                          int max = 0x7FFFFFFF);
 
-  /// Initialize the semaphore, with an initial value of 1 and a
-  /// maximum value of <max>.
-  ACE_Process_Semaphore (const ACE_TCHAR *name,
-                         void * = 0,
-                         int max = 0x7FFFFFFF);
-
   /**
    * This method is a no-op, i.e., it doesn't remove the semaphore.
    * If you want to remove the semaphore, you must call the <remove>
