@@ -1,3 +1,10 @@
+Mon Apr 23 21:10:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/client.cpp:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Twoways/Coordinator.cpp:
+          Fixed ACE_CHECK/ACE_TRY_CHECK mismatches.
+
 Mon Apr 23 16:40:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
