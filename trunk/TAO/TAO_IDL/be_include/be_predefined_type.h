@@ -39,7 +39,8 @@ public:
   be_predefined_type (void);
   // default constructor
 
-  be_predefined_type (AST_PredefinedType::PredefinedType t, UTL_ScopedName *n,
+  be_predefined_type (AST_PredefinedType::PredefinedType t,
+		      UTL_ScopedName *n,
                       UTL_StrList *p);
   // constructor
 
@@ -68,6 +69,11 @@ protected:
 
   virtual void compute_tc_name (void);
   // overridden method
+
+  virtual void compute_repoID (void);
+  // The object and TypeCode repository IDs have a mandatory omg.org
+  // prefix, but the default compute_repoID() uses the #pragma's to
+  // obtain preffixes.
 };
 
 #endif

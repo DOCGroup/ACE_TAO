@@ -256,8 +256,11 @@ be_predefined_type::compute_tc_name (void)
       break;
     case AST_PredefinedType::PT_any:
       {
-        this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_any", 1, 0,
-                                                             I_FALSE), NULL));
+        this->tc_name_->nconc (new UTL_ScopedName (new Identifier
+						         ("_tc_any",
+							  1, 0,
+							  I_FALSE),
+						   NULL));
       }
     break;
     case AST_PredefinedType::PT_pseudo:
@@ -435,6 +438,23 @@ be_predefined_type::compute_size_type (void)
       this->size_type (be_decl::FIXED);
     }
   return 0;
+}
+
+void
+be_predefined_type::compute_repoID (void)
+{
+  switch (this->pt ())
+    {
+    case AST_PredefinedType::PT_pseudo:
+      if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
+	this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
+      else
+	be_decl::compute_repoID ();
+      break;
+    default:
+      be_decl::compute_repoID ();
+      break;
+    }
 }
 
 int
