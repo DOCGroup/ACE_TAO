@@ -30,6 +30,8 @@ LIBS="ace/libACE.a \
     TAO/tao/RTCORBA/libTAO_RTCORBA.a \
     TAO/tao/RTPortableServer/libTAO_RTPortableServer.a"
 
+cd $ACE_ROOT
+
 for i in $BINS; do
   b=`basename $i`
   if [ -x $i ]; then
