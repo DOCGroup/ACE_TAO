@@ -19,14 +19,15 @@
 
 #include "Broadcaster_i.h"
 
-int
+bool
 Broadcaster_i::Receiver_Data::operator == (const Broadcaster_i::Receiver_Data &receiver_data) const
 {
   // The <_is_equivalent> function checks if the _var and _ptr objects
   // are the same.  NOTE: this call might not behave well on other
   // ORBs since <_is_equivalent> isn't guaranteed to differentiate
   // object references.
-  return this->receiver_->_is_equivalent (receiver_data.receiver_.in ())
+  return
+    this->receiver_->_is_equivalent (receiver_data.receiver_.in ())
     && this->nickname_ == receiver_data.nickname_;
 }
 

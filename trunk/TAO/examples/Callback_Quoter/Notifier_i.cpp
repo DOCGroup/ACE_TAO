@@ -222,7 +222,7 @@ Notifier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 }
 
-int
+bool
 Notifier_i::Consumer_Data::operator== (const Consumer_Data &rhs)
 {
   // The <_is_equivalent> function checks if the _var and _ptr objects
