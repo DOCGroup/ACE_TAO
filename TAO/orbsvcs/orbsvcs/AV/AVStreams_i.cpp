@@ -1627,11 +1627,6 @@ TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint (void)
 
 TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint (void)
 {
-  Flow_Handler_Map_Iterator iter = this->flow_handler_map_.begin();
-  Flow_Handler_Map_Entry *entry = 0;
-
-  for (;iter.next (entry) != 0; iter.advance ())
-    this->flow_handler_map_.unbind (entry->ext_id_);
 }
 
 int
@@ -2180,6 +2175,7 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
             TAO_FlowSpec_Entry *entry = *begin;
             if (entry->protocol_object ())
               {
+                entry->protocol_object ()->stop ();
 
                 ACE_CString control_flowname =
                     TAO_AV_Core::get_control_flowname (entry->flowname ());
@@ -2198,6 +2194,8 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
             TAO_FlowSpec_Entry *entry = *begin;
             if (entry->protocol_object ())
               {
+                entry->protocol_object ()->stop ();
+                
                 ACE_CString control_flowname =
                     TAO_AV_Core::get_control_flowname (entry->flowname ());
                 TAO_AV_CORE::instance()->remove_connector(entry->flowname());
@@ -3154,15 +3152,10 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
 
 CORBA::Boolean
 TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl
-                          ACE_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL_NOT_USED)
 
 {
-//  ACE_UNUSED_ARG (media_ctrl);
-  ACE_CHECK_RETURN (0);
-
-  // FIX MEMORY LEAK:
   //  since the media ctrl is not stored or used, delete it.
-  //  cleaned up several memory leaks (according to BoundsChecker)
 
   CORBA::release( media_ctrl);
 
@@ -3374,7 +3367,7 @@ TAO_MMDevice::bind_mcast (AVStreams::MMDevice_ptr first_peer,
                           AVStreams::streamQoS &the_qos,
                           CORBA::Boolean_out is_met,
                           const AVStreams::flowSpec &the_spec
-                          ACE_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::streamOpFailed,
                    AVStreams::noSuchFlow,
@@ -3762,7 +3755,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj
 // Gets the FDev object associated with this flow.
 CORBA::Object_ptr
 TAO_MMDevice::get_fdev (const char *flow_name
-                        ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported,
                    AVStreams::noSuchFlow))
@@ -3971,7 +3964,7 @@ TAO_FlowConnection::destroy (ACE_ENV_SINGLE_ARG_DECL)
 // modify the QoS for this flow.
 CORBA::Boolean
 TAO_FlowConnection::modify_QoS (AVStreams::QoS & new_qos
-                                ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::QoSRequestFailed))
 {
@@ -4152,7 +4145,7 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
 
 
 CORBA::Boolean
-TAO_FlowConnection::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FlowConnection::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_CHECK_RETURN (0);
@@ -4364,7 +4357,7 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
 
 CORBA::Boolean
 TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target
-                          ACE_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notConnected))
 {
@@ -4453,7 +4446,7 @@ TAO_FlowEndPoint::set_flowname (const char *flowname)
 // used by one flowconnection so that multiple connections cant use
 // the same flowendpoint.
 CORBA::Boolean
-TAO_FlowEndPoint::lock (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FlowEndPoint::lock (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // lock the current flowendpoint
@@ -4467,7 +4460,7 @@ TAO_FlowEndPoint::lock (ACE_ENV_SINGLE_ARG_DECL)
 
 // unlocks the flowendpoint , becomes free to be used in another flow.
 void
-TAO_FlowEndPoint::unlock (ACE_ENV_SINGLE_ARG_DECL)
+TAO_FlowEndPoint::unlock (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_CHECK;
@@ -4514,7 +4507,7 @@ TAO_FlowEndPoint::related_flow_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_FlowEndPoint::related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection
-                                           ACE_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_CHECK;

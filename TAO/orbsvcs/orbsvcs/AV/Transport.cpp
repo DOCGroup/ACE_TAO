@@ -485,7 +485,8 @@ TAO_AV_Transport::get_local_addr (void)
 TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
   :transport_ (0),
    callback_ (0),
-   protocol_object_ (0)
+   protocol_object_ (0),
+   timer_id_ (-1)
 {
 }
 
@@ -546,7 +547,10 @@ TAO_AV_Flow_Handler::schedule_timer (void)
 int
 TAO_AV_Flow_Handler::cancel_timer (void)
 {
+  if (this->timer_id_ != -1)
   return TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
+  else
+    return 0;
 }
 
 
@@ -573,7 +577,9 @@ int
 TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
                                      const void * /*arg*/)
 {
-  this->callback_->handle_timeout (this->timeout_arg_);
+  int result = this->callback_->handle_timeout (this->timeout_arg_);
+  if (result < 0)
+    return result;
   ACE_Event_Handler *event_handler = this->event_handler ();
   ACE_Time_Value *timeout = 0;
 
@@ -586,6 +592,9 @@ TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
                                                                 *timeout);
 
   delete timeout;
+
+  if (this->timer_id_ < 0)
+    return -1;
 
   return 0;
 }

@@ -28,8 +28,6 @@ TAO_AV_UDP_Flow_Handler::~TAO_AV_UDP_Flow_Handler (void)
 
   // close the socket.
   this->close ();
-//  if (this->protocol_object())
-//    this->protocol_object()->stop();
   delete this->transport_;
 }
 
@@ -598,6 +596,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Core::Flow_Component flow_component)
 {
   ACE_INET_Addr *local_addr;
+  ACE_INET_Addr *control_inet_addr;
 
   this->entry_ = entry;
   this->flow_component_ = flow_component;
@@ -613,6 +612,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
     {
       this->flowname_ = entry->flowname ();
       inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
+      control_inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->control_address ());
     }
 
   TAO_AV_Flow_Handler *flow_handler = 0;
@@ -660,7 +660,6 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
               else
                 {
                   ACE_INET_Addr *local_control_addr;
-                  ACE_INET_Addr *control_inet_addr;
                   TAO_AV_Flow_Handler *control_flow_handler = 0;
 
                   if (entry->is_multicast ())
@@ -833,6 +832,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
       flow_handler = handler;
 
+      if (ct == ACCEPTOR)
+        result = handler->open (*inet_addr);
+      else
       result = handler->open (*local_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
@@ -854,6 +856,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
                && errno != ENOTSUP)
         return 0;
 
+      if (ct == CONNECTOR)
       handler->set_remote_address  (inet_addr);
 
       result = handler->get_socket ()->get_local_addr (*local_addr);
