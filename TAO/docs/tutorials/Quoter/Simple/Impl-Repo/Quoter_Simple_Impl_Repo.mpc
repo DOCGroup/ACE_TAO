@@ -5,7 +5,6 @@ project(*client) : taoexe, portableserver, rtevent, naming  {
   requires += exceptions
   source_files {
     client.cpp
-    Stock_Consumer.cpp
   }
 }
 
