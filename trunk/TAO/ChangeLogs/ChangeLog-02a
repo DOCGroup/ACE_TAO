@@ -1,7 +1,14 @@
+Thu Dec  6 15:34:45 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Coordinator.cpp:
+	  Fixed warnings about inconsistent formatting directives and the
+	  actual argument type.  Used ACE_UINT64_FORMAT_SPECIFIER to deal
+	  with the variation across platforms.
+
 Thu Dec  6 16:35:04 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Strategies/DIOP_Transport.cpp:
-	  
+
 	  Fixed a compiler warning. Thanks to Venkita for pointing this
 	  out.
 
@@ -22,9 +29,9 @@ Thu Dec  6 14:56:14 2001  Justin Michel  <michel_j@ociweb.com>
         Updated the readme file and fixed a few typos in the
         portspan test.
         Tried to update the borland project to recurse into the
-        portspan test directory. 
+        portspan test directory.
         Note : The portspan test is not set up to run nightly, but
-        it will at least build. 
+        it will at least build.
 
 Thu Dec  6 11:05:14 2001  Justin Michel  <michel_j@ociweb.com>
 
@@ -43,12 +50,12 @@ Thu Dec  6 11:05:14 2001  Justin Michel  <michel_j@ociweb.com>
         * TAO/tests/ior_corbaloc/IOR CorbaLoc Server.dsp
         * TAO/tests/ior_corbaloc/IOR CorbaName Client.dsp
 
-          Added the Portspan test that was originally added to 1.1a. 
+          Added the Portspan test that was originally added to 1.1a.
           Added Visual C++ project files for the tao ior_corbaloc test.
 
 Thu Dec  6 10:30:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Smart_Proxies/On_Demand/Makefile: Updated dependencies.  
+	* tests/Smart_Proxies/On_Demand/Makefile: Updated dependencies.
 
 Thu Dec  6 07:25:14 2001  Chad Elliott  <elliott_c@ociweb.com>
 
