@@ -274,12 +274,13 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
       object_id = CORBA::string_dup ((char *) request.object_key ().get_buffer ());
       object_id [request.object_key ().length ()] = '\0';
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "Simple Object key %s. Doing the Table Lookup ...\n",
-		  object_id.in ()));
-
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Simple Object key %s. Doing the Table Lookup ...\n",
+		    object_id.in ()));
+      
       CORBA::Object_ptr object_reference;
-
+      
       // Do the Table Lookup.
       int status =
 	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id.in (),
