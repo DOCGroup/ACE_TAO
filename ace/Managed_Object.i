@@ -5,14 +5,14 @@
 // have a default constructor.  Let the compiler figure it out . . .
 template <class TYPE>
 ACE_INLINE
-ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup (void)
+ACE_Cleanup_Adapter<TYPE>::ACE_Cleanup_Adapter (void)
 {
 }
 
 template <class TYPE>
 ACE_INLINE
 TYPE &
-ACE_Managed_Cleanup<TYPE>::object (void)
+ACE_Cleanup_Adapter<TYPE>::object (void)
 {
   return this->object_;
 }
@@ -30,7 +30,7 @@ ACE_Managed_Object<TYPE>::get_preallocated_object
 
   // Cast the return type of the the object pointer based
   // on the type of the function template parameter.
-  return &((ACE_Managed_Cleanup<TYPE> *)
+  return &((ACE_Cleanup_Adapter<TYPE> *)
            ACE_Object_Manager::preallocated_object[id])->object ();
 }
 
@@ -47,6 +47,6 @@ ACE_Managed_Object<TYPE>::get_preallocated_array
 
   // Cast the return type of the the object pointer based
   // on the type of the function template parameter.
-  return &((ACE_Managed_Cleanup<TYPE> *)
+  return &((ACE_Cleanup_Adapter<TYPE> *)
            ACE_Object_Manager::preallocated_array[id])->object ();
 }
