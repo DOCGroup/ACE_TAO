@@ -6,6 +6,10 @@ handles (stdin, stdout, and stderr).  ACE_Process is created with the
 ACE_Process_Options and can be used to perform operations on the
 running process.  
 
+Notice that this example uses NT version's UNIX utilities like
+"DATE.EXE," and "ls.exe."  You can find where to get them from
+Microsoft's NT page on the Web.
+
 Run the application as ./process -u to get all the command-line
 options.
 
