@@ -37,7 +37,7 @@ LDFLAGS += -L$(STL_ROOT)/lib
 #	Local macros
 #----------------------------------------------------------------------------
 shared_libs_only=1
-BIN     = export_test import_test
+BIN     = export_test import_test colocated_test
 
 MAKEFILE = Makefile
 LIBNAME  = libTTest
