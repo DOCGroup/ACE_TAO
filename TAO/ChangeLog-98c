@@ -1,3 +1,13 @@
+Mon Aug 17 22:01:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/fe/lex.yy.cpp: 
+	  Removed unwanted #includes that produced warnings in some
+	  platforms; thanks to David Levine for catching this one.
+
+	* TAO_IDL/Makefile: 
+	  Yet another RCS id that was not properly protected, I also need
+	  to thank David for this report.
+
 Mon Aug 17 17:16:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL: Renamed README to README.sun and INSTALL to INSTALL.sun

@@ -8,7 +8,6 @@
 #define TAO_YY_FLEX_MAJOR_VERSION 2
 #define TAO_YY_FLEX_MINOR_VERSION 5
 
-#include /**/ <stdio.h>
 
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
@@ -21,7 +20,6 @@
 
 #ifdef __cplusplus
 
-#include /**/ <stdlib.h>
 #include "ace/OS.h"
 
 /* Use prototypes in function declarations. */
@@ -43,8 +41,6 @@
 #ifdef __TURBOC__
  #pragma warn -rch
  #pragma warn -use
-#include /**/ <io.h>
-#include /**/ <stdlib.h>
 #define TAO_YY_USE_CONST
 #define TAO_YY_USE_PROTOS
 #endif
@@ -724,7 +720,6 @@ TAO_YY_MALLOC_DECL
 #else
 #if __STDC__
 #ifndef __cplusplus
-#include /**/ <stdlib.h>
 #endif
 #else
 /* Just try to get by without declaring the routines.  This will fail
