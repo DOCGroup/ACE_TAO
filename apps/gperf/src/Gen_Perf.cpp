@@ -91,11 +91,11 @@ Gen_Perf::sort_set (char *union_set, int len)
 {
   for (int i = 0, j = len - 1; i < j; i++)
     {
-      short curr, tmp;
+      int curr, tmp;
 
-      for (curr = i + 1, tmp = union_set[curr];
+      for (curr = i + 1, tmp = (int) union_set[curr];
            curr > 0
-           && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr-1]];
+           && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr - 1]];
            curr--)
         union_set[curr] = union_set[curr - 1];
 
@@ -146,7 +146,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
     {
       int collisions = 0;
 
-      Vectors::asso_values[c] = Vectors::asso_values[(int) c] +
+      Vectors::asso_values[(int) c] = Vectors::asso_values[(int) c] +
         (option.jump () ? option.jump () : ACE_OS::rand ()) & option.asso_max () - 1;
 
       // Iteration Number array is a win, O(1) intialization time!
