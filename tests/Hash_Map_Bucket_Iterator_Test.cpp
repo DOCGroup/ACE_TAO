@@ -104,9 +104,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            iterator != end;
            ++iterator)
         {
+          ACE_DEBUG ((LM_DEBUG, "%d ", (*iterator).int_id_));
           ACE_UINT32 key = (*iterator).ext_id_;
           ACE_ASSERT (((key - i) % table_size) == 0);
         }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
     }
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
