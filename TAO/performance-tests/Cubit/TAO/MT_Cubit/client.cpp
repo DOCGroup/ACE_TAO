@@ -47,12 +47,12 @@ do_priority_inversion_test (Task_State &ts)
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager thr_mgr;
 
-  //  Util_Thread util_thread (&ts, &thr_mgr);
+  Util_Thread util_thread (&ts, &thr_mgr);
 
   ACE_Sched_Priority priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
-#if 0
+#if 1
   // First activate the Utilization thread.  It will wait until all
   // threads have finished binding.
   util_thread.activate (THR_BOUND,
@@ -104,7 +104,7 @@ do_priority_inversion_test (Task_State &ts)
       // priority thread is the utilization thread.
 
       // get the next higher priority
-      ACE_OS::sleep (5);
+      //ACE_OS::sleep (5);
       priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                       priority,
                                                       ACE_SCOPE_THREAD);
@@ -140,10 +140,12 @@ do_priority_inversion_test (Task_State &ts)
                 low_priority_client.get_low_priority_jitter ()));
 #endif /* !defined (VXWORKS) && !defined (CHORUS) */
 
+#if 1
  util_thread.done_ = 1;
  thr_mgr.wait ();
  ACE_DEBUG ((LM_DEBUG, "(%t) utilization task performed %g computations\n",
                         util_thread.get_number_of_computations ()));
+#endif
  return 0;
 }
 
