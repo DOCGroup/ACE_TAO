@@ -54,8 +54,6 @@ TAO_CEC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->_decr_refcnt ();
-
   ACE_TRY
     {
       consumer->disconnect_push_consumer (ACE_TRY_ENV);
@@ -229,8 +227,6 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
         }
       ACE_ENDTRY;
     }
-
-  this->_decr_refcnt ();
 }
 
 void

@@ -28,11 +28,13 @@ TAO_EC_List_Based_Proxy_Set<PROXY>::connected (PROXY *proxy,
   if (r == 1)
     {
       // @@ Already there, throw some user exception..
+      proxy->_decr_refcnt ();
     }
   if (r == -1)
     {
       // @@ Cannot insert, running out of memory? throw some other
       // user exception
+      proxy->_decr_refcnt ();
     }
 }
 
@@ -41,18 +43,20 @@ TAO_EC_List_Based_Proxy_Set<PROXY>::reconnected (PROXY *proxy,
                                                  CORBA::Environment &)
 {
   int r = this->impl_.insert (proxy);
-  if (r == 0 || r == 1) {
-    // Reference count is incremented by the callers to [re]connected.
-    // @@ Find out if the protocol could be simplified, and decoupling
-    //    increased.
-    proxy->_decr_refcnt ();
-    return;
-  }
+  if (r == 0 || r == 1)
+    {
+      // Reference count is incremented by the callers to [re]connected.
+      // @@ Find out if the protocol could be simplified, and decoupling
+      //    increased.
+      proxy->_decr_refcnt ();
+      return;
+    }
 
   if (r == -1)
     {
       // @@ Cannot insert, running out of memory? throw some other
       // user exception
+      proxy->_decr_refcnt ();
     }
 }
 
@@ -101,11 +105,13 @@ TAO_EC_RB_Tree_Based_Proxy_Set<PROXY>::connected (PROXY *proxy,
   if (r == 1)
     {
       // @@ Already there, throw some user exception..
+      proxy->_decr_refcnt ();
     }
   if (r == -1)
     {
       // @@ Cannot insert, running out of memory? throw some other
       // user exception
+      proxy->_decr_refcnt ();
     }
 }
 
@@ -114,18 +120,13 @@ TAO_EC_RB_Tree_Based_Proxy_Set<PROXY>::reconnected (PROXY *proxy,
                                                  CORBA::Environment &)
 {
   int r = this->impl_.rebind (proxy, 1);
-  if (r != 0) {
-    // Reference count is incremented by the callers to [re]connected.
-    // @@ Find out if the protocol could be simplified, and decoupling
-    //    increased.
-    proxy->_decr_refcnt ();
-    return;
-  }
-
-  if (r == 0)
+  if (r != 0)
     {
-      // @@ Cannot insert, running out of memory? throw some other
-      // user exception
+      // Reference count is incremented by the callers to [re]connected.
+      // @@ Find out if the protocol could be simplified, and decoupling
+      //    increased.
+      proxy->_decr_refcnt ();
+      return;
     }
 }
 

@@ -217,14 +217,25 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
 void
 TAO_EC_ProxyPushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
-  PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_TRY
+    {
+      PortableServer::POA_var poa =
+        this->_default_POA (ACE_TRY_ENV);
+      ACE_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_CHECK;
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Exceptions here should not be propagated.  They usually
+      // indicate that an object is beign disconnected twice, or some
+      // race condition, but not a fault that the user needs to know
+      // about.
+    }
+  ACE_ENDTRY;
 }
 
 CORBA::ULong
@@ -360,6 +371,7 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::PushSupplier_var supplier;
+  int connected = 0;
 
   {
     ACE_GUARD_THROW_EX (
@@ -368,12 +380,11 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
-      ACE_THROW (CORBA::BAD_INV_ORDER ()); // @@ add user exception?
-
+    connected = this->is_connected_i ();
     supplier = this->supplier_._retn ();
 
-    this->cleanup_i ();
+    if (connected)
+      this->cleanup_i ();
   }
 
   this->deactivate (ACE_TRY_ENV);
@@ -382,6 +393,11 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (!connected)
+    {
+      return;
+    }
 
   if (this->event_channel_->disconnect_callbacks ())
     {
@@ -397,8 +413,6 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
         }
       ACE_ENDTRY;
     }
-
-  this->_decr_refcnt ();
 }
 
 PortableServer::POA_ptr
