@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib_with_idl {
+project : orbsvcslib {
   after    += SmartProxies
   libs     += TAO_SmartProxies
   idlflags += -Gsp
