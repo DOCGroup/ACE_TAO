@@ -1,3 +1,32 @@
+Sat Mar 15 10:55:01 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/Makefile.bor:
+	* tests/run_test.lst: Added Recursive_Condition_Bug_Test.cpp to
+	  these files.
+
+	* tests: Added a new Recursive_Condition_Bug_Test.cpp to check
+	  that the fix from Leonid Kvetnyi is correct and doesn't cause
+	  other problems.  
+
+	* tests/Recursive_Condition_Test.cpp (ACE_TMAIN): Minor reformatting.
+
+	* ace/OS.i (recursive_mutex_cond_unlock): Added another check for
+	  m->RecursionCount > 1 to fix problems where the test program hangs.
+	  Thanks to Leonid Kvetnyi <leonidk@nice.com> for this fix.
+
+	* ace/Event_Handler_T.h: Changed
+  
+          typedef int (T::*SIG_HANDLER) (ACE_HANDLE, siginfo_t*, ucontext_t*);
+
+	  to this
+
+	  typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
+  
+          so that we're consistent across platforms where ACE_HANDLE is a
+ 	  HANDLE, not an int!  Thanks to Johnny Willemsen
+ 	  <jwillemsen@remedy.nl> for reporting this.
+
 Fri Mar 14 22:26:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client.mpb:
