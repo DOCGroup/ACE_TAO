@@ -294,7 +294,8 @@ protected:
   // thread-specific storage.
 
   int ts_init (void) const;
-  // Factors out common code for initializing TSS.
+  // Factors out common code for initializing TSS.  This must NOT be
+  // called with the lock held...
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   TYPE *type_;

@@ -455,12 +455,15 @@ ACE_TSS<TYPE>::ts_object (void) const
 template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
 {
-  // Ensure that we are serialized!
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
-
+  // Note, we shouldn't hold the keylock at this point because
+  // <ts_init> does it for us and we'll end up with deadlock
+  // otherwise...
   if (this->once_ == 0)
     // Create and initialize thread-specific ts_obj.
     this->ts_init ();
+
+  // Ensure that we are serialized!
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
 
   TYPE *ts_obj = 0;
 
