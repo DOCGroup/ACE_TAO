@@ -1,3 +1,9 @@
+Tue Jul 25 18:20:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+	  Changed pace=1 code to check for inline=1, and
+	  include libPACE correctly.
+
 Tue Jul 25 16:42:02 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* ace/Logging_Strategy.cpp:
@@ -24,7 +30,7 @@ Tue Jul 25 13:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	Edan Ayal  <edana@bandwiz.com> for contributing this class and
 	Susan Liebeskind  <shl@janis.gtri.gatech.edu> for brainstorming
 	about it.
-		
+
 Tue Jul 25 05:46:29 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Optimized the check to make sure that
