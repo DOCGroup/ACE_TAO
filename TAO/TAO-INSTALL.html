@@ -45,33 +45,33 @@ likely unpredictable and erroneous results. <P>
       <CODE>$ACE_ROOT/TAO</CODE>. <P>
 
   <LI>Build and install the TAO release under
-	<CODE>$TAO_ROOT</CODE>.<P>
+        <CODE>$TAO_ROOT</CODE>.<P>
 
-	<P>The easiest and recommended way to compile the
-	  <B>complete</B> TAO distribution by simply simply executing
-	  <code><a href="#makenotes">make</a></code>
-	  in the <CODE>$TAO_ROOT</CODE> directory.
-	</P>
+        <P>The easiest and recommended way to compile the
+          <B>complete</B> TAO distribution by simply simply executing
+          <code><a href="#makenotes">make</a></code>
+          in the <CODE>$TAO_ROOT</CODE> directory.
+        </P>
 
-	<P>A smaller subset, that may be of interest to test basic TAO
-	  functionality, is:
-	  <CODE>$TAO_ROOT/tao</CODE>,
-	  <CODE>$TAO_ROOT/TAO_IDL</CODE>,
-	  <CODE>$TAO_ROOT/tests/Param_Test</CODE>.
-	  Then you can execute the <CODE>run_test.pl</CODE> script in
-	  <CODE>$TAO_ROOT/tests/Param_Test</CODE> and/or
-	  follow the instructions contained in the <CODE>README</CODE>
-	  file in the same directory.
-	</P>
+        <P>A smaller subset, that may be of interest to test basic TAO
+          functionality, is:
+          <CODE>$TAO_ROOT/tao</CODE>,
+          <CODE>$TAO_ROOT/TAO_IDL</CODE>,
+          <CODE>$TAO_ROOT/tests/Param_Test</CODE>.
+          Then you can execute the <CODE>run_test.pl</CODE> script in
+          <CODE>$TAO_ROOT/tests/Param_Test</CODE> and/or
+          follow the instructions contained in the <CODE>README</CODE>
+          file in the same directory.
+        </P>
 
-	<P>If you wish to compile the services distributed with TAO,
-	  including the <CODE>Naming_Service</CODE> you
-	  must include <CODE>$TAO_ROOT/orbsvcs</CODE> to the list
-	  above.
-	</P>
+        <P>If you wish to compile the services distributed with TAO,
+          including the <CODE>Naming_Service</CODE> you
+          must include <CODE>$TAO_ROOT/orbsvcs</CODE> to the list
+          above.
+        </P>
 
   <LI>To test that the TAO release is properly configured,
-	follow instructions on executing the various examples under
+        follow instructions on executing the various examples under
       <CODE>$TAO_ROOT/tests</CODE>.<P>
 
 </OL>
@@ -113,20 +113,20 @@ tree:<p>
   <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
 </ol><p>
 
-To build, first on the host, then on the target:<p>
+To build on the host:
 <ol>
   <li><code>cd build/SunOS5_g++</code>
   <li><code>export ACE_ROOT=`pwd`;
     export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH</code>
   <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
-    make.log 2&gt;&1</code>
+    make.log</code>
   <li><code>cd ../vxworks</code>
   <li><code>export ACE_ROOT=`pwd`</code>
   <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
-    make.log 2&gt;&1</code>
+    make.log</code>
 </ol><p>
 
-For NT host, please see the detailed instructions for building and
+For NT hosts, please see the detailed instructions for building and
 installing ACE and TAO in <a
 href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>.<p>
 
@@ -168,12 +168,12 @@ files in the correct place.</P>
   <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
       Directories in Tools|Options.  This is needed if using the TAO_IDL
       compiler under MSVC.  If you intend to also use the release version of the
-	  libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
-	  <STRONG>Note:</STRONG> The order that these are listed is important.  If your
-	  main development is with the debug versions, make sure \bin is before
-	  \bin\Release, otherwise put the \bin\Release first.  Because the output names
-	  for the release and debug versions of TAO_IDL are the same, extra care must be
-	  taken when both versions are generated simulataneously. <P>
+          libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
+          <STRONG>Note:</STRONG> The order that these are listed is important.  If your
+          main development is with the debug versions, make sure \bin is before
+          \bin\Release, otherwise put the \bin\Release first.  Because the output names
+          for the release and debug versions of TAO_IDL are the same, extra care must be
+          taken when both versions are generated simulataneously. <P>
 
   <LI>Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO
       library. <P>
