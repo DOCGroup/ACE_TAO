@@ -192,6 +192,10 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::init (void)
         }
       ACE_ENDTRY;
       ACE_CHECK_RETURN (-1);
+
+      // Below will never be reached, but the compiler is not smart to
+      // figure it out.  This will keep the warnings away.
+      return -1;
     }
 
   else
