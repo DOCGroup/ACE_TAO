@@ -74,6 +74,11 @@ examples:
           This example shows how to store the state of CORBA servants in
           persistent memory.
 
+        . PluggableUDP
+        
+          This example tests the UDP Pluggable Protocol (DIOP) implementation by
+          sending oneway requests to a server.
+
         . POA
 
           Contains various small examples of POA features based on
