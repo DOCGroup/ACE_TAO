@@ -14,17 +14,17 @@ already running and forward the invocation to the real server.
 
 @section resources Resources
 
-The IMR in TAO was first based on a paper on the subject by 
+The ImR in TAO was first based on a paper on the subject by 
 <a href="http://www.triodia.com/staff/michi-henning.html">Michi Henning</a> 
 called <a href="http://www.triodia.com/staff/michi/cacm.pdf">Binding,
 Migration, and Scalability in CORBA</a>. Mr. Henning later went on to
 coauthor the book 
 <a href="http://cseng.awl.com/bookdetail.qry?ISBN=0-201-37927-9&amp;ptype=0">
 Advanced CORBA Programming in C++</a> and included a chapter on the 
-Implementation Repository. The description of the IMR in this chapter is used 
-as the specification for TAO's IMR.
+Implementation Repository. The description of the ImR in this chapter is used 
+as the specification for TAO's ImR.
 
-@ref usersguide - Overall documentation on how to use the IMR in your programs
+@ref usersguide - Overall documentation on how to use the ImR in your programs
 
 @ref future - Future Work 
 
@@ -32,7 +32,7 @@ as the specification for TAO's IMR.
 
 @section authors Authors
 
-The guy currently in charge of the IMR is Darrell Brunsch
+The guy currently in charge of the ImR is Darrell Brunsch
 @<<a href="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>@>.
 You can reach me by either email (which is better), or through the 
 <a href="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE mailing list</a> 
@@ -56,7 +56,7 @@ As with any program, there is always a wishlist of things to do.
 @subsection logicalnames Logical Server names 
 
 In the IDL interface, but not used on the server side or fully implemented in 
-tao_imr.
+tao_ImR.
 
 @subsection shutdown Server Shutdown
 
@@ -93,19 +93,19 @@ Nothing yet.
 @page usersguide Implementation Repository User's Guide
 
 In order for a server to make use of the Implementation Repository, it must 
-communicate with the IMR to keep it up to date on such things as the server's 
+communicate with the ImR to keep it up to date on such things as the server's 
 running status. These functions now are contained within the POA, so when a 
-Persistent POA is used on a server that has -ORBUseIMR specified, it will 
+Persistent POA is used on a server that has -ORBUseImR specified, it will 
 communicate with an Implementation Repository, if one is available.
 
-@subsection use How is the IMR used?
+@subsection use How is the ImR used?
 
-The main steps for the lifetime of a server that uses the IMR are generally 
+The main steps for the lifetime of a server that uses the ImR are generally 
 the following:
 
 <ol>
-  <li>Register name and startup commands with the IMR using <b>tao_imr<br>
-    </b><em>Example:<code>  </code> </em><code> tao_imr -ORBInitRef 
+  <li>Register name and startup commands with the ImR using <b>tao_ImR<br>
+    </b><em>Example:<code>  </code> </em><code> tao_ImR -ORBInitRef 
     ImplRepoService=file://implrepo.ior add plane -c &quot;airplane_server -i 
     -ORBInitRef ImplRepoService=file://implrepo.ior&quot;<br></code>
     <br> 
@@ -113,16 +113,16 @@ the following:
     which the objects are created in. So in this example, the airplane_server 
     creates a POA called &quot;plane&quot; and activates its servants under 
     it.<br>
-  <li>Start the server once to generate an IMR-ified IOR<br>
+  <li>Start the server once to generate an ImR-ified IOR<br>
   <li>Start clients and pass them the above IOR<br>
-  <li>Clients will use the IOR, which will automatically go through the IMR<br>
-  <li>The IMR will start the server if it is not already running<br>
+  <li>Clients will use the IOR, which will automatically go through the ImR<br>
+  <li>The ImR will start the server if it is not already running<br>
   <li>At any time when the server is not currently in use by a client, it can be 
-      shut down using <strong>tao_imr<br></strong><em>Example:</em><code> tao_imr 
+      shut down using <strong>tao_ImR<br></strong><em>Example:</em><code> tao_ImR 
       -ORBInitRef ImplRepoService=file://implrepo.ior shutdown plane<br>
     </code>
-  <li>After the server isn't needed anymore, it can be removed from the IMR database 
-      using <strong>tao_imr<br></strong><em>Example:<code> </em>tao_imr -ORBInitRef 
+  <li>After the server isn't needed anymore, it can be removed from the ImR database 
+      using <strong>tao_ImR<br></strong><em>Example:<code> </em>tao_ImR -ORBInitRef 
       ImplRepoService=file://implrepo.ior remove plane</code>
 </ol>
 
@@ -130,23 +130,55 @@ the following:
 
 As of TAO 1.0.9, the Implementation Repository support on the server-side has
 been integrated into the POA. Previously, the IR_Helper class needed to be
-used explicitly. Now only the &quot;-ORBUseIMR 1&quot; command line
+used explicitly. Now only the &quot;-ORBUseImR 1&quot; command line
 argument needs to be used.
 
 There are a couple of restrictions on the server though. Only objects within 
-a persistent POA will be supported by the IMR. Also the Implementation 
+a persistent POA will be supported by the ImR. Also the Implementation 
 Repository will key its entries on POA name. What this means for the server 
 is that each server must have unique persistent POA names.
+
+@subsection defaultinitref Use of -ORBDefaultInitRef with the ImR
+
+As mentioned in the INS documentation (in TAO/docs/INS.html), a base IOR
+can be passed to the ORB.  Then when resolve_initial_reference is called,
+the ORB can append the service name to the base IOR to form a full IOR.
+
+When used with the ImR, this can be a powerful feature.  If the ImR's endpoint
+is used as the base IOR, then the ImR can be used to provide many services via
+the resolve_initial_reference functionality.
+
+For example, let's say the ImR service is running on doriath on port 5555 and 
+the Name Service is already registered with the ImR (in that the ImR knows how
+to start the Name Service).
+
+Now we should be able to run some client that uses the Name Service like this:
+
+<code>client -ORBDefaultInitRef corbaloc://doriath:5555/</code>
+
+When the client calls resolve_initial_reference("NameService"), the ORB will 
+resolve that to "corbaloc://doriath:5555/NameService".  The ImR recognizes this
+IOR as a pointer to the NameService, and will then start it up if necessary.  
+Finally, it will forward the client to the Name Service.
+
+Services used in this way have two requirements:
+
+- The server must be registered as the request_initial_reference name.  For
+  example, the Name Service is registered as the "NameService", and thus also
+  contains a POA with the name "NameService".
+- The server must also be able to handle the INS name 
+  "corbaloc://machine:port/poa_name", where the poa_name is the same name as
+  above.  
 
 @subsection activationmodes What are activation modes
 
 Each server can have one of three different types of activation modes:
 
 <ul>
-  <li>NORMAL is the default.  The server can be started via tao_imr, the command 
+  <li>NORMAL is the default.  The server can be started via tao_ImR, the command 
       line, and with client requests.
   <li>MANUAL specifies that the server shouldn't be  activated with a client request 
-      but can be activated through tao_imr or via the command line.  
+      but can be activated through tao_ImR or via the command line.  
   <li>PER_CLIENT specifies that each request to the ImplRepo will result in a new 
       server process started up.  Because clients cache the forwarded reference, 
       there is one server per client (more or less).  There are some exceptions, 
@@ -156,11 +188,11 @@ Each server can have one of three different types of activation modes:
       used to shut down the servers.  So the servers must have an alternative way of 
       shutting down. 
   <li>AUTO_START specifies that a server should be activated when the Implementation 
-      Repository is started.  tao_imr also has an autostart command to activate all 
+      Repository is started.  tao_ImR also has an autostart command to activate all 
       servers marked AUTO_START
 </ul>
 
-@subsection taoimrior Using the tao_imr ior command
+@subsection taoImRior Using the tao_ImR ior command
 
 First, some background.
 
@@ -172,12 +204,12 @@ running the server.
 
 It would be nice to be able to  generate a valid IOR without requiring the 
 program to be run. A valid IOR in this case requires two major things.  First 
-it requires the endpoint of the IMR. This is relatively easy to get, since it 
-is encoded in the IMR's IOR.  Second it also requires an object key.  At the 
+it requires the endpoint of the ImR. This is relatively easy to get, since it 
+is encoded in the ImR's IOR.  Second it also requires an object key.  At the 
 least, this involves both the POA hierarchy and the object name.
 
 So if we knew the POA and object names, then we should be able to create an 
-IOR for the server. One possibility would be to have tao_imr ask for both the 
+IOR for the server. One possibility would be to have tao_ImR ask for both the 
 POA and the object, and then create the POA hierarchy to generate an IOR.  
 Doing the generation is this manner (letting the POA create the reference) 
 shields us from changes in the IOR generation schemes.  Since we are using 
@@ -186,8 +218,8 @@ the same code that the server would use, our IORs would be up to date.
 It ends up there is an easier way to do this.  The Interoperable Naming 
 Service is intended to be used in situations where an IOR could be created by 
 hand.  Using the same information as above, it is not difficult to take the 
-endpoint information from the IMR and attach the POA name.  For example, 
-let's say that we are running the IMR on ringil.ece.uci.edu at port 5000.  
+endpoint information from the ImR and attach the POA name.  For example, 
+let's say that we are running the ImR on ringil.ece.uci.edu at port 5000.  
 The endpoint would be &quot;iioploc://1.1@ringil.ece.uci.edu:5000&quot;.  If 
 we are creating an IOR for the nestea server, we'd just need to attach 
 &quot;/nestea_server&quot; to the end of the endpoint.  Now we have an IOR.
@@ -218,17 +250,17 @@ simplified name. This can be done by using the IORTable like this:
 </CODE>
 
 These lines, as taken from the nestea_server example, just uses the same 
-poa_name as registered with the IMR and associates it with the server_obj 
-object in the IOR table.  Because the IMR will be able to handle the 
+poa_name as registered with the ImR and associates it with the server_obj 
+object in the IOR table.  Because the ImR will be able to handle the 
 simplified name (if it uses the POA name scheme) then this IOR will work.
 
 Just one more thing, each object that needs an IOR needs to be registered 
 with the IOR table.  But this raises the problem of uniqueness; they all 
-can't have the same name.  The IMR will actually only look at the name part 
+can't have the same name.  The ImR will actually only look at the name part 
 of the simplified IOR up to the first &quot;/&quot;.  So both 
 &quot;iioploc://1.1@ringil:5000/nestea_server/foo&quot; and 
 &quot;iioploc://1.1@ringil:5000/nestea_server/bar&quot; will be treated by 
-the IMR as objects in the &quot;nestea_server&quot; server.
+the ImR as objects in the &quot;nestea_server&quot; server.
 
 @subsection persistence Persistent Implementation Repository
 
@@ -237,11 +269,11 @@ Tao's Implementation Repository can be made persistent by doing two things:
 <ul>
 <li>
 Always start up the Implementation Repository on the same port. This ensures that
-the Implementation Repository will not have to re-IMR-ify the IORs of every server
+the Implementation Repository will not have to re-ImR-ify the IORs of every server
 registered to it each time it starts up. The way to accomplish this is to add<br>
 -ORBEndpoint iiop://(hostname):(portnumber)<br>
 
- to the IMR's startup command line. The host
+ to the ImR's startup command line. The host
 name can be obtained portably in C++ code with the lines<br>
 
 	ACE_INET_addr ad;<br>
@@ -258,12 +290,12 @@ information about this, see <a href="http://www.iana.org/">http://www.iana.org/<
 and <a href="http://www.isi.edu/in-notes/iana/assignments/port-numbers">
 http://www.isi.edu/in-notes/iana/assignments/port-numbers</a>.<br><br>
 <li>
-Pass the IMR a filename to use for the backing store, specified by the command line 
+Pass the ImR a filename to use for the backing store, specified by the command line 
 option<br>
 
 -p (filename)<br>
 
-This option must be used the first and every subsequent time the persistent IMR is 
+This option must be used the first and every subsequent time the persistent ImR is 
 started up.
 
 </ul>
