@@ -12,7 +12,7 @@
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-class ACE_Config_Scheduler
+class TAO_ORBSVCS_Export ACE_Config_Scheduler
 : public POA_RtecScheduler::Scheduler
   // = TITLE
   //   A (local) implementation for the RtecScheduler::Scheduler service.

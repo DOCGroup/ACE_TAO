@@ -22,7 +22,7 @@
 #include "orbsvcs/CosNamingS.h"
 #include "Entries.h"
   
-class NS_NamingContext : public POA_CosNaming::NamingContext
+class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
   // = TITLE
   //     This class implements the NamingContext interface that is part of the 
   //     CosNaming idl module.  
@@ -101,7 +101,7 @@ class NS_NamingContext : public POA_CosNaming::NamingContext
   // implements.  This is needed to implement the <destroy> method.
 };
 
-class NS_BindingIterator : public POA_CosNaming::BindingIterator
+class TAO_ORBSVCS_Export NS_BindingIterator : public POA_CosNaming::BindingIterator
   // = TITLE
   //     This class implements the BindingIterator interface 
   //     that is part of the CosNaming idl module.

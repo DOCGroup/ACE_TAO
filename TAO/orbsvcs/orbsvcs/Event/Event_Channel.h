@@ -49,7 +49,7 @@ ACE_INLINE int operator == (const RtecEventComm::Event &event1,
 
 // ************************************************************
 
-class ACE_ES_Event_Container : public RtecEventComm_Event
+class TAO_ORBSVCS_Export ACE_ES_Event_Container : public RtecEventComm_Event
 // = TITLE
 //    Event Container
 //
@@ -104,11 +104,11 @@ ACE_Svc_Export void dump_sequence (const ACE_CORBA_Sequence<RtecEventComm::Event
 #endif /* ACE_ES_LACKS_ORB */
 
 // Utility for debugging events.
-void dump_event (const RtecEventComm::Event &event);
+void TAO_ORBSVCS_Export dump_event (const RtecEventComm::Event &event);
 
 // ************************************************************
 
-class ACE_RTU_Manager
+class TAO_ORBSVCS_Export ACE_RTU_Manager
 // = TITLE
 //   ACE RTU Manager
 //
@@ -161,7 +161,7 @@ class ACE_ES_Dispatching_Base;
 typedef ACE_ES_Dispatching_Base ACE_ES_Dispatching_Module;
 
 // ec..
-class ACE_EventChannel : public RtecEventChannelAdmin_EventChannelBOAImpl
+class TAO_ORBSVCS_Export ACE_EventChannel : public RtecEventChannelAdmin_EventChannelBOAImpl
 // = TITLE
 //   ACE Event Channel.
 //
@@ -241,7 +241,7 @@ private:
 
 // ************************************************************
 
-class ACE_ES_Dependency_Iterator
+class TAO_ORBSVCS_Export ACE_ES_Dependency_Iterator
 // = TITLE
 //    ConsumerQOS Iterator
 //
@@ -306,7 +306,7 @@ protected:
 
 // ************************************************************
 
-class ACE_ES_Timer_ACT
+class TAO_ORBSVCS_Export ACE_ES_Timer_ACT
 // = TITLE
 //    Timer Asynchronous Completion Token
 //
@@ -321,7 +321,7 @@ public:
 // Forward decl.
 class ACE_ES_Consumer_Rep_Timeout;
 
-class ACE_ES_Disjunction_Group
+class TAO_ORBSVCS_Export ACE_ES_Disjunction_Group
 // = TITLE
 //    Disjunction Group
 //
@@ -370,7 +370,7 @@ private:
 
 // ************************************************************
 
-class ACE_ES_Conjunction_Group : public ACE_ES_Disjunction_Group
+class TAO_ORBSVCS_Export ACE_ES_Conjunction_Group : public ACE_ES_Disjunction_Group
 // = TITLE
 //    Conjunction Group
 //
@@ -410,7 +410,7 @@ private:
 // Forward decl.
 class ACE_ES_Consumer_Correlation;
 
-class ACE_ES_Consumer_Rep : public ACE_ES_Timer_ACT
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Rep : public ACE_ES_Timer_ACT
 // = TITLE
 //    Consumer Representation.
 //
@@ -531,7 +531,7 @@ protected:
   // Lock for reference count.
 };
 
-class ACE_ES_Consumer_Rep_Timeout : public ACE_ES_Consumer_Rep
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Rep_Timeout : public ACE_ES_Consumer_Rep
 // = TITLE
 //    Consumer Representation.
 //
@@ -573,7 +573,7 @@ protected:
 
 // ************************************************************
 
-class ACE_ES_Subscription_Info
+class TAO_ORBSVCS_Export ACE_ES_Subscription_Info
 // = TITLE
 //    Event Service Subscription Info
 //
@@ -683,7 +683,7 @@ public:
 class ACE_ES_Dispatch_Request;
 class ACE_Push_Consumer_Proxy;
 
-class ACE_ES_Consumer_Correlation : public RtecEventComm_PushSupplierBOAImpl
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Correlation : public RtecEventComm_PushSupplierBOAImpl
 // = TITLE
 //    Event Service Consumer_Correlation
 //
@@ -796,7 +796,7 @@ private:
 
 // ************************************************************
 
-class ACE_ES_ACT
+class TAO_ORBSVCS_Export ACE_ES_ACT
 // = TITLE
 //    Event Service ACT
 //
@@ -814,7 +814,7 @@ public:
 // Forward declarations.
 class ACE_ES_Dispatch_Request;
 
-class ACE_ES_Consumer_Module : public RtecEventChannelAdmin_ConsumerAdminBOAImpl
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Module : public RtecEventChannelAdmin_ConsumerAdminBOAImpl
 // = TITLE
 //    Event Service Consumer Module
 //
@@ -874,7 +874,7 @@ private:
 // Forward declaration.
 class ACE_ES_Subscription_Module;
 
-class ACE_ES_Correlation_Module
+class TAO_ORBSVCS_Export ACE_ES_Correlation_Module
 // = TITLE
 //    Event Service Correlation Module
 //
@@ -942,7 +942,7 @@ private:
 class ACE_ES_Supplier_Module;
 class ACE_Push_Supplier_Proxy;
 
-class ACE_ES_Subscription_Module
+class TAO_ORBSVCS_Export ACE_ES_Subscription_Module
 // = TITLE
 //    Event Service Subscription Module
 //
@@ -1079,7 +1079,7 @@ private:
 
 // ************************************************************
 
-class ACE_ES_Supplier_Module : public RtecEventChannelAdmin_SupplierAdminBOAImpl
+class TAO_ORBSVCS_Export ACE_ES_Supplier_Module : public RtecEventChannelAdmin_SupplierAdminBOAImpl
 // = TITLE
 //    Event Service Supplier Proxy Module
 //
@@ -1140,7 +1140,7 @@ class ACE_EventChannel;
 
 // = Event Channel interfaces.
 
-class ACE_Push_Supplier_Proxy : public RtecEventChannelAdmin_ProxyPushConsumerBOAImpl
+class TAO_ORBSVCS_Export ACE_Push_Supplier_Proxy : public RtecEventChannelAdmin_ProxyPushConsumerBOAImpl
 // = TITLE
 //    Push Supplier Proxy.
 //
@@ -1213,7 +1213,7 @@ private:
 
 // ************************************************************
 
-class ACE_Push_Consumer_Proxy : public RtecEventChannelAdmin_ProxyPushSupplierBOAImpl
+class TAO_ORBSVCS_Export ACE_Push_Consumer_Proxy : public RtecEventChannelAdmin_ProxyPushSupplierBOAImpl
 // = TITLE
 //     Push Consumer Proxy.
 //
@@ -1288,7 +1288,7 @@ private:
 
 // Helper function that returns
 // qos.dependencies_[0].rt_info_->entry_point or "no-name".
-const char *
+const TAO_ORBSVCS_Export char *
 ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos);
 
 // ************************************************************
