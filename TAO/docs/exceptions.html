@@ -26,7 +26,8 @@ definition of macros discussed here.
       exception is called <code>_env</code>.  Use
       <code>TAO_THROW_ENV</code> and <code>TAO_THROW_ENV_RETURN</code>
       to pass back thru the <code>CORBA_Environment</code> variable
-      specified.<p>
+      specified.  (Also see: <a href="try_throw">Throwing exceptions
+      within try blocks.</a>)<p>
 
   <li>Use <code>TAO_TRY</code>, <code>TAO_CHECK_ENV</code>,
       <code>TAO_CATCH</code>, <code>TAO_CATCHALL</code>, and
@@ -115,6 +116,12 @@ definition of macros discussed here.
       TAO_ENDTRY;
 </pre><p>
 
+      <a name="#try_throw"></a>
+  <li>Notice that you need to use <code>TAO_TRY_THROW</code> and
+      <code>TAO_TRY_THROW_EX</code> when throwing exceptions within
+      the try block.  Without using it, the exception won't be caught
+      by the try block, which is not how native exceptions work.<p>
+
   <li>Follow each operation that may throw an exception with
       <code>TAO_CHECK_ENV</code> or <code>TAO_CHECK_ENV_EX</code>.
       This is required for simulated exceptions to break out of
@@ -135,8 +142,13 @@ definition of macros discussed here.
       <code>TAO_THROW_ENV_RETURN</code> and specify the name of the
       variable used to pass back the CORBA environment.<p>
 
-  <li>To rethrow an exception after catchingit, use
-      <code>TAO_RETHROW_RETURN</code>.<p>
+  <li>To rethrow an exception after catching it, use
+      <code>TAO_RETHROW_RETURN</code> or
+      <code>TAO_RETHROW_RETURN_VOID</code>.  But if you are reusing
+      the same <code>CORBA::Environment</code> variable of the
+      function in the try block, use
+      <code>TAO_RETHROW_SAME_ENV_RETURN</code> and
+      <code>TAO_RETHROW_SAME_ENV_RETURN_VOID</code> instead.<p>
 
   <li>Follow each statement that throws exceptions with
       <code>TAO_CHECK_ENV_RETURN</code>,
@@ -173,7 +185,14 @@ definition of macros discussed here.
       will be to catch "CORBA_Exception" class.<p>
 
   <li>Don't catch an exception just to rethrow it.  Exceptions cost
-      you performance.
+      you performance.<p>
+
+  <li>Current implementation of <code>TAO_TRY/TAO_CATCH</code> macros
+      do not propagate a exception up if it is not caught.  (So,
+      you'll have to catch all exceptions with a
+      <code>TAO_CATCHANY</code> and rethrow it, which contradicts the
+      previous guideline. ;( )<p>
+
 </ul>
 
 <h3>General Guidelines of Exceptions</h3>
