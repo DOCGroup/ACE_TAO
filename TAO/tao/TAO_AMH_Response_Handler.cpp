@@ -8,7 +8,7 @@
 #include "tao/Pluggable_Messaging.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
-
+#include "tao/debug.h"
 
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
