@@ -49,8 +49,24 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/vcr.o .obj/vcr.so .shobj/vcr.o .shobj/vcr.so: vcr.cpp ../mpeg_client//video.h ../mpeg_client//proto.h \
- ../include/common.h ../mpeg_client//newproto.h \
- ../mpeg_client//../mpeg_shared/routine.h ../mpeg_client//global.h \
- ../mpeg_client//util.h ../mpeg_client//dither.h
+ ../include/common.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ ../mpeg_client//newproto.h ../mpeg_client//../mpeg_shared/routine.h \
+ ../mpeg_client//../mpeg_shared/../include/common.h \
+ ../mpeg_client//global.h ../mpeg_client//util.h \
+ ../mpeg_client//dither.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
