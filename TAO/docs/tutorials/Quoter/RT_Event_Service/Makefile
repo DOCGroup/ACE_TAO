@@ -26,7 +26,7 @@ ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # RTEvent
 
-SRC = $(addsuffix .cpp, $(BIN)Stock_Consumer Stock_i Stock_Factory_i) \
+SRC = $(addsuffix .cpp, $(BIN) Stock_Consumer Stock_i Stock_Factory_i) \
 	$(IDL_SRC)
 
 CLIENT_OBJS = $(addsuffix .o, client Stock_Consumer) \
@@ -66,6 +66,30 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
+
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Stock_Consumer.h
+
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h QuoterS.h QuoterC.h QuoterC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(ACE_ROOT)/ace/post.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
+ QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Consumer.o .obj/Stock_Consumer.so .shobj/Stock_Consumer.o .shobj/Stock_Consumer.so: Stock_Consumer.cpp Stock_Consumer.h QuoterC.h \
  QuoterC.i
@@ -203,6 +227,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -356,6 +381,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -378,6 +404,11 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
