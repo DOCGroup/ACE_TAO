@@ -610,7 +610,13 @@ recommend using it. However, some people have used it successfully.<P>
      <BR>
      <CODE>#define ACE_HAS_STANDARD_CPP_LIBRARY 1</CODE><BR>
      <BR>
-     before the #include statement in ACE_ROOT\ace\config.h.<BR><BR>
+     before the #include statement in ACE_ROOT\ace\config.h.<BR>
+     If you are building for Windows CE, you need to add the line <BR>
+     <br>
+     <code>#define ACE_HAS_WINCE</code>
+     <br>
+     before including &lt;config-win32.h&gt;.
+
      The default project files which build ACE library have various
      configurations to build dynamic/static, with or without Unicode
      support.  Although we recommend using the dynamic library, if,
