@@ -87,14 +87,6 @@ namespace CIAO
                               PortableServer::POA_ptr poa
                               ACE_ENV_ARG_DECL);
 
-      // @@ (OO) Since this class is reference counted, please make this
-      //         destructor protected to enforce proper memory managment
-      //         through the reference counting mechanism (i.e. to
-      //         disallow calling operator delete() on an instance of
-      //         this class.
-      /// Destructor.
-      ~RepositoryManager_Impl ();
-
       virtual void installPackage (const char* installation_name,
                                    const char* location
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -148,8 +140,9 @@ namespace CIAO
 
     protected:
 
-      // @@ (OO) You may want to change the external ID to an
-      //         ACE_CString to ease memory management.
+      ~RepositoryManager_Impl ();
+      // destructor
+
       typedef ACE_Hash_Map_Manager_Ex<const char *,
         Deployment::PackageConfiguration*,
         ACE_Hash<const char *>, ACE_Equal_To<const char *>,
@@ -161,12 +154,6 @@ namespace CIAO
 
       // Cached POA pointer
       PortableServer::POA_var poa_;
-
-      // @@ (OO) Does this really need to be cached?  Can't you just
-      //         keep it local to the installPackage() method, the
-      //         only place where it is used?  Please confirm.
-      // Package Configuration element
-      Deployment::PackageConfiguration pc_;
 
       pc_table pc_table_;
     };

@@ -130,9 +130,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // call the PackageConfiguration handler to parse the XML descriptor.
       Deployment::PackageConfiguration* pc;
-      CIAO::RepositoryManager_Impl rep_impl;
-      rep_impl.installPackage ("PC", package_url);
-      pc = rep_impl.findPackageByName ("PC");
+
+      CIAO::RepositoryManager_Impl *rep_impl = 0;
+      ACE_NEW_RETURN (rep_impl,
+                      CIAO::RepositoryManager_Impl (),
+                      -1);
+      PortableServer::ServantBase_var owner_transfer (rep_impl);
+
+      rep_impl->installPackage ("PC", package_url);
+      pc = rep_impl->findPackageByName ("PC");
 
       REF_MAP ref_map;
       REF_MAP primary_ref_map;
@@ -248,7 +254,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
-      while (true); // @@ (OO) What purpose does this server?
+      while (true); 
       return -1;
     }
   catch (const DOMException& e)
@@ -267,13 +273,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       //ACE_PRINT_EXCEPTION ("Caught DOM Exception: ");
       ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
-      while (true); // @@ (OO) What purpose does this server?
+      while (true); 
       return -1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
-      while (true); // @@ (OO) What purpose does this server?
+      while (true); 
       return -1;
     }
 
