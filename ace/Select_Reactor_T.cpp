@@ -714,7 +714,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
   int result = 0;
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if (sigset.is_member (s)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
@@ -736,7 +736,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   int result = 0;
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
@@ -1227,7 +1227,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
          && this->state_changed_ == 0)
     {
       // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Select_Reactor_T::dispatching\n")));
-      number_of_handlers_dispatched++;
+      ++number_of_handlers_dispatched;
       this->notify_handle (handle,
                            mask,
                            ready_mask,
