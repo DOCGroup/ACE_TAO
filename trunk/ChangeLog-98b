@@ -12,6 +12,8 @@ Tue Dec 29 16:24:24 1998  David L. Levine  <levine@cs.wustl.edu>
           translated Hash_Map_Manager_Helper.csh from csh to sh.
           Renamed Hash_Map_Manager_Helper.csh to Hash_Map_Manager_Helper.
 
+        * docs/ACE-guidelines.html: specifically disallow csh scripts.
+
 Tue Dec 29 15:09:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.10 released.
