@@ -13,16 +13,16 @@ URL::URL(char *input_buf) {
   char *temp;
   char *lasts;
 
-  if(temp = ACE_OS::strtok_r(buffer,": ",&lasts))  {
+  if((temp = ACE_OS::strtok_r(buffer,": ",&lasts)))  {
 	protocol_ = (char *) ACE_OS::malloc(strlen(temp));
 	ACE_OS::strcpy(protocol_, temp);
   }
 
-  if(temp = ACE_OS::strtok_r(NULL,"/",&lasts))  {
+  if((temp = ACE_OS::strtok_r(NULL,"/",&lasts)))  {
 	hostname_ = (char *) ACE_OS::malloc(strlen(temp));  
 	ACE_OS::strcpy(hostname_, temp);
   }
-  if(temp = ACE_OS::strtok_r(NULL,"\0",&lasts)) { 
+  if((temp = ACE_OS::strtok_r(NULL,"\0",&lasts))) { 
     filename_ = (char *) malloc(strlen(temp));
 	ACE_OS::strcpy(filename_, temp);
   }

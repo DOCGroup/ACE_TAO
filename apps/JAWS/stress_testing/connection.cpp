@@ -61,20 +61,24 @@ int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz
 }
 
 int connection::read(void *buffer, size_t maxlen, unsigned int timeout_seconds) {
+  ACE_UNUSED_ARG (timeout_seconds);
   return stream_.recv(buffer, maxlen);
 }
 
 int connection::write(const void *buffer, size_t maxlen, unsigned int timeout_seconds) {
+  ACE_UNUSED_ARG (timeout_seconds);
   return stream_.send(buffer, maxlen);
 }
 
 int connection::write_n(const void *buffer, size_t len, unsigned int timeout_seconds) {
+  ACE_UNUSED_ARG (timeout_seconds);
   if(stream_.send_n(buffer, len) == -1)
     ACE_ERROR_RETURN((LM_ERROR, "Write failed for %s", buffer),1);
   return 0;
 }
 
 int connection::read_n(void *buffer, size_t maxlen, unsigned int timeout_seconds) {
+  ACE_UNUSED_ARG (timeout_seconds);
   if(stream_.recv_n(buffer, maxlen) == -1)
     ACE_ERROR_RETURN((LM_ERROR, "Read failed.."),1);
   return 1;
