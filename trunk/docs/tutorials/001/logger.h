@@ -89,7 +89,7 @@ protected:
   /*
     And here's the handle_input().  This is really the workhorse of the application.
    */
-  int handle_input (ACE_HANDLE)
+  virtual int handle_input (ACE_HANDLE)
   {
     /*
       Create and initialize a small receive buffer.
@@ -109,16 +109,16 @@ protected:
       Notice that in the error case or closed case we return -1.  That tells the reactor
       to call our handle_close() where we'll take care of shutting down cleanly.
 
-			Although we don't make use of them, there are additional parameters you can
-			use with the recv() call.  One of these is an ACE_Time_Value that allows you to
-			limit the amount of time blocking on the recv().  You would use that if you
-			weren't sure if data was available.  Since we only get to handle_input() when
-			data is ready, that would be redundant.  On the other hand, if you use recv_n()
-			to read *exactly* a number of bytes then limiting the time you wait for those
-			bytes might be good.
-			The other paramter that may come in handy is an integer <i>flags</i>.  This is
-			passed directly to the underlying OS recv() call.  See the man page recv(2)
-			and the header sys/socket.h for the gory details.
+      Although we don't make use of them, there are additional parameters you can
+      use with the recv() call.  One of these is an ACE_Time_Value that allows you to
+      limit the amount of time blocking on the recv().  You would use that if you
+      weren't sure if data was available.  Since we only get to handle_input() when
+      data is ready, that would be redundant.  On the other hand, if you use recv_n()
+      to read *exactly* a number of bytes then limiting the time you wait for those
+      bytes might be good.
+      The other paramter that may come in handy is an integer <i>flags</i>.  This is
+      passed directly to the underlying OS recv() call.  See the man page recv(2)
+      and the header sys/socket.h for the gory details.
      */
     switch( this->cli_stream_.recv(buf,sizeof buf) )
     {
