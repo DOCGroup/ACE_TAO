@@ -1,24 +1,23 @@
 // -*- MPC -*-
 // $Id$
 
-project (NodeDaemon_stub): ciao_deployment_stub, ciao_server_dnc {
+project (NodeDaemon_stub): ciao_deployment_stub, ciao_server_dnc, ifr_client {
   sharedname = NodeDaemon_stub
   idlflags += -Wb,stub_export_macro=NodeDaemon_stub_Export -Wb,stub_export_include=NodeDaemon_stub_export.h
   dynamicflags = NODEDAEMON_STUB_BUILD_DLL
-                                                                
-  libs += TAO_IFR_Client                                                                                       
+
   IDL_Files {
    NodeDaemon.idl
   }
-                                                                                                                                                        
+
   Source_Files {
    NodeDaemonC.cpp
   }
 }
 
-project(Node_Daemon): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, iortable, naming {
+project(Node_Daemon): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, iortable, ifr_client, naming {
   after += NodeApplicationManager NodeDaemon_stub
-  libs += NodeDaemon_stub NodeApplicationManager TAO_IFR_Client
+  libs += NodeDaemon_stub NodeApplicationManager
   exename = Node_Daemon
 
   IDL_Files {
