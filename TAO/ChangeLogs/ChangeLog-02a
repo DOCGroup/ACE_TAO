@@ -1,3 +1,17 @@
+Wed May 24 11:45:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* examples/Simulator/DOVEBrowser/Makefile
+	  examples/Simulator/DOVEBrowser/MultiDoubleVisComp.java (new)
+	  examples/Simulator/DOVEBrowser/Properties.java
+	  examples/Simulator/DOVEBrowser/PushConsumer.java
+	  examples/Simulator/DOVEBrowser/PushConsumerFactory.java
+	  examples/Simulator/DOVEBrowser/VisCompFactory.java
+	  examples/Simulator/DOVEBrowser/ecdata_patch.pl (new)
+	  examples/Simulator/DOVEBrowser/make.bat: ported from BOA to POA,
+	  added a Perl patch to remove a typedef from RtecEventComm.idl
+	  that the vbj 4.0 idl2java compiler is not handling correctly.
+	  Work still needs to be done to integrate with the new EC.
+
 Tue May 23 22:45:50 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Policy_i.cpp:

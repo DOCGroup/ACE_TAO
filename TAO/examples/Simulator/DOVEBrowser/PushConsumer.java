@@ -20,7 +20,7 @@
 
 // The Consumer has to implement the Skeleton Consumer
 
-public class PushConsumer extends RtecEventComm._PushConsumerImplBase
+public class PushConsumer extends RtecEventComm.PushConsumerPOA
 {
 
   public static final int ACE_ES_EVENT_ANY = 0;
@@ -39,18 +39,20 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   // Store the number of received events
   private int total_received_ = 0;
   private org.omg.CORBA.ORB orb_;
+  private org.omg.PortableServer.POA poa_;
   private MTDataHandlerAdapter dataHandlerAdapter_;
-  // private RtecScheduler.RT_InfoHolder rt_info_;
-  private RtecScheduler.handle_tHolder rt_info_;
+  private int rt_info_;
   private RtecEventChannelAdmin.EventChannel channel_admin_;
   private RtecEventChannelAdmin.ConsumerAdmin consumer_admin_;
   private RtecEventChannelAdmin.ProxyPushSupplier suppliers_;
 
   public PushConsumer (org.omg.CORBA.ORB orb,
+                       org.omg.PortableServer.POA poa,
                        DataHandler dataHandler,
                        boolean use_queueing)
     {
       orb_ = orb;
+      poa_ = poa;
       dataHandlerAdapter_ =
         new MTDataHandlerAdapter (dataHandler, use_queueing);
       if (use_queueing)
@@ -93,9 +95,9 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 
         // Define Real-time information
 
-        rt_info_ = new RtecScheduler.handle_tHolder (scheduler_.create (name));
+        rt_info_ = scheduler_.create (name);
 
-        scheduler_.set (rt_info_.value,
+        scheduler_.set (rt_info_,
                         RtecScheduler.Criticality_t.VERY_LOW_CRITICALITY,
                         0L,
                         0L,
@@ -120,7 +122,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
           new RtecEventData (0, payload, orb_.create_any());
 
         RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];
-        dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
+        dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_);
 
 
         // @@ Carlos please help me to set the right boolean value
@@ -140,7 +142,10 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 
         suppliers_ = consumer_admin_.obtain_push_supplier ();
 
-        suppliers_.connect_push_consumer (this, qos);
+        org.omg.CORBA.Object objref = poa_.servant_to_reference (this);
+        RtecEventComm.PushConsumer consumer_ref = 
+          RtecEventComm.PushConsumerHelper.narrow (objref);
+        suppliers_.connect_push_consumer (consumer_ref, qos);
 
         System.out.println ("Registered the consumer successfully.");
 
@@ -174,6 +179,16 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   catch (RtecScheduler.SYNCHRONIZATION_FAILURE e)
         {
           System.err.println ("Demo_Consumer.open_consumer: scheduler synchronization failure");
+          System.err.println (e);
+        }
+  catch (org.omg.PortableServer.POAPackage.ServantNotActive e)
+        {
+          System.err.println ("Demo_Consumer.open_consumer: org.omg.PortableServer.POAPackage.ServantNotActive");
+          System.err.println (e);
+        }
+  catch (org.omg.PortableServer.POAPackage.WrongPolicy e)
+        {
+          System.err.println ("Demo_Consumer.open_consumer: org.omg.PortableServer.POAPackage.WrongPolicy");
           System.err.println (e);
         }
   catch(org.omg.CORBA.SystemException e)

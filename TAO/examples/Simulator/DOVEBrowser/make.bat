@@ -38,6 +38,7 @@ REM This part build with JDK
 @echo JDK1.2
 idltojava NavWeap.idl
 idltojava Persian.idl
+idltojava RtecBase.idl
 idltojava RtecEventComm.idl
 idltojava RtecEventChannelAdmin.idl
 idltojava RtecDefaultEventData.idl
@@ -48,6 +49,7 @@ javac CosNaming\NamingContextPackage\*.java
 javac CosNaming\*.java
 javac TimeBase\*.java
 javac RtecScheduler\*.java
+javac RtecBase\*.java
 javac RtecEventComm\*.java
 javac RtecEventComm\EventChannelPackage\*.java
 javac RtecEventChannelAdmin\*.java
@@ -58,38 +60,31 @@ javac *.java
 @goto end
 
 :setup
+:realclean
 
 @REM This part updates IDL files
 
 @del *.idl
 @xcopy ..\NavWeap.idl
 @xcopy ..\Persian.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\TimeBase.idl
-@mkdir tao
-@xcopy ..\..\..\tao\TimeBase.pidl tao\
+@xcopy ..\..\..\tao\TimeBase.pidl
+@move TimeBase.pidl TimeBase.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecBase.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecDefaultEventData.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecScheduler.idl
 
-@goto end
-
-@REM This part cleans up everything, and updates IDL files
-
-:realclean
-
-@del *.idl
-@xcopy ..\NavWeap.idl
-@xcopy ..\Persian.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\TimeBase.idl
-@mkdir tao
-@xcopy ..\..\..\tao\TimeBase.pidl tao\
-@xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
+@REM still do this in case the user does not have
+@REM Perl and wants to hand-alter the idl file to
+@REM remove the typedef, or has a working idl2java
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\RtecDefaultEventData.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\RtecScheduler.idl
+
+@REM Then, try to apply the Perl patch to remove the typedef
+@perl -S ecdata_patch.pl < ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl > .\RtecEventComm.idl
+
+@REM Skip deleting everything else if in setup mode
+@if %1. == setup. goto end
 
 :clean
 
@@ -97,10 +92,18 @@ javac *.java
 @del Weapons.java
 @del WeaponsHelper.java
 @del WeaponsHolder.java
+@del EventPayloadHelper.java
+@del EventPayloadHolder.java
+@del RtecEventDataHelper.java
+@del RtecEventDataHolder.java
+@del RtecEventData.java
 @del *NavWeapTerminator*.java
 @del Navigation.java
 @del NavigationHelper.java
 @del NavigationHolder.java
+@del RtecBase\*.java
+@del RtecBase\*.class
+@rd RtecBase
 @del RtecEventComm\*.java
 @del RtecEventComm\*.class
 @REM del RtecEventComm\EventChannelPackage\*.java
@@ -130,10 +133,6 @@ javac *.java
 @rd CosNaming\NamingContextPackage
 @rd CosNaming
 
-@REM del TimeBase\*.java
-@REM del TimeBase\*.class
-@REM rd TimeBase
-
 @del TimeBase\*.java
 @del TimeBase\*.class
 @rd TimeBase
@@ -141,13 +140,15 @@ javac *.java
 @goto end
 
 
-REM This part build with VB
+REM This part builds with VB
 :VB
 @echo Visibroker
 @echo idl2java NavWeap.idl
 @idl2java NavWeap.idl
 @echo idl2java Persian.idl
 @idl2java Persian.idl
+@echo idl2java RtecBase.idl
+@idl2java RtecBase.idl
 @echo idl2java RtecEventComm.idl
 @idl2java RtecEventComm.idl
 @echo idl2java RtecEventChannelAdmin.idl

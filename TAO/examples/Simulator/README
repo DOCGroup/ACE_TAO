@@ -232,8 +232,8 @@ Starting:
 
         DOVE Browser:
                 vbj DOVEBrowser
-                (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> 
-                                 vbj DOVEBrowser -ORBnameserviceport <port>
+                (also supported: vbj DOVEBrowser -nameserviceior <IOR> 
+                                 vbj DOVEBrowser -nameserviceport <port>
                                  vbj DOVEBrowser -dualECdemo)
 
                 or
