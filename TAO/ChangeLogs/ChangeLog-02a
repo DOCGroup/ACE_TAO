@@ -1,4 +1,13 @@
-Mon Jan 21 17:37:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+Tue Jan 22 06:52:32 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+
+          Reverting the const_cast change from "Mon Jan 21 08:02:28 2002".
+          It was not necessary.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> and Johnny Willemsen <jwillemsen@remedy.nl>
+          for pointing this out.
+
+Mon Jan 21 17:37:47 2002  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
 
