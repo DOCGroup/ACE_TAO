@@ -1,3 +1,10 @@
+Thu May  6 11:04:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/DLL/Today.{h cpp}:
+	* examples/DLL/Newsweek.{h cpp}: Added a nothrow-variant operator
+	  new if ACE_HAS_NEW_NOTHROW is defined. The ACE_NEW_* macros use
+	  nothrow when available.
+
 Wed May  5 23:35:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Get_Opt.cpp (~ACE_Get_Opt_Long_Option):
