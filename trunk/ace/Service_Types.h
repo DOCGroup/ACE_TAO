@@ -85,7 +85,7 @@ protected:
  * @class ACE_Service_Object_Type
  *
  * @brief Define the methods for handling the configuration of
- * <ACE_Service_Objects>.
+ * ACE_Service_Objects.
  */
 class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 {
@@ -110,7 +110,7 @@ public:
  * @class ACE_Module_Type
  *
  * @brief Define the methods for handling the configuration of
- * <ACE_Modules>.
+ * ACE_Modules.
  */
 class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
@@ -129,10 +129,10 @@ public:
   virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
-  // Get the link pointer.
+  /// Get the link pointer.
   ACE_Module_Type *link (void) const;
 
-  // Set the link pointer.
+  /// Set the link pointer.
   void link (ACE_Module_Type *);
 
   /// Dump the state of an object.
@@ -142,7 +142,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Pointer to the next <ACE_Module_Type> in an <ACE_Stream_Type>.
+  /// Pointer to the next ACE_Module_Type in an ACE_Stream_Type.
   ACE_Module_Type *link_;
 };
 
@@ -150,7 +150,7 @@ private:
  * @class ACE_Stream_Type
  *
  * @brief Define the methods for handling the configuration of
- * <ACE_Streams>.
+ * ACE_Streams.
  */
 class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
@@ -169,13 +169,13 @@ public:
   virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
-  /// Add a new <ACE_Module> to the top of the <ACE_Stream>.
+  /// Add a new  ACE_Module to the top of the ACE_Stream.
   int push (ACE_Module_Type *new_module);
 
-  /// Search for <module> and remove it from the <ACE_Stream>.
+  /// Search for @a module and remove it from the ACE_Stream.
   int remove (ACE_Module_Type *module);
 
-  /// Locate the <ACE_Module> with <mod_name>.
+  /// Locate the ACE_Module with @a mod_name.
   ACE_Module_Type *find (const ACE_TCHAR *mod_name) const;
 
   /// Dump the state of an object.
@@ -185,7 +185,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Pointer to the head of the <ACE_Module> list.
+  /// Pointer to the head of the ACE_Module list.
   ACE_Module_Type *head_;
 };
 

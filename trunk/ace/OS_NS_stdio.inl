@@ -983,7 +983,7 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600))))
+#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)))
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
 #else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
@@ -1000,7 +1000,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined(ACE_WIN32)
-#  if defined (__BORLANDC__) && (__BORLANDC__ < 0x600)
+#  if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)
   ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
@@ -1039,7 +1039,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL))
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in

@@ -146,7 +146,7 @@ ACE_OS::fopen (const char *filename,
 #   endif  // ACE_USES_WCHAR
             return fp;
           }
-          _close (fd);
+          ::_close (fd);
         }
 # endif  // ACE_HAS_WINCE
 
@@ -201,7 +201,7 @@ ACE_OS::fopen (const wchar_t *filename,
 #   endif  // ACE_USES_WCHAR
             return fp;
           }
-          _close (fd);
+          ::_close (fd);
         }
 # endif  // ACE_HAS_WINCE
 
@@ -399,7 +399,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::sprintf");
 
-# if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || (defined ACE_HAS_DINKUM_STL)
+# if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || (defined ACE_HAS_DINKUM_STL) || defined (__DMC__)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
