@@ -47,12 +47,10 @@ CIAO::Session_Container::~Session_Container ()
 
 int
 CIAO::Session_Container::init (const char *name,
-                               const CORBA::PolicyList *add_policies
+                               const CORBA::PolicyList *more_policies
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (add_policies);
-
   char buffer[MAXPATHLEN];
 
    if (name == 0)
@@ -77,8 +75,14 @@ CIAO::Session_Container::init (const char *name,
    ACE_CHECK_RETURN (-1);
 
    // Set up proper poa policies here.  Default policies seems to be
-   // fine for session container.
+   // fine for session container.  If you add some other default
+   // policies here, then you need to "add" more_policies below
+   // instead of simply assigning more_policies to the init policy
+   // list.
    CORBA::PolicyList policies (0);
+
+   if (more_policies != 0)
+     policies = *more_policies;
 
    this->poa_ = root_poa->create_POA (name,
                                       PortableServer::POAManager::_nil (),

@@ -53,7 +53,7 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *add_policies = 0
+                      const CORBA::PolicyList *more_policies = 0
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
@@ -89,7 +89,7 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *add_policies = 0
+                      const CORBA::PolicyList *more_policies = 0
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

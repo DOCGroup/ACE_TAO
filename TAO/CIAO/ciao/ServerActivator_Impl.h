@@ -175,7 +175,11 @@ namespace CIAO
      */
     typedef struct CS_config
     {
-      CORBA::String_var svcconf_hint_; // ConfigValue::name: CIAO-svcconf-id
+      // ConfigValue::name: CIAO-svcconf-id
+      CORBA::String_var svcconf_hint_;
+
+      // ConfigValue::Name: CIAO-rtcad-filename
+      CORBA::String_var rtcad_filename_;
     } CompServ_Config_Info;
 
     /**
