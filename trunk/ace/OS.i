@@ -6479,12 +6479,13 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 #else
   ACE_OSCALL (::ctime_r (t, buf), char *, 0, result);
 #endif /* DIGITAL_UNIX */
-  ::strncpy (buf, result, buflen);
+  if (result != 0)
+    ::strncpy (buf, result, buflen);
   return buf;
 #else
 
 # if defined (ACE_CTIME_R_RETURNS_INT)
-  return (::ctime_r(t, buf, buflen) == -1 ? 0 : buf);
+  return (::ctime_r (t, buf, buflen) == -1 ? 0 : buf);
 # else
   ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), char *, 0);
 # endif /* ACE_CTIME_R_RETURNS_INT */
@@ -6493,7 +6494,8 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 #else
   char *result;
   ACE_OSCALL (::ctime (t), char *, 0, result);
-  ::strncpy (buf, result, buflen);
+  if (result != 0)
+    ::strncpy (buf, result, buflen);
   return buf;
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }

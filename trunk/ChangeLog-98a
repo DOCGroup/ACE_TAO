@@ -1,3 +1,25 @@
+Fri Dec 19 17:16:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Log_Record.i: The time stamp put into the ACE_Log_Record
+	  gets all messed up when the ACE_Log_Record is transmitted to the
+	  Server_Logging_Handler and the client is run on a little-endian
+	  architecture.  This is because the ACE_Log_Record::encode method
+	  does: 
+ 
+          this->time_stamp_ = ACE_Time_Value
+  
+          htonl (this->time_stamp_.sec ()),
+          htonl (this->time_stamp_.usec ()));
+ 
+          When the ACE_Time_Value is passed in the resulting values from
+ 	  "htonl", it calls "normalize" which totally messes with the
+ 	  values passed.  Thanks to Patrick J. McNerthney
+ 	  <pat@thememedia.com> for reporting this.
+
+	* ace/OS.i: Fixed ctime_r() so that it doesn't crash if a NULL is
+ 	  returned from ctime_r().  Thanks to Patrick J. McNerthney
+ 	  <pat@thememedia.com> for reporting this.
+
 Fri Dec 19 09:44:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,i}: fixed sigwait for DEC cxx, yet again for cxx
