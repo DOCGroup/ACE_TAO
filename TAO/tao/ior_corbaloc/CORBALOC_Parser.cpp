@@ -35,6 +35,9 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Priyanka: this routine turns out to be a little big, you may
+  // want to divide in in several pieces, just to make it more
+  // readable.
 
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
@@ -42,24 +45,37 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
     ior + sizeof corbaloc_prefix - 1;
 
   // First separates each <obj_addr> from the list of the obj_addr
-  // Then concatenates the obj. key to the end of each one and 
+  // Then concatenates the obj. key to the end of each one and
   // tries to find a binding .........
- 
+
   // Find the position where '/' seperator btn <obj_addr_list> and
   // <key_string>
 
   cout << "The corbaloc name is " << corbaloc_name << endl;
   CORBA::ULong count_addr = 0;
+
+  // @@ Priyanka: the name of this variable confuses me, it is called
+  // "pos" as in position or something like that, but it seems to be a
+  // length of some sort (based on its use), any better name for it?
   CORBA::ULong pos = 0;
   CORBA::Boolean start_key_string = 1;
 
+  //
   const char rir_prefix [] = "rir:/";
 
   // If the protocol is "rir:", there is no need to do any of this.
   //
   if (this->check_prefix (corbaloc_name) == 0)
     {
-      
+
+      // @@ Priyanka: here you are allocating 4 bytes, is that what
+      // you want? Don't you want to allocate something like:
+      //   key_string =
+      //       CORBA::string_alloc (ACE_OS::strlen (corbaloc_name));
+      // Also: in this routine you allocate a lot of memory, but never
+      // deallocate it!  Please make sure you do so, there are some
+      // suggestions below that tell you how you could automate that.
+
       char *key_string = CORBA::string_alloc (sizeof (corbaloc_name));
       char *key_stringPtr = key_string;
       cout << "lets see" << endl;
@@ -70,7 +86,7 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
               // Increment the count of the addresses in the list
               ++count_addr;
             }
-          
+
           if (*i == '/')
             {
               if (*(i+1) == '/')
@@ -88,7 +104,7 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                   start_key_string = 0;
                 }
             }
-          
+
           if (start_key_string == 1)
             {
               ++pos;
@@ -98,57 +114,99 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
               *key_stringPtr = *i;
               ++key_stringPtr;
             }
-          
+
         }
-      
+
       // Copy the <obj_addr_list> to cloc_name.
       char *cloc_name = CORBA::string_alloc (pos);
       cloc_name = ACE_OS::strncpy (cloc_name, corbaloc_name, pos);
-      
+
       ACE_DEBUG ((LM_DEBUG, "The obj_addr_list is %s\n", cloc_name));
-      
+
       // Declare an array of addr.
-      char *addr [count_addr];
+      // @@ Priyanka: this is a non-standard extension, you are
+      // declaring a variable sized array, you probably want to use
+      //    char **addr;
+      //    ACE_NEW_RETURN (addr, char*[count_addr], 0);
+      // or better yet use an ACE_Array:
+      //    ACE_Array_Base<char*> addr (count_addr);
+      // because the latter is exception safe
+      // Speaking of exception safety.... you may want to use
+      // ACE_CString or something like that for your strings, so they
+      // are all automatically deallocated if an exception is raised.
+      //
+      char **addr;
+      ACE_NEW_RETURN (addr, char*[count_addr], 0);
+
+      // @@ Priyanka: don't declare a variable without initializing
+      // it, that is bad style, also: we don't use fooPtr in ACE+TAO,
+      // please use <cloc_name_ptr> or something like that.
       char *cloc_namePtr;
-      
+
       CORBA::ULong current_addr = 0;
-      
+
       addr [current_addr] = CORBA::string_alloc (pos);
       // Tokenize using "," as the seperator
+      // @@ Priyanka: in general you want to use ACE_OS::strtok_r()
+      // because that version is reentrant and works with multiple
+      // threads without any problems.
+      // The regular strtok() uses a static variable to keep the last
+      // pointer, so multiple threads cannot call it simultaneously.
       cloc_namePtr = ACE_OS::strtok (cloc_name, ",");
-      
+
       const char file_prefix[] = "iiop://";
-      
+
+      // @@ Priyanka: please don't use NULL, I know some books and
+      // documents use it, but 0 is good enough for C++ (and safer).
       while (cloc_namePtr != NULL)
         {
 
+          // @@ Priyanka: if you want to initialize the string to the
+          // empty string just do:
+          //     ACE_OS::strcpy (addr[current_addr], "");
+          // or also
+          //     addr[current_addr][0] = '\0';
           addr [current_addr] = ACE_OS::strcpy (addr [current_addr],
                                                 "\0");
-          
-          if (ACE_OS::strncmp (cloc_namePtr, file_prefix, 
+
+          if (ACE_OS::strncmp (cloc_namePtr, file_prefix,
                                sizeof (file_prefix)-1) != 0)
             {
               // If there is no explicit protocol specified, use the
               // default "iiop://"
+              // @@ Priyanka: you don't need to store the result from
+              // ACE_OS::strcat()...
+              // @@ Priyanka: did you allocate enough memory for this
+              // prefix too?
               addr [current_addr] = ACE_OS::strcat (addr [current_addr],
                                                     file_prefix);
-              
+
             }
-          
+
+          // @@ Priyanka: you don't need to store the result from
+          // ACE_OS::strcat()...
           addr [current_addr] = ACE_OS::strcat(addr [current_addr],
                                                cloc_namePtr);
-          
+
+          // @@ Priyanka: you don't need to store the result from
+          // ACE_OS::strcat()...
           addr [current_addr] = ACE_OS::strcat (addr [current_addr],
                                                 key_string);
-          
+
+          // @@ Priyanka: you don't need to store the result from
+          // ACE_OS::strcat()...
           addr [current_addr] = ACE_OS::strcat (addr [current_addr],
                                                 "\0");
-          
+
           ACE_DEBUG ((LM_DEBUG, "The obj_addr [%d] is %s\n", current_addr,
                       addr [current_addr]));
-          
+
           ++current_addr;
-          
+
+          // @@ Priyanka: can you move this to the beginning of the
+          // loop? It seems more readable like that.  Obviously you
+          // would need to remove the initialization outside the look
+          // too.
           addr [current_addr] = CORBA::string_alloc (pos);
           cloc_namePtr = ACE_OS::strtok (NULL, ",");
         }
@@ -156,14 +214,14 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
       // Now We have an array of <obj_addr> obtained from the
       // <obj_list>. Now, we define an MProfile and then use
       // make_mprofile ()....
-      // 
+      //
       TAO_MProfile mprofile;
 
-      for (CORBA::ULong i=0; i != count_addr; ++i)
+      for (CORBA::ULong j = 0; j != count_addr; ++j)
         {
-          int retv = 
-            orb->orb_core ()->connector_registry ()->make_mprofile (addr [i],
-                                                                  mprofile, 
+          int retv =
+            orb->orb_core ()->connector_registry ()->make_mprofile (addr [j],
+                                                                  mprofile,
                                                                   ACE_TRY_ENV);
 
           ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
@@ -189,21 +247,21 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
-          
+
           TAO_Stub_Auto_Ptr safe_data (data);
-          
+
           // Figure out if the servant is collocated.
           TAO_ServantBase *servant = 0;
           TAO_SERVANT_LOCATION servant_location =
             orb->_get_collocated_servant (safe_data.get (),
                                            servant);
-          
+
           int collocated = 0;
           if (servant_location != TAO_SERVANT_NOT_FOUND)
             collocated = 1;
-          
+
           CORBA::Object_ptr obj = CORBA::Object::_nil ();
-          
+
           // Create the CORBA level proxy.  This will increase the ref_count
           // on data by one
           ACE_NEW_THROW_EX (obj,
@@ -216,27 +274,29 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
-          
+
           // All is well, so release the stub object from its auto_ptr.
           data = safe_data.release ();
-          
+
           return obj;
-          
+
         }
 
     }
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
-  
-  if (ACE_OS::strncmp (corbaloc_name, rir_prefix, 
+
+  // @@ Priyanka: This is something that you could move to another
+  // routine, all the RIR case should be easy to separate...
+  if (ACE_OS::strncmp (corbaloc_name, rir_prefix,
                        sizeof (rir_prefix)-1) == 0)
     {
       // "rir" protocol used ... pass the key string as an
       // argument to the resolve_initial_references ()
       const char *key_string =
         corbaloc_name + sizeof (rir_prefix) -1;
-          
-      ACE_TRY 
+
+      ACE_TRY
         {
           ACE_DEBUG ((LM_DEBUG, "The key string is %s\n", key_string));
           object = orb->resolve_initial_references (key_string, ACE_TRY_ENV);
@@ -247,11 +307,11 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
           ACE_PRINT_EXCEPTION (ex, "CORBALOC_Parser");
         }
       ACE_ENDTRY;
-      
+
     }
-  
+
   return object;
-  
+
 }
 
 int
@@ -282,7 +342,7 @@ TAO_CORBALOC_Parser::check_prefix (const char *endpoint)
   // Failure: not an IIOP IOR
   // DO NOT throw an exception here.
 }
-  
+
 ACE_FACTORY_DEFINE (TAO_IOR_CORBALOC, TAO_CORBALOC_Parser)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
