@@ -1,3 +1,7 @@
+Mon Jan 12 20:04:32 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* server.cpp: Added comments
+
 Mon Jan 12 17:29:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: Added initialization for an abstract
