@@ -1,3 +1,9 @@
+Fri Dec 22 13:00:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional/run_test.pl: 
+	* tests/BiDirectional_NestedUpcall/run_test.pl: Added these perl
+	  scripts. 
+
 Fri Dec 22 12:22:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional_NestedUpcall: New test for BiDirectional
