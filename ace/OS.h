@@ -1243,6 +1243,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #    define THR_SCOPE_PROCESS       0x00200000
 #    define THR_INHERIT_SCHED       0x00400000
 #    define THR_EXPLICIT_SCHED      0x00800000
+#    define THR_SCHED_IO	    0x01000000
 
 #    if !defined (ACE_HAS_STHREADS)
 #    if !defined (ACE_HAS_POSIX_SEM)
