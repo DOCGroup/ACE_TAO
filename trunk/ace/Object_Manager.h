@@ -368,9 +368,6 @@ public:
   // Accesses a default signal set used in ACE_Sig_Guard methods.
 
 private:
-  static ACE_Object_Manager *instance_;
-  // Singleton pointer.
-
   static int starting_up_;
   // Flag indicating whether the program is starting up.
 

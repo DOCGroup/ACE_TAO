@@ -56,6 +56,8 @@ ACE_OS::netdb_release (void)
 # endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 #endif /* defined (ACE_MT_SAFE) */
 
+ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
+
 // Static constant representing `zero-time'.
 const ACE_Time_Value ACE_Time_Value::zero;
 
@@ -4898,10 +4900,11 @@ ACE_OS::exit (int status)
   // ACE_TRACE ("ACE_OS::exit");
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
-  // Shut down the ACE_Object_Manager.  With
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
+  // Shut down the ACE_Object_Manager, if it had registered its exit_hook.
+  // With ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
   // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  ACE_Object_Manager::fini ();
+  if (exit_hook_)
+    (*exit_hook_) ();
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 #if !defined (ACE_HAS_WINCE)
@@ -5309,10 +5312,11 @@ void
 exit (int status)
 {
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
-  // Shut down the ACE_Object_Manager.  With
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
+  // Shut down the ACE_Object_Manager, if it had registered its exit_hook.
+  // With ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
   // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  ACE_Object_Manager::fini ();
+  if (exit_hook_)
+    (*exit_hook_) ();
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
   ACE_OS::exit (status);
