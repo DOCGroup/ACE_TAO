@@ -1,3 +1,34 @@
+Sun Aug  9 15:04:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* netsvcs/clients/Tokens/manual/manual.cpp: Changed all instances
+	  of "#if (ACE_WIN32)" to "#if defined (ACE_WIN32)"
+
+	* netsvcs/netsvcs.dsw: Added this workspace which contains all the
+	  netsvcs projects.
+
+	* netsvcs/clients/Tokens/collection/collection.dsp:
+	* netsvcs/clients/Tokens/collection/collection.dsw:
+	* netsvcs/clients/Tokens/deadlock/deadlock.dsp:
+	* netsvcs/clients/Tokens/deadlock/deadlock.dsw:
+	* netsvcs/clients/Tokens/invariant/invariant.dsp:
+	* netsvcs/clients/Tokens/invariant/invariant.dsw:
+	* netsvcs/clients/Tokens/manual/manual.dsp:
+	* netsvcs/clients/Tokens/manual/manual.dsw:
+	* netsvcs/clients/Tokens/mutex/mutex.dsp:
+	* netsvcs/clients/Tokens/mutex/mutex.dsw:
+	* netsvcs/clients/Tokens/rw_lock/rw_lock.dsp:
+	* netsvcs/clients/Tokens/rw_lock/rw_lock.dsw:
+	  Added these MSVC projects and workspaces.  Thanks to Jeff
+	  Hellzen <JHellzen@hwdcsaws.cahwnet.gov> for submitting these.
+
+	* netsvcs/clients/Logger/direct_logging.dsp:
+	* netsvcs/clients/Logger/indirect_logging.dsp:
+	* netsvcs/clients/Naming/Client/Client_Test.dsp:
+	* netsvcs/clients/Naming/Client/main.dsp:
+	* netsvcs/lib/netsvcs.dsp:
+	* netsvcs/servers/servers.dsp:
+	  Mainly just updated all of these and made sure that they worked.
+
 Sun Aug  9 09:17:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (connect_svc_handler): Changed the call to
