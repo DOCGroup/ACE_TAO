@@ -31,6 +31,7 @@ class JAWS_IO_Handler;
 class JAWS_IO_Handler_Factory;
 class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
+class JAWS_Waiter;
 
 class JAWS_Export JAWS_Abstract_IO_Handler
   // = TITLE
@@ -118,17 +119,26 @@ public:
   virtual void idle (void) = 0;
   // puts handler in an idle state
 
-  enum { IDLE = 0,
-         ACCEPT_OK, ACCEPT_ERROR,
-         READ_OK, READ_ERROR,
-         WRITE_OK, WRITE_ERROR,
-         TRANSMIT_OK, TRANSMIT_ERROR,
-         RECEIVE_OK, RECEIVE_ERROR };
+  enum { IDLE = 0, IDLE_A = 1,
+         ACCEPT_OK = 2, ACCEPT_OK_A = 3,
+         ACCEPT_ERROR = 4, ACCEPT_ERROR_A = 5,
+         READ_OK = 6, READ_OK_A = 7,
+         READ_ERROR = 8, READ_ERROR_A = 9,
+         WRITE_OK = 10, WRITE_OK_A = 11,
+         WRITE_ERROR = 12, WRITE_ERROR_A = 13,
+         TRANSMIT_OK = 14, TRANSMIT_OK_A = 15,
+         TRANSMIT_ERROR = 16, TRANSMIT_ERROR_A = 17,
+         RECEIVE_OK = 18, RECEIVE_OK_A = 19,
+         RECEIVE_ERROR = 20, RECEIVE_ERROR_A = 21 };
   // The different states of the handler
 
 };
 
 #if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+
+// Forward reference.
+class JAWS_Asynch_IO_Handler;
+
 class JAWS_Export JAWS_Asynch_Handler : public ACE_Service_Handler
 {
 public:
@@ -153,8 +163,8 @@ public:
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
   // This method will be called when an asynchronous accept completes.
 
-  virtual void handler (JAWS_IO_Handler *ioh);
-  virtual JAWS_IO_Handler * handler (void);
+  virtual void handler (JAWS_Asynch_IO_Handler *ioh);
+  virtual JAWS_Asynch_IO_Handler * handler (void);
 
   virtual void dispatch_handler (void);
 
@@ -167,17 +177,13 @@ public:
   //virtual ACE_HANDLE handle (void) const;
 
 private:
-  JAWS_IO_Handler *ioh_;
+  JAWS_Asynch_IO_Handler *ioh_;
 };
 #endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
 
 
 class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
-#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
-friend class JAWS_Asynch_Handler;
-#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
-  // Provide implementations for the common functions.
 public:
   JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory);
   virtual ~JAWS_IO_Handler (void);
@@ -204,18 +210,14 @@ public:
   virtual void idle (void);
 
   virtual void acquire (void);
+  virtual void lock (void);
   virtual void release (void);
-  virtual int count (void);
 
   virtual void task (JAWS_Pipeline_Handler *ph);
   virtual JAWS_Pipeline_Handler *task (void);
 
   virtual void message_block (JAWS_Data_Block *mb);
   virtual JAWS_Data_Block *message_block (void);
-
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  virtual ACE_Handler *handler (void);
-#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
 protected:
   int status_;
@@ -233,18 +235,9 @@ protected:
 
   JAWS_IO_Handler_Factory *factory_;
   // The reference to the handler's factory.
-
-  int count_;
-
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  JAWS_Asynch_Handler *handler_;
-#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 };
 
 class JAWS_Export JAWS_IO_Handler_Factory
-#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
-  : public ACE_Service_Handler
-#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
 {
 public:
   virtual ~JAWS_IO_Handler_Factory (void);
@@ -263,8 +256,51 @@ typedef JAWS_IO_Handler_Factory JAWS_Synch_IO_Handler_Factory;
 typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
         JAWS_Synch_IO_Handler_Factory_Singleton;
 
+#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+
+class JAWS_Export JAWS_Asynch_IO_Handler : public JAWS_IO_Handler
+{
+friend class JAWS_Asynch_Handler;
+friend class JAWS_Asynch_IO_Handler_Factory;
+friend class JAWS_Waiter;
+
+  // Provide implementations for the common functions.
+public:
+  JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory);
+  virtual ~JAWS_Asynch_IO_Handler (void);
+
+  virtual ACE_Handler *handler (void);
+
+  virtual void acquire (void);
+  virtual void lock (void);
+  virtual void release (void);
+
+protected:
+
+  JAWS_Asynch_Handler *handler_;
+  ACE_SYNCH_RW_MUTEX count_;
+};
+
+
+class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
+{
+public:
+  virtual ~JAWS_Asynch_IO_Handler_Factory (void);
+  // Destructor
+
+  virtual JAWS_IO_Handler *create_io_handler (void);
+  // This creates a new JAWS_IO_Handler
+
+  virtual void destroy_io_handler (JAWS_IO_Handler *handler);
+  // This deletes a JAWS_IO_Handler
+};
+
+#else
+
 typedef JAWS_IO_Handler JAWS_Asynch_IO_Handler;
 typedef JAWS_IO_Handler_Factory JAWS_Asynch_IO_Handler_Factory;
+
+#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
 
 typedef ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
         JAWS_Asynch_IO_Handler_Factory_Singleton;
