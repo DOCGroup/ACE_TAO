@@ -47,5 +47,6 @@ UPIPE_SAP_Test
 Reactors_Test
 Enum_Interfaces_Test
 Hash_Map_Manager_Test
+Semaphore_Test
 
 @echo Tests complete...
