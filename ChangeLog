@@ -1,3 +1,11 @@
+Sat Feb 26 13:40:57 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+
+	  Compaq C++ doesn't like the static cast from ACE_thread_t to
+	  long unsigned int.  Take the sledgehammer approach and use a
+	  reinterpret cast instead.
+
 Sat Feb 26 13:20:13 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h (INADDR_LOOPBACK):
