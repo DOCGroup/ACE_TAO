@@ -323,20 +323,27 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
                                                *this);
     ACE_UNUSED_ARG (outstanding_requests);
 
-    // This class helps us by locking servants in a single threaded
-    // POA for the duration of the upcall.  Single_Threaded_POA_Lock
-    // has a magic constructor and destructor.  We acquire the servant
-    // lock in the constructor.  We release the servant lock in the
-    // destructor.
-    Single_Threaded_POA_Lock single_threaded_poa_lock (*poa,
-                                                       servant);
-    ACE_UNUSED_ARG (single_threaded_poa_lock);
-
     // Unlock for the duration of the servant upcall.  Reacquire once
     // the upcall completes. Even though we are releasing the lock,
     // the servant entry in the active object map is reference counted
     // and will not get removed/deleted prematurely.
     TAO_POA_GUARD (ACE_Lock, monitor, this->reverse_lock (), ACE_TRY_ENV);
+
+    // This class helps us by locking servants in a single threaded
+    // POA for the duration of the upcall.  Single_Threaded_POA_Lock
+    // has a magic constructor and destructor.  We acquire the servant
+    // lock in the constructor.  We release the servant lock in the
+    // destructor.
+    //
+    // Note that this lock must be acquired *after* the POA lock has
+    // been released.  This is necessary since we cannot block waiting
+    // for the servant lock while holding the POA lock.  Otherwise,
+    // the thread that wants to release this lock will not be able to
+    // do so since it can't acquire the POA lock.
+    //
+    Single_Threaded_POA_Lock single_threaded_poa_lock (*poa,
+                                                       servant);
+    ACE_UNUSED_ARG (single_threaded_poa_lock);
 
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
