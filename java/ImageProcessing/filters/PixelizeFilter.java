@@ -17,6 +17,11 @@ public class PixelizeFilter extends SpatialFilter
       pheight_ = pheight;
     }
 
+  public String info ()
+  {
+    return "Pixelizes the image";
+  }
+
   public void imageComplete(int status)
   {
     if (status == IMAGEERROR || status == IMAGEABORTED)
