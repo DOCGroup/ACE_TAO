@@ -323,70 +323,69 @@ public:
     //   for the string once it goes out of scope.
   public:
     String_var (void);
-    // default constructor
+    // default constructor.
 
     String_var (char *p);
-    // constructor, owns p
+    // constructor, owns p.
 
     String_var (const char *p);
-    // constructor. Makes a copy of p
+    // constructor. Makes a copy of p.
 
     String_var (const String_var &s);
-    // copy constructor
+    // copy constructor.
 
     ~String_var (void);
-    // destructor
+    // destructor.
 
     String_var &operator= (char *p);
-    // assignment operator
+    // assignment operator.
 
     String_var &operator= (const char *p);
-    // assignment to a const char*. Makes a copy.
+    // assignment to a const char*.  Makes a copy.
 
     String_var &operator= (const String_var &s);
-    // assignment operator
+    // assignment operator.
 
     operator char *();
-    // access and modify
+    // access and modify.
 
     operator const char *() const;
-    // only read privileges
+    // only read privileges.
 
     char &operator[] (ULong index);
-    // allows access and modification using an index
+    // allows access and modification using an index.
 
     char operator[] (ULong index) const;
-    // allows only accessing thru an index
+    // allows only accessing thru an index.
 
     // = in, out, out, and _retn operations.
     // ORBOS/97-05-15, Appendix C.2
 
     const char *in (void) const;
-    // for in parameter
+    // for in parameter.
 
     char *&inout (void);
-    // for inout parameter
+    // for inout parameter.
 
     char *&out (void);
-    // for out parameter
+    // for out parameter.
 
     char *_retn (void);
-    // for string of return type
+    // for string of return type.
 
   private:
     char *ptr_;
     // instance.
   };
 
-  // ORBOS/97-05-15, Appendix C.2 defines a String_out class
-
   class String_out
   {
-    //=TITLE
-    // String_out
-    // =DESCRIPTION
-    // To support the memory management for "out" parameter passing mode.
-
+    // = TITLE
+    //   String_out
+    //
+    // = DESCRIPTION
+    //   To support the memory management for "out" parameter passing
+    //   mode.  ORBOS/97-05-15, Appendix C.2 defines a String_out class
   public:
     // =operations
 
