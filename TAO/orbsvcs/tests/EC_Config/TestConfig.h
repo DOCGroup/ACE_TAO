@@ -26,6 +26,7 @@ namespace TestConfig {
 
 struct test_config_t;
 typedef ACE_Array<test_config_t*> Test_Config_Set;
+typedef ACE_Strong_Bound_Ptr<Test_Config_Set,ACE_Null_Mutex> TCFG_SET_SPTR;
 typedef ACE_Weak_Bound_Ptr<Test_Config_Set,ACE_Null_Mutex> TCFG_SET_WPTR;
 
 // Entity_Type_t is used to distinguish different types of entities
