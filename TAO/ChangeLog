@@ -5,7 +5,7 @@ Fri Feb 20 12:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           In the constructor, after getting the argument's scope, added
           a check for 0 result. Previous errors in the IDL file could
           cause this to be 0, so we need a check to avoid a subsequent
-          crash. Thanks to Gabiele Trombetti <gabtromb@isis.vanderbilt.edu>
+          crash. Thanks to Gabriele Trombetti <gabtromb@isis.vanderbilt.edu>
           for reporting the problem.
 
 Fri Feb 20 18:20:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
