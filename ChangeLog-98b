@@ -1,5 +1,13 @@
 Mon Jun 01 13:01:14 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* examples/Reactor/Dgram/Dgram.cpp (run_test): Because of the
+ 	  delayed de-registration in WFMO_Reactor, WFMO_Reactor was trying
+ 	  to call handle_close on the Event Handler after it was
+ 	  destroyed.  Solution: dynamically created the Event Handler and
+ 	  call "delete this" in handle_close.  The other alternative was
+ 	  to call remove_handler with the DONT_CALL flag and to close the
+ 	  socket in the Event Handler's destructor.
+
 	* ace/Timeprobe: The vxworks compiler is lame as it cannot handle
  	  operator placement new for arrays.  Therefore, ACE_Allocator was
  	  removed in favor of regular new and delete.
