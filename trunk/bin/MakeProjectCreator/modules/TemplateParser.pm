@@ -267,7 +267,7 @@ sub relative {
             $val = "../" x $count;
             $val =~ s/\/$//;
             if ($self->{'prjc'}->convert_slashes()) {
-              $val =~ s/\//\\/g;
+              $val = slash_to_backslash($val);
             }
             substr($value, $start) =~ s/\$\([^)]+\)/$val/;
           }
@@ -475,6 +475,7 @@ sub handle_end {
 sub get_flag_overrides {
   my($self)  = shift;
   my($name)  = shift;
+  my($type)  = shift;
   my($value) = undef;
   my($file)  = $self->get_value($name);
   my($prjc)  = $self->{'prjc'};
@@ -483,12 +484,18 @@ sub get_flag_overrides {
   foreach my $key (keys %$fo) {
     if ($key =~ /^$name/) {
       foreach my $of (keys %{$$fo{$key}}) {
-        if ($of eq $file) {
+        my($cv) = $of;
+        if ($prjc->convert_slashes()) {
+          $cv = $prjc->slash_to_backslash($of);
+        }
+        if ($cv eq $file) {
           foreach my $ma (keys %{$prjc->{'matching_assignments'}}) {
             if ($ma eq $key) {
               foreach my $aname (@{$prjc->{'matching_assignments'}->{$ma}}) {
-                if (defined $$fo{$key}->{$of}->{$aname}) {
+                if ($aname eq $type &&
+                    defined $$fo{$key}->{$of}->{$aname}) {
                   $value = $$fo{$key}->{$of}->{$aname};
+                  last;
                 }
               }
               last;
@@ -521,8 +528,8 @@ sub handle_if {
       $true = 0;
     }
 
-    if ($val =~ /flag_overrides\(([^\)]+)\)/) {
-      $val = $self->get_flag_overrides($1);
+    if ($val =~ /flag_overrides\(([^\)]+),\s*([^\)]+)\)/) {
+      $val = $self->get_flag_overrides($1, $2);
     }
     else {
       $val = $self->get_value($val)
@@ -642,12 +649,16 @@ sub handle_basenoextension {
 sub handle_flag_overrides {
   my($self) = shift;
   my($name) = shift;
+  my($type) = "";
+
+  ($name, $type) = split(/,\s*/, $name);
+
   my($file) = $self->get_value($name);
   my($prjc) = $self->{'prjc'};
   my($fo)   = $prjc->{'flag_overrides'};
 
   if (!$self->{'if_skip'}) {
-    my($value) = $self->get_flag_overrides($name);
+    my($value) = $self->get_flag_overrides($name, $type);
     if (defined $value) {
       $self->append_current($value);
     }
@@ -702,7 +713,7 @@ sub process_name {
 
   if ($line eq "") {
   }
-  elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+\))\))?%>/) {
+  elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+,\s*[^\)]+\))\))?%>/) {
     my($name, $val) = $self->split_name_value($line);
 
     $length += length($name);

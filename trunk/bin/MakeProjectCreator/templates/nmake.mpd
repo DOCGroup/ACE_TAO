@@ -198,21 +198,25 @@ SOURCE=.\<%idl_file%>
 InputPath=.\<%idl_file%>
 InputName=<%basenoextension(idl_file)%>
 InputDir=<%dirname(idl_file)%>
-
+<%if(flag_overrides(idl_file, idlgendir))%>
+OutDir=<%flag_overrides(idl_file, idlgendir)%>
+<%else%>
+<%if(idlgendir)%>
+OutDir=<%idlgendir%>
+<%else%>
 <%if(dirname_found)%>
-".\$(InputDir)\$(InputName)C.h"	".\$(InputDir)\$(InputName)C.i"	".\$(InputDir)\$(InputName)C.cpp"	".\$(InputDir)\$(InputName)S.h"	".\$(InputDir)\$(InputName)S.i"	".\$(InputDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+OutDir=$(InputDir)
+<%else%>
+OutDir=.
+<%endif%>
+<%endif%>
+<%endif%>
+
+"$(OutDir)\$(InputName)C.h"	"$(OutDir)\$(InputName)C.i"	"$(OutDir)\$(InputName)C.cpp"	"$(OutDir)\$(InputName)S.h"	"$(OutDir)\$(InputName)S.i"	"$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	<<tempfile.bat
 	@echo off
-	cd $(InputDir)
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> <%basename(idl_file)%>
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> -o $(OutDir) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>
 <<
-<%else%>
-".\$(InputName)C.h"	".\$(InputName)C.i"	".\$(InputName)C.cpp"	".\$(InputName)S.h"	".\$(InputName)S.i"	".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	<<tempfile.bat 
-	@echo off 
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
-<<
-<%endif%>
 
 <%endfor%>
 !ENDIF

@@ -181,15 +181,28 @@ TAO_IDLFLAGS += <%idlflags%>
 
 ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
+<%if(flag_overrides(idl_file, idlgendir))%>
+ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
+	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
+<%else%>
+<%if(idlgendir)%>
+ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+<%idlgendir%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
+	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
+<%else%>
+
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 <%noextension(idl_file)%>C.h: <%idl_file%>
-	(cd <%dirname(idl_file)%> && $(TAO_IDL) <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%basename(idl_file)%>)
+	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
-<%if(flag_overrides(idl_file))%>
+<%if(flag_overrides(idl_file, idlflags))%>
 <%noextension(idl_file)%>C.h: <%idl_file%>
-	$(TAO_IDL) <%flag_overrides(idl_file)%> <%basename(idl_file)%>
+	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> $^
+<%endif%>
+<%endif%>
 <%endif%>
 <%endif%>
 <%endfor%>
