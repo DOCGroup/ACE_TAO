@@ -157,7 +157,9 @@ CORBA_Object::_hash (CORBA::ULong maximum,
 // such as strcmp(), to allow more comparison algorithms.
 
 CORBA::Boolean
-CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj)
+CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
+                              CORBA::Environment &)
+    ACE_THROW_SPEC (())
 {
   if (other_obj == this)
     {
