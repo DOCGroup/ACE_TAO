@@ -67,7 +67,7 @@ TAO::HTIOP::Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO::HTIOP::Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (
                           const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-			  int restart)
+                          int restart)
 {
   if (this->peer_acceptor_.open (local_addr, restart) == -1)
     return -1;
@@ -97,10 +97,10 @@ TAO::HTIOP::Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handle
 {
   ACE_DEBUG ((LM_DEBUG, "accept_svc_handler\n"));
   if (this->peer_acceptor_.accept (svc_handler->peer (),
-				   0,
-				   0,
-				   1,
-				   0 /* reset_new_handle */) == -1)
+                                   0,
+                                   0,
+                                   1,
+                                   0 /* reset_new_handle */) == -1)
     {
       svc_handler->close (0);
 
@@ -166,38 +166,38 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_open (
 #endif
     if (protocol_family == PF_INET)
       {
-	sockaddr_in local_inet_addr;
-	ACE_OS::memset (ACE_reinterpret_cast (void *,
-					      &local_inet_addr),
-			0,
-			sizeof local_inet_addr);
+        sockaddr_in local_inet_addr;
+        ACE_OS::memset (ACE_reinterpret_cast (void *,
+                                              &local_inet_addr),
+                        0,
+                        sizeof local_inet_addr);
 
-	if (local_addr == ACE_Addr::sap_any)
-	  {
-	    local_inet_addr.sin_port = 0;
-	  }
-	else
-	  local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
-						   local_addr.get_addr ());
-	if (local_inet_addr.sin_port == 0)
-	  {
-	    if (ACE::bind_port (this->get_handle ()) == -1)
-	      error = 1;
-	  }
-	else if (ACE_OS::bind (this->get_handle (),
-			       ACE_reinterpret_cast (sockaddr *,
-						     &local_inet_addr),
-			       sizeof local_inet_addr) == -1)
-	  error = 1;
+        if (local_addr == ACE_Addr::sap_any)
+          {
+            local_inet_addr.sin_port = 0;
+          }
+        else
+          local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
+                                                   local_addr.get_addr ());
+        if (local_inet_addr.sin_port == 0)
+          {
+            if (ACE::bind_port (this->get_handle ()) == -1)
+              error = 1;
+          }
+        else if (ACE_OS::bind (this->get_handle (),
+                               ACE_reinterpret_cast (sockaddr *,
+                                                     &local_inet_addr),
+                               sizeof local_inet_addr) == -1)
+          error = 1;
       }
     else if (ACE_OS::bind (this->get_handle (),
-			   (sockaddr *) local_addr.get_addr (),
-			   local_addr.get_size ()) == -1)
+                           (sockaddr *) local_addr.get_addr (),
+                           local_addr.get_size ()) == -1)
       error = 1;
 
   if (error != 0
       || ACE_OS::listen (this->get_handle (),
-			 backlog) == -1)
+                         backlog) == -1)
     {
       error = 1;
       this->close ();
@@ -229,7 +229,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open(
 
   int result =
     reactor->register_handler (this,
-			       ACE_Event_Handler::ACCEPT_MASK);
+                               ACE_Event_Handler::ACCEPT_MASK);
 
 
   return result;
@@ -302,11 +302,11 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (A
 
   //int use_select = 1;
   while (1
-	 && ACE_OS::select (select_width,
-			    conn_handle,
-			    0,
-			    0,
-			    &timeout) == 1);
+         && ACE_OS::select (select_width,
+                            conn_handle,
+                            0,
+                            0,
+                            &timeout) == 1);
   return 0;
 }
 
@@ -315,7 +315,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
 {
   return this->concurrency_strategy_->activate_svc_handler (svc_handler,
-							    (void *) this);
+                                                            (void *) this);
 }
 
 
