@@ -6,6 +6,7 @@ Sat Mar 27 06:51:38 1999  David L. Levine  <levine@cs.wustl.edu>
 Fri Mar 26 23:50:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/POA.pidl (PortableServer): Added State and get_state.
+  	  Thanks to Umar Syyid <usyyid@hns.com> for pointing this out.
 
 Fri Mar 26 22:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -32,10 +33,9 @@ Fri Mar 26 22:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Mar 26 21:57:44 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/POAManager.cpp (get_state):
-        Made changes to the type declarations in this file. The scoping
-        was not right to acces the enum variables. Thanks to Naga
-        for pointing out the mistake.
+        * tao/POAManager.cpp (get_state): Made changes to the type
+ 	  declarations in this file. The scoping was not right to acces
+ 	  the enum variables. Thanks to Naga for pointing out the mistake.
 
 Fri Mar 26 18:08:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
