@@ -28727,6 +28727,46 @@ const char* CORBA_LocalInterfaceDef::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/LocalInterfaceDef:1.0";
 }
 
+void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveKind _tao_elem)
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      CORBA::_tc_PrimitiveKind,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveKind &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+
+    CORBA::Boolean result = type->equivalent (CORBA::_tc_PrimitiveKind, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    if (stream >> _tao_elem)
+    {
+      return 1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    return 0;
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
 void operator<<= (CORBA::Any &_tao_any, CORBA_Repository_ptr _tao_elem)
 {
   TAO_OutputCDR stream;
@@ -30007,6 +30047,46 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_ExcDescripti
   }
   ACE_CATCHANY
   {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeMode _tao_elem)
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      CORBA::_tc_AttributeMode,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeMode &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+
+    CORBA::Boolean result = type->equivalent (CORBA::_tc_AttributeMode, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    if (stream >> _tao_elem)
+    {
+      return 1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
