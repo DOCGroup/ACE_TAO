@@ -1,3 +1,11 @@
+Wed Oct 15 14:59:41 1997    <nw1@CHA-CHA>
+
+	* tests/run_tests.bat: Added Reactor_Performance_Test and
+ 	  Notify_Performance_Test to one button test script.
+
+	* tests/tests.dsw: Added Reactor_Performance_Test.dsp and
+ 	  Notify_Performance_Test.dsp.
+
 Wed Oct 15 10:35:38 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* ace/Containers.h: 
