@@ -12,20 +12,20 @@ the client or open a separate window for the client and server.
 server:
 -------
 
-./svr -p <port_num> -h <my_hostname> -n <number_of_servants>
+./svr -p <port_num> -h <my_hostname> -t <number_of_servants>
 
 port_num is the port number at which the server will start the first
 (and highest priority) servant. Successive servants will be created
 starting at (port_num+1). The -n parameter specifies the total number
 of servants. 
 
-The server will print the IOR of the high and low priority servants,
-but it is not required by the client.
+The server will print the IOR of the servants, but it is not required
+by the client.
 
 client:
 -------
 
-./client -d <datatype> -p <port_num> -h <server_hostname> -n <num_calls> -t <num_threads>
+./client -d <datatype> -p <port_num> -h <server_hostname> -n <num_calls> -t <num_of_clients>
 
 <datatype> is one of the following:
 
@@ -34,26 +34,27 @@ client:
 2 Long
 3 Struct of the above 3 types
 
-<port_num> is the port number of the high priority servant. The low
-priority servant is assumed to be at (port_num+1).
+<port_num> is the port number of the highest priority servant and
+should be the same as the port_num supplied to the server, as
+described earlier. The lower priority servant is assumed to be at
+(port_num+1).
 
 <server_hostname> is the hostname of the server.
 
-Based on the server_hostname and the port_num, the client constructs
-the IOR's for the high priority servant and the low priority servant.
+Based on the server_hostname and the port_num, the client
+automatically constructs the IOR's for the servants
 
 <num_calls> is the number of CORBA twoway calls to be made
 
-<num_threads> is the total number of concurrent clients to be
-created. One of these clients will be a high priority client (and thus
-send requests to the high priority servant), and the rest will have
-low priority.
-
-The high priority client makes requests at 20Hz, and the low priority
-clients make requests at 10Hz.
+<num_of_clients> is the total number of concurrent clients to be
+created. The clients will have successively decreasing
+priorities. Hence, with 3 clients, the 1st client will have the highest
+priority, the 2nd client will have lower priority, and the 3rd will have
+the lowest priority.
 
 Results
 -------
 
 The client prints the latency observed by the high priority client,
-and the average latency observed by the low priority client.
+and the average latency observed by the low priority clients. Jitter
+(standard deviation of the latency) is also printed by the client.
