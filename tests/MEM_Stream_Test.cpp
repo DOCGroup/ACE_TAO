@@ -142,7 +142,7 @@ Echo_Handler::handle_close (ACE_HANDLE,
 
   // If no connections are open.
   if (*Waiting::instance () == 0)
-    ACE_Reactor::instance ()->end_event_loop ();
+    ACE_Reactor::instance ()->end_reactor_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Echo_Handler %d::handle_close closing down\n"),
@@ -287,7 +287,7 @@ test_reactive (const ACE_TCHAR *prog,
 #endif /* _TEST_USES_THREADS */
 
   ACE_Time_Value tv (60, 0);
-  ACE_Reactor::instance ()->run_event_loop (tv);
+  ACE_Reactor::instance ()->run_reactor_event_loop (tv);
 
   if (tv == ACE_Time_Value::zero)
     {
@@ -372,7 +372,7 @@ test_concurrent (const ACE_TCHAR *prog,
 #endif /* _TEST_USES_THREADS */
 
   ACE_Time_Value tv (60, 0);
-  ACE_Reactor::instance ()->run_event_loop (tv);
+  ACE_Reactor::instance ()->run_reactor_event_loop (tv);
 
   if (tv == ACE_Time_Value::zero)
     {
@@ -422,7 +422,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test_reactive (argv[0], server_addr);
 #endif  // ACE_HAS_WINCE
 
-      ACE_Reactor::instance ()->reset_event_loop ();
+      ACE_Reactor::instance ()->reset_reactor_event_loop ();
 
 #if !defined (ACE_WIN32) && defined (_ACE_USE_SV_SEM)
       ACE_ERROR ((LM_DEBUG,

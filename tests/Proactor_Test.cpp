@@ -1822,8 +1822,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #endif
 
 #if defined(__sgi) || defined (ACE_LINUX_COMMON_H)
-      ACE_DEBUG (( LM_DEBUG,
-                   "Weak AIO implementation, test will work with 3 clients"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Weak AIO implementation, test will work with 3 clients\n"));
       senders = 3;                    // number of senders
 #else
       senders = 10;                   // number of senders
