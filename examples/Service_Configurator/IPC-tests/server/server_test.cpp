@@ -9,10 +9,7 @@ ACE_RCSID(server, server_test, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  if (ACE_Service_Config::open (argc,
-                                argv,
-                                ACE_DEFAULT_LOGGER_KEY,
-                                0) == -1)
+  if (ACE_Service_Config::open (argc, argv, ACE_DEFAULT_LOGGER_KEY, 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "ACE_Service_Config::open"),
@@ -27,8 +24,7 @@ main (int argc, char *argv[])
 
   // Register ourselves to receive signals so we can shut down
   // gracefully.
-  if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                  &sa) == -1)
+  if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n"),
                       -1);

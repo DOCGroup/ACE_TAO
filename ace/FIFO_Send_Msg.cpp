@@ -26,9 +26,9 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
 {
   // ACE_TRACE ("ACE_FIFO_Send_Msg::send");
 #if defined (ACE_HAS_STREAM_PIPES)
-  return ACE_OS::putmsg (this->get_handle (),
-			 (strbuf *) 0,
-			 (strbuf *) &send_msg,
+  return ACE_OS::putmsg (this->get_handle (), 
+			 (strbuf *) 0, 
+			 (strbuf *) &send_msg, 
 			 0);
 #else
   iovec iov[2];
@@ -49,8 +49,8 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (void)
 }
 
 int
-ACE_FIFO_Send_Msg::open (const ASYS_TCHAR *fifo_name,
-			 int flags,
+ACE_FIFO_Send_Msg::open (const char *fifo_name, 
+			 int flags, 
 			 int perms,
                          LPSECURITY_ATTRIBUTES sa)
 {
@@ -58,8 +58,8 @@ ACE_FIFO_Send_Msg::open (const ASYS_TCHAR *fifo_name,
   return ACE_FIFO_Send::open (fifo_name, flags | O_WRONLY, perms, sa);
 }
 
-ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ASYS_TCHAR *fifo_name,
-				      int flags,
+ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const char *fifo_name, 
+				      int flags, 
 				      int perms,
                                       LPSECURITY_ATTRIBUTES sa)
 {

@@ -165,10 +165,10 @@
 # elif (ACE_SIZEOF_SHORT) == 4 && defined(_CRAYMPP)
   // mpp cray - uses Alpha processors
   //   Use the real 32-bit quantity for ACE_INT32's, and use a "long"
-  //   for ACE_INT16's.  This gets around conflicts with size_t in some ACE
+  //   for shorts.  This gets around conflicts with size_t in some ACE
   //   method signatures, among other things.
-  typedef long ACE_INT16;
-  typedef unsigned long ACE_UINT16;
+  typedef short ACE_INT16;
+  typedef unsigned short ACE_UINT16;
   typedef short ACE_INT32;
   typedef unsigned short ACE_UINT32;
 # elif (ACE_SIZEOF_SHORT) == 8 && defined(_UNICOS)
@@ -196,39 +196,10 @@ typedef ACE_UINT16 ACE_USHORT16;
       typedef int ACE_INT32;
       typedef unsigned int ACE_UINT32;
 #   endif
-  typedef unsigned long long ACE_UINT64;
+  typedef unsigned long ACE_UINT64;
 # else
 #   error Have to add to the ACE_UINT32 type setting
 # endif
-
-// The number of bytes in a void *.
-# ifndef ACE_SIZEOF_VOID_P
-#   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
-# endif /* ACE_SIZEOF_VOID_P */
-
-// Type for doing arithmetic on pointers ... as elsewhere, we assume
-// that unsigned versions of a type are the same size as the signed
-// version of the same type.
-#if ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
-  typedef u_int ptr_arith_t;
-#elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
-  typedef u_long ptr_arith_t;
-#elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-  typedef u_long long ptr_arith_t;
-#else
-# error "Can't find a suitable type for doing pointer arithmetic."
-#endif /* ACE_SIZEOF_VOID_P */
-
-#if defined (ACE_LACKS_LONGLONG_T)
-  // This throws away the high 32 bits.  It's very unlikely that a
-  // pointer will be more than 32 bits wide if the platform does not
-  // support 64-bit integers.
-# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  ACE_reinterpret_cast (PTR_TYPE, L.lo ())
-#else  /* ! ACE_LACKS_LONGLONG_T */
-# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  ACE_reinterpret_cast (PTR_TYPE, ACE_static_cast (ptr_arith_t, L))
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -255,22 +226,14 @@ typedef ACE_UINT16 ACE_USHORT16;
 
     // = Overloaded relation operators.
     int operator== (const ACE_U_LongLong &) const;
-    int operator== (const ACE_UINT32) const;
     int operator!= (const ACE_U_LongLong &) const;
-    int operator!= (const ACE_UINT32) const;
     int operator< (const ACE_U_LongLong &) const;
-    int operator< (const ACE_UINT32) const;
     int operator<= (const ACE_U_LongLong &) const;
-    int operator<= (const ACE_UINT32) const;
     int operator> (const ACE_U_LongLong &) const;
-    int operator> (const ACE_UINT32) const;
     int operator>= (const ACE_U_LongLong &) const;
-    int operator>= (const ACE_UINT32) const;
 
     ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
-    ACE_U_LongLong operator+ (const ACE_UINT32) const;
     ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-    ACE_U_LongLong operator- (const ACE_UINT32) const;
     ACE_U_LongLong operator* (const ACE_UINT32);
     ACE_U_LongLong &operator*= (const ACE_UINT32);
 
@@ -282,15 +245,11 @@ typedef ACE_UINT16 ACE_USHORT16;
     double operator/ (const double) const;
 
     ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator+= (const ACE_UINT32);
     ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator-= (const ACE_UINT32);
     ACE_U_LongLong &operator++ ();
     ACE_U_LongLong &operator-- ();
     ACE_U_LongLong &operator|= (const ACE_U_LongLong);
-    ACE_U_LongLong &operator|= (const ACE_UINT32);
     ACE_U_LongLong &operator&= (const ACE_U_LongLong);
-    ACE_U_LongLong &operator&= (const ACE_UINT32);
 
     // Note that the following take ACE_UINT32 arguments.  These are
     // typical use cases, and easy to implement.  But, they limit the
@@ -433,6 +392,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 # endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 
+
+// The number of bytes in a void *.
+# ifndef ACE_SIZEOF_VOID_P
+#   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
+# endif /* ACE_SIZEOF_VOID_P */
 
 // The number of bytes in a float.
 # ifndef ACE_SIZEOF_FLOAT

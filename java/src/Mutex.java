@@ -61,15 +61,13 @@ public class Mutex
     {
       this.monitor_.timedWait ();
       this.monitor_.inUse (true);
-      setOwner();
     }
 
   /**
-   * Acquire the mutex.
-   * Throws a TimeoutException if the mutex isn't acquired before the
-   * given absolute time timeout.
-   *@param tv time (TimeValue) to wait until before throwing a
-   * TimeoutException (unless the mutex is acquired before that)
+   * Acquire the mutex. Note that the call will return if <timeout>
+   * amount of time expires.
+   *@param tv amount of time (TimeValue) to wait before returning
+   * (unless operation completes before)
    *@exception TimeoutException wait timed out exception
    *@exception InterruptedException exception during wait
    */
@@ -78,32 +76,17 @@ public class Mutex
     {
       this.monitor_.timedWait (tv);
       this.monitor_.inUse (true);
-      setOwner();
     }
 
   /**
-   * Release the mutex.  This is safe for non-owners to call.
+   * Release the mutex.
    */
   public synchronized void release ()
     {
-      if (isOwner()) {
-	  this.monitor_.inUse (false);
-	  this.monitor_.signal ();
-      }
+      this.monitor_.inUse (false);
+      this.monitor_.signal ();
     }
 
   private TimedWaitMAdapter monitor_ = new TimedWaitMAdapter (this);
   // The monitor (adapter) to wait on
-
-  // Keep track of the owner.  Allow subclasses to redefine this
-  // behavior
-  private Object owner_ = null;
-    
-  protected void setOwner() {
-      this.owner_ = Thread.currentThread().toString();
-  }
-
-  protected boolean isOwner() {
-      return Thread.currentThread().toString().equals(this.owner_);
-  }
 }

@@ -5,26 +5,26 @@
 # TARGTYPE "Win32 (ALPHA) Static Library" 0x0604
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=gperf_lib - Win32 Debug
+CFG=gperf_lib - Win32 Alpha Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "gperf_lib.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "gperf_lib.mak" CFG="gperf_lib - Win32 Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "gperf_lib.mak" CFG="gperf_lib - Win32 Alpha Debug"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "gperf_lib - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "gperf_lib - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "gperf_lib - Win32 Alpha Debug" (based on\
  "Win32 (ALPHA) Static Library")
 !MESSAGE "gperf_lib - Win32 Alpha Release" (based on\
  "Win32 (ALPHA) Static Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP Scc_ProjName ""
@@ -130,7 +130,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\lib\gperf.lib"
 # ADD LIB32 /nologo /out:".\lib\gperf.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -187,9 +187,9 @@ DEP_CPP_BOOL_=\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Bool_Array.h"\
 	".\Options.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -242,9 +242,9 @@ DEP_CPP_GEN_P=\
 	".\List_Node.h"\
 	".\Options.h"\
 	".\Vectors.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -294,9 +294,9 @@ DEP_CPP_HASH_=\
 	".\Hash_Table.h"\
 	".\List_Node.h"\
 	".\Options.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -345,9 +345,9 @@ DEP_CPP_ITERA=\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Iterator.h"\
 	".\Options.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -434,9 +434,9 @@ DEP_CPP_KEY_L=\
 	".\List_Node.h"\
 	".\Options.h"\
 	".\Vectors.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -486,9 +486,9 @@ DEP_CPP_LIST_=\
 	".\List_Node.h"\
 	".\Options.h"\
 	".\Vectors.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -539,9 +539,9 @@ DEP_CPP_OPTIO=\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Iterator.h"\
 	".\Options.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -589,9 +589,9 @@ DEP_CPP_VECTO=\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
 	".\Vectors.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -638,9 +638,9 @@ DEP_CPP_VERSI=\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\Trace.h"\
 	"..\..\..\ace\ws2tcpip.h"\
+	
 
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

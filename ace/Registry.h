@@ -37,8 +37,8 @@ class ACE_Export ACE_Registry
   // = DESCRIPTION
   //     The registry interface is inspired by the interface
   //     specified in the CORBA Naming Service Specification.
-  //     The implementation is done through Win32 <Reg*> functions.
-  //     Other than providing an OO wrapper for the Win32 <Reg*>
+  //     The implementation is done through Win32 Reg*() functions.
+  //     Other than providing an OO wrapper for the Win32 Reg*()
   //     functions, ACE_Registry provides an abstraction for iteration
   //     over the elements of the Registry.
 public:
@@ -79,7 +79,7 @@ public:
 
   struct ACE_Export Binding
   {
-    Binding (void);
+    Binding ();
     // Empty (default) constructor
 
     Binding (const Name &binding_name,
@@ -184,7 +184,8 @@ public:
     // Constructor: key_ will be set to <key>
 
     ~Naming_Context (void);
-    // Destructor will call <Naming_Context::close>.
+    // Destructor will call this->close()
+
 
     // The following interfaces are for objects
 
@@ -305,7 +306,7 @@ public:
     // Remove naming_context with <name> from <this> context
 
     int destroy (void);
-    // Same as <unbind_context> with <this> as naming_context
+    // Same as unbind_context() with <this> as naming_context
 
     int list (u_long how_many,
               Binding_List &list,
@@ -328,7 +329,7 @@ public:
 
     int close (void);
     // Close the handle of the context
-    // Note: <close> does not call <flush>
+    // Note: close() does not call flush()
 
 
     // Accessors
@@ -392,7 +393,7 @@ public:
     friend class Naming_Context;
     // Friend factory
 
-    Binding_Iterator (void);
+    Binding_Iterator ();
     // Default constructor
 
     int next_one (Binding &binding);
@@ -433,7 +434,7 @@ public:
                             Binding_List &list) = 0;
         // Next <how_many> entries
 
-        void reset (void);
+        void reset ();
         // Reset state
 
       protected:

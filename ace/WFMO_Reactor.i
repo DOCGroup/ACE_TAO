@@ -431,23 +431,6 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   return result;
 }
 
-ACE_INLINE int
-ACE_WFMO_Reactor::reset_timer_interval
-  (long timer_id, 
-   const ACE_Time_Value &interval)
-{
-  ACE_TRACE ("ACE_WFMO_Reactor::reset_timer_interval");
-
-  long result = this->timer_queue_->reset_interval
-    (timer_id,
-     interval);
-
-  // Wakeup the owner thread so that it gets the latest timer values
-  this->notify ();
-
-  return result;
-}
-
 ACE_INLINE long
 ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
                                   const void *arg,
@@ -457,10 +440,7 @@ ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_WFMO_Reactor::schedule_timer");
 
   long result = this->timer_queue_->schedule
-    (handler, 
-     arg,
-     timer_queue_->gettimeofday () + delta_time,
-     interval);
+    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
 
   // Wakeup the owner thread so that it gets the latest timer values
   this->notify ();
@@ -841,19 +821,6 @@ ACE_WFMO_Reactor::alertable_handle_events (ACE_Time_Value *how_long)
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::deactivated (void)
-{
-  return this->deactivated_;
-}
-
-ACE_INLINE void
-ACE_WFMO_Reactor::deactivate (int do_stop)
-{
-  this->deactivated_ = do_stop;
-  this->wakeup_all_threads ();
-}
-
-ACE_INLINE int
 ACE_WFMO_Reactor::owner (ACE_thread_t *t)
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
@@ -1045,18 +1012,6 @@ ACE_WFMO_Reactor::requeue_position (void)
 {
   // Don't have an implementation for this yet...
   ACE_NOTSUP_RETURN (-1);
-}
-
-ACE_INLINE int
-ACE_WFMO_Reactor::restart (void)
-{
-  return 0;
-}
-
-ACE_INLINE int
-ACE_WFMO_Reactor::restart (int)
-{
-  return 0;
 }
 
 ACE_INLINE int

@@ -116,8 +116,7 @@ public:
   ACE_Select_Reactor_T (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
-                        ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1);
+                        ACE_Reactor_Notify *notify = 0);
   // Initialize <ACE_Select_Reactor> with the default size.
 
   ACE_Select_Reactor_T (size_t size,
@@ -125,8 +124,7 @@ public:
                         ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
-                        ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1);
+                        ACE_Reactor_Notify *notify = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int open (size_t max_number_of_handles = DEFAULT_SIZE,
@@ -195,32 +193,19 @@ public:
   // Current <alertable_handle_events> is identical to
   // <handle_events>.
 
-  // = Event handling control.
-
-  virtual int deactivated (void);
-  // Return the status of Reactor.  If this function returns 0, the reactor is
-  // actively handling events.  If it returns non-zero, <handling_events> and
-  // <handle_alertable_events> return -1 immediately.
-
-  virtual void deactivate (int do_stop);
-  // Control whether the Reactor will handle any more incoming events or not.
-  // If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
-  // is in active state and can be deactivated/reactived as wish.
-
   // = Register and remove <ACE_Event_Handler>s.
   virtual int register_handler (ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask);
   // Register a <eh> with a particular <mask>.  Note that the
-  // <Select_Reactor> will call <ACE_Event_Handler::get_handle> to
-  // extract the underlying I/O handle.
+  // <Select_Reactor> will call eh->get_handle() to extract the
+  // underlying I/O handle.
 
   virtual int register_handler (ACE_HANDLE handle,
                                 ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask);
   // Register a <eh> with a particular <mask>.  Note that since the
   // <handle> is given the Select_Reactor will *not* call
-  // <ACE_Event_Handler::get_handle> to extract the underlying I/O
-  // handle.
+  // eh->get_handle() to extract the underlying I/O handle.
 
 #if defined (ACE_WIN32)
 
@@ -268,8 +253,7 @@ public:
   // Removes the <mask> binding of <eh> from the Select_Reactor.  If
   // there are no more bindings for this <eh> then it is removed from
   // the Select_Reactor.  Note that the Select_Reactor will call
-  // <ACE_Event_Handler::get_handle> to extract the underlying I/O
-  // handle.
+  // eh->get_handle() to extract the underlying I/O handle.
 
   virtual int remove_handler (ACE_HANDLE handle,
                               ACE_Reactor_Mask);
@@ -333,30 +317,21 @@ public:
   // = Timer management.
   virtual long schedule_timer (ACE_Event_Handler *,
                                const void *arg,
-                               const ACE_Time_Value &delta,
+                               const ACE_Time_Value &delta_time,
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
-  // Schedule an <event_handler> that will expire after <delta> amount
-  // of time, which is specified as relative time to the current
-  // <gettimeofday>.  If it expires then <arg> is passed in as the
+  // Schedule an <event_handler> that will expire after <delta_time>
+  // amount of time.  If it expires then <arg> is passed in as the
   // value to the <event_handler>'s <handle_timeout> callback method.
   // If <interval> is != to <ACE_Time_Value::zero> then it is used to
-  // reschedule the <event_handler> automatically, which is also
-  // specified using relative time.  This method returns a <timer_id>
-  // that uniquely identifies the <event_handler> in an internal list.
-  // This <timer_id> can be used to cancel an <event_handler> before
-  // it expires.  The cancellation ensures that <timer_ids> are unique
-  // up to values of greater than 2 billion timers.  As long as timers
-  // don't stay around longer than this there should be no problems
-  // with accidentally deleting the wrong timer.  Returns -1 on
-  // failure (which is guaranteed never to be a valid <timer_id>.
-
-  virtual int reset_timer_interval (long timer_id, 
-                                    const ACE_Time_Value &interval);
-  // Resets the interval of the timer represented by <timer_id> to
-  // <interval>, which is specified in relative time to the current
-  // <gettimeofday>.  If <interval> is equal to
-  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
-  // timer.  Returns 0 if successful, -1 if not.
+  // reschedule the <event_handler> automatically.  This method
+  // returns a <timer_id> that uniquely identifies the <event_handler>
+  // in an internal list.  This <timer_id> can be used to cancel an
+  // <event_handler> before it expires.  The cancellation ensures that
+  // <timer_ids> are unique up to values of greater than 2 billion
+  // timers.  As long as timers don't stay around longer than this
+  // there should be no problems with accidentally deleting the wrong
+  // timer.  Returns -1 on failure (which is guaranteed never to be a
+  // valid <timer_id>.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);
@@ -401,7 +376,7 @@ public:
                       ACE_Time_Value * = 0);
   // Called by a thread when it wants to unblock the Select_Reactor.
   // This wakeups the <ACE_Select_Reactor> if currently blocked in
-  // <select>/<poll>.  Pass over both the <Event_Handler> *and* the
+  // select()/poll().  Pass over both the <Event_Handler> *and* the
   // <mask> to allow the caller to dictate which <Event_Handler>
   // method the <Select_Reactor> will invoke.  The <ACE_Time_Value>
   // indicates how long to blocking trying to notify the
@@ -425,19 +400,13 @@ public:
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify pipe before breaking out of its <recv> loop.
 
-  virtual int restart (void);
-  // Get the existing restart value.
-  
-  virtual int restart (int r);
-  // Set a new value for restart and return the original value.
-
   virtual void requeue_position (int);
   // Set position that the main ACE_Select_Reactor thread is requeued in the
-  // list of waiters during a <notify> callback.
+  // list of waiters during a notify() callback.
 
   virtual int requeue_position (void);
   // Get position that the main ACE_Select_Reactor thread is requeued in the
-  // list of waiters during a <notify> callback.
+  // list of waiters during a notify() callback.
 
   // = Low-level wait_set mask manipulation methods.
   virtual int mask_ops (ACE_Event_Handler *eh,
@@ -553,10 +522,6 @@ protected:
   // if so, update the <handle_set> and return the number ready.  If
   // there aren't any HANDLEs enabled return 0.
 
-  virtual int any_ready_i (ACE_Select_Reactor_Handle_Set &handle_set);
-  // Implement the <any_ready> method, assuming that the Sig_Guard is
-  // beign held
-
   virtual int handle_error (void);
   // Take corrective action when errors occur.
 
@@ -635,15 +600,6 @@ protected:
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);
   // Stops the VC++ compiler from bitching about exceptions and destructors
 
-  sig_atomic_t deactivated_;
-  // This flag is used to keep track of whether we are actively handling
-  // events or not.
-
-  int mask_signals_;
-  // If 0 then the Reactor will not mask the signals during the event
-  // dispatching.  This is useful for applications that do not
-  // register any signal handlers and want to reduce the overhead
-  // introduce by the kernel level locks required to change the mask.
 
 private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))

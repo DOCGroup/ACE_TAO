@@ -72,10 +72,8 @@ public:
 		      ACE_QoS_Params qos_params,
                       ACE_Time_Value *timeout = 0,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-                      ACE_Protocol_Info *protocolinfo = 0,
-                      ACE_SOCK_GROUP g = 0,
-                      u_long flags = 0,
                       int reuse_addr = 0,
+                      int flags = 0,
                       int perms = 0,
                       int protocol_family = PF_INET,
                       int protocol = 0);
@@ -123,10 +121,8 @@ public:
 	       ACE_QoS_Params qos_params,
 	       ACE_Time_Value *timeout = 0,
 	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-               ACE_Protocol_Info *protocolinfo = 0,
-               ACE_SOCK_GROUP g = 0,
-               u_long flags = 0,
 	       int reuse_addr = 0,
+	       int flags = 0,
 	       int perms = 0,
 	       int protocol_family = PF_INET,
 	       int protocol = 0);
@@ -172,26 +168,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  int shared_open (ACE_SOCK_Stream &new_stream,
-                   int protocol_family, 
-                   int protocol,
-                   int reuse_addr);
-  // Perform operations that ensure the socket is opened using
-  // BSD-style semantics (no QoS).
-
-  int shared_open (ACE_SOCK_Stream &new_stream,
-                   int protocol_family,
-                   int protocol,
-                   ACE_Protocol_Info *protocolinfo,
-                   ACE_SOCK_GROUP g,
-                   u_long flags,
-                   int reuse_addr);
-  // Perform operations that ensure the socket is opened using
-  // QoS-enabled semantics.
-
   int shared_connect_start (ACE_SOCK_Stream &new_stream,
 			    ACE_Time_Value *timeout,
-			    const ACE_Addr &local_sap);
+			    const ACE_Addr &local_sap,
+			    int reuse_addr,
+			    int protocol_family, 
+			    int protocol);
   // Perform operations that must be called before <ACE_OS::connect>.
 
   int shared_connect_finish (ACE_SOCK_Stream &new_stream,

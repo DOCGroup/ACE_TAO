@@ -15,8 +15,7 @@
 //      cancellation mechanisms.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
+//    Prashant Jain and Douglas C. Schmidt
 //
 // ============================================================================
 
@@ -236,8 +235,8 @@ main (int, ASYS_TCHAR *[])
       // so it's allowed to ENOTSUP; anything else is a hard fail.
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG((LM_DEBUG,
-                 ASYS_TEXT (" OK: suspend_grp isn't supported with ")
-                 ASYS_TEXT ("Pthreads\n")));
+                 ASYS_TEXT (" OK: suspend_grp isn't supported with "
+                            "Pthreads\n")));
     }
 
   // Wait for 1 more second and then resume every thread in the
@@ -251,8 +250,8 @@ main (int, ASYS_TCHAR *[])
     {
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" OK: resume_grp isn't supported with ")
-                  ASYS_TEXT ("Pthreads\n")));
+              ASYS_TEXT (" OK: resume_grp isn't supported with "
+                         "Pthreads\n")));
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
@@ -294,7 +293,7 @@ main (int, ASYS_TCHAR *[])
                                max_wait.msec ()));
       else
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"), ASYS_TEXT ("wait")));
+                    "%p\n", "wait"));
       status = -1;
     }
 

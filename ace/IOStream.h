@@ -212,7 +212,7 @@ protected:
   // overflow.
 
   void reset_base (void);
-  // Resets the <base> pointer and streambuf mode.  This is used
+  // Resets the base() pointer and streambuf mode.  This is used
   // internally when get/put buffers are allocatd.
 
 protected:
@@ -249,11 +249,11 @@ protected:
 
   int syncin (void);
   // syncin is called when the input needs to be synced with the
-  // source file.  In a filebuf, this results in the <seek> system
+  // source file.  In a filebuf, this results in the seek() system
   // call being used.  We can't do that on socket-like connections, so
   // this does basically nothing.  That's safe because we have a
   // separate read buffer to maintain the already-read data.  In a
-  // filebuf, the single common buffer is used forcing the <seek>
+  // filebuf, the single common buffer is used forcing the seek()
   // call.
 
   int syncout (void);
@@ -304,7 +304,7 @@ protected:
     }
   char *ebuf (void) const
     {
-      return cur_mode_ == 0 ? 0 : base () + streambuf_size_;
+      return cur_mode_ == 0 ? 0 : base() + streambuf_size_;
     }
 
   int blen (void) const
@@ -341,7 +341,7 @@ typedef ostream& (*__omanip_)(ostream&);
 
 // This macro defines the get operator for class MT into datatype DT.
 // We will use it below to quickly override most (all?)  iostream get
-// operators.  Notice how the <ipfx> and <isfx> functions are used.
+// operators.  Notice how the ipfx() and isfx() functions are used.
 
 #define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
 #if defined (__KCC)
@@ -368,7 +368,7 @@ typedef ostream& (*__omanip_)(ostream&);
 
 // This macro defines the put operator for class MT into datatype DT.
 // We will use it below to quickly override most (all?)  iostream put
-// operators.  Notice how the <opfx> and <osfx> functions are used.
+// operators.  Notice how the opfx() and osfx() functions are used.
 
 #define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
 #if defined (__KCC)
@@ -480,8 +480,8 @@ typedef ostream& (*__omanip_)(ostream&);
           PUT_FUNC_SET0(MT,CODE,CODE2)
 #endif /* ACE_LACKS_SIGNED_CHAR */
 
-#define GET_MANIP_CODE  { if (ipfx ()) { (*func) (*this); } isfx (); return *this; }
-#define PUT_MANIP_CODE  { if (opfx ()) { (*func) (*this); } osfx (); return *this; }
+#define GET_MANIP_CODE  { if( ipfx() ) { (*func)(*this); } isfx(); return *this; }
+#define PUT_MANIP_CODE  { if( opfx() ) { (*func)(*this); } osfx(); return *this; }
 
 #define GET_FUNC_SET(MT)        GET_FUNC_SET1(MT,GET_CODE,GET_MANIP_CODE)
 #define PUT_FUNC_SET(MT)        PUT_FUNC_SET1(MT,PUT_CODE,PUT_MANIP_CODE)

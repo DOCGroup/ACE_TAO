@@ -16,8 +16,7 @@ ACE_Registry_Name_Space::ACE_Registry_Name_Space (void)
 ACE_Registry_Name_Space::ACE_Registry_Name_Space (ACE_Name_Options *name_options)
 {
   if (this->open (name_options) != 0)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Registry_Name_Space::open")));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Registry_Name_Space::open")));
 }
 
 
@@ -26,19 +25,17 @@ ACE_Registry_Name_Space::~ACE_Registry_Name_Space (void)
 }
 
 
-int
+int 
 ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 {
-  const ASYS_TCHAR *host = name_options->nameserver_host ();
+  const char *host = name_options->nameserver_host ();
   ACE_Registry::Naming_Context predefined;
-
+  
   int result = ACE_Predefined_Naming_Contexts::connect (predefined,
 							HKEY_LOCAL_MACHINE,
-							ASYS_ONLY_WIDE_STRING (host));
+							ACE_WIDE_STRING (host));
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE_Predefined_Naming_Context::connect")),
-                      result);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Predefined_Naming_Context::connect")), result);
   else
     {
       // Directory
@@ -58,68 +55,68 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 }
 
 
-int
-ACE_Registry_Name_Space::bind (const ACE_WString &name,
-			       const ACE_WString &value,
+int 
+ACE_Registry_Name_Space::bind (const ACE_WString &name, 
+			       const ACE_WString &value, 
 			       const char *type)
 {
   // Pointer to data
   const ACE_USHORT16 *data = value.fast_rep ();
-
+  
   // Size
   u_long size = value.length () * sizeof (ACE_USHORT16);
-
+  
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
 			       size,
 			       REG_SZ);
   // Add new <key>/<value> pair
-  return this->context_.bind (name.fast_rep(),
+  return this->context_.bind (name.fast_rep(), 
 			      object);
 }
 
 
-int
-ACE_Registry_Name_Space::rebind (const ACE_WString &name,
-				 const ACE_WString &value,
+int 
+ACE_Registry_Name_Space::rebind (const ACE_WString &name, 
+				 const ACE_WString &value, 
 				 const char *type)
 {
   // Pointer to data
   const ACE_USHORT16 *data = value.fast_rep ();
-
+  
   // Size
   u_long size = value.length () * sizeof (ACE_USHORT16);
-
+  
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
 			       size,
 			       REG_SZ);
   // Add new <key>/<value> pair
-  return this->context_.rebind (name.fast_rep (),
+  return this->context_.rebind (name.fast_rep (), 
 				object);
 }
 
 
-int
+int 
 ACE_Registry_Name_Space::unbind (const ACE_WString &name)
 {
   return this->context_.unbind (name.fast_rep ());
 }
 
 
-int
-ACE_Registry_Name_Space::resolve (const ACE_WString &name,
-				  ACE_WString &value,
+int 
+ACE_Registry_Name_Space::resolve (const ACE_WString &name, 
+				  ACE_WString &value, 
 				  char *&type)
 {
-  // This object will be used to query the size of the data.
+  // This object will be used to query the size of the data. 
   // Note: The query_object.data will be null for this invocation.
   ACE_Registry::Object query_object;
   int result = this->context_.resolve (name.fast_rep (), query_object);
   if (result != 0)
     return result;
 
-  // Resize the value passed by the user
+  // Resize the value passed by the user 
   // Note: -1 is used because the size includes the null terminator
   value.resize ((query_object.size () - 1) / sizeof (ACE_USHORT16));
 
@@ -137,9 +134,9 @@ ACE_Registry_Name_Space::resolve (const ACE_WString &name,
   return 0;
 }
 
-
-int
-ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
+  
+int 
+ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set, 
 				      const ACE_WString &pattern)
 {
   ACE_BINDING_SET binding_set;
@@ -147,7 +144,7 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
 					pattern);
   if (result != 0)
     return result;
-
+  
   ACE_BINDING_ITERATOR iterator (binding_set);
 
   for (ACE_Name_Binding *entry = 0;
@@ -160,8 +157,8 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
 }
 
 
-int
-ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
+int 
+ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set, 
 				      const ACE_WString &pattern)
 {
   ACE_BINDING_SET binding_set;
@@ -169,7 +166,7 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
 					pattern);
   if (result != 0)
     return result;
-
+  
   ACE_BINDING_ITERATOR iterator (binding_set);
 
   for (ACE_Name_Binding *entry = 0;
@@ -182,16 +179,16 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
 }
 
 
-int
-ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
+int 
+ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set, 
 				     const ACE_WString &pattern)
 {
   return 0;
 }
 
 
-int
-ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
+int 
+ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set, 
 					    const ACE_WString &pattern)
 {
   ACE_Registry::Binding_List list;
@@ -206,22 +203,22 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
     {
       // Yeeesss! STL rules!
       ACE_Registry::Binding &binding = *i;
-
+      
       if (binding.type () == ACE_Registry::OBJECT)
-	{
+	{	  
 	  // Key
 	  ACE_Registry::Istring string = binding.name ();
 	  ACE_WString key (string.c_str ());
-
+	  
 	  // Value
 	  ACE_WString value;
 	  char *type = 0;
 	  result = this->resolve (key,
 				  value,
-				  type);
+				  type);	  
 	  if (result != 0)
 	    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Registry::Naming_Context::resolve")), result);
-
+	  
 	  // Complete binding
 	  ACE_Name_Binding binding (key, value, type);
 	  set.insert (binding);
@@ -231,23 +228,23 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 }
 
 
-int
-ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set,
+int 
+ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set, 
 					     const ACE_WString &pattern)
 {
   return this->list_name_entries (set, pattern);
 }
 
 
-int
-ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set,
+int 
+ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set, 
 					    const ACE_WString &pattern)
 {
   return this->list_name_entries (set, pattern);
 }
 
 
-void
+void 
 ACE_Registry_Name_Space::dump (void) const
 {
 }

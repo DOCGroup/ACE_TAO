@@ -3,14 +3,12 @@
 #define ACE_BUILD_DLL
 #include "ace/Malloc.h"
 #if !defined (ACE_HAS_WINCE)
-# include "ace/Service_Config.h"
+#  include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SString.i"
@@ -648,9 +646,7 @@ ACE_WString::char_rep (void) const
     {
       char *t;
 
-      ACE_NEW_RETURN (t,
-                      char[this->len_ + 1],
-                      0);
+      ACE_NEW_RETURN (t, char[this->len_ + 1], 0);
 
       for (size_t i = 0; i < this->len_; i++)
         // Note that this cast may lose data if wide chars are

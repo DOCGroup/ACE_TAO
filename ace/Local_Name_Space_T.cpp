@@ -311,9 +311,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
       // Makes a copy here. Caller needs to call delete to free up
       // memory.
       char *new_type;
-      ACE_NEW_RETURN (new_type,
-                      char [len + 1],
-                      -1);
+      ACE_NEW_RETURN (new_type, char [len + 1], -1);
 
       ACE_OS::strncpy (new_type, temp, len);
       new_type[len] = '\0';  // Null terminate the string
@@ -439,19 +437,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                              &options), -1);
 
   if (ACE_LOG_MSG->op_status ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Allocator::Allocator\n")),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Allocator::Allocator\n"), -1);
 
-  ACE_NEW_RETURN (this->lock_,
-                  ACE_LOCK (lock_name_for_local_name_space),
-                  -1);
+  ACE_NEW_RETURN (this->lock_, ACE_LOCK (lock_name_for_local_name_space), -1);
 
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("create_manager\n")),
+                       "create_manager\n"),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -493,8 +487,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                           -1);
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("create_manager\n")), -1);
+            ACE_ERROR_RETURN ((LM_ERROR, "create_manager\n"), -1);
         }
 
       if (ACE::debug ())

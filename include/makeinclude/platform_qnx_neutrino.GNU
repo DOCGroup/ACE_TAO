@@ -7,21 +7,17 @@
 #       way to do that is to set "optimize = 0", either below or on
 #       your make command line.
 
-CROSS-COMPILE = 1
-
 ifeq (,$(debug))
   debug = 1
-endif # ! debug
+endif
 ifeq (,$(optimize))
   optimize = 0
-endif # ! optimize
+endif
 
 static_libs_only = 1
 
-ACE_HAS_GNUG_PRE_2_8 := 0
-
-CC      = i386-nto-gcc
-CXX     = i386-nto-g++
+CC      = /usr/gcc/bin/i386-nto-gcc
+CXX     = /usr/gcc/bin/i386-nto-g++
 CFLAGS  += -pipe -W -Wall -Wpointer-arith -Winline
 CCFLAGS += $(CFLAGS) -fno-implicit-templates
 DCFLAGS += -g
@@ -31,9 +27,9 @@ LDFLAGS +=
 LIBS    += -lsocket -lstdc++
 OCFLAGS += -O2
 PIC     = -fPIC
-AR      = i386-nto-ar
+AR      = /usr/gcc/bin/ar
 ARFLAGS = ruv
-RANLIB  = i386-nto-ranlib
+RANLIB  = /usr/gcc/bin/ranlib
 SOFLAGS = -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true

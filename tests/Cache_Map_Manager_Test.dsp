@@ -70,8 +70,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I"..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I"..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -94,7 +94,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir ".\ETS_LIB\Debug"
+# PROP Intermediate_Dir "./ETS_DLL/Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
@@ -131,7 +131,7 @@ SOURCE=.\Cache_Map_Manager_Test.cpp
 
 !ELSEIF  "$(CFG)" == "Cache_Map_Manager_Test - Win32 Alpha Debug"
 
-DEP_CPP_CACHE=\
+DEP_CPP_ATOMI=\
 	"..\ace\ACE.h"\
 	"..\ace\ACE.i"\
 	"..\ace\Atomic_Op.i"\
@@ -172,7 +172,7 @@ DEP_CPP_CACHE=\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
 	
-NODEP_CPP_CACHE=\
+NODEP_CPP_ATOMI=\
 	"..\ace\stdcpp.h"\
 	
 

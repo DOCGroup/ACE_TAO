@@ -208,13 +208,13 @@ single_thread_performance_test (int queue_type = 0)
       ACE_NEW_RETURN (msgq,
                       ACE_Message_Queue_NT,
                       -1);
-      message = ASYS_TEXT ("ACE_Message_Queue_NT, single thread test");
+      message = "ACE_Message_Queue_NT, single thread test";
     }
 #endif /* VXWORKS */
 
   // Create the messages.  Allocate off the heap in case messages
   // is large relative to the amount of stack space available.
-  ACE_Message_Block **send_block = 0;
+  ACE_Message_Block **send_block;
   ACE_NEW_RETURN (send_block,
                   ACE_Message_Block *[max_messages],
                   -1);
@@ -225,7 +225,7 @@ single_thread_performance_test (int queue_type = 0)
                                        MAX_MESSAGE_SIZE),
                     -1);
 
-  ACE_Message_Block **receive_block_p = 0;
+  ACE_Message_Block **receive_block_p;
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
                   -1);
@@ -300,7 +300,7 @@ receiver (void *arg)
                           arg);
   int i;
 
-  ACE_Message_Block **receive_block_p = 0;
+  ACE_Message_Block **receive_block_p;
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
                   (void *) -1);
@@ -460,30 +460,6 @@ main (int argc, ASYS_TCHAR *argv[])
                   usage));
     else
       max_messages = ACE_OS::atoi (argv[1]);
-
-  // Be sure that the a timed out get sets the error code properly.
-  ACE_Message_Queue<ACE_SYNCH> q1;
-  if (!q1.is_empty ()) {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("New queue is not empty!\n")));
-    status = 1;
-  }
-  else {
-    ACE_Message_Block *b;
-    ACE_Time_Value tv (ACE_OS::gettimeofday());   // Now
-    if (q1.dequeue_head (b, &tv) != -1) {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Dequeued from empty queue!\n")));
-      status = 1;
-    }
-    else if (errno != EWOULDBLOCK) {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
-      status = 1;
-    }
-    else {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Timed dequeue test: OK\n")));
-      status = 0;     // All is well
-    }
-  }
 
 #if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on

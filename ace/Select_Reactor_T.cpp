@@ -38,22 +38,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
 {
   ACE_TRACE ("ACE_Select_Reactor_T::any_ready");
 
-  if (this->mask_signals_)
-    {
 #if !defined (ACE_WIN32)
-      // Make this call signal safe.
-      ACE_Sig_Guard sb;
+  // Make this call signal safe.
+  ACE_Sig_Guard sb;
 #endif /* ACE_WIN32 */
 
-      return this->any_ready_i (wait_set);
-    }
-  return this->any_ready_i (wait_set);
-}
-
-  template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
-  (ACE_Select_Reactor_Handle_Set &wait_set)
-{
   int number_ready = this->ready_set_.rd_mask_.num_set ()
     + this->ready_set_.wr_mask_.num_set ()
     + this->ready_set_.ex_mask_.num_set ();
@@ -116,22 +105,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::owner (ACE_thread_t *t_id)
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
   *t_id = this->owner_;
   return 0;
-}
-
-template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::restart (void)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
-  return this->restart_;
-}
-
-template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::restart (int r)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
-  int current_value = this->restart_;
-  this->restart_ = r;
-  return current_value;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> void
@@ -501,12 +474,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
   (ACE_Sig_Handler *sh,
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
-   ACE_Reactor_Notify *notify,
-   int mask_signals)
+   ACE_Reactor_Notify *notify)
     : token_ (*this),
-      lock_adapter_ (token_),
-      deactivated_ (0),
-      mask_signals_ (mask_signals)
+      lock_adapter_ (token_)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -531,12 +501,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Sig_Handler *sh,
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
-   ACE_Reactor_Notify *notify,
-   int mask_signals)
+   ACE_Reactor_Notify *notify)
     : token_ (*this),
-      lock_adapter_ (token_),
-      deactivated_ (0),
-      mask_signals_ (mask_signals)
+      lock_adapter_ (token_)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -684,6 +651,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   return result;
 }
 
+// Note the queue handles its own locking.
+
 template <class ACE_SELECT_REACTOR_TOKEN> long
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
@@ -695,23 +664,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   return this->timer_queue_->schedule
-    (handler,
-     arg,
-     timer_queue_->gettimeofday () + delta_time,
-     interval);
-}
-
-template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
-  (long timer_id, 
-   const ACE_Time_Value &interval)
-{
-  ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
-
-  return this->timer_queue_->reset_interval
-    (timer_id,
-     interval);
+    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
 }
 
 // Main event loop driver that blocks for <max_wait_time> before
@@ -995,17 +948,22 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
    int &number_of_active_handles,
    int &number_of_handlers_dispatched)
 {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Check to see if the ACE_HANDLE associated with the
   // Select_Reactor's notify hook is enabled.  If so, it means that
   // one or more other threads are trying to update the
-  // ACE_Select_Reactor_T's internal tables or the notify pipe is
-  // enabled.  We'll handle all these threads and notifications, and
-  // then break out to continue the event loop.
+  // ACE_Select_Reactor_T's internal tables.  We'll handle all these
+  // threads and then break out to continue the event loop.
 
   number_of_handlers_dispatched +=
     this->notify_handler_->dispatch_notifications (number_of_active_handles,
                                                    dispatch_set.rd_mask_);
   return this->state_changed_ ? -1 : 0;
+#else
+  ACE_UNUSED_ARG (number_of_active_handles);
+  ACE_UNUSED_ARG (dispatch_set);
+  return 0;
+#endif /* ACE_MT_SAFE */
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -1208,14 +1166,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
 
   if (ACE_OS::thr_equal (ACE_Thread::self (),
-                         this->owner_) == 0 || this->deactivated_)
+                         this->owner_) == 0)
     return -1;
 
   // Update the countdown to reflect time waiting for the mutex.
   countdown.update ();
-#else
-  if (this->deactivated_)
-    return -1;
 #endif /* ACE_MT_SAFE */
 
   return this->handle_events_i (max_wait_time);

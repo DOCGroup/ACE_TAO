@@ -11,24 +11,16 @@
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
-#### 3) If you're building on a WIN32 host, be sure that $(CC) is on
-####    your PATH (or is a full pathname).
 
 VXWORKS = 1
 CROSS-COMPILE = 1
 
-ifndef debug
-  debug = 1
-endif # ! debug
-ifndef optimize
-  optimize = 1
-endif # ! optimize
-ifndef rtti
-  rtti =
-endif # ! rtti
-
+debug = 1
+optimize = 1
+rtti =
 shared_libs =
 static_libs = 1
+
 
 ifeq (,$(WIND_BASE))
   default:
@@ -47,12 +39,18 @@ ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
   PATH := $(PATH):$(HOST_DIR)/bin
 endif # PATH
 
-ifeq (,$(PERL_PATH))
-  PERL_PATH = perl
-endif # ! PERL_PATH
+PERL_PATH = perl
+
+ifeq (win32,$(findstring win32,$(WIND_HOST_TYPE)))
+  #### GNU make on WIN32 needs quoted double quotes.
+  ACE_QUOTE ='"'
+else  # ! win32 host
+  ACE_QUOTE ="
+endif # ! win32 host
 
 
 #### BEGIN target CPU-specific settings
+
 
 #### This is kind of messy so that it can support multiple targets.
 #### You'll need to set CPU to a supported CPU using one of these
@@ -86,15 +84,6 @@ ifeq ($(CPU),PPC860)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
-ifeq ($(CPU),SIMNT)
-  BINXSYM_NAME = xsym
-  CFLAGS += -U__WINNT -UWIN32 -U__WINNT__ -UWINNT -U__MINGW32__ -U_WIN32 \
-            -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR =
-    $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
-  TOOLENV = simpc
-else
 ifeq ($(CPU),I80486)
   #### Note: -fno-implicit-templates doesn't seem to work well with g++
   #### cygnus-2.7.2-960126 for pc486 target.  Some member functions don't
@@ -112,9 +101,9 @@ else
   CCFLAGS += -fno-implicit-templates
 endif # I80386
 endif # I80486
-endif # SIMNT
 endif # PPC860
 endif # PPC604
+
 
 #### END target CPU-specific settings
 
@@ -160,40 +149,14 @@ endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
-LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
-                  -C $(COMPILE.c) -traditional -- \
-                  -m munch -n nm$(TOOLENV) ld$(TOOLENV)
+LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
+                  $(ACE_QUOTE)$(COMPILE.c) -traditional$(ACE_QUOTE) \
+                  -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
 #### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
-
-
-#### Tornado II uses egcs
-ifndef ACE_CC
-  ifdef COMSPEC
-    #### Assume we're on a WIN32 host.  Further, assume that $(CC)
-    #### is on the user's PATH.
-    ACE_CC := $(CC)
-  else  # ! COMSPEC
-    #### Don't use this on WIN32 host, because the shell there seems
-    #### to have trouble exec'ing sed.
-    ACE_CC := $(shell PATH=${PATH} type $(CC) | sed -e 's/.* is //')
-  endif # ! COMSPEC
-endif # ! ACE_CC
-ifndef ACE_CC_VERSION
-  ACE_CC_VERSION := $(shell $(ACE_CC) --version)
-endif # ! ACE_CC_VERSION
-ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
-  ACE_HAS_GNUG_PRE_2_8 := 0
-  CFLAGS += -DACE_VXWORKS=0x540
-  ifneq (1,$(exceptions))
-    #### With exceptions, this is applied in wrapper_macros.GNU.
-    #### Without, we do it here.
-    CFLAGS += -Wno-uninitialized
-  endif # ! exceptions
-endif # egcs
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
@@ -207,10 +170,3 @@ LINK.cc.override = $(LD)
 #### To extract the symbol table from each executable, uncomment the POSTLINK
 #### definition below.
 ## POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) $(BINXSYM_NAME) < $@ > $@.sym
-
-ifeq (1,$(exceptions))
-  #### The VxWorks libraries don't support exceptions.  And, exceptions
-  #### give the (Tornado II) compiler fits, e.g., with
-  #### ACE_wrappers/TAO/tao/IORManipulation.cpp.
-  CONFIGURATION_ERROR: exception_handling_is_not_supported_on_VxWorks!
-endif # exceptions

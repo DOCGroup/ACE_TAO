@@ -12,7 +12,7 @@
 
 ## The number in AUTOMAKE_OPTIONS is the minimum required version automake
 ## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4 #check-news
+AUTOMAKE_OPTIONS = 1.4 check-news
 
 bin_SCRIPTS = ace-config
 
@@ -102,7 +102,7 @@ noinst_DATA = ACE.ifnames
 
 ACE.ifnames: ChangeLog acconfig.h
 if MAINTAINER_MODE
-	rm -f $@
+        rm -f $@
 	ifnames $(top_srcdir)/ace/*.{h,i,cpp} | sed -e 's/ .*//g' \
            > $(top_srcdir)/$@
 else

@@ -479,11 +479,11 @@ public:
 
   int get (T *&item, size_t slot = 0) const;
   // Get the <slot>th element in the set.  Returns -1 if the element
-  // isn't in the range {0..<size> - 1}, else 0.
+  // isn't in the range <0..size() - 1>, else 0.
 
   int set (const T &item, size_t slot);
   // Set the <slot>th element in the set.  Will pad out the set with
-  // empty nodes if <slot> is beyond the range {0..<size> - 1}.
+  // empty nodes if <slot> is beyond the range <0..size() - 1>.
   // Returns -1 on failure, 0 if <slot> isn't initially in range, and
   // 0 otherwise.
 
@@ -620,15 +620,6 @@ public:
   // = Initialization method.
   ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &);
 
-  void reset (ACE_Double_Linked_List<T> &);
-  // Retasks the iterator to iterate over a new
-  // Double_Linked_List. This allows clients to reuse an iterator
-  // without incurring the constructor overhead. If you do use this,
-  // be aware that if there are more than one reference to this
-  // iterator, the other "clients" may be very bothered when their
-  // iterator changes.
-  // @@ Here be dragons. Comments?
-
   int first (void);
   // Move to the first element in the list.  Returns 0 if the
   // list is empty, else 1.
@@ -638,10 +629,10 @@ public:
   // items in the list have been seen, else 1.
 
   T* advance_and_remove (int dont_remove);
-  // Advance the iterator while removing the original item from the
-  // list.  Return a pointer points to the original (removed) item.
-  // If <dont_remove> equals 0, this function behaves like <advance>
-  // but return 0 (NULL) instead.
+  // Advance the iterator while removing the original item from the list.
+  // Return a pointer points to the original (removed) item.  If
+  // <dont_remove> equals 0, this function behaves like advance() but
+  // return 0 (NULL) instead.
 
   // = STL-style iteration methods 
 
@@ -683,15 +674,6 @@ public:
   // = Initialization method.
   ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &);
 
-  void reset (ACE_Double_Linked_List<T> &);
-  // Retasks the iterator to iterate over a new
-  // Double_Linked_List. This allows clients to reuse an iterator
-  // without incurring the constructor overhead. If you do use this,
-  // be aware that if there are more than one reference to this
-  // iterator, the other "clients" may be very bothered when their
-  // iterator changes.
-  // @@ Here be dragons. Comments?
-
   int first (void);
   // Move to the first element in the list.  Returns 0 if the
   // list is empty, else 1.
@@ -701,10 +683,10 @@ public:
   // items in the list have been seen, else 1.
   
   T* advance_and_remove (int dont_remove);
-  // Advance the iterator while removing the original item from the
-  // list.  Return a pointer points to the original (removed) item.
-  // If <dont_remove> equals 0, this function behaves like <advance>
-  // but return 0 (NULL) instead.
+  // Advance the iterator while removing the original item from the list.
+  // Return a pointer points to the original (removed) item.  If
+  // <dont_remove> equals 0, this function behaves like advance() but
+  // return 0 (NULL) instead.
 
   // = STL-style iteration methods 
 
@@ -798,7 +780,7 @@ public:
 
   int get (T *&item, size_t slot = 0);
   // Get the <slot>th element in the set.  Returns -1 if the element
-  // isn't in the range {0..<size> - 1}, else 0.
+  // isn't in the range <0..size() - 1>, else 0.
 
   size_t size (void) const;
   // The number of items in the queue.
@@ -882,7 +864,6 @@ class ACE_DLList : public ACE_DLList_Base
   friend class ACE_DLList_Reverse_Iterator<T>;
 
 public:
-
   void operator= (ACE_DLList<T> &l);
   // Delegates to ACE_Double_Linked_List.
 
@@ -945,15 +926,6 @@ public:
   // = Initialization method.
   ACE_DLList_Iterator (ACE_DLList<T> &l);
 
-  void reset (ACE_DLList<T> &l);
-  // Retasks the iterator to iterate over a new
-  // Double_Linked_List. This allows clients to reuse an iterator
-  // without incurring the constructor overhead. If you do use this,
-  // be aware that if there are more than one reference to this
-  // iterator, the other "clients" may be very bothered when their
-  // iterator changes.
-  // @@ Here be dragons. Comments?
-
   // = Iteration methods.
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
@@ -970,13 +942,13 @@ public:
   // DEPRECATED
 
   int remove (void);
-  // Removes the current item (i.e., <next>) from the list.
+  // Removes the current item (i.e., this->next()) from the list.
   
   void dump (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
 
 private:
-  ACE_DLList<T> *list_;
+  ACE_DLList<T> &list_;
 };
 
 template <class T>
@@ -998,15 +970,6 @@ public:
   // = Initialization method.
   ACE_DLList_Reverse_Iterator (ACE_DLList<T> &l);
 
-  void reset (ACE_DLList<T> &l);
-  // Retasks the iterator to iterate over a new
-  // Double_Linked_List. This allows clients to reuse an iterator
-  // without incurring the constructor overhead. If you do use this,
-  // be aware that if there are more than one reference to this
-  // iterator, the other "clients" may be very bothered when their
-  // iterator changes.
-  // @@ Here be dragons. Comments?
-
   // = Iteration methods.
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
@@ -1021,13 +984,13 @@ public:
   // DEPRECATED 
 
   int remove (void);
-  // Removes the current item (i.e., <next>) from the list.
+  // Removes the current item (i.e., this->next()) from the list.
 
   void dump (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
 
 private:
-  ACE_DLList<T> *list_;
+  ACE_DLList<T> &list_;
 };
 
 template <class T>
@@ -1765,7 +1728,7 @@ public:
 
   int operator== (const ACE_Array<T> &s) const;
   // Compare this array with <s> for equality.  Two arrays are equal
-  // if their <size>'s are equal and all the elements from 0 .. <size>
+  // if their size()'s are equal and all the elements from 0 .. size()
   // are equal.
 
   int operator!= (const ACE_Array<T> &s) const;

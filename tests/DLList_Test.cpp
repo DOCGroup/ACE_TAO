@@ -26,25 +26,22 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+static LPCTSTR string_table[] =
+{
+  ASYS_TEXT ("hello"),
+  ASYS_TEXT ("guten Tag"),
+  ASYS_TEXT ("goodbye"),
+  ASYS_TEXT ("auf wiedersehen"),
+  ASYS_TEXT ("funny"),
+  ASYS_TEXT ("lustig"),
+  0
+};
+
 static ACE_Static_Allocator<8192> alloc;
 
 typedef ASYS_TCHAR * STRING;
 typedef ACE_DLList<STRING> STRLIST;
 typedef ACE_DLList_Iterator<STRING> STRLIST_ITERATOR;
-
-static STRING string_table[] =
-{
-  // Note: all these casts are to appease SC 5.0 which is not pleased
-  // with using string literals (i.e. const char *'s) as char
-  // *'s. It's ugly, but necessary.
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("hello")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("guten Tag")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("goodbye")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("auf wiedersehen")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("funny")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("lustig")),
-  0
-};
 
 static void
 run_iterate (STRLIST &list)

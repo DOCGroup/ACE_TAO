@@ -31,11 +31,7 @@
 #if defined (__alpha)
   // This is necessary on Alphas with glib 2.0.7-13.
 # define ACE_POLL_IS_BROKEN
-#elif defined (__powerpc__)
-# if !defined (ACE_DEFAULT_BASE_ADDR)
-#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
-# endif /* ! ACE_DEFAULT_BASE_ADDR */
-#endif /* ! __alpha  &&  ! __powerpc__ */
+#endif /* ! __alpha */
 
 // Then glibc/libc5 specific parts
 
@@ -98,9 +94,7 @@
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 
-#if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-#endif /* ! ACE_DEFAULT_BASE_ADDR */
 
 // Compiler/platform supports alloca().
 #define ACE_HAS_ALLOCA
@@ -165,8 +159,6 @@
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
-
-#define ACE_HAS_STRPTIME
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T

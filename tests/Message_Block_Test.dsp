@@ -70,8 +70,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Message_Block_Test"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I"..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I"..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -94,13 +94,13 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir ".\ETS_LIB\Debug"
+# PROP Intermediate_Dir "./ETS_DLL/Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Message_Block_Test"
 CPP=cl.exe
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -110,7 +110,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\ace"
-# ADD LINK32 acesd.lib /nologo /subsystem:console /debug /machine:I386 /out:"./Message_Block_Test_ETS.exe" /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"./Message_Block_Test_ETS.exe" /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 

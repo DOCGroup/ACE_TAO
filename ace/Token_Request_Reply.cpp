@@ -72,15 +72,11 @@ ACE_Token_Request::decode (void)
   else // Skip this->tokenName_ + '\0' + ':'.
     this->client_id_ = &this->token_name_[token_len + 2];
 
-  // Fixed size header
-  // token_name_ plus '\0'
-  // ':'
-  // client_id_ plus '\0'
-  size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
-                     + ACE_OS::strlen (this->token_name_) + 1 
-		     + ACE_OS::strlen (this->client_id_) + 1  
-		     + 1;	                     
-
+  size_t data_size = ((sizeof this->transfer_ 
+		      - sizeof this->transfer_.data_)  // Fixed-size header.
+		     + ACE_OS::strlen (this->token_name_) + 1 // this->tokenName_ + '\0'
+		     + ACE_OS::strlen (this->client_id_) + 1  // this->clientId_ + '\0'
+		     + 1);	                       // Space for ':'
   // Make sure the message was correctly received and framed.
   return this->length () == data_size ? 0 : -1;
 }

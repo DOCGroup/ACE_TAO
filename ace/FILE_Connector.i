@@ -3,10 +3,10 @@
 
 // FILE_Connector.i
 
-// Creates a Local ACE_FILE.
+// Creates a Local ACE_FILE. 
 
 ASYS_INLINE
-ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
+ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io, 
 					const ACE_FILE_Addr &remote_sap,
 					ACE_Time_Value *timeout,
 					const ACE_Addr &local_sap,
@@ -15,13 +15,11 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
 					int perms)
 {
   ACE_TRACE ("ACE_FILE_Connector::ACE_FILE_Connector");
-  if (this->connect (new_io, remote_sap, timeout, local_sap,
+  if (this->connect (new_io, remote_sap, timeout, local_sap, 
 		     reuse_addr, flags, perms) == ACE_IO_SAP::INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("address %s, %p\n"),
-                remote_sap.get_path_name (),
-                ASYS_TEXT ("ACE_FILE_IO")));
+    ACE_ERROR ((LM_ERROR, "address %s, %p\n", 
+	       remote_sap.get_path_name (), "ACE_FILE_IO"));
 }
 
 ASYS_INLINE int
@@ -31,3 +29,4 @@ ACE_FILE_Connector::reset_new_handle (ACE_HANDLE handle)
   // Nothing to do here since the handle is not a socket
   return 0;
 }
+

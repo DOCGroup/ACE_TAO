@@ -94,8 +94,7 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-  this->ACE_Addr::base_set (sa.get_type (),
-                            sa.get_size ());
+  this->ACE_Addr::base_set (sa.get_type (), sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
     // Ugh, this is really a base class, so don't copy it.
@@ -127,7 +126,7 @@ ACE_INET_Addr::string_to_addr (const ASYS_TCHAR s[])
 
   if (ip_addr == 0) // Assume it's a port number.
     {
-      if (ACE_OS::strspn (t, ASYS_TEXT ("1234567890"))
+      if (ACE_OS::strspn (t, "1234567890") 
           == ACE_OS::strlen (t))
         { // port number
           u_short port = (u_short) ACE_OS::atoi (t);
@@ -135,7 +134,7 @@ ACE_INET_Addr::string_to_addr (const ASYS_TCHAR s[])
                               ACE_UINT32 (INADDR_ANY));
         }
       else // port name
-        result = this->set (t,
+        result = this->set (t, 
                             ACE_UINT32 (INADDR_ANY));
     }
   else
@@ -143,10 +142,10 @@ ACE_INET_Addr::string_to_addr (const ASYS_TCHAR s[])
       *ip_addr = '\0'; ++ip_addr; // skip over ':'
 
       if (ACE_OS::strspn (ip_addr,
-                          ASYS_TEXT ("1234567890")) ==
+                         "1234567890") ==          
           ACE_OS::strlen (ip_addr))
         {
-          u_short port =
+          u_short port = 
             (u_short) ACE_OS::atoi (ip_addr);
           result = this->set (port, t);
         }
@@ -233,11 +232,9 @@ ACE_INET_Addr::set (u_short port_number,
       errno = EINVAL;
       return -1;
     }
-  else if (ACE_OS::inet_aton (ASYS_ONLY_MULTIBYTE_STRING (host_name),
-                              (struct in_addr *) &addr) == 1)
-    return this->set (port_number,
-                      encode ? ntohl (addr) : addr,
-                      encode);
+  else if (ACE_OS::inet_aton (ASYS_ONLY_MULTIBYTE_STRING (host_name), (struct in_addr *) &addr) == 1)
+    return this->set (port_number, encode ? ntohl (addr) : addr, encode);
+
   else
     {
 #if defined (VXWORKS) || defined (CHORUS)
@@ -499,7 +496,7 @@ ACE_INET_Addr::get_host_name (void) const
 
   static ASYS_TCHAR name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-    ACE_OS::strcpy (name, ASYS_TEXT ("<unknown>"));
+    ACE_OS::strcpy (name, "<unknown>");
   return name;
 }
 

@@ -108,11 +108,10 @@ public class MessageQueue
     return 0;
   }
 
-  // ************ Note! ***********
   // = For enqueue, enqueueHead, enqueueTail, and dequeueHead if
-  // timeout is specified, the caller will wait until the *absolute time*
+  // timeout is specified, the caller will wait for amount of time in
   // tv.  Calls will return, however, when queue is closed,
-  // deactivated, or if it is past the time tv
+  // deactivated, or if the time specified in tv elapses.
 
   /**
    * Enqueue a <MessageBlock> into the <MessageQueue> in accordance
@@ -131,10 +130,11 @@ public class MessageQueue
   /**
    * Enqueue a <MessageBlock> into the <MessageQueue> in accordance
    * with its <msgPriority> (0 is lowest priority). Note that the
-   * call will return if the queue has been deactivated or it is
-   * later than the specified absolute time value.
+   * call will return if <timeout> amount of time expires or if the
+   * queue has been deactivated.
    *@param newItem item to enqueue onto the Message Queue
-   *@param tv absolute TimeValue to timeout after
+   *@param tv amount of time (TimeValue) to wait before returning
+   * (unless operation completes before)
    *@return -1 on failure, else the number of items still on the
    * queue. 
    *@exception java.lang.InterruptedException Interrupted while accessing queue
@@ -182,11 +182,11 @@ public class MessageQueue
 
   /**
      * Enqueue a <MessageBlock> at the end of the <MessageQueue>. Note
-     * that the call will return when it's later than the given TimeValue or
+     * that the call will return if <timeout> amount of time expires or
      * if the queue has been deactivated.
      *@param newItem item to enqueue onto the Message Queue
-     *@param tv absolute TimeValue to wait until before returning (unless
-     * the operation compeltes before this time)
+     *@param tv amount of time (TimeValue) to wait before returning
+     * (unless operation completes before)
      *@return -1 on failure, else the number of items still on the queue.
      *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
@@ -232,12 +232,12 @@ public class MessageQueue
   }
 
   /**
-     * Enqueue a <MessageBlock> at the head of the <MessageQueue>.  Note
-     * that the call will return when it's later than the given TimeValue or
+     * Enqueue a <MessageBlock> at the head of the <MessageQueue>. Note
+     * that the call will return if <timeout> amount of time expires or
      * if the queue has been deactivated.
      *@param newItem item to enqueue onto the Message Queue
-     *@param tv absolute TimeValue to wait until before returning (unless
-     * the operation completes before that time)
+     *@param tv amount of time (TimeValue) to wait before returning
+     * (unless operation completes before)
      *@return -1 on failure, else the number of items still on the queue.
      *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
@@ -284,15 +284,12 @@ public class MessageQueue
 
   /**
      * Dequeue and return the <MessageBlock> at the head of the
-     * <MessageQueue>.  Note that the call when return if the queue has 
-     * been deactivated or when the current time is later than the given 
-     * time value.
-     *@param tv absolute time timeout (blocks indefinitely if null)
+     * <MessageQueue>. Note that the call will return if <timeout>
+     * amount of time expires or if the queue has been deactivated.
      *@return null on failure, else the <MessageBlock> at the head of queue.
      *@exception InterruptedException Interrupted while accessing queue
      */
-  public synchronized MessageBlock dequeueHead (TimeValue tv) 
-      throws InterruptedException
+  public synchronized MessageBlock dequeueHead (TimeValue tv) throws InterruptedException
   {
     MessageBlock result = null;
     if (this.deactivated_)

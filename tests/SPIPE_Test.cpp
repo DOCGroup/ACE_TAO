@@ -50,14 +50,14 @@ client (void *)
   ACE_OS::sleep (10);
 
   if (con.connect (cli_stream, ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), rendezvous));
+    ACE_ERROR ((LM_ERROR, "%p\n", rendezvous));
 
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("send_n")));
+      ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
 
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("close")));
+    ACE_ERROR ((LM_ERROR, "%p\n", "close"));
 
 #if !defined (ACE_WIN32)
   ACE_OS::exit (0);
@@ -78,22 +78,22 @@ server (void *)
   // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("open")));
+    ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("waiting for connection\n")));
+  ACE_DEBUG ((LM_DEBUG, "waiting for connection\n"));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("accept")));
+    ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Accepted connection\n")));
+  ACE_DEBUG ((LM_DEBUG, "Accepted connection\n"));
 
   while (new_stream.recv (buf, 1) > 0)
     {
       ACE_ASSERT (*t == buf[0]);
       t++;
     }
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End of connection. Closing handle\n")));
+  ACE_DEBUG ((LM_DEBUG, "End of connection. Closing handle\n"));
   new_stream.close ();
   acceptor.close ();
   return 0;
@@ -101,16 +101,16 @@ server (void *)
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, char *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("SPIPE_Test"));
+  ACE_START_TEST ("SPIPE_Test");
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 #if !defined (ACE_LACKS_FORK)
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("fork failed")));
+      ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
       exit (-1);
     case 0:
       client (0);
@@ -121,18 +121,18 @@ main (int, ASYS_TCHAR *[])
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
                                               (void *) 0,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
                                               (void *) 0,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
   ACE_Thread_Manager::instance ()->wait ();
 #endif /* !ACE_LACKS_EXEC */
 #else
   ACE_DEBUG ((LM_INFO,
-              ASYS_TEXT ("SPIPE is not supported on this platform\n")));
+              "SPIPE is not supported on this platform\n"));
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
   ACE_END_TEST;
   return 0;

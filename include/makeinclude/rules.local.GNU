@@ -32,7 +32,7 @@ ifndef TAO_ROOT
 # only ONE of these rules will be run at make-time,
 
 # The rules are only used if TAO_ROOT is not defined to avoid
-# conflicts with a similar rule in TAO.
+# conflicts with a similar rule in TAO. 
 
 %S.cpp: %.idl
 	$(IDL) --version $(IDLFLAGS) $<
@@ -111,24 +111,19 @@ show_uninit:
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) \
-$(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
+	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
 
 ifeq (,$(LN_S))
-  ifdef COMSPEC
-    #### Assume we're on a WIN32 host.
-    LN_S = cp -p
-  else  # ! WIN32
-    LN_S = ln -s
-  endif # ! WIN32
+  LN_S = ln -s
 endif # ! LN_S
 
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
-$(INSLIB)/% \
+$(INSLIB)/%$(VAR).a \
+$(INSLIB)/%$(VAR).$(SOEXT)$(ACE_LDSO_Version_Number) \
 $(INSMAN)/man1/% \
 $(INSMAN)/man2/% \
 $(INSMAN)/man3/% \
@@ -165,8 +160,8 @@ endif
 
 clean.local:
 	-$(RM) *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) cxx_repository ptrepository \
-Templates.DB gcctemp.c gcctemp so_locations
+	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
+	  gcctemp.c gcctemp so_locations
 
 realclean.local: clean.local
 	-$(RM) $(BIN) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2) $(BIN2:%=%_debug) $(BIN2:%=%_profile) $(BIN2:%=%_optimize) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
@@ -196,15 +191,14 @@ depend.local: $(MAKEFILE)
 	@cat $(MAKEFILE) | \
 	sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
 	    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
-	    $(ACE_DEPEND_SED_CMD) \
 	    -e '/$$(ACE_ROOT)\/ace\/config[^\.]*\.h/d' \
 	    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
 	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
 	@cat $(MAKEFILE).new >$(MAKEFILE)
 	@$(RM) $(MAKEFILE).new
-	@if cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
-	then echo "Makefile dependencies unchanged." ;\
+	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
+	then	echo "Makefile dependencies unchanged." ;\
 	else \
 		echo "Makefile dependencies updated." ;\
 	fi ;\

@@ -63,9 +63,7 @@ ACE_ODB::instance (void)
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       if (ACE_ODB::instance_ == 0)
-        ACE_NEW_RETURN (ACE_ODB::instance_,
-                        ACE_ODB,
-                        0);
+        ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);
     }
 
   return ACE_ODB::instance_;

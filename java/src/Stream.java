@@ -62,13 +62,11 @@ public class Stream
       return 0;
   }
 
-    // Note that the timeout tv is absolute time
   public int put (MessageBlock mb, TimeValue tv)
   {
     return this.streamHead_.writer ().put (mb, tv);
   }
 
-    // Note that the timeout tv is absolute time
   public MessageBlock get (TimeValue tv) throws InterruptedException
   {
     return this.streamHead_.reader ().getq (tv);
@@ -284,9 +282,9 @@ public class Stream
 
     int result = 0;
 
-    if (this.streamHead_.writer ().put (cb, null) == -1)
+    if (this.streamHead_.writer ().put (cb, new TimeValue ()) == -1)
       result = -1;
-    else if ((cb = this.streamHead_.reader ().getq (null)) == null)
+    else if ((cb = this.streamHead_.reader ().getq (new TimeValue ())) == null)
       result = -1;
     else
       result = ((IOCntlMsg ) cb.obj ()).rval ();

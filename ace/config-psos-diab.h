@@ -204,6 +204,7 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
+// #define ACE_MALLOC_ALIGN 8
 // #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
@@ -225,8 +226,6 @@
 #if !defined (ACE_PSOS)
 #define ACE_PSOS
 #endif /* ACE_PSOS */
-
-#define ACE_MALLOC_ALIGN 8
 
 #if !defined (ACE_PSOS_DIAB)
 #define ACE_PSOS_DIAB

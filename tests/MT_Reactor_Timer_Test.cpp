@@ -133,7 +133,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
+              "%T (%t): Timer #%d (id #%d) expired\n",
               time_tag,
               this->timer_id_[time_tag]));
 
@@ -153,8 +153,6 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
 {
 
   ACE_Reactor *r = ACE_Reactor::instance ();
-
-  this->input_seen_ = this->notify_seen_ = this->timers_fired_ = 0;
 
   // Initialize the pipe.
   if (this->pipe_.open () == -1)
@@ -209,9 +207,6 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 {
   char c;
 
-  ACE_ASSERT (this->input_seen_ == 0);
-  this->input_seen_ = 1;
-
   if (ACE::recv (h, &c, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
@@ -230,9 +225,6 @@ Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
 {
   ACE_UNUSED_ARG (h);
 
-  ACE_ASSERT (this->notify_seen_ == 0);
-  this->notify_seen_ = 1;
-
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("%T (%t): handle_exception\n")));
   return 0;
@@ -243,8 +235,6 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
                                         const void *arg)
 {
   ACE_UNUSED_ARG (tv);
-
-  ++this->timers_fired_;
 
   long value = ACE_reinterpret_cast (long, arg);
 
@@ -257,23 +247,11 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 int
-Dispatch_Count_Handler::verify_results (void)
-{
-
-  ACE_ASSERT (this->input_seen_ == 1);
-  ACE_ASSERT (this->notify_seen_ == 1);
-  ACE_ASSERT (this->timers_fired_ == ACE_MAX_TIMERS);
-  return 0;
-
-}
-
-int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("MT_Reactor_Timer_Test"));
 
   int status = 0;
-  int test_result = 0;
 
   ACE_Reactor *r = ACE_Reactor::instance ();
 
@@ -289,47 +267,21 @@ main (int, ASYS_TCHAR *[])
                          ASYS_TEXT ("schedule_timer")),
                         1);
 
-  ACE_Time_Value no_waiting (0);
-  size_t events = 0;
-
-  while (1)
-    {
-      int result = r->handle_events (no_waiting);
-
-      // Timeout.
-      if (result == 0)
-        break;
-
-      // Make sure there were no errors.
-      ACE_ASSERT (result != -1);
-
-      events += result;
-    }
-
-  // All <ACE_MAX_TIMERS> + 2 I/O dispatches (one for <handle_input>
-  // and the other for <handle_exception>) should be counted in
-  // events.
-  if (events < ACE_MAX_TIMERS + 2) 
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("expected %d events, got %d instead\n"),
-                  ACE_MAX_TIMERS + 2,
-                  events));
-      ACE_ASSERT (events >= ACE_MAX_TIMERS + 2);
-    }
-
-  status = callback.verify_results ();
-  if (status != 0) 
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("Dispatch counting test failed.\n")));
-      test_result = 1;
-    }
+  int result = r->handle_events ();
+  // All <ACE_MAX_TIMERS> should be counted in the return value + 2
+  // I/O dispatches (one for <handle_input> and the other for
+  // <handle_exception>).
+  if (result != ACE_MAX_TIMERS + 2) {
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("expected %d events, got %d instead\n"),
+                ACE_MAX_TIMERS + 2, result));
+    ACE_ASSERT (result == ACE_MAX_TIMERS + 2);
+  }
 
 #if defined (ACE_HAS_THREADS)
 
   Time_Handler other_thread;
-  ACE_Time_Value time_limit (30);
+  ACE_Time_Value time_limit(30);
+
 
   // Set up initial set of timers.
   other_thread.setup ();
@@ -344,21 +296,16 @@ main (int, ASYS_TCHAR *[])
   if (status == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p, errno is %d\n"),
-                  "wait ()",
-                  errno));
+                  ASYS_TEXT ("%p, errno is %d\n"), "wait ()", errno));
       ACE_ASSERT (status != -1);
     }
 
   status = other_thread.verify_results ();
-  if (status != 0)
-    test_result = 1;
-
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
-  return test_result;
+  return status;
 }

@@ -62,7 +62,7 @@ public:
   // the relative time specified in *<timeout> elapses).
 
   virtual int dispatch_notifications (int &number_of_active_handles,
-                                      ACE_Handle_Set &rd_mask) = 0;
+                                      const ACE_Handle_Set &rd_mask) = 0;
   // Handles pending threads (if any) that are waiting to unblock the
   // <Reactor_Impl>.
 
@@ -154,18 +154,6 @@ public:
   // <handle_events> is that in the alertable case, the eventloop will
   // return when the system queues an I/O completion routine or an
   // Asynchronous Procedure Call.
-
-  // = Event handling control.
-
-  virtual int deactivated (void) = 0;
-  // Return the status of Reactor.  If this function returns 0, the reactor is
-  // actively handling events.  If it returns non-zero, <handling_events> and
-  // <handle_alertable_events> return -1 immediately.
-
-  virtual void deactivate (int do_stop) = 0;
-  // Control whether the Reactor will handle any more incoming events or not.
-  // If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
-  // is in active state and can be deactivated/reactived as wish.
 
   // = Register and remove Handlers.
 
@@ -261,7 +249,7 @@ public:
 
   virtual int suspend_handler (ACE_Event_Handler *event_handler) = 0;
   // Suspend <event_handler> temporarily.  Use
-  // <ACE_Event_Handler::get_handle> to get the handle.
+  // <event_handler->get_handle()> to get the handle.
 
   virtual int suspend_handler (ACE_HANDLE handle) = 0;
   // Suspend <handle> temporarily.
@@ -273,8 +261,8 @@ public:
   // Suspend all <handles> temporarily.
 
   virtual int resume_handler (ACE_Event_Handler *event_handler) = 0;
-  // Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
-  // get the handle.
+  // Resume <event_handler>. Use <event_handler->get_handle()> to get
+  // the handle.
 
   virtual int resume_handler (ACE_HANDLE handle) = 0;
   // Resume <handle>.
@@ -291,34 +279,25 @@ public:
 
   // If we need to reset handles returned from accept/connect.
 
-  // = Timer management.
+  // Timer management.
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delta,
                                const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
   // Schedule an <event_handler> that will expire after <delay> amount
-  // of time, which is specified as relative time to the current
-  // <gettimeofday>.  If it expires then <arg> is passed in as the
-  // value to the <event_handler>'s <handle_timeout> callback method.
-  // If <interval> is != to <ACE_Time_Value::zero> then it is used to
-  // reschedule the <event_handler> automatically, also using relative
-  // time.  This method returns a <timer_id> that uniquely identifies
-  // the <event_handler> in an internal list.  This <timer_id> can be
-  // used to cancel an <event_handler> before it expires.  The
-  // cancellation ensures that <timer_ids> are unique up to values of
-  // greater than 2 billion timers.  As long as timers don't stay
-  // around longer than this there should be no problems with
-  // accidentally deleting the wrong timer.  Returns -1 on failure
-  // (which is guaranteed never to be a valid <timer_id>.
-
-  virtual int reset_timer_interval (long timer_id, 
-                                    const ACE_Time_Value &interval) = 0;
-  // Resets the interval of the timer represented by <timer_id> to
-  // <interval>, which is specified in relative time to the current
-  // <gettimeofday>.  If <interval> is equal to
-  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
-  // timer.  Returns 0 if successful, -1 if not.
+  // of time.  If it expires then <arg> is passed in as the value to
+  // the <event_handler>'s <handle_timeout> callback method.  If
+  // <interval> is != to <ACE_Time_Value::zero> then it is used to
+  // reschedule the <event_handler> automatically.  This method
+  // returns a <timer_id> that uniquely identifies the <event_handler>
+  // in an internal list.  This <timer_id> can be used to cancel an
+  // <event_handler> before it expires.  The cancellation ensures that
+  // <timer_ids> are unique up to values of greater than 2 billion
+  // timers.  As long as timers don't stay around longer than this
+  // there should be no problems with accidentally deleting the wrong
+  // timer.  Returns -1 on failure (which is guaranteed never to be a
+  // valid <timer_id>.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1) = 0;
@@ -414,12 +393,6 @@ public:
 
   virtual int owner (ACE_thread_t *owner) = 0;
   // Return the ID of the "owner" thread.
-
-  virtual int restart (void) = 0;
-  // Get the existing restart value.
-  
-  virtual int restart (int r) = 0;
-  // Set a new value for restart and return the original value.
 
   virtual void requeue_position (int) = 0;
   // Set position of the owner thread.

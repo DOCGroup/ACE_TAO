@@ -60,7 +60,7 @@ public:
   // whether entries are returned for dot or dot-dot.  The pointer
   // returned by <readdir> points to data that may be overwritten by
   // another call to <readdir> on the same directory stream.  This
-  // data shall not be overwritten by another call to <readdir> on a
+  // data shall not be overwritten by another call to readdir() on a
   // different directory stream.  <readdir> may buffer several
   // directory entries per actual read operation; <readdir> marks for
   // update the st_atime field of the directory each time the

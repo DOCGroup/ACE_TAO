@@ -1,7 +1,7 @@
 // $Id$
 
-#if !defined (ACE_MALLOC_CPP)
-#define ACE_MALLOC_CPP
+#if !defined (ACE_MALLOC_C)
+#define ACE_MALLOC_C
 
 #define ACE_BUILD_DLL
 #include "ace/Malloc.h"
@@ -29,8 +29,8 @@ ACE_Control_Block::dump (void) const
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ((ACE_Name_Node *) this->name_head_)->dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  this->name_head_->dump ();
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), this->freep_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -41,35 +41,13 @@ ACE_Name_Node::ACE_Name_Node (void)
 }
 
 ACE_Name_Node::ACE_Name_Node (const char *name,
-                              char *name_ptr,
-                              char *pointer,
+                              void *ptr,
                               ACE_Name_Node *next)
-  : name_ (name_ptr),
-    pointer_ (pointer),
+  : pointer_ (ptr),
     next_ (next)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
-  char *n = this->name_;
-  ACE_OS::strcpy (n, name);
-}
-
-ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
-{
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
-  ACE_ASSERT (!"not implemented!");
-}
-
-const char *
-ACE_Name_Node::name (void) const
-{
-  const char *c = this->name_;
-  return c;
-}
-
-void
-ACE_Name_Node::name (const char *)
-{
-  ACE_ASSERT (!"not implemented yet");
+  ACE_OS::strcpy (this->name_, name);
 }
 
 void
@@ -78,12 +56,9 @@ ACE_Name_Node::dump (void) const
   ACE_TRACE ("ACE_Name_Node");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), (const char *) this->pointer_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), (ACE_Name_Node *) this->next_));
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT("\nname_ = (%x, %s)"),
-              (const char *) this->name_,
-              (const char *) this->name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), this->pointer_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nname_ = %s"), this->name_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -117,9 +92,9 @@ ACE_Allocator::instance (void)
           // destroy it.
           static void *allocator_instance = 0;
 
-          // Check this critical assumption.  We put it in a variable
-          // first to avoid stupid compiler warnings that the
-          // condition may always be true/false.
+          // Check this critical assumption.
+          // We put it in a variable first to avoid stupid compiler
+          // warnings that the condition may always be true/false.
 #         if !defined (ACE_NDEBUG)
           int assertion = (sizeof allocator_instance ==
                            sizeof (ACE_New_Allocator));
@@ -233,22 +208,6 @@ template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_MALLOC_STATS */
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Based_Pointer_Basic<ACE_Malloc_Header>;
-template class ACE_Based_Pointer_Basic<ACE_Name_Node>;
-template class ACE_Based_Pointer_Basic<char>;
-template class ACE_Based_Pointer<ACE_Malloc_Header>;
-template class ACE_Based_Pointer<ACE_Name_Node>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Based_Pointer_Basic<ACE_Malloc_Header>
-#pragma instantiate ACE_Based_Pointer_Basic<ACE_Name_Node>
-#pragma instantiate ACE_Based_Pointer_Basic<char>
-#pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header>
-#pragma instantiate ACE_Based_Pointer<ACE_Name_Node>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-
-#endif /* ACE_MALLOC_CPP */
+#endif /* ACE_MALLOC_C */

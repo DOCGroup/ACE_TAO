@@ -123,8 +123,7 @@ private:
   // Resets the MAX_FD after a clear of the original MAX_FD.
 
   static const char nbits_[NBITS];
-  // Table that maps bytes to counts of the enabled bits in each value
-  // from 0 to 255.
+  // Table that maps bytes to counts of the enabled bits.
 };
 
 class ACE_Export ACE_Handle_Set_Iterator

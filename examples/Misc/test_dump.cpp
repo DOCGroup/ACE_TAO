@@ -5,9 +5,8 @@
 // SOCK_Stream.
 
 #include "ace/Dump.h"
-#include "test_dump.h"
 
-#include "ace/Reactor.h"
+#include "test_dump.h"
 
 ACE_RCSID(Misc, test_dump, "$Id$")
 

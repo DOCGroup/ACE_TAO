@@ -85,7 +85,7 @@ public:
   // return a chunk of memory back to free store.
 
 private:
-  char *pool_;
+  T *pool_;
   // remember how we allocate the memory in the first place so
   // we can clear things up later.
 
@@ -163,10 +163,10 @@ public:
 
   virtual int find (const char *name, void *&pointer);
   // Locate <name> and pass out parameter via pointer.  If found,
-  // return 0, Returns -1 if <name> isn't found.
+  // return 0, Returns -1 if failure occurs.
 
   virtual int find (const char *name);
-  // Returns 0 if the name is in the mapping and -1 if not.
+  // returns 0 if the name is in the mapping. -1, otherwise.
 
   virtual int unbind (const char *name);
   // Unbind (remove) the name from the map.  Don't return the pointer
@@ -376,10 +376,6 @@ public:
   // Dump statistics of how malloc is behaving.
 #endif /* ACE_HAS_MALLOC_STATS */
 
-  ACE_LOCK &mutex (void);
-  // Returns a pointer to the lock used to provide mutual exclusion to
-  // an <ACE_Malloc> allocator.
-
   void dump (void) const;
   // Dump the state of an object.
 
@@ -390,8 +386,7 @@ private:
   int open (void);
   // Initialize the Malloc pool.
 
-  int shared_bind (const char *name,
-                   void *pointer);
+  int shared_bind (const char *name, void *pointer);
   // Associate <name> with <pointer>.  Assumes that locks are held by
   // callers.
 
@@ -407,14 +402,14 @@ private:
   // Deallocate memory.  Assumes that locks are held by callers.
 
   ACE_Control_Block *cb_ptr_;
-  // Pointer to the control block that is stored in memory controlled
-  // by <MEMORY_POOL>.
+  // Pointer to the control block (stored in memory controlled by
+  // MEMORY_POOL).
 
   MEMORY_POOL memory_pool_;
-  // Pool of memory used by <ACE_Malloc> to manage its freestore.
+  // Pool of memory used by ACE_Malloc
 
   ACE_LOCK lock_;
-  // Lock that ensures mutual exclusion for the <MEMORY_POOL>.
+  // Local that ensures mutual exclusion.
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -443,8 +438,7 @@ public:
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
-  int next (void *&next_entry, 
-            const char *&name);
+  int next (void *&next_entry, char *&name);
   // Pass back the next <entry> (and the <name> associated with it) in
   // the set that hasn't yet been visited.  Returns 0 when all items
   // have been seen, else 1.

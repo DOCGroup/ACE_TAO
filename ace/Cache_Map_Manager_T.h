@@ -28,31 +28,13 @@
 // Forward declaration.
 class ACE_Allocator;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-#define ACE_Cache_Map_Iterator ACMI
-#define ACE_Cache_Map_Reverse_Iterator ACMRI
-
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator;
 
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator;
 
-#define ACE_T1 class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
-
-#else
-
-#define ACE_T1 class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-// For linkers that cant grok long names.
-#define ACE_Cache_Map_Manager ACMM
-
-template <ACE_T1>
+template <class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Manager
 {
   // = TITLE
@@ -76,14 +58,15 @@ public:
   typedef VALUE mapped_type;
   typedef MAP map_type;
   typedef CACHING_STRATEGY caching_strategy_type;
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
   typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
   typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
+  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
+  // The actual value mapped to the key in the map. The <attributes>
+  // are used by the strategy and is transparent to the user of this
+  // class.
 
-  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
-  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
   typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
@@ -97,28 +80,27 @@ public:
   typedef REVERSE_ITERATOR
           reverse_iterator;
 
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-  // The actual value mapped to the key in the map. The <attributes>
-  // are used by the strategy and is transparent to the user of this
-  // class.
-
   // = Initialization and termination methods.
 
-  ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
-                         size_t size = ACE_DEFAULT_MAP_SIZE,
-                         ACE_Allocator *alloc = 0);
-  // Initialize a <Cache_Map_Manager> with <caching_strategy> and
-  // <size> entries.
+  ACE_Cache_Map_Manager (size_t size = ACE_DEFAULT_MAP_SIZE,
+                         ACE_Allocator *alloc = 0,
+                         CACHING_STRATEGY *caching_s = 0,
+                         int delete_caching_strategy = 1);
+  // Initialize a <Cache_Map_Manager> with <size> entries.
+  // By default the caching strategy is allocated and deallocated by
+  // the class but if needed it can be changed as per the users need.
+  // The <delete_on_destruction> flag simply tells the class whether
+  // the ownership is given to the class or not.
 
   virtual ~ACE_Cache_Map_Manager (void);
   // Close down a <Cache_Map_Manager> and release dynamically allocated
   // resources.
 
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
-  // Initialize a cache with size <length>.
+            ACE_Allocator *alloc = 0,
+            CACHING_STRATEGY *caching_s = 0,
+            int delete_caching_strategy = 1);
+  // Initialise a cache with size <length> and set the caching_strategy.
 
   int close (void);
   // Close down a cache and release dynamically allocated resources.
@@ -192,8 +174,6 @@ public:
   void dump (void) const;
   // Dumps the state of the object.
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
   // = STL styled iterator factory functions.
 
   ITERATOR begin (void);
@@ -203,8 +183,6 @@ public:
   REVERSE_ITERATOR rbegin (void);
   REVERSE_ITERATOR rend (void);
   // Return reverse iterator.
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   MAP &map (void);
   // The map managed by the Cache_Map_Manager.
@@ -217,18 +195,20 @@ protected:
   MAP map_;
   // The underlying map which needs to be cached.
 
-  CACHING_STRATEGY &caching_strategy_;
+  CACHING_STRATEGY *caching_strategy_;
   // The strategy to be followed for caching entries in the map.
+
+  int delete_caching_strategy_;
+  // This flag denotes whether the ownership lies in the hands of the
+  // class or not. Is yes, then it deletes the strategy.
 
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<ACE_T2> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<ACE_T2> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
 
 };
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator
@@ -377,11 +357,6 @@ protected:
   // belonging to the Cache_Map_Manager.
 };
 
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-#undef ACE_T1
-#undef ACE_T2
-
 #if defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.i"
 #endif /* __ACE_INLINE__ */
@@ -391,7 +366,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Cache_Map_Manager_T.cpp")
+#pragma implementation ("ace/Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CACHE_MAP_MANAGER_T_H */

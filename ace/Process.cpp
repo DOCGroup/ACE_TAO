@@ -53,8 +53,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
     // CreateProcess failed.
     return -1;
 #elif defined (CHORUS)
-  // This only works if we <exec>.  Chorus does not really support
-  // <fork>.
+  // This only works if we exec.  Chorus does not really support
+  // forking
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
     ACE_NOTSUP_RETURN (-1);
@@ -96,8 +96,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                options.avoid_zombies ());
 
   // If we're not supposed to exec, return the process id.
-  if (ACE_BIT_ENABLED (options.creation_flags (),
-                       ACE_Process_Options::NO_EXEC))
+  if (ACE_BIT_ENABLED (options.creation_flags (), ACE_Process_Options::NO_EXEC))
     return this->child_id_;
 
   switch (this->child_id_)
@@ -109,16 +108,13 @@ ACE_Process::spawn (ACE_Process_Options &options)
       // Child process.
       {
         if (options.get_stdin () != ACE_INVALID_HANDLE
-            && ACE_OS::dup2 (options.get_stdin (),
-                             ACE_STDIN) == -1)
+            && ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
           ACE_OS::exit (errno);
         else if (options.get_stdout () != ACE_INVALID_HANDLE
-                 && ACE_OS::dup2 (options.get_stdout (),
-                                  ACE_STDOUT) == -1)
+                 && ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
           ACE_OS::exit (errno);
         else if (options.get_stderr () != ACE_INVALID_HANDLE
-                 && ACE_OS::dup2 (options.get_stderr (),
-                                  ACE_STDERR) == -1)
+                 && ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
           ACE_OS::exit (errno);
 
         // close down unneeded descriptors
@@ -126,8 +122,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         ACE_OS::close (options.get_stdout ());
         ACE_OS::close (options.get_stderr ());
 
-        // If we must, set the working directory for the child
-        // process.
+        // If we must, set the working directory for the child process.
         if (options.working_directory () != 0)
           ACE_OS::chdir (options.working_directory ());
 
@@ -141,12 +136,13 @@ ACE_Process::spawn (ACE_Process_Options &options)
         else
           {
 #if defined( ghs )
-            // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
-            // code.  Processes aren't supported on VxWorks anyways.
+            // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile
+            // this code.  Processes aren't supported on VxWorks
+            // anyways.
             ACE_NOTSUP_RETURN (-1);
 #else
-            // Add the new environment variables to the environment
-            // context of the context before doing an <execvp>.
+            // Add the new environment variables to the environment context
+            // of the context before doing an <execvp>.
             for (char *const *user_env = options.env_argv ();
                  *user_env != 0;
                  user_env++)
@@ -178,6 +174,39 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #endif /* ACE_WIN32 */
 }
 
+int
+ACE_Process::wait (int *status)
+{
+#if defined (ACE_WIN32)
+  // Notice that status doesn't get updated.
+  int retv;
+
+  // Don't try to get the process exit status if wait failed so we can
+  // keep the original error code intact.
+  if ((retv = ::WaitForSingleObject (process_info_.hProcess, INFINITE))
+      != WAIT_FAILED && status != 0)
+    // The error status of GetExitCodeProcess is nontheless not tested.
+    // (Don't know how to return the value.)
+    ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
+  return retv;
+#else /* ACE_WIN32 */
+  return ACE_OS::waitpid (this->child_id_, status, 0);
+#endif /* ACE_WIN32 */
+}
+
+int
+ACE_Process::wait (const ACE_Time_Value &tv)
+{
+#if defined (ACE_WIN32)
+  return ::WaitForSingleObject (process_info_.hProcess, tv.msec ());
+#else /* ACE_WIN32 */
+  ACE_UNUSED_ARG (tv);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_WIN32 */
+}
+
+// ************************************************************
+
 ACE_Process_Options::ACE_Process_Options (int ie,
                                           int cobl,
                                           int ebl,
@@ -185,7 +214,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
   :
 #if !defined (ACE_HAS_WINCE)
     inherit_environment_ (ie),
-#endif /* ACE_HAS_WINCE */
+#endif
     creation_flags_ (0),
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
@@ -210,16 +239,13 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     command_line_argv_calculated_ (0),
     command_line_buf_ (0)
 {
-  ACE_NEW (command_line_buf_,
-           TCHAR[cobl]);
+  ACE_NEW (command_line_buf_, TCHAR[cobl]);
   command_line_buf_[0] = '\0';
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
-  ACE_NEW (environment_buf_,
-           TCHAR[ebl]);
-  ACE_NEW (environment_argv_,
-           LPTSTR[mea]);
+  ACE_NEW (environment_buf_, TCHAR[ebl]);
+  ACE_NEW (environment_argv_, LPTSTR[mea]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
 
@@ -256,8 +282,8 @@ ACE_Process_Options::inherit_environment (void)
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
-          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p.\n"),
-                      ASYS_TEXT ("ACE_Process_Options::ACE_Process_Options")));
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "ACE_Process_Options::ACE_Process_Options"));
           break;
         }
 
@@ -395,7 +421,7 @@ ACE_Process_Options::setenv_i (LPTSTR assignment,
 
   // If environment larger than allocated buffer return. Also check to
   // make sure we have enough room.
-  if (environment_argv_index_ == max_environ_argv_index_
+  if (environment_argv_index_ == max_environ_argv_index_  
       || (len + environment_buf_index_) >= environment_buf_len_)
     return -1;
 
@@ -493,9 +519,9 @@ ACE_Process_Options::~ACE_Process_Options (void)
 }
 
 int
-ACE_Process_Options::command_line (LPCTSTR const argv[])
+ACE_Process_Options::command_line (LPCTSTR argv[])
 {
-  // @@ Factor out the code between this
+  // @@ Factor out the code between this 
   int i = 0;
 
   if (argv[i])

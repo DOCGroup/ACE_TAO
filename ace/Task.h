@@ -65,10 +65,9 @@ public:
   virtual ~ACE_Task_Base (void);
   // Destructor.
 
-  // = Initialization and termination hooks.
+  // = Initialization and termination hooks
 
-  // These methods should be overridden by subclasses if you'd like to
-  // provide <Task>-specific initialization and termination behavior.
+  // Note that these methods *must* be defined by subclasses.
 
   virtual int open (void *args = 0);
   // Hook called to open a Task.  <args> can be used to pass arbitrary
@@ -84,19 +83,15 @@ public:
   // interpret this as a flag to shut down the <Task>.
 
   virtual int module_closed (void);
-  // Hook called during <ACE_Module::close>.  The default
+  // Hook called during ACE_Module::close().  The default
   // implementation calls forwards the call to close(1).  Please
-  // notice the changed value of the default argument of <close>.
+  // notice the changed value of the default argument of close().
   // This allows tasks to differ between the call has been originated
   // from <ACE_Thread_Exit> or from <module_closed>.  Be aware that
   // close(0) will be also called when a thread associated with the
   // ACE_Task instance exits.
 
   // = Immediate and deferred processing methods, respectively.
-
-  // These methods should be overridden by subclasses if you'd like to
-  // provide <Task>-specific message processing behavior.
-
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
   // Transfer msg into the queue to handle immediate processing.
 
@@ -113,7 +108,7 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0);
+                        ACE_thread_t  thread_names[] = 0);
   // Turn the task into an active object, i.e., having <n_threads> of
   // control, all running at the <priority> level (see below) with the
   // same <grp_id>, all of which invoke <Task::svc>.  Returns -1 if

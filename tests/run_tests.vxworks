@@ -60,10 +60,6 @@ ld < Atomic_Op_Test
 write 2, "Atomic_Op_Test ", 15
 ace_main; unld "Atomic_Op_Test"
 
-ld < Object_Manager_Test
-write 2, "Object_Manager_Test ", 20
-ace_main; unld "Object_Manager_Test"
-
 ld < Semaphore_Test
 write 2, "Semaphore_Test ", 15
 ace_main; unld "Semaphore_Test"
@@ -100,10 +96,6 @@ ace_main; unld "Handle_Set_Test"
 ld < Hash_Map_Manager_Test
 write 2, "Hash_Map_Manager_Test ", 22
 ace_main; unld "Hash_Map_Manager_Test"
-
-ld < Hash_Map_Bucket_Iterator_Test
-write 2, "Hash_Map_Bucket_Iterator_Test ", 29
-ace_main; unld "Hash_Map_Bucket_Iterator_Test"
 
 ld < Sigset_Ops_Test
 write 2, "Sigset_Ops_Test ", 16
@@ -143,9 +135,9 @@ ld < Future_Test
 write 2, "Future_Test ", 12
 ace_main; unld "Future_Test"
 
-#### ld < Future_Set_Test
-#### write 2, "Future_Set_Test ", 12
-#### ace_main; unld "Future_Set_Test"
+ld < Future_Set_Test
+write 2, "Future_Set_Test ", 12
+ace_main; unld "Future_Set_Test"
 
 ld < Reactors_Test
 write 2, "Reactors_Test ", 14
@@ -179,14 +171,6 @@ ld < Conn_Test
 write 2, "Conn_Test ", 10
 ace_main; unld "Conn_Test"
 
-ld < Cached_Conn_Test
-write 2, "Cached_Conn_Test ", 17
-ace_main; unld "Cached_Conn_Test"
-
-ld < Cached_Accept_Conn_Test
-write 2, "Cached_Accept_Conn_Test ", 24
-ace_main; unld "Cached_Accept_Conn_Test"
-
 ld < Barrier_Test
 write 2, "Barrier_Test ", 13
 ace_main; unld "Barrier_Test"
@@ -212,13 +196,9 @@ ld < Reverse_Lock_Test
 write 2, "Reverse_Lock_Test ", 18
 ace_main; unld "Reverse_Lock_Test"
 
-ld < Map_Manager_Test
-write 2, "Map_Manager_Test ", 17
-ace_main; unld "Map_Manager_Test"
-
-ld < Cache_Map_Manager_Test
-write 2, "Cache_Map_Manager_Test ", 23
-ace_main; unld "Cache_Map_Manager_Test"
+#### ld < Map_Manager_Test
+#### write 2, "Map_Manager_Test ", 17
+#### ace_main; unld "Map_Manager_Test"
 
 ld < Map_Test
 write 2, "Map_Test ", 9

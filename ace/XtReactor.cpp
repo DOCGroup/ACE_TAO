@@ -371,27 +371,6 @@ ACE_XtReactor::reset_timeout (void)
                                   (XtPointer) this);
 }
 
-int
-ACE_XtReactor::reset_timer_interval
-  (long timer_id,
-   const ACE_Time_Value &interval)
-{
-  ACE_TRACE ("ACE_XtReactor::reset_timer_interval");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
-
-  int result = ACE_Select_Reactor::timer_queue_->reset_interval
-    (timer_id,
-     interval);
-
-  if (result == -1)
-    return -1;
-  else
-    {
-      this->reset_timeout ();
-      return result;
-    }
-}
-
 long
 ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
 			       const void *arg,

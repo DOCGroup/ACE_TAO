@@ -185,10 +185,6 @@ ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
                                         like foo->operator T *()
 ACE_HAS_BROKEN_CTIME                    Compiler/platform uses macro
                                         for ctime (e.g., MVS)
-ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
-                                        properly with datagrams,
-                                        i.e. it fails when the iovec
-                                        size is IOV_MAX.
 ACE_HAS_BROKEN_ENUMS                    Compiler can't handle large
                                         enums (e.g., HP/UX C++)
 ACE_HAS_BROKEN_HPUX_TEMPLATES           Earlier versions of HP/UX C++
@@ -224,7 +220,7 @@ ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const
                                         the setrlimit() prototype.
 ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
-                                        t_error(char *) rather than
+                                        t_error(char *) rather than 
                                         t_error(const char *).
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct
                                         timespec members as ts_sec and
@@ -272,7 +268,6 @@ ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EXCEPTIONS                      Compiler supports C++
                                         exception handling
-ACE_HAS_EXPLICIT_KEYWORD                Compiler support explicit constructors.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
                                         instantiation mechanism
                                         supports the use of explicit
@@ -304,7 +299,6 @@ ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT Optimize
                                         ACE_Handle_Set::count_bits for
                                         select() operations (common
                                         case)
-ACE_HAS_LLSEEK                          Platform supports llseek.
 ACE_HAS_HI_RES_TIMER                    Compiler/platform supports
                                         SunOS high resolution timers
 ACE_HAS_IDTYPE_T                        Compiler/platform supports
@@ -355,7 +349,6 @@ ACE_HAS_MSG                             Platform supports recvmsg and
 ACE_HAS_MT_SAFE_MKTIME                  Platform supports MT safe
                                         mktime() call (do any of
                                         them?)
-ACE_HAS_MUTABLE_KEYWORD                 Compiler supports mutable.
 ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname
@@ -386,9 +379,6 @@ ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
 ACE_HAS_PENTIUM                         Platform is an Intel Pentium
                                         microprocessor.
 ACE_HAS_POLL                            Platform contains <poll.h>
-ACE_HAS_POSITION_INDEPENDENT_MALLOC     The ACE_Malloc<> class uses
-                                        "position-independent" features
-                                        provided by ACE_Based_Pointer<>.
 ACE_HAS_POSIX_NONBLOCK                  Platform supports POSIX
                                         O_NONBLOCK semantics
 ACE_HAS_POSIX_SEM                       Platform supports POSIX
@@ -418,8 +408,6 @@ ACE_HAS_PTHREADS_DRAFT7                 Platform's 'Pthreads' is .1c draft 7
 ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         (This is the final standard
                                         Pthreads).
-ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
-                                        Pthreads (susp/cont, rwlocks)
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().
@@ -492,7 +480,6 @@ ACE_HAS_SPARCWORKS_401_SIGNALS          Compiler has brain-damaged
                                         prototype...
 ACE_HAS_SSIZE_T                         Compiler supports the ssize_t
                                         typedef
-ACE_HAS_STRPTIME                        Enables ACE_OS::strptime ().
 ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
@@ -633,13 +620,6 @@ ACE_LACKS_ACE_IOSTREAM                  Platform can not build
                                         does not necessarily mean that
                                         the platform does not support
                                         iostreams.
-ACE_LACKS_ATEXIT                        Platform does not support ::atexit ().
-                                        Use ACE's at_exit () emulation instead.
-                                        NOTE: should be used with
-                                        ACE_HAS_NONSTATIC_OBJECT_MANAGER for
-                                        proper semantics of _when_ exit hooks
-                                        are destroyed, i.e., prior to static
-                                        object destruction.
 ACE_LACKS_AUTO_MMAP_REPLACEMENT         No system support for replacing any
                                         previous mappings.
 ACE_LACKS_BSEARCH                       Compiler/platform lacks the
@@ -743,8 +723,6 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
                                         gethostbyaddr_r,
                                         gethostbyname_r,
                                         getservbyname_r).
-ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
-                                        use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
 ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
@@ -812,8 +790,6 @@ ACE_LACKS_SOME_POSIX_PROTOTYPES         Platform lacks POSIX
                                         prototypes for certain System
                                         V functions like shared memory
                                         and message queues.
-ACE_LACKS_NATIVE_STRPTIME               Platform/compiler lacks the strptime()
-                                        function.
 ACE_LACKS_STRRCHR                       Platform/compiler lacks
                                         strrchr () function.
 ACE_LACKS_SYS_NERR                      Platforms/compiler lacks the

@@ -7,14 +7,6 @@
 #   inlining is disabled by default with Sun C++ 5.0.  If you'd like
 #   to try enabling it, comment out the "inline = 0" line below.
 #
-# To enable compilation of 64-bit binaries with Sun CC 5.0, a
-# platform_macros.GNU file such as this can be used:
-#     fast=1
-#     include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
-#     CCFLAGS += -xtarget=ultra2 -xarch=v9a #### CPU specific!
-# Please note that the xtarget and xarch settings are specific to
-# the target CPU.
-#
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
 # with Sun C++ 4.1.
@@ -32,9 +24,6 @@
 # size should not be penalized.  We don't use it because it's not
 # necessary with automatic template instantiation.
 
-ifeq (,$(compat4))
-  compat4 = 0
-endif
 ifeq (,$(debug))
   debug = 1
 endif
@@ -68,7 +57,7 @@ CC_VERSION = $(shell CC -V 2>&1)
 
 ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
-  CCFLAGS      += $(CFLAGS) -features=castop
+  CCFLAGS         += $(CFLAGS) -features=castop
 
   #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
   #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
@@ -89,20 +78,10 @@ ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
   #### Inlining appears to cause link problems with early releases of
   #### CC 5.0.
   inline = 0
-
-  #### If compat=4 is desired, set up for that. There are syntactic diffs
-  #### in the compatibility modes, but here all we need to be concerned with
-  #### is turning on -compat=4, and not trying to enable the new libraries.
-  #### RTTI may work, but has not been tested. To try it, cut/paste the
-  #### rtti conditions from the 4.2 section, above.
-  ifeq ($(compat4),1)
-    CCFLAGS += -compat=4 $(CFLAGS) -DACE_LACKS_RTTI -instances=explicit
-  else
-    #### Support RTTI by default.  And, use explicit template instantiation
-    #### because automatic instantiation appears to be broken, at least
-    #### with early releases of CC 5.0.  And, use old iostreams.
-    CCFLAGS += $(CFLAGS) -library=iostream,no%Cstd -instances=explicit
-  endif # compat4 requested
+  #### Support RTTI by default.  And, use explicit template instantiation
+  #### because automatic instantiation appears to be broken, at least
+  #### with early releases of CC 5.0.  And, use old iostreams.
+  CCFLAGS += $(CFLAGS) -library=iostream,no%Cstd -instances=explicit
 endif # CC 5.0 or later
 endif # ! 4.2
 

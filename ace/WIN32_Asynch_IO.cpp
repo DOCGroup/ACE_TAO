@@ -86,9 +86,7 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
                                                          proactor);
 
   if (win32_proactor == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Dynamic cast to WIN32 Proactor failed\n")),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Dynamic cast to WIN32 Proactor failed\n"), -1);
 
   // Post myself.
   return win32_proactor->post_completion (this);
@@ -158,9 +156,9 @@ ACE_WIN32_Asynch_Operation::cancel (void)
 
   // @@ This API returns 0 on failure. So, I am returning -1 in that
   //    case. Is that right? (Alex).
-
+  
   int result = (int) ::CancelIo (this->handle_);
-
+  
   if (result == 0)
     // Couldnt cancel the operations.
     return 2;
@@ -393,14 +391,17 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
       // Something else went wrong: the OVERLAPPED will not get
       // queued.
 
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ReadFile")));
-        }
+      // Cleanup dynamically allocated Asynch_Result
+      delete result;
 
-      return -1;
+      // @@ Alex, shouldn't this only print an error if the ACE
+      // debugging level is above a certain value?
+
+      // Return error
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("ReadFile")),
+                        -1);
     }
 }
 
@@ -410,14 +411,14 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
 
 int
 ACE_WIN32_Asynch_Read_Stream::open (ACE_Handler &handler,
-                                    ACE_HANDLE handle,
-                                    const void *completion_key,
-                                    ACE_Proactor *proactor)
+				    ACE_HANDLE handle,
+				    const void *completion_key,
+				    ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -630,13 +631,16 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       // Something else went wrong: the OVERLAPPED will not get
       // queued.
 
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("WriteFile")));
-        }
-      return -1;
+      // Cleanup dynamically allocated Asynch_Result
+      delete result;
+
+      // @@ Alex, shouldn't this only print an error if the ACE
+      // debugging level is above a certain value?
+
+      // Return error
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("WriteFile")), -1);
     }
 }
 
@@ -651,9 +655,9 @@ ACE_WIN32_Asynch_Write_Stream::open (ACE_Handler &handler,
                                      ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -885,9 +889,9 @@ ACE_WIN32_Asynch_Read_File::open (ACE_Handler &handler,
                                   ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1116,9 +1120,9 @@ ACE_WIN32_Asynch_Write_File::open (ACE_Handler &handler,
                                    ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1202,7 +1206,7 @@ ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance
+// Base class operations. These operations are here to kill dominance 
 // warnings. These methods call the base class methods.
 
 u_long
@@ -1307,15 +1311,12 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
                                       SOCK_STREAM,
                                       0);
       if (accept_handle == ACE_INVALID_HANDLE)
-        {
-          if (ACE::debug ())
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("ACE_OS::socket")));
-            }
-          return -1;
-        }
+        // @@ Alex, shouldn't this only print an error if the ACE
+        // debugging level is above a certain value?
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("ACE_OS::socket")),
+                          -1);
       else
         // Remember to close the socket down if failures occur.
         close_accept_handle = 1;
@@ -1369,14 +1370,14 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
 
       // Cleanup dynamically allocated Asynch_Result.
       delete result;
-      
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ReadFile")));
-        }
-      return -1;
+
+      // @@ Alex, shouldn't this only print an error if the ACE
+      // debugging level is above a certain value?
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("ReadFile")),
+                        -1);
     }
 #else /* ACE_HAS_WINNT4 .......|| ACE_HAS_AIO_CALLS */
   ACE_NOTSUP_RETURN (-1);
@@ -1398,9 +1399,9 @@ ACE_WIN32_Asynch_Accept::open (ACE_Handler &handler,
                                ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1652,14 +1653,14 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
       // Cleanup dynamically allocated Asynch_Result
       delete result;
-      
-      if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("TransmitFile")));
-        }
-      return -1;
+
+      // @@ Alex, shouldn't this only print an error if the ACE
+      // debugging level is above a certain value?
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("TransmitFile")),
+                        -1);
     }
 #else /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
   ACE_NOTSUP_RETURN (-1);
@@ -1681,9 +1682,9 @@ ACE_WIN32_Asynch_Transmit_File::open (ACE_Handler &handler,
                                       ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1696,6 +1697,6 @@ ACE_Proactor *
 ACE_WIN32_Asynch_Transmit_File::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
-}
+} 
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

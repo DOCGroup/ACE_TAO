@@ -77,9 +77,12 @@ public:
   // max strlen for command-line arguments.
 
   ~ACE_Process_Options (void);
-  // Destructor.
+  // Death.
 
-  // = Methods to set process creation options portably.
+  // ************************************************************
+  // = These operations are used by applications to portably set
+  // process creation options.
+  // ************************************************************
 
   int set_handles (ACE_HANDLE std_in,
                    ACE_HANDLE std_out = ACE_INVALID_HANDLE,
@@ -89,20 +92,17 @@ public:
   // sure to set the others to ACE_INVALID_HANDLE.  Returns 0 on
   // success, -1 on failure.
 
-  int setenv (LPCTSTR format,
-              ...);
-  // <format> must be of the form "VARIABLE=VALUE".  There can not be
+  int setenv (LPCTSTR format, ...);
+  // <format> must be of the form "VARIABLE= VALUE".  There can not be
   // any spaces between VARIABLE and the equal sign.
 
-  int setenv (LPCTSTR variable_name,
-              LPCTSTR format,
-              ...);
+  int setenv (LPCTSTR variable_name, LPCTSTR format, ...);
   // Set a single environment variable, <variable_name>.  Since
   // different platforms separate each environment variable
   // differently, you must call this method once for each variable.
-  // <format> can be any printf format string.  So options->setenv
-  // ("FOO","one + two = %s", "three") will result in "FOO=one + two =
-  // three".
+  // <format> can be any printf format string.
+  // So options->setenv ("FOO","one + two = %s", "three") will result
+  // in "FOO=one + two = three".
 
   int setenv (LPTSTR envp[]);
   // Same as above with argv format.  <envp> must be null terminated.
@@ -120,7 +120,7 @@ public:
   // path to run a process, this method *must* be called!  Returns 0
   // on success, -1 on failure.
 
-  int command_line (LPCTSTR const argv[]);
+  int command_line (LPCTSTR argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
 
   u_long creation_flags (void) const;
@@ -299,38 +299,28 @@ public:
   ACE_Process (void);
   // Default construction.  Must use ACE_Process::start.
 
-  virtual ~ACE_Process (void);
+  ~ACE_Process (void);
   // Destructor.
 
   pid_t spawn (ACE_Process_Options &options);
   // Launch the process described by <options>.
 
-  pid_t wait (int *status = 0,
-              int wait_options = 0);
-  // Wait for the process we just created to exit.  If <status> != 0,
-  // it points to an integer where the function store the exit status
-  // of child process to.  If <wait_options> == <WNOHANG> then return
-  // 0 and don't block if the child process hasn't exited yet.  A
-  // return value of -1 represents the <wait> operation failed,
-  // otherwise, the child process id is returned.
+  int wait (int *status = 0);
+  // Wait for the process we just created to exit.
 
-  pid_t wait (const ACE_Time_Value &tv,
-              int *status = 0);
-  // Timed wait for the process we just created to exit.  This
-  // operation is only supported on Win32 platforms because UNIX
-  // platforms don't support a timed <wait> operation.
+  int wait (const ACE_Time_Value &tv);
+  // Timed wait for the process we just created to exit.
 
   int kill (int signum = SIGINT);
   // Send the process a signal.  This is only portable to operating
-  // systems that support signals, such as UNIX/POSIX.
+  // systems that support signals (e.g., POSIX).
 
   int terminate (void);
-  // Terminate the process abruptly using <ACE::terminate_process>.
-  // This call doesn't give the process a chance to cleanup, so use it
-  // with caution...
+  // Terminate the process.  This call doesn't give the process a
+  // chance to cleanup, so use with caution...
 
   pid_t getpid (void);
-  // Return the process id of the new child process.
+  // Return the pid of the new process.
 
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info (void);

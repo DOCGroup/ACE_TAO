@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
-// NOTE:  if you are using Digital UNIX V4.0f or later, you must
-// use config-tru64.h instead of directly using this config file.
-
 // The following configuration file is designed to work for the
-// Digital UNIX V4.0a through V4.0d with either the GNU g++, DEC
+// Digital UNIX V4.0a and later platforms with either the GNU g++, DEC
 // cxx 5.4 and later, Rational RCC (2.4.1) compilers, or KAI 3.3
 // compilers.  It is configured to use the IEEE Std 1003.1c-1995,
 // POSIX System Application Program Interface, or DCE threads (with
 // cxx only); it automatically selects the proper thread interface
 // depending on whether the cxx -pthread or -threads option was
-// specified.  By 4.0a, the version is meant that is called "V4.0 464"
+// specified.  By 4.0a the version is meant that is called "V4.0 464"
 // by uname -a.
 
 #ifndef ACE_CONFIG_H
@@ -63,13 +60,13 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
-#   define ACE_HAS_USING_KEYWORD
 
 //    9: nested comment not allowed.  (/usr/include/pdsc.h!) (nestcomment)
 //  177: variable was declared but never referenced (declbutnotref)
 //  193: zero used for undefined preprocessing identifier (undpreid)
 //  236: controlling expression is constant (boolexprconst)
 //  401: base_class_with_nonvirtual_dtor (basclsnondto)
+//  835: unreferenced_function_param (unrfunprm)
 // 1016: expected type is incompatible with declared type of int (incint)
 // 1136: conversion to smaller size integer could lose data (intconlosbit)
 
@@ -83,10 +80,14 @@
 #     pragma message disable intconlosbit
 #   endif /* __DECCXX_VER >= 60190029 */
 
-#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40F
+#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 5
       // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
 #     pragma message disable declbutnotref
-#   endif /* DIGITAL_UNIX >= 4.0f */
+#   endif /* DIGITAL_UNIX 5 */
+
+#   if defined (ACE_HAS_EXCEPTIONS)
+#     pragma message disable unrfunprm
+#   endif /* ACE_HAS_EXCEPTIONS */
 
 # else  /* __DECCXX_VER < 60090010 */
 #   define ACE_LACKS_PRAGMA_ONCE
@@ -102,10 +103,8 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_USING_KEYWORD
 #elif defined (__KCC)
 # include "ace/config-kcc-common.h"
-#else
 # error unsupported compiler on Digital Unix
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ && !_KCC */
 
@@ -120,7 +119,7 @@
 # define ACE_LACKS_T_ERRNO
 # define ACE_POLL_IS_BROKEN
 # if !defined (DIGITAL_UNIX)
-#   define DIGITAL_UNIX 0x400
+#   define DIGITAL_UNIX
 # endif /* ! DIGITAL_UNIX */
   // DJT removed this due to some minor issues related to the
   // definitions of timestruc_t and tid_t in procfs.h not sure what
@@ -168,7 +167,6 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_IP_MULTICAST
-#define ACE_HAS_LLSEEK
 #define ACE_HAS_LONG_MAP_FAILED
 #define ACE_HAS_MSG
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
@@ -185,7 +183,6 @@
 #define ACE_HAS_STREAMS
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRING_CLASS
-#define ACE_HAS_STRPTIME
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T
 #define ACE_HAS_SYSCALL_H

@@ -441,7 +441,7 @@ ACE_TS_Clerk_Processor::init (int argc, char *argv[])
 
 #if !defined (ACE_WIN32)
   // Ignore SIPPIPE so each Output_Channel can handle it.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
   ACE_UNUSED_ARG (sig);
 #endif /* ACE_WIN32 */
 

@@ -182,8 +182,8 @@ public:
   virtual ~ACE_Message_Block (void);
   // Delete all the resources held in the message.
   //
-  // Note that <release> is designed to release the continuation
-  // chain; the destructor is not. See <release> for details.
+  // Note that release() is designed to release the continuation
+  // chain; the destructor is not. See release() for details.
 
   // = Message Type accessors and mutators.
 
@@ -251,9 +251,9 @@ public:
   // In all cases, this ACE_Message_Block is deleted - it must have come
   // from the heap, or there will be trouble.
   //
-  // <release> is designed to release the continuation chain; the
+  // release() is designed to release the continuation chain; the
   // destructor is not.  If we make the destructor release the
-  // continuation chain by calling <release> or delete on the message
+  // continuation chain by calling release() or delete on the message
   // blocks in the continuation chain, the following code will not
   // work since the message block in the continuation chain is not off
   // the heap:
@@ -263,7 +263,7 @@ public:
   //
   //  mb1.cont (&mb2);
   //
-  // And hence, call <release> on a dynamically allocated message
+  // And hence, call release() on a dynamically allocated message
   // block. This will release all the message blocks in the
   // continuation chain.  If you call delete or let the message block
   // fall off the stack, cleanup of the message blocks in the
@@ -285,7 +285,7 @@ public:
   // <wr_ptr>.
 
   int copy (const char *buf);
-  // Copies <buf> into the Message_Block starting at the <wr_ptr>
+  // Copies <buf> into the Message_Block starting at the wr_ptr()
   // offset.  This call assumees that <buf> is NUL-terminated.  Return
   // 0 and increment <wr_ptr> by <ACE_OS::strlen (buf) + 1> if the
   // method succeeds.  Returns -1 if the size of the message is too
@@ -317,7 +317,7 @@ public:
   // Set the write pointer ahead <n> bytes.  This is used to compute
   // the <length> of a message.
 
-  // = Message length is <wr_ptr> - <rd_ptr>.
+  // = Message length is wr_ptr() - rd_ptr ().
   size_t length (void) const;
   // Get the length of the message
   void length (size_t n);
@@ -349,8 +349,6 @@ public:
   // Get the data block.
   void data_block (ACE_Data_Block *);
   // Set the data block (releasing the original one).
-  ACE_Data_Block *replace_data_block (ACE_Data_Block*);
-  // Set the data block (returning the original one).
 
   // = The continuation field chains together composite messages.
   ACE_Message_Block *cont (void) const;
@@ -520,12 +518,6 @@ public:
   // classes can override this method and create instances of
   // themselves.
 
-  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0) const;
-  // As clone above, but it does not copy the contents of the buffer,
-  // i.e., create a new Data_Block of the same dynamic type, with the
-  // same allocator, locking_strategy, and with the same amount of
-  // storage available but the buffer is unitialized.
-
   ACE_Data_Block *duplicate (void);
   // Return a "shallow" copy that increments our reference count by 1.
 
@@ -660,11 +652,11 @@ public:
                                 u_long dynamic_priority_offset);
   // ctor
 
-  virtual ~ACE_Dynamic_Message_Strategy (void);
+  virtual ~ACE_Dynamic_Message_Strategy ();
   // virtual dtor
 
-  Priority_Status priority_status (ACE_Message_Block &mb,
-                                   const ACE_Time_Value &tv);
+  Priority_Status priority_status (ACE_Message_Block & mb,
+                                   const ACE_Time_Value & tv);
   // Updates the message's priority and returns its priority status.
 
   u_long static_bit_field_mask (void);

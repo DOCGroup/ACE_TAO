@@ -35,13 +35,13 @@ ACE_Priority_Reactor::init_bucket (void)
 	   TUPLE_ALLOCATOR (ACE_Select_Reactor::DEFAULT_SIZE));
 
   // The event handlers are assigned to a new As the Event
-  ACE_NEW (this->bucket_,
-           QUEUE *[npriorities]);
-
+  ACE_NEW (this->bucket_, QUEUE*[npriorities]);
   // This loops "ensures" exception safety.
-  for (int i = 0; i < npriorities; ++i)
-    ACE_NEW (this->bucket_[i],
-             QUEUE (this->tuple_allocator_));
+  int i;
+  for (i = 0; i < npriorities; ++i)
+    {
+      ACE_NEW (this->bucket_[i], QUEUE (this->tuple_allocator_));
+    }
 }
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
@@ -69,10 +69,10 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
 ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
 {
   ACE_TRACE ("ACE_Priority_Reactor::~ACE_Priority_Reactor");
-
   for (int i = 0; i < npriorities; ++i)
-    delete this->bucket_[i];
-
+    {
+      delete this->bucket_[i];
+    }
   delete[] this->bucket_;
   delete tuple_allocator_;
 }
@@ -88,36 +88,48 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   ACE_TRACE ("ACE_Priority_Reactor::dispatch_io_set");
 
   if (number_of_active_handles == 0)
-    return 0;
+    {
+      return 0;
+    }
+
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Priority_Reactor::dispatch_io_set\n")));
+
+  ACE_HANDLE handle;
+
 
   // The range for which there exists any Event_Tuple is computed on
-  // the ordering loop, minimizing iterations on the dispatching loop.
+  // the ordering loop, minimizing iterations on the dispatching
+  // loop.
   int min_priority = ACE_Event_Handler::HI_PRIORITY;
   int max_priority = ACE_Event_Handler::LO_PRIORITY;
 
   ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
 
-  for (ACE_HANDLE handle;
-       (handle = handle_iter ()) != ACE_INVALID_HANDLE;
-       )
+  while ((handle = handle_iter ()) != ACE_INVALID_HANDLE)
     {
-      ACE_Event_Tuple et (this->handler_rep_.find (handle), 
-                          handle);
+      ACE_Event_Tuple et (this->handler_rep_.find (handle), handle);
       int prio = et.event_handler_->priority ();
 
       // If the priority is out of range assign the minimum priority.
       if (prio < ACE_Event_Handler::LO_PRIORITY
 	  || prio > ACE_Event_Handler::HI_PRIORITY)
-        prio = ACE_Event_Handler::LO_PRIORITY;
+	{
+	  prio = ACE_Event_Handler::LO_PRIORITY;
+	}
 
       bucket_[prio]->enqueue_tail (et);
-
       // Update the priority ranges....
       if (min_priority > prio)
-        min_priority = prio;
+	{
+	  min_priority = prio;
+	}
       if (max_priority < prio)
-        max_priority = prio;
+	{
+	  max_priority = prio;
+	}
     }
+
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("dispatching.... %d\n"), number_of_active_handles));
 
   for (int i = max_priority; i >= min_priority; --i)
     {
@@ -141,7 +153,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
     }
 
   if (number_dispatched > 0 && this->state_changed_)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }

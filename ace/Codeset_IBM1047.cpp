@@ -17,8 +17,6 @@
 //
 // ============================================================================
 
-#if defined(ACE_MVS)
-
 #include "ace/Codeset_IBM1047.h"
 
 ACE_RCSID(ace, Codeset_IBM1047, "$Id$")
@@ -237,7 +235,7 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
 
 // ****************************************************************
 
-char ACE_to_IBM1047[257] =
+char ACE_to_IBM1047[257] = 
 {
   "\x00\x01\x02\x03\x37\x2D\x2E\x2F\x16\x05\x25\x0B\x0C\x0D\x0E\x0F" // 00-0F
   "\x10\x11\x12\x13\x3C\x3D\x32\x26\x18\x19\x3F\x27\x22\x1D\x35\x1F" // 10-1F
@@ -257,8 +255,8 @@ char ACE_to_IBM1047[257] =
   "\xFC\x9E\xAE\x8C\xDD\xDC\x39\xFB\x80\xAF\xFD\x78\x76\xB2\x9F\xFF" // F0-FF
 };
 
-char ACE_from_IBM1047[257] =
-{
+char ACE_from_IBM1047[257] = 
+{ 
   "\x00\x01\x02\x03\xCF\x09\xD3\x7F\xD4\xD5\xC3\x0B\x0C\x0D\x0E\x0F" // 00-0F
   "\x10\x11\x12\x13\xC7\xB4\x08\xC9\x18\x19\xCC\xCD\x83\x1D\xD2\x1F" // 10-1F
   "\x81\x82\x1C\x84\x86\x0A\x17\x1B\x89\x91\x92\x95\xA2\x05\x06\x07" // 20-2F
@@ -277,7 +275,3 @@ char ACE_from_IBM1047[257] =
   "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\xB3\xF7\xF0\xFA\xA7\xFF" // F0-FF
 };
 
-#elif defined (__HP_aCC)
-// Make aC++ stop complaining about an empty translation unit
-static int shut_up_aCC = 0;
-#endif /* ACE_MVS */

@@ -53,7 +53,7 @@ public:
   // the default value of <ACE_Addr::sap_any> then the user is letting
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
-  // The <flags> and <perms> arguments are passed down to the <open>
+  // The <flags> and <perms> arguments are passed down to the open()
   // method.
 
   int connect (ACE_SPIPE_Stream &new_io,
@@ -76,7 +76,7 @@ public:
   // the default value of <ACE_Addr::sap_any> then the user is letting
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
-  // The <flags> and <perms> arguments are passed down to the <open>
+  // The <flags> and <perms> arguments are passed down to the open()
   // method.
 
   int reset_new_handle (ACE_HANDLE handle);

@@ -18,24 +18,17 @@
 
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).dll
 
-$(TARGET): $(OBJFILES) $(RESOURCE)
+$(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
 	$(LD) @&&!
 	$(COMMON_LFLAGS) $(DLL_LFLAGS) $(LFLAGS) +
 	$(DLL_STARTUP_OBJ) $(OBJFILES), +
 	$(TARGET),, +
-	$(COMMON_LIBS) $(LIBFILES),, +
-	$(RESOURCE)
+	$(COMMON_LIBS) $(LIBFILES)
 !
 
 !ifdef CPPDIR
 .path.cpp = $(CPPDIR)
-!endif
-
-!ifdef RESDIR
-.path.rc = $(RESDIR)
-!else
-.path.rc = .
 !endif
 
 .path.obj = $(OBJDIR)
@@ -43,10 +36,6 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 .cpp.obj:
 	@$(MAKE_OBJDIR)
 	$(CC) $(COMMON_CFLAGS) $(DLL_CFLAGS) $(CFLAGS) -c -n$(@D) $<
-
-.rc.res:
-	@$(MAKE_OBJDIR)
-	$(RC) -fo$@ $<
 
 .autodepend
 

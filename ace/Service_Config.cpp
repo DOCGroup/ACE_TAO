@@ -73,9 +73,8 @@ ACE_STATIC_SVCS *
 ACE_Service_Config::static_svcs (void)
 {
   if (ACE_Service_Config::static_svcs_ == 0)
-    ACE_NEW_RETURN (ACE_Service_Config::static_svcs_,
-                    ACE_STATIC_SVCS,
-                    0);
+    ACE_NEW_RETURN (ACE_Service_Config::static_svcs_, ACE_STATIC_SVCS, 0);
+
   return ACE_Service_Config::static_svcs_;
 }
 
@@ -515,12 +514,11 @@ ACE_Service_Config::load_static_svcs (void)
 
       ACE_Service_Type *sr;
 
-      ACE_NEW_RETURN (sr,
-                      ACE_Service_Type (ssd->name_,
-                                        stp,
-                                        0,
-                                        ssd->active_),
-                      -1);
+      ACE_NEW_RETURN (sr, ACE_Service_Type (ssd->name_,
+                                            stp,
+                                            0,
+                                            ssd->active_), -1);
+
       if (ACE_Service_Repository::instance ()->insert (sr) == -1)
         return -1;
     }
@@ -534,13 +532,8 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                             LPCTSTR logger_key,
                             int ignore_default_svc_conf_file)
 {
-  int result = 0;
+  int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
-  ACE_Log_Msg *log_msg = ACE_LOG_MSG;
-
-  // Record the current log setting upon entering this thread.
-  int debugging_enabled =
-    log_msg->log_priority_enabled (LM_DEBUG);
 
   if (ACE_Service_Config::is_initialized_ != 0)
     // Guard against reentrant processing!
@@ -550,7 +543,8 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
     return -1;
-  else if (!ignore_default_svc_conf_file
+
+  if (!ignore_default_svc_conf_file
       && ACE_Service_Config::svc_conf_file_queue_->is_empty ()
       // Load the default "svc.conf" entry here if there weren't
       // overriding -f arguments in <parse_args>.
@@ -561,19 +555,14 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                        "enqueue_tail"),
                       -1);
 
-  // If -d was included as a startup parameter, the user wants debug
-  // information printed during service initialization.
+  // Clear the LM_DEBUG bit from log messages if appropriate
   if (ACE::debug ())
-    ACE_Log_Msg::enable_debug_messages ();
-  else
-    // The user has requested no debugging info.
     ACE_Log_Msg::disable_debug_messages ();
-
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
 
-  u_long flags = log_msg->flags ();
+  u_long flags = ACE_LOG_MSG->flags ();
 
   if (flags == 0)
     // Only use STDERR if the caller hasn't already set the flags.
@@ -587,10 +576,10 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
     // equal to the default static logger key.
     key = ACE_Service_Config::logger_key_;
 
-  if (log_msg->open (program_name,
-                     flags,
-                     key) == -1)
-    result = -1;
+  if (ACE_LOG_MSG->open (program_name,
+                         flags,
+                         key) == -1)
+    retval = -1;
   else
     {
       if (ACE::debug ())
@@ -605,45 +594,35 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
       // same size as the ACE_Service_Repository).
       ACE_Reactor::instance ();
 
-      // There's no point in dealing with this on NT since it doesn't
-      // really support signals very well...
+      // See if we need to load the static services.
+      if (ACE_Service_Config::no_static_svcs_ == 0
+          && ACE_Service_Config::load_static_svcs () == -1)
+        retval = -1;
+      else
+        {
+          int result = ACE_Service_Config::process_commandline_directives ();
+          retval = ACE_Service_Config::process_directives () + result;
+        }
+
+      // There's no point in dealing with this on NT since it doesn't really
+      // support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-      // @@ This really ought to be a Singleton.
+      // This really ought to be a Singleton I suspect...
+
       if (ACE_Reactor::instance ()->register_handler
           (ACE_Service_Config::signum_,
            ACE_Service_Config::signal_handler_) == -1)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
-
-      // See if we need to load the static services.
-      if (ACE_Service_Config::no_static_svcs_ == 0
-          && ACE_Service_Config::load_static_svcs () == -1)
-        result = -1;
-      else
-        {
-          if (ACE_Service_Config::process_commandline_directives () == -1)
-            result = -1;
-          else
-            result = ACE_Service_Config::process_directives ();
-        }
     }
 
-  {
-    // Make sure to save/restore errno properly.
-    ACE_Errno_Guard error (errno);
+  ace_yy_delete_parse_buffer ();
 
-    ace_yy_delete_parse_buffer ();
+  if (ACE::debug ())
+    ACE_Log_Msg::enable_debug_messages ();
 
-    // Reset debugging back to the way it was when we came into into
-    // <open_i>.
-    if (debugging_enabled)
-      ACE_Log_Msg::enable_debug_messages ();
-    else
-      // Debugging was off when we entered <open_i>.
-      ACE_Log_Msg::disable_debug_messages ();
-  }
-  return result;
+  return retval;
 }
 
 ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
@@ -651,8 +630,7 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  if (this->open (program_name,
-                  logger_key) == -1
+  if (this->open (program_name, logger_key) == -1
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
@@ -789,9 +767,7 @@ ACE_Service_Config::fini_svcs (void)
   if (ACE::debug ())
     ACE_Log_Msg::disable_debug_messages ();
 
-  int result = 0;
-  if (ACE_Service_Repository::instance () != 0)
-    result = ACE_Service_Repository::instance ()->fini ();
+  int result = ACE_Service_Repository::instance ()->fini ();
 
   // Since the fini() method of the objects inside the service
   // repository may reference the ACE singletons, they must be

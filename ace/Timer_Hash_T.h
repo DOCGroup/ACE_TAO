@@ -164,23 +164,13 @@ public:
                          const void *act,
                          const ACE_Time_Value &delay,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero);
-  // Schedule <type> that will expire after <delay> amount of time,
-  // which is specified in absolute time.  If it expires then <act> is
-  // passed in as the value to the <functor>.  If <interval> is != to
-  // <ACE_Time_Value::zero> then it is used to reschedule the <type>
-  // automatically, using relative time to the current <gettimeofday>.
-  // This method returns a <timer_id> that is a pointer to a token
-  // which stores information about the event. This <timer_id> can be
-  // used to cancel the timer before it expires.  Returns -1 on
-  // failure.
-
-  virtual int reset_interval (long timer_id, 
-                              const ACE_Time_Value &interval);
-  // Resets the interval of the timer represented by <timer_id> to
-  // <interval>, which is specified in relative time to the current
-  // <gettimeofday>.  If <interval> is equal to
-  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
-  // timer.  Returns 0 if successful, -1 if not.
+  // Schedule <type> that will expire after <delay> amount of time.
+  // If it expires then <act> is passed in as the value to the
+  // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
+  // is used to reschedule the <type> automatically.  This method
+  // returns a <timer_id> that is a pointer to a token which stores
+  // information about the event. This <timer_id> can be used to cancel
+  // the timer before it expires.  Returns -1 on failure.
 
   virtual int cancel (const TYPE &type,
                       int dont_call_handle_close = 1);

@@ -10,7 +10,6 @@
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
-#include "JAWS/Filecache.h"
 
 // #include "HTTP_Helpers.h"
 
@@ -68,7 +67,7 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 void
 JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *,
-                       unsigned int)
+                       unsigned int size)
 {
   ACE_SOCK_Stream new_stream;
   new_stream.set_handle (ACE_INVALID_HANDLE);
@@ -108,7 +107,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                              unsigned int entire_length)
 {
   ACE_Filecache_Handle handle (filename, 
-                               (int) entire_length);
+                               ACE_reinterpret_cast(int, entire_length));
 
   int result = handle.error ();
 
@@ -188,35 +187,21 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                               const char *trailer,
                               unsigned int trailer_size)
 {
-  int result = 0;
+  ACE_Filecache_Handle handle (filename);
 
-  if (filename == 0)
-    {
-      ioh->transmit_file_error (-1);
-      return;
-    }
+  int result = handle.error ();
 
-  JAWS_Cached_FILE cf (filename);
-
-  if (cf.file ()->get_handle () != ACE_INVALID_HANDLE)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
 #if defined (ACE_JAWS_BASELINE) || defined (ACE_WIN32)
-      ACE_FILE_Info info;
-      cf.file ()->get_info (info);
+      ACE_SOCK_Stream stream;
+      stream.set_handle (ioh->handle ());
 
-      if (cf.file ()->get_info (info) == 0 && info.size_ > 0)
-        {
-          ACE_SOCK_Stream stream;
-          stream.set_handle (ioh->handle ());
-          if (((u_long) stream.send_n (header, header_size) == header_size)
-              && (stream.send_n (cf.mmap ()->addr (), info.size_)
-                  == info.size_)
-              && ((u_long) stream.send_n (trailer, trailer_size)
-                  == trailer_size))
-            this->handler_->transmit_file_complete ();
-          else
-            result = -1;
-        }
+      if ((stream.send_n (header, header_size) == header_size)
+          && ((u_long) stream.send_n (handle.address (), handle.size ())
+              == handle.size ())
+          && (stream.send_n (trailer, trailer_size) == trailer_size))
+        this->handler_->transmit_file_complete ();
       else
         result = -1;
 #else
@@ -230,13 +215,10 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
           iov[iovcnt].iov_len =  header_size;
           iovcnt++;
         }
-
-      ACE_FILE_Info info;
-
-      if (cf.file ()->get_info (info) == 0 && info.size_ > 0)
+      if (handle.size () > 0)
         {
-          iov[iovcnt].iov_base = (char *) cf.mmap ()->addr ();
-          iov[iovcnt].iov_len = info.size_;
+          iov[iovcnt].iov_base = ACE_reinterpret_cast(char*,handle.address ());
+          iov[iovcnt].iov_len = handle.size ();
           iovcnt++;
         }
       if (trailer_size > 0)
@@ -252,7 +234,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 #endif /* ACE_JAWS_BASELINE */
     }
 
-  if (result != 0)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     ioh->transmit_file_error (result);
 }
 
@@ -452,8 +434,6 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                const char *trailer,
                                unsigned int trailer_size)
 {
-  int result = 0;
-
   JAWS_TRACE ("JAWS_Asynch_IO::transmit_file");
 
   ioh->idle ();
@@ -462,9 +442,11 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
-  JAWS_Cached_FILE *cf = new JAWS_Cached_FILE (filename);
+  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, ACE_NOMAP);
 
-  if (cf->file ()->get_handle () != ACE_INVALID_HANDLE)
+  int result = handle->error ();
+
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_Message_Block hdr_mb (header, header_size);
       ACE_Message_Block trl_mb (trailer, trailer_size);
@@ -475,23 +457,23 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
       ACE_Asynch_Transmit_File tf;
 
       if (tf.open (*(aioh->handler ()), aioh->handle ()) == -1
-          || tf.transmit_file (cf->file ()->get_handle (), // file handle
+          || tf.transmit_file (handle->handle (), // file handle
                                header_and_trailer, // header and trailer data
                                0,  // bytes_to_write
                                0,  // offset
                                0,  // offset_high
                                0,  // bytes_per_send
                                0,  // flags
-                               cf // act
+                               handle // act
                                ) == -1)
         result = -1;
     }
 
-  if (result != 0)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ioh->transmit_file_error (result);
       delete header_and_trailer;
-      delete cf;
+      delete handle;
     }
 }
 

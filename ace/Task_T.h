@@ -117,8 +117,8 @@ public: // Should be protected:
 
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
   // Flush the queue.  Note that if this conflicts with the C++
-  // iostream <flush> function, just rewrite the iostream function as
-  // ::<flush>.
+  // iostream flush() function, just rewrite the iostream function as
+  // ::flush().
 
   // = Special routines corresponding to certain message types.
 

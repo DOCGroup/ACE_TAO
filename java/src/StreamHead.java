@@ -72,17 +72,10 @@ public class StreamHead extends Task
 	f &= ~TaskFlags.ACE_FLUSHR;
       }
     if ((f & TaskFlags.ACE_FLUSHW) != 0)
-      return this.reply (mb, null);
+      return this.reply (mb, new TimeValue ());
     return 0;
   }
 
-  // Will block forever to add the given MessageBlock
-  public int put (MessageBlock mb) 
-  {
-      return this.put (mb, null);
-  }
-
-  // tv is absolute time
   public int put (MessageBlock mb, TimeValue tv)
   {
     int res = 0;

@@ -8,14 +8,11 @@
 #ifndef ACE_GNUG_COMMON_H
 #define ACE_GNUG_COMMON_H
 
-#if __GNUC__ > 2  ||  ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)  || \
-    (defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x540)
+#if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
   // egcs or g++ >= 2.8.0
 
 # define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_CPLUSPLUS_HEADERS
-# define ACE_HAS_EXPLICIT_KEYWORD
-# define ACE_HAS_MUTABLE_KEYWORD
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_TYPEDEFS
 # define ACE_HAS_TYPENAME_KEYWORD

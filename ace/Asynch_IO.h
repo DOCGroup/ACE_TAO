@@ -988,28 +988,31 @@ public:
 class ACE_Export ACE_Handler
 {
   // = TITLE
+  //
   //     This base class defines the interface for receiving the
   //     results of asynchronous operations.
   //
   // = DESCRIPTION
+  //
   //     Subclasses of this class will fill in appropriate methods.
+
 public:
   ACE_Handler (void);
   // A do nothing constructor.
 
   ACE_Handler (ACE_Proactor *p);
-  // A do nothing constructor which allows proactor to be set to <p>.
+  // A do nothing constructor which allows proactor to be set to <d>.
 
   virtual ~ACE_Handler (void);
   // Virtual destruction.
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This method will be called when an asynchronous read completes on
+   // This method will be called when an asynchronous read completes on
   // a stream.
 
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
   // This method will be called when an asynchronous write completes
-  // on a stream.
+  // on a strea_m.
 
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
   // This method will be called when an asynchronous read completes on

@@ -153,8 +153,7 @@ ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
 inline
 ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
   ACE_recursive_thread_mutex_t &m)
-   : lock_ (m),
-     owner_ (-1)
+   : lock_ (m)
 {
   acquire ();
 }
@@ -248,7 +247,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = (long) ((_100ns.LowPart % (DWORD) (10000 * 1000)) / 10);
+  this->tv_.tv_usec = long ((long (_100ns.QuadPart) % long (10000 * 1000)) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -262,8 +261,16 @@ ACE_Time_Value::operator FILETIME () const
                      ACE_Time_Value::FILETIME_to_timval_skew);
   FILETIME file_time;
 
-  file_time.dwLowDateTime = _100ns.LowPart;
-  file_time.dwHighDateTime = _100ns.HighPart;
+# if defined(__BORLANDC__)
+#   define LOWPART(x) x.u.LowPart
+#   define HIGHPART(x) x.u.HighPart
+# else
+#   define LOWPART(x) x.LowPart
+#   define HIGHPART(x) x.HighPart
+# endif /* defined(__BORLANDC__) */
+
+  file_time.dwLowDateTime = LOWPART(_100ns);
+  file_time.dwHighDateTime = HIGHPART(_100ns);
 
   return file_time;
 }
@@ -289,133 +296,6 @@ int
 ACE_Cleanup_Info::operator!= (const ACE_Cleanup_Info &o) const
 {
   return !(*this == o);
-}
-
-class ACE_Cleanup_Info_Node
-{
-  // = TITLE
-  //     For maintaining a list of ACE_Cleanup_Info items.
-  //
-  // = DESCRIPTION
-  //     For internal use by ACE_Object_Manager.
-public:
-  ACE_Cleanup_Info_Node (void);
-  ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
-                         ACE_Cleanup_Info_Node *next);
-  ~ACE_Cleanup_Info_Node (void);
-  ACE_Cleanup_Info_Node *insert (const ACE_Cleanup_Info &);
-private:
-  ACE_Cleanup_Info cleanup_info_;
-  ACE_Cleanup_Info_Node *next_;
-
-  friend class ACE_OS_Exit_Info;
-};
-
-ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void)
-  : cleanup_info_ (),
-    next_ (0)
-{
-}
-
-ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
-                                              ACE_Cleanup_Info_Node *next)
-  : cleanup_info_ (new_info),
-    next_ (next)
-{
-}
-
-ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
-{
-  delete next_;
-}
-
-ACE_Cleanup_Info_Node *
-ACE_Cleanup_Info_Node::insert (const ACE_Cleanup_Info &new_info)
-{
-  ACE_Cleanup_Info_Node *new_node;
-
-  ACE_NEW_RETURN (new_node,
-                  ACE_Cleanup_Info_Node (new_info, this),
-                  0);
-
-  return new_node;
-}
-
-ACE_OS_Exit_Info::ACE_OS_Exit_Info (void)
-{
-  ACE_NEW (registered_objects_, ACE_Cleanup_Info_Node);
-}
-
-ACE_OS_Exit_Info::~ACE_OS_Exit_Info (void)
-{
-  delete registered_objects_;
-  registered_objects_ = 0;
-}
-
-int
-ACE_OS_Exit_Info::at_exit_i (void *object,
-                             ACE_CLEANUP_FUNC cleanup_hook,
-                             void *param)
-{
-  ACE_Cleanup_Info new_info;
-  new_info.object_ = object;
-  new_info.cleanup_hook_ = cleanup_hook;
-  new_info.param_ = param;
-
-  // Return -1 and sets errno if unable to allocate storage.  Enqueue
-  // at the head and dequeue from the head to get LIFO ordering.
-
-  ACE_Cleanup_Info_Node *new_node;
-
-  if ((new_node = registered_objects_->insert (new_info)) == 0)
-    return -1;
-  else
-    {
-      registered_objects_ = new_node;
-      return 0;
-    }
-}
-
-int
-ACE_OS_Exit_Info::find (void *object)
-{
-  // Check for already in queue, and return 1 if so.
-  for (ACE_Cleanup_Info_Node *iter = registered_objects_;
-       iter  &&  iter->next_ != 0;
-       iter = iter->next_)
-    {
-      if (iter->cleanup_info_.object_ == object)
-        {
-          // The object has already been registered.
-          return 1;
-        }
-    }
-
-  return 0;
-}
-
-void
-ACE_OS_Exit_Info::call_hooks ()
-{
-  // Call all registered cleanup hooks, in reverse order of
-  // registration.
-  for (ACE_Cleanup_Info_Node *iter = registered_objects_;
-       iter  &&  iter->next_ != 0;
-       iter = iter->next_)
-    {
-      ACE_Cleanup_Info &info = iter->cleanup_info_;
-      if (info.cleanup_hook_ == ACE_reinterpret_cast (ACE_CLEANUP_FUNC,
-                                                      ace_cleanup_destroyer))
-        // The object is an ACE_Cleanup.
-        ace_cleanup_destroyer (ACE_reinterpret_cast (ACE_Cleanup *,
-                                                     info.object_),
-                               info.param_);
-      else if (info.object_ == &ace_exit_hook_marker)
-        // The hook is an ACE_EXIT_HOOK.
-        (* ACE_reinterpret_cast (ACE_EXIT_HOOK, info.cleanup_hook_)) ();
-      else
-        (*info.cleanup_hook_) (info.object_, info.param_);
-    }
 }
 
 void
@@ -463,6 +343,44 @@ ACE_Time_Value::normalize (void)
       this->tv_.tv_sec++;
       this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
     }
+}
+
+int
+ACE_Countdown_Time::start (void)
+{
+  if (this->max_wait_time_ != 0)
+    {
+      this->start_time_ = ACE_OS::gettimeofday ();
+      this->stopped_ = 0;
+    }
+  return 0;
+}
+
+int
+ACE_Countdown_Time::update (void)
+{
+  return (this->stop () == 0) && this->start ();
+}
+
+int
+ACE_Countdown_Time::stop (void)
+{
+  if (this->max_wait_time_ != 0 && this->stopped_ == 0)
+    {
+      ACE_Time_Value elapsed_time =
+        ACE_OS::gettimeofday () - this->start_time_;
+
+      if (*this->max_wait_time_ > elapsed_time)
+        *this->max_wait_time_ -= elapsed_time;
+      else
+        {
+          // Used all of timeout.
+          *this->max_wait_time_ = ACE_Time_Value::zero;
+          // errno = ETIME;
+        }
+      this->stopped_ = 1;
+    }
+  return 0;
 }
 
 ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
@@ -538,23 +456,9 @@ ACE_OS::uname (struct utsname *name)
   ::GetVersionEx (&vinfo);
 
   SYSTEM_INFO sinfo;
-#   if defined (ACE_HAS_PHARLAP)
-  // PharLap doesn't do GetSystemInfo.  What's really wanted is the CPU
-  // architecture, so we can get that with EtsGetSystemInfo. Fill in what's
-  // wanted in the SYSTEM_INFO structure, and carry on. Note that the
-  // CPU type values in EK_KERNELINFO have the same values are the ones
-  // defined for SYSTEM_INFO.
-  EK_KERNELINFO ets_kern;
-  EK_SYSTEMINFO ets_sys;
-  EtsGetSystemInfo (&ets_kern, &ets_sys);
-  sinfo.wProcessorLevel = ACE_static_cast (WORD, ets_kern.CpuType);
-  sinfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_INTEL;
-  sinfo.dwProcessorType = ets_kern.CpuType * 100 + 86;
-#   else
   ::GetSystemInfo(&sinfo);
 
   ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
-#   endif /* ACE_HAS_PHARLAP */
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
   {
@@ -907,6 +811,9 @@ ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 #endif /* ACE_HAS_THREADS */
 }
 
+// The following *printf functions aren't inline because
+// they use varargs.
+
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
@@ -976,10 +883,6 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 # endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_WINCE)
-
-// The following *printf functions aren't inline because
-// they use varargs.
-
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
@@ -1397,7 +1300,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       int result = ::sched_setscheduler (0, // this process
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
-#   if defined (DIGITAL_UNIX)
+#   if defined DIGITAL_UNIX
         return result == 0
           ? // Use priocntl (2) to set the process in the RT class,
             // if using an RT policy.
@@ -1439,17 +1342,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
 
 # elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-  // PharLap ETS can act on the current thread - it can set the quantum also,
-  // unlike Win32. All this only works on the RT version.
-#   if defined (ACE_HAS_PHARLAP_RT)
-  if (id != ACE_SELF)
-    ACE_NOTSUP_RETURN (-1);
-
-  if (sched_params.quantum() != ACE_Time_Value::zero)
-    EtsSetTimeSlice (sched_params.quantum().msec());
-
-#   else
   ACE_UNUSED_ARG (id);
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||
@@ -1471,7 +1363,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     {
       return -1;
     }
-#   endif /* ACE_HAS_PHARLAP_RT */
 
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
@@ -1931,9 +1822,9 @@ ACE_TSS_Cleanup::instance (void)
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
       if (ACE_TSS_Cleanup::instance_ == 0)
-        ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_,
-                        ACE_TSS_Cleanup,
-                        0);
+        {
+          ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
+        }
     }
 
   return ACE_TSS_Cleanup::instance_;
@@ -2087,14 +1978,11 @@ ACE_TSS_Cleanup::tss_keys ()
 
   if (ts_keys == 0)
     {
-      ACE_NEW_RETURN (ts_keys,
-                      ACE_TSS_Keys,
-                      0);
+      ACE_NEW_RETURN (ts_keys, ACE_TSS_Keys, 0);
       // Store the dynamically allocated pointer in thread-specific
       // storage.
       if (ACE_OS::thr_setspecific (in_use_,
-            ACE_reinterpret_cast (void *,
-                                  ts_keys)) == -1)
+            ACE_reinterpret_cast (void *, ts_keys)) == -1)
         {
           delete ts_keys;
           return 0; // Major problems, this should *never* happen!
@@ -2130,7 +2018,7 @@ ACE_TSS_Emulation_cleanup (void *ptr)
 }
 
 void **
-ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
+ACE_TSS_Emulation::tss_base (void* ts_storage[])
 {
   // TSS Singleton implementation.
 
@@ -2145,9 +2033,9 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
           ACE_NO_HEAP_CHECK;
           if (ACE_OS::thr_keycreate (&native_tss_key_,
                                      &ACE_TSS_Emulation_cleanup) != 0)
-            {
+           {
               return 0; // Major problems, this should *never* happen!
-            }
+           }
           key_created_ = 1;
         }
     }
@@ -2164,85 +2052,37 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
   // at least on Pthreads Draft 4 platforms.
   if (old_ts_storage == 0)
     {
-      if (ts_created)
-        *ts_created = 1u;
-
       // Use the ts_storage passed as argument, if non-zero.  It is
       // possible that this has been implemented in the stack. At the
       // moment, this is unknown.  The cleanup must not do nothing.
       // If ts_storage is zero, allocate (and eventually leak) the
       // storage array.
       if (ts_storage == 0)
-        {
-          ACE_NO_HEAP_CHECK;
+      {
+        ACE_NO_HEAP_CHECK;
 
-          ACE_NEW_RETURN (ts_storage,
-                          void*[ACE_TSS_THREAD_KEYS_MAX],
-                          0);
+        ACE_NEW_RETURN (ts_storage, void*[ACE_TSS_THREAD_KEYS_MAX], 0);
 
-          // Zero the entire TSS array.  Do it manually instead of
-          // using memset, for optimum speed.  Though, memset may be
-          // faster :-)
-          void **tss_base_p = ts_storage;
+        // Zero the entire TSS array.  Do it manually instead of using
+        // memset, for optimum speed.  Though, memset may be faster :-)
+        void **tss_base_p = ts_storage;
+        for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
+          {
+            *tss_base_p = 0;
+          }
+      }
 
-          for (u_int i = 0;
-               i < ACE_TSS_THREAD_KEYS_MAX;
-               ++i)
-            *tss_base_p++ = 0;
-        }
-
-       // Store the pointer in thread-specific storage.  It gets
-       // deleted via the ACE_TSS_Emulation_cleanup function when the
-       // thread terminates.
-       if (ACE_OS::thr_setspecific (native_tss_key_,
-                                    (void *) ts_storage) != 0)
+     // Store the pointer in thread-specific storage.  It gets deleted
+     // via the ACE_TSS_Emulation_cleanup function when the thread
+     // terminates.
+     if (ACE_OS::thr_setspecific (native_tss_key_,
+                                 (void *) ts_storage) != 0)
           return 0; // Major problems, this should *never* happen!
     }
-  else
-    if (ts_created)
-      ts_created = 0;
 
-  return ts_storage  ?  ts_storage  :  old_ts_storage;
+  return old_ts_storage;
 }
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-
-u_int
-ACE_TSS_Emulation::total_keys ()
-{
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
-                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
-
-  return total_keys_;
-}
-
-int
-ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
-{
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
-                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
-
-  if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
-    {
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
-      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
-# else
-      key = total_keys_;
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
-      ++total_keys_;
-      return 0;
-    }
-  else
-    {
-      key = ACE_OS::NULL_key;
-      return -1;
-    }
-}
 
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
@@ -2257,9 +2097,9 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
   // Zero the entire TSS array.
   void **tss_base_p = ts_storage;
   for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
-    {
-      *tss_base_p = 0;
-    }
+  {
+    *tss_base_p = 0;
+  }
 
   return (void *) tss_base;
 #   else  /* ! ACE_PSOS */
@@ -2269,9 +2109,7 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
         // directly by the shell (without spawning a new task) after
         // another program has been run.
 
-  u_int ts_created = 0;
-  tss_base (ts_storage, &ts_created);
-  if (ts_created)
+  if (tss_base (ts_storage) == 0)
     {
 #     else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
       tss_base () = ts_storage;
@@ -2390,13 +2228,13 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 }
 
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ()
+#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ();
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, (void *) STACKSIZE, (unsigned int) ENTRYPOINT, (unsigned int *) THR_ID)
 #else
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS);
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
+      ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID);
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 void *
@@ -3918,8 +3756,8 @@ ACE_OS::thr_key_detach (void *inst)
 
 void
 ACE_OS::unique_name (const void *object,
-                     LPTSTR name,
-                     size_t length)
+                  LPTSTR name,
+                  size_t length)
 {
   // The process ID will provide uniqueness between processes on the
   // same machine. The "this" pointer of the <object> will provide
@@ -3929,7 +3767,7 @@ ACE_OS::unique_name (const void *object,
   TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
                    ACE_TEXT ("%x%d"),
-                   ACE_reinterpret_cast (ptr_arith_t, object),
+                   object,
                    ACE_OS::getpid ());
   ACE_OS::strncpy (name,
                    temp_name,
@@ -4150,7 +3988,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
       startup_info.cb = sizeof startup_info;
 
       if (::CreateProcess (0,
-                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
+                           (LPTSTR) ACE_WIDE_STRING (buf),
                            0, // No process attributes.
                            0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
@@ -4161,7 +3999,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            &process_info))
 #   else
       if (::CreateProcess (0,
-                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
+                           (LPTSTR) buf,
                            0, // No process attributes.
                            0,  // No thread attributes.
                            FALSE, // Can's inherit handles on CE
@@ -4329,9 +4167,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 #   if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
 #   else
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -4375,9 +4211,7 @@ ACE_TRACE ("readv");
 #   if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
 #   else
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE_OS::read_n (handle, buf, length);
@@ -4589,7 +4423,7 @@ spa (FUNCPTR entry, ...)
   const int ret = ::taskSpawn (argv[0],    // task name
                                100,        // task priority
                                VX_FP_TASK, // task options
-                               ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                               1000000,    // stack size
                                entry,      // entry point
                                argc,       // first argument to main ()
                                (int) argv, // second argument to main ()
@@ -5314,16 +5148,12 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 # endif /* ACE_LACKS_DIFFTIME */
 
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+# if defined (ACE_HAS_WINCE)
 wchar_t *
 ACE_OS::ctime (const time_t *t)
 {
-#if defined (ACE_HAS_WINCE)
   wchar_t buf[26];              // 26 is a "magic number" ;)
   return ACE_OS::ctime_r (t, buf, 26);
-#else
-  ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
-#endif /* ACE_HAS_WINCE */
 }
 
 wchar_t *
@@ -5331,13 +5161,6 @@ ACE_OS::ctime_r (const time_t *clock,
                  wchar_t *buf,
                  int buflen)
 {
-#if !defined (ACE_HAS_WINCE)
-  wchar_t *result;
-  ACE_OSCALL (::_wctime (clock), wchar_t *, 0, result);
-  if (result != 0)
-    ::wcsncpy (buf, result, buflen);
-  return buf;
-#else
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
     return 0;
@@ -5369,9 +5192,8 @@ ACE_OS::ctime_r (const time_t *clock,
                    systime.wSecond,
                    systime.wYear);
   return buf;
-#endif /* ACE_HAS_WINCE */
 }
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+# endif /* ACE_HAS_WINCE */
 
 # if !defined (ACE_HAS_WINCE)
 time_t
@@ -5424,25 +5246,18 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                        name4,
                        ACE_UNIQUE_NAME_LEN);
 
-  ACE_condattr_t attributes;
-  if (ACE_OS::condattr_init (attributes, type) == 0)
-    {
-      if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
-          && ACE_OS::cond_init (&rw->waiting_readers_,
-                                attributes, name2, arg) == 0
-          && ACE_OS::cond_init (&rw->waiting_writers_,
-                                attributes, name3, arg) == 0
-          && ACE_OS::cond_init (&rw->waiting_important_writer_,
-                                attributes, name4, arg) == 0)
-        {
-          // Success!
-          rw->ref_count_ = 0;
-          rw->num_waiting_writers_ = 0;
-          rw->num_waiting_readers_ = 0;
-          rw->important_writer_ = 0;
-          result = 0;
-        }
-      ACE_OS::condattr_destroy (attributes);
+  if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_important_writer_, type, name4, arg) == 0)
+  {
+      // Success!
+      rw->ref_count_ = 0;
+      rw->num_waiting_writers_ = 0;
+      rw->num_waiting_readers_ = 0;
+      rw->important_writer_ = 0;
+
+      result = 0;
     }
 
   if (result == -1)
@@ -5486,30 +5301,6 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
-}
-
-// @@ The following functions could be inlined if i could figure where
-// to put it among the #ifdefs!
-int
-ACE_OS::condattr_init (ACE_condattr_t &attributes,
-                       int type)
-{
-  attributes.type = type;
-  return 0;
-}
-
-int
-ACE_OS::condattr_destroy (ACE_condattr_t &)
-{
-  return 0;
-}
-
-int
-ACE_OS::cond_init (ACE_cond_t *cv,
-                   ACE_condattr_t &attributes,
-                   LPCTSTR name, void *arg)
-{
-  return ACE_OS::cond_init (cv, attributes.type, name, arg);
 }
 
 int
@@ -6414,7 +6205,7 @@ ACE_Object_Manager_Base::shutting_down_i ()
 
 extern "C"
 void
-ACE_OS_Object_Manager_Internal_Exit_Hook (void)
+ACE_OS_Object_Manager_Internal_Exit_Hook ()
 {
   if (ACE_OS_Object_Manager::instance_)
     ACE_OS_Object_Manager::instance ()->fini ();
@@ -6426,7 +6217,6 @@ void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
-  : exit_info_ ()
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
   // already been instantiated (it is likely to be one initialized by way
@@ -6461,9 +6251,7 @@ ACE_OS_Object_Manager::instance (void)
     {
       ACE_OS_Object_Manager *instance_pointer;
 
-      ACE_NEW_RETURN (instance_pointer,
-                      ACE_OS_Object_Manager,
-                      0);
+      ACE_NEW_RETURN (instance_pointer, ACE_OS_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;
@@ -6487,61 +6275,38 @@ ACE_OS_Object_Manager::init (void)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
-            ACE_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_OS_MONITOR_LOCK])) != 0)
+        ACE_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::init, ACE_OS_MONITOR_LOCK")));
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (1)")));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_CLEANUP_LOCK])) != 0)
+        ACE_recursive_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) !=
+        0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::init, ")
-              ASYS_TEXT ("ACE_TSS_CLEANUP_LOCK")));
-          ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
-                                     ACE_LOG_MSG_INSTANCE_LOCK)
-          if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
-            ACE_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
-            ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::init, ")
-              ASYS_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK")));
-#   if defined (ACE_HAS_TSS_EMULATION)
-          ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
-                                     ACE_TSS_KEY_LOCK)
-          if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_KEY_LOCK])) != 0)
-            ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::init, ACE_TSS_KEY_LOCK")));
-#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (2)")));
+#   if defined (ACE_HAS_TSS_EMULATION) && \
+       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_BASE_LOCK])) != 0)
+          ACE_recursive_thread_mutex_t *,
+          ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::init, ACE_TSS_BASE_LOCK")));
-#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#   endif /* ACE_HAS_TSS_EMULATION */
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (3)")));
+#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 
           // Open Winsock (no-op on other platforms).
           ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
           // Register the exit hook, for use by ACE_OS::exit ().
-          ACE_OS::set_exit_hook (&ACE_OS_Object_Manager_Internal_Exit_Hook);
+          ACE_OS::set_exit_hook (ACE_OS_Object_Manager_Internal_Exit_Hook);
         }
 
       // Finally, indicate that the ACE_OS_Object_Manager instance has
@@ -6551,7 +6316,7 @@ ACE_OS_Object_Manager::init (void)
       return 0;
     } else {
       // Had already initialized.
-      return 1;
+      return -1;
     }
 }
 
@@ -6565,7 +6330,7 @@ ACE_OS_Object_Manager::fini (void)
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
-    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    return -1;
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_OS_Object_Manager instance.
@@ -6581,10 +6346,6 @@ ACE_OS_Object_Manager::fini (void)
       next_->fini ();
       next_ = 0;  // Protect against recursive calls.
     }
-
-  // Call all registered cleanup hooks, in reverse order of
-  // registration.
-  exit_info_.call_hooks ();
 
   // Only clean up preallocated objects when the singleton Instance is being
   // destroyed.
@@ -6602,8 +6363,8 @@ ACE_OS_Object_Manager::fini (void)
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT ("%p\n"),
-            ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_OS_MONITOR_LOCK")));
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (1)")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -6613,52 +6374,25 @@ ACE_OS_Object_Manager::fini (void)
        ACE_recursive_thread_mutex_t *,
        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT ("%p\n"),
-            ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_TSS_CLEANUP_LOCK")));
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (2)")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
+#   if defined (ACE_HAS_TSS_EMULATION) && \
+       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 #   if !defined (__Lynx__)
       // LynxOS 3.0.0 has problems with this after fork.
-      if (ACE_OS::thread_mutex_destroy (ACE_reinterpret_cast (
-        ACE_thread_mutex_t *,
-        ACE_OS_Object_Manager::preallocated_object
-            [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
+      if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
+        ACE_recursive_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT ("%p\n"),
-            ASYS_TEXT ("ACE_OS_Object_Manager::fini, ")
-            ASYS_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK")));
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (3)")));
 #   endif /* ! __Lynx__ */
-      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
-                                         ACE_LOG_MSG_INSTANCE_LOCK)
-#   if defined (ACE_HAS_TSS_EMULATION)
-#     if !defined (__Lynx__)
-        // LynxOS 3.0.0 has problems with this after fork.
-        if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-          ACE_recursive_thread_mutex_t *,
-          ACE_OS_Object_Manager::preallocated_object[
-            ACE_TSS_KEY_LOCK])) != 0)
-          ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_TSS_KEY_LOCK")));
-#     endif /* ! __Lynx__ */
-      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
-                                         ACE_TSS_KEY_LOCK)
-#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-#       if !defined (__Lynx__)
-          // LynxOS 3.0.0 has problems with this after fork.
-          if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_BASE_LOCK])) != 0)
-            ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("%p\n"),
-              ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_TSS_BASE_LOCK")));
-#       endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
-#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#   endif /* ACE_HAS_TSS_EMULATION */
+#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }
@@ -6675,16 +6409,6 @@ ACE_OS_Object_Manager::fini (void)
     instance_ = 0;
 
   return 0;
-}
-
-int ace_exit_hook_marker = 0;
-
-int
-ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func)
-{
-  return exit_info_.at_exit_i (&ace_exit_hook_marker,
-                               ACE_reinterpret_cast (ACE_CLEANUP_FUNC, func),
-                               0);
 }
 
 int
@@ -6870,287 +6594,3 @@ exit (int status)
 }
 
 # endif /* ACE_HAS_WINCE */
-
-#if defined (ACE_HAS_STRPTIME)
-# if defined (ACE_LACKS_NATIVE_STRPTIME)
-int
-ACE_OS::strptime_getnum (char *buf,
-                         int *num,
-                         int *bi,
-                         int *fi,
-                         int min,
-                         int max)
-{
-  int i = 0, tmp = 0;
-
-  while (isdigit (buf[i]))
-    {
-      tmp = (tmp * 10) + (buf[i] - '0');
-      if (max && (tmp > max))
-        return 0;
-      i++;
-    }
-
-  if (tmp < min)
-    return 0;
-  else if (i)
-    {
-      *num = tmp;
-      (*fi)++;
-      *bi += i;
-      return 1;
-    }
-  else
-    return 0;
-}
-# endif /* ACE_LACKS_NATIVE_STRPTIME */
-
-char *
-ACE_OS::strptime (char *buf,
-                  const char *format,
-                  struct tm *tm)
-{
-#if defined (ACE_LACKS_NATIVE_STRPTIME)
-  int bi = 0, fi = 0, percent = 0;
-  int wday = 0, yday = 0;
-  struct tm tmp;
-
-  if (!buf || !format)
-    return 0;
-
-  while (format[fi] != '\0')
-    {
-      if (percent)
-        {
-          percent = 0;
-          switch (format[fi])
-            {
-            case '%':                        /* an escaped % */
-              if (buf[bi] == '%')
-                {
-                  fi++; bi++;
-                }
-              else
-                return buf + bi;
-              break;
-
-              /* not supported yet: weekday via locale long/short names
-                 case 'a':                        / * weekday via locale * /
-                 / * FALL THROUGH * /
-                 case 'A':                        / * long/short names * /
-                 break;
-                 */
-
-              /* not supported yet:
-                 case 'b':                        / * month via locale * /
-                 / * FALL THROUGH * /
-                 case 'B':                        / * long/short names * /
-                 / * FALL THROUGH * /
-                 case 'h':
-                 break;
-                 */
-
-              /* not supported yet:
-                 case 'c':                        / * %x %X * /
-                 break;
-                 */
-
-              /* not supported yet:
-                 case 'C':                        / * date & time -  * /
-                 / * locale long format * /
-                 break;
-                 */
-
-            case 'd':                        /* day of month (1-31) */
-              /* FALL THROUGH */
-            case 'e':
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
-                return buf + bi;
-
-              break;
-
-            case 'D':                        /* %m/%d/%y */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
-                return buf + bi;
-
-              fi--;
-              tm->tm_mon--;
-
-              if (buf[bi] != '/')
-                return buf + bi;
-
-              bi++;
-
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
-                return buf + bi;
-
-              fi--;
-              if (buf[bi] != '/')
-                return buf + bi;
-              bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
-                return buf + bi;
-              if (tm->tm_year < 69)
-                tm->tm_year += 100;
-              break;
-
-            case 'H':                        /* hour (0-23) */
-              /* FALL THROUGH */
-            case 'k':
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
-                return buf + bi;
-              break;
-
-              /* not supported yet:
-                 case 'I':                        / * hour (0-12) * /
-                 / * FALL THROUGH * /
-                 case 'l':
-                 break;
-                 */
-
-            case 'j':                        /* day of year (0-366) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366))
-                return buf + bi;
-
-              tm->tm_yday--;
-              yday = 1;
-              break;
-
-            case 'm':                        /* an escaped % */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
-                return buf + bi;
-
-              tm->tm_mon--;
-              break;
-
-            case 'M':                        /* minute (0-59) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return buf + bi;
-
-              break;
-
-              /* not supported yet:
-                 case 'p':                        / * am or pm for locale * /
-                 break;
-                 */
-
-              /* not supported yet:
-                 case 'r':                        / * %I:%M:%S %p * /
-                 break;
-                 */
-
-            case 'R':                        /* %H:%M */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
-                return buf + bi;
-
-              fi--;
-              if (buf[bi] != ':')
-                return buf + bi;
-              bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return buf + bi;
-
-              break;
-
-            case 'S':                        /* seconds (0-61) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
-                return buf + bi;
-              break;
-
-            case 'T':                        /* %H:%M:%S */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
-                return buf + bi;
-
-              fi--;
-              if (buf[bi] != ':')
-                return buf + bi;
-              bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return buf + bi;
-
-              fi--;
-              if (buf[bi] != ':')
-                return buf + bi;
-              bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
-                return buf + bi;
-
-              break;
-
-            case 'w':                        /* day of week (0=Sun-6) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6))
-                return buf + bi;
-
-              wday = 1;
-              break;
-
-              /* not supported yet: date, based on locale
-                 case 'x':                        / * date, based on locale * /
-                 break;
-                 */
-
-              /* not supported yet:
-                 case 'X':                        / * time, based on locale * /
-                 break;
-                 */
-
-            case 'y':                        /* the year - 1900 (0-99) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
-                return buf + bi;
-
-              if (tm->tm_year < 69)
-                tm->tm_year += 100;
-              break;
-
-            case 'Y':                        /* the full year (1999) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 0))
-                return buf + bi;
-
-              tm->tm_year -= 1900;
-              break;
-
-            default:                        /* unrecognised */
-              return buf + bi;
-            } /* switch (format[fi]) */
-
-        }
-      else
-        { /* if (percent) */
-          if (format[fi] == '%')
-            {
-              percent = 1;
-              fi++;
-            }
-          else
-            {
-              if (format[fi] == buf[bi])
-                {
-                  fi++;
-                  bi++;
-                }
-              else
-                return buf + bi;
-            }
-        } /* if (percent) */
-    } /* while (format[fi] */
-
-  if (!wday || !yday)
-    {
-      ACE_OS::memcpy (&tmp, tm, sizeof (struct tm));
-      if (mktime (&tmp) != (time_t) (-1))
-        {
-          if (!wday)
-            tm->tm_wday = tmp.tm_wday;
-          if (!yday)
-            tm->tm_yday = tmp.tm_yday;
-        }
-    }
-
-  return buf + bi;
-#else  /* ! ACE_LACKS_NATIVE_STRPTIME */
-  return ::strptime (buf,
-                     format,
-                     tm);
-#endif /* ! ACE_LACKS_NATIVE_STRPTIME */
-}
-#endif /* ACE_HAS_STRPTIME */

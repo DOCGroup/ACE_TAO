@@ -62,13 +62,6 @@ public:
     // changes enabled bits).
   };
 
-  typedef int (*REACTOR_EVENT_HOOK)(void*);
-  // You can add a hook to various run_event methods and the hook will
-  // be called after handling every reactor event.  If this function
-  // returns 0, run_reactor_event_loop will check for the return value of
-  // handle_event.  If it is -1, the the run_reactor_event_loop will return
-  // (pre-maturely.)
-
   static ACE_Reactor *instance (void);
   // Get pointer to a process-wide <ACE_Reactor>.
 
@@ -81,7 +74,7 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
 
-  // = Singleton reactor event loop management methods.
+  // = Reactor event loop management methods.
 
   // Note that these method ONLY work on the "Singleton Reactor,"
   // i.e., the one returned from <ACE_Reactor::instance>.
@@ -107,42 +100,6 @@ public:
   // Report if the <ACE_Reactor::instance>'s event loop is finished.
 
   static void reset_event_loop (void);
-  // Resets the <ACE_Reactor::end_event_loop_> static so that the
-  // <run_event_loop> method can be restarted.
-
-  static int check_reconfiguration (void *);
-  // The singleton reactor is used by the service_configurator.
-  // Therefore, we must check for the reconfiguration request and
-  // handle it after handling an event.
-
-
-  // = Reactor event loop management methods.
-
-  // These methods work with an instance of a reactor.
-  virtual int run_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
-  virtual int run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
-  // Run the event loop until the
-  // <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
-  // method returns -1 or the <end_event_loop> method is invoked.
-
-  virtual int run_reactor_event_loop (ACE_Time_Value &tv,
-                                      REACTOR_EVENT_HOOK = 0);
-  virtual int run_alertable_reactor_event_loop (ACE_Time_Value &tv,
-                                                REACTOR_EVENT_HOOK = 0);
-  // Run the event loop until the <ACE_Reactor::handle_events> or
-  // <ACE_Reactor::alertable_handle_events> methods returns -1, the
-  // <end_event_loop> method is invoked, or the <ACE_Time_Value>
-  // expires.
-
-  virtual int end_reactor_event_loop (void);
-  // Instruct the <ACE_Reactor::instance> to terminate its event loop
-  // and notifies the <ACE_Reactor::instance> so that it can wake up
-  // and close down gracefully.
-
-  virtual int reactor_event_loop_done (void);
-  // Report if the <ACE_Reactor::instance>'s event loop is finished.
-
-  virtual void reset_reactor_event_loop (void);
   // Resets the <ACE_Reactor::end_event_loop_> static so that the
   // <run_event_loop> method can be restarted.
 
@@ -309,7 +266,7 @@ public:
 
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
   // Suspend <event_handler> temporarily.  Use
-  // <ACE_Event_Handler::get_handle> to get the handle.
+  // <event_handler->get_handle()> to get the handle.
 
   virtual int suspend_handler (ACE_HANDLE handle);
   // Suspend <handle> temporarily.
@@ -321,8 +278,8 @@ public:
   // Suspend all <handles> temporarily.
 
   virtual int resume_handler (ACE_Event_Handler *event_handler);
-  // Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
-  // get the handle.
+  // Resume <event_handler>. Use <event_handler->get_handle()> to get
+  // the handle.
 
   virtual int resume_handler (ACE_HANDLE handle);
   // Resume <handle>.
@@ -333,34 +290,25 @@ public:
   virtual int resume_handlers (void);
   // Resume all <handles>.
 
-  // = Timer management.
+  // Timer management.
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delta,
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule an <event_handler> that will expire after <delay> amount
-  // of time, which is specified as relative time to the current
-  // <gettimeofday>.  If it expires then <arg> is passed in as the
-  // value to the <event_handler>'s <handle_timeout> callback method.
-  // If <interval> is != to <ACE_Time_Value::zero> then it is used to
-  // reschedule the <event_handler> automatically, also specified
-  // using relative time.  This method returns a <timer_id> that
-  // uniquely identifies the <event_handler> in an internal list.
-  // This <timer_id> can be used to cancel an <event_handler> before
-  // it expires.  The cancellation ensures that <timer_ids> are unique
-  // up to values of greater than 2 billion timers.  As long as timers
-  // don't stay around longer than this there should be no problems
-  // with accidentally deleting the wrong timer.  Returns -1 on
-  // failure (which is guaranteed never to be a valid <timer_id>.
-
-  virtual int reset_timer_interval (long timer_id, 
-                                    const ACE_Time_Value &interval);
-  // Resets the interval of the timer represented by <timer_id> to
-  // <interval>, which is specified in relative time to the current
-  // <gettimeofday>.  If <interval> is equal to
-  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
-  // timer.  Returns 0 if successful, -1 if not.
+  // of time.  If it expires then <arg> is passed in as the value to
+  // the <event_handler>'s <handle_timeout> callback method.  If
+  // <interval> is != to <ACE_Time_Value::zero> then it is used to
+  // reschedule the <event_handler> automatically.  This method
+  // returns a <timer_id> that uniquely identifies the <event_handler>
+  // in an internal list.  This <timer_id> can be used to cancel an
+  // <event_handler> before it expires.  The cancellation ensures that
+  // <timer_ids> are unique up to values of greater than 2 billion
+  // timers.  As long as timers don't stay around longer than this
+  // there should be no problems with accidentally deleting the wrong
+  // timer.  Returns -1 on failure (which is guaranteed never to be a
+  // valid <timer_id>.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);
@@ -424,8 +372,6 @@ public:
   // via the notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
-  // = Assorted helper methods.
-  
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Event_Handler **event_handler = 0);
@@ -466,12 +412,6 @@ public:
   virtual int requeue_position (void);
   // Get position of the owner thread.
 
-  virtual int restart (void);
-  // Get the existing restart value.
-  
-  virtual int restart (int r);
-  // Set a new value for restart and return the original value.
-
   // = Low-level wait_set mask manipulation methods.
 
   virtual int mask_ops (ACE_Event_Handler *event_handler,
@@ -504,7 +444,7 @@ public:
   virtual int current_info (ACE_HANDLE handle,
                             size_t &msg_size);
   // Returns 0, if the size of the current message has been put in
-  // <size> returns -1, if not.  ACE_HANDLE allows the reactor to
+  // <size> Returns -1, if not.  ACE_HANDLE allows the reactor to
   // check if the caller is valid.  Used for CLASSIX Reactor
   // implementation.
 
@@ -516,7 +456,7 @@ public:
   // Declare the dynamic allocation hooks.
 
   void dump (void) const;
-  // Dump the state of the object.
+  // Dump the state of an object.
 
 protected:
   virtual void implementation (ACE_Reactor_Impl *implementation);
@@ -535,6 +475,9 @@ protected:
 
   static int delete_reactor_;
   // Must delete the <reactor_> singleton if non-0.
+
+  static sig_atomic_t end_event_loop_;
+  // Terminate the event loop of the singleton Reactor.
 
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);

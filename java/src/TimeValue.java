@@ -17,8 +17,7 @@ public class TimeValue
   public final static TimeValue zero = new TimeValue (0,0);
 
   /** 
-   * Default constructor.  This creates a TimeValue that is
-   * equal to TimeValue.zero.
+   * Default constructor
    */
   public TimeValue ()
   {
@@ -95,39 +94,11 @@ public class TimeValue
 
   /** 
    * Get current time.
-   *@return the current system time as a new TimeValue
+   *@return the current system time
    */
   public static TimeValue getTimeOfDay ()
   {
     return new TimeValue (System.currentTimeMillis ()/1000);
-  }
-
-  /**
-   * Return a new TimeValue that represents the current system time 
-   * of day offset by the given number of seconds and nanoseconds.  
-   *@param sec Number of seconds to offset by
-   *@param nanos Number of nanoseconds to offset by
-   *@see JACE.ASX.TimeValue
-   *@return TimeValue for the system time plus the given offset
-   */
-  public static TimeValue relativeTimeOfDay(long sec, int nanos) 
-  {
-    return new TimeValue ((System.currentTimeMillis() / 1000) + sec,
-			 nanos);
-  }  
-
-  /**
-   * Return a new TimeValue that represents the current system time 
-   * of day offset by the given TimeValue.
-   *@param tv TimeValue to offset by
-   *@see JACE.ASX.TimeValue
-   *@return TimeValue for the system time plus the given offset
-   */
-  public static TimeValue relativeTimeOfDay(TimeValue offset)
-  {
-    return new TimeValue ((System.currentTimeMillis() / 1000) +
-			  offset.sec(),
-			  offset.nanos());
   }
 
   /**

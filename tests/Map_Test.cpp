@@ -48,25 +48,25 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>,
 typedef ACE_Active_Map_Manager_Adapter<KEY, VALUE, Key_Adapter> ACTIVE_MAP_MANAGER_ADAPTER;
 
 static void
-functionality_test (MAP &map,
+functionality_test (MAP &map, 
                     size_t iterations)
 {
   size_t counter;
   VALUE i;
   KEY *original_keys = new KEY[iterations];
   KEY *modified_keys = new KEY[iterations];
-
+  
   // Setup the keys to have some initial data.
-  for (i = 0;
-       i < iterations;
+  for (i = 0; 
+       i < iterations; 
        ++i)
     {
       original_keys[i].size (sizeof i / sizeof (KEY::TYPE));
       ACE_OS::memcpy (&original_keys[i][0],
-                      &i,
-                      sizeof i);
+                      &i, 
+                      sizeof i);      
     }
-
+  
   // Make a copy of the keys so that we can compare with the original
   // keys later.
   for (i = 0; i < iterations; ++i)
@@ -82,7 +82,7 @@ functionality_test (MAP &map,
       ++counter;
       ACE_ASSERT (map.current_size () == counter);
     }
-
+    
   // Forward iteration...
   {
     counter = 0;
@@ -98,7 +98,7 @@ functionality_test (MAP &map,
         KEY original_key;
         ACE_ASSERT (map.recover_key (entry.first (),
                                      original_key) == 0);
-
+        
         // Make sure recovering keys work.
         ACE_ASSERT (original_keys[entry.second ()] == original_key);
 
@@ -123,9 +123,9 @@ functionality_test (MAP &map,
 
   // Reverse iteration...
   {
-    counter = iterations;
+    counter = iterations;    
     MAP::reverse_iterator end = map.rend ();
-
+    
     for (MAP::reverse_iterator iter = map.rbegin ();
          iter != end;
          ++iter)
@@ -137,7 +137,7 @@ functionality_test (MAP &map,
         KEY original_key;
         ACE_ASSERT (map.recover_key (entry.first (),
                                      original_key) == 0);
-
+        
         // Make sure recovering keys work.
         ACE_ASSERT (original_keys[entry.second ()] == original_key);
 
@@ -154,7 +154,7 @@ functionality_test (MAP &map,
                     original_value,
                     entry.second ()));
       }
-
+    
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("\n")));
     ACE_ASSERT (counter == 0);
@@ -183,7 +183,7 @@ functionality_test (MAP &map,
 }
 
 static void
-insert_test (MAP &map,
+insert_test (MAP &map, 
              size_t iterations,
              KEY *keys)
 {
@@ -198,7 +198,7 @@ insert_test (MAP &map,
 }
 
 static void
-find_test (MAP &map,
+find_test (MAP &map, 
            size_t iterations,
            KEY *keys)
 {
@@ -212,7 +212,7 @@ find_test (MAP &map,
 }
 
 static void
-unbind_test (MAP &map,
+unbind_test (MAP &map, 
              size_t iterations,
              KEY *keys)
 {
@@ -288,90 +288,45 @@ main (int argc, ASYS_TCHAR *argv[])
   if (functionality_tests)
     {
       // Functionality test of the maps.
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nMap Manager functionality test\n")));
+      ACE_DEBUG ((LM_DEBUG, "\nMap Manager functionality test\n"));
       functionality_test (map1, iterations);
-
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nHash Map Manager functionality test\n")));
+      
+      ACE_DEBUG ((LM_DEBUG, "\nHash Map Manager functionality test\n"));
       functionality_test (map2, iterations);
-
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nActive Map Manager functionality test\n")));
+      
+      ACE_DEBUG ((LM_DEBUG, "\nActive Map Manager functionality test\n"));
       functionality_test (map3, iterations);
-
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+      
+      ACE_DEBUG ((LM_DEBUG, "\n"));        
     }
 
   // Performance test of the maps.
   KEY *keys = new KEY[iterations];
-
+      
   // Map Manager
-  performance_test (&insert_test,
-                    map1,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Map Manager (insert test)"));
-  performance_test (&find_test,
-                    map1,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Map Manager (find test)"));
-  performance_test (&unbind_test,
-                    map1,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Map Manager (unbind test)"));
+  performance_test (&insert_test, map1, iterations, keys, table_size, "Map Manager (insert test)");                    
+  performance_test (&find_test,   map1, iterations, keys, table_size, "Map Manager (find test)");                    
+  performance_test (&unbind_test, map1, iterations, keys, table_size, "Map Manager (unbind test)");                    
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, "\n"));  
 
   // Hash Map Manager
-  performance_test (&insert_test,
-                    map2,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Hash Map Manager (insert test)"));
-  performance_test (&find_test,
-                    map2,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Hash Map Manager (find test)"));
-  performance_test (&unbind_test,
-                    map2,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Hash Map Manager (unbind test)"));
+  performance_test (&insert_test, map2, iterations, keys, table_size, "Hash Map Manager (insert test)");                    
+  performance_test (&find_test,   map2, iterations, keys, table_size, "Hash Map Manager (find test)");                    
+  performance_test (&unbind_test, map2, iterations, keys, table_size, "Hash Map Manager (unbind test)");                    
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, "\n"));  
 
   // Active Map Manager
-  performance_test (&insert_test,
-                    map3,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Active Map Manager (insert test)"));
-  performance_test (&find_test,
-                    map3,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Active Map Manager (find test)"));
-  performance_test (&unbind_test,
-                    map3,
-                    iterations,
-                    keys,
-                    table_size,
-                    ASYS_TEXT ("Active Map Manager (unbind test)"));
+  performance_test (&insert_test, map3, iterations, keys, table_size, "Active Map Manager (insert test)");                    
+  performance_test (&find_test,   map3, iterations, keys, table_size, "Active Map Manager (find test)");                    
+  performance_test (&unbind_test, map3, iterations, keys, table_size, "Active Map Manager (unbind test)");                    
 
   delete[] keys;
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
-
+  
   return 0;
 }
 
@@ -386,7 +341,7 @@ typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 template class ACE_Array<char>;
 template class ACE_Array_Base<char>;
 
-// Common
+// Common 
 template class ACE_Reference_Pair<const KEY, VALUE>;
 
 // Map and iterator classes.
@@ -408,7 +363,7 @@ template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, expanded_value, ACE_N
 template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
-template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>;
+template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>;                            
 
 // Hash Map Manager related.
 template class ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, COMPARE_KEYS, Key_Generator>;
@@ -442,7 +397,7 @@ typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 #pragma instantiate ACE_Array<char>
 #pragma instantiate ACE_Array_Base<char>
 
-// Common
+// Common 
 #pragma instantiate ACE_Reference_Pair<const KEY, VALUE>
 
 // Map and iterator classes.
@@ -464,7 +419,7 @@ typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 #pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>
+#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>                            
 
 // Hash Map Manager related.
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, COMPARE_KEYS, Key_Generator>

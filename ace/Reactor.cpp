@@ -35,19 +35,15 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
       || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) \
       || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
   #if defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl,
-               ACE_TP_Reactor);
-  #else
-      ACE_NEW (impl,
-               ACE_Select_Reactor);
+      ACE_NEW (impl, ACE_TP_Reactor);
+  #else  
+      ACE_NEW (impl, ACE_Select_Reactor);
   #endif /* ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL */
 #else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
   #if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl,
-               ACE_Msg_WFMO_Reactor);
+      ACE_NEW (impl, ACE_Msg_WFMO_Reactor);
   #else
-      ACE_NEW (impl,
-               ACE_WFMO_Reactor);
+      ACE_NEW (impl, ACE_WFMO_Reactor);
   #endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
 #endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
       this->implementation (impl);
@@ -68,6 +64,9 @@ ACE_Reactor *ACE_Reactor::reactor_ = 0;
 // only delete it safely if we created it!)
 int ACE_Reactor::delete_reactor_ = 0;
 
+// Terminate the eventloop.
+sig_atomic_t ACE_Reactor::end_event_loop_ = 0;
+
 ACE_Reactor *
 ACE_Reactor::instance (void)
 {
@@ -81,9 +80,7 @@ ACE_Reactor::instance (void)
 
       if (ACE_Reactor::reactor_ == 0)
         {
-          ACE_NEW_RETURN (ACE_Reactor::reactor_,
-                          ACE_Reactor,
-                          0);
+          ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, 0);
           ACE_Reactor::delete_reactor_ = 1;
         }
     }
@@ -125,128 +122,134 @@ ACE_Reactor::close_singleton (void)
     }
 }
 
+// Run the event loop until the <ACE_Reactor::handle_events> method
+// returns -1 or the <end_event_loop> method is invoked.
+
 int
-ACE_Reactor::check_reconfiguration (void *)
+ACE_Reactor::run_event_loop (void)
 {
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->handle_events ();
+
 #if !defined (ACE_HAS_WINCE)
-  if (ACE_Service_Config::reconfig_occurred ())
-    {
-      ACE_Service_Config::reconfigure ();
-      return 1;
+      if (ACE_Service_Config::reconfig_occurred ())
+        ACE_Service_Config::reconfigure ();
+      else
+#endif /* !ACE_HAS_WINCE */
+        if (result == -1)
+          return -1;
     }
-#endif /* ACE_HAS_WINCE */
+  /* NOTREACHED */
   return 0;
 }
 
+// Run the event loop until the <ACE_Reactor::handle_events>
+// method returns -1, the <end_event_loop> method
+// is invoked, or the <ACE_Time_Value> expires.
+
 int
-ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
+ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
 {
-  ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
 
-  while (1)
+  while (ACE_Reactor::end_event_loop_ == 0)
     {
-      int result = this->implementation_->handle_events ();
+      int result = ACE_Reactor::instance ()->handle_events (tv);
 
-      if (eh != 0 && (*eh)(0))
-        continue;
-      else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
-      else if (result == -1)
-        return -1;
+#if !defined (ACE_HAS_WINCE)
+      if (ACE_Service_Config::reconfig_occurred ())
+        ACE_Service_Config::reconfigure ();
+      else
+#endif /* !ACE_HAS_WINCE */
+        if (result <= 0)
+          return result;
     }
 
-  ACE_NOTREACHED (return 0;)
-}
-
-int
-ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
-{
-  ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
-
-  while (1)
-    {
-      int result = this->implementation_->alertable_handle_events ();
-
-      if (eh != 0 && (*eh)(0))
-        continue;
-      else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
-      else if (result == -1)
-        return -1;
-    }
-
-  ACE_NOTREACHED (return 0;)
-}
-
-int
-ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
-                                     REACTOR_EVENT_HOOK eh)
-{
-  ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
-
-  while (1)
-    {
-      int result = this->implementation_->handle_events (tv);
-
-      if (eh != 0 && (*eh)(0))
-        continue;
-      else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
-      else if (result <= 0)
-        return result;
-    }
-
-  ACE_NOTREACHED (return 0;)
-}
-
-int
-ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
-                                               REACTOR_EVENT_HOOK eh)
-{
-  ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
-
-  while (1)
-    {
-      int result = this->implementation_->alertable_handle_events (tv);
-
-      if (eh != 0 && (*eh)(0))
-        continue;
-      else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
-      else if (result <= 0)
-        return result;
-    }
-
-  ACE_NOTREACHED (return 0;)
-}
-
-int
-ACE_Reactor::end_reactor_event_loop (void)
-{
-  ACE_TRACE ("ACE_Reactor::end_reactor_event_loop");
-
-  this->implementation_->deactivate (1);
-
+  /* NOTREACHED */
   return 0;
 }
 
+// Run the event loop until the <ACE_Reactor::alertable_handle_events> method
+// returns -1 or the <end_event_loop> method is invoked.
+
 int
-ACE_Reactor::reactor_event_loop_done (void)
+ACE_Reactor::run_alertable_event_loop (void)
 {
-  ACE_TRACE ("ACE_Reactor::reactor_event_loop_done");
-  return this->implementation_->deactivated ();
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->alertable_handle_events ();
+
+#if !defined (ACE_HAS_WINCE)
+      if (ACE_Service_Config::reconfig_occurred ())
+        ACE_Service_Config::reconfigure ();
+      else
+#endif /* !ACE_HAS_WINCE */
+
+        if (result == -1)
+          return -1;
+    }
+  /* NOTREACHED */
+  return 0;
 }
-  // Report if the <ACE_Reactor::instance>'s event loop is finished.
+
+// Run the event loop until the <ACE_Reactor::alertable_handle_events>
+// method returns -1, the <end_event_loop> method
+// is invoked, or the <ACE_Time_Value> expires.
+
+int
+ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
+{
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->alertable_handle_events (tv);
+
+#if !defined (ACE_HAS_WINCE)
+      if (ACE_Service_Config::reconfig_occurred ())
+        ACE_Service_Config::reconfigure ();
+      else
+#endif /* !ACE_HAS_WINCE */
+        if (result <= 0)
+          return result;
+    }
+
+  /* NOTREACHED */
+  return 0;
+}
 
 void
-ACE_Reactor::reset_reactor_event_loop (void)
+ACE_Reactor::reset_event_loop (void)
 {
   ACE_TRACE ("ACE_Reactor::reset_event_loop");
 
-  this->implementation_->deactivate (0);
+  ACE_Reactor::end_event_loop_ = 0;
 }
-  // Resets the <ACE_Reactor::end_event_loop_> static so that the
-  // <run_event_loop> method can be restarted.
+
+int
+ACE_Reactor::end_event_loop (void)
+{
+  ACE_TRACE ("ACE_Reactor::end_event_loop");
+
+  ACE_Reactor::end_event_loop_ = 1;
+
+  // Wakeup all threads waiting in the Reactor.
+  ACE_Reactor::instance ()->wakeup_all_threads ();
+
+  return 0;
+}
+
+int
+ACE_Reactor::event_loop_done (void)
+{
+  ACE_TRACE ("ACE_Reactor::event_loop_done");
+  return ACE_Reactor::end_event_loop_ != 0;
+}
 
 void
 ACE_Reactor::dump (void) const

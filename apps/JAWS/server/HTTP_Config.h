@@ -68,26 +68,26 @@ public:
 private:
   // = Accesors that can set the data
 
-  const char *document_root (const char *dr_string);
-  const char *cgi_path (const char *cp_string);
-  const char *user_dir (const char *ud_string);
-  const char *dir_index (const char *di_string);
+  char *document_root (char *dr_string);
+  char *cgi_path (char *cp_string);
+  char *user_dir (char *ud_string);
+  char *dir_index (char *di_string);
 
   int proxy_flag (int pf);
 
 private:
   // = Data members
 
-  const char *document_root_;
+  char *document_root_;
   // The directory root from which documents will be fetched
 
-  const char *cgi_path_;
+  char *cgi_path_;
   // The directories from which to expect CGI scripts
 
-  const char *user_dir_;
+  char *user_dir_;
   // Name of the sub-directory where user Web pages are
 
-  const char *dir_index_;
+  char *dir_index_;
   // Name of the Web page to present in place of a directory listing
 
   int proxy_flag_;

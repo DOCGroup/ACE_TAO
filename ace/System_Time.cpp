@@ -10,8 +10,7 @@ ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
   : delta_time_ (0)
 {
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
-  ACE_NEW (this->shmem_,
-           ALLOCATOR (poolname));
+  ACE_NEW (this->shmem_, ALLOCATOR (poolname));
 }
 
 ACE_System_Time::~ACE_System_Time (void)

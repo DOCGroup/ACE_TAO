@@ -35,7 +35,7 @@ class ACE_Sig_Set;
   class ACE_RW_Thread_Mutex;
 #endif /* ACE_MT_SAFE */
 
-class ACE_Cleanup_Info_Node;
+template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Cleanup_Adapter;
 
 
@@ -153,46 +153,40 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //        late.  The ACE tests do not violate this requirement.
   //        However, applications may have trouble with it.
   //
-  //     NOTE on the use of <::exit> -- <::exit> does not destroy
+  //     NOTE on the use of ::exit ():  ::exit () does not destroy
   //     static objects.  Therefore, if
   //     ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
-  //     <ACE_Object_Manager> instance will *not* be destroyed if
-  //     <::exit> is called!  However, <ACE_OS::exit> will properly
-  //     destroy the ACE_Object_Manager.  It is highly recommended
-  //     that <ACE_OS::exit> be used instead of <::exit>.
+  //     ACE_Object_Manager instance will *not* be destroyed if ::exit
+  //     () is called!  However, ACE_OS::exit () will properly destroy
+  //     the ACE_Object_Manager.  It is highly recommended that
+  //     ACE_OS::exit () be used instead of ::exit ().
   //
-  //     However, <::exit> and <ACE_OS::exit> are tricky to use
+  //     However, ::exit () and ACE_OS::exit () are tricky to use
   //     properly, especially in multithread programs.  It is much
   //     safer to throw an exception (or simulate that effect) that
-  //     will be caught by <main> instead of calling exit.  Then,
-  //     <main> can perform any necessary application-specific cleanup
-  //     and return the status value.  In addition, it's usually best
-  //     to avoid calling <::exit> and <ACE_OS::exit> from threads
-  //     other than the main thread.  Thanks to Jeff Greif
-  //     <jmg@trivida.com> for pointing out that <::exit> doesn't
-  //     destroy automatic objects, and for developing the
+  //     will be caught by main () instead of calling exit.  Then,
+  //     main () can perform any necessary application-specific
+  //     cleanup and return the status value.  In addition, it's
+  //     usually best to avoid calling ::exit () and ACE_OS::exit ()
+  //     from threads other than the main thread.  Thanks to Jeff
+  //     Greif <jmg@trivida.com> for pointing out that ::exit ()
+  //     doesn't destroy automatic objects, and for developing the
   //     recommendations in this paragraph.
   //
-  //     Instead of creating a static <ACE_Object_Manager>, or letting
-  //     ACE create it on the stack of <main> for you, another
-  //     alternative is to #define
+  //     Instead of creating a static ACE_Object_Manager, or creating
+  //     it on the stack of main (), another alternative is to #define
   //     ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
-  //     #define, the application must create the ACE_Object_Manager.
-  //     The recommended way is to call <ACE::init> at the start of
-  //     the program, and call <ACE::fini> at the end.  Alternatively,
-  //     the application could explicity construct an
-  //     <ACE_Object_Manager>.
+  //     #define, the application _must_ call ACE::init () at the
+  //     start of the program, and call ACE::fini () at the end.
 
 public:
   virtual int init (void);
   // Explicitly initialize (construct the singleton instance of) the
-  // ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
-  // if it had already been called.
+  // ACE_Object_Manager.
 
   virtual int fini (void);
   // Explicitly destroy the singleton instance of the
-  // ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
-  // if it had already been called.
+  // ACE_Object_Manager.
 
   static int starting_up (void);
   // Returns 1 before the ACE_Object_Manager has been constructed.
@@ -211,14 +205,15 @@ public:
   // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
 
   static int at_exit (ACE_Cleanup *object, void *param = 0);
-  // Register an ACE_Cleanup object for cleanup at process
-  // termination.  The object is deleted via the
-  // <ace_cleanup_destroyer>.  If you need more flexiblity, see the
-  // <other at_exit> method below.  For OS's that do not have
-  // processes, cleanup takes place at the end of <main>.  Returns 0
-  // on success.  On failure, returns -1 and sets errno to: EAGAIN if
-  // shutting down, ENOMEM if insufficient virtual memory, or EEXIST
-  // if the object (or array) had already been registered.
+  // Register an ACE_Cleanup object for cleanup at process termination.
+  // The object is deleted via the ace_cleanup_destroyer ().  If you
+  // need more flexiblity, see the other at_exit () method below.  For
+  // OS's that do not have processes, cleanup takes place at the end of
+  // main ().  Returns 0 on success.  On failure, returns -1 and sets
+  // errno to:
+  //   EAGAIN if shutting down,
+  //   ENOMEM if insufficient virtual memory, or
+  //   EEXIST if the object (or array) had already been registered.
 
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
@@ -231,16 +226,17 @@ public:
   // "cleanup_hook" function; the first parameter is the object (or
   // array) to be destroyed.  "cleanup_hook", for example, may delete
   // the object (or array).  For OS's that do not have processes, this
-  // function is the same as <at_thread_exit>.  Returns 0 on success.
-  // On failure, returns -1 and sets errno to: EAGAIN if shutting
-  // down, ENOMEM if insufficient virtual memory, or EEXIST if the
-  // object (or array) had already been registered.
+  // function is the same as at_thread_exit ().  Returns 0 on success.
+  // On failure, returns -1 and sets errno to:
+  //   EAGAIN if shutting down,
+  //   ENOMEM if insufficient virtual memory, or
+  //   EEXIST if the object (or array) had already been registered.
 
 #if 0 /* not implemented yet */
   static int at_thread_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param);
-  // Similar to <at_exit>, except that the cleanup_hook is called
+  // Similar to at_exit (), except that the cleanup_hook is called
   // when the current thread exits instead of when the program terminates.
 #endif /* 0 */
 
@@ -251,16 +247,15 @@ public:
       ACE_STATIC_OBJECT_LOCK,
 #endif /* ACE_HAS_THREADS */
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_LOG_MSG_INSTANCE_LOCK,
       ACE_MT_CORBA_HANDLER_LOCK,
       ACE_DUMP_LOCK,
       ACE_SIG_HANDLER_LOCK,
       ACE_SINGLETON_NULL_LOCK,
       ACE_SINGLETON_RECURSIVE_THREAD_LOCK,
       ACE_THREAD_EXIT_LOCK,
-#if !defined (ACE_LACKS_ACE_TOKEN)
       ACE_TOKEN_MANAGER_CREATION_LOCK,
       ACE_TOKEN_INVARIANTS_CREATION_LOCK,
-#endif /* ! ACE_LACKS_ACE_TOKEN */
       ACE_PROACTOR_EVENT_LOOP_LOCK,
 #endif /* ACE_MT_SAFE */
 
@@ -294,8 +289,8 @@ public:
   // Accesses a default signal set used in ACE_Sig_Guard methods.
 
 private:
-  ACE_OS_Exit_Info exit_info_;
-  // For at_exit support.
+  ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
+  // Keeps track of all registered objects.
 
   ACE_Object_Manager_Preallocations *preallocations_;
   // Preallocated objects collection.
@@ -358,7 +353,7 @@ public:
 public:
   // Application code should not use these explicitly, so they're
   // hidden here.  They're public so that the ACE_Object_Manager can
-  // be constructed/destructed in <main> with
+  // be constructed/destructed in main () with
   // ACE_HAS_NONSTATIC_OBJECT_MANAGER.
   ACE_Object_Manager (void);
   ~ACE_Object_Manager (void);

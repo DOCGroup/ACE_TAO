@@ -2,18 +2,12 @@
 // $Id$
 
 // The following configuration file contains the defines
-// common to all Borland compilers.  Do not include this file directly
-// -- just include config-win32-common.h, which includes this file.
+// common to all Borland compilers.
 
 #ifndef ACE_WIN32_BORLAND_H
 #define ACE_WIN32_BORLAND_H
 
-# if defined (__BORLANDC__)
-
-# define ACE_CC_NAME "Borland C++ Builder"
-# define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
-# define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
-# define ACE_CC_BETA_VERSION  (0)
+# if defined(__BORLANDC__)
 
 #   if defined (ACE_LACKS_MODE_MASKS)
 #     undef ACE_LACKS_MODE_MASKS
@@ -25,12 +19,10 @@
 #   endif /* defined (ACE_HAS_USER_MODE_MASKS) */
 #   define ACE_HAS_USER_MODE_MASKS 1
 
-#   if (__BORLANDC__ < 0x540)
-#     if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#       undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#     endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) */
-#     define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 1
-#   endif /* (__BORLANDC__ < 0x540) */
+#   if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#     undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#   endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) */
+#   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 1
 
 #   if defined (ACE_EXPORT_NESTED_CLASSES)
 #     undef ACE_EXPORT_NESTED_CLASSES
@@ -97,26 +89,16 @@
 #     endif /* defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) */
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
-#     if defined (ACE_NEW_THROWS_EXCEPTIONS)
-#       undef ACE_NEW_THROWS_EXCEPTIONS
-#     endif /* defined (ACE_NEW_THROWS_EXCEPTIONS) */
-#     define ACE_NEW_THROWS_EXCEPTIONS 1
-
-#     if defined (ACE_HAS_ANSI_CASTS)
-#       undef ACE_HAS_ANSI_CASTS
-#     endif /* defined (ACE_HAS_ANSI_CASTS) */
-#     define ACE_HAS_ANSI_CASTS 1
-
 #   endif /* (__BORLANDC__ >= 0x0530) */
 
 /*
  * Definitions only for Borland C++ Builder 4.x
  */
-#   if (__BORLANDC__ == 0x0540)
+#   if (__BORLANDC__ == 0x0540) 
 
 // Compiler enforces need for 'template<>" when specializing template
 // class methods.
-#     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+#     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION 
 
 // Compiler enforces need for 'template<>" when specializing template
 // class methods.
@@ -143,7 +125,7 @@
 #     endif /* defined (ACE_LACKS_ACE_IOSTREAM) */
 #     define ACE_LACKS_ACE_IOSTREAM 1
 
-      /* previously defined for MSVC */
+      /* previously defined for MSVC */ 
 #     if defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
 #       undef ACE_HAS_WCHAR_TYPEDEFS_USHORT
 #     endif /* defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT) */
@@ -158,21 +140,13 @@
 #       undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #     endif /* defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR) */
 
-      /* include only forward declaration of iostreams */
-#     if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-#       undef ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
-#     endif /* defined (ACE_HAS_STDCPP_STL_INCLUDES) */
-#     define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
-
       /* need to ensure these are included before <iomanip> */
 #     include <time.h>
 #     include <stdlib.h>
 
 #   endif /* (__BORLANDC__ == 0x0540) */
 
-# define ACE_HAS_EXPLICIT_KEYWORD
-# define ACE_HAS_MUTABLE_KEYWORD
-
 # endif /* defined(__BORLANDC__) */
 
 #endif /* ACE_WIN32_BORLAND_H */
+

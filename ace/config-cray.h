@@ -5,12 +5,12 @@
 #define ACE_CONFIG_CRAY_H
 
 /*
-    The following predefined macros are used within ACE ifdefs.
+    The following predefined macros are used within ACE ifdefs.  
     These are defined when using the Cray compilers.  _CRAYMPP
     is defined, for example, if you are running on a Cray T3E
     massively parallel machine.  Moreover, in the case of the T3E,
     _CRAYT3E will be defined.  This is used to determine the
-    ACE_SIZEOF defines for primitive types.
+    ACE_SIZEOF defines for primitive types.  
 
     _UNICOS is defined as either the major version of UNICOS being run,
     e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
@@ -23,10 +23,10 @@
     _CRAYT3E  (defined specifically if compiling on a Cray T3E)
     _UNICOS   (defined if running UNICOS or UNICOS/mk)
 
-    Tested on UNICOS 10.0.0.5, UNICOS/mk 2.0.4.57
+    Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
     Compiles on UNICOS 9.0.2.8, but some tests deadlock
 
-    Contributed by Doug Anderson <dla@home.com>
+    Contributed by Doug Anderson <doug@clark.net>
 */
 
 #if defined (_UNICOS) && !defined (MAXPATHLEN)
@@ -46,7 +46,7 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
 // using cray's autoinstantiation gives C++ prelinker: error: instantiation loop
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
@@ -69,7 +69,7 @@
 // UNICOS versions sport Draft 7 threads.
 
 #if _UNICOS > 9
-# define ACE_HAS_PTHREADS_STD
+# define ACE_HAS_PTHREADS_STD  
 #else
 # define ACE_HAS_PTHREADS_DRAFT7
 # define ACE_LACKS_THREAD_STACK_SIZE
@@ -78,6 +78,7 @@
 # define SCHED_OTHER 0
 # define SCHED_FIFO 1
 # define SCHED_RR 2
+# define pthread_sigmask sigprocmask
 #endif
 
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -117,9 +118,7 @@
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
-#if _UNICOS > 9
-# define ACE_HAS_SIGWAIT
-#endif
+#define ACE_HAS_SIGWAIT
 
 #define ACE_HAS_SIG_ATOMIC_T
 
@@ -207,27 +206,27 @@
 
 #ifndef _CRAYMPP
 
-# define ACE_SIZEOF_CHAR        1
-# define ACE_SIZEOF_SHORT       8
-# define ACE_SIZEOF_INT         8
-# define ACE_SIZEOF_LONG        8
-# define ACE_SIZEOF_LONG_LONG   8
-# define ACE_SIZEOF_FLOAT       8
-# define ACE_SIZEOF_DOUBLE      8
-# define ACE_SIZEOF_LONG_DOUBLE 16
-# define ACE_SIZEOF_VOID_P      8
+# define ACE_SIZEOF_CHAR	1
+# define ACE_SIZEOF_SHORT	8
+# define ACE_SIZEOF_INT		8
+# define ACE_SIZEOF_LONG	8
+# define ACE_SIZEOF_LONG_LONG	8
+# define ACE_SIZEOF_FLOAT	8
+# define ACE_SIZEOF_DOUBLE	8
+# define ACE_SIZEOF_LONG_DOUBLE	16
+# define ACE_SIZEOF_VOID_P	8
 
 #elif defined(_CRAYT3E)
 
-# define ACE_SIZEOF_CHAR        1
-# define ACE_SIZEOF_SHORT       4
-# define ACE_SIZEOF_INT         8
-# define ACE_SIZEOF_LONG        8
-# define ACE_SIZEOF_LONG_LONG   8
-# define ACE_SIZEOF_FLOAT       4
-# define ACE_SIZEOF_DOUBLE      8
-# define ACE_SIZEOF_LONG_DOUBLE 8
-# define ACE_SIZEOF_VOID_P      8
+# define ACE_SIZEOF_CHAR	1
+# define ACE_SIZEOF_SHORT	4
+# define ACE_SIZEOF_INT		8
+# define ACE_SIZEOF_LONG	8
+# define ACE_SIZEOF_LONG_LONG	8
+# define ACE_SIZEOF_FLOAT	4
+# define ACE_SIZEOF_DOUBLE	8
+# define ACE_SIZEOF_LONG_DOUBLE	8
+# define ACE_SIZEOF_VOID_P	8
 
 #endif
 

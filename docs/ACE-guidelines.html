@@ -109,17 +109,12 @@ bgcolor="#ffffff">
           'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
         </pre><p>
 
-    <li>Be sure to follow the guidelines and restrictions for use of the
-        <a href="../bin/README.html">ACE documentation tools</a>, notably
-        for header files.<p>
-
-    <li>One example of such guidelines is that comments, especially in
-        header files, must follow the
+    <li>Comments, especially in header files, must follow the
         <a href=http://www.dscpl.com.au>OSE</a> Tools format requirements.
         Please see the ``Classinfo Tools'' section of the
         <a href=http://www.dscpl.com.au>OSE</a> ``Tools Manual''
-        for these requirements.  One example is that method names must
-        be enclosed in brackets (&lt;&gt;).<p>
+        for these requirements.<p>
+
   </ul>
 
   <li><strong>Preprocessor</strong><p>
@@ -163,21 +158,7 @@ bgcolor="#ffffff">
         It's always best to prefix them with something like <code>ACE_</code>
         or <code>TAO_</code>.  There are too many system headers out
         there that #define <code>OK</code>, <code>SUCCESS</code>,
-        <code>ERROR</code>, <code>index</code>, <code>s_type</code>,
-        and so on.<p>
-
-    <li>When using macros in an arithmetic expression, be sure to test
-      that the macro is defined, using defined(macro) before specifying
-      the expression.  For example:
-<pre>
-#if __FreeBSD__ &lt; 3
-</pre>
-
-will evaluate true on any platform where __FreeBSD__ is not defined.
-The correct way to write that guard is:
-<pre>
-#if defined (__FreeBSD__)  &&  __FreeBSD__ &lt; 3
-</pre>
+        <code>ERROR</code>, <code>index</code>, and so on.<p>
 
     <li>Try to centralize <code>#ifdefs</code> with <code>typedefs</code>
         and <code>#defines</code>.  For example, use this:
@@ -332,32 +313,6 @@ The correct way to write that guard is:
       The <code>/usr/include/math.h</code> on SunOS 5.5.1 through 5.7
       defines a struct name <strong>exception</strong>, which complicates
       use of exceptions.<p>
-
-    <li>On a <CODE>.cpp</CODE> file always include the corresponding
-      header file <EM>first</EM>, like this:<P>
-
-<PRE>
-        // This is Foo.cpp
-
-        #include "Foo.h"
-        #include "tao/Bar.h"
-        #include "ace/Baz.h"
-
-        // Here comes the Foo.cpp code....
-</PRE><P>
-
-      In this way we are sure that the header file is self-contained
-      and can be safely included from some place else.
-
-    <li>In the TAO library <B>never</B> include
-      <CODE>&lt;corba.h&gt</CODE>, this file should only be included
-      by the user and introduces cyclic dependencies in the library
-      that we must avoid.<p>
-
-    <li>Never include a header file when a forward reference will do,
-      remember that templates can be forward referenced too.
-      Consult your favorite C++ book to find out when you must include 
-      the full class definition.<P>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
@@ -457,27 +412,6 @@ The correct way to write that guard is:
         Therefore, the inline functions in the .i file should be arranged
         properly.  Some compilers, such as <code>g++</code> with the
         <code>-Wall</code> option, will issue warnings for violations.<p>
-
-    <li>Some inlining heuristics:<p>
-      <ul>
-        <li>One liners should almost always be inline, as in:
-<pre>
-ACE_INLINE
-Foo::bar ()
-{
-  this-&gt;baz();
-}
-</pre><p>
-
-        <li>The notable exception is virtual functions, which should never be
-          inlined.<p>
-
-        <li>Big (more than 10 lines) and complex function (more than one if ()
-          statement, or a switch, or a loop) should not be inlined.<p>
-
-        <li>Medium sized stuff depends on how performance critical it is.
-          If you know that it's in the critical path, then make it inline.<p>
-      </ul>
 
     <li><code>ACE_Export</code> must be inserted between the
         <code>class</code> keyword and class name for all classes that
@@ -673,7 +607,7 @@ Foo::bar ()
   <li><strong>I/O</strong><p>
   <ul>
      <li>Use <strong><code>ACE_DEBUG</code></strong> for printouts,
-         and <strong><code>ACE_OS::fprintf ()</code></strong> for
+         and <strong><code>ACE_OS::scanf/fprintf ()</code></strong> for
          file I/O.  Avoid using iostreams because of implementation
          differences across platforms.<p>
      <li>After attempting to open an existing file, always check for success.
@@ -712,26 +646,6 @@ Foo::bar ()
         in most of their APIs.  On these platforms, ACE also uses
         UNICODE as its system string type.<p>
 
-        Notice that when spaning a string literal across several lines,
-        you must apply <code>ASYS_TEXT</code> to <strong>every</strong>
-        line.  For example, it is <font color=red>illegal</font> to do this:
-        <pre>
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("\nerror: x is a null pointer in "
-                               "ACE_RB_Tree&lt;EXT_ID, INT_ID&gt;::"
-                               "RB_rotate_left\n")));
-        </pre></p>
-
-        <p>Instead, this should be written like this:
-        <pre>
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("\nerror: x is a null pointer in ")
-                    ASYS_TEXT ("ACE_RB_Tree&lt;EXT_ID, INT_ID&gt;::")
-                    ASYS_TEXT ("RB_rotate_left\n")));
-        </pre></p>
-
     <li><strong><code>ACE_TRACE</code></strong> handles conversion
         between char strings and UNICODE strings automatically.<p>
 
@@ -740,73 +654,6 @@ Foo::bar ()
         <strong><code>ASYS_ONLY_MULTIBYTE_STRING</code></strong>. See
         the end of <a href="../ace/OS.h">OS.h</a> for more details.<p>
 
-    <li>Here is a brief breakdown:<p>
-        <table BORDER=2 CELLSPACING=2 CELLPADDING=0>
-          <tr>
-            <th Align=left>Macro Name</th>
-            <td>NONE </td>
-            <td>UNICODE</td>
-            <td>MOSTLY</td>
-            <td>Remark</td>
-          </tr>
-          <tr>
-            <th align=left><code>ACE_WIDE_STRING</code></th>
-            <td>NOP</td>
-            <td>C 2 W</td>
-            <td>C 2 W</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <th align=left><code>ACE_MULTIBYTE_STRING</code>
-            <td>NOP</td>
-            <td>W 2 C</td>
-            <td>W 2 C</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_WIDE_STRING</code></th>
-            <td>NOP</td>
-            <td>NOP</td>
-            <td>C 2 W</td>
-            <td>Convert char strings to where ASYS_TCHAR strings are
-                expected.</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_MULTIBYTE_STRING</code></th>
-            <td>NOP</td>
-            <td>W 2 C</td>
-            <td>NOP</td>
-            <td>Convert LPTCSTR or LPTSTR strings to where ASYS_TCHAR
-                strings are expected.</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_ONLY_WIDE_STRING</code></th>
-            <td>NOP</td>
-            <td>C 2 W</td>
-            <td>NOP</td>
-            <td>Convert ASYS_TCHAR stirngs to where wchar strings are
-                expected.</td>
-          </tr>
-          <tr>
-            <th align=left><code>ASYS_ONLY_MULTIBYTE_STRING</code></th>
-            <td>NOP</td>
-            <td>NOP</td>
-            <td>W 2 C</td>
-            <td>Convert ASYS_TCHAR strings to where</td>
-          </tr>
-        </table><p>
-        Where:
-
-        <UL>
-          <LI>UNICODE: When <code>UNICODE</code> is defined.
-          <li>MOSTLY: When <code>ACE_HAS_MOSTLY_UNICODE_APIS</code> is
-              defined
-          <li>C: char *
-          <li>W: wchar *
-          <li>T: ASYS_TCHAR*  (T == W) only when MOSTLY is defined,
-              otherwise, (T == C)
-          <li>NOP: No operation.
-        </ul><p>
   </ul><p>
 
   <li><strong>Exceptions</strong><p>
@@ -828,8 +675,7 @@ Foo::bar ()
           ~exe_foo ()
             { cerr &lt;&lt; "destructor of exception called" &lt;&lt; endl; }
           exe_foo (const exe_foo& foo) : data_ (foo.data_)
-            { cerr &lt;&lt; "copy constructor of exception called"
-                   &lt;&lt; endl; }
+            { cerr &lt;&lt; "copy constructor of exception called" &lt;&lt; endl; }
           int data_;
         };
 
@@ -849,52 +695,44 @@ Foo::bar ()
 
         int main ()
         {
-          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
           return 0;
@@ -1072,7 +910,8 @@ Foo::bar ()
   <ol>
     <li>Test your change on at least one platform.  All changes
       <strong>must</strong> be tested with egcs before commiting.
-      That means you may need to test on at least two platforms.<p>
+      That means you may need to test on two platforms.<p>
+    <li>Commit your change with a meaningful message.<p>
     <li>An an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
       <a href="../apps/JAWS">JAWS</a>, and
@@ -1080,15 +919,10 @@ Foo::bar ()
       own ChangeLogs.  If you don't use one of those, use the
       <a href="../ChangeLog">ChangeLog</a> in the top-level
       <a href="..">ACE_wrappers</a> directory.<p>
-    <li>Commit your change using a message of this form:<p>
-<code>
-ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
- &lt;levine@cs.wustl.edu&gt;
-</code><p>
     <li>If the change is in response to a request by someone else:
     <ol>
       <li>Make sure that person is acknowledged in
-        <a href="../THANKS">ACE_wrappers/THANKS</a>, and<p>
+        <a href="../README">ACE_wrappers/README</a>, and<p>
       <li>Respond to that person.<p>
     </ol>
   </ol>
@@ -1104,9 +938,7 @@ ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
   Usage Guidelines</h3>
 <ul>
   <li>Always make sure that a change builds and executes correctly
-    on at least one platform before checking it into the CVS repository.
-    All changes <strong>must</strong> be tested with egcs before commiting.
-    That means you may need to test on at least two platforms.<p>
+      on at least one platform before checking it into the CVS repository.<p>
 </ul>
 
 
@@ -1124,9 +956,9 @@ ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
     the following code at the top of the script to pick up
     perl from the users <code>PATH</code>:<br>
       <pre>
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+      eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+      & eval 'exec perl -S $0 $argv:q'
+      if 0;
       </pre><p>
 
   <li>Never, never, never start the first line of a script
@@ -1172,13 +1004,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
   <li><strong>Synthesize</strong>:  Build stubs and scaffolding early to
       simulate the complete system.  Maintain a checked-in version of the
       system that cleanly builds and tests at all times.<p>
-
-  <li><strong>Be available</strong>:  Breaking compilation in one
-      platform or another should be avoided (see above),
-      but it is bound to happen when so many platforms are in use.
-      Be available after making a change,
-      if you won't be available for at least 48 hours after the change 
-      is made then don't make it!<p>
 </ul>
 
 

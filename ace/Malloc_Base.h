@@ -121,8 +121,8 @@ public:
   virtual void dump (void) const = 0;
   // Dump the state of the object.
 private:
-  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
-  // <ACE_Allocator::instance> implementation for explanation.
+  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!
+  // See the ACE_Allocator::instance () implementation for explanation.
 
   static ACE_Allocator *allocator_;
   // Pointer to a process-wide <ACE_Allocator> instance.

@@ -222,7 +222,7 @@ ACE_Stats::print_summary (const u_int precision,
       // Build a format string, in case the C library doesn't support %*u.
       ASYS_TCHAR format[32];
       if (tmp_precision == 0)
-        ACE_OS::sprintf (format, ASYS_TEXT ("%%%d"), tmp_precision);
+        ACE_OS::sprintf (format, ASYS_TEXT ("%%d"), tmp_precision);
       else
         ACE_OS::sprintf (format, ASYS_TEXT ("%%d.%%0%du"), tmp_precision);
 
@@ -272,7 +272,7 @@ ACE_Stats::print_summary (const u_int precision,
 #if !defined (ACE_HAS_WINCE)
       ACE_OS::fprintf (file,
                        ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
-                       ASYS_WIDE_STRING (strerror (overflow_)));
+                       ASYS_TEXT (strerror (overflow_)));
 #else
       // WinCE doesn't have strerror ;(
       ACE_OS::fprintf (file,
@@ -424,9 +424,7 @@ ACE_Stats::square_root (const ACE_UINT64 n,
 ACE_Throughput_Stats::ACE_Throughput_Stats (void)
   :  samples_count_ (0),
      latency_min_ (0),
-     latency_min_at_ (0),
      latency_max_ (0),
-     latency_max_at_ (0),
      latency_sum_ (0),
      latency_sum2_ (0),
      throughput_last_ (0),
@@ -444,12 +442,10 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
 {
   ++this->samples_count_;
 
-  if (this->samples_count_ == 1u)
+  if (this->samples_count_ == 1)
     {
       this->latency_min_ = latency;
-      this->latency_min_at_ = ACE_U64_TO_U32 (this->samples_count_);
       this->latency_max_ = latency;
-      this->latency_max_at_ = ACE_U64_TO_U32 (this->samples_count_);
       this->latency_sum_ = latency;
 #if defined ACE_LACKS_LONGLONG_T
       this->latency_sum2_ = latency * ACE_U64_TO_U32 (latency);
@@ -471,15 +467,9 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
   else
     {
       if (this->latency_min_ > latency)
-        {
-          this->latency_min_ = latency;
-          this->latency_min_at_ = ACE_U64_TO_U32 (this->samples_count_);
-        }
+        this->latency_min_ = latency;
       if (this->latency_max_ < latency)
-        {
-          this->latency_max_ = latency;
-          this->latency_max_at_ = ACE_U64_TO_U32 (this->samples_count_);
-        }
+        this->latency_max_ = latency;
 
       this->latency_sum_  += latency;
 #if defined ACE_LACKS_LONGLONG_T
@@ -508,7 +498,7 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
   if (rhs.samples_count_ == 0)
     return;
 
-  if (this->samples_count_ == 0u)
+  if (this->samples_count_ == 0)
     {
       this->samples_count_ = rhs.samples_count_;
 
@@ -552,13 +542,12 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 }
 
 void
-ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
+ACE_Throughput_Stats::dump_results (const char* msg,
                                     ACE_UINT32 sf)
 {
-  if (this->samples_count_ == 0u)
+  if (this->samples_count_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%s : no data collected\n"), msg));
+      ACE_DEBUG ((LM_DEBUG, "%s : no data collected\n"));
       return;
     }
 
@@ -583,12 +572,8 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
   double l_dev = ACE_CU64_TO_CU32 (latency_dev) / (sf * sf);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
-              msg,
-              l_min, this->latency_min_at_,
-              l_avg,
-              l_max, this->latency_max_at_,
-              l_dev));
+              "%s latency: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2)\n",
+              msg, l_min, l_avg, l_max, l_dev));
 
   double seconds =
 #if defined ACE_LACKS_LONGLONG_T
@@ -601,7 +586,7 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
   double t_avg = ACE_CU64_TO_CU32 (this->samples_count_) / seconds;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%s throughput: %.2f (events/second)\n"),
+              "%s throughput: %.2f (events/second)\n",
               msg, t_avg));
 
 #if 0

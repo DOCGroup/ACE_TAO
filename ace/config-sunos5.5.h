@@ -26,18 +26,15 @@
        With CC 5.0, those problems may be fixed.  And, this is necessary
        to work around problems with automatic template instantiation. */
 #   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#   define ACE_TEMPLATES_REQUIRE_SOURCE
-    // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
-    // but the newer, explicit instantiation is used (above)
-#   if (__SUNPRO_CC_COMPAT >= 5)
-#     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+#   define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 // Note that SunC++ 5.0 doesn't yet appear to support 
 // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
-#     define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#     define ACE_USES_OLD_IOSTREAMS 1
-#     define ACE_HAS_THR_C_DEST
-#   endif
+#   define ACE_TEMPLATES_REQUIRE_SOURCE
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#   define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#   define ACE_USES_OLD_IOSTREAMS 1
+#   define ACE_HAS_THR_C_DEST
+
 #  if !defined (ACE_HAS_EXCEPTIONS)
      // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
 #    define _RWSTD_NO_EXCEPTIONS 1
@@ -82,6 +79,7 @@
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
+# define ACE_MALLOC_ALIGN 8
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
@@ -299,8 +297,6 @@
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
-#define ACE_HAS_STRPTIME
-
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
@@ -311,8 +307,6 @@
 #define ACE_HAS_STL_MAP_CONFLICT
 #define ACE_HAS_STL_QUEUE_CONFLICT
 #define ACE_HAS_IDTYPE_T
-
-#define ACE_HAS_POSITION_INDEPENDENT_MALLOC
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
@@ -338,10 +332,4 @@
 # define ACE_HAS_X86_STAT_MACROS
 #endif /* i386 */
 
-#define ACE_MALLOC_ALIGN 8
-
-#if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
-#undef ACE_HAS_PROC_FS
-#undef ACE_HAS_PRUSAGE_T
-#endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
 #endif /* ACE_CONFIG_H */

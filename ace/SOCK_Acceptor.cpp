@@ -71,9 +71,8 @@ ACE_SOCK_Acceptor::shared_accept_finish (ACE_SOCK_Stream new_stream,
     {
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
-
-      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-      // originally.
+      // Only disable ACE_NONBLOCK if we weren't in
+      // non-blocking mode originally.
       ACE::clr_flags (this->get_handle (),
 		      ACE_NONBLOCK);
       ACE::clr_flags (new_handle,
@@ -195,135 +194,6 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 				     reset_new_handle);
 }
 
-void
-ACE_SOCK_Acceptor::dump (void) const
-{
-  ACE_TRACE ("ACE_SOCK_Acceptor::dump");
-}
-
-int
-ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
-                                int protocol_family,
-                                int backlog)
-{
-  ACE_TRACE ("ACE_SOCK_Acceptor::shared_open");
-  int error = 0;
-
-  if (protocol_family == PF_INET)
-    {
-      sockaddr_in local_inet_addr;
-      ACE_OS::memset (ACE_reinterpret_cast (void *,
-                                            &local_inet_addr),
-                      0,
-                      sizeof local_inet_addr);
-
-      if (local_sap == ACE_Addr::sap_any)
-        {
-          local_inet_addr.sin_port = 0;
-          local_inet_addr.sin_addr.s_addr = htonl (INADDR_ANY);
-        }
-      else
-        local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
-                                                 local_sap.get_addr ());
-      if (local_inet_addr.sin_port == 0)
-        {
-          if (ACE::bind_port (this->get_handle (),
-                              local_inet_addr.sin_addr.s_addr) == -1)
-            error = 1;
-        }
-      else if (ACE_OS::bind (this->get_handle (),
-                             ACE_reinterpret_cast (sockaddr *,
-                                                   &local_inet_addr),
-                             sizeof local_inet_addr) == -1)
-        error = 1;
-    }
-  else if (ACE_OS::bind (this->get_handle (),
-			 (sockaddr *) local_sap.get_addr (),
-                         local_sap.get_size ()) == -1)
-    error = 1;
-
-  if (error != 0
-      || ACE_OS::listen (this->get_handle (),
-                         backlog) == -1)
-    {
-      error = 1;
-      this->close ();
-    }
-
-  return error ? -1 : 0;
-}
-
-int
-ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
-                         ACE_Protocol_Info *protocolinfo,
-                         ACE_SOCK_GROUP g,
-                         u_long flags,
-                         int reuse_addr,
-                         int protocol_family,
-                         int backlog,
-                         int protocol)
-{
-  ACE_TRACE ("ACE_SOCK_Acceptor::open");
-
-  if (ACE_SOCK::open (SOCK_STREAM,
-		      protocol_family,
-		      protocol,
-                      protocolinfo,
-                      g,
-                      flags,
-		      reuse_addr) == -1)
-    return -1;
-  else
-    return this->shared_open (local_sap,
-                              protocol_family,
-                              backlog);
-}
-
-ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
-                                      ACE_Protocol_Info *protocolinfo,
-                                      ACE_SOCK_GROUP g,
-                                      u_long flags,
-                                      int reuse_addr,
-                                      int protocol_family,
-                                      int backlog,
-                                      int protocol)
-{
-  ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
-  if (this->open (local_sap,
-                  protocolinfo,
-                  g,
-                  flags,
-		  reuse_addr,
-		  protocol_family,
-		  backlog,
-		  protocol) == -1)
-    ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SOCK_Acceptor")));
-}
-
-// General purpose routine for performing server ACE_SOCK creation.
-
-int
-ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
-			 int reuse_addr,
-			 int protocol_family,
-			 int backlog,
-			 int protocol)
-{
-  ACE_TRACE ("ACE_SOCK_Acceptor::open");
-
-  if (ACE_SOCK::open (SOCK_STREAM,
-		      protocol_family,
-		      protocol,
-		      reuse_addr) == -1)
-    return -1;
-  else
-    return this->shared_open (local_sap,
-                              protocol_family,
-                              backlog);
-}
-
 // General purpose routine for performing server ACE_SOCK creation.
 
 ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
@@ -341,4 +211,73 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
     ACE_ERROR ((LM_ERROR,
 		ASYS_TEXT ("%p\n"),
 		ASYS_TEXT ("ACE_SOCK_Acceptor")));
+}
+
+void
+ACE_SOCK_Acceptor::dump (void) const
+{
+  ACE_TRACE ("ACE_SOCK_Acceptor::dump");
+}
+
+// General purpose routine for performing server ACE_SOCK creation.
+
+int
+ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
+			 int reuse_addr,
+			 int protocol_family,
+			 int backlog,
+			 int protocol)
+{
+  ACE_TRACE ("ACE_SOCK_Acceptor::open");
+  int error = 0;
+
+  if (ACE_SOCK::open (SOCK_STREAM,
+		      protocol_family,
+		      protocol,
+		      reuse_addr) == -1)
+    error = 1;
+
+  else if (protocol_family == PF_INET)
+    {
+      sockaddr_in local_inet_addr;
+      ACE_OS::memset ((void *) &local_inet_addr,
+                      0,
+                      sizeof local_inet_addr);
+
+      if (local_sap == ACE_Addr::sap_any)
+        {
+          local_inet_addr.sin_port = 0;
+          local_inet_addr.sin_addr.s_addr = htonl (INADDR_ANY);
+        }
+      else
+        local_inet_addr = *(sockaddr_in *) local_sap.get_addr ();
+
+      if (local_inet_addr.sin_port == 0)
+        {
+          if (ACE::bind_port (this->get_handle (),
+                              local_inet_addr.sin_addr.s_addr) == -1)
+            error = 1;
+        }
+      else
+        {
+          if (ACE_OS::bind (this->get_handle (),
+                            ACE_reinterpret_cast (sockaddr *,
+						  &local_inet_addr),
+                            sizeof local_inet_addr) == -1)
+            error = 1;
+        }
+    }
+  else if (ACE_OS::bind (this->get_handle (),
+			 (sockaddr *) local_sap.get_addr (),
+                         local_sap.get_size ()) == -1)
+    error = 1;
+
+  if (error || ACE_OS::listen (this->get_handle (),
+			       backlog) == -1)
+    {
+      error = 1;
+      this->close ();
+    }
+
+  return error ? -1 : 0;
 }

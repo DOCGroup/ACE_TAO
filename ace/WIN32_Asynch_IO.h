@@ -43,7 +43,7 @@
 // Forward declaration
 class ACE_WIN32_Proactor;
 
-class ACE_Export ACE_WIN32_Asynch_Result : public virtual ACE_Asynch_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Result : public virtual ACE_Asynch_Result_Impl,
                                            public OVERLAPPED
 {
   // = TITLE
@@ -184,7 +184,7 @@ protected:
   // I/O handle used for reading.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public virtual ACE_WIN32_Asynch_Result
 {
   // = TITLE
@@ -282,7 +282,7 @@ protected:
   // I/O handle used for reading.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                 public ACE_WIN32_Asynch_Operation
 {
   // = TITLE
@@ -340,7 +340,7 @@ protected:
   // the ACE_Asynch_Read_File class can use it too.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Write_Stream_Result : public virtual ACE_Asynch_Write_Stream_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Write_Stream_Result : public virtual ACE_Asynch_Write_Stream_Result_Impl,
                                                         public ACE_WIN32_Asynch_Result
 {
   // = TITLE
@@ -439,7 +439,7 @@ protected:
   // I/O handle used for writing.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
                                                  public ACE_WIN32_Asynch_Operation
 {
   // = TITLE
@@ -470,10 +470,9 @@ public:
   virtual ~ACE_WIN32_Asynch_Write_Stream (void);
   // Destructor.
 
-  // = Methods belonging to <ACE_WIN32_Asynch_Operation> base class. 
-
-  // These methods are defined here to avoid VC++ warnings. They route
-  // the call to the <ACE_WIN32_Asynch_Operation> base class.
+  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+  //   methods are defined here to avoid VC++ warnings. They route the 
+  //   call to the ACE_WIN32_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -498,7 +497,7 @@ protected:
   // the ACE_Asynch_Write_File class can use it too.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Read_File_Result : public virtual ACE_Asynch_Read_File_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Read_File_Result : public virtual ACE_Asynch_Read_File_Result_Impl,
                                                      public ACE_WIN32_Asynch_Read_Stream_Result
 {
   // = TITLE
@@ -595,7 +594,7 @@ protected:
   // Destructor.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                               public ACE_WIN32_Asynch_Read_Stream
 {
   // = TITLE
@@ -664,7 +663,7 @@ private:
   // ACE_WIN32_Asynch_Read_Stream class.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_Write_File_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_Write_File_Result_Impl,
                                                       public ACE_WIN32_Asynch_Write_Stream_Result
 {
   // = TITLE
@@ -770,7 +769,7 @@ protected:
   // Destructor.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
                                                public ACE_WIN32_Asynch_Write_Stream
 {
   // = TITLE
@@ -836,7 +835,7 @@ private:
   // ACE_WIN32_Asynch_Write_Stream class.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Accept_Result : public virtual ACE_Asynch_Accept_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Accept_Result : public virtual ACE_Asynch_Accept_Result_Impl,
                                                   public ACE_WIN32_Asynch_Result
 {
   // = TITLE
@@ -944,7 +943,7 @@ protected:
   // I/O handle for the new connection.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl,
                                            public ACE_WIN32_Asynch_Operation
 {
   // = TITLE
@@ -1005,7 +1004,7 @@ public:
   // Return the underlying proactor.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Transmit_File_Result : public virtual ACE_Asynch_Transmit_File_Result_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Transmit_File_Result : public virtual ACE_Asynch_Transmit_File_Result_Impl,
                                                          public ACE_WIN32_Asynch_Result
 {
   // = TITLE
@@ -1132,7 +1131,7 @@ protected:
   // Flags which were passed into transmit file.
 };
 
-class ACE_Export ACE_WIN32_Asynch_Transmit_File : public virtual ACE_Asynch_Transmit_File_Impl, 
+class ACE_Export ACE_WIN32_Asynch_Transmit_File : public virtual ACE_Asynch_Transmit_File_Impl,
                                                   public ACE_WIN32_Asynch_Operation
 {
   // = TITLE

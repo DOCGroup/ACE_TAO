@@ -21,8 +21,7 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 ACE_DLL::ACE_DLL (const char *dll_name,
                   int open_mode,
                   int close_on_destruction)
-  : handle_ (ACE_OS::dlopen (ASYS_WIDE_STRING (dll_name),
-                             open_mode)),
+  : handle_ (ACE_OS::dlopen (dll_name, open_mode)),
     close_on_destruction_ (close_on_destruction)
 {
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
@@ -77,8 +76,7 @@ ACE_DLL::open (const char *dll_filename,
     return result;
 
   // The ACE_SHLIB_HANDLE object is obtained.
-  this->handle_ = ACE_OS::dlopen (dll_pathname,
-                                  open_mode);
+  this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,7 +117,7 @@ ACE_DLL::close (void)
 
 // This method is used on error in an library operation.
 
-ASYS_TCHAR *
+char *
 ACE_DLL::error (void)
 {
   return ACE_OS::dlerror ();
@@ -135,7 +133,7 @@ ACE_DLL::get_handle (int become_owner)
   // Since the caller is becoming the owner of the handle we lose
   // rights to close it on destruction.  The new controller has to do
   // it explicitly.
-  if (become_owner)
+  if (become_owner == 0)
     this->close_on_destruction_ = 0;
 
   // Return the handle requested by the user.

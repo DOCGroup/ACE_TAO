@@ -34,7 +34,7 @@ class ACE_Noop_Key_Generator
   //     Defines a noop key generator.
 public:
 
-  int operator () (T &);
+  int operator() (T &);
   // Functor method: generates a new key.
 };
 
@@ -59,7 +59,7 @@ public:
   ACE_Incremental_Key_Generator (void);
   // Constructor.
 
-  int operator () (T &t);
+  int operator() (T &t);
   // Functor method: generates a new key.
 
   T& current_value (void);
@@ -90,7 +90,7 @@ public:
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const = 0;
   // Comparison.
 
-  virtual T dereference (void) const = 0;
+  virtual T dereference () const = 0;
   // Dereference.
 
   virtual void plus_plus (void) = 0;
@@ -119,7 +119,7 @@ public:
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const = 0;
   // Comparison.
 
-  virtual T dereference (void) const = 0;
+  virtual T dereference () const = 0;
   // Dereference.
 
   virtual void plus_plus (void) = 0;
@@ -159,7 +159,7 @@ public:
   int operator!= (const ACE_Iterator<T> &rhs) const;
   // Comparison operators.
 
-  T operator *() const;
+  T operator* () const;
   // Dereference operator.
 
   ACE_Iterator<T> &operator++ (void);
@@ -213,7 +213,7 @@ public:
   int operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
   // Comparison operators.
 
-  T operator *() const;
+  T operator* () const;
   // Dereference operator.
 
   ACE_Reverse_Iterator<T> &operator++ (void);
@@ -427,7 +427,7 @@ public:
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -471,7 +471,7 @@ public:
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -676,7 +676,7 @@ public:
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -720,7 +720,7 @@ public:
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -940,7 +940,7 @@ public:
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -984,7 +984,7 @@ public:
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -1194,7 +1194,7 @@ public:
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);
@@ -1238,7 +1238,7 @@ public:
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
 
-  virtual T dereference (void) const;
+  virtual T dereference () const;
   // Dereference.
 
   virtual void plus_plus (void);

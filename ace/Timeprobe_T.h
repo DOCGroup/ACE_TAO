@@ -33,7 +33,7 @@ class ACE_Timeprobe
   //     pointer copies are done and the string data is *not* copied.
   //
   //     The recorded time probes can then be printed by calling
-  //     <print_times>.  If you have used unsigned longs as event
+  //     print_times().  If you have used unsigned longs as event
   //     descriptions in any of your time probes, you must have
   //     provided an event description table that maps the unsigned
   //     longs to readable strings.  This map is a simple array of
@@ -43,7 +43,7 @@ class ACE_Timeprobe
   //     necessary.
   //
   //     Multiple maps can also be used to chunk up the time probes.
-  //     Each one can be added by calling <event_descriptions>.
+  //     Each one can be added by calling event_descriptions().
   //     Different tables are used internally by consulting the
   //     minimum_id for each table.  It is up to the user to make sure
   //     that multiple tables do not share the same event id range.

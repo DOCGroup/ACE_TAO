@@ -69,18 +69,19 @@ public:
   int acquire (void (*sleep_hook)(void *),
                void *arg = 0,
                ACE_Time_Value *timeout = 0);
-  // Acquire the token, sleeping until it is obtained or until the
-  // expiration of <timeout>, which is treated as "absolute" time.  If
-  // some other thread currently holds the token then <sleep_hook> is
-  // called before our thread goes to sleep.  This <sleep_hook> can be
-  // used by the requesting thread to unblock a token-holder that is
-  // sleeping, e.g., by means of writing to a pipe (the ACE
-  // ACE_Reactor uses this functionality).  Return values: 0 if
-  // acquires without calling <sleep_hook> 1 if <sleep_hook> is
-  // called.  2 if the token is signaled.  -1 if failure or timeout
-  // occurs (if timeout occurs errno == ETIME) If <timeout> ==
-  // <&ACE_Time_Value::zero> then acquire has polling semantics (and
-  // does *not* call <sleep_hook>).
+  // Acquire the token, sleeping until it is obtained or until
+  // <timeout> expires.  If some other thread currently holds the
+  // token then <sleep_hook> is called before our thread goes to
+  // sleep.  This <sleep_hook> can be used by the requesting thread to
+  // unblock a token-holder that is sleeping, e.g., by means of
+  // writing to a pipe (the ACE ACE_Reactor uses this functionality).
+  // Return values:
+  // 0 if acquires without calling <sleep_hook>
+  // 1 if <sleep_hook> is called.
+  // 2 if the token is signaled.
+  // -1 if failure or timeout occurs (if timeout occurs errno == ETIME)
+  // If <timeout> == <&ACE_Time_Value::zero> then acquire has polling
+  // semantics (and does *not* call <sleep_hook>).
 
   int acquire (ACE_Time_Value *timeout = 0);
   // This behaves just like the previous <acquire> method, except
@@ -92,8 +93,7 @@ public:
   // the appropriate behavior before <acquire> goes to sleep.
   // By default, this is a no-op...
 
-  int renew (int requeue_position = 0,
-             ACE_Time_Value *timeout = 0);
+  int renew (int requeue_position = 0, ACE_Time_Value *timeout = 0);
   // An optimized method that efficiently reacquires the token if no
   // other threads are waiting.  This is useful for situations where
   // you don't want to degrad the quality of service if there are
@@ -109,7 +109,6 @@ public:
   // thing to do (since it makes it possible for shared data to be
   // changed unexpectedly) so use with caution...
   // This method maintians the original token priority.
-  // As in <acquire>, the <timeout> value is an absolute time.
 
   int tryacquire (void);
   // Become interface-compliant with other lock mechanisms (implements
@@ -154,7 +153,7 @@ public:
   ACE_thread_t current_owner (void);
   // Return the id of the current thread that owns the token.
 
-  int signal_all_threads (void);
+  int signal_all_threads ();
   // Force all threads waiting to acquire the token to return one by
   // one.  The method sets the <signal_all_thread_> to non-zero if
   // there're threads waiting, and returns the number of threads
@@ -176,14 +175,7 @@ public:
 
   struct ACE_Token_Queue_Entry
   {
-    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
-                           ACE_thread_t t_id);
-    // Constructor
-
-    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
-                           ACE_thread_t t_id,
-                           ACE_Condition_Attributes &attributes);
-    // Constructor using a pre-allocated attributes
+    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m, ACE_thread_t t_id);
 
     int wait (ACE_Time_Value *timeout, ACE_Thread_Mutex &lock);
     // Entry blocks on the token.
@@ -260,9 +252,6 @@ private:
 
   int signal_all_threads_;
   // Whether we are "signaling" all threads or not.
-
-  ACE_Condition_Attributes attributes_;
-  // The attributes for the condition variables, optimizes lock time.
 };
 
 #if defined (__ACE_INLINE__)

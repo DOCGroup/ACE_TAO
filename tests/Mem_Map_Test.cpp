@@ -63,7 +63,7 @@ reverse_file (ACE_HANDLE file_handle,
 static int
 create_test_file (int line_length, int num_lines)
 {
-  char *mybuf = 0;
+  char *mybuf;
 
   ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
   char *c = ACE_ALPHABET;

@@ -18,36 +18,18 @@
 ####   % cd TAO
 ####   % make release
 ####
-#### There are some other release/releaseall options [default value is in
-#### brackets]:
-####   ACE_TAG [ACE version in your workspace]: prepend tag with -ta
-####   TAO_TAG [TAO version in your workspace]: prepend tag with -tt
+#### To see what make release* would do without actually doing it, add
+#### CHECK=-n to the invocation.
 ####
-####   NOTE: the ACE and TAO versions will be updated automatically
-####   by release/releaseall.  ACE_TAG and TAO_TAG can be overridden
-####   to kit a particular version.
-####
-####   APPLY_NEW_TAG [enabled]: set to null to disable
-####   CHECK [disabled]: set to -n to see what make_release will do, but not
-####     do it
-####   GENERATE_MAN_PAGES [enabled]: set to null to disable regeneration of
-####     the ACE_wrappers/man/ hierarchy
-####   INSTALL_KIT [enabled]: set to null to not install in public
-####     ftp/http directory on host ace
-####   REL [beta]: set to minor or major, optionally, when applying a new tag
-####   ZIP_FILES [enabled]: set to -z to disable creation of .zip files
-####
-#### Example creation of ACE-only kit, version ACE-5_0_1 from current
-#### workspace:
-#### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
-####   GENERATE_MAN_PAGES= INSTALL_KIT= ZIP_FILES=-z
+#### By default, make release* will regenerate the contents of the man
+#### directory.  To suppress that, add GENERATE_MAN_PAGES= to your
+#### make release or make releaseall invocation.
 
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
 
 INFO    = README \
-          THANKS \
           VERSION
 
 DIRS    = ace \
@@ -55,8 +37,7 @@ DIRS    = ace \
           tests \
           apps \
           examples \
-          performance-tests \
-          websvcs
+          performance-tests
 
 CLONE   = Makefile \
           ace \
@@ -68,8 +49,7 @@ CLONE   = Makefile \
           netsvcs \
           performance-tests \
           TAO \
-          tests \
-          websvcs
+          tests
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -96,7 +76,6 @@ CONTROLLED_FILES = \
         ACE-INSTALL.html \
         ACE-install.sh \
         ASNMP \
-        AUTHORS \
         BIBLIOGRAPHY \
         COPYING \
         ChangeLog \
@@ -111,41 +90,22 @@ CONTROLLED_FILES = \
         ChangeLog-93 \
         FAQ \
         Makefile \
-        Makefile.am \
-        NEWS \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
-        TODO \
         VERSION \
-        WindozeCE \
-        acconfig.h \
-        aclocal.m4 \
         ace \
-        ace-config.1.in \
-        ace-config.in \
-        aceConf.sh.in \
         apps \
         bin \
-        config.guess \
-        config.sub \
-        configure \
-        configure.in \
         docs \
         etc \
         examples \
         include \
-        install-sh \
-        ltconfig \
-        ltmain.sh \
-        m4 \
-        missing \
-        mkinstalldirs \
         netsvcs \
         os-patches \
         performance-tests \
         tests \
-        websvcs
+        WindozeCE
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
@@ -162,40 +122,28 @@ RELEASE_LIB_FILES = \
         ACE_wrappers/bin \
         ACE_wrappers/etc \
         ACE_wrappers/include \
-        ACE_wrappers/m4 \
         ACE_wrappers/netsvcs \
-        ACE_wrappers/tests \
-        ACE_wrappers/websvcs
+        ACE_wrappers/tests
 
-.PHONY: release releasetao releaseall tag
+.PHONY: release releasetao releaseall
 
-ACE_TAG_VALUE = $(shell head -1 VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";')
-ACE_TAG = -ta $(ACE_TAG_VALUE)
-TAO_TAG_VALUE = $(shell head -1 TAO/VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";') 
-TAO_TAG = -tt $(TAO_TAG_VALUE)
-APPLY_NEW_TAG = tag
-CHECK =
-GENERATE_MAN_PAGES = -g
-INSTALL_KIT = -i
 REL = beta
-ZIP_FILES =
+CHECK =
+GENERATE_MAN_PAGES = $(ACE_ROOT)/bin/generate_man_pages
 
 #### The release target creates the ACE (only) kit.
-release: $(APPLY_NEW_TAG)
-	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
-          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
-
-tag:
-	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -v $(REL) -u
+release: ACE-INSTALL
+	@$(GENERATE_MAN_PAGES)
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
+           -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
+           -l "$(RELEASE_LIB_FILES)"
 
 #### The following target is for use by the TAO Makefile.  It should not
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
-	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
-          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace+tao -t $(REL) \
+           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)"
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.
@@ -203,19 +151,8 @@ releasetao:
 ####      recursively invoking make release in the TAO directory.
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
-releaseall: $(APPLY_NEW_TAG)
-	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
-
-.PHONY: show_controlled_files show_release_files show_release_lib_files
-
-show_controlled_files:
-	@echo $(CONTROLLED_FILES)
-
-show_release_files:
-	@echo $(RELEASE_FILES)
-
-show_release_lib_files:
-	@echo $(RELEASE_LIB_FILES)
+releaseall: release
+	@cd TAO  &&  $(MAKE) release REL=$(REL)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@

@@ -1,13 +1,12 @@
+// Log_Record.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
 #include "ace/Log_Record.h"
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#include "ace/streams.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-# include "ace/Log_Record.i"
+#include "ace/Log_Record.i"
 #endif
 
 ACE_RCSID(ace, Log_Record, "$Id$")
@@ -99,8 +98,8 @@ ACE_Log_Record::round_up (void)
 {
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
-  int len = (sizeof (*this) - sizeof (this->msg_data_))
-    + (sizeof (ASYS_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
+  int len = (sizeof *this - MAXLOGMSGLEN)
+    + (ACE_OS::strlen (this->msg_data_) + 1);
 
   // Round up to the alignment.
   this->length_ = 1 + ((len + ACE_Log_Record::ALIGN_WORDB - 1)
@@ -121,14 +120,7 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
                             u_long verbose_flag,
                             ASYS_TCHAR *verbose_msg)
 {
-  /* 0123456789012345678901234     */
-  /* Oct 18 14:25:36.000 1989<nul> */
-  ASYS_TCHAR timestamp[26]; // Only used by VERBOSE and VERBOSE_LITE.
-
-  if (ACE_BIT_ENABLED (verbose_flag,
-                       ACE_Log_Msg::VERBOSE)
-      || ACE_BIT_ENABLED (verbose_flag,
-                          ACE_Log_Msg::VERBOSE_LITE))
+  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
     {
       time_t now = this->time_stamp_.sec ();
       ASYS_TCHAR ctp[26]; // 26 is a magic number...
@@ -142,43 +134,38 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
-      ACE_OS::sprintf (timestamp,
-                       ASYS_TEXT ("%s.%03ld %s"),
-                       ctp + 4,
-                       this->time_stamp_.usec () / 1000,
-                       ctp + 20);
-    }
-
-  if (ACE_BIT_ENABLED (verbose_flag,
-                       ACE_Log_Msg::VERBOSE))
-    {
 # if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
       const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0)
-                                                            ? ((char *) ASYS_TEXT ("<local_host>"))
-                                                            : ((char *) host_name));
+        ? ((char *) ASYS_TEXT ("<local_host>")) : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ASYS_TCHAR *lhost_name = ((host_name == 0)
-                                      ? ASYS_TEXT ("<local_host>")
-                                      : host_name);
+        ? ASYS_TEXT ("<local_host>") : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
+
       ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s@%s@%ld@%s@%s"),
-                       timestamp,
+                       ASYS_TEXT ("%s.%03d %s@%s@%d@%s@%s"),
+                       ctp + 4,
+                       this->time_stamp_.usec () / 1000,
+                       ctp + 20,
                        lhost_name,
                        this->pid_,
                        ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                        this->msg_data_);
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    ACE_OS::sprintf (verbose_msg,
-                     ASYS_TEXT ("%s@%s@%s"),
-                     timestamp,
-                     ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                     this->msg_data_);
+    {
+      ACE_OS::sprintf (verbose_msg,
+                       ASYS_TEXT ("%s@%s"),
+                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                       this->msg_data_);
+    }
   else
-    ACE_OS::sprintf (verbose_msg,
-                     ASYS_TEXT ("%s"),
-                     this->msg_data_);
+    {
+      ACE_OS::sprintf (verbose_msg,
+                       ASYS_TEXT ("%s"),
+                       this->msg_data_);
+    }
+
   return 0;
 }
 
@@ -239,7 +226,7 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
   return result;
 }
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 int
 ACE_Log_Record::print (const ASYS_TCHAR *host_name,

@@ -231,10 +231,26 @@ ACE_Stream<ACE_SYNCH_USE>::push_module (ACE_Module<ACE_SYNCH_USE> *new_top,
   return 0;
 }
 
+#if 0
 template <ACE_SYNCH_DECL> int
 ACE_Stream<ACE_SYNCH_USE>::open (void *a,
-                                 ACE_Module<ACE_SYNCH_USE> *head,
-                                 ACE_Module<ACE_SYNCH_USE> *tail)
+                               ACE_Multiplexor &muxer,
+                               ACE_Module<ACE_SYNCH_USE> *head)
+{
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::open");
+  this->stream_head_ = head == 0
+    ? new ACE_Module<ACE_SYNCH_USE> ("ACE_Stream_Head",
+                               new ACE_Stream_Head<ACE_SYNCH_USE>,
+                               new ACE_Stream_Head<ACE_SYNCH_USE>, a) : head;
+  this->stream_tail_ = 0;
+  return muxer.link_from_below (this->stream_head_);
+}
+#endif
+
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::open (void *a,
+                               ACE_Module<ACE_SYNCH_USE> *head,
+                               ACE_Module<ACE_SYNCH_USE> *tail)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::open");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
@@ -339,12 +355,11 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   ACE_Message_Block *db;
 
   // Try to create a data block that contains the user-supplied data.
-  ACE_NEW_RETURN (db,
-                  ACE_Message_Block (sizeof (int),
-                                     ACE_Message_Block::MB_IOCTL,
-                                     0,
-                                     (char *) a),
-                  -1);
+  ACE_NEW_RETURN (db, ACE_Message_Block (sizeof (int),
+                                         ACE_Message_Block::MB_IOCTL,
+                                         0,
+                                         (char *) a), -1);
+
   // Try to create a control block <cb> that contains the control
   // field and a pointer to the data block <db> in <cb>'s continuation
   // field.

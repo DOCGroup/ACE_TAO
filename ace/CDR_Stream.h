@@ -4,32 +4,46 @@
 // ============================================================================
 //
 // = LIBRARY
-//   ace
+//    ace
 //
 // = FILENAME
-//   CDR_Stream.h
+//    CDR.h
 //
 // = DESCRIPTION
-//   ACE Common Data Representation (CDR) marshaling and demarshaling
-//   classes.
+//     Common Data Representation (CDR) marshaling streams.
 //
-//   This implementation was inspired in the CDR class in SunSoft's
-//   IIOP engine, but has a completely different implementation and a
-//   different interface too.
+//     This implementation assumes that the native numeric
+//     representation is two's complement for integers, IEEE
+//     single/double for floats.  Also that characters are in ISO
+//     Latin/1.
 //
-//   The current implementation assumes that the host has 1-byte,
-//   2-byte and 4-byte integral types, and that it has single
-//   precision and double precision IEEE floats.
-//   Those assumptions are pretty good these days, with Crays beign
-//   the only known exception.
+//     Note that CDR itself makes no such assumptions, but this
+//     implementation makes such assumptions for reasons of
+//     efficiency.  Careful enhancements could preserve that
+//     efficiency where the assumptions are true, yet still allow the
+//     code to work when they aren't true.
+//
+//     The implementation expects that buffers are aligned according
+//     to the strongest CDR alignment restriction.
+//
+//     NOTE: this does everything "CDR 1.1" does ... that is, it
+//     supports the five extended OMG-IDL data types in UNO Appendix
+//     A, which provide richer arithmetic types (64 bit integers,
+//     "quad precision" FP) and UNICODE-based characters and strings.
+//     Those types are not standard parts of OMG-IDL at this time.
+//
+//     THREADING NOTE: CDR data structures must be protected against
+//     concurrent access by their owning thread.
 //
 // = AUTHORS
-//   Aniruddha Gokhale <gokhale@cs.wustl.edu> and Carlos O'Ryan
-//   <coryan@cs.wustl.edu> for the original implementation in TAO.
-//   ACE version by Jeff Parsons <parsons@cs.wustl.edu>
-//   and Istvan Buki <istvan.buki@euronet.be>.
-//   Codeset translation by Jim Rogers (jrogers@viasoft.com) and
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
+//     Original copyright 1994-1995 by Sun Microsystems, Inc.  See
+//     $TAO_ROOT/COPYING.sun for more info.
+//     Many enhancements added by Aniruddha Gokhale
+//     <gokhale@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
+//     for TAO.  ACE version by Jeff Parsons <parsons@cs.wustl.edu>
+//     and Istvan Buki <istvan.buki@euronet.be>.
+//     Codeset translation by Jim Rogers (jrogers@viasoft.com) and
+//     Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -143,7 +157,7 @@ public:
   # if    (defined (_MSC_VER) && (_MSC_VER >= 900)) \
           || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))
       typedef __int64 LongLong;
-  # elif ACE_SIZEOF_LONG == 8 && !defined(_CRAYMPP)
+  # elif ACE_SIZEOF_LONG == 8
       typedef long LongLong;
   # elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
   #   if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T) && !defined (__KCC)
@@ -179,11 +193,11 @@ public:
   #     else  /* ACE_SIZEOF_INT != 4 */
           // Applications will probably have trouble with this.
           char f[4];
-  #       if defined(_UNICOS) && !defined(_CRAYMPP)
-            Float (void);
-            Float (const float &init);
-            Float & operator= (const float &rhs);
-            int operator!= (const Float &rhs) const;
+  #       if defined(_UNICOS)
+        Float (void);
+        Float (const float &init);
+        float operator= (const Float &rhs) const;
+        int operator!= (const Float &rhs) const;
   #       endif /* _UNICOS */
   #     endif /* ACE_SIZEOF_INT != 4 */
       };
@@ -309,16 +323,6 @@ public:
                  ACE_CDR::ULong b,
                  ACE_CDR::Boolean nocopy = 0);
     ACE_CDR::Char *val_;
-    ACE_CDR::ULong bound_;
-    ACE_CDR::Boolean nocopy_;
-  };
-
-  struct ACE_Export from_wstring
-  {
-    from_wstring (ACE_CDR::WChar* ws,
-                  ACE_CDR::ULong b,
-                  ACE_CDR::Boolean nocopy = 0);
-    ACE_CDR::WChar *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
   };
@@ -460,9 +464,9 @@ private:
   // to be packed with the right alignment restrictions.  It is mostly
   // designed for buffers of the basic types.
   //
-  // This operation uses <memcpy>; as explained above it is expected
-  // that using assignment is faster that <memcpy> for one element,
-  // but for several elements <memcpy> should be more efficient, it
+  // This operation uses memcpy(); as explained above it is expected
+  // that using assignment is faster that memcpy() for one element,
+  // but for several elements memcpy() should be more efficient, it
   // could be interesting to find the break even point and optimize
   // for that case, but that would be too platform dependent.
 
@@ -484,7 +488,7 @@ private:
                        char *&buf);
   // Grow the CDR stream. When it returns <buf> contains a pointer to
   // memory in the CDR stream, with at least <size> bytes ahead of it
-  // and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
+  // and aligned to an <align> boundary. It moved the wr_ptr() to <buf
   // + size>.
 
   int do_byte_swap (void) const;
@@ -585,18 +589,6 @@ public:
                 ACE_Allocator* data_block_allocator = 0);
   // Create an input CDR from an output CDR.
 
-  struct ACE_Export Transfer_Contents
-  {
-    // Helper class to transfer the contents from one input CDR to
-    // another without requiring any extra memory allocations, data
-    // copies or too many temporaries.
-    Transfer_Contents (ACE_InputCDR &rhs);
-    
-    ACE_InputCDR &rhs_;
-  };
-  ACE_InputCDR (Transfer_Contents rhs);
-  // Transfer the contents from <rhs> to a new CDR
-
   ~ACE_InputCDR (void);
   // Destructor
 
@@ -629,17 +621,8 @@ public:
 
   struct ACE_Export to_string
   {
-    to_string (ACE_CDR::Char *&s,
-               ACE_CDR::ULong b);
+    to_string (ACE_CDR::Char *&s, ACE_CDR::ULong b);
     ACE_CDR::Char *&val_;
-    ACE_CDR::ULong bound_;
-  };
-
-  struct ACE_Export to_wstring
-  {
-    to_wstring (ACE_CDR::WChar *&ws,
-                ACE_CDR::ULong b);
-    ACE_CDR::WChar *&val_;
     ACE_CDR::ULong bound_;
   };
 
@@ -732,9 +715,9 @@ public:
   //   CDR stream from a socket or file.
 
   int grow (size_t newsize);
-  // Grow the internal buffer, reset <rd_ptr> to the first byte in the
-  // new buffer that is properly aligned, and set <wr_ptr> to <rd_ptr>
-  // + newsize
+  // Grow the internal buffer, reset rd_ptr() to the first byte in the
+  // new buffer that is properly aligned, and set wr_ptr() to
+  // rd_ptr() + newsize
 
   void reset_byte_order (int byte_order);
   // After reading and partially parsing the contents the user can
@@ -746,12 +729,9 @@ public:
   // Re-initialize the CDR stream, copying the contents of the chain
   // of message_blocks starting from <data>.
 
-  ACE_Message_Block *steal_contents (void);
-  // Steal the contents from the currect CDR.
-
-  void steal_from (ACE_InputCDR &cdr);
-  // Steal the contents of <cdr> and make a shallow copy into this
-  // stream.
+  ACE_Message_Block * steal_contents (void);
+  // Re-initialize the CDR stream, copying the contents of the chain
+  // of message_blocks starting from <data>.
 
   void reset_contents (void);
   // Re-initialize the CDR stream, forgetting about the old contents
@@ -772,10 +752,6 @@ public:
   int do_byte_swap (void) const;
   // If non-zero then this stream is writing in non-native byte order,
   // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
-
-  int byte_order (void) const;
-  // If <do_byte_swap> returns 1, this returns ACE_CDR_BYTE_ORDER else
-  // it returns ~ACE_CDR_BYTE_ORDER.
 
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
@@ -820,9 +796,9 @@ private:
   // to be packed with the right alignment restrictions.  It is mostly
   // designed for buffers of the basic types.
   //
-  // This operation uses <memcpy>; as explained above it is expected
-  // that using assignment is faster that <memcpy> for one element,
-  // but for several elements <memcpy> should be more efficient, it
+  // This operation uses memcpy(); as explained above it is expected
+  // that using assignment is faster that memcpy() for one element,
+  // but for several elements memcpy() should be more efficient, it
   // could be interesting to find the break even point and optimize
   // for that case, but that would be too platform dependent.
 
@@ -1049,12 +1025,7 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_string x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
-                                               ACE_OutputCDR::from_wstring x);
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Char* x);
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
-                                               const ACE_CDR::WChar* x);
-
 // CDR input operators for primitive types
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Short &x);
@@ -1089,11 +1060,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_InputCDR::to_string x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
-                                               ACE_InputCDR::to_wstring x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
-                                               ACE_CDR::WChar*& x);
 
 #endif /* __ACE_INLINE */
 

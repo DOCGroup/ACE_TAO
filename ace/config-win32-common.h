@@ -27,11 +27,9 @@
 #define ACE_HAS_MSG
 #define ACE_HAS_SOCKADDR_MSG_NAME
 #define ACE_LACKS_GETPGID
-#define ACE_LACKS_GETPPID
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 #define ACE_HAS_EXCEPTIONS
 #define ACE_HAS_BROKEN_NAMESPACES
-#define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_SIGACTION
@@ -45,7 +43,6 @@
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
-#define ACE_HAS_POSITION_INDEPENDENT_MALLOC
 
 #define ACE_SIZEOF_LONG_LONG 8
 typedef unsigned __int64 ACE_UINT64;
@@ -58,18 +55,13 @@ typedef unsigned __int64 ACE_UINT64;
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* _MSC_VER < 1000 */
 
-// Only >= MSVC 5.0 definitions
+// Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100)
   #if !defined (ACE_HAS_WINCE)
     #define ACE_HAS_SIG_ATOMIC_T
   #endif /* ACE_HAS_WINCE */
+#define ACE_HAS_TYPENAME_KEYWORD
 #endif /* _MSC_VER >= 1100 */
-
-// Only >= MSVC 6.0 definitions
-#if (_MSC_VER >= 1200)
-# define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#endif /* _MSC_VER >= 1200 */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -93,12 +85,14 @@ typedef unsigned __int64 ACE_UINT64;
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
+// Platform supports IP multicast
+#define ACE_HAS_IP_MULTICAST
+
 // Platform contains <poll.h>.
 //define ACE_HAS_POLL
 
 // Platform supports POSIX timers via timestruc_t.
 //define ACE_HAS_POSIX_TIME
-#define ACE_LACKS_STRPTIME
 
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
@@ -278,10 +272,6 @@ typedef unsigned __int64 ACE_UINT64;
         #define NOMINMAX
 #endif /* NOMINMAX */
 
-#if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
-#define UNICODE
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
-
 #if defined (_UNICODE)
         #if !defined (UNICODE)
                  #define UNICODE         /* UNICODE is used by Windows headers */
@@ -310,14 +300,6 @@ typedef unsigned __int64 ACE_UINT64;
 #if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
         #undef __ACE_INLINE__
 #endif /* __ACE_INLINE__ */
-
-// ACE_USES_STATIC_MFC always implies ACE_HAS_MFC
-#if defined (ACE_USES_STATIC_MFC)
-# if defined (ACE_HAS_MFC)
-#   undef ACE_HAS_MFC
-# endif
-# define ACE_HAS_MFC 1
-#endif /* ACE_USES_STATIC_MFC */
 
 // We are build ACE and want to use MFC (multithreaded)
 #if defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
@@ -409,10 +391,7 @@ typedef unsigned __int64 ACE_UINT64;
                 #include /**/ <winsock.h>
         #endif /* _WINSOCKAPI */
 
-        // PharLap ETS has its own winsock lib, so don't grab the one
-        // supplied with the OS.
-        #if defined (_MSC_VER) && !defined (UNDER_CE) && \
-                                  !defined (ACE_HAS_PHARLAP)
+        #if defined (_MSC_VER) && !defined (UNDER_CE)
                 #pragma comment(lib, "wsock32.lib")
         #endif /* _MSC_VER */
 
@@ -422,11 +401,6 @@ typedef unsigned __int64 ACE_UINT64;
 
         // Version 1.1 of WinSock
         #define ACE_WSOCK_VERSION 1, 1
-#endif /* ACE_HAS_WINSOCK2 */
-
-// Platform supports IP multicast on Winsock 2
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-# define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
 #if defined (_MSC_VER)

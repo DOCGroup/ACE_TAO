@@ -54,9 +54,8 @@ ACE_Token_Manager::instance (void)
 
       if (token_manager_ == 0)
         {
-          ACE_NEW_RETURN (token_manager_,
-                          ACE_Token_Manager,
-                          0);
+          ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
+
           // Register for destruction with ACE_Object_Manager.
           ACE_Object_Manager::at_exit (token_manager_);
         }

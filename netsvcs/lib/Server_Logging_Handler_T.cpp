@@ -221,7 +221,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, char *argv[])
                       -1);
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
   ACE_INET_Addr server_addr;
@@ -327,9 +327,8 @@ ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
     return -1;
 
   // Spawn a new thread of control to handle logging records with the
-  // client using a thread-per-connection concurrency model.  Note
-  // that this implicitly uses the <ACE_Thread_Manager::instance> to
-  // control all the threads.
+  // client.  Note that this implicitly uses the
+  // ACE_Thread_Manager::instance () to control all the threads.
   if (this->activate (THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

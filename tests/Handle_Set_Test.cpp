@@ -104,8 +104,8 @@ test_boundaries (void)
       const int SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS = 1;
       ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
 #else /* ! defined (ACE_PSOS_DIAB) */
-      ACE_ASSERT (0 == ASYS_TEXT ("this shouldn't get called since ")
-                  ASYS_TEXT ("the set is empty!\n"));
+      ACE_ASSERT (0 == ASYS_TEXT ("this shouldn't get called since "
+                                  "the set is empty!\n"));
 #endif /* defined (ACE_PSOS_DIAB) */
     }
 
@@ -208,13 +208,13 @@ main (int argc, ASYS_TCHAR *argv[])
 // The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-# if defined(_CRAYMPP)
-// MPP Cray ACE_HANDLE is 64-bit, defined as int, but ACE_INT32 is short
-// so instantiation in ace/Stats.cpp isn't used in this case
-template class ACE_Node<ACE_HANDLE>;
-# endif
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 #pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
+# if defined(_CRAYMPP)
+// MPP Cray ACE_HANDLE is 64-bit, defined as int, but ACE_INT32 is short
+// so instantiation in ace/Stats.cpp isn't used in this case
+#pragma instantiate ACE_Node<ACE_HANDLE>
+# endif
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

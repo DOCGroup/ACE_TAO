@@ -50,24 +50,6 @@
 // relies on the standard c++ library.
 //  Runtime restrictions: You must be using MSVC 4.2 or above and your
 //                        application must link with the standard libraries.
-
-#if defined (_MSC_VER)
-
-# define ACE_CC_NAME "Visual C++"
-# define ACE_CC_COMPILER "CL.EXE"
-
-#if (_MSC_VER >= 1200)
-# define ACE_CC_MAJOR_VERSION 6
-#elif (_MSC_VER >= 1100)
-# define ACE_CC_MAJOR_VERSION 5
-#elif (_MSC_VER >= 1000)
-# define ACE_CC_MAJOR_VERSION 4
-#endif /* _MSC_VER  >= 1200 */
-
-# define ACE_CC_MINOR_VERSION (_MSC_VER % 100)
-# define ACE_CC_BETA_VERSION  (0)
-#endif /* _MSC_VER */
-
 #if defined (_MSC_VER) && (_MSC_VER >= 1020)
         #if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
                 #define ACE_HAS_STANDARD_CPP_LIBRARY    0
@@ -167,28 +149,16 @@
 
 // By default, we use non-static object manager on Win32.  That is,
 // the object manager is allocated in main's stack memory.  If this
-// does not suit your need, i.e., if your programs depend on the use
-// of static object manager, you neet to disable the behavior by
-// defining ACE_HAS_NONSTATIC_OBJECT_MANAGER=0.
+// does not suit your need, you can disable the behavior by defining
+// ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
 //
-// MFC users: the main function is defined within a MFC library and
-// therefore, ACE won't be able to meddle with main function and
-// instantiate the non-static object manager for you.  To solve the
-// problem, you'll need to instantiate the ACE_Object_Manager by
-// either:
+// MFC users: Since the main function is defined withing MFC library,
+// you'll need to instantiate the ACE_Object_Manager by doing either,
 //
-// 1. Using static object manager (as described above), however, using
-// the non-static object manager is prefered, therefore,
-// 2. Instantiate the non-static object manager yourself by either 1)
-//    call ACE::init () at the beginning and ACE::fini () at the end,
-//    _or_ 2) instantiate the ACE_Object_Manager in your CWinApp
-//    derived class.
+// 1. Using static object manager (as described above.)
+// 2. Instantiate Object Manager in your CApplication derived class
+//    and define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
 //
-// Optionally, you can #define
-// ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER in your
-// ace/config.h and always take care of the business by yourself.
-// ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER has no effect when
-// using static object managers.
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
@@ -197,9 +167,6 @@
 
 // MSVC already defined __TEXT
 #define ACE_HAS_TEXT_MACRO_CONFLICT
-
-#define ACE_HAS_EXPLICIT_KEYWORD
-#define ACE_HAS_MUTABLE_KEYWORD
 
 #define ACE_HAS_GPERF
 

@@ -60,7 +60,7 @@ public class StreamTail extends Task
       default:
 	mb.msgType (MessageType.MB_IOCNAK);
       }
-    return this.reply (mb, null);
+    return this.reply (mb, new TimeValue ());
   }
 
   // Perform flush algorithm as though we were the driver
@@ -77,19 +77,11 @@ public class StreamTail extends Task
     if ((f & TaskFlags.ACE_FLUSHR) != 0)
       {
 	this.sibling ().flush (TaskFlags.ACE_FLUSHALL);
-	return this.reply (mb, null);
+	return this.reply (mb, new TimeValue ());
       }
     return 0;
   }
 
-  // put the given MessageBlock without a timeout (block forever if
-  // necessary)
-  public int put (MessageBlock mb) 
-  {
-    return this.put (mb, null);
-  }
-
-  // tv is an absolute time timeout
   public int put (MessageBlock mb, TimeValue tv)
   {
     if (this.isWriter ())

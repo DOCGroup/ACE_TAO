@@ -4,7 +4,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Synch_T.h"
 
-//#define ACE_ENABLE_TIMEPROBES
+// #define ACE_ENABLE_TIMEPROBES
 #include "ace/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
@@ -26,9 +26,7 @@ static const char *ACE_MB_Timeprobe_Description[] =
   "Data_Block::ctor[1] - enter",
   "Data_Block::ctor[1] - leave",
   "Data_Block::ctor[2] - enter",
-  "Data_Block::ctor[2] - leave",
-  "Data_Block::clone - enter",
-  "Data_Block::clone - leave"
+  "Data_Block::ctor[2] - leave"
 };
 
 enum
@@ -40,9 +38,7 @@ enum
   ACE_DATA_BLOCK_CTOR1_ENTER,
   ACE_DATA_BLOCK_CTOR1_LEAVE,
   ACE_DATA_BLOCK_CTOR2_ENTER,
-  ACE_DATA_BLOCK_CTOR2_LEAVE,
-  ACE_DATA_BLOCK_CLONE_ENTER,
-  ACE_DATA_BLOCK_CLONE_LEAVE
+  ACE_DATA_BLOCK_CTOR2_LEAVE
 };
 
 
@@ -862,23 +858,6 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
 {
   ACE_TRACE ("ACE_Data_Block::clone");
 
-  ACE_Data_Block* nb = this->clone_nocopy (mask);
-
-  // Copy all of the payload memory into the new object.
-  ACE_OS::memcpy (nb->base_,
-                  this->base_,
-                  this->max_size_);
-
-  return nb;
-}
-
-ACE_Data_Block *
-ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
-{
-  ACE_FUNCTION_TIMEPROBE(ACE_DATA_BLOCK_CLONE_ENTER);
-
-  ACE_TRACE ("ACE_Data_Block::clone_nocopy");
-
   // You always want to clear this one to prevent memory leaks but you
   // might add some others later.
   const ACE_Message_Block::Message_Flags always_clear =
@@ -898,6 +877,10 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
                                          this->data_block_allocator_),
                          0);
 
+  // Copy all of the payload memory into the new object.
+  ACE_OS::memcpy (nb->base_,
+                  this->base_,
+                  this->max_size_);
 
   // Set new flags minus the mask...
   nb->clr_flags (mask | always_clear);

@@ -30,38 +30,6 @@ size_t ACE::pagesize_ = 0;
 // Size of allocation granularity.
 size_t ACE::allocation_granularity_ = 0;
 
-int
-ACE::out_of_handles (int error)
-{
-  // EMFILE is common to all platforms.
-  if (error == EMFILE ||
-#if defined (ACE_WIN32)
-      // On Win32, we need to check for ENOBUFS also.
-      error == ENOBUFS ||
-#elif defined (HPUX)
-      // On HPUX, we need to check for EADDRNOTAVAIL also.
-      error == EADDRNOTAVAIL ||
-#elif defined (linux)
-      // On linux, we need to check for ENOENT also.
-      error == ENOENT ||
-      // For RedHat5.2, need to check for EINVAL too.
-      error == EINVAL ||
-      // Without threads check for EOPNOTSUPP
-      error == EOPNOTSUPP ||
-#elif defined (sun)
-      // On sun, we need to check for ENOSR also.
-      error == ENOSR ||
-#elif defined (__FreeBSD__)
-      // On FreeBSD we need to check for EOPNOTSUPP (LinuxThreads) or
-      // ENOSYS (libc_r threads) also.
-       error == EOPNOTSUPP ||
-       error == ENOSYS ||
-#endif /* ACE_WIN32 */
-      error == ENFILE)
-    return 1;
-  else
-    return 0;
-}
 
 int
 ACE::init (void)
@@ -155,10 +123,7 @@ ACE::compiler_beta_version (void)
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_HAS_PHARLAP)
-  ACE_UNUSED_ARG (pid);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_TERMINATE,
@@ -166,7 +131,7 @@ ACE::terminate_process (pid_t pid)
                    pid);
 
   if (process_handle == ACE_INVALID_HANDLE
-      || process_handle == 0)
+      || process_handle == NULL)
     return -1;
   else
     {
@@ -207,7 +172,7 @@ ACE::process_active (pid_t pid)
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_QUERY_INFORMATION, FALSE, pid);
   if (process_handle == ACE_INVALID_HANDLE
-      || process_handle == 0)
+      || process_handle == NULL)
     return 0;
   else
     {
@@ -261,7 +226,7 @@ ACE::strsplit_r (char *str,
 const char *
 ACE::execname (const char *old_name)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32)
   if (ACE_OS::strstr (old_name, ".exe") == 0)
     {
       char *new_name;
@@ -273,7 +238,7 @@ ACE::execname (const char *old_name)
 
       ACE_NEW_RETURN (new_name,
                       char[size],
-                      0);
+                      -1);
       char *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
@@ -283,7 +248,7 @@ ACE::execname (const char *old_name)
 
       return new_name;
     }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32 */
   return old_name;
 }
 
@@ -341,7 +306,7 @@ ACE::strsplit_r (wchar_t *str,
 const wchar_t *
 ACE::execname (const wchar_t *old_name)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32)
   if (ACE_OS::strstr (old_name, L".exe") == 0)
     {
       wchar_t *new_name;
@@ -353,7 +318,7 @@ ACE::execname (const wchar_t *old_name)
 
       ACE_NEW_RETURN (new_name,
                       wchar_t[size],
-                      0);
+                      -1);
       wchar_t *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
@@ -363,7 +328,7 @@ ACE::execname (const wchar_t *old_name)
 
       return new_name;
     }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32 */
   return old_name;
 }
 #endif /* ACE_HAS_UNICODE */
@@ -623,8 +588,8 @@ ACE::strrepl (char *s, char search, char replace)
 }
 
 #if !defined (ACE_HAS_WINCE)
-ASYS_TCHAR *
-ACE::strenvdup (const ASYS_TCHAR *str)
+char *
+ACE::strenvdup (const char *str)
 {
   ACE_TRACE ("ACE::strenvdup");
 
@@ -658,20 +623,13 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 {
   ACE_TRACE ("ACE::ldfind");
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
-    !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ASYS_TCHAR expanded_filename[MAXPATHLEN];
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   if (::ExpandEnvironmentStringsA (filename,
                                    expanded_filename,
                                    sizeof expanded_filename))
-#else
-  if (::ExpandEnvironmentStringsW (filename,
-                                   expanded_filename,
-                                   sizeof expanded_filename))
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     filename = expanded_filename;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 
   ASYS_TCHAR tempcopy[MAXPATHLEN + 1];
   ASYS_TCHAR searchpathname[MAXPATHLEN + 1];
@@ -719,7 +677,11 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   ASYS_TCHAR *s = ACE_OS::strrchr (searchfilename, '.');
 
   const ASYS_TCHAR *dll_suffix =
-    ASYS_TEXT (ACE_DLL_SUFFIX);
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+    ACE_DLL_SUFFIX;
+#else
+    _TEXT (ACE_DLL_SUFFIX);
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
   if (s != 0)
     {
@@ -1032,8 +994,11 @@ ACE::dirname (const char *pathname, char delim)
 
   if (temp == 0)
     {
-      return_dirname[0] = '.';
-      return_dirname[1] = '\0';
+      if (ACE_OS::strcmp (pathname, ".") == 0
+          || ACE_OS::strcmp (pathname, "..") == 0)
+        return_dirname[0] = '.';
+      else
+        return_dirname[0] = delim;
 
       return return_dirname;
     }
@@ -1077,9 +1042,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp,
-                  iovec[total_tuples],
-                  -1);
+  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -1115,9 +1078,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp,
-                  iovec[total_tuples],
-                  -1);
+  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -1698,7 +1659,7 @@ ACE::timestamp (ASYS_TCHAR date_and_time[], int date_and_timelen)
                    timebuf,
                    date_and_timelen);
   ACE_OS::sprintf (&date_and_time[19],
-                   ".%06ld",
+                   ".%06d",
                    cur_time.usec ());
 #endif /* WIN32 */
   date_and_time[26] = '\0';
@@ -1872,7 +1833,7 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
           && (errno == EWOULDBLOCK
               && (timeout->sec () > 0 || timeout->usec () > 0)))
         // This expression checks if we were polling.
-        errno = ETIMEDOUT;
+        errno = ETIME;
 
       return handle;
     }
@@ -1934,7 +1895,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
               && timeout->usec () == 0)
             errno = EWOULDBLOCK;
           else
-            errno = ETIMEDOUT;
+            errno = ETIME;
           return -1;
           /* NOTREACHED */
         case 1:
@@ -2694,8 +2655,6 @@ const ASYS_TCHAR *
 ACE::sock_error (int error)
 {
 #if defined (ACE_WIN32)
-  static ASYS_TCHAR unknown_msg[64];
-
   switch (error)
     {
     case WSAVERNOTSUPPORTED:
@@ -2787,8 +2746,7 @@ ACE::sock_error (int error)
       return ASYS_TEXT ("address not available");
       /* NOTREACHED */
     default:
-      ACE_OS::sprintf (unknown_msg, ASYS_TEXT ("unknown error: %d"), error);
-      return unknown_msg;
+      return ASYS_TEXT ("unknown error");
       /* NOTREACHED */
     }
 #else
@@ -2857,6 +2815,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         {
           ACE_UINT64 haddr;  // a place to put the address
           char * haddrp = (char *) &haddr;  // convert to char pointer
+          haddr += 4;   // adjust within the word
           ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
           ip_addr.sin_addr.s_addr = haddr;
         }
@@ -3156,8 +3115,8 @@ ACE::get_ip_interfaces (size_t &count,
                     0, 0,
                     info, sizeof(info),
                     &bytes,
-                    0,
-                    0);
+                    NULL,
+                    NULL);
   closesocket (sock);
   if (status == SOCKET_ERROR)
       return -1;
@@ -3166,9 +3125,7 @@ ACE::get_ip_interfaces (size_t &count,
   if (n_interfaces == 0)
     return 0;
 
-  ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[n_interfaces],
-                  -1);
+  ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -1);
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
@@ -3200,89 +3157,6 @@ ACE::get_ip_interfaces (size_t &count,
 
 #else /* Winsock 2 && MSVC 5 or later */
 
-  // PharLap ETS has kernel routines to rummage through the device
-  // configs and extract the interface info. Sort of a pain in the
-  // butt, but better than trying to figure out where it moved to in
-  // the registry... :-|
-#  if defined (ACE_HAS_PHARLAP)
-#    if !defined (ACE_HAS_PHARLAP_RT)
-  ACE_NOTSUP_RETURN (-1);
-#    endif /* ACE_HAS_PHARLAP_RT */
-
-  // Locate all of the IP devices in the system, saving a DEVHANDLE
-  // for each. Then allocate the ACE_INET_Addrs needed and fetch all
-  // the IP addresses.  To locate the devices, try the available
-  // device name roots and increment the device number until the
-  // kernel says there are no more of that type.
-  const size_t ACE_MAX_ETS_DEVICES = 64;  // Arbitrary, but should be enough.
-  DEVHANDLE ip_dev[ACE_MAX_ETS_DEVICES];
-  EK_TCPIPCFG *devp;
-  size_t i, j;
-  char dev_name[16];
-
-  count = 0;
-  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
-    {
-      // Ethernet.
-      ACE_OS::sprintf (dev_name,
-                       "ether%d",
-                       i);
-      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
-      if (ip_dev[count] == 0)
-        break;
-    }
-  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
-    {
-      // SLIP.
-      ACE_OS::sprintf (dev_name,
-                       "sl%d",
-                       i);
-      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
-      if (ip_dev[count] == 0)
-        break;
-    }
-  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
-    {
-      // PPP.
-      ACE_OS::sprintf (dev_name,
-                       "ppp%d",
-                       i);
-      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
-      if (ip_dev[count] == 0)
-        break;
-    }
-
-  if (count > 0)
-    ACE_NEW_RETURN (addrs,
-                    ACE_INET_Addr[count],
-                    -1);
-  else
-    addrs = 0;
-
-  for (i = 0, j = 0; i < count; i++)
-    {
-      devp = EtsTCPGetDeviceCfg (ip_dev[i]);
-      if (devp != 0)
-        {
-          addrs[j].set (0,
-                        devp->nwIPAddress,
-                        0); // Already in net order.
-          j++;
-        }
-      // There's no call to close the DEVHANDLE.
-    }
-
-  count = j;
-  if (count == 0 && addrs != 0)
-    {
-      delete [] addrs;
-      addrs = 0;
-    }
-
-  return 0;
-
-#  else /* ACE_HAS_PHARLAP */
-
   const TCHAR *SVCS_KEY1 =
     ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const TCHAR *LINKAGE_KEY1 =
@@ -3302,14 +3176,14 @@ ACE::get_ip_interfaces (size_t &count,
                        raw_buffer,
                        raw_buflen))
     return -1;
-  // return buffer contains 0 delimited strings
+  // return buffer contains NULL delimited strings
 
   ACE_Tokenizer dev_names (raw_buffer);
   dev_names.delimiter (ACE_TEXT('\0'));
   int n_interfaces = 0;
 
   // Count the number of interfaces
-  while (dev_names.next () != 0)
+  while (dev_names.next () != NULL)
     n_interfaces ++;
 
   // case 1. no interfaces present, empty string? OS version change?
@@ -3356,7 +3230,6 @@ ACE::get_ip_interfaces (size_t &count,
         }
     }
   return 0;
-#  endif /* ACE_HAS_PHARLAP */
 # endif /* Winsock 2 && MSVC 5 or later */
 
 #elif defined (__unix) || defined (__Lynx__) || defined (_AIX)

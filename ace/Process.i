@@ -20,51 +20,15 @@ ACE_Process::getpid (void)
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE pid_t
-ACE_Process::wait (int *status,
-                   int options)
-{
-  return ACE_OS::wait (this->getpid (),
-                       status,
-                       options);
-}
-
-ACE_INLINE pid_t
-ACE_Process::wait (const ACE_Time_Value &tv,
-                   int *status)
-{
-#if defined (ACE_WIN32)
-  // Don't try to get the process exit status if wait failed so we can
-  // keep the original error code intact.
-  switch (::WaitForSingleObject (process_info_.hProcess,
-                                 tv.msec ()))
-    {
-    case WAIT_OBJECT_0:
-      if (status != 0)
-        // The error status of <GetExitCodeProcess> is nonetheless not
-        // tested because we don't know how to return the value.
-        ::GetExitCodeProcess (process_info_.hProcess,
-                              (LPDWORD) status);
-      return 0;
-    case WAIT_TIMEOUT:
-      errno = ETIME;
-      return 0;
-    default:
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
-#else /* ACE_WIN32 */
-  ACE_UNUSED_ARG (tv);
-  ACE_UNUSED_ARG (status);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
 ACE_INLINE int
 ACE_Process::kill (int signum)
 {
-  return ACE_OS::kill (this->getpid (),
-                       signum);
+#if defined (ACE_WIN32) || defined (CHORUS)
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  return ACE_OS::kill (this->getpid (), signum);
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
@@ -72,6 +36,8 @@ ACE_Process::terminate (void)
 {
   return ACE::terminate_process (this->getpid ());
 }
+
+// ************************************************************
 
 ACE_INLINE u_long
 ACE_Process_Options::creation_flags (void) const
@@ -89,6 +55,7 @@ ACE_Process_Options::creation_flags (u_long cf)
   creation_flags_ = cf;
 }
 
+// ******************************
 #if defined (ACE_WIN32)
 
 ACE_INLINE STARTUPINFO *

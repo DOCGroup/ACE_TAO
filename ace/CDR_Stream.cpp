@@ -1,4 +1,36 @@
+// CDR_Stream.cpp
 // $Id$
+
+// Portions of this file are:
+// Copyright 1994-1995 by Sun Microsystems Inc.
+// All Rights Reserved
+
+// CDR:         Encode/Decode basic machine data types
+//
+// Implementation of OMG "Common Data Representation" (CDR) ... there
+// are one routine each for byte/halfword/word/doubleword put/get,
+// which adjust to establish "natural" alignment (the bulk of the
+// code) and then put or get with byteswapping as needed.
+//
+// The implementation knows that native data formats are conformant
+// with OMG-IDL's (and hence CDR's) size requirements, and relies on
+// the fact that (for example) CORBA's Long is always four bytes long
+// even if the environment's "int" is a different size.
+//
+//      char, octet                       8 bits (1 byte)
+//      short, unsigned short            16 bits (2 bytes)
+//      long, unsigned long, float       32 bits (4 bytes)
+//      double, (unsigned) long long     64 bits (8 bytes)
+//      long double                     128 bits (16 bytes)
+//
+// Moreover, this "knows" that the native 'char' represents ISO
+// Latin/1 characters (an ASCII superset addressing Western European
+// characters) and that "double" and "float" comply with the IEEE
+// standards. (The "long double" may not be a native data type,
+// though.)
+//
+// THREADING NOTE: "CDR" is a data structure which must be protected
+// by external critical sections.
 
 #define ACE_BUILD_DLL
 #include "ace/CDR_Stream.h"
@@ -85,20 +117,20 @@ ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
-#if defined(_UNICOS) && !defined(_CRAYMPP)
+#if defined(_UNICOS)
 // placeholders to get things compiling
 ACE_CDR::Float::Float()
 {
 }
 
-ACE_CDR::Float::Float(const float & init)
+ACE_CDR::Float::Float(const float & init))
 {
 }
 
-ACE_CDR::Float &
-ACE_CDR::Float::operator= (const float &rhs)
+float
+ACE_CDR::Float::operator= (const ACE_CDR::Float &rhs) const
 {
-    return *this;
+    return 0.0f;
 }
 
 int
@@ -644,25 +676,11 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (rhs.char_translator_),
-    wchar_translator_ (rhs.wchar_translator_)
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   this->start_.rd_ptr (rhs.start_.rd_ptr ());
   this->start_.wr_ptr (rhs.start_.wr_ptr ());
-}
-
-ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
-  : start_ (x.rhs_.start_.data_block ()),
-    do_byte_swap_ (x.rhs_.do_byte_swap_),
-    good_bit_ (1),
-    char_translator_ (x.rhs_.char_translator_),
-    wchar_translator_ (x.rhs_.wchar_translator_)
-{
-  this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
-  this->start_.wr_ptr (x.rhs_.start_.wr_ptr ());
-
-  ACE_Data_Block* db = this->start_.data_block ()->clone_nocopy ();
-  (void) x.rhs_.start_.replace_data_block (db);
 }
 
 ACE_InputCDR&
@@ -718,9 +736,7 @@ ACE_InputCDR::read_string (char *&x)
   this->read_ulong (len);
   if (len > 0)
     {
-      ACE_NEW_RETURN (x,
-                      ACE_CDR::Char[len],
-                      0);
+      ACE_NEW_RETURN (x, ACE_CDR::Char[len], 0);
       if (this->read_char_array (x, len))
         return 1;
       delete [] x;
@@ -758,9 +774,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   this->read_ulong (len);
   if (this->good_bit())
     {
-      ACE_NEW_RETURN (x,
-                      ACE_CDR::WChar[len],
-                      0);
+      ACE_NEW_RETURN (x, ACE_CDR::WChar[len], 0);
       if (this->read_wchar_array (x, len))
         return 1;
 
@@ -1021,17 +1035,6 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
     }
 }
 
-void
-ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
-{
-  this->do_byte_swap_ = cdr.do_byte_swap_;
-  this->start_.data_block (cdr.start_.data_block ()->duplicate ());
-  this->start_.rd_ptr (cdr.start_.rd_ptr ());
-  this->start_.wr_ptr (cdr.start_.wr_ptr ());
-
-  cdr.reset_contents ();
-}
-
 ACE_Message_Block*
 ACE_InputCDR::steal_contents (void)
 {
@@ -1046,5 +1049,5 @@ ACE_InputCDR::steal_contents (void)
 void
 ACE_InputCDR::reset_contents (void)
 {
-  this->start_.data_block (this->start_.data_block ()->clone_nocopy ());
+  this->start_.data_block (this->start_.data_block ()->clone ());
 }

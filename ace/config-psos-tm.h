@@ -174,6 +174,7 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
+// #define ACE_MALLOC_ALIGN 8
 // #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
@@ -194,6 +195,7 @@
 #define ACE_PSOS_CANT_USE_SYS_TYPES
 #define ACE_PSOS_HAS_TIME
 
+
 //#define ACE_PSOS_SNARFS_HEADER_INFO
 
 #if !defined (ACE_PSOS)
@@ -204,5 +206,5 @@
 #define ACE_PSOS_TBD
 #endif /* ACE_PSOS_TBD */
 #define ACE_LACKS_MKFIFO
-#define ACE_MALLOC_ALIGN 8
+
 #endif /* ACE_CONFIG_H */

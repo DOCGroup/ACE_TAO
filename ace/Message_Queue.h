@@ -48,9 +48,9 @@ public:
     DEFAULT_LWM = 16 * 1024,
     // Default low watermark (same as high water mark).
     WAS_ACTIVE = 1,
-    // Message queue was active before <activate> or <deactivate>.
+    // Message queue was active before activate() or deactivate().
     WAS_INACTIVE = 2
-    // Message queue was inactive before <activate> or <deactivate>.
+    // Message queue was inactive before activate() or deactivate().
   };
 
   ACE_Message_Queue_Base (void);
@@ -133,9 +133,6 @@ private:
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
 
-// This typedef is used to get around a compiler bug in g++/vxworks.
-typedef ACE_Message_Queue<ACE_SYNCH> ACE_DEFAULT_MESSAGE_QUEUE_TYPE;
-
 #if defined (VXWORKS)
 # include /**/ <msgQLib.h>
 
@@ -153,22 +150,22 @@ class ACE_Message_Queue_Vx : public ACE_Message_Queue<ACE_NULL_SYNCH>
   //
   //     NOTE: *Many* ACE_Message_Queue features are not supported with
   //     this specialization, including:
-  //     * The two size arguments to the constructor and <open> are
+  //     * The two size arguments to the constructor and open () are
   //       interpreted differently.  The first is interpreted as the
   //       maximum number of bytes in a message.  The second is
   //       interpreted as the maximum number of messages that can be
   //       queued.
-  //     * <dequeue_head> *requires* that the ACE_Message_Block
+  //     * dequeue_head () *requires* that the ACE_Message_Block
   //       pointer argument point to an ACE_Message_Block that was
   //       allocated by the caller.  It must be big enough to support
   //       the received message, without using continutation.  The
   //       pointer argument is not modified.
   //     * Message priority.  MSG_Q_FIFO is hard-coded.
   //     * enqueue method timeouts.
-  //     * <peek_dequeue_head>.
-  //     * <ACE_Message_Queue_Iterators>.
+  //     * peek_dequeue_head ().
+  //     * ACE_Message_Queue_Iterators.
   //     * The ability to change low and high water marks after creation.
-  //     * <Message_Block> chains.  The continuation field of <ACE_Message_Block>
+  //     * Message_Block chains.  The continuation field of ACE_Message_Block
   //     *   is ignored; only the first block of a fragment chain is
   //     *   recognized.
 public:
@@ -233,10 +230,7 @@ protected:
   virtual int is_empty_i (void);
   // True if queue is empty, else false.
 
-  // = Implementation of public <activate>/<deactivate> methods above.
-
-  // These methods assume locks are held.
-
+  // = Implementation of the public activate() and deactivate() methods above (assumes locks are held).
   virtual int deactivate_i (void);
   // Deactivate the queue.
   virtual int activate_i (void);
@@ -292,12 +286,12 @@ class ACE_Export ACE_Message_Queue_NT : public ACE_Message_Queue_Base
   //
   //     NOTE: *Many* ACE_Message_Queue features are not supported with
   //     this implementation, including:
-  //     * <open> method have different signatures.
-  //     * <dequeue_head> *requires* that the <ACE_Message_Block>
-  //       pointer argument point to an <ACE_Message_Block> that was
+  //     * open method have different signatures.
+  //     * dequeue_head () *requires* that the ACE_Message_Block
+  //       pointer argument point to an ACE_Message_Block that was
   //       allocated by the caller.
-  //     * <peek_dequeue_head>.
-  //     * <ACE_Message_Queue_Iterators>.
+  //     * peek_dequeue_head ().
+  //     * ACE_Message_Queue_Iterators.
   //     * No flow control.
 public:
   // = Initialization and termination methods.

@@ -56,9 +56,7 @@ Handle_L_FIFO::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "registering service with ACE_Reactor\n"),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
   return 0;
 }
 

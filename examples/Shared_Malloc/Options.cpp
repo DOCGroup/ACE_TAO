@@ -103,7 +103,6 @@ Options::print_usage_and_die (void)
        "[-p] (use processes rather than threads)\n"
        "[-s] (use SysV shared memory rather than mmap)\n"
        "[-t number of threads or processes to spawn]\n"
-       "[-T] (enable tracking)\n"
        "[-n iteration_count]\n%a", -1));
   /* NOTREACHED */
 }
@@ -126,7 +125,7 @@ Options::Options (void)
 void
 Options::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dehlL:mn:pst:T");
+  ACE_Get_Opt get_opt (argc, argv, "dehlL:mn:pst:");
 
   this->program_name_ = argv[0];
   ACE_LOG_MSG->open (this->program_name_);
@@ -138,9 +137,9 @@ Options::parse_args (int argc, char *argv[])
       this->use_mmap_ = 1;
     }
 
-  for (int c;
-       (c = get_opt ()) != -1;
-       )
+  int c;
+
+  while ((c = get_opt ()) != -1)
     {
       switch (c)
 	{
@@ -175,9 +174,6 @@ Options::parse_args (int argc, char *argv[])
 	  break;
 	case 't':
 	  this->spawn_count_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'T':
-          ACE_Trace::start_tracing ();
 	  break;
 	default:
 	  this->print_usage_and_die ();

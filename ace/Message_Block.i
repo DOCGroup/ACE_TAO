@@ -298,21 +298,6 @@ ACE_Message_Block::space (void) const
   return this->end () - this->wr_ptr ();
 }
 
-ACE_INLINE ACE_Data_Block *
-ACE_Message_Block::replace_data_block (ACE_Data_Block *db)
-{
-  ACE_TRACE ("ACE_Message_Block::replace_data_block");
-  ACE_Data_Block *old = this->data_block_;
-  this->data_block_ = db;
-
-  // Set the read and write pointers in the <Message_Block> to point
-  // to the buffer in the <ACE_Data_Block>.
-  this->rd_ptr (this->data_block ()->base ());
-  this->wr_ptr (this->data_block ()->base ());
-
-  return old;
-}
-
 ACE_INLINE void
 ACE_Message_Block::cont (ACE_Message_Block *cont_msg)
 {

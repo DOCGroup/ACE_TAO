@@ -100,7 +100,7 @@ public:
   // Returns a reference to the <Time_Value>.  This value only makes
   // sense if (*this)[USE_TIMEOUT] is true.
 
-  void timeout (const ACE_Time_Value &tv);
+  void timeout (ACE_Time_Value &tv);
   // Set the <Time_Value>.
 
   const ACE_Time_Value *time_value (void) const;

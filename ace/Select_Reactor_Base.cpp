@@ -190,15 +190,12 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle,
 #endif /* ACE_WIN32 */
     }
   else
-    // g++ can't figure out that <i> won't be used below if the handle
-    // is out of range, so keep it happy by defining <i> here . . .
+    // g++ can't figure out that i won't be used below if the handle
+    // is out of range, so keep it happy by defining i here . . .
     i = 0;
 
-  if (eh != 0)
-    {
-      if (index_p != 0)
-        *index_p = i;
-    }
+  if (eh != 0 && index_p != 0)
+    *index_p = i;
   else
     errno = ENOENT;
 
@@ -505,8 +502,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ = 
-        ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
+      this->select_reactor_ = ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
 
       if (select_reactor_ == 0)
         {
@@ -573,7 +569,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
 
 int
 ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
-                                                   ACE_Handle_Set &rd_mask)
+                                                   const ACE_Handle_Set &rd_mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::handle_notification");
 
@@ -584,7 +580,6 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
       && rd_mask.is_set (read_handle))
     {
       number_of_active_handles--;
-      rd_mask.clr_bit (read_handle);
       return this->handle_input (read_handle);
     }
   else
@@ -653,9 +648,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
               break;
             default:
               // Should we bail out if we get an invalid mask?
-              ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("invalid mask = %d\n"),
-                          buffer.mask_));
+              ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
             }
           if (result == -1)
             buffer.eh_->handle_close (ACE_INVALID_HANDLE,

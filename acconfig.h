@@ -14,6 +14,15 @@
   autoheader may encounter.
 */
 
+/* Name of package */
+#ifndef PACKAGE
+# undef PACKAGE
+#endif
+
+/* Version of package */
+#ifndef VERSION
+# undef VERSION
+#endif
 
 /* Define _REENTRANT if reentrant functions should be used. */
 #ifndef _REENTRANT
@@ -671,9 +680,6 @@
 
 /* No system support for replacing any previous mappings. */
 #undef ACE_LACKS_AUTO_MMAP_REPLACEMENT
-
-/* Platform lacks support for the standard C++ auto_ptr class */
-#undef ACE_LACKS_AUTO_PTR
 
 /* Compiler/platform lacks the standard C library bsearch() function  */
 #undef ACE_LACKS_BSEARCH

@@ -214,6 +214,7 @@
 
 #define ACE_LACKS_UTSNAME_T
 
+// #define ACE_MALLOC_ALIGN 8
 // #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
@@ -240,5 +241,4 @@
 #endif /* #if !defined (ACE_USE_RCSID) */
 #define ACE_LACKS_MKFIFO
 
-#define ACE_MALLOC_ALIGN 8
 #endif /* ACE_CONFIG_H */

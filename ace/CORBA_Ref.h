@@ -45,10 +45,10 @@ public:
 
   ACE_CORBA_Ref (CORBA_REF *ref);
   // Contruction with an orbix ref.
-  // performs a <CORBA_REF::_duplicate>.
+  // performs a ref->_duplicate().
 
   CORBA_REF *operator= (CORBA_REF *ref);
-  // Assignment performs a <CORBA_REF::_duplicate>.
+  // Assignment performs a ref->_duplicate().
 
   operator CORBA_REF *(void) const;
   // Type operator
@@ -64,7 +64,7 @@ public:
   // Pointer comparison.
 
   ~ACE_CORBA_Ref (void);
-  // Destruction: calls <CORBA_REF::_release>.
+  // Destruction: calls ref_->_release
 
 private:
   CORBA_REF *ref_;

@@ -110,9 +110,8 @@ public:
   // = Functions to operate the service
 
   virtual int open (void *args = 0);
-  // Hook called to open the service.  By default, will set the status
-  // to <START>_PENDING, <svc>, <wait>, then set the status to
-  // STOPPED.
+  // Hook called to open the service.  By default, will set the status to
+  // START_PENDING, svc(), wait(), then set the status to STOPPED.
 
   virtual int svc (void);
   // The actual service implementation.  This function need not be overridden
@@ -122,12 +121,12 @@ public:
 
   virtual void  handle_control (DWORD control_code);
   // This function is called in response to a request from the Service
-  // Dispatcher.  It must interact with the <svc> function to effect the
+  // Dispatcher.  It must interact with the svc() function to effect the
   // requested control operation.  The default implementation handles
   // all requests as follows:
   //    SERVICE_CONTROL_STOP: set stop pending, set cancel flag
-  //    SERVICE_CONTROL_PAUSE: set pause pending, <suspend>, set paused
-  //    SERVICE_CONTROL_CONTINUE: set continue pending, <resume>, set running
+  //    SERVICE_CONTROL_PAUSE: set pause pending, suspend(), set paused
+  //    SERVICE_CONTROL_CONTINUE: set continue pending, resume(), set running
   //    SERVICE_CONTROL_INTERROGATE: reports current status
   //    SERVICE_CONTROL_SHUTDOWN: same as SERVICE_CONTROL_STOP.
 
@@ -239,7 +238,7 @@ public:
   // service state values are all greater than 0.
 
   int state (DWORD *pstate, ACE_Time_Value *wait_hint = 0);
-  // A version of <state> that returns -1 for failure, 0 for success.
+  // A version of state() which returns -1 for failure, 0 for success.
   // The DWORD pointed to by pstate receives the state value.
 
   int test_access (DWORD desired_access = SERVICE_ALL_ACCESS);
@@ -272,16 +271,16 @@ protected:
   // wait after that.
 
   virtual void stop_requested (DWORD control_code);
-  // Called by <handle_control> when a stop/shutdown was requested.
+  // Called by handle_control () when a stop/shutdown was requested.
 
   virtual void pause_requested (DWORD control_code);
-  // Called by <handle_control> when a pause was requested.
+  // Called by handle_control () when a pause was requested.
 
   virtual void continue_requested (DWORD control_code);
-  // Called by <handle_control> when a continue was requested.
+  // Called by handle_control () when a continue was requested.
 
   virtual void interrogate_requested (DWORD control_code);
-  // Called by <handle_control> when a interrogate was requested.
+  // Called by handle_control () when a interrogate was requested.
 
 protected:
   DWORD                  start_time_;   // Estimate of init time needed

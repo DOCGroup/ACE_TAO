@@ -3,8 +3,8 @@
 
 // FIFO.i
 
-ACE_INLINE int
-ACE_FIFO::get_local_addr (const ASYS_TCHAR *&r) const
+ACE_INLINE int 
+ACE_FIFO::get_local_addr (const char *&r) const
 {
   ACE_TRACE ("ACE_FIFO::get_local_addr");
   r = this->rendezvous_;
@@ -18,3 +18,4 @@ ACE_FIFO::remove (void)
   int result = this->close ();
   return ACE_OS::unlink (this->rendezvous_) == -1 || result == -1 ? -1 : 0;
 }
+

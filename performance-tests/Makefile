@@ -11,9 +11,7 @@
 INFO  = README
 
 DIRS  = Misc \
-	UDP \
-	TCP
-
+	UDP
 # @@ This directory is currently under restructuring.  It should be
 #    added back to the makefile once this is done.
 # Synch-Benchmarks \

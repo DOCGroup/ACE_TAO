@@ -225,13 +225,13 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_list_id (void) const
   // If you change ~0, please change
   // ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key()
   // accordingly.
-  return (size_t) ~0;
+  return ~0;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE size_t
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::occupied_list_id (void) const
 {
-  return (size_t) ~1;
+  return ~1;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
@@ -278,7 +278,9 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT
       return 1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
@@ -291,9 +293,13 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
 {
   if (this->next_ == this->map_man_->occupied_list_id ())
-    this->next_ = this->map_man_->occupied_list_.next ();
+    {
+      this->next_ = this->map_man_->occupied_list_.next ();
+    }
   else
-    this->next_ = this->map_man_->search_structure_[this->next_].next ();
+    {
+      this->next_ = this->map_man_->search_structure_[this->next_].next ();
+    }
 
   return this->next_ != this->map_man_->occupied_list_id ();
 }
@@ -302,9 +308,13 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
 {
   if (this->next_ == this->map_man_->occupied_list_id ())
-    this->next_ = this->map_man_->occupied_list_.prev ();
+    {
+      this->next_ = this->map_man_->occupied_list_.prev ();
+    }
   else
-    this->next_ = this->map_man_->search_structure_[this->next_].prev ();
+    {
+      this->next_ = this->map_man_->search_structure_[this->next_].prev ();
+    }
 
   return this->next_ != this->map_man_->occupied_list_id ();
 }

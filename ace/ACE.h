@@ -43,11 +43,9 @@ class ACE_Export ACE
 public:
   // Initialize ACE library services.
   static int init (void);
-  // Returns 0 on success, -1 on failure, and 1 if it had already been called.
 
   // Shut down ACE library services.
   static int fini (void);
-  // Returns 0 on success, -1 on failure, and 1 if it had already been called.
 
   // = ACE version information.
   static u_int major_version (void);
@@ -71,10 +69,6 @@ public:
 
   static u_int compiler_beta_version (void);
   // E.g., the "0" in SunPro C++ 4.32.0
-
-  static int out_of_handles (int error);
-  // Check if error indicates the process being out of handles (file
-  // descriptors).
 
   // = Recv operations that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle,
@@ -446,7 +440,7 @@ public:
 
   // = String functions
 #if !defined (ACE_HAS_WINCE)
-  static ASYS_TCHAR *strenvdup (const ASYS_TCHAR *str);
+  static char *strenvdup (const char *str);
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
   // pointer is allocated with <ACE_OS::malloc> and must be freed by
@@ -505,10 +499,9 @@ public:
 
   static const char *dirname (const char *pathname,
                               char delim = ACE_DIRECTORY_SEPARATOR_CHAR_A);
-  // Returns the "dirname" of a <pathname>.  For instance, the dirname
-  // of "/tmp/foo.cpp" is "/tmp" when <delim> is '/'.  If <pathname>
-  // has no <delim> ".\0" is returned.  This method does not modify
-  // <pathname> and is not reentrant.
+  // Returns the "dirname" of a <pathname>.  For instance, the
+  // basename of "/tmp/foo.cpp" is "/tmp" when <delim> is '/'.  This
+  // method does not modify <pathname> and is not reentrant.
 
 #if defined (ACE_HAS_UNICODE)
   // A collection of wide string functions.  See above for details.
@@ -649,12 +642,9 @@ public:
   // happened.
 
   static int terminate_process (pid_t pid);
-  // Terminate the process abruptly with id <pid>.  On Win32 platforms
-  // this uses <TerminateProcess> and on POSIX platforms is uses
-  // <kill> with the -9 (SIGKILL) signal, which cannot be caught or
-  // ignored.  Note that this call is potentially dangerous to use
-  // since the process being terminated may not have a chance to
-  // cleanup before it shuts down.
+  // Terminate the process with id <pid>.  Note that this call is
+  // potentially dangerous to use since the process being terminated
+  // may not have a chance to cleanup before it shuts down.
 
   static void unique_name (const void *object,
                            LPTSTR name,
@@ -705,9 +695,9 @@ private:
   // non-blocking status of <handle>).
 
   static u_int init_fini_count_;
-  // Counter to match <init>/<fini> calls.  <init> must increment it;
-  // <fini> must decrement it.  <fini> then does nothing until it
-  // reaches 0.
+  // Counter to match init ()/fini () calls.  init () must increment
+  // it; fini () must decrement it.  fini () then does nothing until
+  // it reaches 0.
 
   static size_t pagesize_;
   // Size of a VM page.

@@ -46,8 +46,7 @@ host_is_up (ASYS_TCHAR hostname[])
   ACE_OS::strcpy (test_host, hostname);
 
   ACE_INET_Addr another_host ((u_short) 7, test_host);
-  ACE_Time_Value timeout_value (5);
-  const int status = con.connect (sock, another_host, &timeout_value);
+  const int status = con.connect (sock, another_host, 0);
 
   sock.close ();
   return status == 0  ?  1  :  0;
@@ -173,8 +172,8 @@ fail_no_listener_nonblocking (void)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Test not executed fully; ")
-                  ASYS_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
+                  ASYS_TEXT ("Test not executed fully; "
+                             "expected EWOULDBLOCK, %p (%d)\n"),
                   ASYS_TEXT ("not"), errno));
       status = -1;
     }

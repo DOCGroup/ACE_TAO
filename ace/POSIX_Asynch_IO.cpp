@@ -419,10 +419,8 @@ ACE_POSIX_AIOCB_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                   -1);
 
   ssize_t return_val = this->shared_read (result);
-
   if (return_val == -1)
     delete result;
-
   return return_val;
 }
 
@@ -488,9 +486,9 @@ ACE_POSIX_AIOCB_Asynch_Read_Stream::open (ACE_Handler &handler,
                                           ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -535,10 +533,8 @@ ACE_POSIX_SIG_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                   -1);
 
   ssize_t return_val = this->shared_read (result);
-
   if (return_val == -1)
     delete result;
-
   return return_val;
 }
 
@@ -582,9 +578,9 @@ ACE_POSIX_SIG_Asynch_Read_Stream::open (ACE_Handler &handler,
                                         ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -765,10 +761,8 @@ ACE_POSIX_AIOCB_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                   -1);
 
   ssize_t return_val = this->shared_write (result);
-
   if (return_val == -1)
     delete result;
-
   return return_val;
 }
 
@@ -826,9 +820,9 @@ ACE_POSIX_AIOCB_Asynch_Write_Stream::open (ACE_Handler &handler,
                                      ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -872,10 +866,8 @@ ACE_POSIX_SIG_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                   -1);
 
   ssize_t return_val = this->shared_write (result);
-
   if (return_val == -1)
     delete result;
-
   return return_val;
 }
 
@@ -919,9 +911,9 @@ ACE_POSIX_SIG_Asynch_Write_Stream::open (ACE_Handler &handler,
                                      ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1121,12 +1113,7 @@ ACE_POSIX_AIOCB_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      signal_number),
                   -1);
 
-  ssize_t return_val = this->shared_read (result);
-
-  if (return_val == -1)
-    delete result;
-  
-  return return_val;
+  return this->shared_read (result);
 }
 
 ACE_POSIX_AIOCB_Asynch_Read_File::~ACE_POSIX_AIOCB_Asynch_Read_File (void)
@@ -1158,9 +1145,9 @@ ACE_POSIX_AIOCB_Asynch_Read_File::open (ACE_Handler &handler,
                                         ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1208,12 +1195,7 @@ ACE_POSIX_SIG_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      signal_number),
                   -1);
 
-  ssize_t return_val = this->shared_read (result);
-  
-  if (return_val == -1)
-    delete result;
-  
-  return return_val;
+  return this->shared_read (result);
 }
 
 int
@@ -1245,9 +1227,9 @@ ACE_POSIX_SIG_Asynch_Read_File::open (ACE_Handler &handler,
                                       ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1447,12 +1429,7 @@ ACE_POSIX_AIOCB_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       signal_number),
                   -1);
 
-  ssize_t return_val = this->shared_write (result);
-  
-  if (return_val == -1)
-    delete result;
-  
-  return return_val;
+  return this->shared_write (result);
 }
 
 ACE_POSIX_AIOCB_Asynch_Write_File::~ACE_POSIX_AIOCB_Asynch_Write_File (void)
@@ -1484,9 +1461,9 @@ ACE_POSIX_AIOCB_Asynch_Write_File::open (ACE_Handler &handler,
                                    ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -1534,12 +1511,7 @@ ACE_POSIX_SIG_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       signal_number),
                   -1);
 
-  ssize_t return_val = this->shared_write (result);
-
-  if (return_val == -1)
-    delete result;
-  
-  return return_val;
+  return this->shared_write (result);
 }
 
 ACE_POSIX_SIG_Asynch_Write_File::~ACE_POSIX_SIG_Asynch_Write_File (void)
@@ -1571,9 +1543,9 @@ ACE_POSIX_SIG_Asynch_Write_File::open (ACE_Handler &handler,
                                    ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -3239,9 +3211,9 @@ ACE_POSIX_AIOCB_Asynch_Transmit_File::open (ACE_Handler &handler,
                                       ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int
@@ -3352,9 +3324,9 @@ ACE_POSIX_SIG_Asynch_Transmit_File::open (ACE_Handler &handler,
                                       ACE_Proactor *proactor)
 {
   return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
+					   handle,
+					   completion_key,
+					   proactor);
 }
 
 int

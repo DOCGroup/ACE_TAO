@@ -40,17 +40,9 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Default number of clients/servers.
-#if defined (ACE_HAS_PHARLAP)
-// PharLap is, by default, resource contrained. Test for something that works
-// on the default configuration.
-static int n_servers = 2;
-static int n_clients = 4;
-#else
-static int n_servers = 5;
-static int n_clients = 5;
-#endif /* ACE_HAS_PHARLAP */
-
-static int n_client_iterations = 3;
+static int n_servers = 4;
+static int n_clients = 10;
+static int n_client_iterations = 2;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
 {
@@ -183,27 +175,16 @@ Svc_Handler::idle (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
 
-//
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
-// listen-mode port/socket.  Also, note that since timed accept is
-// implemented using select(), and we use timed accepts with threads,
-// we need a real lock when using timed accepts even if the OS has
-// thread-safe accept.
-//
-#if defined (ACE_LACKS_FORK)
-#  if defined (ACE_HAS_THREADS)
-     typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
-#  else
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
-#  endif /* ACE_HAS_THREADS */
+// listen-mode port/socket.
+#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+#elif defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
+typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
 #else
-#  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
-#  else
-     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
-#  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
-#endif /* ACE_LACKS_FORK */
+typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
@@ -477,7 +458,7 @@ server (void *arg)
 
       if (result == -1)
         {
-          // svc_handler->close (); The ACE_Onsehot_Acceptor closed it.
+          svc_handler->close ();
 
           if (errno == ETIMEDOUT)
             {
@@ -567,10 +548,9 @@ spawn_processes (ACCEPTOR *acceptor,
   do
     {
       child = ACE_OS::wait ();
-      if (child != -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P|%t) reaping %d\n"),
-                    child));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) reaping %d\n"),
+                  child));
     }
   while (child != -1);
 
@@ -670,7 +650,7 @@ spawn_threads (ACCEPTOR *acceptor,
                     ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
-        ACE_OS::perror (ASYS_TEXT ("wait"));
+        ACE_OS::perror ("wait");
 
       status = -1;
     }
@@ -718,16 +698,14 @@ main (int argc, ASYS_TCHAR *argv[])
   // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("open")));
-      ACE_ASSERT (0);
-    }
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%P|%t) %p\n"),
+                ASYS_TEXT ("open")));
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
+
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
@@ -741,7 +719,7 @@ main (int argc, ASYS_TCHAR *argv[])
       status = spawn_threads (&acceptor, &server_addr);
 #else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
+                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 
                   1));
 #endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
     }
@@ -754,7 +732,6 @@ main (int argc, ASYS_TCHAR *argv[])
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class CACHED_CONNECT_STRATEGY;
 template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
 template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
@@ -765,27 +742,20 @@ template class ACE_Creation_Strategy<Svc_Handler>;
 template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>;
 template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
 template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-
-template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
-template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
-
 #if defined (ACE_HAS_THREADS)
 template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
 #endif /* ACE_HAS_THREADS */
-
 template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
 template class ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>;
@@ -801,7 +771,6 @@ template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
 template class ACE_Auto_Basic_Array_Ptr<pid_t>;
-
 #if defined (__BORLANDC__)
 // Borland C++ doesn't link with these instantiations in the ACE library.
 template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
@@ -821,27 +790,20 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>
 #pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
 #pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-
-#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
-
 #if defined (ACE_HAS_THREADS)
 #pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
 #endif /* ACE_HAS_THREADS */
-
 #pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
@@ -857,12 +819,10 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
-
 #if defined (__BORLANDC__)
 // Borland C++ doesn't link with these instantiations in the ACE library.
 #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
 #endif /* defined (__BORLANDC__) */
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

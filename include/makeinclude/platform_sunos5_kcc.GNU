@@ -26,10 +26,8 @@ LD              = $(CXX)
 
 LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 
-MATHLIB	        = -lm
-
 CPPFLAGS	+= $(CFLAGS)
-OCFLAGS         += +K3
+OCFLAGS         += -K2
 PIC             = -KPIC
 AR              = ar
 ARFLAGS         = -xar -o

@@ -74,7 +74,7 @@ public:
   // call is intended to be called from a server, for example, when it
   // is being shut down, as we do an IPC_RMID on the ACE_SV_Semaphore,
   // regardless of whether other processes may be using it or not.
-  // Most other processes should use <close> below.
+  // Most other processes should use close() below.
 
   // = Semaphore acquire and release methods.
   int acquire (u_short n = 0, int flags = 0) const;
@@ -132,8 +132,7 @@ protected:
   int sem_number_;
   // Number of semaphores we're creating.
 
-  int init (key_t k = ACE_static_cast (key_t, ACE_INVALID_SEM_KEY),
-            int i = -1);
+  int init (key_t k = ACE_INVALID_SEM_KEY, int i = -1);
   key_t name_2_key (const char *name);
   // Convert name to key This function is used internally to create
   // keys for the semaphores. A valid name contains letters and

@@ -30,14 +30,14 @@ class ACE_Export ACE_Parse_Node
   //    tree of Service Nodes.
 public:
   ACE_Parse_Node (void);
-  ACE_Parse_Node (const ASYS_TCHAR *name);
+  ACE_Parse_Node (const char *name);
   virtual ~ACE_Parse_Node (void);
 
   ACE_Parse_Node *link (void) const;
   void link (ACE_Parse_Node *);
   virtual void apply (void) = 0;
 
-  const ASYS_TCHAR *name (void) const;
+  const char *name (void) const;
   void print (void) const;
 
   void dump (void) const;
@@ -47,7 +47,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const ASYS_TCHAR *name_;
+  const char *name_;
   ACE_Parse_Node *next_;
 };
 
@@ -56,7 +56,7 @@ class ACE_Export ACE_Suspend_Node : public ACE_Parse_Node
   // = TITLE
   //     Suspend a Service Node.
 public:
-  ACE_Suspend_Node (const ASYS_TCHAR *name);
+  ACE_Suspend_Node (const char *name);
   ~ACE_Suspend_Node (void);
 
   virtual void apply (void);
@@ -73,7 +73,7 @@ class ACE_Export ACE_Resume_Node : public ACE_Parse_Node
   // = TITLE
   //     Resume a Service Node.
 public:
-  ACE_Resume_Node (const ASYS_TCHAR *name);
+  ACE_Resume_Node (const char *name);
   ~ACE_Resume_Node (void);
 
   virtual void apply (void);
@@ -90,7 +90,7 @@ class ACE_Export ACE_Remove_Node : public ACE_Parse_Node
   // = TITLE
   //     Remove a Service Node.
 public:
-  ACE_Remove_Node (const ASYS_TCHAR *name);
+  ACE_Remove_Node (const char *name);
   ~ACE_Remove_Node (void);
 
   virtual void apply (void);
@@ -107,12 +107,12 @@ class ACE_Export ACE_Static_Node : public ACE_Parse_Node
   // = TITLE
   //     Handle a statically linked node.
 public:
-  ACE_Static_Node (const ASYS_TCHAR *name, ASYS_TCHAR *params = 0);
+  ACE_Static_Node (const char *name, char *params = 0);
   virtual ~ACE_Static_Node (void);
 
   virtual void apply (void);
   virtual const ACE_Service_Type *record (void) const;
-  ASYS_TCHAR *parameters (void) const;
+  char *parameters (void) const;
 
   void dump (void) const;
   // Dump the state of an object.
@@ -121,7 +121,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ASYS_TCHAR *parameters_;
+  char *parameters_;
   // "Command-line" parameters.
 };
 
@@ -130,7 +130,7 @@ class ACE_Export ACE_Dynamic_Node : public ACE_Static_Node
   // = TITLE
   //     Handle a dynamically linked node.
 public:
-  ACE_Dynamic_Node (const ACE_Service_Type *, ASYS_TCHAR *params);
+  ACE_Dynamic_Node (const ACE_Service_Type *, char *params);
   virtual ~ACE_Dynamic_Node (void);
 
   virtual const ACE_Service_Type *record (void) const;
@@ -179,8 +179,8 @@ public:
   virtual void set_symbol (void *h);
   ACE_SHLIB_HANDLE handle (void) const;
   void handle (const ACE_SHLIB_HANDLE h);
-  const ASYS_TCHAR *pathname (void) const;
-  void pathname (const ASYS_TCHAR *h);
+  const char *pathname (void) const;
+  void pathname (const char *h);
   int dispose (void) const;
 
   virtual ~ACE_Location_Node (void);
@@ -194,7 +194,7 @@ public:
 protected:
   ACE_SHLIB_HANDLE open_handle (void);
 
-  const ASYS_TCHAR *pathname_;
+  const char *pathname_;
   // Pathname to the shared library we are working on.
 
   int must_delete_;
@@ -212,7 +212,7 @@ class ACE_Export ACE_Object_Node : public ACE_Location_Node
   // = TITLE
   //   Keeps track of the symbol name for a shared object.
 public:
-  ACE_Object_Node (const ASYS_TCHAR *pathname, const ASYS_TCHAR *obj_name);
+  ACE_Object_Node (const char *pathname, const char *obj_name);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0);
   virtual ~ACE_Object_Node (void);
 
@@ -223,7 +223,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const ASYS_TCHAR *object_name_;
+  const char *object_name_;
   // Name of the object that we're parsing.
 };
 
@@ -232,7 +232,7 @@ class ACE_Export ACE_Function_Node : public ACE_Location_Node
   // = TITLE
   //     Keeps track of the symbol name of for a shared function.
 public:
-  ACE_Function_Node (const ASYS_TCHAR *pathname, const ASYS_TCHAR *func_name);
+  ACE_Function_Node (const char *pathname, const char *func_name);
   virtual void *symbol (ACE_Service_Object_Exterminator *gobbler = 0);
   virtual ~ACE_Function_Node (void);
 
@@ -243,7 +243,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const ASYS_TCHAR *function_name_;
+  const char *function_name_;
   // Name of the function that we're parsing.
 };
 
@@ -275,7 +275,7 @@ class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
   //     linked in from a DLL, but is statically linked with the
   //     application.
 public:
-  ACE_Static_Function_Node (const ASYS_TCHAR *func_name);
+  ACE_Static_Function_Node (const char *func_name);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0);
   virtual ~ACE_Static_Function_Node (void);
 
@@ -286,7 +286,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const ASYS_TCHAR *function_name_;
+  const char *function_name_;
   // Name of the function that we're parsing.
 };
 

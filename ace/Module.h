@@ -38,16 +38,16 @@ public:
   enum
   {
     M_DELETE_NONE = 0,
-    // Indicates that <close> should not delete any Tasks.
+    // Indicates that close() should not delete any Tasks.
 
     M_DELETE_READER = 1,
-    // Indicates that <close> should delete the writer Task.
+    // Indicates that close() should delete the writer Task.
 
     M_DELETE_WRITER = 2,
-    // Indicates that <close> should delete the reader Task.
+    // Indicates that close() should delete the reader Task.
 
     M_DELETE = 3
-    // Indicates that <close> deletes the Tasks.  Don't change this
+    // Indicates that close() deletes the Tasks.  Don't change this
     // value without updating the same enum in class ACE_Stream...
     // The <M_DELETE_READER> and <M_DELETE_WRITER> flags may be or'ed
     // together.
@@ -93,14 +93,14 @@ public:
   // and <reader> and <writer> as its tasks.  Previously register
   // reader or writers or closed down and deleted according to the
   // value of flags_.  Should not be called from within
-  // <ACE_Task::module_closed>.
+  // ACE_Task::module_closed().
 
   int close (int flags = M_DELETE_NONE);
   // Close down the Module and its Tasks.  The flags argument can be
   // used to override the default behaviour, which depends on previous
-  // <flags> values in calls to c'tor, <open>, <reader>, and <writer>.
-  // A previous value M_DELETE[_XXX] can not be overridden.  Should
-  // not be called from within <ACE_Task::module_closed>.
+  // <flags> values in calls to c'tor(), open(), reader() and
+  // writer().  A previous value M_DELETE[_XXX] can not be overridden.
+  // Should not be called from within ACE_Task::module_closed().
 
   // = ACE_Task manipulation routines
   ACE_Task<ACE_SYNCH_USE> *writer (void);
@@ -111,7 +111,7 @@ public:
   // module should delete the writer during a call to close or to the
   // destructor. If a previous writer exists, it is closed.  It may
   // also be deleted, depending on the old flags_ value.  Should not
-  // be called from within <ACE_Task::module_closed>.
+  // be called from within ACE_Task::module_closed().
 
   ACE_Task<ACE_SYNCH_USE> *reader (void);
   // Get the reader task.
@@ -121,7 +121,7 @@ public:
   // module should delete the reader during a call to close or to the
   // destructor. If a previous reader exists, it is closed.  It may
   // also be deleted, depending on the old flags_ value.  Should not
-  // be called from within <ACE_Task::module_closed>.
+  // be called from within ACE_Task::module_closed()
 
   ACE_Task<ACE_SYNCH_USE> *sibling (ACE_Task<ACE_SYNCH_USE> *orig);
   // Set and get pointer to sibling <ACE_Task> in an <ACE_Module>

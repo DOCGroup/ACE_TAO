@@ -14,7 +14,7 @@ if not "%1" == "" goto runtest
 
 :runall
 
-rem call %0 ACE_Init_Test
+call %0 ACE_Init_Test
 call %0 Atomic_Op_Test
 call %0 Barrier_Test
 call %0 Basic_Types_Test
@@ -22,8 +22,6 @@ call %0 Buffer_Stream_Test
 call %0 CDR_Test
 call %0 Collection_Test
 call %0 Conn_Test
-call %0 Cached_Conn_Test
-call %0 Cached_Accept_Conn_Test
 call %0 DLL_Test
 call %0 DLList_Test
 call %0 Enum_Interfaces_Test
@@ -31,23 +29,21 @@ call %0 Env_Value_Test
 call %0 Future_Test
 call %0 Handle_Set_Test
 call %0 Hash_Map_Manager_Test
-call %0 Hash_Map_Bucket_Iterator_Test
 call %0 High_Res_Timer_Test
 call %0 IOStream_Test
 call %0 Map_Manager_Test
 call %0 Cache_Map_Manager_Test
 call %0 Map_Test
-rem call %0 Mem_Map_Test            not supported
+call %0 Mem_Map_Test
 call %0 Message_Block_Test
 call %0 Message_Queue_Notifications_Test
 call %0 Message_Queue_Test
 call %0 MT_Reactor_Timer_Test
-rem call %0 MM_Shared_Memory_Test   not supported
+call %0 MM_Shared_Memory_Test
 call %0 MT_SOCK_Test
 call %0 Naming_Test
 call %0 New_Fail_Test
 call %0 Notify_Performance_Test
-call %0 Object_Manager_Test
 call %0 OrdMultiSet_Test
 call %0 Pipe_Test
 call %0 Priority_Buffer_Test
@@ -74,7 +70,7 @@ call %0 Svc_Handler_Test
 call %0 SOCK_Test
 call %0 SOCK_Connector_Test
 call %0 SOCK_Send_Recv_Test
-rem call %0 SPIPE_Test             not supported
+call %0 SPIPE_Test
 call %0 SString_Test
 call %0 SV_Shared_Memory_Test
 call %0 Task_Test
@@ -94,16 +90,13 @@ goto done
 :runtest
 
 echo Running %arg%
-if not exist %arg%_ETS.exe goto nofile
+if not exist %arg%.exe goto nofile
 
 RUNEMB -LOGHOST -NODIALOG %arg%_ETS.exe > log\%arg%.log
 if errorlevel 0 goto fine
 echo.
 echo %arg% has FAILED!!!
 echo.
-type log\%arg%.log | find /I "Abnormal program termination"
-type log/%arg%.log | find /I "target halted"
-type log/%arg%.log | find /I "Fatal error"
 type log\%arg%.log | find /I "assertion failed"
 type log\%arg%.log | find /I "not supported"
 type log\%arg%.log | find /I "no such file or directory"

@@ -146,7 +146,7 @@ public:
   // scale factor, it successively tries to reduce it.  Returns -1 if
   // there is overflow even with a 0 scale factor.
 
-  void reset (void);
+  void reset ();
   // Initialize internal state.
 
   static void quotient (const ACE_UINT64 dividend,
@@ -194,12 +194,12 @@ class ACE_Export ACE_Throughput_Stats
   //   A simple class to make throughput and latency analysis.
   //
   // = DESCRIPTION
-  //   Keep the relevant information to perform throughput and latency
+  //   Keep the relevant information to perform throughput and latency 
   //   analysis, including:
   //   1) Minimum, Average and Maximum latency
   //   2) Jitter for the latency
   //   3) Linear regression for throughput
-  //   4) Accumulate results from several samples to obtain aggregated
+  //   4) Accumulate results from several samples to obtain aggregated 
   //      results, across several threads or experiments.
   //
 public:
@@ -212,7 +212,7 @@ public:
   void accumulate (const ACE_Throughput_Stats &throughput);
   // Update the values to reflect the stats in <throughput>
 
-  void dump_results (const ASYS_TCHAR* msg, ACE_UINT32 scale_factor);
+  void dump_results (const char* msg, ACE_UINT32 scale_factor);
   // Print down the stats
 
 private:
@@ -220,9 +220,7 @@ private:
   // The number of samples
 
   ACE_UINT64 latency_min_;
-  ACE_UINT32 latency_min_at_;
   ACE_UINT64 latency_max_;
-  ACE_UINT32 latency_max_at_;
   ACE_UINT64 latency_sum_;
   ACE_UINT64 latency_sum2_;
   // The stadigraphs for latency computation

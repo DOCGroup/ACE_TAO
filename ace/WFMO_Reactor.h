@@ -400,7 +400,7 @@ class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
   //     This implementation is necessary for cases where the
   //     <ACE_WFMO_Reactor> is run in a multi-threaded program.  In
   //     this case, we need to be able to unblock
-  //     <WaitForMultipleObjects> when updates occur other than in the
+  //     WaitForMultipleObjects() when updates occur other than in the
   //     main <ACE_WFMO_Reactor> thread.  To do this, we signal an
   //     auto-reset event the <ACE_WFMO_Reactor> is listening on.  If
   //     an <ACE_Event_Handler> and <ACE_Reactor_Mask> is passed to
@@ -429,7 +429,7 @@ public:
   // until the relative time specified in <timeout> elapses).
 
   virtual int dispatch_notifications (int &number_of_active_handles,
-                                      ACE_Handle_Set &rd_mask);
+                                      const ACE_Handle_Set &rd_mask);
   // No-op.
 
   virtual ACE_HANDLE get_handle (void) const;
@@ -510,10 +510,9 @@ class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
   //     handle_close on the handler when it is finally removed and
   //     not when remove_handler is called.  If the handler is not
   //     going to be around when the WFMO_Reactor calls
-  //     <ACE_Event_Handler::handle_close>, use the DONT_CALL flag
-  //     with <remove_handler>.  Or else, dynamically allocate the
-  //     handler, and then call "delete this" inside
-  //     <ACE_Event_Handler::handle_close>.
+  //     handler->handle_close(), use the DONT_CALL flag with
+  //     remove_handler().  Or else, dynamically allocate the handler,
+  //     and then call "delete this" inside handler->handle_close().
 public:
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
@@ -609,18 +608,6 @@ public:
   // <handle_events> is that in the alertable case, TRUE is passed to
   // <WaitForMultipleObjects> for the <bAlertable> option.
 
-
-  // = Event handling control.
-
-  virtual int deactivated (void);
-  // Return the status of Reactor.  If this function returns 0, the reactor is
-  // actively handling events.  If it returns non-zero, <handling_events> and
-  // <handle_alertable_events> return -1 immediately.
-
-  virtual void deactivate (int do_stop);
-  // Control whether the Reactor will handle any more incoming events or not.
-  // If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
-  // is in active state and can be deactivated/reactived as wish.
 
   // = Register and remove Handlers.
 
@@ -729,7 +716,7 @@ public:
 
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
   // Suspend <event_handler> temporarily.  Use
-  // <ACE_Event_Handler::get_handle> to get the handle.
+  // <event_handler->get_handle()> to get the handle.
 
   virtual int suspend_handler (ACE_HANDLE handle);
   // Suspend <handle> temporarily.
@@ -741,8 +728,8 @@ public:
   // Suspend all <handles> temporarily.
 
   virtual int resume_handler (ACE_Event_Handler *event_handler);
-  // Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
-  // get the handle.
+  // Resume <event_handler>. Use <event_handler->get_handle()> to get
+  // the handle.
 
   virtual int resume_handler (ACE_HANDLE handle);
   // Resume <handle>.
@@ -766,27 +753,18 @@ public:
                                const ACE_Time_Value &delta,
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule an <event_handler> that will expire after <delay> amount
-  // of time, which is specified using relative time to the current
-  // <gettimeofday>.  If it expires then <arg> is passed in as the
-  // value to the <event_handler>'s <handle_timeout> callback method.
-  // If <interval> is != to <ACE_Time_Value::zero> then it is used to
-  // reschedule the <event_handler> automatically, which is also
-  // specified using relative time.  This method returns a <timer_id>
-  // that uniquely identifies the <event_handler> in an internal list.
-  // This <timer_id> can be used to cancel an <event_handler> before
-  // it expires.  The cancellation ensures that <timer_ids> are unique
-  // up to values of greater than 2 billion timers.  As long as timers
-  // don't stay around longer than this there should be no problems
-  // with accidentally deleting the wrong timer.  Returns -1 on
-  // failure (which is guaranteed never to be a valid <timer_id>.
-
-  virtual int reset_timer_interval (long timer_id, 
-                                    const ACE_Time_Value &interval);
-  // Resets the interval of the timer represented by <timer_id> to
-  // <interval>, which is specified in relative time to the current
-  // <gettimeofday>.  If <interval> is equal to
-  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
-  // timer.  Returns 0 if successful, -1 if not.
+  // of time.  If it expires then <arg> is passed in as the value to
+  // the <event_handler>'s <handle_timeout> callback method.  If
+  // <interval> is != to <ACE_Time_Value::zero> then it is used to
+  // reschedule the <event_handler> automatically.  This method
+  // returns a <timer_id> that uniquely identifies the <event_handler>
+  // in an internal list.  This <timer_id> can be used to cancel an
+  // <event_handler> before it expires.  The cancellation ensures that
+  // <timer_ids> are unique up to values of greater than 2 billion
+  // timers.  As long as timers don't stay around longer than this
+  // there should be no problems with accidentally deleting the wrong
+  // timer.  Returns -1 on failure (which is guaranteed never to be a
+  // valid <timer_id>.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);
@@ -860,12 +838,10 @@ public:
   // notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
-  // = Assorted helper methods.
-
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Event_Handler **event_handler = 0);
-  // Not implemented.
+  // Not implemented
 
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);
@@ -895,12 +871,6 @@ public:
 
   virtual int owner (ACE_thread_t *owner);
   // Return the ID of the "owner" thread.
-
-  virtual int restart (void);
-  // Get the existing restart value.
-  
-  virtual int restart (int r);
-  // Set a new value for restart and return the original value.
 
   virtual void requeue_position (int);
   // Not implemented
@@ -963,7 +933,7 @@ protected:
 
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
                           int alertable);
-  // Check to see if it is ok to enter <::WaitForMultipleObjects>.
+  // Check to see if it is ok to enter ::WaitForMultipleObjects().
 
   virtual int wait_for_multiple_events (int timeout,
                                         int alertable);
@@ -1101,10 +1071,6 @@ protected:
 
   int open_for_business_;
   // This flag is used to keep track of whether we are already closed.
-
-  sig_atomic_t deactivated_;
-  // This flag is used to keep track of whether we are actively handling
-  // events or not.
 
 private:
   ACE_WFMO_Reactor (const ACE_WFMO_Reactor &);

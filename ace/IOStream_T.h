@@ -125,9 +125,9 @@ public:
   int eof (void) const;
   // Returns 1 if we're at the end of the <STREAM>, i.e., if the
   // connection has closed down or an error has occurred, else 0.
-  // Under the covers, <eof> calls the streambuf's <timeout> function
+  // Under the covers, eof() calls the streambuf's timeout() function
   // which will reset the timeout flag.  As as result, you should save
-  // the return of <eof> and check it instead of calling <eof>
+  // the return of eof() and check it instead of calling eof()
   // successively.
 
 #if defined (ACE_HAS_STRING_CLASS)
@@ -146,63 +146,61 @@ public:
 #if defined (ACE_LACKS_IOSTREAM_FX)
   virtual int ipfx (int noskip = 0)
     {
-      if (good ())
+      if (good())
         {
-          if (tie () != 0)
-             tie ()->flush ();
-          if (!noskip && flags () & skipws)
+          if (tie() != 0)
+             tie()->flush();
+          if (!noskip && flags() & skipws)
             {
               int ch;
-              while (isspace (ch = rdbuf ()->sbumpc ()))
-                continue;
+              while (isspace(ch = rdbuf()->sbumpc()))
+                  ;
               if (ch != EOF)
-                  rdbuf ()->sputbackc (ch);
+                  rdbuf()->sputbackc(ch);
             }
-          if (good ())
-              return 1;
+          if (good())
+              return (1);
         }
-#if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
-      setstate (failbit);
+#if !defined (ACE_WIN32) /* MS VC++ 5.0 doesn't declare setstate */
+      setstate(failbit);
 #endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual int ipfx0 (void)         {  return ipfx (0); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void)                                // Optimized ipfx(1)
+  virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)                                // Optimized ipfx(1)
     {
-      if (good ())
+      if (good())
         {
-          if (tie () != 0)
-             tie ()->flush ();
-          if (good ())
-              return 1;
+          if (tie() != 0)
+             tie()->flush();
+          if (good())
+              return (1);
         }
-#if !defined (ACE_WIN32) 
-      // MS VC++ 5.0 doesn't declare setstate.
-      setstate (failbit);
+#if !defined (ACE_WIN32) /* MS VC++ 5.0 doesn't declare setstate */
+      setstate(failbit);
 #endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual void isfx (void) {  return; }
+  virtual void isfx (void)        {  return; }
   virtual int opfx (void)
     {
-      if (good () && tie () != 0)
-        tie ()->flush ();
-      return good ();
+      if (good() && tie() != 0)
+        tie()->flush();
+      return (good());
     }
-  virtual void osfx (void) {  if (flags () & unitbuf) flush (); }
+  virtual void osfx (void)        {  if (flags() & unitbuf) flush(); }
 #else
 #if defined (__GNUC__)
-  virtual int ipfx0 (void) { return iostream::ipfx0 (); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void) { return iostream::ipfx1 (); }  // Optimized ipfx(1)
+  virtual int ipfx0(void)         { return iostream::ipfx0 (); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)         { return iostream::ipfx1(); }  // Optimized ipfx(1)
 #else
-  virtual int ipfx0 (void) { return iostream::ipfx (0); }
-  virtual int ipfx1 (void) { return iostream::ipfx (1); }
+  virtual int ipfx0(void)         {  return iostream::ipfx (0); }
+  virtual int ipfx1(void)         {  return iostream::ipfx (1); }
 #endif /* __GNUC__ */
   virtual int ipfx (int need = 0) {  return iostream::ipfx (need); }
-  virtual void isfx (void)        {  iostream::isfx (); }
+  virtual void isfx (void)        {  iostream::isfx (); return; }
   virtual int opfx (void)         {  return iostream::opfx (); }
-  virtual void osfx (void)        {  iostream::osfx (); }
+  virtual void osfx (void)        {  iostream::osfx (); return; }
 #endif /* ACE_LACKS_IOSTREAM_FX */
 
   ACE_IOStream<STREAM> & operator>> (ACE_Time_Value *&tv);

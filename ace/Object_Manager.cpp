@@ -3,9 +3,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Object_Manager.h"
-#if !defined (ACE_LACKS_ACE_TOKEN)
-# include "ace/Token_Manager.h"
-#endif /* ! ACE_LACKS_ACE_TOKEN */
+#include "ace/Token_Manager.h"
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
 # include "ace/Naming_Context.h"
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
@@ -201,6 +199,8 @@ ACE_Object_Manager::init (void)
 #     endif /* ACE_HAS_THREADS */
 #     if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
+                                  ACE_LOG_MSG_INSTANCE_LOCK)
+          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
                                   ACE_MT_CORBA_HANDLER_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
@@ -209,16 +209,20 @@ ACE_Object_Manager::init (void)
           ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
                                   ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
-#if !defined (ACE_LACKS_ACE_TOKEN)
           ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                   ACE_TOKEN_MANAGER_CREATION_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                   ACE_TOKEN_INVARIANTS_CREATION_LOCK)
-#endif /* ! ACE_LACKS_ACE_TOKEN */
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
                                   ACE_PROACTOR_EVENT_LOOP_LOCK)
 #     endif /* ACE_MT_SAFE */
         }
+
+      // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It
+      // shouldn't matter, but just in case
+      // ACE_Static_Object_Lock::instance () gets changed . . .
+      ACE_NEW_RETURN (registered_objects_,
+                      ACE_Unbounded_Queue<ACE_Cleanup_Info>, -1);
 
       if (this == instance_)
         {
@@ -231,16 +235,15 @@ ACE_Object_Manager::init (void)
           ACE_TSS_Emulation::tss_open (ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
 
-          ACE_NEW_RETURN (preallocations_,
-                          ACE_Object_Manager_Preallocations,
+          ACE_NEW_RETURN (preallocations_, ACE_Object_Manager_Preallocations,
                           -1);
+
           // Open the main thread's ACE_Log_Msg.
           (void) ACE_LOG_MSG;
         }
 
-      ACE_NEW_RETURN (default_mask_,
-                      ACE_Sig_Set (1),
-                      -1);
+      ACE_NEW_RETURN (default_mask_, ACE_Sig_Set (1), -1);
+
       // Finally, indicate that the ACE_Object_Manager instance has
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
@@ -248,14 +251,14 @@ ACE_Object_Manager::init (void)
       return 0;
     } else {
       // Had already initialized.
-      return 1;
+      return -1;
     }
 }
 
 ACE_Object_Manager::ACE_Object_Manager (void)
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
-  : exit_info_ ()
+  : registered_objects_ (0)
   , preallocations_ (0)
   , default_mask_ (0)
   , ace_service_config_sig_handler_ (0)
@@ -298,9 +301,7 @@ ACE_Object_Manager::instance (void)
     {
       ACE_Object_Manager *instance_pointer;
 
-      ACE_NEW_RETURN (instance_pointer,
-                      ACE_Object_Manager,
-                      0);
+      ACE_NEW_RETURN (instance_pointer, ACE_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;
@@ -308,7 +309,9 @@ ACE_Object_Manager::instance (void)
       return instance_pointer;
     }
   else
-    return instance_;
+    {
+      return instance_;
+    }
 }
 
 ACE_Sig_Set &
@@ -331,14 +334,29 @@ ACE_Object_Manager::at_exit_i (void *object,
       return -1;
     }
 
-  if (exit_info_.find (object))
+  // Check for already in queue, and return 1 if so.
+  ACE_Cleanup_Info *info = 0;
+  for (ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
+         iter (*registered_objects_);
+       iter.next (info) != 0;
+       iter.advance ())
     {
-      // The object has already been registered.
-      errno = EEXIST;
-      return -1;
+      if (info->object_ == object)
+        {
+          // The object has already been registered.
+          errno = EEXIST;
+          return -1;
+        }
     }
 
-  return exit_info_.at_exit_i (object, cleanup_hook, param);
+  ACE_Cleanup_Info new_info;
+  new_info.object_ = object;
+  new_info.cleanup_hook_ = cleanup_hook;
+  new_info.param_ = param;
+
+  // Returns -1 and sets errno if unable to allocate storage.  Enqueue
+  // at the head and dequeue from the head to get LIFO ordering.
+  return registered_objects_->enqueue_head (new_info);
 }
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -383,7 +401,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 {
   if (lock == 0)
     {
-      if (starting_up () || shutting_down ())
+      if (starting_up ()  ||  shutting_down ())
         {
           // The Object_Manager and its internal lock have not been
           // constructed yet.  Therefore, the program is single-
@@ -391,9 +409,8 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
-          ACE_NEW_RETURN (lock,
-                          ACE_Thread_Mutex,
-                          -1);
+
+          ACE_NEW_RETURN (lock, ACE_Thread_Mutex, -1);
         }
       else
         {
@@ -402,7 +419,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                                     ace_mon,
                                     *ACE_Object_Manager::instance ()->
-                                    internal_lock_,
+                                      internal_lock_,
                                     -1));
 
           if (lock == 0)
@@ -439,9 +456,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
 
-          ACE_NEW_RETURN (lock,
-                          ACE_Mutex,
-                          -1);
+          ACE_NEW_RETURN (lock, ACE_Mutex, -1);
         }
       else
         {
@@ -514,7 +529,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 {
   if (lock == 0)
     {
-      if (starting_up () || shutting_down ())
+      if (starting_up ()  ||  shutting_down ())
         {
           // The Object_Manager and its internal lock have not been
           // constructed yet.  Therefore, the program is single-
@@ -523,9 +538,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
 
-          ACE_NEW_RETURN (lock,
-                          ACE_RW_Thread_Mutex,
-                          -1);
+          ACE_NEW_RETURN (lock, ACE_RW_Thread_Mutex, -1);
         }
       else
         {
@@ -534,7 +547,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
           ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                                     ace_mon,
                                     *ACE_Object_Manager::instance ()->
-                                    internal_lock_,
+                                      internal_lock_,
                                     -1));
 
           if (lock == 0)
@@ -574,7 +587,7 @@ ACE_Object_Manager::fini (void)
   if (shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
-    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    return -1;
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.
@@ -585,7 +598,16 @@ ACE_Object_Manager::fini (void)
 
   // Call all registered cleanup hooks, in reverse order of
   // registration.
-  exit_info_.call_hooks ();
+  ACE_Cleanup_Info info;
+  while (registered_objects_ &&
+         registered_objects_->dequeue_head (info) != -1)
+    {
+      if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
+        // The object is an ACE_Cleanup.
+        ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
+      else
+        (*info.cleanup_hook_) (info.object_, info.param_);
+    }
 
   if (this == instance_)
     {
@@ -629,6 +651,8 @@ ACE_Object_Manager::fini (void)
 #endif /* ACE_HAS_THREADS */
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
+                                      ACE_LOG_MSG_INSTANCE_LOCK)
+      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
                                       ACE_MT_CORBA_HANDLER_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
@@ -638,12 +662,10 @@ ACE_Object_Manager::fini (void)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                       ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
-#if !defined (ACE_LACKS_ACE_TOKEN)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                       ACE_TOKEN_MANAGER_CREATION_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                       ACE_TOKEN_INVARIANTS_CREATION_LOCK)
-#endif /* ! ACE_LACKS_ACE_TOKEN */
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
                                       ACE_PROACTOR_EVENT_LOOP_LOCK)
 # endif /* ACE_MT_SAFE */
@@ -659,6 +681,9 @@ ACE_Object_Manager::fini (void)
 
   delete ace_service_config_sig_handler_;
   ace_service_config_sig_handler_ = 0;
+
+  delete registered_objects_;
+  registered_objects_ = 0;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   delete internal_lock_;
@@ -738,22 +763,15 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 
 #if defined (ACE_HAS_THREADS)
 
-// This is global so that it doesn't have to be declared in the header
-// file.  That would cause nasty circular include problems.
-typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
-  ACE_Static_Object_Lock_Type;
-static ACE_Static_Object_Lock_Type *
-  ACE_Static_Object_Lock_lock = 0;
-
-// ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
-// But, applications may find it useful for avoiding recursive calls
-// if they have overridden operator new.  Thanks to Jody Hagins
-// <jody@atdesk.com> for contributing it.
+// This global so that it doesn't have to be declared in the
+// header file.  That would cause nasty circular include problems.
+static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *
+ACE_Static_Object_Lock_lock = 0;
 
 ACE_Recursive_Thread_Mutex *
 ACE_Static_Object_Lock::instance (void)
 {
-  if (ACE_Object_Manager::starting_up ()  ||
+  if (ACE_Object_Manager::starting_up ()  || \
       ACE_Object_Manager::shutting_down ())
     {
       // The preallocated ACE_STATIC_OBJECT_LOCK has not been
@@ -763,24 +781,9 @@ ACE_Static_Object_Lock::instance (void)
       // Allocate a lock to use, for interface compatibility, though
       // there should be no contention on it.
       if (ACE_Static_Object_Lock_lock == 0)
-        {
-#     if defined (ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
-        // Allocate a buffer with malloc, and then use placement
-        // new for the object, on the malloc'd buffer.
-        void *buffer =
-          ACE_OS::malloc (sizeof (*ACE_Static_Object_Lock_lock));
-        if (buffer == 0)
-          {
-            return 0;
-          }
-        ACE_NEW (ACE_Static_Object_Lock_lock,
-                 (buffer) ACE_Static_Object_Lock_Type ());
-#       else   /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
                         ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
                         0);
-#       endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
-        }
 
       // Can't register with the ACE_Object_Manager here!  The lock's
       // declaration is visible to the ACE_Object_Manager destructor,
@@ -798,16 +801,8 @@ ACE_Static_Object_Lock::instance (void)
 void
 ACE_Static_Object_Lock::cleanup_lock (void)
 {
-# if defined(ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
-    // It was malloc'd, so we need to explicitly call the dtor
-    // and then free the memory.
-    ACE_DES_FREE (ACE_Static_Object_Lock_lock,
-                  ACE_OS::free,
-                  ACE_Static_Object_Lock_Type);
-# else  /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
-    delete ACE_Static_Object_Lock_lock;
-# endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
-    ACE_Static_Object_Lock_lock = 0;
+  delete ACE_Static_Object_Lock_lock;
+  ACE_Static_Object_Lock_lock = 0;
 }
 #endif /* ACE_HAS_THREADS */
 
@@ -824,6 +819,9 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 # endif /* ACE_MT_SAFE */
   template class ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>;
   template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Unbounded_Queue<ACE_Cleanup_Info>;
+  template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
+  template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
@@ -837,4 +835,7 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 # endif /* ACE_MT_SAFE */
 # pragma instantiate ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>
 # pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>
+# pragma instantiate ACE_Unbounded_Queue<ACE_Cleanup_Info>
+# pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
+# pragma instantiate ACE_Node<ACE_Cleanup_Info>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -113,16 +113,16 @@ class ACE_Export ACE_Log_Msg_Callback
   //     Log_Msg class and make sure that they turn on the
   //     ACE_Log_Msg::MSG_CALLBACK flag.
   //
-  //     Your <log> routine is called with an instance of
+  //     Your log() routine is called with an instance of
   //     ACE_Log_Record.  From this class, you can get the log
   //     message, the verbose log message, message type, message
   //     priority, and so on.
   //
   //     Remember that there is one Log_Msg object per thread.
   //     Therefore, you may need to register your callback object with
-  //     many <ACE_Log_Msg> objects (and have the correct
-  //     synchronization in the <log> method) or have a separate
-  //     callback object per Log_Msg object.
+  //     many Log_Msg objects (and have the correct synchronization in
+  //     the log() method) or have a separate callback object per
+  //     Log_Msg object.
 public:
   virtual ~ACE_Log_Msg_Callback (void);
   // No-op virtual destructor.
@@ -278,8 +278,8 @@ public:
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
   //   on Windows CE.  There is no <iostream.h> support on CE.
 
-  void msg_ostream (ACE_OSTREAM_TYPE *);
-  ACE_OSTREAM_TYPE *msg_ostream (void) const;
+  void msg_ostream (ostream *);
+  ostream *msg_ostream (void) const;
   // Set/Get the ostream that is used to print error messages.
 
   void msg_callback (ACE_Log_Msg_Callback *c);
@@ -349,11 +349,11 @@ public:
             int op_status = -1,
             int errnum = 0,
             int restart = 1,
-            ACE_OSTREAM_TYPE *os = 0,
+            ostream *os = 0,
             ACE_Log_Msg_Callback *c = 0);
   // Set the line number, file name, operational status, error number,
-  // restart flag, ostream, and the callback object.  This combines
-  // all the other set methods into a single method.
+  // restart flag, ostream and the callback object.  This combines all
+  // the other set methods into a single method.
 
   ssize_t log (ACE_Log_Priority priority, const ASYS_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
@@ -379,7 +379,6 @@ public:
   // 'D': print timestamp in month/day/year hour:minute:sec:usec format.
   // 't': print thread id (1 if single-threaded)
   // 'u': print as unsigned int
-  // 'W': print out a wide (Unicode) character string (currently Win32 only).
   // 'X', 'x': print as a hex number
   // '%': print out a single percent sign, '%'
 
@@ -429,7 +428,7 @@ private:
   // Indicates whether we should restart system calls that are
   // interrupted.
 
-  ACE_OSTREAM_TYPE *ostream_;
+  ostream *ostream_;
   // The ostream where logging messages can be written.
 
   ACE_Log_Msg_Callback *msg_callback_;
@@ -491,14 +490,6 @@ private:
   // names
   static u_long default_priority_mask_;
   // Priority mask to use for each new instance
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static int key_created_;
-# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
-    defined (ACE_HAS_TSS_EMULATION)
-  static ACE_thread_key_t log_msg_tss_key_;
-# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
-#endif /* ACE_MT_SAFE */
 
   static void close (void);
   // For cleanup, at program termination.

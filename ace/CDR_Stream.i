@@ -140,30 +140,6 @@ ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
 {
 }
 
-ACE_INLINE
-ACE_OutputCDR::from_wstring::from_wstring (ACE_CDR::WChar *ws,
-                                           ACE_CDR::ULong b,
-					   ACE_CDR::Boolean nocopy)
-  : val_ (ws),
-    bound_ (b),
-    nocopy_ (nocopy)
-{
-}
-
-ACE_INLINE
-ACE_InputCDR::to_wstring::to_wstring (ACE_CDR::WChar *&ws,
-                                      ACE_CDR::ULong b)
-  : val_ (ws),
-    bound_ (b)
-{
-}
-
-ACE_INLINE
-ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
-  :  rhs_ (rhs)
-{
-}
-
 // ****************************************************************
 
 ACE_INLINE
@@ -197,7 +173,7 @@ ACE_OutputCDR::write_octet (ACE_CDR::Octet x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_boolean (ACE_CDR::Boolean x)
 {
-  return (ACE_CDR::Boolean) this->write_octet (x ? 1 : 0);
+  return this->write_octet (x ? 1 : 0);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -535,7 +511,7 @@ ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
   ACE_CDR::Octet tmp;
   this->read_octet (tmp);
   x = tmp ? 1 : 0;
-  return (ACE_CDR::Boolean) this->good_bit_;
+  return this->good_bit_;
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -963,13 +939,6 @@ operator<< (ACE_OutputCDR &os, const ACE_CDR::Char *x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const ACE_CDR::WChar *x)
-{
-  os.write_wstring (x);
-  return os.good_bit ();
-}
-
-ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CString &x)
 {
   os.write_string (x);
@@ -1009,13 +978,6 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 {
   os.write_string (x.bound_, x.val_);
-  return os.good_bit ();
-}
-
-ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
-{
-  os.write_wstring (x.bound_, x.val_);
   return os.good_bit ();
 }
 
@@ -1092,13 +1054,6 @@ operator>> (ACE_InputCDR &is, ACE_CDR::Char *&x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-operator>> (ACE_InputCDR &is, ACE_CDR::WChar *&x)
-{
-  is.read_wstring (x);
-  return is.good_bit ();
-}
-
-ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CString &x)
 {
   is.read_string (x);
@@ -1141,15 +1096,6 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
   // check if the bounds are satisfied
   return (is.good_bit () &&
           (ACE_OS::strlen (x.val_) <= x.bound_));
-}
-
-ACE_INLINE ACE_CDR::Boolean
-operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wstring x)
-{
-  is.read_wstring (x.val_);
-  // check if the bounds are satisfied
-  return (is.good_bit () &&
-          (ACE_OS::wslen (x.val_) <= x.bound_));
 }
 
 // ***************************************************************************
@@ -1278,15 +1224,6 @@ ACE_INLINE int
 ACE_InputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
-}
-
-ACE_INLINE int
-ACE_InputCDR::byte_order (void) const
-{
-  if (this->do_byte_swap ())
-    return !ACE_CDR_BYTE_ORDER;
-  else
-    return ACE_CDR_BYTE_ORDER;
 }
 
 ACE_INLINE int

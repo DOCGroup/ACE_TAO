@@ -4,15 +4,6 @@
 ACE_INLINE int
 ACE_Dirent::open (const char *dirname) 
 {
-  // If the directory stream is already open, close it to prevent
-  // possible resource leaks.
-
-  if (this->dirp_ != 0) 
-    {
-      ACE_OS::closedir (this->dirp_);
-      this->dirp_ = 0;
-    }
-
   this->dirp_ = ACE_OS::opendir (dirname);
 
   if (this->dirp_ == 0)
@@ -61,13 +52,8 @@ ACE_Dirent::read (struct dirent *entry,
 ACE_INLINE void
 ACE_Dirent::close (void)
 {
-  if (this->dirp_ != 0) 
-    {
-      ACE_OS::closedir (this->dirp_);
-
-      // Prevent double closure
-      this->dirp_ = 0;
-    }
+  if (this->dirp_ != 0)
+    ACE_OS::closedir (this->dirp_);
 }
 
 ACE_INLINE void

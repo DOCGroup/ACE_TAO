@@ -14,9 +14,8 @@ ACE_RCSID(ace, TP_Reactor, "$Id$")
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
-                                ACE_Timer_Queue *tq,
-                                int mask_signals)
-  : ACE_Select_Reactor (sh, tq, 0, 0, mask_signals)
+                                ACE_Timer_Queue *tq)
+  : ACE_Select_Reactor (sh, tq)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
@@ -25,9 +24,8 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
 ACE_TP_Reactor::ACE_TP_Reactor (size_t size,
                                 int rs,
                                 ACE_Sig_Handler *sh,
-                                ACE_Timer_Queue *tq,
-                                int mask_signals)
-  : ACE_Select_Reactor (size, rs, sh, tq, 0, 0, mask_signals)
+                                ACE_Timer_Queue *tq)
+  : ACE_Select_Reactor (size, rs, sh, tq)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
@@ -57,9 +55,8 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 
   // If positive, reschedule in Reactor
   else if (status > 0)
-    this->ready_ops (handle,
-                     mask,
-                     ACE_Reactor::SET_MASK);
+    this->ready_ops (handle, mask, ACE_Reactor::SET_MASK);
+
   // assert (status >= 0);
   // resume in Reactor
   return (event_handler != this->notify_handler_ ?
@@ -130,13 +127,6 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
       ACE_MT (this->token_.release ());
       return 0;
     case -1:
-      return -1;
-    }
-
-  // After acquiring the lock, check if we have been deactivated.
-  if (this->deactivated_)
-    {
-      ACE_MT (this->token_.release ());
       return -1;
     }
 

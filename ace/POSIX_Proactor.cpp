@@ -357,6 +357,8 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
   return 0;
 }  
 
+// *********************************************************************
+
 class ACE_Export ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
 {
   // = TITLE
@@ -911,9 +913,7 @@ ACE_Asynch_Read_Stream_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_read_stream (void)
 {
   ACE_Asynch_Read_Stream_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_SIG_Asynch_Read_Stream (this),
-                  0);
+  ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Read_Stream (this), 0);
   return  implementation;
 }
 
@@ -921,9 +921,7 @@ ACE_Asynch_Write_Stream_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_write_stream (void)
 {
   ACE_Asynch_Write_Stream_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_SIG_Asynch_Write_Stream (this),
-                  0);
+  ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Write_Stream (this), 0);
   return  implementation;
 }
 
@@ -931,9 +929,7 @@ ACE_Asynch_Read_File_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_read_file (void)
 {
   ACE_Asynch_Read_File_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_SIG_Asynch_Read_File (this),
-                  0);
+  ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Read_File (this), 0);
   return  implementation;
 }
 
@@ -941,9 +937,7 @@ ACE_Asynch_Write_File_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_write_file (void)
 {
   ACE_Asynch_Write_File_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_SIG_Asynch_Write_File (this),
-                  0);
+  ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Write_File (this), 0);
   return  implementation;
 }
 
@@ -951,9 +945,7 @@ ACE_Asynch_Accept_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_accept (void)
 {
   ACE_Asynch_Accept_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_SIG_Asynch_Accept (this),
-                  0);
+  ACE_NEW_RETURN (implementation, ACE_POSIX_SIG_Asynch_Accept (this), 0);
   return implementation;
 }
 

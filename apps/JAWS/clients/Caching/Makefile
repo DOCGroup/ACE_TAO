@@ -1,47 +1,39 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Makefile for the ACE Adapter Web Server (JAWS) client
+#	Makefile for the ACE Adapter Web Server (JAWS) client
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
-BIN2     = http_client
+BIN   	= http_client
 
 FILES   = http_handler
 
-SRC     = $(addsuffix .cpp,$(FILES))
-OBJ     = $(addsuffix .o,$(FILES))
+SRC	= $(addsuffix .cpp,$(FILES))
+OBJ	= $(addsuffix .o,$(FILES))
+
+BUILD 	= $(VBIN)
 
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the ACE library wasn't built with sufficient components, don't
-#### try to build here.
-ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Utils,$(findstring Utils,$(ACE_BUILD_COMPONENTS)))
-  ifneq (FOR_TAO,$(ACE_COMPONENTS))
-    BIN = $(BIN2)
-  endif # ! FOR_TAO
-endif # ! Utils
-
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#       Local targets
+#	Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Dependencies
+#	Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -55,12 +47,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -94,7 +89,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -115,8 +109,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \

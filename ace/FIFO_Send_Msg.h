@@ -33,13 +33,13 @@ public:
   ACE_FIFO_Send_Msg (void);
   // Default constructor.
 
-  ACE_FIFO_Send_Msg (const ASYS_TCHAR *rendezvous,
+  ACE_FIFO_Send_Msg (const char *rendezvous,
                      int flags = O_WRONLY,
                      int perms = ACE_DEFAULT_FILE_PERMS,
                      LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a record-oriented named pipe for writing.
 
-  int open (const ASYS_TCHAR *rendezvous,
+  int open (const char *rendezvous,
             int flags = O_WRONLY,
             int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
@@ -76,3 +76,4 @@ public:
 #endif
 
 #endif /* ACE_FIFO_SEND_MSG_H */
+

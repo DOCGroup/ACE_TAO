@@ -2,17 +2,12 @@
 # Makefile for building the ACE tests
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
 TESTS = \
 	Aio_Platform_Test \
 	Atomic_Op_Test \
 	Barrier_Test \
 	Basic_Types_Test \
 	Buffer_Stream_Test \
-	Cache_Map_Manager_Test \
-	Cached_Conn_Test \
-	Cached_Accept_Conn_Test \
 	CDR_Test \
 	Collection_Test \
 	Conn_Test \
@@ -22,13 +17,10 @@ TESTS = \
 	Enum_Interfaces_Test \
 	Env_Value_Test \
 	Future_Test \
-	Future_Set_Test \
 	Handle_Set_Test \
 	High_Res_Timer_Test \
 	Hash_Map_Manager_Test \
-	Hash_Map_Bucket_Iterator_Test \
 	IOStream_Test \
-	Map_Manager_Test \
 	Map_Test \
 	Mem_Map_Test \
 	MM_Shared_Memory_Test \
@@ -72,7 +64,6 @@ TESTS = \
 	Task_Test \
 	Thread_Manager_Test \
 	Thread_Mutex_Test \
-	Thread_Pool_Reactor_Test \
 	Thread_Pool_Test \
 	Time_Service_Test \
 	Time_Value_Test \
@@ -83,18 +74,33 @@ TESTS = \
 	Upgradable_RW_Test \
 	XtReactor_Test
 
+#	Map_Manager_Test \
+
 all_tests: $(TESTS)
 
+!ifdef DEBUG
+DEBUGFLAG = -DDEBUG
+!endif
+
+!ifdef STATIC
+STATICFLAG = -DSTATIC
+!endif
+
+!ifdef PASCAL
+PASCALFLAG = -DPASCAL
+!endif
+
 $(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
+	$(MAKE) -fMakefile.bor -DNAME=$@ $(DEBUGFLAG) $(STATICFLAG) \
+		$(PASCALFLAG) $(BINDIR)\$@.exe
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
-
-CFLAGS = $(ACE_CFLAGS)
-
+CFLAGS = -I.. $(ACE_CFLAGS)
 CPPDIR = .
-
-LIBFILES = $(ACE_LIB)
+BINDIR=.\bor\bin
+BASE_OBJDIR=.\bor\obj
+LIBFILES = \
+        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 

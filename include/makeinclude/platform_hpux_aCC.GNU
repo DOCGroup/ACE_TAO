@@ -15,21 +15,10 @@
 #  -Wl,+vnocompatwarnings is added to shut up the "At least one PA 2.0 object
 # file detected..." messages.
 
-ifeq (,$(buildbits))
-  buildbits = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
+buildbits = 0
+debug = 1
+distrib = 0
+threads = 1
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
@@ -37,11 +26,11 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
+# CPP_LOCATION is for TAO builds - says where the C preprocessor is
+CPP_LOCATION    = /usr/ccs/lbin/cpp
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
-# If the user has requested building without threads, then don't set any
-# for 10.20, but for 11.00, the default is to use threads, so explicitly
-# turn them off if the user requested build without threads.
+# If the user has requested building without threads, then don't set any.
 #
 ifeq ($(threads),1)
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
@@ -49,21 +38,17 @@ THR_DEFS	= -DACE_HAS_THREADS -D_POSIX_C_SOURCE=199506L
 else
 THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
 endif
-else
-ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-THR_DEFS	= -DACE_HAS_THREADS=0
 endif
-endif
-
+#
+# Suppress warning 829 (string literal to char * is deprecated)
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W302
+CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W829,302
 # Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from
 # the system header files.  667 is also suppressed, but the compiler still
 # tells you there was a future error, but at least you can pick out any real
-# errors by quickly scanning the output. 829 is suppressed because the
-# system headers have offending string literals assigned to char *.
+# errors by quickly scanning the output.
 ifeq ($(word 2,$(HPVERS_WORDS)), 10)
-CCFLAGS         += +W495,667,829
+CCFLAGS         += +W495,667
 endif
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)

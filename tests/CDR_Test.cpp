@@ -113,8 +113,8 @@ short_stream (void)
 
   if (in_mb->length () != len)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("buffer length not preserved")),
+                       "%p\n",
+                       "buffer length not preserved"),
                       1);
 
   u_long in_chunk, out_chunk;
@@ -125,8 +125,8 @@ short_stream (void)
       out_chunk = u_long (* (out_mb->rd_ptr () + i));
       if (in_chunk != out_chunk )
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("buffer contents not preserved")),
+                           "%p\n",
+                           "buffer contents not preserved"),
                           1);
     }
 
@@ -147,7 +147,7 @@ short_stream (void)
   ACE_CDR::Double d_array1[3];
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Checking operators and arrays\n\n")));
+              "Checking operators and arrays\n\n"));
 
   ACE_InputCDR::to_char tc (ch1);
   is >> tc;
@@ -165,78 +165,78 @@ short_stream (void)
 
   if (ch1 != ch)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("char transfer error")),
+                       "%p\n",
+                       "char transfer error"),
                       1);
 
   if (str1 != str)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("string transfer error")),
+                       "%p\n",
+                       "string transfer error"),
                       1);
 
   if (s1 != s)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("short transfer error")),
+                       "%p\n",
+                       "short transfer error"),
                       1);
 
   if (us1 != us)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ushort transfer error")),
+                       "%p\n",
+                       "ushort transfer error"),
                       1);
 
   if (l1 != l)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("long transfer error")),
+                       "%p\n",
+                       "long transfer error"),
                       1);
 
   if (ul1 != ul)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ulong transfer error")),
+                       "%p\n",
+                       "ulong transfer error"),
                       1);
 
   if (f1 != f)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("float transfer error")),
+                       "%p\n",
+                       "float transfer error"),
                       1);
 
   if (d1 != d)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("double transfer error")),
+                       "%p\n",
+                       "double transfer error"),
                       1);
 
   for (i = 0 ; i < 3; i++)
     if (s_array1[i] != s_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("short array transfer error")),
+                         "%p\n",
+                         "short array transfer error"),
                         1);
 
   for (i = 0 ; i < 3; i++)
     if (l_array1[i] != l_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("long array transfer error")),
+                         "%p\n",
+                         "long array transfer error"),
                         1);
 
   for (i = 0 ; i < 3; i++)
     if (f_array1[i] != f_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("float array transfer error")),
+                         "%p\n",
+                         "float array transfer error"),
                         1);
 
   for (i = 0 ; i < 3; i++)
     if (d_array1[i] != d_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("double array transfer error")),
+                         "%p\n",
+                         "double array transfer error"),
                         1);
 
   return 0;
@@ -252,7 +252,7 @@ main (int argc, ASYS_TCHAR *argv[])
               ACE::minor_version(),
               ACE::beta_version()));
 
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("dn:l:"));
+  ACE_Get_Opt get_opt (argc, argv, "dn:l:");
   int opt, debug = 0;
 
   while ((opt = get_opt ()) != EOF)
@@ -271,25 +271,25 @@ main (int argc, ASYS_TCHAR *argv[])
           case '?':
           default:
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("Usage: %s ")
-                        ASYS_TEXT ("-d debug")
-                        ASYS_TEXT ("-n <num> ")
-                        ASYS_TEXT ("-l <loops> ")
-                        ASYS_TEXT ("\n"),
+                        "Usage: %s "
+                        "-d debug"
+                        "-n <num> "
+                        "-l <loops> "
+                        "\n",
                         argv[0]));
             return -1;
         }
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Testing ACE CDR functions - short stream\n\n")));
+              "Testing ACE CDR functions - short stream\n\n"));
 
   if (short_stream () != 0 )
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Short stream - no errors\n\n")
-              ASYS_TEXT ("Testing basic types - long stream\n\n")));
+              "Short stream - no errors\n\n"
+              "Testing basic types - long stream\n\n"));
 
   for (int i = 0; i < nloops; ++i)
     {
@@ -303,12 +303,12 @@ main (int argc, ASYS_TCHAR *argv[])
       if (debug > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Output CDR: \n")));
+                      "Output CDR: \n"));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Input CDR: \n")));
+                      "Input CDR: \n"));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
@@ -319,8 +319,8 @@ main (int argc, ASYS_TCHAR *argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Long stream - no errors\n\n")
-              ASYS_TEXT ("Testing basic types - long stream[2]\n\n")));
+              "Long stream - no errors\n\n"
+              "Testing basic types - long stream[2]\n\n"));
 
   for (int j = 0; j < nloops; ++j)
     {
@@ -334,12 +334,12 @@ main (int argc, ASYS_TCHAR *argv[])
       if (debug > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Output CDR: \n")));
+                      "Output CDR: \n"));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Input CDR: \n")));
+                      "Input CDR: \n"));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
@@ -350,7 +350,7 @@ main (int argc, ASYS_TCHAR *argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Long stream[2] - no errors\n\n")));
+              "Long stream[2] - no errors\n\n"));
 
   ACE_END_TEST;
 
@@ -366,33 +366,33 @@ CDR_Test_Types::test_put (ACE_OutputCDR &cdr)
     {
       if (cdr.write_octet (this->o) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("write_octet[%d] failed\n"),
+                           "write_octet[%d] failed\n",
                            i),
                           1);
       if (cdr.write_short (this->s) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("write_short[%d] failed\n"),
+                           "write_short[%d] failed\n",
                            i),
                           1);
       if (cdr.write_octet (this->o) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("write_octet-2[%d] failed\n"),
+                           "write_octet-2[%d] failed\n",
                            i),
                           1);
       if (cdr.write_long (this->l) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("write_long[%d] failed\n"),
+                           "write_long[%d] failed\n",
                            i),
                           1);
       if (cdr.write_long (this->l) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("write_long-2[%d] failed\n"),
+                           "write_long-2[%d] failed\n",
                            i),
                           1);
 
       if (cdr.write_string (this->str) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("write_string[%d] failed\n"),
+                           "write_string[%d] failed\n",
                            i),
                           1);
 
@@ -412,64 +412,64 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
     {
       if (cdr.read_octet (xo) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("read_octet[%d] failed\n"),
+                           "read_octet[%d] failed\n",
                            i),
                           1);
       if (xo != this->o)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("octet[%d] differs\n"),
+                           "octet[%d] differs\n",
                            i),
                           1);
       if (cdr.read_short (xs) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("read_short[%d] failed\n"),
+                           "read_short[%d] failed\n",
                            i), 1);
       if (xs != this->s)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("short[%d] differs\n"),
+                           "short[%d] differs\n",
                            i),
                           1);
       if (cdr.read_octet (xo) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("read_octet-2[%d] failed\n"),
+                           "read_octet-2[%d] failed\n",
                            i),
                           1);
       if (xo != this->o)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("octet-2[%d] differs\n"),
+                           "octet-2[%d] differs\n",
                            i),
                           1);
       if (cdr.read_long (xl) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("read_long[%d] failed\n"),
+                           "read_long[%d] failed\n",
                            i),
                           1);
       if (xl != this->l)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("long[%d] differs\n"),
+                           "long[%d] differs\n",
                            i),
                           1);
       if (cdr.read_long (xl) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("read_long-2[%d] failed\n"),
+                           "read_long-2[%d] failed\n",
                            i),
                           1);
       if (xl != this->l)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("long-2[%d] differs\n"),
+                           "long-2[%d] differs\n",
                            i),
                           1);
 
       ACE_CDR::Char *xstr;
       if (cdr.read_string (xstr) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("read_string2[%d] failed\n"),
+                           "read_string2[%d] failed\n",
                            i),
                           1);
       ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> auto_xstr (xstr);
       if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("string[%d] differs\n"),
+                           "string[%d] differs\n",
                            i),
                           1);
     }

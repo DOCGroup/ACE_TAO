@@ -20,65 +20,93 @@
 ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Manager)
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
+  
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Reverse_Iterator)
 
-#define ACE_T1 class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
+#define T_1 class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
+#define T_2 KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
 
-#else
-
-#define ACE_T1 class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-template <ACE_T1>
-ACE_Cache_Map_Manager<ACE_T2>::ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
-                                                      size_t size,
-                                                      ACE_Allocator *alloc)
-  : caching_strategy_ (caching_s)
+template <T_1> 
+ACE_Cache_Map_Manager<T_2>::ACE_Cache_Map_Manager (size_t size,
+                                                   ACE_Allocator *alloc,
+                                                   CACHING_STRATEGY *caching_s,
+                                                   int delete_caching_strategy)
+  : caching_strategy_ (0)
 {
-  if (this->open (size, alloc) == -1)
+  if (this->open (size, alloc, caching_s, delete_caching_strategy) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Cache_Map_Manager::ACE_Cache_Map_Manager")));
-
+  
 }
 
-template <ACE_T1>
-ACE_Cache_Map_Manager<ACE_T2>::~ACE_Cache_Map_Manager (void)
+template <T_1>
+ACE_Cache_Map_Manager<T_2>::~ACE_Cache_Map_Manager (void)
 {
   this->close ();
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::open (size_t length,
-                                     ACE_Allocator *alloc)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::open (size_t length,
+                                  ACE_Allocator *alloc,
+                                  CACHING_STRATEGY *caching_s,
+                                  int delete_caching_strategy)  
 {
-  return this->map_.open (length,
-                          alloc);
+  // Create the map.
+  if (this->map_.open (length,
+                       alloc) == -1)
+    return -1;
+
+  // Initialise the caching strategy.
+
+  // First we decide whether we need to clean up.
+  if (this->caching_strategy_ != 0 &&
+      this->delete_caching_strategy_ == 1 &&
+      caching_s != 0)
+    {
+      delete this->caching_strategy_;
+      this->caching_strategy_ = 0;
+      this->delete_caching_strategy_ = 0;
+    }
+
+  if (caching_s != 0)
+    {
+      this->caching_strategy_ = caching_s;
+      this->delete_caching_strategy_ = delete_caching_strategy;
+    }
+  else if (this->caching_strategy_ == 0)
+    {
+      ACE_NEW_RETURN (this->caching_strategy_,
+                      CACHING_STRATEGY,
+                      -1);
+      this->delete_caching_strategy_ = 1;
+    }
+    
+  return 0;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::close (void)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::close (void)
 {
+  if (this->delete_caching_strategy_ == 1)
+    delete this->caching_strategy_;
+  this->delete_caching_strategy_ = 0;
+  this->caching_strategy_ = 0;
+
   return this->map_.close ();
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
-                                     const VALUE &value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::bind (const KEY &key,
+                                  const VALUE &value)
 {
   // Insert an entry which has the <key> and the <cache_value> which
   // is the combination of the <value> and the attributes of the
   // caching strategy.
   CACHE_VALUE cache_value (value,
-                           this->caching_strategy_.attributes ());
+                           this->caching_strategy_->attributes ());
 
   int bind_result = this->map_.bind (key,
                                      cache_value);
@@ -86,8 +114,8 @@ ACE_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
   if (bind_result != -1)
     {
 
-      int result = this->caching_strategy_.notify_bind (bind_result,
-                                                        cache_value.second ());
+      int result = this->caching_strategy_->notify_bind (bind_result,
+                                                         cache_value.second ());
 
       if (result == -1)
         {
@@ -106,12 +134,12 @@ ACE_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
 }
 
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
-                                       const VALUE &value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::rebind (const KEY &key,
+                                    const VALUE &value)
 {
   CACHE_VALUE cache_value (value,
-                           this->caching_strategy_.attributes ());
+                           this->caching_strategy_->attributes ());
 
   int rebind_result = this->map_.rebind (key,
                                          cache_value);
@@ -119,8 +147,8 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   if (rebind_result != -1)
     {
 
-      int result = this->caching_strategy_.notify_rebind (rebind_result,
-                                                          cache_value.second ());
+      int result = this->caching_strategy_->notify_rebind (rebind_result,
+                                                           cache_value.second ());
 
       if (result == -1)
         {
@@ -143,16 +171,16 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
 }
 
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
-                                       const VALUE &value,
-                                       VALUE &old_value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::rebind (const KEY &key,
+                                    const VALUE &value,
+                                    VALUE &old_value)
 {
   CACHE_VALUE cache_value (value,
-                           this->caching_strategy_.attributes ());
+                           this->caching_strategy_->attributes ());
 
   CACHE_VALUE old_cache_value (old_value,
-                               this->caching_strategy_.attributes ());
+                               this->caching_strategy_->attributes ());
 
   int rebind_result = this->map_.rebind (key,
                                          cache_value,
@@ -161,8 +189,8 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   if (rebind_result != -1)
     {
 
-      int result = this->caching_strategy_.notify_rebind (rebind_result,
-                                                          cache_value.second ());
+      int result = this->caching_strategy_->notify_rebind (rebind_result,
+                                                           cache_value.second ());
 
       if (result == -1)
         {
@@ -190,17 +218,17 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   return rebind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
-                                       const VALUE &value,
-                                       KEY &old_key,
-                                       VALUE &old_value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::rebind (const KEY &key,
+                                    const VALUE &value,
+                                    KEY &old_key,
+                                    VALUE &old_value)
 {
   CACHE_VALUE cache_value (value,
-                           this->caching_strategy_.attributes ());
+                           this->caching_strategy_->attributes ());
 
   CACHE_VALUE old_cache_value (old_value,
-                               this->caching_strategy_.attributes ());
+                               this->caching_strategy_->attributes ());
 
   int rebind_result = this->map_.rebind (key,
                                          cache_value,
@@ -210,8 +238,8 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   if (rebind_result != -1)
     {
 
-      int result = this->caching_strategy_.notify_rebind (rebind_result,
-                                                          cache_value.second ());
+      int result = this->caching_strategy_->notify_rebind (rebind_result,
+                                                           cache_value.second ());
 
       if (result == -1)
         {
@@ -239,22 +267,22 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   return rebind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::trybind (const KEY &key,
-                                        VALUE &value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::trybind (const KEY &key,
+                                     VALUE &value)
 {
   CACHE_VALUE cache_value (value,
-                           this->caching_strategy_.attributes ());
+                           this->caching_strategy_->attributes ());
 
   int trybind_result = this->map_.trybind (key,
                                            cache_value);
 
   if (trybind_result != -1)
     {
-
-      int result = this->caching_strategy_.notify_trybind (trybind_result,
-                                                           cache_value.second ());
-
+    
+      int result = this->caching_strategy_->notify_trybind (trybind_result,
+                                                            cache_value.second ());
+      
       if (result == -1)
         {
 
@@ -268,22 +296,22 @@ ACE_Cache_Map_Manager<ACE_T2>::trybind (const KEY &key,
         }
       else
         {
-
+   
           // If an attempt is made to bind an existing entry the value
           // is overwritten with the value from the map.
           if (trybind_result == 1)
             value = cache_value.first ();
-
+        
         }
-
+    
     }
 
   return trybind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
-                                     VALUE &value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::find (const KEY &key,
+                                  VALUE &value)
 {
   // Lookup the key and populate the <value>.
   CACHE_VALUE cache_value;
@@ -294,8 +322,8 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
   if (find_result != -1)
     {
 
-      int result = this->caching_strategy_.notify_find (find_result,
-                                                        cache_value.second ());
+      int result = this->caching_strategy_->notify_find (find_result,
+                                                         cache_value.second ());
 
       // Unless the find and notification operations go thru, this
       // method is not successful.
@@ -303,7 +331,7 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
         find_result = -1;
       else
         {
-
+          
           // Since the <cache_value> has now changed after the
           // notification, we need to bind to the map again.
           int rebind_result = this->map_.rebind (key,
@@ -312,16 +340,16 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
             find_result = -1;
           else
             value = cache_value.first ();
-
+        
         }
-
+    
     }
 
   return find_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::find (const KEY &key)
 {
   // Lookup the key and populate the <value>.
   CACHE_VALUE cache_value;
@@ -332,8 +360,8 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
   if (find_result != -1)
     {
 
-      int result = this->caching_strategy_.notify_find (find_result,
-                                                        cache_value.second ());
+      int result = this->caching_strategy_->notify_find (find_result,
+                                                         cache_value.second ());
 
       // Unless the find and notification operations go thru, this
       // method is not successful.
@@ -341,15 +369,15 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
         find_result = -1;
       else
         {
-
+    
           // Since the <cache_value> has now changed after the
           // notification, we need to bind to the map again.
           int rebind_result = this->map_.rebind (key,
                                                  cache_value);
-
+        
           if (rebind_result == -1)
             find_result = -1;
-
+      
         }
 
     }
@@ -358,8 +386,8 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
 }
 
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::unbind (const KEY &key)
 {
   // Remove the entry from the cache.
   CACHE_VALUE cache_value;
@@ -369,21 +397,21 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key)
 
   if (unbind_result != -1)
     {
-
-      int result = this->caching_strategy_.notify_unbind (unbind_result,
-                                                          cache_value.second ());
+      
+      int result = this->caching_strategy_->notify_unbind (unbind_result,
+                                                           cache_value.second ());
 
       if (result == -1)
         unbind_result = -1;
-
+    
     }
 
   return unbind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
-                                       VALUE &value)
+template <T_1> int
+ACE_Cache_Map_Manager<T_2>::unbind (const KEY &key,
+                                    VALUE &value)
 {
   // Remove the entry from the cache.
   CACHE_VALUE cache_value;
@@ -393,30 +421,30 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
 
   if (unbind_result != -1)
     {
-
-      int result = this->caching_strategy_.notify_unbind (unbind_result,
-                                                          cache_value.second ());
-
+      
+      int result = this->caching_strategy_->notify_unbind (unbind_result,
+                                                           cache_value.second ());
+      
       if (result == -1)
         unbind_result = -1;
       else
         value = cache_value.first ();
-
+    
     }
 
   return unbind_result;
 }
 
 
-template <ACE_T1> void
-ACE_Cache_Map_Manager<ACE_T2>::dump (void) const
+template <T_1> void
+ACE_Cache_Map_Manager<T_2>::dump (void) const
 {
   this->map_.dump ();
-
-  this->caching_strategy_.dump ();
+  
+  this->caching_strategy_->dump ();
 }
 
-#undef ACE_T1
-#undef ACE_T2
+#undef T_1
+#undef T_2
 
 #endif /* ACE_CACHE_MAP_MANAGER_T_C */

@@ -43,14 +43,4 @@ LOGDIR=$HOME/head/ACE_wrappers/build/$BUILD/auto_compile
 # Who do we send email when compilation (or anything else) fails.
 ADMIN=PUT_YOUR_ADDRESS_HERE ; echo "You must edit this file" ; exit 0
 
-# You must select a mail tool that can understand the -s option such
-# as:
-#
-# /usr/bin/mailx 		Solaris
-# /usr/bin/mailx 		HP-UX
-# /usr/sbin/mailx		IRIX
-# /bin/mail 			Linux
-
-exec /pkg/gnu/bin/perl $CHECKOUT/ACE_wrappers/bin/auto_compile \
-    $CHECKOUT $BUILD $LOGDIR $ADMIN /usr/bin/mailx
-
+exec /pkg/gnu/bin/perl $HOME/bin/auto_compile $CHECKOUT $BUILD $LOGDIR $ADMIN

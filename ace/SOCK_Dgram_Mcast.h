@@ -66,15 +66,12 @@ public:
   // these numbers in alphanumeric form and <subscribe> will convert
   // them into numbers via <ACE_OS::atoi>.
 
-  int subscribe (const ACE_INET_Addr &mcast_addr,
-                 const ACE_QoS_Params &qos_params,
-                 int reuse_addr = 1,
-                 const ASYS_TCHAR *net_if = 0,
-                 int protocol_family = PF_INET,
-                 int protocol = 0,
-                 ACE_Protocol_Info *protocolinfo = 0,
-                 ACE_SOCK_GROUP g = 0,
-                 u_long flags = 0);
+  ACE_HANDLE subscribe (const ACE_INET_Addr &mcast_addr,
+                        const ACE_QoS_Params &qos_params,
+                        int reuse_addr = 1,
+                        const ASYS_TCHAR *net_if = 0,
+                        int protocol_family = PF_INET,
+                        int protocol = 0);
   // This is a QoS-enabled method for joining a multicast group, which
   // passes <qos_params> via <ACE_OS::join_leaf>.  The network
   // interface device driver is instructed to accept datagrams with
@@ -85,7 +82,8 @@ public:
   // The <net_if> interface is hardware specific, e.g., use "netstat
   // -i" to find whether your interface is, such as "le0" or something
   // else.  If net_if == 0, <subscribe> uses the default mcast
-  // interface.  Returns: a 0 on success or -1 on failure.
+  // interface.  Returns: an <ACE_HANDLE> to the newly created
+  // multipoint socket on success or ACE_INVALID_HANDLE on failure.
   // 
   // Note that some platforms, such as pSoS, support only number, not
   // names, for network interfaces.  For these platforms, just give
@@ -126,10 +124,9 @@ public:
   int set_option (int option, 
 		  char optval);
   // Set an ip option that takes a char as input, such as
-  // <IP_MULTICAST_LOOP> or <IP_MULTICAST_TTL>.  This is just a more
-  // concise nice interface to a subset of possible
-  // <ACE_SOCK::set_option> calls.  Returns 0 on success, -1 on
-  // failure.
+  // <IP_MULTICAST_LOOP>.  This is just a more concise nice interface
+  // to a subset of possible <ACE_SOCK::set_option> calls.  Returns 0
+  // on success, -1 on failure.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -138,50 +135,27 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  // = Disable public <open> methods to ensure class used properly.
+  ACE_HANDLE open (const ACE_Addr &local,
+                   int protocol_family = PF_INET,
+                   int protocol = 0);
+  // Disable public use of <ACE_SOCK_Dgram::open> to ensure the class
+  // is used properly.
 
-  int open (const ACE_Addr &mcast_addr,
-            int protocol_family = PF_INET,
-            int protocol = 0,
-            int reuse_addr = 0);
-  // Not publically visible.
+  int subscribe_i (const ACE_INET_Addr &mcast_addr,
+		   int reuse_addr = 1,
+		   const ASYS_TCHAR *net_if = 0,
+		   int protocol_family = PF_INET,
+		   int protocol = 0);
+  // Implementation method of <subscribe>.
 
-  int open (const ACE_Addr &mcast_addr,
-            const ACE_QoS_Params &qos_params,
-            int protocol_family = PF_INET,
-            int protocol = 0,
-            ACE_Protocol_Info *protocolinfo = 0,
-            ACE_SOCK_GROUP g = 0,
-            u_long flags = 0,
-            int reuse_addr = 0);
-  // Not publically visible.
+  int unsubscribe_i (const ACE_INET_Addr &mcast_addr,
+		     const ASYS_TCHAR *net_if = 0,
+		     int protocol_family = PF_INET,
+		     int protocol = 0);
+  // Implementation method of <unsubscribe>.
 
-  int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ASYS_TCHAR *net_if,
-                     int protocol_family,
-                     int protocol,
-                     int reuse_addr);
-  // Subscribe to the multicast interface using BSD-style semantics
-  // (no QoS).
-
-  int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ACE_QoS_Params &qos_params,
-                     const ASYS_TCHAR *net_if,
-                     int protocol_family,
-                     int protocol,
-                     int reuse_addr);
-  // Subscribe to the multicast interface using QoS-enabled semantics.
-
-  int unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                       const ASYS_TCHAR *net_if = 0,
-                       int protocol_family = PF_INET,
-                       int protocol = 0);
-  // Unsubscribe to multicast interfaces subscribed to previously by
-  // <subscribe_ifs>.
-
-  // = Disable public use of <ACE_SOCK_Dgram::send>s 
-
-  // This forces <ACE_SOCK_Dgram_Mcast::send>s inline.
+  // = Disable public use of <ACE_SOCK_Dgram::send>s and force
+  // <ACE_SOCK_Dgram_Mcast::send>s inline.
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,

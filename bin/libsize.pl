@@ -72,7 +72,8 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
 
 $make_args = join (' ', @ARGV) . $build_args;
 
-chop ($pwd = `pwd`);
+$pwd = $ENV{'PWD'};
+chop ($pwd = `pwd`) unless "$pwd";
 
 if ($pwd =~ m%/ace$%) {
   #### libACE

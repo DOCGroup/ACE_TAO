@@ -43,15 +43,14 @@ ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (ACE_Service_Repository::svc_rep_ == 0 &&
-          !ACE_Object_Manager::shutting_down ())
-        {
-          ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_,
+				*ACE_Static_Object_Lock::instance (), 0));
+      if (ACE_Service_Repository::svc_rep_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_,
                           ACE_Service_Repository (size),
                           0);
-          ACE_Service_Repository::delete_svc_rep_ = 1;
-        }
+	  ACE_Service_Repository::delete_svc_rep_ = 1;
+	}
     }
 
   return ACE_Service_Repository::svc_rep_;
@@ -62,7 +61,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
 {
   ACE_TRACE ("ACE_Service_Repository::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+			    *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Service_Repository *t = ACE_Service_Repository::svc_rep_;
   // We can't safely delete it since we don't know who created it!
@@ -78,7 +77,7 @@ ACE_Service_Repository::close_singleton (void)
   ACE_TRACE ("ACE_Service_Repository::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                     *ACE_Static_Object_Lock::instance ()));
+		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Service_Repository::delete_svc_rep_)
     {
@@ -197,8 +196,8 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
 
 int
 ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
-                                const ACE_Service_Type **srp,
-                                int ignore_suspended)
+				const ACE_Service_Type **srp,
+				int ignore_suspended)
 {
   ACE_TRACE ("ACE_Service_Repository::find_i");
   int i;
@@ -218,10 +217,10 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
         }
 
       if (srp != 0)
-        *srp = this->service_vector_[i];
+	*srp = this->service_vector_[i];
       if (ignore_suspended
           && this->service_vector_[i]->active () == 0)
-        return -2;
+	return -2;
       return i;
     }
   else
@@ -230,8 +229,8 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
 
 int
 ACE_Service_Repository::find (const ASYS_TCHAR name[],
-                              const ACE_Service_Type **srp,
-                              int ignore_suspended)
+			      const ACE_Service_Type **srp,
+			      int ignore_suspended)
 {
   ACE_TRACE ("ACE_Service_Repository::find");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -261,7 +260,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
     {
       // Check for self-assignment...
       if (sr == this->service_vector_[i])
-        return 0;
+	return 0;
       ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
                                             this->service_vector_[i]);
       delete s;
@@ -283,7 +282,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
 int
 ACE_Service_Repository::resume (const ASYS_TCHAR name[],
-                                const ACE_Service_Type **srp)
+				const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::resume");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -302,7 +301,7 @@ ACE_Service_Repository::resume (const ASYS_TCHAR name[],
 
 int
 ACE_Service_Repository::suspend (const ASYS_TCHAR name[],
-                                 const ACE_Service_Type **srp)
+				 const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::suspend");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -340,8 +339,8 @@ ACE_Service_Repository::remove (const ASYS_TCHAR name[])
       --this->current_size_;
 
       if (this->current_size_ >= 1)
-        this->service_vector_[i]
-          = this->service_vector_[this->current_size_];
+	this->service_vector_[i]
+	  = this->service_vector_[this->current_size_];
       return 0;
     }
 }

@@ -286,7 +286,6 @@ libACE_Streams_la_SOURCES = \
         Task.cpp
 
 libACE_Memory_la_SOURCES = \
-	Based_Pointer_Repository.cpp \
         Malloc.cpp \
         Mem_Map.cpp \
         Memory_Pool.cpp \
@@ -384,7 +383,6 @@ ACE_TEMPLATE_FILES = \
         Active_Map_Manager_T.cpp \
         Asynch_Acceptor.cpp \
         Auto_Ptr.cpp \
-	Based_Pointer_T.cpp \
         Connector.cpp \
         Containers_T.cpp \
 	Cache_Map_Manager_T.cpp \
@@ -399,6 +397,7 @@ ACE_TEMPLATE_FILES = \
         Free_List.cpp \
         Functor_T.cpp \
         Future.cpp \
+	Future_Node.cpp \
 	Future_Set.cpp \
         Hash_Map_Manager_T.cpp \
         Hash_Cache_Map_Manager_T.cpp \
@@ -470,9 +469,6 @@ pkginclude_HEADERS = \
         Atomic_Op.i \
         Auto_Ptr.h \
         Auto_Ptr.i \
-        Based_Pointer_Repository.h \
-        Based_Pointer_T.h \
-        Based_Pointer_T.i \
         Basic_Types.h \
         Basic_Types.i \
         CDR_Stream.h \
@@ -552,6 +548,7 @@ pkginclude_HEADERS = \
         Functor_T.h \
         Functor_T.i \
         Future.h \
+        Future_Node.h \
         Future_Set.h \
         Get_Opt.h \
         Get_Opt.i \
@@ -563,6 +560,8 @@ pkginclude_HEADERS = \
         Hash_Map_Manager.i \
         Hash_Map_Manager_T.h \
         Hash_Map_Manager_T.i \
+        Hash_Purgable_Map_Manager_T.h \
+        Hash_Purgable_Map_Manager_T.i \
         High_Res_Timer.h \
         High_Res_Timer.i \
         INET_Addr.h \

@@ -38,7 +38,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
       ACE_ASSERT (dynamic_instance != 0);
 
-      ACE_throw_bad_alloc;
+      return 0;
     }
   else
     {
@@ -158,11 +158,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::shutdown (void)
       // Make sure there are no timers.
       this->reactor ()->cancel_timer (this);
 
-      if (this->peer ().get_handle () != ACE_INVALID_HANDLE)
-        {
-          // Remove self from reactor.
-          this->reactor ()->remove_handler (this, mask);
-        }
+      // Remove self from reactor.
+      this->reactor ()->remove_handler (this, mask);
     }
 
   // Remove self from the recycler.
@@ -298,25 +295,6 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::idle (u_long flags)
     return this->recycler ()->cache (this->recycling_act_);
   else
     return this->close (flags);
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle_state (ACE_Recyclable_State new_state)
-{
-  if (this->recycler ())
-    return this->recycler ()->recycle_state (this->recycling_act_,
-                                             new_state);
-
-  return 0;
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL> ACE_Recyclable_State
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle_state (void) const
-{
-  if (this->recycler ())
-    return this->recycler ()->recycle_state (this->recycling_act_);
-
-  return ACE_RECYCLABLE_UNKNOWN;
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void

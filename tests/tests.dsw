@@ -87,30 +87,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cached_Conn_Test"=.\Cached_Conn_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Cached_Accept_Conn_Test"=.\Cached_Accept_Conn_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Collection_Test"=.\Collection_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -243,18 +219,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Hash_Map_Bucket_Iterator_Test"=.\Hash_Map_Bucket_Iterator_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "High_Res_Timer_Test"=.\High_Res_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -304,18 +268,6 @@ Package=<4>
 ###############################################################################
 
 Project: "MT_SOCK_Test"=.\MT_SOCK_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Malloc_Test"=.\Malloc_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -926,3 +878,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+

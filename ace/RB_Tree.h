@@ -617,7 +617,7 @@ public:
   int is_done (void);
   // Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
   // node, returns 1 if not.
-  // DEPRECATED: use the base class <done> method instead.
+  // DEPRECATED: use the base class done () method instead.
 
 };
 

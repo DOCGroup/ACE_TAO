@@ -25,10 +25,6 @@
 
 #include "ace/Malloc_Base.h"
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-
 #if defined (ACE_HAS_MALLOC_STATS)
 #include "ace/Synch_T.h"
 #if defined (ACE_HAS_THREADS)
@@ -61,128 +57,79 @@ struct ACE_Export ACE_Malloc_Stats
 #define AMS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
-#if !defined (ACE_MALLOC_PADDING)
-// ACE_MALLOC_PADDING allows you to insure that allocated regions are
-// at least <ACE_MALLOC_PADDING> bytes long.  It is especially useful
-// when you want areas to be at least a page long, or 32K long, or
+// ACE_MALLOC_ALIGN allows you to insure that allocated regions are at
+// least <ACE_MALLOC_ALIGN> bytes long.  It is especially useful when
+// you want areas to be at least a page long, or 32K long, or
 // something like that.  It doesn't guarantee alignment to an address
 // multiple, like 8-byte data alignment, etc.  The allocated area's
 // padding to your selected size is done with an added array of long[]
 // and your compiler will decide how to align things in memory.
 //
-// If you want to use this feature, define ACE_MALLOC_PADDING in your
-// config.h file and use a signed integer number of bytes you want, e.g.:
-//
-// #define ACE_MALLOC_PADDING ((int) 4096)
+// The default ACE_MALLOC_ALIGN is 'long', which will probably add a
+// long of padding - it doesn't have any real affect.  If you want to
+// use this feature, define ACE_MALLOC_ALIGN in your config.h file and
+// use a signed integer number of bytes you want.  For example:
+// #define ACE_MALLOC_ALIGN ((int)4096)
 
-#define ACE_MALLOC_PADDING 1
-#endif /* ACE_MALLOC_PADDING */
+#if !defined (ACE_MALLOC_ALIGN)
+#define ACE_MALLOC_ALIGN ((int)(sizeof (long)))
+#endif /* ACE_MALLOC_ALIGN */
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#define ACE_MALLOC_HEADER_PTR ACE_Based_Pointer<ACE_Malloc_Header>
-#define ACE_NAME_NODE_PTR ACE_Based_Pointer<ACE_Name_Node>
-#define ACE_CHAR_PTR ACE_Based_Pointer_Basic<char>
-#else
-#define ACE_MALLOC_HEADER_PTR ACE_Malloc_Header *
-#define ACE_NAME_NODE_PTR ACE_Name_Node *
-#define ACE_CHAR_PTR char *
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-
-class ACE_Export ACE_Malloc_Header
+union ACE_Export ACE_Malloc_Header
 {
-  // = TITLE
-  //    This is the control block header.  It's used by <ACE_Malloc>
-  //    to keep track of each chunk of data when it's in the free
-  //    list or in use.
-public:
-  class ACE_Malloc_Control_Block
+  // TITLE
+  //    This is a block header.
+
+  struct ACE_Malloc_Control_Block
   {
-  public:
-    ACE_MALLOC_HEADER_PTR next_block_;
+    ACE_Malloc_Header *next_block_;
     // Points to next block if on free list.
 
     size_t size_;
     // Size of this block.
   } s_;
 
-#if (ACE_MALLOC_PADDING > 1)
-#define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
-                                  (sizeof (ACE_Malloc_Control_Block)) / sizeof (long)))
-  long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
-#endif /* ACE_MALLOC_PADDING > 0 */
-
-  ACE_UNIMPLEMENTED_FUNC (void dummy (void))
-  // A dummy for egcs (or all g++ variants?) to prevent them from
-  // complaining "all member functions are private."
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Malloc_Header &))
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+  long align_[ACE_MALLOC_ALIGN/sizeof (long)];
+  // Force alignment.
 };
 
 class ACE_Export ACE_Name_Node
 {
   // = TITLE
-  //    This class supports "named memory regions" within <ACE_Malloc>.
-  //
-  // = DESCRIPTION
-  //   Internally, the named memory regions are stored as a linked
-  //   list within the <Memory_Pool>.
+  //    This is stored as a linked list within the Memory_Pool
+  //    to allow "named memory chunks."
 public:
   // = Initialization methods.
-  ACE_Name_Node (const char *name,
-                 char *name_ptr,
-                 char *pointer,
-                 ACE_Name_Node *head);
-  // Constructor.
-
-  ACE_Name_Node (const ACE_Name_Node &);
-  // Copy constructor.
-
+  ACE_Name_Node (const char *name, void *, ACE_Name_Node *);
   ACE_Name_Node (void);
-  // Constructor.
-
   ~ACE_Name_Node (void);
-  // Constructor.
 
-  const char *name (void) const;
-  // Return a pointer to the name of this node.
-
-  void name (const char *);
-  // Assign a name;
-
-  ACE_CHAR_PTR name_;
+  char *name_;
   // Name of the Node.
 
-  ACE_CHAR_PTR pointer_;
+  void *pointer_;
   // Pointer to the contents.
 
-  ACE_NAME_NODE_PTR next_;
+  ACE_Name_Node *next_;
   // Pointer to the next node in the chain.
 
   void dump (void) const;
   // Dump the state of the object.
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 };
 
 class ACE_Export ACE_Control_Block
 {
   // = TITLE
-  //    This information is stored in memory allocated by the <Memory_Pool>.
+  //    This information is stored in memory allocated by the MEMORY_POOL.
   //
   // = DESCRIPTION
-  //    This class should be local to class ACE_Malloc, but some older
-  //    C++ compilers don't like nested classes in templates...
+  //    This class should be local to class ACE_Malloc, but cfront and
+  //    G++ don't like nested classes in templates...
 public:
-  ACE_NAME_NODE_PTR name_head_;
+  ACE_Name_Node *name_head_;
   // Head of the linked list of Name Nodes.
 
-  ACE_MALLOC_HEADER_PTR freep_;
+  ACE_Malloc_Header *freep_;
   // Current head of the freelist.
 
   char lock_name_[MAXNAMELEN];
@@ -196,30 +143,24 @@ public:
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof(ACE_Name_Node *) \
                                       + sizeof (ACE_Malloc_Header *) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
-// Notice the casting to int for <sizeof> otherwise unsigned int
+// Notice the casting to int for sizeof() otherwise unsigned int
 // arithmetic is used and some awful things may happen.
-#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_PADDING != 0 \
-                                        ? ACE_MALLOC_PADDING - (ACE_CONTROL_BLOCK_SIZE) \
-                                        : ACE_MALLOC_PADDING) / int (sizeof (long)))
+#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
+                                        ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
+                                        : ACE_MALLOC_ALIGN) / int(sizeof(long)))
 
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
-  // Force alignment.
 
   ACE_Malloc_Header base_;
-  // Dummy node used to anchor the freelist.  This needs to come last...
+  // Dummy node used to anchor the freelist.
 
   void dump (void) const;
   // Dump the state of the object.
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 };
 
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
@@ -233,9 +174,9 @@ class ACE_Export ACE_New_Allocator : public ACE_Allocator
   //     up memory.  Please note that the only methods that are
   //     supported are malloc and free. All other methods are no-ops.
   //     If you require this functionality, please use:
-  //     ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
-  //     MUTEX> > This will allow you to use the added functionality
-  //     of bind/find/etc. while using the new/delete operators.
+  //     ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, MUTEX>>
+  //     This will allow you to use the added functionality of
+  //     bind/find/etc. while using the new/delete operators.
 public:
   virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
@@ -257,8 +198,8 @@ public:
   virtual void dump (void) const;
 
 private:
-  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
-  // <ACE_Allocator::instance> implementation for explanation.
+  // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!
+  // See the ACE_Allocator::instance () implementation for explanation.
 };
 
 class ACE_Export ACE_Static_Allocator_Base : public ACE_Allocator

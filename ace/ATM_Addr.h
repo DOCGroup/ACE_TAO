@@ -25,15 +25,14 @@
 
 #include "ace/Addr.h"
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
-typedef ATMSAPAddress ATM_Addr;
+#if !defined (ACE_HAS_FORE_ATM_XTI)
+typedef int ATMSAPAddress;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
 #include <winsock2.h>
 #include <ws2atm.h>
-typedef struct sockaddr_atm ATM_Addr;
-#else
-typedef int ATM_Addr;
-#endif /* ACE_HAS_FORE_ATM_XTI/ACE_HAS_FORE_ATM_WS2 */
+
+typedef ATM_ADDRESS ATMSAPAddress;
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {
@@ -54,7 +53,7 @@ public:
                 unsigned char selector = DEFAULT_SELECTOR);
   // Copy constructor.
 
-  ACE_ATM_Addr (const ATM_Addr *,
+  ACE_ATM_Addr (const ATMSAPAddress *,
                 unsigned char selector = DEFAULT_SELECTOR);
   // Creates an <ACE_ATM_Addr> from an ATMSAPAddress structure. This
   // is vendor specific (FORE systems). May need to change when other
@@ -79,7 +78,7 @@ public:
            unsigned char selector = DEFAULT_SELECTOR);
   // Initializes from another <ACE_ATM_Addr>.
 
-  int set (const ATM_Addr *,
+  int set (const ATMSAPAddress *,
            unsigned char selector = DEFAULT_SELECTOR);
   // Initializes an <ACE_ATM_Addr> from an ATMSAPAddress
   // structure. This is vendor specific (FORE systems). May need to
@@ -139,16 +138,28 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-//   char *construct_options (ACE_HANDLE fd,
-//                            int qos_kb,
-//                            int flags,
-//                            long *optsize);
-//   // Construct options for ATM connections
+  static char *construct_options (ACE_HANDLE fd,
+                                  int qos_kb,
+                                  int flags,
+                                  long *optsize);
+  // Construct options for ATM connections
 
 protected:
+  static int get_local_address (ACE_HANDLE handle,
+                                u_char addr[]);
+  // Get the local ATM address.
 
 private:
-  ATM_Addr atm_addr_;
+#if 1 // defined (ACE_HAS_FORE_ATM_XTI)
+  ATMSAPAddress atm_addr_;
+  // Underlying representation - this may be very
+  // vendor-implementation specific. Other vendors (besides FORE) may
+  // name and define this structure differently. We can work around
+  // that problem when we run into other vendors supporting XTI on top
+  // of ATM. Is this class specific to XTI?  Not sure.
+#elif 0 // defined (ACE_HAS_FORE_ATM_WS2)
+  struct sockaddr_atm atm_addr_;
+#endif // ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2
 };
 
 #if defined (__ACE_INLINE__)

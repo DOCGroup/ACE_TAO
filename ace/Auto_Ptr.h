@@ -33,7 +33,7 @@ class ACE_Auto_Basic_Ptr
   //     This class allows one to work on non-object (basic) types
 public:
   // = Initialization and termination methods
-  ACE_EXPLICIT ACE_Auto_Basic_Ptr (X *p = 0);
+  /* explicit */ ACE_Auto_Basic_Ptr (X *p = 0);
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Ptr (void);
@@ -71,7 +71,7 @@ class auto_ptr : public ACE_Auto_Basic_Ptr <X>
   //     Implements the draft C++ standard auto_ptr abstraction.
 public:
   // = Initialization and termination methods
-  ACE_EXPLICIT auto_ptr (X *p = 0);
+  /* explicit */ auto_ptr (X *p = 0);
 
   X *operator-> () const;
 };
@@ -88,7 +88,7 @@ class ACE_Auto_Basic_Array_Ptr
   //     deallocated via "delete [] foo".
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Basic_Array_Ptr (X *p = 0);
+  /* explicit */ ACE_Auto_Basic_Array_Ptr (X *p = 0);
   ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap);
   ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Array_Ptr (void);
@@ -118,31 +118,10 @@ class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
   //     abstraction.
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Array_Ptr (X *p = 0);
+  /* explicit */ ACE_Auto_Array_Ptr (X *p = 0);
 
   X *operator-> () const;
 };
-
-// Some platforms have an older version of auto_ptr
-// support, which lacks reset, and cannot be disabled
-// easily.  Portability to these platforms requires
-// use of the following ACE_AUTO_PTR_RESET macro.
-# if defined (ACE_AUTO_PTR_LACKS_RESET)
-#   define ACE_AUTO_PTR_RESET(X,Y,Z) \
-      do { \
-        if (Y != X.get ()) \
-          { \
-            X.release (); \
-            X = auto_ptr<Z> (Y); \
-          } \
-      } while (0)
-# else /* ! ACE_AUTO_PTR_LACKS_RESET */
-#   define ACE_AUTO_PTR_RESET(X,Y,Z) \
-      do { \
-         X.reset (Y); \
-      } while (0)
-# endif /* ACE_AUTO_PTR_LACKS_RESET */
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_Ptr.i"

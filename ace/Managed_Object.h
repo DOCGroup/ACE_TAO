@@ -75,7 +75,7 @@ class ACE_Managed_Object
   //     until needed, but should be allocated when first needed.  And
   //     they are destroyed in the reverse order of construction.
   //
-  //     <get_preallocated_object> accesses a "preallocated" object,
+  //     get_preallocated_object () accesses a "preallocated" object,
   //     i.e., one that is identified by a value in the
   //     ACE_Object_Manager:: Preallocated_Object enum.  These objects
   //     are used internally by the ACE library.
@@ -136,7 +136,7 @@ public:
 
 private:
   // Disallow instantiation of this class.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (void))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object ())
   ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (const ACE_Managed_Object<TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Managed_Object<TYPE> &))
 

@@ -61,11 +61,7 @@ main (int argc, char *argv[])
                 "%p\n",
                 "register_stdin_handler"));
 
-  if (loggerd.open (argc,
-                    argv,
-                    ACE_DEFAULT_LOGGER_KEY,
-                    // Don't ignore static services!
-                    0) == -1 && errno != ENOENT)
+  if (loggerd.open (argc, argv) == -1 && errno != ENOENT)
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 "open",

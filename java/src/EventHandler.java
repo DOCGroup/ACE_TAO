@@ -37,13 +37,13 @@ import JACE.ASX.TimeValue;
  *</blockquote>
  *
  *@see TimerQueue
- *@see JACE.Reactor
+ *@see Reactor
  */
 public interface EventHandler
 {
   /** 
    * Called when timer expires.
-   *@param tv Time Value at which the event occured 
+   *@param tv Time Value for which timer was set
    *@param obj An arbitrary object that was passed to the Timer Queue
    * (Asynchronous Completion Token)
    */

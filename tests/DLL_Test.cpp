@@ -42,14 +42,18 @@ USELIB("..\ace\aced.lib");
 
 #if defined (ACE_WIN32)
 #  define OBJ_SUFFIX ".exe"
-#  define OBJ_PREFIX ""
+#    if defined (__BORLANDC__)
+#      define OBJ_PREFIX ".\\bor\\bin\\"
+#    else
+#      define OBJ_PREFIX ""
+#    endif /* defined (__BORLANDC__) */
 #else
 #  define OBJ_SUFFIX ACE_DLL_SUFFIX
 #  define OBJ_PREFIX "./" ACE_DLL_PREFIX
 #endif /*ACE_WIN32*/
 
 
-char const *
+static char const * 
 cdecl_decoration(char const * func_name)
 {
 #if defined(__BORLANDC__)
@@ -67,7 +71,7 @@ extern "C" ACE_Svc_Export Hello *get_hello (void);
 
 Hello *get_hello (void)
 {
-  Hello *hello = 0;
+  Hello *hello;
 
   ACE_NEW_RETURN (hello,
                   Hello,
@@ -79,12 +83,12 @@ Hello *get_hello (void)
 typedef Hello *(*TC) (void);
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, char *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ASYS_TEXT ("DLL_Test"));
+  ACE_START_TEST ("DLL_Test");
 
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
@@ -94,23 +98,22 @@ main (int argc, ASYS_TCHAR *argv[])
   int retval = dll.open (OBJ_PREFIX "DLL_Test" OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
+                       "%p\n",
 		       dll.error ()),
                       -1);
 
   // Just becos the ANSI C++ spec says you can no longer cast a void* to a
-  // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello");
+  // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello"); 
   void * foo;
 
-  char const *cdecl_str = cdecl_decoration("get_hello");
-  foo = dll.symbol (cdecl_str);
+  foo = dll.symbol (cdecl_decoration("get_hello"));
 
   // Cast the void* to long first.
-  long tmp = ACE_reinterpret_cast (long, foo);
+  long tmp = ACE_reinterpret_cast (long, foo);  
   TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
+                       "%p\n",
 		       dll.error ()),
                       -1);
 

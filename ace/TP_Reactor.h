@@ -13,7 +13,7 @@
 //    TP_Reactor (ala, Thread Pool Reactor) uses the leader-follower
 //    model to demultiplex requests among a bunch of threads.
 //    Basically, when using thread pool reactor, one will pre-spawn a
-//    _fixed_ number of threads.  When you issue the <run_event_loop>
+//    _fixed_ number of threads.  When you issue the run_event_loop ()
 //    method, one of the thread will become the leader thread and wait
 //    for an event.  The other threads (followers) will be lined up
 //    and waiting for their turns to become the leader.  When an event
@@ -69,21 +69,23 @@ public:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
   // = TITLE
+  //
   //     Specialization of Select Reactor to support thread-pool based
   //     event dispatching.
   //
   // = DESCRIPTION
+  //
   //     One of the short comings of the Select_Reactor in ACE is that
   //     it did not support a thread pool based event dispatching
   //     model, similar to the one in WFMO_Reactor.  In
-  //     Select_Reactor, only thread can be blocked in <handle_events>
+  //     Select_Reactor, only thread can be blocked in handle_events()
   //     at any given time.
   //
   //     A new Reactor has been added to ACE that removes this
   //     short-coming.  TP_Reactor is a specialization of Select
   //     Reactor to support thread-pool based event dispatching. This
   //     Reactor takes advantage of the fact that events reported by
-  //     <select> are persistent if not acted upon immediately.  It
+  //     select() are persistent if not acted upon immediately.  It
   //     works by remembering the event handler that just got
   //     activated, releasing the internal lock (so that some other
   //     thread can start waiting in the event loop) and then
@@ -106,15 +108,13 @@ public:
   // = Initialization and termination methods.
 
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0,
-                  int mask_signals = 1);
+                  ACE_Timer_Queue * = 0);
   // Initialize <ACE_TP_Reactor> with the default size.
 
   ACE_TP_Reactor (size_t max_number_of_handles,
                   int restart = 0,
                   ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0,
-                  int mask_signals = 1);
+                  ACE_Timer_Queue * = 0);
   // Initialize the <ACE_TP_Reactor> to manage
   // <max_number_of_handles>.  If <restart> is non-0 then the
   // <ACE_Reactor>'s <handle_events> method will be restarted
@@ -161,7 +161,7 @@ protected:
                                ACE_Handle_Set& dispatch_mask,
                                ACE_Handle_Set& ready_mask,
                                ACE_EH_PTMF callback);
-  // Overwrites <ACE_Select_Reactor::dispatch_io_set> to *not*
+  // Overwrites ACE_Select_Reactor::dispatch_io_set() to *not*
   // dispatch any event handlers.  The information of one activated
   // event handler is stored away, so that the event handler can be
   // dispatch later.
