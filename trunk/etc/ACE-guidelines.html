@@ -263,6 +263,14 @@ to Graham for providing the OSE tools!<p>
         A static variable is only initialized the first time its
         declaration is seen.  Of course, we should avoid using
         static variables at all.<p>
+
+    <li>If a cast is necessary, avoid use of ANSI-style casts,
+        <em>e.g.</em>, <code>int (foo)</code>.  Instead, use
+        the ACE_static_cast macro:
+
+        <pre>
+        return ACE_static_cast(size_t, this-&gt;count_) &gt; that-&gt;size_;
+        </pre><p>
   </ul>
 
   <li><strong>I/O</strong><p>
