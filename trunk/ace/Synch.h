@@ -50,31 +50,38 @@ public:
   // Explicitly destroy the lock.
 
   virtual int acquire (void) = 0;
-  // Block the thread until the lock is acquired.
+  // Block the thread until the lock is acquired.  Returns -1 on
+  // failure.
 
   virtual int tryacquire (void) = 0;
-  // Conditionally acquire the lock (i.e., won't block).
+  // Conditionally acquire the lock (i.e., won't block).  Returns -1
+  // on failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
 
   virtual int release (void) = 0;
-  // Release the lock.
+  // Release the lock.  Returns -1 on failure.
 
   virtual int acquire_read (void) = 0;
   // Block until the thread acquires a read lock.  If the locking
   // mechanism doesn't support read locks then this just calls
-  // <acquire>.
+  // <acquire>.  Returns -1 on failure.
 
   virtual int acquire_write (void) = 0;
   // Block until the thread acquires a write lock.  If the locking
   // mechanism doesn't support read locks then this just calls
-  // <acquire>.
+  // <acquire>.  Returns -1 on failure.
 
   virtual int tryacquire_read (void) = 0;
   // Conditionally acquire a read lock.  If the locking mechanism
   // doesn't support read locks then this just calls <acquire>.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   virtual int tryacquire_write (void) = 0;
   // Conditionally acquire a write lock.  If the locking mechanism
   // doesn't support read locks then this just calls <acquire>.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 };
 
 class ACE_Export ACE_File_Lock
@@ -115,7 +122,9 @@ public:
   int tryacquire (short whence = 0, off_t start = 0, off_t len = 1);
   // Note, for interface uniformity with other synchronization
   // wrappers we include the <tryacquire> method.  This is implemented
-  // as a write-lock to be on the safe-side...
+  // as a write-lock to be on the safe-side...  Returns -1 on failure.
+  // If we "failed" because someone else already had the lock, <errno>
+  // is set to <EBUSY>.
 
   int release (short whence = 0, off_t start = 0, off_t len = 1);
   // Unlock a readers/writer lock.
@@ -125,13 +134,19 @@ public:
   // writer hold the lock.
 
   int tryacquire_write (short whence = 0, off_t start = 0, off_t len = 1);
-  // Conditionally acquire a write lock (i.e., won't block).
+  // Conditionally acquire a write lock (i.e., won't block).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
 
   int acquire_read (short whence = 0, off_t start = 0, off_t len = 1);
   // Acquire a read lock, but block if a writer hold the lock.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   int tryacquire_read (short whence = 0, off_t start = 0, off_t len = 1);
-  // Conditionally acquire a read lock (i.e., won't block).
+  // Conditionally acquire a read lock (i.e., won't block).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
 
   ACE_HANDLE get_handle (void);
   // Get underlying <ACE_HANDLE> for the file.
@@ -192,11 +207,13 @@ public:
 
   int tryacquire (void);
   // Conditionally decrement the semaphore if count is greater than 0
-  // (i.e., won't block).
+  // (i.e., won't block).  Returns -1 on failure.  If we "failed"
+  // because someone else already had the lock, <errno> is set to
+  // <EBUSY>.
 
   int release (void);
   // Increment the semaphore by 1, potentially unblocking a waiting
-  // thread.
+  // thread.  
 
   int release (size_t release_count);
   // Increment the semaphore by <release_count>, potentially
@@ -216,11 +233,15 @@ public:
   // Conditionally acquire semaphore (i.e., won't block).  This calls
   // <tryacquire> and is only here to make the <ACE_Semaphore>
   // interface consistent with the other synchronization APIs.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   int tryacquire_write (void);
   // Conditionally acquire semaphore (i.e., won't block).  This calls
   // <tryacquire> and is only here to make the <ACE_Semaphore>
   // interface consistent with the other synchronization APIs.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -265,7 +286,9 @@ public:
 
   int tryacquire (void);
   // Conditionally decrement the semaphore if count is greater than 0
-  // (i.e., won't block).
+  // (i.e., won't block).  Returns -1 on failure.  If we "failed"
+  // because someone else already had the lock, <errno> is set to
+  // <EBUSY>.
 
   int release (void);
   // Increment the semaphore, potentially unblocking a waiting thread.
@@ -284,11 +307,15 @@ public:
   // Conditionally acquire semaphore (i.e., won't block).  This calls
   // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
   // interface consistent with the other synchronization APIs.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   int tryacquire_write (void);
   // Conditionally acquire semaphore (i.e., won't block).  This calls
   // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
   // interface consistent with the other synchronization APIs.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   const ACE_sema_t &lock (void) const;
@@ -338,7 +365,9 @@ public:
   // writer hold the lock.
 
   int tryacquire_read (void);
-  // Conditionally acquire a read lock (i.e., won't block).
+  // Conditionally acquire a read lock (i.e., won't block).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
 
   int tryacquire_write (void);
   // Conditionally acquire a write lock (i.e., won't block).
@@ -351,7 +380,9 @@ public:
   int tryacquire (void);
   // Note, for interface uniformity with other synchronization
   // wrappers we include the <tryacquire> method.  This is implemented
-  // as a write-lock to be safe...
+  // as a write-lock to be safe...  Returns -1 on failure.  If we
+  // "failed" because someone else already had the lock, <errno> is
+  // set to <EBUSY>.
 
   int release (void);  
   // Unlock a readers/writer lock.
@@ -396,7 +427,9 @@ public:
   // Acquire lock ownership (wait on priority queue if necessary).
 
   int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).
+  // Conditionally acquire lock (i.e., don't wait on queue).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
 
   int release (void);  
   // Release lock and unblock a thread at head of priority queue.
@@ -413,13 +446,17 @@ public:
 
   int tryacquire_read (void);
   // Conditionally acquire mutex (i.e., won't block).  This calls
-  // <tryacquire> and is only here to make the <ACE_Mutex>
-  // interface consistent with the other synchronization APIs.
+  // <tryacquire> and is only here to make the <ACE_Mutex> interface
+  // consistent with the other synchronization APIs.  Returns -1 on
+  // failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
 
   int tryacquire_write (void);
   // Conditionally acquire mutex (i.e., won't block).  This calls
-  // <tryacquire> and is only here to make the <ACE_Mutex>
-  // interface consistent with the other synchronization APIs.
+  // <tryacquire> and is only here to make the <ACE_Mutex> interface
+  // consistent with the other synchronization APIs.  Returns -1 on
+  // failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
 
   const ACE_mutex_t &lock (void) const;
   // Return the underlying mutex.
@@ -459,7 +496,9 @@ public:
   // Acquire lock ownership (wait on priority queue if necessary).
 
   int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).
+  // Conditionally acquire lock (i.e., don't wait on queue).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
 
   int release (void);  
   // Release lock and unblock a thread at head of priority queue.
@@ -471,10 +510,14 @@ public:
   // Acquire lock ownership (wait on priority queue if necessary).
 
   int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).
+  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
+  // failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
 
   int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).
+  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
+  // failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   const ACE_mutex_t &lock (void) const;
@@ -809,7 +852,9 @@ public:
   // Acquire lock ownership (wait on priority queue if necessary). 
 
   int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).
+  // Conditionally acquire lock (i.e., don't wait on queue).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
 
   int release (void);  
   // Release lock and unblock a thread at head of priority queue.
@@ -828,11 +873,15 @@ public:
   // Conditionally acquire mutex (i.e., won't block).  This calls
   // <tryacquire> and is only here to make the <ACE_Thread_Mutex>
   // interface consistent with the other synchronization APIs.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   int tryacquire_write (void);
   // Conditionally acquire mutex (i.e., won't block).  This calls
   // <tryacquire> and is only here to make the <ACE_Thread_Mutex>
   // interface consistent with the other synchronization APIs.
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   const ACE_thread_mutex_t &lock (void) const;
   // Return the underlying mutex.
@@ -881,7 +930,9 @@ public:
   // Explicitly acquire the lock.
 
   int tryacquire (void);
-  // Conditionally acquire the lock (i.e., won't block).
+  // Conditionally acquire the lock (i.e., won't block).  Returns -1
+  // on failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
 
   int release (void);
   // Explicitly release the lock.
@@ -1015,6 +1066,8 @@ public:
 
   int tryacquire (void);
   // Conditionally acquire a recursive mutex (i.e., won't block).
+  // Returns -1 on failure.  If we "failed" because someone else
+  // already had the lock, <errno> is set to <EBUSY>.
 
   int acquire_read (void);
   // Acquire mutex ownership.  This calls <acquire> and is only
@@ -1028,13 +1081,19 @@ public:
 
   int tryacquire_read (void);
   // Conditionally acquire mutex (i.e., won't block).  This calls
-  // <tryacquire> and is only here to make the <ACE_Recusive_Thread_Mutex>
-  // interface consistent with the other synchronization APIs.
+  // <tryacquire> and is only here to make the
+  // <ACE_Recusive_Thread_Mutex> interface consistent with the other
+  // synchronization APIs.  Returns -1 on failure.  If we "failed"
+  // because someone else already had the lock, <errno> is set to
+  // <EBUSY>.
 
   int tryacquire_write (void);
   // Conditionally acquire mutex (i.e., won't block).  This calls
-  // <tryacquire> and is only here to make the <ACE_Recusive_Thread_Mutex>
-  // interface consistent with the other synchronization APIs.
+  // <tryacquire> and is only here to make the
+  // <ACE_Recusive_Thread_Mutex> interface consistent with the other
+  // synchronization APIs.  Returns -1 on failure.  If we "failed"
+  // because someone else already had the lock, <errno> is set to
+  // <EBUSY>.
 
   int release (void);
   // Releases a recursive mutex (will not release mutex until all the

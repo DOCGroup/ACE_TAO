@@ -1,5 +1,24 @@
 Wed Oct 15 11:07:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS.i: Fixed the flock_trywrlock() and flock_tryrdlock() so
+ 	  that they both set errno = EBUSY if they lock is already held.
+
+	* ace/OS.i (mutex_trylock): Make the VxWorks version consistent
+ 	  with the other versions by returning -1 and setting errno to
+ 	  EBUSY.  Thanks to David Levine for reporting this.
+
+	* ace/Synch.h: Updated the documentation to clarify what the
+ 	  return value is from the tryacquire() methods.
+
+	* ace/OS.i (mutex_trylock): On NT, if we try to acquire a mutex
+ 	  that's already locked we'll return -1 and set errno to EBUSY
+ 	  rather than ETIME to be consistent with Pthreads.  Please see
+ 	  the following entry to understand why this doesn't break
+ 	  existing code ;-).
+
+	* ace/OS.h: Added a #define for EBUSY on NT.  We'll make it the
+	  same as ETIME to avoid breaking existing code!
+
 	* tests/Process_Strategy_Test.cpp (main): Ignore SIGCHLD in the
  	  child.
 
