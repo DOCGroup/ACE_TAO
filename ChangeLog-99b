@@ -1,3 +1,13 @@
+Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
+	  so the compiler won't complain about the protocol paraemter in
+ 	  parts of the code where it's not used.
+
+	* tests/MM_Shared_Memory_Test.cpp (spawn): Added ACE_UNUSED_ARG
+	  so the compiler won't complain about process_synchronizer in
+ 	  parts of the code where it's not used.
+
 Sun Oct  3 12:47:35 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Process_Mutex_Test.cpp (main): Renamed the confusing "server" stuff
