@@ -1,3 +1,44 @@
+Thu Jul 12 13:31:25 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+
+	  Corrected constructor signature to match the implementation.
+	
+	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
+	  (create_policy):
+
+	  Support creation of the SecurityLevel2::EstablishTrustPolicy.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+
+	  Refactored IIOP-specific and SSLIOP-specific code into new
+	  iiop_connect() and ssliop_connect() methods, respectively.
+
+	  (ssliop_connect):
+
+	  Added support for the SecurityLevel2::EstablishTrustPolicy.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
+
+	  Cache the SSLIOP-specific ACE_INET_Addr in the
+	  TAO_SSLIOP_Endpoint rather than initializing one each time an
+	  invocation is made.  This should improve SSLIOP performance.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+
+	  Removed left over Security::Detect{Replay,Misordering} security
+	  association bits from the default security association value.
+	  They were actually unused, but removed them anwyay since SSLIOP
+	  doesn't support either.  No visible run-time change will occur.
+
+	* orbsvcs/orbsvcs/Makefile.Security (FILES):
+	* orbsvcs/orbsvcs/Security.bor (OBJFILES):
+	* orbsvcs/orbsvcs/Security.dsp:
+
+	  Added EstablishTrustPolicy files to the list of sources.
+
 Thu Jul 12 15:10:46 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * examples/PluggableUDP/tests/Basic/svc.conf:
