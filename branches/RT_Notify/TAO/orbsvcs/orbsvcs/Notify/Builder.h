@@ -26,6 +26,8 @@ class TAO_NS_EventChannelFactory;
 class TAO_NS_EventChannel;
 class TAO_NS_SupplierAdmin;
 class TAO_NS_ConsumerAdmin;
+class TAO_NS_FilterFactory;
+//class TAO_NS_Filter;
 
 /**
  * @class TAO_NS_Builder
@@ -54,7 +56,7 @@ public:
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
- 
+
   CosNotifyChannelAdmin::ProxyConsumer_ptr build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosNotifyChannelAdmin::ClientType ctype, CosNotifyChannelAdmin::ProxyID_out proxy_id  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -66,6 +68,8 @@ public:
                      CORBA::SystemException
                      , CosNotifyChannelAdmin::AdminLimitExceeded
                      ));
+
+  CosNotifyFilter::FilterFactory_ptr build_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

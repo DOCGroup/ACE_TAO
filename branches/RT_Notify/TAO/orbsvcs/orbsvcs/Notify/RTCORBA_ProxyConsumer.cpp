@@ -21,18 +21,14 @@ TAO_NS_RTCORBA_ProxyConsumer::~TAO_NS_RTCORBA_ProxyConsumer ()
 {
 }
 
-void 
+void
 TAO_NS_RTCORBA_ProxyConsumer::push (TAO_NS_Event_var &event)
 {
   if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG, "(%x,%P,%t) received event priority %d\n", this,
-	  TAO_NS_RTCORBA_PROPERTIES::instance()->current ()->the_priority ()));
-  
+          TAO_NS_RTCORBA_PROPERTIES::instance()->current ()->the_priority ()));
+
   TAO_NS_Method_Request_Lookup request (event, this, this->event_manager_->consumer_map ());
 
   request.call ();
 }
-
-
-
-

@@ -27,7 +27,7 @@
 /**
  * @class TAO_NS_ProxySupplier
  *
- * @brief Base class for all the ProxySuppliers. 
+ * @brief Base class for all the ProxySuppliers.
  *
  */
 class TAO_Notify_Export TAO_NS_ProxySupplier : public TAO_NS_Proxy
@@ -54,18 +54,24 @@ public:
   /// Dispatch Event to consumer
   virtual void push (TAO_NS_Event_var &event);
 
+  /// Dispatch Event to consumer, no filtering
+  virtual void push_no_filtering (TAO_NS_Event_var &event);
+
   /// Shutdown  (TAO_NS_Container_T method)
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Access our Peer.
+  virtual TAO_NS_Peer* peer (void);
 
   /// Access the Consumer
   TAO_NS_Consumer* consumer (void);
 
-protected:  
+protected:
   /// Return 1 if connected
   int is_connected (void);
 
   /// The Consumer that we're connect to.
-  TAO_NS_Consumer* consumer_;  
+  TAO_NS_Consumer* consumer_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -35,7 +35,7 @@ TAO_NS_Container::cleanup (ACE_ENV_SINGLE_ARG_DECL)
   if (delete_object_poa_ == 1)
     {
       object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      delete object_poa_; 
+      delete object_poa_;
     }
 
   if (delete_proxy_poa_ == 1)
@@ -70,6 +70,3 @@ TAO_NS_Container::proxy_poa (void)
 {
   return this->proxy_poa_;
 }
-
-
-

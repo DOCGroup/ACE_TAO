@@ -34,7 +34,7 @@ public:
   TAO_NS_RTCORBA_Builder (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_Builder ();  
+  ~TAO_NS_RTCORBA_Builder ();
 };
 
 #if defined (__ACE_INLINE__)

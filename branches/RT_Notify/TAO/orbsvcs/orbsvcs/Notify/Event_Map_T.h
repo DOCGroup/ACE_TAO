@@ -20,52 +20,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Copy_Disabled.h"
 #include "Types.h"
 #include "EventType.h"
+#include "Event_Map_Entry_T.h"
 
-template <class PROXY, class ACE_LOCK> class TAO_NS_Event_Map_T;
-
-/**
- * @class TAO_NS_Event_Map_Entry_T
- *
- * @brief The entry stored in the event map.
- *
- */
-template <class PROXY>
-class TAO_NS_Event_Map_Entry_T : private ACE_Copy_Disabled
-{
-public:
-  typedef TAO_ESF_Proxy_Collection<PROXY> COLLECTION;
-
-  /// Constructor
-  TAO_NS_Event_Map_Entry_T (void);
-
-  /// Destructor
-  ~TAO_NS_Event_Map_Entry_T (void);
-
-  /// Init - Allocates collection
-  void init (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Connect
-  void connected (PROXY* proxy ACE_ENV_ARG_DECL);
-
-  /// Disconnect
-  void disconnected (PROXY* proxy ACE_ENV_ARG_DECL);
-
-  /// Collection accessor
-  COLLECTION* collection (void);
-
-  /// Count accessor
-  int count (void);
-  
-protected:
-  /// The Collection 
-  COLLECTION* collection_;
-
-  /// Count of PROXY's connected in the collection;
-  int count_;
-};
+class TAO_NS_Event_Map_Observer;
 
 /**
  * @class TAO_NS_Event_Map_T
@@ -84,9 +43,15 @@ public:
   TAO_NS_Event_Map_T (void);
 
   /// Destructor
-  ~TAO_NS_Event_Map_T ();  
+  ~TAO_NS_Event_Map_T ();
 
-  /// An entry can be precreated for an event_type. else it is created when required (during insert). 
+  /// Init
+  void init (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Attach an Observer.
+  void attach_observer (TAO_NS_Event_Map_Observer* observer);
+
+  /// An entry can be precreated for an event_type. else it is created when required (during insert).
   COLLECTION* create_entry (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Associate PROXY and event_type. returns count of PROXYs.
@@ -95,11 +60,14 @@ public:
   /// Remove association of PROXY and event_type. returns count of PROXYs.
   int remove (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
-  /// Find the collection mapped mapped to the <event_type> 
+  /// Find the collection mapped to the <event_type>
   COLLECTION* find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
-  /// Access count
-  int count (void);
+  /// Find the default broadcast list.
+  COLLECTION* broadcast_collection (void);
+
+  /// Access count, number of different event types in the map.
+  int event_type_count (void);
 
 protected:
   /// The Map that stores eventtype to entry mapping.
@@ -109,7 +77,13 @@ protected:
   ACE_LOCK lock_;
 
   /// Count of items entered in the map.
-  int count_;
+  int event_type_count_;
+
+  /// The default broadcast list for EventType::special.
+  COLLECTION* broadcast_collection_;
+
+  /// Observer attached to us.
+  TAO_NS_Event_Map_Observer* observer_;
 };
 
 #if defined (__ACE_INLINE__)

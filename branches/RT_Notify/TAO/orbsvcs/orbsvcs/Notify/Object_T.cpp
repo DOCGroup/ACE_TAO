@@ -30,9 +30,9 @@ TAO_NS_Object_T<TYPE, PARENT>::destroy (TYPE *type ACE_ENV_ARG_DECL)
 
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   if (parent_)
-    parent_->remove (type ACE_ENV_ARG_PARAMETER);   
+    parent_->remove (type ACE_ENV_ARG_PARAMETER);
 }
 
 #endif /* TAO_NS_OBJECT_T_CPP */

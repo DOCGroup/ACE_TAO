@@ -38,6 +38,9 @@ public:
   TAO_NS_EventTypeSeq (void);
   TAO_NS_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
 
+  /// Preprocess the types added and removed.
+  void init (TAO_NS_EventTypeSeq& added, TAO_NS_EventTypeSeq& removed);
+
   /// insert_seq the contents of <event_type_seq> into this object.
   void insert_seq (const CosNotification::EventTypeSeq& event_type_seq);
 
@@ -51,7 +54,7 @@ public:
   void remove_seq (const TAO_NS_EventTypeSeq& event_type_seq);
 
   /// Populate <event_type_seq> with the contents of this object.
-  void populate (CosNotification::EventTypeSeq& event_type_seq);
+  void populate (CosNotification::EventTypeSeq& event_type_seq) const;
 };
 
 #if defined (__ACE_INLINE__)

@@ -34,10 +34,13 @@ public:
   TAO_NS_RTCORBA_QoSAdmin (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_QoSAdmin ();  
+  ~TAO_NS_RTCORBA_QoSAdmin ();
 
   /// Apply Threadpool QoS
   virtual void apply_threadpool_qos (TAO_NS_Container* container, NotifyExt::ThreadPoolParams* tp_params ACE_ENV_ARG_DECL);
+
+  /// Apply ThreadpoolLanes QoS
+  virtual void apply_threadpool_lane_qos (TAO_NS_Container* container, NotifyExt::ThreadPoolLanesParams* tpl_params ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

@@ -35,7 +35,7 @@ TAO_NS_RTCORBA_Factory::create (TAO_NS_EventChannel*& channel ACE_ENV_SINGLE_ARG
                     TAO_NS_RTCORBA_EventChannel (),
                     CORBA::NO_MEMORY ());
 }
-  
+
 void
 TAO_NS_RTCORBA_Factory::create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -58,5 +58,3 @@ TAO_NS_RTCORBA_Factory::create (TAO_NS_StructuredProxyPushConsumer*& proxy ACE_E
                     TAO_NS_RTCORBA_StructuredProxyPushConsumer (),
                     CORBA::NO_MEMORY ());
 }
-
-

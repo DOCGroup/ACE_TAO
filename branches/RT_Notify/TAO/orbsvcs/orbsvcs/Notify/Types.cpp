@@ -8,5 +8,3 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(RT_Notify, TAO_NS_Types, "$Id$")
-
-

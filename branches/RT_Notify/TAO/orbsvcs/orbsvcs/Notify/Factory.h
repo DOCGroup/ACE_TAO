@@ -46,7 +46,7 @@ public:
   TAO_NS_Factory (void);
 
   /// Destructor
-  virtual ~TAO_NS_Factory ();  
+  virtual ~TAO_NS_Factory ();
 
   /// Create Object Lock.
   virtual ACE_Lock* create_object_lock (ACE_ENV_SINGLE_ARG_DECL);
@@ -55,19 +55,22 @@ public:
   virtual void create (TAO_NS_QoSAdmin*& qos_admin ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create Collection
-  virtual void create (TAO_NS_Supplier_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
-  virtual void create (TAO_NS_Consumer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
+  virtual void create (TAO_NS_ProxySupplier_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
+  virtual void create (TAO_NS_ProxyConsumer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
 
   virtual void create (TAO_NS_EventChannel_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
   virtual void create (TAO_NS_Admin_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
   virtual void create (TAO_NS_Proxy_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
 
+  virtual void create (TAO_NS_Peer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
+  virtual void create (TAO_NS_Consumer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL);
+
   /// Create EventChannelFactory
   virtual void create (TAO_NS_EventChannelFactory*& channel_factory ACE_ENV_SINGLE_ARG_DECL);
-  
+
   /// Create EventChannel
   virtual void create (TAO_NS_EventChannel*& channel ACE_ENV_SINGLE_ARG_DECL);
-  
+
   /// Create SupplierAdmin
   virtual void create (TAO_NS_SupplierAdmin*& admin ACE_ENV_SINGLE_ARG_DECL);
 
@@ -75,10 +78,10 @@ public:
   virtual void create (TAO_NS_ConsumerAdmin*& admin ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create StructuredProxyPushConsumer
-  virtual void create (TAO_NS_StructuredProxyPushConsumer*& proxy ACE_ENV_SINGLE_ARG_DECL); 
-  
+  virtual void create (TAO_NS_StructuredProxyPushConsumer*& proxy ACE_ENV_SINGLE_ARG_DECL);
+
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_SINGLE_ARG_DECL); 
+  virtual void create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

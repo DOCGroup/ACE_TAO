@@ -5,6 +5,7 @@
 #include "Event_Map_T.h"
 #include "ProxySupplier.h"
 #include "ProxyConsumer.h"
+#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Method_Request_Lookup.inl"
@@ -31,11 +32,27 @@ TAO_NS_Method_Request_Lookup::copy (void)
 int
 TAO_NS_Method_Request_Lookup::call (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV; 
-  
-  TAO_NS_Consumer_Collection* consumers = map_->find (this->event_->type () ACE_ENV_ARG_PARAMETER);
-      
-  consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  CORBA::Boolean val =  this->proxy_consumer_->check_filters (this->event_ ACE_ENV_ARG_PARAMETER);
+
+  if (TAO_debug_level > 1)
+    ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",this->proxy_consumer_ , val));
+
+  // Filter failed - do nothing.
+  if (val == 0)
+    return 0;
+
+  TAO_NS_ProxySupplier_Collection* consumers = map_->find (this->event_->type () ACE_ENV_ARG_PARAMETER);
+
+  if (consumers != 0)
+    consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+
+  // Get the default consumers
+  consumers = map_->broadcast_collection ();
+
+  if (consumers != 0)
+    consumers->for_each (this ACE_ENV_ARG_PARAMETER);
 
   return 0;
 }

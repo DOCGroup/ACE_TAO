@@ -1,7 +1,6 @@
 // $Id$
 
 #include "POA_Helper.h"
-#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "POA_Helper.inl"
@@ -9,32 +8,34 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_POA_Helper, "$Id$")
 
+#include "tao/debug.h"
+
 TAO_NS_POA_Helper::TAO_NS_POA_Helper (void)
 {
 }
 
 TAO_NS_POA_Helper::~TAO_NS_POA_Helper ()
 {
-  
+
 }
 
 void
 TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyList policy_list (2);
-  
+
   this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   this->create_i (parent_poa, poa_name, policy_list ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 {
-  char child_poa_name[32]; 
+  char child_poa_name[32];
   ACE_OS_String::itoa (ACE_OS::rand (), child_poa_name, 10);
-  
+
   this->init (parent_poa, child_poa_name ACE_ENV_ARG_PARAMETER);
 }
 
@@ -43,15 +44,15 @@ void
 TAO_NS_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
 {
   policy_list.length (2);
-  
+
   policy_list[0] =
     parent_poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID
-					     ACE_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   policy_list[1] =
     parent_poa->create_id_assignment_policy (PortableServer::USER_ID
-					     ACE_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -65,12 +66,14 @@ TAO_NS_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char* poa
 
   // Create the child POA.
   this->poa_ = parent_poa->create_POA (poa_name,
-				       manager.in (),
-				       policy_list
-				       ACE_ENV_ARG_PARAMETER);
+                                       manager.in (),
+                                       policy_list
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  /*  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", this->poa_->the_name ()));
+  /*
   // Destroy the policies
   for (CORBA::ULong index = 0; index < policy_list.length (); ++index)
     {
@@ -115,11 +118,14 @@ TAO_NS_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id AC
   // Generate a new ID.
   id = this->id_factory_.id ();
 
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, this->poa_->the_name ()));
+
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
     this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  
+
   poa_->activate_object_with_id (oid.in (),
                                  servant
                                  ACE_ENV_ARG_PARAMETER);
@@ -157,7 +163,3 @@ TAO_NS_POA_Helper::destroy (ACE_ENV_SINGLE_ARG_DECL)
   poa_->destroy (1,0 ACE_ENV_ARG_PARAMETER);
  // The <wait_for_completion> flag = 0
 }
-
-
-
-

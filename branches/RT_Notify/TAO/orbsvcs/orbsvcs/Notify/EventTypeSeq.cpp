@@ -18,7 +18,7 @@ TAO_NS_EventTypeSeq::TAO_NS_EventTypeSeq (const CosNotification::EventTypeSeq& e
 }
 
 void
-TAO_NS_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq)
+TAO_NS_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq) const
 {
   event_type_seq.length (this->size ());
 
@@ -75,4 +75,66 @@ TAO_NS_EventTypeSeq::remove_seq (const TAO_NS_EventTypeSeq& event_type_seq)
 
   for (iter.first (); iter.next (event_type); iter.advance ())
     inherited::remove (*event_type);
+}
+
+void
+TAO_NS_EventTypeSeq::init (TAO_NS_EventTypeSeq& seq_added, TAO_NS_EventTypeSeq& seq_remove_seq)
+{
+  const TAO_NS_EventType& special = TAO_NS_EventType::special ();
+
+  if (this->find (special) == 0)
+    {
+      if (seq_added.find (special) == 0)
+        {
+          seq_added.reset ();
+          seq_remove_seq.reset ();
+        }
+      else
+        {
+          this->reset ();
+          this->insert_seq (seq_added);
+
+          seq_remove_seq.reset ();
+          seq_remove_seq.insert (special);
+        }
+    }
+  else
+    {
+      if (seq_added.find (special) == 0)
+        {
+          if (seq_remove_seq.find (special) == 0)
+            {
+              seq_added.reset ();
+              seq_remove_seq.reset ();
+            }
+          else
+            {
+              seq_remove_seq.reset ();
+              seq_remove_seq.insert_seq (*this);
+
+              this->reset ();
+              this->insert (special);
+
+              seq_added.reset ();
+              seq_added.insert (special);
+            }
+        }
+      else
+        {
+          if (seq_remove_seq.find (special) == 0)
+            {
+
+              seq_remove_seq.reset ();
+              seq_remove_seq.insert_seq (*this);
+
+              this->reset ();
+              this->insert_seq (seq_added);
+            }
+          else
+            {
+              this->insert_seq (seq_added);
+              this->remove_seq (seq_remove_seq);
+            }
+        }
+    }
 }

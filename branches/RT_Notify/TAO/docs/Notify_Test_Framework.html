@@ -1,0 +1,800 @@
+//$Id$
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./Notify_Test_Framework_files/filelist.xml">
+<title>Target Object</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Pradeep Gore</o:Author>
+  <o:LastAuthor>Pradeep Gore</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>314</o:TotalTime>
+  <o:Created>2002-10-07T18:28:00Z</o:Created>
+  <o:LastSaved>2002-10-07T18:28:00Z</o:LastSaved>
+  <o:Pages>3</o:Pages>
+  <o:Words>835</o:Words>
+  <o:Characters>4760</o:Characters>
+  <o:Company>OOMWorks LLC</o:Company>
+  <o:Lines>39</o:Lines>
+  <o:Paragraphs>9</o:Paragraphs>
+  <o:CharactersWithSpaces>5845</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>9.35 pt</w:DrawingGridHorizontalSpacing>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+        {mso-style-parent:"";
+        margin:0in;
+        margin-bottom:.0001pt;
+        mso-pagination:widow-orphan;
+        font-size:12.0pt;
+        font-family:"Times New Roman";
+        mso-fareast-font-family:"Times New Roman";}
+h1
+        {mso-style-next:Normal;
+        margin:0in;
+        margin-bottom:.0001pt;
+        mso-pagination:widow-orphan;
+        page-break-after:avoid;
+        mso-outline-level:1;
+        font-size:12.0pt;
+        font-family:"Times New Roman";
+        mso-font-kerning:0pt;}
+@page Section1
+        {size:8.5in 11.0in;
+        margin:45.35pt 1.0in .5in 1.0in;
+        mso-header-margin:.5in;
+        mso-footer-margin:.5in;
+        mso-paper-source:0;}
+div.Section1
+        {page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<h1>TAO Notification Service Test Framewok options for Creating Command <span
+style="mso-spacerun: yes"> </span>Objects:</h1>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=1 cellspacing=3 cellpadding=0 style='mso-cellspacing:2.0pt;
+ margin-left:2.75pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b>Target Object<o:p></o:p></b></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b>Command<o:p></o:p></b></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b>Parameters<o:p></o:p></b></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b>Svc. Conf. File Example<o:p></o:p></b></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b>Description<o:p></o:p></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>EventChannel</h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Create</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_channel</p>
+  <p class=MsoNormal>Name_of_EventChannelFactory</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;EventChannel -Create ec1
+  NotifyEventChannelFactory&quot;</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create an event channel </p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Destroy</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_channel</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;EventChannel -Destroy ec1</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Destroy an event channel</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Set_QoS</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_channel</p>
+  <p class=MsoNormal>-ThreadPool <span style="mso-spacerun: yes"> </span>[-Threads
+  thread_pool_size (default= 1) ]</p>
+  <p class=MsoNormal>[-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]</p>
+  <p class=MsoNormal>| </p>
+  <p class=MsoNormal>-ThreadPoolLane <span style="mso-spacerun:
+  yes"> </span>lane_count [-Lane priority static_threads dynamic_threads]*<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;EventChannel –ThreadPool –Threads
+  2”</p>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  <p class=MsoNormal>static Command_Builder &quot;EventChannel -ThreadPoolLane <span
+  style="mso-spacerun: yes"> </span>2 –Lane 10 1 0 –Lane 30 2 1”</p>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Set QoS parameters on an event channel</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>ConsumerAdmin</h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Create</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Admin</p>
+  <p class=MsoNormal>Name_of_EventChannel</p>
+  <p class=MsoNormal>[-AND_OP | OR_OP (default = CosNotifyChannelAdmin::OR_OP)]</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “ConsumerAdmin –Create ca1 ec1 –AND_OP”</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create a ConsumerAdmin</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Subscription</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Admin</p>
+  <p class=MsoNormal>+added_type1 +added_type2 ... -removed_type3 -removed_type4…</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “ConsumerAdmin –Subscription <span
+  style="mso-spacerun: yes"> </span>ca1 +Red +Green –Blue”</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Send subscription updates to the ConsumerAdmin. Note that
+  domain name <span style="mso-spacerun: yes"> </span>is <span
+  style="mso-spacerun: yes"> </span>set to “*”.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>SupplierAdmin<o:p></o:p></h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Create<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Admin<o:p></o:p></p>
+  <p class=MsoNormal>Name_of_EventChannel<o:p></o:p></p>
+  <p class=MsoNormal>[-AND_OP | OR_OP (default = CosNotifyChannelAdmin::OR_OP)]<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “SupplierAdmin –Create sa1 ec1 –AND_OP”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create a SupplierAdmin<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Offer<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Admin<o:p></o:p></p>
+  <p class=MsoNormal>+added_type1 +added_type2 ... -removed_type3 -removed_type4…<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “SupplierAdmin –Subscription <span
+  style="mso-spacerun: yes"> </span>sa1 +Red +Green –Blue”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Send offer updates to the SupplierAdmin. Note that domain name
+  <span style="mso-spacerun: yes"> </span>is <span style="mso-spacerun:
+  yes"> </span>set to “*”.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>PeriodicConsumer</h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Create</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Consumer</p>
+  <p class=MsoNormal>Name_of_ConsumerAdmin</p>
+  <p class=MsoNormal>[-POA name_of_POA (default = RootPOA)]</p>
+  <p class=MsoNormal>-Proxy proxy_name </p>
+  <p class=MsoNormal>-MaxCount expected_number_of_events</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicConsumer –Create c1 ca1 –POA
+  myPOA –Proxy ca1_proxy –MaxCount 10”</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create a PeriodicConsumer. The consumer is activated in
+  the POA specified.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Subscription<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Consumer<o:p></o:p></p>
+  <p class=MsoNormal>+added_type1 +added_type2 ... -removed_type3 -removed_type4…<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicConsumer –Subscription <span
+  style="mso-spacerun: yes"> </span>ca1 +Red +Green –Blue”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Send subscription updates to its proxy. Note that domain name
+  <span style="mso-spacerun: yes"> </span>is <span style="mso-spacerun:
+  yes"> </span>set to “*”.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Disconnect</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Consumer</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicConsumer –Disconnect ca1”</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Disconnect the Consumer from the EventChannel.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Deactivate</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Consumer</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicConsumer –Deactivate ca1”</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Deactivate the Consuner from its POA.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Status</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Consumer<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicConsumer –Status ca1”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Print the status of the consumer.</p>
+  <p class=MsoNormal>Checks if the proxy is alive. <o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>PeriodicSupplier<o:p></o:p></h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Create<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Supplier<o:p></o:p></p>
+  <p class=MsoNormal>Name_of_SupplierAdmin<o:p></o:p></p>
+  <p class=MsoNormal>[-POA name_of_POA (default = RootPOA)]<o:p></o:p></p>
+  <p class=MsoNormal>-Proxy proxy_name <o:p></o:p></p>
+  <p class=MsoNormal>-EventType type_of_event</p>
+  <p class=MsoNormal>-FilterLongData name<span style="mso-spacerun: yes"> 
+  </span>long_filterable_data</p>
+  <p class=MsoNormal>-Priority supplier_thread_priority</p>
+  <p class=MsoNormal>-Period <span style="mso-spacerun: yes"> </span>sending_period</p>
+  <p class=MsoNormal>-ExecTime estimated_time_per_send_operation</p>
+  <p class=MsoNormal>-Phase supplier_thread_starting_phase</p>
+  <p class=MsoNormal>-Iter number_of_events-to_send<o:p></o:p></p>
+  <p class=MsoNormal>-MaxCount expected_number_of_events</p>
+  <p class=MsoNormal>-Load hint_to_consumer<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;PeriodicSupplier -Create s1
+  sa1_ec1 -Proxy s1_proxy -EventType RED -FilterLongData Temp 3 -Priority 0
+  -Period 10000 -ExecTime 10000 -Phase 0 -Iter 1 -Load 1 &quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create a PeriodicSupplier. </p>
+  <p class=MsoNormal>The supplier is activated in the POA specified.</p>
+  <p class=MsoNormal>The –Create command spawns a thread that sends periodic
+  events.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Offer<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Supplier<o:p></o:p></p>
+  <p class=MsoNormal>+added_type1 +added_type2 ... -added_type3 -added_type4…<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicSupplier –Offer <span
+  style="mso-spacerun: yes"> </span>sa1 +Red +Green –Blue”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Send offer updates to its proxy. Note that domain name <span
+  style="mso-spacerun: yes"> </span>is <span style="mso-spacerun: yes"> </span>set
+  to “*”.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Disconnect<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Supplier<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicSupplier –Disconnect sa1”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Disconnect the Supplier from the EventChannel.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Deactivate<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Supplier<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicSupplier –Deactivate sa1”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Deactivate the Supplier from its POA.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Status<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Name_of_Supplier<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder “PeriodicSupplier –Status sa1”<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Print the status of the supplier.<o:p></o:p></p>
+  <p class=MsoNormal>Checks if the proxy is alive. <o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>Filter<o:p></o:p></h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-CreateFactory<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Filter_Factory_Name</p>
+  <p class=MsoNormal>Event_Channel_Name</p>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Filter -CreateFactory ff
+  ec1&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Obtain the default FilterFactory <span
+  style="mso-spacerun: yes"> </span>from the EventChannel.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-CreateFilter<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Filter_Name</p>
+  <p class=MsoNormal>Filter_Factory_Name<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Filter -CreateFilter f1
+  ff&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create a Filter,<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Add_Constraint<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Filter_Name</p>
+  <p class=MsoNormal>Constraint_Expression<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Filter -Add_Constraint f1
+  'Temp &gt; 2'&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Add a constraint to a filter.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-AddFilter<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Filter_Name</p>
+  <p class=MsoNormal>FilterAdmin_Name<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Filter -Add_Filter f1
+  sa1_ec1&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Add a filter to an Admin.</p>
+  <p class=MsoNormal>The FilterAdmin can be the name of any Admin or Proxy
+  objects.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Destroy<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>FilterName<o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Filter –Destroy ff &quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Destroy the Filter.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>Application<o:p></o:p></h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Init<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Application -Init&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Init the Application<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Run<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Application -Run&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Run all the suppliers<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-WaitForEvents<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Application –Wait_For_Events&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Wait till all the suppliers have send all there events and
+  all the consumers have received the expected count of events.<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Shutdown<o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Application –Shutdown&quot;<o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Shutdown the ORB<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-DumpStats</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;Application –DumpStats&quot;</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Dump performance statistics.</p>
+  <p class=MsoNormal>Data files are created in the current directory with the
+  following names:</p>
+  <p class=MsoNormal>Supplier_&lt;supplier_name&gt;_&lt;proxy_id&gt;_&lt;EventType&gt;.dat</p>
+  <p class=MsoNormal>Consumer_&lt;consumer_name&gt;_&lt;proxy_id&gt;.dat</p>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1>POA </h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Create</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>POA_Name </p>
+  <p class=MsoNormal>-PriorityModel &lt;CLIENT|SERVER&gt; <span
+  style="mso-spacerun: yes"> </span>default_priority</p>
+  <p class=MsoNormal>-Lanes lane_count <span style="mso-spacerun: yes"> </span>[-Lane
+  priority static_threads dynamic_threads&gt;]* </p>
+  <p class=MsoNormal>-Bands band_count [-Band low_priority high_priority]* </p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;POA -Create poa_test
+  -PriorityModel SERVER 1 -Lanes 1 -Lane -15 1 0&quot;</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Create a POA </p>
+  </td>
+ </tr>
+ <tr>
+  <td width=138 valign=top style='width:103.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <h1><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></h1>
+  </td>
+  <td width=131 valign=top style='width:98.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>-Destroy</p>
+  </td>
+  <td width=378 valign=top style='width:283.35pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>POA_Name</p>
+  </td>
+  <td width=363 valign=top style='width:272.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>static Command_Builder &quot;POA –Destroy”</p>
+  </td>
+  <td width=209 valign=top style='width:157.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Destroy a POA</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+</html>

@@ -17,7 +17,6 @@ TAO_NS_Event::TAO_NS_Event (void)
 
 TAO_NS_Event::~TAO_NS_Event ()
 {
-  if (TAO_debug_level > 0)
+  if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
 }
-

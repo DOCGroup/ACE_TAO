@@ -14,3 +14,8 @@ TAO_NS_Object::worker_task (void)
   return this->worker_task_;
 }
 
+ACE_INLINE TAO_NS_POA_Helper*
+TAO_NS_Object::poa (void)
+{
+  return this->poa_;
+}

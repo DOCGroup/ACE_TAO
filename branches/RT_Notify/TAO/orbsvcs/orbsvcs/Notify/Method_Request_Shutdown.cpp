@@ -18,7 +18,7 @@ TAO_NS_Method_Request_Shutdown::~TAO_NS_Method_Request_Shutdown ()
 {
 }
 
-int 
+int
 TAO_NS_Method_Request_Shutdown::call (void)
 {
   // Shut down the scheduler by deactivating the activation queue's
@@ -27,4 +27,3 @@ TAO_NS_Method_Request_Shutdown::call (void)
   this->task_->msg_queue ()->deactivate ();
   return -1;
 }
-

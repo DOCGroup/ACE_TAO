@@ -21,4 +21,3 @@ TAO_NS_RTCORBA_Builder::TAO_NS_RTCORBA_Builder (void)
 TAO_NS_RTCORBA_Builder::~TAO_NS_RTCORBA_Builder ()
 {
 }
-

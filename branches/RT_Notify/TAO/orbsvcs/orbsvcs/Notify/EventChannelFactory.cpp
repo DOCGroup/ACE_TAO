@@ -22,6 +22,12 @@ TAO_NS_EventChannelFactory::~TAO_NS_EventChannelFactory ()
 {
 }
 
+void
+TAO_NS_EventChannelFactory::init (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->default_filter_factory_ = TAO_NS_PROPERTIES::instance()->builder ()->build_filter_factory (ACE_ENV_ARG_PARAMETER);
+}
+
 PortableServer::Servant
 TAO_NS_EventChannelFactory::servant (void)
 {
@@ -47,6 +53,12 @@ TAO_NS_EventChannelFactory::release (void)
   //@@ inform factory
 }
 
+CosNotifyFilter::FilterFactory_ptr
+TAO_NS_EventChannelFactory::get_default_filter_factory (void)
+{
+  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
+}
+
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_NS_EventChannelFactory::create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
@@ -60,9 +72,9 @@ TAO_NS_EventChannelFactory::release (void)
 {
   return TAO_NS_PROPERTIES::instance()->builder ()->build_event_channel (this, initial_qos, initial_admin, id ACE_ENV_ARG_PARAMETER);
 }
-  
+
 ::CosNotifyChannelAdmin::ChannelIDSeq *TAO_NS_EventChannelFactory::get_all_channels (
-    
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -72,7 +84,7 @@ TAO_NS_EventChannelFactory::release (void)
     return 0;
     //Add your implementation here
   }
-  
+
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_NS_EventChannelFactory::get_event_channel (
     CosNotifyChannelAdmin::ChannelID id
   )
@@ -83,6 +95,5 @@ TAO_NS_EventChannelFactory::release (void)
 
   {
     //Add your implementation here
-	return 0;
+        return 0;
   }
-

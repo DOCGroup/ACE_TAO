@@ -20,7 +20,7 @@
 
 ACE_RCSID(RN_Notify, TAO_NS_Factory, "$Id$")
 
-  
+
 TAO_NS_Factory::TAO_NS_Factory (void)
 {
 }
@@ -46,47 +46,69 @@ TAO_NS_Factory::create (TAO_NS_QoSAdmin*& qos_admin ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Factory::create (TAO_NS_Supplier_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_Factory::create (TAO_NS_Peer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
+{
+  typedef TAO_ESF_Proxy_List<TAO_NS_Peer>::Iterator ProxyIterator;
+  typedef TAO_ESF_Copy_On_Write<TAO_NS_Peer, TAO_ESF_Proxy_List<TAO_NS_Peer>,ProxyIterator, ACE_SYNCH> ProxyType;
+
+  ACE_NEW_THROW_EX (collection,
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
+}
+
+void
+TAO_NS_Factory::create (TAO_NS_ProxyConsumer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
 {
   typedef TAO_ESF_Proxy_List<TAO_NS_ProxyConsumer>::Iterator ProxyIterator;
-  typedef TAO_ESF_Copy_On_Write<TAO_NS_ProxyConsumer, TAO_ESF_Proxy_List<TAO_NS_ProxyConsumer>,ProxyIterator, ACE_SYNCH> ProxyType; 
-  
+  typedef TAO_ESF_Copy_On_Write<TAO_NS_ProxyConsumer, TAO_ESF_Proxy_List<TAO_NS_ProxyConsumer>,ProxyIterator, ACE_SYNCH> ProxyType;
+
   ACE_NEW_THROW_EX (collection,
-		    ProxyType (),
-		    CORBA::NO_MEMORY ());
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
+}
+
+void
+TAO_NS_Factory::create (TAO_NS_ProxySupplier_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
+{
+  typedef TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>::Iterator ProxyIterator;
+  typedef TAO_ESF_Copy_On_Write<TAO_NS_ProxySupplier, TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>,ProxyIterator, ACE_SYNCH> ProxyType;
+
+  ACE_NEW_THROW_EX (collection,
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
 }
 
 void
 TAO_NS_Factory::create (TAO_NS_Consumer_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
 {
-  typedef TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>::Iterator ProxyIterator;
-  typedef TAO_ESF_Copy_On_Write<TAO_NS_ProxySupplier, TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>,ProxyIterator, ACE_SYNCH> ProxyType; 
-  
+  typedef TAO_ESF_Proxy_List<TAO_NS_Consumer>::Iterator ProxyIterator;
+  typedef TAO_ESF_Copy_On_Write<TAO_NS_Consumer, TAO_ESF_Proxy_List<TAO_NS_Consumer>,ProxyIterator, ACE_SYNCH> ProxyType;
+
   ACE_NEW_THROW_EX (collection,
-		    ProxyType (),
-		    CORBA::NO_MEMORY ());
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
 }
 
 void
 TAO_NS_Factory::create (TAO_NS_EventChannel_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
 {
   typedef TAO_ESF_Proxy_List<TAO_NS_EventChannel>::Iterator ProxyIterator;
-  typedef TAO_ESF_Copy_On_Write<TAO_NS_EventChannel, TAO_ESF_Proxy_List<TAO_NS_EventChannel>,ProxyIterator, ACE_SYNCH> ProxyType; 
-  
+  typedef TAO_ESF_Copy_On_Write<TAO_NS_EventChannel, TAO_ESF_Proxy_List<TAO_NS_EventChannel>,ProxyIterator, ACE_SYNCH> ProxyType;
+
   ACE_NEW_THROW_EX (collection,
-		    ProxyType (),
-		    CORBA::NO_MEMORY ());
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
 }
 
 void
 TAO_NS_Factory::create (TAO_NS_Admin_Collection*& collection ACE_ENV_SINGLE_ARG_DECL)
 {
   typedef TAO_ESF_Proxy_List<TAO_NS_Admin>::Iterator ProxyIterator;
-  typedef TAO_ESF_Copy_On_Write<TAO_NS_Admin, TAO_ESF_Proxy_List<TAO_NS_Admin>,ProxyIterator, ACE_SYNCH> ProxyType; 
+  typedef TAO_ESF_Copy_On_Write<TAO_NS_Admin, TAO_ESF_Proxy_List<TAO_NS_Admin>,ProxyIterator, ACE_SYNCH> ProxyType;
 
   ACE_NEW_THROW_EX (collection,
-		    ProxyType (),
-		    CORBA::NO_MEMORY ());
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
 }
 
 void
@@ -96,11 +118,11 @@ TAO_NS_Factory::create (TAO_NS_Proxy_Collection*& collection ACE_ENV_SINGLE_ARG_
   typedef TAO_ESF_Copy_On_Write<TAO_NS_Proxy,TAO_ESF_Proxy_List<TAO_NS_Proxy>,ProxyIterator,ACE_SYNCH> ProxyType;
 
   ACE_NEW_THROW_EX (collection,
-		    ProxyType (),
-		    CORBA::NO_MEMORY ());
+                    ProxyType (),
+                    CORBA::NO_MEMORY ());
 }
 
-void 
+void
 TAO_NS_Factory::create (TAO_NS_EventChannelFactory*& factory ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (factory,

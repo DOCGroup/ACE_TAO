@@ -34,7 +34,7 @@ public:
   TAO_NS_RTCORBA_Factory (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_Factory ();  
+  ~TAO_NS_RTCORBA_Factory ();
 
   /// Create QoSAdmin
   virtual void create (TAO_NS_QoSAdmin*& qos_admin ACE_ENV_SINGLE_ARG_DECL);
@@ -43,10 +43,10 @@ public:
   virtual void create (TAO_NS_EventChannel*& ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_SINGLE_ARG_DECL); 
+  virtual void create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create StructuredProxyPushConsumer
-  virtual void create (TAO_NS_StructuredProxyPushConsumer*& proxy ACE_ENV_SINGLE_ARG_DECL); 
+  virtual void create (TAO_NS_StructuredProxyPushConsumer*& proxy ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)
