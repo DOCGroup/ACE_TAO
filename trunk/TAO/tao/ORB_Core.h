@@ -158,9 +158,6 @@ public:
   TAO_ORB_Core (const char* id);
   // Constructor.
 
-  ~TAO_ORB_Core (void);
-  // Destructor
-
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
@@ -187,8 +184,7 @@ public:
   // = Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
 
-
-  // = Set/get pointer to the ORB.
+  // = Get pointer to the ORB.
   CORBA::ORB_ptr orb (void);
 
   ACE_Reactor *reactor (void);
@@ -360,8 +356,7 @@ public:
 
   CORBA::Policy_ptr get_default_policy (
       CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ());
+      CORBA::Environment &ACE_TRY_ENV);
   // Accesor to obtain the default policy for a particular policy
   // type.  If there is no default policy it returns
   // CORBA::Policy::_nil ()
@@ -466,15 +461,13 @@ public:
   // Run the event loop
 
   void shutdown (CORBA::Boolean wait_for_completion,
-                 CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+                 CORBA::Environment &ACE_TRY_ENV);
   // End the event loop
 
   int has_shutdown (void);
   // Get the shutdown flag value
 
-  void destroy (CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
+  void destroy (CORBA::Environment &ACE_TRY_ENV);
   // Shutdown the ORB and free resources
 
   void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
@@ -571,6 +564,10 @@ public:
 
 protected:
 
+  ~TAO_ORB_Core (void);
+  // Destructor is protected since the ORB Core should only be
+  // allocated on the heap.
+
   int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
   // Initialize the guts of the ORB Core.  It is intended that this be
   // called by <CORBA::ORB_init>.
@@ -583,7 +580,7 @@ protected:
   // Implement the input_cdr_*_allocator() routines using pre-fetched
   // TSS resources.  This minimizes the number of calls to them.
 
-  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  int open (CORBA::Environment &ACE_TRY_ENV);
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
