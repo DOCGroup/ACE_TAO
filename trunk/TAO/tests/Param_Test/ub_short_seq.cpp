@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "ub_short_seq.h"
 
 ACE_RCSID(Param_Test, ub_short_seq, "$Id$")
@@ -30,14 +28,15 @@ Test_Short_Sequence::Test_Short_Sequence (void)
   : opname_ (CORBA::string_dup ("test_short_sequence")),
     in_ (new Param_Test::Short_Seq),
     inout_ (new Param_Test::Short_Seq),
-    out_ (0),
-    ret_ (0)
+    out_ (new Param_Test::Short_Seq),
+    ret_ (new Param_Test::Short_Seq)
 {
 }
 
 Test_Short_Sequence::~Test_Short_Sequence (void)
 {
   CORBA::string_free (this->opname_);
+  this->opname_ = 0;
 }
 
 const char *
@@ -60,13 +59,14 @@ Test_Short_Sequence::init_parameters (Param_Test_ptr objref,
 
   // set the length of the sequence
   this->in_->length (len);
+  this->inout_->length (len);
   // now set each individual element
   for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
       this->in_[i] = i;
-
+      this->inout_[i] = i+1;
     }
   return 0;
 }
@@ -74,9 +74,9 @@ Test_Short_Sequence::init_parameters (Param_Test_ptr objref,
 int
 Test_Short_Sequence::reset_parameters (void)
 {
-  this->inout_ = new Param_Test::Short_Seq; // delete the previous one
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->inout_ = new Param_Test::Short_Seq; // delete the previous ones
+  this->out_ = new Param_Test::Short_Seq;
+  this->ret_ = new Param_Test::Short_Seq;
   return 0;
 }
 
@@ -106,7 +106,7 @@ Test_Short_Sequence::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
  
   CORBA::Any out_arg (Param_Test::_tc_Short_Seq,
-                      &this->dii_out_,
+                      &this->out_.inout (), // .out () causes crash
                       CORBA::B_FALSE);
 
   // add parameters
@@ -116,30 +116,27 @@ Test_Short_Sequence::add_args (CORBA::NVList_ptr param_list,
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Short_Seq,
-                                            &this->dii_ret_,
+                                            &this->ret_.inout (), // see above
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Short_Sequence::check_validity_engine (const Param_Test::Short_Seq &the_in,
-                                            const Param_Test::Short_Seq &the_inout,
-                                            const Param_Test::Short_Seq &the_out,
-                                            const Param_Test::Short_Seq &the_ret)
+Test_Short_Sequence::check_validity (void)
 {
   CORBA::Boolean flag = 0;
-  if ((the_in.length () == the_inout.length ()) &&
-      (the_in.length () == the_out.length ()) &&
-      (the_in.length () == the_ret.length ()))
+  if ((this->in_->length () == this->inout_->length ()) &&
+      (this->in_->length () == this->out_->length ()) &&
+      (this->in_->length () == this->ret_->length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < the_in.length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
         {
-          if ((the_in[i] != the_inout[i]) ||
-              (the_in[i] != the_out[i]) ||
-              (the_in[i] != the_ret[i]))
+          if (this->in_[i] != this->inout_[i] ||
+              this->in_[i] != this->out_[i] ||
+              this->in_[i] != this->ret_[i])
             // not equal
             flag = 0;
         }
@@ -148,21 +145,10 @@ Test_Short_Sequence::check_validity_engine (const Param_Test::Short_Seq &the_in,
 }
 
 CORBA::Boolean
-Test_Short_Sequence::check_validity (void)
-{
-  return this->check_validity_engine (this->in_.in (),
-                                      this->inout_.in (),
-                                      this->out_.in (),
-                                      this->ret_.in ());
-}
-
-CORBA::Boolean
 Test_Short_Sequence::check_validity (CORBA::Request_ptr req)
 {
-  return this->check_validity_engine (this->in_.in (),
-                                      this->inout_.in (),
-                                      this->dii_out_,
-                                      this->dii_ret_);
+  ACE_UNUSED_ARG (req);
+  return this->check_validity ();
 }
 
 void

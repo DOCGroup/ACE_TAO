@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "ub_struct_seq.h"
 
 ACE_RCSID(Param_Test, ub_struct_seq, "$Id$")
@@ -29,14 +27,15 @@ ACE_RCSID(Param_Test, ub_struct_seq, "$Id$")
 Test_Struct_Sequence::Test_Struct_Sequence (void)
   : opname_ (CORBA::string_dup ("test_struct_sequence")),
     inout_ (new Param_Test::StructSeq),
-    out_ (0),
-    ret_ (0)
+    out_ (new Param_Test::StructSeq),
+    ret_ (new Param_Test::StructSeq)
 {
 }
 
 Test_Struct_Sequence::~Test_Struct_Sequence (void)
 {
   CORBA::string_free (this->opname_);
+  this->opname_ = 0;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -61,12 +60,14 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr objref,
 
   // set the length of the sequence
   this->in_.length (len);
+  this->inout_->length (len);
   // now set each individual element
   for (CORBA::ULong i = 0; i < this->in_.length (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
       this->in_[i] = gen->gen_fixed_struct ();
+      this->inout_[i] = gen->gen_fixed_struct ();
     }
   return 0;
 }
@@ -75,8 +76,8 @@ int
 Test_Struct_Sequence::reset_parameters (void)
 {
   this->inout_ = new Param_Test::StructSeq; // delete the previous one
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->out_ = new Param_Test::StructSeq;
+  this->ret_ = new Param_Test::StructSeq;
   return 0;
 }
 
@@ -98,7 +99,7 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_StructSeq, 
-                     (void *) &this->in_,
+                     &this->in_,
                      CORBA::B_FALSE);
 
   CORBA::Any inout_arg (Param_Test::_tc_StructSeq,
@@ -106,7 +107,7 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (Param_Test::_tc_StructSeq,
-                      &this->dii_out_,
+                      &this->out_.inout (), // .out () causes crash
                       CORBA::B_FALSE);
 
   // add parameters
@@ -116,43 +117,28 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_StructSeq,
-                                            &this->dii_ret_,
+                                            &this->ret_.inout (), // see above
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Struct_Sequence::check_validity_engine 
-                (const Param_Test::StructSeq &the_in,
-                 const Param_Test::StructSeq &the_inout,
-                 const Param_Test::StructSeq &the_out,
-                 const Param_Test::StructSeq &the_ret)
+Test_Struct_Sequence::check_validity (void)
 {
-  if (this->compare (the_in, the_inout) &&
-      this->compare (the_in, the_out) &&
-      this->compare (the_in, the_ret))
+  if (this->compare (this->in_, this->inout_.in ()) &&
+      this->compare (this->in_, this->out_.in ()) &&
+      this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
     return 0;
 }
 
 CORBA::Boolean
-Test_Struct_Sequence::check_validity (void)
-{
-  return this->check_validity_engine (this->in_,
-                                      this->inout_.in (),
-                                      this->out_.in (),
-                                      this->ret_.in ());
-}
-
-CORBA::Boolean
 Test_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
-  return this->check_validity_engine (this->in_,
-                                      this->inout_.in (),
-                                      this->dii_out_,
-                                      this->dii_ret_);
+  ACE_UNUSED_ARG (req);
+  return this->check_validity ();
 }
 
 void
