@@ -3,6 +3,10 @@ Wed Nov 12 16:44:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>"
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (init):
           Changed ACE_THROW to ACE_THROW_RETURN to fix compile error.
 
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (unregister_activator):
+          Changed ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_NOT_USED to fix
+          compile warning about unused variable.
+
 Wed Nov 12 14:51:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Makefile:
