@@ -1,4 +1,4 @@
-#!/pkg/gnu/bin/perl -I..\..\..\bin
+#!/pkg/gnu/bin/perl -I../../../bin
 #
 # If your perl installation isn't in /pkg/gnu/bin/perl,
 # please make the change accordingly
