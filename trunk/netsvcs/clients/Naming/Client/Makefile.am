@@ -20,6 +20,9 @@ libClient_Test_la_CPPFLAGS = \
 libClient_Test_la_SOURCES = \
   Client_Test.cpp
 
+libClient_Test_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libClient_Test_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
