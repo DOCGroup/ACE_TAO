@@ -1,3 +1,14 @@
+Fri Feb  6 09:04:50 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Added support for dynamicflags, staticflags and rc files.
+
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+
+          Added the _REENTRANT macro to the extracppflags for many of the
+          platforms.
+
 Fri Feb  6 06:35:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
