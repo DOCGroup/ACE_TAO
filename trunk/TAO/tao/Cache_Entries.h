@@ -31,6 +31,9 @@
 class TAO_Connection_Handler;
 class Tao_Base_Connection_Property;
 
+#ifdef index
+#undef index
+#endif /* index */
 
 /**
  * @class TAO_Cache_IntId
