@@ -40,26 +40,26 @@ ACEXML_SoftPkg::dump (void)const
 void
 ACEXML_SoftPkg::PropertyFile::dump(void)const
 {
-  ACE_DEBUG ((LM_DEBUG, " Property File = %s\n", this->file_.c_str()));
+  ACE_DEBUG ((LM_DEBUG, "Property File = %s\n", this->file_.c_str()));
 }
 
 void
 ACEXML_SoftPkg::OperSys::dump(void)const
 {
-  ACE_DEBUG ((LM_DEBUG, " Operating System: \n Name = %s\n Version = %s\n",
+  ACE_DEBUG ((LM_DEBUG, "OS = %s Version = %s\n",
               this->name_.c_str(), this->version_.c_str()));
 }
 void
 ACEXML_SoftPkg::Code::dump(void)const
 {
-  ACE_DEBUG ((LM_DEBUG, " Code: \n Type = %s\n File = %s\n "
+  ACE_DEBUG ((LM_DEBUG, " Code: \n  Type = %s\n  File = %s\n  "
               "EntryPoint = %s\n", this->type_.c_str(), this->file_.c_str(),
               this->func_.c_str()));
 }
 void
 ACEXML_SoftPkg::Dependency::dump(void)const
 {
-  ACE_DEBUG ((LM_DEBUG, "Dependency: \n Type = %s\n File = %s\n ",
+  ACE_DEBUG ((LM_DEBUG, "Dependency: \n Type = %s\n File = %s\n",
               this->type_.c_str(), this->localfile_.c_str()));
 }
 void
@@ -67,7 +67,7 @@ ACEXML_SoftPkg::Implementation::dump(void)const
 {
   ACE_DEBUG ((LM_DEBUG, "Implementation: \n Id = %s\n ", this->id_.c_str()));
   this->os_.dump();
-  ACE_DEBUG ((LM_DEBUG, "Processor = %s\n Compiler = %s\n ProgLang = %s\n",
+  ACE_DEBUG ((LM_DEBUG, " Processor = %s\n Compiler = %s\n ProgLang = %s\n ",
               this->cpu_.c_str(), this->compiler_.c_str(),
               this->lang_.c_str()));
   this->propfile_.dump();
