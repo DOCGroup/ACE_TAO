@@ -137,8 +137,6 @@ namespace TAO
                                    ACE_Time_Value *max_wait_time
                                    ACE_ENV_ARG_DECL)
   {
-
-// here we send the message on the transport, check this method
     const int retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),
