@@ -1,44 +1,57 @@
+Fri Mar 05 14:15:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_TSS_Cleanup (),free_all_keys_left ()):
+          with ACE_TSS_Emulation only, don't free the TSS key that
+          ACE_TSS_Cleanup uses internally for its in_use_ member.
+          The key doesn't get freed in ACE_OS::thr_key_detach (),
+          because that gets called during shutdown.  So,
+          free_all_keys_left () would attempt to free it.  But,
+          the dynamic memory associated with it had already been
+          deleted by ACE_TSS_Cleanup::exit ().  And, theren't
+          aren't any other resources associated with it.  So,
+          free_all_keys_left () can just skip over it.
+
 Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Log_Msg/Log_Msg.dsw: Fixed the path to Callback.dsp.
-	  Thanks to Zoran Ivanovic <zorani@pathcom.com> for reporting
-	  this.
+        * examples/Log_Msg/Log_Msg.dsw: Fixed the path to Callback.dsp.
+          Thanks to Zoran Ivanovic <zorani@pathcom.com> for reporting
+          this.
 
-	* performance-tests/Misc/Makefile: Removed test_guard from the
-	  Makefile.  This test requires having
-	  ACE_USES_OBSOLETE_GUARD_CLASSES defined in order to compare
-	  ACE_Guard to ACE_Thread_Mutex_Guard (obsolete).
+        * performance-tests/Misc/Makefile: Removed test_guard from the
+          Makefile.  This test requires having
+          ACE_USES_OBSOLETE_GUARD_CLASSES defined in order to compare
+          ACE_Guard to ACE_Thread_Mutex_Guard (obsolete).
 
-	* ace/OS.h: Removed ACE_THREAD_GUARD*.
+        * ace/OS.h: Removed ACE_THREAD_GUARD*.
 
-	* ace/config-psos-{diab,tm}.h: Removed
-	  ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE.  It is no longer
-	  needed.
+        * ace/config-psos-{diab,tm}.h: Removed
+          ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE.  It is no longer
+          needed.
 
-	* ace/Synch_T.{h,i}: One would assume compilers are smart enough
-	  to treat _all_ in-class functions as inline.  Not for template
-	  member functions.  This is true at least for SunCC, egcs, gcc,
-	  and MSVC.  These functions seems to impose extra overhead.
-	  After removing the in-class definitions for ACE_Guard, the cost
-	  of using ACE_Guard is now as good as using
-	  ACE_Thread_Mutex_Guard (which, by the way, is depricated.)  So,
-	  there's no need for a ACE_THREAD_MUTEX_GUARD class.  Afterall,
-	  the "ACE Way[TM]" of defining inline functions is the "Right
-	  Way[TM]".  The motto of the change is, always put inline
-	  functions in .i files (even for template specialization)
-	  otherwise, they'll become regular functions.  If you really need
-	  to put function definitions within class definitions, mark
-	  inline function explicitly.
+        * ace/Synch_T.{h,i}: One would assume compilers are smart enough
+          to treat _all_ in-class functions as inline.  Not for template
+          member functions.  This is true at least for SunCC, egcs, gcc,
+          and MSVC.  These functions seems to impose extra overhead.
+          After removing the in-class definitions for ACE_Guard, the cost
+          of using ACE_Guard is now as good as using
+          ACE_Thread_Mutex_Guard (which, by the way, is depricated.)  So,
+          there's no need for a ACE_THREAD_MUTEX_GUARD class.  Afterall,
+          the "ACE Way[TM]" of defining inline functions is the "Right
+          Way[TM]".  The motto of the change is, always put inline
+          functions in .i files (even for template specialization)
+          otherwise, they'll become regular functions.  If you really need
+          to put function definitions within class definitions, mark
+          inline function explicitly.
 
-	  Thanks to Andy Marchewka <AndyM@who.net> for noticing the
-	  performance differences between ACE_Thread_Mutex_Guard and (old)
-	  ACE_Guard.
+          Thanks to Andy Marchewka <AndyM@who.net> for noticing the
+          performance differences between ACE_Thread_Mutex_Guard and (old)
+          ACE_Guard.
 
 Fri Mar  5 11:06:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Conf.y: Always print out an error message when we
- 	  increment yyerror.  Thanks to Ulf Jaehrig <jaehrig@desys.com>
- 	  for reporting this.
+        * ace/Svc_Conf.y: Always print out an error message when we
+          increment yyerror.  Thanks to Ulf Jaehrig <jaehrig@desys.com>
+          for reporting this.
 
 Thu Mar  4 12:26:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
