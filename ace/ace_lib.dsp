@@ -14,30 +14,22 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace_lib.mak"\
- CFG="ACE static library - Win32 Alpha Unicode Debug"
+!MESSAGE NMAKE /f "ace_lib.mak" CFG="ACE static library - Win32 Alpha Unicode Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE static library - Win32 Debug" (based on\
- "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Release" (based on\
- "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Unicode Debug" (based on\
- "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Unicode Release" (based on\
- "Win32 (x86) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Unicode Debug" (based on\
- "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE static library - Win32 Alpha Unicode Release" (based on\
- "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Unicode Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Unicode Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Release" (based on "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE static library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Static Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -53,13 +45,13 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -79,13 +71,13 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -105,13 +97,13 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Unicode_Debug"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -131,13 +123,13 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Unicode_Release"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -255,7 +247,7 @@ LIB32=link.exe -lib
 # Name "ACE static library - Win32 Alpha Unicode Release"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "cpp"
 # Begin Source File
 
 SOURCE=.\ACE.cpp
@@ -14557,7 +14549,7 @@ DEP_CPP_XTREA=\
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "h"
 # Begin Source File
 
 SOURCE=.\Acceptor.h
@@ -15309,7 +15301,7 @@ SOURCE=.\XtReactor.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor.i
@@ -16059,25 +16051,7 @@ SOURCE=.\Map_Manager.cpp
 # Begin Source File
 
 SOURCE=.\Map_T.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -16131,25 +16105,7 @@ SOURCE=.\Module.cpp
 # Begin Source File
 
 SOURCE=.\Pair_T.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
