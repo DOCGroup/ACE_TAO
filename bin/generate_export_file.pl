@@ -6,30 +6,59 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Replacement for the old trusty GenExportH.bat
 # Creates the nice little *_export file which is used for
 # importing and exporting of symbols in DLLs.
+# (they are soooo cute!)
 
-die "Error: Missing command line argument" if ($#ARGV < 0);
+use Getopt::Std;
 
-$depend = 0;
-while ($#ARGV >= 0) {
-  if (!($ARGV[0] =~ m/-/)) {
-      $name = $ARGV[0];
-      $ucname = uc $name;
-      shift;
-  } elsif ($ARGV[0] eq "-depends") {
-      $depend = 1;
-      shift;
-      $dependname = uc $ARGV[0];
-      shift;
-  }
+##############################################################################
+# Grab the options
+
+if (!getopts ('df:hs') || $opt_h) {
+    print "generate_export_file.pl [-d] [-f dependency] [-s] library_name\n";
+    print "\n";
+    print "    -d         Turn on debug mode\n";
+    print "    -f         Adds a dependency to another *_HAS_DLL macro\n";
+    print "    -s         Add in ACE_STATIC_LIBS check\n";
+    print "\n";
+    print "generate_export_file creates the *_export files that are used\n";
+    print "in exporting of symbols for DLLs (and not exporting them when\n";
+    print "the library is static).  If library_name is something like\n";
+    print "\"Foo\", then the file will contain definitions for Foo_Export\n"; 
+    print "and FOO_SINGLETON_DECLARE, etc. which will be controlled by\n";
+    print "FOO_HAS_DLL, etc.\n";
+    exit (1);
 }
 
-$prologue="
+if (defined $opt_d) {
+    print "Debugging Turned on\n";
+
+    if (defined $opt_f) {
+        print "Dependency to $opt_f\n";
+    }
+
+    if (defined $opt_s) {
+        print "ACE_STATIC_LIBS turned on\n"; 
+    }
+}
+
+
+if ($#ARGV < 0) {
+    print STDERR "No library_name specified, use -h for help\n";
+    exit (1);
+}
+
+$name = shift @ARGV;
+$ucname = uc $name;
+
+##############################################################################
+# Prologue
+
+$prologue = '
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by
-// generate_export_file.pl
-// ------------------------------
+// This file is generated automatically by generate_export_file.pl
+// ------------------------------'."
 #ifndef -UC-_EXPORT_H
 #define -UC-_EXPORT_H
 
@@ -37,58 +66,73 @@ $prologue="
 ";
 
 
-if ($depend == 1)
+##############################################################################
+# Static Stuff
+
+if (defined $opt_s)
 {
-    $has_dll="
-#if defined ($dependname)
-# if !defined (-UC-_HAS_DLL)
-# define -UC-_HAS_DLL 0
-# endif /* ! -UC-_HAS_DLL */
+    $static_stuff = "
+#if defined (ACE_STATIC_LIBS) && !defined (-UC-_HAS_DLL)
+#  define -UC-_HAS_DLL 0
+#endif /* ACE_STATIC_LIBS && -UC-_HAS_DLL */
+";
+}
+
+##############################################################################
+# Dependencies
+
+if (defined $opt_f)
+{
+    $has_dll = "
+#if defined ($opt_f)
+#  if !defined (-UC-_HAS_DLL)
+#    define -UC-_HAS_DLL 0
+#  endif /* ! -UC-_HAS_DLL */
 #else
-# if !defined (-UC-_HAS_DLL)
-# define -UC-_HAS_DLL 1
-# endif /* ! -UC-_HAS_DLL */
+#  if !defined (-UC-_HAS_DLL)
+#    define -UC-_HAS_DLL 1
+#  endif /* ! -UC-_HAS_DLL */
 #endif
 ";
 }
 else
 {
-    $has_dll="
+    $has_dll = "
 #if !defined (-UC-_HAS_DLL)
-#define -UC-_HAS_DLL 1
+#  define -UC-_HAS_DLL 1
 #endif /* ! -UC-_HAS_DLL */
 ";
 }
 
-$epilogue="
-#if defined (-UC-_HAS_DLL)
-#  if (-UC-_HAS_DLL == 1)
-#    if defined (-UC-_BUILD_DLL)
-#      define -NC-_Export ACE_Proper_Export_Flag
-#      define -UC-_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#      define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-#    else
-#      define -NC-_Export ACE_Proper_Import_Flag
-#      define -UC-_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#      define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-#    endif /* -UC-_BUILD_DLL */
-#  else
-#    define -NC-_Export
-#    define -UC-_SINGLETON_DECLARATION(T)
-#    define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-#  endif   /* ! -UC-_HAS_DLL == 1 */
-#else
+##############################################################################
+# Epilogue
+
+$epilogue = "
+#if defined (-UC-_HAS_DLL) && (-UC-_HAS_DLL == 1)
+#  if defined (-UC-_BUILD_DLL)
+#    define -NC-_Export ACE_Proper_Export_Flag
+#    define -UC-_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#    define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#  else /* -UC-_BUILD_DLL */
+#    define -NC-_Export ACE_Proper_Import_Flag
+#    define -UC-_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#    define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#  endif /* -UC-_BUILD_DLL */
+#else /* -UC-_HAS_DLL == 1 */
 #  define -NC-_Export
 #  define -UC-_SINGLETON_DECLARATION(T)
 #  define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-#endif     /* -UC-_HAS_DLL */
+#endif /* -UC-_HAS_DLL == 1 */
 
-#endif     /* -UC-_EXPORT_H */
+#endif /* -UC-_EXPORT_H */
 
 // End of auto generated file.
 ";
 
-foreach $export ($prologue, $has_dll, $epilogue)
+##############################################################################
+# Print the stuff out
+
+foreach $export ($prologue, $static_stuff, $has_dll, $epilogue)
 {
 ## -NC- stands for normal case, the name as it is
 ## -UC- stands for the name all upper case
