@@ -1,3 +1,11 @@
+Fri Oct 24 15:59:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Valuetype/AbstractBase.h:
+	* tao/Valuetype/AbstractBase.cpp: 
+	* tao/Valuetype/Seq_Tmplinst.cpp: 
+	  Fixed the includes and some compilation errors with explicit
+	  template instantiations. 
+
 Fri Oct 24 15:47:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Sequence_T.cpp:
