@@ -1,3 +1,6 @@
+//  -*- MPC -*- now wouldn't this be cool...
+// $Id$
+
 project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
   libout       = $(ACE_ROOT)/lib 
   sharedname   = ACE
@@ -11,45 +14,45 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
     OS {
       Basic_Types.cpp
       Time_Value.cpp
-      Cleanup.cpp
-      Object_Manager_Base.cpp
       //OS.cpp
       //OS_Dirent.cpp
       //OS_Memory.cpp
-      OS_QoS.cpp
       //OS_String.cpp
+      Cleanup.cpp
+      Object_Manager_Base.cpp
       OS_NS_arpa_inet.cpp
-      OS_NS_fcntl.cpp
-      OS_NS_regex.cpp
-      OS_NS_strings.cpp
-      OS_NS_sys_select.cpp
-      OS_NS_sys_uio.cpp
-      OS_NS_unistd.cpp
       OS_NS_ctype.cpp
-      OS_NS_math.cpp
-      OS_NS_signal.cpp
-      OS_NS_stropts.cpp
-      OS_NS_sys_shm.cpp
-      OS_NS_sys_utsname.cpp
-      OS_NS_wchar.cpp
       OS_NS_dirent.cpp
-      OS_NS_netdb.cpp
-      OS_NS_stdio.cpp
-      OS_NS_sys_mman.cpp
-      OS_NS_sys_socket.cpp
-      OS_NS_sys_wait.cpp
       OS_NS_dlfcn.cpp
-      OS_NS_poll.cpp
-      OS_NS_stdlib.cpp
-      OS_NS_sys_msg.cpp
-      OS_NS_sys_stat.cpp
-      OS_NS_Thread.cpp
       OS_NS_errno.cpp
+      OS_NS_fcntl.cpp
+      OS_NS_math.cpp
+      OS_NS_netdb.cpp
+      OS_NS_poll.cpp
       OS_NS_pwd.cpp
+      OS_NS_regex.cpp
+      OS_NS_signal.cpp
+      OS_NS_stdio.cpp
+      OS_NS_stdlib.cpp
       OS_NS_string.cpp
+      OS_NS_strings.cpp
+      OS_NS_stropts.cpp
+      OS_NS_sys_mman.cpp
+      OS_NS_sys_msg.cpp
       OS_NS_sys_resource.cpp
+      OS_NS_sys_select.cpp
+      OS_NS_sys_shm.cpp
+      OS_NS_sys_socket.cpp
+      OS_NS_sys_stat.cpp
       OS_NS_sys_time.cpp
-      OS_NS_time.cpp     
+      OS_NS_sys_uio.cpp
+      OS_NS_sys_utsname.cpp
+      OS_NS_sys_wait.cpp
+      OS_NS_Thread.cpp
+      OS_NS_time.cpp
+      OS_NS_unistd.cpp
+      OS_NS_wchar.cpp
+      OS_QoS.cpp
       OS_TLI.cpp
       OS_Errno.cpp
       ARGV.cpp
