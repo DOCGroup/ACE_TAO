@@ -1,3 +1,15 @@
+Thu Jan 07 04:01:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (check_hint_i and cleanup_hint_i):
+ 	  purge_i() should be called after the entry is closed.
+
+	* Select_Reactor_Base.cpp (unbind): The next <max_handlep1_>
+ 	  should be calculated not only based on the <wait_set> but also
+ 	  the <suspend_set>.
+
+	  Thanks to Mark L. Boriack <mboriack@std.saic.com> for providing
+ 	  a description of this bug.
+
 Wed Jan 06 21:42:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): moved #endif /* ACE_LACKS_SETDETACH */

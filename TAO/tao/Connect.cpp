@@ -774,11 +774,15 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
                                    sizeof ignored,
                                    MSG_PEEK);
   switch (ret)
-    {
+    {      
+    case 0:
     case -1:
-      // Error...but we weren't expecting input, either...what should
-      // we do?
-      ACE_ERROR ((LM_WARNING,
+      // 0 is a graceful shutdown
+      // -1 is a somewhat ugly shutdown
+      //
+      // Both will result in us returning -1 and this connection getting closed
+      //
+      ACE_DEBUG ((LM_WARNING,
                   "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
                   this->peer().get_handle ()));
       break;
@@ -793,13 +797,6 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
                   "Client_Connection_Handler::handle_input received "
                   "input while not expecting a response; closing connection on fd %d\n",
                   this->peer().get_handle ()));
-      break;
-
-    case 0:
-      // This is an EOF, so we will return -1 and let handle_close()
-      // take over.  As long as handle_close() calls the
-      // Svc_Handler<>::handle_close(), the socket will be shutdown
-      // properly.
       break;
     }
 
