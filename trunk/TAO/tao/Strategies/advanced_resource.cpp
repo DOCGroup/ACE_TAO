@@ -37,6 +37,7 @@ ACE_RCSID(Strategies, advanced_resource, "$Id$")
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
   TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
 #if TAO_HAS_UIOP == 1
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_UIOP_Protocol_Factory);
