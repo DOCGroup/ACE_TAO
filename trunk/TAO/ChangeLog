@@ -1,3 +1,24 @@
+Fri Feb  4 01:25:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IIOP_Endpoint.h:
+	* tao/Object.h:
+	* tao/Profile.h:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/params.h:
+
+	  Optimized class/struct attribute declaration order to reduce
+	  alignment padding, hence the overall size of the class/struct.
+
+	* tao/IIOP_Endpoint.cpp:
+	* tao/Object.cpp:
+	* tao/Object.i:
+	* tao/Profile.cpp:
+	* tao/Profile_Transport_Resolver.inl:
+	* tao/params.cpp:
+
+	  Updated order of attributes in constructor base member
+	  initializer lists accordingly.
+
 Thu Feb  3 19:27:58 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (reply_timed_out): 
