@@ -5,11 +5,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "ace/Log_Msg.h"
+#include "ace/Reactor.h"
 #include "Logging_Strategy.h"
 
 ACE_RCSID(lib, Logging_Strategy, "$Id$")
 
-// Parse the string containing all the flags and set the flags accordingly
+// Parse the string containing all the flags and set the flags
+// accordingly.
+
 void
 ACE_Logging_Strategy::tokenize (char *flag_string)
 {
@@ -40,8 +43,10 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 
   this->flags_ = 0;
   this->wipeout_logfile_ = 0;
+  this->interval_ = 0;
+  this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
 
-  ACE_Get_Opt get_opt (argc, argv, "f:s:w", 0);
+  ACE_Get_Opt get_opt (argc, argv, "f:i:m:s:w", 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -52,11 +57,22 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 	  // Now tokenize the string to get all the flags
 	  this->tokenize (temp);
 	  break;
+	case 'i':
+	  // Interval (in secs) at which logfile size is sampled.
+	  this->interval_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+	  break;
+	case 'm':
+	  // Maximum logfile size (in KB).  Must be a non-zero value.
+	  this->max_size_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+	  if (this->max_size_ == 0)
+	    this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
+	  this->max_size_ <<= 10;       // convert to KB
+	  break;
 	case 's':
 	  // Ensure that the OSTREAM flag is set
 	  ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
           delete [] this->filename_;
-	  this->filename_ = ACE_OS::strdup (get_opt.optarg);
+	  this->filename_ = ACE::strnew (get_opt.optarg);
 	  break;
         case 'w':
           // Cause the logfile to be wiped out, both on startup and on
@@ -73,21 +89,22 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 ACE_Logging_Strategy::ACE_Logging_Strategy (void)
 {
 #if defined (ACE_DEFAULT_LOGFILE)
-  this->filename_ = ACE_OS::strnew (ACE_DEFAULT_LOGFILE);
+  this->filename_ = ACE::strnew (ACE_DEFAULT_LOGFILE);
 #else /* ACE_DEFAULT_LOGFILE */
   ACE_NEW (this->filename_, char[MAXPATHLEN + 1]);
 
   // Get the temporary directory
-  if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 7) == -1)  // 7 for "logfile"
+  if (ACE::get_temp_dir (this->filename_,
+                         MAXPATHLEN - 7) == -1)  // 7 for "logfile"
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "Temporary path too long, defaulting to current directory\n"));
       this->filename_[0] = 0;
     }
 
   // Add the filename to the end
-  ACE_OS::strcat (this->filename_, "logfile");
-  
+  ACE_OS::strcat (this->filename_,
+                  "logfile");
 #endif /* ACE_DEFAULT_LOGFILE */
 }
 
@@ -111,7 +128,7 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
   if (this->flags_ != 0)
     {
       // Clear all flags
-      ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR  
+      ACE_Log_Msg::instance ()->clr_flags (ACE_Log_Msg::STDERR  
                                           | ACE_Log_Msg::LOGGER  
                                           | ACE_Log_Msg::OSTREAM 
                                           | ACE_Log_Msg::VERBOSE 
@@ -135,15 +152,75 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
 
           // Set the <output_file> that'll be used by the rest of the
           // code.
-          ACE_Log_Msg::instance()->msg_ostream (output_file);
+          ACE_Log_Msg::instance ()->msg_ostream (output_file);
+
+          // Setup a timeout handler to perform the maximum file size
+          // check (if required).
+          if (this->interval_ > 0)
+            {
+              if (this->reactor () == 0)
+                this->reactor (ACE_Reactor::instance ());  // Use singleton
+              this->reactor ()->schedule_timer (this, 0,
+                                                ACE_Time_Value (this->interval_),
+                                                ACE_Time_Value (this->interval_));
+            }
 	}
       // Now set the flags for Log_Msg
-      ACE_Log_Msg::instance()->set_flags (this->flags_);
+      ACE_Log_Msg::instance ()->set_flags (this->flags_);
     }
 
   return ACE_LOG_MSG->open ("Logging_Strategy",
                             ACE_LOG_MSG->flags (),
-                            ACE_TEXT_CHAR_TO_TCHAR (ACE_DEFAULT_LOGGER_KEY));
+                            ACE_DEFAULT_LOGGER_KEY);
+  // ACE_TEXT_CHAR_TO_TCHAR (ACE_DEFAULT_LOGGER_KEY));
+}
+
+int
+ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &tv,
+                                      const void *arg)
+{
+  if ((size_t) ACE_LOG_MSG->msg_ostream ()->tellp () > this->max_size_)
+    {
+      // Lock out any other logging.
+      if (ACE_LOG_MSG->acquire ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("Cannot acquire lock!\n")),
+                          -1);
+
+      // Close the current ostream.
+      ofstream *output_file =
+        (ofstream *) ACE_LOG_MSG->msg_ostream ();
+      output_file->close ();
+
+      // Save current logfile to logfile.old
+      if (ACE_OS::strlen (this->filename_) + 4 <= MAXPATHLEN)	// 4 for ".old"
+        {
+          char backup[MAXPATHLEN+1];
+  
+          ACE_OS::strcpy (backup, this->filename_);
+          ACE_OS::strcat (backup, ".old");
+
+          // Remove any existing .old file; ignore error as file may
+          // not exist.
+          ACE_OS::unlink (backup);
+
+          // Rename the current log file to the name of the backup log
+          // file.
+          ACE_OS::rename (this->filename_, 
+                          backup);
+        }
+      else
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("Backup file name too long; backup logfile not saved.\n")));
+
+      // Open a new log file by the same name
+      output_file->open (this->filename_, ios::out);
+
+      // Release the lock previously acquired.
+      ACE_LOG_MSG->release ();
+    }
+
+  return 0;
 }
 
 // The following is a "Factory" used by the ACE_Service_Config and
