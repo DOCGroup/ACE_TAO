@@ -42,6 +42,12 @@ main (int, char *[])
       ACE_Message_Block *entry;
       ACE_NEW_RETURN (entry, ACE_Message_Block (buffer[i], sizeof buffer[i]), -1);
 
+      if (queue.is_full ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "QUEUE:: the message queue is full on iteration %u!\n",
+                           i+1),
+                          -1);
+
       if (queue.enqueue (entry) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
     }
