@@ -60,7 +60,7 @@ project(Hello_Base_Sender_exec) : ciao_component {
 project (Hello_Starter) : ciao_client, valuetype{
   exename = starter
   after += Hello_Base_Sender_stub
-  libs += Sender_stub
+  libs += Sender_stub Hello_Base_stub
 
   IDL_Files {
   }
