@@ -1,3 +1,8 @@
+Fri Jan  9 20:49:41 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: Fixed some code dealing
+ 	with Warning (Anachronism) messages.
+
 Fri Jan  9 19:04:10 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tao/orbobj.cpp: Moved template instantiation codes around to
