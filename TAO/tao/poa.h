@@ -50,9 +50,6 @@
 // Active Object Table
 #include "tao/objtable.h"
 
-// This is the maximum space require to convert a ulong into a string
-static const int TAO_POA_max_space_required_for_ulong = 24;
-
 class TAO_POA;
 class TAO_POA_Manager;
 
@@ -235,9 +232,9 @@ public:
 
   TAO_Creation_Time (void);
 
-  virtual void creation_time (const char *creation_time);
+  virtual void creation_time (const void *creation_time);
   
-  virtual const char *creation_time (void) const;
+  virtual const void *creation_time (void) const;
   
   virtual int creation_time_length (void) const;
   
@@ -247,9 +244,8 @@ public:
 
 private:
   
-  char time_stamp_[TAO_POA_max_space_required_for_ulong * 2];
-
-  int time_stamp_length_;
+  // 32 bit ulong requires 8 octets
+  char time_stamp_[(8 * 2) + 1];
 };
 
 class TAO_POA_Current;
@@ -582,6 +578,8 @@ protected:
   CORBA::ULong counter_;
 
   TAO_Creation_Time creation_time_;
+
+  static const int max_space_required_for_ulong;
 };
 
 class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
