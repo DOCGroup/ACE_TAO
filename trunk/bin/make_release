@@ -81,7 +81,7 @@ my $gnu2 = '/usr/local/bin:/usr/bin';
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
 my $export_dir = '/project/deuce/ftp/pub/ACE+TAO-distribution';
-my $old_versions_dir = '/project/deuce/ftp/pub/previous_verions';
+my $old_versions_dir = '/project/deuce/ftp/pub/previous_versions';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
 my $install = 0;
