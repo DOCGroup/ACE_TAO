@@ -42,10 +42,11 @@ TAO_EventDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EventDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_EventDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
+  // An event type is a restriction of a value type, not an extension.
+  this->TAO_ExtValueDef_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Contained::Description *
@@ -61,11 +62,10 @@ TAO_EventDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Contained::Description *
-TAO_EventDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_EventDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  return this->TAO_ValueDef_i::describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Boolean
@@ -83,11 +83,16 @@ TAO_EventDef_i::is_a (const char *event_id
 }
 
 CORBA::Boolean
-TAO_EventDef_i::is_a_i (const char * /* event_id */
-                        ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_EventDef_i::is_a_i (const char *event_id
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  if (ACE_OS::strcmp (event_id, "IDL:omg.org/CORBA/EventBase:1.0") == 0)
+    {
+      return 1;
+    }
+
+  return this->TAO_ValueDef_i::is_a_i (event_id
+                                       ACE_ENV_ARG_PARAMETER);
 }
 

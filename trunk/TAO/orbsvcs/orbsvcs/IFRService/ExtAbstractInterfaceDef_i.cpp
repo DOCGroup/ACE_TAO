@@ -25,28 +25,3 @@ TAO_ExtAbstractInterfaceDef_i::~TAO_ExtAbstractInterfaceDef_i (void)
 {
 }
 
-void
-TAO_ExtAbstractInterfaceDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD;
-
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-void
-TAO_ExtAbstractInterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  /// Call destroy() on our base classes.
-  this->TAO_InterfaceAttrExtension_i::destroy_i (
-      ACE_ENV_SINGLE_ARG_PARAMETER
-    );
-  ACE_CHECK;
-
-  this->TAO_InterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-

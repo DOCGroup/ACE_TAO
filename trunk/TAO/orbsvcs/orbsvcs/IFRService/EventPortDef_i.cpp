@@ -3,6 +3,7 @@
 
 #include "Repository_i.h"
 #include "EventPortDef_i.h"
+#include "EventDef_i.h"
 
 ACE_RCSID (IFRService, 
            EventPortDef_i, 
@@ -34,12 +35,20 @@ TAO_EventPortDef_i::event (
 
 CORBA::ComponentIR::EventDef_ptr 
 TAO_EventPortDef_i::event_i (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  ACE_TString holder;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "base_type",
+                                            holder);
+  CORBA::Contained_var obj = this->repo_->lookup_id (holder.fast_rep ()
+                                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+
+  return CORBA::ComponentIR::EventDef::_narrow (obj.in ()
+                                                ACE_ENV_ARG_PARAMETER);
 }
 
 void 
@@ -60,12 +69,16 @@ TAO_EventPortDef_i::event (
 
 void 
 TAO_EventPortDef_i::event_i (
-    CORBA::ComponentIR::EventDef_ptr /* event */
+    CORBA::ComponentIR::EventDef_ptr event
     ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
+  this->repo_->config ()->set_string_value (
+                              this->section_key_,
+                              "base_type",
+                              event->_interface_repository_id ()
+                            );
 }
 
 CORBA::Boolean 
@@ -86,13 +99,27 @@ TAO_EventPortDef_i::is_a (
 
 CORBA::Boolean 
 TAO_EventPortDef_i::is_a_i (
-    const char * /* event_id */
+    const char *event_id
     ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  ACE_TString holder;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "base_type",
+                                            holder);
+  this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
+                                            holder.fast_rep (),
+                                            holder);
+  ACE_Configuration_Section_Key key;
+  this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                       holder,
+                                       key,
+                                       0);
+  TAO_EventDef_i impl (this->repo_);
+  impl.section_key (key);
+  return impl.is_a_i (event_id
+                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Contained::Description *
@@ -136,7 +163,7 @@ TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->repo_->config ()->get_string_value (this->section_key_,
                             "base_type",
                             holder);
-  ev_desc->version = holder.fast_rep ();
+  ev_desc->event = holder.fast_rep ();
 
   CORBA::Contained::Description *retval = 0;
   ACE_NEW_RETURN (retval,

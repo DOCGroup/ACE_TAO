@@ -52,16 +52,6 @@ public:
 
   virtual ~TAO_ExtAbstractInterfaceDef_i (void);
   // Destructor
-
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

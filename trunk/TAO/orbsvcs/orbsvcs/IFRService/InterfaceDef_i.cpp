@@ -106,23 +106,24 @@ TAO_InterfaceDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   CORBA::InterfaceDescription ifd;
-
-  ifd.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  ifd.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  ACE_TString container_id;
+  ACE_TString holder;
 
   this->repo_->config ()->get_string_value (this->section_key_,
+                                            "name",
+                                            holder);
+  ifd.name = holder.fast_rep ();
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "id",
+                                            holder);
+  ifd.id = holder.fast_rep ();
+  this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
-                                            container_id);
-
-  ifd.defined_in = container_id.c_str ();
-
-  ifd.version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                            holder);
+  ifd.defined_in = holder.fast_rep ();
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "version",
+                                            holder);
+  ifd.version = holder.fast_rep ();
 
   CORBA::ULong i = 0;
   CORBA::InterfaceDefSeq_var bases = 
@@ -238,7 +239,7 @@ TAO_InterfaceDef_i::base_interfaces_i (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA::InterfaceDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -429,38 +430,42 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::InterfaceDef::FullInterfaceDescription_var retval = fifd;
 
-  fifd->name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_TString holder;
 
-  fifd->id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  ACE_TString container_id;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "name",
+                                            holder);
+  fifd->name = holder.fast_rep ();
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "id",
+                                            holder);
+  fifd->id = holder.fast_rep ();
 
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
-                                            container_id);
+                                            holder);
 
-  fifd->defined_in = container_id.c_str ();
-
-  fifd->version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  fifd->defined_in = holder.fast_rep ();
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "version",
+                                            holder);
+  fifd->version = holder.fast_rep ();
 
   CORBA::ULong i = 0;
-  ACE_TString section_name;
+  CORBA::ULong j = 0;
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
   // Operations
   this->inherited_operations (key_queue);
 
-  ACE_Configuration_Section_Key ops_key;
+  ACE_Configuration_Section_Key ops_key, op_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "ops",
                                           0,
                                           ops_key);
 
-  u_int count = 0;
+  CORBA::ULong count = 0;
 
   if (status == 0)
     {
@@ -468,9 +473,8 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
                                                  "count",
                                                  count);
 
-      for (u_int j = 0; j < count; ++j)
+      for (j = 0; j < count; ++j)
         {
-          ACE_Configuration_Section_Key op_key;
           char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
           status =
             this->repo_->config ()->open_section (ops_key,
@@ -496,8 +500,8 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       TAO_OperationDef_i op (this->repo_);
       op.section_key (key);
 
-      fifd->operations[i] = 
-        op.make_description (ACE_ENV_SINGLE_ARG_PARAMETER);
+      op.make_description (fifd->operations[i]
+                           ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -519,7 +523,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
                                                  "count",
                                                  count);
 
-      for (u_int j = 0; j < count; ++j)
+      for (j = 0; j < count; ++j)
         {
           ACE_Configuration_Section_Key attr_key;
           char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
@@ -840,7 +844,6 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
         }
 
       ACE_Configuration_Section_Key excepts_key;
-
       this->repo_->config ()->open_section (new_key,
                                             "excepts",
                                             1,
@@ -850,7 +853,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       for (i = 0; i < length; ++i)
         {
           type_path = 
-            TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
+            TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,
