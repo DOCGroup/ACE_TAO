@@ -1,3 +1,12 @@
+Mon Nov 10 17:02:40 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.h: Reformatted the #ifdef structure of the
+	  ACE_HAS_XPG4_MULTIBYTE_CHAR to conform to ACE usage.
+
+	* ace/Service_Repository.cpp: The close() method needed a '\n' in
+ 	  one of the debug messages.  Thanks to Steve Coy for reporting
+ 	  this.
+
 Mon Nov 10 14:09:24 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h, OS.i, README:  Added new macro, ACE_HAS_XPG4_MULTIBYTE_CHAR
@@ -40,12 +49,6 @@ Mon Nov 10 10:21:55 1997  David L. Levine  <levine@cs.wustl.edu>
         * ACE-INSTALL.html: updated VxWorks info to mention requirement
           for perl with VxWorks/g++.  And, LD_LIBRARY_PATH must be set
           to find the ACE libraries on the host if using TAO.
-
-Mon Nov 10 00:11:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Service_Repository.cpp: The close() method needed a '\n' in
- 	  one of the debug messages.  Thanks to Steve Coy for reporting
- 	  this.
 
 Sun Nov 09 23:29:43 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
