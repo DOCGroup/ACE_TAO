@@ -1,3 +1,11 @@
+Wed Jul 11 06:41:43 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+  	* ace/TLI_Stream.cpp,
+	* ace/TLI_Connector.cpp,
+	* ace/TLI_Acceptor.cpp: Added enhancements so that the code would
+	  work on Win32.  Thanks to Andreas Geisler
+ 	  <Andreas.Geisler@erl9.siemens.de> for reporting this.
+
 Tue Jul 10 19:26:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/ace_dll.dsp:

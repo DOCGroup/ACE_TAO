@@ -139,9 +139,9 @@ public:
                      struct
                      t_bind *ret);
   static int t_close (ACE_HANDLE fildes);
-  static int t_connect(ACE_HANDLE fildes,
-                       struct t_call *sndcall,
-                       struct t_call *rcvcall);
+  static int t_connect (ACE_HANDLE fildes,
+                        struct t_call *sndcall,
+                        struct t_call *rcvcall);
   static void t_error (const char *errmsg);
   static int t_free (char *ptr,
                      int struct_type);
