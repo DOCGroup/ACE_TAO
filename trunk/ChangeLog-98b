@@ -1,3 +1,26 @@
+Tue Aug 04 11:01:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/GenExportH.BAT: Moved from TAO/TAO_IDL/.
+
+	* ace/Token.{h,cpp} (signal_all_threads): Added this method which
+	  changes the return values of all acquire method to 2.  The last
+	  thread waiting for the token will reset the signal state
+	  (therefore, there's NO cancel_signal_all_threads method.)
+	  (shared_acquire): Return 2 if the token is signaled after
+	  acquiring the token successfully.
+	  (release):  If the token is signaled and there's no other thread
+	  waiting to acquire the token, reset the signal state.
+
+	* ace/TP_Reactor.{h,i,cpp} (wakeup_all_threads): Added
+	  implementation for this virtual function.  It "signals" the
+	  token threads are waiting on and wake them up by notifying the
+	  reactor.
+	  (handle_events): Check to see if the reactor token is signaled
+	  after acquiring it.  If the the token is signaled, it will not
+	  proceed to handle events (by calling select) but instead return
+	  successfully.  This allow the thread the chance to check if it's
+	  time to shut down the event loop.
+
 Mon Aug  3 17:53:48 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* performance-tests/Makefile: 
