@@ -1,3 +1,9 @@
+Fri Jun  4 11:31:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+
+          Made changes to fix "Ref" variables.
+
 Fri Jun  4 11:22:46 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/ciao/Deployment_Core.idl:
