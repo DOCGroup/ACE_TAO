@@ -1,3 +1,8 @@
+Fri Sep 14 17:18:37 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/High_Res_Timer_Test.cpp (check_micro_nano): If the
+          nanointerval is 0, change it to 1 to prevent divide-by-zero.
+
 Fri Sep 14 17:02:39 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/High_Res_Timer_Test.cpp: Replaced some (u_int) casts with
