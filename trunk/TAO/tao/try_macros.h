@@ -186,10 +186,7 @@ if (TAO_TRY_ENV.exception () != 0 && \
   TYPE &VAR = *TYPE::_narrow (TAO_TRY_ENV.exception ()); \
   ACE_UNUSED_ARG (VAR);
 
-#define TAO_CATCHALL \
-} while (0); \
-do { \
-continue;
+#define TAO_CATCHALL TAO_CATCH(CORBA_Exception, ex)
 
 // The first "while" closes the local scope.  The second "while"
 // closes the TAO_TRY_ENV scope.
