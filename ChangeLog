@@ -1,4 +1,14 @@
-Fri Sep  3 07:43:12 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Fri Sep  3 10:44:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Process_Manager.cpp (append_proc): If the process_table_ needs
+	  to be enlarged, make sure it's to a size greater than 0. If the
+	  original size is 0, change it to DEFAULT_SIZE, else double it (as
+	  was always done).
+	  (resize): Changed to not shrink the process_table_ array. Primarily
+	  to guard against changing it to 0, but also guards against having to
+	  decide what to do with entries that won't fit in the new array.
+
+Fri Sep  3 07:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DLL/test_dll.cpp:
         * examples/Export/test.cpp:
