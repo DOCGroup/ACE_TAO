@@ -12,7 +12,7 @@ HelloWorld_Impl::~HelloWorld_Impl
 }
 
 char *
-HelloWorld_Impl::sayHello (const char *username
+HelloWorld_Impl::sayhello (const char *username
                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
