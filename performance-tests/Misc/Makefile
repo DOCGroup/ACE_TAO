@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for tests of the miscellaneous ACE performance tests
 #----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 BUILD = $(VLIB) $(VBIN)
 
 # For make depend.
-SRC = $(addsuffix .cpp, $(BIN))
+PSRC = $(addsuffix .cpp, $(BIN))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
