@@ -21,6 +21,10 @@ Wed Jun 24 10:23:27 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i,gethrtime.cpp (gethrtime): with Pentium and g++ or ghs,
           only; fixed load of 64-bit tick count into two 4-byte ints.
 
+        * performance-tests/Misc/basic_perf.cpp (iteration_time): check
+          for elapsed_time_ less than empty_iteration_time_, and return 0
+          if so.
+
 Wed Jun 24 10:02:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/ASX/Event_Server/Transceiver/transceiver.cpp
