@@ -1,3 +1,15 @@
+Sun Jul 18 20:36:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp (check_prefix):
+
+	  Removed "iioploc" from check.  We only care about the first four 
+	  characters at this point, so "iiop" will suffice.
+
+	* tao/ORB.cpp (url_ior_string_to_object):
+
+	  Minor change.  Moved declaration of returned Object_ptr to just
+	  before it gets assigned.
+
 Sun Jul 18 19:41:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/InterOp-Naming/INS_test_client.cpp (main):
