@@ -1,3 +1,10 @@
+Thu Jun  3 21:50:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils/catior/catior.cpp (catior): Fixed a byte-ordering problem
+ 	  that caused the catior utility to incorrectly decode little
+ 	  endian IOR's.  Thanks to Jeff D. Hopper <jhopper@orbisys.com>
+	  for reporting this.
+
 Thu Jun 03 21:03:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Pluggable.h:
