@@ -93,9 +93,9 @@ ACE_ARGV::string_to_argv (void)
  // Make sure that the buffer we're copying into is always large
  // enough.
  if (cp - this->buf_ >= ACE_DEFAULT_ARGV_BUFSIZ)
-   ACE_NEW (argp,
-            ASYS_TCHAR[cp - this->buf_ + 1],
-            -1);
+   ACE_NEW_RETURN (argp,
+                   ASYS_TCHAR[cp - this->buf_ + 1],
+                   -1);
 
  // Make a new argv vector of argc + 1 elements.
  ACE_NEW_RETURN (this->argv_,
@@ -121,7 +121,7 @@ ACE_ARGV::string_to_argv (void)
            {
              // @@ We can probably remove this since we ensure it's
              // big enough earlier!
-             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFIZ);
+             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
 	     *cp = *ptr;
            }
 	 
@@ -137,7 +137,7 @@ ACE_ARGV::string_to_argv (void)
            {
              // @@ We can probably remove this since we ensure it's
              // big enough earlier!
-             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFIZ);
+             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
 	     *cp = *ptr;
            }
 
