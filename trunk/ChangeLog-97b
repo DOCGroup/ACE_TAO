@@ -5,7 +5,8 @@ Wed Nov 19 15:55:52 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 Wed Nov 19 14:26:36 1997  Nanbor Wang  <nw1@lindy.cs.wustl.edu>
 
-	* stdcpp.h, OS.h: *** empty log message ***
+	* stdcpp.h, OS.h: Changed ACE_CONFIG_H to ACE_USER_CONFIG_H.  It
+	conflicts with the macro in various configuration files.
 
 Wed Nov 19 15:55:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -28,8 +29,8 @@ Wed Nov 19 15:55:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Nov 19 13:43:33 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* Merged the purify testing into run_tests.  Just use 
-	  
+	* Merged the purify testing into run_tests.  Just use
+
 	  "run_tests purify ..."
 
 	  to purify instead of running the tests.  If you thought this
