@@ -15,6 +15,7 @@ autoconf or Larry Wall's metaconfig...
 Macro					Description
 -----					-----------
 
+ACE_THREADS_DONT_INHERIT_LOG_MSG		Specify this if you don't want threads to inherit parent thread's ACE_Log_Msg properties.
 ACE_HAS_RECV_TIMEDWAIT			Platform has the MIT pthreads APIs for
 ACE_HAS_RECVFROM_TIMEDWAIT		timed send/recv operations
 ACE_HAS_RECVMSG_TIMEDWAIT
