@@ -1,3 +1,9 @@
+Thu Aug 22 16:00:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/README:
+
+	  Added some detailed usage notes for the LoadManager.
+
 Thu Aug 22 15:24:06 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
