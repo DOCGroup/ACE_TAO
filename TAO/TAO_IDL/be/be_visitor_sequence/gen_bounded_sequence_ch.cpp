@@ -75,9 +75,9 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   // Constructor
   *os << class_name << " (void)" << be_nl
       << "// Default constructor." << be_nl
-      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", 0, 0, CORBA::B_FALSE)" << be_nl
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
+      << ", 0, allocbuf (" << node->max_size () << "), CORBA::B_FALSE)" << be_nl
       << "{" << be_nl
-      << "  this->_allocate_buffer (" << node->max_size () << ");" << be_nl 
       << "}" << be_nl
       << be_nl;
 

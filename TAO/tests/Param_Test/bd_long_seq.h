@@ -63,6 +63,14 @@ public:
   // print all the values
 
 private:
+  // called by the 2 public versions of check_validity
+  CORBA::Boolean
+  Test_Bounded_Long_Sequence::check_validity_engine 
+            (const Param_Test::Bounded_Long_Seq &the_in,
+             const Param_Test::Bounded_Long_Seq &the_inout,
+             const Param_Test::Bounded_Long_Seq &the_out,
+             const Param_Test::Bounded_Long_Seq &the_ret);
+
   char *opname_;
   // operation name
 
@@ -77,6 +85,12 @@ private:
 
   Param_Test::Bounded_Long_Seq_var ret_;
   // return value
+
+  Param_Test::Bounded_Long_Seq dii_out_;
+  // DII out parameter
+
+  Param_Test::Bounded_Long_Seq dii_ret_;
+  // DII return value
 };
 
 #endif /* PARAM_TEST_BOUNDED_LONG_SEQUENCE_H */
