@@ -1,6 +1,3 @@
-// $Id$
-
-
 #include "IIOP_SSL_Connection_Handler.h"
 #include "IIOP_SSL_Transport.h"
 #include "SSLIOP_Connection_Handler.h"
@@ -9,7 +6,8 @@
 #include "tao/ORB.h"
 #include "tao/debug.h"
 
-ACE_RCSID (TAO_SSLIOP,
+
+ACE_RCSID (SSLIOP,
            IIOP_SSL_Connection_Handler,
            "$Id$")
 
@@ -52,8 +50,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_SSL_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_IIOP_SSL_Connection_Handler::
-TAO_IIOP_SSL_Connection_Handler (ACE_Thread_Manager *t)
+TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
+  ACE_Thread_Manager *t)
   : TAO_IIOP_Connection_Handler (t)
 {
   // This constructor should *never* get called, it is just here to
@@ -65,25 +63,23 @@ TAO_IIOP_SSL_Connection_Handler (ACE_Thread_Manager *t)
 }
 
 
-TAO_IIOP_SSL_Connection_Handler::
-TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
-                                 CORBA::Boolean /*flag*/,
-                                 void *arg)
-  : TAO_IIOP_Connection_Handler (orb_core,
-                                 (ACE_static_cast (
-                                    TAO_SSLIOP_Connection_Handler_State *,
-                                    arg))->tcp_properties)
+TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
+  TAO_ORB_Core *orb_core,
+  CORBA::Boolean /*flag*/,
+  void *arg)
+  : TAO_IIOP_Connection_Handler (
+      orb_core,
+      (static_cast<TAO::SSLIOP::Connection_Handler_State *> (arg))->tcp_properties)
 {
-  TAO_SSLIOP_Connection_Handler_State *s =
-    ACE_static_cast (TAO_SSLIOP_Connection_Handler_State *,
-                     arg);
+  TAO::SSLIOP::Connection_Handler_State *s =
+  static_cast<TAO::SSLIOP::Connection_Handler_State *> (arg);
 
-  TAO_IIOP_SSL_Transport* specific_transport = 0;
+  IIOP_SSL_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-           TAO_IIOP_SSL_Transport (this,
-                                   orb_core,
-                                   s->ssliop_current.in (),
-                                   0));
+           IIOP_SSL_Transport (this,
+                               orb_core,
+                               s->ssliop_current.in (),
+                               0));
 
   // Delete the transport with TAO_IIOP_Connection_Handler.
   delete this->transport ();
@@ -92,10 +88,8 @@ TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
   this->transport (specific_transport);
 }
 
-TAO_IIOP_SSL_Connection_Handler::
-~TAO_IIOP_SSL_Connection_Handler (void)
+TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler (void)
 {
 }
-
 
 // ****************************************************************

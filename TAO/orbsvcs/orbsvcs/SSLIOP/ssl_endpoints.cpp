@@ -87,7 +87,7 @@ void TAO_SSLEndpointSequence::_tao_any_destructor (
   )
 {
   TAO_SSLEndpointSequence * _tao_tmp_pointer =
-    ACE_static_cast (TAO_SSLEndpointSequence *, _tao_void_pointer);
+    static_cast<TAO_SSLEndpointSequence *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 

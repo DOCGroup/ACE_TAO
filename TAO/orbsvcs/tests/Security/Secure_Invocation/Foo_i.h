@@ -16,7 +16,7 @@
 #define SECURE_INVOCATION_FOO_I_H
 
 #include "FooS.h"
-#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
 
 class Foo_i : public virtual POA_Foo::Bar
             , public virtual PortableServer::RefCountServantBase
@@ -25,7 +25,7 @@ public:
 
   /// Constructor.
   Foo_i (CORBA::ORB_ptr,
-         SecurityLevel2::Current_ptr current);
+         SecurityLevel3::SecurityCurrent_ptr current);
 
   /// Test method.
   virtual void baz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -41,7 +41,7 @@ private:
   CORBA::ORB_var orb_;
 
   /// Reference to the "SecurityCurrent" object.
-  SecurityLevel2::Current_var current_;
+  SecurityLevel3::SecurityCurrent_var current_;
 
 };
 

@@ -3,7 +3,7 @@
 #include "Security_Current.h"
 #include "tao/debug.h"
 
-ACE_RCSID (TAO_Security,
+ACE_RCSID (Security,
            Security_Current,
            "$Id$")
 
@@ -29,7 +29,7 @@ TAO_Security_Current::get_attributes (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Security_Current_Impl *impl = this->implementation ();
+  TAO::Security::Current_Impl *impl = this->implementation ();
 
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
@@ -45,7 +45,7 @@ TAO_Security_Current::received_credentials (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Security_Current_Impl *impl = this->implementation ();
+  TAO::Security::Current_Impl *impl = this->implementation ();
 
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception

@@ -19,12 +19,10 @@ contents may differ):
 Activated as <IOR:...>
 (1768|1628) Received CORBA::NO_PERMISSION from server, as expected.
 
-Secure_Invocation test passed.
-
-Security::SecAttribute 0 -- Certificate Issuer
-===============================================
-/C=US/ST=CA/L=Irvine/O=UCI/OU=DOC/CN=Foo/Email=nobody@doc.ece.uci.edu
-
-Secure_Invocation test passed.
+ClientCredentials ID
+====================
+X509: 06
 
 Event loop finished.
+
+Secure_Invocation test passed.

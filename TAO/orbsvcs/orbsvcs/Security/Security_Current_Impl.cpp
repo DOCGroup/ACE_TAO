@@ -2,11 +2,11 @@
 
 #include "Security_Current_Impl.h"
 
-ACE_RCSID (TAO_Security,
-           Security_Current_Impl,
+ACE_RCSID (Security,
+           SL3_Security_Current_Impl,
            "$Id$")
 
 
-TAO_Security_Current_Impl::~TAO_Security_Current_Impl (void)
+TAO::Security::Current_Impl::~Current_Impl (void)
 {
 }

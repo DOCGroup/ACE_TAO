@@ -8,7 +8,7 @@
  *
  *  IIOP/SSL specific accept strategy
  *
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -31,55 +31,64 @@
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
 
-/**
- * @class TAO_SSLIOP_Accept_Strategy
- *
- * @brief SSLIOP-specific accept strategy that builds on the
- *        TAO_Accept_Strategy implementation.
- *
- * This accept strategy builds on on the TAO_Accept_Strategy
- * implementation.  It sub-classes that class, and overrides the
- * accept_svc_handler() method so that a timeout value may be passed
- * to the underlying peer acceptor.  This is necessary to defend
- * against a simple Denial-of-Service attack.
- * @par
- * Since SSL requires two handshakes, one TCP and one SSL, it is
- * possible for a malicious client to establish a TCP connection to
- * the SSL port, and never complete the SSL handshake.  The underlying
- * SSL passive connection code would block/hang waiting for the SSL
- * handshake to complete.  Given enough incomplete connections where
- * only the TCP handshake is completed, a server process could
- * potentially run out of available file descriptors, thus preventing
- * legitimate client connections from being established.
- * @par.
- * The timeout defense alluded to above bounds the time this sort of
- * DoS attack lasts.
- */
-class TAO_SSLIOP_Accept_Strategy
-  : public TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler,
-                               ACE_SSL_SOCK_ACCEPTOR>
+namespace TAO
 {
-public:
+  namespace SSLIOP
+  {
 
-  /// Constructor.
-  TAO_SSLIOP_Accept_Strategy (TAO_ORB_Core * orb_core,
-                              const ACE_Time_Value & timeout);
+    /**
+     * @class Accept_Strategy
+     *
+     * @brief SSLIOP-specific accept strategy that builds on the
+     *        TAO_Accept_Strategy implementation.
+     *
+     * This accept strategy builds on on the TAO_Accept_Strategy
+     * implementation.  It sub-classes that class, and overrides the
+     * accept_svc_handler() method so that a timeout value may be
+     * passed to the underlying peer acceptor.  This is necessary to
+     * defend against a simple Denial-of-Service attack.
+     * @par
+     * Since SSL requires two handshakes, one TCP and one SSL, it is
+     * possible for a malicious client to establish a TCP connection
+     * to the SSL port, and never complete the SSL handshake.  The
+     * underlying SSL passive connection code would block/hang waiting
+     * for the SSL handshake to complete.  Given enough incomplete
+     * connections where only the TCP handshake is completed, a server
+     * process could potentially run out of available file
+     * descriptors, thus preventing legitimate client connections from
+     * being established.
+     * @par.
+     * The timeout defense alluded to above bounds the time this sort of
+     * DoS attack lasts.
+     */
+    class Accept_Strategy
+      : public TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
+                                   ACE_SSL_SOCK_ACCEPTOR>
+    {
+    public:
 
-  /// Overridden method that forces a passive connection timeout value
-  /// to be passed to the underlying acceptor.
-  virtual int accept_svc_handler (handler_type * svc_handler);
+      /// Constructor.
+      Accept_Strategy (TAO_ORB_Core * orb_core,
+                       const ACE_Time_Value & timeout);
 
-private:
+      /// Overridden method that forces a passive connection timeout value
+      /// to be passed to the underlying acceptor.
+      virtual int accept_svc_handler (handler_type * svc_handler);
 
-  /// The accept() timeout.
-  /**
-   * This timeout includes the overall time to complete the SSL
-   * handshake.  This includes both the TCP handshake and the SSL
-   * handshake.
-   */
-  const ACE_Time_Value timeout_;
+    private:
 
-};
+      /// The accept() timeout.
+      /**
+       * This timeout includes the overall time to complete the SSL
+       * handshake.  This includes both the TCP handshake and the SSL
+       * handshake.
+       */
+      const ACE_Time_Value timeout_;
+
+    };
+
+  }  // End SSLIOP namespace
+}  // End TAO namespace
 
 
 #include /**/ "ace/post.h"

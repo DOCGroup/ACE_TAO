@@ -1,5 +1,4 @@
 #include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Current.h"
 #include "SSLIOP_Endpoint.h"
 
 #include "tao/debug.h"
@@ -23,9 +22,9 @@ ACE_RCSID (SSLIOP,
 
 // ****************************************************************
 
-TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
+TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
-  : TAO_SSL_SVC_HANDLER (t, 0 , 0),
+  : SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
     current_ (),
     tcp_properties_ (0)
@@ -38,44 +37,43 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
   ACE_ASSERT (0);
 }
 
-
-TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
+TAO::SSLIOP::Connection_Handler::Connection_Handler (
     TAO_ORB_Core *orb_core,
     CORBA::Boolean /* flag */, // SSLIOP does *not* support GIOPlite
     void *arg)
-  : TAO_SSL_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     current_ (),
     tcp_properties_ (0)
 {
-  TAO_SSLIOP_Connection_Handler_State *s =
-    ACE_static_cast (TAO_SSLIOP_Connection_Handler_State *, arg);
+  TAO::SSLIOP::Connection_Handler_State *s =
+    static_cast<TAO::SSLIOP::Connection_Handler_State *> (arg);
 
   this->tcp_properties_ = s->tcp_properties;
   this->current_ = s->ssliop_current;
 
-  TAO_SSLIOP_Transport* specific_transport = 0;
+  TAO::SSLIOP::Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-          TAO_SSLIOP_Transport (this, orb_core, 0));
+          TAO::SSLIOP::Transport (this, orb_core, 0));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
 
 
-TAO_SSLIOP_Connection_Handler::~TAO_SSLIOP_Connection_Handler (void)
+TAO::SSLIOP::Connection_Handler::~Connection_Handler (void)
 {
   delete this->transport ();
 }
 
 int
-TAO_SSLIOP_Connection_Handler::open_handler (void *v)
+TAO::SSLIOP::Connection_Handler::open_handler (void *v)
 {
   return this->open (v);
 }
 
 int
-TAO_SSLIOP_Connection_Handler::open (void *)
+TAO::SSLIOP::Connection_Handler::open (void *)
 {
   if (this->set_socket_option (this->peer (),
                                tcp_properties_->send_buffer_size,
@@ -142,7 +140,7 @@ TAO_SSLIOP_Connection_Handler::open (void *)
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof (local_as_string));
           ACE_ERROR ((LM_ERROR,
-                      "TAO(%P|%t) - TAO_SSLIOP_Connection_Handler::open, "
+                      "TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, "
                       "Holy Cow! The remote addr and "
                       "local addr are identical (%s == %s)\n",
                       remote_as_string, local_as_string));
@@ -178,19 +176,19 @@ TAO_SSLIOP_Connection_Handler::open (void *)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::resume_handler (void)
+TAO::SSLIOP::Connection_Handler::resume_handler (void)
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_SSLIOP_Connection_Handler::close_connection (void)
+TAO::SSLIOP::Connection_Handler::close_connection (void)
 {
   return this->close_connection_eh (this);
 }
 
 int
-TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO::SSLIOP::Connection_Handler::handle_input (ACE_HANDLE h)
 {
   const int result =
     this->handle_input_eh (h, this);
@@ -205,7 +203,7 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
+TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 {
   const int result =
     this->handle_output_eh (handle, this);
@@ -220,7 +218,7 @@ TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                                const void *)
 {
   // We don't use this upcall for I/O.  This is only used by the
@@ -230,7 +228,7 @@ TAO_SSLIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE,
+TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE,
                                              ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
@@ -238,7 +236,7 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-TAO_SSLIOP_Connection_Handler::close (u_long)
+TAO::SSLIOP::Connection_Handler::close (u_long)
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
   this->transport ()->remove_reference ();
@@ -246,20 +244,20 @@ TAO_SSLIOP_Connection_Handler::close (u_long)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::release_os_resources (void)
+TAO::SSLIOP::Connection_Handler::release_os_resources (void)
 {
   return this->peer().close ();
 }
 
 void
-TAO_SSLIOP_Connection_Handler::pos_io_hook (int & return_value)
+TAO::SSLIOP::Connection_Handler::pos_io_hook (int & return_value)
 {
   if (return_value == 0 && ::SSL_pending (this->peer ().ssl ()))
     return_value = 1;
 }
 
 int
-TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
+TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
 {
   ACE_INET_Addr addr;
 
@@ -278,7 +276,7 @@ TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
   // @@ This is broken.  We need to include the SecurityAssociation
   //    options to be able to truly distinguish cached SSLIOP
   //    transports.
-  SSLIOP::SSL ssl =
+  const ::SSLIOP::SSL ssl =
     {
       0,                        // target_supports
       0,                        // target_requires
@@ -300,7 +298,7 @@ TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::process_listen_point_list (
+TAO::SSLIOP::Connection_Handler::process_listen_point_list (
   IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
@@ -317,7 +315,8 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Listening port [%d] on [%s]\n",
-                      listen_point.port, listen_point.host.in ()));
+                      listen_point.port,
+                      listen_point.host.in ()));
         }
 
       // Construct an  IIOP_Endpoint object
@@ -326,7 +325,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
       // Note that the port in the ACE_INET_Addr is actually the SSL
       // port!
       TAO_IIOP_Endpoint tmpoint (addr,
-        this->orb_core()->orb_params()->use_dotted_decimal_addresses());
+        this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // @@ This is broken.  We need to include the
       //    SecurityAssociation options so that the invocation to the
@@ -335,7 +334,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
       //    way to send the SecurityAssociation options with the
       //    IIOP::ListenPointList.  Presumably the new Firewall
       //    specification will address this deficiency.
-      SSLIOP::SSL ssl =
+      const ::SSLIOP::SSL ssl =
         {
           0,                        // target_supports
           0,                        // target_requires
@@ -366,10 +365,10 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 }
 
 int
-TAO_SSLIOP_Connection_Handler::setup_ssl_state (
-  TAO_SSLIOP_Current_Impl *&previous_current_impl,
-  TAO_SSLIOP_Current_Impl *new_current_impl,
-  CORBA::Boolean &setup_done)
+TAO::SSLIOP::Connection_Handler::setup_ssl_state (
+  TAO::SSLIOP::Current_Impl *&previous_current_impl,
+  TAO::SSLIOP::Current_Impl *new_current_impl,
+  bool &setup_done)
 {
   // Make the SSL session state available to the SSLIOP::Current
   // TSS object.
@@ -384,9 +383,9 @@ TAO_SSLIOP_Connection_Handler::setup_ssl_state (
 }
 
 void
-TAO_SSLIOP_Connection_Handler::teardown_ssl_state (
-  TAO_SSLIOP_Current_Impl *previous_current_impl,
-  CORBA::Boolean &setup_done)
+TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
+  TAO::SSLIOP::Current_Impl *previous_current_impl,
+  bool &setup_done)
 {
   this->current_->teardown (previous_current_impl,
                             setup_done);
