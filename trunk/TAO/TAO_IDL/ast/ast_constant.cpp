@@ -120,7 +120,7 @@ AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
     case AST_Expression::EV_longdouble:
       return "LongDouble";
     default:
-      return 0;
+      break;
     }
 
   return 0;
