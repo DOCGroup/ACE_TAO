@@ -16,7 +16,6 @@
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
-#include "tao/InconsistentTypeCodeC.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
 #include "tao/IIOP_Profile.h"
@@ -67,49 +66,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
                                   TAO_CORBA_ORB_RUN_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-// Typecode stuff for the InconsistentTypeCode exception
-static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
-{
-  TAO_ENCAP_BYTE_ORDER,   // byte order
-  47,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f4f52),
-  ACE_NTOHL (0x422f496e),
-  ACE_NTOHL (0x636f6e73),
-  ACE_NTOHL (0x69737465),
-  ACE_NTOHL (0x6e745479),
-  ACE_NTOHL (0x7065436f),
-  ACE_NTOHL (0x64653a31),
-  ACE_NTOHL (0x2e3000fd), // repository ID =
-                          // IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0
-  21,
-  ACE_NTOHL (0x496e636f),
-  ACE_NTOHL (0x6e736973),
-  ACE_NTOHL (0x74656e74),
-  ACE_NTOHL (0x54797065),
-  ACE_NTOHL (0x436f6465),
-  ACE_NTOHL (0xfdfdfd),   // name = InconsistentTypeCode
-  0,                      // member count
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_InconsistentTypeCode (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_ORB_InconsistentTypeCode),
-    (char *) &_oc_CORBA_ORB_InconsistentTypeCode,
-    0,
-    sizeof (CORBA_ORB_InconsistentTypeCode));
-
-// ORB exception typecode initialization.
-CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode =
-  &_tc_TAO_tc_CORBA_ORB_InconsistentTypeCode;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // = Static initialization.
 

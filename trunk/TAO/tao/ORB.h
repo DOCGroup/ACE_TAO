@@ -232,6 +232,11 @@ public:
   typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
   typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
 
+  typedef char *ObjectId;
+  typedef CORBA::String_var ObjectId_var;
+  typedef CORBA::String_out ObjectId_out;
+  static CORBA::TypeCode_ptr _tc_ObjectId;
+
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
   // complete, it should be freed up using <CORBA::release()>.
