@@ -1,3 +1,8 @@
+Mon Oct 18 23:13:55 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Web_Crawler/URL_Visitor.cpp: Updated some broken
+	  template instantiations.
+
 Mon Oct 18 21:32:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	Updates that remove need to use _GNU_SOURCE macro on Linux/glibc
