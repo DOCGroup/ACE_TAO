@@ -1259,7 +1259,7 @@ TAO_YY_RULE_SETUP
 		  /* Skip the quotes */
 		  char *tmp = ace_tao_yytext;
 		  tmp[strlen(tmp)-1] = '\0';
-		  tao_yylval.sval = new String(tmp + 1);
+		  tao_yylval.sval = new UTL_String(tmp + 1);
 		  return IDL_STRING_LITERAL;
 	      	}
 	TAO_YY_BREAK
@@ -2339,7 +2339,7 @@ idl_parse_line_and_file(char *buf)
     continue;
   *r = 0;
   if (*h == '\0')
-    idl_global->set_filename((const char *) new String("standard input"));
+    idl_global->set_filename(new UTL_String("standard input"));
   else
     {
       long i;
@@ -2354,7 +2354,7 @@ idl_parse_line_and_file(char *buf)
 	  h[i] = h[j];
         }
       h[i] = '\0';
-      idl_global->set_filename((const char *) new String(h));
+      idl_global->set_filename(new UTL_String(h));
     }
   int in_main_file = I_FALSE;
   if (idl_global->filename()->compare(idl_global->real_filename())
@@ -2404,9 +2404,9 @@ idl_store_pragma(char *buf)
   *sp = '\0';
   UTL_StrList *p = idl_global->pragmas();
   if (p == NULL)
-    idl_global->set_pragmas(new UTL_StrList(new String(buf), NULL));
+    idl_global->set_pragmas(new UTL_StrList(new UTL_String(buf), NULL));
   else {
-    p->nconc(new UTL_StrList(new String(buf), NULL));
+    p->nconc(new UTL_StrList(new UTL_String(buf), NULL));
     idl_global->set_pragmas(p);
   }
 }

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_expression.cpp
 //
@@ -14,9 +14,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -30,13 +30,13 @@ ACE_RCSID(be, be_expression, "$Id$")
  */
 
 // the constructors
-be_expression::be_expression (UTL_ScopedName *n) 
-  : AST_Expression (n) 
+be_expression::be_expression (UTL_ScopedName *n)
+  : AST_Expression (n)
 {
 }
 
 be_expression::be_expression (AST_Expression *b, AST_Expression::ExprType t)
-  : AST_Expression (b, t) 
+  : AST_Expression (b, t)
 {
 }
 
@@ -47,8 +47,8 @@ be_expression::be_expression (AST_Expression::ExprComb c,
 {
 }
 
-be_expression::be_expression (long l) 
-  : AST_Expression (l) 
+be_expression::be_expression (long l)
+  : AST_Expression (l)
 {
 }
 
@@ -57,23 +57,23 @@ be_expression::be_expression (long l, AST_Expression::ExprType t)
 {
 }
 
-be_expression::be_expression (unsigned long l) 
-  : AST_Expression (l) 
+be_expression::be_expression (unsigned long l)
+  : AST_Expression (l)
 {
 }
 
-be_expression::be_expression (String *s) 
-  : AST_Expression (s) 
+be_expression::be_expression (UTL_String *s)
+  : AST_Expression (s)
 {
 }
 
-be_expression::be_expression (char c) 
-  : AST_Expression (c) 
+be_expression::be_expression (char c)
+  : AST_Expression (c)
 {
 }
 
-be_expression::be_expression (double d) 
-  : AST_Expression (d) 
+be_expression::be_expression (double d)
+  : AST_Expression (d)
 {
 }
 

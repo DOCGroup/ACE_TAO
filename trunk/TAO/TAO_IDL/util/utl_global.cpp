@@ -260,45 +260,45 @@ IDL_GlobalData::set_lineno (long n)
 }
 
 // Get or set file name being read now
-String *
+UTL_String *
 IDL_GlobalData::filename (void)
 {
   return this->pd_filename;
 }
 void
-IDL_GlobalData::set_filename (const char *f)
+IDL_GlobalData::set_filename (UTL_String *s)
 {
   if (this->pd_filename != 0)
     delete this->pd_filename;
-  ACE_NEW (this->pd_filename, UTL_String(f));
+  this->pd_filename = s;
 }
 
 // Get or set main file name
-String *
+UTL_String *
 IDL_GlobalData::main_filename (void)
 {
   return this->pd_main_filename;
 }
 void
-IDL_GlobalData::set_main_filename (const char *n)
+IDL_GlobalData::set_main_filename (UTL_String *n)
 {
   if (this->pd_main_filename != 0)
     delete this->pd_main_filename;
-  ACE_NEW (this->pd_main_filename, UTL_String(n));
+  this->pd_main_filename = n;
 }
 
 // Get or set real file name
-String *
+UTL_String *
 IDL_GlobalData::real_filename (void)
 {
   return this->pd_real_filename;
 }
 void
-IDL_GlobalData::set_real_filename (const char *n)
+IDL_GlobalData::set_real_filename (UTL_String *n)
 {
   if (this->pd_real_filename != 0)
     delete this->pd_real_filename;
-  ACE_NEW (this->pd_real_filename, UTL_String(n));
+  this->pd_real_filename = n;
 }
 
 // Get or set indicator whether import is on
@@ -331,18 +331,18 @@ IDL_GlobalData::set_in_main_file (idl_bool is_in)
 }
 
 // Get or set stripped file name
-String *
+UTL_String *
 IDL_GlobalData::stripped_filename (void)
 {
   return this->pd_stripped_filename;
 }
 void
-IDL_GlobalData::set_stripped_filename (const char *nm)
+IDL_GlobalData::set_stripped_filename (UTL_String *nm)
 {
   if (this->pd_stripped_filename != 0)
     delete this->pd_stripped_filename;
 
-  ACE_NEW (this->pd_stripped_filename, UTL_String(nm));
+  this->pd_stripped_filename = nm;
 }
 
 // Get or set cache value for argv[0]
@@ -451,7 +451,7 @@ IDL_GlobalData::set_read_from_stdin (idl_bool r)
 
 // Have we seen this include file name before?
 long
-IDL_GlobalData::seen_include_file_before (String *n)
+IDL_GlobalData::seen_include_file_before (UTL_String *n)
 {
   unsigned long i;
 
@@ -463,9 +463,9 @@ IDL_GlobalData::seen_include_file_before (String *n)
 
 // Store a name of an #include file
 void
-IDL_GlobalData::store_include_file_name (String *n)
+IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
-  String        **o_include_file_names;
+  UTL_String        **o_include_file_names;
   unsigned long o_n_alloced_file_names, i;
 
   /*
@@ -483,14 +483,14 @@ IDL_GlobalData::store_include_file_name (String *n)
       if (this->pd_n_alloced_file_names == 0)
         {
           this->pd_n_alloced_file_names = INCREMENT;
-          this->pd_include_file_names = new String *[this->pd_n_alloced_file_names];
+          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
         }
       else
         {
           o_include_file_names = this->pd_include_file_names;
           o_n_alloced_file_names = this->pd_n_alloced_file_names;
           this->pd_n_alloced_file_names += INCREMENT;
-          this->pd_include_file_names = new String *[this->pd_n_alloced_file_names];
+          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
           for (i = 0; i < o_n_alloced_file_names; i++)
             this->pd_include_file_names[i] = o_include_file_names[i];
           delete [] o_include_file_names;
@@ -502,12 +502,12 @@ IDL_GlobalData::store_include_file_name (String *n)
 }
 
 void
-IDL_GlobalData::set_include_file_names (String **ns)
+IDL_GlobalData::set_include_file_names (UTL_String **ns)
 {
   this->pd_include_file_names = ns;
 }
 
-String **
+UTL_String **
 IDL_GlobalData::include_file_names (void)
 {
   return this->pd_include_file_names;
@@ -715,13 +715,13 @@ IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
 }
 
 // returns the IDL source file being copiled
-String* IDL_GlobalData::idl_src_file()
+UTL_String* IDL_GlobalData::idl_src_file()
 {
   return this->pd_idl_src_file;
 }
 
 // set the source IDL file that is being parsed
-void IDL_GlobalData::idl_src_file(String *s)
+void IDL_GlobalData::idl_src_file(UTL_String *s)
 {
   this->pd_idl_src_file = s;
 }
@@ -744,7 +744,7 @@ IDL_GlobalData::changing_standard_include_files (void)
 
 /************ Helper functions **************/
 static const char*
-be_change_idl_file_extension (String* idl_file,
+be_change_idl_file_extension (UTL_String* idl_file,
                               const char *new_extension,
                               int base_name_only = 0)
 {
@@ -756,7 +756,7 @@ be_change_idl_file_extension (String* idl_file,
   static char fname[MAXPATHLEN];
   ACE_OS::memset (fname, 0, MAXPATHLEN);
 
-  // Get the char* from the String.
+  // Get the char* from the UTL_String.
   const char* string = idl_file->get_string ();
 
   // Get the base part of the filename, we try several extensions
@@ -817,7 +817,7 @@ be_change_idl_file_extension (String* idl_file,
 }
 
 const char *
-IDL_GlobalData::be_get_client_hdr (String *idl_file_name,
+IDL_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
                                    int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -826,14 +826,14 @@ IDL_GlobalData::be_get_client_hdr (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_client_stub (String *idl_file_name)
+IDL_GlobalData::be_get_client_stub (UTL_String *idl_file_name)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        idl_global->client_stub_ending ());
 }
 
 const char *
-IDL_GlobalData::be_get_client_inline (String *idl_file_name,
+IDL_GlobalData::be_get_client_inline (UTL_String *idl_file_name,
                                       int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -842,7 +842,7 @@ IDL_GlobalData::be_get_client_inline (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_server_hdr (String *idl_file_name,
+IDL_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
                                    int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -851,7 +851,7 @@ IDL_GlobalData::be_get_server_hdr (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_implementation_hdr (String *idl_file_name,
+IDL_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
                                    int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -860,7 +860,7 @@ IDL_GlobalData::be_get_implementation_hdr (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_implementation_skel (String *idl_file_name,
+IDL_GlobalData::be_get_implementation_skel (UTL_String *idl_file_name,
                                    int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -869,7 +869,7 @@ IDL_GlobalData::be_get_implementation_skel (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name,
+IDL_GlobalData::be_get_server_template_hdr (UTL_String *idl_file_name,
                                             int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -878,14 +878,14 @@ IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_server_skeleton (String *idl_file_name)
+IDL_GlobalData::be_get_server_skeleton (UTL_String *idl_file_name)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        idl_global->server_skeleton_ending ());
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_skeleton (String *idl_file_name,
+IDL_GlobalData::be_get_server_template_skeleton (UTL_String *idl_file_name,
                                                  int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -894,7 +894,7 @@ IDL_GlobalData::be_get_server_template_skeleton (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_server_inline (String *idl_file_name,
+IDL_GlobalData::be_get_server_inline (UTL_String *idl_file_name,
                                       int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -903,7 +903,7 @@ IDL_GlobalData::be_get_server_inline (String *idl_file_name,
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_inline (String *idl_file_name,
+IDL_GlobalData::be_get_server_template_inline (UTL_String *idl_file_name,
                                                int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,

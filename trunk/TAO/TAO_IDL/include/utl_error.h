@@ -183,7 +183,7 @@ public:
   void  not_a_type(AST_Decl *d);
 
   // Report back-end error
-  void  back_end(long lineno, String *s);
+  void  back_end(long lineno, UTL_String *s);
 };
 
 #endif           // _UTL_ERROR_UTL_ERROR_HH

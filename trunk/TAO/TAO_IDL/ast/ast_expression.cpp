@@ -311,7 +311,7 @@ AST_Expression::AST_Expression(unsigned char ov)
 /*
  * An AST_Expression denotign a string (char * encapsulated as a String)
  */
-AST_Expression::AST_Expression(String *sv)
+AST_Expression::AST_Expression(UTL_String *sv)
 	      : pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
@@ -1712,13 +1712,13 @@ AST_Expression::operator==(AST_Expression *vc)
   case EV_bool:
     return (pd_ev->u.lval == vc->ev()->u.lval) ? I_TRUE : I_FALSE;
   case EV_string:
-    if (pd_ev->u.strval == NULL) 
+    if (pd_ev->u.strval == NULL)
       {
         if (vc->ev()->u.strval == NULL)
 	        return I_TRUE;
         else
 	        return I_FALSE;
-      } 
+      }
     else if (vc->ev()->u.strval == NULL)
       return I_FALSE;
     else
@@ -2002,14 +2002,14 @@ AST_Expression::set_line(long l)
   pd_line = l;
 }
 
-String *
+UTL_String *
 AST_Expression::file_name()
 {
   return pd_file_name;
 }
 
 void
-AST_Expression::set_file_name(String *f)
+AST_Expression::set_file_name(UTL_String *f)
 {
   pd_file_name = f;
 }

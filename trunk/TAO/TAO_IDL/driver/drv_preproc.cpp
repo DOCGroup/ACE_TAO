@@ -325,10 +325,11 @@ DRV_pre_proc(const char *myfile)
 
   if (strcmp(myfile, "standard input") == 0)
     {
-      idl_global->set_filename(tmp_ifile);
-      idl_global->set_main_filename(tmp_ifile);
-      idl_global->set_stripped_filename(DRV_stripped_name(tmp_ifile));
-      idl_global->set_real_filename(tmp_ifile);
+      idl_global->set_filename(new UTL_String (tmp_ifile));
+      idl_global->set_main_filename(new UTL_String (tmp_ifile));
+      UTL_String* stripped = new UTL_String (DRV_stripped_name(tmp_ifile));
+      idl_global->set_stripped_filename(stripped);
+      idl_global->set_real_filename(new UTL_String (tmp_ifile));
       DRV_copy_input(stdin, tmp_ifile, "standard input");
       idl_global->set_read_from_stdin(I_TRUE);
     }
@@ -338,11 +339,11 @@ DRV_pre_proc(const char *myfile)
       DRV_copy_input(fd, tmp_ifile, myfile);
       fclose(fd);
       idl_global->set_read_from_stdin(I_FALSE);
-      idl_global->set_filename(myfile);
-      idl_global->set_main_filename(myfile);
+      idl_global->set_filename(new UTL_String (myfile));
+      idl_global->set_main_filename(new UTL_String (myfile));
       ACE_Auto_String_Free tmp (ACE_OS::strdup (myfile));
-      idl_global->set_stripped_filename(tmp.get ());
-      idl_global->set_real_filename(tmp_ifile);
+      idl_global->set_stripped_filename(new UTL_String (tmp.get ()));
+      idl_global->set_real_filename(new UTL_String (tmp_ifile));
     }
 
   // We use ACE instead of the (low level) fork facilities, this also
