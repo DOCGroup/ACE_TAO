@@ -39,6 +39,15 @@ Any_Test_i::try_an_any (const CORBA::Any &a,  CORBA::Environment &env)
       AnyAnalyser anyAnalyser_ = AnyAnalyser ("stdout");
 
       TAO_CHECK_ENV;
+
+      Weapons *weapons_ = (Weapons *)a.value();
+       
+      cout << "Adr weapon5 status:" << &(weapons_->weapon5_status) << endl;
+      cout << "Adr first double: " << &(weapons_->utilization) << endl;
+      cout << "Adr first double: " << &(weapons_->overhead) << endl;
+      cout << "Adr util: " << &(weapons_->utilization) << endl;
+      cout << "utilization: " << weapons_->utilization << endl;
+      cout << "ArrTime: " << weapons_->arrival_time << endl;
       
       anyAnalyser_.printAny (a);      
     }
