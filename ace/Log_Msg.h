@@ -330,12 +330,12 @@ public:
   ACE_Log_Msg_Callback *msg_callback (void) const;
 
   /**
-   * Set a new backend object and return the existing backend to 
+   * Set a new backend object and return the existing backend to
    * allow "chaining". Note that as opposit to <ACE_Log_Msg_Callback>
    * <ACE_Log_Msg_Backend> is a per-process entity.
    *
    * Note: Be aware that because of the current architecture there is
-   * no guarantee that open (), reset () and close () will be called 
+   * no guarantee that open (), reset () and close () will be called
    * on a backend object.
    *
    */
@@ -466,6 +466,7 @@ public:
    *  + 'p': print out the appropriate errno message from sys_errlist,
    *         e.g., as done by perror()
    *  + 'Q': print out the uint64 number
+   *  + '@': print a void* pointer (in hexadecimal)
    *  + 'r': call the function pointed to by the corresponding argument
    *  + 'R': print return status
    *  + 'S': print out the appropriate _sys_siglist entry corresponding
