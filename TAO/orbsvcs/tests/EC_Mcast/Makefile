@@ -38,7 +38,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -56,6 +55,46 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -72,20 +111,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -93,29 +118,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
@@ -173,13 +175,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.i \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -219,6 +221,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
@@ -265,11 +268,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
@@ -325,14 +327,19 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
@@ -349,6 +356,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_UDP_Admin.h \
+ EC_Mcast.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

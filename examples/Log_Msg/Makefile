@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for testing the Log_Msg logger
 #----------------------------------------------------------------------------
@@ -44,6 +44,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
