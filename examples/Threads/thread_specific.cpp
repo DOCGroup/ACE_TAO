@@ -59,7 +59,7 @@ int Errno::flags_;
 static ACE_TSS<Errno> tss_error;
 
 // Serializes output via cout.
-static ACE_SYNCH_MUTEX lock;
+static ACE_SYNCH_MUTEX printf_lock;
 
 #if defined (ACE_HAS_THREADS)
 typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
@@ -80,7 +80,11 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
+#if defined (ACE_HAS_64BIT_LONGS)
+  int count = long (c);
+#else /* ! ACE_HAS_64BIT_LONGS */
   int count = int (c);
+#endif /* ! ACE_HAS_64BIT_LONGS */
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
@@ -99,25 +103,25 @@ worker (void *c)
   for (int i = 0; i < count; i++)
     {
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
       ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
 
       if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       delete ip;
 
       if (ACE_OS::thr_keyfree (key) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -134,35 +138,35 @@ worker (void *c)
         ACE_hthread_t handle;
         ACE_Thread::self (handle);
 
-	// Use the guard to serialize access to printf...
-	ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
+        // Use the guard to serialize access to printf...
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
-	ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
-		handle, tss_error->error (), tss_error->line (),
-		tss_error->flags () );
+        ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
+                handle, tss_error->error (), tss_error->line (),
+                tss_error->flags () );
       }
       key = ACE_OS::NULL_key;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
       ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
 
       if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
       delete ip;
 
       if (ACE_OS::thr_keyfree (key) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting\n"));
@@ -191,9 +195,9 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (threads,
-					       ACE_THR_FUNC (&worker),
-					       (void *) count,
-					       THR_BOUND | THR_DETACHED) == -1)
+                                               ACE_THR_FUNC (&worker),
+                                               (void *) count,
+                                               THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -215,7 +219,7 @@ int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "ACE doesn't support support threads on this platform (yet)\n"),
-		    -1);
+                     "ACE doesn't support support threads on this platform (yet)\n"),
+                    -1);
 }
 #endif /* ACE_HAS_THREADS */
