@@ -1,3 +1,9 @@
+Thu May 10 19:33:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/ARGV_Test.cpp:
+          Fixed argv, it should be an ACE_TCHAR, add missing ACE_TEXT()
+          and removed superfluous one.
+
 Thu May 10 18:19:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ACE-INSTALL.html:
