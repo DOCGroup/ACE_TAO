@@ -58,6 +58,7 @@ NAMES = \
 	OrdMultiSet_Test \
 	OS_Test \
 	Pipe_Test \
+	Proactor_Test \
 	Priority_Buffer_Test \
 	Priority_Reactor_Test \
 	Priority_Task_Test \
