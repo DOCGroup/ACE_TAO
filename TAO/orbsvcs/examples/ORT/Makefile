@@ -45,7 +45,7 @@ SERVER_OBJS = \
   Server_IORInterceptor.o \
   server.o
 
-TAO_IDLFLAGS += -Ge 1 -Gv
+TAO_IDLFLAGS += -Ge 1
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
