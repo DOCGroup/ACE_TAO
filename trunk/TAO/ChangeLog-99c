@@ -1,3 +1,7 @@
+Mon Aug 30 15:56:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Interceptors/Makefile: Updated dependencies.
+
 Mon Aug 30 15:15:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Makefile:
@@ -5,13 +9,13 @@ Mon Aug 30 15:15:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* rules.tao.GNU:
 	  Added a number of new classes to implement the
 	  endpoint-per-priority concurrency strategy.  In this strategy
-	  each priority level is assigned a different reactor, threads use 
+	  each priority level is assigned a different reactor, threads use
 	  the reactor for their priority level; acceptors are also bound
 	  to the reactor of their priority level, as specificied in the
 	  command-line.
 	  Since the priority is embedded in the IOR using a tagged
 	  component the client can use that to select which endpoint it
-	  will use, preserving priority end-to-end (the client-side is not 
+	  will use, preserving priority end-to-end (the client-side is not
 	  implemented yet).
 	  This achieves total isolation of threads running at different
 	  priorities.
@@ -22,7 +26,7 @@ Mon Aug 30 15:15:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Helper class that creates the threads to run the ORB based on
 	  the endpoints (and their priorities) as specified in the
 	  command-line.
-	  The user is not required to create the threads using this class, 
+	  The user is not required to create the threads using this class,
 	  but it is much simpler to do so.
 
 	* tao/Reactor_Registry.h:
@@ -38,15 +42,15 @@ Mon Aug 30 15:15:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Reactor_Per_Priority.h:
 	* tao/Reactor_Per_Priority.i:
 	* tao/Reactor_Per_Priority.cpp:
-	  Two simple implementations of the Reactor_Registry strategy. The 
+	  Two simple implementations of the Reactor_Registry strategy. The
 	  first one creates a single reactor for the ORB. The second one
 	  creates a new reactor for each priority level.
 
 	* tao/rtcorbafwd.h:
 	* tao/rtcorbafwd.i:
 	* tao/rtcorbafwd.cpp:
-	  Some of the new features use types and interfaces defined in the 
-	  RTCORBA spec, we added a 
+	  Some of the new features use types and interfaces defined in the
+	  RTCORBA spec, we added a
 
 	* tao/Priority_Mapping.h:
 	* tao/Priority_Mapping.i:
