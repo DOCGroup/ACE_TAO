@@ -1,3 +1,11 @@
+Wed Jun 20 10:42:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Disabled the TAO/tests/Exposed_Policies test from being
+	  run under minimum builds, since it needs CORBA messaging
+	  and RTCORBA.
+
 Wed Jun 20 09:17:46 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* tests/Max_Default_Port_Test.dsp (SOURCE): Fixed the release

@@ -97,7 +97,7 @@ TAO/tests/Queued_Message_Test/run_test.pl
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1
-TAO/tests/Exposed_Policies/run_test.pl
+TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
