@@ -483,7 +483,8 @@ public:
                       ACE_HANDLE accept_handle,
                       const void *act,
                       int priority,
-                    int signal_number) = 0;
+                      int signal_number,
+                      int addr_family) = 0;
 
 protected:
   /// Do-nothing constructor.

@@ -589,14 +589,16 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
                            ACE_HANDLE accept_handle,
                            const void *act,
                            int priority,
-                           int signal_number)
+                           int signal_number,
+                           int addr_family)
 {
   return this->implementation_->accept (message_block,
                                         bytes_to_read,
                                         accept_handle,
                                         act,
                                         priority,
-                                        signal_number);
+                                        signal_number,
+                                        addr_family);
 }
 
 ACE_Asynch_Operation_Impl *

@@ -40,8 +40,8 @@ ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
   //this->asynch_accept_.close ();
 
   // Close down the listen socket
-  // if (this->listen_handle_ != ACE_INVALID_HANDLE)
-  //   ACE_OS::closesocket (this->listen_handle_);
+  if (this->listen_handle_ != ACE_INVALID_HANDLE)
+    ACE_OS::closesocket (this->listen_handle_);
 }
 
 template <class HANDLER> int
@@ -62,6 +62,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   this->bytes_to_read_ = bytes_to_read;
   this->validate_new_connection_ = validate_new_connection;
   this->reissue_accept_ = reissue_accept;
+  this->addr_family_ = address.get_type ();
 
   // Create the listener socket
   this->listen_handle_ = ACE_OS::socket (address.get_type (), SOCK_STREAM, 0);
@@ -110,8 +111,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   if (address == sa &&
       ACE::bind_port (this->listen_handle_,
-                                   INADDR_ANY,
-                                   address.get_type()) == -1)
+                      INADDR_ANY,
+                      address.get_type()) == -1)
     {
       ACE_Errno_Guard g (errno);
       ACE_ERROR ((LM_ERROR,
@@ -200,7 +201,14 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
   ACE_TRACE ("ACE_Asynch_Acceptor<>::accept");
 
   ACE_Message_Block *message_block = 0;
-  size_t space_needed = bytes_to_read + 2 * this->address_size ();
+  // The space_needed calculation is drive by needs of Windows. POSIX doesn't
+  // need to extra 16 bytes, but it doesn't hurt.
+  size_t space_needed = sizeof (sockaddr_in) + 16;
+#if defined (ACE_HAS_IPV6)
+  if (this->addr_family_ = PF_INET6)
+    space_needed = sizeof (sockaddr_in6) + 16;
+#endif /* ACE_HAS_IPV6 */
+  space_needed = (2 * space_needed) + bytes_to_read;
 
   // Create a new message block big enough for the addresses and data
   ACE_NEW_RETURN (message_block,
@@ -211,7 +219,10 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
   if (this->asynch_accept_.accept (*message_block,
                                    bytes_to_read,
                                    ACE_INVALID_HANDLE,
-                                   act) == -1)
+                                   act,
+                                   0,
+                                   ACE_SIGRTMIN,
+                                   this->addr_family_) == -1)
     {
       // Cleanup on error
       message_block->release ();
@@ -381,11 +392,17 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   sockaddr *remote_addr = 0;
   int local_size = 0;
   int remote_size = 0;
+  // This matches setup in accept().
+  size_t addr_size = sizeof (sockaddr_in) + 16;
+#if defined (ACE_HAS_IPV6)
+  if (this->addr_family_ == PF_INET6)
+    addr_size = sizeof (sockaddr_in6) + 16;
+#endif /* ACE_HAS_IPV6 */
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
                           static_cast<DWORD> (this->bytes_to_read_),
-                          static_cast<DWORD> (this->address_size ()),
-                          static_cast<DWORD> (this->address_size ()),
+                          static_cast<DWORD> (addr_size),
+                          static_cast<DWORD> (addr_size),
                           &local_addr,
                           &local_size,
                           &remote_addr,

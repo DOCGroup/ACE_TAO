@@ -825,28 +825,44 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto <bytes_to_read> will be read and stored in the
-   * <message_block>.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
-   * handle will be created. Priority of the
-   * operation is specified by <priority>. On POSIX4-Unix, this is
-   * supported. Works like <nice> in Unix. Negative values are not
-   * allowed. 0 means priority of the operation same as the process
-   * priority. 1 means priority of the operation is one less than
-   * process. And so forth. On Win32, this is a no-op.
-   *
-   * <message_block> must be specified. This is because the address of
-   * the new connection is placed at the end of this buffer.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
-   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   * handler specified to @c open().
+   *   @param message_block   A message block to receive initial data, as well
+   *                          as the local and remote addresses when the
+   *                          connection is made. Since the block receives
+   *                          the addresses regardless of whether or not
+   *                          initial data is available or requested, the
+   *                          message block size must be at least
+   *                          @a bytes_to_read plus two times the size of
+   *                          the addresses used (IPv4 or IPv6).
+   *   @param bytes_to_read   The maximum number of bytes of initial data
+   *                          to read into @a message_block.
+   *   @param accept_handle   The handle that the new connection will be
+   *                          accepted on. If @c INVALID_HANDLE, a new
+   *                          handle will be created using @a addr_family.
+   *   @param act             Value to be passed in result when operation
+   *                          completes.
+   *   @param priority        Priority of the operation. On POSIX4-Unix, this
+   *                          is supported. Works like @c nice in Unix.
+   *                          Negative values are not allowed. 0 means
+   *                          priority of the operation same as the process
+   *                          priority. 1 means priority of the operation is
+   *                          one less than process. And so forth.
+   *                          On Win32, this argument is ignored.
+   *   @param signal_number   The POSIX4 real-time signal number to be used
+   *                          for the operation. Value range is from
+   *                          @c ACE_SIGRTMIN to @c ACE_SIGRTMAX.
+   *                          This argument is ignored on non-POSIX4 systems.
+   *   @param addr_family     The address family to use if @a accept_handle
+   *                          is @c ACE_INVALID_HANDLE and a new handle must
+   *                          be opened. Values are @c AF_INET and @c PF_INET6.
    */
   int accept (ACE_Message_Block &message_block,
               size_t bytes_to_read,
               ACE_HANDLE accept_handle = ACE_INVALID_HANDLE,
               const void *act = 0,
               int priority = 0,
-              int signal_number = ACE_SIGRTMIN);
+              int signal_number = ACE_SIGRTMIN,
+              int addr_family = AF_INET);
 
   /// Return the underlying implementation class.
   //  (this should be protected...)

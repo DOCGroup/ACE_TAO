@@ -697,7 +697,8 @@ public:
               ACE_HANDLE accept_handle,
               const void *act,
               int priority,
-              int signal_number = 0);
+              int signal_number = 0,
+              int addr_family = AF_INET);
 
   /**
    *  Cancel all pending pseudo-asynchronus requests
