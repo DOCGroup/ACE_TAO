@@ -173,7 +173,7 @@ TAO_AV_RTCP::parse_sr (rtcphdr* rh,
                        ACE_UINT32 addr,
                        TAO_AV_SourceManager *source_manager)
 {
-  rtcp_sr* sr = (rtcp_sr*) (rh + 1);
+  rtcp_sr* sr = ACE_reinterpret_cast (rtcp_sr*, (rh + 1));
   TAO_AV_Source* s;
   ACE_UINT32 ssrc = rh->rh_ssrc;
   if (ps->srcid () != ssrc)
@@ -186,7 +186,7 @@ TAO_AV_RTCP::parse_sr (rtcphdr* rh,
               ntohl (sr->sr_ntp.lower) >> 16);
 
   int cnt = flags >> 8 & 0x1f;
-  parse_rr_records (ssrc, (rtcp_rr*) (sr + 1), cnt, ep, addr);
+  parse_rr_records (ssrc, ACE_reinterpret_cast (rtcp_rr*, (sr + 1)), cnt, ep, addr);
 }
 
 void
@@ -206,7 +206,7 @@ TAO_AV_RTCP::parse_rr (rtcphdr* rh,
 
   s->lts_ctrl (ACE_OS::gettimeofday ());
   int cnt = flags >> 8 & 0x1f;
-  parse_rr_records (ssrc, (rtcp_rr*) (rh + 1), cnt, ep, addr);
+  parse_rr_records (ssrc, ACE_reinterpret_cast (rtcp_rr*, (rh + 1)), cnt, ep, addr);
 }
 
 int
@@ -344,17 +344,17 @@ TAO_AV_RTCP::send_report (int bye,
     state->last_np_ = s.np ();
     we_sent = 1;
     flags |= RTCP_PT_SR;
-    rtcp_sr* sr = (rtcp_sr*) (rh + 1);
+    rtcp_sr* sr = ACE_reinterpret_cast (rtcp_sr*, (rh + 1));
     sr->sr_ntp = ntp64time (now);
     sr->sr_ntp.upper = ACE_HTONL (sr->sr_ntp.upper);
     sr->sr_ntp.lower = ACE_HTONL (sr->sr_ntp.lower);
     sr->sr_ts = htonl (mt->ref_ts ());
     sr->sr_np = htonl (s.np ());
     sr->sr_nb = htonl (s.nb ());
-    rr = (rtcp_rr*) (sr + 1);
+    rr = ACE_reinterpret_cast (rtcp_rr*, (sr + 1));
   } else {
     flags |= RTCP_PT_RR;
-    rr = (rtcp_rr*) (rh + 1);
+    rr = ACE_reinterpret_cast (rtcp_rr*, (rh + 1));
   }
   int nrr = 0;
   int nsrc = 0;
@@ -409,9 +409,9 @@ TAO_AV_RTCP::send_report (int bye,
   rh->rh_len = htons ( (len >> 2) - 1);
 
   if (bye)
-    len += build_bye ( (rtcphdr*)rr, s);
+    len += build_bye ( ACE_reinterpret_cast (rtcphdr*,rr), s);
   else
-    len += build_sdes ( (rtcphdr*)rr, s,state);
+    len += build_sdes ( ACE_reinterpret_cast (rtcphdr*, rr), s,state);
 
   ACE_Message_Block mb ((char *)state->pktbuf_, len);
   mb.wr_ptr (len);
