@@ -94,7 +94,8 @@ be_interface::compute_coll_name (void)
     }
   delete i;
 
-  ACE_NEW (this->full_coll_name_, char[namelen+1]);
+  ACE_NEW (this->full_coll_name_, 
+           char[namelen+1]);
   this->full_coll_name_[0] = 0; // null terminate the string...
 
   // Iterate again....
@@ -145,11 +146,11 @@ be_interface::compute_coll_name (void)
                  this->local_name ()->get_string ());
 }
 
-const char*
-be_interface::full_coll_name (void) const
+const char *
+be_interface::full_coll_name (void)
 {
   if (this->full_coll_name_ == 0)
-    ACE_const_cast (be_interface*, this)->compute_coll_name ();
+    this->compute_coll_name ();
 
   return this->full_coll_name_;
 }

@@ -904,8 +904,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return new ";
 
   // This may be necessary to work around a GCC compiler bug!
-  const char *coll_name = node->full_coll_name ();
   const char *skel_name = node->full_skel_name ();
+  const char *coll_name = node->full_coll_name ();
+  assert (coll_name != 0);
 
   *os << coll_name << "(" << be_idt << be_idt_nl
       << "ACE_reinterpret_cast(" << skel_name

@@ -1,4 +1,7 @@
-Sun Mar 22 18:01:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sun Mar 22 21:54:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface: Made full_coll_name() a NON-const
+ 	  method to work around a bug with GCC...
 
 	* TAO/tao: Moved a bunch of inline methods from *.i files into
  	  *.cpp files to avoid warnings from G++.  I don't know why it
