@@ -1,3 +1,10 @@
+Sat Sep 19 21:35:28 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Simple_Naming/client.dsp:
+	* tests/Trading/TradingLib.dsp:
+	  More projects that need to be changed because of the
+	  TAO_IDL's move.
+
 Sat Sep 19 21:27:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/GIOP.cpp: Fixed a signed/unsigned comparison in 
