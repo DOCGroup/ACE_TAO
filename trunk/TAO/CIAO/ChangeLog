@@ -1,3 +1,11 @@
+Fri May  7 12:44:42 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/RS_Handler.cpp:
+
+          Modified the handler to parse out of order schema
+          definitions. Now parsing is independent of the appearance of the
+          schema elements as it should be.
+
 Thu May  6 16:20:00 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/SP_Handler.cpp:
