@@ -618,6 +618,8 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     // override it in the parameter list or if the key supplied is
     // equal to the default static logger key.
     key = ACE_Service_Config::logger_key_;
+  else
+    ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
 
   if (log_msg->open (program_name,
                      flags,
