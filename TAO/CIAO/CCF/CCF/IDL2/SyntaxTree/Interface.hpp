@@ -233,8 +233,11 @@ namespace CCF
       protected:
         AbstractInterfaceForwardDecl (SimpleName const& name,
                                       Order const& order,
-                                      ScopePtr const& scope)
-            : Declaration (name, order, scope)
+                                      ScopePtr const& scope,
+                                      ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
+
         {
           type_info (static_type_info ());
         }
@@ -243,10 +246,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new AbstractInterfaceForwardDecl (name, order, scope));
+            new AbstractInterfaceForwardDecl (name, order, scope, ch));
         }
 
       public:
@@ -285,8 +289,10 @@ namespace CCF
         AbstractInterfaceDef (SimpleName const& name,
                               Order const& order,
                               ScopePtr const& scope,
+                              ContextHolderPtr const& ch,
                               ScopedNameSet const& inherits)
-            : Declaration (name, order, scope),
+            : Node (ch),
+              Declaration (name, order, scope),
               InterfaceDef (inherits)
         {
           type_info (static_type_info ());
@@ -296,10 +302,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new AbstractInterfaceDef (name, order, scope, inherits ()));
+            new AbstractInterfaceDef (name, order, scope, ch, inherits ()));
         }
 
 
@@ -363,8 +370,10 @@ namespace CCF
       protected:
         LocalInterfaceForwardDecl (SimpleName const& name,
                                    Order const& order,
-                                   ScopePtr const& scope)
-            : Declaration (name, order, scope)
+                                   ScopePtr const& scope,
+                                   ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -373,10 +382,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new LocalInterfaceForwardDecl (name, order, scope));
+            new LocalInterfaceForwardDecl (name, order, scope, ch));
         }
 
       public:
@@ -415,8 +425,10 @@ namespace CCF
         LocalInterfaceDef (SimpleName const& name,
                            Order const& order,
                            ScopePtr const& scope,
+                           ContextHolderPtr const& ch,
                            ScopedNameSet const& inherits)
-            : Declaration (name, order, scope),
+            : Node (ch),
+              Declaration (name, order, scope),
               InterfaceDef (inherits)
         {
           type_info (static_type_info ());
@@ -426,10 +438,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new LocalInterfaceDef (name, order, scope, inherits ()));
+            new LocalInterfaceDef (name, order, scope, ch, inherits ()));
         }
 
 
@@ -504,8 +517,10 @@ namespace CCF
 
         UnconstrainedInterfaceForwardDecl (SimpleName const& name,
                                            Order const& order,
-                                           ScopePtr const& scope)
-            : Declaration (name, order, scope)
+                                           ScopePtr const& scope,
+                                           ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -514,10 +529,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new UnconstrainedInterfaceForwardDecl (name, order, scope));
+            new UnconstrainedInterfaceForwardDecl (name, order, scope, ch));
         }
 
       public:
@@ -557,8 +573,10 @@ namespace CCF
         UnconstrainedInterfaceDef (SimpleName const& name,
                                    Order const& order,
                                    ScopePtr const& scope,
+                                   ContextHolderPtr const& ch,
                                    ScopedNameSet const& inherits)
-            : Declaration (name, order, scope),
+            : Node (ch),
+              Declaration (name, order, scope),
               InterfaceDef (inherits)
         {
           type_info (static_type_info ());
@@ -568,10 +586,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (
-            new UnconstrainedInterfaceDef (name, order, scope, inherits ()));
+          return TypeDeclPtr ( new UnconstrainedInterfaceDef (
+                                 name, order, scope, ch, inherits ()));
         }
 
 

@@ -448,10 +448,26 @@ namespace CCF
                    public virtual ReferenceCounting::DefaultImpl <>
       {
       protected:
+        struct ContextHolder : virtual ReferenceCounting::DefaultImpl <>
+        {
+          virtual ~ContextHolder () throw () {}
+
+          CompilerElements::Context context;
+        };
+
+        typedef StrictPtr<ContextHolder> ContextHolderPtr;
+
+      protected:
         virtual
         ~Node () throw () {}
 
         Node ()
+        {
+          type_info (static_type_info ());
+        }
+
+        Node (ContextHolderPtr const& ch)
+            : context_holder_ (ch)
         {
           type_info (static_type_info ());
         }
@@ -499,31 +515,39 @@ namespace CCF
         CompilerElements::Context&
         context ()
         {
-          if (context_.get () == 0)
+          if (context_holder_.in () == 0)
           {
-            context_.reset (new CompilerElements::Context);
+            context_holder_ = ContextHolderPtr (new ContextHolder);
           }
 
-          return *context_;
+          return context_holder_->context;
         }
 
         CompilerElements::Context const&
         context () const
         {
-          if (context_.get () == 0)
+          if (context_holder_.in () == 0)
           {
-            context_.reset (new CompilerElements::Context);
+            context_holder_ = ContextHolderPtr (new ContextHolder);
           }
 
-          return *context_;
+          return context_holder_->context;
         }
 
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
 
+
+      protected:
+        ContextHolderPtr
+        context_holder () const
+        {
+          return context_holder_;
+        }
+
       private:
-        mutable std::auto_ptr<CompilerElements::Context> context_;
+        mutable ContextHolderPtr context_holder_;
       };
 
 
@@ -943,7 +967,8 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope) = 0;
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch) = 0;
 
         // Type completeness.
         //

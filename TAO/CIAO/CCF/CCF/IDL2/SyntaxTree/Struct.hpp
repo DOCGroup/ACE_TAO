@@ -60,8 +60,10 @@ namespace CCF
       protected:
         StructForwardDecl (SimpleName const& name,
                            Order const& order,
-                           ScopePtr const& scope)
-            : Declaration (name, order, scope)
+                           ScopePtr const& scope,
+                           ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -70,9 +72,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new StructForwardDecl (name, order, scope));
+          return TypeDeclPtr (new StructForwardDecl (name, order, scope, ch));
         }
 
       public:
@@ -111,8 +114,10 @@ namespace CCF
       protected:
         StructDef (SimpleName const& name,
                    Order const& order,
-                   ScopePtr const& scope)
-            : Declaration (name, order, scope)
+                   ScopePtr const& scope,
+                   ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -121,9 +126,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new StructDef (name, order, scope));
+          return TypeDeclPtr (new StructDef (name, order, scope, ch));
         }
 
       public:
