@@ -44,11 +44,12 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Throw an overload exception
-  Test::ServerOverload ts;
-  Test::AMH_RoundtripExceptionHolder holder (&ts ACE_ENV_ARG_PARAMETER);
 
   ACE_DECLARE_NEW_CORBA_ENV;
+  // Throw an overload exception
+  Test::ServerOverload ts;
+  Test::AMH_RoundtripExceptionHolder holder (&ts);
+
   ACE_TRY
     {
       _tao_rh->test_method_excep (&holder ACE_ENV_ARG_PARAMETER);
@@ -171,6 +172,8 @@ ST_AMH_Server::start_orb_and_poa (void)
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 void 
