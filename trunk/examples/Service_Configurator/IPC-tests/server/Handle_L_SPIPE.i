@@ -5,6 +5,7 @@
 #include "ace/SPIPE_Stream.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
@@ -14,7 +15,7 @@ Handle_L_SPIPE::Handle_L_SPIPE (void)
 }
 
 ACE_INLINE int
-Handle_L_SPIPE::open (const ACE_SPIPE_Addr &rendezvous_spipe) 
+Handle_L_SPIPE::open (const ACE_SPIPE_Addr &rendezvous_spipe)
 {
   if (this->ACE_SPIPE_Acceptor::open (rendezvous_spipe) == -1)
     return -1;
@@ -22,7 +23,7 @@ Handle_L_SPIPE::open (const ACE_SPIPE_Addr &rendezvous_spipe)
     return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_SPIPE::info (char **strp, size_t length) const
 {
   char       buf[BUFSIZ];
@@ -50,37 +51,37 @@ Handle_L_SPIPE::init (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'r': 
+       case 'r':
 	 rendezvous = get_opt.opt_arg ();
 	 break;
        default:
 	 break;
        }
-  
+
   ACE_OS::unlink (rendezvous);
   susp.set (rendezvous);
   if (this->open (susp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (ACE_Reactor::instance ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
   return 0;
 }
 
-ACE_INLINE int 
-Handle_L_SPIPE::fini (void) 
+ACE_INLINE int
+Handle_L_SPIPE::fini (void)
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_SPIPE::get_handle (void) const
 {
   return ACE_SPIPE::get_handle();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_SPIPE::handle_input (int)
 {
   ACE_SPIPE_Stream new_spipe;
