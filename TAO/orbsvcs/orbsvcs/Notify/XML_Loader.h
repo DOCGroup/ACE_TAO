@@ -33,7 +33,6 @@
 
 namespace TAO_Notify
 {
-
  /// \brief Load Notification Service Topology from an XML file.
 class XML_Loader : public ACEXML_DefaultHandler , public Topology_Loader
 {
@@ -72,7 +71,7 @@ private:
   /// The name of the file from which data is read.
   ACE_CString file_name_;
   /// A stream representing our current output.
-  istream * input_;
+  FILE * input_;
 
   typedef ACE_Unbounded_Stack<Topology_Object*> TopoStack;
   TopoStack object_stack_;

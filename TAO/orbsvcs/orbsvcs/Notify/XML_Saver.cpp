@@ -42,7 +42,7 @@ namespace TAO_Notify
       this->end_object(0, "notification_service" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      delete this->output_;
+      ACE_OS::fclose(this->output_);
       this->output_ = 0;
 
       // delete the oldest backup file (if it exists)
@@ -80,12 +80,12 @@ namespace TAO_Notify
     this->backup_count_ = backup_count;
     if (base_name ==  "cout")
     {
-      this->output_ = & cout;
+      this->output_ = stdout;
       this->close_out_ = false;
     }
     else if (base_name ==  "cerr")
     {
-      this->output_ = & cerr;
+      this->output_ = stderr;
       this->close_out_ = false;
     }
     else
@@ -93,18 +93,10 @@ namespace TAO_Notify
       ACE_CString file_name = base_name;
       file_name += ".new";
 
-      ofstream * fs = 0;
-      ACE_NEW_RETURN (fs, ofstream , false);
-      fs-> open (file_name.c_str());
-      if (fs->is_open ())
-      {
-        this->output_ = fs;
+      this->output_ = ACE_OS::fopen (file_name.c_str(), ACE_TEXT("wb"));
+      if (this->output_) {
         this->close_out_ = true;
-      }
-      else
-      {
-        delete fs;
-        ACE_ASSERT(this->output_ == 0);
+      } else {
         ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("(%P|%t) XML_Saver unable to open %s\n"),
             base_name.c_str()));
@@ -112,9 +104,10 @@ namespace TAO_Notify
     }
     if (this->output_ != 0)
     {
-      ostream& out = * this->output_;
+      FILE *out = this->output_;
 
-      out << "<?xml version=\"1.0\"?>\n";
+      ACE_OS::fprintf (out, "<?xml version=\"1.0\"?>\n");
+
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
       {
@@ -162,28 +155,29 @@ namespace TAO_Notify
     ACE_ENV_ARG_DECL_NOT_USED)
   {
     ACE_ASSERT(this->output_ != 0);
-    ostream& out = * this->output_;
 
-    out << indent_ << "<" << type;
+    FILE *out = this->output_;
+
+    ACE_OS::fprintf (out, "%s%s%s", indent_.c_str(), "<", type.c_str());
     if (id != 0)
     {
       // not all ostreams know what to do with a CORBA::Long
       long lid = id;
-      out << " " << TOPOLOGY_ID_NAME << "=\"" << lid << "\"";
+      ACE_OS::fprintf (out, "%s%s%d%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
     char * buffer = 0;
     size_t buffer_size = 0;
     for (size_t idx = 0; idx < attrs.size(); idx++)
     {
-      out << " "
-        << attrs[idx].name.c_str ()
-        << "=\""
-        << escape_string(buffer, buffer_size, attrs[idx].value.c_str ())
-        << "\"";
+      ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
+        attrs[idx].name.c_str (),
+        "=\"",
+        escape_string(buffer, buffer_size, attrs[idx].value.c_str ()),
+        "\"");
     }
     delete [] buffer;
-    out << ">\n";
+    ACE_OS::fprintf (out, ">\n");
     this->indent_ += "  ";
     return true;
   }
@@ -193,13 +187,13 @@ namespace TAO_Notify
   {
     ACE_ASSERT(this->output_ != 0);
     ACE_UNUSED_ARG (id);
-    ostream& out = * this->output_;
+    FILE *out = this->output_;
     if (this->indent_.length() >= 2)
     {
       this->indent_ = this->indent_.substr(2);
     }
-    // Note : We avoid flushing after every object by using \n instead of << endl;
-    out << indent_ << "</" << type << ">\n";
+    ACE_OS::fprintf (out, "%s%s%s%s", indent_.c_str(), "</",
+                     type.c_str(), ">\n");
   }
 
   static const char escaped_amp[] = "&amp;";
