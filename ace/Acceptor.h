@@ -88,9 +88,9 @@ public:
    * The @c PEER_ACCEPTOR handle is put into non-blocking mode as a
    * safeguard against the race condition that can otherwise occur
    * between the time when the passive-mode socket handle is "ready"
-   * and when the actual @c accept call is made.  During this
+   * and when the actual @c accept() call is made.  During this
    * interval, the client can shutdown the connection, in which case,
-   * the <accept> call can hang.
+   * the @c accept() call can hang.
    *
    * @param local_addr The address to listen at.
    * @param reactor    Pointer to the ACE_Reactor instance to register

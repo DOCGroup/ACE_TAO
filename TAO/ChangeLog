@@ -1,3 +1,10 @@
+Sun Jun 27 11:20:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.cpp:
+	  Rearranged the code in the TAO_AMH_Response_Handler destructor
+ 	  to solve problems with the SGI compiler.  Thanks to Simu Ruelle
+ 	  <simu.dcnruelle@wanadoo.fr> for motivating this.
+
 Sun Jun 27 09:39:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:

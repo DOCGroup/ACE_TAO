@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and 
+ *          Orlando Ribeiro <oribeiro@inescporto.pt>
  */
 //=============================================================================
 
@@ -38,8 +39,8 @@
  * to a maximum size and repeatedly split into new files.  The
  * log file size can be limited at any logging point (i.e.,
  * application, client logging daemon, or server logging daemon)
- * by specifying the -i <sample_interval_in_secs> and -m
- * <max_size_in_KB> options for the Logging_Strategy class in a
+ * by specifying the -i @param sample_interval_in_secs and -m
+ * @param max_size_in_KB options for the Logging_Strategy class in a
  * svc.conf file.
  *
  * By default, two logfiles are generated.  It's possible, however, to
@@ -55,7 +56,22 @@
  * most recent one), the second is for increasing speed (we only
  * create a new log file, and don't rotate the others (fewer accesses
  * to disk)).
- */
+ *
+ * By default, the @c ACE_Logging_Strategy uses the singleton reactor,
+ * i.e., what's returned by @c ACE_Reactor::instance().  If you want
+ * to set the reactor used by @c ACE_Logging_Strategy to something
+ * other than the singleton reactor you'll need to get a pointer to
+ * the @c ACE_Logging_Strategy instance and do this
+ * 
+ * ACE_Reactor my_reactor;
+ * ACE_Logging_Strategy *logging_strategy = ...... // Get instance.
+ * 
+ * logging_strategy->reactor (&my_reactor);
+ *
+ * and then logging_strategy will use your reactor.  If you're
+ * dynamically linking the @c ACE_Logging_Strategy then you can use
+ * the @c ACE_Dynamic_Service template to get a pointer to the
+ * @c ACE_Logging_Strategy.  */
 class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
 public:
