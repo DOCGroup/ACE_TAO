@@ -461,7 +461,7 @@ ACE_OS_String::ace_isprint (const ACE_TCHAR c)
 #if defined (ACE_USES_WCHAR)
   return iswprint (c);
 #else /* ACE_USES_WCHAR */
-  return isprint (c);
+  return isprint ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */
 }
 
@@ -471,7 +471,7 @@ ACE_OS_String::ace_isspace (const ACE_TCHAR c)
 #if defined (ACE_USES_WCHAR)
   return iswspace (c);
 #else /* ACE_USES_WCHAR */
-  return isspace (c);
+  return isspace ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */
 }
 
