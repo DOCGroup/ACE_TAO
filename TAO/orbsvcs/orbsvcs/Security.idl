@@ -272,18 +272,18 @@ module Security {
 
     // Audit
     typedef unsigned long  AuditChannelId;
-    typedef unsigned short EventType;
+    typedef unsigned short _EventType;
 
-    const EventType    AuditAll = 0;
-    const EventType    AuditPrincipalAuth = 1;
-    const EventType    AuditSessionAuth = 2;
-    const EventType    AuditAuthorization = 3;
-    const EventType    AuditInvocation = 4;
-    const EventType    AuditSecEnvChange = 5;
-    const EventType    AuditPolicyChange = 6;
-    const EventType    AuditObjectCreation = 7;
-    const EventType    AuditObjectDestruction = 8;
-    const EventType    AuditNonRepudiation = 9;
+    const _EventType    AuditAll = 0;
+    const _EventType    AuditPrincipalAuth = 1;
+    const _EventType    AuditSessionAuth = 2;
+    const _EventType    AuditAuthorization = 3;
+    const _EventType    AuditInvocation = 4;
+    const _EventType    AuditSecEnvChange = 5;
+    const _EventType    AuditPolicyChange = 6;
+    const _EventType    AuditObjectCreation = 7;
+    const _EventType    AuditObjectDestruction = 8;
+    const _EventType    AuditNonRepudiation = 9;
 
     enum DayOfTheWeek {
       Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
@@ -296,7 +296,7 @@ module Security {
 
     struct AuditEventType {
         ExtensibleFamily    event_family;
-        EventType           event_type;
+        _EventType           event_type;
     };
 
     typedef sequence <AuditEventType> AuditEventTypeList;
