@@ -11,7 +11,6 @@
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_RCSID(ace, Local_Tokens, "$Id$")
 
