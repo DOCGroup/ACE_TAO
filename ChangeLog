@@ -1,3 +1,11 @@
+Thu May 15 10:41:32 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Add a -r to the realclean target for custom generated files.  The
+          generated files could be directories.
+
 Thu May 15 12:21:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/SOCK_SEQPACK_Association.cpp:
@@ -11,7 +19,7 @@ Thu May 15 07:08:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
           Fixed a couple of bugs with the custom build types.  Generated
           files were being selected due to a back regular expression match.
-          
+
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
 
           Only write out a new workspace if it is different than the
