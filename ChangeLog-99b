@@ -1,9 +1,13 @@
 Thu Jul 08 10:40:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linuxppcr5.h: use config-linux-lxpthreads.h
-          because thread support works.  Use an ACE_DEFAULT_BASE_ADDR
-          of 0x40000000, because that allows Naming_Test to work.
-          With these changes, all ACE tests pass on LinuxPPC.
+          because thread support works.
+
+        * ace/config-linuxppcr5.h, config-linux-common.h:  use an
+          ACE_DEFAULT_BASE_ADDR of 0x40000000, because that allows
+          Naming_Test to work.
+
+          With these two changes, all ACE tests pass on LinuxPPC.
           Thanks to Andreas Tobler <a.tobler@schweiz.ch> for the
           fixes and testing.
 
