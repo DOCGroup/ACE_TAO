@@ -839,7 +839,12 @@ ACE::bind_port (ACE_HANDLE handle)
       sin.sin_port = htons (upper_limit);
 
       if (ACE_OS::bind (handle, (sockaddr *) &sin, sizeof sin) >= 0)
-	return 0;
+	{
+#if defined (ACE_WIN32)
+	  upper_limit--;
+#endif
+	  return 0;
+	}
       else if (errno != EADDRINUSE)
 	return -1;
       else
