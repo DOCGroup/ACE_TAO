@@ -1,3 +1,28 @@
+Fri Aug 13 00:46:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Update to account for Ossama's SSLIOP changes.
+
+	* configure.ac:
+	  Update to configure orbsvcs/performance-tests/*.
+
+	* orbsvcs/Makefile.am:
+	  Update to build performance-tests.
+
+	* orbsvcs/performance-tests/Makefile.am:
+	* orbsvcs/performance-tests/LoadBalancing/Makefile.am:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/Makefile.am:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+	  New files, built with a little help from MPC.
+
 Thu Aug 12 21:00:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
