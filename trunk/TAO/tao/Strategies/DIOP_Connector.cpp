@@ -258,6 +258,16 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
   return diop_endpoint;
 }
 
+int
+TAO_DIOP_Connector::cancel_svc_handler (
+  TAO_Connection_Handler * svc_handler)
+{
+  ACE_UNUSED_ARG(svc_handler);
+
+  // Noop
+  return 0;
+}
+
 
 // ****************************************************************
 
