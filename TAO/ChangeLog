@@ -1,3 +1,10 @@
+Tue Nov 25 18:17:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Simulator/Event_Supplier/Makefile:
+
+	  Do not build this in parallel This seems to create lots of
+	  problems. 
+
 2003-11-25  Douglas C. Schmidt  <schmidt@deuce.doc.wustl.edu>
 
 	* utils/wxNamingViewer/wxBindNewContext.cpp: Updated this file to
