@@ -1,5 +1,9 @@
 1998-10-10  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h, cpp}: Updated
+	TAO_Naming_Server to take in and pass on a parameter specifying
+	the size for the naming cotexts' hash tables.
+
 	* orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a
 	command line option to specify size of hash tables
 	allocated upon creation of naming contexts.
