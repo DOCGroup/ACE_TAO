@@ -1,3 +1,64 @@
+Mon Sep 13 08:34:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+	* tao/Seuqence_T.cpp:
+	  Added two new classes - TAO_Unbounded_Array_Sequence and
+	  TAO_Bounded_Array_Sequence. These have parameters T and
+	  T_var. For an array foo, the class foo_var now has a copy() method
+	  generated that calls foo_copy. Passing in T_var allows us to call
+	  this method on each sequence element in the copy constructor,
+	  assignment operator, and (for the unbounded class) _allocate_buffer.
+	  The existing classes simply asssigned the rhs elements to the lhs
+	  elements, which doesn't work if they are arrays. This approach is
+	  similar to that used in TAO_*_Object_Sequence to pass in the
+	  _duplicate() method.
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	  Implementation of the copy() method in the _var class as
+	  mentioned above.
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Implementation of code generation for sequences of arrays.
+
+	* TAO_IDL/be_include/be_codegen.h:
+	  Added a context substate to use when generating template parameters
+	  when listing the base class in the header file using ACE_NESTED_CLASS.
+	  I'm going to look at this some more - there may be a way to do this
+	  without adding the extra state.
+
+	* tests/Param_Test/param_test.idl:
+	* tests/Param_Test/Makefile:
+	* tests/Param_Test/run_test.pl:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/tmplinst.cpp:
+	* tests/Param_Test/options.h:
+	* tests/Param_Test/options.cpp:
+	* tests/Param_Test/tests.h:
+	* tests/Param_Test/driver.cpp:
+	* tests/Param_Test/bd_array_seq.h:
+	* tests/Param_Test/param_test_i.h:
+	* tests/Param_Test/param_test_i.cpp:
+	  Changes to Param_Test to add the new array sequences tests.
+
+	* tests/Param_Test/bd_array_seq.h:
+	* tests/Param_Test/bd_array_seq.cpp:
+	* tests/Param_Test/ub_array_seq.h:
+	* tests/Param_Test/ub_array_seq.cpp:
+	  New files for the new array sequences tests.	 
+
+	* tests/Param_Test/bd_struct_seq.cpp:
+	* tests/Param_Test/ub_struct_seq.cpp:
+	  Cosmetic changes and correction of comments pasted in
+	  unmodified from another file.
+
 Sun Sep 12 19:25:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO version 1.0.4 released.
