@@ -321,8 +321,8 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
 
-  hdr_status = this->unmarshall_object_key (request.object_key (),
-                                            input);
+  hdr_status = 
+    hdr_status && request.profile ().unmarshall_object_key (input);
 
   if (input.char_translator () == 0)
     {
@@ -397,9 +397,8 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   request.request_id (req_id);
 
   // Get the object key
-  hdr_status =
-    this->unmarshall_object_key (request.object_key (),
-                                 msg);
+  hdr_status = 
+    hdr_status && request.profile ().unmarshall_object_key (msg);
 
   return hdr_status ? 0 : -1;
 }

@@ -158,6 +158,45 @@ public:
   /// Gets the TAO_MProfile that holds the TAO_Profile instance.
   virtual TAO_Stub* the_stub (void);
 
+  /// Returns true if this profile can specify multicast endpoints.
+  virtual int supports_multicast (void) const;
+
+  /**
+   * Set the addressing mode if a remote servant replies with
+   * an addressing mode exception.  If this profile doesn't 
+   * support a particular addressing mode, this method needs to
+   * be overridden signal the appropriate error.
+   *
+   * ** RACE CONDITION NOTE **
+   * 
+   * Currently, getting and setting the addressing mode is not
+   * protected by a mutex.  Theoretically, this could cause a race
+   * condition if one thread sends a request, then gets an exception
+   * from the remote servant to change the addressing mode, and then
+   * another thread sends a different request to the same servant 
+   * using the wrong addressing mode.  The result of this is that 
+   * we'll get another address change exception.  (Annoying, but not
+   * that bad.)
+   *
+   * In practice at the current time, the above theoretical case 
+   * never happens since the target specification always uses the
+   * object key except for MIOP requests.  Remote ORBs can't respond
+   * to MIOP requests even to send exceptions, so even in this case,
+   * the race condition can't happen.
+   *
+   * Therefore, for the time being, there is no lock to protect the
+   * addressing mode.  Given that the addressing mode is checked in 
+   * the critical path, this decision seems like a good thing.
+   */
+  virtual void addressing_mode (CORBA::Short addr_mode
+                                TAO_ENV_ARG_DECL);
+
+  /**
+   * Return the current addressing mode for this profile.
+   * In almost all cases, this is TAO_Target_Specification::Key_Addr.
+   */
+  CORBA::Short addressing_mode (void) const;
+
 private:
 
   /// this object keeps ownership of this object
@@ -199,6 +238,10 @@ protected:
   // PolicyList object. The life cycle of this object is managed
   // by the TAO_MProfile class.
 
+  /// The current addressing mode.
+  /// This may be changed if a remote server sends back an address mode
+  /// exception.
+  CORBA::Short addressing_mode_;
 
 private:
 

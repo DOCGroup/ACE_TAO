@@ -273,12 +273,6 @@ public:
    */
   void servant_orb (CORBA::ORB_ptr orb);
 
-  /// Set the addressing mode.
-  void addressing_mode (CORBA::Short addr_mode);
-
-  /// Return the Addressing mode.
-  CORBA::Short addressing_mode (void);
-
   /// Make a call on to services to see whether they have some
   /// preferences on selecting the right profiles.
   CORBA::Boolean service_profile_selection (void);
@@ -381,9 +375,6 @@ protected:
   /// The policy overrides in this object, if nil then use the default
   /// policies.
   TAO_Policy_Set *policies_;
-
-  /// The addressing mode.
-  CORBA::Short addressing_mode_;
 
   /**
    * The ior info. This is needed for GIOP 1.2, as the clients could

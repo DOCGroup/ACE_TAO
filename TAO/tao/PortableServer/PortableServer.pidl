@@ -71,6 +71,13 @@ module PortableServer {
         Object forward_reference;
     };
 
+    // @@ Frank - MIOP specific types
+
+    exception NotAGroupObject {};
+    typedef sequence <ObjectId> IDs;
+
+    // @@ Frank - End MIOP
+
     // Policy interfaces
     const CORBA::PolicyType THREAD_POLICY_ID                = 16;
     const CORBA::PolicyType LIFESPAN_POLICY_ID              = 17;
@@ -282,6 +289,24 @@ module PortableServer {
                                         raises (ObjectNotActive, WrongPolicy);
 
         readonly attribute CORBA::OctetSeq id;
+
+        // @@ Frank - MIOP specific methods
+
+        ObjectId create_id_for_reference(in Object the_ref)
+                              raises (NotAGroupObject);
+
+        IDs reference_to_ids(in Object the_ref)
+                              raises (NotAGroupObject);
+
+        void associate_reference_with_id (in Object ref, 
+                                          in ObjectId oid)
+                              raises (NotAGroupObject);
+          
+        void disassociate_reference_with_id (in Object ref, 
+                                             in ObjectId oid)
+                              raises (NotAGroupObject);
+
+        // @@ Frank - End MIOP
     };
 
     // Current interface

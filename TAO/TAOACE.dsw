@@ -648,6 +648,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "PortableGroup"=.\orbsvcs\orbsvcs\PortableGroup.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "PortableServer"=.\tao\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
 
 Package=<5>

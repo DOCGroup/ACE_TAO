@@ -10,7 +10,8 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
-#include "LF_Strategy.h"
+#include "tao/LF_Strategy.h"
+#include "tao/Request_Dispatcher.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
@@ -796,11 +797,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       CORBA::Object_var forward_to;
 
       // Do this before the reply is sent.
-      this->orb_core_->adapter_registry ()->dispatch (
-          request.object_key (),
+      this->orb_core_->request_dispatcher ()->dispatch (
+          this->orb_core_,
           request,
           forward_to
-           TAO_ENV_ARG_PARAMETER);
+          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))
@@ -1009,8 +1010,8 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       CORBA::Object_var forward_to;
 
-      this->orb_core_->adapter_registry ()->dispatch (
-          server_request.object_key (),
+      this->orb_core_->request_dispatcher ()->dispatch (
+          this->orb_core_,
           server_request,
           forward_to
            TAO_ENV_ARG_PARAMETER);

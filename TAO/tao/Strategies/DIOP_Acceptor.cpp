@@ -646,7 +646,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) TAO_Tagged_Profile::decode - ")
+                      ACE_TEXT ("TAO (%P|%t) TAO_DIOP_Acceptor::object_key - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
       return -1;
