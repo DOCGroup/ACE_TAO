@@ -184,7 +184,7 @@ public:
   double get_low_priority_latency (void);
   double get_high_priority_jitter (void);
   double get_low_priority_jitter (void);
-  int get_latency (u_int thread_id);
+  u_int get_latency (u_int thread_id);
   // Accessors to get the various measured quantities.
 
 private:
