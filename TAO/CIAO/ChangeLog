@@ -1,3 +1,10 @@
+Wed Aug 13 16:23:02 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.h:
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
+
+          Fixed memory management and added comments.
+
 Wed Aug 13 13:25:14 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIDLC/cidlc.mpc: Reordered static library list to suit
