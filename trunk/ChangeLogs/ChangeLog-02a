@@ -1,7 +1,18 @@
+Mon Apr 16 12:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp: Limited the concurrent connections
+	  used in the multithreaded test on platforms without POSIX or
+	  Win32 semaphores.  In this case, SysV semaphores are used and
+	  a user can only instantiate very limited number of them.  The
+	  test will also print out an INFO in this case as it implies
+	  there can only be one "multithreaded" connection in one host at
+	  any instance.  This fixed the test on some obsolete UNIX
+	  platforms.
+
 Mon Apr 16 09:58:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Config_Test.cpp: Fixed a warning with g++ builds. The
-	  warning was  because of an unused function. 
+	  warning was  because of an unused function.
 
 Sun Apr 15 21:27:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
