@@ -628,9 +628,6 @@ AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MEMBER],
 
 AH_TEMPLATE([ACE_LACKS_READDIR_R],[Platform lacks readdir_r()])
 
-AH_TEMPLATE([ACE_LACKS_INET_ATON],
-[Platform doesn't provide the inet_aton() function.])
-
 AH_TEMPLATE([ACE_LACKS_INLINE_FUNCTIONS],
 [Platform can't handle "inline" keyword correctly.])
 
