@@ -42,7 +42,6 @@ $CMD = basename($0);
 $single_threaded = 0;
 $minimum_corba = 0;
 $ami = 0;
-$smart_proxies = 0;
 $dont_update = 0;
 $dont_run = 0;
 $pre_clean = 0;
@@ -65,9 +64,6 @@ while ($#ARGV >= 0) {
   } elsif ($ARGV[0] eq "-ami") {
       $ami =1;
       shift;
-  } elsif ($ARGV[0] eq "-smart_proxies") {
-     $smart_proxies = 1;
-     shift
   } elsif ($ARGV[0] eq "-build_list") {
     shift;
     @BUILD_LIST = split (/,/, $ARGV[0]);
