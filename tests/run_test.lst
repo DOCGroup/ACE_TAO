@@ -77,8 +77,8 @@ Priority_Reactor_Test: !chorus
 Priority_Task_Test: !Unicos
 Proactor_Test: Win32
 Proactor_Timer_Test: Win32
-Process_Manager_Test: ALL MSVC !DISABLED
-Process_Mutex_Test: !MSVC !chorus !VxWorks
+Process_Manager_Test: !chorus !VxWorks
+Process_Mutex_Test: !chorus !VxWorks
 Process_Strategy_Test: !chorus !LynxOS !VxWorks
 RB_Tree_Test
 Reactors_Test

@@ -1,3 +1,9 @@
+Fri Jan 18 19:09:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Re-enabled Process_Manager_Test for all but
+          Chorus and VxWorks. Could not find a reason it was disabled.
+          Also enabled Process_Mutex_Test on Win32.
+
 Fri Jan 18 16:44:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Added Reactor_Notification_Strategy.(h cpp) sources.
