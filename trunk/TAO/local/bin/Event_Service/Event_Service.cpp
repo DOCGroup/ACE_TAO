@@ -30,7 +30,6 @@ int main (int argc, char *argv[])
 			    1);
 	}
 
-#if 0
       CORBA::Object_ptr objref =
 	orb->resolve_initial_references ("NameService");
       ACE_CHECK_ENV;
@@ -42,9 +41,6 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "got reference to NameService\n"));
 
       ACE_Scheduler_Factory::use_config (naming_context);
-#else
-      ACE_Scheduler_Factory::use_config (orb);
-#endif
 
       // Register Event_Service with Naming Service.
       ACE_EventChannel* ec;
@@ -56,15 +52,11 @@ int main (int argc, char *argv[])
 	orb->object_to_string (ec, ACE_TRY_ENV);
       ACE_OS::puts ((char *) str);
 
-#if 0
-      // @@ TODO: Should this be done automatically by the Event_Channel
-      // constructor?
       CosNaming::Name channel_name (1);
       channel_name[0].id = CORBA::string_dup ("EventService");
       channel_name.length (1);
       naming_context->bind (channel_name, ec, ACE_TRY_ENV);
       ACE_CHECK_ENV;
-#endif
 
       orb->run ();
 
