@@ -1,3 +1,9 @@
+Sat Jun 19 10:34:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* man/{html,man3}: Zapped the Ace_Export.* files since
+	  they don't belong here.  Thanks to Zoran Ivanovic
+          <zorani@pathcom.com> for reporting this.
+
 Fri Jun 18 20:49:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch.cpp: Added template instantiations for
