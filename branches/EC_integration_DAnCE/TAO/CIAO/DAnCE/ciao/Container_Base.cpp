@@ -72,10 +72,11 @@ CIAO::Container::connect_event_consumer (
     CIAO::Consumer_Config_ptr consumer_config
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
+    Components::InvalidConnection,
     CORBA::SystemException))
 {
 
-  //ACE_DEBUG ((LM_DEBUG, "CIAO::Container::connect_event_consumer\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::connect_event_consumer\n"));
 
   // Look up the supplier's event service implementation.
   CIAO::EventServiceBase * event_service = 0;
@@ -86,8 +87,8 @@ CIAO::Container::connect_event_consumer (
 
   if (this->event_service_map_.find (supplier_id.c_str (), event_service) != 0)
     {
-      ACE_THROW (
-      Components::InvalidConnection ());
+      ACE_DEBUG ((LM_DEBUG, "-------------Oops!!! -----------------\n"));
+      ACE_THROW (Components::InvalidConnection ());
     }
 
   // Connect to the supplier's event service implementation
@@ -113,7 +114,7 @@ CIAO::Container::connect_event_supplier (
     CORBA::SystemException))
 {
 
-  //ACE_DEBUG ((LM_DEBUG, "CIAO::Container::connect_event_supplier\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::connect_event_supplier\n"));
 
   // Use factory to create the appropriate implementation of EventServiceBase
   CIAO::EventServiceType type =
@@ -148,14 +149,13 @@ CIAO::Container::disconnect_event_consumer (
     Components::InvalidConnection))
 {
 
-  //ACE_DEBUG ((LM_DEBUG, "CIAO::Container::disconnect_event_consumer\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::disconnect_event_consumer\n"));
 
   CIAO::EventServiceBase * event_service;
 
   if (this->event_service_map_.unbind (connection_id, event_service) != 0)
     {
-      ACE_THROW (
-      Components::InvalidConnection ());
+      ACE_THROW (Components::InvalidConnection ());
     }
 
   event_service->disconnect_event_consumer (connection_id ACE_ENV_ARG_PARAMETER);
@@ -173,14 +173,13 @@ CIAO::Container::disconnect_event_supplier (
     Components::InvalidConnection))
 {
 
-  //ACE_DEBUG ((LM_DEBUG, "CIAO::Container::disconnect_event_supplier\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::disconnect_event_supplier\n"));
 
   CIAO::EventServiceBase * event_service;
 
   if (this->event_service_map_.unbind (connection_id, event_service) != 0)
     {
-      ACE_THROW (
-      Components::InvalidConnection ());
+      ACE_THROW (Components::InvalidConnection ());
     }
 
   event_service->disconnect_event_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -194,17 +193,19 @@ CIAO::Container::push_event (
     const char * connection_id
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
+    Components::InvalidConnection,
     CORBA::SystemException))
 {
 
-  //ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
 
   CIAO::EventServiceBase * event_service;
-  //ACE_DEBUG ((LM_DEBUG, "Pushing from supplier id: %s\n", connection_id));
+  ACE_DEBUG ((LM_DEBUG, "Pushing from supplier id: %s\n", connection_id));
   if (this->event_service_map_.find (connection_id, event_service) != 0)
     {
-      ACE_THROW (
-      Components::InvalidConnection ());
+      ACE_DEBUG ((LM_DEBUG, "-------------Gosh!!! Invalid Connection! -----------------\n"));
+
+      ACE_THROW (Components::InvalidConnection ());
     }
   event_service->push_event (ev ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -52,18 +52,18 @@ module CIAO
 
     Consumer_Config create_consumer_config (in EventServiceType type);
     
-    void connect_event_supplier (in Supplier_Config supplier_config);
+    void connect_event_supplier (in Supplier_Config supplier_conf);
     
-    void disconnect_event_supplier (in CONNECTION_ID connection_id)
+    void disconnect_event_supplier (in CONNECTION_ID conn_id)
       raises (Components::InvalidConnection, Components::InvalidName);
     
-    void connect_event_consumer (in Consumer_Config consumer_config);
+    void connect_event_consumer (in Consumer_Config consumer_conf);
     
-    void disconnect_event_consumer (in CONNECTION_ID connection_id)
+    void disconnect_event_consumer (in CONNECTION_ID conn_id)
       raises (Components::InvalidConnection, Components::InvalidName);
     
     void push_event (in Components::EventBase ev,
-                     in CONNECTION_ID connection_id);
+                     in CONNECTION_ID conn_id);
   };
 
   /// An object for setting consumer QoS requirements. This will be expanded to

@@ -122,6 +122,7 @@ namespace CIAO
         Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
+        Components::InvalidConnection,
         CORBA::SystemException));
 
     /// Connect an event source.
@@ -155,6 +156,7 @@ namespace CIAO
         const char * connection_id
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
+        Components::InvalidConnection,
         CORBA::SystemException));
 
 

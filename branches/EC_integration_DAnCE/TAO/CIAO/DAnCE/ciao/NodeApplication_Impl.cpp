@@ -2,6 +2,7 @@
 
 #include "NodeApplication_Impl.h"
 #include "ace/UUID.h"
+#include "string.h" // for debug
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -69,8 +70,8 @@ CIAO::NodeApplication_Impl::finishLaunch (
                   }
 
                 comp->connect_consumer(providedReference[i].portName.in (),
-                                      consumer.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                       consumer.in ()
+                                       ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
                 break;
 
@@ -240,12 +241,23 @@ CIAO::NodeApplication_Impl::install (
          comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
          ACE_TRY_CHECK;
 
-         /*
+         
          // @@ Set up a component_UUID for this component
+         /*
          ACE_Utils::UUID_Generator uuid_gen;
          ACE_Utils::UUID * p_uuid = uuid_gen.generateUUID ();
-         comp->component_UUID (p_uuid->to_string ()->c_str ());
+
+         char* str_tmp = p_uuid->to_string ()->c_str ();
          */
+
+         //char* str_tmp;
+         //strcpy (str_tmp, impl_infos[i].component_instance_name.in ());
+         ACE_DEBUG ((LM_DEBUG, "UUID is %s\n", impl_infos[i].component_instance_name.in ()));
+         ACE_DEBUG ((LM_DEBUG, "################ Making a remote CORBA call on component named: %s\n", 
+                    impl_infos[i].component_instance_name.in ()));
+
+         comp->component_UUID (impl_infos[i].component_instance_name.in ());
+         
 
 
          if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
@@ -633,8 +645,14 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
       }
     
     // supplier ID
+    //ACE_DEBUG ((LM_DEBUG, "################ Making a remote CORBA call on event SOURCE component named: %s\n", supplier_comp_name));
+    //ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
     //ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+
+      ACE_CString test_sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+      ACE_DEBUG ((LM_DEBUG, "The COMPONENT UUID I GOT is: %s\n", test_sid.c_str ()));
     ACE_CString sid = supplier_comp_name;
+    ACE_DEBUG ((LM_DEBUG, "The SUPPLIER COMPONENT NAME is: %s\n", supplier_comp_name.c_str ()));
     ACE_CHECK;
 
     sid += "_";
@@ -642,6 +660,7 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
     sid += "_publisher";
 
     // consumer ID
+    //ACE_DEBUG ((LM_DEBUG, "################ Making a remote CORBA call on event SINK component named: %s\n", consumer_comp_name));
     //ACE_CString cid = sink_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
     ACE_CString cid = consumer_comp_name;
     ACE_CHECK;

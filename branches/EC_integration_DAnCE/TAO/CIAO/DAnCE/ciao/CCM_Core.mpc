@@ -35,6 +35,7 @@ project (CIAO_DnC_Events) : orbsvcslib, portableserver, valuetype, ifr_client, s
 
   after += CIAO_DnC_Client
   sharedname  = CIAO_DnC_Events
+  libs      += TAO_CosNotification_Skel
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
   dynamicflags = CIAO_EVENTS_BUILD_DLL
 
