@@ -1,3 +1,13 @@
+Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* apps/Gateway/Gateway/{Event_Channel.cpp,Gateway.cpp,
+	                        Proxy_Handler.cpp,Proxy_Handler_Acceptor.cpp,
+	                        Proxy_Handler_Connector.cpp,
+	  examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp,
+	  netsvcs/clients/Naming/Client/Client_Test.cpp,
+	  netsvcs/clients/Tokens/manual/manual.cpp:
+	  added template specializations.
+
 Thu Mar 27 01:00:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.2_sgiCC.GNU: Added a new
