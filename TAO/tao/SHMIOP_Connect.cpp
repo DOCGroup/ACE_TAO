@@ -474,11 +474,10 @@ TAO_SHMIOP_Client_Connection_Handler::handle_cleanup (void)
       this->reactor ()->cancel_timer (this);
     }
 
-  this->peer ().close ();
-
-  // Now do the decerment of the ref count
+  // Now do the decrement of the ref count
   this->decr_ref_count ();
 
+  this->peer ().close ();
   return 0;
 }
 
