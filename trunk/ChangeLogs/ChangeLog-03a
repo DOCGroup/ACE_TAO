@@ -1,5 +1,18 @@
 Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/SPIPE_Addr.cpp (set): Added a "+ 1" to the computation of
+	  the size of the SPIPE_Addr to account for the trailing NUL.
+  	  Thanks to Oren Zeev-Ben-Mordehai <oren@phonedo.com> for
+ 	  reporting this.
+
+	* ace/Refcounted_Auto_Ptr.{h,i}: Added support for a "null()" 
+	  method to check if a refcounted auto ptr is NULL.  Thanks to
+ 	  Jenny Kowald <jkowald@oz.agile.tv> for reporting this.
+
+	* ace/config-macosx.h,
+  	* ace/platform_macosx.GNU: Enhanced these files to support MacOSX.
+	  Thanks to John Zorko <j.zorko@att.net> for contributing this.
+
 	* ace/Synch.h: Fixed the Doxygen documentation for all the
 	  removed_ fields, which where somehow messed up.  Thanks to
  	  Johnny Willemsen for reporting this.

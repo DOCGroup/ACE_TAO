@@ -5,6 +5,7 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
+
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -32,6 +33,7 @@
 
 #define ACE_HAS_SVR4_TLI
 
+//#define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_MEMCHR
 
 // Compiler/platform defines the sig_atomic_t typedef.
@@ -158,8 +160,11 @@
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_DIRENT
 
+
 #define ACE_LACKS_SETSCHED
+//#define ACE_HAS_TANDEM_SIGNALS
 //#define ACE_HAS_RECURSIVE_MUTEXES
+
 
 #define ACE_HAS_TERM_IOCTLS
 #define ACE_USES_HIGH_BAUD_RATES
