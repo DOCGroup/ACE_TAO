@@ -126,6 +126,9 @@ Wed Oct 20 00:04:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  subclasses from the skeletons, improving footprint for the
 	  TAO_HAS_INTERCEPTORS case.
 
+	  Made pointer to Servant_Upcall object const.  It's value should
+	  never change.
+	
 	  (ServerRequestInfo):
 	* tao/PortableServer/ServerInterceptorAdapter.h
 	  (ServerRequestInterceptor_Adapter):
@@ -148,16 +151,9 @@ Wed Oct 20 00:04:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  operation-specific upcall processing incurred by a TAO_IDL
 	  generated skeleton.
 
-	* tao/PortableServer/Upcall_Wrapper.inl:
 	* tao/PortableServer/Upcall_Wrapper.cpp:
 
-	  New sources containing TAO::Upcall_Wrapper class
-	  implementation.
-
-	* tao/PortableServer/ServerRequestInfo.h:
-
-	  Made pointer to Servant_Upcall object const.  It's value should
-	  never change.
+	  New source containing TAO::Upcall_Wrapper class implementation.
 
 Tue Sep 14 06:27:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
