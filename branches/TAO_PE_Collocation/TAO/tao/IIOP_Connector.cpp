@@ -7,17 +7,22 @@
 #include "Connect_Strategy.h"
 #include "Thread_Lane_Resources.h"
 #include "Profile_Transport_Resolver.h"
-#include "Transport.h"
+
 #include "Wait_Strategy.h"
 #include "SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+#if !defined (TAO_HAS_COLLOCATION)
+# include "Transport.h"
+#endif
 
 ACE_RCSID (tao,
            IIOP_Connector,
            "$Id$")
 
+
+#if !defined (TAO_HAS_COLLOCATION)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
@@ -40,11 +45,17 @@ template class ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif
+
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
   , lite_flag_ (flag)
+
+#if !defined (TAO_HAS_COLLOCATION)
   , connect_strategy_ ()
   , base_connector_ ()
+#endif
+
 {
 }
 
@@ -55,6 +66,8 @@ TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   // @@todo: The functionality of the following two statements could
   // be done in the constructor, but that involves changing the
   // interface of the pluggable transport factory.
@@ -87,14 +100,26 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
                                      concurrency_strategy);
+#else
+  ACE_UNUSED_ARG (orb_core);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
+
 }
 
 int
 TAO_IIOP_Connector::close (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   delete this->base_connector_.concurrency_strategy ();
   delete this->base_connector_.creation_strategy ();
   return this->base_connector_.close ();
+#else
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
+
 }
 
 int
@@ -134,6 +159,9 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *timeout)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   TAO_IIOP_Endpoint *iiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
@@ -174,8 +202,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       synch_options.timeout (ACE_Time_Value::zero);
       timeout = &tmp_zero;
     }
-
-  TAO_IIOP_Connection_Handler *svc_handler = 0;
 
   int result =
     this->base_connector_.connect (svc_handler,
@@ -303,7 +329,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     }
 
   return transport;
+
+#else
+  ACE_UNUSED_ARG (r);
+  ACE_UNUSED_ARG (desc);
+  ACE_UNUSED_ARG (timeout);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
 }
+
 
 TAO_Profile *
 TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
@@ -322,6 +356,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 
   return pfile;
 }
+
 
 TAO_Profile *
 TAO_IIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
@@ -399,6 +434,8 @@ int
 TAO_IIOP_Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   TAO_IIOP_Connection_Handler* handler=
     dynamic_cast<TAO_IIOP_Connection_Handler*>(svc_handler);
 
@@ -413,4 +450,8 @@ TAO_IIOP_Connector::cancel_svc_handler (
     {
       return -1;
     }
+#else
+  ACE_UNUSED_ARG (svc_handler);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
 }

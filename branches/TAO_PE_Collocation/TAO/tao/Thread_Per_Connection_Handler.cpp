@@ -16,13 +16,13 @@ TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
   : TAO_TPC_BASE (oc->thr_mgr ())
   , ch_ (ch)
 {
-  this->ch_->transport ()->add_reference ();
+  //this->ch_->transport ()->add_reference ();
 }
 
 TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler (void)
 {
   this->ch_->close_connection ();
-  this->ch_->transport ()->remove_reference ();
+  //this->ch_->transport ()->remove_reference ();
 }
 
 int
@@ -61,11 +61,15 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
 int
 TAO_Thread_Per_Connection_Handler::svc (void)
 {
+#if !defined (TAO_HAS_COLLOCATION)
   ACE::clr_flags (this->ch_->transport ()->event_handler_i ()->get_handle (),
                   ACE_NONBLOCK);
 
   // Call the implementation here
   return this->ch_->svc_i ();
+#else
+  return 1;
+#endif
 }
 
 int

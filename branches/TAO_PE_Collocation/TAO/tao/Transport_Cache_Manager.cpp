@@ -1,10 +1,16 @@
 //$Id$
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Transport.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/Connection_Purging_Strategy.h"
-#include "tao/Condition.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "tao/Transport.h"
+# include "tao/debug.h"
+# include "tao/ORB_Core.h"
+# include "tao/Connection_Purging_Strategy.h"
+# include "tao/Condition.h"
+#else
+# include "ace/CORBA_macros.h"
+# include "tao/SystemException.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager.inl"
@@ -12,13 +18,13 @@
 
 #include "ace/ACE.h"
 
-
 ACE_RCSID (tao,
            Transport_Cache_Manager,
            "$Id$")
 
-
 TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core)
+
+#if !defined (TAO_HAS_COLLOCATION)
   : percent_ (orb_core.resource_factory ()->purge_percentage ())
   , purging_strategy_ (orb_core.resource_factory ()->create_purging_strategy ())
   , cache_map_ (orb_core.resource_factory ()->cache_maximum ())
@@ -27,7 +33,10 @@ TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core
   , muxed_number_ (orb_core.resource_factory ()->max_muxed_connections ())
   , no_waiting_threads_ (0)
   , last_entry_returned_ (0)
+#endif
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (orb_core.resource_factory ()->locked_transport_cache ())
     {
       ACE_NEW (this->condition_,
@@ -45,10 +54,27 @@ TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core
       ACE_NEW (this->cache_lock_,
                ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>);
     }
+
+#else
+  ACE_UNUSED_ARG (orb_core);
+#endif
 }
+
+TAO_Transport_Cache_Manager::HASH_MAP &
+TAO_Transport_Cache_Manager::map (void)
+{
+#if !defined (TAO_HAS_COLLOCATION)
+  return this->cache_map_;
+#else
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
+}
+
 
 TAO_Transport_Cache_Manager::~TAO_Transport_Cache_Manager (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   // Wakeup all the waiting threads threads before we shutdown stuff
   if (this->no_waiting_threads_)
     {
@@ -75,6 +101,9 @@ TAO_Transport_Cache_Manager::~TAO_Transport_Cache_Manager (void)
       delete this->condition_;
       this->condition_ = 0;
     }
+
+#endif
+
 }
 
 
@@ -82,6 +111,8 @@ int
 TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                                      TAO_Cache_IntId &int_id)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -144,6 +175,12 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
     }
 
   return retval;
+#else
+  ACE_UNUSED_ARG (ext_id);
+  ACE_UNUSED_ARG (int_id);
+  return 0;
+#endif
+
 }
 
 int
@@ -151,6 +188,8 @@ TAO_Transport_Cache_Manager::find_transport (
     TAO_Transport_Descriptor_Interface *prop,
     TAO_Transport *&transport)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (prop == 0)
     {
       transport = 0;
@@ -169,12 +208,20 @@ TAO_Transport_Cache_Manager::find_transport (
     }
 
   return retval;
+#else
+  ACE_UNUSED_ARG (prop);
+  ACE_UNUSED_ARG (transport);
+  return 0;
+#endif
+
 }
 
 int
 TAO_Transport_Cache_Manager::find (const TAO_Cache_ExtId &key,
                                     TAO_Cache_IntId &value)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
                              guard,
                              *this->cache_lock_,
@@ -191,12 +238,20 @@ TAO_Transport_Cache_Manager::find (const TAO_Cache_ExtId &key,
     }
 
   return status;
+#else
+  return 0;
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (value);
+#endif
+
 }
 
 int
 TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
                                      TAO_Cache_IntId &value)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   HASH_MAP_ENTRY *entry = 0;
 
   // Get the entry from the Hash Map
@@ -258,11 +313,20 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
     }
 
   return retval;
+
+#else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (value);
+  return 0;
+#endif
+
 }
 
 int
 TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (entry == 0)
     return -1;
 
@@ -279,11 +343,18 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (entry);
+  return 0;
+#endif
+
 }
 
 int
 TAO_Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if(entry == 0)
     {
       return -1;
@@ -302,11 +373,19 @@ TAO_Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
   (void) st->update_item (entry->int_id_.transport ());
 
   return 0;
+#else
+  ACE_UNUSED_ARG (entry);
+  return 0;
+#endif
+
 }
 
 int
 TAO_Transport_Cache_Manager::close_i (TAO_Connection_Handler_Set &handlers)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   HASH_MAP_ITER end_iter = this->cache_map_.end ();
 
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
@@ -332,11 +411,18 @@ TAO_Transport_Cache_Manager::close_i (TAO_Connection_Handler_Set &handlers)
   this->cache_map_.unbind_all ();
 
   return 0;
+#else
+  ACE_UNUSED_ARG (handlers);
+  return 0;
+#endif
+
 }
 
 int
 TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (entry == 0)
     {
       return 0;
@@ -349,11 +435,16 @@ TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
   entry = 0;
 
   return retval;
+#else
+  ACE_UNUSED_ARG (entry);
+  return 0;
+#endif
 }
 
 void
 TAO_Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *&entry)
 {
+#if !defined (TAO_HAS_COLLOCATION)
   if (entry == 0)
     {
       return;
@@ -361,8 +452,11 @@ TAO_Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *&entry)
 
   // Mark the entry as not usable
   entry->int_id_.recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
-}
+#else
+  ACE_UNUSED_ARG (entry);
+#endif
 
+}
 
 
 int
@@ -370,6 +464,8 @@ TAO_Transport_Cache_Manager::get_last_index_bind (TAO_Cache_ExtId &key,
                                                   TAO_Cache_IntId &val,
                                                   HASH_MAP_ENTRY *&entry)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   CORBA::ULong ctr = entry->ext_id_.index ();
   int retval = 0;
 
@@ -387,12 +483,20 @@ TAO_Transport_Cache_Manager::get_last_index_bind (TAO_Cache_ExtId &key,
   return  this->cache_map_.bind (key,
                                  val,
                                  entry);
+#else
+  ACE_UNUSED_ARG (entry);
+  ACE_UNUSED_ARG (val);
+  ACE_UNUSED_ARG (key);
+  return 0;
+#endif
 }
 
 
 int
 TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   ACE_Recyclable_State recycle_state = entry->int_id_.recycle_state ();
 
   if (TAO_debug_level)
@@ -410,6 +514,11 @@ TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (entry);
+  return 0;
+#endif
+
 }
 
 
@@ -417,6 +526,8 @@ TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
 int
 TAO_Transport_Cache_Manager::cpscmp(const void* a, const void* b)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**)a;
   const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**)b;
 
@@ -433,12 +544,19 @@ TAO_Transport_Cache_Manager::cpscmp(const void* a, const void* b)
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (a);
+  ACE_UNUSED_ARG (b);
+  return 0;
+#endif
 }
 #endif /* ACE_LACKS_QSORT */
 
 int
 TAO_Transport_Cache_Manager::purge (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   ACE_Unbounded_Stack<TAO_Transport*> transports_to_be_closed;
 
   {
@@ -522,6 +640,10 @@ TAO_Transport_Cache_Manager::purge (void)
     }
 
   return 0;
+#else
+  return 0;
+#endif
+
 }
 
 
@@ -558,6 +680,8 @@ TAO_Transport_Cache_Manager::sort_set (DESCRIPTOR_SET& entries,
 int
 TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   int current_size = 0;
   int cache_maximum = this->purging_strategy_->cache_maximum ();
 
@@ -594,12 +718,18 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
     }
 
   return current_size;
+#else
+  ACE_UNUSED_ARG (sorted_set);
+  return 0;
+#endif
 }
 
 
 int
 TAO_Transport_Cache_Manager::wait_for_connection (TAO_Cache_ExtId &extid)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (this->muxed_number_ && this->muxed_number_ == extid.index ())
     {
       // If we have a limit on the number of muxed connections for
@@ -636,11 +766,17 @@ TAO_Transport_Cache_Manager::wait_for_connection (TAO_Cache_ExtId &extid)
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (extid);
+  return 0;
+#endif
 }
 
 int
 TAO_Transport_Cache_Manager::is_wakeup_useful (TAO_Cache_ExtId &extid)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   // Get the underlying property that we are looking for
   TAO_Transport_Descriptor_Interface *prop = extid.property ();
 
@@ -670,6 +806,10 @@ TAO_Transport_Cache_Manager::is_wakeup_useful (TAO_Cache_ExtId &extid)
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (extid);
+  return 0;
+#endif
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

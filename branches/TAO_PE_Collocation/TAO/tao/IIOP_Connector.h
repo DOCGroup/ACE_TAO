@@ -33,7 +33,6 @@
 
 class TAO_IIOP_Endpoint;
 
-
 // ****************************************************************
 
 /**
@@ -67,6 +66,8 @@ public:
 
 public:
 
+#if !defined (TAO_HAS_COLLOCATION)
+
   typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
           TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -80,16 +81,13 @@ public:
   typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
           TAO_IIOP_BASE_CONNECTOR;
+#endif
 
 protected:
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep);
-
-  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
-                                  TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
@@ -98,6 +96,9 @@ protected:
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
+  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface &desc,
+                                  ACE_Time_Value *timeout = 0);
 protected:
 
   /// Do we need to use a GIOP_Lite for sending messages?
@@ -110,11 +111,15 @@ private:
 
 private:
 
+#if !defined (TAO_HAS_COLLOCATION)
+
   /// Our connect strategy
   TAO_IIOP_CONNECT_STRATEGY connect_strategy_;
 
   /// The connector initiating connection requests for IIOP.
   TAO_IIOP_BASE_CONNECTOR base_connector_;
+#endif
+
 };
 
 

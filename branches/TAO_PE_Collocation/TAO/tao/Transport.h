@@ -33,6 +33,7 @@ class TAO_Target_Specification;
 class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
+
 class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
 class TAO_Codeset_Translator_Factory;
@@ -309,6 +310,7 @@ public:
    */
   int queue_is_empty (void);
 
+#if !defined (TAO_HAS_COLLOCATION)
   /// Added event handler to the handlers set.
   /**
    * Called by the cache when the cache is closing.
@@ -317,6 +319,7 @@ public:
    *        transport should place its handler
    */
   void provide_handler (TAO_Connection_Handler_Set &handlers);
+#endif
 
   /// Register the handler with the reactor.
   /**

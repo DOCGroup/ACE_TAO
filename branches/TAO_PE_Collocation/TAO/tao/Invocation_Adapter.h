@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ *  @author Originally Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ *  @author Modified   Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
 //=============================================================================
 #ifndef TAO_INVOCATION_ADAPTER_H
@@ -151,11 +152,11 @@ namespace TAO
      * SII, AMI, DII and DSI. All the subclasses implement these
      * methods to get the right behaviour at their level.
      */
-    //@{
 
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
-
     /*
      * This method does the following essential activities needed for
      * a remote invocation.
@@ -174,6 +175,8 @@ namespace TAO
         CORBA::Object_var &effective_target,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
 
     /// Make a collocated call.
     /**
@@ -193,6 +196,8 @@ namespace TAO
         Collocation_Strategy strat
         ACE_ENV_ARG_DECL);
 
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
     /// Helper method to make a two way invocation.
     /**
      * This method creates a synchronous twoway invocation object to
@@ -222,14 +227,6 @@ namespace TAO
         ACE_ENV_ARG_DECL);
     //@}
 
-    /// Helper function that extracts the roundtrip timeout policies
-    /// set in the ORB.
-    bool get_timeout (TAO_Stub *stub,
-                      ACE_Time_Value &val);
-
-    /// Helper method that extracts TAO_Stub from the target object.
-    TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;
-
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
     void object_forwarded (CORBA::Object_var &effective_target,
@@ -239,6 +236,16 @@ namespace TAO
     /// Helper method to set the response flags within @a details
     void set_response_flags (TAO_Stub *stub,
                              TAO_Operation_Details &details);
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
+
+    /// Helper function that extracts the roundtrip timeout policies
+    /// set in the ORB.
+    bool get_timeout (TAO_Stub *stub,
+                      ACE_Time_Value &val);
+
+    /// Helper method that extracts TAO_Stub from the target object.
+    TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;
 
   protected:
 
@@ -266,6 +273,8 @@ namespace TAO
     /// The invocation type
     Invocation_Type type_;
 
+    //@@ Need to remove this when collocation is enabled however, this
+    // also needs to be done in the generated code.
     /// The invocation mode
     Invocation_Mode mode_;
 

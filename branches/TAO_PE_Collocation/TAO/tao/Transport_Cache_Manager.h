@@ -214,6 +214,8 @@ private:
   int is_wakeup_useful (TAO_Cache_ExtId &extid);
 
 private:
+
+#if !defined (TAO_HAS_COLLOCATION)
   /// The percentage of the cache to purge at one time
   int percent_;
 
@@ -240,6 +242,8 @@ private:
   /// is put back is cached here. This should prevent all th threads
   /// trying to search for their required entry.
   TAO_Cache_ExtId *last_entry_returned_;
+#endif
+
 };
 
 #if defined (__ACE_INLINE__)

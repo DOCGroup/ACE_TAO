@@ -7,9 +7,13 @@
 #include "Wait_On_LF_No_Upcall.h"
 #include "Exclusive_TMS.h"
 #include "Muxed_TMS.h"
-#include "Blocked_Connect_Strategy.h"
-#include "Reactive_Connect_Strategy.h"
-#include "LF_Connect_Strategy.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "Blocked_Connect_Strategy.h"
+# include "Reactive_Connect_Strategy.h"
+# include "LF_Connect_Strategy.h"
+#endif
+
 #include "orbconf.h"
 
 #include "ace/Lock_Adapter_T.h"
@@ -46,8 +50,11 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
+#if !defined (TAO_HAS_COLLOCATION)
   // @@todo: will be changed when other strategies are implemented.
   this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
+#endif
+
 }
 
 TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
@@ -175,6 +182,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                ACE_TEXT("-ORBConnectStrategy")) == 0)
         {
           curarg++;
+#if !defined (TAO_HAS_COLLOCATION)
           if (curarg < argc)
             {
               ACE_TCHAR* name = argv[curarg];
@@ -191,6 +199,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               else
                 this->report_option_value_error (ACE_TEXT("-ORBConnectStrategy"), name);
             }
+#endif
         }
       else if (ACE_OS::strcmp (argv[curarg],
                                    ACE_TEXT("-ORBReplyDispatcherTableSize")) == 0)
@@ -313,6 +322,8 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
 TAO_Connect_Strategy *
 TAO_Default_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *orb_core)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   TAO_Connect_Strategy *cs = 0;
 
   if (this->connect_strategy_ == TAO_BLOCKED_CONNECT)
@@ -333,6 +344,10 @@ TAO_Default_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *orb_
     }
 
   return cs;
+#else
+  ACE_UNUSED_ARG (orb_core);
+  return 0;
+#endif
 }
 
 
