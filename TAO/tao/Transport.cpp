@@ -144,10 +144,7 @@ TAO_Transport::~TAO_Transport (void)
   // Avoid making the call if we can.  This may be redundant, unless
   // someone called handle_close() on the connection handler from
   // outside the TAO_Transport.
-  if (this->cache_map_entry_ != 0)
-    {
-      this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
-    }
+  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 }
 
 
@@ -369,19 +366,13 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 void
 TAO_Transport::purge_entry (void)
 {
-  if (this->cache_map_entry_ != 0)
-    {
-      (void) this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
-    }
+  (void) this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 }
 
 int
 TAO_Transport::make_idle (void)
 {
-  if (this->cache_map_entry_ != 0)
-    {
-      return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
-    }
+  return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
 
   return -1;
 }
@@ -695,7 +686,7 @@ TAO_Transport::close_connection_shared (int disable_purge,
                                         ACE_Event_Handler * eh)
 {
   // Purge the entry
-  if (!disable_purge && this->cache_map_entry_ != 0)
+  if (!disable_purge)
     {
       this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
     }
