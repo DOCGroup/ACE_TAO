@@ -291,6 +291,9 @@ public:
   // method succeeds.  Returns -1 if the size of the message is too
   // small, i.e., for this to work correct, <end> must be >= <wr_ptr>.
 
+  void crunch (void);
+  // Normalizes data in the top-level <Message_Block> to align with the base.
+
   char *base (void) const;
   // Get message data.
 
@@ -300,7 +303,12 @@ public:
   // Set message data (doesn't reallocate).
 
   char *end (void) const;
-  // Return a pointer to 1 past the end of the data in a message.
+  // Return a pointer to 1 past the end of the allocated data in a message.
+
+  char *mark (void) const;
+  // Return a pointer to 1 past the end of the allotted data in a message.
+  // Allotted data may be less than allocated data  if a value smaller than
+  // capacity() to is passed to size().
 
   char *rd_ptr (void) const;
   // Get the read pointer.
@@ -341,12 +349,16 @@ public:
   // <wr_ptr_> remain at the original offsets into the buffer, even if
   // it is reallocated.  Returns 0 if successful, else -1.
 
+  size_t total_capacity (void) const;
+  // Get the number of allocated bytes in all <Message_Block>, including
+  // chained <Message_Block>s.
+
+  size_t capacity (void) const;
+  // Get the number of allocated bytes in the top-level <Message_Block>.
+
   size_t space (void) const;
   // Get the number of bytes available after the <wr_ptr_> in the
   // top-level <Message_Block>.
-
-  void crunch (void);
-  // Normalizes data in message block to align with the base.
 
   // = <ACE_Data_Block> methods.
   ACE_Data_Block *data_block (void) const;
@@ -508,14 +520,25 @@ public:
   // Set message data pointer (doesn't reallocate).
 
   char *end (void) const;
-  // Return a pointer to 1 past the end of the data in a message.
+  // Return a pointer to 1 past the end of the allocated data in a message.
+
+  char *mark (void) const;
+  // Return a pointer to 1 past the end of the allotted data in a message.
+  // The allotted data may be less than allocated data if <size()> is passed
+  // an argument less than <capacity()>.
 
   // = Message size is the total amount of space alloted.
+
   size_t size (void) const;
-  // Get the total amount of space in the message.
+  // Get the total amount of allotted space in the message.  The amount of
+  // allotted space may be less than allocated space.
+
   int size (size_t length);
   // Set the total amount of space in the message.  Returns 0 if
   // successful, else -1.
+
+  size_t capacity (void) const;
+  // Get the total amount of allocated space.
 
   virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0) const;
   // Return an exact "deep copy" of the message, i.e., create fresh

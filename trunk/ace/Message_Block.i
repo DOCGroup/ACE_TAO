@@ -38,6 +38,13 @@ ACE_Data_Block::size (void) const
   return this->cur_size_;
 }
 
+ACE_INLINE size_t
+ACE_Data_Block::capacity (void) const
+{
+  ACE_TRACE ("ACE_Data_Block::capacity");
+  return this->max_size_;
+}
+
 ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Data_Block::set_flags (ACE_Message_Block::Message_Flags more_flags)
 {
@@ -117,6 +124,13 @@ ACE_Message_Block::size (void) const
 {
   ACE_TRACE ("ACE_Message_Block::size");
   return this->data_block ()->size ();
+}
+
+ACE_INLINE size_t
+ACE_Message_Block::capacity (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::capacity");
+  return this->data_block ()->capacity ();
 }
 
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
@@ -249,6 +263,20 @@ ACE_Message_Block::wr_ptr (char *new_ptr)
 // Return a pointer to 1 past the end of the data buffer.
 
 ACE_INLINE char *
+ACE_Data_Block::mark (void) const
+{
+  ACE_TRACE ("ACE_Data_Block::mark");
+  return this->base_ + this->cur_size_;
+}
+
+ACE_INLINE char *
+ACE_Message_Block::mark (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::mark");
+  return this->data_block ()->mark ();
+}
+
+ACE_INLINE char *
 ACE_Data_Block::end (void) const
 {
   ACE_TRACE ("ACE_Data_Block::end");
@@ -295,7 +323,7 @@ ACE_INLINE size_t
 ACE_Message_Block::space (void) const
 {
   ACE_TRACE ("ACE_Message_Block::space");
-  return this->end () - this->wr_ptr ();
+  return this->mark () - this->wr_ptr ();
 }
 
 ACE_INLINE ACE_Data_Block *
