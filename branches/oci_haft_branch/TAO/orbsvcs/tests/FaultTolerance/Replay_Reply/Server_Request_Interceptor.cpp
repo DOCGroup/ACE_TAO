@@ -113,13 +113,8 @@ Server_Request_Interceptor::send_reply (
     ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Short retval = 0;
-
-  result >>= retval;
-
   TAO_OutputCDR cdr;
-
-  cdr << retval;
+  result->impl ()->marshal_value (cdr);
 
   Dynamic::ParameterList_var pl =
     ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -133,10 +128,7 @@ Server_Request_Interceptor::send_reply (
       // No chance for PARAM_OUT
       if ((*pl)[index].mode == CORBA::PARAM_INOUT)
         {
-          const char *str;
-          (*pl)[index].argument >>= str;
-
-          cdr.write_string (str);
+          (*pl)[index].argument.impl ()->marshal_value (cdr);
         }
     }
 

@@ -1,3 +1,11 @@
+Tue Sep 30 11:45:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/Replay_Reply/Server_Request_Interceptor.cpp:
+   
+	  The send_reply () method now uses generic ways to marshall the
+	  value inside an Any into the CDR stream. This now uses the
+	  undocumented marshal_value () in Any_Impl class. 
+	
 Mon Sep 29 18:55:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/Replay_Reply:
