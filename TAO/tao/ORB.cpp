@@ -659,11 +659,6 @@ CORBA_ORB::multicast_query (char *buf,
 		       "Unable to open the Datagram!\n"),
 		      -1);
 
-  // Vishal, please only print this stuff out if TAO_debug > 0.
-  ACE_DEBUG ((LM_DEBUG,
-	      "\nPort sent |%u|\n",
-	      my_addr.get_port_number ()));
-  
   // Convert the port that we are listening at to Network Byte Order.
   ACE_UINT16 response_port =
     ACE_HTONS (my_addr.get_port_number ());
@@ -695,9 +690,6 @@ CORBA_ORB::multicast_query (char *buf,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "\nsent multicast request."));
-
-  // Vishal, I moved this close() call up here.  Please make sure that
-  // this doesn't mess things up!!!
 
   // We don't need the Dgram anymore.
   dgram.close ();
