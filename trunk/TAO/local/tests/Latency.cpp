@@ -9,6 +9,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
 
+#include "Timeprobe.h"
 #include "Event_Utilities.h"
 #include "Event_Service_Constants.h"
 #include "Scheduler_Factory.h"
@@ -118,7 +119,7 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                         CORBA::Environment &)
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
-  // @@ ACE_TIMEPROBE ("push event to consumer");
+  ACE_TIMEPROBE ("push event to consumer");
   
   if (events.length () == 0)
     {
@@ -146,7 +147,11 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 	{
 	  if (measure_jitter_)
 	    {
-	      const ACE_hrtime_t elapsed = ACE_OS::gethrtime () - event_push_time;
+	      // @@ TOTAL HACK
+	      ACE_hrtime_t t; // = event_push_time;
+	      ACE_OS::memcpy (&t, &events[i].time_, sizeof (t));
+
+	      const ACE_hrtime_t elapsed = ACE_OS::gethrtime () - t;
 	      // Note: the division by 1 provides transparent support of
 	      // ACE_U_LongLong.
 	      ACE_Time_Value latency (elapsed / ACE_ONE_SECOND_IN_NSECS,
@@ -161,8 +166,7 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 		}
 	    }
 	}
-
-      // @@ ACE_TIMEPROBE_PRINT;
+      
     }
 }
 
@@ -413,7 +417,11 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 	      // const ACE_hrtime_t now = ACE_OS::gethrtime ();
 	      // event.time_.set (now / ACE_ONE_SECOND_IN_NSECS,
 	      // (now % ACE_ONE_SECOND_IN_NSECS) / 1000);
-	      event_push_time = ACE_OS::gethrtime ();
+
+	      // @@ TOTAL HACK
+	      // event_push_time = ACE_OS::gethrtime ();
+	      ACE_hrtime_t t = ACE_OS::gethrtime ();
+	      ACE_OS::memcpy (&event.time_, &t, sizeof (event.time_));
 	    }
 
 	  // @@ ACE_TIMEPROBE_RESET;
@@ -440,13 +448,14 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 		    }
 #endif /* quantify */
 
-		  // @@ ACE_TIMEPROBE ("time to read high-res clock and "
-		  // @@ "compare an int with 0");
+		  ACE_TIMEPROBE ("  supplier starts pushing event");
 
 		  RtecEventComm::EventSet events (1);
 		  events.length (1);
 		  events[0] = event;
 		  consumers_->push (events, ACE_TRY_ENV);
+
+		  ACE_TIMEPROBE ("  supplier ends pushing event");
 		}
 	      ACE_CHECK_ENV;
 	    } 
@@ -464,7 +473,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 
 	  // Check if we're done.
 	  if (master_ && (total_sent_ >= total_messages_))
-	this->shutdown ();
+	    this->shutdown ();
 	}
       else
 	{
@@ -531,9 +540,11 @@ Latency_Supplier::shutdown (void)
 	{
 	  // @@ TODO: Do this portably (keeping the ORB_ptr returned from
 	  // ORB_init)
+	  channel_admin_->destroy (ACE_TRY_ENV);
+	  ACE_CHECK_ENV;
+
 	  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 	}
-      ACE_CHECK_ENV;
     }
   ACE_CATCHANY
     {
@@ -711,8 +722,8 @@ main (int argc, char *argv [])
 
       // Allocate the timeprobe instance now, so we don't measure
       // the cost of doing it later.
-      // @@ ACE_TIMEPROBE_RESET;
-
+      ACE_TIMEPROBE_RESET;
+      
       CosNaming::Name channel_name (1);
       channel_name[0].id = CORBA::string_dup ("EventService");
       channel_name.length (1);
@@ -792,7 +803,8 @@ main (int argc, char *argv [])
 	}
       delete [] consumer;
 
-      // @@ ACE_TIMEPROBE_FINI;
+      ACE_TIMEPROBE_PRINT;
+      ACE_TIMEPROBE_FINI;
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {

@@ -628,6 +628,7 @@ ACE_EventChannel::shutdown (void)
   // to call deactive_impl () on a CORBA::POA is that the portable
   // way?
   // With TAO we need access to the ORB (to call shutdown() on it).
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
 void
@@ -1242,7 +1243,6 @@ ACE_ES_Consumer_Correlation::ACE_ES_Consumer_Correlation (void) :
   correlation_module_ (0),
   type_id_index_ (0),
   channel_ (0),
-  forwarding_rt_info_ (0),
   qos_ (),
   pending_events_ (0),
   lock_ (),
@@ -1588,13 +1588,6 @@ ACE_ES_Consumer_Correlation::register_event (RtecEventChannelAdmin::Dependency &
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
 		       "ACE_ES_Consumer_Correlation::register_event"), -1);
 
-  // If we're forwarding, then subscriptions should affect the
-  // forwarding rt_info, not the consumer's rt_info.  Ok, this might
-  // be dangerous since the consumer rep can be shared between many
-  // correlation groups.
-  if (forwarding_rt_info_ != 0)
-    consumer_rep->dependency ()->rt_info = forwarding_rt_info_;
-
   switch (group_type)
     {
     case ACE_ES_CONJUNCTION_DESIGNATOR:
@@ -1658,10 +1651,10 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
 	// Calls reschedule on all disjunction groups it belongs to.
 	cr->reschedule_deadlines ();
 
-	ACE_TIMEPROBE ("  ACE_ES_Consumer_Correlation::push, determine NO CORRELATION");
+	ACE_TIMEPROBE ("  Consumer_Correlation::push, determine NO CORR.");
 	ACE_ES_Dispatch_Request *request = 
 	  new ACE_ES_Dispatch_Request (consumer_, event, cr->dependency ()->rt_info);
-	ACE_TIMEPROBE ("  ACE_ES_Consumer_Correlation::push, NO_CORR: alloc");
+	ACE_TIMEPROBE ("  Consumer_Correlation::push, NO_CORR: alloc");
 	
 	if (request == 0)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
@@ -1774,7 +1767,7 @@ ACE_ES_Consumer_Rep::execute (void)
 void
 ACE_ES_Consumer_Rep_Timeout::execute (void)
 {
-  ACE_TIMEPROBE ("Timeout execute");
+  ACE_TIMEPROBE (" Consumer_Rep_Timeout::execute");
   if (this->receiving_events ())
     {
       CORBA::Environment __env;
@@ -2426,10 +2419,12 @@ ACE_ES_Subscription_Module::push (ACE_Push_Supplier_Proxy *source,
   if (this->push_source (source, event) == -1)
     return;
 	
-  ACE_TIMEPROBE ("  push_source_type");
+  ACE_TIMEPROBE ("  begin push_source_type");
 
   if (this->push_source_type (source, event) == -1)
     return;
+
+  ACE_TIMEPROBE ("  end push_source_type");
 }
 
 void
@@ -2706,63 +2701,13 @@ ACE_ES_Priority_Timer::handle_timeout (const ACE_Time_Value &,
     ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Priority_Timer::handle_timeout: "
 		       "received act == 0!!!.\n"), 0);
 
+  ACE_TIMEPROBE ("ES_Priority_Queue - start execute");
+
   act->execute ();
 
+  ACE_TIMEPROBE ("ES_Priority_Queue - end execute");
+
   return 0;
-}
-
-ACE_Timeprobe *ACE_Timeprobe::instance_ = 0;
-
-ACE_Timeprobe &
-ACE_Timeprobe::instance ()
-{
-  if (instance_ == 0)
-    {
-      // if this allocation fails, we're in big trouble . . .
-      ACE_NEW_RETURN (instance_, ACE_Timeprobe (), *instance_);
-    }
-
-  return *instance_;
-}
-
-void
-ACE_Timeprobe::timeprobe (const char *id)
-{
-  timeprobes [current_slot_].time_ = ACE_OS::gethrtime ();
-  timeprobes [current_slot_].id_ = id;
-
-  ++current_slot_;
-
-  ACE_ASSERT (current_slot_ < SLOTS);
-}
-
-void
-ACE_Timeprobe::print_times () const
-{
-  ACE_OS::printf ("\nACE_Timeprobe; %u timeprobes were recorded:\n",
-                  current_slot_ > 1  ?  current_slot_ - 1
-                                     :  0);
-
-  if (current_slot_ > 0)
-    {
-      for (u_int i = 1; i < current_slot_; ++i)
-        {
-	  ACE_hrtime_t elapsed = timeprobes [i].time_ - timeprobes [i-1].time_;
-          ACE_OS::printf ("\"%-55s\"%10.3f usec\n",
-                          timeprobes [i].id_,
-                          (double) (elapsed / 1000) /* nanosec/microsec */);
-        }
-
-      ACE_hrtime_t elapsed2 = timeprobes [current_slot_ - 1].time_ -
-                              timeprobes [0].time_;
-
-      // print the total time
-      ACE_OS::printf (
-        "                                                          =========\n"
-        "                                                    total"
-        "%10.3f usec\n",
-        (double) (elapsed2 / 1000) /* nanoseconds/microsecond */);
-    }
 }
 
 // ************************************************************
