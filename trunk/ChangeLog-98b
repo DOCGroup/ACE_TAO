@@ -1,3 +1,8 @@
+Thu Aug  6 20:41:44 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/Filecache.cpp: Avoided a deadlock detected by Tom Dobridge
+	  (thanks!).
+
 Thu Aug  6 17:44:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Queue_T.h: Improved the documentation of the low
@@ -16,11 +21,11 @@ Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu Aug  6 14:30:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-sgic++-nothreads.h: 
+	* ace/config-irix6.x-sgic++-nothreads.h:
 	  Use template specializations instead of pragmas if the compiler
 	  is 7.2 or better.
 
-	* ace/config-irix6.x-sgic++.h: 
+	* ace/config-irix6.x-sgic++.h:
 	  The <sched.h> is not necessary in IRIX 6.4
 
 Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -28,7 +33,7 @@ Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/Message_Queue_T.cpp: Make sure to check if the cur_bytes_ is
  	  <= to the low_water_mark before signaling threads trying to
  	  enqueue a Message_Block.
-	
+
 	* ace/Message_Queue_T.cpp: Fixed a bunch of code to use the
           ACE_NEW_RETURN macro to ensure that errno is set correctly.
 
@@ -45,11 +50,11 @@ Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 Thu Aug  6 09:41:22 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* ace/ARGV.{h,cpp} : Added a new
-	ACE_ARGV(ASYS_TCHAR *first_argv,ASYS_TCHAR *second_argv,int) 
+	ACE_ARGV(ASYS_TCHAR *first_argv,ASYS_TCHAR *second_argv,int)
 	which creates a new ARGV which is the concatenation of the 2 argvs.
 
 	Also added a new private method argv_to_string
-	which converts an argv to a string.	
+	which converts an argv to a string.
 
 Thu Aug  6 08:56:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -71,7 +76,7 @@ Wed Aug  5 23:12:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* include/makeinclude/wrapper_macros.GNU: Changed
 	  PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(CXX)
 
-	  to 
+	  to
 
 	  PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
 
@@ -114,7 +119,7 @@ Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Queue_T.i: Changed the computation of is_empty_i()
 	  so that it's
-	  
+
 	  return this->cur_bytes_ <= this->low_water_mark_ || this->cur_count_ <= 0;
 
 	  i.e., we use an || rather than a &&.  Thanks to Umar for
@@ -130,8 +135,8 @@ Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Aug 05 00:10:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (strnstr (both Unicode and Multibyte versions)): 
-	* ace/SString.cpp (strstr): 
+	* ace/OS.i (strnstr (both Unicode and Multibyte versions)):
+	* ace/SString.cpp (strstr):
 	  Fixed "off by one error" in searching algorithm.  Thanks to
  	  Byron Harris <harris_b@ociweb.com> for pointing this out.
 
