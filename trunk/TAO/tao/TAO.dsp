@@ -163,6 +163,10 @@ SOURCE=.\Abstract_Servant_Base.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AbstractBase.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
@@ -944,6 +948,10 @@ SOURCE=.\WrongTransactionC.cpp
 # Begin Source File
 
 SOURCE=.\Abstract_Servant_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AbstractBase.h
 # End Source File
 # Begin Source File
 
@@ -1773,6 +1781,10 @@ SOURCE=.\WrongTransactionC.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "i;inl"
+# Begin Source File
+
+SOURCE=.\AbstractBase.inl
+# End Source File
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i

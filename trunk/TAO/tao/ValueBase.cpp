@@ -18,15 +18,18 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/ValueBase.h"
+#include "tao/ValueFactory.h"
 #include "tao/debug.h"
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ValueBase.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, ValueBase, "$Id$")
+ACE_RCSID (tao, 
+           ValueBase, 
+           "$Id$")
 
 // destructor
 CORBA_ValueBase::~CORBA_ValueBase (void)
@@ -34,7 +37,7 @@ CORBA_ValueBase::~CORBA_ValueBase (void)
 }
 
 CORBA_ValueBase*
-CORBA_ValueBase::_downcast (CORBA_ValueBase* vt)
+CORBA_ValueBase::_downcast (CORBA_ValueBase *vt)
 {
   return vt;  // every vt is a CORBA::ValueBase :-)
 }
@@ -88,18 +91,24 @@ CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
   //    is provided. The latter is necessary if the formal_type_id
   //    is unequal the 'true derived' type of this object. +++
 
-  CORBA::ULong value_tag =   TAO_OBV_GIOP_Flags::Value_tag_base
+  CORBA::ULong value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
                            | TAO_OBV_GIOP_Flags::Type_info_single;
 
   retval = strm.write_ulong (value_tag);
-  if (!retval)
-    return retval;
+
+  if (! retval)
+    {
+      return retval;
+    }
 
   // 4. Marshal type information.
 
   retval = strm.write_string (this_->_tao_obv_repository_id ());
-  if (!retval)
-    return retval;
+
+  if (! retval)
+    {
+      return retval;
+    }
 
   // 5. if (chunking) let room for a blocksize-tag. (i.e. write ULong)
 
@@ -119,8 +128,8 @@ CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &,
-                                  CORBA_ValueBase *&)
+CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
+                                 CORBA_ValueBase *&new_object)
 {
   // This is for the special case only that one unmarshals in order
   // to assign the newly created object directly to a ValueBase pointer.
@@ -135,14 +144,46 @@ CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &,
   //  new_object->_tao_unmarshal_v ()
   //  new_object->_tao_unmarshal_post ()
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("unimpl. CORBA::ValueBase::_tao_unmarshal\n")));
-  return 0; // %!
+//  CORBA::ValueBase *base = 0;
+  CORBA::ValueFactory_var factory;
+  CORBA::Boolean retval = 
+    CORBA::ValueBase::_tao_unmarshal_pre (strm,
+                                          factory.out (),
+                                          new_object,
+                                          0);
+                      
+  if (retval == 0)
+    {
+      return 0;
+    }
+  
+  if (factory.in () != 0)
+    {
+      new_object = factory->create_for_unmarshal ();
+      
+      if (new_object == 0)
+        {
+          return 0;  // %! except.?
+        }
+      
+      retval = new_object->_tao_unmarshal_v (strm);
+      
+      if (retval == 0)
+        {
+          return 0;
+        }
+    }
+  
+  // Now base must be null or point to the unmarshaled object.
+  // Align the pointer to the right subobject.
+//  new_object = CORBA_ValueBase::_downcast (base);
+  return retval;
 }
 
 
 CORBA::Boolean
 CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
-                                     CORBA_ValueFactory_ptr &factory,
+                                     CORBA_ValueFactory &factory,
                                      CORBA_ValueBase *&valuetype,
                                      const char * const /* repo_id */)
 { // %! dont leak on error case !
@@ -160,6 +201,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   //     So the type should be checked ... +++
 
   CORBA::ULong value_tag;
+
   if (!strm.read_ulong (value_tag))
     {
       return 0;
@@ -178,7 +220,9 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("!CORBA::ValueBase::_tao_unmarshal_pre not value_tag\n")));
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("!CORBA::ValueBase::_tao_unmarshal_pre ")
+                  ACE_TEXT ("not value_tag\n")));
       return 0;
     }
 
@@ -198,9 +242,11 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     }
 
   TAO_ORB_Core *orb_core = strm.orb_core ();
+
   if (orb_core == 0)
     {
       orb_core = TAO_ORB_Core_instance ();
+
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
@@ -209,10 +255,12 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
         }
     }
 
-  factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in());
+  factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+
   if (factory == 0) // %! except.!
     {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
+      ACE_DEBUG ((LM_ERROR, 
+                  ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
       return 0;
     }
 
@@ -265,7 +313,6 @@ CORBA_DefaultValueRefCountBase::_refcount_value (void)
 {
   return this->_tao_refcount_value ();
 }
-
 
 // some constants
 

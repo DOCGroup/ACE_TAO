@@ -756,7 +756,7 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value
   ACE_CHECK;
 }
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 void
 TAO_DynCommon::insert_val (CORBA::ValueBase_ptr
                            ACE_ENV_ARG_DECL)
@@ -1459,7 +1459,7 @@ TAO_DynCommon::get_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
                                           ACE_ENV_ARG_PARAMETER);
 }
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 CORBA::ValueBase_ptr
 TAO_DynCommon::get_val (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((

@@ -39,6 +39,18 @@ CORBA_Any::to_object::to_object (CORBA_Object_out obj)
 {
 }
 
+ACE_INLINE
+CORBA_Any::to_abstract_base::to_abstract_base (CORBA_AbstractBase_ptr &obj)
+  : ref_ (obj)
+{
+}
+
+ACE_INLINE
+CORBA_Any::to_value::to_value (CORBA_ValueBase *&obj)
+  : ref_ (obj)
+{
+}
+
 // *************************************************************
 // Inline operations for class CORBA_Any_var
 // *************************************************************
