@@ -1,3 +1,10 @@
+Fri Feb 08 21:27:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Environment.cpp (exception_type):
+
+	  Corrected the POA prefix.  The PortableServer module is prefixed
+	  with "omg.org."  It was previously missing.
+
 Sat Feb  9 04:57:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp: Added a template instantiation for
