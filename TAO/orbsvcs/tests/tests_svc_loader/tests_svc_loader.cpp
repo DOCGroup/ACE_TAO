@@ -22,12 +22,10 @@
 //
 // ============================================================================
 
-#include <iostream>
+#include "tao/corba.h"
+
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
-#include "ace/pre.h"
-
-#include "tao/corba.h"
 
 ACE_RCSID(tests_svc_loader, tests_svc_loader, "$Id$");
 
@@ -47,7 +45,7 @@ int main (int argc, char *argv [])
       if (argc < 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Usage: File name to be retrieved%s",
+                      "Usage: %s <ior>\n",
                       argv[0]));
 
           return -1;

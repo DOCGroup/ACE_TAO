@@ -1,11 +1,73 @@
+Fri Nov 17 10:11:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/corba.h:
+        * TAO_IDL/be/be_codegen.cpp:
+          Removed reference to the PortableServer library in the corba.h
+          file.  Only the generated skeletons need the ServerRequestInfo.h
+          file, so we generate an explicit #include, instead of taxing the
+          whole world with the extra file.
+
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+          Fixed warning
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+          Disable if the right components are not in
+
+        * orbsvcs/tests/LoadBalancing/Makefile:
+          Disable if the right components are not in
+
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+          Fixed warnings and errors due to exception handling stuff.
+
+        * orbsvcs/tests/ior_corbaname/status_i.h:
+        * orbsvcs/tests/ior_corbaname/status_i.cpp:
+        * orbsvcs/tests/ior_corbaname/client.cpp:
+          Fixed warnings.
+
+        * orbsvcs/tests/tests_svc_loader/Makefile:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.cpp:
+          Some of the code was not compiled under minimum corba, but was
+          used anyway if other variables were set.  Don't use it under
+          minimum CORBA either.
+
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.h:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/ior_corbaloc_export.h:
+        * tao/ior_corbaname_export.h:
+          Fixed excessive #includes.
+          Remove obsolete #includes
+
+        * tao/Makefile:
+        * tao/Remote_Object_Proxy_Impl.cpp:
+          Never include "corba.h" directly in the tao library, it
+          introduces deadly cyclic dependencies.
+
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/Strategies/Makefile:
+          Update dependencies due to the removed files.
+
+        * tests/ior_corbaloc/ior_corbaloc_client_i.cpp:
+          Fixed warnings.
+
 Fri Nov 17 10:59:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicInterface/DynamicImplementation.cpp:
-	* tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/DynamicImplementation.cpp:
+        * tao/DynamicInterface/Server_Request.cpp:
 
-	  Fixed DSI exception handling. Thanks to 
-	  Mateu Batle <mbatle@iname.com> for reporting this
-	  bug.
+          Fixed DSI exception handling. Thanks to
+          Mateu Batle <mbatle@iname.com> for reporting this
+          bug.
 
 Fri Nov 17 08:23:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 

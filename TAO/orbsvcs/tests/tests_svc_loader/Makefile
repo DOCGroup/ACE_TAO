@@ -15,20 +15,20 @@ endif
 LDLIBS  = -lTAO
 ACE_SHLIBS = -lTAO -lACE
 
-PROG_SRCS = tests_svc_loader.cpp \
+PROG_SRCS = tests_svc_loader.cpp
        
 SRC = $(PROG_SRCS)
 
-SIMPLE_CLI_OBJS = tests_svc_loader.o \
+SIMPLE_CLI_OBJS = tests_svc_loader.o
        
 BIN2 = tests_svc_loader
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+ifneq (minimum_corba,1)
   BIN = $(BIN2)
-endif # Naming
+endif # minimum_corba
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -57,9 +57,6 @@ tests_svc_loader: $(addprefix $(VDIR),$(SIMPLE_CLI_OBJS)) $(SHLIB)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 $(BIN):
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), Time_Date$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies

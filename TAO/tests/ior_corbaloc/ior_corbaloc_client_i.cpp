@@ -63,7 +63,7 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
         }
 
       // Invoke a request on the server
-      CORBA::Boolean ret_value = 
+      CORBA::Boolean ret_value =
         factory->print_status (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -113,7 +113,7 @@ IOR_corbaloc_Client_i::init (int argc, char **argv)
 
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->string_to_object (this->argv_[1], 
+        orb->string_to_object (this->argv_[1],
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

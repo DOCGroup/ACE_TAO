@@ -1,6 +1,8 @@
 // $Id$
 
 #include "CORBANAME_Parser.h"
+#include "Invocation.h"
+#include "Stub.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBANAME_Parser.i"

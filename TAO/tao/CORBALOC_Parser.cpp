@@ -1,6 +1,9 @@
 // $Id$
 
 #include "CORBALOC_Parser.h"
+#include "ORB_Core.h"
+#include "Stub.h"
+#include "Connector_Registry.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
