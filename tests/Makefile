@@ -42,6 +42,7 @@ BIN = 	Async_Timer_Queue_Test \
 	Service_Config_Test \
 	Sigset_Ops_Test \
 	SOCK_Test \
+	SOCK_Connector_Test \
 	SPIPE_Test \
 	SString_Test \
 	SV_Shared_Memory_Test \
