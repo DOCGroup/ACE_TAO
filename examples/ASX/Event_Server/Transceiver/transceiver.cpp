@@ -5,8 +5,8 @@
 // program by typing ^C....
 
 #include "ace/Service_Config.h"
-#include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
 #include "ace/Get_Opt.h"
 
 #include "transceiver.h"

@@ -55,9 +55,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Acceptor.h"
-#include "ace/Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
 #include "Options.h"
 
 ACE_SVC_FACTORY_DECLARE (Peer_Factory)
