@@ -47,7 +47,7 @@ endif # PATH
 #### 1) create a $ACE_ROOT/include/makeinclude/platform_macros.GNU
 ####    that contains something like:
 ####
-####  WIND_BASE = /project/doc/wind
+####  WIND_BASE = /project/doc/pkg/wind
 ####  WIND_HOST_TYPE = sun4-solaris2
 ####  CPU = I80486
 ####
