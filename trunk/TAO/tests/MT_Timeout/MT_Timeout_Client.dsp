@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /out:"client.exe" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\Messaging"
+# ADD LINK32 ace.lib TAO.lib TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /out:"Release/client.exe" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\Messaging"
 
 !ELSEIF  "$(CFG)" == "MT Timeout Client - Win32 Debug"
 
