@@ -1,3 +1,11 @@
+Tue Mar 25 21:44:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.h:
+
+          Finished re-parametrizing the template sequence classes.
+
 Mon Mar 24 20:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
