@@ -140,7 +140,6 @@ OBJFILES = \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
 	$(OBJDIR)\PICurrent_ORBInitializer.obj \
-	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
 	$(OBJDIR)\Policy_ForwardC.obj \

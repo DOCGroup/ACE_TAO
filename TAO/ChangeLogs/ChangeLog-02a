@@ -1,3 +1,8 @@
+Mon Apr 15 20:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Removed Pluggable
+
 Mon Apr 15 11:30:50 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Table.h:
@@ -22,31 +27,31 @@ Mon Apr 15 11:30:50 2002  Ossama Othman  <ossama@uci.edu>
 Mon Apr 15 08:05:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h: Included
-	  security_export.h for the file to compile fine. 
+	  security_export.h for the file to compile fine.
 
 	* orbsvcs/orbsvcs/Makefile.SSLIOP:
 	* orbsvcs/orbsvcs/Makefile.Security: Fixed the dependency yet
 	  again :(.
-	
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
 	  Added the handler in reactor after the transport has been
-	  cached. 
-	
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: 
+	  cached.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h: Added the handler
 	  in reactor after the transport has been cached in
 	  connect. Removed portions of the code that looked up connection
 	  from cache since this code has been moved to the common base
-	  class. 
+	  class.
 
 Mon Apr 15 07:37:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Removed support
 	  for preconnects.  Fixed compile errors with g++.
-	
+
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
-	  Forward declared TAO_Profile to avoid compile errors. 
+	  Forward declared TAO_Profile to avoid compile errors.
 
 Mon Apr 15 07:12:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -60,10 +65,10 @@ Sun Apr 14 23:05:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Fixed wrong
 	  includes. They were including Pluggable.h which doesnt exist
-	  anymore. 
-	
+	  anymore.
+
 	* orbsvcs/orbsvcs/Makefile.PortableGroup: Generated dependency
-	  again. 
+	  again.
 
 Sun Apr 14 20:17:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -77,7 +82,7 @@ Sun Apr 14 19:51:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp: Added new files like Transport_Acceptor.*
 	  and Transport_Connector.* and removed old ones, namely
-	  Pluggable.* 
+	  Pluggable.*
 
 Sun Apr 14 19:43:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -92,15 +97,15 @@ Sun Apr 14 19:05:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         Merged in from my branch.
-	
+
 	Fri Apr 12 15:39:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connector_Impl.cpp: Do not add the handler to the reactor.  
+	* tao/Connector_Impl.cpp: Do not add the handler to the reactor.
 
 	* tao/IIOP_Connector.cpp:
 	* tao/Strategies/SHMIOP_Connector.cpp:
 	* tao/Strategies/UIOP_Connector.cpp: Add the handler to the
-	  reactor after the transport has been cached. 
+	  reactor after the transport has been cached.
 
 	  The above changes helps to works around a race condition. The
 	  race occurs in the following scenario:
@@ -110,28 +115,28 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  - the server crashes and a thread waiting on the reactor closes
 	    down the connection. As the connection handler and transports
 	    have not been ref counted (yet) they could be completely
-	    destroyed. 
+	    destroyed.
 	  - the thread that initiated the connection would try to
 	    duplicate a null transport and try adding that to cache and
-	    all hell would break loose. 
+	    all hell would break loose.
 
 	  The methodology adopted is to delay adding the handler to the
 	  reactor till the handler is added to cache. This would make sure
 	  that the transport is refcounted and hence the thread making the
 	  connection will have a valid pointer to take action and do the
-	  cleanup when it finds that the connection is closed. 
+	  cleanup when it finds that the connection is closed.
 
         Fri Apr 12 14:14:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connector_Registry.cpp:
-	* tao/Connector_Registry.h: 
+	* tao/Connector_Registry.h:
 	* tao/Connector_Registry.i: Added a new method, get_connector ()
 	  which returns a TAO_Connector based on a TAO_Endpoint. Need to
 	  deprecate connect (). The connector registry should not be
-	  involved in doing active connects. 
+	  involved in doing active connects.
 
 	* tao/Invocation.cpp: Used the connector_registry's get_connector
-	  () to retrieve a connector before calling a connect on it. 
+	  () to retrieve a connector before calling a connect on it.
 
 	* tao/Transport_Connector.cpp:
 	* tao/Transport_Connector.h: Consolidated some of the code from
@@ -140,10 +145,10 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  which looks for a connection in the cache has been moved in
 	  here. If a connection is not found in cache, the control is
 	  transferred to the underlying transports to set up a
-	  connection. 
-	
+	  connection.
+
 	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Connector.h: 
+	* tao/IIOP_Connector.h:
 	* tao/Strategies/DIOP_Connector.cpp:
 	* tao/Strategies/DIOP_Connector.h:
 	* tao/Strategies/SHMIOP_Connector.cpp:
@@ -156,38 +161,38 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Thu Apr 11 17:26:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Connector.cpp: 
+	* tao/Strategies/SHMIOP_Connector.cpp:
 	* tao/Strategies/SHMIOP_Connector.h:
 	* tao/Strategies/UIOP_Connector.h:
 	* tao/Strategies/UIOP_Connector.cpp:
 	* tao/Strategies/DIOP_Connector.h:
 	* tao/Strategies/DIOP_Connector.cpp: Cleaned up left over
 	  preconnect code.
-	
+
         Thu Apr 11 14:36:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This checkin does the following 
+	This checkin does the following
 
 	  - Splits the file Pluggable.{h,cpp,i} into two files namely
 	    Transport_Acceptor.{h,cpp,inl} and
-	    Transport_Connector.{h,cpp,inl}. 
+	    Transport_Connector.{h,cpp,inl}.
 
 	  - Removes support for preconnects () totally. The code for
 	    preconnects is just #if 0'ed now. We can remove the code
-	    totally once these changes stabilizes. 
+	    totally once these changes stabilizes.
 
 	* tao/Pluggable.h:
 	* tao/Pluggable.cpp:
-	* tao/Pluggable.i: Files to be removed from the repository. 
+	* tao/Pluggable.i: Files to be removed from the repository.
 
 	* tao/Transport_Acceptor.h:
 	* tao/Transport_Acceptor.cpp:
 	* tao/Transport_Acceptor.inl:
 	* tao/Transport_Connector.h:
 	* tao/Transport_Connector.cpp:
-	* tao/Transport_Connector.inl: New files to the repository. 
-	
-	* tao/Acceptor_Registry.cpp: 
+	* tao/Transport_Connector.inl: New files to the repository.
+
+	* tao/Acceptor_Registry.cpp:
 	* tao/IIOP_Acceptor.h:
 	* tao/Tagged_Profile.cpp:
 
