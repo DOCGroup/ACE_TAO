@@ -38,7 +38,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
                                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (kind == CORBA::tk_struct)
+      if (kind == CORBA::tk_struct || kind == CORBA::tk_except)
         {
           CORBA::ULong numfields =
             this->type_.in ()->member_count (ACE_TRY_ENV);
@@ -97,7 +97,11 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA_TypeCode_ptr tc)
   ACE_TRY
     {
       // Need to check if called by user.
-      if (TAO_DynAny_i::unalias (tc, ACE_TRY_ENV) == CORBA::tk_struct)
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (kind == CORBA::tk_struct || kind == CORBA::tk_except)
         {
           CORBA::ULong numfields = tc->member_count (ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -106,9 +110,10 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA_TypeCode_ptr tc)
           this->da_members_.size (numfields);
 
           for (CORBA::ULong i = 0; i < numfields; i++)
-
-            // With a typecode arg, we just create the top level.
-            this->da_members_[i] = 0;
+            {
+              // With a typecode arg, we just create the top level.
+              this->da_members_[i] = 0;
+            }
         }
       else
         {
