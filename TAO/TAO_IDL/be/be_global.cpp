@@ -1726,7 +1726,7 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GI[h|s|b|e|c]\t\tGenerate Implemenation Files \n")
+      ACE_TEXT (" -GI[h|s|b|e|c]\t\tGenerate Implementation Files \n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
