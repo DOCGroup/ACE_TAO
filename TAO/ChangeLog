@@ -1,3 +1,10 @@
+Tue Dec  7 16:35:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        
+          Fixed perl script to look for the tao_ifr executable in
+          ACE_ROOT/bin.
+
 Tue Dec  7 15:36:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/asts/ast_root.cpp:
