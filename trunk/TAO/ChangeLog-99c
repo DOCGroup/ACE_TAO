@@ -1,3 +1,9 @@
+Tue Jul 13 12:39:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Transport.cpp (send_request):
+
+	  Updated to match IIOP's send_request() method.
+
 Tue Jul 13 12:22:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence_T.h:
