@@ -93,6 +93,16 @@ schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   -1);
   item->thread_handle (thr_handle);
 
+#if 0
+  printf("*********************************BEFORE*************************************\n");
+  {
+        DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var(item);
+  }
+  if(item == NULL) { printf("*************************NULL**************************\n"); exit(-1); }
+  printf("*********************************AFTER*************************************\n");
+#endif
+
+
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
   if (this->ready_queue_.insert (item) == -1)
     return -1;
@@ -212,18 +222,20 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 //If I change the guid to Task ID, will it work?
       if(this->release_map_.find(qos.task_id_, tv)==0)
       {
-#ifdef KOKYU_DSRT_LOGGING
+#ifdef MY_KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): Get the previous release time is %d\n",tv.sec()));
+                  "(%t|%T): Get the previous release time is %d, %d\n",tv.sec(),tv.usec()));
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Get the cur time is %d, %d\n",cur_time.sec(), cur_time.usec()));
 #endif
-        proper_t = tv + ACE_Time_Value (period/10000000, (period%10000000)/1000);
+        proper_t = tv + ACE_Time_Value (period/10000000, (period%10000000)/10);
         if( proper_t  <= cur_time )
            {
-#ifdef KOKYU_DSRT_LOGGING
+#ifdef MY_KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): Over the proper release time\n"));
 #endif
-             this->release_map_.rebind(qos.task_id_, cur_time);
+             this->release_map_.rebind(qos.task_id_, proper_t);
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
@@ -232,35 +244,47 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
            }
         else
            {
+//           if(this->ready_queue_.current_size()) {
            ACE_Time_Value left_time;
 //           left_time.sec = (cur_v-tv-period)/10000000;
 //           left_time.usec = (cur_v-tv-period)/10;
 //           left_time.set (ACE_static_cast(ACE_UINT32, (cur_v-tv-period) / 10000000),
 //           ACE_static_cast(ACE_UINT32, ((cur_v-tv-period) % 10000000) / 1000));
-
-           left_time = proper_t - cur_time;
 #ifdef KOKYU_DSRT_LOGGING
-           ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): About to block on release guard cond\n"));
+	   ACE_DEBUG((LM_DEBUG,"(%t|%T):BEFORE GOING TO SLEEP\n"));
 #endif
-           if (this->release_cond_.wait (&left_time) == -1)
-             {
-             ACE_ERROR ((LM_ERROR,
-                      "(%t|%T): release_cond.wait timed out \n"));
+//           while(proper_t>cur_time) {
+           left_time = proper_t - cur_time;
+           timeval time_tv;
+           time_tv.tv_sec = left_time.sec();
+           time_tv.tv_usec = left_time.usec();
+
+#ifdef MY_KOKYU_DSRT_LOGGING
+           ACE_DEBUG((LM_DEBUG,"GOING TO SLEEP FOR %d, %d\n", time_tv.tv_sec, time_tv.tv_usec));
+#endif
+           DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED, int_guid, 0, NULL);
+           usleep(left_time.sec()*1000000+left_time.usec());
+//           if (this->release_cond_.wait (&left_time) == -1)
+//             select(0, NULL, NULL, NULL, &time_tv);
+//	 cur_time = ACE_OS::gettimeofday ();
+//          }
+
+//             ACE_ERROR ((LM_ERROR,
+//                      "(%t|%T): release_cond.wait timed out \n"));
+//             }
              cur_time = ACE_OS::gettimeofday ();
-#ifdef KOKYU_DSRT_LOGGING
+#ifdef MY_KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): And Current time is set in the map.\n"));
+                  "(%t|%T): And Current time is set in the map and %d, %d.\n",cur_time.sec(), cur_time.usec() ));
 #endif
 
              this->release_map_.rebind(qos.task_id_, cur_time);
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
-             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_DELAYED_EVENT_RELEASED, int_guid, 0, NULL);
+             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED_FIRE, qos.task_id_, 0, NULL);
 
              this->schedule_i (guid, qos);
-             }
            }
       }
       else
