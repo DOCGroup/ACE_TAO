@@ -62,15 +62,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   //this->message_state_.reset (0);
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  // @@ Somebody could please explain why we ignore the value
-  // returned? And why don't we simply use the normal C++ idioms to
-  // represent that?  Namely:
-  // (void) this->reply_cdr_.close_from (params.input_cdr_);
-  //
-  ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
-
-  ACE_UNUSED_ARG (db);
+  (void) this->reply_cdr_.clone_from (params.input_cdr_);
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
