@@ -91,11 +91,9 @@ Command_Processor::execute (void)
                                                    command);
       Auto_Destroyer<URL_Command> url_command_ptr (url_command);
       if (url_command_ptr->execute () != 0)
-        {
-        ACE_DEBUG ((LM_DEBUG,
-                    "Couldnt execute command"));
-        return -1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n", "Couldnt execute command"),
+                          -1);
     }
   return 0;
 }

@@ -1,16 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
-//    apps/Web
+//    examples/Web_Crawlerx
 //
 // = FILENAME
 //    URL_Visitor.h
 //
 // = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//    Douglas C.Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -23,12 +22,11 @@
 
 #include "ace/Strategies_T.h"
 #include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
 #include "HTTP_URL.h"
 #include "Iterators.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "Caching_Strategies_T.h"
-#include "Cached_Connect_Strategy_T.h"
+#include "ace/Caching_Strategies_T.h"
+#include "ace/Cached_Connect_Strategy_T.h"
 #include "Options.h"
 
 // Forward declarations.
@@ -49,6 +47,7 @@ public:
   // Perform the strategy.
 
   virtual int destroy (void);
+
   // Close down the resources.
 
 protected:
@@ -255,17 +254,16 @@ public:
   URL_CACHE &url_cache (void);
   // Returns a reference to the URL cache.
 
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
-  
-  typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR>
-        STRAT_CONNECTOR;
+  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
+          Svc_Handler;
+  typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+          STRAT_CONNECTOR;
   typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
   typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-  NULL_CREATION_STRATEGY;
+          NULL_CREATION_STRATEGY;
   typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-  NULL_ACTIVATION_STRATEGY;
+          NULL_ACTIVATION_STRATEGY;
 
   typedef ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                   ACE_Pair<Svc_Handler *, int>,\
@@ -285,8 +283,8 @@ public:
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
                                  ACE_Null_Mutex> 
     CONNECTION_HASH_MAP_REVERSE_ITERATOR;
-  typedef  ACE_LRU_Caching_Strategy<CONNECTION_HASH_MAP>
-          LRU;
+  typedef ACE_LRU_Caching_Strategy<CONNECTION_HASH_MAP>
+         LRU;
   typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler,ACE_SOCK_CONNECTOR, LRU, ACE_SYNCH_NULL_MUTEX>
          CACHED_CONNECT_STRATEGY;
 
