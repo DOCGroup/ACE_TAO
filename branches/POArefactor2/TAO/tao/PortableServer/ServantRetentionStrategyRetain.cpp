@@ -356,14 +356,14 @@ namespace TAO
         {
           // Remember params for potentially invoking <key_to_object> later.
           this->poa_->key_to_object_params_.set (system_id,
-                                               servant->_interface_repository_id (),
-                                              servant,
-                                           1,
-                                           priority);
+                                                 servant->_interface_repository_id (),
+                                                 servant,
+                                                 1,
+                                                 priority);
 
           return this->poa_->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
-                                                      id
-                                                      ACE_ENV_ARG_PARAMETER);
+                                                            id
+                                                            ACE_ENV_ARG_PARAMETER);
         }
       else
         {
@@ -449,7 +449,7 @@ namespace TAO
           servant_upcall.active_object_map_entry (active_object_map_entry);
 
           // Increment the reference count.
-          ++servant_upcall.active_object_map_entry ()->reference_count_;
+          servant_upcall.increment_servant_refcount ();
 
           // Success
           return servant;

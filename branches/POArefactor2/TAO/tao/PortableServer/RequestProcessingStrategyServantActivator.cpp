@@ -256,12 +256,10 @@ namespace TAO
         {
           // Increment the reference count on the servant upcall.
           servant_upcall.increment_servant_refcount ();
-
-          // Success
-          return servant;
         }
 
-      // todo
+      // Success
+      return servant;
     }
 
   }
