@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    cos
+//   ORBSVCS AVStreams
 //
 // = FILENAME
 //   Transport.h
@@ -19,6 +19,7 @@
 #define TAO_AV_TRANSPORT_H
 
 #include "ace/Acceptor.h"
+#include "ace/Addr.h"
 #include "AVStreams_i.h"
 
 //  Transports
@@ -29,7 +30,7 @@ class TAO_ORBSVCS_Export TAO_AV_Transport
   //   = A Base class for the different transport protocols.
   //
   // DESCRIPTION
-  //   = All the different transports should derive and implement 
+  //   = All the different transports should derive and implement
   //     the open,close,send and recv methods.
 public:
   TAO_AV_Transport (void);
@@ -41,6 +42,7 @@ public:
   virtual int close (void) = 0;
 
   virtual int mtu (void) = 0;
+  virtual int get_peer_addr (ACE_Addr &addr) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) = 0;
   // Write the complete Message_Block chain to the connection.
@@ -70,12 +72,12 @@ public:
                         int iovcnt,
                         ACE_Time_Value *s = 0) = 0;
   //  Read received data into the iovec buffers.
-  
+
 };
 
 class TAO_AV_TCP_Flow_Handler;
 
-class TAO_AV_TCP_Transport 
+class TAO_AV_TCP_Transport
   :public TAO_AV_Transport
 {
   // = TITLE
@@ -93,8 +95,10 @@ public:
   virtual int open (ACE_Addr *address);
 
   virtual int close (void);
-  
+
   virtual int mtu (void);
+
+  virtual int get_peer_addr (ACE_Addr &addr);
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
@@ -148,8 +152,10 @@ public:
   virtual int open (ACE_Addr *addr);
 
   virtual int close (void);
-  
+
   virtual int mtu (void);
+
+  virtual int get_peer_addr (ACE_Addr &addr);
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
@@ -199,10 +205,10 @@ public:
   TAO_AV_Acceptor (void);
   virtual ~TAO_AV_Acceptor (void);
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core, 
+                    TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry) = 0;
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core, 
+                            TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry) = 0;
   virtual const char *flowname ();
   virtual int close (void) = 0;
@@ -236,10 +242,10 @@ public:
   TAO_AV_TCP_Acceptor (void);
   virtual ~TAO_AV_TCP_Acceptor (void);
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core, 
+                    TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry);
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core, 
+                            TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry);
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
@@ -274,7 +280,7 @@ class TAO_ORBSVCS_Export TAO_AV_Dgram_Connector
 public:
   virtual int open (TAO_AV_UDP_Connector *connector,
                     ACE_Reactor *reactor);
-  
+
   virtual int connect (TAO_AV_UDP_Flow_Handler *&handler,
                        const ACE_Addr &remote_addr,
                        ACE_Addr &local_addr);
@@ -292,10 +298,10 @@ public:
   TAO_AV_UDP_Acceptor (void);
   virtual ~TAO_AV_UDP_Acceptor (void);
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core, 
+                    TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry);
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core, 
+                            TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry);
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
@@ -359,6 +365,7 @@ protected:
   TAO_AV_Core *av_core_;
   TAO_AV_TCP_Base_Connector connector_;
   TAO_Base_StreamEndPoint *endpoint_;
+  TAO_FlowSpec_Entry *entry_;
 };
 
 class TAO_AV_UDP_Connector
@@ -387,7 +394,7 @@ class TAO_ORBSVCS_Export TAO_AV_Protocol_Factory
 public:
   TAO_AV_Protocol_Factory (void);
   virtual ~TAO_AV_Protocol_Factory (void);
-  
+
   virtual int match_protocol (TAO_AV_Core::Protocol protocol) = 0;
   virtual TAO_AV_Acceptor *make_acceptor (void) = 0;
   virtual TAO_AV_Connector *make_connector (void) = 0;
@@ -419,7 +426,7 @@ public:
 class TAO_AV_Flow_Handler
 {
 public:
-  TAO_AV_Flow_Handler (void);
+  TAO_AV_Flow_Handler (TAO_AV_Callback *callback);
   virtual int start (void);
   virtual int stop  (void);
   virtual TAO_AV_Transport *transport (void);
@@ -427,6 +434,7 @@ public:
   //  virtual ACE_Event_Handler* event_handler (void) = 0;
 protected:
   TAO_AV_Transport *transport_;
+  TAO_AV_Callback *callback_;
 };
 
 class TAO_AV_TCP_Flow_Handler
@@ -434,8 +442,9 @@ class TAO_AV_TCP_Flow_Handler
    public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  TAO_AV_TCP_Flow_Handler (void);
+  TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = 0);
   virtual TAO_AV_Transport *transport (void);
+  virtual int handle_input (ACE_HANDLE fd);
   //  virtual ACE_Event_Handler* event_handler (void){ return this; }
 protected:
   TAO_AV_Core *av_core_;
@@ -447,10 +456,11 @@ class TAO_AV_UDP_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  TAO_AV_UDP_Flow_Handler (void);
+  TAO_AV_UDP_Flow_Handler (TAO_AV_Callback *callback);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
   virtual ACE_HANDLE get_handle (void) const;
+  virtual int handle_input (ACE_HANDLE fd);
 protected:
   TAO_AV_Core *av_core_;
   ACE_INET_Addr peer_addr_;

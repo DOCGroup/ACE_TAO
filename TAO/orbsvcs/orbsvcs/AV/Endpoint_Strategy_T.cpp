@@ -464,7 +464,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
 
       // make the media controller a property of the vdev
       CORBA::Any media_ctrl_property;
-      CORBA::Object_var media_ctrl_obj = 
+      CORBA::Object_var media_ctrl_obj =
         this->media_ctrl_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       media_ctrl_property <<= this->orb_manager_.orb ()->object_to_string (media_ctrl_obj.in (),

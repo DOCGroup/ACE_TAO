@@ -10,7 +10,7 @@
 //
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
-//    
+//
 //
 // ============================================================================
 
@@ -91,7 +91,7 @@ TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy (void)
 // Spawns the process, and waits for it to finish booting.
 // Then uses bind_to_naming_service, get_stream_endpoint, and get_vdev
 // to get the object references to the various objects created in the
-// child 
+// child
 int
 TAO_AV_Endpoint_Process_Strategy::activate (void)
 {
@@ -109,14 +109,14 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 
   // Create a unique semaphore name, using my hostname, and pid.
   char sem_str [BUFSIZ];
-  
+
   // create a unique semaphore name
   ACE_OS::sprintf (sem_str,
                    "%s:%s:%ld",
                    "TAO_AV_Process_Semaphore",
                    this->host_,
                    this->pid_);
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
               sem_str));
@@ -124,7 +124,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
   ACE_Process_Semaphore semaphore (0, // 0 means that the
                                    // semaphore is locked initially
                                    sem_str);
-  
+
   // wait until the child finishes booting
   while (1)
     {
@@ -150,7 +150,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                        "(%P|%t) semaphore remove failed: %p\n",
                        "remove"),
                       -1);
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -170,7 +170,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy::activate");
       return -1;
-    }      
+    }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
   return 0;
@@ -278,15 +278,15 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
 {
   // use the baseclass activate
   if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                       -1);
-  
+
   // return the object references
   stream_endpoint = this->stream_endpoint_a_;
   vdev = this->vdev_;
   return 0;
-  
+
 }
 
 // Gets the stream endpoint object reference from the naming service
@@ -306,7 +306,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &ACE
 
       // Create the name
       CosNaming::Name Stream_Endpoint_A_Name (1);
-  
+
       Stream_Endpoint_A_Name.length (1);
       Stream_Endpoint_A_Name [0].id = CORBA::string_dup (stream_endpoint_name);
 
@@ -315,13 +315,13 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &ACE
         this->naming_context_->resolve (Stream_Endpoint_A_Name,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       // Narrow the reference
       this->stream_endpoint_a_ =
         AVStreams::StreamEndPoint_A::_narrow (stream_endpoint_a.in (),
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       // Check for validity
       if (CORBA::is_nil (this->stream_endpoint_a_))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -362,7 +362,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
   ACE_TRY
     {
     if (this->activate () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                         -1);
 
@@ -374,7 +374,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
     vdev = this->vdev_;
   }
   ACE_CATCHANY
-    { 
+    {
       ACE_TRY_ENV.print_exception ("TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
       return -1;
     }
@@ -400,10 +400,10 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &ACE
 
       // Create the name
       CosNaming::Name Stream_Endpoint_B_Name (1);
-  
+
       Stream_Endpoint_B_Name.length (1);
       Stream_Endpoint_B_Name [0].id = CORBA::string_dup (stream_endpoint_name);
-  
+
       // Get the CORBA::Object reference
       CORBA::Object_var stream_endpoint_b =
         this->naming_context_->resolve (Stream_Endpoint_B_Name,

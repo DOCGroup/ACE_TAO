@@ -1,6 +1,7 @@
 // $Id$
 
 #include "MCast.h"
+#include "Nil.h"
 
 //------------------------------------------------------------
 // TAO_AV_UDP_MCast_Acceptor
@@ -15,9 +16,25 @@ TAO_AV_UDP_MCast_Acceptor::~TAO_AV_UDP_MCast_Acceptor (void)
 }
 
 int
-TAO_AV_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&udp_handler)
+TAO_AV_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mcast_handler)
 {
-  this->endpoint_->make_dgram_mcast_flow_handler (udp_handler);
+  TAO_AV_Callback *callback = 0;
+  if (this->endpoint_ != 0)
+    {
+      this->endpoint_->get_callback (this->flowname_.c_str (),
+                                     callback);
+      ACE_NEW_RETURN (mcast_handler,
+                      TAO_AV_UDP_MCast_Flow_Handler (callback),
+                      -1);
+      TAO_AV_Protocol_Object *object =0;
+      ACE_NEW_RETURN (object,
+                      TAO_AV_UDP_MCast_Object (callback,
+                                               mcast_handler->transport ()),
+                      -1);
+      this->endpoint_->set_protocol_object (this->flowname_.c_str (),
+                                            object);
+      this->entry_->protocol_object (object);
+    }
   return 0;
 }
 
@@ -82,13 +99,29 @@ TAO_AV_UDP_MCast_Connector::~TAO_AV_UDP_MCast_Connector (void)
 }
 
 int
-TAO_AV_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&udp_handler)
+TAO_AV_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mcast_handler)
 {
-  this->endpoint_->make_dgram_mcast_flow_handler (udp_handler);
+  TAO_AV_Callback *callback = 0;
+  if (this->endpoint_ != 0)
+    {
+      this->endpoint_->get_callback (this->flowname_.c_str (),
+                                     callback);
+      ACE_NEW_RETURN (mcast_handler,
+                      TAO_AV_UDP_MCast_Flow_Handler (callback),
+                      -1);
+      TAO_AV_Protocol_Object *object =0;
+      ACE_NEW_RETURN (object,
+                      TAO_AV_UDP_MCast_Object (callback,
+                                               mcast_handler->transport ()),
+                      -1);
+      this->endpoint_->set_protocol_object (this->flowname_.c_str (),
+                                            object);
+      this->entry_->protocol_object (object);
+    }
   return 0;
 }
 
-int 
+int
 TAO_AV_UDP_MCast_Connector::open (TAO_Base_StreamEndPoint *endpoint,
                                   TAO_AV_Core *av_core)
 {
@@ -139,11 +172,12 @@ TAO_AV_UDP_MCast_Connector::close (void)
 //TAO_AV_UDP_MCast_Flow_Handler
 //------------------------------------------------------------
 
-TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler (void)
+TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback)
+  :TAO_AV_Flow_Handler (callback)
 {
   ACE_NEW (transport_,
            TAO_AV_UDP_MCast_Transport (this));
-           
+
 }
 
 ACE_HANDLE
@@ -152,6 +186,25 @@ TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
   cerr << ACE_IPC_SAP::get_handle () << " " << endl;
   return ACE_IPC_SAP::get_handle () ;
+}
+
+int
+TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE fd)
+{
+  size_t size = 2*this->transport_->mtu ();
+  ACE_Message_Block *frame = 0;
+  ACE_NEW_RETURN (frame,
+                  ACE_Message_Block (size),
+                  -1);
+  int n = this->transport_->recv (frame->rd_ptr (),
+                                  frame->size ());
+  if (n == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_Flow_Handler::handle_input recv failed\n"),-1);
+  if (n == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_Flow_Handler::handle_input connection closed\n"),-1);
+  frame->wr_ptr (n);
+  this->callback_->receive_frame (frame);
+  return 0;
 }
 
 //------------------------------------------------------------
@@ -190,6 +243,12 @@ TAO_AV_UDP_MCast_Transport::mtu (void)
   return ACE_MAX_DGRAM_SIZE;
 }
 
+int
+TAO_AV_UDP_MCast_Transport::get_peer_addr (ACE_Addr &addr)
+{
+  return -1;
+}
+
 ssize_t
 TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 {
@@ -222,7 +281,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
             {
               n = this->handler_->send ((const iovec *) iov,
                                         iovcnt);
-                              
+
               if (n < 1)
                 return n;
 

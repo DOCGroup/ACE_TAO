@@ -1,5 +1,21 @@
 /* -*- C++ -*- */
+
 // $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//   ORBSVCS AVStreams
+//
+// = FILENAME
+//   MCast.h
+//
+// = AUTHOR
+//    Nagarajan Surendran <naga@cs.wustl.edu>
+//
+//
+// ============================================================================
+
 
 #ifndef TAO_AV_MCAST_H
 #define TAO_AV_MCAST_H
@@ -9,7 +25,7 @@
 
 class TAO_AV_UDP_MCast_Flow_Handler;
 
-class TAO_AV_UDP_MCast_Transport 
+class TAO_AV_UDP_MCast_Transport
   :public TAO_AV_Transport
 {
   // = TITLE
@@ -29,6 +45,8 @@ public:
   virtual int close (void);
 
   virtual int mtu (void);
+
+  virtual int get_peer_addr (ACE_Addr &addr);
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
@@ -71,10 +89,10 @@ public:
   TAO_AV_UDP_MCast_Acceptor (void);
   virtual ~TAO_AV_UDP_MCast_Acceptor (void);
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core, 
+                    TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry);
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core, 
+                            TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry);
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&udp_handler);
@@ -113,8 +131,9 @@ class TAO_AV_UDP_MCast_Flow_Handler
    public virtual ACE_SOCK_Dgram_Mcast
 {
 public:
-  TAO_AV_UDP_MCast_Flow_Handler (void);
+  TAO_AV_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback);
   virtual ACE_HANDLE get_handle (void) const;
+  virtual int handle_input (ACE_HANDLE fd);
 protected:
   ACE_INET_Addr peer_addr_;
 };
