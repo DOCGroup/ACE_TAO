@@ -1,3 +1,8 @@
+Fri Feb 26 10:59:45 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/test_talker.cpp (main): Fixed to
+	use the new proactor interface.
+
 Thu Feb 25 22:17:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (spa, for VxWorks only): updated comment about
