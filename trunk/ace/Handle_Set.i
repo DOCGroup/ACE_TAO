@@ -13,7 +13,7 @@ ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
   if (this->size_ > 0)
     {
       this->max_handle_ = rhs.max_handle_;
-      this->size_ = rhs.size_;
+      this->mask_ = rhs.mask_;
     }
   else
     {
