@@ -1,7 +1,11 @@
-Sat Nov 15 17:34:11 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sat Nov 15 17:45:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/object: Changed the _get_name() method to return const char
+ 	  * to be consistent with the iiopobj change below.
 
 	* tao/iiopobj: Fixed _get_name() so that it doesn't allocate
- 	memory.  This should fix some subtle problems.
+ 	  memory by having it return const char * and just return the
+ 	  pointer.  This should fix some subtle problems.
 
 Sat Nov 15 17:33:15 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
