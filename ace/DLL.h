@@ -42,7 +42,7 @@ public:
   // Default constructor.  By default, the <close> operation on the
   // object will be invoked before it is destroyed.
 
-  ACE_DLL (const char *dll_name,
+  ACE_DLL (const ASYS_TCHAR *dll_name,
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
            int close_on_destruction = 1);
   // This constructor opens and dynamically links <dll_name>.  The
@@ -53,7 +53,7 @@ public:
   // loaded and <RTLD_GLOBAL>, which makes symbols available for
   // relocation processing of any other DLLs.
 
-  int open (const char *dll_name,
+  int open (const ASYS_TCHAR *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
             int close_on_destruction = 1);
   // This method opens and dynamically links <dll_name>.  The default

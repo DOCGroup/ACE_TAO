@@ -5150,7 +5150,7 @@ struct ACE_Protocol_Info
 
 #define ACE_QOS_NOT_SPECIFIED            0xFFFFFFFF
 #define ACE_SERVICETYPE_NOTRAFFIC        0x00000000  // No data in this direction.
-#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000002  // Controlled Load. 
+#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000002  // Controlled Load.
 #define ACE_SERVICETYPE_GUARANTEED       0x00000003  // Guaranteed.
 
 #define ACE_JL_SENDER_ONLY    0x01
@@ -7927,21 +7927,11 @@ public:
   ACE_CE_Bridge (void);
   // Default ctor.
 
-#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  ACE_CE_Bridge (CWnd *, int notification, int idc);
-  // Construct and set the default windows.
-#   endif /* ACE_HAS_MFC && ACE_HAS_MFC != 0 */
-
   ACE_CE_Bridge (HWND, int notification, int idc);
   // Construct and set the default windows.
 
   ~ACE_CE_Bridge (void);
   // Default dtor.
-
-#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  void set_window (CWnd *, int notification, int idc);
-  // Specify which window to use.
-#   endif /* ACE_HAS_MFC && ACE_HAS_MFC != 0 */
 
   void set_window (HWND, int notification, int idc);
   // Specify which window to use.

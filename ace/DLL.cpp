@@ -18,10 +18,10 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 // If the library name and the opening mode are specified than on
 // object creation the library is implicitly opened.
 
-ACE_DLL::ACE_DLL (const char *dll_name,
+ACE_DLL::ACE_DLL (const ASYS_TCHAR *dll_name,
                   int open_mode,
                   int close_on_destruction)
-  : handle_ (ACE_OS::dlopen (ASYS_WIDE_STRING (dll_name),
+  : handle_ (ACE_OS::dlopen (dll_name,
                              open_mode)),
     close_on_destruction_ (close_on_destruction)
 {
@@ -53,7 +53,7 @@ ACE_DLL::~ACE_DLL (void)
 //               relocation processing of any other object.
 
 int
-ACE_DLL::open (const char *dll_filename,
+ACE_DLL::open (const ASYS_TCHAR *dll_filename,
                int open_mode,
                int close_on_destruction)
 {
@@ -69,7 +69,7 @@ ACE_DLL::open (const char *dll_filename,
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  int result = ACE::ldfind (ASYS_WIDE_STRING (dll_filename),
+  int result = ACE::ldfind (dll_filename,
                             dll_pathname,
                             (sizeof dll_pathname / sizeof (ASYS_TCHAR)));
   // Check for errors
