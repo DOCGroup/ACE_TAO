@@ -5,6 +5,10 @@
 
 ACE_RCSID(tao, Servant_Base, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Servant_Base.i"
+#endif /* ! __ACE_INLINE__ */
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Servant_Base_Timeprobe_Description[] =

@@ -228,7 +228,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 
 #include "tao/Connect.h"
 #include "tao/ORB_Core.h"
-#include "tao/Object_Table.h"
+#include "tao/Active_Object_Map.h"
 #include "tao/Operation_Table.h"
 #include "tao/debug.h"
 

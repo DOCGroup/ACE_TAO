@@ -68,10 +68,6 @@ public:
   // Used for sequences of object to convert from the derived type
   // into the Object class.
 
-  // = TAO-specific method.
-  virtual u_long hash (void) const;
-  // Returns a hash value.
-
 protected:
   TAO_Base_Sequence (void);
   // Default constructor.

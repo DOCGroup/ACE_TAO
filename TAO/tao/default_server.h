@@ -50,10 +50,15 @@ public:
 
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
-  virtual TAO_Object_Table_Impl *create_object_table (int user_id_policy);
-  // Return a new id-->object table.  If <user_id_policy> is true, the
-  // request is being made for a POA with USER ID policy. Otherwise,
+  virtual TAO_Active_Object_Map_Impl *create_active_object_map (int user_id_policy);
+  // Return a new id-->sevant table.  If <user_id_policy> is true, the
+  // request is being made for a POA with USER_ID policy. Otherwise,
   // the SYSTEM_ID policy is being used.
+
+  virtual TAO_Reverse_Active_Object_Map_Impl *create_reverse_active_object_map (int unique_id_policy);
+  // Return a new servant-->id table.  If <unique_id_policy> is true,
+  // the request is being made for a POA with UNIQUE_ID
+  // policy. Otherwise, the MULTIPLE_ID policy is being used.
 
   virtual ACE_Lock *create_poa_lock (void);
   // Creates and returns a lock for POA based on the setting for
@@ -98,7 +103,7 @@ public:
   virtual int init (int argc, char *argv[]);
   // Initialize the ORB when it's linked dynamically.
 
-  virtual u_long object_table_size (void) const;
+  virtual u_long active_object_map_size (void) const;
   // Return the object table size
 
   int parse_args (int argc, char *argv[]);
@@ -119,15 +124,16 @@ public:
 protected:
   void tokenize (char *flag_string);
 
-  // = Helpers for <create_object_table>
-  TAO_Object_Table_Impl *create_user_id_policy_object_table (void);
-  TAO_Object_Table_Impl *create_system_id_policy_object_table (void);
-  TAO_Object_Table_Impl *create_object_table_i (TAO_Demux_Strategy table_type);
+  // = Helpers for <create_active_object_map>
+  TAO_Active_Object_Map_Impl *create_user_id_policy_active_object_map (void);
+  TAO_Active_Object_Map_Impl *create_system_id_policy_active_object_map (void);
+  TAO_Active_Object_Map_Impl *create_active_object_map_i (TAO_Demux_Strategy table_type,
+                                                          int user_id_policy);
 
   u_long thread_flags_;
   // Default thread flags passed to thr_create().
 
-  u_long object_table_size_;
+  u_long active_object_map_size_;
   // Default size of object lookup table.
 
   TAO_Demux_Strategy object_lookup_strategy_for_user_id_policy_;
@@ -137,6 +143,10 @@ protected:
   TAO_Demux_Strategy object_lookup_strategy_for_system_id_policy_;
   // The type of lookup/demultiplexing strategy being used for system
   // id policy
+
+  TAO_Demux_Strategy reverse_object_lookup_strategy_for_unique_id_policy_;
+  // The type of reverse lookup/demultiplexing strategy being used for
+  // the UNIQUE_ID policy
 
   enum Lock_Type
   {
