@@ -1,3 +1,8 @@
+Tue Dec 30 11:07:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.h (TAO_Resource_Factory): Corrected my "fat-finger"
+ 	mistake for the return type of get_allocator ().
+
 Mon Dec 29 16:26:24 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/orb_core.{h,cpp}: Added methods for the orb core allocator
