@@ -25,19 +25,24 @@ typedef TAO_Profile * TAO_Profile_ptr;
 // by TAO_.
 typedef CORBA::ULong PHandle; 
 
-class TAO_MProfile 
+class TAO_Export TAO_MProfile 
 {
-  // @@ Fred, please use the = TITLE and = DESCRIPTION format here...
+  // = TITLE
+  //   TAO_MProfile
+  // 
+  // = DESCRIPTION
   // this class implements the basic interface for supporting multiple
   // profiles.  This can be treated either as a circular queue or a
   // linear array of profiles.   
-  // @@ FRED:  For now this list is not locked, BUT it needs to be!
+  // 
+  // It is assumed that locking will only be required when a profile list
+  // is associated with a STUB_Object.  Thus when the STUB_Object accepts 
+  // ownership of an MProfile it also assumes responsibility for controling
+  // access (i.e. locking).
+  // 
 public:
   // = Initalization and termination methods.
-  // @@ Fred, please make sure to capitalize the first letter of each
-  // sentence in your comments.  
   TAO_MProfile (CORBA::ULong sz);
-  // ctor.
 
   TAO_MProfile (TAO_MProfile *mprofiles);
   // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to 
@@ -65,7 +70,8 @@ public:
   // Get previous profile, stop at beginning of list and return 0
 
   TAO_Profile_ptr get_current_profile (void);
-  // @@ Fred, please document.
+  // return a pointer to the current profile, will not increment
+  // referecne pointer.
 
   TAO_Profile_ptr get_profile (PHandle handle);
   // Return a pointer to the profile referenced by handle void
@@ -108,20 +114,30 @@ public:
   // references profiles!
 protected:
   TAO_Profile_ptr *pfiles (void) const;
-  // @@ Fred, please add comments.
+  // return the complete list of profiles, this object retains ownership!
 
 private:
-  // @@ Fred, please add comments.
 
   TAO_MProfile  *fwded_mprofile_;
+  // Used for chaning references when the current profile is forwarded.
+  // Note, this will only be valid for an MProfile which contains a list of
+  // fwd_profiles for some initial or base profile.
+  // This is a backward reference to the profile list which received the 
+  // relocate message.  The actual profile what was forwarded will be
+  // fwded_mprofile_->get_current_profile ()
+
   TAO_Profile_ptr *pfiles_;
+  // Actual list of profiles.
 
   PHandle current_;
+  // Points to the next prfoile to be used.
   // 0 ... size_
+
   PHandle size_;
   // Max size of array
+
   PHandle last_;
-  // Index plus 1 of last valid entry!
+  // Index plus 1 of last valid entry!  May be < size_
 };
 
 #endif // TAO_MPROFILE_H
