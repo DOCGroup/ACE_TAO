@@ -116,10 +116,16 @@ public:
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS& qos,
-                CORBA::Environment &);
-  virtual void disconnect_push_supplier (CORBA::Environment &);
-  virtual void suspend_connection (CORBA::Environment &);
-  virtual void resume_connection (CORBA::Environment &);
+                CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected,
+                       RtecEventChannelAdmin::TypeError));
+  virtual void disconnect_push_supplier (CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void suspend_connection (CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void resume_connection (CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);

@@ -122,6 +122,7 @@ TAO_ECG_UDP_Sender::close (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ECG_UDP_Sender::disconnect_push_consumer (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "ECG (%t): Supplier-consumer received "
@@ -131,6 +132,7 @@ TAO_ECG_UDP_Sender::disconnect_push_consumer (CORBA::Environment &)
 void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                           CORBA::Environment & ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - \n"));
 
@@ -729,6 +731,7 @@ TAO_ECG_UDP_Receiver::close (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ECG_UDP_Receiver::disconnect_push_supplier (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "ECG (%t): Supplier received "
@@ -1107,8 +1110,10 @@ TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
 }
 
 void
-TAO_ECG_Mcast_EH::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                                   CORBA::Environment& TAO_IN_ENV)
+TAO_ECG_Mcast_EH::update_consumer (
+    const RtecEventChannelAdmin::ConsumerQOS& sub,
+    CORBA::Environment& TAO_IN_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG,
   //          "ECG_Mcast_EH (%t) updating consumer\n"));
@@ -1158,6 +1163,7 @@ TAO_ECG_Mcast_EH::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
 void
 TAO_ECG_Mcast_EH::update_supplier (const RtecEventChannelAdmin::SupplierQOS&,
                                    CORBA::Environment&)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
 }
@@ -1170,16 +1176,19 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 }
 
 void
-TAO_ECG_Mcast_EH::Observer::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                                             CORBA::Environment& TAO_IN_ENV)
+TAO_ECG_Mcast_EH::Observer::update_consumer (
+    const RtecEventChannelAdmin::ConsumerQOS& sub,
+    CORBA::Environment& TAO_IN_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->eh_->update_consumer (sub, TAO_IN_ENV);
 }
 
 void
-TAO_ECG_Mcast_EH::Observer::update_supplier (const
-                                             RtecEventChannelAdmin::SupplierQOS& pub,
-                                             CORBA::Environment& TAO_IN_ENV)
+TAO_ECG_Mcast_EH::Observer::update_supplier (
+    const RtecEventChannelAdmin::SupplierQOS& pub,
+    CORBA::Environment& TAO_IN_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->eh_->update_supplier (pub, TAO_IN_ENV);
 }

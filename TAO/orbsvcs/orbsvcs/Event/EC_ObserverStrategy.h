@@ -61,17 +61,19 @@ public:
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-		       CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER))
+                       CORBA::Environment &env)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
     = 0;
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle,
                         CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER))
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
      = 0;
   // The basic methods to support the EC strategies.
 
@@ -108,16 +110,18 @@ public:
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-		       CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
+                       CORBA::Environment &env)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle,
                         CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
@@ -157,16 +161,18 @@ public:
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-		       CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
+                       CORBA::Environment &env)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle,
                         CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
