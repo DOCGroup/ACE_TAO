@@ -754,7 +754,7 @@ value_concrete_decl :
                 idl_global->scopes ().top_non_null ()
               );
 
-          if (vt->will_have_factory ())
+          if (vt != 0 && vt->will_have_factory ())
             {
               ACE_SET_BITS (idl_global->decls_seen_info_,
                             idl_global->decls_seen_masks.valuefactory_seen_);

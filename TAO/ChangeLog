@@ -1,3 +1,11 @@
+Thu Jun 17 13:53:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Fixed IDL compiler crash caused by illegal valuetype
+          member declaration.
+
 Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
