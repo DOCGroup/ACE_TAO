@@ -37,6 +37,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
@@ -954,9 +955,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
     {
       char ns_port_char[256];
 
-      ACE_OS_String::itoa (ns_port,
-                           ns_port_char,
-                           10);
+      ACE_OS::itoa (ns_port,
+                    ns_port_char,
+                    10);
 
       CORBA::String_var ns_port_ptr =
         CORBA::string_alloc (ACE_static_cast (CORBA::ULong,

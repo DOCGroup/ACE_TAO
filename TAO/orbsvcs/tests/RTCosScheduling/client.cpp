@@ -275,7 +275,7 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS_String::strcat(client_output_, buf);
+          ACE_OS::strcat(client_output_, buf);
 
           do_work(before_);
           ACE_TRY_CHECK;
@@ -289,11 +289,11 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS_String::strcat(client_output_, buf);
-      serv_output_ = ACE_OS_String::strdup("");
+          ACE_OS::strcat(client_output_, buf);
+      serv_output_ = ACE_OS::strdup("");
           object1->method1 (activity_, remote_, serv_output_.inout());
 
-          ACE_OS_String::strcat(client_output_, serv_output_.in());
+          ACE_OS::strcat(client_output_, serv_output_.in());
 
 
           ACE_OS::sprintf(buf,
@@ -304,7 +304,7 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS_String::strcat(client_output_, buf);
+          ACE_OS::strcat(client_output_, buf);
 
 
           do_work(after_);
@@ -317,7 +317,7 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS_String::strcat(client_output_, buf);
+          ACE_OS::strcat(client_output_, buf);
 
 
         }
@@ -333,7 +333,7 @@ int svc(void) {
                       activity_));
 
           object1->method1 (activity_, remote_, serv_output_.inout());
-          ACE_OS_String::strcat(client_output_,serv_output_.in());
+          ACE_OS::strcat(client_output_,serv_output_.in());
           /// Finished with remote call
           ACE_DEBUG ((LM_DEBUG,
                       "%T\t%s\tClient\tDone with method1\n",

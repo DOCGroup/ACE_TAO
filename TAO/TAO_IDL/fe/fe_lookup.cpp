@@ -1,7 +1,7 @@
 // $Id$
 
 #include "fe_private.h"
-#include "ace/OS_String.h"
+#include "ace/OS_NS_string.h"
 
 /* starting time is 2:40:07 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
@@ -183,7 +183,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
         {
           const char *s = wordlist[key].keyword_;
 
-          if (*str == *s && !ACE_OS_String::strncmp (str + 1, s + 1, len - 1))
+          if (*str == *s && !ACE_OS::strncmp (str + 1, s + 1, len - 1))
             return &wordlist[key];
         }
     }

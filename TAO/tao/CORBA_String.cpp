@@ -1,7 +1,8 @@
 #include "CORBA_String.h"
 #include "Managed_Types.h"
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
 #include "ace/streams.h"
 
@@ -22,7 +23,7 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  size_t len = ACE_OS_String::strlen (str);
+  size_t len = ACE_OS::strlen (str);
 
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, len));
@@ -33,9 +34,9 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  ACE_OS_String::memcpy (copy,
-                         str,
-                         len + 1);
+  ACE_OS::memcpy (copy,
+                  str,
+                  len + 1);
   return copy;
 }
 
@@ -69,7 +70,7 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS_String::strlen (str));
+  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::strlen (str));
 
   // The wscpy() below assumes that the destination is a valid buffer.
   if (retval == 0)
@@ -267,7 +268,7 @@ operator>> (istream &is, CORBA::String_out &so)
 ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
-  const CORBA::ULong len = ACE_OS_String::strlen (wsv.in ());
+  const CORBA::ULong len = ACE_OS::strlen (wsv.in ());
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -306,7 +307,7 @@ ostream &
 operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
-  const CORBA::ULong len = ACE_OS_String::strlen (tmp);
+  const CORBA::ULong len = ACE_OS::strlen (tmp);
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {

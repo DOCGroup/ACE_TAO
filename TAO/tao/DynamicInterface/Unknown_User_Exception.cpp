@@ -5,6 +5,8 @@
 #include "tao/Any.h"
 #include "tao/Environment.h"
 #include "tao/TC_Constants_Forward.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID (DynamicInterface,
            Unknown_User_Exception,
@@ -51,8 +53,8 @@ int
 CORBA::UnknownUserException::_is_a (const char *interface_id) const
 {
   return
-    ((ACE_OS_String::strcmp (interface_id,
-                             "IDL:omg.org/CORBA/UnknownUserException:1.0")
+    ((ACE_OS::strcmp (interface_id,
+                      "IDL:omg.org/CORBA/UnknownUserException:1.0")
         == 0)
       || UserException::_is_a (interface_id));
 }

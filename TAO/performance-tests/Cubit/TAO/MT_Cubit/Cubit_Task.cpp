@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Cubit_Task.h"
 #include "tao/TAO_Internal.h"
+#include "ace/Barrier.h"
 
 Cubit_Task::Cubit_Task (void)
 {

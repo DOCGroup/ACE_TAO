@@ -5,10 +5,10 @@ ACE_RCSID (tao, Policy_Verifier, "$Id$")
 Policy_Verifier::Policy_Verifier (void)
   : priority_bands_ (0)
 {
-  ACE_OS_String::strcpy (this->base_object_ref_,
-                         "file://default.ior");
-  ACE_OS_String::strcpy (this->overridden_object_ref_,
-                         "file://overridden.ior");
+  ACE_OS::strcpy (this->base_object_ref_,
+                  "file://default.ior");
+  ACE_OS::strcpy (this->overridden_object_ref_,
+                  "file://overridden.ior");
 }
 
 Policy_Verifier::~Policy_Verifier (void)
@@ -56,8 +56,9 @@ Policy_Verifier::init (int argc,
               ACE_CHECK;
             }
           this->rt_poa_properties_->ior_source (arg);
-          ACE_OS_String::strcpy (this->base_object_ref_, "file://");
-          ACE_OS_String::strcat (this->base_object_ref_, this->rt_poa_properties_->ior_source ());
+          ACE_OS::strcpy (this->base_object_ref_, "file://");
+          ACE_OS::strcat (this->base_object_ref_,
+                          this->rt_poa_properties_->ior_source ());
         }
       else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
         {
@@ -70,9 +71,9 @@ Policy_Verifier::init (int argc,
               ACE_CHECK;
             }
           this->rt_object_properties_->ior_source (arg);
-          ACE_OS_String::strcpy (this->overridden_object_ref_, "file://");
-          ACE_OS_String::strcat (this->overridden_object_ref_,
-                                 this->rt_object_properties_->ior_source ());
+          ACE_OS::strcpy (this->overridden_object_ref_, "file://");
+          ACE_OS::strcat (this->overridden_object_ref_,
+                          this->rt_object_properties_->ior_source ());
         }
       else
         {

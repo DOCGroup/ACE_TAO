@@ -6,6 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_strings.h"
 
 #if defined (linux) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"

@@ -1,3 +1,21 @@
+Tue Nov  4 04:55:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/CDR_Stream.h:
+          Removed #include of OS_Memory.h and OS_String.h.
+
+        * ace/Object_Manager.h:
+          Added #includes needed due to subsetting.
+
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * tests/CDR_Test.cpp:
+          Added #includes needed due to subsetting.
+
+        * ace/ace.mpc:
+          Removed commented out Synch.cpp--comments aren't supported.
+
+        * ace/Makefile.ace:
+          Removed Synch and added new files, e.g., Mutex, etc...
+
 Mon Nov  3 22:11:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/config-sunos5.5.h: Added a note about SunCC 5.0.

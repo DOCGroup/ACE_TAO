@@ -4,6 +4,8 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (tao,
            IIOP_Endpoint,

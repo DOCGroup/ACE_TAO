@@ -31,6 +31,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Default_Factory.i"

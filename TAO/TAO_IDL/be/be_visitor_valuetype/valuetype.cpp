@@ -988,13 +988,13 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 idl_bool
 be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
- if (ACE_OS_String::strncmp (node->local_name (), "AMH_", 4) == 0)
+ if (ACE_OS::strncmp (node->local_name (), "AMH_", 4) == 0)
    {
      const char *last_E = 
-      ACE_OS_String::strrchr (node->full_name (), 'E');
+      ACE_OS::strrchr (node->full_name (), 'E');
 
      if (last_E != 0
-         && ACE_OS_String::strcmp (last_E, "ExceptionHolder") == 0)
+         && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
        {
          return I_TRUE;
        }

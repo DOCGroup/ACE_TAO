@@ -22,6 +22,7 @@
 
 #include "ace/Atomic_Op.h"
 #include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Condition_Thread_Mutex.h"
 
 #include "tao/orbconf.h"
 

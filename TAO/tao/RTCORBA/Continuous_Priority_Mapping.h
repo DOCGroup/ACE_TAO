@@ -24,8 +24,6 @@
 #include "rtcorba_export.h"
 #include "Priority_Mapping.h"
 
-#include "ace/OS.h"
-
 /**
  * @class TAO_Continuous_Priority_Mapping
  *

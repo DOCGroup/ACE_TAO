@@ -12,6 +12,7 @@
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
+#include "ace/OS_NS_strings.h"
 
 #include "DIOP_Profile.h"
 

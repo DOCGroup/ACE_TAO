@@ -22,6 +22,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_strings.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedConsumerAdmin.h"

@@ -18,6 +18,7 @@
 #include "orbsvcs/CosNamingS.h"
 
 #include "naming_export.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_Naming_Context_Impl;
 

@@ -3,6 +3,7 @@
 #include "Environment.h"
 #include "debug.h"
 #include "ORB_Constants.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Object_Ref_Table,
@@ -28,7 +29,7 @@ TAO_Object_Ref_Table::register_initial_reference (
   CORBA::Object_ptr obj
   ACE_ENV_ARG_DECL)
 {
-  if (id == 0 || ACE_OS_String::strlen (id) == 0)
+  if (id == 0 || ACE_OS::strlen (id) == 0)
     {
       ACE_THROW (CORBA::ORB::InvalidName ());
     }

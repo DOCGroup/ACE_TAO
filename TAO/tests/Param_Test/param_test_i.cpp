@@ -17,6 +17,8 @@
 
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_wchar.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (Param_Test,
            param_test_i, 

@@ -41,6 +41,12 @@ class ACE_Sig_Set;
   #include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
 
+// temporary fix dhinton
+#if defined (DO_NOT_INCLUDE_OS_H)
+#  include "ace/OS_NS_stdio.h"
+#  include "ace/OS_NS_ctype.h"
+#endif /* DO_NOT_INCLUDE_OS_H */
+
 // only used by ACE_OS_Object_Manager::ctor
 # if defined (ACE_WIN32)
 // Default WIN32 structured exception handler.

@@ -36,7 +36,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
               "%s.receive_request_service_contexts",
               this->name_.in ()));
 
-  if (ACE_OS_String::strcmp ("SERVER B", this->name_.in ()) == 0)
+  if (ACE_OS::strcmp ("SERVER B", this->name_.in ()) == 0)
     {
       this->scenario_++;
 
@@ -104,7 +104,7 @@ Server_Request_Interceptor::send_reply (
               "%s.send_reply",
               this->name_.in ()));
 
-  if (ACE_OS_String::strcmp ("SERVER B", this->name_.in ()) == 0)
+  if (ACE_OS::strcmp ("SERVER B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
@@ -164,7 +164,7 @@ Server_Request_Interceptor::send_exception (
               "%s.send_exception",
               this->name_.in ()));
 
-  if (ACE_OS_String::strcmp ("SERVER B", this->name_.in ()) == 0)
+  if (ACE_OS::strcmp ("SERVER B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
@@ -191,7 +191,7 @@ Server_Request_Interceptor::send_exception (
               id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
-              if (ACE_OS_String::strcmp (id, "IDL:Test/X:1.0") == 0)
+              if (ACE_OS::strcmp (id, "IDL:Test/X:1.0") == 0)
                 {
                   // We can only throw a CORBA::SystemException or a
                   // PortableInteceptor::ForwardRequest exception due
@@ -257,5 +257,5 @@ Server_Request_Interceptor::server_side_test (
   CORBA::String_var op = info->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return ACE_OS_String::strcmp (op.in (), "server_test") == 0 ? 1 : 0;
+  return ACE_OS::strcmp (op.in (), "server_test") == 0 ? 1 : 0;
 }

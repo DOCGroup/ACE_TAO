@@ -7,6 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
 #include "Iterator_Handler.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(AMI_Iterator, Iterator_Handler, "$Id$")
 

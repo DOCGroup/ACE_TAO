@@ -18,6 +18,7 @@
 
 #include "helper.h"
 #include "bd_wstr_seq.h"
+#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (Param_Test, 
            bd_wstr_seq, 

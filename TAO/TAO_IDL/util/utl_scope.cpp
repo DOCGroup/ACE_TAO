@@ -101,6 +101,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 #include "global_extern.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (util, 
            utl_scope, 
@@ -1200,11 +1201,11 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   idl_bool obj_lookup = I_FALSE;
   idl_bool vb_lookup = I_FALSE;
 
-  if (ACE_OS_String::strcasecmp (name_string, "Object") == 0)
+  if (ACE_OS::strcasecmp (name_string, "Object") == 0)
     {
       obj_lookup = I_TRUE;
     }
-  else if (ACE_OS_String::strcasecmp (name_string, "ValueBase") == 0)
+  else if (ACE_OS::strcasecmp (name_string, "ValueBase") == 0)
     {
       vb_lookup = I_TRUE;
     }
@@ -1218,8 +1219,8 @@ UTL_Scope::lookup_pseudo (Identifier *e)
                               UTL_Scope::IK_decls),
                       0);
     }
-  else if (ACE_OS_String::strcasecmp (name_string, "TypeCode") == 0
-           || ACE_OS_String::strcasecmp (name_string, "TCKind") == 0)
+  else if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
+           || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
     {
       // Occurrences of "TypeCode" or TCKind in IDL files must be
       // scoped with "CORBA" so we know we'll be in the CORBA module

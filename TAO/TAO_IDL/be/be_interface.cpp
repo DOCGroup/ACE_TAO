@@ -38,6 +38,7 @@
 #include "nr_extern.h"
 
 #include "ace/Process.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID (be,
            be_interface,

@@ -23,7 +23,6 @@
 
 #include "tao/Pseudo_VarOut_T.h"
 #include "ace/CORBA_macros.h"
-#include "ace/OS.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Objref_VarOut_T.h"

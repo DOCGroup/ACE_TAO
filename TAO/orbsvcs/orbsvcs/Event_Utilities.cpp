@@ -1,6 +1,8 @@
 // $Id$
 
 #include "orbsvcs/Event_Utilities.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/Event_Utilities.i"

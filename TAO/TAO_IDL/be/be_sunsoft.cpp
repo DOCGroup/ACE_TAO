@@ -5,6 +5,8 @@
 #include "utl_identifier.h"
 #include "utl_idlist.h"
 #include "utl_string.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (be, 
            be_sunsoft, 

@@ -4,6 +4,7 @@
 #include "DynAny_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (DynamicAny,
            DynAny_i,

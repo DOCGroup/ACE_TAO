@@ -1,6 +1,7 @@
 //$Id$
 #include "MIF_Task.h"
 #include "test.h"
+#include "ace/OS_NS_errno.h"
 
 MIF_Task::MIF_Task (int importance,
 		    int start_time,

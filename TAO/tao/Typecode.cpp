@@ -22,6 +22,7 @@
 #include "ORB_Constants.h"
 
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

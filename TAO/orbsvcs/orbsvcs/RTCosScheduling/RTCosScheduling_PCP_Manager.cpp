@@ -11,6 +11,8 @@
 //=============================================================================
 
 #include "RTCosScheduling_PCP_Manager.h"
+#include "ace/Condition_Thread_Mutex.h"
+#include "ace/Thread.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RTCosScheduling_PCP_Manager.i"
@@ -428,14 +430,14 @@ PCP_Manager_Factory::PCP_Manager_Factory(char *shared_file)
 
       /// Get the temporary directory
       if (ACE::get_temp_dir (temp_file,
-                             MAXPATHLEN - ACE_OS_String::strlen(shared_file))
+                             MAXPATHLEN - ACE_OS::strlen(shared_file))
           == -1)
         ACE_ERROR ((LM_ERROR,
                     "Temporary path too long\n"));
       ACE_TRY_CHECK;
 
       /// Add the filename to the end
-      ACE_OS_String::strcat (temp_file, shared_file);
+      ACE_OS::strcat (temp_file, shared_file);
 
       /// Store in the global variable.
       this->shm_key_ = temp_file;

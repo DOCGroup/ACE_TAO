@@ -20,7 +20,7 @@
 #define TAO_BE_CODEGEN_H
 
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 #include "TAO_IDL_BE_Export.h"
 
 class TAO_Visitor_Factory;

@@ -37,6 +37,7 @@
 #include "ace/Memory_Pool.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Malloc.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
 

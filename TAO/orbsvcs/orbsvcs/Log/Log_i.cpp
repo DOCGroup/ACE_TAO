@@ -6,7 +6,7 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
-
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Log,
            Log_i,

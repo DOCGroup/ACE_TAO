@@ -5,7 +5,7 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-#include "ace/Synch.h"
+#include "ace/Barrier.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/Thread_Manager.h"

@@ -49,6 +49,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+#include "ace/OS_NS_string.h"
 
 #include "IFR_ExtendedC.h"
 
