@@ -1,4 +1,17 @@
+Fri Feb 13 17:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Any_Impl.cpp:
+	* tao/Any_Impl.h:
+
+	  Added a mutex around refcounting to address problems as outlined
+	  in 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1728
+	 
+	  Thanks to Torsten Kuepper for reporting the problem.
+
 Fri Feb 13 15:34:22 EST 2004 Kevin Bryan <bryank@cs.uri.edu>
+	
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h
