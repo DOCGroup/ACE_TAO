@@ -133,7 +133,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
   const char *temphost2 = 0;
   if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
     {
-      temphost2 = addr.get_host_addr ();      
+      temphost2 = addr.get_host_addr ();
       if (temphost2 == 0)
         return -1;
     }
@@ -141,7 +141,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     {
       if (addr.get_host_name (temphost, sizeof temphost) != 0)
         return -1;
-      
+
       temphost2 = temphost;
     }
 
@@ -161,7 +161,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
   const char *temphost2 = 0;
   if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
     {
-      temphost2 = addr.get_host_addr ();      
+      temphost2 = addr.get_host_addr ();
       if (temphost2 == 0)
         return -1;
     }
@@ -169,7 +169,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     {
       if (addr.get_host_name (temphost, sizeof temphost) != 0)
         return -1;
-      
+
       temphost2 = temphost;
     }
 
@@ -363,7 +363,7 @@ IIOP_Object::IIOP_Object (const char *host,
     refcount_ (1),
     handler_ (0)
 {
-  this->fwd_profile_lock_ptr_ = 
+  this->fwd_profile_lock_ptr_ =
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
@@ -378,7 +378,7 @@ IIOP_Object::IIOP_Object (char *repository_id,
     refcount_ (1),
     handler_ (0)
 {
-  this->fwd_profile_lock_ptr_ = 
+  this->fwd_profile_lock_ptr_ =
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
@@ -455,7 +455,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
   ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE);
 
-  TAO_GIOP_ReplyStatusType status;
+  TAO_GIOP_ReplyStatusType status = 0;
 
   // Do a locate_request if necessary/wanted.
   if (this->use_locate_request_ && this->first_locate_request_)
@@ -465,7 +465,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
       // Simply let these exceptions propagate up
       // (if any of them occurs.)
       call.start (env);
-         
+
       status = call.invoke (env);
 
       this->first_locate_request_ = 0;
@@ -504,8 +504,8 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
             }
           TAO_CATCH_SYS (CORBA_SystemException, ex)
             {
-              ACE_MT (ACE_GUARD (ACE_Lock, 
-                                guard, 
+              ACE_MT (ACE_GUARD (ACE_Lock,
+                                guard,
                                 *this->fwd_profile_lock_ptr_));
 
               // If this is the fwd_profile, then check to see if we
@@ -514,7 +514,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                 {
                   delete this->fwd_profile_;
                   this->fwd_profile_ = 0;
-                  
+
                   // See if we need to try again.
                   if (this->fwd_profile_success_ == 1)
                     {
@@ -539,10 +539,10 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
             }
           TAO_CATCH_SYS (CORBA_SystemException, ex)
             {
-              ACE_MT (ACE_GUARD (ACE_Lock, 
-                                guard, 
+              ACE_MT (ACE_GUARD (ACE_Lock,
+                                guard,
                                 *this->fwd_profile_lock_ptr_));
- 
+
               // If this is the fwd_profile, then check to see if we
               // need to go back to the original profile and try that.
               if (this->fwd_profile_ != 0)
@@ -569,7 +569,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
               // @@ DB: and lock this
               if (this->fwd_profile_ != 0)
                 this->fwd_profile_success_ = 1;
-              
+
               // Now, get all the "return", "out", and "inout"
               // parameters from the response message body.
 
@@ -664,8 +664,8 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
             }
           TAO_CATCH_SYS (CORBA_SystemException, ex)
             {
-              ACE_MT (ACE_GUARD (ACE_Lock, 
-                                guard, 
+              ACE_MT (ACE_GUARD (ACE_Lock,
+                                guard,
                                 *this->fwd_profile_lock_ptr_));
 
               // If this is the fwd_profile, then check to see if we
