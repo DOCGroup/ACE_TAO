@@ -16,9 +16,9 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
            -I$(top_srcdir)/TAO_IDL/include \
            -I$(top_srcdir)/TAO_IDL/be_include
 
-noinst_LIBRARIES = libbe.a
+noinst_LTLIBRARIES = libbe.la
 
-libbe_a_SOURCES = \
+libbe_la_SOURCES = \
   be_args.cpp \
   be_argument.cpp \
   be_array.cpp \

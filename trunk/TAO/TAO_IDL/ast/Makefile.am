@@ -15,9 +15,9 @@ AUTOMAKE_OPTIONS = 1.4
 INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
            -I$(top_srcdir)/TAO_IDL/include
 
-noinst_LIBRARIES = libast.a
+noinst_LTLIBRARIES = libast.la
 
-libast_a_SOURCES = \
+libast_la_SOURCES = \
   ast_argument.cpp \
   ast_array.cpp \
   ast_attribute.cpp \
