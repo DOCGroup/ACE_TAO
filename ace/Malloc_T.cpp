@@ -246,8 +246,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
-                                                          const ACE_TCHAR *lock_name,
-                                                          const ACE_MEM_POOL_OPTIONS *options)
+                                                              const ACE_TCHAR *lock_name,
+                                                              const ACE_MEM_POOL_OPTIONS *options)
   : memory_pool_ (pool_name, options),
     lock_ (lock_name != 0 ? lock_name : ACE::basename (pool_name,
                                                        ACE_DIRECTORY_SEPARATOR_CHAR))
