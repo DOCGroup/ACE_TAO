@@ -19,7 +19,6 @@
 #ifndef TAO_ATTRIBUTES_H
 #define TAO_ATTRIBUTES_H
 
-#include "orbsvcs_export.h"
 #include "orbsvcs/CosTradingS.h"
 #include "Monitor.h"
  
