@@ -1,3 +1,9 @@
+Mon Feb 24 08:53:52 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.i (operator++, operator--):
+
+	  Fixed incorrect dereferencing of non-pointer return variable.
+
 Sun Feb 23 12:16:34 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/WIN32_Asynch_IO.cpp (cancel): Added support for cancel() on
