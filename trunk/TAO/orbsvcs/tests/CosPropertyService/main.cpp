@@ -49,7 +49,8 @@ public:
   // no. "char_property", "short_property" and a "string_property".
   
   int test_get_property_value (void);
-  // Get the "float_property" and "string_property" and print them out.
+  // Get the "float_property" and "string_property" and print them
+  // out.
   
   int test_delete_properties (void);
   // Delete char, short,long, and string properties.
@@ -60,6 +61,7 @@ public:
   int test_define_properties (void);
   // Define a sequence of properties. a char, a short, a long, a float
   // and a string.
+
 private:
   TAO_PropertySet property_set_;
   // The PropertySet.
@@ -76,12 +78,16 @@ TAO_PropertySet_Tester::~TAO_PropertySet_Tester (void)
 }
 
 // Defines a char, a short, a long, a float and a string.
+
 TAO_PropertySet_Tester::test_define_property (void)
 {
   TAO_TRY 
     {
-      ACE_DEBUG ((LM_DEBUG, "\nChecking define_property\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nChecking define_property\n"));
+
       CORBA::Any anyval;
+
       // Prepare a char and "define" that in the PropertySet.
       CORBA::Char ch = '#';
       anyval <<= ch;
@@ -90,6 +96,7 @@ TAO_PropertySet_Tester::test_define_property (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Main : Char ch = %c\n",
                   ch));
+
       property_set_.define_property ("char_property",
                                      anyval,
                                      TAO_TRY_ENV);
@@ -164,6 +171,7 @@ TAO_PropertySet_Tester::test_define_property (void)
 }
 
 // Testing, get_number_of_properties.
+
 int
 TAO_PropertySet_Tester::test_get_number_of_properties (void)
 {
@@ -189,6 +197,7 @@ TAO_PropertySet_Tester::test_get_number_of_properties (void)
 
 // Testing the delete_property. Delets property, with the given name,
 // if that exsists.
+
 int
 TAO_PropertySet_Tester::test_delete_property (const char *property_name)
 {
@@ -213,6 +222,7 @@ TAO_PropertySet_Tester::test_delete_property (const char *property_name)
 }
 
 // Gets the value of "short_property" and "string_property".
+
 int
 TAO_PropertySet_Tester::test_get_property_value (void)
 {
@@ -266,10 +276,11 @@ TAO_PropertySet_Tester::test_get_property_value (void)
 
 // Check the following properties are defined or no. "short_property",
 // "string_property" and "char_property".
+
 int
 TAO_PropertySet_Tester::test_is_property_defined (void)
 {
-  // Checking "if_property_deifined" of no.
+  // Checking "is_property_defined" of no.
   TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -312,8 +323,10 @@ TAO_PropertySet_Tester::test_is_property_defined (void)
   TAO_ENDTRY;
 }
 
-// Make a sequence of property names and delete them from the PropertySet.
-// Deleting char, short, long, float and string properties.
+// Make a sequence of property names and delete them from the
+// PropertySet.  Deleting char, short, long, float and string
+// properties.
+
 int
 TAO_PropertySet_Tester::test_delete_properties (void)
 {
@@ -349,9 +362,9 @@ TAO_PropertySet_Tester::test_delete_properties (void)
   TAO_ENDTRY;
 }
 
-
 // Defines a sequnce of properties containing, char, short, long,
 // float and string property in the property set.
+
 int
 TAO_PropertySet_Tester::test_define_properties (void)
 {  
@@ -418,6 +431,7 @@ TAO_PropertySet_Tester::test_define_properties (void)
 }
 
 // Delete all the properties.
+
 int
 TAO_PropertySet_Tester::test_delete_all_properties (void)
 {
@@ -455,7 +469,8 @@ main (int argc, char *argv [])
               "\nTAO_PropertySet Testing\n"));
   TAO_PropertySet_Tester propertyset_tester;
   
-  // Checking define_property. define a char, a short,a long, a float and a string.
+  // Checking define_property. define a char, a short,a long, a float
+  // and a string.
   propertyset_tester.test_define_property ();
   
   // Test the number of properties and print it out.
@@ -473,13 +488,14 @@ main (int argc, char *argv [])
   // Test the number of properties and print it out.
   propertyset_tester.test_get_number_of_properties ();
   
-  // Define a sequence of properties. char, short, long, float and string.
+  // Define a sequence of properties. char, short, long, float and
+  // string.
   propertyset_tester.test_define_properties ();
 
   // Test the number of properties and print it out.
   propertyset_tester.test_get_number_of_properties ();
 
-  // Checking get_property_value. get the value  of short and string.
+  // Checking get_property_value. get the value of short and string.
   propertyset_tester.test_get_property_value ();
 
   // Checking delete_all_properties.

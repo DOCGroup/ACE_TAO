@@ -625,11 +625,11 @@ typedef struct
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
 
 #if !defined (ACE_DEFAULT_LOCALNAME_A)
-#define ACE_DEFAULT_LOCALNAME_A "/localnames"
+#define ACE_DEFAULT_LOCALNAME_A "localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_A */
 
 #if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#define ACE_DEFAULT_GLOBALNAME_A "/globalnames"
+#define ACE_DEFAULT_GLOBALNAME_A "globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_A */
 
 #if defined (ACE_HAS_UNICODE)
@@ -637,20 +637,20 @@ typedef struct
 #define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #if !defined (ACE_DEFAULT_LOCALNAME_W)
-#define ACE_DEFAULT_LOCALNAME_W L"/localnames"
+#define ACE_DEFAULT_LOCALNAME_W L"localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_W */
 #if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#define ACE_DEFAULT_GLOBALNAME_W L"/globalnames"
+#define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_W */
 #else
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
 #define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #if !defined (ACE_DEFAULT_LOCALNAME_W)
-#define ACE_DEFAULT_LOCALNAME_W "/localnames"
+#define ACE_DEFAULT_LOCALNAME_W "localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_W */
 #if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#define ACE_DEFAULT_GLOBALNAME_W "/globalnames"
+#define ACE_DEFAULT_GLOBALNAME_W "globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_W */
 #endif /* ACE_HAS_UNICODE */
 
@@ -2782,11 +2782,11 @@ typedef char TCHAR;
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
 
 #if !defined (ACE_DEFAULT_LOCALNAME_A)
-#define ACE_DEFAULT_LOCALNAME_A "/localnames"
+#define ACE_DEFAULT_LOCALNAME_A "localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_A */
 
 #if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#define ACE_DEFAULT_GLOBALNAME_A "/globalnames"
+#define ACE_DEFAULT_GLOBALNAME_A "globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_A */
 
 #if defined (ACE_HAS_UNICODE)
@@ -2794,20 +2794,20 @@ typedef char TCHAR;
 #define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #if !defined (ACE_DEFAULT_LOCALNAME_W)
-#define ACE_DEFAULT_LOCALNAME_W L"/localnames"
+#define ACE_DEFAULT_LOCALNAME_W L"localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_W */
 #if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#define ACE_DEFAULT_GLOBALNAME_W L"/globalnames"
+#define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_W */
 #else
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
 #define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #if !defined (ACE_DEFAULT_LOCALNAME_W)
-#define ACE_DEFAULT_LOCALNAME_W "/localnames"
+#define ACE_DEFAULT_LOCALNAME_W "localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_W */
 #if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#define ACE_DEFAULT_GLOBALNAME_W "/globalnames"
+#define ACE_DEFAULT_GLOBALNAME_W "globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_W */
 #endif /* ACE_HAS_UNICODE */
 

@@ -1,3 +1,29 @@
+Mon Mar  2 19:21:36 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
+
+	* ace/OS.h: Changed all uses of "/localname" and "/globalname" to
+ 	  "localname" and "globalname" to avoid problems on UNIX.  Thanks
+ 	  to John Mulhern <9107@MN3.LAWSON.lawson.com> for reporting this.
+
+        * netsvcs/lib/Log_Message_Receiver.cpp
+          (Log_Message_Receiver_Impl): Removed some stray inline keywords.
+          Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+          reporting this.
+
+        * ace/OS.i (sigwait): Added support for POSIX sigwait().  Thanks
+          to Russ Noseworthy <rnosewor@objectsciences.com> for reporting
+          this.
+
+        * ace/Containers.cpp (done):
+          ace/Map_Manager.cpp (done): Corrected some misplaced "consts" in
+          the ACE_static_cast macro.  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for reporting this.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CXX): Commented
+          out the -pta option since it might not be necessary.  If this
+          breaks code then we'll need to reevaluate this change.  Thanks
+          to Russ Noseworthy <rnosewor@objectsciences.com> for suggesting
+          this.
+
 Mon Mar 02 17:06:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (exit): Added Win32 thread exit
@@ -19,28 +45,6 @@ Mon Mar 02 17:06:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  function directly.  Esp. from the main thread because I don't
 	  know how to tell if you are calling it from main thread thread
 	  or not and thus memory leak might occur.
-
-Mon Mar  2 12:59:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-        * netsvcs/lib/Log_Message_Receiver.cpp
-          (Log_Message_Receiver_Impl): Removed some stray inline keywords.
-          Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
-          reporting this.
-
-        * ace/OS.i (sigwait): Added support for POSIX sigwait().  Thanks
-          to Russ Noseworthy <rnosewor@objectsciences.com> for reporting
-          this.
-
-        * ace/Containers.cpp (done):
-          ace/Map_Manager.cpp (done): Corrected some misplaced "consts" in
-          the ACE_static_cast macro.  Thanks to Russ Noseworthy
-          <rnosewor@objectsciences.com> for reporting this.
-
-        * include/makeinclude/platform_sunos5_sunc++.GNU (CXX): Commented
-          out the -pta option since it might not be necessary.  If this
-          breaks code then we'll need to reevaluate this change.  Thanks
-          to Russ Noseworthy <rnosewor@objectsciences.com> for suggesting
-          this.
 
 Mon Mar 02 09:13:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
