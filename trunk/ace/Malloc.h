@@ -108,6 +108,11 @@ public:
                                   (sizeof (ACE_Malloc_Control_Block)) / sizeof (long)))
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING > 0 */
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Malloc_Header &))
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 };
 
 class ACE_Export ACE_Name_Node
@@ -164,8 +169,10 @@ public:
   void dump (void) const;
   // Dump the state of the object.
 
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 };
 
 class ACE_Export ACE_Control_Block
@@ -218,6 +225,11 @@ public:
 
   void dump (void) const;
   // Dump the state of the object.
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 };
 
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
