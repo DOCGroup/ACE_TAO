@@ -1,3 +1,9 @@
+Thu Aug 14 18:46:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+          Added #include Synch_Traits.h and Thread_Mutex.h needed due to
+          recent subsetting>
+
 Thu Aug 14 17:55:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Driver.cpp:
