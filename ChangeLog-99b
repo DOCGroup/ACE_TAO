@@ -1,3 +1,30 @@
+Fri Mar 19 00:15:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	The following changes are specific to WindowsCE.  They are
+	required to remove MFC dependency from CE port.  Thanks to Eric
+	Covington <eric@nowsol.com> for motivating this.
+
+	* ace/config-WinCE.h: We no longer enfoce the use of MFC with ACE
+	  CE port anymore.
+
+	* ace/config-win32-common.h: When not using MFC, CE needs to
+	  include <windows.h> and <wce.h> explicitly.
+
+	* ace/OS.{h,cpp} (ACE_CE_Bridge): Changed to use HWND to record
+	  target window handle instead of CWnd. Also, we stop passing
+	  output string in a CString anymore.  The string is now created
+	  using ACE_OS::strdup and must be released by the target window
+	  using ACE_OS::free..  A small smart pointer class will be added
+	  later.  Notice that if you used ACE CE port before, the wParam
+	  can no longer be casted to a CString*, it should be casted to
+	  LPTSTR now.
+
+	* WindozeCE/WindozeCEDlg.cpp: <wParam> should be casted to LPTSTR
+	  and it should be freed using ACE_OS::free.
+
+	* ace/ace_ce_dll.dsp: CE programs (or DLL only?) not using MFC
+	  must specify all libraries used by the program, even msvcrt.
+
 Thu Mar 18 22:21:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU: changed
