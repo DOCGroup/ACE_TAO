@@ -1,3 +1,8 @@
+Mon Jan 31 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Doxygen improvements
+
 Mon Jan 31 10:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/clients/Naming/Client/Client_Test.cpp:
