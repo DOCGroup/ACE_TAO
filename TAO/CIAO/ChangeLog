@@ -1,7 +1,14 @@
+Wed Nov 24 09:47:58 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/OEP/Display/NavDisplayGUI_exec/DetailView.cpp:
+
+          Added static_cast from double to int to avoid build warnings from
+          g++.
+
 Wed Nov 17 17:46:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver.idl:
-        
+
           Added 'uses multiple' receptacle to test code generation
           and compilation.
 
