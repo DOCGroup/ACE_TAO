@@ -86,12 +86,80 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
 
   os->indent ();
 
+  // first generate the static methods since they are used by others. Sinc
+  // ethey are inlined, their definition needs to come before their use else
+  // some compilers give lost of warnings.
+
+  // Static Operations
+  // allocbuf
+  *os << "// = Static operations." << be_nl
+      << "ACE_INLINE "; 
+
+  // the accept is here the first time used and if an 
+  // error occurs, it will occur here. Later no check
+  // for errors will be done.
+  if (pt->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence::"
+                         "gen_bounded_sequence - "
+                         "base type visit failed\n"),
+                        -1);
+    }
+  *os << " *" << be_nl
+      << full_class_name << "::allocbuf (CORBA::ULong) "
+      << "// Allocate storage for the sequence." << be_nl
+      << "{" << be_idt_nl
+      << "return new "; 
+  pt->accept (visitor); 
+  *os << "[" << node->max_size () << "];" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+  
+  // free_buf
+  *os << "ACE_INLINE void " << be_nl
+      << full_class_name << "::freebuf ("; 
+  pt->accept (visitor); 
+  *os << " *buffer) // Free the sequence." << be_nl
+      << "{" << be_idt_nl
+      << "delete [] buffer;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+  
+  // allocate_buffer
+  *os << "ACE_INLINE void " << be_nl
+      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
+      << "// allocate a buffer of the requested length. The buffer is allocated for the" << be_nl
+      << "// right type" << be_nl
+      << "{" << be_idt_nl
+      << "this->buffer_ = " << full_class_name << "::allocbuf (" 
+      << node->max_size () << ");" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+
+  // deallocate_buffer
+  *os << "ACE_INLINE void " << be_nl
+      << full_class_name << "::_deallocate_buffer (void)" << be_nl
+      << "// deallocate the buffer" << be_nl
+      << "{" << be_idt_nl
+      << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
+      << "return;" << be_uidt_nl;
+  pt->accept(visitor); 
+  *os <<" *tmp = ACE_reinterpret_cast (";
+  pt->accept (visitor); 
+  *os << " *, this->buffer_);" << be_nl
+      << full_class_name << "::freebuf (tmp);" << be_nl
+      << "this->buffer_ = 0;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+  
   // Constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
       << "// Default constructor." << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
-      << ", 0, allocbuf (" << node->max_size () << "), 0)" << be_nl
+      << ", 0, " << full_class_name << "::allocbuf (" << node->max_size () 
+      << "), 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -117,7 +185,8 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); 
-  *os <<" *tmp1 = allocbuf (" << node->max_size () << ");" << be_nl
+  *os <<" *tmp1 = " << full_class_name << "::allocbuf (" << node->max_size () 
+      << ");" << be_nl
       << be_nl;
   pt->accept(visitor); 
   *os <<" * const tmp2 = ACE_reinterpret_cast (";
@@ -143,7 +212,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "{" << be_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = allocbuf (rhs.maximum_);" << be_nl
+      << "this->buffer_ = " << full_class_name << "::allocbuf (rhs.maximum_);" << be_nl
       << be_nl
       <<"TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
@@ -201,56 +270,6 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
   
-  // Static Operations
-  *os << "// = Static operations." << be_nl
-      << "ACE_INLINE "; 
-  pt->accept (visitor); 
-  *os << " *" << be_nl
-      << full_class_name << "::allocbuf (CORBA::ULong) "
-      << "// Allocate storage for the sequence." << be_nl
-      << "{" << be_idt_nl
-      << "return new "; 
-  pt->accept (visitor); 
-  *os << "[" << node->max_size () << "];" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-  
-  // free_buf
-  *os << "ACE_INLINE void " << be_nl
-      << full_class_name << "::freebuf ("; 
-  pt->accept (visitor); 
-  *os << " *buffer) // Free the sequence." << be_nl
-      << "{" << be_idt_nl
-      << "delete [] buffer;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-  
-  // allocate_buffer
-  *os << "ACE_INLINE void " << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
-      << "// allocate a buffer of the requested length. The buffer is allocated for the" << be_nl
-      << "// right type" << be_nl
-      << "{" << be_idt_nl
-      << "this->buffer_ = allocbuf (" << node->max_size () << ");" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
-  // deallocate_buffer
-  *os << "ACE_INLINE void " << be_nl
-      << full_class_name << "::_deallocate_buffer (void)" << be_nl
-      << "// deallocate the buffer" << be_nl
-      << "{" << be_idt_nl
-      << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl;
-  pt->accept(visitor); 
-  *os <<" *tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor); 
-  *os << " *, this->buffer_);" << be_nl
-      << "freebuf (tmp);" << be_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-  
   // get_buffer
   *os << "ACE_INLINE ";
   pt->accept(visitor); 
@@ -264,7 +283,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = allocbuf (this->maximum_);" << be_nl
+      << "result = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
       << "this->buffer_ = result;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
@@ -321,7 +340,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   *os <<"* tmp = ACE_reinterpret_cast(";
   pt->accept (visitor); 
   *os << "* ACE_CAST_CONST, this->buffer_);" << be_nl
-      << "freebuf (tmp);" << be_uidt_nl
+      << full_class_name << "::freebuf (tmp);" << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = data;" << be_nl
       << "this->release_ = release;" << be_uidt_nl
