@@ -1,3 +1,13 @@
+Tue Nov  7 12:04:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/tao_idl.dsp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+
+          Removed precompiled header usage.
+
 Tue Nov  7 12:00:32 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.cpp:
