@@ -3,6 +3,10 @@ Sun Jun 22 04:54:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Handle_Set.[i,cpp]:
           Moved include of Log_Msg.h from the cpp to the i file.
 
+        * ace/INET_Addr.i:
+        * ace/Malloc_Allocator.i:
+          Added include of OS.h.
+
 Sun Jun 22 04:32:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Global_Macros.h:
