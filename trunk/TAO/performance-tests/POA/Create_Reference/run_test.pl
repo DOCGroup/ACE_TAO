@@ -8,18 +8,30 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../bin";
 use PerlACE::Run_Test;
 
-$status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iterations = 10000;
 
 print STDERR "================ Reference Creation Test\n";
 
-$CO = new PerlACE::Process ("create_reference", " -i 10000");
+print STDERR "\nTesting with hints (default configuration)\n";
 
-$collocated = $CO->SpawnWaitKill (120);
+$CR = new PerlACE::Process ("create_reference", " -i $iterations");
+$status = $CR->SpawnWaitKill (120);
 
-if ($collocated != 0) {
-    print STDERR "ERROR: collocated test returned $collocated\n";
-    $status = 1;
+if ($status != 0) {
+    print STDERR "ERROR: create_reference returned $status\n";
+    exit $status;
+}
+
+print STDERR "\nTesting without hints (optimized configuration)\n";
+
+$no_active_hint_directive = "-ORBsvcconfdirective \"static Server_Strategy_Factory '-ORBActiveHintInIds 0'\"";
+
+$CR = new PerlACE::Process ("create_reference", " -i $iterations $no_active_hint_directive");
+$status = $CR->SpawnWaitKill (120);
+
+if ($status != 0) {
+    print STDERR "ERROR: create_reference returned $status\n";
+    exit $status;
 }
 
 exit $status;
