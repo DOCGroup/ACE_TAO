@@ -14,6 +14,9 @@ Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
           SunOS 5.5.  Thanks to Hakan Kallberg <hk@simulina.se> for
           reporting this.
 
+        * ACE-INSTALL.html: added Sun C++ version/patchlevel information.
+          Thanks to Susan for recommending this.
+
         * ACE-INSTALL.html: added note about segfault when attempting to
           register a signal handler on LynxOS 3.0.0/PowerPC.
 
