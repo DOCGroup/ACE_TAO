@@ -1,3 +1,12 @@
+Sat May 24 14:37:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_Dirent.cpp:
+          Added definitions of INVALID_FILE_ATTRIBUTES and
+          INVALID_SET_FILE_POINTER if missing on ACE_WIN32.  These
+          were added after VC6 shipped and are provided in subsequent
+          headers, including the SDK's.  They are defined here for those
+          us who don't have the new headers.
+
 Sat May 24 14:10:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
