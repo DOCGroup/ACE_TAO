@@ -20,12 +20,12 @@ ACE_RCSID(Sched_Conf, Sched_Conf_Runtime, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -35,12 +35,12 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       // Store a pointer to the local run-time scheduler.
       RtecScheduler::Scheduler_ptr runtime_scheduler = 
@@ -59,15 +59,15 @@ main (int argc, char *argv[])
           // run-time scheduler's create and lookup methods.
           ACE_ASSERT (infos [i].handle == 
                       runtime_scheduler->create (infos [i].entry_point, 
-                                                 TAO_TRY_ENV));
+                                                 ACE_TRY_ENV));
           ACE_ASSERT (infos [i].handle == 
                       runtime_scheduler->lookup (infos [i].entry_point, 
-                                                 TAO_TRY_ENV));
+                                                 ACE_TRY_ENV));
 
           // Make sure the values in the RT_Info returned by get are OK.
           delete rt_info;
           rt_info = runtime_scheduler->get (infos [i].handle, 
-                                            TAO_TRY_ENV);
+                                            ACE_TRY_ENV);
           ACE_ASSERT (rt_info != 0);
           ACE_ASSERT (ACE_OS::strcmp (rt_info->entry_point,
                                       infos [i].entry_point) == 0);
@@ -113,14 +113,14 @@ main (int argc, char *argv[])
                                   infos [i].threads,
                                   ACE_static_cast (RtecScheduler::Info_Type_t,
                                                    infos [i].info_type),
-                                  TAO_TRY_ENV);
+                                  ACE_TRY_ENV);
 
           // Make sure the correct priority values are returned.
           runtime_scheduler->priority (infos [i].handle,
                                        priority,
                                        subpriority,
                                        p_priority,
-                                       TAO_TRY_ENV);
+                                       ACE_TRY_ENV);
           ACE_ASSERT (priority == infos [i].priority);
           ACE_ASSERT (subpriority == infos [i].static_subpriority);
           ACE_ASSERT (p_priority == infos [i].preemption_priority);
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
                                                    priority,
                                                    subpriority,
                                                    p_priority,
-                                                   TAO_TRY_ENV);
+                                                   ACE_TRY_ENV);
           ACE_ASSERT (priority == infos [i].priority);
           ACE_ASSERT (subpriority == infos [i].static_subpriority);
           ACE_ASSERT (p_priority == infos [i].preemption_priority);
@@ -144,17 +144,17 @@ main (int argc, char *argv[])
             dispatch_configuration (configs [j].preemption_priority,
                                     priority,
                                     dispatching_type,
-                                    TAO_TRY_ENV);
+                                    ACE_TRY_ENV);
           ACE_ASSERT (priority == configs [j].thread_priority);
           ACE_ASSERT (dispatching_type == configs [j].dispatching_type);
 
         }
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
