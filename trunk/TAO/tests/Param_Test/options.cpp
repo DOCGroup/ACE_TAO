@@ -129,6 +129,12 @@ Options::parse_args (int argc, char **argv)
 	  this->test_type_ = Options::TEST_LONGSEQ;
 	else if (!ACE_OS::strcmp (get_opts.optarg, "bounded_long_sequence"))
 	  this->test_type_ = Options::TEST_BOUNDED_LONGSEQ;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "fixed_array"))
+	  this->test_type_ = Options::TEST_FIXED_ARRAY;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "var_array"))
+	  this->test_type_ = Options::TEST_VAR_ARRAY;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "multdim_array"))
+	  this->test_type_ = Options::TEST_MULTDIM_ARRAY;
         break;
 
       case '?':
