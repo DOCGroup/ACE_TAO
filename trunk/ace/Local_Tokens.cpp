@@ -96,8 +96,8 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
 		       ASYS_TEXT ("/%s/%u/%lu"),
 		       host_name,
 		       ACE_static_cast (unsigned int, ACE_OS::getpid ()),
-		       ACE_static_cast (long unsigned int,
-                                        ACE_Thread::self ()));
+		       ACE_reinterpret_cast (long unsigned int,
+                                             ACE_Thread::self ()));
 
       this->client_id (name);
     }
