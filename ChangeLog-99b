@@ -10,6 +10,10 @@ Wed Jul 14 11:22:31 1999  David L. Levine  <levine@cs.wustl.edu>
           To avoid the warning, we always disable the warning
           with VxWorks' egcs.
 
+Wed Jul 14 11:20:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Add ACE_LACKS_SETSCHED for pre-4.3 AIX.
+
 Wed Jul 14 11:15:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Shared_Malloc/Malloc.cpp: only explicitly
