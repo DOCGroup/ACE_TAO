@@ -239,9 +239,14 @@ public:
   int trace_active (void);
   void trace_active (int value);
 
-  // = Get/set the current thread descriptor.
   ACE_Thread_Descriptor *thr_desc (void) const;
-  void thr_desc (ACE_Thread_Descriptor *);
+  // Get the TSS thread descriptor.
+
+  void thr_desc (ACE_Thread_Descriptor *td,
+		 ACE_Thread_Manager *thr_mgr = 0);
+  // Set the TSS thread descriptor.  This method will call
+  // thr_mgr->acquire_release to block execution until this
+  // call return.
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
