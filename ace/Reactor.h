@@ -116,7 +116,11 @@ public:
                     int restart = 0,
                     ACE_Sig_Handler *signal_handler = 0,
                     ACE_Timer_Queue *timer_queue = 0);
-  // Initialization.
+  // Initialize the <ACE_Reactor> to manage <max_number_of_handles>.
+  // If <restart> is non-0 then the <ACE_Reactor>'s <handle_events>
+  // method will be restarted automatically when <EINTR> occurs.  If
+  // <signal_handler> or <timer_queue> are non-0 they are used as the
+  // signal handler and timer queue, respectively.
 
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
   // Use a user specified signal handler instead.
