@@ -1,3 +1,8 @@
+Tue Mar  5 00:07:13 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tests/LongUpcalls/Makefile:
+	  Added links to TAO_Messaging library.
+
 Mon Mar  4 15:35:08 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Messaging/MessagingC.cpp:
