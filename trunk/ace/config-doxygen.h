@@ -100,4 +100,7 @@
 /// Generate ACE_Log_Msg_NT_Event_Log documentation
 #define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 
+/// Generate strptime documentation
+#define ACE_HAS_STRPTIME
+
 #endif /* ACE_CONFIG_DOXYGEN_H */

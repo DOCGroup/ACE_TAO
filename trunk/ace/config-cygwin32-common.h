@@ -140,6 +140,7 @@
 #define ACE_HAS_GPERF
 
 #define ACE_HAS_DIRENT
+#define ACE_HAS_STRPTIME
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
