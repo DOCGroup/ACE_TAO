@@ -32,6 +32,7 @@
 class TAO_Root_POA;
 class TAO_ServerRequest;
 class TAO_Object_Adapter;
+class TAO_RT_Collocation_Resolver;
 struct TAO_Active_Object_Map_Entry;
 
 namespace TAO
@@ -48,7 +49,7 @@ namespace TAO
     class TAO_PortableServer_Export Servant_Upcall
     {
     public:
-      friend class TAO_RT_Collocation_Resolver;
+      friend class ::TAO_RT_Collocation_Resolver;
 
       /**
        * @class Pre_Invoke_State
