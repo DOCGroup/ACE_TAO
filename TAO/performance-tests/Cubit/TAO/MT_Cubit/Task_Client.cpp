@@ -285,7 +285,7 @@ Client::~Client (void)
   delete this->timer_;
 }
 
-ACE_INLINE int
+int
 Client::func (u_int i)
 {
   return i - 117;
