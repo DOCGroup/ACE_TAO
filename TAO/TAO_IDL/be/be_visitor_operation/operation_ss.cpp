@@ -161,6 +161,33 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                         -1);
     }
 
+  *os << be_nl;
+
+  ACE_CString upcall_command_name =
+    ACE_CString (node->local_name ()->get_string()) + "_"  +
+    ACE_CString (intf->local_name());
+
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
+    {
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          upcall_command_name = "_set_" + upcall_command_name;
+        }
+      else
+        {
+          upcall_command_name = "_get_" + upcall_command_name;
+        }
+    }
+
+  // Generate the local class encapsulating the actual servant upcall
+  // command/invocation.
+  be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+  upcall_command_visitor.visit (node,
+                                intf->full_skel_name (),
+                                upcall_command_name.c_str ());
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -192,11 +219,6 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
   *os << "{" << be_idt_nl;
-
-  // Generate the local class encapsulating the actual servant upcall
-  // command/invocation.
-  be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
-  upcall_command_visitor.visit_operation (node);
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -245,12 +267,13 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "static_cast<" << be_idt_nl
+      << "static_cast<"
       << intf->full_skel_name () << " *> (servant);" << be_uidt << be_uidt_nl;
 
   // Upcall_Command instantiation.
-  *os << be_nl
-      << "Upcall_Command command (" << be_idt_nl
+  *os << be_idt_nl
+      << upcall_command_name.c_str()
+      << " command (" << be_idt_nl
       << "impl";
 
   if (!node->void_return_type () || node->argument_count () > 0)
@@ -272,12 +295,12 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "upcall_wrapper.upcall (server_request" << be_nl
       << "                       , args" << be_nl
       << "                       , nargs" << be_nl
-      << "                       , command" << be_nl
+      << "                       , command"
       << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "                       , servant_upcall" << be_nl
       << "                       , exceptions" << be_nl
       << "                       , nexceptions"
-      << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
+      << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
       << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK;" << be_nl;
 

@@ -33,11 +33,15 @@ public:
   /// destructor
   ~be_visitor_operation_upcall_command_ss (void);
 
-  /// visit the operation
-  virtual int visit_operation (be_operation * node);
+  /// Same as visit_operation() but override full_skel_name and
+  /// upcall_command_name.
+  int visit (be_operation * node,
+             char const * full_skel_name,
+             char const * upcall_command_name);
 
-  /// Same as visit_operation() but override full_skel_name.
-  int visit (be_operation * node, char const * full_skel_name);
+  int gen_nested_namespace_begin (be_module *node);
+
+  int gen_nested_namespace_end (be_module *node);
 
 private:
 

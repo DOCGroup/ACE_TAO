@@ -22,7 +22,6 @@ ACE_RCSID (be_visitor_operation,
            upcall_command_ss,
            "$Id$")
 
-
 be_visitor_operation_upcall_command_ss
 ::be_visitor_operation_upcall_command_ss (
     be_visitor_context *ctx)
@@ -35,34 +34,88 @@ be_visitor_operation_upcall_command_ss
 {
 }
 
+// The following needs to be done to deal until the MSVC compiler's broken
+// handling of namespaces is fixed (hopefully forthcoming in version 7).
 int
-be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
+be_visitor_operation_upcall_command_ss
+::gen_nested_namespace_begin (be_module *node)
 {
-  be_visitor_context ctx (*this->ctx_);
+  TAO_OutStream *os = this->ctx_->stream ();
+  char *item_name = 0;
+  bool first_level = true;
 
-  // save the node.
-  this->ctx_->node (node);
-
-  be_interface * const intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
-
-  if (!intf)
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_upcall_command_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
+      item_name = i.item ()->get_string ();
+
+      if (ACE_OS::strcmp (item_name, "") != 0)
+        {
+          // Leave the outermost root scope.
+          *os << "namespace ";
+
+          if (first_level)
+            {
+              // We are outermost module.
+              *os << "POA_";
+              first_level = false;
+            }
+
+          *os << item_name << be_nl
+              << "{" << be_idt_nl;
+        }
     }
 
-  return this->visit (node, intf->full_skel_name ());
+  return 0;
+}
+
+// The following needs to be done to deal until the MSVC compiler's broken
+// handling of namespaces is fixed (hopefully forthcoming in version 7).
+int
+be_visitor_operation_upcall_command_ss
+::gen_nested_namespace_end (be_module *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
+    {
+      if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
+        {
+          // Leave the outermost root scope.
+          *os << be_uidt_nl << "}" << be_nl;
+        }
+    }
+
+  return 0;
 }
 
 int
 be_visitor_operation_upcall_command_ss::visit (be_operation * node,
-                                               char const * full_skel_name)
+                                               char const * full_skel_name,
+                                               char const * upcall_command_name)
 {
+  be_interface * const intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
+
+  be_module *module = 0;
+
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the typecode must be declared
+  // extern.
+  if (intf->is_nested () &&
+      intf->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      module = be_module::narrow_from_scope (intf->defined_in ());
+
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_operation_upcall_command_ss::visit - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+    }
+
   be_visitor_context ctx (*this->ctx_);
 
   // save the node.
@@ -74,10 +127,6 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the operation-specific TAO::Upcall_Command concrete class.
-
-  be_interface * const intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
 
   if (!intf)
     {
@@ -92,13 +141,14 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
   // class, an instance of which will be invoked by the
   // TAO::Upcall_Wrapper object.
 
-  os << "class Upcall_Command" << be_nl
+  os << "class " << upcall_command_name  << be_nl
      << "  : public TAO::Upcall_Command" << be_nl
      << "{" << be_nl
-     << "public:" << be_idt_nl << be_nl;
+     << "public:" << be_idt_nl ;
 
   // Generate constructor
-  os << "inline Upcall_Command (" << be_idt_nl
+  os << "inline " << upcall_command_name
+     << " (" << be_idt_nl
      << full_skel_name << " * servant";
 
   // No need to accept an argument array parameter if the operation
@@ -207,7 +257,7 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
      << "}" << be_uidt_nl << be_nl;
 
   // Generate class attributes.
-  os << "private:" << be_idt_nl << be_nl
+  os << "private:" << be_idt_nl
      << full_skel_name << " * const servant_;";
 
   // Don't bother generating an argument array attribute if the
@@ -224,6 +274,17 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
 
   os << be_uidt_nl
      << "};" << be_nl;
+
+  if (module != 0)
+    {
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_operation_upcall_command_ss::visit - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+    }
 
   return 0;
 }
