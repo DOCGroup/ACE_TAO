@@ -189,7 +189,7 @@ Identity_Server::~Identity_Server (void)
 int
 main (int argc, char *argv[])
 {
-  int result;
+  int result = 0;
   Identity_Server server;
 
   if (server.init (argc, argv) == -1)
