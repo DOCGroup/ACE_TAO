@@ -1,3 +1,7 @@
+eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
+    & eval 'exec perl -pi -S $0 $argv:q'
+    if 0;
+
 # $Id$
 #
 # You may want to run the "find" command with this script, which maybe
@@ -5,13 +9,9 @@
 #
 # find . -type f \( -name "*.i" -o -name "*.h" -o -name "*.C" -o -name "*.cc" -o -name "*.c" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.ipp" \) -print | xargs $ACE_ROOT/bin/Service_Config.perl
 
-# The following three lines let this script run without specifying the
+# The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
-
-eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
-    & eval 'exec perl -pi -S $0 $argv:q'
-    if 0;
 
 s/ACE_Service_Config::run_reactor_event_loop/ACE_Reactor::run_event_loop/g;
 s/ACE_Service_Config::end_reactor_event_loop/ACE_Reactor::end_event_loop/g;
