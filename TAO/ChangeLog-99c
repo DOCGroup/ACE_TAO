@@ -1,3 +1,16 @@
+Fri Apr 16 14:17:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+	  Added a visit_typedef() method to 
+	  be_visitor_cdr_op_field_decl, so that we can
+	  generate cdr operations for typedef'd members
+	  of structs as well as anonymous ones. Previously,
+	  cdr operation code for this type of struct member
+	  would just be missing. Thanks to Torsten Kuepper 
+	  <kuepper2@uni-wuppertal.de> for pointing out the
+	  problem and suggesting a fix.
+
 Fri Apr 16 13:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp
