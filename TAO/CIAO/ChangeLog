@@ -1,3 +1,10 @@
+Thu Jun  3 16:15:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DnC/NodeApplication/NodeApplication.mpc:
+        * DnC/ciao/CCM_Core.mpc:
+        
+          Some tweaks to the MPC files.
+
 Thu Jun  3 16:10:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
