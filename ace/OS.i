@@ -915,8 +915,10 @@ ACE_OS::time (time_t *tloc)
   // ACE_TRACE ("ACE_OS::time");
   ACE_OSCALL_RETURN (::time (tloc), time_t, (time_t) -1);
 #else
-  ACE_UNUSED_ARG (tloc);
-  ACE_NOTSUP_RETURN (-1);
+  time_t retv = ACE_OS::gettimeofday ().sec ();
+  if (tloc)
+    *tloc = retv;
+  return retv;
 #endif /* ACE_HAS_WINCE */
 }
 
