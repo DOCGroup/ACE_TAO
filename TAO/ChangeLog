@@ -1,3 +1,8 @@
+Mon Nov 18 07:28:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/AMI/Makefile: Prevent the contents
+	  from being compiled when AMI is disabled.
+
 Sun Nov 17 12:57:10 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
