@@ -57,7 +57,7 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
           be in the repository.
 
         * tests/Process_Manager_Test.cpp:
-        * tests/Process_Manager_Test.dsp:
+        * tests/Process_Manager_Test.dsp:  (added)
         * tests/tests.dsw:
           
           Enabled the Process_Manager_Test on NT and created a MSVC 
