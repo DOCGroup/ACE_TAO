@@ -1,0 +1,9 @@
+
+#
+# Makefile for building the TAO performance-tests
+#
+
+DIRS = \
+        RTCorba
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
