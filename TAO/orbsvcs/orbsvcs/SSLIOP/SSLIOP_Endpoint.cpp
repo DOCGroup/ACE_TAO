@@ -154,20 +154,21 @@ TAO_SSLIOP_Endpoint::duplicate (void)
                                          0),
                   0);
 
-  endpoint->qop (this->qop_);
-  endpoint->trust (this->trust_);
-  endpoint->credentials (this->credentials_.in ());  // Shallow copy
-
-  endpoint->credentials_set_ = this->credentials_set_;
+  if (this->credentials_set_)
+    endpoint->set_sec_attrs (this->qop_,this->trust_, this->credentials_.in());
 
   endpoint->iiop_endpoint (this->iiop_endpoint_, true);
-
+  endpoint->hash_val_ = this->hash_val_;
   return endpoint;
 }
 
 CORBA::ULong
 TAO_SSLIOP_Endpoint::hash (void)
 {
+  // there is actually the potential for a race of the inverse case,
+  // since setting the security attributes will reset the hash_val_,
+  // it is possible this test to pass, but then have the hash reset
+  // before the value is returned.
   if (this->hash_val_ != 0)
     return this->hash_val_;
 
@@ -222,4 +223,29 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
     }
 
   return this->object_addr_;
+}
+
+void
+TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
+                                    const ::Security::EstablishTrust &t,
+                                    const TAO::SSLIOP::OwnCredentials_ptr c)
+{
+  if (this->credentials_set_)
+    return;
+
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
+             this->addr_lookup_lock_);
+
+  // double-check
+  if (this->credentials_set_)
+    return;
+
+  this->qop_ = q;
+  this->trust_ = t;
+  this->credentials_ = TAO::SSLIOP::OwnCredentials::_duplicate (c);
+  this->credentials_set_ = 1;
+
+  // reset the hash value to force a recomputation.
+  this->hash_val_ = 0;
 }

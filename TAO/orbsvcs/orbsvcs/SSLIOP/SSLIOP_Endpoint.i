@@ -41,37 +41,16 @@ TAO_SSLIOP_Endpoint::ssl_component (void) const
   return this->ssl_component_;
 }
 
-
-
-ACE_INLINE void
-TAO_SSLIOP_Endpoint::qop (::Security::QOP q)
-{
-  this->qop_ = q;
-}
-
 ACE_INLINE ::Security::QOP
 TAO_SSLIOP_Endpoint::qop (void) const
 {
   return this->qop_;
 }
 
-ACE_INLINE void
-TAO_SSLIOP_Endpoint::trust (const ::Security::EstablishTrust &t)
-{
-  this->trust_ = t;
-}
-
 ACE_INLINE ::Security::EstablishTrust
 TAO_SSLIOP_Endpoint::trust (void) const
 {
   return this->trust_;
-}
-
-ACE_INLINE void
-TAO_SSLIOP_Endpoint::credentials (const TAO::SSLIOP::OwnCredentials_ptr creds)
-{
-  this->credentials_ = TAO::SSLIOP::OwnCredentials::_duplicate (creds);
-  this->credentials_set_ = 1;
 }
 
 ACE_INLINE TAO::SSLIOP::OwnCredentials *
