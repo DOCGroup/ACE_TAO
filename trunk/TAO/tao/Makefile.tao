@@ -410,6 +410,18 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_BUILD_DLL
+endif
+endif
+
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS
+endif
+endif
+
 # @@ Can we generalize this to something like this:
 # $(MANAGED_PIDL).target:
 # 	......

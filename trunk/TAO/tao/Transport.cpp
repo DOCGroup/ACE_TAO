@@ -907,19 +907,19 @@ TAO_Transport::drain_queue_i (void)
   // the loop because after the loop there may still be data to be
   // sent
   int iovcnt = 0;
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
   while (i != 0)
     {
       // ... each element fills the iovector ...
-      i->fill_iov (IOV_MAX, iovcnt, iov);
+      i->fill_iov (ACE_IOV_MAX, iovcnt, iov);
 
       // ... the vector is full, no choice but to send some data out.
       // We need to loop because a single message can span multiple
       // IOV_MAX elements ...
-      if (iovcnt == IOV_MAX)
+      if (iovcnt == ACE_IOV_MAX)
         {
           int retval =
             this->drain_queue_helper (iovcnt, iov);

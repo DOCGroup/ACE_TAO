@@ -1,14 +1,25 @@
+Mon Jan 13 12:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Use ACE_IOV_MAX instead of IOV_MAX. IOV_MAX is defined as MAX_INT-1
+          with Cygwn and this gives compiles array because an array of this
+          size is allocated on the stack.
+
+        * tao/Makefile.tao:
+          When building shared lib then set the define TAO_BUILD_DLL, when
+          building statically set the define TAO_AS_STATIC_LIBS
+
 Fri Jan 10 19:36:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.h:
 	* tao/Transport_Cache_Manager.cpp: Added a debug
 	  statement. Removed the method close_entries () which was under
-	  #if 0 guard. 
+	  #if 0 guard.
 
 	  The method is_entry_idle () was trying to make the transport as
 	  busy, which is horribly horribly bad. The method is_entry_idle
 	  () should only do one thing, ie. check whether the entry is idle
-	  or not! 
+	  or not!
 
 Fri Jan 10 08:28:34 2003  Frank Hunleth  <frank@hunleth.com>
 
@@ -21,11 +32,11 @@ Fri Jan 10 08:28:34 2003  Frank Hunleth  <frank@hunleth.com>
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
 
-	  Added code to check length of MIOP UniqueID so that it can be 
+	  Added code to check length of MIOP UniqueID so that it can be
 	  properly parsed.  Thanks to Chau Vincent
-	  <Vincent.Chau@fr.thalesgroup.com> for finding the problem when 
+	  <Vincent.Chau@fr.thalesgroup.com> for finding the problem when
 	  performing MIOP interoperability testing.  Also, added code to
-	  set the UniqueID and packet length fields properly per update to 
+	  set the UniqueID and packet length fields properly per update to
 	  the MIOP spec and tightened bounds checks on MIOP packets to
 	  prevent buffer overruns.
 
