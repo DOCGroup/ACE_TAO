@@ -358,12 +358,6 @@ orbs_shutdown (void)
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
           
-        }
-     
-      for (i = 0;
-           i < iterations;
-           ++i)
-        {
           info[i].root_poa->destroy (1,
                                      1,
                                      ACE_TRY_ENV);
