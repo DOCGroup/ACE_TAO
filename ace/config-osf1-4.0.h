@@ -22,15 +22,15 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-/*clearerr is not defined when _REENTRANT is not defined*/
-#if ACE_MT_SAFE == 0
-#define ACE_LACKS_CLEARERR
-#endif /* ACE_MT_SAFE == 0 */
-
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
 #endif /* ! ACE_MT_SAFE */
+
+/*clearerr is not defined when _REENTRANT is not defined*/
+#if ACE_MT_SAFE == 0
+#define ACE_LACKS_CLEARERR
+#endif /* ACE_MT_SAFE == 0 */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
