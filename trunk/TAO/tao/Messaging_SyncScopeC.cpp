@@ -42,18 +42,18 @@ static const CORBA::Long _oc_Messaging_SyncScope[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5379), 
-  ACE_NTOHL (0x6e635363), 
-  ACE_NTOHL (0x6f70653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5379),
+  ACE_NTOHL (0x6e635363),
+  ACE_NTOHL (0x6f70653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/SyncScope:1.0
     10,
-  ACE_NTOHL (0x53796e63), 
-  ACE_NTOHL (0x53636f70), 
+  ACE_NTOHL (0x53796e63),
+  ACE_NTOHL (0x53636f70),
   ACE_NTOHL (0x65000000),  // name = SyncScope
     CORBA::tk_short,
 
@@ -75,4 +75,3 @@ TAO_NAMESPACE_DEFINE (
     &_tc_TAO_tc_Messaging_SyncScope
   )
 TAO_NAMESPACE_END
-

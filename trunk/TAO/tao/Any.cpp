@@ -530,11 +530,11 @@ TAO::Unknown_IDL_Type::assign_translator (CORBA::TCKind kind,
     {
       case CORBA::tk_string:
       case CORBA::tk_char:
-      	cdr->char_translator (this->char_translator_);
+        cdr->char_translator (this->char_translator_);
         break;
       case CORBA::tk_wstring:
       case CORBA::tk_wchar:
-      	cdr->wchar_translator(this->wchar_translator_);
+        cdr->wchar_translator(this->wchar_translator_);
         break;
       default:
         break;
