@@ -1,3 +1,15 @@
+Mon Jan 10 16:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	  Lookup and code generation of case labels for unions
+	  in IDL did not correctly handle cases where the
+	  label names are scoped (for example, if the enum
+	  discriminator is defined in a different module than
+	  the union, the case label names may or may not be
+	  scoped). Thanks to Hessel Idzenga <idzenga@lucent.com>
+	  for reporting this bug.
+
 Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
