@@ -1,3 +1,8 @@
+Mon May 10 22:57:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/DomainC.cpp:
+	  Added missing #include
+
 Mon May 10 22:40:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html:
