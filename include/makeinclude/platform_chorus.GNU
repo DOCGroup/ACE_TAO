@@ -20,7 +20,7 @@ CCFLAGS		+= $(CFLAGS) -fno-implicit-templates	\
 		   -nostdinc 				\
 		   -D_POSIX_THREADS 			\
 		   -D_POSIX_THREAD_SAFE_FUNCTIONS
-DCFLAGS		+= -g
+DCFLAGS		+= -gstabs+
 INCLDIRS	+= -I$(INC_DIR)/posix			\
 		   -I$(INC_DIR)/stdc			\
 		   -I$(INC_DIR)/chorus/ 		\
