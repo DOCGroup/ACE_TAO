@@ -35,9 +35,9 @@ BIN =   Aio_Platform_Test \
         Env_Value_Test \
         Future_Test \
         Future_Set_Test \
+	Get_Opt_Test \
         Handle_Set_Test \
         High_Res_Timer_Test \
-        OrdMultiSet_Test \
         Hash_Map_Manager_Test \
         Hash_Map_Bucket_Iterator_Test \
         INET_Addr_Test \
@@ -60,6 +60,7 @@ BIN =   Aio_Platform_Test \
         Message_Queue_Notifications_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
+        OrdMultiSet_Test \
         OS_Test \
 	Proactor_Test \
         Process_Mutex_Test \
