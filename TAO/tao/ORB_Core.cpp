@@ -323,6 +323,16 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   int std_profile_components = 0;
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
+  // Pick up the value of the use_implrepo_ flag from an environment variable
+  // called "TAO_USE_IMR". Do it here so that it can be overridden by
+  // the "-ORBUseIMR" command line argument.
+  //
+  char* use_IMR_env_var_value = ACE_OS::getenv  ("TAO_USE_IMR") ;
+  if  (use_IMR_env_var_value != 0)
+    {
+      this->use_implrepo_ = ACE_OS::atoi  (use_IMR_env_var_value) ;
+    }
+
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line(argc, argv);
 

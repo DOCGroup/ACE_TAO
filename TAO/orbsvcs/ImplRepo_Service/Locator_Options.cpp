@@ -183,6 +183,14 @@ Options::init (int argc, char *argv[])
   // Now initialize the orb and pass it the leftover arguments
   ACE_TRY_NEW_ENV
     {
+      // First make sure the ImplRepo doesn't pick up an environment setting 
+      // that would make it try to register with itself.
+      char* use_IMR_env_var_value = ACE_OS::getenv ("TAO_USE_IMR");
+      if (use_IMR_env_var_value != 0)
+        {
+          ACE_OS::putenv ("TAO_USE_IMR=0");
+        }
+
       this->orb_ = CORBA::ORB_init (orb_argc,
                                     orb_args.argv (),
                                     0
