@@ -1,3 +1,9 @@
+Mon Jan 18 01:13:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CORBA_macros.h: ACE_TRY_NEW_ENV also needs to define a new
+	  CORBA::Environment even with native exceptions.  Mark exception
+	  caught by ACE_CATCH as unused arg to avoid compilation warnings.
+
 Mon Jan 18 00:12:13 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.16 released.

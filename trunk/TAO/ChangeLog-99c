@@ -1,11 +1,20 @@
+Mon Jan 18 01:16:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.cpp:
+	* tao/GIOP.cpp: Replaced TAO try macros with ACE try macros.
+
+	* tao/try_macros.h: Source in ace/CORBA_macros.h so we can start
+	  switching over to the new macros.  Most of the macros in this
+	  file will be gone once we finish the transition.
+
 Mon Jan 18 00:25:40 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.52 released.
 
 Sun Jan 17 16:15:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.h: 
-	* tao/GIOP.cpp: 
+	* tao/GIOP.h:
+	* tao/GIOP.cpp:
 	  Checked the return value of some send_n() calls, at least to
 	  print appropiate debug messages if TAO_orbdebug is not 0.
 	  Also added constants to document the size of the IIOP_Lite
