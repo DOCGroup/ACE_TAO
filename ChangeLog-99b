@@ -1,3 +1,8 @@
+Mon Aug 23 21:20:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/ACE-guidelines.html:
+	  Added new guidelines relevant to ACE+TAO.
+
 Mon Aug 23 16:57:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/RPC/README:
