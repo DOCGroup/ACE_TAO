@@ -196,6 +196,7 @@ ACE_INET_Addr::set (u_short port_number,
                     ACE_UINT32 ip_addr,
                     int encode)
 {
+  printf("in set1(port=%d,ip_addr=%u,encode=%d)\n",port_number,ip_addr,encode);
   if(ip_addr == INADDR_ANY)
     return this->set(port_number,ACE_INADDR_ANY);
 
@@ -203,7 +204,8 @@ ACE_INET_Addr::set (u_short port_number,
     ip_addr = htonl(ip_addr);
 
   char addr[INET_ADDRSTRLEN];
-  if(0 == ACE_OS::inet_ntop (AF_INET, (const void*)&ip_addr, addr, INET_ADDRSTRLEN)) {
+  ACE_OS::strcpy(addr,"::ffff:");
+  if(0 == ACE_OS::inet_ntop (AF_INET, (const void*)&ip_addr, addr+7, INET_ADDRSTRLEN)) {
     errno = EINVAL;
     return -1;
   }
@@ -220,6 +222,8 @@ ACE_INET_Addr::set (u_short port_number,
                     ace_in_addr_t inet_address,
                     int encode)
 {
+  printf("in set2(%d,ace_in_addr_t,%d)\n",port_number,encode);
+
 #if defined (ACE_HAS_IPV6)
   unsigned char &family = this->inet_addr_.sin6_family;
 #if defined (ACE_HAS_SIN_LEN)
@@ -257,15 +261,11 @@ ACE_INET_Addr::set (u_short port_number,
   else
     port = port_number;
 
-#if defined (ACE_HAS_IPV6)
+  printf("doing memcpy\n");
   (void) ACE_OS::memcpy ((void *) addrptr,
                          (void *) &inet_address,
                          addrsize);
-#else
-  (void) ACE_OS::memcpy ((void *) addrptr,
-                         (void *) &inet_address,
-                         addrsize);
-#endif
+  printf("returning after memcpy\n");
   return 0;
 }
 
@@ -279,6 +279,12 @@ ACE_INET_Addr::set (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::set");
   ace_in_addr_t addr;
+  ACE_UINT32 addrv4;
+
+  printf("in set3(%d,%s,%d)\n",port_number,host_name,encode);
+
+  if(encode)
+    port_number = htonl(port_number);
 
   this->ACE_Addr::base_set (ACE_AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
@@ -293,18 +299,24 @@ ACE_INET_Addr::set (u_short port_number,
   else if (ACE_OS::inet_pton (AF_INET6,
                               host_name,
                               (void*)&addr) == 1) {
-    printf("Setting address from pton\n");
+    printf("Setting AF_INET6 address from pton\n");
 
     return this->set (port_number,
-                      addr,
-                      encode);
+                      addr,0);
+  }
+  else if (ACE_OS::inet_pton (AF_INET,
+                              host_name,
+                              (void*)&addrv4) == 1) {
+    printf("Setting address from AF_INET pton\n");
+
+    return this->set (port_number,
+                      addrv4,0);
   }
 #else
   else if (ACE_OS::inet_aton (host_name,
                               (struct in_addr *) &addr) == 1)
     return this->set (port_number,
-                      encode ? ntohl (addr) : addr,
-                      encode);
+                      addr,0);
 #endif
   else
     {
@@ -314,7 +326,8 @@ ACE_INET_Addr::set (u_short port_number,
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       int error;
-
+      
+      printf("trying gethostbyname_r for %s\n",host_name);
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
                                              buf, &error);
 #endif /* VXWORKS */
@@ -326,16 +339,8 @@ ACE_INET_Addr::set (u_short port_number,
         }
       else
         {
-          (void) ACE_OS::memcpy ((void *) &addr,
-                                 hp->h_addr,
-                                 hp->h_length);
           return this->set (port_number,
-#if defined (ACE_HAS_IPV6)
-                            addr,
-#else
-                            encode ? ntohl (addr) : addr,
-#endif
-                            encode);
+                            *(ACE_UINT32*)hp->h_addr,0);
         }
     }
 }
