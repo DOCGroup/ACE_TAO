@@ -133,6 +133,11 @@ TAO_Marshal_WString::TAO_Marshal_WString (void)
 {
 }
 
+ACE_INLINE 
+TAO_Marshal_WString::~TAO_Marshal_WString (void)
+{
+}
+
 // factory method
 //
 // Based on the kind of the typecode, return the appropriate marshal object
