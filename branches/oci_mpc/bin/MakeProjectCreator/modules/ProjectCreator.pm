@@ -1041,6 +1041,8 @@ sub write_project {
 
   if ($status &&
       $self->separate_static_project() && $self->lib_target()) {
+    ## Set the project name back to what it originally was
+    $self->process_assignment('project_name', $prjname);
     $name = $self->static_project_file_name();
 
     ## Writing the static file so set it to 1
