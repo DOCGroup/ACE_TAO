@@ -81,6 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
+#include "nr_extern.h"
 #include "y.tab.h"
 
 static char *           idl_wstring_escape_reader (char *);

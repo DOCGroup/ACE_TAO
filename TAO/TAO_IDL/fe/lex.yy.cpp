@@ -872,6 +872,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
+#include "nr_extern.h"
 #include "y.tab.h"
 
 static char *           idl_wstring_escape_reader (char *);
@@ -2746,7 +2747,7 @@ idl_store_pragma (char *buf)
             {
               UTL_Scope *top_scope = idl_global->scopes ().top ();
               top_scope->has_prefix (1);
-              top_scope->prefix_scope (top_scope);
+              ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);

@@ -136,7 +136,8 @@ AST_Decl::AST_Decl (void)
     anonymous_ (I_FALSE),
     typeid_set_ (I_FALSE),
     flat_name_ (0),
-    last_referenced_as_ (0)
+    last_referenced_as_ (0),
+    prefix_scope_ (0)
 {
 }
 
@@ -163,7 +164,8 @@ AST_Decl::AST_Decl (NodeType nt,
     anonymous_ (anonymous),
     typeid_set_ (I_FALSE),
     flat_name_ (0),
-    last_referenced_as_ (0)
+    last_referenced_as_ (0),
+    prefix_scope_ (0)
 {
   this->compute_full_name (n);
 
@@ -263,6 +265,7 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value,
   delete [] this->repoID_;
   this->repoID_ = 0;
   this->prefix (value);
+  this->prefix_scope_ = appeared_in;
 
   // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
@@ -282,7 +285,6 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value,
 
   if (s != 0)
     {
-      s->prefix_scope (appeared_in);
       AST_Decl *d = 0;
       AST_Decl *prefix_scope = 0;
 
@@ -291,7 +293,7 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value,
            i.next ())
         {
           d = i.item ();
-          prefix_scope = ScopeAsDecl (DeclAsScope (d)->prefix_scope ());
+          prefix_scope = ScopeAsDecl (d->prefix_scope ());
 
           // This will let a prefix set in an inner scope override one set in
           // an outer scope, even if the outer scope typeprefix directive
@@ -1277,6 +1279,18 @@ void
 AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
   this->last_referenced_as_ = n;
+}
+
+UTL_Scope *
+AST_Decl::prefix_scope (void)
+{
+  return this->prefix_scope_;
+}
+
+void
+AST_Decl::prefix_scope (UTL_Scope *s)
+{
+  this->prefix_scope_ = s;
 }
 
 // Container types will override this.
