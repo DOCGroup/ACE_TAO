@@ -1,3 +1,9 @@
+Tue Jun 27 23:27:46 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RT_Current.h:
+
+	  Removed MSVC "inherited via dominance" warnings.
+
 Tue Jun 27 00:44:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/TAOC.h
