@@ -75,14 +75,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     to_unicode_ (0),
     use_tss_resources_ (0),
     leader_follower_ (this),
-    has_shutdown_ (0)
+    has_shutdown_ (0),
+    thread_per_connection_use_timeout_ (1)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
-
-  // Make sure that the thread manager does not wait for threads
-  this->tm_.wait_on_exit (0);
-
+                                                
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
@@ -870,6 +868,33 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   ssf->open (this);
 
+  // Obtain the timeout value for the thread-per-connection model
+  this->thread_per_connection_use_timeout_ =
+    ssf->thread_per_connection_timeout (this->thread_per_connection_timeout_);
+
+  if (thread_per_connection_use_timeout_ == -1)
+    {
+      if (ACE_OS::strcasecmp (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT,
+                              "INFINITE") == 0)
+        {
+          this->thread_per_connection_use_timeout_ = 0;
+        }
+      else
+        {
+          int milliseconds = 
+            ACE_OS::atoi (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT);
+
+          this->thread_per_connection_timeout_.set (0,
+                                                    1000 * milliseconds);
+        }
+      if (this->thread_per_connection_use_timeout_ == 0)
+        {
+          // Do not wait for the server threads because they may block
+          // forever.
+          this->tm_.wait_on_exit (0);
+        }
+    }
+
   // Inititalize the "ORB" pseudo-object now.
   ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), 0);
 
@@ -1001,6 +1026,9 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
 int
 TAO_ORB_Core::fini (void)
 {
+  // Wait for any server threads, ignoring any failures.
+  (void) this->thr_mgr ()->wait ();
+
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,

@@ -48,6 +48,7 @@ public:
   virtual int open (TAO_ORB_Core*);
   virtual int enable_poa_locking (void);
   virtual int activate_server_connections (void);
+  virtual int thread_per_connection_timeout (ACE_Time_Value &timeout);
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
 
@@ -82,6 +83,10 @@ protected:
 
   Lock_Type event_loop_lock_type_;
   // The type of lock to be returned by <create_event_loop_lock()>.
+
+  int thread_per_connection_use_timeout_;
+  ACE_Time_Value thread_per_connection_timeout_;
+  // The timeout flag and value for the thread-per-connection model
 };
 
 #if defined (__ACE_INLINE__)

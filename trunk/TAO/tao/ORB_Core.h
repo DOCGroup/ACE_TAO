@@ -429,6 +429,11 @@ public:
   int has_shutdown (void);
   // Get the shutdown flag value
 
+  int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
+  // Returns the <timeout> value used by the server threads to poll
+  // the shutdown flag.
+  // If the return value is zero then the server threads block forever.
+
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
                          CORBA::UShort port,
@@ -579,6 +584,10 @@ protected:
   int has_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.
+
+  int thread_per_connection_use_timeout_;
+  ACE_Time_Value thread_per_connection_timeout_;
+  // The value of the timeout if the flag above is not zero
 };
 
 // ****************************************************************

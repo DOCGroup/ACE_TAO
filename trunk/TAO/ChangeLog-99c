@@ -1,3 +1,27 @@
+Fri Jul 30 01:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Options.html:
+	* tao/orbconf.h:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/default_server.h:
+	* tao/default_server.cpp:
+	* tao/Server_Strategy_Factory.h:
+	* tao/Server_Strategy_Factory.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	  Fixed the concurrency problems of shutting down the ORB when the 
+	  thread-per-connection concurrency model was used.  The server
+	  threads poll the ORB to find out if they should shutdown, but at 
+	  a very low rate (the default is 5 seconds).
+	  The user can control the rate or even disabled the polling
+	  completely using the -ORBThreadPerConnection server strategy
+	  factory option; the complete documentation is in Options.html
+	  This solves [BUGID:174]
+
 Thu Jul 29 23:03:32 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}: 
