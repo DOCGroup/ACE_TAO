@@ -1,3 +1,12 @@
+Mon Mar 29 21:34:30 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+	  Fixed byte ordering problems that prevented DSI gateways on a
+	  different byte order to communicate with clients and servers
+	  running on different byte orders.  Thanks To Mouna Seri 
+          <seri@crhc.uiuc.edu> for reporting the problem.
+
 Mon Mar 29 11:46:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
