@@ -1988,6 +1988,9 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 //   this->gen_standard_include (stream,
 //                               "tao/TypeCode.h");
 
+  this->gen_standard_include (stream,
+                              "tao/Null_RefCount_Policy.h");
+
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
   this->gen_standard_include (stream,
