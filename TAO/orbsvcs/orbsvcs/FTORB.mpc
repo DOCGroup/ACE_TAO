@@ -45,6 +45,10 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
   Template_Files {
     PortableGroup_Simple_DSS_T.cpp
   }
+
+  Pkgconfig_Files {
+    TAO_FTORB_Utils.pc.in
+  }
 }
 
 project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, interceptors {
@@ -72,6 +76,10 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, 
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    TAO_FT_ClientORB.pc.in
+  }
 }
 
 project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, interceptors {
@@ -94,5 +102,9 @@ project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, 
   }
 
   Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_FT_ServerORB.pc.in
   }
 }

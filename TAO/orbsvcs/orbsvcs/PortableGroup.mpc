@@ -34,4 +34,8 @@ project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    TAO_PortableGroup.pc.in
+  }
 }

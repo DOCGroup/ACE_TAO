@@ -1104,6 +1104,11 @@ nobase_include_HEADERS += \
   PortableGroup_Simple_DSS_T.cpp \
   PortableGroup_Simple_DS.idl
 
+pkgconfigdata_DATA += TAO_FTORB_Utils.pc
+
+TAO_FTORB_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_FTORB_Utils.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_FTORB_Utils.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.PortableGroup.am
@@ -1304,6 +1309,11 @@ nobase_include_HEADERS += \
   miopS_T.cpp \
   PortableGroup.idl \
   miop.idl
+
+pkgconfigdata_DATA += TAO_PortableGroup.pc
+
+TAO_PortableGroup.pc: ${top_builddir}/config.status ${srcdir}/TAO_PortableGroup.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_PortableGroup.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
@@ -3838,6 +3848,11 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_Service_Callbacks.h \
   FaultTolerance/FT_ClientPolicy_i.inl
 
+pkgconfigdata_DATA += TAO_FT_ClientORB.pc
+
+TAO_FT_ClientORB.pc: ${top_builddir}/config.status ${srcdir}/TAO_FT_ClientORB.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_FT_ClientORB.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_ACE_UUID
 endif BUILD_CORBA_MESSAGING
@@ -3889,6 +3904,12 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_ServerRequest_Interceptor.h \
   FaultTolerance/FT_ServerService_Activate.h \
   FaultTolerance/FT_ServerPolicy_i.inl
+
+pkgconfigdata_DATA += TAO_FT_ServerORB.pc
+
+TAO_FT_ServerORB.pc: ${top_builddir}/config.status ${srcdir}/TAO_FT_ServerORB.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_FT_ServerORB.pc.in
+
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
@@ -4131,6 +4152,11 @@ nobase_include_HEADERS += \
   FT_Notifier.idl \
   FT_Replica.idl \
   FT_ReplicationManager.idl
+
+pkgconfigdata_DATA += TAO_FaultTolerance.pc
+
+TAO_FaultTolerance.pc: ${top_builddir}/config.status ${srcdir}/TAO_FaultTolerance.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_FaultTolerance.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
