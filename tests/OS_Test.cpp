@@ -743,8 +743,8 @@ string_convert_test (void)
   int result = 0;
   const char *test1_n = "abcdefg";
   const wchar_t *test1_w = ACE_TEXT_WIDE ("abcdefg");
-  const char *test2_n = "יטאשך";
-  const wchar_t *test2_w = ACE_TEXT_WIDE ("יטאשך");
+  const char *test2_n = "\xe9\xe8\xe0\xf9\xea";
+  const wchar_t *test2_w = ACE_TEXT_WIDE ("\xe9\xe8\xe0\xf9\xea");
   wchar_t str_w[10];
   char str_n[10];
   ACE_OS::strcpy (str_w, ACE_Ascii_To_Wide (test1_n).wchar_rep ());
