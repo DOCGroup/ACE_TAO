@@ -58,6 +58,13 @@ public:
     return shmem_allocator->malloc (sizeof (Employee));
   }
 
+#if defined (ACE_HAS_NEW_NOTHROW)
+  void *operator new (size_t, const nothrow_t&)
+  {
+    return shmem_allocator->malloc (sizeof (Employee));
+  }
+#endif
+
   void operator delete (void *pointer) { shmem_allocator->free (pointer); }
 
 private:
