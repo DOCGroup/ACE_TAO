@@ -739,6 +739,13 @@ public:
                            Environment &env = CORBA_Environment::default_environment ());
   // ORB initialisation, per OMG document 94-9-46.
 
+  // = The following two methods are TAO-specific extensions. 
+  static ORB_ptr instance (void);
+  // Returns a pointer to the "default ORB."
+
+  static void instance (ORB_ptr);
+  // Sets a pointer to the "default ORB."
+
   enum
   {
     // = Define flags for NVList add methods
@@ -769,6 +776,9 @@ public:
   typedef CORBA::ULong_out PolicyType_out;
   static CORBA::TypeCode_ptr _tc_PolicyType;
 
+private:
+  static ORB_ptr instance_;
+  // Points to the "default ORB."
 };  // end of class (namespace) CORBA
 
 #include "tao/Sequence.h"
