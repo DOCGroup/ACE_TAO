@@ -1,3 +1,10 @@
+Fri Jul 10 12:21:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/Makefile: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	  Fixed errors and warnings reported by David.
+
 Fri Jul 10 00:32:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp: 

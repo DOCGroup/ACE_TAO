@@ -241,14 +241,14 @@ Driver::push_consumer (void* consumer_cookie,
       // other.description.in (),
       // other.inventory.current_size ()));
 
-      for (CORBA::ULong i = 0; i < n; ++i)
+      for (CORBA::ULong j = 0; j < n; ++j)
         {
-          ECT_IDLData::Point& p = info.trajectory[i];
-          if (p.x != i || p.y != i*i)
+          ECT_IDLData::Point& p = info.trajectory[j];
+          if (p.x != j || p.y != j*j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "invalid data in trajectory[%d] = (%f,%f)\n",
-                          i, p.x, p.y));
+                          j, p.x, p.y));
             }
         }
     }
