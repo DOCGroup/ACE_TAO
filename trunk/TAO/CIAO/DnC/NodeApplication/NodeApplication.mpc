@@ -4,6 +4,7 @@
 project(NodeApplication): ciao_server, ciao_deployment_svnt {
   requires += dnc
   exename   = NodeApplication
+
     IDL_Files {
   }
   
@@ -12,11 +13,11 @@ project(NodeApplication): ciao_server, ciao_deployment_svnt {
   }
 }
 
-project(NodeApplication_test_client) : ciao_server {
-  requries +=dnc
-  exename   =NodeApplication_client
-  Source_Files {
-    NodeApplication_test_client.cpp
-  }
+//project(NodeApplication_test_client) : ciao_server {
+//  requries +=dnc
+//  exename   =NodeApplication_client
+//  Source_Files {
+//    NodeApplication_test_client.cpp
+//  }
 
-}
+//}

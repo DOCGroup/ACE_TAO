@@ -8,7 +8,7 @@
  */
 
 #include "NodeApplication_Impl.h"
-#include "NOdeApplicatin_CallBackC.h"
+#include "NodeApplication_CallBackC.h"
 #include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
 #include "ace/SString.h"
@@ -135,7 +135,7 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var safe_servant (nodeapp_servant);
 
       // CONFIGURING NodeApplication
-      Portableserver::ObjectId_var nodeapp_oid
+      PortableServer::ObjectId_var nodeapp_oid
         = poa->activate_object (nodeapp_servant
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -150,7 +150,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (nodeapp_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to activate NodeApplication object\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to activate NodeApplication object\n"),
+                          -1);
 
 
       Deployment::NodeApplicationManager_var nodeapp_man;
