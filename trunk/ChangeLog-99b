@@ -1,3 +1,8 @@
+Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/config-ghs-common.h: removed use of native auto_ptrs, as they
+          implement an older specification which lacks the reset method.
+
 Wed Jul  7 17:17:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/ARGV.cpp (ACE_ARGV):

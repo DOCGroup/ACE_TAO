@@ -147,12 +147,10 @@ init (int config_count,
           case -1:
             // Something bad but unknown occurred while trying to bind in map.
             ACE_THROW_RETURN (RtecScheduler::INTERNAL (), -1);
-            break;
 
           case 1:
             // Tried to bind an operation that was already in the map.
             ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), -1);
-            break;
 
           default:
             break;
@@ -421,10 +419,14 @@ set (RtecScheduler::handle_t handle,
 
   // Update stability flags, based on changes to operation characteristics.
 
-  // Reference the associated scheduling entry.
+  // Reference the associated scheduling entry: the double cast is
+  // needed to ensure that the size of the pointer and the size of the
+  // stored magic cookie are the same (see the definition of
+  // ptr_arith_t in ACE to grok how this works portably).
   TAO_Reconfig_Scheduler_Entry *sched_entry_ptr =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *,
-                          rt_info_ptr->volatile_token);
+                          ACE_static_cast (ptr_arith_t,
+                                           rt_info_ptr->volatile_token));
   if (0 == sched_entry_ptr)
     {
       ACE_THROW (RtecScheduler::INTERNAL ());
@@ -440,17 +442,16 @@ set (RtecScheduler::handle_t handle,
         ACE_UINT64_DBLCAST_ADAPTER (sched_entry_ptr->
                                       orig_rt_info_data ().
                                         worst_case_execution_time));
-      CORBA::Double orig_period = ACE_static_cast (
-        CORBA::Double,
-        ACE_UINT64_DBLCAST_ADAPTER (sched_entry_ptr->
-                                      orig_rt_info_data ().period));
+
+      CORBA::Double orig_period =
+        sched_entry_ptr->orig_rt_info_data ().period;
+
       CORBA::Double new_time = ACE_static_cast (
         CORBA::Double,
         ACE_UINT64_DBLCAST_ADAPTER (rt_info_ptr->
                                       worst_case_execution_time));
-      CORBA::Double new_period = ACE_static_cast (
-        CORBA::Double,
-        ACE_UINT64_DBLCAST_ADAPTER (rt_info_ptr->period));
+
+      CORBA::Double new_period = rt_info_ptr->period;
 
       if ((orig_time / orig_period) - (new_time / new_period) > DBL_EPSILON
           || (orig_time / orig_period) - (new_time / new_period) < DBL_EPSILON)
@@ -857,10 +858,15 @@ create_i (const char *entry_point,
   // Atore in the scheduling entry pointer array.
   entry_ptr_array_ [handle] = new_sched_entry;
 
-  // Store a pointer to the scheduling entry in the
-  // scheduling entry pointer array and in the RT_Info.
+  // Store a pointer to the scheduling entry in the scheduling entry
+  // pointer array and in the RT_Info: the double cast is needed to
+  // ensure that the size of the pointer and the size of the stored
+  // magic cookie are the same (see the definition of ptr_arith_t in
+  // ACE to grok how this works portably).
   new_rt_info->volatile_token =
-    ACE_reinterpret_cast (CORBA::ULong, new_sched_entry);
+    ACE_static_cast (CORBA::ULongLong,
+                     ACE_reinterpret_cast (ptr_arith_t,
+                                           new_sched_entry));
 
   // Release the auto pointers, so their destruction does not
   // remove the new rt_info that is now in the map and tree,
@@ -1295,12 +1301,10 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
               case -1:
                 // Something bad but unknown occurred while trying to bind in map.
                 ACE_THROW (RtecScheduler::INTERNAL ());
-                break;
 
               case 1:
                 // Tried to bind an operation that was already in the map.
                 ACE_THROW (RtecScheduler::DUPLICATE_NAME ());
-                break;
 
               default:
                 break;
