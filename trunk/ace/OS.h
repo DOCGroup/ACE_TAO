@@ -1048,6 +1048,8 @@ struct strrecvfd {};
 #  else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #    include /**/ <wchar.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#else
+typedef long wchar_t;
 #endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_HAS_BROKEN_WRITEV)
@@ -1480,7 +1482,7 @@ typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
-// use unsigned int, so the ACE TSS emulation is compatible with them.)
+// use u_int, so the ACE TSS emulation is compatible with them.)
 typedef u_int ACE_thread_key_t;
 
 #elif defined (ACE_HAS_WTHREADS)
@@ -1678,14 +1680,14 @@ typedef const struct msghdr ACE_SENDMSG_TYPE;
 
 #if defined (ACE_HAS_BROKEN_RANDR)
 // The SunOS 5.x version of rand_r is inconsistent with the header files...
-typedef unsigned int ACE_RANDR_TYPE;
+typedef u_int ACE_RANDR_TYPE;
 extern "C" int rand_r (ACE_RANDR_TYPE seed);
 #else
 # if defined (__hpux)
-// HP-UX's stdlib.h (long *) doesn't match that man page (unsigned int *)
+// HP-UX's stdlib.h (long *) doesn't match that man page (u_int *)
 typedef long *ACE_RANDR_TYPE;
 # else
-typedef unsigned int *ACE_RANDR_TYPE;
+typedef u_int *ACE_RANDR_TYPE;
 # endif /* __hpux */
 #endif /* ACE_HAS_BROKEN_RANDR */
 
@@ -2477,13 +2479,13 @@ extern "C"
   int t_open(char *path, int oflag, struct t_info *info);
   int t_optmgmt(int fildes, struct t_optmgmt *req,
                 struct t_optmgmt *ret);
-  int t_rcv(int fildes, char *buf, unsigned nbytes, int *flags);
+  int t_rcv(int fildes, char *buf, u_int nbytes, int *flags);
   int t_rcvconnect(int fildes, struct t_call *call);
   int t_rcvdis(int fildes, struct t_discon *discon);
   int t_rcvrel(int fildes);
   int t_rcvudata(int fildes, struct t_unitdata *unitdata, int *flags);
   int t_rcvuderr(int fildes, struct t_uderr *uderr);
-  int t_snd(int fildes, char *buf, unsigned nbytes, int flags);
+  int t_snd(int fildes, char *buf, u_int nbytes, int flags);
   int t_snddis(int fildes, struct t_call *call);
   int t_sndrel(int fildes);
   int t_sndudata(int fildes, struct t_unitdata *unitdata);
@@ -2627,7 +2629,7 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* MAXNAMELEN */
 
 #if defined (ACE_LACKS_SIGSET)
-typedef unsigned int sigset_t;
+typedef u_int sigset_t;
 #endif /* ACE_LACKS_SIGSET */
 
 #if defined (ACE_LACKS_SIGACTION)
@@ -3932,9 +3934,14 @@ public:
   static long strtol (const char *s,
                       char **ptr,
                       int base);
-  static unsigned long strtoul(const char *s,
-                               char **ptr,
-                               int base);
+  static u_long strtoul(const char *s,
+                        char **ptr,
+                        int base);
+
+  // = These go here since they are needed for TAO.
+  static size_t strlen (const wchar_t *s);
+  static wchar_t *strcpy (wchar_t *s,
+                          const wchar_t *t);
 
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
@@ -3950,8 +3957,6 @@ public:
   static int strncmp (const wchar_t *s,
                       const wchar_t *t,
                       size_t len);
-  static wchar_t *strcpy (wchar_t *s,
-                          const wchar_t *t);
   static int strcasecmp (const wchar_t *s,
                          const wchar_t *t);
   static int strncasecmp (const wchar_t *s,
@@ -3959,7 +3964,6 @@ public:
                           size_t len);
   static wchar_t *strpbrk (const wchar_t *s1,
                            const wchar_t *s2);
-  static size_t strlen (const wchar_t *s);
   static wchar_t *strncpy (wchar_t *s,
                            const wchar_t *t,
                            size_t len);
