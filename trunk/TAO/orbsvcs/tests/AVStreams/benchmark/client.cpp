@@ -2,8 +2,7 @@
 
 #include "client.h"
 #include "tao/debug.h"
-
-
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(benchmark, client, "$Id$")
 

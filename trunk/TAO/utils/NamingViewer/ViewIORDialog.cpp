@@ -6,6 +6,7 @@
 #include "NamingViewer.h"
 #include "ViewIORDialog.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/Stub.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
