@@ -1,8 +1,9 @@
 Wed Dec 02 14:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fstat): This function needs to close down the c handle
-	  opened by _open_osfhandle to avoid resource leaks.  Thanks to
-	  Christian Korn <korn@gate.qaqa.com> for reporting this.
+ 	  opened by _open_osfhandle to avoid resource leaks on Win32.
+  	  Thanks to Christian Korn <korn@gate.qaqa.com> for reporting
+ 	  this.
 
 Tue Dec 01 13:48:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
