@@ -1,3 +1,14 @@
+Tue Oct 12 12:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Added include of ServantManagerC.h to get ForwardRequest exception
+
+Tue Oct 12 12:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+          Use a dynamic_cast to get the TAO_POA, the _tao_downcast has been
+          zapped with this rework
+
 Tue Oct 12 12:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
