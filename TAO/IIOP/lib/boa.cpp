@@ -150,7 +150,7 @@ void CORBA_BOA::dispatch (CORBA_OctetSeq &key,
 			 obj_key->length) != 0) {
     env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO) );
 #ifdef	DEBUG
-    if (debug_level) 
+    if (TAO_debug_level) 
       dmsg_opaque ("request to nonexistent object, key = ",
 		   key.buffer, key.length);
 #endif

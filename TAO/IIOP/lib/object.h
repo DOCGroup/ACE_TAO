@@ -26,7 +26,6 @@
 #  include "ace/OS.h"
 
 #  include "request.h"
-#  include "optable.h"
 
 #  if !defined(__ACE_INLINE__)
 // Can't have forward decls if we're doing inlines of these functions
@@ -35,6 +34,8 @@ CORBA_Boolean CORBA_is_nil (CORBA_Object_ptr obj);
 #  endif
 
 extern const IID IID_CORBA_Object;
+
+class TAO_Operation_Table;
 
 class ACE_Svc_Export CORBA_Object : public IUnknown
 {

@@ -80,13 +80,10 @@ TAO_Linear_OpTable::find (const CORBA_String &opname,
 
 TAO_Linear_OpTable_Entry::TAO_Linear_OpTable_Entry (void)
 {
-  this->opname = 0;
-  this->skel_ptr = 0;
 }
 
 TAO_Linear_OpTable_Entry::~TAO_Linear_OpTable_Entry (void)
 {
-  this->opname = 0;
   this->skel_ptr = 0;  // cannot delete this as we do not own it
 }
 
