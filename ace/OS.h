@@ -5627,6 +5627,10 @@ private:
 # endif /* ACE_HAS_INLINED_OSCALLS */
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#if defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)
+# define ACE_INLINE_FOR_GNUC ACE_INLINE
+#endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
+
 #include "ace/Trace.h"
 
 // These need to come here to avoid problems with circular dependencies.
