@@ -37,11 +37,11 @@
 #include "NavWeapC.h"
 
 #define SOURCE_ID    1001
-#define TOTAL_MESSAGES 150
 
+static const char usage [] = "[-? |\n"
+"            [-m <count> of messages to send [100]]]";
 
-static const char usage [] = "[-? |\n";
-
+unsigned int total_messages = 100;
 
 
 
@@ -240,7 +240,7 @@ Demo_Supplier::start_generating_events (void)
 
 	      ACE_OS::sleep (pause);
 
-      } while (++total_sent_ < TOTAL_MESSAGES);
+      } while (++total_sent_ < total_messages);
 
  
       // Sending a shutdown event -- not wanted right now
@@ -365,7 +365,7 @@ get_options (int argc, char *argv [])
 {
   // We need the 'O' in get_opt() because we also want to have ORB parameters, they
   // all start with 'O'
-  ACE_Get_Opt get_opt (argc, argv, "O?");
+  ACE_Get_Opt get_opt (argc, argv, "O?m:");
   int opt;
   int temp;
 
@@ -377,6 +377,18 @@ get_options (int argc, char *argv [])
 		  "Usage: %s %s\n",
 		  argv[0], usage));
       ACE_OS::exit (0);
+      break;
+    case 'm':
+      if ((temp = ACE_OS::atoi (get_opt.optarg)) > 0)
+        {
+          total_messages = (u_int) temp;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s: count must be > 0",
+			     argv[0]), 1);
+        }
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -397,6 +409,7 @@ get_options (int argc, char *argv [])
 
   return 0;
 }
+
 
 
 // function main
