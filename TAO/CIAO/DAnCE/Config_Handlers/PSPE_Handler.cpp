@@ -53,6 +53,9 @@ namespace CIAO
       CORBA::ULong tmp = 0;
       bool r = IDD_Handler::IDREF.find_ref
         (src.instance ().id ().c_str (), tmp);
+      ACE_UNUSED_ARG (r);
+      
+      // @@ MAJO:  What should we do if find_ref fails??
       dest.instanceRef = tmp;
 
       if (src.kind () == CCMComponentPortKind::Facet)
@@ -72,7 +75,7 @@ namespace CIAO
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
       const Deployment::PlanSubcomponentPortEndpoint &src)
-    {/*MAJO
+    { // @@MAJO
       XMLSchema::string< char > pname ((src.portName));
       XMLSchema::string< char > tval  ("true");
       XMLSchema::string< char > prov  ("");

@@ -1,3 +1,35 @@
+Fri Mar 11 13:55:17 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* Config_Handlers/DP_Handler.cpp
+	* Config_Handlers/IDD_Handler.cpp
+	* Config_Handlers/IDD_Handler.h
+	* Config_Handlers/PSPE_Handler.cpp
+
+	Some cosmetic fixes and silenced a couple warnings.
+	
+	* Config_Handlers/Basic_Deployment_Data.cpp
+	* Config_Handlers/Basic_Deployment_Data.hpp
+	* Config_Handlers/ccd.cpp
+	* Config_Handlers/ccd.hpp
+	* Config_Handlers/cdd.cpp
+	* Config_Handlers/cdd.hpp
+	* Config_Handlers/cdp.cpp
+	* Config_Handlers/cdp.hpp
+	* Config_Handlers/cid.cpp
+	* Config_Handlers/cid.hpp
+	* Config_Handlers/cpd.cpp
+	* Config_Handlers/cpd.hpp
+	* Config_Handlers/iad.cpp
+	* Config_Handlers/iad.hpp
+	* Config_Handlers/pcd.cpp
+	* Config_Handlers/pcd.hpp
+	* Config_Handlers/toplevel.cpp
+	* Config_Handlers/toplevel.hpp
+
+	New XSC handlers compiled using the soon to be cut 0.6.1 release of XSC.
+
+	This silences a number of warnings from GCC.
+	
 Fri Mar 11 16:29:30 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/Container_Base.h:
