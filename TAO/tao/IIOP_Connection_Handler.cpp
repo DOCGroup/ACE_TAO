@@ -57,7 +57,6 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
-  cout << " I am going " << endl;
 }
 
 int
@@ -135,6 +134,7 @@ TAO_IIOP_Connection_Handler::open (void*)
   this->transport ()->id ((int) this->get_handle ());
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+
   return 0;
 }
 

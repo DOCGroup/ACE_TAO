@@ -160,7 +160,7 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
 
    // Get the max_wait_time
-   // @@todo: Right place for Jon reis stuff!!
+   // @@todo: Right place for Jon Reis stuff!!
    ACE_Time_Value *max_wait_time =
      invocation->max_wait_time ();
 
@@ -185,8 +185,6 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                                max_wait_time);
      }
 
-
-   cout << "Asked to go " << endl;
    // Reduce the refcount to the svc_handler that we have. The
    // increment to the handler is done in make_svc_handler (). Now
    // that we dont need the reference to it anymore we can decrement
