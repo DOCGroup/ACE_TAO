@@ -367,13 +367,22 @@ INCLUDES = \
 	Singleton.cpp \
 	Stream.cpp \
 	Stream_Modules.cpp \
-   String_Base.cpp \
+        String_Base.cpp \
 	Svc_Handler.cpp \
-   Swap.cpp \
+        Swap.cpp \
 	Test_and_Set.cpp \
 	Timer_Queue_Adapters.cpp \
 	Typed_SV_Message.cpp \
 	Typed_SV_Message_Queue.cpp
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+install: extra_install
+extra_install:
+	@xcopy /i /s /y os_include\*.h $(INSTALL_INCDIR)\os_include
+	@xcopy /i /s /y os_include\arpa\*.h $(INSTALL_INCDIR)\os_include\arpa
+	@xcopy /i /s /y os_include\net\*.h $(INSTALL_INCDIR)\os_include\net
+	@xcopy /i /s /y os_include\netinet\*.h $(INSTALL_INCDIR)\os_include\netinet
+	@xcopy /i /s /y os_include\sys\*.h $(INSTALL_INCDIR)\os_include\sys
+
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
