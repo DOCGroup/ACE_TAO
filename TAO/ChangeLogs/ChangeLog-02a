@@ -1,3 +1,11 @@
+Sun Jan  7 17:04:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* rules.tao.GNU:
+
+	  Disable interceptor support if minimum CORBA is enabled.  This
+	  fixes portable interceptor related build errors in minimum CORBA
+	  builds.
+
 Sun Jan  7 16:05:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/client.bor
