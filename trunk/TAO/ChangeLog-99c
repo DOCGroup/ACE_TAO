@@ -1,3 +1,10 @@
+Fri Apr 30 20:06:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode_Constants.cpp:
+	  Fixed a bunch of 'Memory in Use' reports from Purify
+	  reported by Irfan. Of a group of 10 Policy-related
+	  Typecodes in init(), only 3 had been added to fini().
+
 Fri Apr 30 19:55:26 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.*:
