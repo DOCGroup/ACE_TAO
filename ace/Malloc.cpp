@@ -28,7 +28,7 @@ ACE_Control_Block::ACE_Malloc_Header::dump (void) const
   ACE_TRACE ("ACE_Control_Block::ACE_Malloc_Header::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_block = %@"), (ACE_Malloc_Header *) this->next_block_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize = %d\n"), this->size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -44,7 +44,7 @@ ACE_Control_Block::print_alignment_info (void)
               ACE_LIB_TEXT ("Sizeof long: %d\n")
               ACE_LIB_TEXT ("Sizeof double: %d\n")
               ACE_LIB_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")
-              ACE_LIB_TEXT ("sizeof ACE_MALLOC_PADDING: %d\n")
+              ACE_LIB_TEXT ("Sizeof ACE_MALLOC_PADDING: %d\n")
               ACE_LIB_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %d\n")
               ACE_LIB_TEXT ("Sizeof ACE_MALLOC_PADDING_SIZE: %d\n")
               ACE_LIB_TEXT ("Sizeof ACE_CONTROL_BLOCK_SIZE: %d\n")
@@ -79,7 +79,7 @@ ACE_Control_Block::dump (void) const
        nextn = nextn->next_)
     nextn->dump ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("freep_ = %@"), (ACE_Malloc_Header *) this->freep_));
   this->base_.dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nMalloc Header:\n")));
@@ -148,10 +148,10 @@ ACE_Control_Block::ACE_Name_Node::dump (void) const
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("pointer = %x"), (const char *) this->pointer_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_ = %x"), (ACE_Name_Node *) this->next_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("pointer = %@"), (const char *) this->pointer_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_ = %@"), (ACE_Name_Node *) this->next_));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\nname_ = (%x, %s)"),
+              ACE_LIB_TEXT ("\nname_ = (%@, %s)"),
               (const char *) this->name_,
               (const char *) this->name_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
