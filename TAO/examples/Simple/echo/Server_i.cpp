@@ -22,7 +22,7 @@ Server_i::~Server_i (void)
 // the object name is bound to the naming server.
 
 int
-Server_i::thru_naming_service (CORBA::Environment& env)
+Server_i::init_naming_service (CORBA::Environment& env)
 {
   TAO_TRY
     {
@@ -41,7 +41,7 @@ Server_i::thru_naming_service (CORBA::Environment& env)
 			  -1);
 
       // Register the object implementation with the POA.
-      Echo_var echo_obj = this->servant_->_this (env);
+      Echo_var echo_obj = this->servant_._this (env);
       TAO_CHECK_ENV_RETURN (env, -1);
 
       // Name the context.
@@ -69,7 +69,7 @@ Server_i::thru_naming_service (CORBA::Environment& env)
     }
   TAO_CATCHANY
     {
-      //  TAO_TRY_ENV.print_execption ("Server_i::thru_naming_service\n");
+      //  TAO_TRY_ENV.print_execption ("Server_i::init_naming_service\n");
       return -1;
     }
   TAO_ENDTRY;
@@ -105,7 +105,7 @@ Server_i::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-	this->using_naming_srv_ = 0;
+	this->using_naming_service_ = 0;
         break;
 
       case '?':  // display help for use of the server.
@@ -174,8 +174,8 @@ Server_i::init (int argc,
       ACE_OS::fclose (this->ior_output_file_);
     }
 
-  if (this->using_naming_srv_)
-    return this->thru_naming_service (env);
+  if (this->using_naming_service_)
+    return this->init_naming_service (env);
 
   return 0;
 }
