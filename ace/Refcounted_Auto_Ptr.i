@@ -65,17 +65,19 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::assign (ACE_Refcounted_Auto_Ptr_Rep<X,
   ACE_ASSERT (rep != 0);
   ACE_ASSERT (new_rep != 0);
 
-  ACE_GUARD (ACE_LOCK, guard, rep->lock_);
-
-  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *old = rep;
-  rep = new_rep;
-
-  // detached old last for exception safety
-  if(old->ref_count_-- == 0)
-    // We do not need the lock when deleting the representation.
-    // There should be no side effects from deleting rep and we don
-    // not want to release a deleted mutex.
-    delete old;
+  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *old = 0;
+  {
+    // detached old last for exception safety
+    ACE_GUARD (ACE_LOCK, guard, rep->lock_);
+    old = rep;
+    rep = new_rep;
+ 
+    if (old->ref_count_-- > 0)
+      return;
+ 
+  } // The lock is released before deleting old rep object below.
+ 
+  delete old;
 }
 
 template <class X, class ACE_LOCK> inline
