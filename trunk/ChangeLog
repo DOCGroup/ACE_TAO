@@ -1,3 +1,8 @@
+Mon Jun 28 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/OS/Process/imore.cpp:
+          Fixed compile errors in unicode build
+
 Mon Jun 28 12:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Svc_Handler.h:
