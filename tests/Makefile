@@ -137,7 +137,7 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   endif
 endif
 
-ifeq ($(rmcast),1)
+ifneq ($(rmcast),0)
   DIRS += RMCast
 endif
 
