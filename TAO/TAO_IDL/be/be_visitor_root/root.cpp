@@ -332,14 +332,17 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
-  if (this->gen_explicit_tmplinst (node, os) != 0)
+  if (be_global->gen_tmplinst ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root::"
-                         "visit_root - "
-                         "explicit template instantiation "
-                         "generation failed\n"),
-                        -1);
+      if (this->gen_explicit_tmplinst (node, os) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "explicit template instantiation "
+                             "generation failed\n"),
+                            -1);
+        }
     }
 
   // Generate any final code such as #endifs and/or EOF newlines.
