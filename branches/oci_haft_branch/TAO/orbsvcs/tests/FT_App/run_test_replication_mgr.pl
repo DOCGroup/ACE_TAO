@@ -139,13 +139,16 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
+# my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
+# my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q -ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q -ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
 my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n file://$notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
-my($REPLM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $replmgr_ior -f file://$notifier_ior");
-my($REPLM_CTRL) = new PerlACE::Process (".$build_directory/replmgr_controller", "-k file://$replmgr_ior -x");
+my($REPLM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $replmgr_ior -f file://$notifier_ior -ORBEndpoint iiop://localhost:2833");
+# my($REPLM_CTRL) = new PerlACE::Process (".$build_directory/replmgr_controller", "-k file://$replmgr_ior -x");
+my($REPLM_CTRL) = new PerlACE::Process (".$build_directory/replmgr_controller", "-ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager -x");
 
 my($CL);
 if (simulated) {
