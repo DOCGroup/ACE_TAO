@@ -146,6 +146,12 @@ ACE_String_Base<CHAR>::length (void) const
   return this->len_;
 }
 
+template <class CHAR> ACE_INLINE void
+ACE_String_Base<CHAR>::clear (int release)
+{
+  this->set(0, 0, release);
+}
+
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
 ACE_String_Base<CHAR>::substr (size_t offset,
                                ssize_t length) const
@@ -180,8 +186,7 @@ ACE_String_Base<CHAR>::rep (void) const
 
   CHAR *new_string;
   ACE_NEW_RETURN (new_string, CHAR[this->len_ + 1], 0);
-  ACE_OS::strncpy (new_string, this->rep_, this->len_);
-  new_string[this->len_] = '\0';
+  ACE_OS::strsncpy (new_string, this->rep_, this->len_+1);
 
   return new_string;
 }
