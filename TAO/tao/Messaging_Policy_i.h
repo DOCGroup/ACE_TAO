@@ -23,6 +23,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/MessagingC.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -33,7 +34,9 @@
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy : public Messaging::RelativeRoundtripTimeoutPolicy
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
+  : public Messaging::RelativeRoundtripTimeoutPolicy,
+    public CORBA::LocalObject
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -48,6 +51,12 @@ public:
 
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
   // Copy constructor.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -81,7 +90,9 @@ private:
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-class TAO_Export TAO_Sync_Scope_Policy : public Messaging::SyncScopePolicy
+class TAO_Export TAO_Sync_Scope_Policy
+  : public Messaging::SyncScopePolicy,
+    public CORBA::LocalObject
 
 {
   // = TITLE
@@ -97,6 +108,12 @@ public:
 
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
   // Copy constructor.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
