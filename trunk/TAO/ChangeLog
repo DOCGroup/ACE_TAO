@@ -1,3 +1,14 @@
+Mon Nov 11 09:28:43 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+	  Get the whole hostname name including the domain instead
+	  of just the hostname.
+	  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for pointing
+	  out a exception thats raised.
+	
+	* orbsvcs/tests/ImplRepo/run_test.pl:
+	  cosmetic changes.
+
 Sun Nov 10 20:24:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
