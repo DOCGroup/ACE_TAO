@@ -1,3 +1,8 @@
+Thu Oct 28 09:31:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/SOCK_Send_Recv_Test.cpp (client): if len is not 255,
+          print out its value.
+
 Thu Oct 28 09:27:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU,
