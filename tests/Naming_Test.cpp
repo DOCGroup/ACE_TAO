@@ -28,7 +28,7 @@ static char value[BUFSIZ];
 static char type[BUFSIZ];
 
 static void
-randomize (int array[], int size)
+randomize (int array[], size_t size)
 {
   size_t i;
 
