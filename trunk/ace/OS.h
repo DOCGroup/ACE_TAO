@@ -205,15 +205,11 @@ typedef int key_t;
 #define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024)) 
 #endif /* ACE_DEFAULT_BASE_ADDR */
 
-// Fudge factor for timers that need it, such as on Solaris.
-// This symbol should be defined in the appropriate config header.
-#if !defined (ACE_TIMER_SKEW)
-#define 0
-#endif /* ACE_TIMER_SKEW */
-
-// 10 millisecond fudge factor to account for Solaris timers...
-#if !defined (ACE_TIMER_SKEW)
-#define ACE_TIMER_SKEW 1000 * 10
+// This fudge factor can be overriden for timers that need it, such as on
+// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
+// header.
+if !defined (ACE_TIMER_SKEW)
+#define ACE_TIMER_SKEW 0
 #endif /* ACE_TIMER_SKEW */
 
 // Nasty macro stuff to account for Microsoft Win32 DLL nonsense.  We
