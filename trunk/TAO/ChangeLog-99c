@@ -1,122 +1,127 @@
+Tue Jul 27 11:00:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/README: updated
+          collocation test usage notes.
+
 Mon Jul 26 21:41:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO/PROBLEM-REPORT-FORM: Changed all occurrences of ace-users
-	  to tao-users.  Thanks to David Levine for remembering this!
+        * TAO/PROBLEM-REPORT-FORM: Changed all occurrences of ace-users
+          to tao-users.  Thanks to David Levine for remembering this!
 
 Mon Jul 26 20:55:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* docs/configurations.html: Added thread-pool example link.
+        * docs/configurations.html: Added thread-pool example link.
 
 Mon Jul 26 18:20:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated UIOP BNF to be more like "iioploc" BNF, and reorganized
-	  some text.
+          Updated UIOP BNF to be more like "iioploc" BNF, and reorganized
+          some text.
 
-	* tao/IIOP_Acceptor.cpp (open, open_default):
+        * tao/IIOP_Acceptor.cpp (open, open_default):
 
-	  TAO now properly sets the host using the fully qualified domain
-	  name (FQDN) when only a port is specified in an iiop endpoint.
-	  [Bug 43]
+          TAO now properly sets the host using the fully qualified domain
+          name (FQDN) when only a port is specified in an iiop endpoint.
+          [Bug 43]
 
-	  Added some error checks when setting the host and port.
+          Added some error checks when setting the host and port.
 
-	* tao/{IIOP,UIOP}_Connector.cpp (check_prefix):
+        * tao/{IIOP,UIOP}_Connector.cpp (check_prefix):
 
-	  Make sure only certain prefixes are accepted.  Previously, we
-	  were only checking if the there the first few characters
-	  matched.
+          Make sure only certain prefixes are accepted.  Previously, we
+          were only checking if the there the first few characters
+          matched.
 
-	* tao/{IIOP,UIOP}_Factory.cpp (match_prefix):
+        * tao/{IIOP,UIOP}_Factory.cpp (match_prefix):
 
-	  {iiop,uiop}loc should not be accepted as a proper prefix for
-	  server endpoints.
+          {iiop,uiop}loc should not be accepted as a proper prefix for
+          server endpoints.
 
-	* tao/{IIOP,UIOP}_Profile.cpp (to_string):
+        * tao/{IIOP,UIOP}_Profile.cpp (to_string):
 
-	  URL style IOR prefix should be "iioploc" for IIOP and "uioploc"
-	  for UIOP (although there is no "uioploc" standardized
-	  specification yet).
+          URL style IOR prefix should be "iioploc" for IIOP and "uioploc"
+          for UIOP (although there is no "uioploc" standardized
+          specification yet).
 
-	* tao/Acceptor_Registry.h:
+        * tao/Acceptor_Registry.h:
 
-	  Comment update.
+          Comment update.
 
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Corrected typo in error message.
+          Corrected typo in error message.
 
 Mon Jul 26 17:11:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Connect.cpp (handle_input):
-	* tao/UIOP_Connect.cpp (handle_input):
+        * tao/IIOP_Connect.cpp (handle_input):
+        * tao/UIOP_Connect.cpp (handle_input):
 
-	  Take out all the information from the <message_state> and reset
-	  it so that nested upcall on the same transport can be handled.
+          Take out all the information from the <message_state> and reset
+          it so that nested upcall on the same transport can be handled.
 
-	* tao/GIOP.h (TAO_GIOP::process_server_message): Changed method
-	  interface to take message_type and giop_version instead of
-	  TAO_GIOP_Message_State.
+        * tao/GIOP.h (TAO_GIOP::process_server_message): Changed method
+          interface to take message_type and giop_version instead of
+          TAO_GIOP_Message_State.
 
 Mon Jul 26 16:08:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/bevisitor_scope.cpp:
-	* TAO_IDL/util/utl_string.cpp:
-	  Changes to avert MSVC level 4 warnings. There are still some
-	  left, but they are in generated files, and I will get those
-	  in another checkin.
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/bevisitor_scope.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+          Changes to avert MSVC level 4 warnings. There are still some
+          left, but they are in generated files, and I will get those
+          in another checkin.
 
 Mon Jul 26 15:30:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tao/Any.cpp:
-	* append.cpp:
-	* CDR_Interpreter.cpp:
-	* decode.cpp:
-	* DynAny_i.cpp:
-	* GIOP.cpp:
-	* GIOP_Server_Request.cpp:
-	* IIOP_Connector.cpp:
-	* Object.cpp:
-	* ORB.cpp:
-	* ORB_Core.cpp:
-	* Pluggable.cpp:
-	* POA.i:
-	* Stub.i:
-	* Principal.cpp:
-	* skip.cpp:
-	* ValueBase.i:
-	* Typecode.i:
-	  Minor mods to get rid of MSVC level 4 warnings, mostly casting
-	  return values from integer to CORBA::Boolean and the like
+        * TAO/tao/Any.cpp:
+        * append.cpp:
+        * CDR_Interpreter.cpp:
+        * decode.cpp:
+        * DynAny_i.cpp:
+        * GIOP.cpp:
+        * GIOP_Server_Request.cpp:
+        * IIOP_Connector.cpp:
+        * Object.cpp:
+        * ORB.cpp:
+        * ORB_Core.cpp:
+        * Pluggable.cpp:
+        * POA.i:
+        * Stub.i:
+        * Principal.cpp:
+        * skip.cpp:
+        * ValueBase.i:
+        * Typecode.i:
+          Minor mods to get rid of MSVC level 4 warnings, mostly casting
+          return values from integer to CORBA::Boolean and the like
 
-	* Typecode.h:
-	  Changed the private member kind_ from CORBA::TCKind type to
-	  CORBA::Long. With indirection in typecodes came the added value
-	  ~0u to switch statements. MSVC at level 4 warns that this value is
-	  not in the enum. This mod (suggested by Carlos) seems to work
-	  well, with some minor changes in the files above to compensate.
+        * Typecode.h:
+          Changed the private member kind_ from CORBA::TCKind type to
+          CORBA::Long. With indirection in typecodes came the added value
+          ~0u to switch statements. MSVC at level 4 warns that this value is
+          not in the enum. This mod (suggested by Carlos) seems to work
+          well, with some minor changes in the files above to compensate.
 
 Mon Jul 26 15:15:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/Makefile:
-	  Corrected some mistakes in the code to get
-	  generated files from reopened_modules.idl to
-	  be included in the build or not depending on
-	  whether the platform supports namespaces.
+        * TAO/tests/IDL_Test/Makefile:
+          Corrected some mistakes in the code to get
+          generated files from reopened_modules.idl to
+          be included in the build or not depending on
+          whether the platform supports namespaces.
 
-	* TAO/tests/Makefile:
-	  Added IDL_Test directory to the list. It now builds
-	  cleanly on NT, SunOS/egcs and SunOS/g++.
+        * TAO/tests/Makefile:
+          Added IDL_Test directory to the list. It now builds
+          cleanly on NT, SunOS/egcs and SunOS/g++.
 
 Mon Jul 26 15:00:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-	  Fixed broken code for generation of CDR extraction
-	  for enum union member.
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Fixed broken code for generation of CDR extraction
+          for enum union member.
 
 Mon Jul 26 12:37:20 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -124,203 +129,203 @@ Mon Jul 26 12:37:20 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Jul 26 12:25:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Added comments explaining that -ORBEndpoint is a server side
-	  option and -ORBPreconnect is a client side option.  Also
-	  clarified use of -ORBInitRef and -ORBDefaultInitRef with UIOP
-	  IORs.
+          Added comments explaining that -ORBEndpoint is a server side
+          option and -ORBPreconnect is a client side option.  Also
+          clarified use of -ORBInitRef and -ORBDefaultInitRef with UIOP
+          IORs.
 
 Mon Jul 26 10:42:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/Factory: Added a README file.
-	  Thanks to Pradeep Gore for contributing this.
+        * orbsvcs/examples/CosEC/Factory: Added a README file.
+          Thanks to Pradeep Gore for contributing this.
 
 Fri Jul 23 17:54:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Acceptor_Impl.cpp (TAO_Accept_Strategy): Added a new accept
-	  strategy that purges old connections when it runs out of
-	  descriptors.
+        * tao/Acceptor_Impl.cpp (TAO_Accept_Strategy): Added a new accept
+          strategy that purges old connections when it runs out of
+          descriptors.
 
-	* tao/IIOP_Acceptor.cpp (open):
-	* tao/UIOP_Acceptor.cpp (open):
+        * tao/IIOP_Acceptor.cpp (open):
+        * tao/UIOP_Acceptor.cpp (open):
 
-	  Changed the acceptors to use the new accept strategy.
+          Changed the acceptors to use the new accept strategy.
 
-	* tests/Connection_Purging/Connection_Purging.cpp:
+        * tests/Connection_Purging/Connection_Purging.cpp:
 
-	  - Added handle gobbling to this test in order to reduce the
-	    number of iterations required to make purging happen.
+          - Added handle gobbling to this test in order to reduce the
+            number of iterations required to make purging happen.
 
-	  - Added the ability to go back and reinvoke on old servers.
-	    This will check whether the purging did the right thing.
+          - Added the ability to go back and reinvoke on old servers.
+            This will check whether the purging did the right thing.
 
 Fri Jul 23 17:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Transport_Mux_Strategy.cpp:
-	  Fixed return value when the request id does not match. This is
-	  not always an error, for example if an old reply for a timedout
-	  request arrives while we are waiting for another requests.
+        * tao/Transport_Mux_Strategy.cpp:
+          Fixed return value when the request id does not match. This is
+          not always an error, for example if an old reply for a timedout
+          request arrives while we are waiting for another requests.
 
 Fri Jul 23 16:50:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (_get_collocated_servant): Further simplify the
-	  collocation seach method by pushing the collocation strategy
-	  check into _find_collocated_servant.
+        * tao/ORB.cpp (_get_collocated_servant): Further simplify the
+          collocation seach method by pushing the collocation strategy
+          check into _find_collocated_servant.
 
-	  (_find_collocated_servant): Make sure that we only search the
-	  ORB for the collocation when the strategies used by the ORB
-	  allows us to do it.
+          (_find_collocated_servant): Make sure that we only search the
+          ORB for the collocation when the strategies used by the ORB
+          allows us to do it.
 
 Fri Jul 23 15:03:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	  Fixed shutdown problems when there is a client thread still
-	  running. This fixed the problems with the Faults, Timeout,
-	  EC_Throughput and EC_Custom_Marshal tests.
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Fixed shutdown problems when there is a client thread still
+          running. This fixed the problems with the Faults, Timeout,
+          EC_Throughput and EC_Custom_Marshal tests.
 
 Fri Jul 23 14:53:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
-	  Changed the ior output file flag to -f.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+          Changed the ior output file flag to -f.
 
 Fri Jul 23 12:17:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf: We
-	  can't use TSS resource in this test because it shuts down the
-	  wrong reactor.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf: We
+          can't use TSS resource in this test because it shuts down the
+          wrong reactor.
 
 Fri Jul 23 13:23:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/PolicyC.cpp:
-	  Fixed problem in unchecked_narrow(), it was creating remote
-	  policy stubs all the time. Thanks to David for pointing this
-	  out.
+        * tao/PolicyC.cpp:
+          Fixed problem in unchecked_narrow(), it was creating remote
+          policy stubs all the time. Thanks to David for pointing this
+          out.
 
 Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/namespace_check.cpp:
-	   New file that includes files generated from reopened_modules.idl
-	   if ACE_HAS_USING_KEYWORD is defined. Reopened
-	   modules are mapped to reopened namespaces, and platforms
-	   without namespaces cannot handle this, even with the
-	   TAO_NAMESPACE macro. If this is the case, the file
-	   namespace_check.cpp will be empty after preprocessing.
+        * TAO/tests/IDL_Test/namespace_check.cpp:
+           New file that includes files generated from reopened_modules.idl
+           if ACE_HAS_USING_KEYWORD is defined. Reopened
+           modules are mapped to reopened namespaces, and platforms
+           without namespaces cannot handle this, even with the
+           TAO_NAMESPACE macro. If this is the case, the file
+           namespace_check.cpp will be empty after preprocessing.
 
-	* TAO/tests/IDL_Test/Makefile:
-	* TAO/tests/IDL_Test/README:
-	   Changed to reflect the above addition.
+        * TAO/tests/IDL_Test/Makefile:
+        * TAO/tests/IDL_Test/README:
+           Changed to reflect the above addition.
 
-	* TAO/tests/IDL_Test/reopened_modules.idl:
-	* TAO/tests/IDL_Test/interface.idl:
-	* TAO/tests/IDL_Test/sequence.idl
-	   New examples added.
+        * TAO/tests/IDL_Test/reopened_modules.idl:
+        * TAO/tests/IDL_Test/interface.idl:
+        * TAO/tests/IDL_Test/sequence.idl
+           New examples added.
 
-	* TAO_IDL/util/utl_scope.cpp:
-	   Further tweaking of the lookup_by_name() method,
-	   in response to a bug report. Thanks to
-	   Ruud Diterwich<R.M.L.Diterwich@marin.nl>
-	   for sending in the example.
+        * TAO_IDL/util/utl_scope.cpp:
+           Further tweaking of the lookup_by_name() method,
+           in response to a bug report. Thanks to
+           Ruud Diterwich<R.M.L.Diterwich@marin.nl>
+           for sending in the example.
 
-	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
-	   Added code generation for an explicit temporary in
-	   CDR extraction operator of multi-dimensional array
-	   where base type is a typedef, rather than just
-	   putting a constructor on the rhs of the >> operator
-	   in the FOR loop. SunOS/egcs complained about
-	   lvalue/rvalue stuff.
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+           Added code generation for an explicit temporary in
+           CDR extraction operator of multi-dimensional array
+           where base type is a typedef, rather than just
+           putting a constructor on the rhs of the >> operator
+           in the FOR loop. SunOS/egcs complained about
+           lvalue/rvalue stuff.
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	   Added #if !defined guards around CDR operator
-	   declarations and definitions if the sequence is
-	   anonymous. A struct or a union could contain an
-	   anonymous sequence of the same type more than once,
-	   and the body of the CDR operators would also appear
-	   more than once in generated code, leading to C++
-	   compile errors. Thanks to Roger Egbers <regbers@isrglobal.com>
-	   for sending in the example.
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+           Added #if !defined guards around CDR operator
+           declarations and definitions if the sequence is
+           anonymous. A struct or a union could contain an
+           anonymous sequence of the same type more than once,
+           and the body of the CDR operators would also appear
+           more than once in generated code, leading to C++
+           compile errors. Thanks to Roger Egbers <regbers@isrglobal.com>
+           for sending in the example.
 
 Fri Jul 23 11:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Use get_host_addr()
-	  rather than get_host_name() to avoid failures where DHCP can't
- 	  resolve the remote host name.  Thanks to Andrew G. Harvey
- 	  <agh@cisco.com> for reporting this.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Use get_host_addr()
+          rather than get_host_name() to avoid failures where DHCP can't
+          resolve the remote host name.  Thanks to Andrew G. Harvey
+          <agh@cisco.com> for reporting this.
 
 Fri Jul 23 08:53:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_type.cpp (nested_type_name): There was an error in
-	  the computation of the string length that we use to do string
-	  comparison. This error resulted due to a copy/paste which was
-	  causing errors in generated code. This bug report was passed to
-	  me by Jeff Parsons. Thanks to Alex Hornby <alex@anvil.co.uk> for
-	  submitting the bug report.
+        * TAO_IDL/be/be_type.cpp (nested_type_name): There was an error in
+          the computation of the string length that we use to do string
+          comparison. This error resulted due to a copy/paste which was
+          causing errors in generated code. This bug report was passed to
+          me by Jeff Parsons. Thanks to Alex Hornby <alex@anvil.co.uk> for
+          submitting the bug report.
 
 Fri Jul 23 02:13:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Generate a warning message if we see
-	  '-ORBCollocation YES'.  We still accept this option but it
-	  implies using global collocation table.  Thanks to Irfan for
-	  suggesting this.
+        * tao/ORB_Core.cpp (init): Generate a warning message if we see
+          '-ORBCollocation YES'.  We still accept this option but it
+          implies using global collocation table.  Thanks to Irfan for
+          suggesting this.
 
 Fri Jul 23 02:02:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (_get_collocated_servant): The origianl
-	  implementation was somewhat broken in that it check the
-	  collocation strategy of the client ORB to determine whether an
-	  object is collocated or not.  However, the server ORB's
-	  collocation strategy should be the one that determine whether an
-	  object be considered collocated or not.  The revised
-	  implementation now check with the the client ORB first if the
-	  client ORB allows collocation.  If yes, regardless of the
-	  collocation table strategy, we check to see if the object
-	  resides in the same ORB or not.  If not, we then check the
-	  global collocation table which only contains information of ORBs
-	  that use global collocation table strategy.
+        * tao/ORB.cpp (_get_collocated_servant): The origianl
+          implementation was somewhat broken in that it check the
+          collocation strategy of the client ORB to determine whether an
+          object is collocated or not.  However, the server ORB's
+          collocation strategy should be the one that determine whether an
+          object be considered collocated or not.  The revised
+          implementation now check with the the client ORB first if the
+          client ORB allows collocation.  If yes, regardless of the
+          collocation table strategy, we check to see if the object
+          resides in the same ORB or not.  If not, we then check the
+          global collocation table which only contains information of ORBs
+          that use global collocation table strategy.
 
-	  (key_to_object): This method should also respect the ORB's
-	  collocation strategy so we can generate the right stubs from POA
-	  if collocation optimization is turned off.
+          (key_to_object): This method should also respect the ORB's
+          collocation strategy so we can generate the right stubs from POA
+          if collocation optimization is turned off.
 
 Thu Jul 22 21:13:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object.cpp (_non_existent): This function can also enjoy the
-	  benefit of collocated object.
+        * tao/Object.cpp (_non_existent): This function can also enjoy the
+          benefit of collocated object.
 
 Thu Jul 22 15:05:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	  Fixed timeout computation it was off by a factor of 10 (thanks
-	  to the OMG 1/10 of a microsecond units!)
+        * tao/Invocation.cpp:
+          Fixed timeout computation it was off by a factor of 10 (thanks
+          to the OMG 1/10 of a microsecond units!)
 
-	* tao/Wait_Strategy.cpp:
-	  Improved loop conditions to cope with reactors that return 0
-	  even when there is no timeout. Thanks to Irfan for pointing this
-	  out.
+        * tao/Wait_Strategy.cpp:
+          Improved loop conditions to cope with reactors that return 0
+          even when there is no timeout. Thanks to Irfan for pointing this
+          out.
 
-	* orbsvcs/tests/Event/lib/Makefile:
-	* orbsvcs/tests/Event/lib/Consumer.h:
-	* orbsvcs/tests/Event/lib/Consumer.cpp:
-	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/Event/lib/Driver.i:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	* orbsvcs/tests/Event/lib/Supplier.h:
-	* orbsvcs/tests/Event/lib/Supplier.cpp:
-	* orbsvcs/tests/Event/Basic/Reconnect.h:
-	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
-	* orbsvcs/tests/Event/Performance/Makefile:
-	* orbsvcs/tests/Event/Performance/Connect.h:
-	* orbsvcs/tests/Event/Performance/Connect.cpp:
-	  Changed to use the ACE_Throughput_Stats class, this is more
-	  portable and works on platforms without 64-bit support, thanks
-	  to David Levine for pointing this out.
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Driver.i:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/lib/Supplier.h:
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+        * orbsvcs/tests/Event/Basic/Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/Performance/Connect.h:
+        * orbsvcs/tests/Event/Performance/Connect.cpp:
+          Changed to use the ACE_Throughput_Stats class, this is more
+          portable and works on platforms without 64-bit support, thanks
+          to David Levine for pointing this out.
 
 Thu Jul 22 14:10:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
