@@ -8,8 +8,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-#### VisiBroker 3.2
-JAVA_DIR = /project/doc/pkg/VisiJava-3.2/bin/
+#### VisiBroker 3.3
+JAVA_DIR = /project/doc/pkg/VisiJava3.3/bin/
 IDL2JAVA = $(JAVA_DIR)idl2java
 JAVAC = $(JAVA_DIR)vbjc
 
@@ -76,12 +76,13 @@ OBJDIRS =
 %.java: %.idl
 	@$(IDL2JAVA) $<
 
-ifeq ($(findstring vbjc, $(JAVAC)), vbjc)
+
+#### VisiBroker 3.2 idl2java creates references to a _long type,
+#### but never defines it.  Just change it to long if it's present.
+files=$(find . -name '*.java' | xargs egrep -l ' _long')
+ifneq (,$(files))
   %.class: %.java
-  #### VisiBroker 3.2 idl2java creates references to a _long type,
-  #### but never defines it.  Just change it to long.
-	perl -pi -e 's/\b_long\b/long/g' \
-          `find . -name '*.java' | xargs egrep -l ' _long'`
+	perl -pi -e 's/\b_long\b/long/g' $(files)
 else  # ! vbjc
   %.class: %.java
 endif # vbjc
@@ -102,5 +103,7 @@ Navigation.java Weapons.java: NavWeap.idl
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
