@@ -406,7 +406,11 @@ CORBA_ORB::resolve_name_service (void)
                                        remote_addr,
                                        0,
                                        &timeout);
-      if (n_bytes == -1)
+
+      // close endopoint for response.
+      u_int retval = response.close ();
+      
+      if ((n_bytes == -1) || (retval == -1))
         return CORBA_Object::_nil ();
 
       // null terminate message
