@@ -69,8 +69,9 @@ void CNamingTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point)
   POINT Point = point;
   ClientToScreen(&Point);
   CNamingObject* pObject = GetTreeObject(hItem);
-  CosNaming::NamingContext_var Context = pObject->NamingContext();
-  if(CORBA::is_nil(Context))
+
+  // If this is not a context, show the object popup
+  if(!pObject->IsContext())
   {
     if(!m_ObjectPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
     {
