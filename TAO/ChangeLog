@@ -1,3 +1,9 @@
+Wed Mar 12 11:10:20 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
+
+	  Added missing "ace/post.h" include.
+
 Wed Mar 12 12:19:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ObjectIDListC.*:
