@@ -2,18 +2,33 @@ $Id$
 README for the Notification Service
 -----------------------------------
 
-Features implemented so far:
----------------------------
-1. Creating Event Channels. however the Channel Factory does not assign ids
-   as yet.
-2. Creating ConsumerAdmins and Supplier Admins.
-3. Creating ProxyConsumers and ProxySuppliers for "Any" events and Structured
-   events.
-4. Helper classes TAO_Notify_StructuredPushConsumer and
-   TAO_Notify_StructuredPushSupplier to write consumers and suppliers for
-   Structured Events.
-5. Support for Filters.The EventChannel's default Filter Factory can be used to
-   create filters. The "TCL" grammer is supported.
+The following interfaces have been implemented:
+CosNotifyFilter::Filter (supports the Trader TCL grammer)
+CosNotifyFilter::FilterFactory
+
+CosNotifyChannelAdmin::ProxyPushConsumer
+CosNotifyChannelAdmin::StructuredProxyPushConsumer
+CosNotifyChannelAdmin::SequenceProxyPushConsumer
+
+CosNotifyChannelAdmin::ProxyPushSupplier
+CosNotifyChannelAdmin::StructuredProxyPushSupplier
+CosNotifyChannelAdmin::SequenceProxyPushSupplier (push not implemented)
+
+CosNotifyChannelAdmin::ConsumerAdmin
+CosNotifyChannelAdmin::SupplierAdmin
+CosNotifyChannelAdmin::EventChannel
+
+Helper classes TAO_Notify_StructuredPushConsumer,
+               TAO_Notify_StructuredPushSupplier,
+               TAO_Notify_PushConsumer,
+               TAO_Notify_PushSupplier,
+to help write client consumers and suppliers.
+
+Work in progress:
+----------------
+
+* Testing of the features implemented so far.
+* Support for QoS properties.
 
 Usage:
 -----
@@ -22,7 +37,10 @@ Naming Service.See the README for more details.
 
 Examples:
 --------
-The $TAO_ROOT/orbsvcs/examples/Notify/Filter example shows how to use the
-features implemented so far.
+The $TAO_ROOT/orbsvcs/examples/Notify/Filter example shows how to using
+filtering.
+
+The $TAO_ROOT/orbsvcs/examples/Notify/Subscribe example shows how consumers
+can subscribe only to the required event types.
 
 send comments/suggestions to Pradeep Gore <pradeep@cs.wustl.edu>
