@@ -1,3 +1,9 @@
+Thu Jul  8 08:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ACE.mwc:
+
+	  A workspace file ACE alone.
+
 Thu Jul  8 01:09:32 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace: Renamed config-aix5.1.h to config-aix-5.1.h to be consistent 
