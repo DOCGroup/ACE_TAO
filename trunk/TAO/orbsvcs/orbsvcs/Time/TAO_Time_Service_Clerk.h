@@ -48,6 +48,7 @@ public:
 
   // = Initialization and termination methods.
   TAO_Time_Service_Clerk (int timer_value,
+                          int timer_value_usecs,
                           const IORS& server);
   // Constructor.
 

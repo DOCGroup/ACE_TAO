@@ -122,8 +122,11 @@ private:
   // My orb.
   
   int timer_value_ ;
-  // Clerk seeks time periodically after this interval from the
+  // Clerk seeks time periodically after this interval in secs. from the
   // servers in the network.
+
+  int timer_value_usecs_;
+  // Continues the precision of timer_value_ in microseconds.
 
   //  IR_Helper *ir_helper_;
   // Helper class for using the IR.

@@ -54,7 +54,6 @@ Server_i::parse_args (void)
                            " [-d]"
                            " [-o] <ior_output_file>"
                            " [-i] <Use the Implementation Repository>"
-                           " [-r] <Register with the Implementation Repository>"
                            "\n",
                            argv_ [0]),
                           1);
@@ -75,10 +74,10 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
       // Initialize the POA.
       this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
-                                         "time_server",
+                                         "child_poa",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       PortableServer::POA_ptr child_poa
         = this->orb_manager_.child_poa ();
 
@@ -96,6 +95,7 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "(%P|%t) Exception from init_naming_service ()\n");
+      
       return -1;
     }
   ACE_ENDTRY;
@@ -172,13 +172,7 @@ Server_i::create_server (void)
                       TAO_Time_Service_Server(this->use_ir_),
                       0);
 
-      // Generate IOR of the <TimeService Server> and register with
-      // POA.
-      //this->time_service_server_ =
-      //time_service_server_impl_->_this ();
-
       // Register a servant with the child poa.
-
       CORBA::String_var server_str =
         this->orb_manager_.activate_under_child_poa ("server",
                                                      this->time_service_server_impl_,
@@ -318,7 +312,7 @@ Server_i::register_server (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception from init_naming_service ()\n");
+                           "(%P|%t) Exception from Register Server ()\n");
       return -1;
     }
   ACE_ENDTRY;
@@ -352,6 +346,10 @@ Server_i::init (int argc,
                                  "%p\n",
                                  "init_child_poa"),
                                 -1);
+      ACE_TRY_CHECK;
+
+      // Activate the POA Manager.
+      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       int result = this->parse_args ();
@@ -425,3 +423,6 @@ Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 
   return 0;
 }
+
+
+

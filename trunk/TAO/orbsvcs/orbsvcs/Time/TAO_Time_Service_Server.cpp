@@ -24,12 +24,19 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
-  TAO_UTO *uto = 0;
+  TAO_UTO *uto = 0;  
+  
+  // This is the difference in seconds between 
+  // 15th October 1582 and 1st Jan 1970. It needs to be added to the system 
+  // time to make the base time as 15th October 1582.
 
+  const CORBA::ULongLong MAGIC_OFFSET = 12219290000;
+  
   // Return the local time of the system as a UTO.
   ACE_NEW_THROW_EX (uto,
-                    TAO_UTO (ACE_static_cast(CORBA::ULongLong,
-                                             ACE_OS::gettimeofday ().sec ()) *
+                    TAO_UTO ((MAGIC_OFFSET +
+                              ACE_static_cast(CORBA::ULongLong,
+                                              ACE_OS::gettimeofday ().sec ())) *
                              ACE_static_cast(ACE_UINT32,
                                              10000000) +
                              ACE_static_cast(CORBA::ULongLong,
@@ -44,15 +51,6 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
               "Returning a UTO\n"));
 
   return uto->_this ();
-
-  // In case we are using the IR.
-  //   if (this->shutdown_ != 0)
-  //       {
-  //    TAO_ORB_Core_instance ()->orb ()->shutdown ();
-
-  //    ACE_DEBUG ((LM_DEBUG,
-  //                "Shutting down the ORB\n"));
-  //       }
 
 }
 
