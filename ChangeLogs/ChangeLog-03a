@@ -1,5 +1,11 @@
 Sat Jun  2 13:05:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Connector.cpp: Removed the ACE_Errno_Guard from the
+	  create_AST() method and instead have the connect_i() method
+ 	  check to see if create_AST() succeeded and explicitly set errno
+ 	  = EWOULDBLOCK in this case.  Thanks to Boris Temkin
+ 	  <borist@allcharge.com> for motivating this change.
+
 	* ace/Timer_Wheel_T.cpp: Since we removed the call to
 	  is_empty() from earliest_time() we need to modify the code in
  	  reschedule() to test for is_empty.
