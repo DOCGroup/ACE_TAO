@@ -246,7 +246,7 @@ public:
     (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
-
+  
 protected:
 
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
@@ -416,12 +416,24 @@ public:
   CORBA::Double noncritical_utilization_threshold ();
   // Accessor for utilization by noncritical operations.
 
+  CORBA::Double total_critical_utilization ();
+  // Accessor for utilization by critical operations.
+
+  CORBA::Double total_noncritical_utilization ();
+  // Accessor for utilization by noncritical operations.
+
 private:
 
   CORBA::Double critical_utilization_;
   // Utilization by critical operations.
 
   CORBA::Double noncritical_utilization_;
+  // Utilization by noncritical operations.
+
+  CORBA::Double total_critical_utilization_;
+  // Utilization by critical operations.
+
+  CORBA::Double total_noncritical_utilization_;
   // Utilization by noncritical operations.
 
   CORBA::Double critical_utilization_threshold_;
