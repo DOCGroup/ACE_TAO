@@ -370,13 +370,13 @@ TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
 
 const char* TAO_Policies::POLICY_NAMES[] = 
 {
+  "starting_trader",
   "exact_type_match",
   "hop_count",
   "link_follow_rule",
   "match_card",
   "return_card",
   "search_card",
-  "starting_trader",
   "use_dynamic_properties",
   "use_modifiable_properties",
   "use_proxy_offers",
@@ -783,7 +783,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
   if (policy_buffer == 0)
     return;
   
-  for (int i = EXACT_TYPE_MATCH; i <= REQUEST_ID; i++)
+  for (int i = 0; i <= REQUEST_ID; i++)
     {
       CosTrading::Policy& new_policy = policy_buffer[counter];
       
@@ -833,7 +833,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
   if (policy_buffer == 0)
     return;
   
-  for (int i = EXACT_TYPE_MATCH; i <= REQUEST_ID; i++)
+  for (int i = 0; i <= REQUEST_ID; i++)
     {
       CosTrading::Policy& new_policy = policy_buffer[counter];
       
@@ -1145,7 +1145,7 @@ TAO_Offer_Filter::matched_offer (void)
     }
 }
 
-CosTrading::PolicyNameSeq*
+CosTrading::PolicyNameSeq* 
 TAO_Offer_Filter::limits_applied (void)
 {
   int i = 0;
@@ -1162,7 +1162,7 @@ TAO_Offer_Filter::limits_applied (void)
       temp[i++] = CORBA::string_dup ((const char*) *policy_name_ptr);
     }
   
-  return new CosTrading::PolicyNameSeq (i, i, temp, 1);
+  return new PolicyNameSeq (size, size, temp, CORBA::B_TRUE);
 }
 
   // *************************************************************
