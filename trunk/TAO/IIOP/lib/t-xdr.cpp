@@ -84,144 +84,144 @@ do_test (
     void			*data
 )
 {
-    unsigned			loopcount = 100 * 1000;
-    unsigned			i;
-    unsigned			error_count = 0;
-    ACE_Time_Value		before, after;
-    CORBA_String		opname = "kill_husband";
-    opaque			key;
-    CORBA_Boolean		status;
+  unsigned			loopcount = 100 * 1000;
+  unsigned			i;
+  unsigned			error_count = 0;
+  ACE_Time_Value		before, after;
+  CORBA_String		opname = "kill_husband";
+  opaque			key;
+  CORBA_Boolean		status;
 
-    key.buffer = (CORBA_Octet *) "jacqueline";
-    key.length = key.maximum = 10;
+  key.buffer = (CORBA_Octet *) "jacqueline";
+  key.length = key.maximum = 10;
 
-    before = ACE_OS::gettimeofday ();
+  before = ACE_OS::gettimeofday ();
 
-    if (use_XDR) {
+  if (use_XDR) {
 
-	// Using XDR APIs and encoding rules ... 
-	// encode the structure  repeatedly
+    // Using XDR APIs and encoding rules ... 
+    // encode the structure  repeatedly
 
-	for (i = 0; i < loopcount; i++) {
-	    CORBA_Environment	env;
-	    XDR_stream		stream (-1);
+    for (i = 0; i < loopcount; i++) {
+      CORBA_Environment	env;
+      XDR_stream		stream (-1);
 
-	    // GIOP header plus most of request header
-	    status = status
-		    && stream.put_long ('GIOP')		// magic
-		    && stream.put_long ('\01\01\01\01')	// version etc
-		    && stream.put_long (99)		// msg len
-		    && stream.put_long (0)		// no svc ctx
-		    && stream.put_long (42)		// request ID
-		    && stream.put_boolean (CORBA_B_TRUE)// response?
-		    ;
+      // GIOP header plus most of request header
+      status = status
+	&& stream.put_long ('GIOP')		// magic
+	&& stream.put_long ('\01\01\01\01')	// version etc
+	&& stream.put_long (99)		// msg len
+	&& stream.put_long (0)		// no svc ctx
+	&& stream.put_long (42)		// request ID
+	&& stream.put_boolean (CORBA_B_TRUE)// response?
+	;
 
-	    if (status)
-		status = XDR_stream::encoder (&TC_opaque, &key, 0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+      if (status)
+	status = XDR_stream::encoder (&TC_opaque, &key, 0, &stream, env)
+	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	    if (status)
-		status = XDR_stream::encoder (_tc_CORBA_String, &opname,
-			0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+      if (status)
+	status = XDR_stream::encoder (_tc_CORBA_String, &opname,
+				      0, &stream, env)
+	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	    /*
-	    if (status)
-		status = XDR_stream::encoder (_tc_CORBA_Principal, &key,
-			0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
-	    */
+      /*
+	if (status)
+	status = XDR_stream::encoder (_tc_CORBA_Principal, &key,
+	0, &stream, env)
+	== CORBA_TypeCode::TRAVERSE_CONTINUE;
+	*/
 
-	    // Parameters:  two longs, a string
-	    status = status
-		    && stream.put_long (99)
-		    && stream.put_long (-3455);
-	    if (status)
-		status = XDR_stream::encoder (_tc_CORBA_String, &opname,
-			0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+      // Parameters:  two longs, a string
+      status = status
+	&& stream.put_long (99)
+	&& stream.put_long (-3455);
+      if (status)
+	status = XDR_stream::encoder (_tc_CORBA_String, &opname,
+				      0, &stream, env)
+	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	    // Gratuitous extra "interesting" data
-	    status = XDR_stream::encoder (tc, data, 0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+      // Gratuitous extra "interesting" data
+      status = XDR_stream::encoder (tc, data, 0, &stream, env)
+	== CORBA_TypeCode::TRAVERSE_CONTINUE;
 
 	    
-	    if (status != CORBA_B_TRUE)
-		error_count++;
-	}
-
-    } else {
-
-	// This branch is the same, but using CDR APIs and encoding ...
-	// encode the structure  repeatedly
-
-	for (i = 0; i < loopcount; i++) {
-	    CORBA_Environment	env;
-	    unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
-	    CDR			stream (buffer, sizeof buffer);
-
-	    // GIOP header plus most of request header
-	    status = status
-		    && stream.put_long ('GIOP')		// magic
-		    && stream.put_long ('\01\01\01\01')	// version etc
-		    && stream.put_long (99)		// msg len
-		    && stream.put_long (0)		// no svc ctx
-		    && stream.put_long (42)		// request ID
-		    && stream.put_boolean (CORBA_B_TRUE)// response?
-		    ;
-
-	    if (status)
-		status = CDR::encoder (&TC_opaque, &key, 0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-	    if (status)
-		status = CDR::encoder (_tc_CORBA_String, &opname,
-			0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-	    /*
-	    if (status)
-		status = CDR::encoder (_tc_CORBA_Principal, &key,
-			0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
-	    */
-
-	    // Parameters:  two longs, a string
-	    status = status
-		    && stream.put_long (99)
-		    && stream.put_long (-3455);
-	    if (status)
-		status = CDR::encoder (_tc_CORBA_String, &opname,
-			0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-	    // Gratuitous extra "interesting" data
-	    status = CDR::encoder (tc, data, 0, &stream, env)
-		    == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-
-	    if (status != CORBA_B_TRUE)
-		error_count++;
-	}
-
+      if (status != CORBA_B_TRUE)
+	error_count++;
     }
 
-    after = ACE_OS::gettimeofday ();
+  } else {
 
-    if (loopcount > 0) {
-      if (error_count == 0) {
-	ACE_Time_Value diff = after - before;
-	unsigned long	usecs = diff.sec() * 1000 * 1000 + diff.usec();
+    // This branch is the same, but using CDR APIs and encoding ...
+    // encode the structure  repeatedly
 
-	ACE_OS::printf ("%s average encode time\t= %ld.%.03ldms, \t"
-			"%ld calls/second\n",
-			use_XDR ? "XDR" : "CDR",
-			usecs / 1000, usecs % 1000,
-			1000000L / usecs);
-      }
+    for (i = 0; i < loopcount; i++) {
+      CORBA_Environment	env;
+      unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
+      CDR			stream (buffer, sizeof buffer);
 
-      ACE_OS::printf ("%d calls, %d errors\n", loopcount, error_count);
+      // GIOP header plus most of request header
+      status = status
+	&& stream.put_long ('GIOP')		// magic
+	&& stream.put_long ('\01\01\01\01')	// version etc
+	&& stream.put_long (99)		// msg len
+	&& stream.put_long (0)		// no svc ctx
+	&& stream.put_long (42)		// request ID
+	&& stream.put_boolean (CORBA_B_TRUE)// response?
+	;
+
+      if (status)
+	status = CDR::encoder (&TC_opaque, &key, 0, &stream, env)
+	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
+
+      if (status)
+	status = CDR::encoder (_tc_CORBA_String, &opname,
+			       0, &stream, env)
+	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
+
+      /*
+	if (status)
+	status = CDR::encoder (_tc_CORBA_Principal, &key,
+	0, &stream, env)
+	== CORBA_TypeCode::TRAVERSE_CONTINUE;
+	*/
+
+      // Parameters:  two longs, a string
+      status = status
+	&& stream.put_long (99)
+	&& stream.put_long (-3455);
+      if (status)
+	status = CDR::encoder (_tc_CORBA_String, &opname,
+			       0, &stream, env)
+	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
+
+      // Gratuitous extra "interesting" data
+      status = CDR::encoder (tc, data, 0, &stream, env)
+	== CORBA_TypeCode::TRAVERSE_CONTINUE;
+
+
+      if (status != CORBA_B_TRUE)
+	error_count++;
     }
+
+  }
+
+  after = ACE_OS::gettimeofday ();
+
+  if (loopcount > 0) {
+    if (error_count == 0) {
+      ACE_Time_Value diff = after - before;
+      unsigned long	usecs = diff.sec() * 1000 * 1000 + diff.usec();
+
+      ACE_OS::printf ("%s average encode time\t= %ld.%.03ldms, \t"
+		      "%ld calls/second\n",
+		      use_XDR ? "XDR" : "CDR",
+		      usecs / 1000, usecs % 1000,
+		      1000000L / usecs);
+    }
+
+    ACE_OS::printf ("%d calls, %d errors\n", loopcount, error_count);
+  }
 }
 
 
@@ -231,35 +231,35 @@ main (
     char		**argv
 )
 {
-    int			c;
-    int			use_XDR = 1;
-    CORBA_TypeCode_ptr	tc = _tc_CORBA_TypeCode;
-    void		*data = tc;
+  int			c;
+  int			use_XDR = 1;
+  CORBA_TypeCode_ptr	tc = _tc_CORBA_TypeCode;
+  void		*data = tc;
 
-    while ((c = ACE_OS::getopt (argc, argv, "cx")) != EOF) {
-	switch (c) {
-	  case 'c':
-	    use_XDR = 0;
-	    continue;
+  while ((c = ACE_OS::getopt (argc, argv, "cx")) != EOF) {
+    switch (c) {
+    case 'c':
+      use_XDR = 0;
+      continue;
 
-	  case 'x':
-	    use_XDR = 1;
-	    continue;
+    case 'x':
+      use_XDR = 1;
+      continue;
 
-	  case '?':
-	  default:
-// usage:
-	    ACE_OS::fprintf (stderr, "usage:  %s"
-			, " [-cx]"
-			, "\n"
-			, argv [0]
-			);
-	}
+    case '?':
+    default:
+      // usage:
+      ACE_OS::fprintf (stderr, "usage:  %s"
+		       , " [-cx]"
+		       , "\n"
+		       , argv [0]
+		       );
     }
+  }
 
-    do_test (1, tc, data);	// XDR-ish
-    do_test (0, tc, data);	// CDR
+  do_test (1, tc, data);	// XDR-ish
+  do_test (0, tc, data);	// CDR
 
-    return 0;
+  return 0;
 }
 

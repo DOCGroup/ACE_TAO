@@ -72,19 +72,19 @@ IIOP_ServerRequest::QueryInterface (
     void        **ppv
 )
 {
-    assert (_refcount > 0);
-    *ppv = 0;
+  assert (_refcount > 0);
+  *ppv = 0;
  
-    if (IID_IIOP_ServerRequest == riid
-	    || IID_CORBA_ServerRequest == riid
-	    || IID_IUnknown == riid)
-        *ppv = this;
+  if (IID_IIOP_ServerRequest == riid
+      || IID_CORBA_ServerRequest == riid
+      || IID_IUnknown == riid)
+    *ppv = this;
  
-    if (*ppv == 0)
-        return ResultFromScode (E_NOINTERFACE);
+  if (*ppv == 0)
+    return ResultFromScode (E_NOINTERFACE);
  
-    (void) AddRef ();
-    return NOERROR;
+  (void) AddRef ();
+  return NOERROR;
 }
 
 
@@ -99,70 +99,70 @@ IIOP_ServerRequest::params (
     CORBA_Environment		&env
 )
 {
-    unsigned			i;
+  unsigned			i;
 
-    env.clear ();
+  env.clear ();
 
-    //
-    // Save params for later use when marshaling reply
-    //
-    _params = list;
+  //
+  // Save params for later use when marshaling reply
+  //
+  _params = list;
 
-    //
-    // Then unmarshal each "in" and "inout" parameter
-    //
-    for (i = 0; i < list->count (); i++) {
-	CORBA_NamedValue_ptr	nv;
-	CORBA_Any_ptr		any;
-	CORBA_TypeCode_ptr	tc;
-	void			*value;
+  //
+  // Then unmarshal each "in" and "inout" parameter
+  //
+  for (i = 0; i < list->count (); i++) {
+    CORBA_NamedValue_ptr	nv;
+    CORBA_Any_ptr		any;
+    CORBA_TypeCode_ptr	tc;
+    void			*value;
 
-	nv = list->item (i);
-	if (!(nv->flags () & (CORBA_ARG_IN | CORBA_ARG_INOUT)))
-	    continue;
-
-	//
-	// First, make sure the memory into which we'll be unmarshaling
-	// exists, and is the right size.
-	//
-	// NOTE: desirable to have a way to let the dynamic implementation
-	// routine preallocate this data, for environments where DSI is
-	// just being used in lieu of a language mapped server side API
-	// and the size is really knowable in advance.
-	//
-	any = nv->value ();
-	tc = any->type ();
-    	tc->AddRef ();
-	value = new char [tc->size (env)];
-	any->replace (tc, value, CORBA_B_TRUE, env);
-
-        //
-        // Decrement the refcount of "tc".
-        //
-        // The earlier AddRef is needed since Any::replace() releases
-	// the typecode inside the Any.  Without the dup, the reference
-	// count can go to zero, and the typecode would then be deleted.
-	//
-	// This Release ensures that the reference count is correct so
-	// the typecode can be deleted some other time.
-        //
-        tc->Release ();
-
-	//
-	// Then just unmarshal the value.
-	//
-	(void) CDR::decoder (tc, value, 0, _incoming, env);
-    }
+    nv = list->item (i);
+    if (!(nv->flags () & (CORBA_ARG_IN | CORBA_ARG_INOUT)))
+      continue;
 
     //
-    // If any data is left over, it'd be context values ... else error.
-    // We don't support context values, so it's always an error.
+    // First, make sure the memory into which we'll be unmarshaling
+    // exists, and is the right size.
     //
-    if (_incoming->bytes_remaining () != 0) {
-	dmsg1 ("params(), %d bytes remaining (error)", 
-		_incoming->bytes_remaining ());
-	env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
-    }
+    // NOTE: desirable to have a way to let the dynamic implementation
+    // routine preallocate this data, for environments where DSI is
+    // just being used in lieu of a language mapped server side API
+    // and the size is really knowable in advance.
+    //
+    any = nv->value ();
+    tc = any->type ();
+    tc->AddRef ();
+    value = new char [tc->size (env)];
+    any->replace (tc, value, CORBA_B_TRUE, env);
+
+    //
+    // Decrement the refcount of "tc".
+    //
+    // The earlier AddRef is needed since Any::replace() releases
+    // the typecode inside the Any.  Without the dup, the reference
+    // count can go to zero, and the typecode would then be deleted.
+    //
+    // This Release ensures that the reference count is correct so
+    // the typecode can be deleted some other time.
+    //
+    tc->Release ();
+
+    //
+    // Then just unmarshal the value.
+    //
+    (void) CDR::decoder (tc, value, 0, _incoming, env);
+  }
+
+  //
+  // If any data is left over, it'd be context values ... else error.
+  // We don't support context values, so it's always an error.
+  //
+  if (_incoming->bytes_remaining () != 0) {
+    dmsg1 ("params(), %d bytes remaining (error)", 
+	   _incoming->bytes_remaining ());
+    env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+  }
 }
 
 
@@ -178,14 +178,14 @@ IIOP_ServerRequest::result (
     CORBA_Environment		&env
 )
 {
-    env.clear ();
+  env.clear ();
 
-    if (!_params || _retval || _exception)
-	env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
-    else
-	_retval = value;
+  if (!_params || _retval || _exception)
+    env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+  else
+    _retval = value;
     
-    // XXX send the message now!
+  // XXX send the message now!
 }
 
 
@@ -200,15 +200,15 @@ IIOP_ServerRequest::exception (
     CORBA_Environment		&env
 )
 {
-    if (!_params || _retval || _exception)
-	env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
-    else {
-	env.clear ();
-	_exception = value;
-	_ex_type = type;
-    }
+  if (!_params || _retval || _exception)
+    env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+  else {
+    env.clear ();
+    _exception = value;
+    _ex_type = type;
+  }
 
-    // XXX send the message now!
+  // XXX send the message now!
 }
 
 
@@ -219,36 +219,35 @@ CORBA_String
 __stdcall
 IIOP_ServerRequest::op_name ()
 {
-    return _opname;
+  return _opname;
 }
 
 CORBA_Object_ptr
 __stdcall
 IIOP_ServerRequest::target ()
 {
-    // XXX implement me!!  Code from TCP_OA exists ...
-    return 0;
+  // XXX implement me!!  Code from TCP_OA exists ...
+  return 0;
 }
 
 CORBA_Principal_ptr
 __stdcall
 IIOP_ServerRequest::caller ()
 {
-    // XXX ... return client's principal
-    return 0;
+  // XXX ... return client's principal
+  return 0;
 }
 
 CORBA_ORB_ptr
 __stdcall
 IIOP_ServerRequest::orb ()
 {
-    return _orb;
+  return _orb;
 }
 
 CORBA_BOA_ptr
 __stdcall
 IIOP_ServerRequest::oa ()
 {
-    return _boa;
+  return _boa;
 }
-

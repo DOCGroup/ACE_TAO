@@ -14,44 +14,45 @@
 #if !defined(ACE_ROA_TYPECODE_H)
 #  define ACE_ROA_TYPECODE_H
 
-enum CORBA_TCKind {
-    tk_null		= 0,
-    tk_void		= 1,
-    tk_short		= 2,
-    tk_long		= 3,
-    tk_ushort		= 4,
-    tk_ulong		= 5,
-    tk_float		= 6,
-    tk_double		= 7,
-    tk_boolean		= 8,
-    tk_char		= 9,
-    tk_octet		= 10,
-    tk_any		= 11,
-    tk_TypeCode		= 12,
-    tk_Principal	= 13,
-    tk_objref		= 14,
-    tk_struct		= 15,
-    tk_union		= 16,
-    tk_enum		= 17,
-    tk_string		= 18,
-    tk_sequence		= 19,
-    tk_array		= 20,
-    tk_alias		= 21,		// 94-11-7
-    tk_except		= 22,		// 94-11-7
+enum CORBA_TCKind 
+{
+  tk_null		= 0,
+  tk_void		= 1,
+  tk_short		= 2,
+  tk_long		= 3,
+  tk_ushort		= 4,
+  tk_ulong		= 5,
+  tk_float		= 6,
+  tk_double		= 7,
+  tk_boolean		= 8,
+  tk_char		= 9,
+  tk_octet		= 10,
+  tk_any		= 11,
+  tk_TypeCode		= 12,
+  tk_Principal	= 13,
+  tk_objref		= 14,
+  tk_struct		= 15,
+  tk_union		= 16,
+  tk_enum		= 17,
+  tk_string		= 18,
+  tk_sequence		= 19,
+  tk_array		= 20,
+  tk_alias		= 21,		// 94-11-7
+  tk_except		= 22,		// 94-11-7
 
-    // these five are OMG-IDL data type extensions
-    tk_longlong		= 23,		// 94-9-32 Appendix A (+ 2)
-    tk_ulonglong	= 24,		// 94-9-32 Appendix A (+ 2)
-    tk_longdouble	= 25,		// 94-9-32 Appendix A (+ 2)
-    tk_wchar		= 26,		// 94-9-32 Appendix A (+ 2)
-    tk_wstring		= 27,		// 94-9-32 Appendix A (+ 2)
+  // these five are OMG-IDL data type extensions
+  tk_longlong		= 23,		// 94-9-32 Appendix A (+ 2)
+  tk_ulonglong	= 24,		// 94-9-32 Appendix A (+ 2)
+  tk_longdouble	= 25,		// 94-9-32 Appendix A (+ 2)
+  tk_wchar		= 26,		// 94-9-32 Appendix A (+ 2)
+  tk_wstring		= 27,		// 94-9-32 Appendix A (+ 2)
 
-    //
-    // This symbol is not defined by CORBA 2.0.  It's used to speed up
-    // dispatch based on TCKind values, and lets many important ones
-    // just be table lookups.  It must always be the last enum value!!
-    //
-    TC_KIND_COUNT
+  //
+  // This symbol is not defined by CORBA 2.0.  It's used to speed up
+  // dispatch based on TCKind values, and lets many important ones
+  // just be table lookups.  It must always be the last enum value!!
+  //
+  TC_KIND_COUNT
 };
 
 
@@ -59,11 +60,12 @@ enum CORBA_TCKind {
 // Two "user exceptions" are defined for manipulating TypeCodes.
 //
 extern CORBA_TypeCode_ptr	_tc_CORBA_Bounds;
-class CORBA_Bounds : public CORBA_UserException {
-  public:
-			CORBA_Bounds (
+class CORBA_Bounds : public CORBA_UserException 
+{
+public:
+  CORBA_Bounds (
 			) : CORBA_UserException (_tc_CORBA_Bounds)
-			{}
+  {}
 };
 
 extern CORBA_TypeCode_ptr	_tc_CORBA_BadKind;

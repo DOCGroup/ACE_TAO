@@ -7,8 +7,8 @@
 // CORBA C/C++/COM mapping for Win32
 //
 
-#ifndef _CORBACOM_HH
-#define _CORBACOM_HH
+#if !defined (TAO_CORBACOM_H)
+#define TAO_CORBACOM_H
 
 #include <objbase.h>		// Win32 name for "compobj.h"
 
@@ -102,17 +102,17 @@ void			CORBA_string_free (CORBA_Char *const);
 class CORBA_String_var
 {
 public:
-  CORBA_String_var();
-  CORBA_String_var(char *p);
-  CORBA_String_var(const char *p);
-  CORBA_String_var(const CORBA_String_var &s);
-  ~CORBA_String_var();
+  CORBA_String_var (void);
+  CORBA_String_var (char *p);
+  CORBA_String_var (const char *p);
+  CORBA_String_var (const CORBA_String_var &s);
+  ~CORBA_String_var (void);
 
-  CORBA_String_var &operator=(char *p);
-  CORBA_String_var &operator=(const char *p);
-  CORBA_String_var &operator=(const CORBA_String_var &s);
-  operator char*() { return ptr_; }
-  operator const char*() const {return ptr_; };
+  CORBA_String_var &operator= (char *p);
+  CORBA_String_var &operator= (const char *p);
+  CORBA_String_var &operator= (const CORBA_String_var &s);
+  operator char* () { return ptr_; }
+  operator const char* () const {return ptr_; };
   char &operator[] (CORBA_ULong index);
   char operator[] (CORBA_ULong index) const;
 private:
@@ -135,4 +135,4 @@ CORBA_WString		CORBA_wstring_alloc (CORBA_ULong len);
 CORBA_WString		CORBA_wstring_copy (const CORBA_WChar *const);
 void			CORBA_wstring_free (CORBA_WChar *const);
 
-#endif
+#endif /* TAO_CORBA_COM_H */
