@@ -28,7 +28,7 @@ ftruncate (ACE_HANDLE handle, long len)
   fl.l_start = len;
   fl.l_type = F_WRLCK;
 
-  return ACE_OS::fcntl (handle, F_FREESP, ACE_reinterpret_cast (long, &fl));
+  return ACE_OS::fcntl (handle, F_FREESP, reinterpret_cast <long> (&fl));
 }
 #endif /* ACE_NEEDS_FTRUNCATE */
 
@@ -136,39 +136,27 @@ int
 ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execl");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
   // ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
-#endif /* ACE_WIN32 */
 }
 
 int
 ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execle");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
   //  ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
-#endif /* ACE_WIN32 */
 }
 
 int
 ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execlp");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
   //  ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
-#endif /* ACE_WIN32 */
 }
 
 pid_t
@@ -409,7 +397,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 
   BOOL result = ::ReadFile (handle,
                             buf,
-                            ACE_static_cast (DWORD, nbytes),
+                            static_cast <DWORD> (nbytes),
                             &bytes_read,
                             &overlapped);
 
@@ -534,7 +522,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
   BOOL result = ::WriteFile (handle,
                              buf,
-                             ACE_static_cast (DWORD, nbytes),
+                             static_cast <DWORD> (nbytes),
                              &bytes_written,
                              &overlapped);
 
