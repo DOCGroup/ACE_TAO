@@ -617,6 +617,11 @@ DRV_parse_args (long ac, char **av)
                   idl_global->exception_support (!option);
                   i++;
                 }
+              else if (av[i][2] == 'l')
+                {
+                  // optimized typecode support
+                  idl_global->gen_locality_constraint (1);
+                }
               else if (av[i][2] == 't')
                 {
                   // optimized typecode support
