@@ -87,7 +87,7 @@ ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
 int \
 ace_main_i
 
-#   elif !defined (ACE_WINCE)
+#   elif !defined (ACE_HAS_WINCE)
 
 #     if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
 class ACE_Export ACE_Main_Base
@@ -154,10 +154,6 @@ public:
 #     if defined (ACE_TMAIN)  // Use WinMain on CE; others give warning/error.
 #       undef ACE_TMAIN
 #     endif  // ACE_TMAIN
-
-// CE only gets a command line string;  no argv. So we need to convert it
-// when the main entrypoint expects argc/argv. ACE_ARGV supports this.
-#     include "ace/ARGV.h"
 
 // Support for ACE_TMAIN, which is a recommended way. It would be nice if
 // CE had CommandLineToArgvW()... but it's only on NT3.5 and up.
