@@ -1,3 +1,18 @@
+Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (svc): The following
+	  loop
+
+	    while ((result = this->handle_input ()) > 0)
+	      continue;
+  
+          causes server thread to leave its execution loop, because handle_input()
+	  always returns 0 or -1.  This should be replaced with
+  
+            while ((result = this->handle_input ()) == 0)
+  
+          Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+
 Sun Dec 05 21:54:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Dump.cpp (ACE_ODB ctor): initialize current_size_

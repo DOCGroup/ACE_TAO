@@ -347,7 +347,7 @@ ACE_Thr_Server_Logging_Handler<LMR>::svc (void)
 
   // Loop until the client terminates the connection or an error occurs.
 
-  while ((result = this->handle_input ()) > 0)
+  while ((result = this->handle_input ()) == 0)
     continue;
 
   return result;
