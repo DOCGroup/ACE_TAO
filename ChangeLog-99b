@@ -1,3 +1,9 @@
+Tue Oct 26 14:56:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/FlReactor.cpp (reset_timer_interval): Fixed a compile error
+	  with Sun_Egcs. Thanks to Thomas Groth <groth.th@stn-atlas.de>
+	  for reporting this problem & also for giving a fix. 
+
 Sat Oct 23 19:11:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ACE version 5.0.7 released.
