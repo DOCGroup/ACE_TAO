@@ -11,18 +11,13 @@
  *          CIAO_Event.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
 //#define CIAO_HAS_IMPORT_KEYWORD
 #include "CIAO_Base.pidl"
 
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typePrefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
-
 module Components
 {
+  typeprefix Components "omg.org";
+
   abstract valuetype EventBase {};
 
   interface EventConsumerBase

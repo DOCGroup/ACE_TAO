@@ -12,27 +12,22 @@
  *          CIAO_Base.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
 //#define CIAO_HAS_IMPORT_KEYWORD
 
 #if defined (CIAO_HAS_IMPORT_KEYWORD)
 import ::CORBA;
 #else
 #include "CORBA.pidl"
-#endif /* CIAO_HAS_IMPORT_KEYWORD)
+#endif /* CIAO_HAS_IMPORT_KEYWORD */
 
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typePrefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
 
 module Components
 {
   /**
    * @@ Commented out temporarily for lack of typePrefix support.
    */
-  //  typePrefix Components "omg.org"
+  typeprefix Components "omg.org";
+
   typedef string FeatureName;
   typedef sequence<FeatureName> NameList;
 

@@ -11,23 +11,18 @@
  *          CIAO_Container.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
 //#define CIAO_HAS_IMPORT_KEYWORD
 
 #include "CIAO_Component.pidl"
 #include <SecurityLevel2.idl>
 #include "CIAO_Transaction.pidl"
 
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typeprefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
-
 // *************** Basic Container interfaces ***************
 
 module Components
 {
+  typeprefix Components "omg.org";
+
   typedef SecurityLevel2::Credentials Principal;
 
   local interface CCMContext

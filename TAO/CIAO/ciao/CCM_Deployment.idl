@@ -11,21 +11,16 @@
  *          CIAO_Deployment.pidl
  */
 
-//#define CIAO_HAS_TYPEPREFIX_KEYWORD
 //#define CIAO_HAS_IMPORT_KEYWORD
 
 #include "CIAO_Component.pidl"
 
-#if defined (CIAO_HAS_TYPEPREFIX_KEYWORD)
-typeprefix Components "omg.org"
-#else
-#pragma prefix "omg.org"
-#endif /* CIAO_HAS_TYPEPREFIX */
-
-  // *************** Packaging and Deployment ***************
+// *************** Packaging and Deployment ***************
 
 module Components
 {
+  typeprefix Components "omg.org";
+
   module Deployment
   {
     typedef string UUID;
