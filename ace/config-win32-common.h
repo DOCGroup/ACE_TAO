@@ -87,14 +87,9 @@
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
 #define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
-#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
-#if defined (__BORLANDC__)
-#define ACE_IMPORT_SINGLETON_DECLARATION(T) template class __declspec (dllimport) T
-#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllimport) SINGLETON_TYPE <CLASS, LOCK>;
-#else /* __BORLANDC__ */
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
+#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
-#endif /* __BORLANDC__ */
 #endif /* !__MINGW32__ */
 
 // Define ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not*
@@ -511,7 +506,6 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_LACKS_STRUCT_DIR
-#define ACE_LACKS_MKSTEMP
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

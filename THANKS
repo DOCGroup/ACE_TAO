@@ -663,7 +663,7 @@ Gildo Medeiros Junior <gildo@siemens.com.br>
 Brian Peterson <bpeterson@globalmt.com>
 Fabrice Podlyski <podlyski@clrhp04.in2p3.fr>
 Darren DeRidder <darren.deridder@bridgewatersys.com>
-John Tucker <johnny_tucker@yahoo.com>
+John Tucker <jtucker@infoglide.com>
 Oleg Orlov <orlov@diasoft.ru>
 Timothy Canham <Timothy.Canham@jpl.nasa.gov>
 Randy Heiland <heiland@ncsa.uiuc.edu>
@@ -1237,6 +1237,7 @@ Corey Trager <corey.trager@tradingtechnologies.com>
 Kirat Singh <kirat.singh@gs.com>
 Oleg Pavliv <oleg_pavliv@yahoo.com>
 Frederick Niemi <fniemi@cisco.com>
+Vsevolod Novikov <novikov@ci.nnov.ru>
 Andrew Munro <Andrew.Munro@Australia.Boeing.com>
 Nicolas Huynh <HUYNH_Nicolas@cena.fr>
 Kevin Burge <kcburge@systemware-inc.com>
@@ -1274,18 +1275,8 @@ Rich Newman <RNewman@directv.com>
 Kelly F. Hickel <kfh@mqsoftware.com>
 David Trusty <david.trusty@westwave.com>
 Burkhard Neppert <b.neppert@dr-staedtler.de>
-Crawford Lodge <crawford.lodge@xmlglobal.com>
+Crawford Lodge <crawford.lodge@xmlglobal.com> 
 Scott Gaa <scott_a_gaa@md.northgrum.com>
-Jenny Kowald <jkowald@oz.agile.tv>
-Oren Zeev-Ben-Mordehai <oren@phonedo.com>
-Holger P. Krekel <krekel@merlinux.de>
-Glenn Popelka <gpp@gpopelka.com>
-Marco Kranawetter <Marco.Kranawetter@icn.siemens.de>
-Tibor Kiss <tkiss@mindmaker.hu>
-Robert Davidson <robert@rdavidson.freeserve.co.uk>
-Peter Crowther <peter.crowther@networkinference.com>
-Mouna Seri <seri@crhc.uiuc.edu>
-Vladimir Chovanec <Vladimir.CHOVANEC@asset.sk>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

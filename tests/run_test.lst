@@ -49,7 +49,6 @@ Log_Msg_Test
 Logging_Strategy_Test: !STATIC !ST
 Map_Manager_Test
 Map_Test
-Max_Default_Port_Test: !ST
 MEM_Stream_Test: !Linux
 Mem_Map_Test: !chorus !Unicos
 Message_Block_Test: !chorus
@@ -98,11 +97,11 @@ Task_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Test
-Thread_Pool_Reactor_Resume_Test: !ST
+Thread_Pool_Reactor_Resume_Test
 Thread_Pool_Test: !LynxOS
 Timer_Queue_Test
 Timeprobe_Test
-Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
+Time_Service_Test: ALL !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
 Tokens_Test: ALL MSVC !DISABLED TOKEN !chorus !Unicos
 TSS_Test

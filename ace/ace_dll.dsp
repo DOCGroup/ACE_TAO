@@ -290,10 +290,6 @@ SOURCE=.\Dirent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Dirent_Selector.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL.cpp
 # End Source File
 # Begin Source File
@@ -1223,10 +1219,6 @@ SOURCE=.\DEV_IO.h
 # Begin Source File
 
 SOURCE=.\Dirent.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dirent_Selector.h
 # End Source File
 # Begin Source File
 
@@ -2311,10 +2303,6 @@ SOURCE=.\DEV_IO.i
 # Begin Source File
 
 SOURCE=.\Dirent.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dirent_Selector.inl
 # End Source File
 # Begin Source File
 

@@ -24,9 +24,6 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
-ifeq (,$(buildbits))
-  buildbits = 32
-endif
 
 # First, find out which compiler we're building with. The settings we
 # use for compiling, as well as how to build shared libraries, depend on
@@ -60,7 +57,6 @@ SOEXT       = a
 # aix_build turns on the funky shared library building code in
 # rules.lib.GNU
 aix_build = 1
-SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
 
 ifeq ($(threads),1)
 # Note - the _r form of the compiler command turns on -qthreads and the
@@ -77,7 +73,7 @@ endif
 
 ARFLAGS	    = ruv
 AR	    = ar
-LD          = $(ACE_ROOT)/bin/aix_shr $(CXX)
+LD          = $(CXX)
 RANLIB	    = ranlib
 TEMPINCDIR  = tempinc
 
@@ -97,14 +93,9 @@ ifeq ($(XLCVERSION),0x0306)
  rtti = 0
 else
  ifeq ($(XLCVERSION),0x0500)
-  CCFLAGS    += -qflag=w:w -qsuppress=1540-1102:1500-010
+  CCFLAGS    += -qflag=w:w
   DLD         = $(CXX) -qmkshrobj
   SOFLAGS     = $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
-  ifeq ($(buildbits),64)
-    DLD     += -q64
-    CCFLAGS += -q64
-    ARFLAGS := -X64 $(ARFLAGS)
-  endif
  else
   CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
  endif

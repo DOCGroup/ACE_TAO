@@ -99,11 +99,6 @@ TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/valinor_Unicode/
 WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?valinor_Unicode
 
-[Debian_GCC_3.0]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/valinor_GCC_3.0/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?valinor_GCC_3.0
-
 [RedHat_NoInline]
 TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_NoInline/
@@ -195,11 +190,6 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
 
-[RedHat_IA64_Linux]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/yoda_Full
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?yoda_Full
-
 [Debian_NoInterceptors]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
@@ -220,12 +210,3 @@ TYPE = TIMEONLY
 LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
 WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
 
-[AIX_VAC]
-TYPE = TIMEONLY
-LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/tripoli_AIX_VAC/
-WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?tripoli_AIX_VAC
-
-[Solaris8_FORTE_UP_1]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/chipper_SOLARIS8_FORTE_UPDATE1/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?chipper_SOLARIS8_FORTE_UPDATE1

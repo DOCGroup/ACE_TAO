@@ -273,7 +273,7 @@ Options::oneway_client_test (void *)
   cli_stream.close ();
 
   delete [] request;
-  return ACE_reinterpret_cast (void *, result);
+  return (void *) result;
 }
 
 // Static function entry point to the twoway client service.
@@ -364,7 +364,7 @@ Options::twoway_client_test (void *)
   cli_stream.close ();
 
   delete [] request;
-  return ACE_reinterpret_cast (void *, result);
+  return (void *) result;
 }
 
 ACE_THR_FUNC

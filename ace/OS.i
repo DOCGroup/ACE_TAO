@@ -545,14 +545,6 @@ ACE_OS::mktemp (ACE_TCHAR *s)
 }
 #endif /* !ACE_LACKS_MKTEMP */
 
-#if !defined (ACE_LACKS_MKSTEMP)
-ACE_INLINE ACE_HANDLE
-ACE_OS::mkstemp (ACE_TCHAR *s)
-{
-  return ::mkstemp (s);
-}
-#endif /* !ACE_LACKS_MKSTEMP */
-
 ACE_INLINE int
 ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 {
@@ -5895,7 +5887,7 @@ ACE_OS::gethostbyname2 (const char *name, int family)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_IP6)
+# elif defined (ACE_HAS_IPV6)
 #   if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name),
                                          family),
@@ -7209,7 +7201,7 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_pton");
 
-#if defined (ACE_HAS_IP6)
+#if defined (ACE_HAS_IPV6)
   ACE_OSCALL_RETURN (::inet_pton (family, strptr, addrptr), int, -1);
 #else
   if (family == AF_INET)
@@ -7226,7 +7218,7 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
     }
 
   ACE_NOTSUP_RETURN(-1);
-#endif  /* ACE_HAS_IP6 */
+#endif  /* ACE_HAS_IPV6 */
 }
 
 ACE_INLINE const char *
@@ -7234,7 +7226,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntop");
 
-#if defined (ACE_HAS_IP6)
+#if defined (ACE_HAS_IPV6)
   ACE_OSCALL_RETURN (::inet_ntop (family, addrptr, strptr, len), const char *, 0);
 #else
   const u_char *p =
@@ -7262,7 +7254,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
     }
 
   ACE_NOTSUP_RETURN(0);
-#endif /* ACE_HAS_IP6 */
+#endif /* ACE_HAS_IPV6 */
 }
 
 ACE_INLINE int
@@ -7506,7 +7498,9 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   prio = param.sched_priority;
   return result;
 #elif defined (ACE_HAS_THREADS)
-# if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# if defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
+# elif (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
@@ -7539,8 +7533,6 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   prio = param.sched_priority;
   return result;
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-# elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   prio = ::GetThreadPriority (thr_id);
   if (prio == THREAD_PRIORITY_ERROR_RETURN)
@@ -8373,7 +8365,11 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
                                        (thr_id, policy, &param),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
-# if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# if defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
+                                       ace_result_),
+                     int, -1);
+# elif (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
@@ -8401,10 +8397,6 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
                                        result),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-# elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
-                                       ace_result_),
-                     int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio),
                                           ace_result_),

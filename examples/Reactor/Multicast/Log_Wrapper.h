@@ -25,26 +25,26 @@ public:
   ~Log_Wrapper (void);
 
   // = Types of logging messages.
-  enum Log_Priority
+  enum ACE_Log_Priority
   {
-    LM_MESSAGE,
-    LM_DEBUG,
-    LM_WARNING,
-    LM_ERROR,
-    LM_EMERG
+    LOG_MESSAGE,
+    LOG_DEBUG,
+    LOG_WARNING,
+    LOG_ERROR,
+    LOG_EMERG
   };
 
   int open (const int port, const char* mcast_addr);
   // get an object reference from an orbixd
 
-  int log_message (Log_Priority type, char *message);
+  int log_message (ACE_Log_Priority type, char *message);
   // send a string to the logger
 
   // = Format of the logging record.
-  struct Log_Record
+  struct ACE_Log_Record
   {
     u_long sequence_number;
-    Log_Priority type;
+    ACE_Log_Priority type;
     long  host;
     long  time;
     long  app_id;
@@ -58,7 +58,7 @@ private:
   u_long sequence_number_;
   // Keep track of the sequence.
 
-  Log_Record log_msg_;
+  ACE_Log_Record log_msg_;
   // One record used for many log messages.
 
   ACE_SOCK_Dgram_Mcast logger_;

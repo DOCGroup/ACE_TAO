@@ -30,7 +30,7 @@
 #define ACE_HAS_GPERF
 //#define ACE_HAS_POSIX_SEM
 
-//#define ACE_HAS_SVR4_TLI
+#define ACE_HAS_SVR4_TLI
 
 #define ACE_HAS_MEMCHR
 
@@ -46,8 +46,7 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-// Platform/compiler has macros for sig{empty,fill,add,del}set (e.g.,
-// SCO and FreeBSD)  
+//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
 #define ACE_HAS_SIG_MACROS
 
 //#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS

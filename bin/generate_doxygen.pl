@@ -22,19 +22,18 @@ $dot_path = '/usr/local/bin';
              'ace_rmcast',
              'ace_ssl',
              'ace_qos');
-@TAO_DOCS = ('tao'
-             ,'tao_portableserver'
-             ,'tao_dynamicany'
-             ,'tao_dynamicinterface'
-             ,'tao_iormanip'
-             ,'tao_iortable'
-             ,'tao_esf'
-             ,'tao_rtevent'
-             ,'tao_implrepo'
-             ,'tao_strategies'
-             ,'tao_smartproxies'
-             ,'tao_av'
-            );
+@TAO_DOCS = ('tao',
+             'tao_portableserver',
+             'tao_dynamicany',
+             'tao_dynamicinterface',
+             'tao_iormanip',
+             'tao_iortable',
+             'tao_esf',
+             'tao_rtevent',
+             'tao_implrepo',
+             'tao_strategies',
+	     'tao_smartproxies',
+	     'tao_av');
 
 # Modify defaults using the command line arguments
 &parse_args ();

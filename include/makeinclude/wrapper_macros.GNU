@@ -175,10 +175,6 @@ xt_reactor = 0
 #### flag to Include/Preclude the RAPI support in ACE
 rapi = 0
 
-ifndef PACE_ROOT
-  PACE_ROOT = $(ACE_ROOT)/PACE
-endif # PACE_ROOT
-
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 #----------------------------------------------------------------------------
@@ -511,13 +507,9 @@ ifneq ($(pace),)
   ACELIB = -lACE
   ifeq ($(inline),0)
     ACELIB += -lPACE
-    LDFLAGS += -L$(PACE_ROOT)/pace/
+    LDFLAGS += -L$(ACE_ROOT)/PACE/pace/
   endif # inline == 0
-  ifdef VXWORKS
-    ACELIB += -lPACE
-    LDFLAGS += -L$(PACE_ROOT)/pace/
-  endif # inline == 0
-  include $(PACE_ROOT)/include/makeinclude/rules.common.GNU
+  include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
 endif # pace
 
 ifeq ($(profile),0)

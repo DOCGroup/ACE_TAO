@@ -34,6 +34,7 @@ BIN =   Aio_Platform_Test \
         Future_Set_Test \
         Handle_Set_Test \
         High_Res_Timer_Test \
+	INET_Addr_Test \
         OrdMultiSet_Test \
         Hash_Map_Manager_Test \
         Hash_Map_Bucket_Iterator_Test \
@@ -44,7 +45,6 @@ BIN =   Aio_Platform_Test \
         Malloc_Test \
         Map_Test \
         Map_Manager_Test \
-        Max_Default_Port_Test \
 	MEM_Stream_Test \
         Mem_Map_Test \
         MM_Shared_Memory_Test \

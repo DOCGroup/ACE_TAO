@@ -271,11 +271,6 @@ typedef long      id_t;
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
-// Used for the UNIX syslog logging interface to ACE_Log_Msg.
-# ifndef ACE_DEFAULT_SYSLOG_FACILITY
-# define ACE_DEFAULT_SYSLOG_FACILITY LOG_USER
-# endif /* ACE_DEFAULT_SYSLOG_FACILITY */
-
 # if !defined (ACE_DEFAULT_LOGGER_KEY)
 
 #     if defined (ACE_HAS_STREAM_PIPES)
@@ -336,14 +331,8 @@ typedef long      id_t;
 # endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
-# if defined (FD_SETSIZE)
-int const ACE_FD_SETSIZE = FD_SETSIZE;
-# else
-#   define ACE_FD_SETSIZE FD_SETSIZE
-# endif /* ACE_FD_SETSIZE */
-
 # if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
+#   define ACE_DEFAULT_SELECT_REACTOR_SIZE FD_SETSIZE
 # endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
 # if !defined (ACE_DEFAULT_TIMEPROBE_TABLE_SIZE)
@@ -4170,6 +4159,14 @@ typedef fd_set ACE_FD_SET_TYPE;
 #   define INET6_ADDRSTRLEN 46
 # endif /* INET6_ADDRSTRLEN */
 
+#if defined (ACE_HAS_IPV6)
+#define ACE_ADDRESS_FAMILY_INET AF_INET6
+#define ACE_PROTOCOL_FAMILY_INET PF_INET6
+#else
+#define ACE_ADDRESS_FAMILY_INET AF_INET
+#define ACE_PROTOCOL_FAMILY_INET PF_INET
+#endif
+
 # if defined (ACE_LACKS_SIGSET)
 #    if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 typedef pace_sigset_t sigset_t;
@@ -4816,10 +4813,6 @@ typedef double ACE_timer_t;
 # else
     typedef int ACE_Rusage;
 # endif /* ACE_HAS_PRUSAGE_T */
-
-# if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
-# include /**/ <syslog.h>
-# endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
 #if defined (ACE_HAS_SYS_FILIO_H)
 # include /**/ <sys/filio.h>
@@ -6082,7 +6075,6 @@ public:
   static int mkfifo (const ACE_TCHAR *file,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
   static ACE_TCHAR *mktemp (ACE_TCHAR *t);
-  static ACE_HANDLE mkstemp (ACE_TCHAR *t);
   static ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
   static int rename (const ACE_TCHAR *old_name,
                      const ACE_TCHAR *new_name,
@@ -6655,7 +6647,7 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
-
+  
 
 private:
 
@@ -6705,22 +6697,22 @@ private:
 
   static int cond_timedwait_i (ACE_cond_t *cv,
                        ACE_mutex_t *m,
-                       ACE_Time_Value *);
-
+                       ACE_Time_Value *); 
+  
   static u_int alarm_i (u_int secs);
 
   static u_int ualarm_i (u_int usecs, u_int interval = 0);
-
+  
   static u_int ualarm_i (const ACE_Time_Value &tv,
                          const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
-
+  
   static int sleep_i (u_int seconds);
 
   static int sleep_i (const ACE_Time_Value &tv);
-
+  
   static int nanosleep_i (const struct timespec *requested,
                           struct timespec *remaining = 0);
-
+  
   static int select_i (int width,
                        fd_set *rfds,
                        fd_set *wfds,
@@ -6732,11 +6724,11 @@ private:
                        fd_set *wfds,
                        fd_set *efds,
                        const ACE_Time_Value &tv);
-
+  
   static int poll_i (struct pollfd *pollfds,
                      u_long len,
                      const ACE_Time_Value *tv = 0);
-
+    
   static int poll_i (struct pollfd *pollfds,
                      u_long len,
                      const ACE_Time_Value &tv);

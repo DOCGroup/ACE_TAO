@@ -39,7 +39,7 @@ public:
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
   ACE_SOCK_Dgram (const ACE_Addr &local,
-                  int protocol_family = PF_INET,
+                  int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                   int protocol = 0,
                   int reuse_addr = 0);
 
@@ -59,7 +59,7 @@ public:
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
   int open (const ACE_Addr &local,
-            int protocol_family = PF_INET,
+            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0);
 
@@ -142,7 +142,7 @@ public:
    * until action is possible, else will wait until the relative time
    * specified in *<timeout> elapses).  If <send> times out a -1 is
    * returned with <errno == ETIME>.  If it succeeds the number of
-   * bytes sent is returned.
+   * bytes received is returned.
    */
   ssize_t send (const void *buf,
                 size_t n,

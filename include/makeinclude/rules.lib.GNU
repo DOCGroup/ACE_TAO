@@ -126,7 +126,6 @@ $(VSHLIB): shr.o
 ifneq (,$(RANLIB))
 	-$(RANLIB) $@
 endif # RANLIB
-	$(RM) shr.o 
 
 shr.o: $(VSHOBJS1)
 else
@@ -162,9 +161,9 @@ ifeq (1,$(ace_lib_prelink))
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $(VSHOBJS1) $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
 ifeq ($(split),1)
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+	$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 else
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+	$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 endif
 endif
 	-chmod a+rx $@

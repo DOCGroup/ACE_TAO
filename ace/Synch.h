@@ -272,10 +272,10 @@ protected:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.
@@ -405,11 +405,10 @@ protected:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
-
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_RW_Mutex &);
@@ -528,10 +527,10 @@ public:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.
@@ -805,10 +804,10 @@ protected:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent copying.
@@ -1013,10 +1012,10 @@ public:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.
@@ -1198,10 +1197,10 @@ protected:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.
@@ -1321,10 +1320,10 @@ protected:
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the
-  /// destructor.  This flag isn't protected by a lock, so make sure
-  /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
   int removed_;
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
 
 private:
   // = Prevent assignment and initialization.

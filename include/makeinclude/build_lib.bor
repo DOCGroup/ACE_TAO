@@ -32,10 +32,9 @@ all: $(TARGET)
 !ifdef TARGET
 $(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
-	-@del $(TARGET) 2>NUL
 	$(AR) $(LIB_LFLAGS) $(TARGET) @&&!
-+ $(**: = &^
-+ )
+	+-$(**:	= &^
+	+-)
 !
 !endif
 

@@ -151,6 +151,7 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::open");
+
   if (ACE_SOCK::open (SOCK_DGRAM,
                       protocol_family,
                       protocol,

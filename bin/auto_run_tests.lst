@@ -81,7 +81,6 @@ TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 # BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
-TAO/tests/LongUpcalls/run_ami_test.pl: !MINIMUM
 TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
@@ -90,16 +89,14 @@ TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_timeout_reactive.pl: !MINIMUM
 TAO/tests/Big_Oneways/run_test.pl: !ST
 TAO/tests/Big_Twoways/run_test.pl: !ST
-TAO/tests/Big_Reply/run_test.pl: !ST
 TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM
-TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST
 TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Queued_Message_Test/run_test.pl
 
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1
-TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM
+TAO/tests/Exposed_Policies/run_test.pl
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
@@ -127,15 +124,15 @@ TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
 
-TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
-#TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
-#TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
-#TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1

@@ -54,7 +54,7 @@ public:
                       ACE_Time_Value *timeout = 0,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
-                      int flags = O_RDWR | O_CREAT | O_EXCL,
+                      int flags = O_RDWR | O_CREAT,
                       int perms = ACE_DEFAULT_FILE_PERMS);
 
   /**
@@ -78,7 +78,7 @@ public:
                ACE_Time_Value *timeout = 0,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
-               int flags = O_RDWR | O_CREAT | O_EXCL,
+               int flags = O_RDWR | O_CREAT,
                int perms = ACE_DEFAULT_FILE_PERMS);
 
   /// Resets any event associations on this handle

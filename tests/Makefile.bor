@@ -40,8 +40,7 @@ NAMES = \
 	Malloc_Test \
 	Map_Manager_Test \
 	Map_Test \
-        Max_Default_Port_Test \
-        MEM_Stream_Test \
+	MEM_Stream_Test \
 	Mem_Map_Test \
 	Message_Block_Test \
 	Message_Queue_Notifications_Test \
@@ -89,7 +88,6 @@ NAMES = \
 	Thread_Manager_Test \
 	Thread_Mutex_Test \
 	Thread_Pool_Reactor_Test \
-	Thread_Pool_Reactor_Resume_Test \
 	Thread_Pool_Test \
 	Time_Service_Test \
 	Time_Value_Test \

@@ -148,6 +148,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
+
   if (this->shared_open (new_stream,
                          protocol_family,
                          protocol,
@@ -183,6 +184,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
+
   if (this->shared_open (new_stream,
                          protocol_family,
                          protocol,

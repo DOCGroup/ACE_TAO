@@ -138,10 +138,8 @@ ACE_Token_Handler::send_reply (ACE_UINT32 err)
 ACE_Token_Handler::acquire (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Handler::acquire");
-#if 0
   ACE_DEBUG ((LM_DEBUG, "in acquire for client id = %s\n",
 	     proxy->client_id ()));
-#endif /* 0 */
 
   // @@ add notify in token request reply
   if (proxy->acquire (0, 0, ACE_Synch_Options::asynch) == -1)
@@ -182,10 +180,8 @@ ACE_Token_Handler::try_acquire (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Handler::try_acquire");
 
-#if 0
   ACE_DEBUG ((LM_DEBUG, "in try_acquire for client id = %s\n",
 	     proxy->client_id ()));
-#endif /* 0 */
 
   // @@ add notify in token request reply
   if (proxy->tryacquire () == -1)
@@ -201,11 +197,9 @@ ACE_Token_Handler::try_acquire (ACE_Token_Proxy *proxy)
 ACE_Token_Handler::release (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Handler::release");
-#if 0
   ACE_DEBUG ((LM_DEBUG,
 	      "in release for client id = %s\n",
 	      proxy->client_id ()));
-#endif /* 0 */
 
   if (proxy->release (ACE_Synch_Options::asynch) == -1)
     // oops, it failed
@@ -229,10 +223,8 @@ ACE_Token_Handler::renew (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Handler::renew");
 
-#if 0
   ACE_DEBUG ((LM_DEBUG, "in renew for client id = %s\n",
 	     proxy->client_id ()));
-#endif /* 0 */
 
   if (proxy->renew (token_request_.requeue_position (),
 		    ACE_Synch_Options::asynch) == -1)
@@ -266,10 +258,8 @@ ACE_Token_Handler::renew (ACE_Token_Proxy *proxy)
 ACE_Token_Handler::remove (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_Token_Handler::remove");
-#if 0
   ACE_DEBUG ((LM_DEBUG, "in remove for client id = %s\n",
 	     proxy->client_id ()));
-#endif /* 0 */
   ACE_ERROR ((LM_ERROR, "sorry: ACE_Token_Handler::remove() is not implemented"));
 
   return this->send_reply (ENOTSUP);
@@ -294,10 +284,8 @@ ACE_Token_Handler::handle_timeout (const ACE_Time_Value &,
 
   ACE_Token_Proxy *proxy = (ACE_Token_Proxy *) tp;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG, "in handle_timeout for client id = %s\n",
 	     proxy->client_id ()));
-#endif /* 0 */
 
   // Remove ourselves from the waiter list.
   proxy->release ();
@@ -482,9 +470,7 @@ ACE_Token_Handler::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Token_Handler::handle_input");
 
-#if 0
   ACE_DEBUG ((LM_DEBUG, "****************** in handle_input\n"));
-#endif /* 0 */
 
   if (this->recv_request () == -1)
     return -1;

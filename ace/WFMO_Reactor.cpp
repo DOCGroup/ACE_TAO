@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ace/WFMO_Reactor.h"
 
 #include "ace/Handle_Set.h"
@@ -12,7 +11,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")
-
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
@@ -2349,8 +2347,7 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
 }
 
 int
-ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
-                                                      ACE_Reactor_Mask mask)
+ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::purge_pending_notifications");
 
@@ -2389,30 +2386,19 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
         ACE_reinterpret_cast (ACE_Notification_Buffer *, mb->base ());
 
       // If this is not a Reactor notify (it is for a particular handler),
-      // and it matches the specified handler (or purging all),
-      // and applying the mask would totally eliminate the notification, then
+      // and it matches the specified handler (or purging all), then
       // release it and count the number purged.
-      if ((0 != buffer->eh_) &&
-          (0 == eh || eh == buffer->eh_) &&
-          ACE_BIT_DISABLED (buffer->mask_, ~mask)) // the existing notification mask
-                                                   // is left with nothing when
-                                                   // applying the mask
-      {
-        mb->release ();
-        ++number_purged;
-      }
+      if (0 != buffer->eh_ && (0 == eh || eh == buffer->eh_))
+        {
+          mb->release ();
+          ++number_purged;
+        }
       else
-      {
-        // To preserve it, move it to the local_queue.
-        // But first, if this is not a Reactor notify (it is for a particularhandler),
-        // and it matches the specified handler (or purging all), then
-        // apply the mask
-        if ((0 != buffer->eh_) &&
-            (0 == eh || eh == buffer->eh_))
-          ACE_CLR_BITS(buffer->mask_, mask);
-        if (-1 == local_queue.enqueue_head (mb))
-          return -1;
-      }
+        {
+          // To preserve it, move it to the local_queue.
+          if (-1 == local_queue.enqueue_head (mb))
+            return -1;
+        }
     }
 
   if (this->message_queue_.message_count ())
@@ -2475,20 +2461,11 @@ ACE_WFMO_Reactor::max_notify_iterations (void)
 }
 
 int
-ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
-                                               ACE_Reactor_Mask mask)
+ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::purge_pending_notifications");
-  return this->notify_handler_->purge_pending_notifications (eh, mask);
+  return this->notify_handler_->purge_pending_notifications (eh);
 }
-
-int
-ACE_WFMO_Reactor::resumable_handler (void)
-{
-  ACE_TRACE ("ACE_WFMO_Reactor::resumable_handler");
-  return 0;
-}
-
 
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
