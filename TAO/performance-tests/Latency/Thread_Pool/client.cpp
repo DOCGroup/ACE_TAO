@@ -126,9 +126,9 @@ main (int argc, char *argv[])
       task2.accumulate_and_dump (totals, "Task[2]", gsf);
       task3.accumulate_and_dump (totals, "Task[3]", gsf);
 
-      totals.dump_results ("All Threads", gsf);
+      totals.dump_results ("Total", gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Throughput", gsf,
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                              test_end - test_start,
                                              totals.samples_count ());
 

@@ -179,9 +179,9 @@ main (int argc, char *argv[])
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Deferred Synchronous", gsf);
+      stats.dump_results ("Total", gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Deferred Synchronous", gsf,
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
 

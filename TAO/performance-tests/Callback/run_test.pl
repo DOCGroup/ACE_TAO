@@ -11,8 +11,12 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -i 1000");
+$SV = new PerlACE::Process ("server",
+			    "-o $iorfile");
+
+$CL = new PerlACE::Process ("client",
+			    "-k file://$iorfile "
+			    . " -i 20000");
 
 print STDERR "================ Callback performance test\n";
 
