@@ -95,21 +95,18 @@ main (int argc, char *argv[])
     {
       ACE_START_TEST ("Pipe_Test");
       ACE_INIT_LOG ("Pipe_Test-children");      
-  
-      char *s_argv[4];
-      s_argv[0] = "Pipe_Test" ACE_PLATFORM_EXE_SUFFIX;
-      s_argv[1] = "-c"; // child/slave process
-      if (close_pipe == 0)	
-	s_argv[2] = "-d";
+
+      ACE_Process_Options options;
+      if (close_pipe == 0)
+	options.command_line ("Pipe_Test" ACE_PLATFORM_EXE_SUFFIX " -c -d");
       else
-	s_argv[2] = 0;
-      s_argv[3] = 0;
+	options.command_line ("Pipe_Test" ACE_PLATFORM_EXE_SUFFIX " -c");
       
       for (int i = 0; i < ::iterations; i++)
 	{
 	  ACE_Process server;
 
-	  ACE_ASSERT (server.start (s_argv) != -1);
+	  ACE_ASSERT (server.start (options) != -1);
 
 	  ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 

@@ -96,17 +96,19 @@ main (int argc, char *argv[])
     {
       ACE_START_TEST ("Process_Mutex_Test");
       ACE_INIT_LOG ("Process_Mutex_Test-children");      
-  
+
+      ACE_Process_Options options;
       char *s_argv[6];
       s_argv[0] = "Process_Mutex_Test" ACE_PLATFORM_EXE_SUFFIX;
       s_argv[1] = "-c"; // child/slave process
       s_argv[2] = "-n";
       s_argv[3] = mutex_name;
-      if (release_mutex == 0)	
-	s_argv[4] = "-d";
+      if (release_mutex == 0)
+	options.command_line ("Process_Mutex_Test" ACE_PLATFORM_EXE_SUFFIX
+			      " -c -n %s -d", mutex_name);
       else
-	s_argv[4] = 0;
-      s_argv[5] = 0;
+	options.command_line ("Process_Mutex_Test" ACE_PLATFORM_EXE_SUFFIX
+			      " -c -n %s", mutex_name);
       
       // Spawn ACE_MAX_PROCESSES processes that will contend for the
       // lock.
@@ -115,9 +117,9 @@ main (int argc, char *argv[])
 
       for (i = 0; i < ACE_MAX_PROCESSES; i++)
 	{	  
-	  ACE_ASSERT (servers[i].start (s_argv) != -1);
+	  ACE_ASSERT (servers[i].start (options) != -1);
 	  ACE_DEBUG ((LM_DEBUG, 
-		      "Server forked with pid = %d.\n", 
+		      "Server forked with pid = %d.\n",
 		      servers[i].getpid ()));
 	}
 

@@ -186,25 +186,21 @@ main (int, char *[])
 
   run_test (A,B,R,W);
 
-  // Fork token server.
-  char *s_argv[4];
-
-  s_argv[0] = 
+  const char *cl = 
     ".." ACE_DIRECTORY_SEPARATOR_STR_A
     "netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A
     "servers" ACE_DIRECTORY_SEPARATOR_STR_A
-    "main" ACE_PLATFORM_EXE_SUFFIX;
+    "main" ACE_PLATFORM_EXE_SUFFIX
+    " -f " ACE_PLATFORM "tokens.conf";
 
-  s_argv[1] = "-f";
-  s_argv[2] = ACE_PLATFORM "tokens.conf";
-  s_argv[3] = 0;
+  ACE_Process_Options options;
+  options.command_line (cl);
 
-  ACE_DEBUG ((LM_DEBUG, "Forking %s %s %s.\n",
-	      s_argv[0], s_argv[1], s_argv[2]));
+  ACE_DEBUG ((LM_DEBUG, "Forking %s.\n", cl));
 
   // Start up the token server.
   ACE_Process new_process;
-  if (new_process.start (s_argv) == -1)
+  if (new_process.start (options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p fork failed.\n", "Tokens_Tests.cpp"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", new_process.getpid ()));
