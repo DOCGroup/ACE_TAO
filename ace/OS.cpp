@@ -183,6 +183,64 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
+#if ! defined (ACE_HAS_LONGLONG_T)
+ACE_U_LongLong
+ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll)
+{
+  ACE_U_LongLong ret (lo_, hi_ + ll.hi_);
+
+  const u_long old_lo = ret.lo_;
+  ret.lo_ += ll.lo_;
+  if (ret.lo_ < old_lo) ++ret.hi_; /* carry to ll.hi_ */
+
+  return ret;
+}
+
+ACE_U_LongLong
+ACE_U_LongLong::operator- (const ACE_U_LongLong &ll)
+{
+  ACE_U_LongLong ret (lo_, hi_ - ll.hi_);
+
+  const u_long old_lo = ret.lo_;
+  ret.lo_ -= ll.lo_;
+  if (ret.lo_ > old_lo) --ret.hi_; /* borrow from ll.hi_ */
+
+  return ret;
+}
+
+ACE_U_LongLong &
+ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
+{
+  hi_ += ll.hi_;
+
+  const u_long old_lo = lo_;
+  lo_ += ll.lo_;
+  if (lo_ < old_lo) ++hi_; /* carry to hi_ */
+
+  return *this;
+}
+
+ACE_U_LongLong &
+ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
+{
+  hi_ -= ll.hi_;
+
+  const u_long old_lo = lo_;
+  lo_ -= ll.lo_;
+  if (lo_ > old_lo) --hi_; /* borrow from hi_ */
+
+  return *this;
+}
+
+void
+ACE_U_LongLong::dump (FILE *file)
+{
+  // Assumes 32-bit unsigned long, which has 10 decimal digits.
+  ::fprintf (file, "%lu%010lu", hi_, lo_);
+}
+
+#endif /* ! ACE_HAS_LONGLONG_T */
+
 #if defined (ACE_HAS_PENTIUM) && defined (__GNUC__)
 ACE_hrtime_t 
 ACE_OS::gethrtime (void)
