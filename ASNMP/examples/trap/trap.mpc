@@ -6,6 +6,6 @@ project (asnmp_example_trap) : aceexe {
   libs  += asnmp
   includes += $(ACE_ROOT)/ASNMP
   source_files {
-    trap
+    trap.cpp
   }
 }
