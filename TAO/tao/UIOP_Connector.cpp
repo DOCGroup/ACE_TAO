@@ -186,7 +186,7 @@ TAO_UIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                           __FILE__,
                           __LINE__,
                           uiop_endpoint->rendezvous_point (),
-                          "errno"));
+                          ACE_TEXT ("errno")));
             }
           return -1;
         }
