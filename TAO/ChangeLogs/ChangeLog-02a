@@ -1,3 +1,16 @@
+Mon Jan  3 15:08:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs//LifeCycle_Service/Factory_Trader.cpp:
+	* orbsvcs/tests/Property/client.cpp: KAI needed fixes in these
+	  files to compile clean. There was a need to explicitly use an
+	  unsigned integer to avoid overloading amibiguity. Essentially
+	  the same fix as 'Mon Jan 03 10:55:36 2000  David L. Levine'. 
+
 Mon Jan  3 14:45:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.h:

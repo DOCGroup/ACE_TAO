@@ -174,24 +174,24 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& ACE_TRY_ENV)
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                          ACE_static_cast (const char*, link_name_seq[i])));
+                          ACE_static_cast (const char*, link_name_seq[iu])));
             }
 
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[i], ACE_TRY_ENV);
+            link_if->describe_link (link_name_seq[iu], ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           for (int j = 0; j < NUM_OFFERS; j++)
             {
-              this->props_plotters_[j][4].value <<= link_name_seq[i];
-              this->props_printers_[j][4].value <<= link_name_seq[i];
-              this->props_fs_[j][4].value <<= link_name_seq[i];
+              this->props_plotters_[j][4].value <<= link_name_seq[iu];
+              this->props_printers_[j][4].value <<= link_name_seq[iu];
+              this->props_fs_[j][4].value <<= link_name_seq[iu];
             }
 
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Exporting offers to %s\n",
-                          ACE_static_cast (const char*, link_name_seq[i])));
+                          ACE_static_cast (const char*, link_name_seq[iu])));
             }
 
           this->export_to (link_info->target_reg.in (), ACE_TRY_ENV);

@@ -112,13 +112,13 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& ACE_TRY_ENV
       ACE_TRY
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                      ACE_static_cast (const char*, link_name_seq[i])));
+                      ACE_static_cast (const char*, link_name_seq[iu])));
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[i], ACE_TRY_ENV);
+            link_if->describe_link (link_name_seq[iu], ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
-                      ACE_static_cast (const char*, link_name_seq[i])));
+                      ACE_static_cast (const char*, link_name_seq[iu])));
 
           CosTrading::TypeRepository_var remote_repos = 
             link_info->target->type_repos (ACE_TRY_ENV);
@@ -222,7 +222,7 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "type name: %s\n",
-                          ACE_static_cast (const char *, type_names[i])));
+                          ACE_static_cast (const char *, type_names[iu])));
             }
         }
     }
