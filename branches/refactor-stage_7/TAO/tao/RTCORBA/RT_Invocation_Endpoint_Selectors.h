@@ -47,13 +47,13 @@ class TAO_Endpoint;
  *
  **/
 class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector :
-  public TAO_Default_Endpoint_Selector
+  public TAO_Invocation_Endpoint_Selector
 {
 public:
 
-  void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                        ACE_Time_Value *val
-                        ACE_ENV_ARG_DECL);
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                ACE_Time_Value *val
+                                ACE_ENV_ARG_DECL);
 
 protected:
   void select_endpoint_based_on_client_protocol_policy (
