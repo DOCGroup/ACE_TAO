@@ -1,3 +1,23 @@
+Wed May 10 14:44:54 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsw:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+          Updated the project files to reflect the new structure for the
+          Event Service.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_Sched.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+          Fixed minor problems with the export macros.
+
 Wed May 10 15:44:23 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
           This batch of changes focus on propagating the "localness" up

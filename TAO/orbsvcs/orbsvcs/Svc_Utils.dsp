@@ -98,6 +98,14 @@ SOURCE=.\IOR_Multicast.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RtecBaseC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecBaseS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Time_Utilities.cpp
 # End Source File
 # Begin Source File
@@ -118,6 +126,18 @@ SOURCE=.\IOR_Multicast.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RtecBaseC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecBaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecBaseS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Time_Utilities.h
 # End Source File
 # Begin Source File
@@ -132,6 +152,18 @@ SOURCE=.\TimeBaseS_T.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\RtecBaseC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecBaseS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecBaseS_T.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\Time_Utilities.i
@@ -152,6 +184,91 @@ SOURCE=.\TimeBaseS_T.i
 # Begin Group "IDL Files"
 
 # PROP Default_Filter ".idl"
+# Begin Source File
+
+SOURCE=.\RtecBase.idl
+
+!IF  "$(CFG)" == "Svc Utils - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECB="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build
+InputPath=.\RtecBase.idl
+InputName=RtecBase
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "Svc Utils - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECB="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build
+InputPath=.\RtecBase.idl
+InputName=RtecBase
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\TimeBase.idl
@@ -241,6 +358,11 @@ BuildCmds= \
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\RtecBaseS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
 # Begin Source File
 
 SOURCE=.\TimeBaseS_T.cpp

@@ -59,6 +59,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -131,6 +134,45 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTOLDEvent_Static"=.\RTOLDEvent_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSchedEvent_Static"=.\RTSchedEvent_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -143,6 +185,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
