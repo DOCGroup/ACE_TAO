@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
+Project: "QuoterFactoryFinder"=.\QuoterFactoryFinder.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "quoter_client"=.\quoter_client.dsp - Package Owner=<4>
 
 Package=<5>
