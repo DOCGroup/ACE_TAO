@@ -58,8 +58,8 @@ main (int, char *[])
 	  while (isspace (*s));
 
           // Shell command.
-          if (ACE_OS::system (s) == -1)
-            ACE_ERROR ((LM_ERROR, " ! Error executing: %s\n", s));
+          if (ACE_OS::system (ACE_TEXT_CHAR_TO_TCHAR (s)) == -1)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT (" ! Error executing: %C\n"), s));
         }
       else if (ACE_OS::strncmp (s, "http://", 7) == 0)
         {
@@ -68,12 +68,12 @@ main (int, char *[])
           connector.connect (s);
         }
       else
-        ACE_ERROR ((LM_ERROR, " ? I don't understand: %s\n", s));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT (" ? I don't understand: %C\n"), s));
 
-      ACE_ERROR ((LM_ERROR, "* "));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("* ")));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\nBye!\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nBye!\n")));
 
   return 0;
 }

@@ -54,7 +54,7 @@ class ACE_Svc_Export HTTP_Server : public ACE_Service_Object
   // = DESCRIPTION
 {
 public:
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialization
 
   virtual int fini (void);
@@ -72,7 +72,7 @@ protected:
 
 private:
   // James, comment these data members.
-  void parse_args (int argc, char **argv);
+  void parse_args (int argc, ACE_TCHAR **argv);
   int port_;
   int threads_;
   int strategy_;
