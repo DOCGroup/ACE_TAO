@@ -1,170 +1,181 @@
+Fri Oct 22 08:18:16 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Muxed_GIOP_Versions/server.cpp:
+
+          Parameterized the number of self abuse client threads.
+
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+
+          Cut the number of self abuse client threads from 10 to 5.  Many of
+          the nightly test systems can't handle it.
+
 Thu Oct 21 17:55:19 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	  The following changes allow the user to specify the endpoints
-	  that will be used by thread pools and lanes.  Previously, only
-	  default endpoints were supported.  With this addition, POAs that
-	  use thread pools will be able to support persistent references.
-	  Many thanks to Lothar Werzinger <lothar@xcerla.com> for helping
-	  with this and for providing the initial patches.
+          The following changes allow the user to specify the endpoints
+          that will be used by thread pools and lanes.  Previously, only
+          default endpoints were supported.  With this addition, POAs that
+          use thread pools will be able to support persistent references.
+          Many thanks to Lothar Werzinger <lothar@xcerla.com> for helping
+          with this and for providing the initial patches.
 
-	* tao/params.{h,cpp}:
+        * tao/params.{h,cpp}:
 
-	  The endpoints were stored in an unbounded queue.  Since we are
-	  adding the capability to specify and store endpoints for each
-	  thread lane, this one queue is insufficient.  One solution would
-	  be to have a mapping to lane id to an unbounded queue of
-	  endpoints.  The only drawback of this is that it would increase
-	  the footprint of TAO since a new kind of map would be required.
-	  To circumvent this issue, the map is going to be a parameterized
-	  with strings.  This kind of map is already used in TAO so no
-	  footprint increase will occur.  The endpoints will be
-	  concatinated into one big string, and then when needed,
-	  converted into an unbounded queue of endpoints.  
+          The endpoints were stored in an unbounded queue.  Since we are
+          adding the capability to specify and store endpoints for each
+          thread lane, this one queue is insufficient.  One solution would
+          be to have a mapping to lane id to an unbounded queue of
+          endpoints.  The only drawback of this is that it would increase
+          the footprint of TAO since a new kind of map would be required.
+          To circumvent this issue, the map is going to be a parameterized
+          with strings.  This kind of map is already used in TAO so no
+          footprint increase will occur.  The endpoints will be
+          concatinated into one big string, and then when needed,
+          converted into an unbounded queue of endpoints.
 
-	  The following methods were effected by this change:	
+          The following methods were effected by this change:
 
-	  - endpoints(string) is now add_endpoints().
-	  - endpoints(void) is now get_endpoint_set().
-	  - add_endpoint() is removed.
-	  - parse_endpoints() is now parse_and_add_endpoints()
-	
-	* tao/Acceptor_Registry.{h,cpp} (open): 
+          - endpoints(string) is now add_endpoints().
+          - endpoints(void) is now get_endpoint_set().
+          - add_endpoint() is removed.
+          - parse_endpoints() is now parse_and_add_endpoints()
 
-	  - The Acceptor Registry no longer looks up the <endpoint_set> it
-	  is going to use.  This set is now passed into open().
+        * tao/Acceptor_Registry.{h,cpp} (open):
 
-	  - Evaluation and parsing of the TAO_ORBENDPOINT environment
-	  variable is now conducted in ORB_init() instead of in open()
-	  since this environment variable only effects the ORB endpoints
-	  of the default lane.
+          - The Acceptor Registry no longer looks up the <endpoint_set> it
+          is going to use.  This set is now passed into open().
 
-	  - No need to call reset() on the endpoint set.  This is done
-	  automatically done in the destructor.
+          - Evaluation and parsing of the TAO_ORBENDPOINT environment
+          variable is now conducted in ORB_init() instead of in open()
+          since this environment variable only effects the ORB endpoints
+          of the default lane.
 
-	  - <ignore_address> was changed to a bool from an int.
+          - No need to call reset() on the endpoint set.  This is done
+          automatically done in the destructor.
 
-	* tao/ORB_Core.cpp (init): 
+          - <ignore_address> was changed to a bool from an int.
 
-	  - -ORBEndpoint and -ORBListenEndpoints options only apply to the
-	  default lane.
+        * tao/ORB_Core.cpp (init):
 
-	  - -ORBLaneEndpoint and -ORBLaneListenEndpoints options apply to
-	  the thread lanes.
+          - -ORBEndpoint and -ORBListenEndpoints options only apply to the
+          default lane.
 
-	  - Evaluation and parsing of the TAO_ORBENDPOINT environment
-	  variable is now conducted in ORB_init() instead of in the
-	  Acceptor Registry since this environment variable only effects
-	  the ORB endpoints of the default lane.
-	
-	* tao/RTPortableServer/RT_Policy_Validator.cpp: 
+          - -ORBLaneEndpoint and -ORBLaneListenEndpoints options apply to
+          the thread lanes.
 
-	  - TAO_POA_RT_Policy_Validator::extract_acceptor_registry() was
-	  flawed for thread pools with multiple lanes.  It picked the
-	  Acceptor Registry from the first lane on the assumption that all
-	  lanes had similar acceptor registries.  This assumption is no
-	  longer true.
+          - Evaluation and parsing of the TAO_ORBENDPOINT environment
+          variable is now conducted in ORB_init() instead of in the
+          Acceptor Registry since this environment variable only effects
+          the ORB endpoints of the default lane.
 
-	  - <acceptor_registry_> is no longer kept as a member.  Also note
-	  that though <thread_pool_> is kept as a member, it is
-	  reevaluated every time policies are parsed.
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
 
-	  - validate_lifespan() is removed since thread pools now support
-	  specification of endpoint and hence persistent references.
+          - TAO_POA_RT_Policy_Validator::extract_acceptor_registry() was
+          flawed for thread pools with multiple lanes.  It picked the
+          Acceptor Registry from the first lane on the assumption that all
+          lanes had similar acceptor registries.  This assumption is no
+          longer true.
 
-	  - In validate_server_protocol(), if the server protocol policy
-	  has not been specified, then add a server policy that reflects
-	  the protocols supported by the acceptor registries of the POA's
-	  thread pool.
+          - <acceptor_registry_> is no longer kept as a member.  Also note
+          that though <thread_pool_> is kept as a member, it is
+          reevaluated every time policies are parsed.
 
-	  - In validate_server_protocol(), acceptor registries in all the
-	  thread lanes should be evaluated.
+          - validate_lifespan() is removed since thread pools now support
+          specification of endpoint and hence persistent references.
 
-	  - server_protocol_policy_from_thread_pool() and
-	  server_protocol_policy_from_acceptor_registry() were added.
+          - In validate_server_protocol(), if the server protocol policy
+          has not been specified, then add a server policy that reflects
+          the protocols supported by the acceptor registries of the POA's
+          thread pool.
 
-	* tao/RTCORBA/Thread_Pool.cpp (open): 
+          - In validate_server_protocol(), acceptor registries in all the
+          thread lanes should be evaluated.
 
-	  Look up the endpoints for a lane. If endpoints are not specified
-	  for a lane, use the endpoints specified for the default lane but
-	  ignore their addresses. If endpoints are specified for a lane,
-	  use them with their addresses.
+          - server_protocol_policy_from_thread_pool() and
+          server_protocol_policy_from_acceptor_registry() were added.
 
-	* tao/PortableServer/Object_Adapter.cpp (open): 
+        * tao/RTCORBA/Thread_Pool.cpp (open):
 
-	  Validation of Root POA policies was missing.  It was added.
+          Look up the endpoints for a lane. If endpoints are not specified
+          for a lane, use the endpoints specified for the default lane but
+          ignore their addresses. If endpoints are specified for a lane,
+          use them with their addresses.
 
-	* tao/Default_Thread_Lane_Resources_Manager.cpp (open_default_resources): 
-	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp (open_default_resources): 
+        * tao/PortableServer/Object_Adapter.cpp (open):
 
-	  Look of endpoints for the default lane is moved here instead of
-	  being done in the Acceptor Registry.
+          Validation of Root POA policies was missing.  It was added.
 
-	* tao/Protocols_Hooks.h: 
-	* tao/Default_Protocols_Hooks.{h,cpp}: 
-	* tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}: 
-	* tao/PortableServer/Object_Adapter.{h,cpp} (open): 
+        * tao/Default_Thread_Lane_Resources_Manager.cpp (open_default_resources):
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp (open_default_resources):
 
-	  It doesn't make sense to set a server protocol policy as an ORB
-	  default since each POA's default server protocol should be the
-	  protocols supported by its Acceptor Registry.  Therefore,
-	  set_default_server_protocol_policy() is no longer needed and is
-	  removed.
+          Look of endpoints for the default lane is moved here instead of
+          being done in the Acceptor Registry.
 
-	* tao/RTPortableServer/RT_POA.cpp (key_to_stub_i): 
+        * tao/Protocols_Hooks.h:
+        * tao/Default_Protocols_Hooks.{h,cpp}:
+        * tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}:
+        * tao/PortableServer/Object_Adapter.{h,cpp} (open):
 
-	  Removal of the flawed function
-	  TAO_POA_RT_Policy_Validator::extract_acceptor_registry() forced
-	  a rewrite of some code here.
+          It doesn't make sense to set a server protocol policy as an ORB
+          default since each POA's default server protocol should be the
+          protocols supported by its Acceptor Registry.  Therefore,
+          set_default_server_protocol_policy() is no longer needed and is
+          removed.
 
-	* tao\orbconf.h (TAO_DEFAULT_LANE): 
+        * tao/RTPortableServer/RT_POA.cpp (key_to_stub_i):
 
-	  Macro for the default lane name used when storing endpoints.
+          Removal of the flawed function
+          TAO_POA_RT_Policy_Validator::extract_acceptor_registry() forced
+          a rewrite of some code here.
 
-	* tao/RTCORBA/RT_Policy_i.cpp (_tao_scope): 
+        * tao\orbconf.h (TAO_DEFAULT_LANE):
 
-	  The TAO_POLICY_CLIENT_EXPOSED scope of PriorityModelPolicy was
-	  removed.  The following comment in the _tao_scope() states the
-	  issue correctly:
+          Macro for the default lane name used when storing endpoints.
 
-	  // Note that this policy is propogated to the client even though
-  	  // it is not specified here.  The reason for this is that the
-	  // server priority field is set dynamically depending on the model
-	  // and the servant's priority.  Therefore, it can't be simply
-	  // copied to the list of client exposed policies.
-	
-	  So I am not sure why I added this scope back in Aug 2002.  With
-	  this addition, the PriorityModelPolicy gets added twice, with
-	  one of the additions being incorrect.
+        * tao/RTCORBA/RT_Policy_i.cpp (_tao_scope):
 
-	* tao/Strategies/DIOP_Acceptor.cpp (open_default): 
+          The TAO_POLICY_CLIENT_EXPOSED scope of PriorityModelPolicy was
+          removed.  The following comment in the _tao_scope() states the
+          issue correctly:
 
-	  ACE_DEFAULT_SERVER_PORT should not be fixed. 0 should be used,
-	  similar to what happens in IIOP.
+          // Note that this policy is propogated to the client even though
+          // it is not specified here.  The reason for this is that the
+          // server priority field is set dynamically depending on the model
+          // and the servant's priority.  Therefore, it can't be simply
+          // copied to the list of client exposed policies.
 
-	* tao/PortableServer/Object_Adapter.cpp: 
+          So I am not sure why I added this scope back in Aug 2002.  With
+          this addition, the PriorityModelPolicy gets added twice, with
+          one of the additions being incorrect.
 
-	  Service name of TAO_Object_Adapter_Factory was changed from
-	  "TAO_POA" to "PortableServer".
+        * tao/Strategies/DIOP_Acceptor.cpp (open_default):
 
-	* tao/RTPortableServer/RT_Object_Adapter_Factory.cpp: 
+          ACE_DEFAULT_SERVER_PORT should not be fixed. 0 should be used,
+          similar to what happens in IIOP.
 
-	  Service name of TAO_RT_Object_Adapter_Factory was changed from
-	  "TAO_RT_POA" to "RTPortableServer".
+        * tao/PortableServer/Object_Adapter.cpp:
 
-	* tests/RTCORBA/Server_Protocol:
+          Service name of TAO_Object_Adapter_Factory was changed from
+          "TAO_POA" to "PortableServer".
 
-	  Server policy is checked at the Root POA instead of ORB default
-	  policies.
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
 
-	* tests/RTCORBA/Persistent_IOR:
+          Service name of TAO_RT_Object_Adapter_Factory was changed from
+          "TAO_RT_POA" to "RTPortableServer".
 
-	  Updated test to check that persistent POAs are properly
-	  supported even when being used with thread pools and lanes.
+        * tests/RTCORBA/Server_Protocol:
 
-	* docs/Options.html:
+          Server policy is checked at the Root POA instead of ORB default
+          policies.
 
-	  Updated documentation to explain new -ORBLaneListenEndpoints and
-	  -ORBLaneEndpoint options.
+        * tests/RTCORBA/Persistent_IOR:
+
+          Updated test to check that persistent POAs are properly
+          supported even when being used with thread pools and lanes.
+
+        * docs/Options.html:
+
+          Updated documentation to explain new -ORBLaneListenEndpoints and
+          -ORBLaneEndpoint options.
 
 Thu Oct 21 13:20:59 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
