@@ -100,15 +100,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__Lynx__) || defined (INTEGRITY)
+// These workarounds are necessary for nasty libraries or platforms
+// that #define STDERR or THREAD (e.g. LynxOS). We simply #undef
+// these macros as there is no way to save the macro definition using
+// the pre-processor. See Bugzilla Bug #299 for more info.
+
+#if defined (STDERR)
 # undef STDERR
-#endif /* __Lynx__ */
+#endif /* STDERR */
 
 #if defined (THREAD)
-// This workaround is necessary for nasty libraries that #define
-// THREAD 1.
-#define ACE_THREAD_HACK THREAD
-#undef THREAD
+# undef THREAD
 #endif /* THREAD */
 
 class ACE_Log_Msg_Callback;
@@ -708,11 +710,6 @@ void
 ACE_TSS_cleanup (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
-
-#if defined (ACE_THREAD_HACK)
-#define THREAD ACE_THREAD_HACK
-#undef ACE_THREAD_HACK
-#endif /* ACE_THREAD_HACK */
 
 #if defined(ACE_LEGACY_MODE)
 #include "ace/Log_Msg_Callback.h"
