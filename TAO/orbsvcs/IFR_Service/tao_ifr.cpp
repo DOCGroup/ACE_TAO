@@ -36,8 +36,13 @@ DRV_fork (void)
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
     {
-      ACE_Process_Options options;
+      ACE_Process_Options options (1, 
+                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
       options.creation_flags (ACE_Process_Options::NO_EXEC);
+      options.command_line ("%s %s %s", 
+                            idl_global->prog_name (), 
+                            idl_global->idl_flags (), 
+                            DRV_files[DRV_file_index]);
       ACE_Process manager;
       pid_t child_pid = manager.spawn (options);
 
