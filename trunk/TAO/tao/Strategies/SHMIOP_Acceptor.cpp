@@ -217,6 +217,9 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
+  if (isdigit (*port) == 0)
+    return -1;                  // Port number must consist of digits
+
   if (port)
     this->address_.set (port);
 

@@ -170,11 +170,11 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         Sets of endpoints may be specified using multiple <CODE>-ORBEndpoint</CODE>
         options or by delimiting endpoints with a semi-colon (;).  For example,
         <blockquote><CODE>
-        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://:10002
+        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://10002
         </CODE></blockquote>
         is equivalent to:
         <blockquote><CODE>
-        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://:10002'
+        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
         </CODE></blockquote>
         Notice the single quotes (') in the latter option specification.  Single
         quotes are needed to prevent the shell from interpreting text after the
@@ -280,7 +280,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
 	<FONT COLOR=RED>-ORBPreconnect is <STRONG>deprecated</STRONG>.
 	This option will be removed in the near future.  The Real-Time CORBA standard
 	<CODE>validate_connection()</CODE> method should be used
-	instead.   
+	instead.
     </TD>
   </TR>
   <TR>
@@ -458,7 +458,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       <code>-ORBProtocolFactory Foo_Factory</code> in the service
       configurator file. The
       <em><code>Foo</code></em> pluggable protocol would then be available
-      for use.		
+      for use.
   </TD>
 </TR>
 <TR>
@@ -508,7 +508,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       Cache. Possible values for lock type are thread, which specifies
       that an inter-thread mutex is used to guarantee exclusive
       access, and null, which specifies that no locking be
-      performed. The default is thread. 
+      performed. The default is thread.
   </TD>
 </TR>
 <TR>
