@@ -1,3 +1,8 @@
+Tue May 26 22:25:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (CORBA_ORB): Never assume a pointer will be
+ 	  initialized to null.
+
 Tue May 26 21:32:03 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/GIOP.cpp (recv_request): Changed CDR::grow() to take an
