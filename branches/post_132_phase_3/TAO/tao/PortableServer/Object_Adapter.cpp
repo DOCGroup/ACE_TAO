@@ -857,6 +857,69 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   return 0;
 }
 
+CORBA::Long
+TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
+                                                  CORBA::Object_ptr obj)
+{
+  // @@ What about forwarding.  With this approach we are never
+  //    forwarded  when we use collocation!
+  const TAO_MProfile &mp =
+    stub->base_profiles ();
+
+  for (TAO_PHandle j = 0;
+       j != mp.profile_count ();
+       ++j)
+    {
+      const TAO_Profile *profile = mp.get_profile (j);
+      TAO::ObjectKey_var objkey = profile->_key ();
+
+      if (ACE_OS::memcmp (objkey->get_buffer (),
+                          &TAO_POA::objectkey_prefix[0],
+                          TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+        continue;
+
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          TAO_ServantBase *servant = 0;
+
+          TAO_SERVANT_LOCATION servant_location =
+            this->find_servant (objkey.in (),
+                                servant
+                                ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (servant_location != TAO_SERVANT_NOT_FOUND)
+            {
+              // Found collocated object.  Perhaps we can get around
+              // by simply setting the servant_orb, but let get this
+              // to work first.
+
+              // There could only be one ORB which is us.
+
+              // @@ Do not duplicate the ORB here!
+              //    TAO_Stub::servant_orb()  duplicates it.
+              //       -Ossama
+              stub->servant_orb (this->orb_core_.orb ());
+
+              obj->set_collocated_servant (servant);
+
+              // Here we set the strategized Proxy Broker.
+              obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+
+              return 1;
+            }
+        }
+      ACE_CATCHANY
+        {
+          // Ignore the exception and continue with the next one.
+        }
+      ACE_ENDTRY;
+    }
+
+  return 0;
+}
+
 // ****************************************************************
 
 TAO_Object_Adapter_Factory::TAO_Object_Adapter_Factory (void)

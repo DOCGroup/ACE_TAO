@@ -237,6 +237,8 @@ ORB_CORE_FILES = \
   Synch_Reply_Dispatcher \
   Synch_Refcountable \
   Asynch_Reply_Dispatcher_Base \
+  IOP_IORC \
+  IOP_CodecC \
   IOPC \
   PollableC \
   CONV_FRAMEC \

@@ -1633,6 +1633,37 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   return x;
 }
 
+CORBA::Long
+TAO_ORB_Core::initialize_object (TAO_Stub *stub,
+                                 CORBA::Object_ptr obj)
+{
+  {
+    // @@ Ossama: maybe we need another lock for the table, to
+    //    reduce contention on the Static_Object_Lock below, if so
+    //    then we need to use that lock in the ORB_init() function.
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
+                              *ACE_Static_Object_Lock::instance (),
+                              0));
+
+    TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+    TAO_ORB_Table::Iterator end = table->end ();
+    for (TAO_ORB_Table::Iterator i = table->begin ();
+         i != end;
+         ++i)
+      {
+        TAO_ORB_Core *other_core = (*i).int_id_;
+        CORBA::Long retval =
+          this->initialize_collocated_object (stub,
+                                              other_core,
+                                              obj);
+        if (retval != -1)
+          return 1;
+      }
+  }
+
+  return 0;
+}
+
 CORBA::Object_ptr
 TAO_ORB_Core::create_collocated_object (TAO_Stub *stub,
                                         TAO_ORB_Core *orb_core,
@@ -1652,6 +1683,31 @@ TAO_ORB_Core::create_collocated_object (TAO_Stub *stub,
 
   return orb_core->adapter_registry ()->create_collocated_object (stub,
                                                                   mprofile);
+}
+
+
+CORBA::Long
+TAO_ORB_Core::initialize_collocated_object (TAO_Stub *stub,
+                                            TAO_ORB_Core *orb_core,
+                                            CORBA::Object_ptr obj)
+{
+  // @@ What about forwarding.  With this approach we are never forwarded
+  //    when we use collocation!
+  const TAO_MProfile &mprofile = stub->base_profiles ();
+
+  if (!orb_core->optimize_collocation_objects ())
+    return -1;
+
+  if (!orb_core->use_global_collocation () && orb_core != this)
+    return -1;
+
+  if (!orb_core->is_collocated (mprofile))
+    return -1;
+
+  // OK, the target ORB and the mprofile match, use the Adapter
+  // Registry of each ORB to find the right one.
+  return orb_core->adapter_registry ()->initialize_collocated_object (stub,
+                                                                      obj);
 }
 
 int

@@ -24,6 +24,12 @@ TAO_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *)
   return 0;
 }
 
+int
+TAO_Client_Strategy_Factory::reply_dispatcher_table_size (void) const
+{
+  return 0;
+}
+
 TAO_Wait_Strategy *
 TAO_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *)
 {

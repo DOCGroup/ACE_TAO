@@ -13,17 +13,17 @@
 #ifndef TAO_PROFILE_H
 #define TAO_PROFILE_H
 #include "ace/pre.h"
-
-#include "corbafwd.h"
+#include "tao/Tagged_Components.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Tagged_Components.h"
-#include "PolicyC.h"
-#include "GIOP_Message_Version.h"
-#include "Object_KeyC.h"
+// @@ This include needs to go after Ossama's checkin
+#include "tao/PolicyC.h"
+#include "tao/GIOP_Message_Version.h"
+#include "tao/Object_KeyC.h"
+
 
 class TAO_MProfile;
 class TAO_Stub;
@@ -143,7 +143,7 @@ public:
    * return the reference to that. This method is necessary for GIOP
    * 1.2.
    */
-  virtual IOP::TaggedProfile &create_tagged_profile (void) = 0;
+  IOP::TaggedProfile *create_tagged_profile (void);
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
@@ -198,6 +198,21 @@ public:
    */
   CORBA::Short addressing_mode (void) const;
 
+protected:
+
+  /// To be used by inherited classes
+  TAO_Profile (CORBA::ULong tag,
+               TAO_ORB_Core *orb_core,
+               const TAO::ObjectKey &key,
+               const TAO_GIOP_Message_Version &version);
+
+  /// Creates an encapsulation of the ProfileBody struct in the <cdr>
+  virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
+
+  /// Helper method that encodes the endpoints for RTCORBA as
+  /// tagged_components.
+  void set_tagged_components (TAO_OutputCDR &cdr);
+
 private:
 
   /// this object keeps ownership of this object
@@ -214,6 +229,7 @@ private:
   // Profiles should not be copied!
   ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
+
 
 protected:
 
@@ -244,8 +260,13 @@ protected:
   /// exception.
   CORBA::Short addressing_mode_;
 
-private:
+  /// Our tagged profile
+  IOP::TaggedProfile *tagged_profile_;
 
+  /// object_key associated with this profile.
+  TAO::ObjectKey object_key_;
+
+private:
   /// IOP protocol tag.
   CORBA::ULong tag_;
 
@@ -261,7 +282,6 @@ private:
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
-
 };
 
 /**
@@ -299,11 +319,12 @@ public:
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
-  virtual IOP::TaggedProfile &create_tagged_profile (void);
+private:
+
+  virtual void create_profile_body (TAO_OutputCDR &encap) const;
 
 private:
   TAO_opaque body_;
-  IOP::TaggedProfile tagged_profile_;
 };
 
 #if defined (__ACE_INLINE__)

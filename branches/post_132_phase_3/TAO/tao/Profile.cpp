@@ -2,11 +2,11 @@
 
 #include "Profile.h"
 #include "Object_KeyC.h"
-
 #include "Messaging_PolicyValueC.h"
 #include "Stub.h"
 #include "debug.h"
-#include "tao/target_specification.h"
+#include "target_specification.h"
+#include "ace/CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Profile.i"
@@ -17,9 +17,52 @@ ACE_RCSID (tao,
            "$Id$")
 
 // ****************************************************************
+TAO_Profile::TAO_Profile (CORBA::ULong tag,
+                          TAO_ORB_Core *orb_core,
+                          const TAO::ObjectKey &obj_key,
+                          const TAO_GIOP_Message_Version &version)
+  : version_ (version)
+    , are_policies_parsed_ (0)
+    , stub_ (0)
+    , policy_list_ (0)
+    , addressing_mode_ (0)
+    , tagged_profile_ (0)
+    , object_key_ (obj_key)
+    , tag_ (tag)
+    , orb_core_ (orb_core)
+    , forward_to_ (0)
+    , refcount_ (1)
+{
+}
 
 TAO_Profile::~TAO_Profile (void)
 {
+  if (this->tagged_profile_)
+    delete this->tagged_profile_;
+}
+
+CORBA::ULong
+TAO_Profile::_incr_refcnt (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+
+  return this->refcount_++;
+}
+
+CORBA::ULong
+TAO_Profile::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  // refcount is 0, so delete us!
+  // delete will call our ~ destructor which in turn deletes stuff.
+  delete this;
+  return 0;
 }
 
 void
@@ -40,6 +83,82 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
   // Note that multiple tagged profiles with the same tag value may be
   // added, unless the tagged component is known to be unique by TAO.
   this->tagged_components_.set_component (component);
+}
+
+IOP::TaggedProfile *
+TAO_Profile::create_tagged_profile (void)
+{
+  if (this->tagged_profile_ == 0)
+    {
+      ACE_NEW_RETURN (this->tagged_profile_,
+                      IOP::TaggedProfile,
+                      0);
+
+      // As we have not created we will now create the TaggedProfile
+      this->tagged_profile_->tag = this->tag_;
+
+      // Create the encapsulation....
+      TAO_OutputCDR encap (ACE_DEFAULT_CDR_BUFSIZE,
+                           TAO_ENCAP_BYTE_ORDER,
+                           this->orb_core ()->output_cdr_buffer_allocator (),
+                           this->orb_core ()->output_cdr_dblock_allocator (),
+                           this->orb_core ()->output_cdr_msgblock_allocator (),
+                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR);
+
+      // Create the profile body
+      this->create_profile_body (encap);
+
+      CORBA::ULong length =
+        ACE_static_cast(CORBA::ULong,encap.total_length ());
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      // Place the message block in to the Sequence of Octets that we
+      // have
+      this->tagged_profile_->profile_data.replace (length,
+                                                   encap.begin ());
+#else
+      this->tagged_profile_->profile_data.length (length);
+      CORBA::Octet *buffer =
+        this->tagged_profile_.profile_data.get_buffer ();
+      for (const ACE_Message_Block *i = encap.begin ();
+           i != encap.end ();
+           i = i->next ())
+        {
+          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          buffer += i->length ();
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+    }
+
+  return this->tagged_profile_;
+}
+
+void
+TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
+{
+  CORBA::ULong length = out_cdr.total_length ();
+
+  IOP::TaggedComponent tagged_component;
+  tagged_component.tag = TAO_TAG_ENDPOINTS;
+  tagged_component.component_data.length (length);
+  CORBA::Octet *buf =
+    tagged_component.component_data.get_buffer ();
+
+  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+       iterator != 0;
+       iterator = iterator->cont ())
+    {
+      CORBA::ULong i_length = iterator->length ();
+      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+
+      buf += i_length;
+    }
+
+  // Add component with encoded endpoint data to this profile's
+  // TaggedComponents.
+  tagged_components_.set_component (tagged_component);
 }
 
 void
@@ -355,8 +474,7 @@ TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
   : TAO_Profile (tag,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
-                                           TAO_DEF_GIOP_MINOR)),
-    tagged_profile_ ()
+                                           TAO_DEF_GIOP_MINOR))
 {
 }
 
@@ -448,12 +566,9 @@ TAO_Unknown_Profile::hash (CORBA::ULong max
                          this->body_.length ()) % max);
 }
 
-IOP::TaggedProfile&
-TAO_Unknown_Profile::create_tagged_profile (void)
+void
+TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
 {
-  this->tagged_profile_.tag = this->tag ();
-
-  // I dont know about the rest, so we return our copy
-  return this->tagged_profile_;
-
+  // No idea about the profile body! Just return
+  return;
 }

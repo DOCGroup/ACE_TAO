@@ -1,6 +1,4 @@
 // $Id$
-
-
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 
@@ -245,6 +243,11 @@ TAO_Resource_Factory::locked_transport_cache (void)
   return 0;
 }
 
+ACE_Lock *
+TAO_Resource_Factory::create_corba_object_lock (void)
+{
+  return 0;
+}
 
 int
 TAO_Resource_Factory::load_default_protocols (void)
