@@ -27,7 +27,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(tests_svc_loader, tests_svc_loader, "$Id$");
+ACE_RCSID(tests_svc_loader, tests_svc_loader, "$Id$")
 
 int main (int argc, char *argv [])
 {

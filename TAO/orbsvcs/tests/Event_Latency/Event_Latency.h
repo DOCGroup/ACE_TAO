@@ -23,11 +23,11 @@
 /// Latency Consumer
 /**
  * Simple example of a consumer that registers for supplier
- * notifications. 
+ * notifications.
  */
 class Latency_Consumer
   : public POA_RtecEventComm::PushConsumer
-  , PortableServer::RefCountServantBase
+  , public PortableServer::RefCountServantBase
 {
 public:
   /// Default constructor
