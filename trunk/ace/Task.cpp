@@ -99,7 +99,11 @@ ACE_Task_Base::activate (long flags,
   // active object and the caller didn't supply us with a
   // Thread_Manager.
   if (this->thr_mgr_ == 0)
+# if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+    this->thr_mgr_ = ACE_THREAD_MANAGER_SINGLETON::instance ();
+# else /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
     this->thr_mgr_ = ACE_Thread_Manager::instance ();
+# endif /* ACE_THREAD_MANAGER_LACKS_STATICS */
 
   int grp_spawned = -1;
   if (thread_ids == 0)

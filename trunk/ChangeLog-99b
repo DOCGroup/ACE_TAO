@@ -1,3 +1,21 @@
+Tue Dec 28 15:37:11 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Log_Msg.cpp
+          ace/Malloc.cpp
+          ace/OS.{cpp, h, i}
+          ace/Process_Manager.cpp
+          ace/SOCK_Dgram_Mcast.cpp
+          ace/Service_Config.{cpp, h}
+          ace/Task.cpp
+          ace/Thread.i
+          ace/Thread_Manager.{cpp, h}
+
+          ace/config-psos-diab-ppc.h: merged in changes for pSOS (Diab PPC)
+          to support additional pHILE+ file system capabilities, and to deal
+          with the limitations on sharing file and socket handles across pSOS
+          tasks. Thanks to Sarmeesha Reddy and Steve Tine of Motorola for
+          contributing these changes to ACE.
+
 Tue Dec 28 15:32:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile: build libDLL_Test.so before building

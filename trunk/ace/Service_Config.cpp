@@ -125,15 +125,22 @@ ACE_Thread_Manager *
 ACE_Service_Config::thr_mgr (void)
 {
   ACE_TRACE ("ACE_Service_Config::thr_mgr");
+
+#if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+  return ACE_THREAD_MANAGER_SINGLETON::instance ();
+#else /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
   return ACE_Thread_Manager::instance ();
+#endif /* ACE_THREAD_MANAGER_LACKS_STATICS */
 }
 
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 ACE_Thread_Manager *
 ACE_Service_Config::thr_mgr (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Service_Config::thr_mgr");
   return ACE_Thread_Manager::instance (tm);
 }
+#endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
 
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
@@ -818,7 +825,9 @@ ACE_Service_Config::close_singletons (void)
 #if !defined (ACE_HAS_WINCE)
   ACE_Proactor::close_singleton ();
 #endif /* !ACE_HAS_WINCE */
+#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();
+#endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
 
   return 0;
 }

@@ -1464,7 +1464,12 @@ ACE_OS::strnchr (const char *s, int c, size_t len)
 ACE_INLINE char *
 ACE_OS::strnchr (char *s, int c, size_t len)
 {
+#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+  const char *const_char_s=s;
+  return (char *) ACE_OS::strnchr (const_char_s, c, len);
+#else
   return (char *) ACE_OS::strnchr ((const char *) s, c, len);
+#endif
 }
 
 ACE_INLINE const char *
@@ -1514,7 +1519,12 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 ACE_INLINE char *
 ACE_OS::strnstr (char *s, const char *t, size_t len)
 {
+#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+  const char *const_char_s=s;
+  return (char *) ACE_OS::strnstr (const_char_s, t, len);
+#else
   return (char *) ACE_OS::strnstr ((const char *) s, t, len);
+#endif
 }
 
 ACE_INLINE char *
@@ -3372,15 +3382,14 @@ ACE_OS::sema_init (ACE_sema_t *s,
   return result;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_PSOS)
-  int result;
+  u_long result;
   ACE_OS::memcpy (s->name_, name, sizeof (s->name_));
   // default semaphore creation flags to priority based, global across nodes
   u_long flags = 0;
   flags |= (type & SM_LOCAL) ? SM_LOCAL : SM_GLOBAL;
   flags |= (type & SM_FIFO) ? SM_FIFO : SM_PRIOR;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_create (s->name_, count, flags, &(s->sema_)),
-                                result), int, -1, result);
-  return result;
+  result = ::sm_create (s->name_, count, flags, &(s->sema_));
+  return (result == 0) ? 0 : -1;
 #   elif defined (VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
@@ -3388,7 +3397,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (sa);
   s->name_ = 0;
   s->sema_ = ::semCCreate (type, count);
-
   return s->sema_ ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
@@ -3867,7 +3875,10 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   u_long ticks = relative_time.sec() * KC_TICKS2SEC +
                  relative_time.usec () * KC_TICKS2SEC /
                    ACE_ONE_SECOND_IN_USECS;
-  ACE_OSCALL_RETURN (::sm_p (s->sema_, SM_WAIT, ticks), int, -1);
+  if(ticks == 0)
+    ACE_OSCALL_RETURN (::sm_p (s->sema_, SM_NOWAIT, 0), int, -1); //no timeout
+  else
+    ACE_OSCALL_RETURN (::sm_p (s->sema_, SM_WAIT, ticks), int, -1);
 #   elif defined (VXWORKS)
   // Note that we must convert between absolute time (which is
   // passed as a parameter) and relative time (which is what
@@ -5336,32 +5347,32 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                 NULL,
                                 NULL);
 
-      
+
       if (result == SOCKET_ERROR)
 	  {
 		u_long dwErr = ::WSAGetLastError ();
-		
+
 		if (dwErr == WSAEWOULDBLOCK)
 		{
 			errno = dwErr;
-			return -1;	
-		}	
+			return -1;
+		}
 		else
 			if (dwErr != WSAENOBUFS)
 			{
 				errno = dwErr;
 				return -1;
 			}
-	  }	
-      
+	  }
+
     char *qos_buf;
 	ACE_NEW_RETURN (qos_buf,
 					char [dwBufferLen],
 					-1);
 
 	QOS *qos = ACE_reinterpret_cast (QOS*,
-									 qos_buf); 
-        
+									 qos_buf);
+
 	result = ::WSAIoctl ((ACE_SOCKET) socket,
 			           io_control_code,
                        NULL,
@@ -5412,7 +5423,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
        ace_qos.sending_flowspec (sending_flowspec);
        ace_qos.receiving_flowspec (receiving_flowspec);
        ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
-      
+
 
       return result;
     }
@@ -8330,6 +8341,8 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   ACE_TRACE ("ACE_OS::close");
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
+#elif defined (ACE_PSOS_DIAB_PPC)
+  ACE_OSCALL_RETURN (::pna_close (handle), int, -1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -8827,7 +8840,10 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   ACE_UNUSED_ARG (nbyte);
   ACE_NOTSUP_RETURN (-1);
 # else
-  ACE_OSCALL_RETURN (::write_f (handle, buf, nbyte), ssize_t, -1);
+  if(::write_f(handle, (void *) buf, nbyte) == 0)
+    return (ssize_t) nbyte;
+  else
+    return -1;
 # endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #else
 # if defined (ACE_LACKS_POSIX_PROTOTYPES)
@@ -10915,7 +10931,41 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::make_dir ((char *) path, mode), int, -1);
+  //The pSOS make_dir fails if the last character is a '/'
+  int location;
+  char *phile_path;
+
+  phile_path = (char *)ACE_OS::malloc(strlen(path));
+  if (phile_path == 0)
+  {
+     ACE_OS::printf ("malloc in make_dir failed: [%X]\n", errno);
+     return -1;
+  }
+  else
+  {
+     ACE_OS::strcpy (phile_path, path);
+  }
+
+  location = ACE_OS::strlen(phile_path);
+  if(phile_path[location-1] == '/')
+  {
+     phile_path[location-1] = 0;
+  }
+
+  u_long result;
+  result = ::make_dir ((char *) phile_path, mode);
+  if (result == 0x2011)  // Directory already exists
+    {
+      result = 0;
+    }
+  else if (result != 0)
+    {
+      result = -1;
+    }
+
+  ACE_OS::free(phile_path);
+  return result;
+
 # elif defined (VXWORKS)
   ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::mkdir ((char *) path), int, -1);
@@ -11243,7 +11293,12 @@ ACE_OS::strchr (wchar_t *s, wint_t c)
 ACE_INLINE wchar_t *
 ACE_OS::strnchr (wchar_t *s, wint_t c, size_t len)
 {
+#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+  const wchar_t *const_wchar_s=s;
+  return (wchar_t *) ACE_OS::strnchr (const_wchar_s, c, len);
+#else
   return (wchar_t *) ACE_OS::strnchr ((const wchar_t *) s, c, len);
+#endif
 }
 
 ACE_INLINE wchar_t *
@@ -11442,7 +11497,12 @@ ACE_OS::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 ACE_INLINE wchar_t *
 ACE_OS::strnstr (wchar_t *s, const wchar_t *t, size_t len)
 {
+#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+  const wchar_t *const_wchar_s=s;
+  return (wchar_t *) ACE_OS::strnstr (const_wchar_s, t, len);
+#else
   return (wchar_t *) ACE_OS::strnstr ((const wchar_t *) s, t, len);
+#endif
 }
 
 ACE_INLINE wchar_t *
