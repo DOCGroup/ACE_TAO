@@ -98,6 +98,10 @@ SOURCE=.\RMCast.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Control_Splitter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Fragment.cpp
 # End Source File
 # Begin Source File
@@ -130,11 +134,23 @@ SOURCE=.\RMCast_Reassembly.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Reliable_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reordering.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Resend_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Singleton_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -144,6 +160,14 @@ SOURCE=.\RMCast_UDP_Event_Handler.cpp
 
 SOURCE=.\RMCast_UDP_Proxy.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Reliable_Receiver.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Reliable_Sender.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -151,6 +175,10 @@ SOURCE=.\RMCast_UDP_Proxy.cpp
 # Begin Source File
 
 SOURCE=.\RMCast.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Control_Splitter.h
 # End Source File
 # Begin Source File
 
@@ -190,11 +218,23 @@ SOURCE=.\RMCast_Reassembly.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Reliable_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reordering.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Resend_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Singleton_Factory.h
 # End Source File
 # Begin Source File
 
@@ -204,6 +244,14 @@ SOURCE=.\RMCast_UDP_Event_Handler.h
 
 SOURCE=.\RMCast_UDP_Proxy.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Reliable_Receiver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Reliable_Sender.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -211,6 +259,10 @@ SOURCE=.\RMCast_UDP_Proxy.h
 # Begin Source File
 
 SOURCE=.\RMCast.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Control_Splitter.i
 # End Source File
 # Begin Source File
 
@@ -246,11 +298,23 @@ SOURCE=.\RMCast_Reassembly.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Reliable_Factory.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reordering.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Resend_Handler.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Singleton_Factory.i
 # End Source File
 # Begin Source File
 
@@ -259,6 +323,14 @@ SOURCE=.\RMCast_UDP_Event_Handler.i
 # Begin Source File
 
 SOURCE=.\RMCast_UDP_Proxy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Reliable_Receiver.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Reliable_Sender.i
 # End Source File
 # End Group
 # Begin Group "Template Files"

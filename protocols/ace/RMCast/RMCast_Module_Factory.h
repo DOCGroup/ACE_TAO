@@ -52,7 +52,7 @@ public:
   virtual ~ACE_RMCast_Module_Factory (void);
 
   //! Create a new proxy
-  virtual ACE_RMCast_Module *create (ACE_RMCast_IO_UDP *) = 0;
+  virtual ACE_RMCast_Module *create (void) = 0;
 
   //! Destroy a proxy
   /*!

@@ -181,6 +181,9 @@ public:
   //! Get the first key
   KEY first_key (void);
 
+  /// Return non-zero if the collection is empty
+  int empty (void);
+
   //! Add a new element
   int bind (KEY const & key, ITEM const & item);
 

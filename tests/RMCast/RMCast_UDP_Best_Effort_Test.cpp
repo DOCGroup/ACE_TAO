@@ -34,7 +34,7 @@ public:
   {
   }
 
-  virtual ACE_RMCast_Module *create (ACE_RMCast_IO_UDP *)
+  virtual ACE_RMCast_Module *create (void)
   {
     return new ACE_RMCast_Reassembly;
   }
@@ -55,7 +55,7 @@ public:
   {
   }
 
-  virtual ACE_RMCast_Module *create (ACE_RMCast_IO_UDP *)
+  virtual ACE_RMCast_Module *create (void)
   {
     ACE_RMCast_Module *x = new ACE_RMCast_Reassembly;
     x->next (this->module_);

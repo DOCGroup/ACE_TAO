@@ -48,12 +48,6 @@ public:
   //! Accesor for the next element in the stack
   virtual ACE_RMCast_Module* next (void) const;
 
-  //! Modifier for the previous element in the stack
-  virtual int prev (ACE_RMCast_Module *prev);
-
-  //! Accesor for the previous element in the stack
-  virtual ACE_RMCast_Module* prev (void) const;
-
   //! Initialize the module, setting up the next module
   virtual int open (void);
 
@@ -84,9 +78,6 @@ public:
 private:
   //! The next element in the stack
   ACE_RMCast_Module *next_;
-
-  //! The previous element in the stack
-  ACE_RMCast_Module *prev_;
 };
 
 #if defined (__ACE_INLINE__)
