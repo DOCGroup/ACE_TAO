@@ -19,6 +19,9 @@
 // They forgot a const in the prototype of putmsg and putpmsg...
 #define ACE_LACKS_CONST_STRBUF_PTR
 
+// Platform defines struct timespec, but not timespec_t
+#define ACE_LACKS_TIMESPEC_T
+
 // Compiler's template mechanism must see source code (i.e., .C files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 // Compiler doesn't support static data member templates.

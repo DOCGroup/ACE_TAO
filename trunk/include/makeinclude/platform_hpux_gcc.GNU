@@ -12,7 +12,7 @@ CC		= gcc
 CXX		= g++
 CFLAGS		+= -w
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
-DCFLAGS		+= -g -DHPUX_VERS=$(HPUX_VERS)
+DCFLAGS		+= -g -DHPUX_VERS=$(HPUX_VERS) -D_REENTRANT
 DLD		= $(CXX)
 LD		= $(CXX)
 OCFLAGS		+= -O2
@@ -23,6 +23,6 @@ LDFLAGS		= -L$(ACE_ROOT)/ace -Wl,+s
 LIBS		+= -lxti
 SOFLAGS		= $(CPPFLAGS) -shared -nostdlib
 SOEXT		= sl
-SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.$(SOEXT) $<
 SHLIBBUILD 	= $(SOLINK.cc) -o $@ $(VSHOBJS1)
 PRELIB = @true
