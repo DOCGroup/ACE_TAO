@@ -1,3 +1,13 @@
+Tue Jan 16 09:58:20 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_wchar.inl:
+
+          Updated ACE_Ascii_To_Wide and ACE_Wide_To_Ascii to 
+          preserve null pointers.
+
+          Thanks to Matthias Wittig <m.wittig@com-on.de> for 
+          reporting this and suggesting a fix.
+
 Tue Jan 16 10:47:33 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* ace/config-win32-common.h:
