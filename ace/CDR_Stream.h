@@ -733,6 +733,10 @@ public:
   // Re-initialize the CDR stream, copying the contents of the chain
   // of message_blocks starting from <data>.
 
+  void reset_contents (void);
+  // Re-initialize the CDR stream, forgetting about the old contents
+  // of the stream and allocating a new buffer (from the allocators).
+
   char* rd_ptr (void);
   // Returns the current position for the rd_ptr....
 

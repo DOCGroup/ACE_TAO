@@ -1,3 +1,10 @@
+Mon Jun 28 15:00:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.cpp:
+	  Added new method to reset the state of a CDR stream without need 
+	  for any memory allocations.
+
 Mon Jun 28 12:48:35 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: added this script, which checks build

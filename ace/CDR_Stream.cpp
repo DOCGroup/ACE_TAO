@@ -1045,3 +1045,9 @@ ACE_InputCDR::steal_contents (void)
 
   return block;
 }
+
+void
+ACE_InputCDR::reset_contents (void)
+{
+  this->start_.data_block (this->start_.data_block ()->clone ());
+}
