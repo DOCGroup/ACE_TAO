@@ -19,6 +19,12 @@ Sat Mar 26 02:34:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Updated CORBA SystemException TypeCode instantations to use new
 	  TypeCode implementation.
 
+	* tao/TAO_Singleton_Manager.cpp (fini):
+
+	  Removed function calls that finalized standard CORBA TypeCodes.
+	  Those TypeCodes are now automatically cleaned up during process
+	  termination.
+
 	* tao/DynamicInterface/Unknown_User_Exception.cpp:
 	* tao/DynamicInterface/Unknown_User_Exception.h:
 

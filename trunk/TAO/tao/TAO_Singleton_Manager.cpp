@@ -2,7 +2,6 @@
 
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/Exception.h"
-#include "tao/Typecode_Constants.h"
 
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -274,12 +273,6 @@ TAO_Singleton_Manager::fini (void)
     {
       delete this;
     }
-
-  // Clean up all ORB owned Exceptions (before TypeCode clean up).
-  TAO_Exceptions::fini ();
-
-  // Clean up all ORB owned TypeCodes.
-  TAO::TypeCode_Constants::fini ();
 
   return 0;
 }
