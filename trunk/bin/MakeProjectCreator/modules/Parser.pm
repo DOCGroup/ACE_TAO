@@ -13,8 +13,6 @@ package Parser;
 use strict;
 use FileHandle;
 
-my($cwd) = Cwd::getcwd();
-
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -22,6 +20,7 @@ my($cwd) = Cwd::getcwd();
 sub new {
   my($class)  = shift;
   my($self)   = bless {'line_number' => 0,
+                       'cwd'         => Cwd::getcwd(),
                       }, $class;
   return $self;
 }
@@ -33,10 +32,10 @@ sub cd {
   my($status) = chdir($dir);
   if ($status && $dir ne '.') {
     if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
-      $cwd = $dir;
+      $self->{'cwd'} = $dir;
     }
     else {
-      $cwd .= "/$dir";
+      $self->{'cwd'} .= "/$dir";
     }
   }
   return $status;
@@ -44,8 +43,8 @@ sub cd {
 
 
 sub getcwd {
-  #my($self) = shift;
-  return $cwd;
+  my($self) = shift;
+  return $self->{'cwd'};
 }
 
 
