@@ -6,7 +6,6 @@
 //#include "FP_Scheduler.h"
 #include "ace/Task.h"
 #include "DT_Creator.h"
-#include "Task.h"
 
 class Task_Stats;
 class DT_Creator;
