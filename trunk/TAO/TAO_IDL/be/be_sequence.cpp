@@ -519,7 +519,7 @@ be_sequence::gen_client_inline (void)
         }
       *ci << " *seq)" << nl;
       *ci << "{\n";
-      ci->indent ();
+      ci->incr_indent ();
       *ci << "delete [] seq;\n";
       ci->decr_indent ();
       *ci << "}\n\n";
@@ -551,7 +551,7 @@ be_sequence::gen_client_inline (void)
       if (this->unbounded_)
         {
           ci->indent ();
-          *ci << "// constructot for unbounded seq" << nl;
+          *ci << "// constructor for unbounded seq" << nl;
           *ci << "ACE_INLINE " << nl;
           *ci << this->name () << "::" << this->local_name () <<
             "(CORBA::ULong max )" << nl;
@@ -637,6 +637,22 @@ be_sequence::gen_client_inline (void)
         }
       *ci << " &" << nl;
       *ci << this->name () << "::operator[] (CORBA::ULong index) // read/write"
+         << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->buffer_[index];\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      ci->indent ();
+      *ci << "ACE_INLINE const ";
+      if (s->gen_code (bt, this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+             "be_sequence - base type code gen failure\n"), -1);
+        }
+      *ci << " &" << nl;
+      *ci << this->name () << "::operator[] (CORBA::ULong index) const // read"
          << nl;
       *ci << "{\n";
       ci->incr_indent ();
