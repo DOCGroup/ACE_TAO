@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (bug_1636_testclient) : taoexe, dynamicany, dynamicinterface, portableserver {
-   avoids += minimum_corba
+project (bug_1636_testclient) : taoexe, dynamicany, dynamicinterface, portableserver, minimum_corba {
    exename = client
 
    IDL_Files {

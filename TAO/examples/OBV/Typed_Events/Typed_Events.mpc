@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, valuetype {
-  avoids += minimum_corba
+project(*server): taoexe, portableserver, valuetype, minimum_corba {
   Source_Files {
     Server_i.cpp
     Event_Types_impl.cpp
@@ -11,8 +10,7 @@ project(*server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*client): taoexe, portableserver, valuetype {
-  avoids += minimum_corba
+project(*client): taoexe, portableserver, valuetype, minimum_corba {
   Source_Files {
     Client_i.cpp
     Event_Types_impl.cpp

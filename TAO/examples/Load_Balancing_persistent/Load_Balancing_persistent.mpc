@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*balancer): taoexe, portableserver {
-  avoids += minimum_corba repo
+project(*balancer): taoexe, portableserver, minimum_corba {
+  avoids += repo
   exename = load_balancer
 
   IDL_Files {
@@ -17,8 +17,8 @@ project(*balancer): taoexe, portableserver {
   }
 }
 
-project(*server): taoserver {
-  avoids += minimum_corba repo
+project(*server): taoserver, minimum_corba {
+  avoids += repo
 
   Source_Files {
     IdentityC.cpp
@@ -29,8 +29,8 @@ project(*server): taoserver {
   }
 }
 
-project(*client): taoclient, portableserver {
-  avoids += minimum_corba repo
+project(*client): taoclient, portableserver, minimum_corba {
+  avoids += repo
   exename = client
 
   Source_Files {
