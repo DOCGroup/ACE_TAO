@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("lb.ior");
 $mt_conffile = PerlACE::LocalFile ("multi_threaded_event_loop.conf");
-$st_conffile = PerlACE::LocalFile ("single_threaded_event_loop.conf");
+$st_conffile = "";
 
 $SV = new PerlACE::Process ("server");
 $CL = new PerlACE::Process ("client");
