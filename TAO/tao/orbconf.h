@@ -843,7 +843,7 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_DEF_GIOP_MAJOR 1
 #endif /* TAO_DEF_GIOP_MAJOR */
 #if !defined (TAO_DEF_GIOP_MINOR)
-#define TAO_DEF_GIOP_MINOR 1
+#define TAO_DEF_GIOP_MINOR 2
 #endif /* TAO_DEF_GIOP_MINOR */
 
 // By default TAO generate the OMG standard profile components

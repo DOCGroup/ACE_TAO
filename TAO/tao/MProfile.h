@@ -101,6 +101,9 @@ public:
   TAO_PHandle get_current_handle (void);
   // Returns the index for the current profile.
 
+  TAO_PHandle get_current_handle (void) const;
+  // Returns the index for the current profile.
+
   CORBA::ULong profile_count (void) const;
   // Returns the number of profiles stored in the list (last_+1).
 
@@ -111,7 +114,7 @@ public:
   const TAO_Profile* get_profile (CORBA::ULong slot) const;
   // Return the profile at position <slot>.  If <slot> is out of range
   // it returns 0.
-
+  
   void rewind (void);
   // Sets the current slot back to 0.
 

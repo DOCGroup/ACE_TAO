@@ -85,20 +85,38 @@ TAO_GIOP_Message_Connectors::
     {
       // Request completed successfully
     case TAO_GIOP_NO_EXCEPTION:
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+      params.reply_status_ = 
+        TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
       break;
 
       // Request terminated with user exception
     case TAO_GIOP_USER_EXCEPTION:
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
+      params.reply_status_ = 
+        TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
       break;
       // Request terminated with system exception
     case TAO_GIOP_SYSTEM_EXCEPTION:
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
+      params.reply_status_ = 
+        TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
       break;
       // Reply is a location forward type
     case TAO_GIOP_LOCATION_FORWARD:
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      params.reply_status_ = 
+        TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      break;
+      // Reply is a location forward perm type
+      // @@For the time being the behaviour of the
+      // LOCATION_FORWARD_PERM would be similar to the
+      // LOCATION_FORWARD as there is a controversy surrounding the
+      // usage of this in the OMG.
+    case TAO_GIOP_LOCATION_FORWARD_PERM:
+      params.reply_status_ = 
+        TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      break;
+      // Reply is a location forward type
+    case TAO_GIOP_NEEDS_ADDRESSING_MODE:
+      params.reply_status_ = 
+        TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE;
       break;
     default:
       if (TAO_debug_level > 0)
@@ -107,6 +125,43 @@ TAO_GIOP_Message_Connectors::
     }
 
   return 0;
+}
+
+
+int
+TAO_GIOP_Message_Connectors::
+  parse_locate_reply (TAO_GIOP_Message_State &state,
+                      TAO_Pluggable_Reply_Params &params)
+{
+  // Read the request id
+  if (!state.cdr.read_ulong (params.request_id_))
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t|%N|%l) : TAO_GIOP_Message_1_1::parse_reply, ")
+                    ACE_TEXT ("extracting request id")));
+      return -1;
+    }
+
+  // and the reply status type.  status can be NO_EXCEPTION,
+  // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD
+
+  // Cannot handle LOCATION_FORWARD_PERM here
+
+  // Please note here that we are NOT converting to the Pluggable
+  // messaging layer exception as this is GIOP specific. Not many
+  // messaging protocols have the locate_* messages.
+  if (!state.cdr.read_ulong (params.reply_status_))
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Connectors::parse_locate_reply, ")
+                    ACE_TEXT ("extracting reply status\n")));
+      return -1;
+    }
+  
+  return 0;
+  
 }
 
 
@@ -275,8 +330,8 @@ TAO_GIOP_Message_Connector_10::
     case TAO_GIOP_REQUEST:
       // In GIOP 1.0 and GIOP 1.1 this is an error,
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l TAO_GIOP_Message_1_1::parse_reply: "
-                         "request.\n"),
+                         ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Connector_10::parse_reply: ") 
+                         ACE_TEXT ("request.\n")),
                         -1);
 
     case TAO_GIOP_CANCELREQUEST:
@@ -289,7 +344,9 @@ TAO_GIOP_Message_Connector_10::
                            ACE_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
-      // Handle after the switch
+      if (this->parse_locate_reply (*state,
+                                    params) == -1)
+        return -1;
       break;
     case TAO_GIOP_REPLY:
       if ((state->cdr >> params.svc_ctx_) == 0)
@@ -300,17 +357,14 @@ TAO_GIOP_Message_Connector_10::
                         ACE_TEXT ("extracting context\n")));
           return -1;
         }
-      // Rest of the stuff after the switch
+      if (TAO_GIOP_Message_Connectors::parse_reply (*state,
+                                                    params) == -1)
+        return -1;
       break;
     case TAO_GIOP_FRAGMENT:
       // Never happens: why??
       break;
     }
-
-  if (TAO_GIOP_Message_Connectors::parse_reply (*state,
-                                                params)
-      == -1)
-    return -1;
 
   return 0;
 }
@@ -537,10 +591,7 @@ parse_reply (TAO_Message_State_Factory &mesg_state,
   // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = ACE_dynamic_cast (TAO_GIOP_Message_State *,
                                                     &mesg_state);
-  if (TAO_GIOP_Message_Connectors::parse_reply (*state,
-                                                params)
-      == -1)
-    return -1;
+
 
   switch (state->message_type)
     {
@@ -558,9 +609,15 @@ parse_reply (TAO_Message_State_Factory &mesg_state,
                            ACE_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
-      // Handle after the switch
+      if (this->parse_locate_reply (*state,
+                                    params) == -1)
+        return -1;
       break;
     case TAO_GIOP_REPLY:
+      if (TAO_GIOP_Message_Connectors::parse_reply (*state,
+                                                    params)
+          == -1)
+        return -1;
       if ((state->cdr >> params.svc_ctx_) == 0)
         {
           if (TAO_debug_level > 0)

@@ -17,7 +17,8 @@ TAO_Profile::~TAO_Profile (void)
 // ****************************************************************
 
 TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
-  : TAO_Profile (tag)
+  : TAO_Profile (tag),
+    tagged_profile_ ()
 {
 }
 
@@ -104,3 +105,14 @@ TAO_Unknown_Profile::reset_hint (void)
 {
   // do nothing
 }
+
+IOP::TaggedProfile&
+TAO_Unknown_Profile::create_tagged_profile (void)
+{
+  this->tagged_profile_.tag = this->tag ();
+  
+  // I dont know about the rest, so we return our copy
+  return this->tagged_profile_;
+  
+}
+

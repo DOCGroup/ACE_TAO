@@ -92,13 +92,13 @@ TAO_GIOP_ServerRequest::principal (void) const
 ACE_INLINE TAO_ObjectKey &
 TAO_GIOP_ServerRequest::object_key (void)
 {
-  return this->object_key_;
+  return this->profile_.object_key ();
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
 {
-  return this->orb ()->key_to_object (this->object_key_,
+  return this->orb ()->key_to_object (this->object_key (),
                                       0,
                                       0,
                                       1,
@@ -137,14 +137,10 @@ TAO_GIOP_ServerRequest::requesting_principal (CORBA_Principal_ptr
   this->requesting_principal_ = principal;
 }
 
-ACE_INLINE IOP::TaggedProfile &
-TAO_GIOP_ServerRequest::tagged_profile (void)
+ACE_INLINE TAO_Tagged_Profile &
+TAO_GIOP_ServerRequest::profile (void)
 {
   return this->profile_;
 }
 
-ACE_INLINE GIOP::IORAddressingInfo &
-TAO_GIOP_ServerRequest::addressing_info (void)
-{
-  return this->addr_info_;
-}
+

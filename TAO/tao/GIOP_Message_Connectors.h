@@ -59,6 +59,11 @@ protected:
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
   // Parse the reply message from the server
+  
+  
+  int parse_locate_reply (TAO_GIOP_Message_State &state,
+                          TAO_Pluggable_Reply_Params &params);
+  // Parse the locate reply message
 
 private:
   virtual CORBA::Boolean

@@ -145,6 +145,10 @@ public:
   void reset_hint (void);
   //  Reset the hint's value.
 
+  IOP::TaggedProfile &create_tagged_profile (void);
+  // Please refer to Profile.h for the documentation of this
+  // function.  
+  
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
@@ -154,6 +158,9 @@ private:
   // Profiles should not be copied.
 
 private:
+
+  void create_profile_body (TAO_OutputCDR &cdr) const;
+  // Creates a encapsultaion of the ProfileBody struct in the <cdr>
 
   CORBA::String_var host_;
   // String representing the hosts name.
@@ -177,6 +184,10 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+  IOP::TaggedProfile tagged_profile_;
+  // Our tagged profile
+  
 };
 
 #if defined (__ACE_INLINE__)

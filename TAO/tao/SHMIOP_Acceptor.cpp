@@ -248,6 +248,57 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   return 0;
 }
 
+
+int
+TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
+                                 TAO_ObjectKey &object_key)
+{
+  // Create the decoding stream from the encapsulation in the buffer,
+  TAO_InputCDR cdr (profile.profile_data.mb ());
+  
+  CORBA::Octet major, minor;
+  
+  // Read the version. We just read it here. We don't*do any*
+  // processing. 
+  if (!(cdr.read_octet (major)
+        && cdr.read_octet (minor)))
+  {
+    if (TAO_debug_level > 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                    major,
+                    minor));
+      }
+    return -1;
+  }
+  
+  CORBA::String_var host;
+  CORBA::UShort port = 0;
+
+  // Get host and port. No processing here too..
+  if (cdr.read_string (host.out ()) == 0
+      || cdr.read_ushort (port) == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) TAO_Tagged_Profile::decode - ")
+                      ACE_TEXT ("error while decoding host/port")));
+        }
+      return -1;
+    }
+  
+  // ... and object key.
+  if ((cdr >> object_key) == 0)
+    return -1;
+  
+  // We are NOT bothered about the rest.
+
+  return 1;
+}
+
+
 CORBA::ULong
 TAO_SHMIOP_Acceptor::endpoint_count (void)
 {

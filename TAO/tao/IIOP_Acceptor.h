@@ -75,6 +75,8 @@ public:
   virtual int is_collocated (const TAO_Profile* profile);
   virtual CORBA::ULong endpoint_count (void);
 
+  virtual int object_key (IOP::TaggedProfile &profile,
+                          TAO_ObjectKey &key);
 private:
   int open_i (TAO_ORB_Core *orb_core,
               const ACE_INET_Addr &addr);

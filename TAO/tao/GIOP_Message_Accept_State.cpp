@@ -8,6 +8,7 @@
 //#include "tao/CDR.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/NVList.h"
+#include "tao/Tagged_Profile.h"
 
 
 ACE_RCSID(tao, GIOP_Message_Accept_State, "$Id$")
@@ -83,7 +84,7 @@ TAO_GIOP_Message_Accept_State::marshal_reply_status (TAO_OutputCDR &output,
       output.write_ulong (TAO_GIOP_USER_EXCEPTION);
       break;
     default:
-      // Some other specifc exception
+      // Some other specific exception
       output.write_ulong (reply.reply_status_);
       break;
     }
@@ -115,8 +116,7 @@ TAO_GIOP_Message_Accept_State::
 
 CORBA::Boolean 
 TAO_GIOP_Message_Accept_State::
-unmarshall_iop_profile (TAO_ObjectKey & /*object_key*/, 
-                        IOP::TaggedProfile & /*profile*/,
+unmarshall_iop_profile (TAO_Tagged_Profile & /*profile*/,
                         TAO_InputCDR & /*cdr*/)
 {
   return 0;
@@ -125,8 +125,7 @@ unmarshall_iop_profile (TAO_ObjectKey & /*object_key*/,
 
 CORBA::Boolean 
 TAO_GIOP_Message_Accept_State::
-unmarshall_ref_addr (TAO_ObjectKey & /*object_key*/, 
-                     GIOP::IORAddressingInfo & /*profile*/,
+unmarshall_ref_addr (TAO_Tagged_Profile & /*profile*/,
                      TAO_InputCDR & /*cdr*/)
 {
   return 0;
@@ -452,15 +451,13 @@ TAO_GIOP_Message_Accept_State_12::
        else if (disc == GIOP::ProfileAddr)
           {
             hdr_status = 
-              this->unmarshall_iop_profile (request.object_key (),
-                                            request.tagged_profile (),
+              this->unmarshall_iop_profile (request.profile (),
                                             input);
           }
       else if (disc == GIOP::ReferenceAddr)
         {
              hdr_status = 
-               this->unmarshall_ref_addr (request.object_key (),
-                                          request.addressing_info (),
+               this->unmarshall_ref_addr (request.profile (),
                                           input);
         }
     }
@@ -547,15 +544,13 @@ TAO_GIOP_Message_Accept_State_12::
        else if (disc == GIOP::ProfileAddr)
           {
             hdr_status = 
-              this->unmarshall_iop_profile (request.object_key (),
-                                            request.tagged_profile (),
+              this->unmarshall_iop_profile (request.profile (),
                                             msg);
           }
       else if (disc == GIOP::ReferenceAddr)
         {
              hdr_status = 
-               this->unmarshall_ref_addr (request.object_key (),
-                                          request.addressing_info (),
+               this->unmarshall_ref_addr (request.profile (),
                                           msg);
         }
     }
@@ -570,28 +565,20 @@ TAO_GIOP_Message_Accept_State_12::
 
 CORBA::Boolean 
 TAO_GIOP_Message_Accept_State_12::
-  unmarshall_iop_profile (TAO_ObjectKey &object_key,
-                          IOP::TaggedProfile &profile_addr,
+  unmarshall_iop_profile (TAO_Tagged_Profile &profile_addr,
                           TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status = 
     (CORBA::Boolean) input.good_bit ();
-  
-  // Extract the TaggedProfile
-  // @@We can also look in to the CDR stream to extract the
-  // members of the struct (TaggedProfile) directly. A place
-  // for optimzation. Once we have this working we can implement
-  // this 
-  hdr_status &= input >> profile_addr;
+
+  // Get the IOP::Tagged profile.
+  IOP::TaggedProfile &tagged_profile = 
+    profile_addr.tagged_profile ();
+    
+  hdr_status &= input >> tagged_profile;
   
   // Extract the object key from the TaggedProfile
-  if (hdr_status)
-    {
-      object_key.replace (profile_addr.profile_data.length (),
-                          profile_addr.profile_data.length (),
-                          profile_addr.profile_data.get_buffer ());
-                          
-    }
+  hdr_status &=profile_addr.extract_object_key (tagged_profile);
 
   return hdr_status;
 }
@@ -599,33 +586,24 @@ TAO_GIOP_Message_Accept_State_12::
 
 CORBA::Boolean 
 TAO_GIOP_Message_Accept_State_12::
-  unmarshall_ref_addr (TAO_ObjectKey &object_key,
-                       GIOP::IORAddressingInfo &addr_info,
+  unmarshall_ref_addr (TAO_Tagged_Profile &profile_addr,
                        TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status = 
     (CORBA::Boolean) input.good_bit ();
 
-  //Extract the Addressing info
-  // @@We can also look in to the CDR stream to extract the
-  // members of the struct (AddressingInfo) directly. A place
-  // for optimzation. Once we have this working we can implement
-  // this 
+    // Get the IOP::Tagged profile.
+  GIOP::IORAddressingInfo &addr_info = 
+    profile_addr.addressing_info ();
+
   hdr_status &= input>> addr_info;
+
+  IOP::TaggedProfile &tag = 
+    addr_info.ior.profiles [addr_info.selected_profile_index];
   
-  // Extract the object key
-  if (hdr_status)
-    {
-      // Get the IOP::TaggedProfile
-      IOP::TaggedProfile &tag = 
-        addr_info.ior.profiles [addr_info.selected_profile_index];
-      
-      // Replace the object key
-      object_key.replace (tag.profile_data.length (),
-                          tag.profile_data.length (),
-                          tag.profile_data.get_buffer ());
-    }
-  
+  // Extract the object key from the TaggedProfile
+  hdr_status &= profile_addr.extract_object_key (tag);
+
   return hdr_status;
 }
 
@@ -650,7 +628,7 @@ write_reply_header (TAO_OutputCDR & output,
       output.write_ulong (TAO_GIOP_LOCATION_FORWARD_PERM);
     }
   else if (reply.reply_status_ ==
-           TAO_PLUGABLE_MESSAGE_NEEDS_ADDRESSING_MODE)
+           TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE)
     {
       // Not sure when we will use this.
       output.write_ulong (TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE);
@@ -678,8 +656,9 @@ write_locate_reply_mesg (TAO_OutputCDR & output,
                          CORBA::ULong request_id,
                          TAO_GIOP_Locate_Status_Msg &status_info)
 {
-  // Make the header for the locate request
   output.write_ulong (request_id);
+
+  // Make the header for the locate request
   output.write_ulong (status_info.status);
 
   if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
@@ -687,9 +666,9 @@ write_locate_reply_mesg (TAO_OutputCDR & output,
 
   switch (status_info.status)
     {
-
-      // More likely than not we will not have this in TAO
     case TAO_GIOP_OBJECT_FORWARD:
+      
+      // More likely than not we will not have this in TAO
     case TAO_GIOP_OBJECT_FORWARD_PERM:
       {
         CORBA::Object_ptr object_ptr = 

@@ -83,6 +83,26 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
   return 0;
 }
 
+TAO_Acceptor*
+TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
+{
+  TAO_AcceptorSetIterator end =
+    this->end ();
+  TAO_AcceptorSetIterator acceptor =
+    this->begin ();
+
+  for (;
+       acceptor != end ;
+       acceptor++)
+    {
+      if ((*acceptor)->tag () == tag)
+        return *acceptor;
+    }
+
+  return 0;
+}
+
+
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              CORBA::Environment &ACE_TRY_ENV)
