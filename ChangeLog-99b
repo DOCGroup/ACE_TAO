@@ -1,3 +1,9 @@
+Sun Feb 28 12:57:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (terminate): The condition for handling
+	  joining thread was wrong.  Thanks to Terry Rosenbaum
+	  <Terry.Rosenbaum@Radiology.MSU.edu> for reporting the bug.
+
 Sun Feb 28 08:37:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_Thread_Adapter::invoke): replaced call
