@@ -294,7 +294,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
   os->incr_indent ();
   *os << "this->"
       << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-      << " = val->duplicate ();" << be_uidt_nl;
+      << " = " << bt->name () << "::_duplicate (val);" << be_uidt_nl;
   *os << "}" << be_nl;
 
   // get method
@@ -350,7 +350,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
   os->incr_indent ();
   *os << "this->"
       << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-      << " = val->duplicate ();" << be_uidt_nl;
+      << " = " << bt->name () << "::_duplicate (val);" << be_uidt_nl;
   *os << "}" << be_nl;
 
   // get method
