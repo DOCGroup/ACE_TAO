@@ -1,3 +1,11 @@
+Thu Apr 29 22:26:05 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Made a change in the structure Domain
+          to add a new field info_property
+          which is of the type Properties.
+
 Thu Apr 29 18:46:51 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Config_Error_Handler.h:
