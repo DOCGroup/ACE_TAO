@@ -27,11 +27,13 @@ To Run Manually:
 $ ./server -ORBSvcConf server.conf -o ior_file &
 
 4  Run the client
-
 $ ./client -ORBSvcConf client.conf -k file://ior_file
+
+The Password is 'trial' for both the certificates.
 
 	The client should print out 'AUTHORIZED' if the subject of the
 client certificate matches that of the dummy certificate created by
 the server.
 
-	Could also be run using the perl script.
+	Could also be run using the perl script provided.
+
