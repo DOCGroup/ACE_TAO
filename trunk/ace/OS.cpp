@@ -6673,3 +6673,287 @@ exit (int status)
 }
 
 # endif /* ACE_HAS_WINCE */
+
+#if defined (ACE_LACKS_STRPTIME)
+int
+ACE_OS::getnum (char *buf,
+                int *num,
+                int *bi,
+                int *fi,
+                int min,
+                int max)
+{
+  int i = 0, tmp = 0;
+
+  while (isdigit (buf[i])) 
+    {
+      tmp = (tmp * 10) + (buf[i] - '0');
+      if (max && (tmp > max))
+        return 0;
+      i++;
+    }
+
+  if (tmp < min)
+    return 0;
+  else if (i) 
+    {
+      *num = tmp;
+      (*fi)++;
+      *bi += i;
+      return 1;
+    } 
+  else
+    return 0;
+}
+#endif /* ACE_LACKS_STRPTIME */
+
+char *
+ACE_OS::strptime (char *buf,
+                  const char *format,
+                  struct tm *tm)
+{
+#if !defined (ACE_LACKS_STRPTIME)  
+  return ::strptime (buf,
+                     format,
+                     tm);
+#else
+  int bi = 0, fi = 0, percent = 0;
+  int wday = 0, yday = 0;
+  struct tm tmp;
+
+  if (!buf || !format) 
+    return 0;
+
+  while (format[fi] != '\0')
+    {
+      if (percent) 
+        {
+          percent = 0;
+          switch (format[fi]) 
+            {
+            case '%':                        /* an escaped % */
+              if (buf[bi] == '%') 
+                {
+                  fi++; bi++;
+                } 
+              else 
+                return buf + bi;
+              break;
+
+              /* not supported yet: weekday via locale long/short names
+                 case 'a':                        / * weekday via locale * /
+                 / * FALL THROUGH * /
+                 case 'A':                        / * long/short names * /
+                 break;
+                 */
+
+              /* not supported yet:
+                 case 'b':                        / * month via locale * /
+                 / * FALL THROUGH * /
+                 case 'B':                        / * long/short names * /
+                 / * FALL THROUGH * /
+                 case 'h':
+                 break;
+                 */
+
+              /* not supported yet:
+                 case 'c':                        / * %x %X * /
+                 break;
+                 */
+
+              /* not supported yet:
+                 case 'C':                        / * date & time -  * /
+                 / * locale long format * /
+                 break;
+                 */
+		
+            case 'd':                        /* day of month (1-31) */
+              /* FALL THROUGH */
+            case 'e':
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31)) 
+                return buf + bi;
+
+              break;
+
+            case 'D':                        /* %m/%d/%y */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12)) 
+                return buf + bi;
+
+              fi--;
+              tm->tm_mon--;
+
+              if (buf[bi] != '/')
+                return buf + bi;
+
+              bi++;
+
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31)) 
+                return buf + bi;
+
+              fi--;
+              if (buf[bi] != '/')
+                return buf + bi;
+              bi++;
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99)) 
+                return buf + bi;
+              if (tm->tm_year < 69)
+                tm->tm_year += 100;
+              break;
+
+            case 'H':                        /* hour (0-23) */
+              /* FALL THROUGH */
+            case 'k':
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23)) 
+                return buf + bi;
+              break;
+
+              /* not supported yet:
+                 case 'I':                        / * hour (0-12) * /
+                 / * FALL THROUGH * /
+                 case 'l':
+                 break;
+                 */
+
+            case 'j':                        /* day of year (0-366) */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366)) 
+                return buf + bi;
+
+              tm->tm_yday--;
+              yday = 1;
+              break;
+
+            case 'm':                        /* an escaped % */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12)) 
+                return buf + bi;
+
+              tm->tm_mon--;
+              break;
+
+            case 'M':                        /* minute (0-59) */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59)) 
+                return buf + bi;
+
+              break;
+
+              /* not supported yet:
+                 case 'p':                        / * am or pm for locale * /
+                 break;
+                 */
+
+              /* not supported yet:
+                 case 'r':                        / * %I:%M:%S %p * /
+                 break;
+                 */
+
+            case 'R':                        /* %H:%M */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23)) 
+                return buf + bi;
+
+              fi--;
+              if (buf[bi] != ':')
+                return buf + bi;
+              bi++;
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59)) 
+                return buf + bi;
+
+              break;
+
+            case 'S':                        /* seconds (0-61) */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61)) 
+                return buf + bi;
+              break;
+
+            case 'T':                        /* %H:%M:%S */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23)) 
+                return buf + bi;
+
+              fi--;
+              if (buf[bi] != ':')
+                return buf + bi;
+              bi++;
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59)) 
+                return buf + bi;
+
+              fi--;
+              if (buf[bi] != ':')
+                return buf + bi;
+              bi++;
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61)) 
+                return buf + bi;
+
+              break;
+
+            case 'w':                        /* day of week (0=Sun-6) */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6)) 
+                return buf + bi;
+
+              wday = 1;
+              break;
+
+              /* not supported yet: date, based on locale
+                 case 'x':                        / * date, based on locale * /
+                 break;
+                 */
+
+              /* not supported yet:
+                 case 'X':                        / * time, based on locale * /
+                 break;
+                 */
+
+            case 'y':                        /* the year - 1900 (0-99) */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99)) 
+                return buf + bi;
+
+              if (tm->tm_year < 69)
+                tm->tm_year += 100;
+              break;
+
+            case 'Y':                        /* the full year (1999) */
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 0)) 
+                return buf + bi;
+
+              tm->tm_year -= 1900;
+              break;
+
+            default:                        /* unrecognised */
+              return buf + bi;
+              break;
+            } /* switch (format[fi]) */
+
+        } 
+      else
+        { /* if (percent) */
+          if (format[fi] == '%') 
+            {
+              percent = 1;
+              fi++;
+            } 
+          else
+            {
+              if (format[fi] == buf[bi]) 
+                {
+                  fi++;
+                  bi++;
+                } 
+              else
+                return buf + bi;
+            }
+        } /* if (percent) */
+    } /* while (format[fi] */
+
+  if (!wday || !yday) 
+    {
+      ACE_OS::memcpy (&tmp, tm, sizeof (struct tm));
+      if (mktime (&tmp) != (time_t) (-1)) 
+        {
+          if (!wday) 
+            tm->tm_wday = tmp.tm_wday;
+          if (!yday) 
+            tm->tm_yday = tmp.tm_yday;
+        }
+    }
+
+  return buf + bi;
+#endif /* !defined (ACE_LACKS_STRPTIME) */
+}
+
