@@ -106,6 +106,25 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   ACE_NEW (this->sync_, ACE_DEFAULT_THREAD_MANAGER_LOCK);
 }
 
+void
+ACE_Thread_Descriptor::acquire_release (void)
+{
+  // Just try to acquire the lock then release it.
+  if (this->registered_ == 0)
+    {
+      this->sync_->acquire ();
+      // Acquire the lock before removing <td> from the thread table.  If
+      // this thread is in the table already, it should simply acquire the
+      // lock easily.
+
+      // Once we get the lock, we must have registered.
+      ACE_ASSERT (this->registered_ != 0);
+
+      this->sync_->release ();
+      // Release the lock before putting it back to freelist.
+    }
+}
+
 // The following macro simplifies subsequence code.
 #define ACE_FIND(OP,INDEX) \
   ACE_Thread_Descriptor *INDEX = OP; \
@@ -348,7 +367,7 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
   ACE_TRACE ("ACE_Thread_Exit::thr_mgr");
 
   if (tm != 0)
-    this->thread_control_.insert (tm);
+    this->thread_control_.insert (tm, 0);
 }
 
 // Set the thread exit status value.
@@ -805,20 +824,6 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
                                 int close_handler)
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
-
-  if (td->registered_ == 0)
-    {
-      td->sync_->acquire ();
-      // Acquire the lock before removing <td> from the thread table.  If
-      // this thread is in the table already, it should simply acquire the
-      // lock easily.
-
-      // Once we get the lock, we must have registered.
-      ACE_ASSERT (td->registered_ != 0);
-
-      td->sync_->release ();
-      // Release the lock before putting it back to freelist.
-    }
 
 #if defined (VXWORKS)
   ACE_thread_t tid = td->self ();
@@ -1294,15 +1299,6 @@ ACE_Thread_Manager::at_exit (void *object,
   return this->thread_desc_self ()->at_exit (object,
                                              cleanup_hook,
                                              param);
-}
-
-int
-ACE_Thread_Manager::acquire_release (void)
-{
-  // Just try to acquire the lock then release it.
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-                            this->lock_, -1));
-  return 0;
 }
 
 // Must be called when thread goes out of scope to clean up its table
@@ -1791,7 +1787,7 @@ ACE_Thread_Control::dump (void) const
 }
 
 int
-ACE_Thread_Control::insert (ACE_Thread_Manager *tm)
+ACE_Thread_Control::insert (ACE_Thread_Manager *tm, int insert)
 {
   ACE_TRACE ("ACE_Thread_Control::insert");
 
@@ -1799,7 +1795,10 @@ ACE_Thread_Control::insert (ACE_Thread_Manager *tm)
   ACE_Thread::self (t_id);
   this->tm_ = tm;
 
-  return this->tm_->insert_thr (ACE_Thread::self (), t_id);
+  if (insert)
+    return this->tm_->insert_thr (ACE_Thread::self (), t_id);
+  else
+    return 0;
 }
 
 // Initialize the thread controller.
