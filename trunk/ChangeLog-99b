@@ -1,3 +1,9 @@
+Fri Feb 26 11:56:08 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Log_Priority.h (ACE_Log_Priority): Removed all references to
+	  ACE_HAS_BROKEN_ENUMS since it has been deprecated (see David's
+	  ChangeLog entries from Feb 5).
+
 Fri Feb 26 11:09:47 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.i (sema_destroy): ACE_OSCALL and ACE_OSCALL_RETURN macro
