@@ -10,6 +10,15 @@ Wed Mar  7 20:07:00 2001  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/EC_Multiple/Makefile:
         * orbsvcs/tests/Event/Basic/Makefile:
         * orbsvcs/tests/Event_Latency/Makefile:
+        * TAO/examples/Content_Server/AMI_Observer/Makefile:
+        * TAO/examples/Quoter/Makefile:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+        * TAO/orbsvcs/examples/RtEC/Schedule/Makefile:
+        * TAO/orbsvcs/examples/RtEC/Simple/Makefile:
+        * TAO/orbsvcs/tests/Event/Performance/Makefile:
+        * TAO/orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * TAO/orbsvcs/tests/Notify/Basic/Makefile:
           Add missing libraries for QNX
 
         * tests/Collocation/Makefile.impl:
