@@ -1,3 +1,9 @@
+Mon Jan 21 03:00:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Framework_Component.cpp (register_component):
+
+	  Removed debugging statements that always printed text.
+
 Mon Jan 21 07:45:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* ace/Framework_Component.cpp:
