@@ -88,11 +88,13 @@ run_client (CORBA::ORB_ptr orb,
       ACE_CATCH (CORBA::TRANSIENT, t)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring transient exception\n"));
+          // ACE_PRINT_EXCEPTION (t, reason);
           ACE_OS::sleep (tv);
         }
       ACE_CATCH (CORBA::COMM_FAILURE, f)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring comm failure exception\n"));
+          // ACE_PRINT_EXCEPTION (f, reason);
           ACE_OS::sleep (tv);
         }
       ACE_CATCHANY
