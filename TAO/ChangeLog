@@ -1,3 +1,19 @@
+Fri Mar 28 10:04:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+          Used ACE_NESTED_CLASS macro for base class constructor
+          initialization for abstract interfaces. Also removed generation
+          of 'to_object' template specialization helper for abstract
+          interfaces. For these cases, we want to return failure (boolean
+          0), which is what the unspecialized version does.
+
+        * tests/Abstract_Interface/Abstract_Interface_Client.dsp:
+        * tests/Abstract_Interface/Abstract_Interface_Server.dsp:
+
+          Turned on RTTI for these projects.
+
 Fri Mar 28 09:23:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService.bor:

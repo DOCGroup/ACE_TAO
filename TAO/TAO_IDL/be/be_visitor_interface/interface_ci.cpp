@@ -74,14 +74,13 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name () 
-          << " (void)" << be_idt_nl
-          << ": CORBA::AbstractBase ()" << be_uidt_nl
+          << " (void)" << be_uidt_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name () 
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
-          << ": CORBA::AbstractBase (rhs)" << be_uidt_nl
+          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (rhs)" << be_uidt_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
@@ -91,7 +90,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
           << ")" << be_nl
-          << ": CORBA::AbstractBase (objref, _tao_collocated, servant)"
+          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (objref, _tao_collocated, servant)"
           << be_uidt_nl
           << "{}";
     }
@@ -103,18 +102,21 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   if (be_global->any_support ())
     {
-      *os << be_nl << be_nl
-          << "template<>" << be_nl
-          << "ACE_INLINE" << be_nl
-          << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
-          << be_idt <<  be_idt_nl
-          << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
-          << ") const" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
-          << "return 1;" << be_uidt_nl
-          << "}";
+      if (! node->is_abstract ())
+        {
+          *os << be_nl << be_nl
+              << "template<>" << be_nl
+              << "ACE_INLINE" << be_nl
+              << "CORBA::Boolean" << be_nl
+              << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
+              << be_idt <<  be_idt_nl
+              << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
+              << ") const" << be_uidt_nl
+              << "{" << be_idt_nl
+              << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
+              << "return 1;" << be_uidt_nl
+              << "}";
+        }
 
       if (node->is_abstract () || node->has_mixed_parentage ())
         {
