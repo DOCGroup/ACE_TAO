@@ -208,6 +208,29 @@ multicast requests.</TD></TR>
 <TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
 <TD>Specifies the use of collocation object optimization.  Default is yes.</TD></TR>
 <TR>
+  <TD>
+      <CODE>-ORBcollocationstrategy</CODE> <EM>thru_poa/direct</EM>
+  </TD>
+  <TD>
+      Specifies what kind of collocated object to use.  If the
+      <em>thru_poa</em> strategy is used, TAO uses the collocation
+      object implementation that respects POA's current state and
+      policies.   When using the <em>direct</em> strategy, method
+      invocations on collocated objects become direct calls to servant
+      without checking POA's status.  Default is thru_poa.
+  </TD>
+</TR>
+<TR>
+  <TD>
+      <CODE>-ORBglobalcollocation</CODE> <EM>yes/no</EM>
+  </TD>
+  <TD>
+      Specifies whether objects from different ORBs within the same
+      process can be treated as collocated or not.  If no, only objects
+      in the same ORB are treated as collocated.   Default is yes.
+  </TD>
+</TR>
+<TR>
 <TD><CODE>-ORBpreconnect</CODE> <EM>endpoint</EM></TD>
 <TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to
 each listed <EM>endpoint</EM>. If a connection cannot be established the
