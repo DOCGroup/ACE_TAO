@@ -1,3 +1,9 @@
+Thu Jul  1 08:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Multi_Priority_Mapping.{h,cpp}:
+          Added checks for TAO_HAS_CORBA_MESSAGING != 0 in these files,
+          we shouldn't build this when corba message is 0.
+
 Thu Jul  1 00:18:07 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* TAO_IDL/include/utl_string.h:
