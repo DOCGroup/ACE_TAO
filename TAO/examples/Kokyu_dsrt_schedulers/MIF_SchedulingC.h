@@ -47,7 +47,7 @@
 #include "tao/VarOut_T.h"
 
 #include "tao/RTScheduling/RTSchedulerC.h"
-#include "tao/RTCORBA/RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBA_includeC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -121,7 +121,7 @@ namespace MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SchedulingParameter;
   
   // TAO_IDL - Generated from
-  // .\be\be_interface.cpp:612
+  // .\be\be_interface.cpp:611
 
 #if !defined (_MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_)
 #define _MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_
@@ -224,7 +224,7 @@ namespace MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SchedulingParameterPolicy;
   
   // TAO_IDL - Generated from
-  // .\be\be_interface.cpp:612
+  // .\be\be_interface.cpp:611
 
 #if !defined (_MIF_SCHEDULING_SCHEDULER__VAR_OUT_CH_)
 #define _MIF_SCHEDULING_SCHEDULER__VAR_OUT_CH_

@@ -1,3 +1,37 @@
+Sun Nov 23 20:09:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTCORBA/RTCORBA_include.pidl:
+		* tao/RTCORBA/RTCORBA_includeC.h:
+		
+		  New files, a .pidl which only includes RTCORBA.pidl, and
+		  the stub header file generated from it, hand-crafted to
+		  include RTCORBA.h instead of RTCORBAC.h. This pair of
+		  files allows applications to include RTCORBA.pidl in
+		  their IDL files by including RTCORBA_include.pidl instead
+		  and let the IDL compiler automatically include 
+		  RTCORBA_includeC.h in the associated generated file, thsu
+		  avoiding the error of including RTCORBAC.h directly.
+		  
+		* tao/RTCORBA/RTCORBA.mpc:
+		
+		  Added RTCORBA_includeC.h to the header file list.
+		  
+		* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+        
+          Replaced include of RTCORBA.pidl in these files with
+          RTCORBA_include.pidl.
+          
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+        
+          Reverted change to idlflags in
+          
+          Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          since changes above now make it unnecessary.
+		
 Sun Nov 23 17:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp (compute_full_name):
