@@ -272,7 +272,7 @@ else
 
 const char* POA_CORBA::Policy::_interface_repository_id (void) const
 {
-  return "IDL:CORBA/Policy:1.0";
+  return "IDL:omg.org/CORBA/Policy:1.0";
 }
 
 // ****************************************************************
