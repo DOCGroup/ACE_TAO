@@ -1,3 +1,15 @@
+Sat Oct  9 20:36:16 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  added "Log" to the orbsvcs build.
+	* orbsvcs/Makefile:
+	  added the <Logging_Service> directory to compile.
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	  added explicit template instantiation macros
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	  used ACE_UINT64_FORMAT_SPECIFIER to sprintf ulonglong.
+
 Sat Oct  9 14:29:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Reply_Dispatcher.{h,i,cpp}:
@@ -6,7 +18,7 @@ Sat Oct  9 14:29:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  guards that I had overlooked.
 
 Sat Oct 09 14:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-	
+
 	* tao/MessagingC.h: Added the collocation function and
 	  removed the unnecessary implementation of constructor
 	  and destructor of the the ExceptionHolder in the header file.
