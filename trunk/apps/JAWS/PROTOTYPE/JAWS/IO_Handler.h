@@ -43,6 +43,8 @@ class JAWS_IO_Handler
   // = DESCRIPTION
 {
 public:
+  virtual ~JAWS_IO_Handler (void);
+
   virtual void task (JAWS_Pipeline_Handler *ph) = 0;
   virtual JAWS_Pipeline_Handler *task (void) = 0;
 
@@ -55,16 +57,16 @@ public:
   // been established.
 
 #if 0
-  virtual void connect_complete (ACE_Message_Block &) = 0;
+  virtual void connect_complete (ACE_Message_Block *) = 0;
   // This method is called by the IO class when new active connection has
   // been established.
 
-  virtual void connect_error (ACE_Message_Block &) = 0;
+  virtual void connect_error (ACE_Message_Block *) = 0;
   // This method is called by the IO class when new active connection has
   // been established.
 #endif
 
-  virtual void read_complete (ACE_Message_Block &data) = 0;
+  virtual void read_complete (ACE_Message_Block *data) = 0;
   // This method is called by the IO class when new client data shows
   // up.
 
@@ -148,7 +150,7 @@ protected:
 
   virtual void accept_complete (ACE_HANDLE handle);
   virtual void accept_error (void);
-  virtual void read_complete (ACE_Message_Block &data);
+  virtual void read_complete (ACE_Message_Block *data);
   virtual void read_error (void);
   virtual void transmit_file_complete (void);
   virtual void transmit_file_error (int result);
@@ -212,7 +214,7 @@ protected:
 
   virtual void accept_complete (void);
   virtual void accept_error (void);
-  virtual void read_complete (ACE_Message_Block &data);
+  virtual void read_complete (ACE_Message_Block *data);
   virtual void read_error (void);
   virtual void transmit_file_complete (void);
   virtual void transmit_file_error (int result);

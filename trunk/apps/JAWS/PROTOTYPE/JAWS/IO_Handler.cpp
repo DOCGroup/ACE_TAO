@@ -1,8 +1,14 @@
 // $Id$
 
+#include "JAWS/JAWS.h"
+
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Data_Block.h"
+
+JAWS_IO_Handler::~JAWS_IO_Handler (void)
+{
+}
 
 JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
 {
@@ -23,6 +29,9 @@ JAWS_Synch_IO_Handler::~JAWS_Synch_IO_Handler (void)
   if (this->mb_)
     this->mb_->release ();
   this->mb_ = 0;
+  ACE_OS::close (this->handle_);
+  this->handle_ = ACE_INVALID_HANDLE;
+  this->status_ = 0;
 }
 
 void
@@ -41,7 +50,7 @@ JAWS_Synch_IO_Handler::accept_error (void)
 }
 
 void
-JAWS_Synch_IO_Handler::read_complete (ACE_Message_Block &data)
+JAWS_Synch_IO_Handler::read_complete (ACE_Message_Block *data)
 {
   ACE_UNUSED_ARG (data);
   // We can call back into the pipeline task at this point
@@ -144,6 +153,8 @@ JAWS_Synch_IO_Handler::status (void)
 JAWS_IO_Handler *
 JAWS_Synch_IO_Handler_Factory::create_io_handler (void)
 {
+  JAWS_TRACE ("JAWS_Synch_IO_Handler_Factory::create");
+
   JAWS_Synch_IO *io;
   JAWS_Synch_IO_Handler *handler;
 
@@ -159,6 +170,7 @@ JAWS_Synch_IO_Handler_Factory::create_io_handler (void)
 void
 JAWS_Synch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
+  JAWS_TRACE ("JAWS_Synch_IO_Handler_Factory::destroy");
   delete handler;
 }
 
