@@ -1,3 +1,14 @@
+Mon Sep  2 18:52:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+
+	  Added missing emulated exception macros to _this() calls.
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
+
+	  Applied the same fix from Jon Biggar that Doug applied to the
+	  TimeService implementation.
+4
 Mon Sep  2 18:28:14 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RTCORBA/RT_PolicyFactory.cpp (create_policy):
