@@ -1,5 +1,4 @@
 #include "ace/Time_Value.h"
-#include "ace/Basic_Types.h"
 
 ACE_RCSID (ace,
            Time_Value,
