@@ -61,12 +61,16 @@ Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
           It will be used by autoconf, for Linux libc5 (pre-libc).  Thanks
           to Ossama for supplying it.
 
-        * config-g++-common.h: disable ACE_HAS_TEMPLATE_SPECIALIZATION with
-          g++ 2.9.  Thanks to Andrew G. Harvey <agh@cisco.com> for a problem
-          with compiling ace/Filecache.cpp with g++ 2.9 on SunOS 5.5.1.
+        * ace/config-g++-common.h: disable ACE_HAS_TEMPLATE_SPECIALIZATION
+          with g++ 2.9.  Thanks to Andrew G. Harvey <agh@cisco.com> for a
+          problem with compiling ace/Filecache.cpp with g++ 2.9 on SunOS 5.5.1.
 
         * tests/Upgradeable_RW_Test.h: replaced ACE_Thread_Mutex with
           ACE_SYNCH_MUTEX.  Thanks to Ossama for reporting this.
+
+        * ace/config-linux-common.h: commented out the msg_accrights(len)
+          #defines.  Thanks to Ossama for noticing that they just don't
+          look right.  They no longer appear to be necessary on Linux.
 
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
