@@ -87,7 +87,8 @@ public:
   CORBA::Policy_ptr get_cached_const_policy (TAO_Cached_Policy_Type type) const;
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
 
   /// Utility method to set a single policy.
   void set_policy (const CORBA::Policy_ptr policy
@@ -130,4 +131,3 @@ private:
 #include /**/ "ace/post.h"
 
 #endif /* TAO_POLICY_SET_H */
-
