@@ -11,6 +11,7 @@
 #include "ThreadPolicyC.h"
 
 #include "Thread_Strategy.h"
+#include "Request_Processing_Strategy.h"
 
 ACE_RCSID(PortableServer,
           Active_Policy_Strategies,
@@ -38,6 +39,37 @@ namespace TAO
       else
       {
         ACE_NEW (thread_strategy_, Single_Thread_Strategy);
+      }
+
+      switch (policies.request_processing())
+      {
+        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
+        {
+          ACE_NEW (request_processing_strategy_, AOM_Only_Request_Processing_Strategy);
+          break;
+        }
+        case ::PortableServer::USE_DEFAULT_SERVANT :
+        {
+          ACE_NEW (request_processing_strategy_, Default_Servant_Request_Processing_Strategy);
+          break;
+        }
+        case ::PortableServer::USE_SERVANT_MANAGER :
+        {
+          switch (policies.servant_retention())
+          {
+            case ::PortableServer::RETAIN :
+            {
+              ACE_NEW (request_processing_strategy_, Servant_Activator_Request_Processing_Strategy);
+              break;
+            }
+            case ::PortableServer::NON_RETAIN :
+            {
+              ACE_NEW (request_processing_strategy_, Servant_Locator_Request_Processing_Strategy);
+              break;
+            }
+          }
+          break;
+        }
       }
     }
 
