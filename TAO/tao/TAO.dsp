@@ -130,10 +130,6 @@ SOURCE=.\decode.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\deep_copy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\deep_free.cpp
 # End Source File
 # Begin Source File
