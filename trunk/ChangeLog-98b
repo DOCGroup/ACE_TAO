@@ -1,3 +1,10 @@
+Sun Oct  4 20:00:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Fixed the regular expression to detect compile errors.
+ 	  The user can pass extra arguments to GNU make, the arguments are
+	  given as the script is invoked.
+
 Sun Oct  4 14:30:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp (handle_events): Made sure we never suspend
