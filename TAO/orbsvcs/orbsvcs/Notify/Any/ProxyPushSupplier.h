@@ -30,6 +30,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class TAO_Notify_Export
+TAO_NS_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 /**
  * @class TAO_NS_ProxyPushSupplier
  *
