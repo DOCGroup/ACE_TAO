@@ -297,8 +297,7 @@ namespace TAO
       const char *intf,
       CORBA::Short priority
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // This operation creates an object reference that encapsulates the
       // specified Object Id and interface repository Id values. This

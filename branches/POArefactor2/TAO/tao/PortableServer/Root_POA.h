@@ -297,8 +297,7 @@ public:
       const char *intf
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -698,8 +697,7 @@ protected:
       CORBA::Short priority
       ACE_ENV_ARG_DECL
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::Servant reference_to_servant_i (
       CORBA::Object_ptr reference

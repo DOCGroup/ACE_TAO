@@ -1,3 +1,19 @@
+Mon Jan 10 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.pidl:
+          Removed raises (WrongPolicy) from create_reference_with_id, this
+          exception specification is not there anymore in the latest corba
+          spec. Addresses part of bugzilla bug [1917]
+
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/PortableServerC.{h,cpp,inl}:
+          Regenerated because of change above
+
+        * tao/PortableServer/Root_POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+          Updated method signature of create_reference_with_id because of
+          change above
+
 Thu Dec 16 10:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/*:

@@ -185,8 +185,7 @@ module PortableServer
       raises (WrongPolicy);
 
     Object create_reference_with_id (in ObjectId oid,
-                                     in CORBA::RepositoryId intf)
-      raises (WrongPolicy);
+                                     in CORBA::RepositoryId intf);
 
     // Identity mapping operations:.
     ObjectId servant_to_id (in Servant p_servant)
