@@ -420,3 +420,5 @@ extern int cma_sigwait  (sigset_t *);
 
 // Uncomment the following if tokens library is needed.
 //#define ACE_HAS_TOKENS_LIBRARY
+
+#endif /* ACE_CONFIG_NSK_H */
