@@ -1,3 +1,12 @@
+Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU,
+          ace/config-g++-common.h:
+          don't #define ACE_HAS_GNUG_PRE_2_8 with Tornado II's
+          g++.  It's egcs, though it's version identifier says
+          it's 2.7.  Thanks to Thomas Lockhart
+          <Thomas.G.Lockhart@jpl.nasa.gov> for reporting this. [Bug 80]
+
 Mon Jul 19 09:50:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Future.cpp: Added ACE_TYPENAME to template-qualified types.

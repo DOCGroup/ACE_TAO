@@ -1,339 +1,359 @@
+Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
+          (visit_interface),
+          TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+          (visit_interface),
+          TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp
+          (visit_valuetype):
+          replaced this generated code:
+
+            #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+
+          with:
+
+            #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+
+          so that it's easier to support Tornado II.  Thanks to
+          Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+          reporting this.  [Bug 80]
+
 Mon Jul 19 11:26:33 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
-	HP/UX compile warning fixes -
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-	modified the <create> method to throw the BindFailed exception.
-	* examples/Event_Comm/Event_Comm.idl:
-	* examples/Event_Comm/Event_Comm_i.h:
-	* examples/Event_Comm/Event_Comm_i.cpp:
-	modified the <subscribe> method to throw CannotSubscribe exception.
-	modified the <unsubscribe> method to throw CannotUnsubscribe exception.
+        HP/UX compile warning fixes -
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        modified the <create> method to throw the BindFailed exception.
+        * examples/Event_Comm/Event_Comm.idl:
+        * examples/Event_Comm/Event_Comm_i.h:
+        * examples/Event_Comm/Event_Comm_i.cpp:
+        modified the <subscribe> method to throw CannotSubscribe exception.
+        modified the <unsubscribe> method to throw CannotUnsubscribe exception.
 
 Mon Jul 19 11:05:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	Added a #ifdef to check if the platform supports 64bit long
-	long. If not, used the ACE_U_LongLong class intead.
+        Added a #ifdef to check if the platform supports 64bit long
+        long. If not, used the ACE_U_LongLong class intead.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
 
 Mon Jul 19 10:48:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Interface.pidl:
-	* tao/InterfaceC.h:
-	* tao/InterfaceC.i:
-	* tao/Interface.cpp:
-	* tao/corba.h:
-	* tao/corbafwd.h: Added preliminary stuff for Interface
-	  Repository. These files were added at the request of Phillippe
-	  <Philippe.Merle@lifl.fr> who wanted to use TAO with
-	  CorbaScript. These files will not get compiled till we release
-	  TAO 1.0.
+        * tao/Interface.pidl:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.i:
+        * tao/Interface.cpp:
+        * tao/corba.h:
+        * tao/corbafwd.h: Added preliminary stuff for Interface
+          Repository. These files were added at the request of Phillippe
+          <Philippe.Merle@lifl.fr> who wanted to use TAO with
+          CorbaScript. These files will not get compiled till we release
+          TAO 1.0.
 
 Sun Jul 18 20:36:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp (check_prefix):
+        * tao/IIOP_Connector.cpp (check_prefix):
 
-	  Removed "iioploc" from check.  We only care about the first four
-	  characters at this point, so "iiop" will suffice.
+          Removed "iioploc" from check.  We only care about the first four
+          characters at this point, so "iiop" will suffice.
 
-	* tao/ORB.cpp (url_ior_string_to_object):
+        * tao/ORB.cpp (url_ior_string_to_object):
 
-	  Minor change.  Moved declaration of returned Object_ptr to just
-	  before it gets assigned.
+          Minor change.  Moved declaration of returned Object_ptr to just
+          before it gets assigned.
 
 Sun Jul 18 19:41:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/InterOp-Naming/INS_test_client.cpp (main):
+        * tests/InterOp-Naming/INS_test_client.cpp (main):
 
-	  Added a command line option "-l" that tests and demonstrates
-	  usage of the CORBA::ORB::list_initial_services() method.
+          Added a command line option "-l" that tests and demonstrates
+          usage of the CORBA::ORB::list_initial_services() method.
 
-	* tests/InterOp-Naming/run_tests.pl:
+        * tests/InterOp-Naming/run_tests.pl:
 
-	  Added a test that exercises the newly added "-l" option.
+          Added a test that exercises the newly added "-l" option.
 
-	* tao/DynAny_i.cpp (get_any):
+        * tao/DynAny_i.cpp (get_any):
 
-	  Fixed problem where CORBA_Any_var::out() was being passed to an
-	  ACE_NEW_THROW_EX macro, which is a problem since
-	  CORBA_Any_var::out() gets called twice, which in turn causes the
-	  underlying pointer to be set to zero.  Thanks to Carlos for
-	  explaining the problem.
+          Fixed problem where CORBA_Any_var::out() was being passed to an
+          ACE_NEW_THROW_EX macro, which is a problem since
+          CORBA_Any_var::out() gets called twice, which in turn causes the
+          underlying pointer to be set to zero.  Thanks to Carlos for
+          explaining the problem.
 
-	* tao/IOR_LookupTable.{h,cpp}:
-	* tao/ORB.{h,cpp}:
+        * tao/IOR_LookupTable.{h,cpp}:
+        * tao/ORB.{h,cpp}:
 
-	  Implemented the CORBA::ORB::list_initial_services() method.
+          Implemented the CORBA::ORB::list_initial_services() method.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Added a macro that defines a comma separated list of initial
-	  references/ObjectIDs that TAO currently supports.
+          Added a macro that defines a comma separated list of initial
+          references/ObjectIDs that TAO currently supports.
 
 Sun Jul 18 14:21:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/compiler.html: Updated the new options described below.
+        * docs/compiler.html: Updated the new options described below.
 
-	* TAO_IDL/be/be_args.cpp:
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_interface_fwd.cpp:
-	* TAO_IDL/be/be_structure.cpp:
-	* TAO_IDL/be/be_union.cpp:
-	* TAO_IDL/be/be_valuetype.cpp:
-	* TAO_IDL/be/be_valuetype_fwd.cpp:
-	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
-	* TAO_IDL/be/be_visitor_module/module_ch.cpp:
-	* TAO_IDL/be/be_visitor_module/module_sh.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.cpp: Separated the client and server
-	  export macros and export include files to allow building
-	  separate server and client DLLs.  4 new idl backend options are
-	  added, -Wb,skel_export_macro=xxx, -Wb,stub_export_macro=xxx,
-	  -Wb,skel_export_include=xxx.h, and
-	  -Wb,stub_export_include=xxx.h.  The original
-	  -Wb,export_macro=xxx and -Wb,export_include=xxx.h are still
-	  available and using the old option will be translated to the new
-	  options internally.  Thanks to Francois Bernier
-	  <fbernier@gel.ulaval.ca> for inspiring the change.
+        * TAO_IDL/be/be_args.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module_sh.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp: Separated the client and server
+          export macros and export include files to allow building
+          separate server and client DLLs.  4 new idl backend options are
+          added, -Wb,skel_export_macro=xxx, -Wb,stub_export_macro=xxx,
+          -Wb,skel_export_include=xxx.h, and
+          -Wb,stub_export_include=xxx.h.  The original
+          -Wb,export_macro=xxx and -Wb,export_include=xxx.h are still
+          available and using the old option will be translated to the new
+          options internally.  Thanks to Francois Bernier
+          <fbernier@gel.ulaval.ca> for inspiring the change.
 
 Sat Jul 17 17:29:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union.cpp:
-	  Changed compute_size_type() for unions to always return VARIABLE.
-	  This fixes a bug found when a union contains a struct which
-	  contains a different union composed of simple types. The inside
-	  union's size type comes back as FIXED, so it (rather than a
-	  pointer to it) becomes a struct member. Then the struct's size
-	  type also comes back as FIXED, so the outside union makes the
-	  struct (rather than a pointer to the struct) a member. Then
-	  the C++ compiler bails because the outside union contains
-	  a member with a copy constructor (the inside union). The previous
-	  version of the compute_size_type() function returns FIXED when
-	  the union contains, say, a short and a long, so it is actually,
-	  as far as marshaling is concerned, variable. This way, the function
-	  returns VARIABLE always, and incurs extra indirection only when
-	  the union contains, say, a long and an unsigned long. Nothing
-	  seems to get broken by this fix, and if that remains true over
-	  time, some of the union's _var and _out code generation sections
-	  can be trimmed.
+        * TAO_IDL/be/be_union.cpp:
+          Changed compute_size_type() for unions to always return VARIABLE.
+          This fixes a bug found when a union contains a struct which
+          contains a different union composed of simple types. The inside
+          union's size type comes back as FIXED, so it (rather than a
+          pointer to it) becomes a struct member. Then the struct's size
+          type also comes back as FIXED, so the outside union makes the
+          struct (rather than a pointer to the struct) a member. Then
+          the C++ compiler bails because the outside union contains
+          a member with a copy constructor (the inside union). The previous
+          version of the compute_size_type() function returns FIXED when
+          the union contains, say, a short and a long, so it is actually,
+          as far as marshaling is concerned, variable. This way, the function
+          returns VARIABLE always, and incurs extra indirection only when
+          the union contains, say, a long and an unsigned long. Nothing
+          seems to get broken by this fix, and if that remains true over
+          time, some of the union's _var and _out code generation sections
+          can be trimmed.
 
 Sat Jul 17 15:00:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB.cpp (resolve_initial_references):
+        * tao/ORB.cpp (resolve_initial_references):
 
-	  Changed a return value from zero to CORBA::Object::_nil () since
-	  the return type is CORBA::Object_ptr.
+          Changed a return value from zero to CORBA::Object::_nil () since
+          the return type is CORBA::Object_ptr.
 
 Sat Jul 17 14:27:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.h:
 
-	  Added some missing default CORBA_Envirnoment values (i.e.,
-	  TAO_default_enviroment ()).
+          Added some missing default CORBA_Envirnoment values (i.e.,
+          TAO_default_enviroment ()).
 
 Sat Jul 17 12:38:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/Makefile: Added nslist to the DIRS built "out-of-the-box".
-	  Thanks to Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
- 	  reporting this.
+        * utils/Makefile: Added nslist to the DIRS built "out-of-the-box".
+          Thanks to Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+          reporting this.
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (unmask_type): Changed
-	  the exception from AlreadyMasked to NotMasked since (1) this is
- 	  what's in the throw spec and (2) this appears to be the right
- 	  exception.
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (unmask_type): Changed
+          the exception from AlreadyMasked to NotMasked since (1) this is
+          what's in the throw spec and (2) this appears to be the right
+          exception.
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (validate_supertypes):
-	  Changed the throw spec from CosTrading::DuplicatePropertyName to
- 	  CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName
- 	  because that's the type of exception that's thrown in the body
- 	  of this method.
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (validate_supertypes):
+          Changed the throw spec from CosTrading::DuplicatePropertyName to
+          CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName
+          because that's the type of exception that's thrown in the body
+          of this method.
 
 Sat Jul 17 12:48:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/orbconf.h:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Connect.h:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Connector.h:
-	* tao/UIOP_Acceptor.cpp:
-	* tao/UIOP_Connector.cpp:
-	  Removed the bogus TAO_SOCK_* and TAO_LSOCK_* macros, the
-	  pluggable protocols framework provides the right solution for
-	  that problem.
+        * tao/orbconf.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/UIOP_Acceptor.cpp:
+        * tao/UIOP_Connector.cpp:
+          Removed the bogus TAO_SOCK_* and TAO_LSOCK_* macros, the
+          pluggable protocols framework provides the right solution for
+          that problem.
 
 Fri Jul 16 22:39:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Acceptor_Impl: This file contained a class that inherited
-	  from Acceptor and overwrote some of the functions (such as
-	  make_svc_handler() and activate_svc_handler()).  Changed this to
-	  use the Strategy_Acceptor and implemented the appropriate
-	  strategies needed for TAO.
+        * tao/Acceptor_Impl: This file contained a class that inherited
+          from Acceptor and overwrote some of the functions (such as
+          make_svc_handler() and activate_svc_handler()).  Changed this to
+          use the Strategy_Acceptor and implemented the appropriate
+          strategies needed for TAO.
 
-	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
-	* tao/UIOP_Acceptor.h (TAO_UIOP_Acceptor):
+        * tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+        * tao/UIOP_Acceptor.h (TAO_UIOP_Acceptor):
 
-	  Changed these classes to use the new Strategy Acceptor.
+          Changed these classes to use the new Strategy Acceptor.
 
 Fri Jul 16 19:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Callback_Quoter/run_test.pl:
-	* examples/Quoter/run_test.pl:
-	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
-	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl:
-	* orbsvcs/tests/Property/run_test.pl: Fixed the use of
-	  "Naming_Server".  Thanks to Irfan for reminding this.
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+        * orbsvcs/tests/CosEC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl: Fixed the use of
+          "Naming_Server".  Thanks to Irfan for reminding this.
 
-	* orbsvcs/Naming_Service/Makefile: Updated makefile to use
-	  multiple source files and generate Naming_Server.
+        * orbsvcs/Naming_Service/Makefile: Updated makefile to use
+          multiple source files and generate Naming_Server.
 
 Fri Jul 16 16:31:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
-	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
-	  Fixed typos in comment and ACE_ERROR message.
+        * TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+          Fixed typos in comment and ACE_ERROR message.
 
-	* TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
-	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
-	  New files needed for the fix described below.
+        * TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+          New files needed for the fix described below.
 
-	* TAO_IDL/be_include/be_visitor_array.h:
-	* TAO_IDL/be/be_visitor_array.cpp:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
-	  Extended the fix made previously for arrays containing
-	  anonymous sequences to work for sequences of
-	  recursive types.
+        * TAO_IDL/be_include/be_visitor_array.h:
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+          Extended the fix made previously for arrays containing
+          anonymous sequences to work for sequences of
+          recursive types.
 
 Fri Jul 16 15:51:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Profile.cpp:
-	  Fixed warning under egcs-2.95
+        * tao/IIOP_Profile.cpp:
+          Fixed warning under egcs-2.95
 
-	* examples/Simple/echo/run_test.pl:
-	  Added $EXEPREFIX thanks to Russell L. Carter
-	  <rcarter@consys.com> for pointing this out
+        * examples/Simple/echo/run_test.pl:
+          Added $EXEPREFIX thanks to Russell L. Carter
+          <rcarter@consys.com> for pointing this out
 
 Fri Jul 16 15:16:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* */Makefile:
-	  Remved the definitions for VLDLIBS and VBIN, these macros are
-	  defined in wrapper_macros.GNU and depend on the platform. Thanks
-	  to Steve Huston for pointing this out.
-	  Also removed the definitions for the BUILD macro for similar
-	  reasons.
+        * */Makefile:
+          Remved the definitions for VLDLIBS and VBIN, these macros are
+          defined in wrapper_macros.GNU and depend on the platform. Thanks
+          to Steve Huston for pointing this out.
+          Also removed the definitions for the BUILD macro for similar
+          reasons.
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Do not compile the AV/Streaming service on AIX until we figure
-	  out what the problem is
+        * orbsvcs/orbsvcs/Makefile:
+          Do not compile the AV/Streaming service on AIX until we figure
+          out what the problem is
 
-	* docs/releasenotes/TODO.html:
-	  Several tasks have been completed or moved to the BTS
+        * docs/releasenotes/TODO.html:
+          Several tasks have been completed or moved to the BTS
 
 Fri Jul 16 14:22:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/run_test.pl: Fixed the location of
-	  Naming_Server.
+        * orbsvcs/tests/Simple_Naming/run_test.pl: Fixed the location of
+          Naming_Server.
 
-	* orbsvcs/Naming_Service/Naming_Service.dsp: Added
-	  Naming_Server.cpp and renamed the executables to
-	  Naming_Server.exe.
+        * orbsvcs/Naming_Service/Naming_Service.dsp: Added
+          Naming_Server.cpp and renamed the executables to
+          Naming_Server.exe.
 
 Fri Jul 16 14:05:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/configurations.html:
+        * docs/configurations.html:
 
-	  Updated the run-time options section with information about how
-	  UIOP will provide considerably better performance over IIOP and
-	  IIOP with GIOPlite for ORB's running on the same host.
+          Updated the run-time options section with information about how
+          UIOP will provide considerably better performance over IIOP and
+          IIOP with GIOPlite for ORB's running on the same host.
 
-	  Additional minor updates to capitalization in "-ORB" options
-	  described in the document.
+          Additional minor updates to capitalization in "-ORB" options
+          described in the document.
 
 Fri Jul 16 13:59:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/{Makefile.bor,tao.rc},
-	  orbsvcs/orbsvcs/{Makefile.bor,orbsvcs.rc}:
-	  Updated these files to add version information to the DLLs so
- 	  when you right click them in windows explorer you can see what
- 	  version the file is (e.g., "4.6.45").  Thanks to Christopher
- 	  Kohlhoff <chris@kohlhoff.com> for contributing this.
+        * tao/{Makefile.bor,tao.rc},
+          orbsvcs/orbsvcs/{Makefile.bor,orbsvcs.rc}:
+          Updated these files to add version information to the DLLs so
+          when you right click them in windows explorer you can see what
+          version the file is (e.g., "4.6.45").  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for contributing this.
 
-	* examples/Borland: Updated the examples to contain several minor
-	  fixes for Borland C++ Builder.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * examples/Borland: Updated the examples to contain several minor
+          fixes for Borland C++ Builder.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
 Fri Jul 16 12:21:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Server_i.cpp.
+        * orbsvcs/Time_Service/Server_i.cpp.
 
-	  Added a parameter to fine tune the clerk's synchronization
-	  period in microseconds.
+          Added a parameter to fine tune the clerk's synchronization
+          period in microseconds.
 
-	* orbsvcs/Time_Service/Clerk_i.cpp.
-	* orbsvcs/Time_Service/Clerk_i.h.
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp.
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h.
+        * orbsvcs/Time_Service/Clerk_i.cpp.
+        * orbsvcs/Time_Service/Clerk_i.h.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h.
 
-	  Added the MAGIC OFFSET to make the base time as 15th October
-	  1582 instead of 1st Jan 1970. Thanks to Carsten Zerbst
-	  <zerbst@tu-harburg.de> for pointing this out and Mark
-	  Laffoon<mark.laffoon@centraxcorp.com> for contributing the magic
-	  offset.
+          Added the MAGIC OFFSET to make the base time as 15th October
+          1582 instead of 1st Jan 1970. Thanks to Carsten Zerbst
+          <zerbst@tu-harburg.de> for pointing this out and Mark
+          Laffoon<mark.laffoon@centraxcorp.com> for contributing the magic
+          offset.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
 
           Fixed a CORBA::TRANSIENT exception thrown by an _narrow () by
-	  adding activate_poa_manager () in init () of the following:
+          adding activate_poa_manager () in init () of the following:
 
 Fri Jul 16 10:08:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_visitor_union/union_cs.cpp:
-	* TAO_IDL/be_visitor_union_branch/public_access_cs.cpp:
-	  The 'alloc_flag' argument to the _access() method is
-	  sometimes used and sometimes not. To avoid unused arg
-	  warnings AND 'undefined' compile errors, had to add
-	  ACE_UNUSED_ARG (alloc_flag) on a case-by-case basis.
+        * TAO_IDL/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be_visitor_union_branch/public_access_cs.cpp:
+          The 'alloc_flag' argument to the _access() method is
+          sometimes used and sometimes not. To avoid unused arg
+          warnings AND 'undefined' compile errors, had to add
+          ACE_UNUSED_ARG (alloc_flag) on a case-by-case basis.
 
 Fri Jul 16 07:13:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
