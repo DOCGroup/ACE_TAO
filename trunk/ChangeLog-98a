@@ -1,3 +1,12 @@
+Fri Dec 26 06:44:25 1997    <nw1@JIG>
+
+	* ace/OS.h (ACE_OS::ace_flock_t): Added a new field "lockname_" to
+ 	  remember the lock filename.
+
+	* ace/OS.i (flock_init,flock_destroy): We need to remember the
+ 	  name of the lock file when initializing the lock and unlink the
+ 	  file when destroying the lock.
+
 Thu Dec 25 18:08:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/XtReactor.cpp: Removed g++ warning about initialization
