@@ -15,6 +15,7 @@ template <class TYPE, class FUNCTOR, class LOCK>
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &wheel)
   : timer_wheel_ (wheel)
 {
+  this->first();
   // Nothing
 }
 

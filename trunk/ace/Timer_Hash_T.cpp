@@ -98,8 +98,9 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::deletion (ACE_Timer_Queue_T<ACE_Even
 
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET>
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &hash)
-  : timer_hash_ (hash)
+  timer_hash_(hash);
 {
+  this->first();
   // Nothing
 }
 
