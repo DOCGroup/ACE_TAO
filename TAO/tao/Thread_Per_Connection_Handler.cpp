@@ -19,6 +19,7 @@ TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
 
 TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler (void)
 {
+  this->ch_->close_connection ();
   this->ch_->transport ()->remove_reference ();
 }
 

@@ -1,3 +1,32 @@
+Fri Feb  6 18:56:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (svc_i):
+
+	  A mistake while we keep looping trying to read messages. The
+	  loop used the availability of the transport () as a
+	  condition to exit the loop. But in the world after BUG 1020 was
+	  fixed, this condition is not right. The lifetime of the
+	  transport and the lifetime of the connection handler was tied
+	  together. The transport will never get deleted till the
+	  connection handler is deleted. The connection handler will never
+	  get deleted since the thread is using it. This is a vicious
+	  loop. Therefore we have removed that condition. We have added
+	  another condition to check for exiting out of the loop. The new
+	  condition basically checks the status of read () call. If the
+	  read call fails (we have taken care of timeouts here), we exit
+	  out of the loop. 
+	
+	* tao/Thread_Per_Connection_Handler.cpp:
+
+	  Before we call remove_ref () on the transport, just make sure
+	  to call close_connection () on the connection handler. Reactive
+	  servers do that automotaically through a call from the
+	  reactor. 
+
+	  These fixes should take care of the leak problems that Chris
+	  Reed <cr@apama.com> reported. Thanks to Chris for reporting
+	  this. 
+
 Fri Feb  6 22:55:30 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/CORBALOC_Parser.cpp: Remove TAO_HAS_SCIOP.
