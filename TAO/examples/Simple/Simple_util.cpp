@@ -435,9 +435,8 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
       CORBA::Object_var obj =
         naming_client_->resolve (server_name,
                                 ACE_TRY_ENV);
-      cout << "I am here "<<endl;
       ACE_TRY_CHECK;
-      cout << "I am here 1"<<endl;
+      
       this->server_ = INTERFACE_OBJECT::_narrow (obj.in (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
