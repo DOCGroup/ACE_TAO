@@ -19,6 +19,8 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/ACE_export.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -28,7 +30,6 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
-#  include "ace/OS.h"
 #  include "ace/Asynch_IO.h"
 #  include "ace/Asynch_IO_Impl.h"
 #  include "ace/Thread_Manager.h"
@@ -36,7 +37,6 @@
 #  include "ace/Timer_List.h"
 #  include "ace/Timer_Heap.h"
 #  include "ace/Timer_Wheel.h"
-#  include "ace/ACE_export.h"
 
 // Forward declarations.
 class ACE_Proactor_Impl;
