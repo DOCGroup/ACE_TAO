@@ -2,6 +2,9 @@
 
 #include "SupplierAdmin_i.h"
 
+// @@ Pradeep: the same comments about memory managment, your code looks
+// correct, but (IMHO) using _var is simpler...
+
 SupplierAdmin_i::SupplierAdmin_i (void)
   : qos_ (),
     rtec_supplieradmin_ (RtecEventChannelAdmin::SupplierAdmin::_nil ())

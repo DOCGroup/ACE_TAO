@@ -11,6 +11,8 @@ ConsumerAdmin_i::ConsumerAdmin_i (void)
 
 ConsumerAdmin_i::~ConsumerAdmin_i (void)
 {
+  // @@ It should be easier to use an _var for holding this object
+  // reference... 
   CORBA::release (this->rtec_consumeradmin_);
 }
 

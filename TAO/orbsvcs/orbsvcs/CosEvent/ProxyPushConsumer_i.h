@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ============================================================================
+// ================================================================
 //
 // = LIBRARY
 //   TAO services
@@ -16,7 +16,7 @@
 //   This has the implementation of the
 //   CosEventChannelAdmin::ProxyPushConsumer interface.
 //
-// ======================================================================================
+// ================================================================
 
 #if !defined (_PROXYPUSHCONSUMER_H)
 #define _PROXYPUSHCONSUMER_H
@@ -24,6 +24,9 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 
+// @@ Pradeep, all your classes should have a prefix, to avoid
+// namespace pollution (think about a user trying to name his class
+// PushSupplierWrapper). Something like TAO_CosEC_
 class PushSupplierWrapper;
 
 class TAO_ORBSVCS_Export ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
