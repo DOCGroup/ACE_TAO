@@ -64,8 +64,13 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   ACE_hrtime_t useconds; 
   useconds = (this->end_ - this->start_) / global_scale_factor_;
 
+#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / 1000000);
   elapsed_time.tv_nsec = (time_t) (useconds % 1000000 * 1000  +  nseconds);
+#else
+  elapsed_time.ts_sec = (time_t) (useconds / 1000000);
+  elapsed_time.ts_nsec = (time_t) (useconds % 1000000 * 1000  +  nseconds);
+#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 }
 #endif /* ACE_HAS_POSIX_TIME */
 
