@@ -19,11 +19,11 @@
 // ********************************************************
 
 // Platform specific directives
-#define FreeBSD
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
 
+// This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
 #if defined(FreeBSD_2_1)
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
