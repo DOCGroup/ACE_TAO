@@ -2,7 +2,8 @@ Wed Feb 10 23:15:27 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Clerk_i.cpp : Fixed a bug for the service not
 	working on NT with files. The initialization of the ACE_Array_Base
-	was not being done in the right place.
+	was not being done in the right place.Thanks to
+	Souhad Mcheik <mcheiks@inrs-telecom.uquebec.ca> for reporting this.
 
 Wed Feb 10 22:16:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
