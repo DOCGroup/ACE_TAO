@@ -77,6 +77,8 @@
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Union.h"
+#include "tao/ValueBase.h"
+#include "tao/ValueFactory.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

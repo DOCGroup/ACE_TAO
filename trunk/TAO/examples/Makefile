@@ -14,7 +14,8 @@ DIRS  = Callback_Quoter \
         POA \
 	Quoter \
 	Simple \
-	Event_Comm
+	Event_Comm \
+	OBV
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

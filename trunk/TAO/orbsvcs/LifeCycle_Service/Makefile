@@ -180,6 +180,8 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -190,8 +192,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -327,6 +327,10 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  LifeCycle_Service.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -363,6 +367,20 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
  Criteria_Evaluator.h
 .obj/LifeCycle_Service_i.o .obj/LifeCycle_Service_i.so .shobj/LifeCycle_Service_i.o .shobj/LifeCycle_Service_i.so: LifeCycle_Service_i.cpp \
@@ -484,6 +502,8 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -494,8 +514,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -631,6 +649,10 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
@@ -663,6 +685,20 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
  Criteria_Evaluator.h
 .obj/Factory_Trader.o .obj/Factory_Trader.so .shobj/Factory_Trader.o .shobj/Factory_Trader.so: Factory_Trader.cpp Factory_Trader.h \
@@ -782,6 +818,8 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -792,8 +830,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -929,6 +965,10 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
@@ -938,6 +978,20 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -1061,6 +1115,8 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1071,8 +1127,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1208,6 +1262,10 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \

@@ -1,3 +1,220 @@
+Thu May  6 12:11:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Many thanks and kudos to Torsten Kuepper
+	  <kuepper2@uni-wuppertal.de> who contributes an initial
+	  implementation of Object-by-Value to TAO. His ChangeLog entry
+	  follows:
+
+	* TAO/tao/Makefile:
+	* TAO/TAO_IDL/Makefile:
+	* TAO/tao/orbconf.h:
+	* TAO/TAO_IDL/include/idl.h:
+	  Support of Valuetypes if TAO_HAS_OBV resp. IDL_HAS_OBV is
+	  defined.
+	  This is far from complete. However
+	  + you are able to pass valuetypes as arguments in operation
+	  signatures (see examples/OBV).
+	    - Valuetype as member of other types (union, sequence ...) is
+	    missing until the compiler backend is provided with visitors
+	    for that.
+	  + A valuetype could have a valuetype as state member, ...
+	    - ... but currently the sharing of valuetypes in the context
+	    of an invocation is not yet implemented. This means you got
+	    two out of one (if two references point to one object) and
+	    cyclic references are not feasible.
+	  + The marshalling code accesses the state member data directly
+	    for optimization (-Wb,obv_opt_accessor).
+	    - This will be changed for unoptimized (standard) valuetypes,
+	      where the implementer should be able to override the
+	      accessor/modifier functions even for marshalling. Currently
+	      she isn't able to do so.
+	    - The marshalling does no fragmentation (chunking) yet. But
+	      this is required for custom marshalling and truncation.
+	    - Ordinary (not hashed) repository ids are used. Some code is
+	      missing that would optimize sending repo ids away (if the
+	      formal parameter is equal the current type) or that
+	      backreferences earlier send repository ids, when marshalling
+	      a graph.
+	    - The code generated for typedefs and forwards of valuetypes
+	      is not complete and will not compile.
+	    - Support of an interface is not yet there. Perhaps the TIE to
+	      a valuetype may give comparable functionality.
+ 	    - Abstract interfaces are not implemented too.
+	    - TypeCode for valuetypes are missing, and without that,
+	      packing a valuetype into an any is not yet possible.
+	    - init () is not yet mapped to create () in the _init
+	      class. But you can declare create () on your own in your
+	      factory class.
+	    - Some helper classes (e.g. _var for ValueFactory) are
+	      missing.
+	  And I have confused a few issues on constness in modifier
+	  functions and members (in _init) which should be private and
+	  friend of another class, but it didn't want to compile right. I
+	  will correct these points, when I have the time.
+
+	* TAO/examples/OBV/Typed_Events [new]:
+	  Demonstration of Typed Events, e.g. measuring values. The idea
+	  is to have common attributes (time and origin id) and operations
+	  (do_print()) in a base class.
+	  The event (temperature, position...) that is derived from the
+	  base is created in one process and is passed (type safe) to
+	  another process which invokes member function of the base class
+	  to do something with this concrete event (e.g. show, perform a
+	  test).
+	  (Naturally, the receiving process must have an implementation of
+	  the valuetypes.)
+
+	* TAO_IDL/idl_global.h:
+	* TAO_IDL/utl_global.cpp:
+	* TAO_IDL/drv_args.cpp:
+	* TAO_IDL/be/be_args.cpp:
+	  New TAO_IDL options
+	    -Gv   enable OBV (Valuetype)
+	    -Sv   disable OBV (Valuetype) (currently default)
+ 	          read option with idl_global->obv_support()
+	    -Wb,obv_opt_accessor  Nonvirtual inline accessor/modifier
+	    functions
+	  Currently it is necessary to use compiled marshalling (-Gc) when
+	  using the valuetype feature.
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/fe_init.cpp:
+	  Compiler FE recognizes the OBV token (abstract, custom, init,
+	  private, public, supports, truncatable, valuetype) (CORBA 2.3
+	  3.2.4), but only if it is compiled with IDL_HAS_OBV and -Gv is
+	  given.
+
+	* TAO_IDL/fe/idl.yy:
+	  There are some new productions in the parser. member is now a
+	  wrapper for member_i, which previously was member but now
+	  accesses $0 as visibility parameter.
+
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/include/ast_interface_fwd.h:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/include/ast_field.h:
+	* TAO_IDL/ast/ast_field.cpp:
+	* TAO_IDL/be_include/be_field.h:
+	* TAO_IDL/be/be_field.cpp:
+	* TAO_IDL/be_include/be_valuetype.h [new]:
+	* TAO_IDL/be/be_valuetype.cpp [new]:
+	* TAO_IDL/include/fe_interface_header.h:
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	  AST_Interface is currently used for valuetypes too.  (This
+	  attempt was made for better staying in sync with the rushing TAO
+	  development.)
+	  Though lots of code for name lookup and inheritance rules can be
+	  reused. AST_Interface has the new methods is_valuetype(),
+	  is_abstract_valuetype() and is_abstract_interface() which allows
+	  the frontend to distinguish them. Later on a new AST_ class
+	  should  be refactored which is a base class to the IDL types
+	  that provide inheritance.
+
+	  Some shared code in idl.yy is now in AST_Interface::redefine()
+	  and AST_Interface::fwd_redefinition_helper(). Forward definition
+	  is a little changed, that the dummy full definition be_ object
+	  stored in AST_InterfaceFwd is of the right type.
+
+	  FE_InterfaceHeader::compile_inheritance () is extended with the
+	  rules to check right inheritance of valuetypes and abstract
+	  interfaces.
+	  The constructor of FE_InterfaceHeader has now a default
+	  parameter which let the derived FE_obv_header invoke
+	  compile_inheritance () at later time.
+
+	* TAO_IDL/be_include/be.h:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be_include/be_visitor_module/module.h:
+	* TAO_IDL/be_include/be_visitor_root/root.h:
+	* TAO_IDL/be_include/be_visitor_argument/arglist.h:
+	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h:
+	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h:
+	* TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h:
+	* TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
+	* TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h:
+	* TAO_IDL/be_include/be_visitor_field/field_ch.h:
+	* TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype*.h:
+	* TAO_IDL/be_include/be_visitor_valuetype.h [new]:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd.h [new]:
+	* TAO_IDL/be_include/be_visitor_valuetype/*.h [new]:
+	* TAO_IDL/be/be_visitor.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype*.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd.cpp [new]:
+	* TAO_IDL/be/be_visitor_valuetype/*.cpp [new]:
+
+	  The visiting of valuetype is integrated into the root and module
+	  visitors. The OBV_ classes resp. namespaces are generated in an
+	  extra pass over the syntax tree.
+
+	* tao/corba.h:
+	* tao/corbafwd.h:
+	* tao/ValueBase.h [new]:
+	* tao/ValueBase.i [new]:
+	* tao/ValueBase.cpp [new]:
+	  All valuetypes inherit from the CORBA::ValueBase. It has
+	  abstract operations for the reference counting, which are
+	  implemented by multiply inherit from
+	  e.g. CORBA::DefaultValueRefCountBase.
+	  _copy_value () is not yet implemented.
+	  There is some internal stuff for doing [un]marshalling and
+	  dynamic type conversion (used by _downcast ()), whose
+	  underlaying mechanism is like in the tao_idl compiler
+	  itself:
+	    The static member _downcast () calls a virtual function, which
+	    is implemented from the IDL compiler, with an id of the wanted
+	    type. These it is compared against the actual id of the
+	    object. In case of mismatch the ancestors of the valuetype are
+	    called (in depth first order).
+	  _downcast () is used during unmarshaling too. This may result in
+	  quite undeterministic real time behaviour. The worst case would
+	  be that the _downcast walks the complete inheritance graph.
+	  The detailed marshaling is best studied from the comments in
+	  ValueBase.cpp.
+
+	* tao/ValueFactory.h [new]:
+	* tao/ValueFactory.i [new]:
+	* tao/ValueFactory.cpp [new]:
+	* tao/ValueFactory_Map.h [new]:
+	* tao/ValueFactory_Map.i [new]:
+	* tao/ValueFactory_Map.cpp [new]:
+	  The map of registered valuetype factories.
+	  TAO_OBV_REGISTER_FACTORY macro is for on the fly factory
+	  registration, but its not like in the OMG specs.
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	  Integration of the factory map for valuetypes with the ORB.
+	  It is accessed through CORBA_ORB::register_value_factory (),
+	  unregister_value_factory () and lookup_value_factory ().
+	  This needs some revision to make the changing of the map thread
+	  safe and changes to make it per ORB and not per process as it is
+	  currently.
+
+	* */Makefile:
+	  Many makefile dependencies updated.
+
+	* examples/Simple/chat/Makefile:
+	  The dependencies did not include Client_i.cpp or Server_i.cpp
+
+	* orbsvcs/tests/Trading/Makefile:
+	  Added dependencies to for parallel compilation.
+
 Thu May  6 09:24:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:

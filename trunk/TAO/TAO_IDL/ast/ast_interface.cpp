@@ -75,8 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * interfaces.
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_interface, "$Id$")
 
@@ -90,9 +90,9 @@ AST_Interface::AST_Interface()
 }
 
 AST_Interface::AST_Interface(UTL_ScopedName *n,
-			     AST_Interface **ih,
-			     long nih,
-			     UTL_StrList *p)
+                             AST_Interface **ih,
+                             long nih,
+                             UTL_StrList *p)
   : AST_Decl(AST_Decl::NT_interface, n, p),
     UTL_Scope(AST_Decl::NT_interface),
     pd_inherits(ih),
@@ -108,6 +108,27 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
  * Public operations
  */
 
+idl_bool AST_Interface::is_abstract_interface ()
+{
+  return 0;
+}
+
+
+idl_bool AST_Interface::is_valuetype ()
+{
+  return 0;
+}
+
+
+idl_bool AST_Interface::is_abstract_valuetype ()
+{
+  return 0;
+}
+
+void AST_Interface::set_abstract_valuetype ()
+{
+  ACE_ASSERT (0);
+}
 
 /*
  * Redefinition of inherited virtual operations
@@ -241,6 +262,50 @@ AST_Attribute *AST_Interface::fe_add_attribute(AST_Attribute *t)
 
   return t;
 }
+
+
+/*
+ * Add this AST_Field node (a field declaration) to this scope
+ * (only for valuetypes)
+ */
+AST_Field *AST_Interface::fe_add_field(AST_Field *t)
+{
+#ifdef IDL_HAS_VALUETYPE
+  AST_Decl *d;
+  /*
+   * Already defined and cannot be redefined? Or already used?
+   */
+  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
+    if (!can_be_redefined(d)) {
+      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
+      return NULL;
+    }
+    if (referenced(d)) {
+      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
+      return NULL;
+    }
+    if (t->has_ancestor(d)) {
+      idl_global->err()->redefinition_in_scope(t, d);
+      return NULL;
+    }
+  }
+  /*
+   * Add it to scope
+   */
+  add_to_scope(t);
+  /*
+   * Add it to set of locally referenced symbols
+   */
+  add_to_referenced(t, I_FALSE);
+
+  return t;
+
+#else /* IDL_HAS_VALUETYPE */
+  ACE_ASSERT (0);
+  return 0;
+#endif /* IDL_HAS_VALUETYPE */
+}
+
 
 /*
  * Add an AST_Operation node (an operation declaration) to this scope
@@ -552,9 +617,20 @@ AST_Native *AST_Interface::fe_add_native (AST_Native *t)
 void
 AST_Interface::dump(ostream &o)
 {
-  long	i;
+  long  i;
 
-  o << "interface ";
+  if (this->is_valuetype ())
+    {
+      if (this->is_abstract_valuetype ())
+        o << "abstract ";
+      o << "valuetype ";
+    }
+  else
+    {
+      if (this->is_abstract_interface ())
+        o << "abstract ";
+      o << "interface ";
+    }
   local_name()->dump(o);
   o << " ";
   if (pd_n_inherits > 0) {
@@ -562,7 +638,7 @@ AST_Interface::dump(ostream &o)
     for (i = 0; i < pd_n_inherits; i++) {
       pd_inherits[i]->local_name()->dump(o);
       if (i < pd_n_inherits - 1)
-	o << ", ";
+        o << ", ";
     }
   }
   o << " {\n";
@@ -571,11 +647,93 @@ AST_Interface::dump(ostream &o)
   o << "}";
 }
 
+void
+AST_Interface::fwd_redefinition_helper (AST_Interface *&i, UTL_Scope *s,
+                                                           UTL_StrList *p)
+{
+  AST_Decl        *d = NULL;
+  AST_Interface   *fd = NULL;
+
+  if (i != NULL &&
+      (d = s->lookup_by_name(i->name(), I_FALSE)) != NULL) {
+    /*
+     * See if we're defining a forward declared interface.
+     */
+    if (d->node_type() == AST_Decl::NT_interface) {
+      /*
+       * Narrow to an interface
+       */
+      fd = AST_Interface::narrow_from_decl(d);
+      /*
+       * Successful?
+       */
+      if (fd == NULL) {
+        /*
+         * Should we give an error here? ... no, look in fe_add_interface
+         */
+      }
+      /*
+       * If it is a forward declared interface..
+       */
+      else if (!fd->is_defined()) {
+        /*
+         * Check if redefining in same scope
+         */
+        if (fd->defined_in() != s) {
+          idl_global->err()
+             ->error3(UTL_Error::EIDL_SCOPE_CONFLICT,
+                      i,
+                      fd,
+                      ScopeAsDecl(s));
+        }
+        /*
+         * All OK, do the redefinition
+         */
+        else {
+#         ifdef IDL_HAS_VALUETYPE
+          /* only redefinition of the same kind */
+          if ((i->is_valuetype() != fd->is_valuetype()) ||
+              (i->is_abstract_valuetype() != fd->is_abstract_valuetype()) ||
+              (i->is_abstract_interface() != fd->is_abstract_interface()))
+          {
+             idl_global->err()->error2(UTL_Error::EIDL_REDEF, i, fd);
+             return;
+          }
+#         endif /* IDL_HAS_VALUETYPE */
+
+          fd->redefine (i, p);
+          /*
+           * Use full definition node
+           */
+          delete i;
+          i = fd;
+        }
+      }
+    }
+  }
+}
+
+
 /*
  * Data accessors
  */
 
-AST_Interface	**
+void
+AST_Interface::redefine (AST_Interface *from, UTL_StrList *p)
+{
+  this->set_inherits(from->inherits());
+  this->set_n_inherits(from->n_inherits());
+  /*
+   * Update place of definition
+   */
+  this->set_imported(idl_global->imported());
+  this->set_in_main_file(idl_global->in_main_file());
+  this->set_line(idl_global->lineno());
+  this->set_file_name(idl_global->filename());
+  this->add_pragmas(p);
+}
+
+AST_Interface   **
 AST_Interface::inherits()
 {
   return pd_inherits;

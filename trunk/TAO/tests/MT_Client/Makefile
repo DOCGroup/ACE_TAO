@@ -214,6 +214,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -224,8 +226,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -329,6 +329,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  testC.i
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -450,6 +454,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -460,8 +466,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -597,6 +601,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 .obj/orb_creation.o .obj/orb_creation.so .shobj/orb_creation.o .shobj/orb_creation.so: orb_creation.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -750,6 +758,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -760,8 +770,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -865,6 +873,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  testC.i
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -983,6 +995,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -993,8 +1007,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1130,6 +1142,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  testC.i testS.h testS_T.h testS_T.i testS_T.cpp testS.i
 .obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1248,6 +1264,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1258,8 +1276,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1395,6 +1411,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1513,6 +1533,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1523,8 +1545,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1660,6 +1680,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

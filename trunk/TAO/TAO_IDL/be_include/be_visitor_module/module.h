@@ -57,6 +57,14 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit an interface
 
+#ifdef IDL_HAS_VALUETYPE
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit valuetype
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit valuetype_fwd
+#endif /* IDL_HAS_VALUETYPE */
+
   virtual int visit_module (be_module *node);
   // visit a module
 

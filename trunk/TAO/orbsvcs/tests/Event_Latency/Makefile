@@ -177,6 +177,8 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -187,8 +189,6 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -323,6 +323,10 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \

@@ -123,6 +123,9 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default)\n");
   cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
   cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
+#ifdef IDL_HAS_VALUETYPE
+  cerr << GTDEVEL (" -Gv\t\t\tenable OBV (Valuetype) support (disabled by default)\n");
+#endif /* IDL_HAS_VALUETYPE */
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
@@ -146,6 +149,9 @@ DRV_usage (void)
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
   cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
+#ifdef IDL_HAS_VALUETYPE
+  cerr << GTDEVEL (" -Sv\t\t\tdisable OBV (Valuetype) support (disabled by default)\n");
+#endif /* IDL_HAS_VALUETYPE */
   cerr << GTDEVEL (" -t\t\t\tTemporary directory to be used by the IDL compiler."
                    "(default is value of environment variable ACE_DEFAULT_TEMP_DIR_ENV)\n");
   cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
@@ -530,8 +536,15 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 't')
                 {
-                  // supress typecode support
+                  // suppress typecode support
                   idl_global->tc_support (0);
+                }
+              else if (av[i][2] == 'v')
+                {
+                  // disable OBV (Valuetype) support
+#                 ifdef IDL_HAS_VALUETYPE
+                  idl_global->obv_support (0);
+#                 endif
                 }
               else
                 {
@@ -564,8 +577,17 @@ DRV_parse_args (long ac, char **av)
                   // optimized typecode support
                   idl_global->opt_tc (1);
                 }
+              else if (av[i][2] == 'v')
+                {
+#             ifdef IDL_HAS_VALUETYPE
+                  // enable OBV (Valuetype) support
+                  idl_global->obv_support (1);
+#             else /* IDL_HAS_VALUETYPE */
+                  cerr << GTDEVEL("IDL: -Gv (Valuetype) not compiled in\n");
+                  ACE_OS::exit (99);
+#             endif /* IDL_HAS_VALUETYPE */
+                }
               else if (av[i][2] == 'I')
-
                 {
                   int options = ACE_OS::strlen(av[i]) - 3;
                   int j;

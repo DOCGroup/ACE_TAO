@@ -144,6 +144,8 @@ public:
   // Report an attempt to inherit from something other than an interface
   void  inheritance_error(UTL_ScopedName *n, AST_Decl *d);
 
+  void  abstract_inheritance_error (UTL_ScopedName *n);
+
   // Report an error while evaluating an expression (division by zero, etc.)
   void  eval_error(AST_Expression *d);
 

@@ -113,6 +113,16 @@ public:
   virtual AST_InterfaceFwd *create_interface_fwd(UTL_ScopedName *n,
                                                  UTL_StrList *p);
 
+  // Create a node representing an valuetype
+  virtual AST_Interface *create_valuetype(UTL_ScopedName *n,
+                                          AST_Interface **ih,
+                                          long nih,
+                                          UTL_StrList *p);
+
+  // Create a node representing a forward declaration of an valuetype
+  virtual AST_InterfaceFwd *create_valuetype_fwd(UTL_ScopedName *n,
+                                                 UTL_StrList *p);
+
   // Create a node representing an exception
   virtual AST_Exception *create_exception(UTL_ScopedName *n,
                                           UTL_StrList *p);
@@ -135,7 +145,8 @@ public:
   // union
   virtual AST_Field     *create_field(AST_Type *ft,
                                       UTL_ScopedName *n,
-                                      UTL_StrList *p);
+                                      UTL_StrList *p,
+                                      AST_Field::Visibility vis = AST_Field::vis_NA);
 
   // Create a node representing an argument to an operation
   virtual AST_Argument  *create_argument(AST_Argument::Direction d,

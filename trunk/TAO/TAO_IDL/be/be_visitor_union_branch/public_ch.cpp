@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_union_branch.h"
 
@@ -296,6 +296,84 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
       << " (void) const; // get method\n\n";
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+
+// visit valuetype type
+int
+be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os; // output stream
+  be_decl *ub = this->ctx_->node (); // get union branch
+  be_decl *bu = this->ctx_->scope ();  // get the enclosing union backend
+  be_type *bt;
+
+  // check if we are visiting this node via a visit to a typedef node
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_ch::"
+                         "visit_valuetype - "
+                         "bad context information\n"
+                         ), -1);
+    }
+
+  os = this->ctx_->stream ();
+
+  os->indent (); // start from current indentation
+  // set method
+  *os << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu, "*")
+      << ");// set" << be_nl;
+  // get method
+  *os << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
+      << " (void) const; // get method\n\n";
+  return 0;
+}
+
+// visit valuetype forward type
+int
+be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os; // output stream
+  be_decl *ub = this->ctx_->node (); // get union branch
+  be_decl *bu = this->ctx_->scope ();  // get the enclosing union backend
+  be_type *bt;
+
+  // check if we are visiting this node via a visit to a typedef node
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_ch::"
+                         "visit_valuetype_fwd - "
+                         "bad context information\n"
+                         ), -1);
+    }
+
+  os = this->ctx_->stream ();
+
+  os->indent (); // start from current indentation
+  // set method
+  *os << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu, "*")
+      << ");// set" << be_nl;
+  // get method
+  *os << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
+      << " (void) const; // get method\n\n";
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
 
 // visit predefined type
 int

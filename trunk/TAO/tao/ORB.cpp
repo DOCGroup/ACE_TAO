@@ -33,6 +33,10 @@
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"
+#ifdef TAO_HAS_VALUETYPE
+#  include "tao/ValueFactory_Map.h"
+#endif /* TAO_HAS_VALUETYPE */
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -134,6 +138,9 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
     event_service_ (CORBA_Object::_nil ()),
     trading_service_ (CORBA_Object::_nil ()),
     orb_core_ (orb_core),
+# ifdef TAO_HAS_VALUETYPE
+    valuetype_factory_map_ (0),
+# endif /* TAO_HAS_VALUETYPE */
     use_omg_ior_format_ (1),
     optimize_collocation_objects_ (1)
 {
@@ -180,6 +187,10 @@ CORBA_ORB::~CORBA_ORB (void)
     CORBA::release (this->event_service_);
   if (!CORBA::is_nil (this->trading_service_))
     CORBA::release (this->trading_service_);
+# ifdef TAO_HAS_VALUETYPE
+  // delete valuetype_factory_map_;
+  // not really, its a singleton
+# endif /* TAO_HAS_VALUETYPE */
 
   delete this->cond_become_leader_;
 }
@@ -647,8 +658,8 @@ CORBA_ORB::multicast_query (char *buf,
 
           // Length of data to be sent. This is sent as a header.
           CORBA::Short data_len =
-            ACE_HTONS (sizeof (ACE_UINT16) 
-                       + ACE_OS::strlen (service_name)); 
+            ACE_HTONS (sizeof (ACE_UINT16)
+                       + ACE_OS::strlen (service_name));
 
           // Vector to be sent.
           const int iovcnt = 3;
@@ -734,7 +745,7 @@ CORBA_ORB::multicast_query (char *buf,
         }
     }
 
-  // We don't need the dgram or acceptor anymore.  
+  // We don't need the dgram or acceptor anymore.
   dgram.close ();
   acceptor.close ();
 
@@ -1714,7 +1725,7 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
 // The following functions are not implemented - they just throw
 // CORBA::NO_IMPLEMENT.
 
-void 
+void
 CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
                                CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1722,7 +1733,7 @@ CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1730,7 +1741,7 @@ CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
                                 CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1738,7 +1749,7 @@ CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::get_default_context (CORBA::Context_ptr &,
                                 CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1746,7 +1757,7 @@ CORBA_ORB::get_default_context (CORBA::Context_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::create_environment (CORBA::Environment_ptr &,
                                CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1754,7 +1765,7 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
                                           CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1762,7 +1773,7 @@ CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
                                             CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1770,7 +1781,7 @@ CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_ORB::get_next_response (CORBA_Request_ptr &,
                               CORBA_Environment &ACE_TRY_ENV)
 {
@@ -1778,7 +1789,7 @@ CORBA_ORB::get_next_response (CORBA_Request_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
@@ -1852,6 +1863,74 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
   return cdr.good_bit ();
 }
+
+// *************************************************************
+// Valuetype factory operations
+// *************************************************************
+
+#ifdef TAO_HAS_VALUETYPE
+
+CORBA::ValueFactory_ptr
+CORBA_ORB::register_value_factory (
+                            const char *repository_id,
+                            CORBA::ValueFactory_ptr factory,
+                            CORBA_Environment &ACE_TRY_ENV)
+{
+// %! guard, and ACE_Null_Mutex in the map
+// do _add_ref here not in map->rebind
+
+  if (valuetype_factory_map_ == 0)
+    {
+      // currently the ValueFactory_Map is a singleton and not per ORB
+      // as in the OMG specs
+      valuetype_factory_map_ = TAO_VALUEFACTORY_MAP::instance ();
+      if (valuetype_factory_map_ == 0)
+        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
+
+  int result = valuetype_factory_map_->rebind (repository_id, factory);
+  if (result == -1)
+    {
+      // Error on bind.
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
+  if (result == 1)
+    {
+      return factory;    // previous factory was found
+    }
+  return 0;
+}
+
+void
+CORBA_ORB::unregister_value_factory (const char * repository_id,
+                                     CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_ERROR((LM_ERROR, "(%N:%l) function not implemented\n"));
+  // %! TODO
+}
+
+CORBA::ValueFactory_ptr
+CORBA_ORB::lookup_value_factory (const char *repository_id,
+                                 CORBA_Environment &ACE_TRY_ENV)
+{
+// %! guard
+// do _add_ref here not in map->find
+  if (valuetype_factory_map_)
+    {
+      CORBA::ValueFactory_ptr factory;
+      int result = valuetype_factory_map_->find (repository_id, factory);
+      if (result == -1)
+        factory = 0;  // %! raise exception !
+      return factory;
+    }
+  else
+    {
+      return 0; // %! raise exception !
+    }
+}
+
+#endif /* TAO_HAS_VALUETYPE */
+
 
 // ****************************************************************
 

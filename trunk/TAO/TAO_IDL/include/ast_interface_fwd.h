@@ -83,12 +83,17 @@ public:
 
   // Constructor(s)
   AST_InterfaceFwd();
-  AST_InterfaceFwd(UTL_ScopedName *n, UTL_StrList *p);
+  AST_InterfaceFwd (AST_Interface *dummy, UTL_ScopedName *n, UTL_StrList *p);
   virtual ~AST_InterfaceFwd() {}
 
   // Data Accessors
   AST_Interface *full_definition();
   void set_full_definition(AST_Interface *nfd);
+
+  virtual idl_bool is_abstract_interface ();
+  virtual idl_bool is_valuetype ();
+  virtual idl_bool is_abstract_valuetype ();
+  virtual void set_abstract_valuetype ();
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_InterfaceFwd, AST_Type);

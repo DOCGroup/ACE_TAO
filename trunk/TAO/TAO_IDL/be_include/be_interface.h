@@ -173,20 +173,21 @@ public:
   // helper method to determine if the interface node is involved in some kind
   // of multiple inheritance or not. Required on the skeleton side
 
-  static int gen_def_ctors_helper (be_interface* node, 
-                                   be_interface* base, 
+  static int gen_def_ctors_helper (be_interface* node,
+                                   be_interface* base,
                                    TAO_OutStream *os);
 
   //helper method to generate a call to the default constructors of all the base classes
 
-  static int gen_copy_ctors_helper (be_interface* node, 
-                                   be_interface* base, 
+  static int gen_copy_ctors_helper (be_interface* node,
+                                   be_interface* base,
                                    TAO_OutStream *os);
 
   //helper method to generate a call to the copy constructors of all the base classes
 
 
   void compute_fullskelname (void);
+  void compute_fullskelname (char *&skelname, const char * prefix);
   // compute the fully scoped skel class name
 
   int gen_operation_table (void);

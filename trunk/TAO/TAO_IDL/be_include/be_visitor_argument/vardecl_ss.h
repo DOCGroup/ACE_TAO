@@ -58,6 +58,14 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
 
+#ifdef IDL_HAS_VALUETYPE
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit valuetype
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit valuetype forward
+#endif /* IDL_HAS_VALUETYPE */
+
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined type
 
@@ -103,6 +111,15 @@ public:
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
+
+#ifdef IDL_HAS_VALUETYPE
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit valuetype
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit valuetype forward
+#endif /* IDL_HAS_VALUETYPE */
+
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_VARDECL_SS_H_ */

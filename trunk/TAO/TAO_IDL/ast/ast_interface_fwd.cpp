@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,8 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * encountered.
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_interface_fwd, "$Id$")
 
@@ -82,19 +82,21 @@ ACE_RCSID(ast, ast_interface_fwd, "$Id$")
  * Constructor(s) and destructor
  */
 AST_InterfaceFwd::AST_InterfaceFwd()
-		: pd_full_definition(NULL)
+                : pd_full_definition(NULL)
 {
 }
 
-AST_InterfaceFwd::AST_InterfaceFwd(UTL_ScopedName *n, UTL_StrList *p)
-		 : AST_Decl(AST_Decl::NT_interface_fwd, n, p)
+AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
+                                    UTL_ScopedName *n, UTL_StrList *p)
+                 : AST_Decl(AST_Decl::NT_interface_fwd, n, p)
 {
   /*
    * Create a dummy placeholder for the forward declared interface. This
    * interface node is not yet defined (n_inherits < 0), so some operations
    * will fail
    */
-  pd_full_definition = idl_global->gen()->create_interface(n, NULL, -1, p);
+  pd_full_definition = dummy;
+  // pd_full_definition = idl_global->gen()->create_interface(n, NULL, -1, p);
   /*
    * Record the node in a list to be checked after the entire AST has been
    * parsed. All nodes in the list must have n_inherits >= 0, else this
@@ -107,6 +109,31 @@ AST_InterfaceFwd::AST_InterfaceFwd(UTL_ScopedName *n, UTL_StrList *p)
 /*
  * Private operations
  */
+
+idl_bool AST_InterfaceFwd::is_abstract_interface ()
+{
+  return this->full_definition()->is_abstract_interface();
+}
+
+
+idl_bool AST_InterfaceFwd::is_valuetype ()
+{
+  return this->full_definition()->is_valuetype();
+}
+
+
+idl_bool AST_InterfaceFwd::is_abstract_valuetype ()
+{
+  return this->full_definition()->is_abstract_valuetype();
+}
+
+void AST_InterfaceFwd::set_abstract_valuetype ()
+{
+  // Don't forget about dummy placeholder ! (see constructor)
+  // (only if the be class isn't used)
+  ACE_ASSERT (0);
+}
+
 
 /*
  * Public operations
@@ -122,7 +149,18 @@ AST_InterfaceFwd::AST_InterfaceFwd(UTL_ScopedName *n, UTL_StrList *p)
 void
 AST_InterfaceFwd::dump(ostream &o)
 {
-  o << "interface ";
+  if (this->is_valuetype ())
+    {
+      if (this->is_abstract_valuetype ())
+        o << "abstract ";
+      o << "valuetype ";
+    }
+  else
+    {
+      if (this->is_abstract_interface ())
+        o << "abstract ";
+      o << "interface ";
+    }
   local_name()->dump(o);
 }
 
@@ -130,7 +168,7 @@ AST_InterfaceFwd::dump(ostream &o)
  * Data accessors
  */
 
-AST_Interface	*
+AST_Interface   *
 AST_InterfaceFwd::full_definition()
 {
   return pd_full_definition;
@@ -140,10 +178,10 @@ void
 AST_InterfaceFwd::set_full_definition(AST_Interface *nfd)
 {
   pd_full_definition = nfd;
-}    
+}
 
 /*
- * Narrowing methods 
+ * Narrowing methods
  */
 IMPL_NARROW_METHODS1 (AST_InterfaceFwd, AST_Type)
 IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)

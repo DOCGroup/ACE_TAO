@@ -237,6 +237,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -247,8 +249,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -384,6 +384,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.h ConsumerC.i NotifierC.i NotifierS.h ConsumerS.h \
  ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i NotifierS_T.h \
  NotifierS_T.i NotifierS_T.cpp NotifierS.i
@@ -504,6 +508,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -514,8 +520,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -651,6 +655,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
  NotifierS.i
@@ -771,6 +779,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -781,8 +791,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -918,6 +926,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS.h ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp \
  ConsumerS.i
 .obj/ConsumerS.o .obj/ConsumerS.so .shobj/ConsumerS.o .shobj/ConsumerS.so: ConsumerS.cpp ConsumerS.h ConsumerC.h \
@@ -1037,6 +1049,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1047,8 +1061,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1184,6 +1196,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i
 .obj/consumer.o .obj/consumer.so .shobj/consumer.o .shobj/consumer.so: consumer.cpp Consumer_Handler.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1302,6 +1318,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1312,8 +1330,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1449,6 +1465,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i NotifierC.h NotifierC.i Consumer_i.h ConsumerS.h \
  ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i NotifierS.h \
  NotifierS_T.h NotifierS_T.i NotifierS_T.cpp NotifierS.i \
@@ -1589,6 +1609,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1599,8 +1621,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1736,6 +1756,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -1877,6 +1901,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1887,8 +1913,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2024,6 +2048,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -2160,6 +2188,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2170,8 +2200,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2307,6 +2335,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -2442,6 +2474,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2452,8 +2486,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2589,6 +2621,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
  NotifierS.i \
@@ -2727,6 +2763,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2737,8 +2775,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2874,6 +2910,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
  NotifierS.i \
@@ -3013,6 +3053,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3023,8 +3065,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -3160,6 +3200,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
  NotifierS.i \
@@ -3281,6 +3325,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3291,8 +3337,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -3428,6 +3472,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierS.h NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i \
  NotifierS_T.cpp NotifierS.i
@@ -3550,6 +3598,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3560,8 +3610,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -3697,6 +3745,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i NotifierC.h NotifierC.i Consumer_i.h ConsumerS.h \
  ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i NotifierS.h \
  NotifierS_T.h NotifierS_T.i NotifierS_T.cpp NotifierS.i \
@@ -3838,6 +3890,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3848,8 +3902,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -3985,6 +4037,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i NotifierC.h NotifierC.i Consumer_i.h ConsumerS.h \
  ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i NotifierS.h \
  NotifierS_T.h NotifierS_T.i NotifierS_T.cpp NotifierS.i \
@@ -4125,6 +4181,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4135,8 +4193,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -4272,6 +4328,10 @@ realclean: clean
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  ConsumerC.i NotifierC.h NotifierC.i Consumer_i.h ConsumerS.h \
  ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i NotifierS.h \
  NotifierS_T.h NotifierS_T.i NotifierS_T.cpp NotifierS.i \

@@ -90,18 +90,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class   AST_Field : public virtual AST_Decl
 {
 public:
+  enum Visibility {vis_NA, vis_PUBLIC, vis_PRIVATE};
   // Operations
 
   // Constructor(s)
   AST_Field();
   AST_Field(AST_Type *field_type,
-            UTL_ScopedName *n, UTL_StrList *p);
+            UTL_ScopedName *n, UTL_StrList *p, Visibility vis = vis_NA);
   AST_Field(AST_Decl::NodeType nt, AST_Type *field_type,
-            UTL_ScopedName *n, UTL_StrList *p);
+            UTL_ScopedName *n, UTL_StrList *p, Visibility vis = vis_NA);
   virtual ~AST_Field() {}
 
   // Data Accessors
   AST_Type *field_type();
+  Visibility visibility();
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Field, AST_Decl);
@@ -113,7 +115,7 @@ public:
 private:
   // Data
   AST_Type                      *pd_field_type; // Base type for field
-
+  Visibility                    pd_visibility;
 };
 
 #endif           // _AST_FIELD_AST_FIELD_HH

@@ -226,6 +226,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -236,8 +238,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -373,6 +373,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -510,6 +514,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -520,8 +526,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -657,6 +661,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
@@ -790,6 +798,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -800,8 +810,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -937,6 +945,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  client.h \
@@ -1066,6 +1078,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1076,8 +1090,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1213,6 +1225,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -1354,6 +1370,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1364,8 +1382,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1501,6 +1517,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  Quoter_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -1635,6 +1655,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1645,8 +1667,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -1782,6 +1802,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  Factory_Finder.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -1922,6 +1946,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1932,8 +1958,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2069,6 +2093,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  Factory_Finder_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -2203,6 +2231,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2213,8 +2243,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2350,6 +2378,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
@@ -2492,6 +2524,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2502,8 +2536,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/Context.h \
- $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
@@ -2639,6 +2671,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  Generic_Factory_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \

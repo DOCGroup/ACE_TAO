@@ -100,6 +100,12 @@ public:
                                           UTL_StrList *p);
   virtual AST_InterfaceFwd *create_interface_fwd(UTL_ScopedName *n,
                                                  UTL_StrList *p);
+  virtual AST_Interface *create_valuetype(UTL_ScopedName *n,
+                                          AST_Interface **ih,
+                                          long nih,
+                                          UTL_StrList *p);
+  virtual AST_InterfaceFwd *create_valuetype_fwd(UTL_ScopedName *n,
+                                                 UTL_StrList *p);
   virtual AST_Exception *create_exception(UTL_ScopedName *n, UTL_StrList *p);
   virtual AST_Structure *create_structure(UTL_ScopedName *n, UTL_StrList *p);
   virtual AST_Enum      *create_enum(UTL_ScopedName *n, UTL_StrList *p);
@@ -108,7 +114,9 @@ public:
                                           UTL_ScopedName *n,
                                           UTL_StrList *p);
   virtual AST_Field     *create_field(AST_Type *ft, UTL_ScopedName *n,
-                                      UTL_StrList *p);
+                                      UTL_StrList *p,
+                                      AST_Field::Visibility vis = AST_Field::vis_NA);
+
   virtual AST_Argument  *create_argument(AST_Argument::Direction d,
                                          AST_Type *ft,
                                          UTL_ScopedName *n,

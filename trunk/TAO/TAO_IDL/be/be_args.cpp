@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -66,9 +66,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // be_args.cc - Collect command line arguments for the BE
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_args, "$Id$")
 
@@ -82,6 +82,9 @@ BE_prep_arg(char *s, idl_bool)
 {
   const char arg_macro[]="export_macro=";
   const char arg_include[]="export_include=";
+#ifdef IDL_HAS_VALUETYPE
+  const char obv_opt_accessor[]="obv_opt_accessor";
+#endif IDL_HAS_VALUETYPE
 
   char* last = 0;
   for (char* arg = ACE_OS::strtok_r (s, ",", &last);
@@ -89,21 +92,27 @@ BE_prep_arg(char *s, idl_bool)
        arg = ACE_OS::strtok_r (0, ",", &last))
     {
       if (ACE_OS::strstr (arg, arg_macro) == arg)
-	{
-	  char* val = arg + sizeof (arg_macro) - 1;
-	  idl_global->export_macro (val);
-	}
+        {
+          char* val = arg + sizeof (arg_macro) - 1;
+          idl_global->export_macro (val);
+        }
       else if (ACE_OS::strstr (arg, arg_include) == arg)
-	{
-	  char* val = arg + sizeof (arg_include) - 1;
-	  idl_global->export_include (val);
-	}
+        {
+          char* val = arg + sizeof (arg_include) - 1;
+          idl_global->export_include (val);
+        }
+#  ifdef IDL_HAS_VALUETYPE
+      else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
+        {
+          idl_global->obv_opt_accessor (1);
+        }
+#  endif IDL_HAS_VALUETYPE
       else
-	{
-	  cerr << idl_global->prog_name ()
-	       << ": invalid or unknown argument <"
-	       << arg
-	       << "> to back end\n";
-	}
+        {
+          cerr << idl_global->prog_name ()
+               << ": invalid or unknown argument <"
+               << arg
+               << "> to back end\n";
+        }
     }
 }

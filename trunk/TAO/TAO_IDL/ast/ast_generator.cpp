@@ -142,8 +142,43 @@ AST_Generator::create_interface(UTL_ScopedName *n,
 AST_InterfaceFwd *
 AST_Generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
 {
-  return new AST_InterfaceFwd(n, p);
+  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, p), n, p);
 }
+
+/*
+ * Create a be_valuetype node
+ */
+AST_Interface *
+AST_Generator::create_valuetype(UTL_ScopedName *n,
+                               AST_Interface **ih,
+                               long nih,
+                               UTL_StrList *p)
+{
+  // Valuetypes are represented as be_valuetype derived from be_interface,
+  // which derives from AST_Interface. If you construct a backend which
+  // utilizes only the AST_... classes, you must instantiate an object that
+  // returns true from AST_Interface::is_valuetype().
+  // (currently not implemented)
+  // Also invoke
+  // (AST_Module::narrow_from_scope (this->defined_in ()))->set_has_nested_valuetype ();
+
+  ACE_ASSERT (0);
+  return 0;
+}
+
+/*
+ * Create a be_valuetype_fwd node
+ */
+AST_InterfaceFwd *
+AST_Generator::create_valuetype_fwd(UTL_ScopedName *n, UTL_StrList *p)
+{
+  // see note in create_valuetype()
+  // dummy placeholder must return true from is_valuetype()
+
+  ACE_ASSERT (0);
+  return 0;
+}
+
 
 /*
  * Construct an AST_Exception node (an exception)
@@ -188,9 +223,10 @@ AST_Generator::create_operation(AST_Type *rt,
  * Construct an AST_Field node (a field in a struct, union or exception)
  */
 AST_Field       *
-AST_Generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
+                                                  AST_Field::Visibility vis)
 {
-  return new AST_Field(ft, n, p);
+  return new AST_Field(ft, n, p, vis);
 }
 
 /*

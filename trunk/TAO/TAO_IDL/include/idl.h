@@ -79,6 +79,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#define IDL_HAS_VALUETYPE
+
 #include        "intlmacros.h"          // Define macros for intl'ion
 
 #include        <stdlib.h>              // POSIX standard defns

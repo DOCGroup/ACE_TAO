@@ -34,7 +34,8 @@ public:
   be_field (void);
   // default constructor
 
-  be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p);
+  be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
+                                    Visibility vis = vis_NA);
   // constructor
 
   virtual int gen_encapsulation (void);

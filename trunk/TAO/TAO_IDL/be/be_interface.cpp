@@ -172,7 +172,13 @@ be_interface::local_coll_name (void) const
 void
 be_interface::compute_fullskelname (void)
 {
-  if (full_skel_name_)
+  this->compute_fullskelname (this->full_skel_name_, "POA_");
+}
+
+void
+be_interface::compute_fullskelname (char *&skelname, const char *prefix)
+{
+  if (skelname)
     return;
   else
     {
@@ -182,7 +188,7 @@ be_interface::compute_fullskelname (void)
       long second = I_FALSE;
 
       // in the first loop compute the total length
-      namelen = 4;
+      namelen = ACE_OS::strlen (prefix);
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
@@ -205,20 +211,20 @@ be_interface::compute_fullskelname (void)
         }
       delete i;
 
-      this->full_skel_name_ = new char [namelen+1];
-      this->full_skel_name_[0] = '\0';
+      skelname = new char [namelen+1];
+      skelname[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
-      ACE_OS::strcat (this->full_skel_name_, "POA_");
+      ACE_OS::strcat (skelname, prefix);
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (this->full_skel_name_, "::");
+            ACE_OS::strcat (skelname, "::");
           else if (second)
             first = second = I_FALSE;
           // print the identifier
-          ACE_OS::strcat (this->full_skel_name_, i->item ()->get_string ());
+          ACE_OS::strcat (skelname, i->item ()->get_string ());
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
@@ -1235,7 +1241,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
   // insert ourselves in the Queue
   if (queue.enqueue_tail (this) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::gen_operation_table - "
+      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::traverse_inheritance_graph - "
                          "error generating entries\n"), -1);
     }
 

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_root.h"
 
@@ -64,15 +64,63 @@ int be_visitor_root::visit_root (be_root *node)
                          "codegen for scope failed\n"), -1);
     }
 
+
+  be_visitor *visitor;
+  be_visitor_context ctx (*this->ctx_);
+
+#ifdef IDL_HAS_VALUETYPE
+  // make one more pass over the entire tree and generate the OBV_ namespaces
+  // and OBV_ classes
+
+  idl_bool obv = 0;
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      obv = 1;
+      ctx.state (TAO_CodeGen::TAO_MODULE_OBV_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      obv = 1;
+      ctx.state (TAO_CodeGen::TAO_MODULE_OBV_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      obv = 1;
+      ctx.state (TAO_CodeGen::TAO_MODULE_OBV_CS);
+      break;
+    }
+  if (obv)
+    {
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "NUL visitor\n"
+                             ),  -1);
+        }
+
+      if (visitor->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "failed to generate OBV_ things\n"
+                             ),  -1);
+        }
+      delete visitor;
+    }
+#endif /* IDL_HAS_VALUETYPE */
+
+
   // The next thing we need to do is make one more pass thru the entire tree
   // and generate code for all the <<= and >>= operators for all the
   // user-defined types.
   //
   // XXXASG - this part of the code may be conditionally generated because at
   // times it is not necessary to have these operators at all. TO-DO.
-  be_visitor *visitor;
-  be_visitor_context ctx (*this->ctx_);
 
+  ctx = *this->ctx_;
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_ROOT_CH:
@@ -82,7 +130,7 @@ int be_visitor_root::visit_root (be_root *node)
       ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
       break;
 
-    case TAO_CodeGen::TAO_ROOT_IH:  
+    case TAO_CodeGen::TAO_ROOT_IH:
       (void) tao_cg->end_implementation_header (idl_global->be_get_implementation_hdr_fname (0));
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
@@ -122,7 +170,7 @@ int be_visitor_root::visit_root (be_root *node)
                              "NUL visitor\n"
                              ),  -1);
         }
-      
+
       // generate the << and >> operators for all the user-defined
       // data types in the outermost scope
       if (node->accept (visitor) == -1)
@@ -135,7 +183,7 @@ int be_visitor_root::visit_root (be_root *node)
         }
       delete visitor;
     }
-  
+
   // make one more pass over the entire tree and generate the CDR << and >>
   // operators for compiled marshaling. Again, this code can be conditionally
   // generated if compiled marshaling is desired.
@@ -302,8 +350,8 @@ be_visitor_root::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-	case TAO_CodeGen::TAO_ROOT_IS:
-	case TAO_CodeGen::TAO_ROOT_IH:
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -377,8 +425,8 @@ be_visitor_root::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-	case TAO_CodeGen::TAO_ROOT_IS:
-	case TAO_CodeGen::TAO_ROOT_IH:
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -529,9 +577,9 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-	case TAO_CodeGen::TAO_ROOT_IS:
-	case TAO_CodeGen::TAO_ROOT_IH:
-		return 0; // nothing to be done
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
+                return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -564,6 +612,149 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
   delete visitor;
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+
+// visit an valuetype
+int
+be_visitor_root::visit_valuetype (be_valuetype *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_IH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+    case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      return 0;    // nothing to do, resp. not yet impl.
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_valuetype - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_valuetype - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_valuetype - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an valuetype_fwd
+int
+be_visitor_root::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CS:
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
+                return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_valuetype_fwd - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_valuetype_fwd - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_valuetype_fwd - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
 
 // visit an module
 int
@@ -688,8 +879,8 @@ be_visitor_root::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-	case TAO_CodeGen::TAO_ROOT_IS:
-	case TAO_CodeGen::TAO_ROOT_IH:
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -763,8 +954,8 @@ be_visitor_root::visit_union (be_union *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-	case TAO_CodeGen::TAO_ROOT_IS:
-	case TAO_CodeGen::TAO_ROOT_IH:
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {
@@ -838,8 +1029,8 @@ be_visitor_root::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-	case TAO_CodeGen::TAO_ROOT_IS:
-	case TAO_CodeGen::TAO_ROOT_IH:
+        case TAO_CodeGen::TAO_ROOT_IS:
+        case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {

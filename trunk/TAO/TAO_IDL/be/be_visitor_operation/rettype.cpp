@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -46,7 +46,7 @@ int
 be_visitor_operation_rettype::visit_array (be_array *node)
 {
 
-  
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -65,7 +65,7 @@ be_visitor_operation_rettype::visit_array (be_array *node)
 int
 be_visitor_operation_rettype::visit_enum (be_enum *node)
 {
- 
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -84,7 +84,7 @@ be_visitor_operation_rettype::visit_enum (be_enum *node)
 int
 be_visitor_operation_rettype::visit_interface (be_interface *node)
 {
- 
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -103,7 +103,7 @@ be_visitor_operation_rettype::visit_interface (be_interface *node)
 int
 be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 {
- 
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -122,7 +122,7 @@ be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 int
 be_visitor_operation_rettype::visit_native (be_native *node)
 {
- 
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -141,7 +141,7 @@ be_visitor_operation_rettype::visit_native (be_native *node)
 int
 be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 {
- 
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -271,3 +271,47 @@ be_visitor_operation_rettype::visit_union (be_union *node)
     *os << " *";
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+
+int
+be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
+{
+
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
+    *os << bt->nested_type_name (this->ctx_->scope (), " *");
+  else {
+    *os << bt->name () << " *";
+  }
+  return 0;
+}
+
+int
+be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
+    *os << bt->nested_type_name (this->ctx_->scope (), "*");
+  else {
+    *os << bt->name () << " *";
+  }
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */

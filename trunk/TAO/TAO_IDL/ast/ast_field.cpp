@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * nodes and AST_UnionBranch nodes.
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_field, "$Id$")
 
@@ -91,16 +91,17 @@ ACE_RCSID(ast, ast_field, "$Id$")
  * Default constructor
  */
 AST_Field::AST_Field()
-	 : pd_field_type(NULL)
+         : pd_field_type(NULL), pd_visibility (vis_NA)
 {
 }
 
 /*
  * To be used when constructing an AST_Field node
  */
-AST_Field::AST_Field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
-	 : AST_Decl(AST_Decl::NT_field, n, p),
-	   pd_field_type(ft)
+AST_Field::AST_Field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
+                                            Visibility vis)
+         : AST_Decl(AST_Decl::NT_field, n, p),
+           pd_field_type(ft), pd_visibility (vis)
 {
 }
 
@@ -108,9 +109,9 @@ AST_Field::AST_Field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
  * To be used when constructing a node of a subclass of AST_Field
  */
 AST_Field::AST_Field(AST_Decl::NodeType nt, AST_Type *ft,
-		   UTL_ScopedName *n, UTL_StrList *p)
-	 : AST_Decl(nt, n, p),
-	   pd_field_type(ft)
+                   UTL_ScopedName *n, UTL_StrList *p, Visibility vis)
+         : AST_Decl(nt, n, p),
+           pd_field_type(ft), pd_visibility (vis)
 {
 }
 
@@ -133,6 +134,15 @@ AST_Field::AST_Field(AST_Decl::NodeType nt, AST_Type *ft,
 void
 AST_Field::dump(ostream &o)
 {
+  switch (visibility())
+    {
+      case vis_PRIVATE:
+        o << "private ";
+        break;
+      case vis_PUBLIC:
+        o << "public ";
+        break;
+    }
   pd_field_type->local_name()->dump(o);
   o << " ";
   local_name()->dump(o);
@@ -146,6 +156,12 @@ AST_Type *
 AST_Field::field_type()
 {
   return pd_field_type;
+}
+
+AST_Field::Visibility
+AST_Field::visibility()
+{
+  return pd_visibility;
 }
 
 /*

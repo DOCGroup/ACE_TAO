@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -107,6 +107,42 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (be_interface_fwd *
   *os << bt->name () << "_ptr _tao_retval = " << bt->name () << "::_nil ();\n";
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  os->indent ();
+  *os << bt->name () << "* _tao_retval = 0;\n";
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  os->indent ();
+  *os << bt->name () << "* _tao_retval = 0;\n";
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_type *node)

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -86,6 +86,32 @@ be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
   *os << "_tao_retval";
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+
+int
+be_visitor_operation_rettype_return_cs::visit_valuetype (be_valuetype *)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  //os->indent ();
+  //*os << "return _tao_retval;\n";
+  *os << "_tao_retval";
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  //os->indent ();
+  //*os << "return _tao_retval;\n";
+  *os << "_tao_retval";
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_return_cs::visit_predefined_type (be_predefined_type *node)
