@@ -66,8 +66,8 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
                                                        this->id_map_));
       else
         {
-          // ??? How did we get here ???
-          ACE_THROW (CORBA::INTERNAL());
+          this->iter_->previousNode ();
+          return;
         }
     }
   return;
