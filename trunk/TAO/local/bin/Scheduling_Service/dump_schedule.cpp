@@ -38,7 +38,7 @@ int main (int argc, char *argv[])
         CosNaming::NamingContext::_narrow (objref, ACE_TRY_ENV);
       ACE_CHECK_ENV;
 
-      ACE_Scheduler_Factory::use_config (naming_context);
+      ACE_Scheduler_Factory::use_config (naming_context.ptr ());
 
       RtecScheduler::RT_Info_Set* infos;
       ACE_Scheduler_Factory::server ()->compute_scheduling

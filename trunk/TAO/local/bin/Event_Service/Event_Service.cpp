@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "got reference to NameService\n"));
 
-      ACE_Scheduler_Factory::use_config (naming_context);
+      ACE_Scheduler_Factory::use_config (naming_context.ptr ());
 
       // Register Event_Service with Naming Service.
       ACE_EventChannel* ec;

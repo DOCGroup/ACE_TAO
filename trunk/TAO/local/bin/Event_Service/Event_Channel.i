@@ -72,7 +72,7 @@ ACE_INLINE void
 ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
 			       CORBA::Environment &_env)
 {
-  ACE_TIMEPROBE ("deliver event to consumer proxy");
+  ACE_TIMEPROBE ("  deliver event to consumer proxy");
 
   if (push_consumer_ == 0)
     {
@@ -396,7 +396,8 @@ ACE_ES_Consumer_Rep::disconnect (void)
 ACE_INLINE int
 ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 					 ACE_ES_Event_Container *event)
-{
+{  
+  ACE_TIMEPROBE ("  enter ACE_ES_Subscription_Module::push");
   // If there are now source-based subscribers for this supplier,
   // return.
   if (source->subscription_info ().source_subscribers_.size () == 0)
@@ -474,7 +475,8 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
   return 0;
 }
 
-// 1. figure out why we're going through the subscription module, instead of just passing through.
+// 1. figure out why we're going through the subscription module,
+// instead of just passing through.
 // 2. where is lock_?  Is there only one per module!?
 
 ACE_INLINE int
