@@ -1,3 +1,11 @@
+Fri Mar 26 18:16:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-g++.h: 
+	* ace/config-irix6.x-kcc.h: 
+	* ace/config-irix6.x-sgic++.h: 
+	  There is no need to explicitly include <sched.h> or to define
+	  ACE_LACKS_SCHED_H the file is present in IRIX 6.4.
+
 Fri Mar 26 17:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Defined cuserid as an extern "C"
