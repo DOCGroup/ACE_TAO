@@ -78,12 +78,19 @@ TAO_Notify_PushConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_Notify_PushConsumer::offer_change (const CosNotification::EventTypeSeq &/*added*/, const CosNotification::EventTypeSeq &/*removed*/, CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType
+                   ))
 {
   // TODO:
 }
 
 void
 TAO_Notify_PushConsumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   this->deactivate (ACE_TRY_ENV);
 }
