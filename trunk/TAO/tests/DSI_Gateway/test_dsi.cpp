@@ -116,7 +116,7 @@ DSI_Simple_Server::test_method_impl (CORBA::ServerRequest_ptr request,
   this->target_->_create_request (0, // ctx
                                   "test_method",
                                   list,
-                                  nv,
+                                  nv.in (),
                                   0, // exception_list,
                                   0, // context_list,
                                   target_request.inout (),

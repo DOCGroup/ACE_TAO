@@ -285,9 +285,9 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 
           if (output_level () >= 5)
             {
-              ACE_OS::printf ("registered task \"%s\" with RT_Info at %X\n",
+              ACE_OS::printf ("registered task \"%s\" with RT_Info at %lX\n",
                               (const char*)(rt_info->entry_point),
-                              (void *) rt_info);
+                              (unsigned long)rt_info);
             }
         }
         break;
@@ -465,14 +465,14 @@ void ACE_DynScheduler::export_to_file (RT_Info* info, FILE* file)
 void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
 {
   (void) ACE_OS::fprintf (file,
-                          "%s\n%d\n%ld\n%ld\n%ld\n%ld\n%d\n%d\n%ld\n%u\n"
+                          "%s\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n%u\n"
                           "# begin calls\n%d\n",
                           info.entry_point.in (),
                           info.handle,
                           ACE_U64_TO_U32 (info.worst_case_execution_time),
                           ACE_U64_TO_U32 (info.typical_execution_time),
                           ACE_U64_TO_U32 (info.cached_execution_time),
-                          info.period,
+                          int(info.period),
                           info.criticality,
                           info.importance,
                           ACE_U64_TO_U32 (info.quantum),
@@ -1941,17 +1941,17 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 
   if (ACE_OS::fprintf (
       file, "\n\nSCHEDULING RESULTS:\n\n"
-            "Number of dispatches:              %3u\n"
+            "Number of dispatches:              %3lu\n"
             "Number of threads:                 %3u\n"
             "Number of tasks:                   %3u\n"
             "Scheduler Status:                    [%d] %s\n"
-            "Total Frame Size:                    %lu nsec (%lf Hz)\n"
-            "Critical Set Frame Size:             %lu nsec (%lf Hz)\n"
-            "Utilization:                         %lf\n"
-            "Critical Set Utilization:            %lf\n"
-            "Minimum Priority Queue:            %3ld\n"
-            "Minimum Guaranteed Priority Queue: %3ld\n"
-            "Minimum Critical Priority:         %3ld\n\n\n"
+            "Total Frame Size:                    %lu nsec (%f Hz)\n"
+            "Critical Set Frame Size:             %lu nsec (%f Hz)\n"
+            "Utilization:                         %f\n"
+            "Critical Set Utilization:            %f\n"
+            "Minimum Priority Queue:            %3d\n"
+            "Minimum Guaranteed Priority Queue: %3d\n"
+            "Minimum Critical Priority:         %3d\n\n\n"
 
             "DISPATCH PRIORITIES:\n\n"
             "                                  (critical              \n"
@@ -1960,10 +1960,14 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
             "operation          ID  priority  subpriority  subpriority\n"
             "---------    --------  --------  -----------  -----------\n",
       dispatch_count, threads_, tasks_, status_,
-      status_message(status_), frame_size_, (double) (10000000.0 / ((double) frame_size_)),
-      critical_set_frame_size_, (double) (10000000.0 / ((double) critical_set_frame_size_)),
-      utilization_, critical_set_utilization_, minimum_priority_queue_,
-      minimum_guaranteed_priority_queue_, minimum_critical_priority ()) < 0)
+      status_message(status_), frame_size_,
+      (double) (10000000.0 / ((double) frame_size_)),
+      critical_set_frame_size_,
+      (double) (10000000.0 / ((double) critical_set_frame_size_)),
+      utilization_, critical_set_utilization_,
+      int(minimum_priority_queue_),
+      int(minimum_guaranteed_priority_queue_),
+      int(minimum_critical_priority ())) < 0)
 
   {
     return UNABLE_TO_WRITE_SCHEDULE_FILE;
@@ -1971,7 +1975,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 
   for (i = 0; i < dispatch_entry_count_; ++i)
   {
-    if (ACE_OS::fprintf (file, "%-11s  %8lu  %8lu  %11lu  %11lu\n",
+    if (ACE_OS::fprintf (file, "%-11s  %8lu  %8u  %11u  %11u\n",
               ordered_dispatch_entries_[i]->task_entry ().rt_info ()->entry_point.in (),
               ordered_dispatch_entries_[i]->dispatch_id (),
               ordered_dispatch_entries_[i]->priority (),
@@ -2042,7 +2046,9 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
       if (link->entry ().dispatch_entry ().original_dispatch ())
       {
         if (ACE_OS::fprintf (
-              file, "%-11s  [%4lu] %4lu  %7lu  %8lu  %8lu  %10lu  %11lu   %10ld   %10ld\n",
+              file,
+              "%-11s  [%4lu] %4lu  %7u  %8u  %8u  "
+              "%10u  %11u   %10d   %10d\n",
               link->entry ().dispatch_entry ().task_entry ().rt_info ()->
                 entry_point.in (),
               link->entry ().dispatch_entry ().original_dispatch ()->dispatch_id (),
@@ -2064,7 +2070,8 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
       else
       {
         if (ACE_OS::fprintf (
-              file, "%-11s  %11lu  %7lu  %8lu  %8lu  %10lu  %11lu   %10ld   %10ld\n",
+              file,
+              "%-11s  %11lu  %7u  %8u  %8u  %10u  %11u   %10d   %10d\n",
               link->entry ().dispatch_entry ().task_entry ().rt_info ()->
                 entry_point.in (),
               link->entry ().dispatch_entry ().dispatch_id (),
@@ -2130,7 +2137,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
     if (link->entry ().dispatch_entry ().original_dispatch ())
     {
       if (ACE_OS::fprintf (
-            file, "%-9s  [%4lu] %4lu  %8lu  %8lu\n",
+            file, "%-9s  [%4lu] %4lu  %8u  %8u\n",
             link->entry ().dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
             link->entry ().dispatch_entry ().original_dispatch ()->dispatch_id (),
@@ -2144,7 +2151,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
     else
     {
       if (ACE_OS::fprintf (
-            file, "%-9s  %11lu  %8lu  %8lu\n",
+            file, "%-9s  %11lu  %8u  %8u\n",
             link->entry ().dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
             link->entry ().dispatch_entry ().dispatch_id (),
@@ -2252,7 +2259,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
     if (current_entry)
     {
       if (ACE_OS::fprintf (
-            file, "%-11s  %9lf  %9lf  %8lu  %8lu  %11lu  %11u\n",
+            file, "%-11s  %9f  %9f  %8u  %8u  %11u  %11u\n",
             current_entry->dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
                         ACE_static_cast (

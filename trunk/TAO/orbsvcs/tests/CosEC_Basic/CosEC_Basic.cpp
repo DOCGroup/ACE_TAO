@@ -139,15 +139,15 @@ CosEC_Basic::run (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Any any;
   cany >>= any;
 
-  this->consumer_.open (this->cos_ec_,
-                        this->orb_,
+  this->consumer_.open (this->cos_ec_.in (),
+                        this->orb_.in (),
                         ACE_TRY_ENV);
   ACE_CHECK;
 
   this->consumer_.connect (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->supplier_.open (this->cos_ec_,
+  this->supplier_.open (this->cos_ec_.in (),
                         ACE_TRY_ENV);
   ACE_CHECK;
 
