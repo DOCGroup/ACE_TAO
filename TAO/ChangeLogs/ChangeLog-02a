@@ -1,10 +1,27 @@
+Fri Aug  4 15:49:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Latency/Makefile:
+          Some files were not listed in the SRC macro, the genereated
+          dependencies did not work right.
+
+        * tests/IDL_Test/Makefile:
+          More dependencies problems, this time it works without -j
+          options.
+
+        * tao/ORB_Core.cpp:
+          Moved the reactor() accessor out of the loop in ORB_Core::run(),
+          no sense in querying over and over for the same stuff.
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Eliminated duplicate accessor for the Reactor.
+
 Fri Aug  4 14:20:50 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
-	* orbsvcs/orbsvcs/CosNotifyComm.idl: 
- 	* orbsvcs/orbsvcs/CosNotifyFilter.idl: 
-	  Changed angle brackets to double quotes in #include.
-	
+        * orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosNotifyComm.idl:
+        * orbsvcs/orbsvcs/CosNotifyFilter.idl:
+          Changed angle brackets to double quotes in #include.
+
 Fri Aug  4 08:56:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/CONV_FRAMEC.i:

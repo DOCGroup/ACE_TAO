@@ -1723,6 +1723,9 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (ret == -1)
     return -1;
 
+  // Fetch the Reactor
+  ACE_Reactor *r = this->reactor ();
+
   int result = 1;
   // 1 to detect that nothing went wrong
 
@@ -1752,12 +1755,15 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
             return result;
         }
 
-      ACE_Reactor *r = this->reactor ();
-
       // Set the owning thread of the Reactor to the one which we're
       // currently in.  This is necessary b/c it's possible that the
       // application is calling us from a thread other than that in which
       // the Reactor's CTOR (which sets the owner) was called.
+      //
+      // We need to do this on every iteration because the reactor may be
+      // acquired by one of the client threads in the LF waiting
+      // strategy
+
       r->owner (ACE_Thread::self ());
 
       if (TAO_debug_level >= 3)
