@@ -5,13 +5,15 @@ Thu Dec 18 22:43:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           by ACE_Malloc_T as a factory for the ACE_LOCK template parameter,
           and allows the use of locking strategy classes that don't have a
           satisfactory ctor taking a single required ACE_TCHAR* parameter,
-          which is the default.
+          which is the default.  Thanks to John Glynn <jglynn@bjc.org> for
+          motivating this.
 
         * ace/Process_Semaphore.{h,cpp}:
         * ace/Thread_Semaphore.{h,cpp}:
           Added template specializations of ACE_Malloc_Adapter_T for
           ACE_Process_Semaphore and ACE_Thread_Semaphore since they don't
-          have a satisfactory ctor taking an ACT_TCHAR*.
+          have a satisfactory ctor taking an ACT_TCHAR*.  Thanks to John
+          Glynn <jglynn@bjc.org> for motivating this.
 
 Thu Dec 18 11:55:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
