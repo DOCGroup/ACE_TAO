@@ -1,3 +1,9 @@
+Fri Dec 19 13:31:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/parser/parser/Parser.i (isChar):
+          Made the argument non const, just as the method declaration
+          in the header file. This fixes a compile error on Tru64.
+
 Fri Dec 19 13:29:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/C++NPv2.mpc:
