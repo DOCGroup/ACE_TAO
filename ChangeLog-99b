@@ -1,5 +1,8 @@
 Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
 
+        * ace/Cache_Map_Manager_T.h: Removed extra "ace/" from #pragma
+          implementation directive.
+
         * tests/Cache_Map_Manager_Test.cpp: Changed typedefs for KEY and VALUE
           from size_t to ACE_UINT32 to they always pick up the specializations
           for ACE_Hash, etc. On HP-UX and AIX, size_t is not the same as
