@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project(RepositoryManager): ciao_deployment_svnt {
+                            
+  requires += dnc
+  exename = RepositoryManager
+
+  Source_Files {
+    RepositoryManager_Impl.cpp
+  }
+}
