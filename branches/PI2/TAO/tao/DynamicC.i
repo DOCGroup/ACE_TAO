@@ -554,6 +554,201 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
+#if !defined (_DYNAMIC_CONTEXTLIST_CI_)
+#define _DYNAMIC_CONTEXTLIST_CI_
+
+// *************************************************************
+// Inline operations for class Dynamic::ContextList_var
+// *************************************************************
+
+ACE_INLINE
+Dynamic::ContextList_var::ContextList_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+Dynamic::ContextList_var::ContextList_var (ContextList *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+Dynamic::ContextList_var::ContextList_var (const ::Dynamic::ContextList_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::Dynamic::ContextList (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+Dynamic::ContextList_var::~ContextList_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE Dynamic::ContextList_var &
+Dynamic::ContextList_var::operator= (ContextList *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE Dynamic::ContextList_var &
+Dynamic::ContextList_var::operator= (const ::Dynamic::ContextList_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::Dynamic::ContextList (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::Dynamic::ContextList *
+Dynamic::ContextList_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::ContextList *
+Dynamic::ContextList_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+Dynamic::ContextList_var::operator const ::Dynamic::ContextList &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Dynamic::ContextList_var::operator ::Dynamic::ContextList &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Dynamic::ContextList_var::operator ::Dynamic::ContextList &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+Dynamic::ContextList_var::operator ::Dynamic::ContextList *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+Dynamic::ContextList_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::Dynamic::ContextList &
+Dynamic::ContextList_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::ContextList &
+Dynamic::ContextList_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::Dynamic::ContextList *&
+Dynamic::ContextList_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::ContextList *
+Dynamic::ContextList_var::_retn (void)
+{
+  ::Dynamic::ContextList *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::Dynamic::ContextList *
+Dynamic::ContextList_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class Dynamic::ContextList_out
+// *************************************************************
+
+ACE_INLINE
+Dynamic::ContextList_out::ContextList_out (ContextList *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Dynamic::ContextList_out::ContextList_out (ContextList_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Dynamic::ContextList_out::ContextList_out (const ::Dynamic::ContextList_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ContextList_out&, p).ptr_)
+{}
+
+ACE_INLINE ::Dynamic::ContextList_out &
+Dynamic::ContextList_out::operator= (const ::Dynamic::ContextList_out &p)
+{
+  this->ptr_ = ACE_const_cast (ContextList_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::Dynamic::ContextList_out &
+Dynamic::ContextList_out::operator= (ContextList *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+Dynamic::ContextList_out::operator ::Dynamic::ContextList *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::ContextList *&
+Dynamic::ContextList_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::ContextList *
+Dynamic::ContextList_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+Dynamic::ContextList_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CI_)
@@ -655,13 +850,13 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     return *this;
   }
   
-  ACE_INLINE TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var>
+  ACE_INLINE TAO_Pseudo_Object_Manager<Dynamic::TypeCode,Dynamic::TypeCode_var>
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
     CORBA::TypeCode ** const tmp = ACE_reinterpret_cast (CORBA::TypeCode ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> (tmp + index, this->release_);
+    return TAO_Pseudo_Object_Manager<Dynamic::TypeCode,Dynamic::TypeCode_var> (tmp + index, this->release_);
   }
   
   ACE_INLINE CORBA::TypeCode* *
@@ -797,7 +992,7 @@ Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList *&() // cast
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> 
+ACE_INLINE TAO_Pseudo_Object_Manager<Dynamic::TypeCode,Dynamic::TypeCode_var> 
 Dynamic::ExceptionList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -894,7 +1089,7 @@ Dynamic::ExceptionList_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> 
+ACE_INLINE TAO_Pseudo_Object_Manager<Dynamic::TypeCode,Dynamic::TypeCode_var> 
 Dynamic::ExceptionList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -902,6 +1097,218 @@ Dynamic::ExceptionList_out::operator[] (CORBA::ULong index)
 
 
 #endif /* end #if !defined */
+
+
+#if !defined (_DYNAMIC_REQUESTCONTEXT_CI_)
+#define _DYNAMIC_REQUESTCONTEXT_CI_
+
+// *************************************************************
+// Inline operations for class Dynamic::RequestContext_var
+// *************************************************************
+
+ACE_INLINE
+Dynamic::RequestContext_var::RequestContext_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+Dynamic::RequestContext_var::RequestContext_var (RequestContext *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+Dynamic::RequestContext_var::RequestContext_var (const ::Dynamic::RequestContext_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::Dynamic::RequestContext (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+Dynamic::RequestContext_var::~RequestContext_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE Dynamic::RequestContext_var &
+Dynamic::RequestContext_var::operator= (RequestContext *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE Dynamic::RequestContext_var &
+Dynamic::RequestContext_var::operator= (const ::Dynamic::RequestContext_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::Dynamic::RequestContext (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::Dynamic::RequestContext *
+Dynamic::RequestContext_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::RequestContext *
+Dynamic::RequestContext_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+Dynamic::RequestContext_var::operator const ::Dynamic::RequestContext &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Dynamic::RequestContext_var::operator ::Dynamic::RequestContext &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Dynamic::RequestContext_var::operator ::Dynamic::RequestContext &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+Dynamic::RequestContext_var::operator ::Dynamic::RequestContext *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+Dynamic::RequestContext_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::Dynamic::RequestContext &
+Dynamic::RequestContext_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::RequestContext &
+Dynamic::RequestContext_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::Dynamic::RequestContext *&
+Dynamic::RequestContext_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::RequestContext *
+Dynamic::RequestContext_var::_retn (void)
+{
+  ::Dynamic::RequestContext *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::Dynamic::RequestContext *
+Dynamic::RequestContext_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class Dynamic::RequestContext_out
+// *************************************************************
+
+ACE_INLINE
+Dynamic::RequestContext_out::RequestContext_out (RequestContext *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Dynamic::RequestContext_out::RequestContext_out (RequestContext_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Dynamic::RequestContext_out::RequestContext_out (const ::Dynamic::RequestContext_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (RequestContext_out&, p).ptr_)
+{}
+
+ACE_INLINE ::Dynamic::RequestContext_out &
+Dynamic::RequestContext_out::operator= (const ::Dynamic::RequestContext_out &p)
+{
+  this->ptr_ = ACE_const_cast (RequestContext_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::Dynamic::RequestContext_out &
+Dynamic::RequestContext_out::operator= (RequestContext *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+Dynamic::RequestContext_out::operator ::Dynamic::RequestContext *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::RequestContext *&
+Dynamic::RequestContext_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::Dynamic::RequestContext *
+Dynamic::RequestContext_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+Dynamic::RequestContext_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Dynamic::ParameterMode &_tao_enumval)
+{
+  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Dynamic::ParameterMode &_tao_enumval)
+{
+  CORBA::ULong _tao_temp;
+  if (strm.read_ulong (_tao_temp))
+  {
+    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
+    return 1;
+  }
+  else
+    return 0;
+}
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Dynamic::Parameter &_tao_aggregate)
 {
@@ -943,6 +1350,21 @@ CORBA::Boolean  operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_I_ */
 
 
+#if !defined _TAO_CDR_OP_Dynamic_ContextList_I_
+#define _TAO_CDR_OP_Dynamic_ContextList_I_
+
+CORBA::Boolean  operator<< (
+    TAO_OutputCDR &,
+    const Dynamic::ContextList &
+  );
+CORBA::Boolean  operator>> (
+    TAO_InputCDR &,
+    Dynamic::ContextList &
+  );
+
+#endif /* _TAO_CDR_OP_Dynamic_ContextList_I_ */
+
+
 #if !defined _TAO_CDR_OP_Dynamic_ExceptionList_I_
 #define _TAO_CDR_OP_Dynamic_ExceptionList_I_
 
@@ -956,4 +1378,19 @@ CORBA::Boolean  operator>> (
   );
 
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_I_ */
+
+
+#if !defined _TAO_CDR_OP_Dynamic_RequestContext_I_
+#define _TAO_CDR_OP_Dynamic_RequestContext_I_
+
+CORBA::Boolean  operator<< (
+    TAO_OutputCDR &,
+    const Dynamic::RequestContext &
+  );
+CORBA::Boolean  operator>> (
+    TAO_InputCDR &,
+    Dynamic::RequestContext &
+  );
+
+#endif /* _TAO_CDR_OP_Dynamic_RequestContext_I_ */
 
