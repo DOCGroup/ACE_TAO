@@ -1,3 +1,8 @@
+Thu Jul 13 10:55:44 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * ace/Makefile: changed ssl check from ifneq null to
+          ifeq 1, to allow ssl = 0.
+
 Thu Jul 13 10:10:54 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: move ssl check to after include of wrapper_macros.GNU,
