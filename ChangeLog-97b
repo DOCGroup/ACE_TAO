@@ -1,3 +1,18 @@
+Sun Oct 12 12:17:50 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Timer_Queue_T: Added a new ACE_Thread_Timer_Queue_Adapter,
+ 	  which makes it possible to use a timer queue in a thread
+ 	  automagically.  Thanks to Carlos O'Ryan for writing this.
+
+	* examples/Timer_Queue: Began to integrate Carlo's new thread
+ 	  timer queue test.
+
+	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp: Changed the
+ 	  timer queue from a Timer_List to a Timer_Heap.
+
+	* examples/Makefile (DIRS): Added Timer_Queue to the list of DIRS
+ 	  to build.
+
 Sun Oct 12 03:35:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/ACE.cpp (register_stdin_handler): Must register the reactor
@@ -25,7 +40,7 @@ Sun Oct 12 00:26:56 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	  Added small tests of the Priority_Reactor, the test runs an
 	  Acceptor on the main thread and creates several threads (or
 	  processes if the plaform does not support threads) that connect
-	  to this connector. The writing threads send several short
+	  to this Acceptor. The writing threads send several short
 	  messages, the main thread receives them using one Svc_Handler
 	  per writer, dispatched at different priorities.
 	  The test itself is interesting, it shows how to write very

@@ -8,8 +8,9 @@
 
 INFO  = README
 
-BIN   = Reactor_Timer_Queue_Test \
-	Async_Timer_Queue_Test
+BIN   = Async_Timer_Queue_Test \
+	Reactor_Timer_Queue_Test \
+	Thread_Timer_Queue_Test
 
 SRC   = $(addsuffix .cpp,$(BIN))
 OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
