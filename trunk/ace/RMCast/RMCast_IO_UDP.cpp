@@ -289,7 +289,7 @@ ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
 }
 
 int
-ACE_RMCast_IO_UDP::send_poll (ACE_RMCast::Poll &poll,
+ACE_RMCast_IO_UDP::send_poll (ACE_RMCast::Poll &,
                               const ACE_INET_Addr &to)
 {
   // @@ TODO: We could keep the header pre-initialized, and only
@@ -328,7 +328,7 @@ ACE_RMCast_IO_UDP::send_ack_join (ACE_RMCast::Ack_Join &ack_join,
 }
 
 int
-ACE_RMCast_IO_UDP::send_ack_leave (ACE_RMCast::Ack_Leave &ack_leave,
+ACE_RMCast_IO_UDP::send_ack_leave (ACE_RMCast::Ack_Leave &,
                                    const ACE_INET_Addr &to)
 {
   // @@ TODO: We could keep the header pre-initialized, and only
@@ -371,7 +371,7 @@ ACE_RMCast_IO_UDP::send_ack (ACE_RMCast::Ack &ack,
 }
 
 int
-ACE_RMCast_IO_UDP::send_join (ACE_RMCast::Join &join,
+ACE_RMCast_IO_UDP::send_join (ACE_RMCast::Join &,
                               const ACE_INET_Addr &to)
 {
   // @@ TODO: We could keep the header pre-initialized, and only

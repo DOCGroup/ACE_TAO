@@ -221,7 +221,7 @@ void
 Receiver::dump (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Message count = %d/%d",
+              "Message count = %d/%d\n",
               this->message_count_,
               total_message_count));
 }
