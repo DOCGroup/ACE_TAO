@@ -1,3 +1,11 @@
+Sat Feb 4 11:32:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_time.inl:
+
+	  Made ACE_OS::gethrtime() for VxWorks always (also on PENTIUM) go through
+          clock_gettime() because the RDTSC somehow does not work correctly (all
+	  HiResTime related tests fail) and clock_gettime() does.
+
 Fri Feb 4 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hashable.inl:
