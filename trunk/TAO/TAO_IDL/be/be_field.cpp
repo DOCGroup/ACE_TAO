@@ -53,6 +53,10 @@ be_field::compute_size_type (void)
   // our size type is the same as our type
   this->size_type (type->size_type ()); // as a side effect will also update
                                         // the size type of parent
+
+  // and while we're here, take care of has_constructor
+  this->has_constructor (type->has_constructor ());
+
   return 0;
 }
 
