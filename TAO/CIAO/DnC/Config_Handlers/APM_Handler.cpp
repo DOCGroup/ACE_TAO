@@ -8,6 +8,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 
+#include "SPR_Handler.h"
 #include "APM_Handler.h"
 
 #include <iostream>
@@ -16,95 +17,91 @@ using std::cerr;
 using std::endl;
 
 
-namespace Config_Handler
+namespace CIAO
 {
-  APM_Handler::APM_Handler (DOMDocument* doc, unsigned long filter)
-    : traverse_ (doc),
-      root_ (doc->getDocumentElement()),
-      filter_ (filter),
-      iter_ (traverse_->createNodeIterator (this->root_,
-                                            this->filter_,
-                                            0,
-                                            true)),
-      release_ (true)
-  {}
-
-  APM_Handler::APM_Handler (DOMNodeIterator* iter, bool release)
-    : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
-  {}
-
-
-  APM_Handler::~APM_Handler()
+  namespace Config_Handler
   {
-    if (this->release_)
-      this->iter_->release();
-  }
+    APM_Handler::APM_Handler (DOMDocument* doc, unsigned long filter)
+      : traverse_ (doc),
+        root_ (doc->getDocumentElement()),
+        filter_ (filter),
+        iter_ (traverse_->createNodeIterator (this->root_,
+                                              this->filter_,
+                                              0,
+                                              true)),
+        release_ (true)
+    {}
 
-  void APM_Handler::process_AssemblyPropertyMapping ()
-  {
-    // This is bogus and should be replaced later.
-    ACE_DECLARE_NEW_CORBA_ENV;
+    APM_Handler::APM_Handler (DOMNodeIterator* iter, bool release)
+      : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+    {}
 
-    for (DOMNode* node = this->iter_->nextNode();
-         node != 0;
-         node = this->iter_->nextNode())
-      {
-        XStr name (node->getNodeName());
-        if (name == XStr (ACE_TEXT ("AssemblyPropertyMapping")))
-          {
-            ACE_NEW_THROW_EX (this->apm_,
-                              ::Deployment::AssemblyPropertyMapping,
-                              CORBA::NO_MEMORY());
-          }
-        else if (name == XStr (ACE_TEXT ("name")))
-          {
-            // Fetch the text node which contains the value
-            node = this->iter_->nextNode();
-            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-            this->process_name (text->getNodeValue());
-          }
-        else if (name == XStr (ACE_TEXT ("externalName")))
-          {
-            // Fetch the text node which contains the value
-            node = this->iter_->nextNode();
-            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-            this->process_externalName (text->getNodeValue());
-          }
-        else if (name == XStr (ACE_TEXT ("delegatesTo")))
-          {
-            SPR_Handler handler (iter_, false); // SubcomponentPropertyReference
-            handler.process_SubcomponentPropertyReference ();
 
-            CORBA::ULong i (apm_->delegatesTo->length ());
-            apm_->delegatesTo->length (i + 1);
+    APM_Handler::~APM_Handler()
+    {
+      if (this->release_)
+        this->iter_->release();
+    }
 
-            (*apm_->delegatesTo)[i] = handler.spr ();
-          }
-        else
-          {
-            // ??? How did we get here ???
-            ACE_THROW (CORBA::INTERNAL());
-          }
-      }
-    return;
-  }
+    void APM_Handler::process_AssemblyPropertyMapping
+    (::Deployment::AssemblyPropertyMapping &apm)
+    {
+      // This is bogus and should be replaced later.
+      ACE_DECLARE_NEW_CORBA_ENV;
 
-  void APM_Handler::process_name (const XMLCh* name)
-  {
-    if (name)
-      {
-        CORBA::String_var value (XMLString::transcode (name));
-        this->apm_->name = value.in();
-      }
-  }
+      for (DOMNode* node = this->iter_->nextNode();
+           node != 0;
+           node = this->iter_->nextNode())
+        {
+          XStr name (node->getNodeName());
+          if (name == XStr (ACE_TEXT ("name")))
+            {
+              // Fetch the text node which contains the value
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_name (text->getNodeValue(), apm);
+            }
+          else if (name == XStr (ACE_TEXT ("externalName")))
+            {
+              // Fetch the text node which contains the value
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_externalName (text->getNodeValue(), apm);
+            }
+          else if (name == XStr (ACE_TEXT ("delegatesTo")))
+            {
+              // increment sequence length
+              CORBA::ULong i (apm.delegatesTo.length ());
+              apm.delegatesTo.length (i + 1);
 
-  void APM_Handler::process_externalName (const XMLCh* name)
-  {
-    if (name)
-      {
-        CORBA::String_var value (XMLString::transcode (name));
-        this->apm_->externalName = value.in();
-      }
+              // delegate to SPR handler
+              SPR_Handler handler (iter_, false); // SubcomponentPropertyReference
+              handler.process_SubcomponentPropertyReference (apm.delegatesTo[i]);
+            }
+          else
+            {
+              // ??? How did we get here ???
+              ACE_THROW (CORBA::INTERNAL());
+            }
+        }
+      return;
+    }
+
+    void APM_Handler::process_name (const XMLCh* name, ::Deployment::AssemblyPropertyMapping &apm)
+    {
+      if (name)
+        {
+          apm.name = XMLString::transcode (name);
+        }
+    }
+
+    void APM_Handler::process_externalName (const XMLCh* name, ::Deployment::AssemblyPropertyMapping &apm)
+    {
+      if (name)
+        {
+          apm.externalName = XMLString::transcode (name);
+        }
+    }
   }
 }
 

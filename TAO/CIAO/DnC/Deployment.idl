@@ -419,6 +419,9 @@ module Deployment {
   typedef sequence < ComponentPackageDescription > ComponentPackageDescriptions;
 
   struct ComponentPackageReference {
+    // @@Issue 6047@@ Newly added two fields below
+    string requiredUUID;
+    string requiredName;
     string requiredType;
   };
 
@@ -453,7 +456,8 @@ module Deployment {
 
   struct SubcomponentPropertyReference {
     string propertyName;
-    unsigned long instanceRef;
+    // changed the type of the field below
+    SubcomponentInstantiationDescription instance;
   };
 
   typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;

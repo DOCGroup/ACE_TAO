@@ -23,10 +23,10 @@ namespace CIAO
   namespace Config_Handler
   {
     PC_Handler::PC_Handler (DOMDocument* doc, unsigned long filter)
-      : traverse_ (doc),
+      : doc_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
-        iter_ (traverse_->createNodeIterator (this->root_,
+        iter_ (doc_->createNodeIterator (this->root_,
                                               this->filter_,
                                               0,
                                               true)),
@@ -34,7 +34,7 @@ namespace CIAO
     {}
 
     PC_Handler::PC_Handler (DOMNodeIterator* iter, bool release)
-      : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 
@@ -134,7 +134,7 @@ namespace CIAO
     void PC_Handler::process_label
       (const XMLCh* label, ::Deployment::PackageConfiguration &pc)
     {
-      if (name)
+      if (label)
         {
           pc.label = XMLString::transcode (label);
         }
@@ -144,7 +144,7 @@ namespace CIAO
     void PC_Handler::process_UUID
       (const XMLCh* UUID, ::Deployment::PackageConfiguration &pc)
     {
-      if (name)
+      if (UUID)
         {
           pc.UUID = XMLString::transcode (UUID);
         }
@@ -154,7 +154,7 @@ namespace CIAO
     void PC_Handler::process_specializedConfig
       (const XMLCh* specializedConfig, ::Deployment::PackageConfiguration &pc)
     {
-      if (source)
+      if (specializedConfig)
         {
           // first increment the length of the sequence
           CORBA::ULong i (pc.specializedConfigRef.length ());

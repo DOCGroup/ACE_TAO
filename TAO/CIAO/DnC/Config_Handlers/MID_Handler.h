@@ -34,42 +34,36 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace Config_Handler
+namespace CIAO
 {
-  class MID_Handler
+  namespace Config_Handler
   {
-  public:
-
-    MID_Handler (DOMDocument* doc, unsigned long filter_);
-
-    MID_Handler (DOMNodeIterator* iter, bool release = false);
-
-    ~MID_Handler();
-
-    void process_MonolithicImplementationDescription ();
-
-  public:
-
-    ::Deployment::MonolithicImplementationDescription const&
-    mid ()
+    class MID_Handler
     {
-      return *mid_;
-    }
+    public:
 
-  private:
+      MID_Handler (DOMDocument* doc, unsigned long filter_);
 
-    DOMDocumentTraversal* traverse_;
+      MID_Handler (DOMNodeIterator* iter, bool release = false);
 
-    DOMNode* root_;
+      ~MID_Handler();
 
-    unsigned long filter_;
+      void process_MonolithicImplementationDescription (::Deployment::MonolithicImplementationDescription &mid);
 
-    DOMNodeIterator* iter_;
+    private:
 
-    bool release_;
+      DOMDocumentTraversal* traverse_;
 
-    ::Deployment::MonolithicImplementationDescription_var mid_;
-  };
+      DOMNode* root_;
+
+      unsigned long filter_;
+
+      DOMNodeIterator* iter_;
+
+      bool release_;
+
+    };
+  }
 }
 
 #include /**/ "ace/post.h"
