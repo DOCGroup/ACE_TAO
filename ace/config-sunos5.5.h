@@ -247,6 +247,7 @@
 #define ACE_HAS_IDTYPE_T
 
 #define ACE_HAS_GPERF
+#define ACE_HAS_DIRENT
 
 #if defined (__SUNPRO_CC)
 #define ACE_CC_NAME "SunPro C++"
