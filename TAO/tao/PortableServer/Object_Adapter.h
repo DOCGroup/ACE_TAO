@@ -23,200 +23,42 @@
 
 #include "Key_Adapters.h"
 #include "poa_macros.h"
-
-// Active Object Table
-#include "Active_Object_Map.h"
+#include "Servant_Location.h"
+#include "Default_Policy_Validator.h"
+#include "POA_Policy_Set.h"
 
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
-
-// Local Object
 #include "tao/LocalObject.h"
 
-#include "ace/Service_Config.h"
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Condition_Thread_Mutex.h"
-
-// Policy Validators
-#include "Default_Policy_Validator.h"
-
-// Policy Set
-#include "POA_Policy_Set.h"
+#include "ace/Map_T.h"
 
 #include "Servant_Location.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-// ****************************************************************
-
-// Forward declaration
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_POA_Manager;
-class TAO_Temporary_Creation_Time;
-class TAO_POA_Current_Impl;
 class TAO_TSS_Resources;
 class TAO_Transport;
 class TAO_Servant_Dispatcher;
 
-class TAO_PortableServer_Export TAO_POA_Current
-  : public PortableServer::Current,
-    public TAO_Local_RefCounted_Object
+namespace TAO
 {
-public:
-  /// Constructor
-  TAO_POA_Current (void);
-
-  /**
-   * Returns the POA on which the current request is being invoked.
-   * Can raise the <CORBA::NoContext> exception if this function is
-   * not invoked in the context of an upcall.
-   */
-  PortableServer::POA_ptr get_POA (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
-
-  /**
-   * Returns the object id of the current request being invoked.  Can
-   * raise the <CORBA::NoContext> exception if this function is not
-   * invoked in the context of an upcall.
-   */
-  PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
-
-  /// Returns the class that implements this interface.
-  TAO_POA_Current_Impl *implementation (void);
-
-  /// Sets the thread-specific pointer to the new POA Current state,
-  /// returning a pointer to the existing POA Current state.
-  TAO_POA_Current_Impl *implementation (TAO_POA_Current_Impl *new_current);
-};
-
-/**
- * @class TAO_POA_Current_Impl
- *
- * @brief Implementation of the PortableServer::Current object.
- *
- * Objects of this class hold state information regarding the
- * current POA invocation.  Savvy readers will notice that this
- * contains substantially more methods than the POA spec shows;
- * they exist because the ORB either (a) needs them or (b) finds
- * them useful for implementing a more efficient ORB.
- * The intent is that instances of this class are held in
- * Thread-Specific Storage so that upcalls can get context
- * information regarding their invocation.  The POA itself must
- * insure that all <set_*> operations are performed in the
- * execution thread so that the proper <TAO_POA_Current> pointer
- * is obtained from TSS.
- */
-class TAO_PortableServer_Export TAO_POA_Current_Impl
-{
-public:
-
-  friend class TAO_POA;
-
-  /// Return pointer to the invoking POA.  Raises the
-  /// <CORBA::NoContext> exception.
-  PortableServer::POA_ptr get_POA (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
-
-  /**
-   * Return pointer to the object id through which this was invoked.
-   * This may be necessary in cases where a <Servant> is serving under
-   * the guise of multiple object ids.  This has _out semantics Raises
-   * the <CORBA::NoContext> exception.
-   */
-  PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
-
-  /// Set the POA implementation.
-  void poa (TAO_POA *);
-
-  /// Get the POA implemantation
-  TAO_POA *poa (void) const;
-
-  /// ORB Core for this current.
-  TAO_ORB_Core &orb_core (void) const;
-
-  /// Set the object ID.
-  void object_id (const PortableServer::ObjectId &id);
-
-  /// Get the object ID.
-  const PortableServer::ObjectId &object_id (void) const;
-
-  /// Set the object key.
-  void object_key (const TAO::ObjectKey &key);
-
-  /// Get the object key.
-  const TAO::ObjectKey &object_key (void) const;
-
-  /// Set the servant for the current upcall.
-  void servant (PortableServer::Servant servant);
-
-  /// Get the servant for the current upcall.
-  PortableServer::Servant servant (void) const;
-
-  /// Set the priority for the current upcall.
-  void priority (CORBA::Short priority);
-
-  /// Get the priority for the current upcall.
-  CORBA::Short priority (void) const;
-
-  /// Convenience constructor combining construction & initialization.
-  TAO_POA_Current_Impl (void);
-
-  /// Return the previous current implementation.
-  TAO_POA_Current_Impl *previous (void) const;
-
-  /// Teardown the current for this request.
-  void teardown (void);
-
-  /// Setup the current.
-  void setup (TAO_POA *impl,
-              const TAO::ObjectKey &key);
-
-protected:
-  /// The POA implementation invoking an upcall
-  TAO_POA *poa_;
-
-  /**
-   * The object ID of the current context.  This is the user id and
-   * not the id the goes into the IOR.  Note also that unlike the
-   * <object_key>, this field is stored by value.
-   */
-  PortableServer::ObjectId object_id_;
-
-  /// The object key of the current context.
-  const TAO::ObjectKey *object_key_;
-
-  /// The servant for the current upcall.
-  PortableServer::Servant servant_;
-
-  /// The priority for the current upcall.
-  CORBA::Short priority_;
-
-  /// void *previous_current_impl_;
-  /// Current previous from <this>.
-  TAO_POA_Current_Impl *previous_current_impl_;
-
-  /// Is setup complete?
-  int setup_done_;
-
-  /// Pointer to tss resources.
-  TAO_TSS_Resources *tss_resources_;
-
-  // = Hidden because we don't allow these
-  TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
-  void operator= (const TAO_POA_Current_Impl &);
-};
+  namespace Portable_Server
+  {
+    class Non_Servant_Upcall;
+    class Servant_Upcall;
+    class POA_Current_Impl;
+    class Temporary_Creation_Time;
+  }
+}
 
 /**
  * @class TAO_Object_Adapter
@@ -225,11 +67,12 @@ protected:
  *
  * This class will be used as a facade for the POAs in a server
  */
-class TAO_PortableServer_Export TAO_Object_Adapter : public TAO_Adapter
+class TAO_PortableServer_Export TAO_Object_Adapter
+  : public TAO_Adapter
 {
 public:
 
-  friend class TAO_POA;
+  friend class TAO_Root_POA;
 
   typedef PortableServer::ObjectId poa_name;
   typedef PortableServer::ObjectId_var poa_name_var;
@@ -257,20 +100,20 @@ public:
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
                 CORBA::Boolean root,
-                const TAO_Temporary_Creation_Time &poa_creation_time,
-                TAO_POA *&poa
+                const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
+                TAO_Root_POA *&poa
                 ACE_ENV_ARG_DECL);
 
   int bind_poa (const poa_name &folded_name,
-                TAO_POA *poa,
+                TAO_Root_POA *poa,
                 poa_name_out system_name);
 
-  int unbind_poa (TAO_POA *poa,
+  int unbind_poa (TAO_Root_POA *poa,
                   const poa_name &folded_name,
                   const poa_name &system_name);
 
   int activate_poa (const poa_name &folded_name,
-                    TAO_POA *&poa
+                    TAO_Root_POA *&poa
                     ACE_ENV_ARG_DECL);
 
   ACE_Lock &lock (void);
@@ -280,7 +123,7 @@ public:
   ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
 
   /// Access the root poa.
-  TAO_POA *root_poa (void) const;
+  TAO_Root_POA *root_poa (void) const;
 
   /// Access to ORB Core.
   TAO_ORB_Core &orb_core (void) const;
@@ -295,6 +138,8 @@ public:
 
   /// Return the validator.
   TAO_Policy_Validator &validator (void);
+
+  int enable_locking() const;
 
   /// Return the set of default policies.
   TAO_POA_Policy_Set &default_poa_policies (void);
@@ -345,24 +190,24 @@ protected:
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_POA *&poa
+                   TAO_Root_POA *&poa
                    ACE_ENV_ARG_DECL);
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
-                          const TAO_Temporary_Creation_Time &poa_creation_time,
-                          TAO_POA *&poa
+                          const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
+                          TAO_Root_POA *&poa
                           ACE_ENV_ARG_DECL);
 
   int find_persistent_poa (const poa_name &system_name,
-                           TAO_POA *&poa
+                           TAO_Root_POA *&poa
                            ACE_ENV_ARG_DECL);
 
-  int bind_transient_poa (TAO_POA *poa,
+  int bind_transient_poa (TAO_Root_POA *poa,
                           poa_name_out system_name);
 
   int bind_persistent_poa (const poa_name &folded_name,
-                           TAO_POA *poa,
+                           TAO_Root_POA *poa,
                            poa_name_out system_name);
 
   int unbind_transient_poa (const poa_name &system_name);
@@ -390,11 +235,11 @@ public:
     virtual ~Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa
+                                     TAO_Root_POA *&poa
                                      ACE_ENV_ARG_DECL) = 0;
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_POA *poa,
+                                     TAO_Root_POA *poa,
                                      poa_name_out system_name) = 0;
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
@@ -425,11 +270,11 @@ public:
     virtual ~Active_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa
+                                     TAO_Root_POA *&poa
                                      ACE_ENV_ARG_DECL);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_POA *poa,
+                                     TAO_Root_POA *poa,
                                      poa_name_out system_name);
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
@@ -439,11 +284,13 @@ public:
 
     typedef ACE_Active_Map_Manager_Adapter<
     poa_name,
-      TAO_POA *,
+      TAO_Root_POA *,
       TAO_Preserve_Original_Key_Adapter> persistent_poa_system_map;
 
     persistent_poa_system_map persistent_poa_system_map_;
   };
+
+  friend class Active_Hint_Strategy;
 
   /**
    * @class No_Hint_Strategy
@@ -461,17 +308,19 @@ public:
     virtual ~No_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa
+                                     TAO_Root_POA *&poa
                                      ACE_ENV_ARG_DECL);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_POA *poa,
+                                     TAO_Root_POA *poa,
                                      poa_name_out system_name);
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
                                        const poa_name &system_name);
 
   };
+
+  friend class No_Hint_Strategy;
 
 protected:
 
@@ -480,13 +329,13 @@ protected:
   /// Base class of the id map.
   typedef ACE_Map<
   poa_name,
-    TAO_POA *> transient_poa_map;
+    TAO_Root_POA *> transient_poa_map;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<poa_name>,
     TAO_Incremental_Key_Generator> transient_poa_hash_map;
@@ -496,25 +345,25 @@ protected:
   /// Id linear map.
   typedef ACE_Map_Manager_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_Incremental_Key_Generator> transient_poa_linear_map;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id active map.
   typedef ACE_Active_Map_Manager_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_Ignore_Original_Key_Adapter> transient_poa_active_map;
 
   /// Base class of the name map.
   typedef ACE_Map<
   poa_name,
-    TAO_POA *> persistent_poa_name_map;
+    TAO_Root_POA *> persistent_poa_name_map;
 
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_hash_map;
@@ -523,16 +372,17 @@ protected:
   /// Id linear map.
   typedef ACE_Map_Manager_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_linear_map;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Strategy for dispatching a request to a servant.
   TAO_Servant_Dispatcher *servant_dispatcher_;
 
-public:
-
+  /// Persistent POA map
   persistent_poa_name_map *persistent_poa_name_map_;
+
+  /// Transient POA map
   transient_poa_map *transient_poa_map_;
 
 protected:
@@ -606,235 +456,15 @@ public:
     const poa_name &folded_name_;
   };
 
-  /**
-   * @class Non_Servant_Upcall
-   *
-   * @brief This class helps us with a recursive thread lock without
-   * using a recursive thread lock.  Non_Servant_Upcall has a
-   * magic constructor and destructor.  We unlock the
-   * Object_Adapter lock for the duration of the non-servant
-   * (i.e., adapter activator and servant activator) upcalls;
-   * reacquiring once the upcalls complete.  Even though we are
-   * releasing the lock, other threads will not be able to make
-   * progress since
-   * <Object_Adapter::non_servant_upcall_in_progress_> has been
-   * set.
-   */
-  class TAO_PortableServer_Export Non_Servant_Upcall
-  {
-  public:
+  friend class TAO::Portable_Server::Non_Servant_Upcall;
 
-    /// Constructor.
-    Non_Servant_Upcall (TAO_POA &poa);
-
-    /// Destructor.
-    ~Non_Servant_Upcall (void);
-
-    TAO_POA &poa (void) const;
-
-  protected:
-
-    TAO_Object_Adapter &object_adapter_;
-    TAO_POA &poa_;
-    Non_Servant_Upcall *previous_;
-  };
-
-  friend class Non_Servant_Upcall;
-
-  /**
-   * @class Servant_Upcall
-   *
-   * @brief This class finds out the POA and the servant to perform an
-   * upcall.  It can only be instantiated without the object
-   * adapter's lock held.
-   */
-  class TAO_PortableServer_Export Servant_Upcall
-  {
-  public:
-
-    friend class TAO_POA;
-    friend class TAO_RT_Collocation_Resolver;
-
-    /**
-     * @class Pre_Invoke_State
-     *
-     * @brief This struct keeps track of state related to pre- and
-     * post-invoke operations.
-     */
-    class Pre_Invoke_State
-    {
-    public:
-      // Constructor.
-      Pre_Invoke_State (void);
-
-      enum State
-      {
-        NO_ACTION_REQUIRED,
-        PRIORITY_RESET_REQUIRED
-      };
-
-      // Indicates whether the priority of the thread needs to be
-      // reset back to its original value.
-      State state_;
-
-      // Original native priority of the thread.
-      CORBA::Short original_native_priority_;
-
-      // Original CORBA priority of the thread.
-      CORBA::Short original_CORBA_priority_;
-    };
-
-    // @@ POA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
-    /// Constructor.
-    Servant_Upcall (TAO_ORB_Core *orb_core);
-
-    /// Destructor.
-    ~Servant_Upcall (void);
-
-    /// Locate POA and servant.
-    int prepare_for_upcall (const TAO::ObjectKey &key,
-                            const char *operation,
-                            CORBA::Object_out forward_to
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    /// Helper.
-    int prepare_for_upcall_i (const TAO::ObjectKey &key,
-                              const char *operation,
-                              CORBA::Object_out forward_to,
-                              int &wait_occurred_restart_call
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    /// Run pre_invoke for a remote request.
-    void pre_invoke_remote_request (TAO_ServerRequest &req
-                                    ACE_ENV_ARG_DECL);
-
-    /// Run pre_invoke for a collocated request.
-    void pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_DECL);
-
-    /// Run post_invoke for a request.
-    void post_invoke (void);
-
-    /// Locate POA.
-    TAO_POA *lookup_POA (const TAO::ObjectKey &key
-                         ACE_ENV_ARG_DECL);
-
-    /// POA accessor.
-    TAO_POA &poa (void) const;
-
-    /// Object Adapter accessor.
-    TAO_Object_Adapter &object_adapter (void) const;
-
-    /// System ID accessor.
-    const PortableServer::ObjectId &id (void) const;
-
-    /// User ID accessors.  This is the same value returned by
-    /// PortableServer::Current::get_object_id().
-    void user_id (const PortableServer::ObjectId *);
-    const PortableServer::ObjectId &user_id (void) const;
-
-    /// Servant accessor.
-    PortableServer::Servant servant (void) const;
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-    /// Get the Servant Locator's cookie
-    PortableServer::ServantLocator::Cookie locator_cookie (void) const;
-
-    /// Set the Servant Locator's cookie
-    void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
-
-    /// Get the operation name.
-    const char *operation (void) const;
-
-    /// Set the operation name.
-    void operation (const char *);
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-    /// Set the <active_object_map_entry>.
-    void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
-
-    /// Get the <active_object_map_entry>.
-    TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
-
-    /// We are using the servant locator for this upcall.
-    void using_servant_locator (void);
-
-    /// Get the priority for the current upcall.
-    CORBA::Short priority (void) const;
-
-    enum State
-    {
-      INITIAL_STAGE,
-      OBJECT_ADAPTER_LOCK_ACQUIRED,
-      POA_CURRENT_SETUP,
-      OBJECT_ADAPTER_LOCK_RELEASED,
-      SERVANT_LOCK_ACQUIRED
-    };
-
-    // State accessors.
-    State state (void) const;
-    void state (State);
-
-  protected:
-
-    void servant_locator_cleanup (void);
-    void single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL);
-    void single_threaded_poa_cleanup (void);
-    void servant_cleanup (void);
-    void poa_cleanup (void);
-
-    /// Clean-up / reset state of this Servant_Upcall object.
-    void upcall_cleanup (void);
-
-  protected:
-
-    TAO_Object_Adapter *object_adapter_;
-
-    TAO_POA *poa_;
-
-    PortableServer::Servant servant_;
-
-    State state_;
-
-    PortableServer::ObjectId system_id_;
-
-    const PortableServer::ObjectId *user_id_;
-
-    TAO_POA_Current_Impl current_context_;
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-    /// Servant Locator's cookie
-    PortableServer::ServantLocator::Cookie cookie_;
-
-    /// Operation name for this current.
-    const char *operation_;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-    /// Pointer to the entry in the TAO_Active_Object_Map corresponding
-    /// to the servant for this request.
-    TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
-
-    /// Are we using the servant locator?
-    int using_servant_locator_;
-
-    /// Preinvoke data for the upcall.
-    Pre_Invoke_State pre_invoke_state_;
-
-  private:
-    Servant_Upcall (const Servant_Upcall &);
-    void operator= (const Servant_Upcall &);
-  };
-
-  friend class Servant_Upcall;
+  friend class TAO::Portable_Server::Servant_Upcall;
 
 public:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
 
 private:
 
@@ -848,7 +478,7 @@ private:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  Non_Servant_Upcall *non_servant_upcall_in_progress_;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_;
 
   /// Current nesting level of non_servant_upcalls.
   unsigned int non_servant_upcall_nesting_level_;
@@ -857,7 +487,7 @@ private:
   ACE_thread_t non_servant_upcall_thread_;
 
   /// The Root POA
-  TAO_POA *root_;
+  TAO_Root_POA *root_;
 
   /// The default validator and the beginning of the chain of
   /// policy validators.
@@ -868,9 +498,7 @@ private:
   TAO_POA_Policy_Set default_poa_policies_;
 };
 
-// ****************************************************************
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

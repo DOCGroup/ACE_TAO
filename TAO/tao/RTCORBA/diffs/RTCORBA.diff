@@ -1,6 +1,5 @@
-// -*- C++ -*-
---- orig/RTCORBAC.h     2004-09-16 12:52:02.885009600 +0200
-+++ RTCORBAC.h  2004-09-16 12:36:01.362408000 +0200
+--- orig/RTCORBAC.h	2005-02-14 15:03:04.020758700 +0100
++++ RTCORBAC.h	2005-02-14 15:03:04.321190700 +0100
 @@ -36,12 +36,18 @@
  
  #include "ace/config-all.h"
@@ -20,16 +19,18 @@
  #include "tao/SystemException.h"
  #include "tao/Environment.h"
  #include "tao/Object.h"
-@@ -50,6 +56,8 @@
+@@ -50,7 +56,10 @@
  #include "tao/Seq_Var_T.h"
  #include "tao/Seq_Out_T.h"
  #include "tao/VarOut_T.h"
 +#include "tao/Encodable.h"
 +#include "tao/PolicyC.h"
  
++#include "tao/IOPC.h"
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
-@@ -532,6 +540,7 @@
+ #endif
+@@ -530,6 +539,7 @@
    
    class TAO_RTCORBA_Export ProtocolProperties
      : public virtual CORBA::Object
@@ -37,7 +38,7 @@
    {
    public:
      typedef ProtocolProperties_ptr _ptr_type;
-@@ -568,6 +577,9 @@
+@@ -566,6 +576,9 @@
      virtual const char* _interface_repository_id (void) const;
      virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
    
@@ -47,18 +48,18 @@
    protected:
      // Abstract or local interface only.
      ProtocolProperties (void);
---- orig/RTCORBAC.cpp   2004-09-16 12:52:02.885009600 +0200
-+++ RTCORBAC.cpp        2004-09-16 12:36:36.643139200 +0200
+--- orig/RTCORBAC.cpp	2005-02-14 15:03:04.020758700 +0100
++++ RTCORBAC.cpp	2005-02-14 15:03:04.331205100 +0100
 @@ -29,7 +29,7 @@
- // be/be_codegen.cpp:303
+ // be\be_codegen.cpp:302
  
  
 -#include "RTCORBAC.h"
 +#include "RTCORBA.h"
  #include "tao/CDR.h"
  #include "tao/Typecode.h"
- #include "tao/Any_Impl_T.h"
-@@ -56,6 +56,22 @@
+ #include "tao/Basic_Arguments.h"
+@@ -53,6 +53,22 @@
  {
  }
  
@@ -79,5 +80,16 @@
 +  return 1;
 +}
  
- // TAO_IDL - Generated from
- // be/be_visitor_typecode/typecode_defn.cpp:290
+ // TAO_IDL - Generated from 
+ // be\be_visitor_structure/structure_cs.cpp:66
+--- orig/RTCORBAA.cpp	2005-02-14 15:03:04.020758700 +0100
++++ RTCORBAA.cpp	2005-02-14 15:03:29.016701100 +0100
+@@ -25,7 +25,7 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#include "RTCORBAC.h"
++#include "RTCORBA.h"
+ #include "tao/Typecode.h"
+ #include "tao/CDR.h"
+ #include "tao/Any.h"

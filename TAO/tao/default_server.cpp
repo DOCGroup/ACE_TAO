@@ -380,10 +380,6 @@ TAO_Default_Server_Strategy_Factory::report_option_value_error (
              option_value, option_name));
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        ACE_TEXT ("Server_Strategy_Factory"),
                        ACE_SVC_OBJ_T,

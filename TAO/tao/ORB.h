@@ -27,7 +27,6 @@
 #include "orb_typesC.h"
 #include "objectid.h"
 #include "Policy_ForwardC.h"
-#include "OBV_Constants.h"
 #include "CORBA_methods.h"
 #include "VarOut_T.h"
 
@@ -45,7 +44,6 @@ typedef enum
 
 /// Forward declarations.
 class TAO_MProfile;
-struct TAO_Dispatch_Context;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_InputCDR;
@@ -120,6 +118,8 @@ namespace CORBA
   typedef ORB * ORB_ptr;
   typedef TAO_Pseudo_Var_T<ORB> ORB_var;
   typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
+
+  typedef CORBA::Short ValueModifier;
 
   /**
    * @class ORB

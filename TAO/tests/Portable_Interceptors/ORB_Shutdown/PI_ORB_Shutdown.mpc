@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoserver {
   requires += interceptors
 
   Source_Files {
@@ -13,7 +13,7 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
 
   Source_Files {
     testC.cpp

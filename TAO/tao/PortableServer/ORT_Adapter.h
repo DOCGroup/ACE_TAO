@@ -26,9 +26,6 @@
 #include "ace/Array_Base.h"
 #include "tao/PI_ForwardC.h"
 
-
-class TAO_POA;
-
 namespace CORBA
 {
   class Object;
@@ -89,16 +86,17 @@ namespace TAO
     virtual void release (
       PortableInterceptor::ObjectReferenceTemplate * t) = 0;
 
-
-    // @@ Johnny, we won't be needing the exception specification
-    //    below for long.  Once bug 1852 is fixed, we can the
-    //    exception specification and the "tao/SystemException.h"
-    //    include above.
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
      *
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
+     *
+     * @todo
+     * @@ Johnny, we won't be needing the exception specification
+     * below for long.  Once bug 1852 is fixed, we can the
+     * exception specification and the "tao/SystemException.h"
+     * include above.
      */
     //@{
     virtual CORBA::Object_ptr make_object (
@@ -108,7 +106,7 @@ namespace TAO
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-  //@}
+    //@}
   };
 
  typedef

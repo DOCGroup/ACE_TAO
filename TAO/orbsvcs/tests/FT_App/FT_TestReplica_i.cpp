@@ -15,7 +15,6 @@
 
 #include "FT_TestReplica_i.h"
 #include "FT_ReplicaFactory_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "tao/ORB_Constants.h"
 #include "FT_TestReplicaC.h"
 // FUZZ: disable check_for_streams_include
@@ -78,7 +77,7 @@ namespace
     suicide (#value " in method " #method);                        \
     ACE_THROW (FAULT_CODE (                                        \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO));                                 \
     } else ;
@@ -88,7 +87,7 @@ namespace
     suicide ("read-only method " #method);                         \
     ACE_THROW (FAULT_CODE (                                        \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO));                                 \
     } else ;
@@ -98,7 +97,7 @@ namespace
     suicide (#value " in method " #method);                        \
     ACE_THROW_RETURN (FAULT_CODE (                                 \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO),                                  \
       result);                                                     \
@@ -109,7 +108,7 @@ namespace
     suicide ("read-only method " #method);                         \
     ACE_THROW_RETURN (FAULT_CODE (                                 \
       CORBA::SystemException::_tao_minor_code (                    \
-            TAO_DEFAULT_MINOR_CODE,                                \
+            TAO::VMCID,                                \
             EFAULT),                                               \
             CORBA::COMPLETED_NO),                                  \
             result);                                               \

@@ -268,7 +268,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
         break;
 
-      case TAO_DEFAULT_MINOR_CODE:
+      case TAO::VMCID:
       default:
         switch (ex.minor () & BITS_5_THRU_12_MASK)
           {

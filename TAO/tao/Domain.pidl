@@ -6,7 +6,7 @@
  * @brief Pre-compiled IDL source for the CORBA::Domain related
  * classes.
  *
- *   This file was used to generate the code in DomainC.{h,i,cpp}.
+ *   This file was used to generate the code in DomainC.{h,inl,cpp}.
  *
  *   The steps to regenerate the code are as follows:
  *
@@ -35,12 +35,9 @@
  *
  *   Note: The diffs were generated with these commands:
  *
- *   for i in DomainC.{h,i,cpp}; do
+ *   for i in DomainC.{h,cpp}; do
  *     diff -wBbu orig/$i $i;
  *   done > diffs/Domain.diff
- *   for i in Domain{S,S_T}.{h,i,cpp}; do
- *     diff -wBbu orig/$i Domain/$i;
- *   done >> diffs/Domain.diff
  */
 
 #ifndef TAO_CORBA_DOMAIN_PIDL

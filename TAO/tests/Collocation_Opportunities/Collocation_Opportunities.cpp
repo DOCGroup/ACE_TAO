@@ -3,6 +3,8 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/POA_Current.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 ACE_RCSID(Collocation_Opportunities, Collocation_Opportunities, "$Id$")
 
@@ -68,10 +70,11 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      TAO_POA_Current &tao_poa_current =
-        dynamic_cast<TAO_POA_Current &> (*(this->poa_current_.in ()));
+      TAO::Portable_Server::POA_Current &tao_poa_current =
+        dynamic_cast <TAO::Portable_Server::POA_Current &>
+                          (*(this->poa_current_.in ()));
 
-      TAO_POA_Current_Impl &tao_poa_current_implementation =
+      TAO::Portable_Server::POA_Current_Impl &tao_poa_current_implementation =
         *tao_poa_current.implementation ();
 
       const char *upcall = 0;

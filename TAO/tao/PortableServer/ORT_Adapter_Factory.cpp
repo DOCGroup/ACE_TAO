@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/ORT_Adapter_Factory.h"
+#include "ORT_Adapter_Factory.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,

@@ -39,7 +39,7 @@ TAO::Security::PolicyFactory::create_policy (
       if (!(value >>= qop))
         ACE_THROW_RETURN (CORBA::BAD_PARAM (
                             CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
+                              TAO::VMCID,
                               EINVAL),
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
@@ -49,7 +49,7 @@ TAO::Security::PolicyFactory::create_policy (
                         TAO::Security::QOPPolicy (qop),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -66,7 +66,7 @@ TAO::Security::PolicyFactory::create_policy (
       if (!(value >>= trust))
         ACE_THROW_RETURN (CORBA::BAD_PARAM (
                             CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
+                              TAO::VMCID,
                               EINVAL),
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
@@ -76,7 +76,7 @@ TAO::Security::PolicyFactory::create_policy (
                         TAO::Security::EstablishTrustPolicy (*trust),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -93,7 +93,7 @@ TAO::Security::PolicyFactory::create_policy (
       if (!(value >>= args))
         ACE_THROW_RETURN (CORBA::BAD_PARAM (
                             CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
+                              TAO::VMCID,
                               EINVAL),
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
@@ -109,7 +109,7 @@ TAO::Security::PolicyFactory::create_policy (
                           args->use_integrity),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -126,7 +126,7 @@ TAO::Security::PolicyFactory::create_policy (
       if (!(value >>= creds))
         ACE_THROW_RETURN (CORBA::BAD_PARAM (
                             CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
+                              TAO::VMCID,
                               EINVAL),
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
@@ -136,7 +136,7 @@ TAO::Security::PolicyFactory::create_policy (
                         TAO::SL3::ObjectCredentialsPolicy (*creds),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());

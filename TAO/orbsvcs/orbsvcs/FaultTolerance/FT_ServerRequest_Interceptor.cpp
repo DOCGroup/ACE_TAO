@@ -169,7 +169,7 @@ namespace TAO
       {
         ACE_THROW (CORBA::TRANSIENT (
                        CORBA::SystemException::_tao_minor_code (
-                       TAO_DEFAULT_MINOR_CODE,
+                       TAO::VMCID,
                        EINVAL),
                        CORBA::COMPLETED_NO));
       }

@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_interceptors_ss, 
+ACE_RCSID (be_visitor_operation,
+           operation_interceptors_ss,
            "$Id$")
 
 // ******************************************************
@@ -76,7 +76,7 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
   // Generate the ServerRequestInfo object per operation to
   // be used by the interecptors.
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "class TAO_ServerRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -162,7 +162,7 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
     }
 
   // Pass in the pointer to the Servant_Upcall.
-  *os << "TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall," << be_nl;
+  *os << "TAO::Portable_Server::Servant_Upcall *tao_servant_upcall," << be_nl;
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *tao_impl";
@@ -443,7 +443,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
 
   // Generate the ServerRequestInfo object definition per operation
   // to be used by the interceptors.
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -511,7 +511,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
 
   *os << " (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
-      << "TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall," << be_nl;
+      << "TAO::Portable_Server::Servant_Upcall *_tao_servant_upcall," << be_nl;
 
   be_interface *intf;
   intf = this->ctx_->attribute ()
@@ -771,7 +771,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::result()
   // -----------------------------------------------------------------
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "CORBA::Any * " << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
@@ -877,7 +877,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::target_most_derived_interface()
   // -----------------------------------------------------------------
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "char *" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
@@ -925,7 +925,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::target_is_a()
   // -----------------------------------------------------------------
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "CORBA::Boolean" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();

@@ -17,6 +17,7 @@
 // ================================================================
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 #include "tao/ORB.h"
 

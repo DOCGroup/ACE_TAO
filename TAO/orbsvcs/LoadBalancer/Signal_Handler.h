@@ -21,9 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/Signal.h"
-
 
 /**
  * @class TAO_LB_Signal_Handler
@@ -97,6 +96,5 @@ private:
   PortableServer::POA_var poa_;
 
 };
-
 
 #endif  /* TAO_LB_SIGNAL_HANDLER_H */

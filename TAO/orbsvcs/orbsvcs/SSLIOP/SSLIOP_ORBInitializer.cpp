@@ -63,7 +63,7 @@ TAO::SSLIOP::ORBInitializer::pre_init (
                     TAO::SSLIOP::Current (orb_core),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -128,7 +128,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
                       this->qop_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -161,7 +161,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
 //                                                  this->csiv2_target_requires_),
 //                     CORBA::NO_MEMORY (
 //                       CORBA::SystemException::_tao_minor_code (
-//                         TAO_DEFAULT_MINOR_CODE,
+//                         TAO::VMCID,
 //                         ENOMEM),
 //                       CORBA::COMPLETED_NO));
 //   ACE_CHECK;

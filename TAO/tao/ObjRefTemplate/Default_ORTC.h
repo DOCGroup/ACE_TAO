@@ -78,7 +78,7 @@ namespace TAO_Default_ORT
 {
   
   // TAO_IDL - Generated from
-  // be\be_valuetype.cpp:527
+  // be\be_valuetype.cpp:525
   
   
 
@@ -228,7 +228,7 @@ TAO_ORT_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceT
 TAO_ORT_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:434
+// be\be_valuetype.cpp:432
 
 namespace CORBA
 {
@@ -243,7 +243,7 @@ TAO_ORT_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT
 TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "Default_ORTC.inl"

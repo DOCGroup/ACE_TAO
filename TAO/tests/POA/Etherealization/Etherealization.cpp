@@ -19,6 +19,7 @@
 
 #include "testS.h"
 #include "ace/OS_NS_string.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 class test_i : public POA_test
 {

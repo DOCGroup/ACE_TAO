@@ -91,7 +91,7 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::UShort BufferingConstraintMode;
   typedef CORBA::UShort_out BufferingConstraintMode_out;
@@ -211,7 +211,7 @@ namespace TAO
     
     static BufferingConstraintPolicy_ptr _nil (void)
     {
-      return (BufferingConstraintPolicy_ptr)0;
+      return static_cast<BufferingConstraintPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);

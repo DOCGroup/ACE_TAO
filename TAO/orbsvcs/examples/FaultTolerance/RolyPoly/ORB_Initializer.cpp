@@ -40,7 +40,7 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
                       ReplicaController (orb.in ()),
                       CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
+                          TAO::VMCID,
                           ENOMEM),
                       CORBA::COMPLETED_NO));
 

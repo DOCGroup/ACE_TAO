@@ -59,7 +59,7 @@ TAO::Security::ORBInitializer::pre_init (
 //                     TAO_Security_Current (old_tss_slot, orb_id.in ()),
 //                     CORBA::NO_MEMORY (
 //                       CORBA::SystemException::_tao_minor_code (
-//                         TAO_DEFAULT_MINOR_CODE,
+//                         TAO::VMCID,
 //                         ENOMEM),
 //                       CORBA::COMPLETED_NO));
 //   ACE_CHECK;
@@ -88,7 +88,7 @@ TAO::Security::ORBInitializer::pre_init (
                                                tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -108,7 +108,7 @@ TAO::Security::ORBInitializer::pre_init (
                     TAO::SL3::CredentialsCurator,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -128,7 +128,7 @@ TAO::Security::ORBInitializer::pre_init (
                     TAO::SL3::SecurityManager (credentials_curator.in ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

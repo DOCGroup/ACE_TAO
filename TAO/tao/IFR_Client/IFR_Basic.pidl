@@ -37,7 +37,7 @@
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Basic.pidl
 //
-//   The only modification necessary to the skelton files is to
+//   The only modification necessary to the skeleton files is to
 //   change
 //
 //   #include "IFR_BasicC.h"
@@ -54,7 +54,7 @@
 #ifndef _IFR_BASIC_IDL_
 #define _IFR_BASIC_IDL_
 
-#include "IFR_Base.pidl"
+#include "tao/IFR_Client/IFR_Base.pidl"
 #include "ParameterMode.pidl"
 
 module CORBA

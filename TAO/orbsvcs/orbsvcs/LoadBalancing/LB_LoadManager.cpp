@@ -148,7 +148,7 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location
                     CosLoadBalancing::LoadList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -882,7 +882,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                         TAO_LB_MemberLocator (this),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK;
@@ -987,7 +987,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                         TAO_LB_LoadAlert_Handler,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK;

@@ -268,6 +268,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UTF16_BOM_Factory.cpp
     UTF16_BOM_Translator.cpp
     Valuetype_Adapter.cpp
+    ValueModifierC.cpp
+    VisibilityC.cpp
     Wait_On_Leader_Follower.cpp
     Wait_On_LF_No_Upcall.cpp
     Wait_On_Reactor.cpp
@@ -362,6 +364,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     CORBANAME_Parser.h
     CORBA_String.h
     CurrentC.h
+    CurrentS.h
     debug.h
     default_client.h
     Default_Collocation_Resolver.h
@@ -508,6 +511,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PolicyC.h
     PolicyFactory_Registry.h
     Policy_ForwardC.h
+    Policy_ForwardS.h
     Policy_Manager.h
     Policy_Set.h
     PolicyS.h
@@ -615,6 +619,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Var_Size_Argument_T.h
     Var_Size_SArgument_T.h
     Version.h
+    VisibilityC.h
+    ValueModifierC.h
     Wait_On_Leader_Follower.h
     Wait_On_LF_No_Upcall.h
     Wait_On_Reactor.h

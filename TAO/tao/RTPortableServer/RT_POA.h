@@ -18,7 +18,7 @@
 
 #include "rtportableserver_export.h"
 
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Regular_POA.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -34,9 +34,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -46,7 +44,7 @@ class TAO_PriorityBandedConnectionPolicy;
 
 class TAO_RTPortableServer_Export TAO_RT_POA :
   public virtual RTPortableServer::POA,
-  public virtual TAO_POA
+  public virtual TAO_Regular_POA
 {
 public:
 
@@ -207,8 +205,7 @@ public:
   CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
                                               const char *intf
                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -258,7 +255,7 @@ public:
   TAO_RT_POA (const String &name,
               TAO_POA_Manager &poa_manager,
               const TAO_POA_Policy_Set &policies,
-              TAO_POA *parent,
+              TAO_Root_POA *parent,
               ACE_Lock &lock,
               TAO_SYNCH_MUTEX &thread_lock,
               TAO_ORB_Core &orb_core,
@@ -272,10 +269,10 @@ public:
 protected:
 
   /// Template method for creating new POA's of this type.
-  virtual TAO_POA *new_POA (const String &name,
+  virtual TAO_Root_POA *new_POA (const String &name,
                             TAO_POA_Manager &poa_manager,
                             const TAO_POA_Policy_Set &policies,
-                            TAO_POA *parent,
+                            TAO_Root_POA *parent,
                             ACE_Lock &lock,
                             TAO_SYNCH_MUTEX &thread_lock,
                             TAO_ORB_Core &orb_core,
@@ -313,7 +310,7 @@ protected:
 
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

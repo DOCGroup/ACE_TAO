@@ -2,15 +2,18 @@
 
 #include "POA_Policy_Set.h"
 #include "POA_Cached_Policies.h"
-#include "tao/Policy_Validator.h"
+#include "PortableServer.h"
 
+#include "tao/Policy_Validator.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "POA_Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, POA, "$Id$")
+ACE_RCSID (PortableServer,
+           POA_Policy_Set,
+           "$Id$")
 
 TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
   :

@@ -49,13 +49,13 @@ TAO_RTScheduler_Loader::init (int,
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_RTScheduler_ORB_Initializer,
                         CORBA::NO_MEMORY (
-					  CORBA::SystemException::_tao_minor_code (
-										  TAO_DEFAULT_MINOR_CODE,
-										  ENOMEM),
+                          CORBA::SystemException::_tao_minor_code (
+                          TAO::VMCID,
+                          ENOMEM),
 					  CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
       orb_initializer = temp_orb_initializer;
-      
+
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

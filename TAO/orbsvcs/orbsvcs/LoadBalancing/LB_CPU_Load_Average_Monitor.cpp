@@ -66,7 +66,7 @@ TAO_LB_CPU_Load_Average_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
                     CosLoadBalancing::Location (this->location_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -121,7 +121,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   if (s == 0)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                         CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
+                          TAO::VMCID,
                           errno),
                         CORBA::COMPLETED_NO),
                       0);
@@ -216,7 +216,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);

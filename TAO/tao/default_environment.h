@@ -28,7 +28,7 @@ namespace CORBA
 
 /// Provide a simple function to access the TSS default
 /// environment. This will be used in TAO wherever we have a default
-/// environement.
+/// environment.
 /**
  * @note We tried with CORBA::default_environment() and others.
  */

@@ -72,7 +72,7 @@ namespace Messaging
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short SyncScope;
   typedef CORBA::Short_out SyncScope_out;
@@ -111,7 +111,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_SyncScopeC.inl"

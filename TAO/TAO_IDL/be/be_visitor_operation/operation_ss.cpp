@@ -198,9 +198,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Cast the Servant_Upcall pointer.
-  *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
+  *os << "TAO::Portable_Server::Servant_Upcall *_tao_upcall =" << be_idt_nl
       << "static_cast<" << be_idt << be_idt_nl
-      << "TAO_Object_Adapter::Servant_Upcall *> (" << be_nl
+      << "TAO::Portable_Server::Servant_Upcall *> (" << be_nl
       << "_tao_servant_upcall" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 

@@ -41,7 +41,7 @@ TAO_Messaging_Initializer::init (void)
                         TAO_Messaging_ORBInitializer,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
@@ -87,7 +87,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
     {
       // Could not demarshal the exception id, raise a local
       // CORBA::MARSHAL
-      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
                                  CORBA::COMPLETED_YES));
     }
 
@@ -97,7 +97,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       CORBA::ULong completion = 0;
       if ((_tao_in >> minor) == 0 ||
           (_tao_in >> completion) == 0)
-        ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
                                    CORBA::COMPLETED_MAYBE));
       CORBA::SystemException* exception =
         TAO_Exceptions::create_system_exception (type_id.in ()
@@ -134,7 +134,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       CORBA::Exception *exception = exception_data[i].alloc ();
 
       if (exception == 0)
-        ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                      CORBA::COMPLETED_YES));
       exception->_tao_decode (_tao_in ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -154,6 +154,6 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
   // @@ It would seem like if the remote exception is a
   //    UserException we can assume that the request was
   //    completed.
-  ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::UNKNOWN (TAO::VMCID,
                              CORBA::COMPLETED_YES));
 }

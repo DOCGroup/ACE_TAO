@@ -11,8 +11,8 @@ ACE_RCSID(RTPortableServer,
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
-#include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
 
@@ -31,15 +31,15 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
 
   // Lookup the target POA.  Note that Object Adapter lock is held
   // until <servant_upcall> dies.
-  TAO_Object_Adapter::Servant_Upcall servant_upcall (orb_core);
-  TAO_POA *poa =
+  TAO::Portable_Server::Servant_Upcall servant_upcall (orb_core);
+  TAO_Root_POA *poa =
     servant_upcall.lookup_POA (object->_stubobj ()->object_key ()
                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Get the thread pool associated with this POA.
   TAO_Thread_Pool *target_thread_pool =
-    (TAO_Thread_Pool *) poa->thread_pool ();
+    static_cast <TAO_Thread_Pool *> (poa->thread_pool ());
 
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
@@ -52,7 +52,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
 
   // Get the lane for this thread.
   TAO_Thread_Lane *current_thread_lane =
-    (TAO_Thread_Lane *) tss.lane_;
+    static_cast <TAO_Thread_Lane *> (tss.lane_);
 
   TAO_Thread_Pool *current_thread_pool = 0;
 
@@ -77,20 +77,16 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   if (!current_thread_pool->with_lanes ())
     return 1;
 
-  // Grab the cached policies from the POA.
-  TAO_POA_Cached_Policies &cached_policies =
-    poa->cached_policies ();
-
   // Grab the priority model used by the POA.  Note that this cannot
   // be NOT_SPECIFIED because NOT_SPECIFIED is not allowed with thread
   // pool with lanes.
-  TAO_POA_Cached_Policies::PriorityModel priority_model =
-    cached_policies.priority_model ();
+  TAO::Portable_Server::Cached_Policies::PriorityModel priority_model =
+    poa->priority_model ();
 
   // If the policy is CLIENT_PROPAGATED, then we are collocated
   // because the current thread is of the correct priority :-) and
   // we'll simple use the current thread to run the upcall.
-  if (priority_model == TAO_POA_Cached_Policies::CLIENT_PROPAGATED)
+  if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
     return 1;
 
   // Locate the target servant.  We are really not interested in the

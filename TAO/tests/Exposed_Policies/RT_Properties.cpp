@@ -30,7 +30,7 @@ RT_Properties::read_from (const char *file_name
 
   ACE_NEW_THROW_EX (rt_properties,
                     RT_Properties,
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
 
   // @@ Angelo: what if the length is more than 255?

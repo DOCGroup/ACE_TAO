@@ -97,7 +97,7 @@ TAO_PriorityModelPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_PriorityModelPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -183,7 +183,7 @@ TAO_ThreadpoolPolicy::create (const CORBA::Any &val
   TAO_ThreadpoolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -211,7 +211,7 @@ TAO_ThreadpoolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_ThreadpoolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -269,7 +269,7 @@ TAO_PrivateConnectionPolicy::create (const CORBA::Any &
   TAO_PrivateConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -290,7 +290,7 @@ TAO_PrivateConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_PrivateConnectionPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -360,7 +360,7 @@ TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -374,7 +374,7 @@ TAO_PriorityBandedConnectionPolicy::priority_bands (ACE_ENV_SINGLE_ARG_DECL)
   RTCORBA::PriorityBands *tmp;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::PriorityBands (this->priority_bands_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
@@ -395,7 +395,7 @@ TAO_PriorityBandedConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_PriorityBandedConnectionPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -478,7 +478,7 @@ TAO_ServerProtocolPolicy::create (const CORBA::Any &val
   TAO_ServerProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -492,7 +492,7 @@ TAO_ServerProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   RTCORBA::ProtocolList *tmp;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
@@ -513,7 +513,7 @@ TAO_ServerProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_ServerProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -589,7 +589,7 @@ TAO_ClientProtocolPolicy::create (const CORBA::Any &val
   TAO_ClientProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -603,7 +603,7 @@ TAO_ClientProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   RTCORBA::ProtocolList *tmp;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
@@ -624,7 +624,7 @@ TAO_ClientProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   TAO_ClientProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 

@@ -28,12 +28,11 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:390
 
-#ifndef _TAO_IDL_SERVER_IFR_BASICS_H_
-#define _TAO_IDL_SERVER_IFR_BASICS_H_
+#ifndef _TAO_IDL_ORIG_IFR_BASICS_H_
+#define _TAO_IDL_ORIG_IFR_BASICS_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ParameterModeS.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "IFR_BaseS.h"
 
@@ -16316,6 +16315,7 @@ namespace POA_CORBA
 // be\be_codegen.cpp:997
 
 #include "IFR_BasicS_T.h"
+
 #if defined (__ACE_INLINE__)
 #include "IFR_BasicS.inl"
 #endif /* defined INLINE */

@@ -15,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Map_T.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PortableServerC.h"
+#include "PS_ForwardC.h"
+
+class ACE_Active_Map_Manager_Key;
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -276,7 +276,7 @@ TAO::SSLIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                                           0), // SSL component
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -299,7 +299,7 @@ TAO::SSLIOP::Connector::make_secure_profile (ACE_ENV_SINGLE_ARG_DECL)
                                           1), // SSL component
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -412,7 +412,7 @@ TAO::SSLIOP::Connector::iiop_connect (
                         ::Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
                         CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
+                          TAO::VMCID,
                           EPERM),
                         CORBA::COMPLETED_NO),
                       0);
@@ -459,7 +459,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                        ::Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
                         CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
+                          TAO::VMCID,
                           EPERM),
                         CORBA::COMPLETED_NO),
                       0);

@@ -68,7 +68,7 @@ ORT_test_IORInterceptor::components_established (
                     ObjectReferenceFactory (old_orf.in ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

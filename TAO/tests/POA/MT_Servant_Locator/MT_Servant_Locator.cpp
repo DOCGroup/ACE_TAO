@@ -20,6 +20,7 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Auto_Event.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
 class test_i : public virtual PortableServer::RefCountServantBase,
                public virtual POA_test
@@ -175,6 +176,72 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
               name.in ()));
 }
 
+void
+set_nil_servant_manager (PortableServer::POA_ptr poa)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Setting a nil servant manager should give an OBJ_Adapter exception with
+      // minor code 4
+      poa->set_servant_manager (PortableServer::ServantManager::_nil()
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::OBJ_ADAPTER, ex)
+    {
+      if ((ex.minor() & 0xFFFU) == 4)
+        {
+          succeed = true;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, set nil servant manager failed\n"));
+  }
+}
+
+void
+overwrite_servant_manager (PortableServer::POA_ptr poa)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      Servant_Locator servant_locator (poa);
+
+      // Setting a servant manager after it is already set should give
+      // obj_adapter with minor code 6
+      poa->set_servant_manager (&servant_locator
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+    {
+      if ((ex.minor() & 0xFFFU) == 6)
+        {
+          succeed = true;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, overwrite servant manager failed\n"));
+  }
+}
+
 int
 main (int argc, char **argv)
 {
@@ -232,10 +299,14 @@ main (int argc, char **argv)
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      set_nil_servant_manager (child_poa.in());
+
       Servant_Locator servant_locator (child_poa.in ());
       child_poa->set_servant_manager (&servant_locator
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      overwrite_servant_manager (child_poa.in());
 
       PortableServer::ObjectId_var first_oid =
         PortableServer::string_to_ObjectId ("first");

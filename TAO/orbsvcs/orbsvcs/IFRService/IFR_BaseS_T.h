@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:546
 
-#ifndef _TAO_IDL_SERVER_IFR_BASES_T_H_
-#define _TAO_IDL_SERVER_IFR_BASES_T_H_
+#ifndef _TAO_IDL_ORIG_IFR_BASES_T_H_
+#define _TAO_IDL_ORIG_IFR_BASES_T_H_
 
 #include /**/ "ace/pre.h"
 

@@ -31,7 +31,7 @@
 
 #include "portableserver_export.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/Basic_Types.h"
 #include "tao/Interceptor_List.h"
 
 class TAO_ServerRequestInfo;
@@ -48,7 +48,6 @@ class TAO_PortableServer_Export TAO_ServerRequestInterceptor_Adapter
 {
 
 public:
-
   TAO_ServerRequestInterceptor_Adapter (
     TAO_ServerRequestInterceptor_List::TYPE &interceptors,
     size_t &stack_size);
@@ -61,9 +60,6 @@ public:
    * Each of these methods corresponds to a client side interception
    * point.
    *
-   * @todo
-   * The "receive_request_service_contexts()" and "send_other()"
-   * PortableInterceptor interception points are missing.
    */
   //@{
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1

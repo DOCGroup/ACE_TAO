@@ -12,8 +12,8 @@
 
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (CosEvent, 
-           CEC_Dispatching, 
+ACE_RCSID (CosEvent,
+           CEC_Dispatching,
            "$Id$")
 
 int
@@ -70,7 +70,7 @@ TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
   void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Push_Command));
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                  CORBA::COMPLETED_NO));
 
   ACE_Message_Block *mb =
@@ -93,7 +93,7 @@ TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
   void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Invoke_Command));
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                  CORBA::COMPLETED_NO));
 
   ACE_Message_Block *mb =

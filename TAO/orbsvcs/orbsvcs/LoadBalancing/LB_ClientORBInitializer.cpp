@@ -26,7 +26,7 @@ TAO_LB_ClientORBInitializer::post_init (
                     TAO_LB_ClientRequestInterceptor,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

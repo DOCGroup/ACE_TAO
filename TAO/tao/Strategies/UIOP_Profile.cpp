@@ -144,7 +144,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     TAO::VMCID,
                      EINVAL),
                    CORBA::COMPLETED_NO));
       // No rendezvous point specified
@@ -161,7 +161,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     TAO::VMCID,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
