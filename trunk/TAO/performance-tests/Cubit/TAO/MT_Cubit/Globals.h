@@ -49,7 +49,7 @@ if (status != OK)\
 #define SCHED_PRIORITY 30
 #elif defined (VXWORKS)
 #define SCHED_PRIORITY 6
-#elif defined (ACE_WIN32)
+#elif defined (ACE_WIN32) || defined (__FreeBSD__)
 #define SCHED_PRIORITY \
 ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
 #else
