@@ -44,14 +44,14 @@ class TAO_EC_Basic_Factory : public TAO_EC_Factory
   //
   // = DESCRIPTION
   //   An slightly more advanced configuration than the
-  //   EC_Null_Factory, this class configure an event channel that can 
+  //   EC_Null_Factory, this class configure an event channel that can
   //   support filtering and correlation. Still dispatching is not
   //   prioritized and all the filtering is done at the consumer level.
   //   A fixed POA is used for servant activation.
   //   This object creates a single instance of the Supplier
   //
   // = MEMORY MANAGMENT
-  //   A single event channel instance can be used with an instance of 
+  //   A single event channel instance can be used with an instance of
   //   this class.
   //
 public:
@@ -94,6 +94,16 @@ public:
        consumer_poa (CORBA::Environment& env);
   virtual PortableServer::POA_ptr
        supplier_poa (CORBA::Environment& env);
+
+  virtual ACE_Lock* create_consumer_lock (void);
+  virtual void destroy_consumer_lock (ACE_Lock*);
+  virtual ACE_Lock* create_supplier_lock (void);
+  virtual void destroy_supplier_lock (ACE_Lock*);
+
+  virtual ACE_Lock* create_consumer_admin_lock (void);
+  virtual void destroy_consumer_admin_lock (ACE_Lock*);
+  virtual ACE_Lock* create_supplier_admin_lock (void);
+  virtual void destroy_supplier_admin_lock (ACE_Lock*);
 
 private:
   PortableServer::POA_var poa_;

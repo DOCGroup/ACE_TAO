@@ -222,6 +222,20 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
   // @@ Ug, not sure what to do with this IIOP specific code!
   //    An idea would be to change this to ->use_lite_protocol
   //    that way it is not IIOP specific.  fredk
+  //
+  // Fred: actually this is not IIOP specific; a better name would be
+  // "GIOP lite".... Carlos
+  //
+  // Fred: this is actually a good start to think about pluggable
+  //       "messaging protocols" (maybe this is a bad name, but I want
+  //       to stress the difference with the pluggable "transport
+  //       protocols" that you recently completed).
+  //       For example: it seems that the transport layer needs to
+  //       know the size of the header and somehow needs to determine
+  //       the size of the message from that header, this could be
+  //       virtual methods in the MessagingProtocol class.
+  //       Just a wild thought..... Carlos
+  //
   size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
   if (orb_core->orb_params ()->use_lite_protocol ())
     {
@@ -230,7 +244,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
     }
 
   CORBA::ULong bodylen = total_len - header_len;
-  
+
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
 #else
@@ -263,14 +277,14 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
     }
     transport->close_conn ();
     return 0 ;
-  } 
+  }
 
   // @@ Don't know about this one, when will we get a 0 from the write if we
   //    assume that there is data to write.  I would only expect a 0 if there
   //    was nothing to send or if nonblocking.
   if (n == 0)
   {
-    if (TAO_orbdebug) 
+    if (TAO_orbdebug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) GIOP::send_request (): ",
@@ -298,8 +312,8 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
 // orderly disconnect as provided by TCP.  This quality of service is
 // required to write robust distributed systems.)
 
-// static CORBA::Octet 
-static const char close_message [TAO_GIOP_HEADER_LEN] = 
+// static CORBA::Octet
+static const char close_message [TAO_GIOP_HEADER_LEN] =
 {
   'G', 'I', 'O', 'P',
   TAO_GIOP_MessageHeader::MY_MAJOR,
@@ -506,7 +520,7 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
 			      orb_core) == -1)
     {
       TAO_GIOP::send_error (transport);
-      return TAO_GIOP::EndOfFile; // We didn't really receive 
+      return TAO_GIOP::EndOfFile; // We didn't really receive
                                   // anything useful here.
     }
 

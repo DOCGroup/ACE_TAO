@@ -56,7 +56,7 @@ public:
 
   virtual void activate (void) = 0;
   // Initialize all the data structures, activate any internal threads,
-  // etc. 
+  // etc.
 
   virtual void shutdown (void) = 0;
   // Deactivate any internal threads and cleanup internal data
@@ -64,10 +64,12 @@ public:
   // their jobs.
 
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+                     RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env) = 0;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                            RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info,
                             CORBA::Environment& env) = 0;
@@ -96,10 +98,12 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+                     RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                            RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info,
                             CORBA::Environment& env);

@@ -1,3 +1,40 @@
+Fri Feb 12 22:04:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i: 
+	  Added new methods to create the locking strategies in the
+	  ProxyPushConsumer and ProxyPushSupplier.
+	  The Null_Factory uses ACE_Lock_Adapter<ACE_Null_Mutex>, the
+	  Basic_Factory uses ACE_Lock_Adapter<ACE_SYNCH_MUTEX>.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
+	  The ProxyPushSupplier uses the new locking strategies.
+	  A couple of private _i methods were added to avoid dead-locks.
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp: 
+	  The dispatching strategy receives the consumer object reference
+	  from the ProxyPushSupplier, otherwise it has to make an upcall
+	  and incurs in a dead-lock.
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	  Minor cosmetic changes.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Added dependencies for the new Event2 service.
+
+	* tao/GIOP.cpp: 
+	  Added some comments.
+
 Fri Feb 12 21:20:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:

@@ -50,7 +50,7 @@ class TAO_EC_Null_Factory : public TAO_EC_Factory
   //   This object creates a single instance of the Supplier
   //
   // = MEMORY MANAGMENT
-  //   A single event channel instance can be used with an instance of 
+  //   A single event channel instance can be used with an instance of
   //   this class.
   //
 public:
@@ -93,6 +93,16 @@ public:
        consumer_poa (CORBA::Environment& env);
   virtual PortableServer::POA_ptr
        supplier_poa (CORBA::Environment& env);
+
+  virtual ACE_Lock* create_consumer_lock (void);
+  virtual void destroy_consumer_lock (ACE_Lock*);
+  virtual ACE_Lock* create_supplier_lock (void);
+  virtual void destroy_supplier_lock (ACE_Lock*);
+
+  virtual ACE_Lock* create_consumer_admin_lock (void);
+  virtual void destroy_consumer_admin_lock (ACE_Lock*);
+  virtual ACE_Lock* create_supplier_admin_lock (void);
+  virtual void destroy_supplier_admin_lock (ACE_Lock*);
 
 private:
   PortableServer::POA_var poa_;

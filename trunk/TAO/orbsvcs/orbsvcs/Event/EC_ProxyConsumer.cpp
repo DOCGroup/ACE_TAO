@@ -90,7 +90,7 @@ void
 TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
       CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_ = 
+  this->supplier_ =
     RtecEventComm::PushSupplier::_nil ();
 
   PortableServer::POA_var poa =
