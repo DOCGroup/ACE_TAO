@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Network_Events - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_network_events.cpp
+SOURCE=.\Network_Events.cpp
 # End Source File
 # End Target
 # End Project

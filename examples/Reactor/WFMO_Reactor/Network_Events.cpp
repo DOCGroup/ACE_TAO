@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_network_events.cpp
+//    Network_Events.cpp
 //
 // = DESCRIPTION
 //
@@ -37,7 +37,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 
-ACE_RCSID(WFMO_Reactor, test_network_events, "$Id$")
+ACE_RCSID(WFMO_Reactor, Network_Events, "$Id$")
 
 class Network_Handler : public ACE_Event_Handler
 {

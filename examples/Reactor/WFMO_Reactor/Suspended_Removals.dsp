@@ -52,7 +52,7 @@ LINK32=link.exe
 # Name "Suspended_Removals - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_suspended_removals.cpp
+SOURCE=.\Suspended_Removals.cpp
 # End Source File
 # End Target
 # End Project

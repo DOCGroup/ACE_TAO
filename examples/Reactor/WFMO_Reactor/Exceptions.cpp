@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_exceptions.cpp
+//    Exceptions.cpp
 //
 // = DESCRIPTION
 //
@@ -25,7 +25,7 @@
 
 #include "ace/WFMO_Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, test_exceptions, "$Id$")
+ACE_RCSID(WFMO_Reactor, Exceptions, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {

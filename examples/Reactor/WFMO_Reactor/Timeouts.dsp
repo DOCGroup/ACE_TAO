@@ -52,7 +52,7 @@ LINK32=link.exe
 # Name "Timeouts - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_timeouts.cpp
+SOURCE=.\Timeouts.cpp
 # End Source File
 # End Target
 # End Project

@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_registry_changes.cpp
+//    Registry_Changes.cpp
 //
 // = DESCRIPTION
 //
@@ -21,7 +21,7 @@
 #include "ace/Reactor.h"
 #include "ace/Registry.h"
 
-ACE_RCSID(WFMO_Reactor, test_registry_changes, "$Id$")
+ACE_RCSID(WFMO_Reactor, Registry_Changes, "$Id$")
 
 static int stop_test = 0;
 static HKEY context_to_monitor = HKEY_CURRENT_USER;

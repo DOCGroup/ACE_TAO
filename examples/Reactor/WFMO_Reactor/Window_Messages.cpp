@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_window_messages.cpp
+//    Window_Messages.cpp
 //
 // = DESCRIPTION
 //
@@ -23,7 +23,7 @@
 #include "ace/Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(WFMO_Reactor, test_window_messages, "$Id$")
+ACE_RCSID(WFMO_Reactor, Window_Messages, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {

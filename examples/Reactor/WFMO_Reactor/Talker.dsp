@@ -52,7 +52,7 @@ LINK32=link.exe
 # Name "Talker - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_talker.cpp
+SOURCE=.\Talker.cpp
 # End Source File
 # End Target
 # End Project

@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Exceptions - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_exceptions.cpp
+SOURCE=.\Exceptions.cpp
 # End Source File
 # End Target
 # End Project

@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_apc.cpp
+//    APC.cpp
 //
 // = DESCRIPTION
 //
@@ -21,7 +21,7 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, test_apc, "$Id$")
+ACE_RCSID(WFMO_Reactor, APC, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {

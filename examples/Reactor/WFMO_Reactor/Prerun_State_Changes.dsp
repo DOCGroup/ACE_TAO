@@ -54,7 +54,7 @@ LINK32=link.exe
 # Name "Prerun_State_Changes - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_prerun_state_changes.cpp
+SOURCE=.\Prerun_State_Changes.cpp
 # End Source File
 # End Target
 # End Project

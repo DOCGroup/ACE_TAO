@@ -52,7 +52,7 @@ LINK32=link.exe
 # Name "APC - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_apc.cpp
+SOURCE=.\APC.cpp
 # End Source File
 # End Target
 # End Project

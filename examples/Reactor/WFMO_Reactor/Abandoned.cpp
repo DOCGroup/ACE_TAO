@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_abandoned.cpp
+//    Abandoned.cpp
 //
 // = DESCRIPTION
 //
@@ -22,7 +22,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
 
-ACE_RCSID(WFMO_Reactor, test_abandoned, "$Id$")
+ACE_RCSID(WFMO_Reactor, Abandoned, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {

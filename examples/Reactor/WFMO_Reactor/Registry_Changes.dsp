@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Registry_Changes - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_registry_changes.cpp
+SOURCE=.\Registry_Changes.cpp
 # End Source File
 # End Target
 # End Project

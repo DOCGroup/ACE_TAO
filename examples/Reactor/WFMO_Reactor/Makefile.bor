@@ -3,22 +3,22 @@
 #
 
 NAMES = \
-        test_abandoned \
-        test_apc \
-        test_console_input \
-        test_directory_changes \
-        test_exceptions \
-        test_handle_close \
-        test_multithreading \
-        test_network_events \
-        test_prerun_state_changes \
-        test_registration \
-        test_registry_changes \
-        test_removals \
-        test_suspended_removals \
-        test_talker \
-        test_timeouts \
-        test_window_messages
+        Abandoned \
+        APC \
+        Console_Input \
+        Directory_Changes \
+        Exceptions \
+        Handle_Close \
+        Multithreading \
+        Network_Events \
+        Prerun_State_Changes \
+        Registration \
+        Registry_Changes \
+        Removals \
+        Suspended_Removals \
+        Talker \
+        Timeouts \
+        Window_Messages
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
