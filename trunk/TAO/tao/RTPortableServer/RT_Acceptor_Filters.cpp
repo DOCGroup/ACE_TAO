@@ -3,16 +3,19 @@
 #include "RT_Acceptor_Filters.h"
 #include "tao/Pluggable.h"
 #include "tao/MProfile.h"
+#include "tao/Profile.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_Acceptor_Filters.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, RT_Acceptor_Filter, "$Id$")
+ACE_RCSID (tao,
+           RT_Acceptor_Filter,
+           "$Id$")
 
 TAO_Server_Protocol_Acceptor_Filter::
 TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
-  :  protocols_ (protocols)
+  : protocols_ (protocols)
 {
 }
 

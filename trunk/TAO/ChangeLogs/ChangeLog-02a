@@ -1,3 +1,31 @@
+Thu Mar  7 21:27:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+
+	  More inter-header dependency reduction.  Forward declarations
+	  are enough.
+
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+
+	  Include "tao/Stub.h" to pull in TAO_Stub class declaration.
+	  Necessitated by the inter-header dependency reductions.
+
+	* tao/IORManipulation/IORManipulation.cpp:
+	* tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+
+	  Include "tao/Profile.h" to pull in TAO_Profile class
+	  declaration.  Necessitated by the inter-header dependency
+	  reductions.
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+	  Include "ace/Containers_T.h" and "ace/Hash_Map_Manager_T.h" to
+	  pull in the ACE_Bounded_Set and ACE_Hash_Map_Manager template
+	  declarations.  Necessitated by the inter-header dependency
+	  reductions.
+
 Thu Mar  7 21:01:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Messaging/Messaging.cpp:

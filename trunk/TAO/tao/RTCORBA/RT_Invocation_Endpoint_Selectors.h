@@ -26,8 +26,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/MProfile.h"
 #include "tao/Invocation_Endpoint_Selectors.h"
+
+class TAO_MProfile;
+class TAO_Endpoint;
 
 /**
  * @class TAO_RT_Default_Endpoint_Selector
