@@ -46,6 +46,7 @@ static ACE_FIFO_Send_Msg message_queue_;
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if !defined(VXWORKS)
+static int key_created_ = 0;
 static ACE_thread_key_t key_;
 #endif /* VXWORKS */
 
@@ -97,7 +98,11 @@ ACE_Thread_Mutex *
 ACE_Log_Msg_Manager::get_lock(void)
 {
 	if (ACE_Log_Msg_Manager::lock_ == 0)
+	{
+		ACE_NO_HEAP_CHECK;
+
 		ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
+	}
 
 	return ACE_Log_Msg_Manager::lock_;
 }
@@ -167,6 +172,39 @@ ACE_TSS_cleanup (void *ptr)
 }
 #endif /* ACE_MT_SAFE */
 
+/* static */
+int 
+ACE_Log_Msg::exists(void)
+{
+#if defined (ACE_MT_SAFE)
+#if defined (VXWORKS)
+  // Get the tss_log_msg from thread-specific storage, using one of
+  // the "spare" fields in the task control block.  Note that no locks
+  // are required here since this is within our thread context.  This
+  // assumes that the sizeof the spare1 field is the same size as a
+  // pointer; it is (it's an int) in VxWorks 5.2-5.3.
+  ACE_Log_Msg **tss_log_msg = (ACE_Log_Msg **) &taskIdCurrent->spare1;
+
+  // Check to see if this is the first time in for this thread.  This
+  // assumes that the spare1 field in the task control block is
+  // initialized to 0, which holds true for VxWorks 5.2-5.3.
+  return (*(int **) tss_log_msg == 0);
+#elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#error "Platform must support thread-specific storage if threads are used..."
+#else
+  ACE_Log_Msg *tss_log_msg = 0;
+
+  // Get the tss_log_msg from thread-specific storage.  
+  return (	key_created_
+			&& ACE_OS::thr_getspecific(key_, (void **) &tss_log_msg) != -1
+			&& tss_log_msg);
+
+#endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#else 
+  return 1;
+#endif /* defined (ACE_MT_SAFE) */
+}
+
 ACE_Log_Msg *
 ACE_Log_Msg::instance (void)
 {
@@ -201,9 +239,7 @@ ACE_Log_Msg::instance (void)
 #else
   // TSS Singleton implementation.
 
-  static int once_ = 0;
-
-  if (once_ == 0)
+  if (key_created_ == 0)
     {
       // Synchronize Singleton creation (note that this may lose big
       // if the compiler doesn't perform thread-safe initialization of
@@ -213,7 +249,7 @@ ACE_Log_Msg::instance (void)
 
       ACE_OS::thread_mutex_lock (&lock);
 
-      if (once_ == 0)
+      if (key_created_ == 0)
 	{
 	  // Allocate the Singleton lock.
 	  ACE_Log_Msg_Manager::get_lock();
@@ -226,7 +262,7 @@ ACE_Log_Msg::instance (void)
 	    }
 	  // Register cleanup handler.
 	  ::atexit (ACE_Log_Msg_Manager::atexit);
-	  once_ = 1;
+	  key_created_ = 1;
 	}
       ACE_OS::thread_mutex_unlock (&lock);
     }  
@@ -247,9 +283,15 @@ ACE_Log_Msg::instance (void)
 	  // Must protect access to lock managers list
 	  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), 0));
 
-      ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
+	  // Stop heap checking, the memory will always
+	  // be freed in atexit. This prevents from getting
+	  // these blocks reported as memory leaks
+	  {
+		  ACE_NO_HEAP_CHECK;
 
-	  ACE_Log_Msg_Manager::insert(tss_log_msg);
+		  ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
+		  ACE_Log_Msg_Manager::insert(tss_log_msg);
+	  }
 
       // Store the dynamically allocated pointer in thread-specific
       // storage.
@@ -294,7 +336,15 @@ ACE_Log_Msg::sync (const char *prog_name)
   if (prog_name)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
-      ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+
+	  // Stop heap checking, block will be freed in
+	  // atexit. Heap checking state will be restored
+	  // when the block is left.
+	  {
+		  ACE_NO_HEAP_CHECK;
+      
+		  ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+	  }	  
     }
   ACE_Log_Msg::pid_ = ACE_OS::getpid ();  
   ACE_Log_Msg::msg_off_ = 0;
@@ -428,8 +478,15 @@ ACE_Log_Msg::open (const char *prog_name,
   if (prog_name)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
-      ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
-    }
+
+	  // Stop heap checking, block will be freed in
+	  // atexit
+	  {
+		  ACE_NO_HEAP_CHECK;
+     
+		  ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+	  }
+  }
 
   int status = 0;
 
@@ -1105,7 +1162,11 @@ ACE_Log_Msg::local_host (const char *s)
   if (s)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::local_host_);
-      ACE_Log_Msg::local_host_ = ACE_OS::strdup (s);
+	  {
+		  ACE_NO_HEAP_CHECK;
+
+	      ACE_Log_Msg::local_host_ = ACE_OS::strdup (s);
+	  }
     }
 }
 
@@ -1130,3 +1191,4 @@ template class ACE_Set_Node<ACE_Log_Msg *>;
 template class ACE_Unbounded_Set<ACE_Log_Msg *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+

@@ -126,10 +126,14 @@ public:
   static ACE_Log_Msg *instance (void);
   // Returns a pointer to the Singleton.
 
+  static int exists(void);
+  // Returns non-null if an ACE_Log_Msg exists for the calling thread.
+
   ACE_Log_Msg (void);
   // Initialize logger.
 
   ~ACE_Log_Msg (void);
+  // cleanup logger.
 
   int open (const char *prog_name, 
 	    u_long options_flags = ACE_Log_Msg::STDERR, 
@@ -348,7 +352,7 @@ private:
 
   // = The following fields are *not* kept in thread-specific storage
   // since we only want one instance for the entire process!
-  
+
   static const char *program_name_; 
   // Records the program name. 
 
