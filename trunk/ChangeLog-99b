@@ -1,3 +1,14 @@
+Thu Mar 18 18:49:32 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* ace/SString.i (compare): fixed the function to work properly in
+	case strings have different lenghts.
+
+	* ace/SString.cpp: fixed code to gracefully handle failed memory
+	allocations.
+
+	* ace/SString.h: added comments about strings with release=0, not
+	necessarily being null terminated.
+
 Thu Mar 18 14:31:29 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/DLL_Test.cpp: Use the new DLL_Test.h file that contains the
