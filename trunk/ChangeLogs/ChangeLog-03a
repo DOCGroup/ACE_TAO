@@ -1,5 +1,12 @@
+Thu Jul 12 17:11:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst (WEB):
+
+	  Temporarily removed the IA-64 build till some issues get sorted
+          out.
+
 Thu Jul 12 06:01:03 2001  John Michael Zorko <j.zorko@att.net>
-  
+
         * netsvcs/lib/Server_Logging_Handler.cpp:
 	  Added an an additional #define in config-macosx.h called
  	  ACE_HAS_MACOSX_DYLIB, and checked to see if this was _not_
@@ -8,7 +15,7 @@ Thu Jul 12 06:01:03 2001  John Michael Zorko <j.zorko@att.net>
  	  (OS X version of .so) where they can't have any duplicate
  	  symbols, which is why libnetsvcs wasn't building on OS X
  	  earlier.  This fixes that.
-  
+
         * include/makeincludes/platform-macosx.GNU: Added -lACE to the
 	  LIBS line, which fixed the majority of the build problems.
 
@@ -421,7 +428,17 @@ Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
           contain Other.  The netsvcs library requires Naming_Context.
 
 Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+<<<<<<< ChangeLog
+<<<<<<< ChangeLog
+=======
 
+        * ace/Makefile (LOGGING_FILES): Added support for
+          Log_Msg_UNIX_Syslog.
+>>>>>>> 4.2247
+=======
+>>>>>>> 4.2257
+
+<<<<<<< ChangeLog
         * ace/Makefile (LOGGING_FILES): Added support for
           Log_Msg_UNIX_Syslog.
 
@@ -435,6 +452,21 @@ Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
           comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
           reporting this.
+<<<<<<< ChangeLog
+=======
+        * ace/Log_Msg_UNIX_Syslog.{h,cpp}:
+        * ace/Log_Msg.cpp,
+        * ace/OS.h: Added support for a new UNIX syslog backend for the
+          ACE_Log_Msg class.  Thanks to Jerry D. De Master
+          <jdemaster@rite-solutions.com> and Robert Davidson
+          <robert@rdavidson.freeserve.co.uk>.
+
+        * ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
+          comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
+          reporting this.
+>>>>>>> 4.2247
+=======
+>>>>>>> 4.2257
 
         * ace/config-macosx.h: Added a new file courtesy of John
           Zorko so that things will work on MacOSX.
