@@ -21,9 +21,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/Hash_Map_Manager.h>
-#include <tao/PortableServer/PortableServerC.h>
-#include <orbsvcs/PortableGroupC.h>
+#include "ace/Hash_Map_Manager.h"
+#include "portablegroup_export.h"
+#include "tao/PortableServer/PortableServerC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "PG_Object_Group_Manipulator.h"
 
 //////////////////
