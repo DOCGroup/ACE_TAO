@@ -242,6 +242,9 @@ public:
   // some static objects before this flag can return 1, if
   // ACE_HAS_NON_STATIC_OBJECT_MANAGER is not defined.)
 
+  static ACE_Sig_Set &default_mask (void);
+  // Accesses a default signal set used in ACE_Sig_Guard methods.
+
 private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -275,9 +278,6 @@ public:
   // Accesses a readers/writer <ACE_RW_Thread_Mutex> to be used for
   // construction of <ACE_Singletons>.  Returns 0, and the lock in the
   // argument, on success; returns -1 on failure.
-
-  static ACE_Sig_Set &default_mask (void);
-  // Accesses a default signal set used in ACE_Sig_Guard methods.
 
 private:
 
