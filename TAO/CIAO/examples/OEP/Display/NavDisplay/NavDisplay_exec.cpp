@@ -28,10 +28,13 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
   ACE_CHECK;
 
   if (CORBA::is_nil (loc.in ()))
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    {
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
+    }
 
   CORBA::Long x = loc->posx (ACE_ENV_SINGLE_ARG_PARAMETER) % 500;
   ACE_CHECK;
+  
   CORBA::Long y = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER) % 300;
   ACE_CHECK;
 
@@ -42,26 +45,35 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
 
 // Operations from Components::SessionComponent
 void
-MyImpl::NavDisplay_exec_impl::set_session_context (Components::SessionContext_ptr ctx
-                                            ACE_ENV_ARG_DECL)
+MyImpl::NavDisplay_exec_impl::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplay_exec_impl::set_session_context\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::set_session_context\n"));
+    }
 
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx
-                                         ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplay_exec_impl::ciao_preactivate (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -73,7 +85,10 @@ MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
+    }
 
   // @@ This hack work around a missing feature in CIAO's assembly
   // mechanism where a Softpkg descriptor can specify it's dependency
@@ -82,9 +97,9 @@ MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   // component server.  Here, we are registering the valuefactory
   // explicitly to work around this problem.
 
-  char *argv[1] = { "NavDisplay_exec"};
-
-  int argc = sizeof(argv)/sizeof(argv[0]);
+  char *argv[1];
+  argv[0] = "NavDisplay_exec";
+  int argc = sizeof (argv)/sizeof (argv[0]);
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
                                         ""
@@ -92,12 +107,15 @@ MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_CHECK;
 
-  CIAO_REGISTER_VALUE_FACTORY (orb.in(), HUDisplay::tick_init,
+  CIAO_REGISTER_VALUE_FACTORY (orb.in(),
+                               HUDisplay::tick_init,
                                HUDisplay::tick);
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplay_exec_impl::ciao_postactivate (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -109,7 +127,10 @@ MyImpl::NavDisplay_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplay_exec_impl::ccm_passivate\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::ccm_passivate\n"));
+    }
 }
 
 void
@@ -118,7 +139,10 @@ MyImpl::NavDisplay_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplay_exec_impl::ccm_remove\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::ccm_remove\n"));
+    }
 }
 
 /// Default ctor.
