@@ -646,6 +646,10 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
+
+  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+  // suspend was called in TAO_Client_Connection_Handler::handle_input
+
   switch (m)
     {
     case TAO_GIOP::Reply:
