@@ -11,6 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Svc_Handler.h"
 #include "ace/Map_Manager.h"
 
 // Type of search key for CONSUMER_MAP

@@ -1,12 +1,14 @@
-// $Id$
-
-// ACE_SOCK Server.
-
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
+#include "ace/Service_Config.h"
+
 #include "CPP-acceptor.h"
 
-ACE_RCSID(non_blocking, test_sock_acceptor, "$Id$")
+
+ACE_RCSID (non_blocking,
+           test_sock_acceptor,
+           "$Id$")
+
 
 typedef Svc_Handler<ACE_SOCK_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_SOCK_ACCEPTOR> IPC_SERVER;
@@ -42,4 +44,3 @@ template class Svc_Handler<ACE_SOCK_STREAM>;
 #pragma instantiate IPC_Server<SVC_HANDLER, ACE_SOCK_ACCEPTOR>
 #pragma instantiate Svc_Handler<ACE_SOCK_STREAM>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

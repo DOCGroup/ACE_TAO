@@ -25,6 +25,7 @@
 
 #include "ace/TLI_Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SString.h"
 #include "ace/Atomic_Op.h"

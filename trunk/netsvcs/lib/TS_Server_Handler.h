@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Svc_Handler.h"
 #include "ace/Time_Request_Reply.h"
 #include "ace/svc_export.h"
 
