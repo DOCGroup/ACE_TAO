@@ -46,9 +46,9 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
     <HR>
 
     <H3><A NAME="idl"></A>IDL Compiler</H3>
-    Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
+    Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-    <P> Current status:
+    <P> Current status: (As of Nov 23rd, 1997.)
     <UL>
       <LI> Generated code closely follows the C++ Mapping specified in
           the POA Specification (ORBOS/97-05-15). </LI>
@@ -77,6 +77,9 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
           supported properly. We think the same approach should work
           for sequences, structs, and unions. </LI>
 
+      <LI> Support for attributes completed and is currently undergoing
+          testing </LI>
+
       <LI> The latest success story is that the compiler
           generates correct code for COSS Naming service and it
           runs properly. Correct code also gets generated for the
@@ -88,6 +91,10 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 	<LI>Works for <I>most</I> IDL constructs. Some of the known
             bugs/incomplete tasks are:
             <UL>
+              <LI> Problems when interfaces use single or multiple
+                  inheritance. The problem is with the demultiplexing
+                  code. </LI>
+
               <LI>
                   Sequences of strings and object references still
                   pose problems </LI>
