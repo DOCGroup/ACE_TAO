@@ -105,7 +105,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
 
   // First check to see if POSIXLY_CORRECT was set.
-  if (ACE_OS::getenv (ACE_TEXT ("POSIXLY_CORRECT")) != 0)
+  if (ACE_OS::getenv (ACE_LIB_TEXT ("POSIXLY_CORRECT")) != 0)
     this->ordering_ = REQUIRE_ORDER;
 
   // Now, check to see if any or the following were passed at
@@ -488,9 +488,9 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
           // Didn't find short option, so add it...
           this->optstring_ += (ACE_TCHAR) short_option;
           if (has_arg == ARG_REQUIRED)
-            this->optstring_ += ACE_TEXT (":");
+            this->optstring_ += ACE_LIB_TEXT (":");
           else if (has_arg == ARG_OPTIONAL)
-            this->optstring_ += ACE_TEXT ("::");
+            this->optstring_ += ACE_LIB_TEXT ("::");
         }
     }
 
@@ -588,7 +588,7 @@ ACE_Get_Opt::permute (void)
 
   if (this->optind != this->argc_
       && ACE_OS::strcmp (this->argv_[this->optind],
-                         ACE_TEXT ("--")) == 0)
+                         ACE_LIB_TEXT ("--")) == 0)
     {
       // We found the marker for the end of the options.
       this->optind++;
