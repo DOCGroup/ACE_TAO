@@ -16,7 +16,6 @@
 #ifndef PACE_AIO_H
 #define PACE_AIO_H
 
-#include "pace/defines.h"
 #include <aio.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
