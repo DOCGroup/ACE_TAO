@@ -1,3 +1,8 @@
+Fri Sep 15 16:04:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Makefile.bor:
+	  Update the Borland Makefile
+
 Thu Sep 14 11:59:48 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Local_Name_Space_T.cpp (resolve_i, unbind_i):
