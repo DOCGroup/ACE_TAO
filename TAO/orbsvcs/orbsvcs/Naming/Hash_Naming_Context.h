@@ -25,6 +25,14 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
+// Note: 'interface' has been defined as struct on WinCE platform and
+//       gives a compiler error.  This undef has been found harmless on
+//       Windows and solaris platforms; however, if this generates
+//       error, then proper ifdef must be added around following block.
+#if defined (interface)
+#undef interface
+#endif  // interface
+
 class TAO_Naming_Export TAO_Bindings_Map
 {
   // = TITLE

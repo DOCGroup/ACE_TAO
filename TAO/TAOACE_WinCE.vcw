@@ -50,6 +50,12 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name CosNaming
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_Messaging
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ETCL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -142,6 +148,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_DynamicAny
     End Project Dependency
 }}}
 
@@ -238,6 +247,21 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ETCL"=".\ORBSVCS\ORBSVCS\ETCL.VCP" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
@@ -399,10 +423,13 @@ Package=<4>
     Project_Dep_Name RTSched
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Svc_Utils
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO
+    Project_Dep_Name TAO_Messaging
     End Project Dependency
 }}}
 
@@ -687,6 +714,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO_Messaging"=".\TAO\MESSAGING\TAO_Messaging.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ace
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ace_os
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "TAO_PortableServer"=".\tao\PortableServer\TAO_PortableServer.vcp" - Package Owner=<4>
 
 Package=<5>
@@ -749,30 +800,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Time_Service_Clerk"=".\ORBSVCS\TIME_SERVICE\Time_Service_Clerk.vcp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Time_Service_Server"=".\ORBSVCS\TIME_SERVICE\Time_Service_Server.vcp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################

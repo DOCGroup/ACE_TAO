@@ -15,6 +15,7 @@
 
 #include "Naming_Loader.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Naming, Naming_Loader, "$Id$")
 
@@ -29,19 +30,22 @@ TAO_Naming_Loader::~TAO_Naming_Loader (void)
 }
 
 int
-TAO_Naming_Loader::init (int argc, char *argv[])
+TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Copy command line parameter.
+      ACE_Argv_Type_Converter command_line(argc, argv);
+
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This function call initializes the Naming Service
       CORBA::Object_var object =
-        this->create_object (orb.in (), argc, argv ACE_ENV_ARG_PARAMETER);
+        this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -62,7 +66,8 @@ TAO_Naming_Loader::fini (void)
 
 CORBA::Object_ptr
 TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
-                                  int argc, char *argv[]
+                                  int argc,
+                                  ACE_TCHAR *argv[]
                                   ACE_ENV_ARG_DECL_NOT_USED)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -64,7 +64,7 @@ class TAO_Notify_Service
   virtual ~TAO_Notify_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[]
+  int init (int argc, ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL);
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
@@ -80,14 +80,14 @@ class TAO_Notify_Service
   // CosNotifyChannelAdmin::EventChannelFactory_var obj;
   //
 protected:
-  int init_ORB (int& argc, char *argv []
+  int init_ORB (int& argc, ACE_TCHAR *argv []
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
   int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
-  int parse_args (int argc, char *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []);
   // Parses the command line arguments.
 
   // = Data members

@@ -51,7 +51,7 @@ public:
   // Set of available Time servers.
 
   int init (int argc,
-            char *argv[]
+            ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL);
   // Initialize the Clerk state - parsing arguments and waiting.
 
@@ -64,11 +64,12 @@ private:
 
 private:
 
-  int read_ior (const char *filename);
+  int read_ior (const ACE_TCHAR* filename);
   // Read the server IORs from a file instead of using a naming
   // service.
 
-  int parse_args (void);
+  int parse_args (int argc,
+                  ACE_TCHAR* argv[]);
   // Parses the commandline arguments.
 
   TAO_ORB_Manager orb_manager_;
@@ -77,7 +78,8 @@ private:
   FILE *ior_output_file_;
   // File where the IOR of the Clerk object is stored.
 
-  int init_naming_service (void);
+  int init_naming_service (int argc,
+                           char* argv[]);
   // Initialises the name server and registers the <TimeService> Clerk
   // object with it.
 
@@ -136,12 +138,6 @@ private:
 
   int ior_fp_;
   // Read IORs from a file.
-
-  int argc_;
-  // Number of command line arguments.
-
-  char **argv_;
-  // The command line arguments.
 };
 
 #endif /* CLERK_I_H */

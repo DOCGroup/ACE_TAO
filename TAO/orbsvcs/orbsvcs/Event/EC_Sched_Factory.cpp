@@ -21,91 +21,91 @@ TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory (void)
 }
 
 int
-TAO_EC_Sched_Factory::init (int argc, char* argv[])
+TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR* arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 {
                   this->dispatching_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, "mt") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("mt")) == 0)
                 {
                   this->dispatching_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
                 {
                   this->dispatching_ = 2;
                 }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "EC_Sched_Factory - "
-                              "unsupported dispatching <%s>\n",
+                              ACE_LIB_TEXT("EC_Sched_Factory - ")
+                              ACE_LIB_TEXT("unsupported dispatching <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECFiltering") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECFiltering")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 {
                   this->filtering_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("basic")) == 0)
                 {
                   this->filtering_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, "prefix") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("prefix")) == 0)
                 {
                   this->filtering_ = 2;
                 }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
                 {
                   this->filtering_ = 3;
                 }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "EC_Sched_Factory - "
-                              "unsupported filtering <%s>\n",
+                              ACE_LIB_TEXT("EC_Sched_Factory - ")
+                              ACE_LIB_TEXT("unsupported filtering <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECTimeout") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 {
                   this->timeout_ = 0;
                 }
 #if 0
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
                 {
                   this->timeout_ = 1;
                 }
@@ -113,38 +113,38 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "EC_Sched_Factory - "
-                              "unsupported timeout <%s>\n",
+                              ACE_LIB_TEXT("EC_Sched_Factory - ")
+                              ACE_LIB_TEXT("unsupported timeout <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECScheduling") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECScheduling")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 {
                   this->scheduling_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, "group") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
                 {
                   this->scheduling_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
                 {
                   this->scheduling_ = 2;
                 }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "EC_Sched_Factory - "
-                              "unsupported scheduling <%s>\n",
+                              ACE_LIB_TEXT("EC_Sched_Factory - ")
+                              ACE_LIB_TEXT("unsupported scheduling <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();

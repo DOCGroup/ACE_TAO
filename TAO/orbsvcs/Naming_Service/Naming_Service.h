@@ -36,10 +36,10 @@ public:
   TAO_Naming_Service (void);
   // Default Constructor.
 
-  TAO_Naming_Service (int argc, char *argv[]);
+  TAO_Naming_Service (int argc, ACE_TCHAR* argv[]);
   // Constructor taking the command-line arguments.
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   // Initialize the Naming Service with the arguments.
 
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
@@ -50,7 +50,7 @@ public:
 
 protected:
 
-  int parse_args (int argc, char *argv []);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // Parse the command line arguments to find
   // the timeout period.
 
@@ -66,12 +66,6 @@ protected:
   size_t time_;
   // After how long the server should stop listening to requests (in
   // seconds).
-
-  int argc_;
-  // argc
-
-  char **argv_;
-  // argv []
 };
 
 #endif /* TAO_NAMING_SERVICE_H */

@@ -140,9 +140,10 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 
 int
 TAO_Naming_Server::parse_args (int argc,
-                               char *argv[])
+                               ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:f:m:u:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:"));
+
   int c;
   int size, result;
   long address;
@@ -155,11 +156,11 @@ TAO_Naming_Server::parse_args (int argc,
         break;
       case 'o': // outputs the naming service ior to a file.
         this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), "w");
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("w"));
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
+                             ACE_LIB_TEXT("Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
         break;
       case 'p':
@@ -174,7 +175,7 @@ TAO_Naming_Server::parse_args (int argc,
           this->context_size_ = size;
         break;
       case 'b':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
                            "%ld",
                            &address);
         if (result == 0 || result == EOF)
@@ -193,15 +194,15 @@ TAO_Naming_Server::parse_args (int argc,
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-NScontextname <contextname> "
-                           "-o <ior_output_file> "
-                           "-p <pid_file_name> "
-                           "-f <persistence_file_name> "
-                           "-b <base_address> "
-                           "-m <1=enable multicast, 0=disable multicast(default) "
-                           "-u <storable_persistence_directory (not used with -f)> "
-                           "\n",
+                           ACE_LIB_TEXT ("usage:  %s ")
+                           ACE_LIB_TEXT ("-NScontextname <contextname> ")
+                           ACE_LIB_TEXT ("-o <ior_output_file> ")
+                           ACE_LIB_TEXT ("-p <pid_file_name> ")
+                           ACE_LIB_TEXT ("-f <persistence_file_name> ")
+                           ACE_LIB_TEXT ("-b <base_address> ")
+                           ACE_LIB_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
+                           ACE_LIB_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
+                           ACE_LIB_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -210,7 +211,7 @@ TAO_Naming_Server::parse_args (int argc,
 
 int
 TAO_Naming_Server::init_with_orb (int argc,
-                                  char *argv [],
+                                  ACE_TCHAR *argv [],
                                   CORBA::ORB_ptr orb)
 {
   int result;
@@ -229,7 +230,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       if (CORBA::is_nil (poa_object.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                             ACE_LIB_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
                             -1);
         }
 
@@ -321,7 +322,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 
   if (this->pid_file_name_ != 0)
     {
-      FILE *pidf = fopen (this->pid_file_name_, "w");
+      FILE *pidf = ACE_OS::fopen (this->pid_file_name_, ACE_LIB_TEXT("w"));
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
@@ -357,7 +358,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (persistence_location == 0)
             {
               // No, assign the default location "."
-              persistence_location = ".";
+              persistence_location = ACE_LIB_TEXT(".");
             }
 
           this->naming_context_ =

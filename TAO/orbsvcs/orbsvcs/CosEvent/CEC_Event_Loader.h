@@ -39,7 +39,7 @@ public:
   /**
    * @name Derived from ACE_Service_Object
    */
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini (void);
   //@}
 
@@ -47,9 +47,10 @@ public:
   /**
    * @name Derived from TAO_Object_Loader
    */
-  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                   int argc, char *argv[]
-                                   ACE_ENV_ARG_DECL)
+  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                           int argc,
+                                           ACE_TCHAR *argv[]
+                                           ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

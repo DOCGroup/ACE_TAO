@@ -31,6 +31,7 @@
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 #include "orbsvcs/Sched/Config_Scheduler.h"
+#include "ace/SString.h"
 
 class TAO_Scheduling_Service
 {
@@ -45,10 +46,10 @@ public:
   TAO_Scheduling_Service (void);
   // Default Constructor.
 
-  TAO_Scheduling_Service (int argc, char *argv[]);
+  TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[]);
   // Constructor taking the command-line arguments.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR* argv[]);
   // Initialize the Scheduling Service with the arguments.
 
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
@@ -72,7 +73,7 @@ private:
 
   enum Scheduler_Type {CONFIG, RECONFIG};
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parses the arguments.
 
   TAO_ORB_Manager orb_manager_;
@@ -81,13 +82,13 @@ private:
   POA_RtecScheduler::Scheduler *scheduler_impl_;
   // Scheduler instance.
 
-  const char *ior_file_name_;
+  ACE_CString ior_file_name_;
   // Name of the IOR output file.
 
-  const char *pid_file_name_;
+  ACE_CString pid_file_name_;
   // Name of the process id output file.
 
-  const char *service_name_;
+  ACE_CString service_name_;
   // Name used to register the service.
 
   Scheduler_Type scheduler_type_;

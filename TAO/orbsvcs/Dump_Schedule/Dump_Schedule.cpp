@@ -2,6 +2,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
@@ -12,13 +13,16 @@ ACE_RCSID(Dump_Schedule, Dump_Schedule, "$Id$")
 // This program dumps the results of one scheduling in a C++ file.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      // Copy command line parameter.
+      ACE_Argv_Type_Converter command_line(argc, argv);
+
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), "internet" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
@@ -35,9 +39,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       const char *name = 0;
-      if (argc > 1)
+      if (command_line.get_argc() > 1)
         {
-          name = argv[1];
+          name = command_line.get_ASCII_argv()[1];
         }
       ACE_Scheduler_Factory::use_config (naming_context.in (), name);
 

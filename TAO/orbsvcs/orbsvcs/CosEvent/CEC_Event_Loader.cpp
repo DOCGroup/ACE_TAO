@@ -22,6 +22,7 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (CosEvent, Event_Loader, "$Id$")
 
@@ -36,18 +37,21 @@ TAO_CEC_Event_Loader::~TAO_CEC_Event_Loader (void)
 }
 
 int
-TAO_CEC_Event_Loader::init (int argc, char *argv[])
+TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Copy command line parameter.
+      ACE_Argv_Type_Converter command_line(argc, argv);
+
       // ORB initialization boiler plate...
       this->orb_=
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        this->create_object (this->orb_.in (), argc, argv ACE_ENV_ARG_PARAMETER);
+        this->create_object (this->orb_.in (), command_line.get_argc(), command_line.get_TCHAR_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -62,7 +66,8 @@ TAO_CEC_Event_Loader::init (int argc, char *argv[])
 
 CORBA::Object_ptr
 TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
-                                     int argc, char *argv[]
+                                     int argc,
+                                     ACE_TCHAR *argv[]
                                      ACE_ENV_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -78,13 +83,12 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       //  - Receive an option to register the Event Service with the
       //    _tao_add_to_IOR_table() stuff..
 
-
       // Parse the options, check if we should bind with the naming
       // service and under what name...
-      ACE_Get_Opt get_opt (argc, argv, "o:n:xr");
+      ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("o:n:xr"));
       int opt;
-      const char *service_name = "CosEventService";
-      const char *ior_file = 0;
+      const ACE_TCHAR *service_name = ACE_LIB_TEXT("CosEventService");
+      const ACE_TCHAR *ior_file = 0;
       this->bind_to_naming_service_ = 1;
       int use_rebind = 0;
 
@@ -163,7 +167,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           CORBA::String_var ior =
             orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          FILE *file = ACE_OS::fopen (ior_file, "w");
+          FILE *file = ACE_OS::fopen (ior_file, ACE_LIB_TEXT("w"));
           ACE_OS::fprintf (file, "%s\n", ior.in ());
           ACE_OS::fclose (file);
         }
@@ -185,7 +189,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK;
 
           this->channel_name_.length (1);
-          this->channel_name_[0].id = CORBA::string_dup (service_name);
+          this->channel_name_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(service_name));
 
           if (use_rebind)
             {

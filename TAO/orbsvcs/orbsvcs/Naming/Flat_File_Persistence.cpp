@@ -14,7 +14,7 @@ int
 TAO_NS_FlatFileWriter::open(const char * filename)
 {
 
-  this->fout_ = ACE_OS::fopen(filename, "w");
+  this->fout_ = ACE_OS::fopen(ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("w"));
   if (this->fout_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output file for writing %s",
@@ -37,7 +37,11 @@ TAO_NS_FlatFileWriter::close()
   ACE_OS::fclose(this->fout_);
 
   if (delete_bindings_)
+#if defined (ACE_HAS_WINCE)
+    ::DeleteFile(ACE_TEXT_CHAR_TO_TCHAR(filename_.c_str()));
+#else
     remove (filename_.c_str());
+#endif  // ACE_HAS_WINCE
   return 0;
 }
 
@@ -110,7 +114,7 @@ TAO_NS_FlatFileReader::TAO_NS_FlatFileReader ()
 int
 TAO_NS_FlatFileReader::open(const char * filename)
 {
-  fin_ = ACE_OS::fopen(filename, "r");
+  fin_ = ACE_OS::fopen(ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("r"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   if (fin_ == 0)
@@ -142,13 +146,13 @@ TAO_NS_FlatFileReader::operator >>(
   int bufSize = 0;
 
   fscanf(fin_, "%d\n", &bufSize);
-  char* context_name = new char[bufSize+1];
+  ACE_TCHAR* context_name = new ACE_TCHAR[bufSize+1];
   //char* context_name = 0;
   //ACE_NEW_RETURN(context_name, char[bufSize+1], 0);
   ACE_OS::fgets(context_name, bufSize+1, fin_);
   fscanf(fin_, "%u\n", &size);
 
-  ACE_CString new_cn = ACE_CString(context_name);
+  ACE_CString new_cn = ACE_CString(ACE_TEXT_ALWAYS_CHAR(context_name));
   header.context_name(new_cn);
   delete context_name;
 
@@ -173,51 +177,51 @@ TAO_NS_FlatFileReader::operator >>(
 
   //id
   fscanf(fin_, "%d\n", &bufSize);
-  char *id = new char[bufSize+1];
+  ACE_TCHAR *id = new ACE_TCHAR[bufSize+1];
   //char *id;
   //ACE_NEW_RETURN (id, char[bufSize+1], 1);
 
   ACE_OS::fgets(id, bufSize+1, fin_);
-  ACE_CString newId(id);
+  ACE_CString newId(ACE_TEXT_ALWAYS_CHAR(id));
   record.id(newId);
 
   delete id;
 
   //kind
   fscanf(fin_, "%d\n", &bufSize);
-  char *kind = new char[bufSize+1];
+  ACE_TCHAR *kind = new ACE_TCHAR[bufSize+1];
   //char *kind;
   //ACE_NEW (kind, char[bufSize+1]);
 
   ACE_OS::fgets(kind, bufSize+1, fin_);
   kind[bufSize] = '\0';
 
-  ACE_CString newKind(kind);
+  ACE_CString newKind(ACE_TEXT_ALWAYS_CHAR(kind));
   record.kind(newKind);
 
   delete kind;
 
    //ior
   fscanf(fin_, "%d\n", &bufSize);
-  char *ior = new char[bufSize+1];
+  ACE_TCHAR *ior = new ACE_TCHAR[bufSize+1];
   //char *ior;
   //ACE_NEW(ior, char[bufSize+1]);
 
   ACE_OS::fgets(ior, bufSize+1, fin_);
-  ACE_CString newIor(ior);
+  ACE_CString newIor(ACE_TEXT_ALWAYS_CHAR(ior));
   record.ior(newIor);
 
   delete ior;
 
   //context_binding
   fscanf(fin_, "%d\n", &bufSize);
-  char *context_binding = new char[bufSize+1];
+  ACE_TCHAR *context_binding = new ACE_TCHAR[bufSize+1];
   //char *context_binding;
   //ACE_NEW (context_binding, char[bufSize+1]);
 
   ACE_OS::fgets(context_binding, bufSize+1, fin_);
 
-  ACE_CString new_cb(context_binding);
+  ACE_CString new_cb(ACE_TEXT_ALWAYS_CHAR(context_binding));
 
   record.context_binding(new_cb);
 

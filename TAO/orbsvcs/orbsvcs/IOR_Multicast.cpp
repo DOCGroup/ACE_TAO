@@ -127,7 +127,7 @@ TAO_IOR_Multicast::common_init (const char *ior,
     {
       if (this->mcast_dgram_.subscribe (this->mcast_addr_,
                                         1,
-                                        this->mcast_nic_) == -1)
+                                        ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_)) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "subscribe"),

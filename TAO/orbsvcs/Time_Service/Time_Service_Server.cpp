@@ -7,7 +7,7 @@ ACE_RCSID(TimeService, Time_Service_Server, "$Id$")
 // This is the main driver program for the Time Service server.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Server_i server;
 

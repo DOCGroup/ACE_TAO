@@ -27,7 +27,7 @@ TAO_Notify_Default_Collection_Factory::~TAO_Notify_Default_Collection_Factory ()
 }
 
 int
-TAO_Notify_Default_Collection_Factory::init (int /*argc*/, char* /*argv*/[])
+TAO_Notify_Default_Collection_Factory::init (int /*argc*/, ACE_TCHAR* /*argv*/[])
 {
   return 0;
 }

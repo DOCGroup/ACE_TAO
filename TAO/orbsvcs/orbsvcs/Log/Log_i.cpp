@@ -434,8 +434,8 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Decide between forward vs backward retrieval.
-  char constraint[32];
-  char uint64_formating[32];
+  ACE_TCHAR constraint[32];
+  ACE_TCHAR uint64_formating[32];
 
   #if defined (ACE_LACKS_LONGLONG_T)
          ACE_OS::sprintf (uint64_formating,
@@ -446,12 +446,12 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
   #endif
 
   if (how_many >= 0)
-    ACE_OS::sprintf (constraint, "time >= %s", uint64_formating);
+    ACE_OS::sprintf (constraint, ACE_LIB_TEXT("time >= %s"), uint64_formating);
   else
-    ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
+    ACE_OS::sprintf (constraint, ACE_LIB_TEXT("time < %s"), uint64_formating);
 
   DsLogAdmin::RecordList* rec_list =
-    this->query_i (constraint,
+    this->query_i (ACE_TEXT_ALWAYS_CHAR(constraint),
                    iter_out,
                    how_many
                    ACE_ENV_ARG_PARAMETER);

@@ -1,7 +1,9 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
 #include "Naming_Service.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
@@ -14,7 +16,7 @@ TAO_Naming_Service::TAO_Naming_Service (void)
 
 // Constructor taking command-line arguments.
 TAO_Naming_Service::TAO_Naming_Service (int argc,
-                                        char* argv[])
+                                        ACE_TCHAR* argv[])
   : time_ (0)
 {
   this->init (argc, argv);
@@ -24,30 +26,30 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
 // Initialize the state of the TAO_Naming_Service object
 int
 TAO_Naming_Service::init (int argc,
-                          char *argv[])
+                          ACE_TCHAR* argv[])
 {
   int result;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->argc_ = argc;
-      this->argv_ = argv;
+      // Copy command line parameter.
+      ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Initialize the ORB
       this->orb_ =
-        CORBA::ORB_init (this->argc_, this->argv_, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the args for '-t' option. If '-t' option is passed, do
       // the needful and then remove the option from the list of
       // arguments.
-      this->parse_args (this->argc_, this->argv_);
+      this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv());
 
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.
-      result = this->my_naming_server_.init_with_orb (this->argc_,
-                                                      this->argv_,
+      result = this->my_naming_server_.init_with_orb (command_line.get_argc(),
+                                                      command_line.get_TCHAR_argv(),
                                                       this->orb_.in ());
 
       if (result == -1)
@@ -66,9 +68,9 @@ TAO_Naming_Service::init (int argc,
 
 int
 TAO_Naming_Service::parse_args (int argc,
-                                char *argv [])
+                                ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:t:f:m:"));
   int c;
   int time = 0;
   int i = 0;
