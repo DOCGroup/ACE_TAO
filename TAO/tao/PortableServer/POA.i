@@ -34,6 +34,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
   poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (check_for_destruction &&
       poa.cleanup_in_progress ())
@@ -311,8 +312,8 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
 {
   // Lock access for the duration of this transaction.
   TAO_POA_Guard poa_guard (*this, ACE_TRY_ENV, 0);
-  ACE_UNUSED_ARG (poa_guard);
   ACE_CHECK;
+  ACE_UNUSED_ARG (poa_guard);
 
   this->destroy_i (etherealize_objects,
                    wait_for_completion,
