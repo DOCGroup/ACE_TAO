@@ -1,3 +1,11 @@
+Thu May 30 08:48:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp (squish): 
+	  Replaced (*cp == ' ') || (*cp == '\t') || (*cp == '\n') || (*cp
+ 	  == '\r')) with isspace (*cp).  Thanks to Gonzalo A. Diethelm
+ 	  <gonzalo.diethelm@aditiva.com> and Dave Steele
+ 	  <Dave_Steele@Mitel.COM> for this suggestion.
+
 Thu May 30 11:53:05 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL_Manager.cpp:  Fixed Fuzz errors.  Thanks to Johnny 
