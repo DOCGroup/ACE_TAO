@@ -478,7 +478,7 @@ Position_Criterion_impl::is_critical (Event* e ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Position_Criterion_impl::do_print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Position_Criterion_impl::do_print ( ACE_ENV_SINGLE_ARG_DECL )
 {
   ACE_DEBUG((LM_DEBUG,
              "Alarm boundary for events with origin id %d is the box\n",

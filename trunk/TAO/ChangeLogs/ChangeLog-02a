@@ -1,3 +1,9 @@
+Sun Mar 24 10:29:08 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp (do_print):
+	  Change ACE_ENV_SINGLE_ARG_DECL_NOT_USED to
+	  ACE_ENV_SINGLE_ARG_DECL.
+
 Sat Mar 23 10:42:42 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp:
