@@ -611,6 +611,8 @@ TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"UDP") == 0)
     return 1;
+  if (ACE_OS::strcasecmp (protocol_string,"RTP/UDP") == 0)
+    return 1;
   return 0;
 }
 

@@ -112,8 +112,10 @@ TAO_AV_RTP_Object::handle_input (void)
                                          frame_info);
   if (result < 0)
     return 0;
-  this->control_object_->handle_control_input (data,
-                                               *addr);
+
+  if(this->control_object_)
+     this->control_object_->handle_control_input (data,
+                                                  *addr);
 
   this->frame_.rd_ptr (sizeof(TAO_AV_RTP::rtphdr));
   result = this->callback_->receive_frame (&this->frame_,
@@ -229,7 +231,9 @@ TAO_AV_RTP_Object::~TAO_AV_RTP_Object (void)
 int
 TAO_AV_RTP_Object::destroy (void)
 {
-  this->control_object_->destroy ();
+  if(this->control_object_)
+     this->control_object_->destroy ();
+
   this->callback_->handle_destroy ();
   return 0;
 }

@@ -274,6 +274,8 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                 TAO_AV_Core *av_core,
                                 TAO_AV_FlowSpecSet &flow_spec_set)
 {
+  int retv = 0;
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_AV_Acceptor_Registry::open \n"));
@@ -300,9 +302,11 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
       if (address == 0)
         {
-          this->open_default (endpoint,
+          retv = this->open_default (endpoint,
 			      av_core,
 			      entry);
+	  if(retv < 0)
+		  return retv;
           continue;
         }
       else
@@ -494,6 +498,8 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
           ACE_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
           TAO_AV_TransportFactorySetItor transport_factory_end =
             av_core->transport_factories ()->end ();
+
+	  int matched_transport = 0;
           for (;transport_factory != transport_factory_end;
                ++transport_factory)
             {
@@ -511,7 +517,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                   continue;
                 }
 
-
+              matched_transport = 1;  
 
               // got it, make an acceptor
               TAO_AV_Acceptor *acceptor =
@@ -542,6 +548,11 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 
               this->acceptors_.insert (acceptor);
             }
+	    if( matched_transport == 0 ){
+                ACE_ERROR ((LM_ERROR, "(%P|%t), %N:%l could not match transport protocol: %s\n",
+					transport_protocol));
+		return -1;
+	    }
         }
     }
   if (this->acceptors_.size () == 0)
