@@ -1,3 +1,16 @@
+2004-03-15  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
+
+	* docs/static_config_example.html: 
+	* docs/static_ciao_contents.html: 
+	* docs/static_ciao_toc.html: 
+
+	  Made some modifications to include an example run.
+	
+	* docs/index.html: 
+
+	  Added link from the CIAO main page to the static config
+	  documentation.
+
 Sun Mar 14 00:23:02 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CCF/CCF/CIDL/CIDL.mpc:
