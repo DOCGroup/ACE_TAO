@@ -1,3 +1,11 @@
+Fri Mar 15 18:08:28 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Removed the optional setting of
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for Visual Age C++
+          5 without __TEMPINC__ set. This was an experiment to try and
+          rid the build of all the "duplicate symbol" warnings, and it
+          broke the incremental builds.
+
 Fri Mar 15 16:02:52 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* TAO/TAO-INSTALL.html: Updated to include Solaris 8.  Thanks to
