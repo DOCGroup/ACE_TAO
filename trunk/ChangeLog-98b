@@ -1,3 +1,7 @@
+Tue Oct 06 02:53:28 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.47 released.
+
 Tue Oct  6 02:16:01 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.cpp: 
