@@ -83,7 +83,6 @@ TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 # BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
-TAO/tests/LongUpcalls/run_ami_test.pl: !MINIMUM
 TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM !Tru64
 TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
