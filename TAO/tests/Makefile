@@ -20,7 +20,6 @@ DIRS  = CDR \
 	MT_Server \
 	FL_Cube \
 	POA \
-	Faults \
 	IORManipulation \
 	Timeout
 
@@ -37,6 +36,9 @@ ifndef minimum_corba
 
 # No NVList and Context in minimum CORBA
   DIRS += Param_Test
+
+# No Implicit activation in minimum CORBA
+  DIRS += Faults
 
 endif # minimum_corba
 
