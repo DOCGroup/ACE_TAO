@@ -1,3 +1,8 @@
+Fri May 24 13:29:05 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/nightlybuilds/builds.lst: Move Debian_Full and
+	  Debian_Minimum_Static builds to new scoreboard.
+
 Thu May 23 20:35:22 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/RB_Tree.h: Clarified that iterator is valid after changes to
