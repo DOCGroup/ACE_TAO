@@ -1,5 +1,7 @@
 // $Id$
 
+#include "JAWS/JAWS.h"
+
 #include "HTTP_10.h"
 
 #define ACCESSOR(T,C,x) \
@@ -10,10 +12,15 @@ void C##::##x (T t) { this->##x##_ = t; }
 JAWS_HTTP_10_Request::JAWS_HTTP_10_Request (void)
   : got_request_line_ (0),
     end_of_headers_ (0),
+    end_of_line_ (0),
+    last_header_type_ (0),
+    last_header_value_ (0),
+    last_header_length_ (0),
     status_ (0),
     type_ (-1),
     content_length_ (-1),
     datalen_ (0),
+    status_msglen_ (0),
     data_ (0),
     method_ (0),
     uri_ (0),
@@ -92,118 +99,6 @@ JAWS_HTTP_10_Request::parse_request_line (char *request_line)
             this->status_ = STATUS_NOT_FOUND;
         }
     }
-
-  ACE_OS::memmove (buf, ptr, ACE_OS::strlen (ptr)+1);
-}
-
-void
-JAWS_HTTP_10_Request::parse_header_line (char *header_line)
-{
-  char *ptr = header_line;
-  char *buf = header_line;
-  int offset = 1;
-
-  ptr = ACE_OS::strchr (header_line, '\n');
-
-  if (ptr > header_line && ptr[-1] == '\r')
-    {
-      ptr--;
-      offset++;
-    }
-
-  if (ptr == header_line)
-    {
-      this->end_of_headers_ = 1;
-      return;
-    }
-
-  *ptr = '\0';
-  ptr += offset;
-
-  char *value;
-  char *header = ACE_OS::strtok_r (buf, ":", &value);
-
-  while (isspace (*value))
-    value++;
-
-  char *key = ACE_OS::strdup (header);
-  char *item = ACE_OS::strdup (value);
-
-  if (key == 0 || item == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "JAWS_HTTP_10_Request::parse_header_line"));
-      ACE_OS::free (key);
-      ACE_OS::free (item);
-    }
-  else
-    this->table_.insert (key, item);
-
-  // Write back the unused portion of the input.
-  ACE_OS::memmove (header_line, ptr, strlen(ptr) + 1);
-}
-
-int
-JAWS_HTTP_10_Request::complete_header_line (char *header_line)
-{
-  // Algorithm --
-  // Scan for end of line marker.
-  // If the next character is linear white space, then unfold the header.
-  // Else, if the next character is printable, we have a complete header line.
-  // Else, presumably the next character is '\0', so the header is incomplete.
-  // return -1 if end of line but not complete header line
-  // return 0 if no end of line marker
-  // return 1 if complete header line
-
-  char *ptr = header_line;
-  int offset;
-
-  if (!this->end_of_line (ptr, offset))
-    return 0;
-
-  if (ptr == header_line)
-    {
-      ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
-      this->end_of_headers_ = 1;
-      return 0;
-    }
-
-  do
-    {
-      if (ptr[offset] == ' ' || ptr[offset] == '\t')
-        {
-          ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
-        }
-      else if (ptr[offset] == '\n' || ptr[offset] == '\r')
-        return 1;
-      else
-        return (isalnum (ptr[offset]) || ispunct (ptr[offset])) ? 1 : -1;
-    }
-  while (this->end_of_line (ptr, offset) != 0);
-  return 0;
-}
-
-int
-JAWS_HTTP_10_Request::end_of_line (char *&line, int &offset) const
-{
-  char *old_line = line;
-  char *ptr = ACE_OS::strchr (old_line, '\n');
-
-  if (ptr == NULL)
-    return 0;
-
-  line = ptr;
-  offset = 1;
-
-  if (line > old_line
-      && line[-1] == '\r')
-    {
-      line--;
-      offset = 2;
-    }
-
-  return 1;
 }
 
 const char *
@@ -369,6 +264,83 @@ JAWS_HTTP_10_Request::table (void)
   return &(this->table_);
 }
 
+void
+JAWS_HTTP_10_Request::append_last_header_value (char c)
+{
+  if (this->last_header_value_ == 0)
+    return;
+
+  if (this->last_header_length_ < MAX_HEADER_LENGTH-1)
+    {
+      this->last_header_value_[this->last_header_length_] = c;
+      this->last_header_length_++;
+      this->last_header_value_[this->last_header_length_] = '\0';
+    }
+}
+
+void
+JAWS_HTTP_10_Request::reduce_last_header_value (void)
+{
+  if (this->last_header_value_ == 0) return;
+
+  if (this->last_header_length_ > 0)
+    {
+      this->last_header_length_--;
+      this->last_header_value_[this->last_header_length_] = '\0';
+    }
+}
+
+void
+JAWS_HTTP_10_Request::resize_last_header_value (void)
+{
+  if (this->last_header_value_ == 0)
+    return;
+  else {
+    JAWS_TRACE ("JAWS_HTTP_10_Request::resize_last_header_value");
+
+    char *nhv = ACE_OS::strdup (this->last_header_value_);
+
+    if (nhv == 0)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "JAWS_HTTP_10_Request::resize_last_header_value"));
+        this->table_.remove (this->last_header_type_);
+        ACE_OS::free (this->last_header_type_);
+      }
+    else
+      {
+        const char **s = this->table_.find (this->last_header_type_);
+        *s = nhv;
+      }
+
+    this->last_header_type_ = 0;
+    this->last_header_value_ = 0;
+    this->last_header_length_ = 0;
+  }
+}
+
+void
+JAWS_HTTP_10_Request::create_next_header_value (char *ht, char *hv)
+{
+  JAWS_TRACE ("JAWS_HTTP_10_Request::create_next_header_value");
+
+  this->resize_last_header_value ();
+  this->last_header_type (ht);
+  this->last_header_value (hv);
+  this->last_header_length (0);
+}
+
+char *
+JAWS_HTTP_10_Request::header_buf (void)
+{
+  return this->header_buf_;
+}
+
+const ACCESSOR(char *,JAWS_HTTP_10_Request,last_header_type)
+const ACCESSOR(char *,JAWS_HTTP_10_Request,last_header_value)
+ACCESSOR(int,JAWS_HTTP_10_Request,last_header_length)
+ACCESSOR(int,JAWS_HTTP_10_Request,end_of_line)
 ACCESSOR(int,JAWS_HTTP_10_Request,got_request_line)
 ACCESSOR(int,JAWS_HTTP_10_Request,end_of_headers)
 ACCESSOR(int,JAWS_HTTP_10_Request,status)
