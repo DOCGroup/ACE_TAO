@@ -2618,9 +2618,12 @@ TAO_ORB_Core::input_cdr_msgblock_allocator (void)
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
+
 #if 0
   if (this->use_tss_resources_)
 #endif /* 0 */
+    // Allocating memory here confuses purify a bit. We do delete this
+    // memory when TSS delete
     {
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss == 0)
