@@ -6006,6 +6006,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_,
                               ACE_Time_Value (0, msec_timeout * 1000));
+
+  if (result != WAIT_OBJECT_0 && errno == ETIME)
+    result = WAIT_TIMEOUT;
+
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
@@ -6072,6 +6076,10 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #     else
   // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_);
+
+  if (result != WAIT_OBJECT_0 && errno == ETIME)
+    result = WAIT_TIMEOUT;
+
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
@@ -6578,6 +6586,9 @@ ACE_OS_Object_Manager::init (void)
       if (this == instance_)
         {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+          ACE_CE_Errno::init ();
+#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
             ACE_thread_mutex_t *,
@@ -6743,6 +6754,9 @@ ACE_OS_Object_Manager::fini (void)
                                          ACE_TSS_BASE_LOCK)
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
+#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+          ACE_CE_Errno::fini ();
+#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }
@@ -6869,6 +6883,26 @@ static ACE_OS_Object_Manager_Manager ACE_OS_Object_Manager_Manager_instance;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_WINCE)
+#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+ACE_CE_Errno *ACE_CE_Errno::instance_ = 0;
+DWORD ACE_CE_Errno::errno_key_ = 0xffffffff;
+
+void
+ACE_CE_Errno::init ()
+{
+  ACE_CE_Errno::instance_ = new ACE_CE_Errno ();
+  ACE_CE_Errno::errno_key_ = TlsAlloc ();
+}
+
+void
+ACE_CE_Errno::fini ()
+{
+  TlsFree (ACE_CE_Errno::errno_key_);
+  delete ACE_CE_Errno::instance_;
+  ACE_CE_Errno::instance_ = 0;
+}
+#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
 ACE_CE_Bridge *ACE_CE_Bridge::default_text_bridge_ = 0;
 
 ACE_CE_Bridge::ACE_CE_Bridge (void)

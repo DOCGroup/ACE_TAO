@@ -141,6 +141,7 @@
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_STRRCHR
 #define ACE_LACKS_BSEARCH
+#define ACE_LACKS_SOCKET_BUFSIZ
 
 // @@ Followings are used to keep existing programs happy.
 
