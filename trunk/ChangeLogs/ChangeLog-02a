@@ -1,20 +1,28 @@
+Wed Apr 11 09:44:32 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Misc/test_trace.cpp:
+
+          Fixed a strange compiler error with Tornado II. 
+          My_Task::recursive was inline which caused an internal compiler
+          error.
+
 Wed Apr 11 08:04:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* include/makeinclude/platform_linux.GNU: By default, we build
-	  ACE+TAO with exceptions enabled on Linux.  Thanks to Craig
- 	  Rodrigues <crodrigu@bbn.com> for motivating this change.
+        * include/makeinclude/platform_linux.GNU: By default, we build
+          ACE+TAO with exceptions enabled on Linux.  Thanks to Craig
+          Rodrigues <crodrigu@bbn.com> for motivating this change.
 
-	* ace/SString.i (operator+): Fixed an "inlined before use" warning.
-	  Thanks to Bala for reporting this.
+        * ace/SString.i (operator+): Fixed an "inlined before use" warning.
+          Thanks to Bala for reporting this.
 
 Tue Apr 10 16:58:54 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (ACE_DEFAULT_FILE_PERMS, ACE_DEFAULT_DIR_PERMS):
+        * ace/OS.h (ACE_DEFAULT_FILE_PERMS, ACE_DEFAULT_DIR_PERMS):
 
-	  Changed the default values on UNIX from 0666 and 0777 to 0644
-	  and 0755, i.e. removed global write permissions.  This addresses
-	  some security issues.  Now, only the owner has write permissions
-	  by default.
+          Changed the default values on UNIX from 0666 and 0777 to 0644
+          and 0755, i.e. removed global write permissions.  This addresses
+          some security issues.  Now, only the owner has write permissions
+          by default.
 
 Tue Apr 10 18:35:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -54,8 +62,8 @@ Tue Apr 10 18:35:22 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 10 17:51:25 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
-	  Added TAO/tests/OctetSeq/run_test1{2}.pl to auto testing.
+        * bin/auto_run_tests.lst:
+          Added TAO/tests/OctetSeq/run_test1{2}.pl to auto testing.
 
 Tue Apr 10 16:33:42 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -65,110 +73,110 @@ Tue Apr 10 16:33:42 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Tue Apr 10 15:14:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 
-	* include/makeinclude/platform_vxworks5.x_g++.GNU:
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
 
           Added missing else/endif from previous support addition.
 
 Tue Apr 10 11:48:51 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* include/makeinclude/platform_vxworks5.x_g++.GNU: Added support
-	  for the M68k line of CPUs.  Thanks to Albert Pariante
- 	  <albert@sw.bev.etn.com> for reporting this.
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: Added support
+          for the M68k line of CPUs.  Thanks to Albert Pariante
+           <albert@sw.bev.etn.com> for reporting this.
 
 Tue Apr 10 02:14:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Added a new
-	  PerlACE function that checks for unwanted files and spits out a
-	  warning before removing the file.  It makes sure that we not
-	  only clean up resource leaks but also notice their existence.
+        * bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Added a new
+          PerlACE function that checks for unwanted files and spits out a
+          warning before removing the file.  It makes sure that we not
+          only clean up resource leaks but also notice their existence.
 
-	* tests/run_test.pl (delete_temp_files): Used the new
-	  <check_n_cleanup_files> to remove the temp files for
-	  MEM_Stream_Test, if there are any.
+        * tests/run_test.pl (delete_temp_files): Used the new
+          <check_n_cleanup_files> to remove the temp files for
+          MEM_Stream_Test, if there are any.
 
 Tue Apr  10 1:44:02 2001  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
-	* examples/QOS/Change_Sender_TSpec/receiver.cpp:
-	* examples/QOS/Change_Sender_TSpec/receiver.dsp:
-	* examples/QOS/Change_Sender_TSpec/sender.cpp:
-	* examples/QOS/Change_Sender_TSpec/sender.dsp:
-	* examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.h:
-	* examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
-	* examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.h:
-	* examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.cpp:
-	* examples/QOS/Change_Sender_TSpec/QoS_Util.h:
-	* examples/QOS/Change_Sender_TSpec/QoS_Util.cpp:
-	* examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.h:
-	* examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.cpp:
-	* examples/QOS/Change_Sender_TSpec/FlowSpec_Dbase.h:
-	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
-	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.cpp:
-	* examples/QOS/Change_Sender_TSpec/README:
-	* examples/QOS/Change_Sender_TSpec/Makefile:
+        * examples/QOS/Change_Sender_TSpec/receiver.cpp:
+        * examples/QOS/Change_Sender_TSpec/receiver.dsp:
+        * examples/QOS/Change_Sender_TSpec/sender.cpp:
+        * examples/QOS/Change_Sender_TSpec/sender.dsp:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/QoS_Util.h:
+        * examples/QOS/Change_Sender_TSpec/QoS_Util.cpp:
+        * examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/FlowSpec_Dbase.h:
+        * examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.cpp:
+        * examples/QOS/Change_Sender_TSpec/README:
+        * examples/QOS/Change_Sender_TSpec/Makefile:
 
-	  Added a test to dynamically change the Sender flow spec in
-	  order to continuously change the PATH messages.
+          Added a test to dynamically change the Sender flow spec in
+          order to continuously change the PATH messages.
 
-	* examples/QOS/Change_Receiver_FlowSpec/receiver.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/receiver.dsp:
-	* examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/sender.dsp:
-	* examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.h:
-	* examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h:
-	* examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/QoS_Util.h:
-	* examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.h:
-	* examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/FlowSpec_Dbase.h:
-	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
-	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.cpp:
-	* examples/QOS/Change_Receiver_FlowSpec/README:
-	* examples/QOS/Change_Receiver_FlowSpec/Makefile:
+        * examples/QOS/Change_Receiver_FlowSpec/receiver.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/receiver.dsp:
+        * examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/sender.dsp:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Util.h:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/FlowSpec_Dbase.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/README:
+        * examples/QOS/Change_Receiver_FlowSpec/Makefile:
 
-	  Added a test to dynamically change the Receiver flow spec in
-	  order to continuously change the RESV messages.
+          Added a test to dynamically change the Receiver flow spec in
+          order to continuously change the RESV messages.
 
-	* examples/QOS/Simple/receiver.cpp:
-	* examples/QOS/Simple/receiver.dsp:
-	* examples/QOS/Simple/sender.cpp:
-	* examples/QOS/Simple/sender.dsp:
-	* examples/QOS/Simple/Sender_QoS_Event_Handler.h:
-	* examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
-	* examples/QOS/Simple/Receiver_QoS_Event_Handler.h:
-	* examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp:
-	* examples/QOS/Simple/QoS_Util.h:
-	* examples/QOS/Simple/QoS_Util.cpp:
-	* examples/QOS/Simple/QoS_Signal_Handler.h:
-	* examples/QOS/Simple/QoS_Signal_Handler.cpp:
-	* examples/QOS/Simple/FlowSpec_Dbase.h:
-	* examples/QOS/Simple/Fill_ACE_QoS.h:
-	* examples/QOS/Simple/Fill_ACE_QoS.cpp:
-	* examples/QOS/Simple/README:
-	* examples/QOS/Simple/Makefile:
+        * examples/QOS/Simple/receiver.cpp:
+        * examples/QOS/Simple/receiver.dsp:
+        * examples/QOS/Simple/sender.cpp:
+        * examples/QOS/Simple/sender.dsp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/QoS_Util.h:
+        * examples/QOS/Simple/QoS_Util.cpp:
+        * examples/QOS/Simple/QoS_Signal_Handler.h:
+        * examples/QOS/Simple/QoS_Signal_Handler.cpp:
+        * examples/QOS/Simple/FlowSpec_Dbase.h:
+        * examples/QOS/Simple/Fill_ACE_QoS.h:
+        * examples/QOS/Simple/Fill_ACE_QoS.cpp:
+        * examples/QOS/Simple/README:
+        * examples/QOS/Simple/Makefile:
 
-	  Moved the original QOS example to Simple.
+          Moved the original QOS example to Simple.
 
-	* examples/QOS/Makefile:
-	* examples/QOS/QOS.dsw:
+        * examples/QOS/Makefile:
+        * examples/QOS/QOS.dsw:
 
-	  Updated the Makefile to compile the constituent tests.
+          Updated the Makefile to compile the constituent tests.
 
 Mon Apr  9 18:48:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* include/makeinclude/Makefile.rtems: Zapped
+        * include/makeinclude/Makefile.rtems: Zapped
 
           export RTEMS_MAKEFILE_PATH=/opt/rtems/sparc-rtems/erc32/
 
-	  so that the environment variable is obtained from the users
- 	  environment.  Thanks to Joel Sherrill <joel@OARcorp.com> for
- 	  this fix.
+          so that the environment variable is obtained from the users
+          environment.  Thanks to Joel Sherrill <joel@OARcorp.com> for
+          this fix.
 
-	* ace/Log_Msg.h: Only define the ACE_ASSERT macro if it's not
-	  already defined.  This make it easy for developers to override
- 	  this macro in their config.h file.  Thanks to Nathalie D'Amours
- 	  <nathalie@stentor.com> for motivating this change.
+        * ace/Log_Msg.h: Only define the ACE_ASSERT macro if it's not
+          already defined.  This make it easy for developers to override
+          this macro in their config.h file.  Thanks to Nathalie D'Amours
+          <nathalie@stentor.com> for motivating this change.
 
 Mon Apr  9 15:36:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
