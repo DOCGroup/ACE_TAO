@@ -1,3 +1,9 @@
+Mon May  7 17:45:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional_NestedUpcall/test_i.cpp:
+	* tests/BiDirectional/test_i.cpp: Made some print statements less
+	  verbose.  
+
 Mon May  7 15:21:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object_Ref_Table.h:
