@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef UUID_H
 #define UUID_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ftrtevent_export.h"
 #include "ace/OS.h"
@@ -114,5 +114,5 @@ class TAO_FtRtEvent_Export  UUID
 #include "UUID.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif

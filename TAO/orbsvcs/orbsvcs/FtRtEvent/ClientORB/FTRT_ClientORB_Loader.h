@@ -13,7 +13,7 @@
 #ifndef FTRT_CLIENTORB_LOADER_H
 #define FTRT_CLIENTORB_LOADER_H
 
-#include  "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ftrt_clientorb_export.h"
 
@@ -50,5 +50,5 @@ namespace TAO_FTRT {
   ACE_FACTORY_DECLARE (TAO_FTRT, FTRT_ClientORB_Loader)
 }
 
-#include  "ace/post.h"
+#include /**/ "ace/post.h"
 #endif //FTRT_CLIENTORB_LOADER_H
