@@ -50,6 +50,7 @@ sub new {
 
   $self->{'prjc'}     = $prjc;
   $self->{'ti'}       = $prjc->get_template_input();
+  $self->{'cslashes'} = $prjc->convert_slashes();
   $self->{'crlf'}     = undef;
   $self->{'values'}   = {};
   $self->{'defaults'} = {};
@@ -275,7 +276,7 @@ sub relative {
             }
             $ival = '../' x $count;
             $ival =~ s/\/$//;
-            if ($self->{'prjc'}->convert_slashes()) {
+            if ($self->{'cslashes'}) {
               $ival = $self->slash_to_backslash($ival);
             }
             substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
@@ -536,7 +537,7 @@ sub get_flag_overrides {
       if ($key =~ /^$name/) {
         foreach my $of (keys %{$$fo{$key}}) {
           my($cv) = $of;
-          if ($prjc->convert_slashes()) {
+          if ($self->{'cslashes'}) {
             $cv = $prjc->slash_to_backslash($of);
           }
           if ($cv eq $file) {
