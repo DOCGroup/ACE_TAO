@@ -292,7 +292,7 @@ parse_args (int argc, char *argv[])
       case 'p':
         purge_percentage = atoi (get_opt.optarg);
         break;
-      case 'c':
+      case 'c': // If Null Caching Strategy then this test will fail!
         caching_strategy_type = atoi (get_opt.optarg);
         break;
       case '?':
