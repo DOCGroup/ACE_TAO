@@ -18,6 +18,7 @@ Sun Sep  5 09:32:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Sun Sep  5 09:21:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
 	* orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h:
 	* orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h:
 	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
