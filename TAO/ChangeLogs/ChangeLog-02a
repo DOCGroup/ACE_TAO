@@ -1,3 +1,11 @@
+Mon Jun 18 09:47:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+
+          Added ACE_LACKS_LONGLONG_T guards around get_longlong,
+          get_ulonglong, insert_longlong, and insert_ulonglong.
+
 Mon Jun 18 09:01:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynStruct_i.cpp:
