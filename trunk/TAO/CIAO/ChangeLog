@@ -1,3 +1,50 @@
+Thu Jul  1 15:40:06 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/ciao/CCM_Base.idl:
+        * DAnCE/ciao/CCM_Component.idl:
+        * DAnCE/ciao/CCM_Container.idl:
+        * DAnCE/ciao/CCM_Container_Ex.idl:
+        * DAnCE/ciao/CCM_Core.mpc:
+        * DAnCE/ciao/CCM_Event.idl:
+        * DAnCE/ciao/CCM_Transaction.idl:
+        * DAnCE/ciao/CIAO_Client_Export.h:
+        * DAnCE/ciao/CIAO_Container_Export.h:
+        * DAnCE/ciao/CIAO_Server_Export.h:
+        * DAnCE/ciao/CIAO_Value.idl:
+        * DAnCE/ciao/CIAO_common.h:
+        * DAnCE/ciao/Client_init.cpp:
+        * DAnCE/ciao/Client_init.h:
+        * DAnCE/ciao/Components.idl:
+        * DAnCE/ciao/ComponentsC.h:
+        * DAnCE/ciao/ComponentsS.h:
+        * DAnCE/ciao/Container_Base.cpp:
+        * DAnCE/ciao/Container_Base.h:
+        * DAnCE/ciao/Container_Base.inl:
+        * DAnCE/ciao/Container_Base.pidl:
+        * DAnCE/ciao/Cookies.cpp:
+        * DAnCE/ciao/Cookies.h:
+        * DAnCE/ciao/Cookies.inl:
+        * DAnCE/ciao/CosPersistentState.idl:
+        * DAnCE/ciao/Deployment.idl:
+        * DAnCE/ciao/Deployment_Core.idl:
+        * DAnCE/ciao/Deployment_stub_export.h:
+        * DAnCE/ciao/Deployment_svnt_export.h:
+        * DAnCE/ciao/NodeApp_CB_Impl.cpp:
+        * DAnCE/ciao/NodeApp_CB_Impl.h:
+        * DAnCE/ciao/NodeApplication_CallBack.idl:
+        * DAnCE/ciao/NodeApplication_Impl.cpp:
+        * DAnCE/ciao/NodeApplication_Impl.h:
+        * DAnCE/ciao/NodeApplication_Impl.inl:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * DAnCE/ciao/Server_init.cpp:
+        * DAnCE/ciao/Server_init.h:
+        * DAnCE/ciao/Version.h:
+
+          Moving DnC/ciao over here.
+
 Thu Jul  1 15:37:33 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
