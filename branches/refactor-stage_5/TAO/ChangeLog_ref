@@ -1,3 +1,9 @@
+Mon Aug  4 23:31:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          Replaced generation of interceptor code.
+
 Mon Aug  4 22:27:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.h:
@@ -24,7 +30,7 @@ Mon Aug  4 10:08:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 
           Replaced instantiation and invocation of visitor to generate
-          skeleton-side interceptor classes, which wa inadvertently
+          skeleton-side interceptor classes, which was inadvertently
           removed.
 
         * tao/TAO.dsp:
