@@ -162,7 +162,7 @@ all: ORBSVCS_COMPONENTS
 all debug profile optimize install deinstall clean realclean clobber depend rcs_info idl_stubs:
 ifneq ($(MKLIST),)
   ifeq (Windows,$(findstring Windows,$(OS)))
-	@cmd /c FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)
+	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
   else  # ! Windows
 	@for m in $(MKLIST); do \
 	echo $$m; \
