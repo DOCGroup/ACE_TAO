@@ -4,7 +4,7 @@
 
 ACE_INLINE CORBA::ULong
 TAO_LB_Location_Hash::operator() (
-  const LoadBalancing::Location &location) const
+  const PortableGroup::Location &location) const
 {
   // @todo Interim implementation until we figure out what to do when a
   //       location has multiple components.

@@ -46,12 +46,12 @@ struct TAO_LB_ReplicaInfo
   CORBA::Object_var replica;
 
   /// FactoryInfo used when creating the replica.
-  LoadBalancing::FactoryInfo factory_info;
+  PortableGroup::FactoryInfo factory_info;
 
   /// FactoryCreationId assigned to this replica.  This
   /// FactoryCreationId_var will contain a zero pointer if the replica
   /// was not created using a GenericFactory.
-  LoadBalancing::GenericFactory::FactoryCreationId_var factory_creation_id;
+  PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
   /// Pointer to the object group map entry corresponding to the
   /// object group to which this replica member in this structure

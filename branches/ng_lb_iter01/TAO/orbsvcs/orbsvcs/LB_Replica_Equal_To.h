@@ -64,8 +64,8 @@ class TAO_LB_Location_Equal_To
 
 public:
 
-  int operator() (const TAO_LoadBalancing::Location &lhs,
-                  const TAO_LoadBalancing::Location &rhs) const;
+  int operator() (const TAO_PortableGroup::Location &lhs,
+                  const TAO_PortableGroup::Location &rhs) const;
   // Iterate through the contents of each Location until a mismatch
   // occurs.  If no mismatch is found, then the Locations are
   // considered equal.

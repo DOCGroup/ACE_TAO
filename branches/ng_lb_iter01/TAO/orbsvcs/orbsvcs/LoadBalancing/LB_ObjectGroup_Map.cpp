@@ -50,7 +50,7 @@ TAO_LB_ObjectGroup_Map::get_group_entry (
     CORBA::Object_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -61,7 +61,7 @@ TAO_LB_ObjectGroup_Map::get_group_entry (
 
   TAO_LB_ObjectGroup_Map_Entry *group_entry = 0;
   if (this->table_.find (oid.in (), group_entry) != 0)
-    ACE_THROW_RETURN (LoadBalancing::ObjectGroupNotFound (),
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
                       0);
 
   return group_entry;

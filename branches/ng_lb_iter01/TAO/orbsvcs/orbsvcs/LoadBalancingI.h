@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/LoadBalancingS.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #include "LB_Location_Map.h"
 #include "LB_ObjectGroup_Map.h"
@@ -63,14 +64,14 @@ public:
   /// Register a load monitor with the load balancer.
   virtual void register_load_monitor (
       LoadBalancing::LoadMonitor_ptr load_monitor,
-      const LoadBalancing::Location & the_location,
+      const PortableGroup::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::MonitorAlreadyPresent));
 
   /// Return a reference to the load monitor at the given location.
   virtual LoadBalancing::LoadMonitor_ptr get_load_monitor (
-      const LoadBalancing::Location & the_location,
+      const PortableGroup::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::LocationNotFound));
@@ -78,53 +79,53 @@ public:
   /// Remove a load monitor at the given location from the load
   /// balancer.
   virtual void remove_load_monitor (
-      const LoadBalancing::Location & the_location,
+      const PortableGroup::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::LocationNotFound));
 
   /**
-   * @name LoadBalancing::PropertyManager methods
+   * @name PortableGroup::PropertyManager methods
    */
   //@{
 
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
-      const LoadBalancing::Properties & props,
+      const PortableGroup::Properties & props,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::UnsupportedProperty));
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::UnsupportedProperty));
 
   /// Get the default properties used by all object groups.
-  virtual LoadBalancing::Properties * get_default_properties (
+  virtual PortableGroup::Properties * get_default_properties (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Remove default properties.
   virtual void remove_default_properties (
-      const LoadBalancing::Properties & props,
+      const PortableGroup::Properties & props,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::UnsupportedProperty));
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::UnsupportedProperty));
 
   /// Set properties associated with a given Replica type.  These
   /// properties override the default properties.
   virtual void set_type_properties (
       const char * type_id,
-      const LoadBalancing::Properties & overrides,
+      const PortableGroup::Properties & overrides,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::UnsupportedProperty));
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::UnsupportedProperty));
 
   /**
    * Return the properties associated with a give Replica type.  These
    * properties include the type-specific properties in use, in
    * addition to the default properties that were not overridden.
    */
-  virtual LoadBalancing::Properties * get_type_properties (
+  virtual PortableGroup::Properties * get_type_properties (
       const char * type_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -132,11 +133,11 @@ public:
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
       const char * type_id,
-      const LoadBalancing::Properties & props,
+      const PortableGroup::Properties & props,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::UnsupportedProperty));
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::UnsupportedProperty));
 
   /**
    * Dynamically set the properties associated with a given object
@@ -145,13 +146,13 @@ public:
    * properties.
    */
   virtual void set_properties_dynamically (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Properties & overrides,
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Properties & overrides,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::UnsupportedProperty));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::UnsupportedProperty));
 
   /**
    * Return the properties currently in use by the given object
@@ -160,45 +161,45 @@ public:
    * were used when the Replica was created, and default properties
    * that weren't overridden.
    */
-  virtual LoadBalancing::Properties * get_properties (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::Properties * get_properties (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   //@}
 
   /**
-   * @name LoadBalancing::ObjectGroupManager methods
+   * @name PortableGroup::ObjectGroupManager methods
    */
   //@{
 
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
-  virtual LoadBalancing::ObjectGroup_ptr create_member (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  virtual PortableGroup::ObjectGroup_ptr create_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       const char * type_id,
-      const LoadBalancing::Criteria & the_criteria,
+      const PortableGroup::Criteria & the_criteria,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberAlreadyPresent,
-                     LoadBalancing::NoFactory,
-                     LoadBalancing::ObjectNotCreated,
-                     LoadBalancing::InvalidCriteria,
-                     LoadBalancing::CannotMeetCriteria));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberAlreadyPresent,
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::CannotMeetCriteria));
 
   /// Add an existing object to the ObjectGroup.
-  virtual LoadBalancing::ObjectGroup_ptr add_member (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  virtual PortableGroup::ObjectGroup_ptr add_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       CORBA::Object_ptr member,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberAlreadyPresent,
-                     LoadBalancing::ObjectNotAdded));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberAlreadyPresent,
+                     PortableGroup::ObjectNotAdded));
 
   /**
    * Remove an object at a specific location from the given
@@ -207,49 +208,49 @@ public:
    * infrastructure (load balancer) will be deleted by the
    * infrastructure.
    */
-  virtual LoadBalancing::ObjectGroup_ptr remove_member (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  virtual PortableGroup::ObjectGroup_ptr remove_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberNotFound));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberNotFound));
 
   /// Return the locations of the members in the given ObjectGroup.
-  virtual LoadBalancing::Locations * locations_of_members (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::Locations * locations_of_members (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   /// Return the ObjectGroupId for the given ObjectGroup.
-  virtual LoadBalancing::ObjectGroupId get_object_group_id (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::ObjectGroupId get_object_group_id (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   /// @note Does this method make sense for load balanced objects?
-  virtual LoadBalancing::ObjectGroup_ptr get_object_group_ref (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
   virtual CORBA::Object_ptr get_member_ref (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & loc,
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & loc,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberNotFound));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberNotFound));
 
   //@}
 
   /**
-   * @name LoadBalancing::GenericFactory methods
+   * @name PortableGroup::GenericFactory methods
    */
   //@{
 
@@ -261,16 +262,16 @@ public:
    */
   virtual CORBA::Object_ptr create_object (
       const char * type_id,
-      const LoadBalancing::Criteria & the_criteria,
-      LoadBalancing::GenericFactory::FactoryCreationId_out
+      const PortableGroup::Criteria & the_criteria,
+      PortableGroup::GenericFactory::FactoryCreationId_out
         factory_creation_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::NoFactory,
-                     LoadBalancing::ObjectNotCreated,
-                     LoadBalancing::InvalidCriteria,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::CannotMeetCriteria));
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::CannotMeetCriteria));
 
   /**
    * Delete the object corresponding to the provided
@@ -279,11 +280,11 @@ public:
    * Afterward, the ObjectGroup itself will be deleted.
    */
   virtual void delete_object (
-      const LoadBalancing::GenericFactory::FactoryCreationId &
+      const PortableGroup::GenericFactory::FactoryCreationId &
         factory_creation_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectNotFound));
+                     PortableGroup::ObjectNotFound));
 
   //@}
 
@@ -312,7 +313,7 @@ private:
   /// the_criteria.
   int get_initial_number_replicas (
     const char *type_id,
-    const LoadBalancing::Criteria &the_criteria,
+    const PortableGroup::Criteria &the_criteria,
     CORBA::UShort &initial_number_replicas) const;
 
   /// Extract the value of the Factories property from the_criteria.
@@ -324,8 +325,8 @@ private:
    */
   int get_factory_infos (
     const char *type_id,
-    const LoadBalancing::Criteria &the_criteria,
-    LoadBalancing::FactoryInfos &factory_infos) const;
+    const PortableGroup::Criteria &the_criteria,
+    PortableGroup::FactoryInfos &factory_infos) const;
 
 private:
 
@@ -338,7 +339,7 @@ private:
   /// Mutex that provides synchronization.
   TAO_SYNCH_MUTEX lock_;
 
-  /// Table that maps LoadBalancing::Location to load monitor at that
+  /// Table that maps PortableGroup::Location to load monitor at that
   /// location, in addition to the replicas residing at that
   /// location.
   TAO_LB_Location_Map location_map_;

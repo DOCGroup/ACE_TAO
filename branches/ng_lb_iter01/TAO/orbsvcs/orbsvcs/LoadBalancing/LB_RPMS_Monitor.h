@@ -48,7 +48,7 @@ public:
   TAO_LB_RPMS_Monitor (void);
 
   /**
-   * @name LoadBalancing::LoadMonitor Methods
+   * @name PortableGroup::LoadMonitor Methods
    */
   //@{
 

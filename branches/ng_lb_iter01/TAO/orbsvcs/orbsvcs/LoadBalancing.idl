@@ -18,7 +18,8 @@
 #ifndef TAO_LOADBALANCING_IDL
 #define TAO_LOADBALANCING_IDL
 
-#include "tao/PortableInterceptor.pidl"
+//#include "tao/PortableInterceptor.pidl"
+#include "PortableGroup.idl"
 #include "CosNaming.idl"
 #include "orb.idl"
 
@@ -86,16 +87,16 @@ module LoadBalancing
     void register_load_notifier (in LoadNotifier load_notifier);
 
     LoadNotifier get_load_notifier ()
-      raises (InterfaceNotFound);
+      raises (PortableGroup::InterfaceNotFound);
 
     void register_load_monitor (in LoadMonitor load_monitor,
-                                in Location the_location)
+                                in PortableGroup::Location the_location)
       raises (MonitorAlreadyPresent);
 
-    LoadMonitor get_load_monitor (in Location the_location)
+    LoadMonitor get_load_monitor (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 
-    void remove_load_monitor (in Location the_location)
+    void remove_load_monitor (in PortableGroup::Location the_location)
       raises (LocationNotFound);
   };
 

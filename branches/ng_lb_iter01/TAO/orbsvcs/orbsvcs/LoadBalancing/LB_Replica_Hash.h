@@ -57,7 +57,7 @@ class TAO_LB_Location_Hash
 
 public:
 
-  CORBA::ULong operator() (const TAO_LoadBalancing::Location &) const;
+  CORBA::ULong operator() (const TAO_PortableGroup::Location &) const;
   // Generates a hash value based on the contents of the
   // Location.
 };

@@ -44,7 +44,7 @@ public:
   CORBA::String_var type_id;
 
   /// Reference to the ObjectGroup.
-  LoadBalancing::ObjectGroup_var object_group;
+  PortableGroup::ObjectGroup_var object_group;
 
   /// Unbounded set containing replica references and all related
   /// information for each replica.
@@ -52,7 +52,7 @@ public:
 
   /// Properties used when creating this object group, in addition
   /// those set dynamically after the creation.
-  LoadBalancing::Properties properties;
+  PortableGroup::Properties properties;
 
   /// Lock used to synchronize access to the ReplicaInfo set.
   TAO_SYNCH_MUTEX lock;
@@ -124,10 +124,10 @@ private:
   /// Obtain the ObjectGroup hash map entry corresponding to the given
   /// ObjectGroup reference.
   TAO_LB_ObjectGroup_Map_Entry *get_group_entry (
-      LoadBalancing::ObjectGroup_ptr object_group,
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
 private:
 

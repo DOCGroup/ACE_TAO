@@ -19,8 +19,8 @@ TAO_LB_Replica_Equal_To::operator() (
 
 ACE_INLINE int
 TAO_LB_Location_Equal_To::operator() (
-  const TAO_LoadBalancing::Location &lhs,
-  const TAO_LoadBalancing::Location &rhs) const
+  const TAO_PortableGroup::Location &lhs,
+  const TAO_PortableGroup::Location &rhs) const
 {
   size_t lhs_length = lhs.length ();
   size_t rhs_length = rhs.length ();

@@ -3,7 +3,7 @@
 #include "LB_Minimum_Dispersion.h"
 #include "LB_Location_Map.h"
 #include "LB_ObjectGroup_Map.h"
-//#include "ReplicaProxy.h"
+#include "orbsvcs/LoadBalancingC.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Minimum_Dispersion,
