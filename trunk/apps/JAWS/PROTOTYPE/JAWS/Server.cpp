@@ -71,6 +71,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
       ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create handler\n"));
       return -1;
     }
+  ACE_UNUSED_ARG (protocol);
   // handler->task (protocol);
 
   // initialize data block

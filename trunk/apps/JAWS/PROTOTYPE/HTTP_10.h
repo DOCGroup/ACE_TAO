@@ -12,7 +12,18 @@ public:
   JAWS_HTTP_10_Read_Task (void);
   virtual ~JAWS_HTTP_10_Read_Task (void);
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv)
+  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+
+private:
+};
+
+class JAWS_HTTP_10_Write_Task : public JAWS_Pipeline_Handler
+{
+public:
+  JAWS_HTTP_10_Write_Task (void);
+  virtual ~JAWS_HTTP_10_Write_Task (void);
+
+  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
 
 private:
 };

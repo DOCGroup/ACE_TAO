@@ -90,6 +90,8 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
   if (this->activate (flags, nthreads) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
+
+  return 0;
 }
 
 int
