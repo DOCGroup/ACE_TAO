@@ -346,7 +346,7 @@ public:
    * Create the IOP::IOR info. We will create the info at most once.
    * Get the index of the profile we are using to make the invocation.
    */
-  int create_ior_info (IOP::IOR *ior_info,
+  int create_ior_info (IOP::IOR *&ior_info,
                        CORBA::ULong &index,
                        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
