@@ -1,3 +1,41 @@
+Thu Jul  1 15:29:57 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/tests/Config_Handlers/HUDisplay/Airframe.ccd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Airframe.cid:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Airframe.cpd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Airframe_Exec.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Airframe_Stub.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Airframe_Svnt.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Deployment.xsd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Domain.cdd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/GPS.ccd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/GPS.cid:
+        * DAnCE/tests/Config_Handlers/HUDisplay/GPS.cpd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/GPS_Exec.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/GPS_Stub.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/GPS_Svnt.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/HUDisplay.cdp:
+        * DAnCE/tests/Config_Handlers/HUDisplay/HUDisplay.cid:
+        * DAnCE/tests/Config_Handlers/HUDisplay/HUDisplay.cpd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/HUDisplay.pcd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Libraries.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay.ccd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay.cid:
+        * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay.cpd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay_Exec.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay_Stub.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay_Svnt.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Timer.ccd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Timer.cid:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Timer.cpd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Timer_Exec.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Timer_Stub.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/Timer_Svnt.iad:
+        * DAnCE/tests/Config_Handlers/HUDisplay/XMI.xsd:
+        * DAnCE/tests/Config_Handlers/HUDisplay/package.tpd:
+
+          Checking in the HUDisplay deployment descriptors.
+
 Thu Jul  1 15:26:54 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
