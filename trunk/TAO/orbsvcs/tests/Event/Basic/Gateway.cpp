@@ -148,7 +148,7 @@ main (int argc, char* argv[])
       {
         ACE_ConsumerQOS_Factory consumer_qos;
         consumer_qos.start_disjunction_group (1);
-        consumer_qos.insert_type (event_type, 0);
+        consumer_qos.insert (event_source, event_type, 0);
 
         consumer_00.connect (consumer_admin_2.in (),
                              consumer_qos.get_ConsumerQOS (),
@@ -167,16 +167,107 @@ main (int argc, char* argv[])
 
       CORBA::ULong expected =
         supplier_00.event_count;
-      CORBA::ULong discarded =
-        supplier_01.event_count;
       consumer_00.dump_results (expected, 5);
+
+      CORBA::ULong last_count = consumer_00.event_count;
+      CORBA::ULong last_supplier_00 = supplier_00.event_count;
+      CORBA::ULong last_supplier_01 = supplier_01.event_count;
 
       // ****************************************************************
 
       {
         ACE_ConsumerQOS_Factory consumer_qos;
         consumer_qos.start_disjunction_group (2);
+        consumer_qos.insert (event_source, event_type,     0);
+        consumer_qos.insert (event_source, event_type + 1, 0);
+
+        consumer_00.connect (consumer_admin_2.in (),
+                             consumer_qos.get_ConsumerQOS (),
+                             ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      tv = ACE_Time_Value (5, 0);
+      orb->run (tv);
+
+      expected = last_count
+        + supplier_00.event_count - last_supplier_00
+        + supplier_01.event_count - last_supplier_01;
+      consumer_00.dump_results (expected, 5);
+
+      last_count = consumer_00.event_count;
+      last_supplier_00 = supplier_00.event_count;
+      last_supplier_01 = supplier_01.event_count;
+
+      // ****************************************************************
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_disjunction_group (1);
+        consumer_qos.insert (event_source, event_type, 0);
+
+        consumer_00.connect (consumer_admin_2.in (),
+                             consumer_qos.get_ConsumerQOS (),
+                             ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      tv = ACE_Time_Value (5, 0);
+      orb->run (tv);
+
+      expected = last_count
+        + supplier_00.event_count - last_supplier_00;
+      consumer_00.dump_results (expected, 5);
+
+      last_count = consumer_00.event_count;
+      last_supplier_00 = supplier_00.event_count;
+      last_supplier_01 = supplier_01.event_count;
+
+      // ****************************************************************
+
+      consumer_00.disconnect (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_disjunction_group (1);
         consumer_qos.insert_type (event_type, 0);
+
+        consumer_00.connect (consumer_admin_2.in (),
+                             consumer_qos.get_ConsumerQOS (),
+                             ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      tv = ACE_Time_Value (5, 0);
+      // Wait for events, using work_pending()/perform_work() may help
+      // or using another thread, this example is too simple for that.
+      orb->run (tv);
+
+      // ****************************************************************
+
+      expected = last_count
+        + supplier_00.event_count - last_supplier_00;
+      consumer_00.dump_results (expected, 5);
+
+      last_count = consumer_00.event_count;
+      last_supplier_00 = supplier_00.event_count;
+      last_supplier_01 = supplier_01.event_count;
+
+      // ****************************************************************
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_disjunction_group (2);
+        consumer_qos.insert_type (event_type,     0);
         consumer_qos.insert_type (event_type + 1, 0);
 
         consumer_00.connect (consumer_admin_2.in (),
@@ -190,13 +281,14 @@ main (int argc, char* argv[])
       tv = ACE_Time_Value (5, 0);
       orb->run (tv);
 
-      expected =
-        supplier_00.event_count
-        + supplier_01.event_count - discarded;
+      expected = last_count
+        + supplier_00.event_count - last_supplier_00
+        + supplier_01.event_count - last_supplier_01;
       consumer_00.dump_results (expected, 5);
 
-      CORBA::ULong last_count = expected;
-      CORBA::ULong last_supplier_00 = supplier_00.event_count;
+      last_count = consumer_00.event_count;
+      last_supplier_00 = supplier_00.event_count;
+      last_supplier_01 = supplier_01.event_count;
 
       // ****************************************************************
 
@@ -216,9 +308,13 @@ main (int argc, char* argv[])
       tv = ACE_Time_Value (5, 0);
       orb->run (tv);
 
-      expected = last_count +
-        supplier_00.event_count - last_supplier_00;
+      expected = last_count
+        + supplier_00.event_count - last_supplier_00;
       consumer_00.dump_results (expected, 5);
+
+      last_count = consumer_00.event_count;
+      last_supplier_00 = supplier_00.event_count;
+      last_supplier_01 = supplier_01.event_count;
 
       // ****************************************************************
 

@@ -1,3 +1,21 @@
+Tue May  2 12:05:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Fixed nasty bug in the event channel gateways.  The local
+          consumer proxy map was not recomputed correctly, because I was
+          invoking Map_Manager::close() to reset the map.  This method
+          resets the map, but it leaves it in an incosistent state,
+          Map_Manager::open() does the right thing.  IMnsHO extremely
+          counter intuitive.
+          Thanks to Ron Klein <rklein@west.raytheon.com> for reporting the
+          bug and providing a test for it.
+
+        * orbsvcs/tests/Event/Basic/Gateway.cpp:
+          Extended the regression test to include Ron's use-case.
+
+        * tests/AMI/Makefile:
+          Updated dependencies.
+
 Tue May  2 10:24:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
@@ -29,10 +47,10 @@ Mon May  1 21:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon May  1 19:20:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	  Another try at getting all compilers happy with the
-	  generated code in _tao_QueryInterface in 
-	  nested_scopesC.cpp in IDL_Test.
+        * TAO_IDL/be/be_interface.cpp:
+          Another try at getting all compilers happy with the
+          generated code in _tao_QueryInterface in
+          nested_scopesC.cpp in IDL_Test.
 
 Mon May  1 14:32:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
