@@ -70,7 +70,7 @@ public:
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size);
 
-  virtual CORBA::Boolean close (void);
+  virtual void  close (void);
   
   virtual CORBA::Boolean stat_sent (void);
 
@@ -109,7 +109,7 @@ public:
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size);
   
-  virtual CORBA::Boolean close (void);
+  virtual void close (void);
   
   virtual CORBA::Boolean stat_sent (void);
   
@@ -153,7 +153,7 @@ public:
   Video_Control_Fast_Forward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_FORWARD
 
-  CORBA::Boolean close (void);
+  void close (void);
 
   CORBA::Boolean stop (CORBA::Long cmdsn);
 };
@@ -167,7 +167,7 @@ public:
   Video_Control_Fast_Backward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_BACKWARD
 
-  CORBA::Boolean close (void);
+  void close (void);
 
   CORBA::Boolean stop (CORBA::Long cmdsn);
 };

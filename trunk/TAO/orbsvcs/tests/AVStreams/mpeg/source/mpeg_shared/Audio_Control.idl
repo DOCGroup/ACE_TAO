@@ -7,10 +7,10 @@ interface Audio_Control
 
   struct AudioParameter
   {
-    short encodeType;
-    short channels;
-    short samplesPerSecond;
-    short bytesPerSample;
+    long encodeType;
+    long channels;
+    long samplesPerSecond;
+    long bytesPerSample;
   };
 
 
@@ -18,33 +18,32 @@ interface Audio_Control
      replys with CmdINITaudio followed by reply or CmdFAIL followed by a string */
   struct INITaudioPara
   {
-    short sn;
-    short version;
+    long sn;
+    long version;
     AudioParameter para;
-    short nameLength;
+    long nameLength;
     sequence <char> audiofile;
     /* char audioFile[] */
   };
 
   struct INITaudioReply
   {
-    short live;
-    short format;
-  
+    long live;
+    long format;
     AudioParameter para;
-    short totalSamples;
+    long totalSamples;
   };
 
 
   /* CmdPLAY parameter */
   struct PLAYPara
   {
-    short sn;
-    short nextSample;
-    short samplesPerSecond; /* audio playback speed */
-    short samplesPerPacket; /* Number of samples in a packet */
-    short ABsamples; /* size of client VB buffer in samples */
-    short spslimit;  /* QoS parameter: sps supported by the audio channel */
+    long sn;
+    long nextSample;
+    long samplesPerSecond; /* audio playback speed */
+    long samplesPerPacket; /* Number of samples in a packet */
+    long ABsamples; /* size of client VB buffer in samples */
+    long spslimit;  /* QoS parameter: sps supported by the audio channel */
   };
 
   /* STOP followed only by SN */
@@ -52,10 +51,10 @@ interface Audio_Control
   /* CmdSPEED parameter */
   struct  SPEEDPara
   {
-    short sn;
-    short samplesPerSecond;
-    short samplesPerPacket; /* Number of samples in a packet */
-    short spslimit;
+    long sn;
+    long samplesPerSecond;
+    long samplesPerPacket; /* Number of samples in a packet */
+    long spslimit;
   };
 
   boolean init_audio (in INITaudioPara para,
@@ -65,6 +64,8 @@ interface Audio_Control
   boolean speed (in SPEEDPara para);
 
   boolean stop (in long cmdsn);
+
+  oneway void close ();
 
   unsigned short set_peer (in string peer);
   // Initializes the server to communicate to the <peer>, which can be

@@ -36,6 +36,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/SOCK_Connector.h"
+#include "mpeg_shared/Audio_ControlC.h"
 
 class Command_Handler 
   : public virtual ACE_Event_Handler
@@ -58,8 +59,11 @@ public:
   int init (void);
   // initialize the ORB
 
-  int resolve_server_reference (void);
-  // Resolve the video control reference
+  int resolve_video_reference (void);
+  // Resolve the video control reference.
+
+  int resolve_audio_reference (void);
+  // Resolve the audio control reference.
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when input events occur (e.g., connection or data).
@@ -67,24 +71,26 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Returns the handle used by the event_handler.
   
-  CORBA::Boolean init_video (void);
+  int init_av (void);
   
   int init_video_channel (char *phostname,char *videofile);
 
-  CORBA::Boolean stat_stream (CORBA::Char_out ch,
+  int init_audio_channel (char *phostname,char *videofile);
+
+  int stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size) ;
   
-  CORBA::Boolean close (void) ;
+  int  close (void) ;
   
-  CORBA::Boolean stat_sent (void) ;
+  int  stat_sent (void) ;
   
-  CORBA::Boolean fast_forward (void);
+  int  fast_forward (void);
   
-  CORBA::Boolean fast_backward (void);
+  int fast_backward (void);
   
-  CORBA::Boolean step (void);
+  int step (void);
   
-  CORBA::Boolean play (int flag,
+  int play (int flag,
                        CORBA::Environment& env);
                       
   int position_action (int operation_tag);
@@ -97,25 +103,40 @@ public:
 
   int balance (void);
 
-  CORBA::Boolean speed (void);
+  int speed (void);
   
-  CORBA::Boolean stop (void);
+  int stop (void);
 
   int stop_playing (void);
 
-  int connect_to_server (char *address,
-                         int *ctr_fd,
-                         int *data_fd,
-                         int *max_pkt_size);
+  int connect_to_video_server (char *address,
+                               int *ctr_fd,
+                               int *data_fd,
+                               int *max_pkt_size);
+
+  int connect_to_audio_server (char *address,
+                               int *ctr_fd,
+                               int *data_fd,
+                               int *max_pkt_size);
 
 private:
-  ACE_SOCK_Dgram dgram_;
-  // UDP datagram on which to send/recv data
+  ACE_SOCK_Dgram video_dgram_;
+  // UDP socket on which to send/recv data
   
-  ACE_SOCK_Stream stream_;
+  ACE_SOCK_Dgram audio_dgram_;
+  // Audio UDP socket
+
+  ACE_SOCK_Stream video_stream_;
   // TCP stream socket
 
-  ACE_SOCK_Connector connector_;
+  ACE_SOCK_Stream audio_stream_;
+  // audio TCP stream.
+
+  ACE_SOCK_Connector video_connector_;
+  // video connector.
+
+  ACE_SOCK_Connector audio_connector_;
+  // audio connector.
 
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket
@@ -125,6 +146,9 @@ private:
 
   Video_Control_var video_control_;
   // Video Control CORBA object
+
+  Audio_Control_var audio_control_;
+  // audio control corba object
 };
 
 

@@ -91,7 +91,7 @@ interface Video_Control
   boolean init_video (in INITvideoPara para,
                       out INITvideoReply reply_para);
   boolean stat_stream (out char ch, out long size);
-  boolean close ();
+  oneway void close ();
   boolean stat_sent ();
   boolean fast_forward (in FFpara para);
   boolean fast_backward (in FFpara para);

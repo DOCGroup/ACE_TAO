@@ -38,7 +38,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include "newproto.h"
 #include "global.h"
 
-int			cmdBusy = 0;
+int cmdBusy = 0;
 
 extern char infomessage[];
 
@@ -590,6 +590,7 @@ static void normal_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs)
   int value = 50;
   CmdWrite(&cmd, 1);
   CmdWrite((char *)&value, 4);
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Reached in %s line %d\n",__FILE__,__LINE__));
   XmScaleSetValue(speedscale, 50);
 }
 
@@ -735,6 +736,7 @@ static void position_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs
     }
     else
     {
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Reached in %s line %d\n",__FILE__,__LINE__));
       XmScaleSetValue(positionscale, shared->locationPosition);
       /*
       fprintf(stderr, "UI: shared->cmd = %d\n", shared->cmd);
@@ -780,7 +782,9 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
       {
 	char cmd = CmdSPEED;
 	int value = 50;
+        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Reached in %s line %d\n",__FILE__,__LINE__));
 	XmScaleSetValue(speedscale, 50);
+        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Reached in %s line %d\n",__FILE__,__LINE__));
 	XmScaleSetValue(positionscale, 0);
 	CmdWrite(&cmd, 1);
 	CmdWrite((char *)&value, 4);
@@ -821,6 +825,8 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
       if (shared->cmd == CmdPLAY &&
 	  (curpos <= prepos - 1 || curpos >= prepos + 1))
       {
+        //   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Reached in %s line %d,positionscale = %d,curpos = %d\n",
+        //          __FILE__,__LINE__,positionscale,curpos));
 	XmScaleSetValue(positionscale, curpos);
 	prepos = curpos;
       }
@@ -832,6 +838,7 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
 	   shared->cmd == CmdFF || shared->cmd == CmdFB) &&
 	  (curpos <= prepos - 1 || curpos >= prepos + 1))
       {
+        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Reached in %s line %d\n",__FILE__,__LINE__));
 	XmScaleSetValue(positionscale, curpos);
 	prepos = curpos;
       }

@@ -29,7 +29,7 @@ public:
                                       CORBA::Long_out size,
                                       CORBA::Environment &_tao_environment);
 
-  virtual CORBA::Boolean close (CORBA::Environment &_tao_environment);
+  virtual void close (CORBA::Environment &_tao_environment);
   
   virtual CORBA::Boolean stat_sent (CORBA::Environment &_tao_environment);
 
