@@ -482,6 +482,13 @@ class Foo {
 	</P>
       </LI>
 
+      <LI><P>Test Any with variable sized types, such as structures
+	  that contain a string inside. Jeff reports that there is a
+	  problem when destroying Anys initialized with this types,
+	  even if the IDL compiler generated <<= operator is used.
+	</P>
+      </LI>
+
       <!-- Things below this point are "big" tasks" that -->
       <!-- could require major work -->
 
