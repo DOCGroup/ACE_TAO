@@ -123,9 +123,8 @@
 
 #define ACE_LACKS_MKFIFO
 
-// Cygwin has no siginfo.h
 #define ACE_LACKS_SIGINFO_H
-// Cygwin has no ucontext.h
+
 #define ACE_LACKS_UCONTEXT_H
 
 #define ACE_LACKS_STROPTS_H
@@ -136,6 +135,9 @@
 
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIGINFO_T
+
+#define ACE_HAS_POSIX_SEM
+#define ACE_LACKS_NAMED_POSIX_SEM
 
 // Cygwin DLL suffix is .dll
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
