@@ -181,5 +181,6 @@
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+#define ACE_LACKS_MKFIFO
 
 #endif /* ACE_LINUX_COMMON_H */

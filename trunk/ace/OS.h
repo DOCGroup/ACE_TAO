@@ -1540,7 +1540,7 @@ if (gobbler != 0) *gobbler = (ACE_Service_Object_Exterminator) _gobble_##X; retu
 # if defined (ACE_LACKS_SEMBUF_T)
 struct sembuf
 {
-  u_short sem_num; // semaphore #
+  unsigned short sem_num; // semaphore #
   short sem_op; // semaphore operation
   short sem_flg; // operation flags
 };
@@ -3201,6 +3201,8 @@ extern "C"
     char    **h_addr_list;  /* (first, only) address from name server */
 #     define h_addr h_addr_list[0]   /* the first address */
   };
+#   elif defined (ACE_HAS_CYGWIN32_SOCKET_H)
+#     include /**/ <cygwin32/socket.h>
 #   else
 #     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #       define queue _Queue_
@@ -3250,7 +3252,14 @@ unsigned long inet_network(const char *);
 #     endif /* howmany */
 #   endif /* __Lynx__ */
 
-#   if defined (CHORUS)
+#   if defined (CYGWIN32)
+#     include /**/ <sys/uio.h>
+#     include /**/ <sys/file.h>
+#     include /**/ <sys/time.h>
+#     include /**/ <sys/resource.h>
+#     include /**/ <sys/wait.h>
+#     include /**/ <pwd.h>
+#   elif defined (CHORUS)
 #     include /**/ <chorus.h>
 #     include /**/ <cx/select.h>
 #     include /**/ <sys/uio.h>
@@ -3716,6 +3725,10 @@ struct sigaction
 # if !defined (IP_ADD_MEMBERSHIP)
 #   define IP_ADD_MEMBERSHIP 0
 # endif /* IP_ADD_MEMBERSHIP */
+
+# if !defined (SIOCGIFBRDADDR)
+#   define SIOCGIFBRDADDR 0
+# endif /* SIOCGIFBRDADDR */
 
 # if !defined (SIOCGIFADDR)
 #   define SIOCGIFADDR 0

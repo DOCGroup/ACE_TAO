@@ -135,6 +135,7 @@
 # define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
 
+#define ACE_LACKS_MKFIFO
 #define ACE_HAS_TSS_EMULATION
 // Needed to wait for "processes" to exit.
 #include <am/await.h>

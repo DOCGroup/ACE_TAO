@@ -590,13 +590,13 @@ ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
 {
   // ACE_TRACE ("ACE_OS::mkfifo");
-#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_MKFIFO)
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
-#   endif /* VXWORKS */
+#   endif /* ACE_LACKS_MKFIFO */
 }
 
 #   if !defined (ACE_LACKS_MKTEMP)
@@ -9096,6 +9096,11 @@ ACE_OS::ioctl (ACE_HANDLE handle, int cmd, void *val)
                      int, -1);
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, (char *) val), int, -1);
+#elif defined (__CYGWIN32__)
+  ACE_UNUSED_ARG (handle);
+   ACE_UNUSED_ARG (cmd);
+   ACE_UNUSED_ARG (val);
+   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, val), int, -1);
 #endif /* ACE_WIN32 */

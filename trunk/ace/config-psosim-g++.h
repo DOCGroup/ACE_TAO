@@ -237,5 +237,6 @@
 #if !defined (ACE_USE_RCSID)
 #define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
+#define ACE_LACKS_MKFIFO
 
 #endif /* ACE_CONFIG_H */
