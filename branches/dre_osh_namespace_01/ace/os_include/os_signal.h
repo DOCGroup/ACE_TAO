@@ -312,7 +312,9 @@ extern "C"
 #  endif /* __rtems__ */
 #endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
-//  typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo_t*,void*);
+#if !defined (ACE_WIN32)
+  typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo_t*,void*);
+#endif /* ACE_WIN32 */
 
 #ifdef __cplusplus
 }
