@@ -1,3 +1,14 @@
+Fri Aug  6 14:15:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Don't define export macro's also for Visual Age.
+
+        * ace/config-win32-visualage.h:
+          Added special Visual Age export macros
+
+          Thanks to Boris Kaminer <boris_kaminer@mail.ru> for reporting
+          this.
+
 Fri Aug  6 14:14:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_sys_socket.h:
