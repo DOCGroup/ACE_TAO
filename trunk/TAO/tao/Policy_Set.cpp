@@ -106,6 +106,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source,
 void
 TAO_Policy_Set::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 {
+  // Cleanup the policy list.
   for (CORBA::ULong i = 0;
        i < this->policy_list_.length ();
        ++i)
@@ -115,6 +116,10 @@ TAO_Policy_Set::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
       this->policy_list_[i] = CORBA::Policy::_nil ();
     }
   this->policy_list_.length (0);
+
+  // Cleanup the cache.
+  for (i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; i++)
+    this->cached_policies_[i] = 0;
 }
 
   // @@ !!! Add comments regarding Policy lifetimes, etc.

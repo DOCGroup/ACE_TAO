@@ -1454,6 +1454,8 @@ TAO_ORB_Core::get_protocols_hooks (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
     (TAO_ORB_Core::protocols_hooks_name_);
 
+  //@@ None of this stuff is needed since the default client factory
+  //   is statically added to the Service Configurator, fredk
   // If there still isn't a reference, allocate the default.
   if (this->protocols_hooks_ == 0)
     {
@@ -3080,7 +3082,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 {
   CORBA::Policy *result = 0;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
@@ -3100,11 +3102,13 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
   if (result == 0)
     result = this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   return result;
 
 }
+
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
