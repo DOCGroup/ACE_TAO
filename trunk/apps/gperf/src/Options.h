@@ -22,7 +22,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
 #if !defined (OPTIONS_H)
-#define OPTIONS_H 
+#define OPTIONS_H
 
 #include "ace/Log_Msg.h"
 
@@ -53,7 +53,10 @@ enum Option_Type
   ENUM	       = 04000000,	// Use enum for constants.
   STRCASECMP   = 010000000,     // Use the case insensitive comparison.
   OPTIMIZE     = 020000000,     // Assume all input keywords are in the keyset.
-  ADA          = 040000000     // Generate Ada code.
+  ADA          = 040000000,     // Generate Ada code.
+  MUTE         = 0100000000,    // Dont print the warnings.
+  SKIPCLASS    = 0200000000,    // Skip the class definition part in the output while in C++ mode.
+  SKIPSTRINGH  = 0400000000     // Skip including the header file string.h.
 };
 
 // Define some useful constants (these don't really belong here, but
@@ -61,7 +64,7 @@ enum Option_Type
 // g++ doesn't seem to do the right thing with them at the
 // moment... ;-(
 
-enum 
+enum
 {
   MAX_KEY_POS = 128 - 1,    // Max size of each word's key set.
   WORD_START = 1,           // Signals the start of a word.
@@ -70,12 +73,12 @@ enum
 };
 
 // @@ The Options class should be changed to use the Singleton pattern.
-class Options 
+class Options
 {
   // = TITLE
   //   This class provides a uniform interface to the various options
-  //   available to a user of the gperf hash function generator.  
-  // 
+  //   available to a user of the gperf hash function generator.
+  //
   // = DESCRIPTION
   //   In addition to the run-time options, found in the <Option_Type>
   //   there is also the hash table Size and the Keys to be used in
@@ -107,68 +110,68 @@ public:
   static const char *get_delimiter (void);
 
 private:
-  static int option_word;                        
+  static int option_word;
   // Holds the user-specified Options.
 
-  static int total_switches;                     
+  static int total_switches;
   // Number of switch statements to generate.
 
-  static int total_keysig_size;                 
+  static int total_keysig_size;
   // Total number of distinct key_positions.
 
-  static int size;                               
+  static int size;
   // Range of the hash table.
 
-  static int key_pos;                            
+  static int key_pos;
   // Tracks current key position for Iterator.
 
-  static int jump;                               
+  static int jump;
   // Jump length when trying alternative values.
 
-  static int initial_asso_value;                 
+  static int initial_asso_value;
   // Initial value for asso_values table.
 
-  static int argument_count;                     
+  static int argument_count;
   // Records count of command-line arguments.
 
-  static int iterations;                         
+  static int iterations;
   // Amount to iterate when a collision occurs.
 
-  static char **argument_vector;                    
+  static char **argument_vector;
   // Stores a pointer to command-line vector.
 
-  static const char *function_name;                      
+  static const char *function_name;
   // Names used for generated lookup function.
 
-  static const char *key_name;                           
+  static const char *key_name;
   // Name used for keyword key.
 
-  static const char *class_name;                         
+  static const char *class_name;
   // Name used for generated C++ class.
 
-  static const char *hash_name;                          
+  static const char *hash_name;
   // Name used for generated hash function.
 
-  static const char *delimiters;                         
+  static const char *delimiters;
   // Separates keywords from other attributes.
 
-  static char key_positions[MAX_KEY_POS];         
+  static char key_positions[MAX_KEY_POS];
   // Contains user-specified key choices.
 
-  static int key_sort (char *base, int len);     
+  static int key_sort (char *base, int len);
   // Sorts key positions in REVERSE order.
 
-  static void usage (void);                       
+  static void usage (void);
   // Prints proper program usage.
 };
 
 // Global option coordinator for the entire program.
-extern Options option;       
+extern Options option;
 
 // If we're using GCC then we'll stack-allocate some large arrays.  If
 // this causes problems simple disable this #define.
 #if defined (__GNUC__)
-#define LARGE_STACK_ARRAYS 
+#define LARGE_STACK_ARRAYS
 #endif /* LARGE_STACK_ARRAYS */
 
 #endif /* OPTIONS_H */

@@ -41,8 +41,8 @@ static int determined[ALPHA_SIZE];
 
 // Destructor dumps diagnostics during debugging.
 
-Key_List::~Key_List (void) 
-{ 
+Key_List::~Key_List (void)
+{
   if (option[DEBUG])
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -74,7 +74,7 @@ Key_List::~Key_List (void)
 
 char *
 Key_List::get_special_input (char delimiter)
-{ 
+{
   int size  = 80;
   char *buf = new char[size];
   int c, i;
@@ -85,10 +85,10 @@ Key_List::get_special_input (char delimiter)
         {
           if ((c = getchar ()) == delimiter)
             {
-        
+
               while ((c = getchar ()) != '\n')
                 ; /* discard newline */
-              
+
               if (i == 0)
                 return "";
               else
@@ -101,18 +101,18 @@ Key_List::get_special_input (char delimiter)
             buf[i++] = '%';
         }
       else if (i >= size) // Yikes, time to grow the buffer!
-        { 
+        {
           char *temp = new char[size *= 2];
           int j;
-          
+
           for (j = 0; j < i; j++)
             temp[j] = buf[j];
-          
+
           buf = temp;
         }
       buf[i] = c;
     }
-  
+
   return 0;        // Problem here.
 }
 
@@ -123,7 +123,7 @@ char *
 Key_List::save_include_src (void)
 {
   int c;
-  
+
   if ((c = getchar ()) != '%')
     ungetc (c, stdin);
   else if ((c = getchar ()) != '{')
@@ -133,7 +133,7 @@ Key_List::save_include_src (void)
                 __LINE__,
                 __FILE__,
                 1));
-  else 
+  else
     return get_special_input ('}');
   return "";
 }
@@ -146,32 +146,32 @@ char *
 Key_List::get_array_type (void)
 {
   return get_special_input ('%');
-}  
-  
+}
+
 // Sets up the Return_Type, the Struct_Tag type and the Array_Type
 // based upon various user Options.
 
-void 
+void
 Key_List::set_output_types (void)
 {
   if (option[TYPE] && !(array_type = get_array_type ()))
     return;                     // Something's wrong, bug we'll catch it later on....
   else if (option[TYPE])        // Yow, we've got a user-defined type...
-    {    
+    {
       int struct_tag_length = ACE_OS::strcspn (array_type, "{\n\0");
-      
+
       if (option[POINTER])      // And it must return a pointer...
-        {    
+        {
           return_type = new char[struct_tag_length + 2];
           strncpy (return_type, array_type, struct_tag_length);
           return_type[struct_tag_length] = '*';
           return_type[struct_tag_length + 1] = '\0';
         }
-      
+
       struct_tag = new char[struct_tag_length + 1];
       strncpy (struct_tag, array_type,  struct_tag_length);
       struct_tag[struct_tag_length] = '\0';
-    }  
+    }
   else if (option[POINTER])     // Return a char *.
     return_type = default_array_type;
 }
@@ -181,29 +181,29 @@ Key_List::set_output_types (void)
 // ``links,'' i.e., unhashable elements possessing identical key sets
 // and lengths.
 
-void 
+void
 Key_List::read_keys (void)
 {
   include_src = save_include_src ();
   set_output_types ();
-  
+
   ACE_Read_Buffer input (stdin);
 
   char *ptr = input.read ('\n');
 
   if (ptr == 0)
-    // Oops, problem with the input file. 
+    // Oops, problem with the input file.
     ACE_ERROR ((LM_ERROR, "No words in input file, did you forget to prepend %s"
                   " or use -t accidentally?\n%a", "%%", 1));
-  
+
   // Read in all the keywords from the input file.
-  else 
-    {                      
+  else
+    {
       const char *delimiter = option.get_delimiter ();
       List_Node  *temp, *trail = 0;
 
       head = new List_Node (ptr, ACE_OS::strcspn (ptr, delimiter));
-      
+
       for (temp = head;
            (ptr = input.read ('\n')) && strcmp (ptr, "%%");
            temp = temp->next)
@@ -215,7 +215,7 @@ Key_List::read_keys (void)
       // See if any additional source code is included at end of this file.
       if (ptr)
         additional_code = 1;
-      
+
       // Hash table this number of times larger than keyword number.
       int table_size = (list_len = total_keys) * TABLE_MULTIPLE;
 
@@ -230,20 +230,20 @@ Key_List::read_keys (void)
       Hash_Table found_link (table, table_size);
 
       // Test whether there are any links and also set the maximum length
-      //  an identifier in the keyword list. 
-      
+      //  an identifier in the keyword list.
+
       for (temp = head; temp; temp = temp->next)
         {
           List_Node *ptr = found_link (temp, option[NOLENGTH]);
-          
+
           // Check for links.  We deal with these by building an
           // equivalence class of all duplicate values (i.e., links)
           // so that only 1 keyword is representative of the entire
           // collection.  This *greatly* simplifies processing during
           // later stages of the program.
 
-          if (ptr)              
-            {                   
+          if (ptr)
+            {
               total_duplicates++;
               list_len--;
               trail->next = temp->next;
@@ -257,7 +257,7 @@ Key_List::read_keys (void)
             }
           else
             trail = temp;
-            
+
           // Update minimum and maximum keyword length, if needed.
 	  if (max_key_len < temp->length)
 	    max_key_len = temp->length;
@@ -272,12 +272,21 @@ Key_List::read_keys (void)
       // Exit program if links exists and option[DUP] not set, since
       // we can't continue.
       if (total_duplicates)
-        ACE_ERROR ((LM_ERROR,
-                    option[DUP]
-                    ? "%d input keys have identical hash values, examine output carefully...\n"
-                    : "%d input keys have identical hash values,\ntry different key positions or use option -D.\n%a",
-                    total_duplicates,
-                    1));
+        {
+          if (option[DUP])
+            {
+              if (!option[MUTE])
+                ACE_ERROR ((LM_ERROR,
+                            "%d input keys have identical hash values, examine output carefully...\n",
+                            total_duplicates,
+                            1));
+            }
+          else
+            ACE_ERROR ((LM_ERROR,
+                        "%d input keys have identical hash values,\ntry different key positions or use option -D.\n%a",
+                        total_duplicates,
+                        1));
+        }
       if (option[ALLCHARS])
         option.set_keysig_size (max_key_len);
     }
@@ -288,7 +297,7 @@ Key_List::read_keys (void)
 // elements in the key set or by the hash value.  This is a kludge,
 // but permits nice sharing of almost identical code without incurring
 // the overhead of a function call comparison.
-  
+
 List_Node *
 Key_List::merge (List_Node *list1, List_Node *list2)
 {
@@ -311,48 +320,48 @@ Key_List::merge (List_Node *list1, List_Node *list2)
 
 // Applies the merge sort algorithm to recursively sort the key list
 // by frequency of occurrence of elements in the key set.
-  
+
 List_Node *
 Key_List::merge_sort (List_Node *a_head)
-{ 
+{
   if (!a_head || !a_head->next)
     return a_head;
   else
     {
       List_Node *middle = a_head;
       List_Node *temp   = a_head->next->next;
-    
+
       while (temp)
         {
           temp   = temp->next;
           middle = middle->next;
           if (temp)
             temp = temp->next;
-        } 
-    
+        }
+
       temp = middle->next;
       middle->next = 0;
       return merge (merge_sort (a_head), merge_sort (temp));
-    }   
+    }
 }
 
 // Returns the frequency of occurrence of elements in the key set.
 
-inline int 
+inline int
 Key_List::get_occurrence (List_Node *ptr)
 {
   int value = 0;
 
   for (char *temp = ptr->char_set; *temp; temp++)
     value += Vectors::occurrences[*temp];
-  
+
   return value;
 }
 
 // Enables the index location of all key set elements that are now
 // determined.
-  
-inline void 
+
+inline void
 Key_List::set_determined (List_Node *ptr)
 {
   for (char *temp = ptr->char_set; *temp; temp++)
@@ -361,14 +370,14 @@ Key_List::set_determined (List_Node *ptr)
 
 // Returns TRUE if PTR's key set is already completely determined.
 
-inline int  
+inline int
 Key_List::already_determined (List_Node *ptr)
 {
   int is_determined = 1;
 
   for (char *temp = ptr->char_set; is_determined && *temp; temp++)
     is_determined = determined[*temp];
-  
+
   return is_determined;
 }
 
@@ -379,30 +388,30 @@ Key_List::already_determined (List_Node *ptr)
 // inevitable collisions early in the search process.  See Cichelli's
 // paper from Jan 1980 JACM for details....
 
-void 
+void
 Key_List::reorder (void)
 {
   List_Node *ptr;
 
   for (ptr = head; ptr; ptr = ptr->next)
     ptr->occurrence = get_occurrence (ptr);
-  
+
   occurrence_sort = !(hash_sort = 0); // Pretty gross, eh?!
-  
+
   for (ptr = head = merge_sort (head); ptr->next; ptr = ptr->next)
     {
       set_determined (ptr);
-    
+
       if (already_determined (ptr->next))
         continue;
       else
         {
           List_Node *trail_ptr = ptr->next;
           List_Node *run_ptr   = trail_ptr->next;
-      
+
           for (; run_ptr; run_ptr = trail_ptr->next)
             {
-        
+
               if (already_determined (run_ptr))
                 {
                   trail_ptr->next = run_ptr->next;
@@ -413,13 +422,13 @@ Key_List::reorder (void)
                 trail_ptr = run_ptr;
             }
         }
-    }     
+    }
 }
 
 // Outputs the maximum and minimum hash values.  Since the list is
 // already sorted by hash value all we need to do is find the final
 // item!
-  
+
 void
 Key_List::output_min_max (void)
 {
@@ -436,7 +445,7 @@ Key_List::output_min_max (void)
 	    "\n#define MAX_HASH_VALUE %d\n#define HASH_VALUE_RANGE %d"
  	    "\n#define DUPLICATES %d\n\n",
  	    total_keys, min_key_len, max_key_len, min_hash_value,
- 	    max_hash_value, max_hash_value - min_hash_value + 1, 
+ 	    max_hash_value, max_hash_value - min_hash_value + 1,
  	    total_duplicates ? total_duplicates + 1 : 0);
   else if (option[GLOBAL])
     printf ("enum\n{\n"
@@ -463,7 +472,7 @@ Key_List::output_min_max (void)
 // match, and otherwise returning a pointer to appropriate index
 // location in the local static array.
 
-void 
+void
 Key_List::output_switch (void)
 {
   char *comp_buffer;
@@ -477,8 +486,8 @@ Key_List::output_switch (void)
       // Keep track of the longest string we'll need!
       const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
 #if defined (__GNUG__)
-      comp_buffer = 
-        (char *) alloca (strlen (s) + 2 * strlen (option.get_key_name ()) + 1);   
+      comp_buffer =
+        (char *) alloca (strlen (s) + 2 * strlen (option.get_key_name ()) + 1);
 #else
       comp_buffer =
         new char [strlen (s) + 2 * strlen (option.get_key_name ()) + 1];
@@ -486,10 +495,10 @@ Key_List::output_switch (void)
       if (option[COMP])
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
                  option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (),
-		 option[STRCASECMP] ? "strncasecmp" : "strncmp", option.get_key_name ()); 
+		 option[STRCASECMP] ? "strncasecmp" : "strncmp", option.get_key_name ());
       else
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
-                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (), 
+                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (),
                  option[STRCASECMP] ? "strcasecmp" : "strcmp", option.get_key_name ());
     }
   else
@@ -510,7 +519,7 @@ Key_List::output_switch (void)
     printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
 
   printf ("        {\n");
-  
+
   // Properly deal with user's who request multiple switch statements.
 
   while (curr)
@@ -533,7 +542,7 @@ Key_List::output_switch (void)
 
       // Output each keyword as part of a switch statement indexed by
       // hash value.
-      
+
      if (option[POINTER] || option[DUP])
         {
           int i = 0;
@@ -571,7 +580,7 @@ Key_List::output_switch (void)
                       if (pointer_and_type_enabled)
                         printf ("                  resword = &wordlist[%d];\n", links->index);
                       else
-                        printf ("                  resword = \"%s\";\n", links->key); 
+                        printf ("                  resword = \"%s\";\n", links->key);
                       printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                 }
@@ -602,7 +611,7 @@ Key_List::output_switch (void)
                 {
                   if (pointer_and_type_enabled)
                     printf ("                  resword = &wordlist[%d];", temp->index);
-                  else 
+                  else
                     printf ("                  resword = \"%s\";", temp->key);
                   if (option[LENTABLE] && !option[DUP])
                     printf (" key_len = %d;", temp->length);
@@ -623,23 +632,23 @@ Key_List::output_switch (void)
 	  curr = temp;
 	}
      else // Nothing special required here.
-        {                        
+        {
           int i = 0;
           printf ("              char *s;\n\n              switch (key - %d)\n                {\n",
                   lowest_case_value);
-      
+
           for (temp = curr; temp && ++i <= number_of_cases; temp = temp->next)
             if (option[LENTABLE])
               printf ("                case %*d: if (len == %d) s = \"%s\"; else return 0; break;\n",
-                      field_width, temp->hash_value - lowest_case_value, 
+                      field_width, temp->hash_value - lowest_case_value,
                       temp->length, temp->key);
             else
               printf ("                case %*d: s = \"%s\"; break;\n",
                       field_width, temp->hash_value - lowest_case_value, temp->key);
-                      
+
           printf ("                default: return 0;\n                }\n              ");
           if (option[COMP])
-            printf ("return %s == *s && !%s;\n            }\n", 
+            printf ("return %s == *s && !%s;\n            }\n",
 		    option[STRCASECMP] ? "charmap[*str]" : "*str",
 		    option[STRCASECMP] ? "strncasecmp (s + 1, str + 1, len - 1)" : "strcmp (s + 1, str + 1)");
           else
@@ -655,7 +664,7 @@ Key_List::output_switch (void)
 // Prints out a table of keyword lengths, for use with the comparison
 // code in generated function ``in_word_set.''
 
-void 
+void
 Key_List::output_keylength_table (void)
 {
   const int  max_column = 15;
@@ -664,31 +673,31 @@ Key_List::output_keylength_table (void)
   char      *indent     = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
 
-  if (!option[DUP] && !option[SWITCH]) 
+  if (!option[DUP] && !option[SWITCH])
     {
       printf ("\n%sstatic %sunsigned %s lengthtable[] =\n%s%s{\n    ",
               indent, option[CONST] ? "const " : "",
               max_key_len <= UCHAR_MAX ? "char" : (max_key_len <= USHRT_MAX ? "short" : "long"),
               indent, indent);
-  
+
       for (temp = head; temp; temp = temp->next, index++)
         {
-    
+
           if (index < temp->hash_value)
             for ( ; index < temp->hash_value; index++)
               printf ("%3d,%s", 0, ++column % (max_column - 1) ? "" : "\n    ");
-    
+
           printf ("%3d,%s", temp->length, ++column % (max_column - 1 ) ? "" : "\n    ");
         }
-  
+
       printf ("\n%s%s};\n", indent, indent);
     }
 }
 
 // Prints out the array containing the key words for the Gen_Perf hash
 // function.
-  
-void 
+
+void
 Key_List::output_keyword_table (void)
 {
   char *l_brace = *head->rest ? "{" : "";
@@ -709,12 +718,12 @@ Key_List::output_keyword_table (void)
   if (0 < head->hash_value)
     printf ("      ");
   for (int column = 1; index < head->hash_value; index++, column++)
-    printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");      
+    printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
   if (0 < head->hash_value && column % 10)
     printf ("\n");
 
   // Generate an array of reserved words at appropriate locations.
-  
+
   for (temp = head ; temp; temp = temp->next, index++)
     {
       temp->index = index;
@@ -724,13 +733,13 @@ Key_List::output_keyword_table (void)
           int column;
 
           printf ("      ");
-      
+
           for (column = 1; index < temp->hash_value; index++, column++)
             printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
-      
+
           if (column % 10)
             printf ("\n");
-          else 
+          else
             {
               printf ("%s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
               if (option[DEBUG])
@@ -771,7 +780,7 @@ Key_List::output_keyword_table (void)
 // Generates C code for the hash function that returns the proper
 // encoding for each key word.
 
-void 
+void
 Key_List::output_hash_function (void)
 {
   const int max_column  = 10;
@@ -784,31 +793,31 @@ Key_List::output_hash_function (void)
 
   if (option[INLINE])
     printf ("inline\n");
-  
+
   if (option[C])
     printf ("static ");
   printf ("unsigned int\n");
   if (option[CPLUSPLUS])
     printf ("%s::", option.get_class_name ());
 
-  printf (option[ANSI] 
+  printf (option[ANSI]
           ? "%s (const char *str, int len)\n{\n  static %sunsigned %s asso_values[] =\n    {"
           : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n  static %sunsigned %s asso_values[] =\n    {",
           option.get_hash_name (), option[CONST] ? "const " : "",
           max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
-  
+
   for (count = 0; count < ALPHA_SIZE; ++count)
     {
       if (!(count % max_column))
         printf ("\n    ");
-      
-      printf ("%*d,", 
-	      field_width, 
+
+      printf ("%*d,",
+	      field_width,
 	      Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
     }
-  
+
   // Optimize special case of ``-k 1,$''
-  if (option[DEFAULTCHARS]) 
+  if (option[DEFAULTCHARS])
     {
       if (option[STRCASECMP])
 	printf ("\n    };\n  return %sasso_values[charmap[str[len - 1]]] + asso_values[charmap[str[0]]];\n}\n\n",
@@ -824,11 +833,11 @@ Key_List::output_hash_function (void)
       option.reset ();
 
       // Get first (also highest) key position.
-      key_pos = option.get (); 
-      
+      key_pos = option.get ();
+
       // We can perform additional optimizations here.
-      if (!option[ALLCHARS] && key_pos <= min_key_len) 
-        { 
+      if (!option[ALLCHARS] && key_pos <= min_key_len)
+        {
           printf ("\n    };\n  return %s", option[NOLENGTH] ? "" : "len + ");
 
           for (; key_pos != WORD_END; )
@@ -840,20 +849,20 @@ Key_List::output_hash_function (void)
                 break;
             }
 
-          printf ("%s;\n}\n\n", key_pos == WORD_END 
+          printf ("%s;\n}\n\n", key_pos == WORD_END
 		  ? (option[STRCASECMP] ? "asso_values[charmap[str[len - 1]]]" : "asso_values[str[len - 1]]")
 		  : "");
         }
 
       // We've got to use the correct, but brute force, technique.
-      else 
-        {                    
+      else
+        {
           printf ("\n    };\n  int hval = %s;\n\n  switch (%s)\n    {\n      default:\n",
                   option[NOLENGTH] ? "0" : "len", option[NOLENGTH] ? "len" : "hval");
-          
+
           // User wants *all* characters considered in hash.
-          if (option[ALLCHARS]) 
-            { 
+          if (option[ALLCHARS])
+            {
               int i;
 
 	      // Break these options up for speed (gee, is this misplaced efficiency or what?!
@@ -866,28 +875,28 @@ Key_List::output_hash_function (void)
 
 		for (i = max_key_len; i > 0; i--)
 		  printf ("      case %d:\n        hval += asso_values[str[%d]];\n", i, i - 1);
-              
+
               printf ("    }\n  return hval;\n}\n\n");
             }
           else                  // do the hard part...
-            {                
+            {
               count = key_pos + 1;
-              
+
               do
                 {
-                  
+
                   while (--count > key_pos)
                     printf ("      case %d:\n", count);
-                  
+
                   printf (option[STRCASECMP]
 			  ? "      case %d:\n        hval += asso_values[charmap[str[%d]]];\n"
 			  : "      case %d:\n        hval += asso_values[str[%d]];\n",
                           key_pos, key_pos - 1);
                 }
               while ((key_pos = option.get ()) != EOS && key_pos != WORD_END);
-              
+
               printf ("    }\n  return hval%s;\n}\n\n",
-                      key_pos == WORD_END 
+                      key_pos == WORD_END
 		      ? (option[STRCASECMP] ? " + asso_values[charmap[str[len - 1]]]" : " + asso_values[str[len - 1]]")
 		      : "");
             }
@@ -930,13 +939,13 @@ Key_List::output_lookup_array (void)
 
       while (lookup_ptr > lookup_array)
         *--lookup_ptr = DEFAULT_VALUE;
-  
+
       for (List_Node *temp = head; temp; temp = temp->next)
         {
           int hash_value = temp->hash_value;
           lookup_array[hash_value] = temp->index;
           if (option[DEBUG])
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "keyword = %s, index = %d\n",
                         temp->key,
                         temp->index));
@@ -953,7 +962,7 @@ Key_List::output_lookup_array (void)
 	  _dups.count = 1;
 	  *dup_ptr = _dups;
 #endif /* LARGE_STACK_ARRAYS */
-          
+
           for (List_Node *ptr = temp->link; ptr; ptr = ptr->link)
             {
               dup_ptr->count++;
@@ -986,11 +995,11 @@ Key_List::output_lookup_array (void)
             }
           dup_ptr++;
         }
-  
+
       while (--dup_ptr >= duplicates)
         {
           if (option[DEBUG])
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "dup_ptr[%d]: hash_value = %d, index = %d, count = %d\n",
                         dup_ptr - duplicates,
                         dup_ptr->hash_value,
@@ -1054,7 +1063,7 @@ Key_List::output_lookup_array (void)
       const int max_column = 15;
       int column = 0;
 
-      for (lookup_ptr = lookup_array; 
+      for (lookup_ptr = lookup_array;
            lookup_ptr < lookup_array + max_hash_value + 1;
            lookup_ptr++)
         printf ("%*d, %s",
@@ -1072,9 +1081,9 @@ Key_List::output_lookup_array (void)
 
 // Generates C code to perform the keyword lookup.
 
-void 
+void
 Key_List::output_lookup_function (void)
-{ 
+{
   if (!option[OPTIMIZE])
     printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
   printf ("      int key = %s (str, len);\n\n", option.get_hash_name ());
@@ -1094,11 +1103,11 @@ Key_List::output_lookup_function (void)
 		  "              %schar *s = wordlist[index]", option[CONST] ? "const " : "");
 	  if (array_type != default_array_type)
 	    printf (".%s", option.get_key_name ());
-  
+
 	  printf (";\n\n              if (%s%s == *s && !%s)\n                return %s;\n            }\n",
 		  option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
 		  option[STRCASECMP] ? "charmap[*str]" : "*str",
-		  option[COMP] ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)") 
+		  option[COMP] ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)")
 		  : (option[STRCASECMP] ? "strcasecmp (str + 1, s + 1)" : "strcmp (str + 1, s + 1)"),
 		  option[TYPE] && option[POINTER] ? "&wordlist[index]" : "s");
 	  printf ("          else if (index < 0 && index >= -MAX_HASH_VALUE)\n"
@@ -1115,11 +1124,11 @@ Key_List::output_lookup_function (void)
         {
           if (option[COMP])
               printf ("if (%s == *ptr->%s && !%s (str + 1, ptr->%s + 1, len - 1",
-                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (), 
+                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (),
                       option[STRCASECMP] ? "strncasecmp" : "strncmp", option.get_key_name ());
           else
               printf ("if (%s == *ptr->%s && !%s (str + 1, ptr->%s + 1",
-                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (), 
+                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (),
                       option[STRCASECMP] ? "strcasecmp" : "strcmp", option.get_key_name ());
         }
       else
@@ -1141,12 +1150,12 @@ Key_List::output_lookup_function (void)
 
 	  if (array_type != default_array_type)
 	    printf (".%s", option.get_key_name ());
-  
+
 	  printf (";\n\n          if (%s%s == *s && !%s)\n            return %s",
 		  option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
 		  option[STRCASECMP] ? "charmap[*str]" : "*str",
 		  option[COMP]
-		  ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)") 
+		  ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)")
 		  : (option[STRCASECMP] ? "strcasecmp (str + 1, s + 1)" : "strcmp (str + 1, s + 1)"),
 		  option[TYPE] && option[POINTER] ? "&wordlist[key]" : "s");
 	}
@@ -1199,7 +1208,7 @@ Key_List::output_strcasecmp (void)
   if (option[COMP])
     {
       printf ("%s", option[ANSI]
-	      ? "strncasecmp (char *s1, char *s2, int n)" 
+	      ? "strncasecmp (char *s1, char *s2, int n)"
 	      : "strncasecmp (s1, s2, n)\n     char *s1, *s2;\n     int n;");
       printf ("\n{\n  char *cm = charmap;\n\n  while (--n >= 0 && cm[*s1] == cm[*s2++])\n"
 	      "    if (*s1++ == '\\0')\n      return 0;\n"
@@ -1207,8 +1216,8 @@ Key_List::output_strcasecmp (void)
     }
   else
     {
-      printf ("%s", option[ANSI] 
-	      ? "strcasecmp (char *s1, char *s2)" 
+      printf ("%s", option[ANSI]
+	      ? "strcasecmp (char *s1, char *s2)"
 	      : "strcasecmp (s1, s2)\n     char *s1, *s2;");
       printf ("\n{\n  char *cm = charmap;\n\n  while (cm[*s1] == cm[*s2++])\n"
 	      "    if (*s1++ == '\\0')\n      return 0;\n"
@@ -1219,29 +1228,37 @@ Key_List::output_strcasecmp (void)
 // Generates the hash function and the key word recognizer function
 // based upon the user's Options.
 
-void 
+void
 Key_List::output (void)
 {
   printf ("%s\n", include_src);
-  
+
   // Get prototype for strncmp() and strcmp().
-  printf ("#include <string.h>\n");
-  if (option[TYPE] && !option[NOTYPE]) // Output type declaration now, reference it later on....
+  if (!option[SKIPSTRINGH])
+    printf ("#include <string.h>\n");
+
+  // Output type declaration now, reference it later on....
+  if (option[TYPE] && !option[NOTYPE])
     printf ("%s;\n", array_type);
-  
+
   output_min_max ();
-  
+
   if (option[STRCASECMP])
     output_strcasecmp ();
-  if (option[CPLUSPLUS])
+
+  // Class definition if -M is *not* enabled.
+  if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
     printf ("class %s\n{\nprivate:\n"
-	    "  static unsigned int hash (const char *str, int len);\npublic:\n"
+	    "  static unsigned int %s (const char *str, int len);\npublic:\n"
 	    "  static %s%s%s (const char *str, int len);\n};\n\n",
-	    option.get_class_name (), option[CONST] ? "const " : "", 
-	    return_type, option.get_function_name ());
-  
+	    option.get_class_name (),
+            option.get_hash_name (),
+            option[CONST] ? "const " : "",
+	    return_type,
+            option.get_function_name ());
+
   output_hash_function ();
-  
+
   if (option[GLOBAL])
     if (option[SWITCH])
       {
@@ -1257,19 +1274,19 @@ Key_List::output (void)
 	output_keyword_table ();
 	output_lookup_array ();
       }
-  
+
   if (option[INLINE])		// Use the inline keyword to remove function overhead.
     printf ("inline\n");
-  
+
   printf ("%s%s\n", option[CONST] ? "const " : "", return_type);
   if (option[CPLUSPLUS])
     printf ("%s::", option.get_class_name ());
-  
-  printf (option[ANSI] 
+
+  printf (option[ANSI]
 	  ? "%s (const char *str, int len)\n{\n"
 	  : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
 	  option.get_function_name ());
-  
+
   if (option[ENUM] && !option[GLOBAL])
     printf ("  enum\n    {\n"
 	    "      TOTAL_KEYWORDS = %d,\n"
@@ -1284,19 +1301,19 @@ Key_List::output (void)
 	    total_duplicates ? total_duplicates + 1 : 0);
   // Use the switch in place of lookup table.
   if (option[SWITCH])
-    {               
+    {
       if (!option[GLOBAL])
 	{
 	  if (option[LENTABLE] && option[DUP])
 	    output_keylength_table ();
-	  if (option[POINTER] && option[TYPE]) 
+	  if (option[POINTER] && option[TYPE])
 	    output_keyword_table ();
 	}
       output_switch ();
     }
   // Use the lookup table, in place of switch.
-  else                
-    {           
+  else
+    {
       if (!option[GLOBAL])
         {
           if (option[LENTABLE])
@@ -1307,13 +1324,13 @@ Key_List::output (void)
         output_lookup_array ();
       output_lookup_function ();
     }
-  
+
   if (additional_code)
     {
       for (;;)
 	{
 	  int c = getchar ();
-	  
+
 	  if (c == EOF)
 	    break;
 	  else
@@ -1326,25 +1343,25 @@ Key_List::output (void)
 
 // Sorts the keys by hash value.
 
-void 
-Key_List::sort (void) 
-{ 
+void
+Key_List::sort (void)
+{
   hash_sort       = 1;
   occurrence_sort = 0;
-  
+
   head = merge_sort (head);
 }
 
 // Dumps the key list to stderr stream.
 
-void 
-Key_List::dump () 
-{      
+void
+Key_List::dump ()
+{
   int field_width = option.get_max_keysig_size ();
-  
+
   fprintf (stderr, "\nList contents are:\n(hash value, key length, index, %*s, keyword):\n",
            field_width, "char_set");
-  
+
   for (List_Node *ptr = head; ptr; ptr = ptr->next)
     fprintf (stderr, "%11d,%11d,%6d, %*s, %s\n",
              ptr->hash_value, ptr->length, ptr->index,
@@ -1353,8 +1370,8 @@ Key_List::dump ()
 
 // Simple-minded constructor action here...
 
-Key_List::Key_List (void) 
-{   
+Key_List::Key_List (void)
+{
   total_keys       = 1;
   max_key_len      = INT_MIN;
   min_key_len      = INT_MAX;
@@ -1367,17 +1384,16 @@ Key_List::Key_List (void)
 
 // Returns the length of entire key list.
 
-int 
-Key_List::keyword_list_length (void) 
-{ 
+int
+Key_List::keyword_list_length (void)
+{
   return list_len;
 }
 
 // Returns length of longest key read.
 
-int 
-Key_List::max_key_length (void) 
-{ 
+int
+Key_List::max_key_length (void)
+{
   return max_key_len;
 }
-
