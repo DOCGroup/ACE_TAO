@@ -33,7 +33,7 @@ CCFLAGS		+= +pp -woff 3203,3209,3161,3262,3665,3937,3259,3920
 # Instantiate no templates automatically, do not run prelinker
 CCFLAGS		+= -ptnone -no_prelink
 LDFLAGS		+= -rpath "$(ACE_ROOT)/ace"
-LDFLAGS		+= -Wl,-woff,15 -Wl,-woff,84 -Wl,-woff,85
+LDFLAGS		+= -Wl,-woff,15 -Wl,-woff,84 -Wl,-woff,85 -Wl,-woff,133
 LIBS		+= -lpthread
 PIC		= -KPIC
 AR		= ar
