@@ -1,3 +1,5 @@
+// $Id$
+
 /* -*- C++ -*- */
 
 template <class TYPE> ACE_INLINE void
