@@ -1,3 +1,15 @@
+Tue Jun 22 12:49:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+          Also run the AMH_Single_Threaded performance test
+
+        * html/Stats/detailed_performance.shtml:
+          Added the AMH_Single_Threaded performance test. Now we can monitor
+          the performance of AMH also. This is in preparation of some changes
+          that add the ability to use allocators for the AMH Response Handlers
+          which should have a positive effect on the performance. With
+          AMH on the scoreboard we can monitor it directly.
+
 Tue Jun 22 08:05:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pl:
