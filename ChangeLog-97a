@@ -1,3 +1,23 @@
+Thu Jan 30 16:01:37 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/{config-aix-4.1.x.h,README}: added ACE_HAS_AIX_HIRES_TIMER;
+	  see change to gettimeofday in OS.i below.
+
+	* ace/OS.i (gettimeofday): use read_real_time () if
+	  ACE_HAS_AIX_HIRES_TIMER.  Thanks to Bob Olson
+	  <olson@mcs.anl.gov> for this suggestion.
+
+	* ace/OS.{i,cpp}: uninlined ACE_OS::gethostbyname (),
+	  and ACE_OS::inet_ntoa () on VxWorks, because they have
+	  static char arrays.
+
+	* ace/OS.i (gethostbyaddr, getservbyname, gethostbyaddr,
+	  gethostbyname, getservbyname_r): with ACE_HAS_NONCONST_GETBY,
+	  instead of copying the const argument, just cast it to (char *).
+	  Thanks to Michael Maxie <maxie@acm.org> for pointing out the
+	  problem with the nonstatic char arrays with sizes determined at
+	  runtime.
+
 Thu Jan 30 06:57:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Thread_Priority.cpp (convert_to_os_priority): changed
