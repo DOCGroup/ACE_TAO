@@ -1,3 +1,11 @@
+Tue Feb 15 14:04:51 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+
+          Corrected an error when resetting the consumer and supplier
+          arguments.  The exe name was accidentally added to the arguments
+          too.
+
 Tue Feb 15 13:29:35 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
