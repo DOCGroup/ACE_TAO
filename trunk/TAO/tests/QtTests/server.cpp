@@ -3,7 +3,6 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 
-
 ACE_RCSID (QtTests, server, "$Id$")
 
 #if !defined (ACE_HAS_QT)
@@ -25,6 +24,7 @@ main (int, char *[])
 #include <qlcdnumber.h>
 #include <qvbox.h>
 #include <qslider.h>
+#include "ace/OS_NS_stdio.h"
 
 
 const char *ior_output_file = 0;
