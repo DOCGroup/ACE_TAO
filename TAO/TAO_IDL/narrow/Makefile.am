@@ -15,9 +15,9 @@ AUTOMAKE_OPTIONS = 1.4
 INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
            -I$(top_srcdir)/TAO_IDL/include
 
-noinst_LIBRARIES = libnarrow.a
+noinst_LTLIBRARIES = libnarrow.la
 
-libnarrow_a_SOURCES = \
+libnarrow_la_SOURCES = \
   narrow.cpp
 
 ## Clean up some additional files/directories possibly created during

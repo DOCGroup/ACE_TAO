@@ -18,9 +18,9 @@ INCLUDES = \
   -I$(top_srcdir)/TAO_IDL/include \
   -I$(top_srcdir)/TAO_IDL/be_include
 
-noinst_LIBRARIES = libdriver.a
+noinst_LTLIBRARIES = libdriver.la
 
-libdriver_a_SOURCES = \
+libdriver_la_SOURCES = \
   drv_args.cpp \
   drv_fork.cpp \
   drv_init.cpp \

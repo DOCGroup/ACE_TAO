@@ -25,12 +25,12 @@ tao_idl_SOURCES = \
         tao_idl.cpp
 
 tao_idl_LDADD = \
-        $(top_builddir)/TAO_IDL/driver/libdriver.a  \
-        $(top_builddir)/TAO_IDL/fe/libfe.a  \
-        $(top_builddir)/TAO_IDL/be/libbe.a  \
-        $(top_builddir)/TAO_IDL/ast/libast.a  \
-        $(top_builddir)/TAO_IDL/util/libutil.a  \
-        $(top_builddir)/TAO_IDL/narrow/libnarrow.a
+        $(top_builddir)/TAO_IDL/driver/libdriver.la  \
+        $(top_builddir)/TAO_IDL/fe/libfe.la  \
+        $(top_builddir)/TAO_IDL/be/libbe.la  \
+        $(top_builddir)/TAO_IDL/ast/libast.la  \
+        $(top_builddir)/TAO_IDL/util/libutil.la  \
+        $(top_builddir)/TAO_IDL/narrow/libnarrow.la
 
 IDL_CFE_VERSION = \"1.3.0\"
 

@@ -64,7 +64,7 @@ noinst_HEADERS = \
   nr_extern.h \
   util.h \
   utl_decllist.h \
-  utl_error.h \
+  utl_err.h \
   utl_exceptlist.h \
   utl_exprlist.h \
   utl_identifier.h \
