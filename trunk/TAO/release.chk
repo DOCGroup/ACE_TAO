@@ -22,9 +22,9 @@ Legend:
 
 
 [111x1 ]   libTAO and TAO_IDL compile.
-[111x1 ]   IDL_Cubit compiles
-        [1x1x1x] Runs
-[1x1x1x]   Param_Test compiles and runs for
+[110x0 ]   IDL_Cubit compiles
+        [1xxxxx] Runs
+[1x1x1x]   Param_Test compiles
         [xxxxxx] DII short
         [xxxxxx] DII ubstring
         [xxxxxx] DII fixed_struct
@@ -43,14 +43,26 @@ Legend:
         [xxxxxx] SII struct_seq
         [xxxxxx] SII objref
 [000000] MT_Cubit compiles
-        [000000] runs for Octet
-        [000000] runs for Short
-        [000000] runs for Long
-        [000000] runs for Struct
-[11xxxx] orbsvcs compiles
-        [10xxxx] Event_Latency runs
+        [xxxxxx] runs for Octet
+        [xxxxxx] runs for Short
+        [xxxxxx] runs for Long
+        [xxxxxx] runs for Struct
+[xx0x0x] Thruput/TAO compiles
+[xx1x1x] liborbsvcs compiles
+[  1 1 ] Naming_Service compiles
+[  0 0 ] Scheduling_Service compiles
+[  0 0 ] Event_Service compiles
+[  0 0 ] Dump_Schedule compiles
+[  x x ] orbsvcs/tests compiles
+        [xx1x1x] Simple_Naming compiles
         [xxxxxx] Simple_Naming runs
+        [xx0x0x] Logger compiles
         [xxxxxx] Logger runs
+        [xx1x1x] Event_Latency compiles
+        [xxxxxx] Event_Latency runs
+[  x x ] POA/FindPOA compiles
+[  x x ] POA/NewPOA compiles
+[  x x ] POA/RootPOA compiles
 
 NOTES
 * Solaris/CC
