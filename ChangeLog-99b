@@ -1,3 +1,16 @@
+Mon Jul 12 10:05:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Event_Handler_T.i: Added ACE_TYPENAME on template-dependent types
+          in function signatures. Quiets HP-UX aC++.
+
+        * ace/Based_Pointer_Repository.h:
+        * ace/Based_Pointer_T.h: Added #include "ace/OS.h" to pick up def. of
+          ACE_Export when instantiating templates with AIX IBM C++.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Removed definition for
+          CPP_LOCATION - use aCC - cpp has too many problems, and a fix for
+          the pragma warnings was checked into TAO_IDL.
+
 Mon Jul 12 09:26:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile: don't build libDLL_Test.so if not building
