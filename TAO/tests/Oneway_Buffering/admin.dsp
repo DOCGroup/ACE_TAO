@@ -89,15 +89,11 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\Oneway_Receiver.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\admin.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Shutdown_Helper.cpp
+SOURCE=.\Oneway_Buffering_Admin.cpp
 # End Source File
 # Begin Source File
 
@@ -113,11 +109,7 @@ SOURCE=.\TestS.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\Oneway_Receiver.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Shutdown_Helper.h
+SOURCE=.\Oneway_Buffering_Admin.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
