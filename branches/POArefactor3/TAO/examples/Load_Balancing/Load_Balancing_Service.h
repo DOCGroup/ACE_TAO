@@ -20,7 +20,7 @@
 #ifndef LOAD_BALANCING_SERVICE_H_
 #define LOAD_BALANCING_SERVICE_H_
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
