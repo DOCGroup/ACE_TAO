@@ -1,3 +1,9 @@
+Thu Oct 29 21:13:41 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/016/Condition_i.cpp: 
+	  Fixed messed-up the signature on
+	    Condition::operator Condition::value_t(void)
+
 Thu Oct 29 18:51:19 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Added "|| defined (_AIX)" to decision to do
