@@ -17,13 +17,17 @@ ACE_RCSID(TAO_PERF_RTEC, Loopback_Pair, "$Id$")
 
 void
 Loopback_Pair::init (CORBA::Long experiment_id,
-                     CORBA::Long base_event_type)
+                     CORBA::Long base_event_type,
+                     PortableServer::POA_ptr supplier_poa,
+                     PortableServer::POA_ptr consumer_poa)
 {
   this->loopback_supplier_ = new Loopback_Supplier (experiment_id,
-                                                    base_event_type + 1);
+                                                    base_event_type + 1,
+                                                    supplier_poa);
   this->loopback_consumer_ = new Loopback_Consumer (experiment_id,
                                                     base_event_type,
-                                                    loopback_supplier_.in ());
+                                                    loopback_supplier_.in (),
+                                                    consumer_poa);
 }
 
 void

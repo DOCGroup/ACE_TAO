@@ -5,8 +5,7 @@
 #include "Servant_var.h"
 #include "RIR_Narrow.h"
 #include "RTEC_Initializer.h"
-#include "RTCORBA_Setup.h"
-#include "SyncScope_Setup.h"
+#include "RTServer_Setup.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
@@ -58,7 +57,8 @@ int main (int argc, char *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  RT_Class test_scheduling;
+  /// Move the test to the real-time class if it is possible.
+  RT_Class rt_class;
 
   ACE_TRY_NEW_ENV
     {
@@ -69,17 +69,11 @@ int main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      auto_ptr<RTCORBA_Setup> rtcorba_setup;
-      if (use_rt_corba)
-        {
-          rtcorba_setup =
-            auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
-                                                        test_scheduling
-                                                        ACE_ENV_ARG_PARAMETER));
-          ACE_TRY_CHECK;
-        }
-
-      SyncScope_Setup syncscope_setup (orb);
+      RTServer_Setup rtserver_setup (use_rt_corba,
+                                     orb,
+                                     rt_class
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
@@ -94,18 +88,34 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      PortableServer::POA_var ec_poa (root_poa);
+      if (use_rt_corba != 0)
+        {
+          ec_poa = rtserver_setup.poa ();
+        }
       Servant_var<TAO_EC_Event_Channel> ec_impl (
-        RTEC_Initializer::create (root_poa.in (),
-                                  root_poa.in (),
-                                  rtcorba_setup.get ()
-                                  ACE_ENV_ARG_PARAMETER));
+              RTEC_Initializer::create (ec_poa.in (),
+                                        ec_poa.in (),
+                                        rtserver_setup.rtcorba_setup ()
+                                        ACE_ENV_ARG_PARAMETER)
+              );
       ACE_TRY_CHECK;
 
       ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      PortableServer::ObjectId_var ec_id =
+        ec_poa->activate_object (ec_impl.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Object_var ec_object =
+        ec_poa->id_to_reference (ec_id.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
+                                                      ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
@@ -121,9 +131,6 @@ int main (int argc, char *argv[])
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
-
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       do {
         ACE_Time_Value tv (1, 0);

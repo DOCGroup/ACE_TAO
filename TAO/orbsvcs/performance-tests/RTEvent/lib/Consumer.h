@@ -35,7 +35,8 @@ public:
             CORBA::Long event_type,
             CORBA::ULong iterations,
             CORBA::Long workload_in_usecs,
-            ACE_UINT32 gsf);
+            ACE_UINT32 gsf,
+            PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec
@@ -54,6 +55,8 @@ public:
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -78,6 +81,9 @@ private:
 
   /// The global scale factor for the high resolution timers
   ACE_UINT32 gsf_;
+
+  /// The default poa
+  PortableServer::POA_var default_POA_;
 };
 
 #endif /* TAO_PERF_RTEC_CONSUMER_H */

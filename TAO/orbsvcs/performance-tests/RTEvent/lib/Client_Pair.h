@@ -1,13 +1,13 @@
 /**
- * @file Client_Group.h
+ * @file Client_Pair.h
  *
  * $Id$
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
-#ifndef TAO_PERF_RTEC_CLIENT_GROUP_H
-#define TAO_PERF_RTEC_CLIENT_GROUP_H
+#ifndef TAO_PERF_RTEC_CLIENT_PAIR_H
+#define TAO_PERF_RTEC_CLIENT_PAIR_H
 
 #include "Servant_var.h"
 
@@ -15,16 +15,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Client_Pair.h"
-#include "Loopback_Pair.h"
+#include "Consumer.h"
+#include "Supplier.h"
 
 /**
- * @class Client_Group
+ * @class Client_Pair
  *
  * @brief Simplify the initialization of a Supplier/Consumer pair
- *        connected through a Loopback.
+ *        connected to the event channel.
  */
-class TAO_RTEC_Perf_Export Client_Group
+class TAO_RTEC_Perf_Export Client_Pair
 {
 public:
   /// Constructor
@@ -32,7 +32,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Client_Group (void);
+  Client_Pair (void);
 
   /**
    * @param experiment_id For tests that run multiple experiments
@@ -68,19 +68,15 @@ public:
   Supplier *supplier (void) const;
 
   Consumer *consumer (void) const;
-
-  Loopback_Supplier *loopback_supplier (void) const;
-
-  Loopback_Consumer *loopback_consumer (void) const;
   //@}
 
 private:
-  Client_Pair client_pair_;
-  Loopback_Pair loopback_pair_;
+  Servant_var<Supplier> supplier_;
+  Servant_var<Consumer> consumer_;
 };
 
 #if defined(__ACE_INLINE__)
-#include "Client_Group.inl"
+#include "Client_Pair.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_PERF_RTEC_CLIENT_GROUP_H */
+#endif /* TAO_PERF_RTEC_CLIENT_PAIR_H */

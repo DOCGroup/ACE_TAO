@@ -14,13 +14,13 @@ Client_Group::Client_Group (void)
 ACE_INLINE Supplier *
 Client_Group::supplier (void) const
 {
-  return this->supplier_.in ();
+  return this->client_pair_.supplier ();
 }
 
 ACE_INLINE Consumer *
 Client_Group::consumer (void) const
 {
-  return this->consumer_.in ();
+  return this->client_pair_.consumer ();
 }
 
 ACE_INLINE Loopback_Supplier *

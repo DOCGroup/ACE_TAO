@@ -4,12 +4,13 @@
 #include "ORB_Holder.h"
 #include "Servant_var.h"
 #include "RIR_Narrow.h"
-#include "RTCORBA_Setup.h"
+#include "RTServer_Setup.h"
 #include "Send_Task.h"
 #include "Client_Group.h"
 #include "ORB_Task.h"
 #include "Auto_Disconnect.h"
-#include "SyncScope_Setup.h"
+#include "ORB_Task_Activator.h"
+#include "Low_Priority_Setup.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -114,7 +115,7 @@ int main (int argc, char *argv[])
 {
   const CORBA::Long experiment_id = 1;
 
-  RT_Class test_scheduling;
+  RT_Class rt_class;
 
   ACE_TRY_NEW_ENV
     {
@@ -124,18 +125,12 @@ int main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
-
-      auto_ptr<RTCORBA_Setup> rtcorba_setup;
-      if (use_rt_corba)
-        {
-          rtcorba_setup = 
-            auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
-                                                        test_scheduling
-                                                        ACE_ENV_ARG_PARAMETER));
-          ACE_TRY_CHECK;
-        }
-
-      SyncScope_Setup sync_scope (orb);
+      
+      RTServer_Setup rtserver_setup (use_rt_corba,
+                                     orb,
+                                     rt_class
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
@@ -150,6 +145,14 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      PortableServer::POA_var supplier_poa (root_poa);
+      PortableServer::POA_var consumer_poa (root_poa);
+      if (use_rt_corba != 0)
+        {
+          supplier_poa = rtserver_setup.poa ();
+          consumer_poa = rtserver_setup.poa ();
+        }
+
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
       CORBA::Object_var object =
@@ -163,14 +166,14 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Finished EC configuration and activation\n"));
 
-      ORB_Task orb_task (orb);
-      orb_task.activate (test_scheduling.thr_sched_class ()
-                         | THR_NEW_LWP
-                         | THR_JOINABLE,
-                         1, 1,
-                         test_scheduling.priority_high ());
-
       ACE_Thread_Manager my_thread_manager;
+
+      ORB_Task orb_task (orb);
+      orb_task.thr_mgr (&my_thread_manager);
+      ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
+                                             rt_class.thr_sched_class (),
+                                             &orb_task);
+
 
       int thread_count = 1;
       if (disable_low_priority == 0)
@@ -183,66 +186,32 @@ int main (int argc, char *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
-      ACE_Auto_Basic_Array_Ptr<Client_Group> low_priority_group (
-          new Client_Group[nthreads]
-          );
-     ACE_Auto_Basic_Array_Ptr<Auto_Disconnect<Client_Group> > low_priority_disconnect (new Auto_Disconnect<Client_Group>[nthreads]);
-      ACE_Auto_Basic_Array_Ptr<Send_Task> low_priority_tasks (new Send_Task[nthreads]);
-      for (int i = 0; i != nthreads; ++i)
-        {
-          int low_priority_iterations = iterations;
-          if (low_priority_period == 0)
-            low_priority_iterations = INT_MAX;
-
-          int per_consumer_workload =
-            low_priority_workload / nthreads;
-          if (per_consumer_workload == 0)
-            per_consumer_workload = 1;
-
-          CORBA::Long base_event_type =
-            ACE_ES_EVENT_UNDEFINED + 2 * (i + 1);
-          low_priority_group[i].init (experiment_id,
-                                      base_event_type,
-                                      iterations,
-                                      per_consumer_workload,
-                                      gsf);
-          low_priority_group[i].connect (ec.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          /// Automatically disconnect the group if the connection was
-          /// successful
-          low_priority_disconnect[i] = &low_priority_group[i];
-
-          if (disable_low_priority == 0)
-            {
-              low_priority_tasks[i].init (low_priority_iterations,
-                                          low_priority_period,
-                                          base_event_type,
-                                          1,
-                                          low_priority_group[i].supplier (),
-                                          &barrier);
-              low_priority_tasks[i].thr_mgr (&my_thread_manager);
-              if (low_priority_tasks[i].activate (
-                      test_scheduling.thr_sched_class ()
-                      | THR_NEW_LWP
-                      | THR_JOINABLE,
-                      1, 1,
-                      test_scheduling.priority_low ()) == -1)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Panic - cannot activate "
-                                     "low priority task\n"),
-                                    1);
-                }
-            }
-        }
+      Low_Priority_Setup<Client_Group> low_priority_setup (
+          nthreads,
+          iterations,
+          1, // each client gets its own type
+          experiment_id,
+          ACE_ES_EVENT_UNDEFINED + 2,
+          low_priority_workload,
+          gsf,
+          disable_low_priority ? 0 : 1,
+          rt_class.priority_low (),
+          rt_class.thr_sched_class (),
+          supplier_poa.in (),
+          consumer_poa.in (),
+          ec.in (),
+          &my_thread_manager,
+          &barrier
+          ACE_ENV_ARG_PARAMETER);
 
       Client_Group high_priority_group;
       high_priority_group.init (experiment_id,
                                 ACE_ES_EVENT_UNDEFINED,
                                 iterations,
                                 high_priority_workload,
-                                gsf);
+                                gsf,
+                                supplier_poa.in (),
+                                consumer_poa.in ());
       high_priority_group.connect (ec.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -256,31 +225,17 @@ int main (int argc, char *argv[])
                                high_priority_group.supplier (),
                                &barrier);
       high_priority_task.thr_mgr (&my_thread_manager);
-      if (high_priority_task.activate (
-             test_scheduling.thr_sched_class ()
-             | THR_NEW_LWP
-             | THR_JOINABLE,
-             1, 1,
-             test_scheduling.priority_high ()) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Panic - cannot activate high priority task\n"),
-                            1);
-        }
-
-      high_priority_task.wait ();
+      {
+        // Artificial scope to wait for the high priority task...
+        Task_Activator<Send_Task> high_priority_act (rt_class.priority_high (),
+                                                     rt_class.thr_sched_class (),
+                                                     &high_priority_task);
+      }
 
       if (disable_low_priority == 0)
         {
-          // Stop all the low priority threads (could be running in
-          // continuous mode
-          for (int i = 0; i != nthreads; ++i)
-            {
-              low_priority_tasks[i].stop ();
-            }
+          low_priority_setup.stop_all_threads ();
         }
-
-      my_thread_manager.wait ();
 
       ACE_Sample_History &history =
         high_priority_group.consumer ()->sample_history ();
@@ -294,24 +249,13 @@ int main (int argc, char *argv[])
       high_priority_stats.dump_results ("High Priority", gsf);
 
       ACE_Basic_Stats low_priority_stats;
-      for (int k = 0; k != nthreads; ++k)
-        {
-          low_priority_group[k].consumer ()->sample_history ().collect_basic_stats (low_priority_stats);
-        }
+      low_priority_setup.collect_basic_stats (low_priority_stats);
       low_priority_stats.dump_results ("Low Priority", gsf);
 
       ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
-
-      orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      orb_task.wait ();
-
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
