@@ -1,3 +1,15 @@
+Thu Jul 15 14:32:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server,cpp,
+          client.cpp,server.cpp,run_tests.pl,README:
+
+          1) Changed -o option to -f, to be consistent with MT_Cubit.
+
+          2) On VxWorks, changed main entry points to be client
+             and server, instead of main or ace_main.
+
+          [Bug 42].
+
 Thu Jul 15 14:03:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/params.h:
@@ -17,7 +29,7 @@ Thu Jul 15 14:01:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/ast/AST_Union.cpp:
 	* TAO_IDL/be_include/be_union.h:
 	* TAO_IDL/be/be_union.cpp:
-	  Added some switch cases and a union member to allow wchar as 
+	  Added some switch cases and a union member to allow wchar as
 	  a discriminator type.
 
 Thu Jul 15 13:11:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>

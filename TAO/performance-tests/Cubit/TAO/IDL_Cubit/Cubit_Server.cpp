@@ -18,7 +18,7 @@ Cubit_Server::Cubit_Server (void)
 int
 Cubit_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "do:");
+  ACE_Get_Opt get_opts (argc_, argv_, "df:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -28,7 +28,7 @@ Cubit_Server::parse_args (void)
         TAO_debug_level++;
         break;
 
-      case 'o': // output the IOR to a file.
+      case 'f': // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,7 +42,7 @@ Cubit_Server::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-                           " [-o] <ior_output_file>"
+                           " [-f] <ior_output_file>"
                            "\n",
                            argv_ [0]),
                           -1);
