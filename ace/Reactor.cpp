@@ -16,17 +16,20 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
-ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *implementation)
-  : implementation_ (implementation),
+ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl)
+  : implementation_ (0),
     delete_implementation_ (0)
 {
-  if (this->implementation_ == 0)
+  this->implementation (impl);
+
+  if (this->implementation () == 0)
     {
 #if defined (ACE_WIN32) && !defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (this->implementation_, ACE_WFMO_Reactor);
+      ACE_NEW (impl, ACE_WFMO_Reactor);
 #else /* ACE_WIN32 && !ACE_USE_SELECT_REACTOR_AS_REACTOR */
-      ACE_NEW (this->implementation_, ACE_Select_Reactor);
+      ACE_NEW (impl, ACE_Select_Reactor);
 #endif /* ACE_WIN32 && !ACE_USE_SELECT_REACTOR_AS_REACTOR */
+      this->implementation (impl);
       this->delete_implementation_ = 1;
     }
 }
@@ -34,7 +37,7 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *implementation)
 ACE_Reactor::~ACE_Reactor (void)
 {
   if (this->delete_implementation_)
-    delete this->implementation_;
+    delete this->implementation ();
 }
   
 // Process-wide ACE_Reactor.

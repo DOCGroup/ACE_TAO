@@ -371,7 +371,8 @@ public:
   virtual int accept (SVC_HANDLER * = 0,
 		      ACE_PEER_ACCEPTOR_ADDR *remote_addr = 0, 
 		      const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-		      int restart = 1);
+		      int restart = 1,
+                      int reset_new_handle = 0);
   // Create a SVC_HANDLER, accept the connection into the SVC_HANDLER,
   // and activate the SVC_HANDLER.
   
@@ -405,7 +406,8 @@ protected:
   int shared_accept (SVC_HANDLER *svc_handler,
 		     ACE_PEER_ACCEPTOR_ADDR *remote_addr,
 		     ACE_Time_Value *timeout,
-		     int restart);
+		     int restart,
+                     int reset_new_handle);
   // Factors out the code shared between the <accept> and
   // <handle_input> methods.
 

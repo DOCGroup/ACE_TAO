@@ -8,6 +8,7 @@
 #include "ace/ACE.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
+#include "ace/WFMO_Reactor.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Acceptor)
 
@@ -221,7 +222,24 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   (SVC_HANDLER *svc_handler)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
-  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1)
+  
+  int reset_new_handle = 0;
+#if defined (ACE_WIN32)
+  // Try to find out if the implementation of the reactor that we are
+  // using is the WFMO_Reactor. If so we need to reset the event
+  // association for the newly created handle. This is because the
+  // newly created handle will inherit the properties of the listen
+  // handle, including its event associations.
+  if (dynamic_cast <ACE_WFMO_Reactor *> (this->reactor ()->implementation ()))
+    reset_new_handle = 1;
+#endif /* ACE_WIN32 */
+  
+  if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
+                                   0, // remote address
+                                   0, // timeout
+                                   1, // restart
+                                   reset_new_handle  // reset new handler
+                                   ) == -1)
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0); 
@@ -250,19 +268,18 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-        return -1;
+        goto failure;
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    return -1;
-  
-  if (svc_handler->open ((void *) this) == -1)
-    {
-      svc_handler->close (0);
-      return -1;
-    }
-  else
+    goto failure;
+
+  if (svc_handler->open ((void *) this) != -1)
     return 0;
+
+failure:
+  svc_handler->close (0);
+  return -1;
 }
 
 // Template Method that makes a SVC_HANDLER (using the appropriate
@@ -438,7 +455,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
   if (acc_s == 0)
     {
-      ACE_NEW_RETURN (acc_s, ACCEPT_STRATEGY, -1);
+      ACE_NEW_RETURN (acc_s, ACCEPT_STRATEGY (this->reactor ()), -1);
       this->delete_accept_strategy_ = 1;
     }
   this->accept_strategy_ = acc_s;
@@ -831,15 +848,20 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept
   (SVC_HANDLER *svc_handler,
    ACE_PEER_ACCEPTOR_ADDR *remote_addr,
    ACE_Time_Value *timeout,
-   int restart)
+   int restart,
+   int reset_new_handle)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept");
   if (svc_handler == 0)
     return -1;
 
   // Accept connection into the Svc_Handler.
-  else if (this->peer_acceptor_.accept (svc_handler->peer (), remote_addr,
-                                        timeout, restart) == -1)
+  else if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
+                                        remote_addr, // remote address
+                                        timeout, // timeout
+                                        restart, // restart
+                                        reset_new_handle // reset new handle
+                                        ) == -1)
     {
       // Check whether we just timed out or whether we failed...
       if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
@@ -864,7 +886,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept
   (SVC_HANDLER *svc_handler,
    ACE_PEER_ACCEPTOR_ADDR *remote_addr,
    const ACE_Synch_Options &synch_options,
-   int restart)
+   int restart,
+   int reset_new_handle)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept");
   // Note that if timeout == ACE_Time_Value (x, y) where (x > 0 || y >
@@ -882,7 +905,12 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept
   else
     timeout = (ACE_Time_Value *) synch_options.time_value ();
 
-  if (this->shared_accept (svc_handler, remote_addr, timeout, restart) == -1)
+  if (this->shared_accept (svc_handler, // stream
+                           remote_addr, // remote address
+                           timeout, // timeout
+                           restart, // restart 
+                           reset_new_handle // reset new handler
+                           ) == -1)
     {
       if (use_reactor && errno == EWOULDBLOCK)
         // We couldn't accept right away, so let's wait in the ACE_Reactor.
@@ -904,7 +932,23 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
   // Cancel any timer that might be pending.
   this->cancel ();
 
-  if (this->shared_accept (this->svc_handler_, 0, 0, this->restart_) == -1)
+  int reset_new_handle = 0;
+#if defined (ACE_WIN32)
+  // Try to find out if the implementation of the reactor that we are
+  // using is the WFMO_Reactor. If so we need to reset the event
+  // association for the newly created handle. This is because the
+  // newly created handle will inherit the properties of the listen
+  // handle, including its event associations.
+  if (dynamic_cast <ACE_WFMO_Reactor *> (this->reactor ()->implementation ()))
+    reset_new_handle = 1;
+#endif /* ACE_WIN32 */
+  
+  if (this->shared_accept (this->svc_handler_, // stream
+                           0, // remote address
+                           0, // timeout
+                           this->restart_, // restart
+                           reset_new_handle // reset new handle
+                           ) == -1)
     result = -1;
   if (this->reactor () && this->reactor ()->remove_handler 
       (this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)

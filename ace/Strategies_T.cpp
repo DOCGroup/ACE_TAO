@@ -7,6 +7,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Strategies_T.h"
 #include "ace/Service_Types.h"
+#include "ace/WFMO_Reactor.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Singleton_Strategy)
 
@@ -391,8 +392,11 @@ ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler
 ACE_ALLOC_HOOK_DEFINE(ACE_Accept_Strategy)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
-  (const ACE_PEER_ACCEPTOR_ADDR &local_addr, int restart)
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy 
+  (const ACE_PEER_ACCEPTOR_ADDR &local_addr, 
+   int restart,
+   ACE_Reactor *reactor)
+  : reactor_ (reactor)
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 
@@ -414,7 +418,8 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy (void)
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy (ACE_Reactor *reactor)
+  : reactor_ (reactor)
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 }
@@ -425,9 +430,26 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
 
-  if (this->acceptor_.accept (svc_handler->peer ()) == -1)
+  int reset_new_handle = 0;
+#if defined (ACE_WIN32)
+  // Try to find out if the implementation of the reactor that we are
+  // using is the WFMO_Reactor. If so we need to reset the event
+  // association for the newly created handle. This is because the
+  // newly created handle will inherit the properties of the listen
+  // handle, including its event associations.
+  if (dynamic_cast <ACE_WFMO_Reactor *> (this->reactor_->implementation ()))
+    reset_new_handle = 1;
+#endif /* ACE_WIN32 */
+  
+  if (this->acceptor_.accept (svc_handler->peer (), // stream
+                              0, // remote address
+                              0, // timeout
+                              1, // restart
+                              reset_new_handle  // reset new handler
+                              ) == -1)
     {
-      svc_handler->close (0);
+      // Close down handler to avoid memory leaks.
+      svc_handler->close (0); 
       return -1;
     }
   else

@@ -72,11 +72,12 @@ int
 ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_local_ipc_sap, 
 			    ACE_Addr *remote_addr, 
 			    ACE_Time_Value *timeout,
-			    int restart) const
+			    int restart,
+                            int reset_new_handle) const
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::accept");
   ACE_HANDLE new_handle = 
-    ACE_SOCK_Acceptor::shared_accept (remote_addr, timeout, restart);
+    ACE_SOCK_Acceptor::shared_accept (remote_addr, timeout, restart, reset_new_handle);
   new_local_ipc_sap.set_handle (new_handle);
   return new_handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
