@@ -46,11 +46,11 @@
 //
 // ============================================================================
 
+#include "test_config.h" /* Include first to enable ACE_ASSERT. */
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
-#include "test_config.h"
 
 ACE_RCSID(tests, Dynamic_Priority_Test, "$Id$")
 
@@ -98,8 +98,8 @@ static const long max_queue = LONG_MAX;
 
 #if defined (VXWORKS)
 // VxWorks Message Queue parameters
-vx_max_queue = INT_MAX
-vx_msg_size = 32
+const int vx_max_queue = INT_MAX;
+const int vx_msg_size = 32;
 #endif /* defined (VXWORKS) */
 
 // loading parameters (number of messages to push through queues)
@@ -700,12 +700,20 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (VXWORKS)
   // test factory for VxWorks message queue
-  test_queue = ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_Vx_message_queue (vx_max_queue, vx_msg_size);
-  ACE_ASSERT (test_queue != 0);
+  ACE_Message_Queue_Vx *test_queue_vx =
+    ACE_Message_Queue_Factory<ACE_NULL_SYNCH>::
+      create_Vx_message_queue (vx_max_queue, vx_msg_size);
+  ACE_ASSERT (test_queue_vx != 0);
   // (TBD - does message receipt order test make any sense for Vx Queue ?
   //  If so, uncomment order test, or if not remove order test, below)
+  // @@ % levine 22 Jul 1998 % It'd be nice to run the test, but:
+  //                           ACE_Message_Queue_Vx isa
+  //                           ACE_Message_Queue<ACE_NULL_SYNCH>, not a
+  //                           ACE_Message_Queue<ACE_MT_SYNCH>, so we're
+  //                           not type-compatible.
+
   // run_order_test (test_queue, send_order, static_receipt_order);
-  delete test_queue;
+  delete test_queue_vx;
 #endif /* VXWORKS */
 
   // For each of an increasing number of message loads, run the same performance
