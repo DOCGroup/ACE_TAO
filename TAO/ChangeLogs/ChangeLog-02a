@@ -1,3 +1,9 @@
+Wed Jun 21 04:54:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
+	  like the whole file in $TAO_ROOT/tao may not be the right
+	  place. 
+
 Tue Jun 20 18:08:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/Interoperable_Naming/Makefile : 
