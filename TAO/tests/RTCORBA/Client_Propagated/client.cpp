@@ -3,6 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+#include "ace/Service_Config.h"
+#include "tao/Strategies/TAO_Strategies_Internal.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -45,7 +47,7 @@ main (int argc, char *argv[])
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
 
-      if ((max_priority + min_priority) / 2 + 2 > max_priority)
+	  if ((max_priority + min_priority) / 2 + 2 > max_priority)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Not enough priority levels on this platform"
@@ -123,10 +125,10 @@ main (int argc, char *argv[])
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
 
-      CORBA::Short native_priority =
+	  CORBA::Short native_priority =
         (max_priority + min_priority) / 2;
 
-      CORBA::Short desired_priority = 0;
+	  CORBA::Short desired_priority = 0;
 
       if (pm->to_CORBA (native_priority, desired_priority) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,

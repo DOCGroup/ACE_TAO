@@ -1,3 +1,12 @@
+Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+
+        * tests/RTCORBA/Client_Propagated/Client_Propagated.dsw
+
+		  Updated to get it working. 
+
 Mon Nov 13 16:12:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Protocol/svc_unix.conf:
