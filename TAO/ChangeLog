@@ -1,3 +1,8 @@
+Tue Dec 30 14:09:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Portable_Interceptors_Service_Context_Manipulation.mpc:
+          Removed not needed libpaths
+
 Tue Dec 30 14:04:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMI_ClientRequestInfo_i.{h,cpp}:
