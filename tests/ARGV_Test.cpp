@@ -105,9 +105,9 @@ test_argv_type_converter2 (void)
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-                  +  ACE_TEXT (" (%d) %s\n"),
-                  +  i,
-                  +  argv[i]));
+				  ACE_TEXT (" (%d) %s\n"),
+                  i,
+                  argv[i]));
   }
 
   for (size_t i = 0; save_argv[i]; ++i) 
