@@ -33,7 +33,8 @@ DIRS    = ace \
           tests \
           apps \
           examples \
-          performance-tests
+          performance-tests \
+          os-patches
 
 CLONE   = Makefile \
           ace \
