@@ -12,7 +12,8 @@
 ACE_RCSID(orbsvcs, ReplicaProxy, "$Id$")
 
 ReplicaProxy_Impl::ReplicaProxy_Impl (void)
-  : balancer_ (0),
+  : has_high_load_ (0),
+    balancer_ (0),
     current_load_ (0),
     connected_ (0)
 {
@@ -29,7 +30,7 @@ ReplicaProxy_Impl::current_load (CORBA::Float load,
     ACE_THROW (LoadBalancing::ReplicaProxy::InvalidLoad ());
 
   this->current_load_ = load;
-  ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));
+  // ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));
 
   this->balancer_->load_changed (this, ACE_TRY_ENV);
 }

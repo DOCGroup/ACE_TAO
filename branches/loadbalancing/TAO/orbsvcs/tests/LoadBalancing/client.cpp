@@ -9,6 +9,11 @@
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 
+static void run_test (int iterations,
+                      int timeout,
+                      Hash_Replica_ptr hasher,
+                      CORBA::Environment &ACE_TRY_ENV);
+
 int
 main (int argc, char *argv[])
 {
@@ -63,23 +68,7 @@ main (int argc, char *argv[])
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (0, timeout * 1000);
-      ACE_Throughput_Stats stats;
-      ACE_UINT64 test_start = ACE_OS::gethrtime ();
-
-      for (long i = 0; i != iterations; ++i)
-        {
-          ACE_UINT64 call_start = ACE_OS::gethrtime ();
-          hasher->do_hash (argv[0], ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          ACE_UINT64 end = ACE_OS::gethrtime ();
-
-          stats.sample (end - test_start, end - call_start);
-          ACE_OS::sleep (tv);
-        }
-
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      stats.dump_results ("Hash Stats", gsf);
+      run_test (iterations, timeout, hasher.in (), ACE_TRY_ENV);
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -91,4 +80,30 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   return 0;
+}
+
+void
+run_test (int iterations,
+          int timeout,
+          Hash_Replica_ptr hasher,
+          CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_Time_Value tv (0, timeout * 1000);
+  ACE_Throughput_Stats stats;
+  ACE_UINT64 test_start = ACE_OS::gethrtime ();
+  
+  for (long i = 0; i != iterations; ++i)
+    {
+      ACE_UINT64 call_start = ACE_OS::gethrtime ();
+
+      hasher->do_hash ("This is a silly test", ACE_TRY_ENV);
+      ACE_CHECK;
+      ACE_UINT64 end = ACE_OS::gethrtime ();
+      
+      stats.sample (end - test_start, end - call_start);
+      ACE_OS::sleep (tv);
+    }
+
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  stats.dump_results ("Hash Stats", gsf);
 }

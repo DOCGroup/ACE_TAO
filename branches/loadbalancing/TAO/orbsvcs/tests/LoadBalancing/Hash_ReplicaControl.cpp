@@ -46,11 +46,8 @@ Hash_ReplicaControl::init (CORBA::ORB_ptr orb,
 
 int
 Hash_ReplicaControl::handle_timeout (const ACE_Time_Value &,
-                                     void *)
+                                     const void *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Hash_ReplicaControl::handle_timeout\n"));
-
   ACE_Time_Value elapsed_time =
     ACE_OS::gettimeofday () - this->interval_start_;
   this->interval_start_ = ACE_OS::gettimeofday ();
@@ -61,7 +58,7 @@ Hash_ReplicaControl::handle_timeout (const ACE_Time_Value &,
   this->interval_start_ = ACE_OS::gettimeofday ();
 
   this->current_load_ =
-    0.25F * this->current_load_ + 0.75F * load;
+    0.9F * this->current_load_ + 0.1F * load;
 
   ACE_TRY_NEW_ENV
     {
@@ -108,7 +105,7 @@ Hash_ReplicaControl::nominal_load_advisory (CORBA::Environment &
 {
   // Notify the replica that it should once again accept requests.
   this->replica_.reject_requests (0);
-  ACE_DEBUG ((LM_DEBUG, "**** Load is nomimal\n"));
+  ACE_DEBUG ((LM_DEBUG, "**** Load is nominal\n"));
 }
 
 // ****************************************************************
@@ -120,9 +117,7 @@ Timeout_Adapter::Timeout_Adapter (Hash_ReplicaControl *adaptee)
 
 int
 Timeout_Adapter::handle_timeout (const ACE_Time_Value &current_time,
-                                 void *arg)
+                                 const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Hash_ReplicaControl::handle_timeout\n"));
   return this->adaptee_->handle_timeout (current_time, arg);
 }

@@ -58,6 +58,9 @@ public:
   CORBA::Object_ptr replica (void);
   // Return a reference to the Replica.
 
+  int has_high_load_;
+  // Has the high load advisory been sent
+
   LoadBalancing::ReplicaControl_var control_;
   // Reference to the ReplicaControl.
 
