@@ -1,3 +1,9 @@
+Wed Sep 19 02:58:46 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.av (.obj/Transport.o): Fixed minor
+	  error in the dependencies (though I am not sure how this error
+	  got in since the dependencies are auto generated).
+
 Tue Sep 18 17:18:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Thread_Pool/client.cpp: Added priority
