@@ -1,3 +1,10 @@
+Sun Feb  1 19:09:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-borland-common.h:
+	* ace/config-win32-borland.h:
+	  Kylix doesn't have swab, CBuilder has a non-const swab, CBuilderX
+	  has the normal swab
+
 Sun Feb  1 17:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
