@@ -1,8 +1,13 @@
+Wed Aug 12 22:45:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MsgQueue_Notifications_Test.cpp: Added an explicit
+	  template instantiation.
+
 Wed Aug 12 21:32:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Message_Block.h: 
-	* ace/Message_Block.i: 
-	* ace/Message_Block.cpp: 
+	* ace/Message_Block.h:
+	* ace/Message_Block.i:
+	* ace/Message_Block.cpp:
 	  Enabled the base() method, it replaces the internal buffer and
 	  resets the Message_Block. There were other ways to do this (like
 	  calling data_block->base()), but some users find it convenient.
@@ -14,7 +19,7 @@ Wed Aug 12 17:43:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MsgQueue_Notifications_Test.cpp: The watermark test which
 	  uses cv's signaling to notify other threads is also merged into
-	  this file. 
+	  this file.
 
 	* tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Removed.
 
@@ -39,7 +44,7 @@ Wed Aug 12 17:12:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 	* test_window_messages.cpp:
 	  Added updated versions of project files (with correct include
 	  directories).  Also changed the <main>'s to take in argc and
-	  argv.  Thanks to Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov> 
+	  argv.  Thanks to Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov>
 	  for submitting these changes.
 
 Wed Aug 12 16:16:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
