@@ -726,9 +726,9 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
            multi_ex.exceptions[len].failing_property_name =
              nproperties[pi].property_name;
          }
-       TAO_CATCHANY
+       TAO_CATCH (CORBA::SystemException, sysex)
          {
-            // Print it and throw it again.
+           // Print it and throw it again.
            TAO_TRY_ENV.print_exception ("Unknown Exception");
            TAO_RETHROW;
          }
@@ -1103,9 +1103,9 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
           multi_ex.exceptions[len].failing_property_name =
             property_names[pi];
         }
-      TAO_CATCHANY
+      TAO_CATCH (CORBA::SystemException, sysex)
         {
-          TAO_TRY_ENV.print_exception ("Unknown");
+          TAO_TRY_ENV.print_exception ("SystemException");
 
           // We cant afford to get this. Throw this.
           TAO_RETHROW;
@@ -1133,21 +1133,28 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &_env)
     {
       // Get all the property names in a names' sequence.
       CosPropertyService::PropertyNames_ptr names_ptr = 0;
-      CosPropertyService::PropertyNames_out names (names_ptr);
+      CosPropertyService::PropertyNames_out names_out (names_ptr);
+      CosPropertyService::PropertyNames_var names;
+
       CosPropertyService::PropertyNamesIterator_ptr iter_ptr = 0;
-      CosPropertyService::PropertyNamesIterator_out iter (iter_ptr);
+      CosPropertyService::PropertyNamesIterator_out iter_out (iter_ptr);
+      CosPropertyService::PropertyNamesIterator_var iter;
 
       CORBA::ULong size = this->get_number_of_properties (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->get_all_property_names (size,
-                                    names,
-                                    iter,
+                                    names_out,
+                                    iter_out,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // Get the out values on to the var varibles.
+      names = names_out.ptr ();
+      iter = iter_out.ptr ();
+
       // Delete all these properties.
-      this->delete_properties (*names.ptr (),
+      this->delete_properties (names.in (),
                                TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
@@ -1470,10 +1477,10 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
             multi_ex.exceptions[len].failing_property_name =
               property_defs[i].property_name;
           }
-        TAO_CATCHANY
+        TAO_CATCH (CORBA::SystemException, sysex)
           {
             // Print it and throw it again.
-            TAO_TRY_ENV.print_exception ("Unknown Exception");
+            TAO_TRY_ENV.print_exception ("SystemException");
             TAO_RETHROW;
           }
         TAO_ENDTRY;
@@ -1748,7 +1755,7 @@ TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes 
           multi_ex.exceptions[len].failing_property_name =
             property_modes[i].property_name;
         }
-      TAO_CATCHANY
+      TAO_CATCH (CORBA::SystemException, systex)
         {
           // DEBUG.
           TAO_TRY_ENV.print_exception ("Unknown");
