@@ -127,13 +127,14 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
 
 void
-TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
+TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent * parent
                            ACE_ENV_ARG_DECL)
 {
   // this-> on the following line confuses VC6
-  TAO_Notify::Topology_Parent::init (ecf ACE_ENV_ARG_PARAMETER);
+  TAO_Notify::Topology_Parent::init (parent ACE_ENV_ARG_PARAMETER);
 
-  this->ecf_ = ecf;
+  this->ecf_ = dynamic_cast <TAO_Notify_EventChannelFactory*>(parent);
+  ACE_ASSERT (this->ecf_ != 0);
 
   this->ecf_->_incr_refcnt ();
 

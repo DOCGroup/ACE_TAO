@@ -67,7 +67,7 @@ public:
              ACE_ENV_ARG_DECL);
 
   /// Init (for reload)
-  void init (TAO_Notify_EventChannelFactory* ecf
+  void init (TAO_Notify::Topology_Parent * parent
              ACE_ENV_ARG_DECL);
 
   /// Remove ConsumerAdmin from its container.

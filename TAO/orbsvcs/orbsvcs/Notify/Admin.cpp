@@ -40,14 +40,15 @@ TAO_Notify_Admin::~TAO_Notify_Admin ()
 }
 
 void
-TAO_Notify_Admin::init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL)
+TAO_Notify_Admin::init (TAO_Notify::Topology_Parent * parent ACE_ENV_ARG_DECL)
 {
-  this->ec_ = ec;
+  this->ec_ = dynamic_cast<TAO_Notify_EventChannel *>(parent);
+  ACE_ASSERT (this->ec_ != 0);
 
   this->ec_->_incr_refcnt ();
 
   // this-> on the following line confuses VC6
-  TAO_Notify::Topology_Parent::init (ec ACE_ENV_ARG_PARAMETER);
+  TAO_Notify::Topology_Parent::init (parent ACE_ENV_ARG_PARAMETER);
 
   ACE_NEW_THROW_EX (this->proxy_container_,
                     TAO_Notify_Proxy_Container (),
