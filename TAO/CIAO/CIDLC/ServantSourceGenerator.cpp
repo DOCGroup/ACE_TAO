@@ -1175,7 +1175,8 @@ namespace
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c," << endl
          << t.name () << "_Servant *sv)" << endl
-         << "  : ctx_svnt_base (home, c, sv)" << endl
+         << "  : Context_Impl_Base (home, c), " << endl
+         << "  ctx_svnt_base (home, c, sv)" << endl
          << "{"
          << "}";
 
@@ -2435,7 +2436,8 @@ namespace
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : comp_svnt_base (exe, c)" << endl
+         << "  : Servant_Impl_Base (c)," << endl
+         << "  comp_svnt_base (exe, c)" << endl
          << "{"
          << "this->context_ = "
          << "new " << t.name () << "_Context (h, c, this);" << endl;
@@ -3281,7 +3283,8 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : home_svnt_base (exe, c)" << endl
+         << "  : Home_Servant_Impl_Base (c)," << endl
+         << "  home_svnt_base (exe, c)" << endl
          << "{"
          << "}";
 
