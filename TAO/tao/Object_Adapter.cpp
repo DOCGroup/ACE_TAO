@@ -224,6 +224,7 @@ TAO_Object_Adapter::deactivate_i (CORBA::Boolean wait_for_completion,
 void
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                       CORBA::ServerRequest &req,
+                                      TAO_Transport *transport,
                                       void *context,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
@@ -240,6 +241,11 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                      operation,
                                      ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (req.sync_with_server ())
+    {
+      req.send_no_exception_reply (transport);
+    }
 
   // Servant dispatch.
   {

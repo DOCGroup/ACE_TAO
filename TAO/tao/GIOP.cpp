@@ -341,7 +341,7 @@ TAO_GIOP::start_message (const TAO_GIOP_Version &version,
 CORBA::Boolean
 TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
                                 CORBA::ULong request_id,
-                                CORBA::Boolean is_roundtrip,
+                                CORBA::Octet response_flags,
                                 const TAO_opaque& key,
                                 const char *opname,
                                 CORBA::Principal_ptr principal,
@@ -351,7 +351,7 @@ TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
   if (orb_core->orb_params ()->use_lite_protocol ())
     return TAO_GIOP::write_request_header_lite (svc_ctx,
                                                 request_id,
-                                                is_roundtrip,
+                                                response_flags,
                                                 key,
                                                 opname,
                                                 principal,
@@ -359,7 +359,7 @@ TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
   else
     return TAO_GIOP::write_request_header_std (svc_ctx,
                                                request_id,
-                                               is_roundtrip,
+                                               response_flags,
                                                key,
                                                opname,
                                                principal,
@@ -461,8 +461,8 @@ TAO_GIOP::send_message (TAO_Transport *transport,
                     transport->handle (),
                     "GIOP::send_message ()"));
 
-    return -1;
-  }
+      return -1;
+    }
 
   // EOF.
   if (n == 0)
@@ -952,22 +952,26 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                                   const TAO_GIOP_Version &version)
 {
   CORBA::ULong request_id = 0;
-  CORBA::ULong response_required = 0;
+  CORBA::Boolean response_required = 0;
+  CORBA::Boolean sync_with_server = 0;
+  CORBA::Boolean location_forward = 0;
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
+  int parse_error;
+
+  // This will extract the request header, set <response_required>
+  // and <sync_with_server> as appropriate.
+
+  TAO_GIOP_ServerRequest request (input,
+                                  output,
+                                  orb_core,
+                                  version,
+                                  parse_error);
+
   ACE_TRY
     {
-      // This will extract the request header, set <response_required>
-      // as appropriate.
-
-      int parse_error;
-      TAO_GIOP_ServerRequest request (input,
-                                      output,
-                                      orb_core,
-                                      version,
-                                      parse_error);
-
       request_id = request.request_id ();
       response_required = request.response_expected ();
+      sync_with_server = request.sync_with_server ();
 
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
@@ -1025,10 +1029,14 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
 
 #endif /* TAO_NO_IOR_TABLE */
 
-      orb_core->object_adapter ()->dispatch_servant (request.object_key (),
-                                                     request,
-                                                     0,
-                                                     ACE_TRY_ENV);
+      // Do this before the reply is sent.
+      orb_core->object_adapter ()->dispatch_servant (
+                                       request.object_key (),
+                                       request,
+                                       transport,
+                                       0,
+                                       ACE_TRY_ENV
+                                     );
       ACE_TRY_CHECK;
     }
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -1050,6 +1058,9 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
         forward_request.forward_reference.in();
 
       output << object_ptr;
+
+      // Flag for code below catch blocks.
+      location_forward = 1;
     }
 #else
   ACE_UNUSED_ARG (request_id);
@@ -1074,6 +1085,7 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                    "TAO: ");
             }
+
         }
       else if (TAO_debug_level > 0)
         {
@@ -1123,6 +1135,7 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                             "TAO_GIOP::process_server_message"));
               ACE_PRINT_EXCEPTION (exception, "TAO: ");
             }
+
         }
       else if (TAO_debug_level > 0)
         {
@@ -1142,7 +1155,11 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
   ACE_ENDTRY;
 
   int result = 0;
-  if (response_required)
+
+  // Do we have a twoway request, a oneway SYNC_WITH_TARGET,
+  // or a oneway SYNC_WITH_SERVER with a location forward reply?
+  if ((response_required && !sync_with_server)
+      || (sync_with_server && location_forward))
     {
       result = TAO_GIOP::send_message (transport,
                                        output,
@@ -1257,6 +1274,7 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
 
       orb_core->object_adapter ()->dispatch_servant (serverRequest.object_key (),
                                                      serverRequest,
+                                                     transport,
                                                      0,
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1492,7 +1510,7 @@ TAO_GIOP::start_message_lite (const TAO_GIOP_Version &,
 CORBA::Boolean
 TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
                                     CORBA::ULong request_id,
-                                    CORBA::Boolean is_roundtrip,
+                                    CORBA::Octet response_flags,
                                     const TAO_opaque& key,
                                     const char* opname,
                                     CORBA::Principal_ptr principal,
@@ -1500,9 +1518,28 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
 {
   out_stream << svc_ctx;
   out_stream << request_id;
-  // @@ Messaging: this is where the extra synchronization information
-  //    should be stored.
-  out_stream << CORBA::Any::from_boolean (is_roundtrip);
+
+  // Sync scope - ignored by server if request is not oneway.
+  switch (response_flags)
+    {
+      case 0:
+      case 1:
+        // No response required.
+        out_stream << CORBA::Any::from_octet (0);
+        break;
+      case 2:
+        // Return before dispatching servant.
+        out_stream << CORBA::Any::from_octet (1);
+        break;
+      case 3:
+        // Return after dispatching servant.
+        out_stream << CORBA::Any::from_octet (3);
+        break;
+      default:
+        // Until more flags are defined by the OMG.
+        return 0;
+    }
+
   out_stream << key;
   out_stream << opname;
   out_stream << principal;
@@ -1512,14 +1549,35 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
 CORBA::Boolean
 TAO_GIOP::write_request_header_lite (const IOP::ServiceContextList&,
                                      CORBA::ULong request_id,
-                                     CORBA::Boolean is_roundtrip,
+                                     CORBA::Octet response_flags,
                                      const TAO_opaque &key,
                                      const char* opname,
                                      CORBA::Principal_ptr,
                                      TAO_OutputCDR &out_stream)
 {
   out_stream << request_id;
-  out_stream << CORBA::Any::from_boolean (is_roundtrip);
+
+  // Sync scope - ignored by server if request is not oneway.
+  switch (response_flags)
+    {
+      case 0:
+      case 1:
+        // No response required.
+        out_stream << CORBA::Any::from_octet (0);
+        break;
+      case 2:
+        // Return before dispatching servant.
+        out_stream << CORBA::Any::from_octet (1);
+        break;
+      case 3:
+        // Return after dispatching servant.
+        out_stream << CORBA::Any::from_octet (3);
+        break;
+      default:
+        // Until more flags are defined by the OMG.
+        return 0;
+    }
+
   out_stream << key;
   out_stream << opname;
   return 1;

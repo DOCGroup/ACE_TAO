@@ -125,10 +125,16 @@ public:
   // Retrieve the outgoing stream.
 
   virtual CORBA::Boolean response_expected (void) const;
-  // is the response expected
+  // Is the response expected?
+
+  virtual CORBA::Boolean sync_with_server (void) const;
+  // Should we return before dispatching the servant?
 
   virtual void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag
+
+  virtual void send_no_exception_reply (TAO_Transport *transport);
+  // Used with reliable oneway requests.
 
   virtual CORBA::Principal_ptr principal (void) const;
 
@@ -181,7 +187,12 @@ private:
   // Outgoing stream.
 
   CORBA::Boolean response_expected_;
-  // is it oneway or twoway
+  // 0: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
+  // 1: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
+
+  CORBA::Boolean sync_with_server_;
+  // 1: oneway (SYNC_WITH_SERVER)
+  // 0: anything else
 
   int lazy_evaluation_;
   // If zero then the NVList is evaluated ASAP.

@@ -428,7 +428,7 @@ public:
 
   static CORBA::Boolean write_request_header (const IOP::ServiceContextList& svc_ctx,
                                               CORBA::ULong request_id,
-                                              CORBA::Boolean is_roundtrip,
+                                              CORBA::Octet response_flags,
                                               const TAO_opaque& key,
                                               const char* opname,
                                               CORBA::Principal_ptr principal,
@@ -542,7 +542,7 @@ private:
 
   static CORBA::Boolean write_request_header_std (const IOP::ServiceContextList& svc_ctx,
                                                   CORBA::ULong request_id,
-                                                  CORBA::Boolean is_roundtrip,
+                                                  CORBA::Octet response_flags,
                                                   const TAO_opaque& key,
                                                   const char* opname,
                                                   CORBA::Principal_ptr principal,
@@ -552,7 +552,7 @@ private:
 
   static CORBA::Boolean write_request_header_lite (const IOP::ServiceContextList& svc_ctx,
                                                    CORBA::ULong request_id,
-                                                   CORBA::Boolean is_roundtrip,
+                                                   CORBA::Octet response_flags,
                                                    const TAO_opaque& key,
                                                    const char* opname,
                                                    CORBA::Principal_ptr principal,

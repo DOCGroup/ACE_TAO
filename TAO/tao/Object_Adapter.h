@@ -45,6 +45,7 @@ class TAO_POA_Manager;
 class TAO_Temporary_Creation_Time;
 class TAO_POA_Current_Impl;
 class TAO_TSS_Resources;
+class TAO_Transport;
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
@@ -195,6 +196,7 @@ public:
 
   void dispatch_servant (const TAO_ObjectKey &key,
                          CORBA::ServerRequest &req,
+                         TAO_Transport *transport,
                          void *context,
                          CORBA_Environment &ACE_TRY_ENV);
 

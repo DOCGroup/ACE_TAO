@@ -212,8 +212,14 @@ public:
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
 
+  virtual CORBA::Boolean sync_with_server (void) const = 0;
+  // Should we return before dispatching the servant?
+
   virtual void _tao_lazy_evaluation (int lazy_evaluation) = 0;
   // Set the lazy evaluation flag
+
+  virtual void send_no_exception_reply (TAO_Transport *transport) = 0;
+  // Used with reliable oneway requests.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;

@@ -807,17 +807,15 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
       << "_tao_vfr.preinvoke (" << be_idt << be_idt_nl
       << "_tao_call.request_id ()," << be_nl;
-  switch (node->flags ())
-    {
-    case AST_Operation::OP_oneway:
-      *os << "0";
-      break;
-    default:
-      *os << "1";
-    }
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    *os << "0";
+  else
+    *os << "1";
+
   *os << "," << be_nl << "this," << be_nl 
-      << this->compute_operation_name (node)
-      << "," << be_nl << "_tao_call.service_info ()," << be_nl
+      << this->compute_operation_name (node) << "," 
+      << be_nl << "_tao_call.service_info ()," << be_nl
       << "_tao_interceptor_args.inout ()," << be_nl
       << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl << ");\n" << be_uidt;
@@ -833,16 +831,21 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   // Prepare the request header
   os->indent ();
-  *os << "_tao_call.prepare_header (";
+  *os << "CORBA::Octet flag = " << be_idt_nl
+      << "ACE_static_cast (CORBA::Octet, ";
+
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
-      *os << "0";
+      *os << "_tao_call.sync_scope ());";
       break;
     default:
-      *os << "1";
+      *os << "TAO::SYNC_WITH_TARGET);";
     }
-  *os << ", ACE_TRY_ENV);\n";
+
+  *os << be_uidt_nl 
+      << "_tao_call.prepare_header (flag, ACE_TRY_ENV);\n";
+
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -1067,14 +1070,12 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
       << "_tao_vfr.postinvoke (" << be_idt << be_idt_nl
       << "_tao_call.request_id ()," << be_nl;
-  switch (node->flags ())
-    {
-    case AST_Operation::OP_oneway:
-      *os << "0";
-      break;
-    default:
-      *os << "1";
-    }
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    *os << "0";
+  else
+    *os << "1";
+
   *os << "," << be_nl << "this," << be_nl 
       << this->compute_operation_name (node)
       << "," << be_nl << "_tao_call.service_info ()," << be_nl
@@ -1102,14 +1103,12 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       << "{" << be_idt_nl
       << "_tao_vfr.exception_occurred (" << be_idt << be_idt_nl
       << "_tao_call.request_id ()," << be_nl;
-  switch (node->flags ())
-    {
-    case AST_Operation::OP_oneway:
-      *os << "0";
-      break;
-    default:
-      *os << "1";
-    }
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    *os << "0";
+  else
+    *os << "1";
+
   *os << "," << be_nl << "this," << be_nl 
       << this->compute_operation_name (node)
       << "," << be_nl // _tao_call.service_info (), "
