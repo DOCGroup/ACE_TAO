@@ -1,4 +1,6 @@
+// -*- c++ -*-
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -16,7 +18,7 @@
 //
 // ============================================================================
 
-#ifndef _NAMING_SERVER_H
+#if !defined (_NAMING_SERVER_H)
 #define _NAMING_SERVER_H
 
 #include "tao/corba.h"
@@ -29,40 +31,44 @@ class TAO_Naming_Server
   // = TITLE
   //    Defines a wrapper class which holds a Naming Context
   //    implementation for TAO "NamingService" naming context.
+  //
   // = DESCRIPTION
   //    This class takes an orb and Poa reference and activates the
   //    NamingService naming context object under that. It also
   //    defines the operator -> so that NamingContext functions like
   //    bind, unbind .. can be called on a NameServer object.
 public:
-  //Default constructor
-  TAO_Naming_Server ();
+  TAO_Naming_Server (void);
+  //Default constructor.
 
-  // Takes the poa under which to register the Naming Service
-  //implementation object
-  TAO_Naming_Server (CORBA::ORB_var& orb,PortableServer::POA_var& root_poa);
+  TAO_Naming_Server (CORBA::ORB_var &orb,
+                     PortableServer::POA_var &root_poa);
+  // Takes the POA under which to register the Naming Service
+  // implementation object.
 
-  // initialize the name server under the given orb and poa.
-  int init (CORBA::ORB_var& orb,PortableServer::POA_var& root_poa);
+  int init (CORBA::ORB_var &orb,
+            PortableServer::POA_var &root_poa);
+  // Initialize the name server under the given ORB and POA.
 
-  //Returns the "NameService" NamingContext implementation object reference 
-  NS_NamingContext& GetNamingContext ();
+  NS_NamingContext &GetNamingContext (void);
+  // Returns the "NameService" NamingContext implementation object
+  // reference.
 
-  // Returns a NamingContext_ptr
-  CosNaming::NamingContext*  operator -> (void) const;
+  CosNaming::NamingContext *operator -> (void) const;
+  // Returns a NamingContext_ptr.
 
-  //Destructor
-  ~TAO_Naming_Server ();
+  ~TAO_Naming_Server (void);
+  // Destructor.
 
 private:
-  // Naming context implemetation for "NameService"
   NS_NamingContext naming_context_impl_;
+  // Naming context implemetation for "NameService".
 
-  // NamingContext ptr
   CosNaming::NamingContext_ptr naming_context_ptr_;
+  // NamingContext ptr.
 
-  // The ior_multicast event handler
   IOR_Multicast *ior_multicast_;
+  // The ior_multicast event handler.
 };
 
-#endif
+#endif /* _NAMING_SERVER_H */
