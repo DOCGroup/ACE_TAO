@@ -83,7 +83,7 @@ int
 main (int argc, char *argv[])
 {
   int policy = ACE_SCHED_FIFO;
-  int flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_FIFO;
+  int flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_FIFO|THR_BOUND;
   int priority =
     ACE_Sched_Params::priority_max (policy);
 
@@ -149,7 +149,6 @@ main (int argc, char *argv[])
     }
 
   ACE_Thread_Manager::instance ()->wait ();
-  ACE_DEBUG ((LM_DEBUG, "Threads finished\n"));
 
   return 0;
 }
@@ -249,7 +248,6 @@ Server::svc (void)
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));
     }
   ACE_CATCHANY
     {

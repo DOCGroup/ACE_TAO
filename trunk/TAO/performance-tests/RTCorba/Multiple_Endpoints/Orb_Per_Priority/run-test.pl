@@ -35,7 +35,7 @@ if (ACE::waitforfile_timed ($iorfile."_1", 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
                        " -ORBSvcConf client.conf "
                        . " -i file://$iorfile "
-                       . " -t 30 -t 5 -t 4 -t 3 -t 2 -t 1 -n 10");
+                       . " -t 1 -t 2 -t 3 -t 4 -t 5 -t 30 -n 100000");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
