@@ -1,25 +1,30 @@
+Tue Apr 08 17:45:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp
+	  (visit_component): Removed a redundant closing paren.
+
 Tue  Apr 8 13:20:02 2003 Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
-	  Method <destroy>: Removed extraneous call to shutdown ec_container_. 
-	
+	  Method <destroy>: Removed extraneous call to shutdown ec_container_.
+
 	* orbsvcs/orbsvcs/Notify/Object.cpp:
 	  Eat exceptions in the <deactivate> method.
 	  Shutdown the proxy_poa_ and object_poa_ in the destructor.
-	
+
 	* orbsvcs/orbsvcs/Notify/Property_T.cpp:
 	  Method <set>: Check to see if the >>= operator returned success.
-	
+
 	* orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
 	  Method <init>: Try to set the individual QoS properties only if some properties are available.
-	
+
 	* orbsvcs/tests/Notify/ThreadPool/consumer.conf:
 	  Corrected formatting of the conf. file.
-	
+
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
-	* orbsvcs/tests/Notify/Notify_Tests.dsw:	
+	* orbsvcs/tests/Notify/Notify_Tests.dsw:
 	  Corrected  to fix compile errors.
-	
+
 Tue Apr  8 16:38:00 2003  Dave Smith  <dts@prismtechnologies.com>
 
 	* tao/Any_T.cpp:
@@ -37,7 +42,7 @@ Tue Apr 08 10:31:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/server.dsp:
 	* tests/Bug_1482_Regression/client.dsp: Fixed the release build
-	  configuration. 
+	  configuration.
 
 Tue Apr  8 17:01:55 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
@@ -77,13 +82,13 @@ Mon Apr  7 16:53:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Apr 07 14:11:02 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier:
-	  Corrected the code to populate the Any data with a payload. 
-	
+	  Corrected the code to populate the Any data with a payload.
+
 Mon Apr  7 11:56:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root.cpp (visit_root):
 
-          Added a check at this higher level before creating and 
+          Added a check at this higher level before creating and
           launching a visitor for OBV_* module code. This visitor
           should not be created unless we are generating code in
           stub files. Formerly the check of context state that catches
@@ -93,7 +98,7 @@ Mon Apr  7 11:56:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp (visit_eventtype):
 
-          Removed error message for case which is now caught at a 
+          Removed error message for case which is now caught at a
           higher level as described above, and made other cosmetic
           changes to the source code. Thanks to Nanbor Wang
           <nanbor@cse.wustl.edu> for reporting the problem.
@@ -121,7 +126,7 @@ Sun Apr  6 23:18:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.h:
 
-	  Changed declaration of exported insertion and extraction 
+	  Changed declaration of exported insertion and extraction
 	  operators for Any_var to be predicated on __ACE_INLINE__
 	  not being defined.
 
@@ -150,7 +155,7 @@ Sun Apr  6 17:37:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/Portable_Interceptors/AMI/client.cpp:
 
 	  Modified code to make it possible to change the number of iterations
-	  in 3 separate loops and in correctness checks by changing one 
+	  in 3 separate loops and in correctness checks by changing one
 	  constant at the top of the file.
 
         * tests/Portable_Interceptors/Benchmark/server.cpp:
