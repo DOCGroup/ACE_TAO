@@ -411,7 +411,7 @@ class TAO_ORBSVCS_Export TAO_MMDevice
 
  public:
 
-  TAO_MMDevice (TAO_Endpoint_Strategy *endpoint_strategy_);
+  TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
   // Constructor
 
   virtual AVStreams::StreamCtrl_ptr  bind (AVStreams::MMDevice_ptr peer_device,
