@@ -87,14 +87,15 @@
 #define TAO_TRY_THROW_EX(EXCEPTION,LABEL) throw EXCEPTION
 
 #define TAO_THROW(EXCEPTION) throw EXCEPTION
-#define TAO_THROW_ENV(EXCEPTION, ENV) throw EXCEPTION
+#define TAO_THROW_ENV(EXCEPTION, ENV) do { \
+  ACE_UNUSED_ARG (ENV); \
+  throw EXCEPTION; } while (0)
 #define TAO_RETHROW throw
 
 #define TAO_GOTO(LABEL) goto LABEL
 #define TAO_LABEL(LABEL) LABEL:
 
 #if defined (ACE_WIN32)
-
 // MSVC++ gives a warning if there is no return after the throw
 // expression, it is possible that other compilers have the same
 // problem.
@@ -108,7 +109,10 @@
 
 #else
 
-#define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) throw EXCEPTION
+#define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) do { \
+  ACE_UNUSED_ARG (ENV); \
+  throw EXCEPTION; } while (0)
+
 #define TAO_RETHROW_RETURN(RETURN) throw
 #define TAO_RETHROW_RETURN_VOID throw
 
