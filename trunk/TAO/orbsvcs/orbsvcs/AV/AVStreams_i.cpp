@@ -3377,7 +3377,6 @@ TAO_MMDevice::bind_mcast (AVStreams::MMDevice_ptr first_peer,
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
   ACE_UNUSED_ARG (the_spec);
-  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -3760,7 +3759,6 @@ TAO_MMDevice::get_fdev (const char *flow_name
                    AVStreams::notSupported,
                    AVStreams::noSuchFlow))
 {
-  ACE_CHECK_RETURN (0);
 
   ACE_CString fdev_name_key (flow_name);
   FDev_Map::ENTRY *fdev_entry = 0;
@@ -3969,7 +3967,6 @@ TAO_FlowConnection::modify_QoS (AVStreams::QoS & new_qos
                    AVStreams::QoSRequestFailed))
 {
   ACE_UNUSED_ARG (new_qos);
-  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -4148,7 +4145,6 @@ CORBA::Boolean
 TAO_FlowConnection::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_CHECK_RETURN (0);
   return  0;
 }
 
@@ -4362,7 +4358,6 @@ TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target
                    AVStreams::notConnected))
 {
   ACE_UNUSED_ARG (target);
-  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -4450,7 +4445,6 @@ TAO_FlowEndPoint::lock (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // lock the current flowendpoint
-  ACE_CHECK_RETURN (0);
 
   if (this->lock_)
     return 0;
@@ -4463,8 +4457,6 @@ void
 TAO_FlowEndPoint::unlock (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_CHECK;
-
   this->lock_ = 0;
 }
 
@@ -4510,8 +4502,6 @@ TAO_FlowEndPoint::related_flow_connection (AVStreams::FlowConnection_ptr related
                                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_CHECK;
-
   this->related_flow_connection_ = AVStreams::FlowConnection::_duplicate (related_flow_connection);
 }
 
