@@ -164,11 +164,6 @@ TAO_Default_ORT::ObjectReferenceTemplate_var::operator= (const ObjectReferenceTe
   return *this;
 }
 
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator const TAO_Default_ORT::ObjectReferenceTemplate* () const // cast
-{
-  return this->ptr_;
-}
-
 TAO_Default_ORT::ObjectReferenceTemplate_var::operator TAO_Default_ORT::ObjectReferenceTemplate* () // cast
 {
   return this->ptr_;
@@ -360,7 +355,7 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
-        factory,
+        factory.out (),
         base,
         ObjectReferenceTemplate::_tao_obv_static_repository_id ()
       );
