@@ -1,3 +1,8 @@
+Tue Sep 15 18:14:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests: Updated the expected output to look for 2.7 vs 2.6
+	  of gperf.
+
 Thu Sep 10 16:50:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile: 
