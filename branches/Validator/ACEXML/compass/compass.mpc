@@ -1,0 +1,6 @@
+project (Compass) : acelib {
+   depends = ACEXML ACEXML_Parser
+   sharedname = Compass
+   dllflags   = COMPASS_BUILD
+   libs = ACEXML ACEXML_Parser zzip z
+}

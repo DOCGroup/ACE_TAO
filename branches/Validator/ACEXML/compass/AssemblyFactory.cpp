@@ -36,6 +36,7 @@ AssemblyFactory::create (const Location& assembly_loc)
 
 Assembly*
 AssemblyFactory::lookup (const Cookie& c)
+  ACE_THROW_SPEC ((InvalidAssembly))
 {
   Assembly* asm = 0;
   if (this->cookies_->find (c, asm) != 0)
@@ -45,9 +46,10 @@ AssemblyFactory::lookup (const Cookie& c)
 
 void
 AssemblyFactory::destroy (const Cookie& c)
+  ACE_THROW_SPEC ((InvalidAssembly, RemoveFailure))
 {
   Assembly* asm = 0;
-  if (this->unbind (c, asm) != 0)
+  if (this->cookies_->unbind (c, asm) != 0)
     ACE_THROW (InvalidAssembly());
   delete asm;
 }

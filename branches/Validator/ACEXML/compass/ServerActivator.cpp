@@ -25,7 +25,7 @@ ServerActivator::~ServerActivator()
 }
 
 ComponentServer*
-ServerActivator::create_component_server (const ConfigValues& config)
+ServerActivator::create_component_server (ConfigValues* config)
   ACE_THROW_SPEC ((CreateFailure, InvalidConfiguration))
 {
   ComponentServer* cserver = 0;

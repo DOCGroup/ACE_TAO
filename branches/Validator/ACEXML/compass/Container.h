@@ -18,7 +18,7 @@ namespace Deployment
   class Compass_Export Container
   {
   public:
-    Container(const ComponentServer* server);
+    Container(ComponentServer* server);
 
     ~Container();
 
