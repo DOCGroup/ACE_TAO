@@ -86,10 +86,11 @@ namespace CIAO
      *        of the NodeApplication. For example, ORB config options etc.
      * @return value 0 on succeed others on failure.
      **/
-    int init (const char *nodeapp_location,
-              CORBA::ULong delay,
-	      const Deployment::DeploymentPlan & plan
-	      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual Deployment::NodeApplicationManager_ptr
+    init (const char *nodeapp_location,
+	  CORBA::ULong delay,
+	  const Deployment::DeploymentPlan & plan
+	  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::InvalidProperty));
 
