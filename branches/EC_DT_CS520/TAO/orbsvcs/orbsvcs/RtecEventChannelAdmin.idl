@@ -54,13 +54,16 @@ module RtecEventChannelAdmin
    */
   struct Dependency
   {
-    /// The filtering information, usually takes the form of an event
-    /// type and/or source that the consumer is interested in.
+    /**
+     * @brief The filtering information is usually an event type
+     * and/or source that the consumer is interested in.
+     */
     RtecEventComm::Event event;
 
-    /// The handle to the RT_Info structure that describes the
-    /// behavior of the consumer upon receiving such an event
     /**
+     * @brief The handle to the RT_Info structure that describes the
+     * behavior of the consumer upon receiving such an event
+     *
      * This handle is ignored for Event Channels configured without an
      * scheduling service.
      */
@@ -106,13 +109,16 @@ module RtecEventChannelAdmin
    */
   struct Publication
   {
-    /// The event publication, normally only the event source and type
-    /// (from the header) is considered.
+    /**
+     * @brief The event publication. Normally this is only the event
+     * source and type supplied from the header.
+     */
     RtecEventComm::Event event;
 
-    /// The dependency information, this includes the RT_Info handle,
-    /// the type of request and other details.
     /**
+     * @brief The dependency information: the RT_Info handle,
+     * the type of request, and other details.
+     *
      * This field is ignored by event channels configured without an
      * scheduling service.
      */
@@ -128,15 +134,14 @@ module RtecEventChannelAdmin
    * @brief Describe the complete QoS and filtering properties for a
    * supplier
    *
-   * Consumers declared their QoS properties and publications using a
+   * Consumers declare their QoS properties and publications using a
    * PublicationSet and a special flag to indicate if they are a
-   * gateway supplier.
-   * Gateway suppliers are ignored in the computation of changes to
-   * the publication list.
+   * gateway supplier. Gateway suppliers are ignored in the
+   * computation of changes to the publication list.
    */
   struct SupplierQOS
   {
-    /// The publications
+    /// The publications provided by this Supplier
     PublicationSet publications;
 
     /// Set to TRUE if the supplier is a gateway.
@@ -145,7 +150,8 @@ module RtecEventChannelAdmin
 
   /**
    * @exception TypeError
-   *
+   * @deprecated { This exception is not used in this module and may
+   * be removed in the future }
    * @brief Obsolete exception
    */
   exception TypeError {};
@@ -160,11 +166,15 @@ module RtecEventChannelAdmin
    * object that implements the ProxyPushSupplier interface.  This is
    * a common idiom in CORBA, as it allows the identification of the
    * remove consumer efficiently.
+   *
+   * Implemented in:
+   *  - EC_ProxySupplier.h
    */
   interface ProxyPushSupplier : RtecEventComm::PushSupplier
   {
-    /// Connect a consumer with the Event Channel
     /**
+     * @brief Connect a consumer with the Event Channel
+     *
      * The ConsumerQOS argument is used to setup the filtering and
      * QoS properties of the consumer.
      *
@@ -180,9 +190,10 @@ module RtecEventChannelAdmin
                                in ConsumerQOS qos)
       raises(AlreadyConnected, TypeError);
 
-    /// Temporarily suspend reception of events from the Event
-    /// Channel.
     /**
+     * @brief Temporarily suspend reception of events from the Event
+     * Channel.
+     *
      * Calling this method is more efficient than dropping the
      * events when received by the consumer, and less expensive than
      * disconnecting and connecting again (but it is not free!!)
@@ -217,11 +228,13 @@ module RtecEventChannelAdmin
    */
   interface ProxyPushConsumer : RtecEventComm::PushConsumer
   {
-    /// Connect a supplier with the Event Channel
     /**
-     * @param push_supplier A callback interface, the
-     *   disconnect_push_supplier operation is called when the Event
-     *   Channel is destroyed.
+     * @brief Connect a supplier with the Event Channel
+     *
+     * @param push_supplier A reference to the PushSupplier which
+     *   supplies publications. When the Event Channel is destroyed
+     *   the disconnect_push_supplier operation is called on the
+     *   PushSupplier reference.
      * @param qos This argument is used to pre-compute filtering and
      *   QoS properties for the supplier.
      *
@@ -237,18 +250,21 @@ module RtecEventChannelAdmin
   /**
    * @interface ConsumerAdmin
    *
-   * @brief Implement an Abstract Factory to create ProxyPushSupplier
+   * @brief Implements an Abstract Factory to create ProxyPushSupplier
    *   objects.
    */
   interface ConsumerAdmin
   {
-    /// Create a new ProxyPushSupplier object
     /**
+     * @brief Create a new ProxyPushSupplier object.
+     *
      * There is an inherent risk of leaking a ProxyPushSupplier
      * here, i.e. if the application does not call
      * connect_push_consumer() at all.  The Event Service may choose
      * to reclaim ProxyPushSupplier objects that have been idle for
      * too long.
+     *
+     * @return Reference to new ProxyPushSupplier object
      */
     ProxyPushSupplier obtain_push_supplier ();
   };
@@ -261,13 +277,16 @@ module RtecEventChannelAdmin
    */
   interface SupplierAdmin
   {
-    /// Create a new ProxyPushConsumer object
     /**
+     * @brief Create a new ProxyPushConsumer object
+     *
      * There is an inherent risk of leaking a ProxyPushConsumer
      * here, i.e. if the application does not call
      * connect_push_supplier() at all.  The Event Service may choose
      * to reclaim ProxyPushConsumer objects that have been idle for
      * too long.
+     *
+     * @return Reference to new ProxyPushConsumer object
      */
     ProxyPushConsumer obtain_push_consumer ();
   };
@@ -279,26 +298,34 @@ module RtecEventChannelAdmin
    * supplier publciations.
    *
    * The event channel reports changes in its internal subscription
-   * and/or publication list via this interface.
+   * and/or publication list via this interface. This is used by the
+   * gateway to know when the subscriptions and publications change.
+   * The event channel is the observerable which is notifies the
+   * Observers (e.g. gateways) whenever the subscriptions change.
    */
   interface Observer
   {
-    /// A change in the list of consumers has ocurred.
     /**
-     * The disjunction of the subscriptions is sent to the
+     * The set of the consumer subscriptions is sent to the
      * observer.
+     * @param sub New list of consumer subscriptions
      */
     void update_consumer (in ConsumerQOS sub);
 
-    /// A change in the list of suppliers has ocurred.
     /**
-     * The list of all the event publications is passed to the
+     * @brief The list of all the event publications is passed to the
      * observer.
+     * @param pub New list of supplier publications
      */
     void update_supplier (in SupplierQOS pub);
   };
 
-  /// Opaque identifier for a connected Observer.
+  /**
+   * @brief Opaque identifier for a connected Observer.
+   * @todo Can this be removed if in all places where we
+   * require the Observer_Handle we use the Observer
+   * reference? If so then this is deprecated.
+   */
   typedef unsigned long Observer_Handle;
 
   /**
@@ -361,31 +388,45 @@ module RtecEventChannelAdmin
     exception DISPATCH_ERROR {};
     //@}
 
-    /// Consumers call this method to gain access to the
-    /// ProxyPushSupplier factory.
+    /**
+     * @brief Initializes the abstract factory for producing ProxyPushSupplier
+     * objects if not setup otherwise it returns a reference.
+     * @return Return a factory for producing ProxyPushSupplier objects.
+     */
     ConsumerAdmin for_consumers ();
 
-    /// Suppliers call this method to gain access to the
-    /// ProxyPushConsumer factory.
+    /**
+     * @brief Initializes the abstract factory for producing ProxyPushConsumer
+     * objects if not setup otherwise it reutrns a reference.
+     * @return Return a factor for producing ProxyPushConsumer objects.
+     */
     SupplierAdmin for_suppliers ();
 
-    /// Shuts down the Event Channel.
     /**
+     * @brief Shuts down the Event Channel.
+     *
      * Calling this methods destroys the event service, all its
      * resource and results in a call to disconnect_push_XXX() on all
      * connected clients.
      */
     void destroy ();
 
-    /// Add an observer to the event channel.
     /**
-     * Return the handle used in the remove_observer() call.
+     * @brief Add an observer to the event channel.
+     * @param obs The Observer to be to notified when the
+     * event channels publications and subscriptions change.
+     * @return An Observer_Handle for removing observer from event channel.
+     * @todo Why do we return a Observer_Handle and not
+     * a Observer pointer/reference?
      */
-    Observer_Handle append_observer (in Observer gw)
+    Observer_Handle append_observer (in Observer obs)
       raises (SYNCHRONIZATION_ERROR,CANT_APPEND_OBSERVER);
 
-    /// Remove the observer.
-    void remove_observer (in Observer_Handle gw)
+    /**
+     * @brief Remove the observer from the event channel
+     * @param obh An Observer_Handle for the Observer to be removed.
+     */
+    void remove_observer (in Observer_Handle obh)
       raises (SYNCHRONIZATION_ERROR,CANT_REMOVE_OBSERVER);
   };
 };

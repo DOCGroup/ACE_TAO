@@ -62,8 +62,9 @@ ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
                                       RtecBase::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != 0) {
     (*this->event_initializer_) (dependency.event);
+  }
   dependency.event.header.source = ACE_ES_EVENT_SOURCE_ANY;
   dependency.event.header.type = type;
   //dependency.event.header.creation_time = 0;

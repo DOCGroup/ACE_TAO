@@ -106,19 +106,20 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
   // Make sure that a designator is first.
   if (designator_set_ == 0)
     {
-      int l = qos_.dependencies.length ();
-      qos_.dependencies.length (l + 1);
-      if (this->event_initializer_ != 0)
-        (*this->event_initializer_) (qos_.dependencies[l].event);
-      qos_.dependencies[l].rt_info = 0;
-      qos_.dependencies[l].event.header.type = ACE_ES_GLOBAL_DESIGNATOR;
+      int depend_length = qos_.dependencies.length ();
+      qos_.dependencies.length (depend_length + 1);
+      if (this->event_initializer_ != 0) {
+        (*this->event_initializer_) (qos_.dependencies[depend_length].event);
+      }
+      qos_.dependencies[depend_length].rt_info = 0;
+      qos_.dependencies[depend_length].event.header.type = ACE_ES_GLOBAL_DESIGNATOR;
 
       this->designator_set_ = 1;
     }
 
-  int l = qos_.dependencies.length ();
-  qos_.dependencies.length (l + 1);
-  qos_.dependencies[l] = subscribe;
+  int depend_length = qos_.dependencies.length ();
+  qos_.dependencies.length (depend_length + 1);
+  qos_.dependencies[depend_length] = subscribe;
   return 0;
 }
 
@@ -172,12 +173,12 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  RtecBase::handle_t rt_info,
                                  u_int ncalls)
 {
-  CORBA::ULong l = this->qos_.publications.length ();
-  if (l >= this->qos_.publications.maximum ())
+  CORBA::ULong publen = this->qos_.publications.length ();
+  if (publen >= this->qos_.publications.maximum ())
     {
       // There is not enough space for the next element, grow the
       // buffer.
-      this->qos_.publications.length (l + 1);
+      this->qos_.publications.length (publen + 1);
 
       // @@ TODO We may want to consider more efficient growing
       // strategies here, for example, duplicating the size of the
@@ -185,12 +186,12 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
     }
 
   if (this->event_initializer_ != 0)
-    (*this->event_initializer_) (qos_.publications[l].event);
-  this->qos_.publications[l].event.header.source = sid;
-  this->qos_.publications[l].event.header.type = type;
+    (*this->event_initializer_) (qos_.publications[publen].event);
+  this->qos_.publications[publen].event.header.source = sid;
+  this->qos_.publications[publen].event.header.type = type;
   // TODO: IDL union this->qos_.publications[l].event.data_.lval (0);
-  this->qos_.publications[l].dependency_info.rt_info = rt_info;
-  this->qos_.publications[l].dependency_info.number_of_calls = ncalls;
+  this->qos_.publications[publen].dependency_info.rt_info = rt_info;
+  this->qos_.publications[publen].dependency_info.number_of_calls = ncalls;
   return 0;
 }
 

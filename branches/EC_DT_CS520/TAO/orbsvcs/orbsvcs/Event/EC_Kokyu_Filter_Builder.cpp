@@ -18,6 +18,7 @@ ACE_RCSID(Event, EC_Kokyu_Filter_Builder, "$Id$")
 
 const char* designator (long dsgn)
 {
+  ACE_DEBUG((LM_DEBUG, "ECKFB::designator - value = %d\n", dsgn));
   switch(dsgn)
     {
     case ACE_ES_GLOBAL_DESIGNATOR: return "GLOBAL";
@@ -57,9 +58,9 @@ TAO_EC_Kokyu_Filter_Builder::build (
 
 #ifdef EC_KOKYU_LOGGING
   for (i=0; i<qos.dependencies.length (); ++i)
-    {                  
+    {
       ACE_DEBUG ((LM_DEBUG,
-                  "consumerqos[%d] event.header.type = %s,"
+                  "ECKFB::build - consumerqos[%d] event.header.type = %s,"
                   "rt_info = %d\n",
                   i,
                   designator (qos.dependencies[i].event.header.type),
@@ -71,7 +72,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   //assume that this entry will have the rt_info of the connecting
   //consumer (ProxyPushSupplier), which is passed into this function.
   for (i=0; !found && i<qos.dependencies.length (); ++i)
-    {                  
+    {
       switch (qos.dependencies[i].event.header.type)
         {
         case ACE_ES_CONJUNCTION_DESIGNATOR:
@@ -89,7 +90,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
         case ACE_ES_EVENT_INTERVAL_TIMEOUT:
         case ACE_ES_EVENT_DEADLINE_TIMEOUT:
           continue;
-          
+
         default:
           npos = i;
           found = 1;
@@ -97,12 +98,14 @@ TAO_EC_Kokyu_Filter_Builder::build (
         }
     }
 
-  ACE_CString final_consumer_rep_name; 
+  ACE_CString final_consumer_rep_name;
   RtecScheduler::handle_t h_final_consumer_rt_info = 0;
   RtecScheduler::handle_t h_final_consumer_rep_rt_info = 0;
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d] \n", npos));
+  if (npos >= 0) {
+    ACE_DEBUG ((LM_DEBUG, "ECKFB::build - consumer rt_info found in consumerqos[%d] \n", npos));
+  }
 #endif
 
   if (npos >= 0 && establish_final_consumer_dependency == 1)
@@ -111,29 +114,29 @@ TAO_EC_Kokyu_Filter_Builder::build (
       h_final_consumer_rt_info = qos.dependencies[npos].rt_info;
 
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "about to get rt_info =  %d\n",
+      ACE_DEBUG ((LM_DEBUG, "ECKFB::build - about to get rt_info =  %d\n",
                   h_final_consumer_rep_rt_info));
 #endif
 
       RtecScheduler::RT_Info_var final_consumer_rt_info =
-        scheduler->get ( h_final_consumer_rt_info 
+        scheduler->get ( h_final_consumer_rt_info
                          ACE_ENV_ARG_PARAMETER);
 
       final_consumer_rep_name = final_consumer_rt_info->entry_point.in ();
       final_consumer_rep_name += "#rep";
 
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "about to create consumer rep %s\n",
+      ACE_DEBUG ((LM_DEBUG, "ECKFB::build - about to create consumer rep %s\n",
                   final_consumer_rep_name.c_str ()));
 #endif
 
       //create an rt_info corresponding to this rep.
       h_final_consumer_rep_rt_info =
-        scheduler->create (final_consumer_rep_name.c_str () 
+        scheduler->create (final_consumer_rep_name.c_str ()
                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "consumer rep created\n"));
+      ACE_DEBUG ((LM_DEBUG, "ECKFB::build - consumer rep created\n"));
 #endif
 
     }
@@ -142,34 +145,33 @@ TAO_EC_Kokyu_Filter_Builder::build (
   //consumer is the one which is connecting to the ProxyPushSupplier
   //passed in to this function.
 
-  TAO_EC_Filter* filter = 
+  TAO_EC_Filter* filter =
     this->recursive_build (supplier, qos, pos,
                            scheduler.in (),
                            h_final_consumer_rep_rt_info  //parent_info
                            ACE_ENV_ARG_PARAMETER);
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "Filter_Builder::Verifying whether root filter"
+  ACE_DEBUG ((LM_DEBUG,
+              "ECKFB::build - Verifying whether root filter"
               " dependency can be established\n"));
 #endif
 
   if (npos >= 0 && establish_final_consumer_dependency == 1)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Filter_Builder::root filter dependency "
-                  "can be established\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECKFB::build - root filter dependency can be established\n"));
 #endif
       TAO_EC_Kokyu_Filter* kokyu_filter =
         ACE_dynamic_cast(TAO_EC_Kokyu_Filter*, filter);
-  
+
       //add the dependency between the root in the filter hierarchy and
       //the final consumer
       TAO_EC_QOS_Info qos_info;
       kokyu_filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
 
-      scheduler->add_dependency (h_final_consumer_rt_info, 
+      scheduler->add_dependency (h_final_consumer_rt_info,
                                  qos_info.rt_info,
                                  1,
                                  RtecBase::ONE_WAY_CALL
@@ -191,13 +193,13 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "Filter_Builder::In recursive build\n"));
+  ACE_DEBUG ((LM_DEBUG, "ECKFB::recursive_build - In recursive build\n"));
 #endif
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "Filter_Builder::Conjuction designator\n"));
+      ACE_DEBUG ((LM_DEBUG, "ECKFB::recursive_build - Event header is a ACE_ES_CONJUNCTION_DESIGNATOR\n"));
 #endif
       CORBA::ULong npos = pos;
       ACE_CString name;
@@ -244,7 +246,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "Filter_Builder::Disjunction designator\n"));
+      ACE_DEBUG ((LM_DEBUG, "ECKFB::recursive_build - Event header is a ACE_ES_DISJUNCTION_DESIGNATOR\n"));
 #endif
       CORBA::ULong npos = pos;
       ACE_CString name;
@@ -292,12 +294,12 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
              || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
       {
 #ifdef EC_KOKYU_LOGGING
-        ACE_DEBUG ((LM_DEBUG, "Filter_Builder::Timeout designator\n"));
+      ACE_DEBUG ((LM_DEBUG, "ECKFB::recursive_build - Event header is a Timeout Designator\n"));
 #endif
         // @@ We need a unique name for each timeout, assigned by the
         //    application?
         char buf[64];
-        
+
         //get the rt_info for the timer consumer
         RtecBase::handle_t h_consumer_rt_info = qos.dependencies[pos].rt_info;
 
@@ -307,19 +309,19 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                           (e.header.creation_time / 10000)),
                          h_consumer_rt_info);
         ACE_CString name = buf;
-        
+
         TAO_EC_QOS_Info qos_info;
         qos_info.rt_info =
           scheduler->create (name.c_str () ACE_ENV_ARG_PARAMETER);
-        
+
         // Convert the time to the proper units....
         RtecScheduler::Period_t period =
           ACE_static_cast (RtecScheduler::Period_t,
                            e.header.creation_time);
-        
+
 #if 1 //by VS original code replaced with this
         RtecScheduler::RT_Info* consumer_rt_info_ptr;
-        
+
         consumer_rt_info_ptr = scheduler->get (h_consumer_rt_info);
         scheduler->set (qos_info.rt_info,
                         consumer_rt_info_ptr->criticality,
@@ -333,7 +335,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                         RtecScheduler::OPERATION
                         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
-        
+
         scheduler->add_dependency (qos_info.rt_info,
                                    h_consumer_rt_info,
                                    1,
@@ -342,14 +344,14 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         ACE_CHECK_RETURN (0);
 #endif //by VS
 
-        pos++;        
+        pos++;
         return new TAO_EC_Timeout_Filter (this->event_channel_,
                                           supplier,
                                           qos_info,
                                           e.header.type,
                                           e.header.creation_time);
       }
-  
+
 #if 1 //added by VS
   else if (e.header.type == ACE_ES_GLOBAL_DESIGNATOR)
     {
@@ -359,18 +361,18 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                     parent_info
                                     ACE_ENV_ARG_PARAMETER);
     }
-  else 
+  else
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Kokyu_Filter_Builder::No designator for this entry. "
-                  "Must be a body\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECKFB::recursive_build - No designator for this entry. "
+                  "This must a leaf-node of the tree.\n"));
 #endif
     }
 #endif
 
-  //probably because of a global designator, the parent_info could be 0. 
-  if (parent_info == 0) 
+  //probably because of a global designator, the parent_info could be 0.
+  if (parent_info == 0)
     {
       //In this case, the parent_info is the same as the one supplied
       //in the consumer qos.
