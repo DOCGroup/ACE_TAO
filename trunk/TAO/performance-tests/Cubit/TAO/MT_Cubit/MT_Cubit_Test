@@ -3,14 +3,15 @@
 #
 # Spawns MT_Cubit server and client executables on a single host.
 
-usage="usage: $0 [-n <iterations>] [-t] [-l] <# low priority threads>"
-usage2="    [-t] uses /tmp, [-l] suppresses use of -ORBiioplite"
+usage="usage: $0 [-n <iterations>] [-r <host>] [-t] [-l] <# low priority threads>"
+usage2="    [-l] suppresses use of -ORBiioplite, [-r runs client on <host>], [-t] uses /tmp"
 
 user=`whoami`
 ior_file=/tmp/MT_Cubit-ior.${user}
 iterations=1000
 client_exec_prefix=time
 iiop_lite=-ORBiioplite
+remote_host=
 
 if [ "$HOSTTYPE" = "lynxos" ]; then
   server_exec_prefix='prio 30'
@@ -24,10 +25,11 @@ fi
 ########
 ######## Interpret command arguments.
 ########
-while getopts ?ln:t arg; do
+while getopts ?ln:r:t arg; do
   case $arg in
       l   ) iiop_lite= ;;
       n   ) iterations=$OPTARG ;;
+      r   ) remote_host="rsh $OPTARG" ;;
       t   ) tmp='/tmp/' ;;
       '?' ) echo $usage; echo $usage2; exit 0 ;;
   esac
