@@ -108,8 +108,10 @@ IDL_GlobalData::IDL_GlobalData (void)
       pd_parse_state (PS_NoState),
       pd_idl_src_file (0),
       changing_standard_include_files_ (1),
-      export_macro_ (0),
-      export_include_ (0),
+      skel_export_macro_ (0),
+      skel_export_include_ (0),
+      stub_export_macro_ (0),
+      stub_export_include_ (0),
       pch_include_ (0),
       client_hdr_ending_ (ACE::strnew ("C.h")),
       client_stub_ending_ (ACE::strnew ("C.cpp")),
@@ -1010,41 +1012,67 @@ IDL_GlobalData::be_get_server_template_inline_fname (int base_name_only)
 }
 
 const char*
-IDL_GlobalData::export_macro (void) const
+IDL_GlobalData::skel_export_macro (void) const
 {
-  if (this->export_macro_ == 0)
+  if (this->skel_export_macro_ == 0)
     return "";
-  return this->export_macro_;
+  return this->skel_export_macro_;
 }
 
 void
-IDL_GlobalData::export_macro (const char *s)
+IDL_GlobalData::skel_export_macro (const char *s)
 {
-  this->export_macro_ = ACE_OS::strdup (s);
+  this->skel_export_macro_ = ACE_OS::strdup (s);
 }
 
 const char*
-IDL_GlobalData::export_include (void) const
+IDL_GlobalData::skel_export_include (void) const
 {
-  return this->export_include_;
+  return this->skel_export_include_;
+}
+
+void
+IDL_GlobalData::skel_export_include (const char *s)
+{
+  this->skel_export_include_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::stub_export_macro (void) const
+{
+  if (this->stub_export_macro_ == 0)
+    return "";
+  return this->stub_export_macro_;
+}
+
+void
+IDL_GlobalData::stub_export_macro (const char *s)
+{
+  this->stub_export_macro_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::stub_export_include (void) const
+{
+  return this->stub_export_include_;
+}
+
+void
+IDL_GlobalData::stub_export_include (const char *s)
+{
+  this->stub_export_include_ = ACE_OS::strdup (s);
 }
 
 const char*
 IDL_GlobalData::pch_include (void) const
 {
   return this->pch_include_;
-}  
+}
 
 void
 IDL_GlobalData::pch_include (const char *s)
 {
   this->pch_include_ = ACE_OS::strdup (s);
-}
-
-void
-IDL_GlobalData::export_include (const char *s)
-{
-  this->export_include_ = ACE_OS::strdup (s);
 }
 
 // Set the client_hdr_ending.

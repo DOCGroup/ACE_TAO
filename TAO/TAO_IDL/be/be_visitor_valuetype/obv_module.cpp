@@ -60,7 +60,7 @@ be_visitor_obv_module::visit_module (be_module *node)
         {
           os->indent ();
 
-          *os << "TAO_NAMESPACE "; // << idl_global->export_macro ()
+          *os << "TAO_NAMESPACE "; // << idl_global->skel_export_macro ()
 
           if (!node->is_nested ())
               // we are outermost module, so prepend

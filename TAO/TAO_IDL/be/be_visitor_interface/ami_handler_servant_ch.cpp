@@ -12,11 +12,11 @@
 //
 // = DESCRIPTION
 //    Visitor generating AMI Reply Handler code for Interfaces in the
-//    client header. 
+//    client header.
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>  
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -52,7 +52,7 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   static char namebuf [NAMEBUFSIZE];
 
   // AMI_<Interface_Name>_Handler string.
-  static char ami_handler [NAMEBUFSIZE]; 
+  static char ami_handler [NAMEBUFSIZE];
 
   if (node->srv_hdr_gen () || node->imported ())
     return 0;
@@ -61,13 +61,13 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   ACE_OS::memset (ami_handler, '\0', NAMEBUFSIZE);
 
   os = this->ctx_->stream ();
-  
+
   // Generate the skeleton class name.
 
   // Start with whatever indentation level we are at.
   os->indent ();
 
-  // We shall have a POA_ prefix only if we are at the topmost level. 
+  // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
     {
       // we are outermost
@@ -86,7 +86,7 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   ACE_OS::sprintf (ami_handler,
                    "AMI_%s_Handler",
                    node->local_name ()->get_string ());
-  
+
   *os << "class " << namebuf << ";" << be_nl;
 
   // generate the _ptr declaration
@@ -94,8 +94,8 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
       << "_ptr;" << be_nl;
 
   // Now generate the class definition.
-  // This class will inherit from the Messaging::ReplyHandler class. 
-  *os << "class " << idl_global->export_macro ()
+  // This class will inherit from the Messaging::ReplyHandler class.
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << namebuf
       << " : public virtual POA_Messaging::ReplyHandler"
       << be_nl;
@@ -107,20 +107,20 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   // Default constructor.
   *os << "protected:" << be_idt_nl
       << namebuf << " (void);\n" << be_uidt_nl;
-  
-  // Public portion starts. 
+
+  // Public portion starts.
   *os << "public:" << be_idt_nl
-    
+
     // Copy constructor.
       << namebuf << " (const " << namebuf << "& rhs);" << be_nl
-    
+
     // Destructor.
       << "virtual ~" << namebuf << " (void);\n\n"
-      
+
       << be_nl;
-    
+
     // Methods.
-  
+
   // _is_a.
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
@@ -128,12 +128,12 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
-  
+
   // _down_cast.
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ");\n" << be_uidt_nl;
-  
+
   // add a skeleton for our _is_a method
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &req," << be_nl

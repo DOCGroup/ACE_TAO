@@ -186,26 +186,26 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       // Other include files.
 
-      if (idl_global->export_include () != 0)
+      if (idl_global->stub_export_include () != 0)
         {
           *this->client_header_ << "#include \""
-                                << idl_global->export_include ()
+                                << idl_global->stub_export_include ()
                                 << "\"\n";
         }
 
-      // Include the Messaging files if AMI is enabled. 
+      // Include the Messaging files if AMI is enabled.
       if (idl_global->ami_call_back () == I_TRUE)
         {
           // Include Messaging skeleton file.
           *this->client_header_ << "#include ";
-          
+
           if (idl_global->changing_standard_include_files () == 1)
             *this->client_header_ << "\"";
           else
             *this->client_header_ << "<";
-          
+
           *this->client_header_ << "tao/MessagingS.h";
-          
+
           if (idl_global->changing_standard_include_files () == 1)
             *this->client_header_ << "\"\n";
           else
@@ -213,14 +213,14 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // Including Asynch Invocation file.
           *this->client_header_ << "#include ";
-          
+
           if (idl_global->changing_standard_include_files () == 1)
             *this->client_header_ << "\"";
           else
             *this->client_header_ << "<";
-          
+
           *this->client_header_ << "tao/Asynch_Invocation.h";
-          
+
           if (idl_global->changing_standard_include_files () == 1)
             *this->client_header_ << "\"\n";
           else
@@ -270,7 +270,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
       *this->client_header_ << "#endif\n";
       *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                            << idl_global->export_macro ()
+                            << idl_global->stub_export_macro ()
                             << be_nl;
 
       // Generate export macro for nested classes
@@ -280,7 +280,7 @@ TAO_CodeGen::start_client_header (const char *fname)
         << "#    undef TAO_EXPORT_NESTED_MACRO\n"
         << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
         << "#  define TAO_EXPORT_NESTED_MACRO "
-        << idl_global->export_macro ()
+        << idl_global->stub_export_macro ()
         << be_nl
         << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n";
 
@@ -461,6 +461,13 @@ TAO_CodeGen::start_server_header (const char *fname)
       *this->server_header_ << "#if defined(_MSC_VER)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
+
+      if (idl_global->skel_export_include () != 0)
+        {
+          *this->server_header_ << "#include \""
+                                << idl_global->skel_export_include ()
+                                << "\"\n";
+        }
 
       return 0;
     }
