@@ -33,6 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "IFR_macro.h"
+
 class IFR_Servant_Factory;
 
 class TAO_Repository_i : public virtual TAO_Container_i
@@ -42,7 +44,7 @@ class TAO_Repository_i : public virtual TAO_Container_i
   //
   // = DESCRIPTION
   //    Provides global access to the Interface Repository, but
-  //    does not support access to information related to 
+  //    does not support access to information related to
   //    CORBA Components.
   //
 public:
@@ -70,35 +72,35 @@ public:
 
   virtual IR::Contained_ptr lookup_id (
       const char *search_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA::TypeCode_ptr tc,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual IR::PrimitiveDef_ptr get_primitive (
       IR::PrimitiveKind kind,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC (( CORBA::SystemException));
 
   virtual IR::StringDef_ptr create_string (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual IR::WstringDef_ptr create_wstring (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -106,7 +108,7 @@ public:
   virtual IR::SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
       IR::IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC (( CORBA::SystemException));
@@ -114,7 +116,7 @@ public:
   virtual IR::ArrayDef_ptr create_array (
       CORBA::ULong length,
       IR::IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -122,7 +124,7 @@ public:
   virtual IR::FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -175,9 +177,13 @@ public:
 
   void shutdown (void);
   // Used ONLY with Purify, for memory leak checking.
-  // A call to this can be temporariily appended to the 
+  // A call to this can be temporariily appended to the
   // destroy() method of the last thing to be destroyed
   // by the test code.
+
+  ACE_Lock &lock (void);
+  // Repo lock.
+
 protected:
   CORBA::ORB_ptr orb_;
   // Reference to our ORB.
@@ -226,6 +232,9 @@ protected:
 
   CORBA::String_var extension_;
   // Added to names to temporarily avoid name clashes.
+
+  ACE_Lock *lock_;
+  // Lock.
 
 private:
   static const char *TAO_IFR_primitive_kinds[];
