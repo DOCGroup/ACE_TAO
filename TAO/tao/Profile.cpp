@@ -148,7 +148,7 @@ TAO_Profile::policies (void)
           // Here we extract the Messaging::PolicyValue out of the sequence
           // and we convert those into the proper CORBA::Policy
 
-          CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+          CORBA::Policy_var policy;
           CORBA::ULong length = policy_value_seq.length ();
 
           // Set the policy list length.
@@ -175,7 +175,7 @@ TAO_Profile::policies (void)
                       ACE_TRY_ENV);
                   ACE_TRY_CHECK;
 
-                  if (!CORBA::is_nil (policy))
+                  if (!CORBA::is_nil (policy.in ()))
                     {
                       buf = policy_value_seq[i].pvalue.get_buffer ();
 
@@ -188,7 +188,7 @@ TAO_Profile::policies (void)
                                                                byte_order));
 
                       policy->_tao_decode (in_cdr);
-                      (*policies)[i] = policy;
+                      (*policies)[i] = policy._retn ();
                     }
                   else
                     {

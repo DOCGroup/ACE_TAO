@@ -34,9 +34,9 @@
 # include "tao/ORBInitInfo.h"
 # include "tao/ORBInitializer_Registry.h" 
 
-#if TAO_HAS_RTCORBA == 1
+#if TAO_HAS_RT_CORBA == 1
 # include "tao/RT_ORBInitializer.h"         // @@ This should go away!
-#endif  /* TAO_HAS_RTCORBA == 1 */
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 # include "tao/Messaging_ORBInitializer.h"  // @@ This should go away!
@@ -1195,13 +1195,13 @@ CORBA::ORB_init (int &argc,
   //    should be registered via the service configurator, for
   //    example.
 
-#if TAO_HAS_RTCORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1
+#if TAO_HAS_RT_CORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
-#endif  /* TAO_HAS_RTCORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1 */
+#endif  /* TAO_HAS_RT_CORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if TAO_HAS_RTCORBA == 1
+#if TAO_HAS_RT_CORBA == 1
   /// Register the RTCORBA ORBInitializer.
   ACE_NEW_THROW_EX (temp_orb_initializer,
                     TAO_RT_ORBInitializer,
@@ -1219,7 +1219,7 @@ CORBA::ORB_init (int &argc,
 
   /// Transfer ownership to the ORBInitializer registry.
   (void) orb_initializer._retn ();
-#endif  /* TAO_HAS_RTCORBA == 1 */
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
   /// Register the Messaging ORBInitializer.
