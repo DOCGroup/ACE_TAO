@@ -267,7 +267,7 @@ TAO_Property_Evaluator::property_value (int index,
     {
       // Property is defined at this point.
       CosTradingDynamic::DynamicProp* dp_struct;
-      const CORBA::String_var name = this->props_[index].name;
+      const CORBA::String_var name = this->props_[index].name.in ();
       const CORBA::Any& value = this->props_[index].value;
 
       // Extract the DP_Struct.
@@ -355,7 +355,7 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
       if (! TAO_Trader_Base::is_valid_identifier_name (prop.name))
         TAO_THROW (CosTrading::IllegalPropertyName (prop.name));
 
-      TAO_String_Hash_Key prop_name = prop.name;
+      TAO_String_Hash_Key prop_name = prop.name.in ();
       if (this->table_.bind (prop_name, i))
         TAO_THROW (CosTrading::DuplicatePropertyName (prop.name));
     }
@@ -1009,7 +1009,7 @@ TAO_Offer_Modifier (const char* type_name,
   // Create a mapping of property names to their types.
   for (i = 0; i < pstructs_length; i++)
     {
-      TAO_String_Hash_Key prop_name = pstructs[i].name;
+      TAO_String_Hash_Key prop_name = pstructs[i].name.in ();
       CORBA::TypeCode_ptr type_code =
         CORBA::TypeCode::_duplicate (pstructs[i].value_type.in ());
       this->prop_types_.bind (prop_name, type_code);
@@ -1159,7 +1159,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   for (i = 0; i < merge_length; i++)
     {
       Property_Table::ENTRY* entry = 0;
-      TAO_String_Hash_Key prop_name = modifies[i].name;
+      TAO_String_Hash_Key prop_name = modifies[i].name.in ();
 
       CosTrading::Property* prop =
         ACE_const_cast (CosTrading::Property*, &modifies[i]);
