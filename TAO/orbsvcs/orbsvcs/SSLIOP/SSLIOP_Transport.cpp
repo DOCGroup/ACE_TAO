@@ -276,8 +276,8 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 
 int
-TAO_SSLIOP_Transport::generate_request_header (TAO_Target_Specification &spec,
-                                               TAO_Operation_Details &opdetails,
+TAO_SSLIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
+                                               TAO_Target_Specification &spec,
                                                TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set, whether the
@@ -300,8 +300,8 @@ TAO_SSLIOP_Transport::generate_request_header (TAO_Target_Specification &spec,
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-  return TAO_Transport::generate_request_header (spec,
-                                                 opdetails,
+  return TAO_Transport::generate_request_header (opdetails,
+                                                 spec,
                                                  msg);
 }
 
