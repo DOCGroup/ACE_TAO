@@ -280,10 +280,13 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                                   "(follower) [has timer, follower failed]\n",
                                   t_id ));
 
-                    // We have timedout.. So set the state in the
-                    // LF_Event about this.. We call the non-locking,
-                    // no-signalling method on LF_Event..
-                    event->set_state (TAO_LF_Event::LFS_TIMEOUT);
+                    // If we have timedout set the state in the
+                    // LF_Event. We call the non-locking,
+                    // no-signalling method on LF_Event.
+                    if (errno == ETIME)
+                        // We have timedout
+                        event->set_state (TAO_LF_Event::LFS_TIMEOUT);
+
                     if (!event->successful ())
                       {
                         // Remove follower can fail because either

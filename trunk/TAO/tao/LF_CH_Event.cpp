@@ -100,6 +100,7 @@ TAO_LF_CH_Event::error_detected (void) const
 void
 TAO_LF_CH_Event::set_state (int new_state)
 {
+  // @@ NOTE: Is this still required?
   if (this->is_state_final () == 0
       && new_state == TAO_LF_Event::LFS_TIMEOUT)
     {
