@@ -17,6 +17,7 @@ Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Select_Reactor_T: Enhanced dispatch_timer_handlers() so that
  	  it passes the number of timers dispatched as an out parameter to
  	  avoid any ambiguity.
+
 Wed Oct 14 15:30:42 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Message_Block_T.h: Removed ACE_Export from definition of template
