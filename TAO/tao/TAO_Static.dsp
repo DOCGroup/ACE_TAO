@@ -862,6 +862,10 @@ SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ifrfwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
@@ -1411,10 +1415,6 @@ SOURCE=.\InterceptorC.i
 # Begin Source File
 
 SOURCE=.\InterfaceC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.i
 # End Source File
 # Begin Source File
 
