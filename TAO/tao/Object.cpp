@@ -245,6 +245,8 @@ CORBA::is_nil (CORBA::Object_ptr obj)
   return 0;
 }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 void
 CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                const char *operation,
@@ -343,8 +345,6 @@ CORBA_Object::_request (const char *operation,
                         0);
     }
 }
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
