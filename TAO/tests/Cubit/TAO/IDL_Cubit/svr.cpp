@@ -22,13 +22,16 @@
 // Global Variables
 static int num_of_objs = 1;
 
+//Flag to tell whether to use the Naming service
+static int use_naming_service;
+
 // Parses the command line arguments and returns an error status
 static FILE* ior_output_file = 0;
 
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dno:");
+  ACE_Get_Opt get_opts (argc, argv, "dn:o:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,6 +50,9 @@ parse_args (int argc, char *argv[])
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
+      case 's':
+	use_naming_service=1;
+	break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,19 +112,7 @@ main (int argc, char *argv[])
 			      TAO_TRY_ENV);  
       TAO_CHECK_ENV;
 
-      //Resolve the Naming Service context
-      CORBA::Object_var naming_obj =
-	orb->resolve_initial_references ("NameService");
-      if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to resolve the Name Service.\n"),
-			  2);
-
-      CosNaming::NamingContext_var naming_context = 
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Parse remaining command line and verify parameters.
+      //Parse remaining command line and verify parameters.
       parse_args (argc, argv);
 
       // create a factory implementation
@@ -149,20 +143,35 @@ main (int argc, char *argv[])
           ACE_OS::fclose (ior_output_file);
         }
 
-      // Bind a new IDL_Cubit Name context
-      CosNaming::Name cubit_context_name (1);
-      cubit_context_name.length (1);
-      cubit_context_name[0].id = CORBA::string_dup ("IDL_Cubit");
-      CosNaming::NamingContext_var cubit_context =
-	naming_context->bind_new_context (cubit_context_name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      //Register the cubit_factory name with the IDL_Cubit Naming Context...
-      CosNaming::Name factory_name (1);
-      factory_name.length (1);
-      factory_name[0].id = CORBA::string_dup ("cubit_factory");
-      cubit_context->bind (factory_name,obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      if (use_naming_service) 
+	{
+	  //Resolve the Naming Service context
+	  CORBA::Object_var naming_obj =
+	    orb->resolve_initial_references ("NameService");
+	  if (CORBA::is_nil (naming_obj.in ()))
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       " (%P|%t) Unable to resolve the Name Service.\n"),
+			      2);
+	  
+	  CosNaming::NamingContext_var naming_context = 
+	    CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  // Bind a new IDL_Cubit Name context
+	  CosNaming::Name cubit_context_name (1);
+	  cubit_context_name.length (1);
+	  cubit_context_name[0].id = CORBA::string_dup ("IDL_Cubit");
+	  CosNaming::NamingContext_var cubit_context =
+	    naming_context->bind_new_context (cubit_context_name,TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  
+	  //Register the cubit_factory name with the IDL_Cubit Naming Context...
+	  CosNaming::Name factory_name (1);
+	  factory_name.length (1);
+	  factory_name[0].id = CORBA::string_dup ("cubit_factory");
+	  cubit_context->bind (factory_name,obj.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
 
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
