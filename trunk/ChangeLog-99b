@@ -1,3 +1,8 @@
+Tue Jul 06 22:47:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: filter out Purify warning about
+          non-pic R_SPARC_*.
+
 Tue Jul 06 22:21:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linuxppcr5.h: commented out #define __USE_XOPEN
