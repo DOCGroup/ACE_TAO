@@ -78,7 +78,7 @@ const size_t ACE_MAX_ITERATIONS = 10;
 const size_t ACE_MAX_PROCESSES = 10;
 const size_t ACE_MAX_THREADS = 4;
 
-static char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
@@ -166,8 +166,6 @@ private:
   OFSTREAM *output_file_;
 };
 
-typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
-
 inline ACE_Test_Output::ACE_Test_Output (void)
   : output_file_ (0)
 {
@@ -188,6 +186,12 @@ inline ACE_Test_Output::~ACE_Test_Output (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+}
+
+inline OFSTREAM *
+ACE_Test_Output::output_file (void)
+{
+  return this->output_file_;
 }
 
 inline int
@@ -260,12 +264,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   return 0;
 }
 
-inline OFSTREAM *
-ACE_Test_Output::output_file (void)
-{
-  return this->output_file_;
-}
-
 inline void
 ACE_Test_Output::close (void)
 {
@@ -300,6 +298,8 @@ randomize (int array[], size_t size)
       array [size] = temp;
     }
 }
+
+typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 
 // This shouldn't be done in a header!  But, we don't have any other
 // need for a .cpp file to link into all tests.

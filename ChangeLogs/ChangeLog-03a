@@ -1,3 +1,15 @@
+Sun Oct 22 08:57:33 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/test_config.h: implemented these changes to remove
+          g++ warnings introduced by:
+
+          Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+          1) Moved ace_file_stream typedef to end of file.
+          2) Moved inline definition of ACE_Test_Output::output_file ()
+             to before first use.
+          3) Removed static qualifier from ACE_ALPHABET.
+
 Sat Oct 21 12:52:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile*:
