@@ -1,3 +1,37 @@
+Tue Jun 12 18:53:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/config-linux-common.h:
+
+	  Added new printf specifier ACE_SIZE_T_FORMAT_SPECIFIER,
+	  ACE_SSIZE_T_FORMAT_SPECIFIER for use with types size_t and
+	  ssize_t.
+
+	* ace/Basic_Types.h:
+
+	  1. Changed default base address on IA-64 to be 64-bit little endian.
+	  2. Added default values for ACE_SIZE_T_FORMAT_SPECIFIER,
+	     ACE_SIZE_T_FORMAT_SPECIFIER.
+	  3. Changed size of LONG_DOUBLE for IA-64.
+
+	* ace/Configuration.cpp:
+	* ace/Naming_Context.cpp:
+	* ace/Task.cpp:
+
+	  Added a reinterpret_cast to silence gcc.
+
+	* tests/MEM_Stream_Test.cpp:
+	* tests/MT_Reactor_Timer_Test.cpp:
+	* tests/Message_Block_Test.cpp:
+	* tests/TSS_Test.cpp:
+	* tests/Thread_Manager_Test.cpp:
+	* tests/Thread_Pool_Test.cpp:
+
+	  1. Fixed usage of ACE_DEBUG with types size_t and ssize_t.
+	  2. Added ACE_reinterpret_cast to silence warnings about
+             conversion from integer to pointer of different size.
+
+	ACE runs on Intel IA-64/Linux.
+
 Tue Jun 12 15:06:06 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/run_test.lst:
