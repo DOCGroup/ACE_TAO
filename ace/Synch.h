@@ -1024,7 +1024,7 @@ public:
 class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
   // = TITLE
   //     Wrapper for Dijkstra style general semaphores that work
-  //     only within on process.
+  //     only within one process.
 {
 public:
   ACE_Thread_Semaphore (u_int count = 1, // By default make this unlocked.
