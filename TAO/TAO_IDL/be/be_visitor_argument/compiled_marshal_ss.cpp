@@ -537,7 +537,7 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
             {
               *os << "CORBA::Any::to_string ("
                   << arg->local_name () << ".out (), "
-                  << node->max_size ()->ev ()->u.ulval
+                  << node->max_size ()->ev ()->u.ulval - 1
                   << ")";
             }
           break;
@@ -572,7 +572,7 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
             case AST_Argument::dir_OUT:
               *os << "CORBA::Any::from_string ((char *)" 
                   << arg->local_name () << ".in (), "
-                  << node->max_size ()->ev ()->u.ulval << ")";
+                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             }
         }
