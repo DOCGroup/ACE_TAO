@@ -1,4 +1,5 @@
 project(*Client) : taoexe, portableserver {
+  requires += minimum_corba
   idlflags -= -Sc
   source_files {
     client.cpp

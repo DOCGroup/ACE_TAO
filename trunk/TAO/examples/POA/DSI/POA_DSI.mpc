@@ -1,4 +1,5 @@
 project(*Client) : taoexe, messaging, portableserver {
+  avoids += minimum_corba
   source_files {
     client.cpp
   }
