@@ -19,20 +19,6 @@
 #if !defined (TAO_EXCEPT_H)
 #  define TAO_EXCEPT_H
 
-#if 0
-#  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#  include "ace/Synch.h"
-#  include <objbase.h>
-#endif
-
-#if defined (minor)
-#undef minor
-#endif /* minor */
-
-#if defined (major)
-#undef major
-#endif /* major*/
-
 class ACE_Svc_Export CORBA_Exception : public IUnknown
   // = TITLE
   // CORBA2-specified exception hierarchy.

@@ -37,16 +37,16 @@ class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
 public:
   // = Intialization method.
   TAO_Client_Connection_Handler (ACE_Thread_Manager * = 0);
-  // Do-nothing constructor
+  // Do-nothing constructor.
 
   // = <Connector> hook.
   virtual int open (void *);
-  // Initialization hook
+  // Initialization hook.
 };
 
 class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
   // = TITLE
-  //    Handles requests on a single connection in a server.
+  //   Handles requests on a single connection in a server.
 {
 public:
   TAO_Server_Connection_Handler (ACE_Thread_Manager *t = ACE_Thread_Manager::instance ());
@@ -91,7 +91,7 @@ protected:
 typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> 
 	TAO_ACCEPTOR;
 
-// Declare that these two functions should be specialized.
+// Declare that the following method should be specialized.
 
 #if defined (ACE_WIN32)
 extern template size_t

@@ -1,16 +1,44 @@
 // This may look like C, but it's really -*- C++ -*-
-//
 // @ (#) $Id$
-// Copyright 1995 by Sun Microsystems, Inc
+
+// ============================================================================
 //
-// Build configuration file for the Inter-ORB Engine, and application
-// level code using it via <corba.hh>
+// = LIBRARY
+//     TAO
+// 
+// = FILENAME
+//     default_server.h
 //
+// = DESCRIPTION
+//     Build configuration file for the Inter-ORB Engine, and application 
+//     level code using it via <corba.hh>
+//
+// = AUTHOR
+//     Copyright 1995 by Sun Microsystems, Inc.
+// 
+//     TAO-specific changes by Chris Cleeland and Douglas C. Schmidt
+//
+// ============================================================================
 
 #if !defined (TAO_ORB_CONFIG_H)
 #define	TAO_ORB_CONFIG_H
 
 #include "ace/OS.h"
+
+// The default size of TAO's server object table.
+#if !defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)
+#define TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE 64
+#endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
+
+// The default multicast port number for TAO Naming Service.
+#if !defined (TAO_DEFAULT_NAME_SERVER_PORT)
+#define TAO_DEFAULT_NAME_SERVER_PORT 10013
+#endif /* TAO_DEFAULT_SERVER_PORT */
+
+// The default starting port number for TAO servers.
+#if !defined (TAO_DEFAULT_SERVER_PORT)
+#define TAO_DEFAULT_SERVER_PORT 10014
+#endif /* TAO_DEFAULT_SERVER_PORT */
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
@@ -80,17 +108,14 @@
 // Define if you have the vprintf function.  
 #define HAVE_VPRINTF 1
 
-// Define if you have strerror declared.  
-#define DECLARED_STRERROR 1
-
-// With ACE, we always have this :-)
-#define HAVE_GETTIMEOFDAY
-
+// Avoid namespace pollution that's common on older UNIXes...
 #if defined (minor)
-	// namespace pollution that's common on older UNIXes,
-    // XXX this can't go here, "autoconf" wants to own #undef
-/* #	undef	minor */
-#endif	/* minor */
+#undef minor
+#endif /* minor */
+
+#if defined (major)
+#undef major
+#endif /* major*/
 
 // For Win16, near/far pointers reflect same/other segment addressing.
 // Of course, ACE doesn't support Win16, so why bother?
@@ -107,20 +132,6 @@
 //#	else	// Win16
 //#		define	SIZEOF_INT	2
 //#	endif	// Win32/Win16
-
-#	define DECLARED_ACCEPT
-#	define DECLARED_BIND
-#	define DECLARED_CONNECT
-#	define DECLARED_GETHOSTNAME
-#	define DECLARED_H_ERRNO
-#	define DECLARED_LISTEN
-#	define DECLARED_LISTEN
-#	define DECLARED_SELECT
-#	define DECLARED_SETSOCKOPT
-#	define DECLARED_SHUTDOWN
-#	define DECLARED_SOCKET
-
-#	define HAVE_STRDUP
 
 #  if !defined (linux) && !defined (_WIN32)
 typedef	unsigned long pid_t;

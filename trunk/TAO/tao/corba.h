@@ -124,11 +124,11 @@
 #include "tao/marshal.i"
 #include "tao/client_factory.i"
 
-#  if defined(do_undef_on_ACE_INLINE)
+#  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE
 #    define ACE_INLINE
-#  endif
+#  endif /* do_undef_on_ACE_INLINE */
 
 // the following *.i files are conditionally included here
 #if defined (__ACE_INLINE__)

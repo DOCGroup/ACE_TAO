@@ -18,17 +18,6 @@
 #if !defined (TAO_CLIENT_FACTORY_H)
 #  define TAO_CLIENT_FACTORY_H
 
-#if 0
-#  include "ace/SOCK_Acceptor.h"
-#  include "ace/SOCK_Connector.h"
-#  include "ace/Svc_Handler.h"
-#  include "ace/Strategies_T.h"
-#  include "ace/Connector.h"
-#  include "ace/Synch.h"
-
-#  include "tao/params.h"
-#endif /* 0 */
-
 class TAO_Client_Strategy_Factory : public ACE_Service_Object
   // = TITLE
   //    Abstract factory used by the client to manufacture various
@@ -43,6 +32,7 @@ public:
   // Destructor
 
 #if 0
+  // @@ Please remove me if possible.
   virtual TAO_CONNECTOR *connector (void);
   // Return a pointer to a connector using appropriate strategies.
 #endif /* 0 */

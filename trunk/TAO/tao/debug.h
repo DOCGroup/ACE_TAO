@@ -19,10 +19,6 @@
 #if !defined (TAO_DEBUG_H)
 #define	TAO_DEBUG_H
 
-#ifndef	DECLARED_STRERROR
-extern "C" char *strerror (int);
-#endif /* DECLARED_STRERROR */
-
 // These are global to simplify is use by other code, very much in
 // particular by getopt and related argument-parsing code
 //
@@ -102,13 +98,13 @@ extern void ACE_Svc_Export dmsg_filter (u_int level,
 
 extern void ACE_Svc_Export dmsg_v (const char *_FAR fmt, ...);
 extern void ACE_Svc_Export _dmsg_x (CORBA_Environment _FAR &env,
-				const char *_FAR info);
+                                    const char *_FAR info);
 extern void ACE_Svc_Export dmsg_opaque (char *_FAR label,
-				  u_char *_FAR buffer,
-				  u_long len);
+                                        u_char *_FAR buffer,
+                                        u_long len);
 extern void ACE_Svc_Export dmsg_opaque_full (char *_FAR label,
-				       const u_char *_FAR buffer,
-				       u_long len);
+                                             const u_char *_FAR buffer,
+                                             u_long len);
 #endif /* DEBUG */
 
 #endif /* TAO_DEBUG_H */
