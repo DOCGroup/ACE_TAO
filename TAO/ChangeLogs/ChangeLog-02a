@@ -1,3 +1,13 @@
+Thu Sep 01 00:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	*  tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	*  tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	   Changed dynamic_cast to <_tao_QueryInterface> for casting
+	   TAO specifc RequestInfo from
+	   PortableInterceptor::ClientRequestInfo and
+	   PortableInterceptor::ServerRequestInfo. Thanks to Carlos and
+	   David for brainstorming on this issue.
+		
 Thu Aug 31 16:31:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Merge the pluggable_poa change, the long description of the
