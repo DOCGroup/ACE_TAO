@@ -1,3 +1,8 @@
+Mon Mar 18 11:13:16 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Server_Leaks/client.cpp: 
+	  Fixed the ACE_CHECK to ACE_TRY_CHECK.
+
 Mon Mar 18 13:06:10 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
