@@ -19,6 +19,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Thread_Manager.h"
+#include "ace/os_include/os_netdb.h"
 #include "Logging_Handler.h"
 #include "AC_CLD_export.h"
 #include <openssl/ssl.h>

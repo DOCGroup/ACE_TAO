@@ -19,6 +19,7 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Unbounded_Set.h"
+#include "ace/os_include/os_netdb.h"
 #include "AIO_CLD_export.h"
 #include <openssl/ssl.h>
 

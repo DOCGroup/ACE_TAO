@@ -1,3 +1,22 @@
+Thu Nov 13 18:39:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/TPC_Logging_Server.cpp:
+          Added #include os_netdb.h to get MAXHOSTNAMELEN.
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.h:
+          Fixed typo, missing "ace" in #include path.
+
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+          Added #include OS_NS_select.h.
+
+        * examples/OS/Process/process.cpp:
+          Added #include OS_NS_stdio.h.
+
+        * examples/QOS/Diffserv/diffserv_test.cpp:
+          Added #include OS_NS_string.h.
+
 Thu Nov 13 12:13:28 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyGenerator.pm:
