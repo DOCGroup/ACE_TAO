@@ -2156,9 +2156,7 @@ CORBA_Any::operator>>= (to_object obj) const
                                    this->byte_order_,
                                    TAO_ORB_Core_instance ());
 
-              int result = stream >> obj.ref_;
-
-              return !result;
+              return (stream >> obj.ref_);
             }
         }
       else
