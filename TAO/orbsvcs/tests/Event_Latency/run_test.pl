@@ -29,11 +29,11 @@ $ES = Process::Create ("..".$DIR_SEPARATOR
 		       ."..".$DIR_SEPARATOR
 		       ."Event_Service".$DIR_SEPARATOR
 		       ."Event_Service".$EXE_EXT,
-		       "-ORBNameServiceIOR file://$NS_ior");
+		       "-ORBNameServiceIOR file://$NS_ior -t new");
 
 sleep $sleeptime;
 
-$TEST = Process::Create ($EXEPREFIX."Event_Latency".$EXE_EXT,
+$TEST = Process::Create (".".$DIR_SEPARATOR."Event_Latency".$EXE_EXT,
 			 "-ORBNameServiceIOR file://$NS_ior"
 			 ." -j -m 100");
 

@@ -10,9 +10,9 @@
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Basic_Factory.h"
 #include "Event_Latency.h"
@@ -95,27 +95,8 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
   entry_point (my_name);
   TAO_TRY
     {
-      RtecScheduler::Scheduler_ptr server =
-        ACE_Scheduler_Factory::server ();
-
-      rt_info_ =
-        server->create (my_name, TAO_TRY_ENV);
-
-      const ACE_hrtime_t wcet_ns = ACE_UINT64_LITERAL (10000000); // 1 ms
-      RtecScheduler::Time wcet;
-      ORBSVCS_Time::hrtime_to_TimeT (wcet, wcet_ns);
-
-      server->set (rt_info_,
-                   RtecScheduler::VERY_HIGH_CRITICALITY,
-                   wcet,
-                   wcet,
-                   ORBSVCS_Time::zero (),
-                   0,
-                   RtecScheduler::VERY_LOW_IMPORTANCE,
-                   ORBSVCS_Time::zero (),
-                   1,
-                   RtecScheduler::OPERATION,
-                   TAO_TRY_ENV);
+      // No scheduling for this test...
+      this->rt_info_ = 0;
 
       // Create the event that we're registering for.
       ACE_ConsumerQOS_Factory dependencies;
@@ -414,26 +395,7 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->channel_admin_ =
         RtecEventChannelAdmin::EventChannel::_duplicate (ec);
 
-      RtecScheduler::Scheduler_ptr server =
-        ACE_Scheduler_Factory::server ();
-
-      this->rt_info_ =
-        server->create (name, TAO_TRY_ENV);
-
-      RtecScheduler::Period_t period = timeout_interval * 20000;
-
-      server->set (rt_info_,
-                   RtecScheduler::VERY_HIGH_CRITICALITY,
-                   ORBSVCS_Time::zero (),
-                   ORBSVCS_Time::zero (),
-                   ORBSVCS_Time::zero (),
-                   period,
-                   RtecScheduler::VERY_LOW_IMPORTANCE,
-                   ORBSVCS_Time::zero (),
-                   1,
-                   RtecScheduler::OPERATION,
-                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->rt_info_ = 0;
 
       ACE_SupplierQOS_Factory publications;
       publications.insert (supplier_id_,
@@ -690,11 +652,6 @@ Latency_Supplier::shutdown (void)
       // Disconnect from the push supplier.
       suppliers_->disconnect_push_supplier (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      if (master_)
-        {
-          TAO_ORB_Core_instance ()->orb ()->shutdown ();
-        }
     }
   TAO_CATCHANY
     {
@@ -888,8 +845,6 @@ main (int argc, char *argv [])
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_Scheduler_Factory::use_config (naming_context.in ());
-
       if (get_options (argc, argv))
         ACE_OS::exit (-1);
 
@@ -971,7 +926,8 @@ main (int argc, char *argv [])
             ACE_ERROR_RETURN ((LM_ERROR, "generate_events failed.\n"), -1);
         }
 
-      orb->run ();
+      while (!shutting_down)
+        orb->perform_work ();
 
       for (i = 0; i < suppliers; ++i)
         {

@@ -28,22 +28,34 @@ $CosEC2_params = "-n cosec2 -e 20 -o 5 -p \"6 21\"";
 sub cosec_multiple_test1
 {
     # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT, "");
+    $SV1 = Process::Create ("..".$DIR_SEPARATOR
+			    ."..".$DIR_SEPARATOR
+			    ."Naming_Service".$DIR_SEPARATOR
+			    ."Naming_Service".$EXE_EXT, "");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT, "");
+    $SV2 = Process::Create ("..".$DIR_SEPARATOR
+			    ."..".$DIR_SEPARATOR
+			    ."Event_Service".$DIR_SEPARATOR
+			    ."Event_Service".$EXE_EXT, "-t new");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT, $CosEC1_params);
+    $SV3 = Process::Create ("..".$DIR_SEPARATOR
+			    ."..".$DIR_SEPARATOR
+			    ."CosEvent_Service".$DIR_SEPARATOR
+			    ."CosEvent_Service".$EXE_EXT, $CosEC1_params);
 
     sleep 10;
 
     # now start the CosEC2..
-    $SV4 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT, $CosEC2_params);
+    $SV4 = Process::Create ("..".$DIR_SEPARATOR
+			    ."..".$DIR_SEPARATOR
+			    ."CosEvent_Service".$DIR_SEPARATOR
+			    ."CosEvent_Service".$EXE_EXT, $CosEC2_params);
 
     sleep 10;
 
