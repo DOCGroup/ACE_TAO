@@ -161,7 +161,7 @@ ACE_DLL_Handle::refcount (void) const
 }
 
 void *
-ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name)
+ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
 {
   ACE_TRACE ("ACE_DLL_Handle::symbol");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
@@ -173,7 +173,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name)
  // Linux says that the symbol could be null and that it isn't an error.
   // So you should check the error message also, but since null symbols
   // won't do us much good anyway, let's still report an error.
-  if (!sym)
+  if (!sym && ignore_errors != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("ACE_DLL_Handle::symbol (\"%s\") \"%s\"."),
                        auto_name.get (), this->error ()->c_str ()),
@@ -205,7 +205,8 @@ ACE_DLL_Handle::get_handle (int become_owner)
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("ACE_DLL_Handle::get_handle: ")
               ACE_LIB_TEXT ("handle %s, refcount %d\n"),
-              this->handle_ == ACE_SHLIB_INVALID_HANDLE ? "invalid" : "valid",
+              this->handle_ == ACE_SHLIB_INVALID_HANDLE ? 
+                ACE_LIB_TEXT ("invalid") : ACE_LIB_TEXT ("valid"),
               this->refcount_));
 
   return handle;
@@ -228,7 +229,7 @@ ACE_DLL_Manager_Ex::ACE_DLL_Manager_Ex (int size)
   : handle_vector_ (0),
     current_size_ (0),
     total_size_ (0),
-    unload_strategy_ (0)
+    unload_policy_ (ACE_DLL_UNLOAD_POLICY_PER_DLL)
 {
   ACE_TRACE ("ACE_DLL_Manager_Ex::ACE_DLL_Manager_Ex");
 
@@ -301,34 +302,38 @@ ACE_DLL_Manager_Ex::close_dll (const ACE_TCHAR *dll_name)
 }
 
 u_long
-ACE_DLL_Manager_Ex::unload_strategy (void) const
+ACE_DLL_Manager_Ex::unload_policy (void) const
 {
   ACE_TRACE ("ACE_DLL_Manager_Ex::unload_strategy");
-  return this->unload_strategy_;
+  return this->unload_policy_;
 }
 
 void
-ACE_DLL_Manager_Ex::unload_strategy (u_long unload_strategy)
+ACE_DLL_Manager_Ex::unload_policy (u_long unload_policy)
 {
   ACE_TRACE ("ACE_DLL_Manager_Ex::unload_strategy");
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
 
-  u_long old_strategy = this->unload_strategy_;
-  this->unload_strategy_ = unload_strategy;
+  u_long old_policy = this->unload_policy_;
+  this->unload_policy_ = unload_policy;
 
-  // If going from LAZY to EAGER, inform all the ACE_DLL_Handle
-  // objects with
-  if (this->handle_vector_ &&
-      ACE_BIT_ENABLED (old_strategy, LAZY) &&
-      ACE_BIT_DISABLED (unload_strategy, LAZY))
-    {
-      for (int i = this->current_size_ - 1; i >= 0; i--)
-        {
-          if (this->handle_vector_[i] &&
-              this->handle_vector_[i]->refcount () == 0)
-            this->handle_vector_[i]->close (1);
-        }
-    }
+  // If going from LAZY to EAGER or from PER_DLL to PER_PROCESS|EAGER, 
+  // call close(1) on all the ACE_DLL_Handle objects with refcount == 0 
+  // which will force those that are still loaded to be unloaded.
+  if (this->handle_vector_)
+    if (( ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_LAZY) &&
+          ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_LAZY) ) ||
+        ( ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_LAZY) &&
+          ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_PER_DLL) &&
+          ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_PER_DLL) ))
+      {
+        for (int i = this->current_size_ - 1; i >= 0; i--)
+          {
+            if (this->handle_vector_[i] &&
+                this->handle_vector_[i]->refcount () == 0)
+              this->handle_vector_[i]->close (1);
+          }
+      }
 }
 
 int
@@ -393,28 +398,43 @@ ACE_DLL_Manager_Ex::find_dll (const ACE_TCHAR *dll_name) const
 }
 
 int
-ACE_DLL_Manager_Ex::unload_dll (ACE_DLL_Handle *dll_handle, int force_close)
+ACE_DLL_Manager_Ex::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 {
   ACE_TRACE ("ACE_DLL_Manager_Ex::unload_dll");
 
   if (dll_handle)
     {
-      int close = force_close;
-      if (close == 0)
+      int unload = force_unload;
+      if (unload == 0)
         {
           // apply strategy
-          if (ACE_BIT_DISABLED (this->unload_strategy_, PER_DLL))
+          if (ACE_BIT_DISABLED (this->unload_policy_, 
+                                ACE_DLL_UNLOAD_POLICY_PER_DLL))
             {
-              close = ACE_BIT_DISABLED (this->unload_strategy_, LAZY);
+              unload = ACE_BIT_DISABLED (this->unload_policy_, 
+                                         ACE_DLL_UNLOAD_POLICY_LAZY);
             }
           else
             {
-              // need to get it from the dll, so just dummy it up for now
-              close = ACE_BIT_DISABLED (this->unload_strategy_, LAZY);
+              // Declare the type of the symbol:
+              typedef int (*dll_unload_policy)(void);
+
+              // Try to get the symbol, and have symbol() ignore errors.
+              void *foo = dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
+
+              // Cast the void* to long first.
+              long tmp = ACE_reinterpret_cast (long, foo);
+              dll_unload_policy the_policy = ACE_reinterpret_cast (dll_unload_policy, tmp);
+              if (the_policy != 0)
+                unload = ACE_BIT_DISABLED (the_policy (), 
+                                           ACE_DLL_UNLOAD_POLICY_LAZY);
+              else
+                unload = ACE_BIT_DISABLED (this->unload_policy_, 
+                                           ACE_DLL_UNLOAD_POLICY_LAZY);
             }
         }
 
-      if (dll_handle->close (close) != 0)
+      if (dll_handle->close (unload) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::unload error.\n")),
                           -1);
@@ -427,3 +447,9 @@ ACE_DLL_Manager_Ex::unload_dll (ACE_DLL_Handle *dll_handle, int force_close)
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

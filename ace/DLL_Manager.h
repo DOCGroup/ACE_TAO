@@ -84,8 +84,11 @@ public:
   sig_atomic_t refcount (void) const;
 
   /// If <symbol_name> is in the symbol table of the DLL a pointer to
-  /// the <symbol_name> is returned.  Otherwise, returns 0.
-  void *symbol (const ACE_TCHAR *symbol_name);
+  /// the <symbol_name> is returned.  Otherwise, returns 0.  Set the
+  /// ignore_errors flag to supress logging errors if symbol_name isn't
+  /// found.  This is nice if you just want to probe a dll to see what's
+  /// available, since missing functions in that case aren't really errors.
+  void *symbol (const ACE_TCHAR *symbol_name, int ignore_errors = 0);
 
   /**
    * Return the handle to the caller.  If <become_owner> is non-0 then
@@ -145,21 +148,6 @@ public:
     DEFAULT_SIZE = ACE_DEFAULT_DLL_MANAGER_SIZE
   };
 
-  enum UNLOAD_STRATEGY
-  {
-    /// The default strategy is to use a per-process strategy
-    /// and unload dlls eagerly, i.e., as soon as the refcount
-    /// reaches zero.
-    DEFAULT = 0,
-    /// Use strategies on a per-dll basis.  If dll doesn't
-    /// define a strategy, use the default one.
-    PER_DLL = 1,
-
-    /// Apply the unload_strategy hook method to decide when to 
-    /// unload the dll, defaults to program exit.
-    LAZY = PER_DLL << 1
-  };
-
   /// Default constructor.
   ACE_DLL_Manager_Ex (int size = ACE_DLL_Manager_Ex::DEFAULT_SIZE);
 
@@ -175,13 +163,13 @@ public:
   /// Close the underlying dll.  Decrements the refcount.
   int close_dll (const ACE_TCHAR *dll_name);
 
-  /// Returns the current UNLOAD_STRATEGY.
-  u_long unload_strategy (void) const;
+  /// Returns the current per-process UNLOAD_POLICY.
+  u_long unload_policy (void) const;
 
-  /// Set the UNLOAD_STRATEGY.  If the strategy is changed for 
+  /// Set the per-process UNLOAD_POLICY.  If the policy is changed from 
   /// LAZY to EAGER, then it will also unload any dlls with zero
   /// refcounts.
-  void unload_strategy (u_long unload_strategy = 0);
+  void unload_policy (u_long unload_policy);
 
 protected:
   // Allocate handle_vector_.
@@ -194,7 +182,7 @@ protected:
   ACE_DLL_Handle *find_dll (const ACE_TCHAR *dll_name) const;
 
   // Applies strategy for unloading dll.
-  int unload_dll (ACE_DLL_Handle *dll_handle, int force_close = 0);
+  int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);
 
 private:
 
@@ -208,7 +196,7 @@ private:
   int total_size_;
 
   /// Unload strategy.
-  u_long unload_strategy_;
+  u_long unload_policy_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository

@@ -85,8 +85,11 @@ public:
   ~ACE_DLL (void);
 
   /// If <symbol_name> is in the symbol table of the DLL a pointer to
-  /// the <symbol_name> is returned.  Otherwise, returns 0.
-  void *symbol (const ACE_TCHAR *symbol_name);
+  /// the <symbol_name> is returned.  Otherwise, returns 0.  Setting
+  /// ignore_errors = 1 allows you to probe a dll without generating
+  /// error messages in the log.  Handy for determining the capabilities
+  /// of a library.
+  void *symbol (const ACE_TCHAR *symbol_name, int ignore_errors = 0);
 
   /// Returns a pointer to a string explaining that an error occured.  You
   /// will need to consult the error log for the actual error string
