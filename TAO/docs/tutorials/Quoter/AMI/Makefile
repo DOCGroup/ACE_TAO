@@ -12,16 +12,17 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
 
 IDL_FILES = Quoter
-IDL_SRC = QuoterC.cpp QuoterS.cpp
+IDL_SRC = QuoterC QuoterS
 BIN = client server
 
-SRC =  $(IDL_SRC) $(addsuffix .cpp, $(BIN) Handler_i Stock_i Stock_Factory_i)
+LDLIBS = -lTAO -lTAO_PortableServer
 
-CLIENT_OBJS = $(IDL_SRC:.cpp:.o) $(addsuffix .o, client Handler_i)
-SERVER_OBJS = $(IDL_SRC:.cpp:.o) $(addsuffix .o, server Stock_i Stock_Factory_i)
+SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) Handler_i Stock_i Stock_Factory_i)
+
+CLIENT_OBJS = $(addsuffix .o, client Handler_i $(IDL_SRC))
+SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i $(IDL_SRC))
 
 TAO_IDLFLAGS=-GC -in
 
@@ -57,24 +58,76 @@ realclean: clean
 
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Handler_i.h QuoterS.h QuoterC.h QuoterC.i \
- QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h Stock_i.h QuoterS.h QuoterC.h \
- QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ QuoterC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h QuoterC.i
 
-.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h QuoterC.i QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h QuoterC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
+ $(TAO_ROOT)/tao/PortableServer/poa_macros.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/Handler_i.o .obj/Handler_i.so .shobj/Handler_i.o .shobj/Handler_i.so: Handler_i.cpp Handler_i.h QuoterS.h QuoterC.h QuoterC.i \
- QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h QuoterC.i \
- QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h Stock_i.h \
- QuoterS.h QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp \
- QuoterS.i
+ QuoterS.h QuoterC.h QuoterC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
