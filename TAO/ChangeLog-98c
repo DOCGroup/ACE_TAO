@@ -1,3 +1,11 @@
+Wed Jul 15 12:45:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.cpp: 
+	  Seth found more problems with the top-level memory stored inside
+	  an Any, sometimes the memory has to be deleted, sometme it
+	  doesn't. IMHO this code requires a big revision to understand
+	  what is going on.
+
 Wed Jul 15 12:07:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Servant_Base.cpp: 
