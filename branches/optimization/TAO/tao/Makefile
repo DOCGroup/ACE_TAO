@@ -98,7 +98,6 @@ PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging_Utils \
   GIOP_Message_Base \
   GIOP_Message_Handler \
-  GIOP_Message_Lite \
   GIOP_Message_Generator_Parser \
   GIOP_Message_Generator_Parser_10 \
   GIOP_Message_Generator_Parser_11 \
