@@ -1,3 +1,9 @@
+Tue Feb 15 18:09:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+
+	  Regenerated.
+
 Tue Feb 15 14:10:33 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAOACE.mwc:
