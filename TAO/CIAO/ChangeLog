@@ -1,6 +1,7 @@
 Mon Sep 27 11:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Config_Handlers.mpc:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
           Instead of adding the valuetype and ifr_client to libs, use the
           corresponding base projects
 
