@@ -1,122 +1,127 @@
+Sat Sep 11 14:13:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tests/NestedUpcall/Simple/run_test.pl:  The wrong argument
+          (-t) was being passed to client.  Changed to (-n) instead.
+
 Sat Sep 11 02:04:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/MessagingS.h (POA_Messaging): Removed the redundant
-	  <_dispatch> declaration, the compiler did not like the multiple
-	  declaration stuff. ;)
+        * tao/MessagingS.h (POA_Messaging): Removed the redundant
+          <_dispatch> declaration, the compiler did not like the multiple
+          declaration stuff. ;)
 
 Fri Sep 10 19:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/MessagingS.h:
-	* tao/MessagingS.cpp:
-	  Added the missing _dispatch() methods to the Policies, the
-	  compiler did not like the multiple inheritance madness.
+        * tao/MessagingS.h:
+        * tao/MessagingS.cpp:
+          Added the missing _dispatch() methods to the Policies, the
+          compiler did not like the multiple inheritance madness.
 
 Fri Sep 10 14:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp,
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
-	* orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp,
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp: Updated this
-	  code to store the result of the new get_context() implementation
- 	  described below into a _var so that it'll be cleaned up
- 	  properly.
+        * orbsvcs/tests/Simple_Naming/client.cpp,
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp,
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp: Updated this
+          code to store the result of the new get_context() implementation
+          described below into a _var so that it'll be cleaned up
+          properly.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils: Changed the implementation
-	  of get_context() so that it _duplicate()s the pointer to enable
- 	  it to be stored into a *_var.  Thanks to Timothy Canham
- 	  <Timothy.Canham@jpl.nasa.gov> for suggesting this.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils: Changed the implementation
+          of get_context() so that it _duplicate()s the pointer to enable
+          it to be stored into a *_var.  Thanks to Timothy Canham
+          <Timothy.Canham@jpl.nasa.gov> for suggesting this.
 
 Fri Sep 10 16:11:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POAC.h: Added LocalityConstrainedServantBase to the
-	  PortableServer namespace.
+        * tao/POAC.h: Added LocalityConstrainedServantBase to the
+          PortableServer namespace.
 
-	* tao/MessagingS (Policies): Since messaging policies are always
-	  collocated, they now use multiple inheritance from the new
-	  TAO_Locality_Constrained_ServantBase class to get locality
-	  constraints and POA registration behavior.
+        * tao/MessagingS (Policies): Since messaging policies are always
+          collocated, they now use multiple inheritance from the new
+          TAO_Locality_Constrained_ServantBase class to get locality
+          constraints and POA registration behavior.
 
-	* tao/POA_CORBA.h (Policy): Changed POA_CORBA::Policy to inherit
-	  from TAO_Locality_Constrained_ServantBase instead of
-	  TAO_Local_ServantBase when TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
-	  is turned on.  This will give us the locality constrained
-	  policies, while still giving the semantics of registering with
-	  the POA.
+        * tao/POA_CORBA.h (Policy): Changed POA_CORBA::Policy to inherit
+          from TAO_Locality_Constrained_ServantBase instead of
+          TAO_Local_ServantBase when TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+          is turned on.  This will give us the locality constrained
+          policies, while still giving the semantics of registering with
+          the POA.
 
-	  Note that the collocated stubs of most policies still use direct
-	  access to the servant.  Therefore, if absolutely normal servant
-	  behavior is desired, these stubs need to be changed to use the
-	  through POA policy.
+          Note that the collocated stubs of most policies still use direct
+          access to the servant.  Therefore, if absolutely normal servant
+          behavior is desired, these stubs need to be changed to use the
+          through POA policy.
 
-	* tao/Servant_Base.h (TAO_Locality_Constrained_ServantBase): Added
-	  a new class TAO_Locality_Constrained_ServantBase.
+        * tao/Servant_Base.h (TAO_Locality_Constrained_ServantBase): Added
+          a new class TAO_Locality_Constrained_ServantBase.
 
           TAO_Local_ServantBase does not register with the POA and does
-	  not produce a valid stub, i.e., object references of this
-	  servant cannot be exported.  The (collocated) stubs of these
-	  servants will always be direct, i.e., call directly to the
-	  servant and don't call through the POA since this servant is not
-	  registered with the POA.
+          not produce a valid stub, i.e., object references of this
+          servant cannot be exported.  The (collocated) stubs of these
+          servants will always be direct, i.e., call directly to the
+          servant and don't call through the POA since this servant is not
+          registered with the POA.
 
-	  TAO_Locality_Constrained_ServantBase does register with the POA.
-	  However, it does not produce a valid stub, i.e., object
-	  references of this servant cannot be exported.  The (collocated)
-	  stubs of these servants can either call directly to the servant
-	  or go through the POA.
+          TAO_Locality_Constrained_ServantBase does register with the POA.
+          However, it does not produce a valid stub, i.e., object
+          references of this servant cannot be exported.  The (collocated)
+          stubs of these servants can either call directly to the servant
+          or go through the POA.
 
-	  Bug 313 was fixed by the above changes.
+          Bug 313 was fixed by the above changes.
 
 Fri Sep 10 16:07:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp (handle_input): Changed to use our
-	  own fmod method.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp (handle_input): Changed to use our
+          own fmod method.
 
 Fri Sep 10 15:48:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  When compiling with RT_CORBA disabled there is no need to
-	  destroy the priority mapping object.  In fact a syntax error
-	  occurs if we try to destroy it.
+        * tao/ORB_Core.cpp:
+          When compiling with RT_CORBA disabled there is no need to
+          destroy the priority mapping object.  In fact a syntax error
+          occurs if we try to destroy it.
 
 Fri Sep 10 14:36:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Fixed so it will not trigger some bugs in egcs when exceptions
-	  are enabled.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Fixed so it will not trigger some bugs in egcs when exceptions
+          are enabled.
 
 Fri Sep 10 12:50:12 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.cpp: Added a method create_exception_tc  within
-	  CORBA_ORB interface.
+        * tao/ORB.h:
+        * tao/ORB.cpp: Added a method create_exception_tc  within
+          CORBA_ORB interface.
 
 Fri Sep 10 12:18:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
-	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
-	  Use the -Ge 1 option to generate the CORBA::Environment
-	  option. Thanks to Joerg Pommnitz <pommnitz@darmstadt.gmd.de> for
-	  pointing out this problem.
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+          Use the -Ge 1 option to generate the CORBA::Environment
+          option. Thanks to Joerg Pommnitz <pommnitz@darmstadt.gmd.de> for
+          pointing out this problem.
 
 Thu Sep  9 21:30:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB.cpp (string_to_object):
+        * tao/ORB.cpp (string_to_object):
 
-	  If a NULL string is passed as an argument, throw an exception.
-	  [Bug 316]
+          If a NULL string is passed as an argument, throw an exception.
+          [Bug 316]
 
 Thu Sep  9 20:49:17 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/source.cpp:
-	* orbsvcs/orbsvcs/AV/source.h:
-	  Added the compare_func function to remove warnings
+        * orbsvcs/orbsvcs/AV/source.cpp:
+        * orbsvcs/orbsvcs/AV/source.h:
+          Added the compare_func function to remove warnings
 
 Thu Sep  9 18:43:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  Fixed memory leak in the ORB, thanks to Nanbor for pointing this
-	  out.
+        * tao/ORB_Core.cpp:
+          Fixed memory leak in the ORB, thanks to Nanbor for pointing this
+          out.
 
 Thu Sep 09 14:55:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -144,16 +149,16 @@ Wed Sep  9 10:35:12 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Wed Sep 08 16:40:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Exception.cpp (~CORBA_Exception): Rememberred to release the
-	  typecode pointer.  Otherwise, it caused MLK when sending system
-	  exceptions.
+        * tao/Exception.cpp (~CORBA_Exception): Rememberred to release the
+          typecode pointer.  Otherwise, it caused MLK when sending system
+          exceptions.
 
-	* tests/Param_Test/param_test_i.cpp (test_exception): There's no
-	  need to dupping the string when throwing the Ooops exception.
-	  The constructor is responsible for dupping the string.
+        * tests/Param_Test/param_test_i.cpp (test_exception): There's no
+          need to dupping the string when throwing the Ooops exception.
+          The constructor is responsible for dupping the string.
 
-	* tests/Interceptors/server.cpp: Be sure to destroy POA to avoid
-	  resource leaks.
+        * tests/Interceptors/server.cpp: Be sure to destroy POA to avoid
+          resource leaks.
 
 Wed Sep  8 14:58:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
