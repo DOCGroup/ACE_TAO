@@ -13,9 +13,7 @@ LD              = $(CXX)
 
 CPPFLAGS        += -ptall -O +pp -D_SGI_MP_SOURCE -woff 3203,3209,3161,3262,3665
 
-##CPPFLAGS      += -ptused -prelink +pp -D_SGI_MP_SOURCE -woff 3203,3209,3161,3
-2
-62,3665
+##CPPFLAGS      += -ptused -prelink +pp -D_SGI_MP_SOURCE -woff 3203,3209,3161,3262,3665
 LDFLAGS         += -rpath "$(WRAPPER_ROOT)/ace"
 ### LDFLAGS             += -rpath "$(WRAPPER_ROOT)/ace" -Wl,-woff,85
 LIBS            += -lpthread

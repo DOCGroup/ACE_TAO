@@ -833,57 +833,41 @@ ACE_OS::gettimeofday (void)
 {
   // ACE_TRACE ("ACE_OS::gettimeofday");
   timeval tv;
+  int result = 0;
 #if defined (ACE_WIN32)
   // From Todd Montgomery...
   struct _timeb tb;
   ::_ftime (&tb);
   tv.tv_sec = tb.time;
   tv.tv_usec = 1000 * tb.millitm;
-#if 0
-  // This version of the code has bugs -- don't use until it's been fixed...
-  // Alternative form.
-  SYSTEMTIME system_time;
-  FILETIME   file_time;
-
-  ::GetSystemTime (&system_time);
-  ::SystemTimeToFileTime (&system_time, &file_time);
-  ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime, 
-				     file_time.dwHighDateTime);
-  // Convert 100ns units to seconds;
-  tv.tv_sec = long (_100ns / (10000 * 1000));
-  // Convert remainder to microseconds;
-  tv.tv_usec = long ((_100ns - (tv.tv_sec * (10000 * 1000))) * 10);
-#endif 
-
 #elif defined (ACE_HAS_AIX_HI_RES_TIMER)
   timebasestruct_t tb;
 
-  ::read_real_time(&tb, TIMEBASE_SZ);
-  ::time_base_to_time(&tb, TIMEBASE_SZ);
+  ::read_real_time (&tb, TIMEBASE_SZ);
+  ::time_base_to_time (&tb, TIMEBASE_SZ);
 
   tv.tv_sec = tb.tb_high;
   tv.tv_usec = tb.tb_low / 1000L;
-
 #else
 #if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
   (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k) && !defined (SCO))
-  int result;
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
 #elif defined (VXWORKS) || defined (CHORUS)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
   struct timespec ts;
 
-  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
-
+  ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
 #else
-  int result;
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
 #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 #endif /* ACE_WIN32 */
-  return ACE_Time_Value (tv);
+  if (result == -1)
+    return -1;
+  else
+    return ACE_Time_Value (tv);
 }
 
 ACE_INLINE int 
@@ -1641,7 +1625,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // passed as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
       ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-      msec_timeout = relative_time.msec ();
+
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.
+      if (relative_time < ACE_Time_Value::zero);
+	msec_timeout = 0;
+      else
+	msec_timeout = relative_time.msec ();
     }
   
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
@@ -1777,7 +1767,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // passed as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
       ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-      msec_timeout = relative_time.msec ();
+
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.
+      if (relative_time < ACE_Time_Value::zero);
+	msec_timeout = 0;
+      else
+	msec_timeout = relative_time.msec ();
     }
   
   // We keep the lock held just long enough to increment the count of
@@ -4867,11 +4863,11 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 {
   // ACE_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTO) || defined (ACE_HAS_NONCONST_MSGSND)
   ACE_OSCALL_RETURN (::msgsnd (int_id, (msgbuf *) buf, len, flags), int, -1);
 #else
   ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTO || ACE_HAS_NONCONST_MSGSND */
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (buf);
