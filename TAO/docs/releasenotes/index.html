@@ -949,11 +949,9 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of February 19, 2001):
+<p>Current Status (as of March 31, 2001):
 <ul>
 
-<LI><P>First pass implementing the new Dynamic Any interfaces.
-  </P>
 </LI>
 
 <li> Implementation of Interface.idl completed, for types fully supported
@@ -983,6 +981,8 @@ other Lynx OS build is on a PowerPC chip, and uses GCC version 2.9-gnupro-98r2. 
 are currently configuration problems with this build, and ACE_HAS_USING_KEYWORD, which
 is necessary for namespace recognition by the preprocessor, is not defined.</li><p>
 
+<li> IFR is now compatible with the CORBA 2.4 version of Interface.idl.
+
 </ul>
 
 <p>Known Issues:
@@ -1008,11 +1008,6 @@ By specifying a disk file to read from at startup, the storage may
 be made persistent. There is also an option to use a win32 registry
 to store the data, although persistence is not available with this
 option.</li><p>
-
-<li> The create_*_tc functions have been moved from the ORB (CORBA 2.x) to
-a new class TypeCodeFactory (CORBA 3.0). The TypeCodeFactory is built as
-a separate DLL, and can be dynamically loaded into a running TAO ORB
-by calling resolve_initial_references ("TypeCodeFactory").</li><p>
 
 <li> Several methods have been added to class TypeCodeFactory, including
 create_exception_tc, create_alias_tc, create_native_tc, create_wstring_tc,
@@ -1042,18 +1037,33 @@ file added to the IFR, a client started, which discovers information about a des
 operation by searching the IFR, and a DII request constructed from this information.
 </li><p>
 
+<li> The TypeCodeFactory has been moved from the IFR_Service directory to its own
+directory under TAO/tao, taking its place alongside the other satellite libraries
+that have been created recently.</li><p>
+
+<li> IFR has been made compliant with the CORBA 2.4 version of Interface.idl.
+Two new IFR object classes have been added, AbstractInterfaceDef and 
+LocalInterfaceDef. Some data structures have changed, as well as the signature
+of some operations.</li><p>
+
+<li> The create_*_tc functions have been replaced in CORBA::ORB (as part of the
+CORBA 2.x IFR compliance). These functions call the corresponding TypeCodeFactory
+functions. The methods are also hooks, so that the TypeCodeFactory does not have to
+be built and linked if an application does not intend to call those functions. If
+it does, however, the application should have
+#include "tao/TypeCodeFactory_Adapter_Impl.h" or something similar in it somewhere,
+and also link to the TAO_TypeCodeFactory library. This will automatically load the
+library if it has been compiled.</li><p>
+
+<li> The CORBA::Object::_get_interface() method has been implemented. This method will
+resolve the IFR of the target object (whether local or remote), and return the
+InterfaceDef associated with that object, if it is found in the repository. The test
+in orbsvcs/tests/InterfaceRepo/Application_Test has been modified to use _get_interface().</li><p>
+
 </ul>
 
 <p>Future Work:
 <ul>
-<li> Implement administration of the IFR. The current plan is to modify the
-IDL compiler to generate an XML file in a special directory for each IDL
-file processed. Then these XML files can be parsed and the IFR populated
-with their contents at any time.</li><p>
-
-<li> Implement the CORBA::Object methods get_interface_def (CORBA 3.0) and
-get_interface (CORBA 2.x), the latter for backward compatibility.</li><p>
-
 <li> Add support for recursive structs and unions to the IFR, and for
 their typecodes to the TypeCodeFactory.</li><p>
 
