@@ -91,36 +91,39 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      *os << "class " << node->strategized_proxy_broker_name () << ";" << be_nl;
+      *os << "class " << node->strategized_proxy_broker_name () 
+          << ";" << be_nl;
     }
 
   *os << be_nl;
 
   // Now generate the class definition.
   *os << "class " << be_global->skel_export_macro ()
-      << " " << namebuf << " : ";
-  if (node->n_inherits () > 0)
+      << " " << namebuf << be_idt_nl << ": " << be_idt;
+
+  long n_parents = node->n_inherits ();
+
+  if (n_parents > 0)
     {
-      // This interface inherits from other interfaces.
-      be_interface *intf;
-
-      *os << "public virtual ";
-      intf = be_interface::narrow_from_decl (node->inherits ()[0]);
-      *os << intf->relative_skel_name (node->full_skel_name ());
-
-      for (i = 1; i < node->n_inherits (); i++)
+      for (i = 0; i < n_parents; ++i)
         {
-          *os << ", public virtual ";
-          intf = be_interface::narrow_from_decl (node->inherits ()[i]);
-          *os << intf->relative_skel_name (node->full_skel_name ());
+          *os << "public virtual " << "POA_" 
+              << node->inherits ()[i]->name ();
+
+          if (i < n_parents - 1)
+            {
+              *os << "," << be_nl;
+            }
         }
     }
   else
-    // We don't inherit from another user defined object, hence our
-    // base class is the ServantBase class.
-    *os << " public virtual PortableServer::ServantBase";
+    {
+      // We don't inherit from another user defined object, hence our
+      // base class is the ServantBase class.
+      *os << "public virtual PortableServer::ServantBase";
+    }
 
-  *os << be_nl
+  *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
       << namebuf << " (void);\n" << be_uidt_nl
