@@ -1,9 +1,15 @@
+Tue Apr 24 14:47:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO_Static.dsp:
+          I managed to remove more files than I expected in my merge,
+          fixed that.
+
 Tue Apr 24 15:00:53 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: 
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
 
-	  Changed the termination times of the processes so they would
-	  not terminate before time.
+          Changed the termination times of the processes so they would
+          not terminate before time.
 
 Tue Apr 24 15:00:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -17,14 +23,14 @@ Tue Apr 24 12:48:19 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
         * tao/Transport.cpp:
-	  Fixed dead-lock in the timeout management.
+          Fixed dead-lock in the timeout management.
 
-	* docs/Options.html:
-	  Documented new option to control the flushing strategy (blocking
-	  vs. reactive)
+        * docs/Options.html:
+          Documented new option to control the flushing strategy (blocking
+          vs. reactive)
 
-	* tao/Asynch_Queued_Message.cpp:
-	  Fixed warnings about unused variable.
+        * tao/Asynch_Queued_Message.cpp:
+          Fixed warnings about unused variable.
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
@@ -36,16 +42,16 @@ Tue Apr 24 12:48:19 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Strategies/UIOP_Connection_Handler.cpp:
         * tao/IIOP_Connection_Handler.h:
         * tao/IIOP_Connection_Handler.cpp:
-	  Removed unused handle_timeout() methods.  The code has been
-	  factored out into the TAO_Transport_Timer class.
+          Removed unused handle_timeout() methods.  The code has been
+          factored out into the TAO_Transport_Timer class.
 
-	* tao/Transport_Timer.h:
-	* tao/Asynch_Timeout_Handler.h:
-	* tao/Synch_Queued_Message.cpp:
-	  Cosmetic fixes
+        * tao/Transport_Timer.h:
+        * tao/Asynch_Timeout_Handler.h:
+        * tao/Synch_Queued_Message.cpp:
+          Cosmetic fixes
 
         * examples/Buffered_Oneways/test.idl:
-	  Made shutdown operation a twoway.
+          Made shutdown operation a twoway.
 
 Tue Apr 24 11:59:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
