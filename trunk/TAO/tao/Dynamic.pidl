@@ -25,6 +25,7 @@
 // File: Dynamic.idl
 // Used primarily for Interceptors
 
+#include <orb.idl>
 #include "Dynamic_Parameter.pidl"
 #include "StringSeq.pidl"
 
