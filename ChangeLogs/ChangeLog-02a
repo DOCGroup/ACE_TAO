@@ -1,8 +1,18 @@
+Mon Oct 16 11:07:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Log_Msg.cpp:
+          Fixed memory leak, or rather, make sure that the default Log_Msg
+          IPC backend is destroyed when the Log_Msg class is closed.
+
+        * ace/Object_Manager.cpp:
+          Fixed typo in #endif, the final comment was not really a
+          comment.
+
 Sun Oct 15 19:14:13 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
-	  Excluded tests/RTCORBA/Client_Propagated from running in
-	  Exceptions build since it's a linux build.
+        * bin/auto_run_tests.lst:
+          Excluded tests/RTCORBA/Client_Propagated from running in
+          Exceptions build since it's a linux build.
 
 Sat Oct 14 15:04:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
