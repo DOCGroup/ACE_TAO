@@ -81,7 +81,7 @@ static void CmdWrite(char *buf, int size)
 int FBread(char * buf, int size)
 { int res;
   while ((res = (VIDEO_SINGLETON::instance ()->conn_tag >= 0 ? wait_read_bytes(VIDEO_SINGLETON::instance ()->videoSocket, buf, size) :
-		 ACE_OS::read (VIDEO_SINGLETON::instance ()->videoSocket, buf, size))) == -1)
+                 ACE_OS::read (VIDEO_SINGLETON::instance ()->videoSocket, buf, size))) == -1)
   {
     if (errno == EINTR) {errno = 0; continue; }
     if (errno == EPIPE || errno == ECONNRESET) ACE_OS::exit (0);
@@ -109,7 +109,7 @@ int send_to_network(int timeToUse)
   msghd->packetSize = htonl(packetSize + sizeof(* VIDEO_SINGLETON::instance ()->packet));
   /*
   fprintf(stderr, "VS to send pkt %d of size %d.\n",
-		  ntohl(msghd->VIDEO_SINGLETON::instance ()->packetsn), ntohl(msghd->VIDEO_SINGLETON::instance ()->packetSize));
+                  ntohl(msghd->VIDEO_SINGLETON::instance ()->packetsn), ntohl(msghd->VIDEO_SINGLETON::instance ()->packetSize));
   */
   {
     VideoMessage * msg = NULL;
@@ -122,24 +122,24 @@ int send_to_network(int timeToUse)
 
       if (!timeToUse)
       {
-	timeToUse = (VIDEO_SINGLETON::instance ()->msgsize + sizeof(*msg) + 28) * 2;
-	    /*
-	       set the max network as 500KB.
-	       28 - UDP header size
-	    */
-	/*
-	fprintf(stderr, "computed timeToUse %d. ", timeToUse);
-	*/
+        timeToUse = (VIDEO_SINGLETON::instance ()->msgsize + sizeof(*msg) + 28) * 2;
+            /*
+               set the max network as 500KB.
+               28 - UDP header size
+            */
+        /*
+        fprintf(stderr, "computed timeToUse %d. ", timeToUse);
+        */
       }
       else
       {
-	timeToUse = (timeToUse  * 7) >> 3;
-	/*
-	fprintf(stderr, "preset timeToUse %d.", timeToUse);
-	*/
-	timeToUse /= (size + VIDEO_SINGLETON::instance ()->msgsize - 1) / VIDEO_SINGLETON::instance ()->msgsize;
-	timeToUse = min(timeToUse, (VIDEO_SINGLETON::instance ()->msgsize + sizeof(*msg) + 28) * 100);
-	/* limit min network bandwidth = 10K */
+        timeToUse = (timeToUse  * 7) >> 3;
+        /*
+        fprintf(stderr, "preset timeToUse %d.", timeToUse);
+        */
+        timeToUse /= (size + VIDEO_SINGLETON::instance ()->msgsize - 1) / VIDEO_SINGLETON::instance ()->msgsize;
+        timeToUse = min(timeToUse, (VIDEO_SINGLETON::instance ()->msgsize + sizeof(*msg) + 28) * 100);
+        /* limit min network bandwidth = 10K */
       }
 
     }
@@ -149,26 +149,26 @@ int send_to_network(int timeToUse)
       int resent = 0;
       
       if (msg == NULL) { /* first message for current VIDEO_SINGLETON::instance ()->packet */
-	count = 0;
-	msg = msghd;
-	targetTime =  get_usec();
+        count = 0;
+        msg = msghd;
+        targetTime =  get_usec();
       }
       else {
 #if 0
-	/* the select() is not precise enough for being used here*/
-	int sleepTime;
-	targetTime += timeToUse;
-	sleepTime = get_duration(get_usec(), targetTime);
-	if (sleepTime >= 5000) {  /* resolution of timer is 10,000 usec */
-	  usleep(sleepTime); /* not first message, wait for a while */
-	}
+        /* the select() is not precise enough for being used here*/
+        int sleepTime;
+        targetTime += timeToUse;
+        sleepTime = get_duration(get_usec(), targetTime);
+        if (sleepTime >= 5000) {  /* resolution of timer is 10,000 usec */
+          usleep(sleepTime); /* not first message, wait for a while */
+        }
 #endif
-	/*
-	count ++;
-	if (!(count % 10)) usleep(10000);
-	*/
-	msg = (VideoMessage *)((char *)msg + VIDEO_SINGLETON::instance ()->msgsize);
-	memcpy((char *)msg, (char *)msghd, sizeof(* msg));
+        /*
+        count ++;
+        if (!(count % 10)) usleep(10000);
+        */
+        msg = (VideoMessage *)((char *)msg + VIDEO_SINGLETON::instance ()->msgsize);
+        memcpy((char *)msg, (char *)msghd, sizeof(* msg));
       }
       msg->msgsn = htonl(VIDEO_SINGLETON::instance ()->msgsn++);
       msg->msgOffset = htonl(offset);
@@ -176,50 +176,50 @@ int send_to_network(int timeToUse)
 
       segsize = min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg);
       if (VIDEO_SINGLETON::instance ()->conn_tag != 0) {  /* VIDEO_SINGLETON::instance ()->packet stream */
-	while ((sentsize = ACE_OS::write (VIDEO_SINGLETON::instance ()->videoSocket, (char *)msg, segsize)) == -1) {
-	  if (errno == EINTR)
-	    continue;
-	  if (errno == ENOBUFS) {
-	    if (resent) {
-	     ACE_OS::perror ("Warning, pkt discarded because");
-	      sent = -1;
-	      break;
-	    }
-	    else {
-	      resent = 1;
-	     ACE_OS::perror ("VS to sleep 5ms");
-	      usleep(5000);
-	      continue;
-	    }
-	  }
-	  if (errno != EPIPE) {
-	    fprintf(stderr, "VS error on send VIDEO_SINGLETON::instance ()->packet %d of size %d ",
-		    VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
-	   ACE_OS::perror ("");
-	  }
-	  ACE_OS::exit (errno != EPIPE);
-	}
+        while ((sentsize = ACE_OS::write (VIDEO_SINGLETON::instance ()->videoSocket, (char *)msg, segsize)) == -1) {
+          if (errno == EINTR)
+            continue;
+          if (errno == ENOBUFS) {
+            if (resent) {
+             ACE_OS::perror ("Warning, pkt discarded because");
+              sent = -1;
+              break;
+            }
+            else {
+              resent = 1;
+             ACE_OS::perror ("VS to sleep 5ms");
+              usleep(5000);
+              continue;
+            }
+          }
+          if (errno != EPIPE) {
+            fprintf(stderr, "VS error on send VIDEO_SINGLETON::instance ()->packet %d of size %d ",
+                    VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
+           ACE_OS::perror ("");
+          }
+          ACE_OS::exit (errno != EPIPE);
+        }
       }
       else {
-	sentsize = wait_write_bytes(VIDEO_SINGLETON::instance ()->videoSocket, (char *)msg, segsize);
-	if (sentsize == -1) {
-	  if (errno != EPIPE) {
-	    fprintf(stderr, "VS error on send VIDEO_SINGLETON::instance ()->packet %d of size %d ",
-		    VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
-	   ACE_OS::perror ("");
-	  }
-	  ACE_OS::exit (errno != EPIPE);
-	}
+        sentsize = wait_write_bytes(VIDEO_SINGLETON::instance ()->videoSocket, (char *)msg, segsize);
+        if (sentsize == -1) {
+          if (errno != EPIPE) {
+            fprintf(stderr, "VS error on send VIDEO_SINGLETON::instance ()->packet %d of size %d ",
+                    VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
+           ACE_OS::perror ("");
+          }
+          ACE_OS::exit (errno != EPIPE);
+        }
       }
       if (sentsize < segsize) {
-	SFprintf(stderr, "VS warning: message size %dB, sent only %dB\n",
-		segsize, sentsize);
+        SFprintf(stderr, "VS warning: message size %dB, sent only %dB\n",
+                segsize, sentsize);
       }
       if (sent == -1)
-	break;
+        break;
       /*
       fprintf(stderr, "VS: message %d of size %d sent.\n",
-	      VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
+              VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
       */
       size -= VIDEO_SINGLETON::instance ()->msgsize;
       offset += VIDEO_SINGLETON::instance ()->msgsize;
@@ -291,31 +291,31 @@ static int SendPacket(int shtag, int gop, int frame, int timeToUse)
     while (i>0)
       if (VIDEO_SINGLETON::instance ()->frameTable[--i].type != 'B')
       {
-	pre1 = i;
-	break;
+        pre1 = i;
+        break;
       }
     while (i>0)
       if (VIDEO_SINGLETON::instance ()->frameTable[--i].type != 'B')
       {
-	pre2 = i;
-	break;
+        pre2 = i;
+        break;
       }
     if (pre2 ==  -1)
     {
       /*
       fprintf(stderr,
-	      "frame %d-%d (%d) is a B without past ref, no to be sent.\n",
-	      gop, frame, f);
+              "frame %d-%d (%d) is a B without past ref, no to be sent.\n",
+              gop, frame, f);
        */
       return -1;
     }
     if (pre1 != VIDEO_SINGLETON::instance ()->lastRef[VIDEO_SINGLETON::instance ()->lastRefPtr] ||
-	pre2 != VIDEO_SINGLETON::instance ()->lastRef[1 - VIDEO_SINGLETON::instance ()->lastRefPtr])
+        pre2 != VIDEO_SINGLETON::instance ()->lastRef[1 - VIDEO_SINGLETON::instance ()->lastRefPtr])
     {
       /*
       fprintf(stderr,
-	      "send of B frame %d gaveup for past %d/future %d ref not sent.\n",
-	      f, pre2, pre1);
+              "send of B frame %d gaveup for past %d/future %d ref not sent.\n",
+              f, pre2, pre1);
        */
       return -1;
     }
@@ -334,10 +334,10 @@ static int SendPacket(int shtag, int gop, int frame, int timeToUse)
     {
       /*
       fprintf(stderr,
-	      "send of P frame %d gaveup for past ref %d not sent.\n",
-	      f, pre);
+              "send of P frame %d gaveup for past ref %d not sent.\n",
+              f, pre);
       fprintf(stderr, "ref0=%d, ref1=%d, ptr=%d.\n",
-	      VIDEO_SINGLETON::instance ()->lastRef[0], VIDEO_SINGLETON::instance ()->lastRef[1], VIDEO_SINGLETON::instance ()->lastRefPtr);
+              VIDEO_SINGLETON::instance ()->lastRef[0], VIDEO_SINGLETON::instance ()->lastRef[1], VIDEO_SINGLETON::instance ()->lastRefPtr);
        */
       return -1;
     }
@@ -378,8 +378,8 @@ static int SendPacket(int shtag, int gop, int frame, int timeToUse)
       */
       if (VIDEO_SINGLETON::instance ()->frameTable[f].type != 'B')
       {
-	VIDEO_SINGLETON::instance ()->lastRefPtr = 1 - VIDEO_SINGLETON::instance ()->lastRefPtr;
-	VIDEO_SINGLETON::instance ()->lastRef[VIDEO_SINGLETON::instance ()->lastRefPtr] = f;
+        VIDEO_SINGLETON::instance ()->lastRefPtr = 1 - VIDEO_SINGLETON::instance ()->lastRefPtr;
+        VIDEO_SINGLETON::instance ()->lastRef[VIDEO_SINGLETON::instance ()->lastRefPtr] = f;
       }
     }
     return sent;
@@ -405,8 +405,8 @@ int SendReferences(int group, int frame)
     base = VIDEO_SINGLETON::instance ()->gopTable[group].previousFrames;
     for (i = 0; i <= frame; i ++) {
       if (VIDEO_SINGLETON::instance ()->frameTable[i + base].type == 'P') {
-	pregroup = 0;
-	break;
+        pregroup = 0;
+        break;
       }
     }
   }
@@ -417,10 +417,10 @@ int SendReferences(int group, int frame)
     base = VIDEO_SINGLETON::instance ()->gopTable[pregroup].previousFrames;
     for (i = 0; i < VIDEO_SINGLETON::instance ()->gopTable[pregroup].totalFrames; i ++) {
       if (VIDEO_SINGLETON::instance ()->frameTable[i + base].type != 'B') {
-	/*
-	SFprintf(stderr, "REF group%d, frame%d\n", pregroup, i);
-	*/
-	result = SendPacket(i == 0, pregroup, i, 0);
+        /*
+        SFprintf(stderr, "REF group%d, frame%d\n", pregroup, i);
+        */
+        result = SendPacket(i == 0, pregroup, i, 0);
         if (result != 0)
           return result;
       }
@@ -478,7 +478,7 @@ static int ReadInfoFromFile(void)
   if (i != VIDEO_SINGLETON::instance ()->fileSize)
   {
     fprintf(stderr, "Warning: VIDEO_SINGLETON::instance ()->fileSize in Info: %d not the same as actual %d.\n",
-	    i, VIDEO_SINGLETON::instance ()->fileSize);
+            i, VIDEO_SINGLETON::instance ()->fileSize);
     goto fail_ReadInfoFromFile;
   }
 
@@ -537,9 +537,9 @@ static int ReadInfoFromFile(void)
   }
   VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->maxS + VIDEO_SINGLETON::instance ()->maxG + max(VIDEO_SINGLETON::instance ()->maxI, max(VIDEO_SINGLETON::instance ()->maxP, VIDEO_SINGLETON::instance ()->maxB));
   VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
-				 VIDEO_SINGLETON::instance ()->packetBufSize);
-  if (VIDEO_SINGLETON::instance ()->packet == NULL)	
-  {	
+                                 VIDEO_SINGLETON::instance ()->packetBufSize);
+  if (VIDEO_SINGLETON::instance ()->packet == NULL)     
+  {     
    ACE_OS::perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
     ACE_OS::exit (1);
   }
@@ -689,65 +689,65 @@ static int init_MPEG1_video_file(void)
     {
       nextByte;
       if (state >= 0 && nb == 0x00)
-	state ++;
+        state ++;
       else if (state >= 2 && nb == 0x01)
-	state = -1;
+        state = -1;
       else if (state == -1)
       {
-	if (!first) first ++;
-	else if (first == 1) first ++;
+        if (!first) first ++;
+        else if (first == 1) first ++;
 
-	switch (nb)
-	{
-	case 0xb7:	/* seq_end_code */
-	  goto exit_phase1;
-	  break;
-	case 0xb3:	/* seq_start_code */
-	  if (first == 1) first = 3;
-	  if (first != 3)
-	  {
-	    fprintf(stderr, "VS error: given file is not in MPEG format.\n");
-	    return 4;
-	  }
-	  VIDEO_SINGLETON::instance ()->numS ++;
-	  break;
-	case 0xb8:	/* gop_start_code */
-	  VIDEO_SINGLETON::instance ()->numG ++;
-	  break;
-	case 0x00:	/* picture_start_code */
-	  nextByte;
-	  nextByte;
-	  nb &= 0x38;
-	  if (nb == 0x08)
-	  {
-	    VIDEO_SINGLETON::instance ()->numI ++;
-	    if (VIDEO_SINGLETON::instance ()->numG == 2)
-	      VIDEO_SINGLETON::instance ()->pattern[VIDEO_SINGLETON::instance ()->patternSize++] = 'I';
-	  }
-	  else if (nb == 0x10)
-	  {
-	    VIDEO_SINGLETON::instance ()->numP ++;
-	    if (VIDEO_SINGLETON::instance ()->numG == 2)
-	      VIDEO_SINGLETON::instance ()->pattern[VIDEO_SINGLETON::instance ()->patternSize++] = 'P';
-	  }
-	  else if (nb == 0x18)
-	  {
-	    VIDEO_SINGLETON::instance ()->numB ++;
-	    if (VIDEO_SINGLETON::instance ()->numG == 2)
-	      VIDEO_SINGLETON::instance ()->pattern[VIDEO_SINGLETON::instance ()->patternSize++] = 'B';
-	  }
-	  /*
-	  else
-	    fprintf(stderr, "VS error: unkonw picture type %d\n", nb);
-	  */
-	  break;
-	default:
-	  break;
-	}
-	state = 0;
+        switch (nb)
+        {
+        case 0xb7:      /* seq_end_code */
+          goto exit_phase1;
+          break;
+        case 0xb3:      /* seq_start_code */
+          if (first == 1) first = 3;
+          if (first != 3)
+          {
+            fprintf(stderr, "VS error: given file is not in MPEG format.\n");
+            return 4;
+          }
+          VIDEO_SINGLETON::instance ()->numS ++;
+          break;
+        case 0xb8:      /* gop_start_code */
+          VIDEO_SINGLETON::instance ()->numG ++;
+          break;
+        case 0x00:      /* picture_start_code */
+          nextByte;
+          nextByte;
+          nb &= 0x38;
+          if (nb == 0x08)
+          {
+            VIDEO_SINGLETON::instance ()->numI ++;
+            if (VIDEO_SINGLETON::instance ()->numG == 2)
+              VIDEO_SINGLETON::instance ()->pattern[VIDEO_SINGLETON::instance ()->patternSize++] = 'I';
+          }
+          else if (nb == 0x10)
+          {
+            VIDEO_SINGLETON::instance ()->numP ++;
+            if (VIDEO_SINGLETON::instance ()->numG == 2)
+              VIDEO_SINGLETON::instance ()->pattern[VIDEO_SINGLETON::instance ()->patternSize++] = 'P';
+          }
+          else if (nb == 0x18)
+          {
+            VIDEO_SINGLETON::instance ()->numB ++;
+            if (VIDEO_SINGLETON::instance ()->numG == 2)
+              VIDEO_SINGLETON::instance ()->pattern[VIDEO_SINGLETON::instance ()->patternSize++] = 'B';
+          }
+          /*
+          else
+            fprintf(stderr, "VS error: unkonw picture type %d\n", nb);
+          */
+          break;
+        default:
+          break;
+        }
+        state = 0;
       }
       else
-	state = 0;
+        state = 0;
     }
    exit_phase1:
 
@@ -764,16 +764,16 @@ static int init_MPEG1_video_file(void)
     VIDEO_SINGLETON::instance ()->averageFrameSize = fileptr / (unsigned)VIDEO_SINGLETON::instance ()->numF;
     /*
     fprintf(stderr, "Pass one finished, total bytes read: %u, average frame size %d\n",
-	    fileptr, VIDEO_SINGLETON::instance ()->averageFrameSize);
+            fileptr, VIDEO_SINGLETON::instance ()->averageFrameSize);
     fprintf(stderr, "VIDEO_SINGLETON::instance ()->numS-%d, VIDEO_SINGLETON::instance ()->numG-%d, VIDEO_SINGLETON::instance ()->numF-%d, VIDEO_SINGLETON::instance ()->numI-%d, VIDEO_SINGLETON::instance ()->numP-%d, VIDEO_SINGLETON::instance ()->numB-%d\n",
-	    VIDEO_SINGLETON::instance ()->numS, VIDEO_SINGLETON::instance ()->numG, VIDEO_SINGLETON::instance ()->numI, VIDEO_SINGLETON::instance ()->numI, VIDEO_SINGLETON::instance ()->numP, VIDEO_SINGLETON::instance ()->numB);
+            VIDEO_SINGLETON::instance ()->numS, VIDEO_SINGLETON::instance ()->numG, VIDEO_SINGLETON::instance ()->numI, VIDEO_SINGLETON::instance ()->numI, VIDEO_SINGLETON::instance ()->numP, VIDEO_SINGLETON::instance ()->numB);
     fprintf(stderr, "VIDEO_SINGLETON::Instance ()->Pattern detected: %s\n", VIDEO_SINGLETON::instance ()->pattern);
      */
     if (VIDEO_SINGLETON::instance ()->numF > MAX_FRAMES)
     {
       fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->Number of frames (%d) is bigger than MAX_FRAMES (%d).\n\
   you need to update the constant definition in common.h and recompile.\n",
-	      VIDEO_SINGLETON::instance ()->numF, MAX_FRAMES);
+              VIDEO_SINGLETON::instance ()->numF, MAX_FRAMES);
       return 5;
     }
 
@@ -818,79 +818,79 @@ static int init_MPEG1_video_file(void)
     {
       nextByte;
       if (state >= 0 && nb == 0x00)
-	state ++;
+        state ++;
       else if (state >= 2 && nb == 0x01)
-	state = -1;
+        state = -1;
       else if (state == -1)
       {
-	switch (nb)
-	{
-	case 0xb7:	/* seq_end_code */
-	  if (gopptr >= 0 && VIDEO_SINGLETON::instance ()->gopTable[gopptr].size == 0)
-	    VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
-	  computePicSize;
-	  goto exit_phase2;
-	  break;
-	case 0xb3:	/* seq_start_code */
-	  if (gopptr >= 0 && VIDEO_SINGLETON::instance ()->gopTable[gopptr].size == 0)
-	    VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
-	  computePicSize;
-	  shptr ++;
-	  VIDEO_SINGLETON::instance ()->systemHeader[shptr].offset = fileptr - 4;
-	  VIDEO_SINGLETON::instance ()->systemHeader[shptr].size = 0;
-	  break;
-	case 0xb8:	/* gop_start_code */
-	  if (VIDEO_SINGLETON::instance ()->systemHeader[shptr].size == 0)
-	     VIDEO_SINGLETON::instance ()->systemHeader[shptr].size =fileptr -  VIDEO_SINGLETON::instance ()->systemHeader[shptr].offset - 4;
-	  if (gopptr >= 0 && VIDEO_SINGLETON::instance ()->gopTable[gopptr].size == 0)
-	    VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
-	  computePicSize;
-	  gopptr ++;
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].systemHeader = shptr;
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset = fileptr - 4;
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize = 0;
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = 0;
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].totalFrames = 0;
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].previousFrames = gopptr ?
-	      (VIDEO_SINGLETON::instance ()->gopTable[gopptr - 1].totalFrames + VIDEO_SINGLETON::instance ()->gopTable[gopptr - 1].previousFrames) : 0;
+        switch (nb)
+        {
+        case 0xb7:      /* seq_end_code */
+          if (gopptr >= 0 && VIDEO_SINGLETON::instance ()->gopTable[gopptr].size == 0)
+            VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
+          computePicSize;
+          goto exit_phase2;
+          break;
+        case 0xb3:      /* seq_start_code */
+          if (gopptr >= 0 && VIDEO_SINGLETON::instance ()->gopTable[gopptr].size == 0)
+            VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
+          computePicSize;
+          shptr ++;
+          VIDEO_SINGLETON::instance ()->systemHeader[shptr].offset = fileptr - 4;
+          VIDEO_SINGLETON::instance ()->systemHeader[shptr].size = 0;
+          break;
+        case 0xb8:      /* gop_start_code */
+          if (VIDEO_SINGLETON::instance ()->systemHeader[shptr].size == 0)
+             VIDEO_SINGLETON::instance ()->systemHeader[shptr].size =fileptr -  VIDEO_SINGLETON::instance ()->systemHeader[shptr].offset - 4;
+          if (gopptr >= 0 && VIDEO_SINGLETON::instance ()->gopTable[gopptr].size == 0)
+            VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
+          computePicSize;
+          gopptr ++;
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].systemHeader = shptr;
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset = fileptr - 4;
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize = 0;
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].size = 0;
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].totalFrames = 0;
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].previousFrames = gopptr ?
+              (VIDEO_SINGLETON::instance ()->gopTable[gopptr - 1].totalFrames + VIDEO_SINGLETON::instance ()->gopTable[gopptr - 1].previousFrames) : 0;
 
-	  break;
-	case 0x00:	/* picture_start_code */
-	  if (VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize == 0)
-	  {
-	    VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
-	    VIDEO_SINGLETON::instance ()->gopTable[gopptr].firstIoffset = fileptr - 4;
-	  }
-	  VIDEO_SINGLETON::instance ()->gopTable[gopptr].totalFrames ++;
-	  computePicSize;
-	  picptr = fileptr - 4;
-	  nextByte;
-	  nextByte;
-	  nb &= 0x38;
-	  if (nb == 0x08)
-	  {
-	    pictype = 'I';
-	    inpic = 1;
-	  }
-	  else if (nb == 0x10)
-	  {
-	    pictype = 'P';
-	    inpic = 1;
-	  }
-	  else if (nb == 0x18)
-	  {
-	    pictype = 'B';
-	    inpic = 1;
-	  }
-	  break;
-	default:
+          break;
+        case 0x00:      /* picture_start_code */
+          if (VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize == 0)
+          {
+            VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize = fileptr - VIDEO_SINGLETON::instance ()->gopTable[gopptr].offset - 4;
+            VIDEO_SINGLETON::instance ()->gopTable[gopptr].firstIoffset = fileptr - 4;
+          }
+          VIDEO_SINGLETON::instance ()->gopTable[gopptr].totalFrames ++;
+          computePicSize;
+          picptr = fileptr - 4;
+          nextByte;
+          nextByte;
+          nb &= 0x38;
+          if (nb == 0x08)
+          {
+            pictype = 'I';
+            inpic = 1;
+          }
+          else if (nb == 0x10)
+          {
+            pictype = 'P';
+            inpic = 1;
+          }
+          else if (nb == 0x18)
+          {
+            pictype = 'B';
+            inpic = 1;
+          }
+          break;
+        default:
 
-	  break;
-	}
-	state = 0;
+          break;
+        }
+        state = 0;
       }
       else
-	state = 0;
+        state = 0;
     }
 
   exit_phase2:
@@ -906,7 +906,7 @@ static int init_MPEG1_video_file(void)
     }
     VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->maxS + VIDEO_SINGLETON::instance ()->maxG + max(VIDEO_SINGLETON::instance ()->maxI, max(VIDEO_SINGLETON::instance ()->maxP, VIDEO_SINGLETON::instance ()->maxB));
     VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
-				   VIDEO_SINGLETON::instance ()->packetBufSize);
+                                   VIDEO_SINGLETON::instance ()->packetBufSize);
     if (VIDEO_SINGLETON::instance ()->packet == NULL)
     {
      ACE_OS::perror ("VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
@@ -924,27 +924,27 @@ static int init_MPEG1_video_file(void)
 
       fprintf(stderr, "id: offset    size  -- system header table:\n");
       for (i=0; i<VIDEO_SINGLETON::instance ()->numS; i++)
-	fprintf(stderr, "%-3d %-9u %d\n", i, VIDEO_SINGLETON::instance ()->systemHeader[i].offset, VIDEO_SINGLETON::instance ()->systemHeader[i].size);
+        fprintf(stderr, "%-3d %-9u %d\n", i, VIDEO_SINGLETON::instance ()->systemHeader[i].offset, VIDEO_SINGLETON::instance ()->systemHeader[i].size);
       fprintf(stderr,
-	      "id:  header   offset   hdsize   totSize  frames   preframs Ioffset  Isize -- GOP\n");
+              "id:  header   offset   hdsize   totSize  frames   preframs Ioffset  Isize -- GOP\n");
       for (i=0; i<VIDEO_SINGLETON::instance ()->numG; i++)
       {
-	fprintf(stderr, "%-4d %-8d %-8u %-8d %-8d %-8d %-8d %-8u %d\n",
-		i,
-		VIDEO_SINGLETON::instance ()->gopTable[i].VIDEO_SINGLETON::instance ()->systemHeader,
-		VIDEO_SINGLETON::instance ()->gopTable[i].offset,
-		VIDEO_SINGLETON::instance ()->gopTable[i].headerSize,
-		VIDEO_SINGLETON::instance ()->gopTable[i].size,
-		VIDEO_SINGLETON::instance ()->gopTable[i].totalFrames,
-		VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames,
-		VIDEO_SINGLETON::instance ()->gopTable[i].firstIoffset,
-		VIDEO_SINGLETON::instance ()->frameTable[VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames].size
-		);
+        fprintf(stderr, "%-4d %-8d %-8u %-8d %-8d %-8d %-8d %-8u %d\n",
+                i,
+                VIDEO_SINGLETON::instance ()->gopTable[i].VIDEO_SINGLETON::instance ()->systemHeader,
+                VIDEO_SINGLETON::instance ()->gopTable[i].offset,
+                VIDEO_SINGLETON::instance ()->gopTable[i].headerSize,
+                VIDEO_SINGLETON::instance ()->gopTable[i].size,
+                VIDEO_SINGLETON::instance ()->gopTable[i].totalFrames,
+                VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames,
+                VIDEO_SINGLETON::instance ()->gopTable[i].firstIoffset,
+                VIDEO_SINGLETON::instance ()->frameTable[VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames].size
+                );
       }
 
      fprintf(stderr, "\nframe information:");
       for (i=0; i<VIDEO_SINGLETON::instance ()->numF; i++)
-	fprintf(stderr, "%c%c%-8d", (i%10 ? '\0' : '\n'), VIDEO_SINGLETON::instance ()->frameTable[i].type, VIDEO_SINGLETON::instance ()->frameTable[i].size);
+        fprintf(stderr, "%c%c%-8d", (i%10 ? '\0' : '\n'), VIDEO_SINGLETON::instance ()->frameTable[i].type, VIDEO_SINGLETON::instance ()->frameTable[i].size);
       fprintf(stderr, "\n");
 
     }
@@ -968,7 +968,7 @@ static int init_MPEG1_video_file(void)
     VIDEO_SINGLETON::instance ()->vbvBufferSize |= ((int)nb >>3) & 0x1f;
     /*
     fprintf(stderr, "SysHeader info: hsize-%d, vsize-%d, pelAspect-%d, rate-%d, vbv-%d.\n",
-	    VIDEO_SINGLETON::instance ()->horizontalSize, VIDEO_SINGLETON::instance ()->verticalSize, VIDEO_SINGLETON::instance ()->pelAspectRatio, VIDEO_SINGLETON::instance ()->pictureRate, VIDEO_SINGLETON::instance ()->vbvBufferSize);
+            VIDEO_SINGLETON::instance ()->horizontalSize, VIDEO_SINGLETON::instance ()->verticalSize, VIDEO_SINGLETON::instance ()->pelAspectRatio, VIDEO_SINGLETON::instance ()->pictureRate, VIDEO_SINGLETON::instance ()->vbvBufferSize);
      */
     WriteInfoToFile();
   }
@@ -978,16 +978,16 @@ static int init_MPEG1_video_file(void)
     
     for (i = VIDEO_SINGLETON::instance ()->numG - 1;; i --) {
       if (VIDEO_SINGLETON::instance ()->gopTable[i].offset < 4235260) {
-	fprintf(stderr, "group %d: offset %ld\n", i, VIDEO_SINGLETON::instance ()->gopTable[i].offset);
-	if (j -- == 0) break;
+        fprintf(stderr, "group %d: offset %ld\n", i, VIDEO_SINGLETON::instance ()->gopTable[i].offset);
+        if (j -- == 0) break;
       }
     }
     /*
     for (i = 0; i  < VIDEO_SINGLETON::instance ()->numG; i ++) {
       if (VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames > 1800) {
-	fprintf(stderr, "group %d: offset %ld pre-frames %d\n",
-		i, VIDEO_SINGLETON::instance ()->gopTable[i].offset, VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames);
-	break;
+        fprintf(stderr, "group %d: offset %ld pre-frames %d\n",
+                i, VIDEO_SINGLETON::instance ()->gopTable[i].offset, VIDEO_SINGLETON::instance ()->gopTable[i].previousFrames);
+        break;
       }
     }
     */
@@ -999,7 +999,7 @@ static int init_MPEG1_video_file(void)
     if (VIDEO_SINGLETON::instance ()->firstSendPattern == NULL)
     {
       fprintf(stderr, "VS failed to allocate VIDEO_SINGLETON::instance ()->firstVIDEO_SINGLETON::instance ()->SendVIDEO_SINGLETON::Instance ()->Pattern for %d frames",
-	      VIDEO_SINGLETON::instance ()->firstPatternSize);
+              VIDEO_SINGLETON::instance ()->firstPatternSize);
      ACE_OS::perror ("");
       return 11;
     }
@@ -1036,12 +1036,12 @@ static int init_MPEG1_video_file(void)
     CmdWrite((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
     if (Mpeg_Global::session_num > Mpeg_Global::session_limit) {
       sprintf(errmsg,
-	      "Too many sessions being serviced, please try again later.\n");
+              "Too many sessions being serviced, please try again later.\n");
     }
     else {
       sprintf(errmsg, "Version # not match, VS %d.%02d, Client %d.%02d",
-	      VERSION / 100, VERSION % 100,
-	      para.version / 100, para.version % 100);
+              VERSION / 100, VERSION % 100,
+              para.version / 100, para.version % 100);
     }
     write_string(VIDEO_SINGLETON::instance ()->serviceSocket, errmsg);
     ACE_OS::exit (0);
@@ -1054,8 +1054,8 @@ static int init_MPEG1_video_file(void)
 
   if (!strncasecmp("LiveVideo", VIDEO_SINGLETON::instance ()->videoFile, 9)) {
     if (OpenLiveVideo(&VIDEO_SINGLETON::instance ()->video_format, &VIDEO_SINGLETON::instance ()->horizontalSize,
-		      &VIDEO_SINGLETON::instance ()->verticalSize, &VIDEO_SINGLETON::instance ()->averageFrameSize,
-		      &VIDEO_SINGLETON::instance ()->fps, &VIDEO_SINGLETON::instance ()->pelAspectRatio) == -1) {
+                      &VIDEO_SINGLETON::instance ()->verticalSize, &VIDEO_SINGLETON::instance ()->averageFrameSize,
+                      &VIDEO_SINGLETON::instance ()->fps, &VIDEO_SINGLETON::instance ()->pelAspectRatio) == -1) {
       failureType = 100;
       goto failure;
     }
@@ -1076,8 +1076,8 @@ static int init_MPEG1_video_file(void)
     VIDEO_SINGLETON::instance ()->pattern[1] = 0;
     VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->verticalSize * VIDEO_SINGLETON::instance ()->horizontalSize * 3;
     VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
-				   VIDEO_SINGLETON::instance ()->packetBufSize);
-    if (VIDEO_SINGLETON::instance ()->packet == NULL)	
+                                   VIDEO_SINGLETON::instance ()->packetBufSize);
+    if (VIDEO_SINGLETON::instance ()->packet == NULL)   
     {
      ACE_OS::perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
       ACE_OS::exit (1);
@@ -1132,15 +1132,15 @@ static int init_MPEG1_video_file(void)
       VIDEO_SINGLETON::instance ()->videoSocket = VIDEO_SINGLETON::instance ()->serviceSocket;
       
       if (VIDEO_SINGLETON::instance ()->live_source) {
-	int frame = 0;
-	SendPicture(&frame);
+        int frame = 0;
+        SendPicture(&frame);
       }
       else if (VIDEO_SINGLETON::instance ()->video_format == VIDEO_MPEG1) {
-	SendPacket(1, 0, 0, 0);
+        SendPacket(1, 0, 0, 0);
       }
       else {
-	fprintf(stderr, "VS: VIDEO_SINGLETON::instance ()->video_format %d not supported.\n",
-		VIDEO_SINGLETON::instance ()->video_format);
+        fprintf(stderr, "VS: VIDEO_SINGLETON::instance ()->video_format %d not supported.\n",
+                VIDEO_SINGLETON::instance ()->video_format);
       }
       VIDEO_SINGLETON::instance ()->videoSocket = tmpSocket;
       
@@ -1162,9 +1162,9 @@ static int init_MPEG1_video_file(void)
           failureType == 3 ? "MPEG file is not seekable" :
           failureType == 4 ? "not an MPEG stream" :
           failureType == 5 ?
-	     "too many frames in MPEG file, need change MAX_FRAMES and recompile VS" :
-	  failureType == 100 ? "failed to connect to live video source" :
-	  failureType == 101 ? "live MPEG2 not supported" :
+             "too many frames in MPEG file, need change MAX_FRAMES and recompile VS" :
+          failureType == 100 ? "failed to connect to live video source" :
+          failureType == 101 ? "live MPEG2 not supported" :
           errmsg;
     write_string(VIDEO_SINGLETON::instance ()->serviceSocket, msg);
     ACE_OS::exit (0);
@@ -1205,7 +1205,7 @@ static int POSITIONvideo()
   if (VIDEO_SINGLETON::instance ()->live_source) return 0;
   
 #ifdef NeedByteOrderConversion
-  para.VIDEO_SINGLETON::instance ()->nextGroup = ntohl(para.VIDEO_SINGLETON::instance ()->nextGroup);
+  para.nextGroup = ntohl(para.nextGroup);
   para.sn = ntohl(para.sn);
 #endif
   
@@ -1227,7 +1227,7 @@ static int STEPvideo()
     return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
-  para.VIDEO_SINGLETON::instance ()->nextFrame = ntohl(para.VIDEO_SINGLETON::instance ()->nextFrame);
+  para.nextFrame = ntohl(para.nextFrame);
 #endif
 
   VIDEO_SINGLETON::instance ()->cmdsn = para.sn;
@@ -1239,7 +1239,7 @@ static int STEPvideo()
       para.nextFrame --;
     }
     /*
-    fprintf(stderr, "STEP . . .frame-%d\n", para.VIDEO_SINGLETON::instance ()->nextFrame);
+    fprintf(stderr, "STEP . . .frame-%d\n", para.nextFrame);
     */
     CheckFrameRange(para.nextFrame);
     group = FrameToGroup(&para.nextFrame);
@@ -1284,7 +1284,7 @@ static void timerHandler(int sig)
   
   if (timerAdjust > 1)
     usec = (int)(((double)usec * (double)(SPEEDUP_INV_SCALE - 1)) /
-		 (double)SPEEDUP_INV_SCALE);
+                 (double)SPEEDUP_INV_SCALE);
   val3 = get_duration(preTimerVal, (val2 = get_usec()));
   /*
   if (val3 >= usec<< 1))
@@ -1309,13 +1309,13 @@ static void timerHandler(int sig)
     if (timerAdjust < MAX_TIMER_ADJUST) {
       timerAdjust += VIDEO_SINGLETON::instance ()->addedSignals * SPEEDUP_INV_SCALE;
       if (val2 < SPEEDUP_INV_SCALE) {
-	TimerSpeed();
+        TimerSpeed();
       }
     }
     else {
       /*
       fprintf(stderr, "VS timerAdjust %d, VIDEO_SINGLETON::instance ()->addedSignals %d, timerFrame %d\n",
-	      timerAdjust, VIDEO_SINGLETON::instance ()->addedSignals, timerFrame);
+              timerAdjust, VIDEO_SINGLETON::instance ()->addedSignals, timerFrame);
       */
       for (val3 = 0; val3 < VIDEO_SINGLETON::instance ()->addedSignals; val3 ++)
         TimerProcessing();
@@ -1364,16 +1364,16 @@ static void TimerProcessing(void)
   else {
     if (VIDEO_SINGLETON::instance ()->cmd == CmdFF) {
       if (timerGroup == VIDEO_SINGLETON::instance ()->numG - 1) {
-	StopTimer();
-	return;
+        StopTimer();
+        return;
       }
       timerGroup ++;
       timerHeader = VIDEO_SINGLETON::instance ()->gopTable[timerGroup].systemHeader;
     }
     else {
       if (timerGroup == 0) {
-	StopTimer();
-	return;
+        StopTimer();
+        return;
       }
       timerGroup --;
       timerHeader = VIDEO_SINGLETON::instance ()->gopTable[timerGroup].systemHeader;
@@ -1388,7 +1388,7 @@ static void StartTimer(void)
   timerAdjust = (VIDEO_SINGLETON::instance ()->VStimeAdvance * SPEEDUP_INV_SCALE) / VIDEO_SINGLETON::instance ()->currentUPF;
   /*
   SFprintf(stderr, "VS StartTimer(): fast-start frames %d\n",
-	  timerAdjust / SPEEDUP_INV_SCALE);
+          timerAdjust / SPEEDUP_INV_SCALE);
   */
   TimerSpeed();
   setsignal(SIGALRM, timerHandler);
@@ -1407,20 +1407,20 @@ static void TimerSpeed(void)
     /*
     int drift = (double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0;
     SFprintf(stderr, "Mpeg_Global::drift_ppm %d, usec %d, drift %d, new usec %d\n",
-	    Mpeg_Global::drift_ppm, usec, drift, usec - drift);
+            Mpeg_Global::drift_ppm, usec, drift, usec - drift);
      */
     usec -= (int)((double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0);
   }
   if (timerAdjust > 1)
     usec = (int)(((double)usec * (double)(SPEEDUP_INV_SCALE - 1)) /
-		 (double)SPEEDUP_INV_SCALE);
+                 (double)SPEEDUP_INV_SCALE);
   val.it_interval.tv_sec =  val.it_value.tv_sec = usec / 1000000;
   val.it_interval.tv_usec = val.it_value.tv_usec = usec % 1000000;
   setitimer(ITIMER_REAL, &val, NULL);
   /*
   SFprintf(stderr,
-	  "VS TimerSpeed() at %s speed, timerAdjust %d VIDEO_SINGLETON::instance ()->addedSignals %d.\n",
-	  (timerAdjust > 1) ? "higher" : "normal", timerAdjust, VIDEO_SINGLETON::instance ()->addedSignals);
+          "VS TimerSpeed() at %s speed, timerAdjust %d VIDEO_SINGLETON::instance ()->addedSignals %d.\n",
+          (timerAdjust > 1) ? "higher" : "normal", timerAdjust, VIDEO_SINGLETON::instance ()->addedSignals);
   */
 }
 
@@ -1451,11 +1451,11 @@ void GetFeedBack()
     return;
   }
 #ifdef NeedByteOrderConversion
-  para.VIDEO_SINGLETON::instance ()->needHeader = ntohl(para.VIDEO_SINGLETON::instance ()->needHeader);
+  para.needHeader = ntohl(para.needHeader);
   para.addUsecPerFrame = ntohl(para.addUsecPerFrame);
   para.addFrames = ntohl(para.addFrames);
-  para.VIDEO_SINGLETON::instance ()->sendVIDEO_SINGLETON::Instance ()->PatternGops = ntohl(para.VIDEO_SINGLETON::instance ()->sendVIDEO_SINGLETON::Instance ()->PatternGops);
-  para.VIDEO_SINGLETON::instance ()->frameRateLimit1000 = ntohl(para.VIDEO_SINGLETON::instance ()->frameRateLimit1000);
+  para.sendPatternGops = ntohl(para.sendPatternGops);
+  para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
 #endif
   VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
   VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
@@ -1477,7 +1477,7 @@ void GetFeedBack()
   }
   /*
   SFprintf(stderr, "VS fb: addf %d, addupf %d\n",
-	  para.addFrames, para.addUsecPerFrame);
+          para.addFrames, para.addUsecPerFrame);
   */
 }
 
@@ -1494,10 +1494,10 @@ static int FastVideoPlay(void)
     return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
-  para.VIDEO_SINGLETON::instance ()->nextGroup = ntohl(para.VIDEO_SINGLETON::instance ()->nextGroup);
+  para.nextGroup = ntohl(para.nextGroup);
   para.usecPerFrame = ntohl(para.usecPerFrame);
   para.framesPerSecond = ntohl(para.framesPerSecond);
-  para.VIDEO_SINGLETON::instance ()->VStimeAdvance = ntohl(para.VIDEO_SINGLETON::instance ()->VStimeAdvance);
+  para.VStimeAdvance = ntohl(para.VStimeAdvance);
 #endif
 
   if (VIDEO_SINGLETON::instance ()->live_source) return 0;
@@ -1523,7 +1523,7 @@ static int FastVideoPlay(void)
     if (preGroup != timerGroup)
     {
       SendPacket(preHeader != timerHeader, timerGroup, 0,
-		 para.usecPerFrame * VIDEO_SINGLETON::instance ()->patternSize >> 2);
+                 para.usecPerFrame * VIDEO_SINGLETON::instance ()->patternSize >> 2);
       preHeader = timerHeader;
       preGroup = timerGroup;
     }
@@ -1553,12 +1553,12 @@ static int FastVideoPlay(void)
       if (result != 0)
         return result;
       if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
-	exit(0);
+        exit(0);
       }
       else if (VIDEO_SINGLETON::instance ()->cmd != CmdSTOP) {
-	fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while STOP is expected.\n", VIDEO_SINGLETON::instance ()->cmd);
-	VIDEO_SINGLETON::instance ()->normalExit = 0;
-	exit(1);
+        fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while STOP is expected.\n", VIDEO_SINGLETON::instance ()->cmd);
+        VIDEO_SINGLETON::instance ()->normalExit = 0;
+        exit(1);
       }
       result = CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
       if (result != 0 )
@@ -1618,7 +1618,7 @@ void ComputeFirstSendPattern(float limit)
     limit = 1.0;
   
   f = (int)((double)len *
-	    ((double)limit / (1000000.0 / (double)VIDEO_SINGLETON::instance ()->currentUPF)) + 0.5);
+            ((double)limit / (1000000.0 / (double)VIDEO_SINGLETON::instance ()->currentUPF)) + 0.5);
   /* rounded to integer, instead of truncated */
   if (f >= len)
     f = len;
@@ -1660,7 +1660,7 @@ void ComputeFirstSendPattern(float limit)
     count = 0;
     /*
     fprintf(stderr, "doscale %d, VIDEO_SINGLETON::instance ()->frameRateLimit %5.2f, VIDEO_SINGLETON::instance ()->fps %5.2f, ratio %5.2f\n",
-	    doscale, VIDEO_SINGLETON::instance ()->frameRateLimit, VIDEO_SINGLETON::instance ()->fps, ratio);
+            doscale, VIDEO_SINGLETON::instance ()->frameRateLimit, VIDEO_SINGLETON::instance ()->fps, ratio);
     */
   }
   else doscale = 0;
@@ -1670,8 +1670,8 @@ void ComputeFirstSendPattern(float limit)
 
     if (doscale) {
       for (;;) {
-	if ((int)((frame - first_frame) * ratio + 0.5) < count) frame ++;
-	else break;
+        if ((int)((frame - first_frame) * ratio + 0.5) < count) frame ++;
+        else break;
       }
       count ++;
     }
@@ -1701,66 +1701,66 @@ void ComputeFirstSendPattern(float limit)
       if (result != 0)
         return result;
       if (tmp == CmdCLOSE) {
-	StopPlayLiveVideo();
-	exit(0);
+        StopPlayLiveVideo();
+        exit(0);
       }
       else if (tmp == CmdSTOP) {
-	VIDEO_SINGLETON::instance ()->cmd = tmp;
-	/*
-	fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSTOP. . .\n");
-	*/
+        VIDEO_SINGLETON::instance ()->cmd = tmp;
+        /*
+        fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSTOP. . .\n");
+        */
         result = CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
         if (result != 0)
           return result;
 #ifdef NeedByteOrderConversion
-	VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
+        VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
 #endif
-	StopPlayLiveVideo();
+        StopPlayLiveVideo();
         break;
       }
       else if (tmp == CmdSPEED)
       {
-	SPEEDpara para;
-	/*
-	fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSPEED. . .\n");
-	*/
-	result = CmdRead((char *)&para, sizeof(para));
+        SPEEDpara para;
+        /*
+        fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSPEED. . .\n");
+        */
+        result = CmdRead((char *)&para, sizeof(para));
         if (result != 0)
           return result;
-	/* ignore this thing for live video */
+        /* ignore this thing for live video */
       }
       else
       {
-	fprintf(stderr, "VS error(live): VIDEO_SINGLETON::instance ()->cmd=%d while expect STOP/SPEED.\n", tmp);
-	VIDEO_SINGLETON::instance ()->normalExit = 0;
-	StopPlayLiveVideo();
-	exit(1);
+        fprintf(stderr, "VS error(live): VIDEO_SINGLETON::instance ()->cmd=%d while expect STOP/SPEED.\n", tmp);
+        VIDEO_SINGLETON::instance ()->normalExit = 0;
+        StopPlayLiveVideo();
+        exit(1);
       }
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->videoSocket, &read_mask))  /* feedback, only for frame rate
-					       adjustment */
+                                               adjustment */
     {
       VideoFeedBackPara para;
       if (FBread((char *)&para, sizeof(para)) == -1 ||
-	  ntohl(para.cmdsn) != VIDEO_SINGLETON::instance ()->cmdsn) {
-	/*
-	   SFprintf(stderr, "VS warning: a FB VIDEO_SINGLETON::instance ()->packet discarded.\n");
-	   */
-	return 0;
+          ntohl(para.cmdsn) != VIDEO_SINGLETON::instance ()->cmdsn) {
+        /*
+           SFprintf(stderr, "VS warning: a FB VIDEO_SINGLETON::instance ()->packet discarded.\n");
+           */
+        return 0;
       }
 #ifdef NeedByteOrderConversion
-      para.VIDEO_SINGLETON::instance ()->frameRateLimit1000 = ntohl(para.VIDEO_SINGLETON::instance ()->frameRateLimit1000);
+      para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
 #endif
       VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
       if (VIDEO_SINGLETON::instance ()->frameRateLimit < VIDEO_SINGLETON::instance ()->fps) {
-	doscale = 1;
-	ratio = min(VIDEO_SINGLETON::instance ()->frameRateLimit, VIDEO_SINGLETON::instance ()->fps) / VIDEO_SINGLETON::instance ()->fps;
-	first_frame = frame;
-	count = 0;
-	/*
-	fprintf(stderr, "doscale %d, VIDEO_SINGLETON::instance ()->frameRateLimit %5.2f, VIDEO_SINGLETON::instance ()->fps %5.2f, ratio %5.2f\n",
-		doscale, VIDEO_SINGLETON::instance ()->frameRateLimit, VIDEO_SINGLETON::instance ()->fps, ratio);
-	*/
+        doscale = 1;
+        ratio = min(VIDEO_SINGLETON::instance ()->frameRateLimit, VIDEO_SINGLETON::instance ()->fps) / VIDEO_SINGLETON::instance ()->fps;
+        first_frame = frame;
+        count = 0;
+        /*
+        fprintf(stderr, "doscale %d, VIDEO_SINGLETON::instance ()->frameRateLimit %5.2f, VIDEO_SINGLETON::instance ()->fps %5.2f, ratio %5.2f\n",
+                doscale, VIDEO_SINGLETON::instance ()->frameRateLimit, VIDEO_SINGLETON::instance ()->fps, ratio);
+        */
       }
       else doscale = 0;
     }
@@ -1783,13 +1783,13 @@ static int PLAYvideo()
     return result;
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
-  para.VIDEO_SINGLETON::instance ()->nextFrame = ntohl(para.VIDEO_SINGLETON::instance ()->nextFrame);
+  para.nextFrame = ntohl(para.nextFrame);
   para.usecPerFrame = ntohl(para.usecPerFrame);
   para.framesPerSecond = ntohl(para.framesPerSecond);
-  para.VIDEO_SINGLETON::instance ()->frameRateLimit1000 = ntohl(para.VIDEO_SINGLETON::instance ()->frameRateLimit1000);
+  para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
   para.collectStat = ntohl(para.collectStat);
-  para.VIDEO_SINGLETON::instance ()->sendVIDEO_SINGLETON::Instance ()->PatternGops = ntohl(para.VIDEO_SINGLETON::instance ()->sendVIDEO_SINGLETON::Instance ()->PatternGops);
-  para.VIDEO_SINGLETON::instance ()->VStimeAdvance = ntohl(para.VIDEO_SINGLETON::instance ()->VStimeAdvance);
+  para.sendPatternGops = ntohl(para.sendPatternGops);
+  para.VStimeAdvance = ntohl(para.VStimeAdvance);
 #endif
 
   VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
@@ -1843,78 +1843,78 @@ static int PLAYvideo()
       int frameStep = 1;
       if (curGroup == 0)
       {
-	int i = curFrame + 1;
-	while (i < VIDEO_SINGLETON::instance ()->firstPatternSize && !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
-	{
-	  frameStep ++;
-	  i++;
-	}
+        int i = curFrame + 1;
+        while (i < VIDEO_SINGLETON::instance ()->firstPatternSize && !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
+        {
+          frameStep ++;
+          i++;
+        }
       }
       else  /* (curGroup > 0) */
       {
-	int i = curFrame + 1;
-	sp = VIDEO_SINGLETON::instance ()->sendPattern + ((curGroup - 1) % VIDEO_SINGLETON::instance ()->sendPatternGops) * VIDEO_SINGLETON::instance ()->patternSize;
-	while (i < VIDEO_SINGLETON::instance ()->patternSize && !sp[i])
-	{
-	  frameStep ++;
-	  i++;
-	}
+        int i = curFrame + 1;
+        sp = VIDEO_SINGLETON::instance ()->sendPattern + ((curGroup - 1) % VIDEO_SINGLETON::instance ()->sendPatternGops) * VIDEO_SINGLETON::instance ()->patternSize;
+        while (i < VIDEO_SINGLETON::instance ()->patternSize && !sp[i])
+        {
+          frameStep ++;
+          i++;
+        }
       }
       if (curGroup == 0)
       {
-	if (VIDEO_SINGLETON::instance ()->firstSendPattern[curFrame])
-	  sendStatus = 0;
-	else /*  (!VIDEO_SINGLETON::instance ()->firstVIDEO_SINGLETON::instance ()->SendVIDEO_SINGLETON::Instance ()->Pattern[curFrame]) */
-	{
-	  int i = curFrame - 1;
-	  while (i > 0 && !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
-	    i--;
-	  if (i > preFrame)
-	     /* the frame (curGroup, i) hasn't been sent yet */
-	  {
-	    sendStatus = 0;
-	    curFrame = i;
-	  }
-	  else
-	    sendStatus = -1;
-	}
+        if (VIDEO_SINGLETON::instance ()->firstSendPattern[curFrame])
+          sendStatus = 0;
+        else /*  (!VIDEO_SINGLETON::instance ()->firstVIDEO_SINGLETON::instance ()->SendVIDEO_SINGLETON::Instance ()->Pattern[curFrame]) */
+        {
+          int i = curFrame - 1;
+          while (i > 0 && !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
+            i--;
+          if (i > preFrame)
+             /* the frame (curGroup, i) hasn't been sent yet */
+          {
+            sendStatus = 0;
+            curFrame = i;
+          }
+          else
+            sendStatus = -1;
+        }
       }
       else if (sp[curFrame]) /* curGroup > 0 */
-	sendStatus = 0;
+        sendStatus = 0;
       else /*  (!sp[curFrame]) */
       {
-	int i = curFrame - 1;
-	while (i > 0 && !sp[i])
-	  i--;
-	if (curGroup == preGroup && i > preFrame)
-	   /* the frame (curGroup, i) hasn't been sent yet */
-	{
-	  sendStatus = 0;
-	  curFrame = i;
-	}
-	else
-	  sendStatus = -1;
+        int i = curFrame - 1;
+        while (i > 0 && !sp[i])
+          i--;
+        if (curGroup == preGroup && i > preFrame)
+           /* the frame (curGroup, i) hasn't been sent yet */
+        {
+          sendStatus = 0;
+          curFrame = i;
+        }
+        else
+          sendStatus = -1;
       }
       if (!sendStatus)
       {
         // Send the current video frame, calls send_to_network which
         // fragments and sends via blocking write .
-	sendStatus = SendPacket(preHeader != curHeader,
-				curGroup, curFrame,
-				(VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF) * frameStep);
-	if (!sendStatus)
-	{
-	  preHeader = curHeader;
-	  preGroup = curGroup;
-	  preFrame = curFrame;
+        sendStatus = SendPacket(preHeader != curHeader,
+                                curGroup, curFrame,
+                                (VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF) * frameStep);
+        if (!sendStatus)
+        {
+          preHeader = curHeader;
+          preGroup = curGroup;
+          preFrame = curFrame;
 #ifdef STAT
-	  if (para.collectStat)
-	  {
-	    int f = VIDEO_SINGLETON::instance ()->gopTable[curGroup].previousFrames + curFrame;
-	    VIDEO_SINGLETON::instance ()->framesSent[f>>3] |= (1 << (f % 8));
-	  }
+          if (para.collectStat)
+          {
+            int f = VIDEO_SINGLETON::instance ()->gopTable[curGroup].previousFrames + curFrame;
+            VIDEO_SINGLETON::instance ()->framesSent[f>>3] |= (1 << (f % 8));
+          }
 #endif
-	}
+        }
       }
     }
 
@@ -1948,50 +1948,50 @@ static int PLAYvideo()
         return result;
         
       if (tmp == CmdCLOSE) {
-	exit(0);
+        exit(0);
       }
       else if (tmp == CmdSTOP) {
-	VIDEO_SINGLETON::instance ()->cmd = tmp;
-	/*
-	fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSTOP. . .\n");
-	*/
+        VIDEO_SINGLETON::instance ()->cmd = tmp;
+        /*
+        fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSTOP. . .\n");
+        */
         result = CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
         if (result != 0)
           return result;
 #ifdef NeedByteOrderConversion
-	VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
+        VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
 #endif
         StopTimer();
         break;
       }
       else if (tmp == CmdSPEED)
       {
-	SPEEDpara para;
-	/*
-	fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSPEED. . .\n");
-	*/
-	result = CmdRead((char *)&para, sizeof(para));
+        SPEEDpara para;
+        /*
+        fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSPEED. . .\n");
+        */
+        result = CmdRead((char *)&para, sizeof(para));
         if (result != 0)
           return result;
 #ifdef NeedByteOrderConversion
-	para.sn = ntohl(para.sn);
-	para.usecPerFrame = ntohl(para.usecPerFrame);
-	para.framesPerSecond = ntohl(para.framesPerSecond);
-	para.sendPatternGops = ntohl(para.sendPatternGops);
-	para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
+        para.sn = ntohl(para.sn);
+        para.usecPerFrame = ntohl(para.usecPerFrame);
+        para.framesPerSecond = ntohl(para.framesPerSecond);
+        para.sendPatternGops = ntohl(para.sendPatternGops);
+        para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
 #endif
-	VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
-	VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
-	VIDEO_SINGLETON::instance ()->currentUPF = para.usecPerFrame;
-	VIDEO_SINGLETON::instance ()->addedUPF = 0;
-	memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
-	TimerSpeed();
+        VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
+        VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
+        VIDEO_SINGLETON::instance ()->currentUPF = para.usecPerFrame;
+        VIDEO_SINGLETON::instance ()->addedUPF = 0;
+        memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
+        TimerSpeed();
       }
       else
       {
-	fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while expect STOP/SPEED.\n", tmp);
-	VIDEO_SINGLETON::instance ()->normalExit = 0;
-	exit(1);
+        fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while expect STOP/SPEED.\n", tmp);
+        VIDEO_SINGLETON::instance ()->normalExit = 0;
+        exit(1);
       }
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->videoSocket, &read_mask))  /* feedBack, speed adjustment */
@@ -2052,7 +2052,7 @@ static void on_exit_routine(void)
   fprintf(stderr, "A VS session terminated.\n");
   */
   if (getpeername(VIDEO_SINGLETON::instance ()->serviceSocket,
-		  (struct sockaddr *)&peeraddr_in, &size) == 0 &&
+                  (struct sockaddr *)&peeraddr_in, &size) == 0 &&
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
       struct hostent *hp;
@@ -2062,10 +2062,10 @@ static void on_exit_routine(void)
       hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
       printf("%s: %s %3dm%02ds %dP %s\n",
-	     buf,
-	     hp == NULL ? inet_ntoa(peeraddr_in.sin_addr) : hp->h_name,
-	     (val - VIDEO_SINGLETON::instance ()->start_time) / 60, (val - VIDEO_SINGLETON::instance ()->start_time) % 60,
-	     VIDEO_SINGLETON::instance ()->pkts_sent, VIDEO_SINGLETON::instance ()->videoFile);
+             buf,
+             hp == NULL ? inet_ntoa(peeraddr_in.sin_addr) : hp->h_name,
+             (val - VIDEO_SINGLETON::instance ()->start_time) / 60, (val - VIDEO_SINGLETON::instance ()->start_time) % 60,
+             VIDEO_SINGLETON::instance ()->pkts_sent, VIDEO_SINGLETON::instance ()->videoFile);
     }
   }
   ComCloseConn(VIDEO_SINGLETON::instance ()->serviceSocket);
@@ -2160,7 +2160,7 @@ int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
       break;
     default:
       fprintf(stderr,
-	      "VS error: video channel command %d not known.\n", VIDEO_SINGLETON::instance ()->cmd);
+              "VS error: video channel command %d not known.\n", VIDEO_SINGLETON::instance ()->cmd);
       VIDEO_SINGLETON::instance ()->normalExit = 0;
       return -1;
       break;
