@@ -1,5 +1,8 @@
 Wed Feb 25 12:58:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (bind): Added checks for
+	null pointers in ACE_DEBUG.
+
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved this file from 
 	orbsvcs/Naming_Service/ to this dir.
 
