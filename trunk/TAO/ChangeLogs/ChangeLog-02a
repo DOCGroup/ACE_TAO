@@ -123,7 +123,7 @@ Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           client with a oneway SYNC_WITH_SERVER request. When
           GIOP 1.2 is fully implemented in TAO, the TAO server
           can then check the version in the message header and
-          behave accordingly.
+          behave accordingly. [bug 397]
 
 Mon Jan 10 11:51:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
