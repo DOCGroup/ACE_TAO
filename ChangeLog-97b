@@ -13,6 +13,10 @@ Fri Oct 17 06:31:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	  instantiations, and the lock is only used for singleton
 	  creation using double-checked locking.
 
+Fri Oct 17 01:19:35 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.3.20, released Fri Oct 17 01:19:35 1997.
+
 Fri Oct 17 00:05:55 1997    <irfan@TWOSTEP>
 
 	* ace/OS: Added ACE_Export to declarations to:
