@@ -47,7 +47,7 @@ Remote Daemon:
 
     w:\TAO\CIAO\examples\OEP\Display\descriptors\
     title Remote Daemon
-    .....\tools\Daemon\CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ../../../../tools/RTComponentServer/RTComponentServer
+    .....\tools\Daemon\CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ../../../../tools/RTComponentServer/RTComponentServer  -m svcmap.dat
 
 Local Daemon:
 --------------
