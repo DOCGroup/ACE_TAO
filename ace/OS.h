@@ -2108,6 +2108,7 @@ extern "C" {
 #include /**/ <time.h>
 #include /**/ <stdfileio.h>
 #include /**/ <am/afexec.h>
+#endif /* CHORUS */
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX
