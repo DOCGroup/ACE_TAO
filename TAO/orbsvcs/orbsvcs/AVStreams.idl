@@ -379,8 +379,8 @@ module AVStreams
     };
 
   // @@
-  //  interface VDev : CosPropertyService::PropertySet{
-  interface VDev 
+  interface VDev : CosPropertyService::PropertySet
+    //  interface VDev 
     // = DESCRIPTION
     //    Implements the VDev interface. One of these is created per connection,
     //    and represents device-specific parameters
