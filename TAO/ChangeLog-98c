@@ -1,3 +1,7 @@
+Tue Dec 01 10:16:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.2.42 released.
+
 Mon Nov 30 01:10:35 1998  Matt Braun  <mjb2@cs.wustl.edu>
 
 	* tests/Param_Test/ub_any_seq.cpp: Added test for const char* and
