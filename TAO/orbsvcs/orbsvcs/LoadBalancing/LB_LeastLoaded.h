@@ -22,9 +22,23 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 
 #include "ace/Synch.h"
+
+namespace TAO_LB
+{
+  /**
+   * @name Default LeastLoaded strategy parameters.
+   *
+   * Defaults defined by the Load Balancing specification.
+   */
+  const CORBA::Float LL_DEFAULT_CRITICAL_THRESHOLD = 0;
+  const CORBA::Float LL_DEFAULT_REJECT_THRESHOLD = 0;
+  const CORBA::Float LL_DEFAULT_TOLERANCE = 1;
+  const CORBA::Float LL_DEFAULT_DAMPENING = 0;
+  const CORBA::Float LL_DEFAULT_PER_BALANCE_LOAD = 0;
+}
 
 /**
  * @class TAO_LB_LeastLoaded
@@ -34,16 +48,21 @@
  * This load balancing strategy is designed to select an object group
  * member residing at a location with the smallest load.
  */
-class TAO_LoadBalancing_Export TAO_LB_LeastLoaded
-  : public virtual POA_CosLoadBalancing::Strategy
+class TAO_LB_LeastLoaded
+  : public virtual CosLoadBalancing::Strategy,
+    public virtual CORBA::LocalObject
 {
 public:
-  typedef TAO_LB_LoadMap LoadMap;
 
   /// Constructor.
-  TAO_LB_LeastLoaded (void);
+  TAO_LB_LeastLoaded (
+    CORBA::Float critical_threshold = TAO_LB::LL_DEFAULT_CRITICAL_THRESHOLD,
+    CORBA::Float reject_threshold = TAO_LB::LL_DEFAULT_REJECT_THRESHOLD,
+    CORBA::Float tolerance = TAO_LB::LL_DEFAULT_TOLERANCE,
+    CORBA::Float dampening = TAO_LB::LL_DEFAULT_DAMPENING,
+    CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD);
 
-  /// Destructor
+  /// Destructor.
   ~TAO_LB_LeastLoaded (void);
 
   /**
@@ -73,42 +92,42 @@ public:
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
     
-  virtual void analyze_loads (
-      PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+//   virtual void analyze_loads (
+//       PortableGroup::ObjectGroup_ptr object_group,
+//       CosLoadBalancing::LoadManager_ptr load_manager
+//       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+//     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 protected:
 
   /// Retrieve the least loaded location from the given list of
   /// locations.
-  CORBA::Boolean get_location (const PortableGroup::Locations & locations,
+  CORBA::Boolean get_location (PortableGroup::ObjectGroup_ptr object_group,
+                               CosLoadBalancing::LoadManager_ptr load_manager,
+                               const PortableGroup::Locations & locations,
                                PortableGroup::Location & location);
-
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
                                CORBA::Float new_load);
 
-  /// 
-  void push_load (
+  /// Push the new load into this Strategy's load processor, and
+  /// return the corresponding effective load.
+  void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::Load & new_load
+      const CosLoadBalancing::LoadList & loads,
       CosLoadBalancing::Load & effective_load
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+      ACE_ENV_ARG_DECL);
 
 private:
 
-  /// Container that maps location to load list.
-  LoadMap load_map_;
+  /// Table that maps location to load list.
+  TAO_LB_LoadMap * load_map_;
 
   /// Lock used to ensure atomic access to state retained by this
   /// class.
-  TAO_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX * lock_;
 
   CORBA::Float critical_threshold_;
   CORBA::Float reject_threshold_;

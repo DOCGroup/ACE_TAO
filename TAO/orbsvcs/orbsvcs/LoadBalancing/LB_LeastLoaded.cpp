@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "LB_LeastLoaded.h"
+#include "LB_LoadMap.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
 #include "tao/debug.h"
 
@@ -20,30 +21,34 @@ TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (CORBA::Float critical_threshold,
                                         CORBA::Float dampening,
                                         CORBA::Float per_balance_load)
   : load_map_ (0),
-    lock_ (),
-    critical_threshold_ (0),
-    reject_threshold_ (0),
-    tolerance_ (1),
-    dampening_ (0),
-    per_balance_load_ (0)
+    lock_ (0),
+    critical_threshold_ (critical_threshold),
+    reject_threshold_ (reject_threshold),
+    tolerance_ (tolerance == 0 ? 1 : tolerance),
+    dampening_ (dampening),
+    per_balance_load_ (per_balance_load)
 {
   // A load map that retains previous load values at a given location
-  // is only needed if dampening is enabled, i.e. non-zero.
+  // and lock are only needed if dampening is enabled, i.e. non-zero.
   if (this->dampening_ != 0)
-    ACE_NEW (this->load_map_,
-             LoadMap (TAO_PG_MAX_LOCATIONS));
+    {
+      ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+
+      ACE_NEW (this->lock_, TAO_SYNCH_MUTEX);
+    }
 }
 
 TAO_LB_LeastLoaded::~TAO_LB_LeastLoaded (void)
 {
   delete this->load_map_;
+  delete this->lock_;
 }
 
 char *
 TAO_LB_LeastLoaded::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup ("TAO_LB_LeastLoaded");
+  return CORBA::string_dup ("LeastLoaded");
 }
     
 CosLoadBalancing::Properties *
@@ -74,14 +79,35 @@ TAO_LB_LeastLoaded::push_loads (
   if (loads.length () == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
+  CosLoadBalancing::Load load;  // Unused
+
+  this->push_loads (the_location,
+                    loads,
+                    load
+                    ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_LB_LeastLoaded::push_loads (
+    const PortableGroup::Location & the_location,
+    const CosLoadBalancing::LoadList & loads,
+    CosLoadBalancing::Load & load
+    ACE_ENV_ARG_DECL)
+{
+  if (loads.length () == 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
+  // Only the first load is used by this load balancing strategy.
   const CosLoadBalancing::Load & new_load = loads[0];
 
   if (this->load_map_ != 0)
     {
-      TAO_LB_LoadMap::ENTRY * load;
-      if (this->load_map_->find (the_location, load) == 0)
+      ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
+
+      TAO_LB_LoadMap::ENTRY * entry;
+      if (this->load_map_->find (the_location, entry) == 0)
         {
-          CosLoadBalancing::Load & previous_load = load->int_id_;
+          CosLoadBalancing::Load & previous_load = entry->int_id_;
 
           if (previous_load.id != new_load.id)
             ACE_THROW (CORBA::BAD_PARAM ());  // Somebody switched
@@ -89,13 +115,15 @@ TAO_LB_LeastLoaded::push_loads (
 
           previous_load.value =
             this->effective_load (previous_load.value, new_load.value);
+
+          load = previous_load;
         }
       else
         {
           const CosLoadBalancing::Load eff_load =
             {
               new_load.id,
-              this->effective_load (0, new_load.value);
+              this->effective_load (0, new_load.value)
             };
 
           if (this->load_map_->bind (the_location, eff_load) != 0)
@@ -107,10 +135,17 @@ TAO_LB_LeastLoaded::push_loads (
 
               ACE_THROW (CORBA::INTERNAL ());
             }
+
+          load = eff_load;
         }
     }
+  else
+    {
+      load.id = new_load.id;
+      load.value = this->effective_load (0, new_load.value);      
+    }
 }
-    
+
 CORBA::Object_ptr
 TAO_LB_LeastLoaded::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -138,7 +173,10 @@ TAO_LB_LeastLoaded::next_member (
 
   PortableGroup::Location location;
   CORBA::Boolean found_location =
-    this->get_location (locations.in (), location);
+    this->get_location (object_group,
+                        load_manager,
+                        locations.in (),
+                        location);
 
   if (found_location)
     {
@@ -154,89 +192,9 @@ TAO_LB_LeastLoaded::next_member (
     }
 }
 
-void
-TAO_LB_LeastLoaded::analyze_loads (
-    PortableGroup::ObjectGroup_ptr object_group,
-    CosLoadBalancing::LoadManager_ptr load_manager
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  int send_load_advisory = 0;
-
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-
-
-    TAO_LB_Location_Map::iterator begin =
-      location_map.begin ();
-
-    TAO_LB_Location_Map::iterator end =
-      location_map.end ();
-
-    float s = 0;
-    CORBA::ULong n = 0;
-    TAO_LB_Location_Map::iterator i = begin;
-    for ( ; i != end; ++i)
-      {
-        s += (*i)->int_id_.load_list[0].value;  // @@ Hard coded to
-                                                //    get things
-                                                //    going.
-        n++;
-      }
-
-    float avg = (n == 0 ? s : s / n);
-    float cl = proxy->current_load ();
-
-    if (avg == 0)
-      return;
-
-    float relative_load = cl / avg;
-
-    // @@ Ossama: Make the 1.5 factor adjustable, it is how much
-    // dispersion we tolerate before starting to send advisories.
-    if (relative_load > 1 + 1.5F / n)
-      {
-        proxy->has_high_load_ = 1;
-        send_load_advisory = 2;  // 2 == Send high load advisory
-      }
-
-    if (send_load_advisory == 1 && relative_load < 1 + 0.9F / n)
-      {
-        proxy->has_high_load_ = 0;
-        send_load_advisory = 1;  // 1 == Send nominal load advisory
-      }
-  }
-
-  // @@ Ossama: no debug messages in production code, my fault....
-  // ACE_DEBUG ((LM_DEBUG, "Load[%x] %f %f %f\n",
-  //             proxy, cl, avg, relative_load));
-
-  // @@ Ossama: Make the 1.5 factor adjustable, it is how much
-  // dispersion we tolerate before starting to send advisories.
-  if (send_load_advisory == 2)
-    {
-      proxy->control_->high_load_advisory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      return;  // We may not throw an exception, so explicitly return.
-    }
-
-  // @@ Ossama: notice that we wait until the load is signifcantly
-  // lower before sending the nominal load advisory, it does not
-  // matter that much because the replicas automatically restart after
-  // rejecting one client....
-  // @@ Ossama: make the 0.9 factor adjustable, at least at
-  // construction time...
-  if (send_load_advisory == 1)
-    {
-      proxy->control_->nominal_load_advisory (ACE_ENV_SINGLE_ARG_PARAMETE);
-      ACE_CHECK;
-    }
-
-}
-
 CORBA::Boolean
 TAO_LB_LeastLoaded::get_location (
+  PortableGroup::ObjectGroup_ptr object_group,
   const CosLoadBalancing::LoadManager_ptr load_manager,
   const PortableGroup::Locations & locations,
   PortableGroup::Location & location)
@@ -247,196 +205,59 @@ TAO_LB_LeastLoaded::get_location (
 
   const CORBA::ULong len = locations.length ();
 
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      guard,
-                      this->lock_,
-                      0);
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      const PortableGroup::Location & loc = locations[i];
 
-    for (CORBA::ULong i = 0; i < len; ++i)
-      {
-        const PortableGroup::Location & loc = locations[i];
+      // Retrieve the load list for the location from the LoadManager
+      // and push it to this Strategy's load processor.
+      CosLoadBalancing::LoadList_var current_loads =
+        load_manager->get_loads (loc
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-        // Retrieve the load list for the location from the
-        // LoadManager and push it to this Strategy's load processor.
-        CosLoadBalancing::LoadList_var current_loads =
-          load_manager->get_loads (loc
-                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      CosLoadBalancing::Load load;
+      this->push_loads (loc,
+                        current_loads.in (),
+                        load
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-        this->push_loads (loc,
-                          current_loads.in ()
-                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        // WRONG!!!  THIS IS LEAST LOADED, NOT MINIMUM DISPERSION!
-        LoadMap::ENTRY * entry;
-        if (this->load_map_.find (locations[i], entry) == 0
-            && (i == 0 || entry.value < min_load))
-          {
-            min_load = entry->value;
-            location_index = i;
-            found_location = 1;
-          }
-      }
-  }
+      if (load.value < this->reject_threshold_
+          && (i == 0 || load.value < min_load))
+        {
+          min_load = load.value;
+          location_index = i;
+          found_location = 1;
+        }
+      else if (load.value > this->critical_threshold_)
+        {
+          // The location is overloaded.  Perform load shedding by
+          // informing the LoadAlert object associated with the member
+          // at that location it should redirect client requests back
+          // to the LoadManager.
+          //
+          // AMI is used to improve member selection times and overall
+          // throughput since the LoadAlert object need not be alerted
+          // synchronously.  In particular, the load alert can and
+          // should be performed in parallel to the member selection.
+          load_manager->enable_alert (object_group,
+                                      loc
+                                      ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else if (load.value <= this->critical_threshold_)
+        {
+          // The location is not overloaded
+          load_manager->disable_alert (object_group,
+                                       loc
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
 
   if (found_location)
     location = locations[location_index];
 
   return found_location;
-}
-
-CORBA::Object_ptr
-TAO_LB_LeastLoaded::replica (
-    TAO_LB_ObjectGroup_Map_Entry *entry
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  for ( ; ; )
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                        guard,
-                        entry->lock,
-                        CORBA::Object::_nil ());
-
-      if (entry->replica_infos.is_empty ())
-        // @@ What do we do if the set is empty?
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                          CORBA::Object::_nil ());
-
-      TAO_LB_ReplicaInfo_Set::iterator begin = entry->replica_infos.begin ();
-      TAO_LB_ReplicaInfo_Set::iterator end = entry->replica_infos.end ();
-
-      TAO_LB_ReplicaInfo_Set::iterator i = begin;
-      TAO_LB_ReplicaInfo *replica_info = (*i);
-
-      LoadBalancing::LoadList *d =
-        replica_info->location_entry->load_list.ptr ();
-
-      for (++i ; i != end; ++i)
-        {
-          LoadBalancing::LoadList *load =
-            (*i)->location_entry->load_list.ptr ();
-
-          // @@ Hardcode one load and don't bother checking the
-          // LoadId, for now.  (just to get things going)
-          if ((*d)[CORBA::ULong (0)].value > (*load)[CORBA::ULong (0)].value)
-            {
-              replica_info = *i;
-              d = (*i)->location_entry->load_list.ptr ();
-            }
-        }
-
-      // Before returning an object reference to the client
-      // validate it first.
-      CORBA::Object_ptr object = replica_info->replica.in ();
-
-      {
-        ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (entry->lock);
-
-        ACE_GUARD_RETURN (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
-                          reverse_guard,
-                          reverse_lock,
-                          CORBA::Object::_nil ());
-
-        // @@ Ossama: we should setup a timeout policy here...
-        ACE_TRY
-          {
-            CORBA::Boolean non_existent =
-              object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-            if (!non_existent)
-              {
-                return CORBA::Object::_duplicate (object);
-              }
-          }
-        ACE_CATCHANY
-          {
-            // @@ HACK!  Do the right thing!
-            return CORBA::Object::_duplicate (object);
-          }
-        ACE_ENDTRY;
-      }
-    }
-}
-
-void
-TAO_LB_LeastLoaded::analyze_loads (
-  TAO_LB_Location_Map &location_map
-  ACE_ENV_ARG_DECL)
-{
-  int send_load_advisory = 0;
-
-  {
-    ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
-                       guard,
-                       this->lock_));
-
-
-    TAO_LB_Location_Map::iterator begin =
-      location_map.begin ();
-
-    TAO_LB_Location_Map::iterator end =
-      location_map.end ();
-
-    float s = 0;
-    CORBA::ULong n = 0;
-    TAO_LB_Location_Map::iterator i = begin;
-    for ( ; i != end; ++i)
-      {
-        s += (*i)->int_id_.load_list[0].value;  // @@ Hard coded to
-                                                //    get things
-                                                //    going.
-        n++;
-      }
-
-    float avg = (n == 0 ? s : s / n);
-    float cl = proxy->current_load ();
-
-    if (avg == 0)
-      return;
-
-    float relative_load = cl / avg;
-
-    // @@ Ossama: Make the 1.5 factor adjustable, it is how much
-    // dispersion we tolerate before starting to send advisories.
-    if (relative_load > 1 + 1.5F / n)
-      {
-        proxy->has_high_load_ = 1;
-        send_load_advisory = 2;  // 2 == Send high load advisory
-      }
-
-    if (send_load_advisory == 1 && relative_load < 1 + 0.9F / n)
-      {
-        proxy->has_high_load_ = 0;
-        send_load_advisory = 1;  // 1 == Send nominal load advisory
-      }
-  }
-
-  // @@ Ossama: no debug messages in production code, my fault....
-  // ACE_DEBUG ((LM_DEBUG, "Load[%x] %f %f %f\n",
-  //             proxy, cl, avg, relative_load));
-
-  // @@ Ossama: Make the 1.5 factor adjustable, it is how much
-  // dispersion we tolerate before starting to send advisories.
-  if (send_load_advisory == 2)
-    {
-      proxy->control_->high_load_advisory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      return;  // We may not throw an exception, so explicitly return.
-    }
-
-  // @@ Ossama: notice that we wait until the load is signifcantly
-  // lower before sending the nominal load advisory, it does not
-  // matter that much because the replicas automatically restart after
-  // rejecting one client....
-  // @@ Ossama: make the 0.9 factor adjustable, at least at
-  // construction time...
-  if (send_load_advisory == 1)
-    {
-      proxy->control_->nominal_load_advisory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
 }
