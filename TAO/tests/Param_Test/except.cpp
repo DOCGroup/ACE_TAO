@@ -119,19 +119,17 @@ Test_Exception::reset_parameters (void)
 
 int
 Test_Exception::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &TAO_IN_ENV)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_,
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      return 0;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (Param_Test::Ooops, ex)
+  ACE_CATCH (Param_Test::Ooops, ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -146,37 +144,31 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
-      TAO_TRY_ENV.clear ();
-
-      return 0;
     }
-  TAO_CATCH (CORBA::UNKNOWN, ex)
+  ACE_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
         {
-          TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
-                                       "expected system exception\n");
+          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - expected system exception\n");
         }
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
-      TAO_TRY_ENV.clear ();
-
-      return 0;
     }
-  TAO_CATCH (Param_Test::BadBoy, ex)
+  ACE_CATCH (Param_Test::BadBoy, ex)
     {
-      TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
-                                   " unexpected exception\n");
-      TAO_RETHROW_RETURN (-1);
+      ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - unexpected system exception\n");
     }
-  TAO_ENDTRY_RETURN (-1);
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
 Test_Exception::add_args (CORBA::NVList_ptr param_list,
                           CORBA::NVList_ptr retval,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_ulong,
@@ -195,24 +187,24 @@ Test_Exception::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value. Let the ORB allocate storage. We simply tell the ORB
   // what type we are expecting.
-  retval->item (0, env)->value ()->replace (CORBA::_tc_ulong,
-                                            &this->ret_,
-                                            0, // does not own
-                                            env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_ulong,
+                                                    &this->ret_,
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 

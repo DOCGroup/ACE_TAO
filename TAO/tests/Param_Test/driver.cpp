@@ -61,52 +61,60 @@ int
 Driver::init (int argc, char **argv)
 {
   // environment to track exceptions
-  CORBA::Environment env;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  //CORBA::Environment env;
 
   // retrieve the instance of Options
   Options *opt = OPTIONS::instance ();
 
-  // Retrieve the underlying ORB
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "internet",
-                                env);
+  char exception_string[256];
 
-  if (env.exception () != 0)
+  ACE_TRY
     {
-      env.print_exception ("ORB initialization");
+      ACE_OS::strcpy (exception_string, "ORB Initialization");
+      
+      // Retrieve the underlying ORB      
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    "internet",
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Parse command line and verify parameters.
+      if (opt->parse_args (argc, argv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) driver.cpp - "
+                           "parse_args failed\n"),
+                          -1);
+      // Retrieve a Param_Test object reference
+      ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
+ 
+      CORBA::Object_var temp =
+        this->orb_->string_to_object (opt->param_test_ior (), ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (temp.in()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ORB::string_to_object() returned null object for IOR <%s>\n",
+                           opt->param_test_ior ()),
+                          -1);
+ 
+      // Get the object reference
+      ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
+ 
+      this->objref_ = Param_Test::_narrow (temp.in(), ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, exception_string);
       return -1;
     }
-
-  // Parse command line and verify parameters.
-  if (opt->parse_args (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) driver.cpp - "
-                       "parse_args failed\n"),
-                      -1);
-
-  // Retrieve a Param_Test object reference
-  CORBA::Object_var temp =
-    this->orb_->string_to_object (opt->param_test_ior (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("ORB::string_to_object() failed.");
-      return -1;
-    }
-
-  if (CORBA::is_nil (temp.in()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ORB::string_to_object() returned null object for IOR <%s>\n",
-                       opt->param_test_ior ()),
-                      -1);
-
-  this->objref_ = Param_Test::_narrow (temp.in(), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Param_Test::_narrow failed");
-      return -1;
-    }
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  
   return 0;
 }
 
@@ -467,19 +475,21 @@ Driver::run (void)
       break;
     }
 
-  TAO_TRY
+  // Get in a new environment variable
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       if (opt->shutdown ())
         {
-          this->objref_->shutdown (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->objref_->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("during shutdown");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "during shutdown");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return retstatus;
 }

@@ -57,7 +57,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req,
 
 int
 Test_AnySeq::init_parameters (Param_Test_ptr objref,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -92,24 +92,22 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
           {
 	    if (TAO_debug_level > 0)
 	      ACE_DEBUG ((LM_DEBUG, "setting coffee object \n" ));
-            TAO_TRY
+            ACE_TRY
               {
                 // get access to a Coffee Object
-                Coffee_var cobj = objref->make_coffee (TAO_TRY_ENV);
-                TAO_CHECK_ENV;
+                Coffee_var cobj = objref->make_coffee (ACE_TRY_ENV);
+                ACE_TRY_CHECK;
 
                 // insert the coffee object into the Any
                 this->in_[i] <<= cobj.in ();
                 this->inout_[i] <<= 0; // different from in_
               }
-            TAO_CATCH (CORBA::SystemException, sysex)
+            ACE_CATCH (CORBA::SystemException, sysex)
               {
-                ACE_UNUSED_ARG (sysex);
-                TAO_TRY_ENV.print_exception
-		  ("System Exception doing make_coffee");
+                ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
                 return -1;
               }
-            TAO_ENDTRY;
+            ACE_ENDTRY;
           }
           break;
         case 3:
@@ -176,20 +174,20 @@ Test_AnySeq::reset_parameters (void)
 
 int
 Test_AnySeq::run_sii_test (Param_Test_ptr objref,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   Param_Test::AnySeq_out out (this->out_.out ());
   this->ret_ = objref->test_anyseq (this->in_.in (),
                                     this->inout_.inout (),
                                     out,
-                                    env);
-  return (env.exception () ? -1:0);
+                                    ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_AnySeq::add_args (CORBA::NVList_ptr param_list,
                        CORBA::NVList_ptr retval,
-                       CORBA::Environment &env)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (Param_Test::_tc_AnySeq,
                      (void *) &this->in_.in (),
@@ -207,24 +205,25 @@ Test_AnySeq::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value type
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_AnySeq,
-					    // see above
-					    &this->ret_.inout (),
-					     // does not own
-                                            0, env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_AnySeq,
+                                                    // see above
+                                                    &this->ret_.inout (),
+                                                    // does not own
+                                                    0, 
+                                                    ACE_TRY_ENV);
   return 0;
 }
 

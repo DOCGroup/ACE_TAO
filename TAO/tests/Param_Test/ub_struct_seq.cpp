@@ -55,13 +55,10 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Struct_Sequence::init_parameters (Param_Test_ptr objref,
-                                     CORBA::Environment &env)
+Test_Struct_Sequence::init_parameters (Param_Test_ptr ,
+                                       CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
@@ -91,20 +88,20 @@ Test_Struct_Sequence::reset_parameters (void)
 
 int
 Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   Param_Test::StructSeq_out out (this->out_.out ());
   this->ret_ = objref->test_struct_sequence (this->in_,
                                              this->inout_.inout (),
                                              out,
-                                             env);
-  return (env.exception () ? -1:0);
+                                             ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (Param_Test::_tc_StructSeq,
                      &this->in_,
@@ -122,23 +119,23 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value type
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_StructSeq,
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_StructSeq,
                                             &this->ret_.inout (), // see above
                                             0, // does not own
-                                            env);
+                                            ACE_TRY_ENV);
   return 0;
 }
 
@@ -154,9 +151,8 @@ Test_Struct_Sequence::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Struct_Sequence::check_validity (CORBA::Request_ptr req)
+Test_Struct_Sequence::check_validity (CORBA::Request_ptr )
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
@@ -270,13 +266,10 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr objref,
-                                     CORBA::Environment &env)
+Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr ,
+                                                 CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
@@ -307,20 +300,20 @@ Test_Unbounded_Struct_Sequence::reset_parameters (void)
 
 int
 Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
-                                    CORBA::Environment &env)
+                                              CORBA::Environment &ACE_TRY_ENV)
 {
   Param_Test::PathSpec_out out (this->out_.out ());
   this->ret_ = objref->test_unbounded_struct_sequence (this->in_,
-                                             this->inout_.inout (),
-                                             out,
-                                             env);
-  return (env.exception () ? -1:0);
+                                                       this->inout_.inout (),
+                                                       out,
+                                                       ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Unbounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
-                                CORBA::NVList_ptr retval,
-                                CORBA::Environment &env)
+                                          CORBA::NVList_ptr retval,
+                                          CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (Param_Test::_tc_PathSpec,
                      &this->in_,
@@ -338,23 +331,23 @@ Test_Unbounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value type
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_PathSpec,
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_PathSpec,
                                             &this->ret_.inout (),
                                             0,
-                                            env);
+                                            ACE_TRY_ENV);
   return 0;
 }
 
@@ -370,9 +363,8 @@ Test_Unbounded_Struct_Sequence::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Unbounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
+Test_Unbounded_Struct_Sequence::check_validity (CORBA::Request_ptr )
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
@@ -399,7 +391,7 @@ Test_Unbounded_Struct_Sequence::print_values (void)
 
 CORBA::Boolean
 Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
-                               const Param_Test::PathSpec &s2)
+                                         const Param_Test::PathSpec &s2)
 {
   if (s1.maximum () != s2.maximum ())
       return 0;

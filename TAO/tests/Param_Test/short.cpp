@@ -44,19 +44,16 @@ Test_Short::opname (void) const
 
 void
 Test_Short::dii_req_invoke (CORBA::Request *req,
-                            CORBA::Environment &env)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke (env);
+  req->invoke (ACE_TRY_ENV);
 }
 
 int
-Test_Short::init_parameters (Param_Test_ptr objref,
-                             CORBA::Environment &env)
+Test_Short::init_parameters (Param_Test_ptr /*objref*/,
+                             CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
 
   this->in_ = gen->gen_short ();
   this->inout_ =  0;
@@ -74,20 +71,20 @@ Test_Short::reset_parameters (void)
 
 int
 Test_Short::run_sii_test (Param_Test_ptr objref,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   this->ret_ = objref->test_short (this->in_,
                                    this->inout_,
                                    this->out_,
-                                   env);
+                                   ACE_TRY_ENV);
 
-  return (env.exception () ? -1:0);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Short::add_args (CORBA::NVList_ptr param_list,
                       CORBA::NVList_ptr retval,
-                      CORBA::Environment &env)
+                      CORBA::Environment &ACE_TRY_ENV)
 {
   // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_short,
@@ -106,24 +103,24 @@ Test_Short::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value. Let the ORB allocate storage. We simply tell the ORB
   // what type we are expecting.
-  retval->item (0, env)->value ()->replace (CORBA::_tc_short,
-                                            &this->ret_,
-                                            0, // does not own
-                                            env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_short,
+                                                    &this->ret_,
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 
@@ -139,9 +136,8 @@ Test_Short::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Short::check_validity (CORBA::Request_ptr req)
+Test_Short::check_validity (CORBA::Request_ptr /*req*/)
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

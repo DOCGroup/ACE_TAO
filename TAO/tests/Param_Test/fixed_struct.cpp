@@ -50,13 +50,13 @@ Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Fixed_Struct::init_parameters (Param_Test_ptr objref,
-                                    CORBA::Environment &env)
+Test_Fixed_Struct::init_parameters (Param_Test_ptr /*objref*/,
+                                    CORBA::Environment &/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
+  //ACE_UNUSED_ARG (objref);
+  //ACE_UNUSED_ARG (env);
 
   this->in_ = gen->gen_fixed_struct ();
   ACE_OS::memset (&this->inout_,
@@ -85,19 +85,19 @@ Test_Fixed_Struct::reset_parameters (void)
 
 int
 Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   this->ret_ = objref->test_fixed_struct (this->in_,
                                           this->inout_,
                                           this->out_,
-                                          env);
-  return (env.exception () ? -1:0);
+                                          ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Fixed_Struct::add_args (CORBA::NVList_ptr param_list,
                              CORBA::NVList_ptr retval,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
   // We provide the top level memory
   // the Any does not own any of these
@@ -117,23 +117,23 @@ Test_Fixed_Struct::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value type
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Struct,
-                                            &this->ret_,
-                                            0, // does not own
-                                            env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Fixed_Struct,
+                                                    &this->ret_,
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 
@@ -167,9 +167,9 @@ Test_Fixed_Struct::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Fixed_Struct::check_validity (CORBA::Request_ptr req)
+Test_Fixed_Struct::check_validity (CORBA::Request_ptr /*req*/)
 {
-  ACE_UNUSED_ARG (req);
+  //ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
