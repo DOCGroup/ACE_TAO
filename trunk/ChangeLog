@@ -1,3 +1,40 @@
+Wed Jun 14 17:54:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am:
+
+	  Moved generation of aceConf.sh and ace-config.1 to configure
+	  script.  There was no reason for them to be generated in the
+	  Makefile.  This also fixes a problem where the Solaris sed
+	  command didn't understand a substitution.
+
+	* acconfig.h (PTHREAD_MIN_PRIORITY, PTHREAD_MAX_PRIORITY):
+
+	  Removed macros related to these macros.  The configure script
+	  will automatically add them.
+
+	* configure.in:
+
+	  Generate aceConf.sh and ace-config.1 at configure time, rather
+	  than make time.  See above entry for details.
+
+	  Fixed tests for PTHREAD_MAX_PRIORITY and PTHREAD_MIN_PRIORITY.
+	  These macros should only be used if the sched_get_priority_max()
+	  and sched_get_priority_min() functions are not available.  If
+	  PTHREAD_{MAX,MIN}_PRIORITY isn't available, then check if
+	  PX_PRIO_{MAX,MIN} is available.  If so, then define
+	  PTHREAD_{MAX,MIN}_PRIORITY to be those values.  These changes
+	  fix some configuration problems experienced IRIX.
+
+	  Improved test for ACE_Addr::sap_any support.  ACE_Addr:sap_any
+	  is now passed as an argument to the ACE_FILE_Addr constructor.
+
+	* ace/Cached_Connect_Strategy_T.cpp:
+
+	  This file was still including a file that was removed from the
+	  distribution, i.e. `ace/Cached_Connect_Strategy_T.i', which
+	  caused compile-time errors to occur when building with inlining
+	  disabled.
+
 Wed Jun 14 11:55:56 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Cleanup_Strategies_T.cpp:
