@@ -167,10 +167,6 @@ SOURCE=.\Security\PrincipalAuthenticator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Security\PrincipalAuthenticator_Impl.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Security\QOPPolicy.h
 # End Source File
 # Begin Source File
