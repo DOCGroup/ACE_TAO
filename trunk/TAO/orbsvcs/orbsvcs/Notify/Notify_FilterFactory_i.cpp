@@ -49,14 +49,14 @@ TAO_Notify_FilterFactory_i::create_filter (
 
 CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_FilterFactory_i::create_mapping_filter (
-    const char * constraint_grammar,
-    const CORBA::Any & default_value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                   const char * /*constraint_grammar*/,
+                                                   const CORBA::Any & /*default_value*/,
+                                                   CORBA::Environment & //ACE_TRY_ENV
+                                                   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::InvalidGrammar
-  ))
+                   CORBA::SystemException,
+                   CosNotifyFilter::InvalidGrammar
+                   ))
 {
   return 0;
 }

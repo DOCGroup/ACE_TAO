@@ -1,3 +1,17 @@
+Mon Dec 20 14:22:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp: Fixed
+	  warnings on SunOS_EGCS. 
+
+
 Mon Dec 20 13:52:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Tagged_Components.i (components):
