@@ -22,7 +22,7 @@ ACE_RCSID(tests, Vector_Test, "$Id$")
 
 #include "ace/Vector_T.h"
 
-typedef int DATA;
+typedef size_t DATA;
 typedef ACE_Vector<DATA> VECTOR;
 typedef ACE_Vector<DATA>::Iterator ITERATOR;
 
