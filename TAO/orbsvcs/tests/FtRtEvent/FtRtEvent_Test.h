@@ -51,7 +51,7 @@ class FtRtEvent_Test : public FtRtEvent_Test_Base
 template <class T>
 int FtRtEvent_Test<T>::init(ACE_ENV_SINGLE_ARG_DECL)
 {
-  return client_.init(orb_, num_iterations_, channel_, timer_interval_ 
+  return client_.init(orb_.in(), num_iterations_, channel_.in(), timer_interval_ 
                       ACE_ENV_ARG_PARAMETER);
 }
 
