@@ -1,3 +1,17 @@
+Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/pace/*.h:
+	* pace/pace/arpa/*.h:
+	* pace/pace/netinet/*.h:
+	* pace/pace/sys/*.h:
+          Modifying .h files to remove any path in front of .inl files. 
+
+	* pace/pace/posix/*.c:
+          Modifying .c files to remove any path in front of .inl files. 
+
+	* pace/pace/posix/time.inl
+          Changed PACE_SETERNNO to PACE_SET_ERRNO
+
 Thu Jun  8 15:03:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/pace/Makefile:
