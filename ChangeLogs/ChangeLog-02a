@@ -1,3 +1,10 @@
+Thu May 30 01:38:51 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/OS_String.inl: Revert:
+	Wed May 29 09:38:53 2002  Ossama Othman  <ossama@uci.edu>
+	The intended fix is satisfactorily addressed by:
+	Tue May 28 18:35:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com> 
+	
 Wed May 29 16:36:42 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/CDR_Stream.cpp (write_wchar, read_wchar, skip_wchar):
