@@ -19,13 +19,12 @@ project(JAWS) : acelib {
 }
 
 project(JAWS_server) : aceexe {
-
   exename = main
   after += JAWS
   libs  += JAWS
 
   Source_Files {
-    main
+    main.cpp
   }
 }
 
