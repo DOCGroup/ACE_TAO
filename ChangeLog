@@ -1,3 +1,8 @@
+Mon Jan 31 10:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+          Fixed compile warning in wchar build
+
 Mon Jan 31 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/agent/agent.mpc:
