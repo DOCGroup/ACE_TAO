@@ -104,7 +104,7 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 
 void
 Checkpoint_i::put_event (Event *event,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In general this function would be a dispatcher which looks at the
@@ -134,7 +134,7 @@ Checkpoint_i::put_event (Event *event,
 
 
 Event_List *
-Checkpoint_i::get_critical_events (CORBA::Environment &ACE_TRY_ENV)
+Checkpoint_i::get_critical_events (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The skeleton should not steal our list by decrementing

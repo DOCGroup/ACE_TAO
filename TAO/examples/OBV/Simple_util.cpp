@@ -283,7 +283,7 @@ Client<InterfaceObj, Var>::init (const char *name,
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0,
+                                    name,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -329,7 +329,7 @@ Client<InterfaceObj, Var>::init (const char *name,
 
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
+Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &)
 {
 
   return 0;
