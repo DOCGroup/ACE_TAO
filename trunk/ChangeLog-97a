@@ -17,6 +17,9 @@ Sun Feb 02 21:24:02 1997  David L. Levine  <levine@cs.wustl.edu>
 	  argument instead of return value; added elapsed_time
 	  (ACE_Time_Value &) and elapsed_time_incr (ACE_Time_Value &).
 
+	* examples/Thread/context_switch.cpp: use ACE_High_Res_Timer
+	  instead of the old Timer adapter.
+
 	* ace/config-aix-4.1.x.h: fixed typo: #defind ACE_HAS_LONGLONG_T.
 
 	* ace/config-aix-4.2.x.h: added #define ACE_HAS_LONGLONG_T.
