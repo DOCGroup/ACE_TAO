@@ -1,3 +1,21 @@
+Fri Nov 29 19:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connect_Strategy.h:
+	* tao/Connect_Strategy.cpp: Added a new method post_failed_connect
+	  () which could be used to do cleanup if the connect () call
+	  fails. 
+
+	* tao/Blocked_Connect_Strategy.h:
+	* tao/Blocked_Connect_Strategy.cpp: Implemented the
+	  post_failed_connect () method to do cleanup of the svc_handler
+	  created. Since the blocked connect strategy doesnt use the
+	  reactor, and hence no handle_close () call if connection
+	  establishment fails,  we need to employ a seperate mechanism to
+	  take care of cleanup. This fixes a memory leak.
+
+	* tao/IIOP_Connector.cpp: Call post_failed_connect () if the
+	  connect () call fails. 
+
 Fri Nov 29 19:25:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport.cpp: Prevented the thread doing the server side
