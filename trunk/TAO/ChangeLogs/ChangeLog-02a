@@ -171,7 +171,7 @@ Fri Jun 14 13:58:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 Fri Jun 14 09:11:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
-        * TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
 
           Move the return statement to avoid warnings with gcc.
 
@@ -1273,14 +1273,14 @@ Fri May 17 18:55:09 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Fri May 17 11:30:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO/tests/ORT/client.dsp:
-	* TAO/tests/ORT/server.dsp: Fixed and forced custom IDL build rules.
+	* tests/ORT/client.dsp:
+	* tests/ORT/server.dsp: Fixed and forced custom IDL build rules.
 
 Thu May 16 16:39:01 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* TAo/tests/TAO_tests.dsw:
-	* TAO/tests/ORT/client.dsp:
-	* TAO/tests/ORT/server.dsp:
+	* tests/TAO_tests.dsw:
+	* tests/ORT/client.dsp:
+	* tests/ORT/server.dsp:
 	  Created new dsp files and inserted them in the TAO_tests workspace.
 
 Thu May 16 15:29:33 2002  Ossama Othman  <ossama@uci.edu>
