@@ -172,6 +172,9 @@ private:
   ACE_Node (ACE_Node<T> *n = 0, int MS_SUCKS = 0);
   ACE_Node (const ACE_Node<T> &n);
 
+  ~ACE_Node (void);
+  // This isn't necessary, but it keeps the compiler happy.
+
   ACE_Node<T> *next_;
   // Pointer to next element in the list of <ACE_Node>s.
 

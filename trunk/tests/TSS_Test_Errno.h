@@ -1,13 +1,13 @@
 class Errno
-// ============================================================================
-// = TITLE
-//    Define a simple Errno abstraction
-//
-// = DESCRIPTION
-//    This class gets its own header file to work around AIX C++
-//    compiler "features" related to template instantiation...  It is
-//    only used by TSS_Test.cpp  
-// ============================================================================
+  // ============================================================================
+  // = TITLE
+  //    Define a simple Errno abstraction
+  //
+  // = DESCRIPTION
+  //    This class gets its own header file to work around AIX C++
+  //    compiler "features" related to template instantiation...  It is
+  //    only used by TSS_Test.cpp.
+  // ============================================================================
 {
 public:
   int error (void) { return this->errno_; }

@@ -21,66 +21,16 @@
 // 
 // ============================================================================
 
-// THE FOLLOWING ARE ONLY FOR DEBUGGING PURPOSES AND SHOULD BE USED
-// WITH EXTREME CAUTION!!!!
-
-#define private public
-#define protected public
-#include "ace/OS.h"
-#include "ace/Thread.h"
-#include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
 #include "ace/Strategies.h"
-#include "ace/Strategies_T.h"
-#undef private
-#undef protected
 #include "test_config.h"
-#define private public
-#define protected public
-
-#if defined (ACE_MT_SAFE)
-typedef ACE_RW_Mutex RW_MUTEX;
-#else
-typedef ACE_Null_Mutex RW_MUTEX;
-#endif /* ACE_MT_SAFE */
+#include "Conn_Test.h"
 
 // ****************************************
-
-class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-  // = TITLE
-  //      This class is the product created by both <ACE_Connector>
-  //      and <ACE_Acceptor> objects.
-{
-public:
-  Svc_Handler (ACE_Thread_Manager * = 0);
-  // Do-nothing constructor.
-
-  virtual int open (void *);
-  // Initialization hook.
-
-  void send_data (void);
-  // Send data to server.
-
-  void recv_data (void);
-  // Recv data from client.
-
-  int close (u_long = 0);
-  // Shutdown the <Svc_Handler>.
-
-  void in_use (int);
-  // Set the use flag (i.e., 1 means "in use", 0 means "not in use").
-
-  int in_use (void);
-  // Returns the current use flag.
-
-private:
-  int in_use_;
-  // Are we currently in use?
-};
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
   : in_use_ (0)
@@ -297,6 +247,7 @@ typedef ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler> EXT_ID;
 typedef Svc_Handler *INT_ID;
 typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> MAP_ENTRY;
 
+#if 0
 static void
 dump_map (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> &hashmap)
 {
@@ -338,6 +289,7 @@ dump (STRAT_CONNECTOR &con)
 
   dump_map (csp->connection_cache_);
 }
+#endif /* 0 */
 
 // This function runs the more sophisticated tests involving the
 // Caching_Connect_Strategy.
