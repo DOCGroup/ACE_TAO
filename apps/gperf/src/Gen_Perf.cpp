@@ -367,14 +367,16 @@ Gen_Perf::run (void)
   if (this->open () == -1)
     return 1;
 
+#if 0
   if (option[BINARYSEARCH])
     {
-      if (this->compute_binary_search () != 0)
+      if (this->compute_binary_search () == -1)
         return 1;
     }
   else
+#endif 
     {
-      if (this->compute_perfect_hash () != 0)
+      if (this->compute_perfect_hash () == -1)
         return 1;
     }
 
