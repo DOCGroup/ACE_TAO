@@ -4,6 +4,10 @@ Tue Jun 29 22:33:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed warnings in green hills and possibly othre EDG-based
 	  compilers.
 
+	* tests/run_tests.sh: 
+	  Take Future_Set_Test out, it does not work in too many
+	  platforms.
+
 Tue Jun 29 21:24:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK.cpp (open): Removed an unused variable.  Thanks
