@@ -1199,7 +1199,8 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
       CORBA::Long size, alignment;
 
       // first encode the RepositoryID which we can grab from the typecode pointer
-      continue_encoding = stream->put_string (tc->id (env));
+      continue_encoding = stream->put_string (tc->id (env),
+                                              ACE_OS::strlen (tc->id (env)));
 
       data = (char *) data + sizeof (CORBA::Exception);
       // @@ (ASG) The reason this is done is because we want to skip the size
