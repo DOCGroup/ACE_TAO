@@ -1,3 +1,11 @@
+Tue Sep  3 18:18:16 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/Messaging/Messaging_No_ImplC.h: Undefined TRANSPARENT, since
+	  some platforms (one of them being Win32) uses it for ioctl (). 
+
+	* tao/Messaging/diffs/Messaging_No_Impl.diff: Updated the patch
+	  file to include the above change.
+
 Tue Sep  3 23:00:35 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Makefile.dirs: Put RTCORBA and RT_PortableServer directories
