@@ -32,6 +32,8 @@
 #   define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #   define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
+# endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
+
 #elif defined (ghs)
   // SunOS 5.7's /usr/include/sys/procfs_isa.h needs uint64_t,
   // but /usr/include/sys/int_types.h doesn't #define it because

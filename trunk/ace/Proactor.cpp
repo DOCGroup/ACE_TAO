@@ -508,6 +508,22 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 }
 
 int
+ACE_Proactor::reset_event_loop(void)
+{
+  ACE_TRACE ("ACE_Proactor::reset_event_loop");
+
+  // Obtain the lock in MT environments.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE !=0)
+  ACE_Thread_Mutex *lock = 
+	  ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+	  (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
+#endif
+  ACE_Proactor::end_event_loop_ = 0;
+  return 0;
+}
+
+int
 ACE_Proactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");

@@ -1,3 +1,12 @@
+Tue Jun 26 16:22:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Proactor.h: Added a static reset_event_loop() to the ACE_Proactor
+	  class.  Thanks to Rich Newman <RNewman@directv.com> for
+ 	  reporting this.
+
+	* ace/config-sunos5.7.h: Removed an errant #endif.  Thanks to
+	  Craig Ching <cching@mqsoftware.com> for reporting this.
+
 Mon Jun 25 15:36:55 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-sunos5.7.h: Added support for GCC 3.0.  Thanks to
