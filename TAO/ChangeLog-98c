@@ -9,6 +9,10 @@ Sat Sep 26 09:24:10 1998  David L. Levine  <levine@cs.wustl.edu>
           moved this constructor up in the file, to avoid use
           before definition.
 
+        * tao/Object_Table.cpp (bind,find,unbind): removed check
+          for "index" < 0.  Because it's unsigned, it can never
+          be less than 0.  GreenHills warned about that.
+
 Sat Sep 26 00:07:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Object_Table.i:
