@@ -90,7 +90,7 @@ public:
               int flags = M_DELETE);
 
   /**
-   * Create an initialized module with <module_name> as its identity
+   * Initialize the module with <module_name> as its identity
    * and <reader> and <writer> as its tasks.  Previously register
    * reader or writers or closed down and deleted according to the
    * value of flags_.  Should not be called from within
@@ -103,7 +103,7 @@ public:
             int flags = M_DELETE);
 
   /**
-   * Close down the Module and its Tasks.  The flags argument can be
+   * Close down the module and its tasks.  The flags argument can be
    * used to override the default behaviour, which depends on previous
    * <flags> values in calls to c'tor, <open>, <reader>, and <writer>.
    * A previous value M_DELETE[_XXX] can not be overridden.  Should
