@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _UTL_STRLIST_UTL_STRLIST_HH
 
 #include "utl_list.h"
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 
 class UTL_String;
 

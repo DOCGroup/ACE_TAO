@@ -69,7 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 #include "idl_bool.h"
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 
 class TAO_IDL_FE_Export UTL_String
 {
