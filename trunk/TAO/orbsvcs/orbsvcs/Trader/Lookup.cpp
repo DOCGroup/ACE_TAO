@@ -73,8 +73,7 @@ query (const char *type,
   returned_limits_applied = new CosTrading::PolicyNameSeq;
   
   // Get service type map
-  TRADER::SERVICE_TYPE_MAP& service_type_map =
-    this->trader_.service_type_map ();
+  SERVICE_TYPE_MAP& service_type_map = this->trader_.service_type_map ();
 
   TAO_Policies policies (this->trader_, in_policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
@@ -118,7 +117,7 @@ query (const char *type,
   // If type is not found, there is nothing to consider - return.
   // Else we found the service type....proceed with lookup.
   // We will store the matched offers in here.
-  LOOKUP_OFFER_LIST ordered_offers;
+  Offer_Queue ordered_offers;
   
   // Perform the lookup, placing the ordered results in ordered_offers.
   this->perform_lookup (type,
@@ -180,7 +179,7 @@ perform_lookup (const char* type,
 		SERVICE_TYPE_MAP& service_type_map,
 		CosTradingRepos::ServiceTypeRepository_ptr rep,		
 		TAO_Policies& policies,
-		LOOKUP_OFFER_LIST& ordered_offers,
+		Offer_Queue& ordered_offers,
     CosTrading::PolicyNameSeq_out returned_limits_applied,
 		CORBA::Environment& env)
   TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
@@ -249,7 +248,12 @@ perform_lookup (const char* type,
       CosTrading::Offer* offer;
       CosTrading::OfferId offer_id;
       if (pref_inter.remove_offer (offer_id, offer))
-	ordered_offers.push_back (make_pair (offer_id, offer));
+	{
+	  Offer_Info offer_info;
+	  offer_info.offer_id_ = offer_id;
+	  offer_info.offer_ptr_ = offer;
+	  ordered_offers.enqueue_head (offer_info);
+	}
       else
 	break;
     }
@@ -269,7 +273,7 @@ lookup_one_type (const char* type,
   ACE_DEBUG ((LM_DEBUG, "TAO_Lookup: Performing query for %s\n", type));
   
   // Retrieve an iterator over the offers for a given type.
-  auto_ptr<LOCAL_OFFER_ITER>
+  auto_ptr<Local_Offer_Iter>
     offer_iter (service_type_map.get_offers (type));
 
   if (offer_iter.get () != 0)
@@ -387,7 +391,7 @@ lookup_all_subtypes (const char* type,
 template <class TRADER> int
 TAO_Lookup<TRADER>::
 fill_receptacles (const char* type,
-		  LOOKUP_OFFER_LIST& ordered_offers,
+		  Offer_Queue& ordered_offers,
 		  CORBA::ULong how_many,		  
 		  const CosTrading::Lookup::SpecifiedProps& desired_props,
 		  CosTrading::OfferSeq*& offers,
@@ -408,8 +412,7 @@ fill_receptacles (const char* type,
   // END SPEC
   
   // Ordered offers iterator.
-  LOOKUP_OFFER_LIST::iterator ordered_offers_iterator = 
-    ordered_offers.begin ();
+  Offer_Queue::ITERATOR ordered_offers_iterator (ordered_offers);
   TAO_Property_Filter prop_filter (desired_props, env);
   TAO_CHECK_ENV_RETURN (env, 0);
   
@@ -423,9 +426,13 @@ fill_receptacles (const char* type,
   offers->length (offers_in_sequence);
   
   // Add to the sequence, filtering out the undesired properties.
-  for (int i = 0; i < offers_in_sequence; ordered_offers_iterator++, i++)
+  for (int i = 0;
+       i < offers_in_sequence;
+       ordered_offers_iterator.advance (), i++)
     {
-      CosTrading::Offer& source = *((*ordered_offers_iterator).second);
+      Offer_Info* offer_info_ptr = 0;
+      ordered_offers_iterator.next (offer_info_ptr);
+      CosTrading::Offer& source = *offer_info_ptr->offer_ptr_;
       CosTrading::Offer& destination = (*offers)[i];
       prop_filter.filter_offer (source, destination);
     }
@@ -442,10 +449,12 @@ fill_receptacles (const char* type,
       // Add to the iterator
       for (i = 0;
 	   i < offers_in_iterator;
-	   ordered_offers_iterator++, i++)
+	   ordered_offers_iterator.advance (), i++)
 	{
-	  oi->add_offer ((*ordered_offers_iterator).first, 
-			 (*ordered_offers_iterator).second);
+	  Offer_Info* offer_info_ptr = 0;
+	  ordered_offers_iterator.next (offer_info_ptr);      
+	  oi->add_offer (offer_info_ptr->offer_id_,
+			 offer_info_ptr->offer_ptr_);
 	}
     }
 
@@ -497,7 +506,7 @@ TAO_Lookup<TRADER>::duplicate_stem_id (TAO_Policies& policies,
 
   // If the stem_id was provided and is a duplicate, return true.
   if ((request_id.ptr () != 0) &&
-      (this->request_ids_.insert (request_id)).second == 0)
+      this->request_ids_.insert (request_id) == 1)
     return_value = CORBA::B_TRUE;
 
   return return_value;
@@ -733,7 +742,7 @@ TAO_Lookup<TRADER>
 }
 
 int
-operator< (const CosTrading::Admin::OctetSeq_var& l,
+operator== (const CosTrading::Admin::OctetSeq_var& l,
 	   const CosTrading::Admin::OctetSeq_var& r)
 {
   int return_value = 0;
@@ -742,19 +751,22 @@ operator< (const CosTrading::Admin::OctetSeq_var& l,
   CORBA::ULong left_length = left.length (),
     right_length = right.length ();
 
+  /*
+  if (left_length != right_length)
+    return_value = 0;
+  else
+  */
   
-  if (left_length < right_length)
-    return_value = 1;
-  else if (left_length == right_length)
+  if (left_length == right_length) 
     {
       for (int i = 0; i < left_length; i++)
 	{
-	  if (left[i] < right[i])
+	  if (left[i] == right[i])
 	    {
 	      return_value = 1;
 	      break;
 	    }
-	  else if (left[i] > right[i])
+	  else /* if (left[i] > right[i]) */
 	    break;
 	}
     }
