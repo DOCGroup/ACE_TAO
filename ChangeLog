@@ -1,5 +1,9 @@
 Sun Jul 22 08:19:43 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/config-cygwin32.h: ADded a #define for_CLOCKID_T.  Thanks to
+	  Christophe Galerne <christophgalerne@earthlink.net> for
+ 	  reporting this.
+
 	* ace/Log_Record.cpp (priority_names_): Added commas after the
 	  'ACE_LIB_TEXT ("LM_UNK(04000)")' lines.  Thanks to Steve Harris
  	  <harris_s@ociweb.com> for reporting this.
