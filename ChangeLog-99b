@@ -1,3 +1,11 @@
+Sun May 16 20:08:41 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thread_Manager_Test.cpp (handler,worker):
+          moved ACE_DEBUG out of signal handler.  It was
+          causing occasional lockups on SunOS.  Signal
+          handlers must never do anything that could cause
+          a lock to be acquired.
+
 Sun May 16 20:04:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: moved #include of ace/Trace.h to before #include of
