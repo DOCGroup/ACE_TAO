@@ -34,8 +34,6 @@ $tbl2 = $ARGV[1];
 ######## Plot separately for each number of suppliers.
 ########
 &plot (1);
-&plot (2);
-&plot (10);
 
 
 sub extract {
