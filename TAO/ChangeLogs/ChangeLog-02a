@@ -1,3 +1,9 @@
+Thu Sep  6 12:56:55 2001  Priyanka Gontla  <gontla_p@ociweb.com>
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl (client): 
+	  Modified the perl script to adhere to the new way of providing
+	  the reference to a multicasted service.
+
 Thu Sep  6 07:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/MCAST_Parser.cpp: Fixed compile errors in Minimum builds. 

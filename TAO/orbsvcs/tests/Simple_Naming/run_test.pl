@@ -68,7 +68,7 @@ sub client
 
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-s -ORBInitRef NameService=file://$iorfile",
-         "-s -ORBNameServicePort $ns_multicast_port",
+         "-s -ORBInitRef NameService=mcast://:$ns_multicast_port\::/NameService",
          "-t -ORBInitRef NameService=file://$iorfile",
          "-i -ORBInitRef NameService=file://$iorfile",
          "-e -ORBInitRef NameService=file://$iorfile",
