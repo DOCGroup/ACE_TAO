@@ -176,7 +176,6 @@
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (VXWORKS)
-
 typedef int key_t;
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
@@ -714,8 +713,8 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #define THR_SCHED_RR            0
 #define THR_SCHED_DEFAULT       0
 #define USYNC_THREAD            0
-#define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU */
-                                  // option)
+#define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU
+                                     option) */
 
 typedef SEM_ID ACE_mutex_t;
 // implement ACE_thread_mutex_t with ACE_mutex_t sinces there's just one process . . .
@@ -1788,6 +1787,7 @@ typedef const wchar_t * ACE_WIDE_DL_TYPE;
 struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
+  siginfo_t (ACE_HANDLE *handles);	// JCEJ 12/23/96
 
   ACE_HANDLE si_handle_;
   // Win32 HANDLE that has become signaled.
