@@ -1,3 +1,12 @@
+Tue Sep 30 13:41:14 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i
+ 	  (handle_input):  
+	* examples/Reactor/ReactorEx/test_network_events.cpp (handle_input): 
+	* examples/Logger/simple-server/Logging_Acceptor.cpp
+ 	  (handle_input): Changed to use reset_new_handle () for querying
+ 	  whether we need to reset handles or not.
+
 Tue Sep 30 08:35:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Atomic_Op.i: added CVS header.
