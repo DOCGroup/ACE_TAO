@@ -1,3 +1,9 @@
+Tue Jan  1 09:38:58 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/Activity.cpp: 
+	  examples/RTCORBA/Activity/Builder.cpp:
+	  Fixed compile errors.
+
 Mon Dec 31 16:51:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp (add_to_scope):

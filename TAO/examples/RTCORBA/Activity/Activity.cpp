@@ -279,7 +279,7 @@ Activity::activate_schedule (TAO_ENV_SINGLE_ARG_DECL)
         } /*  if (TAO_debug_level > 0) */
 
       task->job (job.in ());
-      task->activate (barrier_);
+      task->activate_task (barrier_);
       active_task_count_++;
 
       ACE_DEBUG ((LM_DEBUG, "Job %s scheduled\n", task->job ()));
