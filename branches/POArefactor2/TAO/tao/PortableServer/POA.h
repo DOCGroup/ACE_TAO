@@ -519,10 +519,11 @@ public:
     PortableServer::ObjectId user_id
     ACE_ENV_ARG_DECL);
 
-protected:
+   bool validate_lifespan (
+    CORBA::Boolean is_persistent,
+    const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
 
-  /// Accessor for active policy strategies.
-  TAO::Portable_Server::Active_Policy_Strategies &active_policy_strategies (void);
+protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   int enter (void);

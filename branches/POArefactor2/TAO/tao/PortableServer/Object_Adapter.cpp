@@ -55,8 +55,6 @@
 #include "RequestProcessingPolicyFactory.h"
 #include "ServantRetentionPolicyFactory.h"
 
-#include "LifespanStrategy.h"
-
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -542,7 +540,7 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
     }
 
   if (poa == 0
-      || (result == 0 && !poa->active_policy_strategies().lifespan_strategy()->validate (false, poa_creation_time)))
+      || (result == 0 && !poa->validate_lifespan (false, poa_creation_time)))
     result = -1;
 
   return result;

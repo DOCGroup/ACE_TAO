@@ -2751,6 +2751,15 @@ TAO_POA::exit ()
 }
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+bool
+TAO_POA::validate_lifespan (
+  CORBA::Boolean is_persistent,
+  const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const
+{
+  return this->active_policy_strategies_.lifespan_strategy()->
+    validate (is_persistent, creation_time);
+}
+
 TAO::ORT_Adapter *
 TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

@@ -1,3 +1,12 @@
+
+        * tao/PortableServer/POA.h:
+          Removed active_policy_strategies(), only the POA can use the
+          strategies. Added validate_lifespan that can be used by the object
+          adapter.
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Use validate_lifespan.
+
 Mon Nov 22 16:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
