@@ -202,6 +202,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   //    variables should only be set by the handle_input() method and 
   //    its friends...
   this->transport_->message_size (0);
+  this->transport_->message_received (0);
 
   // Obtain unique request id from the RMS.
   this->request_id_ = this->transport_->request_id ();
@@ -767,8 +768,11 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   //    Transport class. We can get this from the
   //    Client_Strategy_Factory or something later. (Alex).
 
-  // Wait for the reply.
-  this->transport_->wait_for_reply ();
+  // Wait for the reply. We should wait till we receive the reply
+  // fully. 
+  // @@ Check for return value -1 here !!! (Alex).
+  while (!this->transport_->message_received ())
+    this->transport_->wait_for_reply ();
 
   // @@ Alex: the old version of this had some error handling code,
   //    like:  this->profile_->reset_hint ()

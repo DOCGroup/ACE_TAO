@@ -840,6 +840,8 @@ TAO_Client_Connection_Handler::transport (void)
   return this->iiop_transport_;
 }
 
+// @@ Should I do something here to enable non-blocking?? (Alex). 
+
 int
 TAO_Client_Connection_Handler::open (void *)
 {
@@ -1098,7 +1100,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
 
 #if 0
   // @@ I guess we can handle the case of handling unexpected input
-  //    message in the Transport class itself. (Alex).
+  //    message in the Wait Strategy classes itself. (Alex).
 
   if (is_twoway)
     {

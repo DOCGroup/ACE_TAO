@@ -168,6 +168,13 @@ public:
   // Update the offset of the incoming message. Returns 0 on success
   // -1 on failure.
 
+  void message_received (int received);
+  // Set the flag to indicate whether the input message was read fully
+  // or no. 
+
+  int message_received (void) const;
+  // Get the flag.
+
   // = Get and set methods for the ORB Core.
 
   // void orb_core (TAO_ORB_Core *orb_core);
@@ -229,6 +236,11 @@ protected:
   
   CORBA::ULong message_offset_;
   // Current offset of the input message.
+
+  int message_received_;
+  // Flag to indicate whether the input message has been received
+  // fully or not.
+  
     
   TAO_Request_Mux_Strategy *rms_;
   // Strategy to decide whether multiple requests can be sent over the

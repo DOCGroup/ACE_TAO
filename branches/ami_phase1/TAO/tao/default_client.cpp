@@ -27,13 +27,13 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->request_mux_strategy_ = TAO_EXCLUSIVE_RMS;
 #endif /* TAO_USE_MUXED_REQUEST_MUX_STRATEGY */
 
-#if defined (TAO_USE_WAIT_ON_LEADER_FOLLOWER)
-  this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
-#elif defined (TAO_USE_WAIT_ON_REACTOR)
-  this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
-#else 
-  this->wait_strategy_ = TAO_WAIT_ON_READ;
-#endif /* TAO_USE_WAIT_ON_LEADER_FOLLOWER */
+// #if defined (TAO_USE_WAIT_ON_READ)
+//   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
+// #elif defined (TAO_USE_WAIT_ON_REACTOR)     
+//   this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
+// #else                                       
+//   this->wait_strategy_ = TAO_WAIT_ON_READ;  
+// #endif /* TAO_USE_WAIT_ON_LEADER_FOLLOWER */
 }
 
 TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
@@ -188,10 +188,10 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
 {
   TAO_Wait_Strategy *ws = 0;
 
-  if (this->wait_strategy_ == TAO_WAIT_ON_LEADER_FOLLOWER)
+  if (this->wait_strategy_ == TAO_WAIT_ON_READ)
     {
       ACE_NEW_RETURN (ws,
-                      TAO_Wait_On_Leader_Follower (transport),
+                      TAO_Wait_On_Read (transport),
                       0);
     }
   else if (this->wait_strategy_ == TAO_WAIT_ON_REACTOR)
@@ -203,7 +203,7 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
   else
     {
       ACE_NEW_RETURN (ws,
-                      TAO_Wait_On_Read (transport),
+                      TAO_Wait_On_Leader_Follower (transport),
                       0);
     }
   
