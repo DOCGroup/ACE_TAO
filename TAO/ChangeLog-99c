@@ -1,3 +1,10 @@
+Sun Sep 26 16:32:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/time/Time_Client.java.  Added a new example
+	  that illustrates how to use Java to access the simple Time
+ 	  service.  Thanks to Martin Krumpolec <krumpo@pobox.sk> for
+ 	  contributing this.
+
 Sun Sep 26 16:37:33 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 
@@ -9,9 +16,7 @@ Sun Sep 26 16:37:33 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
-	Removed unused variables and added missing template instantiations	
-	
-
+	  Removed unused variables and added missing template instantiations	
 
 Sun Sep 26 04:20:00 1999  Michael Kircher  <Michael.Kicher@mchp.siemens.de>
 
