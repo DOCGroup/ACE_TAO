@@ -601,7 +601,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
 
   while (bounds-- && continue_skipping == 1)
     {
-      continue_skipping = (CORBA::Boolean) stream->skip (tc2, ACE_TRY_ENV);
+      continue_skipping = (CORBA::Boolean) stream->skip (tc2.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -636,7 +636,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
   tc2 = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  retval = stream->skip (tc2, ACE_TRY_ENV);
+  retval = stream->skip (tc2.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   //  tc2->_decr_refcnt ();

@@ -876,7 +876,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
             }
           else
             {
-              return stream->decode (member_tc, member_val,
+              return stream->decode (member_tc.in (), member_val,
                                      data2, ACE_TRY_ENV);
             }
         }
@@ -890,7 +890,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
         {
           CORBA_Object_ptr object;
           int retval =
-            stream->decode (member_tc, &object, data2, ACE_TRY_ENV);
+            stream->decode (member_tc.in (), &object, data2, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)

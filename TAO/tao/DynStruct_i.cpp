@@ -72,7 +72,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
               ACE_TRY_CHECK;
 
               // Move to the next field in the CDR stream.
-              cdr.skip (field_tc);
+              cdr.skip (field_tc.in ());
             }
         }
       else
@@ -322,7 +322,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
           ACE_CHECK;
 
           // Move to the next field in the CDR stream.
-          cdr.skip (field_tc);
+          cdr.skip (field_tc.in ());
         }
     }
   else
