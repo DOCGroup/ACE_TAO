@@ -1,5 +1,5 @@
 project(Reconnect): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Reconnect
@@ -10,7 +10,7 @@ project(Reconnect): messaging, rteventexe {
 }
 
 project(Shutdown): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Shutdown
@@ -21,7 +21,7 @@ project(Shutdown): messaging, rteventexe {
 }
 
 project(Observer): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Observer
@@ -32,7 +32,7 @@ project(Observer): messaging, rteventexe {
 }
 
 project(BCast): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = BCast
@@ -43,7 +43,7 @@ project(BCast): messaging, rteventexe {
 }
 
 project(Timeout): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Timeout
@@ -54,7 +54,7 @@ project(Timeout): messaging, rteventexe {
 }
 
 project(Wildcard): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Wildcard
@@ -65,7 +65,7 @@ project(Wildcard): messaging, rteventexe {
 }
 
 project(Negation): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Negation
@@ -76,7 +76,7 @@ project(Negation): messaging, rteventexe {
 }
 
 project(Disconnect): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Disconnect
@@ -87,7 +87,7 @@ project(Disconnect): messaging, rteventexe {
 }
 
 project(MT_Disconnect): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = MT_Disconnect
@@ -98,7 +98,7 @@ project(MT_Disconnect): messaging, rteventexe {
 }
 
 project(Atomic_Reconnect): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Atomic_Reconnect
@@ -109,7 +109,7 @@ project(Atomic_Reconnect): messaging, rteventexe {
 }
 
 project(Bitmask): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Bitmask
@@ -120,7 +120,7 @@ project(Bitmask): messaging, rteventexe {
 }
 
 project(Complex): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Complex
@@ -131,7 +131,7 @@ project(Complex): messaging, rteventexe {
 }
 
 project(Gateway): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Gateway
@@ -142,7 +142,7 @@ project(Gateway): messaging, rteventexe {
 }
 
 project(Control): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Control
@@ -153,7 +153,7 @@ project(Control): messaging, rteventexe {
 }
 
 project(Random): messaging, rteventexe {
-  depends  += "RTEvent Test Lib" CosNaming IORTable
+  depends  += RTEvent_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Random

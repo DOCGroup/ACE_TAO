@@ -14,7 +14,6 @@ project: rt_client, strategies {
   includes += ../Common
 
   Source_Files {
-    testC.cpp
     client.cpp
   }
 }

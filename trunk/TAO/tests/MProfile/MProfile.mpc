@@ -1,5 +1,5 @@
 project: server {
-  depends += IORManpulation
+  depends += IORManipulation
   libs    += TAO_IORManip
 
   Source_Files {
@@ -9,7 +9,7 @@ project: server {
 }
 
 project: client {
-  depends += IORManpulation
+  depends += IORManipulation
   libs    += TAO_IORManip
 
   Source_Files {

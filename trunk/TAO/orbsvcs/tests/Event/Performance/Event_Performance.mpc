@@ -1,5 +1,5 @@
 project(Throughput): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Throughput
@@ -10,7 +10,7 @@ project(Throughput): messaging, rteventexe {
 }
 
 project(Connect): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Connect
@@ -21,7 +21,7 @@ project(Connect): messaging, rteventexe {
 }
 
 project(Inversion): messaging, rteventexe {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Inversion
@@ -32,7 +32,7 @@ project(Inversion): messaging, rteventexe {
 }
 
 project(Latency): messaging, rteventexe, strategies {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Latency
@@ -43,7 +43,7 @@ project(Latency): messaging, rteventexe, strategies {
 }
 
 project(Latency_Server): messaging, rteventexe, strategies {
-  depends  += "Event Test Lib" CosNaming IORTable
+  depends  += Event_Test_Lib CosNaming IORTable
   libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Latency_Server

@@ -1,5 +1,6 @@
 project: rt_server, messaging_only {
   Source_Files {
+    test_i.cpp
     server.cpp
   }
 }

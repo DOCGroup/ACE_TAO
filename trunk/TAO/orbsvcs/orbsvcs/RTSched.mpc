@@ -10,7 +10,7 @@ project(RTSched) : orbsvcslib {
     RtecScheduler.idl
   }
 
-  Source_Files {
+  Source_Files(ORBSVCS_COMPONENTS) {
     Sched {
       RtecSchedulerC.cpp
       RtecSchedulerS.cpp
