@@ -1,3 +1,8 @@
+Fri Jul  9 16:28:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/Cache_Map_Manager_Test.(h cpp): Moved class hash_key from
+          .cpp to a new file, Cache_Map_Manager_Test.h to satisfy IBM C++.
+
 Fri Jul  9 16:24:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/run_all_win32.pl:
