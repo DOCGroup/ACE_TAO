@@ -18,17 +18,13 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
 {
 }
 
-#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
-
 TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs)
-  : PortableServer::RefCountServantBase (rhs),
+  : TAO_RefCountServantBase (rhs),
     POA_TAO::ClientPriorityPolicy (rhs),
     poa_ (rhs.poa_),
     priority_spec_ (rhs.priority_spec_)
 {
 }
-
-#endif /* ACE_WIN32 */
 
 TAO::PrioritySpecification
 TAO_Client_Priority_Policy::priority_specification (CORBA::Environment &)

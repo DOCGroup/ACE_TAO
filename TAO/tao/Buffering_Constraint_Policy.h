@@ -34,7 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Buffering_Constraint_Policy : public PortableServer::RefCountServantBase,
+class TAO_Export TAO_Buffering_Constraint_Policy : public TAO_RefCountServantBase,
                                                    public POA_TAO::BufferingConstraintPolicy
 {
   // = TITLE
@@ -50,10 +50,8 @@ public:
                                    PortableServer::POA_ptr poa);
   // Constructor.
 
-#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
   // Copy constructor.
-#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
                                    const CORBA::Any& val,
