@@ -710,14 +710,9 @@ ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
 
-  // ACE_Service_Config must be deleted before the Singletons are
-  // closed so that an object's fini() method may reference a valid
-  // ACE_Reactor.
+  // Delete the service repository. All the objects inside the service
+  // repository have already been finalized .
   ACE_Service_Config::close_svcs ();
-
-  // The Singletons can be used independently of the services.
-  // Therefore, this call must go out here.
-  ACE_Service_Config::close_singletons ();
 
   // Delete the list fo svc.conf files
   delete ACE_Service_Config::svc_conf_file_queue_;
@@ -750,6 +745,11 @@ ACE_Service_Config::fini_svcs (void)
     ACE_Log_Msg::disable_debug_messages ();
 
   int result = ACE_Service_Repository::instance ()->fini ();
+
+  // Since the fini() method of the objects inside the service
+  // repository may reference the ACE singletons, they must be
+  // destroyed after the objects have been finalized.
+  ACE_Service_Config::close_singletons ();
 
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
