@@ -1,3 +1,12 @@
+Fri Aug 22 09:44:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+    * TAO_IDL/be/be_global.cpp:
+    * TAO_IDL/include/idl_global.h:
+    * TAO_IDL/util/utl_global.cpp:
+
+      Removed all support for '-Gv' and '-Sv' valuetype switches as per
+      [Bug 1908].
+
 Fri Aug 20 13:11:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
@@ -14,20 +23,20 @@ Fri Aug 20 19:15:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Wait_On_LF_No_Upcall.h:
 
 	  Moved the classes within the TAO namespace. The TAO_* classes
-	  have to die. New classes needs to go in TAO namespace. 
+	  have to die. New classes needs to go in TAO namespace.
 
 	* tao/Transport.cpp:
 	* tao/Transport.h:
 	* tao/Transport.inl:
 
 	  The Connection_Role enum is now in TAO namespace instead of the
-	  the global namespace. 
-	
+	  the global namespace.
+
  	* tao/Acceptor_Impl.cpp:
 	* tao/Transport_Connector.cpp:
 	* tao/default_client.cpp:
 
-	  Changes that got propagated from above. 
+	  Changes that got propagated from above.
 
 Fri Aug 20 10:36:57 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
