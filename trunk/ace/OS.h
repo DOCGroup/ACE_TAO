@@ -4734,12 +4734,18 @@ public:
                        const char *t);
   static char *strchr (char *s,
                        int c);
-  static char *strrchr (char *s,
-                        int c);
   static const char *strchr (const char *s,
                              int c);
+  static char *strrchr (char *s,
+                        int c);
   static const char *strrchr (const char *s,
                               int c);
+  static char *strnchr (char *s,
+                        int c,
+                        size_t len);
+  static const char *strnchr (const char *s,
+                              int c,
+                              size_t len);
   static int strcmp (const char *s,
                      const char *t);
   static int strncmp (const char *s,
@@ -4759,6 +4765,12 @@ public:
                        const char *t);
   static const char *strstr (const char *s,
                              const char *t);
+  static char *strnstr (char *s,
+                        const char *t,
+                        size_t len);
+  static const char *strnstr (const char *s,
+                              const char *t,
+                              size_t len);
   static char *strdup (const char *s);
   static size_t strlen (const char *s);
   static char *strncpy (char *s,
@@ -4801,10 +4813,20 @@ public:
   static wint_t to_lower (wint_t c);
   static wchar_t *strcat (wchar_t *s,
                           const wchar_t *t);
-  static wchar_t *strchr (const wchar_t *s,
+  static wchar_t *strchr (wchar_t *s,
                           wint_t c);
-  static wchar_t *strrchr (const wchar_t *s,
+  static const wchar_t *strchr (const wchar_t *s,
+                                wint_t c);
+  static wchar_t *strrchr (wchar_t *s,
                            wint_t c);
+  static const wchar_t *strrchr (const wchar_t *s,
+                                 wint_t c);
+  static wchar_t *strnchr (wchar_t *s,
+                           wint_t c,
+                           size_t len);
+  static const wchar_t *strnchr (const wchar_t *s,
+                                 wint_t c,
+                                 size_t len);
   static int strcmp (const wchar_t *s,
                      const wchar_t *t);
   static int strncmp (const wchar_t *s,
@@ -4831,8 +4853,16 @@ public:
   static int ace_isspace (wchar_t c);
 
 # if defined (ACE_WIN32)
-  static wchar_t *strstr (const wchar_t *s,
+  static wchar_t *strstr (wchar_t *s,
                           const wchar_t *t);
+  static const wchar_t *strstr (const wchar_t *s,
+                                const wchar_t *t);
+  static wchar_t *strnstr (wchar_t *s,
+                           const wchar_t *t,
+                           size_t len);
+  static const wchar_t *strnstr (const wchar_t *s,
+                                 const wchar_t *t,
+                                 size_t len);
   static wchar_t *strdup (const wchar_t *s);
   static int sprintf (wchar_t *buf,
                       const wchar_t *format,

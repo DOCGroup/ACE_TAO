@@ -506,7 +506,14 @@ public:
   static u_long hash_pjw (const char *str);
   // Computes the hash value of <str> using the ``Hash PJW'' routine.
 
+  static u_long hash_pjw (const char *str, size_t len);
+  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+
   static u_long hash_pjw (const ACE_USHORT16 *str);
+  // Computes the hash value of <str> using the ``Hash PJW'' routine
+  // (works for UNICODE strings).
+
+  static u_long hash_pjw (const ACE_USHORT16 *str, size_t len);
   // Computes the hash value of <str> using the ``Hash PJW'' routine
   // (works for UNICODE strings).
 
