@@ -698,7 +698,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 #endif /* TAO_HAS_UIOP == 1 */
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
-/*      protocol_factory =
+      protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SHMIOP_Factory");
 
       if (protocol_factory == 0)
@@ -757,7 +757,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Loaded default ")
                       ACE_TEXT ("protocol <SHMIOP_Factory>\n")));
-        }*/
+        }
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
       return 0;
