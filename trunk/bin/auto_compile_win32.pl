@@ -55,7 +55,7 @@ TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.dsw, LifeCycle_Service:
 TAO/orbsvcs/Trading_Service/Trading_Service.dsw, Trading_Service:
 TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Server:
 TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Clerk:
-TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.dsw, ImplRepo_Service:
+TAO/orbsvcs/ImplRepo_Service/ImplRepo.dsw, ImplRepo_Service:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
@@ -77,7 +77,7 @@ TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.dsw, LifeCycle_Service:
 TAO/orbsvcs/Trading_Service/Trading_Service.dsw, Trading_Service:
 TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Server:
 TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Clerk:
-TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.dsw, ImplRepo_Service:
+TAO/orbsvcs/ImplRepo_Service/ImplRepo.dsw, ImplRepo_Service:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
