@@ -1,3 +1,12 @@
+Thu Apr 11 20:04:22 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/ARGV.h:  Rolled back the change and readded ACE.h. 
+	  Too many error down the line to fix.
+
+	* ace/Sample_History.cpp:  Added include of OS.h.
+
+	* apps/apps/gperf/src/Options.h: Added include of OS.h.
+
 Thu Apr 11 14:37:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Added ACE_LACKS_PARAM_H.
