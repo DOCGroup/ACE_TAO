@@ -252,6 +252,18 @@ noinst_PROGRAMS = \
   $(TOKENS_TEST) \
   $(XTREACTOR_TEST)
 
+## Conditionally built IPv6 tests.
+if BUILD_IPV6
+noinst_PROGRAMS += \
+  INET_Addr_Test_IPV6 \
+  Max_Default_Port_Test_IPV6 \
+  Multicast_Test_IPV6 \
+  Multihomed_INET_Addr_Test_IPV6 \
+  Proactor_Test_IPV6 \
+  SOCK_Send_Recv_Test_IPV6 \
+  SOCK_Test_IPv6
+endif
+
 ACE_Test_SOURCES = ACE_Test.cpp
 
 Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
@@ -544,6 +556,19 @@ WFMO_Reactor_Test_SOURCES = WFMO_Reactor_Test.cpp
 
 XtReactor_Test_SOURCES = XtReactor_Test.cpp
 XtReactor_Test_LDADD = $(top_builddir)/ace/libACE.la @XTREACTOR_TEST_XLIBS@
+
+## Source for conditionally built IPv6 tests.
+if BUILD_IPV6
+INET_Addr_Test_IPV6_SOURCES = INET_Addr_Test_IPV6.cpp
+Max_Default_Port_Test_IPV6_SOURCES = Max_Default_Port_Test_IPV6.cpp
+Multicast_Test_IPV6_SOURCES = Multicast_Test_IPV6.cpp
+Multihomed_INET_Addr_Test_IPV6_SOURCES = Multihomed_INET_Addr_Test_IPV6.cpp
+Proactor_Test_IPV6_SOURCES = Proactor_Test_IPV6.cpp
+SOCK_Send_Recv_Test_IPV6_SOURCES = SOCK_Send_Recv_Test_IPV6.cpp
+SOCK_Test_IPv6_SOURCES = SOCK_Test_IPv6.cpp
+endif
+
+
 
 ## Additional test header files
 noinst_HEADERS = test_config.h
