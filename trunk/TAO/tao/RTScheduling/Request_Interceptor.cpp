@@ -47,7 +47,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
           RTScheduling::Current::IdType guid;
           guid.length (sizeof(long));
 
-          long temp = ++guid_counter;
+          long temp = ++TAO_RTScheduler_Current::guid_counter;
           ACE_OS::memcpy (guid.get_buffer (),
                           &temp,
                           sizeof(long));
@@ -61,7 +61,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
             ACE_DEBUG ((LM_DEBUG,
                         "The Guid is %d %d\n",
                         id,
-                        guid_counter.value_i ()));
+                        TAO_RTScheduler_Current::guid_counter.value_i ()));
 
           // Create new DT.
           RTScheduling::DistributableThread_var dt =
