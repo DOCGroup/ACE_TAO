@@ -1,6 +1,7 @@
 //$Id$
 #include "Thread_Task.h"
-
+#include "tao/RTScheduling/Scheduler.h"
+#include "tao/RTScheduling/RTScheduler_Manager.h"
 
 int
 main (int argc, char* argv [])
@@ -13,6 +14,18 @@ main (int argc, char* argv [])
 			 ""
 			 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
+      
+      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+								       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
+									      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      TAO_Scheduler scheduler;
+
+      manager->rtscheduler (&scheduler);
       
       Thread_Task task;
       
