@@ -54,7 +54,8 @@ protected:
   X *p_;
 };
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
+#if !defined (ACE_LACKS_AUTO_PTR) && \
+     defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
             (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #include <memory>
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
