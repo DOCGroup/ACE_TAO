@@ -13,7 +13,6 @@ IDLFILES = \
 	$(IDLDIR)\LoadBalancing.idl
 
 OBJFILES = \
-	$(OBJDIR)\DSI_ForwardingProxy.obj \
 	$(OBJDIR)\LoadBalancer_i.obj \
 	$(OBJDIR)\LoadBalancing_Strategy.obj \
 	$(OBJDIR)\LoadBalancingC.obj \
