@@ -120,7 +120,7 @@ High_Priority_Task::svc (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) High: prio = %d, priority_ = %d\n",
-	      prio, this->priority_));
+              prio, this->priority_));
   ACE_ASSERT (this->priority_ == prio);
 
   ACE_Time_Value pause (0, read_period);
@@ -200,7 +200,7 @@ Low_Priority_Task::svc (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Low: prio = %d, priority_ = %d\n",
-	      prio, this->priority_));
+              prio, this->priority_));
   ACE_ASSERT (this->priority_ == prio);
 
   const u_int interval = 1; /* seconds */
@@ -332,7 +332,7 @@ main (int argc, char *argv[])
         }
       else
         {
-          ACE_OS::perror ("context_switch_time");
+          ACE_OS::perror ("preempt; ACE_OS::sched_params ()");
           ACE_OS::exit (-1);
         }
     }
@@ -340,7 +340,7 @@ main (int argc, char *argv[])
   High_Priority_Task *high_priority_task;
   ACE_NEW_RETURN (high_priority_task, High_Priority_Task [high_priority_tasks],
                   1);
-                  
+
   Low_Priority_Task low_priority_task (high_priority_task[0]);
 
   // Save the start time, so that deltas can be displayed later.
