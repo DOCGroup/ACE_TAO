@@ -793,10 +793,19 @@ class TAO_Export CORBA_ORB
   //   ORB pseudo-objref.
   //
   // = DESCRIPTION
+  //
   //   The "ORB" pseudo-object is used in bootstrapping, such as to
-  //   create object references from strings.  It's also used to
-  //   create strings from object references.
+  //   create object references from strings.  This class is intended
+  //   to be inherited by others, which will provide some more of the
+  //   CORBA support.  Implementations of this "CORBA::ORB" class must
+  //   know how to create stringify/destringify their objrefs, as well
+  //   as how to marshal and unmarshal them.
+  //
 public:
+  
+  // ORB_Core has special privileges
+  friend class TAO_ORB_Core;
+  
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
   // complete, it should be freed up using <CORBA::release()>.
@@ -925,12 +934,6 @@ public:
   // Establish connectsion to each of the comma-separated
   // <{host}>:<{port}> combinations specified in <connections>.
 
-  // @@ Irfan, I think this comment is in the wrong place!
-  // This class is intended to be inherited by others, which will
-  // provide some more of the CORBA support.  Implementations of this
-  // "CORBA::ORB" class must know how to create stringify/destringify
-  // their objrefs, as well as how to marshal and unmarshal them.
-
   int open (void);
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
@@ -947,9 +950,6 @@ public:
   // Reference counting...
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
-
-  void _shutdown_lock (ACE_Lock *);
-  // Sets the pointer to our shutdown lock.
 
   TAO_Leader_Follower_Info &leader_follower_info (void);
   // Get access to the leader_follower_info
