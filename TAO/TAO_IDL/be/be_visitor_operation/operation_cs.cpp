@@ -717,7 +717,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   if (idl_global->use_raw_throw ())
     *os << "throw;" << be_uidt_nl;
   else
-    *os << "ACE_RETHROW;" << be_uidt_nl;
+    *os << "ACE_RE_THROW;" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
       << "ACE_ENDTRY;\n";

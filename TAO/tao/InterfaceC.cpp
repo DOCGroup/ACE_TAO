@@ -279,7 +279,7 @@ IR::DefinitionKind CORBA::IRObject::def_kind (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -390,7 +390,7 @@ void CORBA::IRObject::destroy (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -728,7 +728,7 @@ char * IR_Contained::id (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -845,7 +845,7 @@ void IR_Contained::id (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -962,7 +962,7 @@ char * IR_Contained::name (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -1079,7 +1079,7 @@ void IR_Contained::name (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1196,7 +1196,7 @@ char * IR_Contained::version (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -1313,7 +1313,7 @@ void IR_Contained::version (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1431,7 +1431,7 @@ IR_Container_ptr IR_Contained::defined_in (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -1548,7 +1548,7 @@ char * IR_Contained::absolute_name (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -1666,7 +1666,7 @@ IR_Repository_ptr IR_Contained::containing_repository (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -1845,7 +1845,7 @@ IR_Contained::Description * IR_Contained::describe (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -1966,7 +1966,7 @@ void IR_Contained::move (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -4966,7 +4966,7 @@ IR_Contained_ptr IR_Container::lookup (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -5094,7 +5094,7 @@ IR_ContainedSeq * IR_Container::contents (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -5226,7 +5226,7 @@ IR_ContainedSeq * IR_Container::lookup_name (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -5593,7 +5593,7 @@ IR_Container::DescriptionSeq * IR_Container::describe_contents (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -5722,7 +5722,7 @@ IR_ModuleDef_ptr IR_Container::create_module (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -5855,7 +5855,7 @@ IR_ConstantDef_ptr IR_Container::create_constant (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -5986,7 +5986,7 @@ IR_StructDef_ptr IR_Container::create_struct (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6119,7 +6119,7 @@ IR_UnionDef_ptr IR_Container::create_union (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6250,7 +6250,7 @@ IR_EnumDef_ptr IR_Container::create_enum (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6381,7 +6381,7 @@ IR_AliasDef_ptr IR_Container::create_alias (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6515,7 +6515,7 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6658,7 +6658,7 @@ IR_ValueDef_ptr IR_Container::create_value (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6789,7 +6789,7 @@ IR_ValueBoxDef_ptr IR_Container::create_value_box (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -6920,7 +6920,7 @@ IR_ExceptionDef_ptr IR_Container::create_exception (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -7049,7 +7049,7 @@ IR_NativeDef_ptr IR_Container::create_native (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -7669,7 +7669,7 @@ CORBA::TypeCode_ptr IR_IDLType::type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8024,7 +8024,7 @@ IR_Contained_ptr IR_Repository::lookup_id (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8149,7 +8149,7 @@ CORBA::TypeCode_ptr IR_Repository::get_canonical_typecode (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8274,7 +8274,7 @@ IR_PrimitiveDef_ptr IR_Repository::get_primitive (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8399,7 +8399,7 @@ IR_StringDef_ptr IR_Repository::create_string (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8524,7 +8524,7 @@ IR_WstringDef_ptr IR_Repository::create_wstring (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8651,7 +8651,7 @@ IR_SequenceDef_ptr IR_Repository::create_sequence (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8778,7 +8778,7 @@ IR_ArrayDef_ptr IR_Repository::create_array (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -8905,7 +8905,7 @@ IR_FixedDef_ptr IR_Repository::create_fixed (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -9348,7 +9348,7 @@ IR_ComponentDef_ptr IR_ComponentRepository::create_component (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -9483,7 +9483,7 @@ IR_HomeDef_ptr IR_ComponentRepository::create_home (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -10091,7 +10091,7 @@ CORBA::TypeCode_ptr IR_ConstantDef::type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -10209,7 +10209,7 @@ IR_IDLType_ptr IR_ConstantDef::type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -10326,7 +10326,7 @@ void IR_ConstantDef::type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -10445,7 +10445,7 @@ CORBA::Any * IR_ConstantDef::value (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -10562,7 +10562,7 @@ void IR_ConstantDef::value (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -11272,7 +11272,7 @@ IR_StructMemberSeq * IR_StructDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -11389,7 +11389,7 @@ void IR_StructDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -11722,7 +11722,7 @@ CORBA::TypeCode_ptr IR_UnionDef::discriminator_type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -11840,7 +11840,7 @@ IR_IDLType_ptr IR_UnionDef::discriminator_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -11957,7 +11957,7 @@ void IR_UnionDef::discriminator_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -12076,7 +12076,7 @@ IR_UnionMemberSeq * IR_UnionDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -12193,7 +12193,7 @@ void IR_UnionDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -12568,7 +12568,7 @@ IR_EnumMemberSeq * IR_EnumDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -12685,7 +12685,7 @@ void IR_EnumDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -13017,7 +13017,7 @@ IR_IDLType_ptr IR_AliasDef::original_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -13134,7 +13134,7 @@ void IR_AliasDef::original_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -13651,7 +13651,7 @@ IR::PrimitiveKind IR_PrimitiveDef::kind (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -13965,7 +13965,7 @@ CORBA::ULong IR_StringDef::bound (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -14082,7 +14082,7 @@ void IR_StringDef::bound (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -14411,7 +14411,7 @@ CORBA::ULong IR_WstringDef::bound (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -14528,7 +14528,7 @@ void IR_WstringDef::bound (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -14857,7 +14857,7 @@ CORBA::UShort IR_FixedDef::digits (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -14974,7 +14974,7 @@ void IR_FixedDef::digits (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -15091,7 +15091,7 @@ CORBA::Short IR_FixedDef::scale (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -15208,7 +15208,7 @@ void IR_FixedDef::scale (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -15565,7 +15565,7 @@ CORBA::ULong IR_SequenceDef::bound (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -15682,7 +15682,7 @@ void IR_SequenceDef::bound (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -15800,7 +15800,7 @@ CORBA::TypeCode_ptr IR_SequenceDef::element_type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -15918,7 +15918,7 @@ IR_IDLType_ptr IR_SequenceDef::element_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -16035,7 +16035,7 @@ void IR_SequenceDef::element_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -16405,7 +16405,7 @@ CORBA::ULong IR_ArrayDef::length (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -16522,7 +16522,7 @@ void IR_ArrayDef::length (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -16640,7 +16640,7 @@ CORBA::TypeCode_ptr IR_ArrayDef::element_type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -16758,7 +16758,7 @@ IR_IDLType_ptr IR_ArrayDef::element_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -16875,7 +16875,7 @@ void IR_ArrayDef::element_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -17246,7 +17246,7 @@ CORBA::TypeCode_ptr IR_ExceptionDef::type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -17365,7 +17365,7 @@ IR_StructMemberSeq * IR_ExceptionDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -17482,7 +17482,7 @@ void IR_ExceptionDef::members (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -18243,7 +18243,7 @@ CORBA::TypeCode_ptr IR_AttributeDef::type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -18361,7 +18361,7 @@ IR_IDLType_ptr IR_AttributeDef::type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -18478,7 +18478,7 @@ void IR_AttributeDef::type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -18595,7 +18595,7 @@ IR::AttributeMode IR_AttributeDef::mode (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -18712,7 +18712,7 @@ void IR_AttributeDef::mode (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -19667,7 +19667,7 @@ CORBA::TypeCode_ptr IR_OperationDef::result (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -19785,7 +19785,7 @@ IR_IDLType_ptr IR_OperationDef::result_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -19902,7 +19902,7 @@ void IR_OperationDef::result_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -20021,7 +20021,7 @@ IR_ParDescriptionSeq * IR_OperationDef::params (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -20138,7 +20138,7 @@ void IR_OperationDef::params (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -20255,7 +20255,7 @@ IR::OperationMode IR_OperationDef::mode (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -20372,7 +20372,7 @@ void IR_OperationDef::mode (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -20491,7 +20491,7 @@ IR_ContextIdSeq * IR_OperationDef::contexts (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -20608,7 +20608,7 @@ void IR_OperationDef::contexts (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -20727,7 +20727,7 @@ IR_ExceptionDefSeq * IR_OperationDef::exceptions (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -20844,7 +20844,7 @@ void IR_OperationDef::exceptions (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -22313,7 +22313,7 @@ IR_InterfaceDefSeq * IR_InterfaceDef::base_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -22430,7 +22430,7 @@ void IR_InterfaceDef::base_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -22547,7 +22547,7 @@ CORBA::Boolean IR_InterfaceDef::is_abstract (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -22664,7 +22664,7 @@ void IR_InterfaceDef::is_abstract (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -22781,7 +22781,7 @@ CORBA::Boolean IR_InterfaceDef::is_local (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -22898,7 +22898,7 @@ void IR_InterfaceDef::is_local (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -23022,7 +23022,7 @@ CORBA::Boolean IR_InterfaceDef::is_a (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -23159,7 +23159,7 @@ IR_AttributeDef_ptr IR_InterfaceDef::create_attribute (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -23298,7 +23298,7 @@ IR_OperationDef_ptr IR_InterfaceDef::create_operation (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -24634,7 +24634,7 @@ CORBA::TypeCode_ptr IR_ValueMemberDef::type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -24752,7 +24752,7 @@ IR_IDLType_ptr IR_ValueMemberDef::type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -24869,7 +24869,7 @@ void IR_ValueMemberDef::type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -24986,7 +24986,7 @@ CORBA::Visibility IR_ValueMemberDef::access (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -25103,7 +25103,7 @@ void IR_ValueMemberDef::access (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -25475,7 +25475,7 @@ IR_InterfaceDefSeq * IR_ValueDef::supported_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -25592,7 +25592,7 @@ void IR_ValueDef::supported_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -25711,7 +25711,7 @@ IR_InitializerSeq * IR_ValueDef::initializers (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -25828,7 +25828,7 @@ void IR_ValueDef::initializers (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -25946,7 +25946,7 @@ IR_ValueDef_ptr IR_ValueDef::base_value (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -26063,7 +26063,7 @@ void IR_ValueDef::base_value (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -26182,7 +26182,7 @@ IR_ValueDefSeq * IR_ValueDef::abstract_base_values (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -26299,7 +26299,7 @@ void IR_ValueDef::abstract_base_values (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -26416,7 +26416,7 @@ CORBA::Boolean IR_ValueDef::is_abstract (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -26533,7 +26533,7 @@ void IR_ValueDef::is_abstract (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -26650,7 +26650,7 @@ CORBA::Boolean IR_ValueDef::is_custom (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -26767,7 +26767,7 @@ void IR_ValueDef::is_custom (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -26884,7 +26884,7 @@ CORBA::Boolean IR_ValueDef::is_truncatable (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -27001,7 +27001,7 @@ void IR_ValueDef::is_truncatable (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -27125,7 +27125,7 @@ CORBA::Boolean IR_ValueDef::is_a (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -27258,7 +27258,7 @@ IR_ValueMemberDef_ptr IR_ValueDef::create_value_member (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -27395,7 +27395,7 @@ IR_AttributeDef_ptr IR_ValueDef::create_attribute (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -27534,7 +27534,7 @@ IR_OperationDef_ptr IR_ValueDef::create_operation (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -28936,7 +28936,7 @@ IR_IDLType_ptr IR_ValueBoxDef::original_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -29053,7 +29053,7 @@ void IR_ValueBoxDef::original_type_def (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -29385,7 +29385,7 @@ IR_InterfaceDef_ptr IR_ProvidesDef::interface_type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -29779,7 +29779,7 @@ IR_InterfaceDef_ptr IR_UsesDef::interface_type (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -29896,7 +29896,7 @@ CORBA::Boolean IR_UsesDef::is_multiple (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -30675,7 +30675,7 @@ CORBA::Boolean IR_EventDef::is_a (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -30793,7 +30793,7 @@ IR_ValueDef_ptr IR_EventDef::event (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -31758,7 +31758,7 @@ IR_InterfaceDefSeq * IR_ComponentDef::supported_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -31875,7 +31875,7 @@ void IR_ComponentDef::supported_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -31993,7 +31993,7 @@ IR_ComponentDef_ptr IR_ComponentDef::base_component (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32112,7 +32112,7 @@ IR_ProvidesDefSeq * IR_ComponentDef::provides_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32231,7 +32231,7 @@ IR_UsesDefSeq * IR_ComponentDef::uses_interfaces (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32350,7 +32350,7 @@ IR_EmitsDefSeq * IR_ComponentDef::emits_events (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32469,7 +32469,7 @@ IR_PublishesDefSeq * IR_ComponentDef::publishes_events (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32588,7 +32588,7 @@ IR_ConsumesDefSeq * IR_ComponentDef::consumes_events (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32705,7 +32705,7 @@ CORBA::Boolean IR_ComponentDef::is_basic (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -32836,7 +32836,7 @@ IR_ProvidesDef_ptr IR_ComponentDef::create_provides (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -32969,7 +32969,7 @@ IR_UsesDef_ptr IR_ComponentDef::create_uses (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -33100,7 +33100,7 @@ IR_EmitsDef_ptr IR_ComponentDef::create_emits (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -33231,7 +33231,7 @@ IR_PublishesDef_ptr IR_ComponentDef::create_publishes (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -33362,7 +33362,7 @@ IR_ConsumesDef_ptr IR_ComponentDef::create_consumes (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -34343,7 +34343,7 @@ CORBA::Boolean IR_PrimaryKeyDef::is_a (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -34461,7 +34461,7 @@ IR_ValueDef_ptr IR_PrimaryKeyDef::primary_key (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -35240,7 +35240,7 @@ IR_HomeDef_ptr IR_HomeDef::base_home (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -35358,7 +35358,7 @@ IR_ComponentDef_ptr IR_HomeDef::managed_component (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -35476,7 +35476,7 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::primary_key (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -35595,7 +35595,7 @@ IR_FactoryDefSeq * IR_HomeDef::factories (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -35714,7 +35714,7 @@ IR_FinderDefSeq * IR_HomeDef::finders (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -35831,7 +35831,7 @@ CORBA::Boolean IR_HomeDef::is_basic (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -35962,7 +35962,7 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::create_primary_key (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -36095,7 +36095,7 @@ IR_FactoryDef_ptr IR_HomeDef::create_factory (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -36228,7 +36228,7 @@ IR_FinderDef_ptr IR_HomeDef::create_finder (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -37324,7 +37324,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_struct_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -37455,7 +37455,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_union_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -37584,7 +37584,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_enum_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -37713,7 +37713,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_alias_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -37842,7 +37842,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_exception_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -37969,7 +37969,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_interface_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38094,7 +38094,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_string_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38219,7 +38219,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_wstring_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38346,7 +38346,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_fixed_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38473,7 +38473,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_sequence_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38600,7 +38600,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_array_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38733,7 +38733,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38862,7 +38862,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_box_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -38989,7 +38989,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_native_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -39114,7 +39114,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_recursive_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -39241,7 +39241,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_abstract_interface_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -39368,7 +39368,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_component_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -39495,7 +39495,7 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_home_tc (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);

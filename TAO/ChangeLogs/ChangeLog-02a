@@ -1,3 +1,48 @@
+Sun Jun 18 03:18:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * examples/Quoter/server.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoS.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/Invocation.cpp:
+        * tao/ORB.cpp:
+        * tao/Object.cpp:
+        * tests/MProfile/client.cpp:
+        * tests/MProfile_Forwarding/client.cpp  : Replaced ACE_RETHROW
+          with appropriate ACE_RE_THROW/ACE_RE_THROW_EX.  See ACE
+          ChangeLog entry:
+
+            Sun Jun 18 03:18:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+          for more information.
+
+        * examples/Simple/time/Time_Client.java: The time interface has
+          changed to use <current_time> to acquire time instead of <time>.
+
 Sun Jun 18 00:01:28 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Encodable.h

@@ -18,13 +18,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-	ior_input_file = get_opts.optarg;
-	break;
+        ior_input_file = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-o <iorfile>"
+                           "-o <iorfile>"
                            "\n",
                            argv [0]),
                           -1);
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) == -1)
         return -1;
 
-      CORBA::Object_var objref = 
+      CORBA::Object_var objref =
         orb->string_to_object (ior_input_file);
       ACE_TRY_CHECK;
 
@@ -61,11 +61,11 @@ main (int argc, char *argv[])
                               "The received objref is NULL \n"),
                              -1);
         }
-      
-      Simple_Server_var server = 
+
+      Simple_Server_var server =
         Simple_Server::_narrow (objref.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -98,7 +98,7 @@ void run_test (Simple_Server_ptr server,
           // Make a remote call
           server->remote_call (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           /*ACE_DEBUG ((LM_DEBUG,
                       "Kill  the primary . . . "));
           ACE_OS::sleep (25);
@@ -106,7 +106,7 @@ void run_test (Simple_Server_ptr server,
           ACE_DEBUG ((LM_DEBUG,
                       "I am going to shutdown \n"));
           server->shutdown (ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
           ACE_OS::sleep (23);
         }
       ACE_CATCH (CORBA::UserException, x)
@@ -127,7 +127,7 @@ void run_test (Simple_Server_ptr server,
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "Unexpected exception");
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;

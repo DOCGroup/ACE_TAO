@@ -61,7 +61,7 @@ Demux_Test_Client::init (int argc, char *argv [],
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "ORB_init");
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (GET_ORB);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -123,7 +123,7 @@ Demux_Test_Client::init (int argc, char *argv [],
           {
             ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                  "object_to_string");
-            ACE_RETHROW;
+            ACE_RE_THROW_EX (IOR);
           }
         ACE_ENDTRY;
         ACE_CHECK_RETURN (-1);
@@ -287,7 +287,7 @@ Demux_Test_Client::run (CORBA::Environment &ACE_TRY_ENV)
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) Demux_Test_Client::run - "
                   "Error running the Client\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (RUN);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -307,7 +307,7 @@ Demux_Test_Client::run (CORBA::Environment &ACE_TRY_ENV)
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) Demux_Test_Client::run - "
                   "Error running the Client\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (SHUTDOWN) ;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);

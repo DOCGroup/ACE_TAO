@@ -52,7 +52,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::connect_sequence_push_consumer (CosNotif
     {
      this->push_consumer_ =
        CosNotifyComm::SequencePushConsumer::_nil ();
-     ACE_RETHROW;
+     ACE_RE_THROW;
     }
  ACE_ENDTRY;
 }

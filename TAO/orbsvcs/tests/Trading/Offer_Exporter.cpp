@@ -123,7 +123,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::export_offers");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   // ACE_CHECK;
@@ -235,7 +235,7 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::withdraw_offers");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
@@ -282,7 +282,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::describe_offers");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
@@ -336,7 +336,7 @@ TAO_Offer_Exporter::modify_offers (CORBA::Environment& ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::modify_offers");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
@@ -382,7 +382,7 @@ withdraw_offers_using_constraints (CORBA::Environment& ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO_Offer_Exporter::withdraw_using_constraint");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
@@ -447,7 +447,7 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO_Offer_Exporter::grab_offerids");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   // @@ redundant.

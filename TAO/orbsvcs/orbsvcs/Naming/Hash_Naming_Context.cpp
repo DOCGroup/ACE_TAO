@@ -85,7 +85,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name,
       ex.rest_of_name.length (rest_len);
       ex.rest_of_name[rest_len - 1] = name[name_len - 1];
 
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
@@ -508,7 +508,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n,
         ACE_DECLARE_NEW_CORBA_ENV;
         result->destroy (ACE_TRY_ENV);
       }
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());

@@ -168,7 +168,7 @@ void ImplementationRepository::ServerObject::ping (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -279,7 +279,7 @@ void ImplementationRepository::ServerObject::shutdown (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1384,7 +1384,7 @@ void ImplementationRepository::Administration::activate_server (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1509,7 +1509,7 @@ void ImplementationRepository::Administration::register_server (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1628,7 +1628,7 @@ void ImplementationRepository::Administration::reregister_server (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1751,7 +1751,7 @@ void ImplementationRepository::Administration::remove_server (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1874,7 +1874,7 @@ void ImplementationRepository::Administration::shutdown_server (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -2008,7 +2008,7 @@ char * ImplementationRepository::Administration::server_is_running (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -2131,7 +2131,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -2260,7 +2260,7 @@ void ImplementationRepository::Administration::find (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -2385,7 +2385,7 @@ void ImplementationRepository::Administration::list (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -2844,7 +2844,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN  (_tao_retval);
@@ -2955,7 +2955,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;

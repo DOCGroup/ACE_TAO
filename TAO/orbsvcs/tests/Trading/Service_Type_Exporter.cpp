@@ -195,7 +195,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "TAO_Service_Type_Exporter::add_all_types");
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;
@@ -233,7 +233,7 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO_Service_Type_Exporter::list_all_types");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   // ACE_CHECK;
@@ -268,7 +268,7 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO_Service_Type_Exporter::describe_all_types");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
@@ -302,7 +302,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& ACE_TRY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO_Service_Type_Exporter::fully_describe_all_types");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }

@@ -389,7 +389,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   return _tao_retval;

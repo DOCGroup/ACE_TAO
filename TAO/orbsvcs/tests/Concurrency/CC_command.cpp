@@ -73,7 +73,7 @@ CC_Command::GetLockSet (const char *lock_set_name,
     }
   ACE_CATCHANY
     {
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 

@@ -664,7 +664,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
           // this is a client side problem, for one particular
           // request.
           // this->transport_->close_connection ();
-          // ACE_RETHROW;
+          // ACE_RE_THROW;
 
           const ACE_Message_Block* cdr =
             this->inp_stream ().start ();

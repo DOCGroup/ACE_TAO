@@ -1694,7 +1694,7 @@ CORBA_ORB::file_string_to_object (const char* filename,
   ACE_CATCHANY
     {
       reader.alloc ()->free (string);
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
