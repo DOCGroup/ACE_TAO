@@ -29,8 +29,13 @@ public:
   CORBA::Double price () throw (CORBA::SystemException);
 
 private:
+#if defined (HPUX)
+  string symbol_;
+  string full_name_;
+#else
   std::string symbol_;
   std::string full_name_;
+#endif /* HPUX */
   CORBA::Double price_;
 };
 

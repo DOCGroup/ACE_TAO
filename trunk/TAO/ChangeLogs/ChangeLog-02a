@@ -1,3 +1,16 @@
+Tue Jun 19 07:26:59 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/tutorials/Quoter/AMI/Stock_i.h:
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Server/Stock_i.h:
+
+          Add a conditional macro to only use std::string on platforms other
+          than HPUX.
+
 Mon Jun 18 22:03:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Big_Reply.dsw:
