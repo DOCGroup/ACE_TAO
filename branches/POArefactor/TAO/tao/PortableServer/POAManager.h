@@ -26,9 +26,10 @@
 
 // Local Object
 #include "tao/LocalObject.h"
-
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
+
+#include "POAManagerC.h"
 
 // Forward decl.
 class TAO_POA;

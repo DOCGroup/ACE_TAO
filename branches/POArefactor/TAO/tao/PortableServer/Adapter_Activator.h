@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @@ Johnny, see what I have done to avoid inclusions ;)
 namespace PortableServer
 {
   class POAManager;
