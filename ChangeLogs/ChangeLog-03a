@@ -1,3 +1,9 @@
+Mon Jul 15 09:26:17 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SString.cpp (substring): Changed "nil" to "nill" to
+	  avoid conflicts with a Mac OS X macro.  Thanks to Ruslan
+ 	  Zasukhin <sunshine@public.kherson.ua> for reporting this.
+
 Mon Jul 15 10:14:44 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* bin/MakeProjectCreator/README:
