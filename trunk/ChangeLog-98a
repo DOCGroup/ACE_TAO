@@ -1,3 +1,11 @@
+Thu Apr 02 14:23:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reactor_Notify_Test.cpp (Supplier_Task::handle_output):
+          added a thr_yield () so that the Supplier_Task always gets a
+          chance to run.
+
+        * tests/run_tests.sh: Reactor_Notify_Test is OK on Chorus now.
+
 Wed Apr 01 18:59:42 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (dump): Added dump() methods.
