@@ -1,3 +1,19 @@
+Sat Jul  3 11:25:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Moved the initialization of the stream for generated file
+          containing Any operators (if the option is set to generate
+          these into a separate file) out of the TAO_CodeGen
+          constructor and into the method that sets up the stub
+          source stream. Now that we are no longer forking for each
+          IDL file processed, a single code generator is initialized
+          for all files, and it is done earlier in the process than
+          previously. Other key values needed for setting up the
+          Any operator file stream have not yet been set, so it was
+          necessary to move the Any operator file stream initialization
+          to a more appropriate place.
+
 Sat Jul  3 10:06:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
