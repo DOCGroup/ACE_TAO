@@ -296,7 +296,7 @@ public:
   // Destructor
 
   int remove (void);
-  // Releases resources allocated by ACE_Malloc.
+  // Releases resources allocated by <ACE_Malloc>.
 
   // = Memory management
 
