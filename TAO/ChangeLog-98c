@@ -1,3 +1,8 @@
+Sun Mar 22 08:00:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao: Removed the CORBA_Cls.* files (since they conflict with the
+ 	  overall naming scheme) and merged them into the ORB.h class.
+
 Sun Mar 22 03:52:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp (open_services): "this" may only be used
