@@ -1,3 +1,12 @@
+Wed Jan 12 00:12:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ace/OS_NS_signal.inl:
+
+	  Fixed a compile error with the following checkin "Tue Jan 11
+	  18:14:22 2005  Steve Huston  <shuston@riverace.com>". Not sure
+	  whether this is going to break aCC. The existing code broke
+	  atleast g++ 3.3.4. Need to sync with Steve on this. 
+
 Tue Jan 11 18:14:22 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_signal.inl: Added "namespace ACE_OS" to this as some other
