@@ -196,7 +196,10 @@ TAO_SHMIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    return TAO_SVC_HANDLER::handle_close (handle, rm);
+    {
+      this->peer().remove ();
+      return TAO_SVC_HANDLER::handle_close (handle, rm);
+    }
 
   return 0;
 }

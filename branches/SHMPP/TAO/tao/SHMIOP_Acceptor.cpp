@@ -147,9 +147,6 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  this->base_acceptor_.acceptor().malloc_options ().minimum_bytes_
-    = this->mmap_size_;
-
   if (port)
     this->address_.set (port);
 
@@ -204,6 +201,9 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
                     ASYS_TEXT ("cannot open acceptor")));
       return -1;
     }
+
+  this->base_acceptor_.acceptor().malloc_options ().minimum_bytes_
+    = this->mmap_size_;
 
   // @@ Should this be a catastrophic error???
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
