@@ -1,6 +1,13 @@
 /* -*- C++ -*- */
 // $Id$
 
+// Be very carefull before changing the calculations inside
+// ACE_High_Res_Timer.  The precision matters and we are using integer
+// calculations not floating point.  Also look good at the emulated 64
+// bit int class (inside Basic_Types{h,i,cpp} before changing
+// anything.  It's operator/ only returns 32 bits not 64 bits, among
+// other things.
+
 ACE_INLINE void
 ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
                                   const ACE_hrtime_t hrt)

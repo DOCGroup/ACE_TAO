@@ -1,9 +1,9 @@
 (This is file $Id$)
 
 The files in this directory contain the source code from the book
-``C++ Network Programming: Mastering Complexity Using Patterns and ACE''
-by Dr. Douglas C. Schmidt and Stephen D. Huston (Addison-Wesley 2001,
-ISBN X-XXX-XXXXX-X).
+``C++ Network Programming: Mastering Complexity Using Patterns and
+ACE'' by Dr. Douglas C. Schmidt and Stephen D. Huston (Addison-Wesley
+2001, ISBN 0201604647).
 
 We have compiled and run these files on the following platforms:
 
@@ -13,10 +13,12 @@ We have compiled and run these files on the following platforms:
 
 You must have the ACE_ROOT environment variable set correctly to build
 these examples. ACE_ROOT must refer to the top-level ACE_wrappers
-directory.
+directory.  Please see $ACE_ROOT/ACE-INSTALL.html for instructions on
+how to build the ACE toolkit.
 
 Microsoft Visual C++ users:
 ---------------------------
+
 The examples.dsw file is a Microsoft Visual C++ workspace file that
 contains projects for the individual programs. You can either build
 them separately, or use the Batch Build command to build multiple
@@ -24,14 +26,15 @@ projects at once.
 
 All other users:
 ----------------
+
 Assuming that your system is configured correctly, you should be able
 to type
 
-	make
+% make
 
 to compile all of the programs, and
 
-	make clean
+% make clean
 
 to remove all the files that were generated during compilation.
 
@@ -39,9 +42,7 @@ There are also individual Makefiles for each separate example program.
 These makefiles have a ".mak" suffix. For example, Logging_Client.mak
 is the makefile for the Logging_Client program.
 
-
-
-All of the files in these directories are copyright Addison
-Wesley, and they come with absolutely no warranty whatsoever.
-Permission is hereby granted to use these programs for educational
+All of the files in these directories are copyright Addison Wesley,
+and they come with absolutely no warranty whatsoever.  Permission is
+hereby granted to use these programs for educational or commercial
 purposes.

@@ -417,8 +417,8 @@ public:
    * @see reset_timer_interval()
    *
    * @param event_handler  event handler to schedule on reactor
-   * @param arg   argument passed to the handle_timeout() method of  event_handler
-   * @param delta  time interval after which the timer will expire
+   * @param arg  argument passed to the handle_timeout() method of  event_handler
+   * @param delay  time interval after which the timer will expire
    * @param interval  time interval after which the timer will be automatically rescheduled
    * @return -1 on failure, a timer_id value on success
    */
