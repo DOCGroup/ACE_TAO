@@ -1,3 +1,95 @@
+Mon Apr 29 17:56:38 2003  Stephen Torri <venkita@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Metrics/Makefile:
+        * TAO/orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.cpp:
+        * TAO/orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.h:
+        * TAO/orbsvcs/tests/Metrics/Remote_Metrics_Logger.cpp:
+        * TAO/orbsvcs/tests/Metrics/Remote_Metrics_Logger.h:
+        * TAO/orbsvcs/tests/Metrics/Rate_Group_Info.cpp:
+        * TAO/orbsvcs/tests/Metrics/Rate_Group_Info.h:
+        * TAO/orbsvcs/tests/Metrics/Rate_Group_Info.i:
+        * TAO/orbsvcs/tests/Metrics/Makefile:
+        * TAO/tao/orbconf.h:
+
+          Added tests for libTAO_Metrics.
+
+        * TAO/orbsvcs/orbsvcs/Metrics/metrics_export.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.i:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.i:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.i:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.i:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Utils.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Utils.i:
+        * TAO/orbsvcs/orbsvcs/Metrics:
+        * TAO/orbsvcs/orbsvcs/Metrics.idl:
+        * TAO/orbsvcs/orbsvcs/Makefile.Metrics:
+        * TAO/orbsvcs/orbsvcs/Makefile:
+
+          Adding new TAO Metrics ORB service.
+
+        * TAO/tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * TAO/tao/RTCORBA/Multi_Priority_Mapping.h:
+        * TAO/tao/RTCORBA/Multi_Priority_Mapping.i:
+
+        * ace/Timeprobe.h:
+        * ace/Timeprobe.cpp:
+        * ace/Timeprobe_T.cpp:
+        * ace/Timeprobe_T.h:
+        
+          Advanced new timeprobe. New features are a 
+          ring buffer for elements kept in data structure.
+          This eliminates the ACE_ASSERT when an element
+          is attempted to be inserted into a full data
+          structure. Old data is overwritten until the
+          cache is read and cleared.
+
+          Timeprobes now include a second argument to
+          allow for an ACE_ALLOCATOR. This allocator allows
+          for the data structure that will contain the
+          ACE_Timeprobes to be done in the constructor. A
+          new function called 'increase_size' allows for
+          the data structure to increase the number of
+          measurements it can take. It does so by creating a
+          new structure with the new size and copying the
+          elements from the old structure.
+
+        * ace/Makefile.ace:
+        * ace/Metrics_Cache.cpp:
+        * ace/Metrics_Cache.h:
+        * ace/Metrics_Cache.i:
+        * ace/Metrics_Cache_T.cpp:
+        * ace/Metrics_Cache_T.h:
+        * ace/Metrics_Cache_T.i:
+        
+          Added new Metrics Cache.
+
+        * ACE/ace/OS.h:
+
+          Added two new macros called ACE_NEW_MALLOC_ARRAY_RETURN
+          and ACE_NEW_MALLOC_ARRAY. ACE_NEW_MALLOC_ARRAY_RETURN
+          returns an array of class pointers with their space
+          preallocated and each entry initialized. If there is 
+          an error the value contained in RET_VAL is returned.
+          ACE_NEW_MALLOC_ARRAY is the same but there is no
+          return of a value if there is an error.
+
 Thu Apr 24 20:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/DSRT_Dispatcher_Impl.cpp:

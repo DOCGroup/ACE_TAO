@@ -67,7 +67,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORManip_Loader.h $(ACE_ROOT)/ace/pre.h \
+.obj/IORC.o .obj/IORC.o .obj/IORC.o .obj/IORC.o: IORC.cpp IORManip_Loader.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -107,8 +107,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -412,7 +411,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IORManip_Loader.o .obj/IORManip_Loader.so .shobj/IORManip_Loader.o .shobj/IORManip_Loader.so: IORManip_Loader.cpp IORManip_Loader.h \
+.obj/IORManip_Loader.o .obj/IORManip_Loader.o .obj/IORManip_Loader.o .obj/IORManip_Loader.o: IORManip_Loader.cpp IORManip_Loader.h \
   $(ACE_ROOT)/ace/pre.h ior_manip_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -453,8 +452,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -606,7 +604,7 @@ endif
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i
 
-.obj/IORManipulation.o .obj/IORManipulation.so .shobj/IORManipulation.o .shobj/IORManipulation.so: IORManipulation.cpp IORManipulation.h \
+.obj/IORManipulation.o .obj/IORManipulation.o .obj/IORManipulation.o .obj/IORManipulation.o: IORManipulation.cpp IORManipulation.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -648,8 +646,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
