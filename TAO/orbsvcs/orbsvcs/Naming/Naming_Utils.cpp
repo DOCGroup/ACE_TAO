@@ -465,6 +465,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             ACE_DEBUG ((LM_DEBUG,
                         "TAO_Naming_Server: The multicast server setup is done.\n"));
         }
+#else
+  ACE_UNUSED_ARG (enable_multicast);
 #endif /* ACE_HAS_IP_MULTICAST */
     }
   ACE_CATCHANY
