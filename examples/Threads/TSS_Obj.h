@@ -17,6 +17,7 @@
 //
 // ============================================================================
 
+#include "ace/Atomic_Op.h"
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -6,6 +6,7 @@
 
 #include "Reactor_Logging_Server.h"
 #include "Logging_Acceptor_Ex.h"
+#include "ace/Log_Msg.h"
 
 typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
         Server_Logging_Daemon;
