@@ -26,7 +26,7 @@ OBJFILES = \
 	$(OBJDIR)\EventDef_i.obj \
 	$(OBJDIR)\EventPortDef_i.obj \
 	$(OBJDIR)\ExceptionDef_i.obj \
-	$(OBJDIR)\ExtAbsractInterfaceDef_i.obj \
+	$(OBJDIR)\ExtAbstractInterfaceDef_i.obj \
 	$(OBJDIR)\ExtAttributeDef_i.obj \
 	$(OBJDIR)\ExtInterfaceDef_i.obj \
 	$(OBJDIR)\ExtLocalInterfaceDef_i.obj \
