@@ -569,6 +569,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -589,8 +591,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -676,6 +676,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -688,11 +695,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -834,6 +836,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -860,6 +864,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Policy_Factory.h \
  Policy_Factory.i \
@@ -877,8 +888,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -940,11 +949,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -1161,6 +1165,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -1181,8 +1187,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1257,6 +1261,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -1267,11 +1278,6 @@ realclean:
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -1403,6 +1409,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -1423,8 +1431,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1511,6 +1517,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -1521,11 +1534,6 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -1900,10 +1908,11 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
- Any.i \
- iiop_endpoints.i
+ Any.i iiop_endpoints.i
 
 .obj/IIOP_Factory.o .obj/IIOP_Factory.so .shobj/IIOP_Factory.o .shobj/IIOP_Factory.so: IIOP_Factory.cpp \
  IIOP_Factory.h \
@@ -2155,6 +2164,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -2166,11 +2182,6 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -2468,6 +2479,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -2479,11 +2497,6 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -2659,6 +2672,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -2698,6 +2713,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -2727,8 +2749,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2769,11 +2789,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -2893,6 +2908,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -2913,8 +2930,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -3040,6 +3055,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -3071,11 +3093,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -3379,6 +3396,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -3393,11 +3417,6 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -3537,6 +3556,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -3557,8 +3578,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -3679,6 +3698,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -3691,11 +3717,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -3999,6 +4020,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -4011,11 +4039,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -4145,6 +4168,8 @@ realclean:
  Endpoint.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -4193,6 +4218,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -4218,8 +4250,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -4414,10 +4444,11 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
- Any.i \
- uiop_endpoints.i
+ Any.i uiop_endpoints.i
 
 .obj/UIOP_Factory.o .obj/UIOP_Factory.so .shobj/UIOP_Factory.o .shobj/UIOP_Factory.so: UIOP_Factory.cpp \
  UIOP_Factory.h \
@@ -4673,6 +4704,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -4684,11 +4722,6 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -4988,6 +5021,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -4999,11 +5039,6 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -5175,6 +5210,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -5205,8 +5242,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5312,6 +5347,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -5325,11 +5367,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -5449,6 +5486,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -5469,8 +5508,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5622,6 +5659,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -5633,11 +5677,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -5764,6 +5803,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -5784,8 +5825,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5952,6 +5991,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -5962,11 +6008,6 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -6105,6 +6146,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -6125,8 +6168,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6251,6 +6292,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -6263,11 +6311,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -6426,6 +6469,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -6446,8 +6491,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6568,6 +6611,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -6580,11 +6630,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -6733,6 +6778,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -6753,8 +6800,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -7095,6 +7140,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -7106,11 +7158,6 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -7281,6 +7328,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -7320,6 +7369,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -7351,8 +7407,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -7393,11 +7447,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -7517,6 +7566,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -7537,8 +7588,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -7673,6 +7722,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -7704,11 +7760,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -8022,6 +8073,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -8036,11 +8094,6 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -8161,6 +8214,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -8181,8 +8236,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -8310,6 +8363,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -8322,11 +8382,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -8614,6 +8669,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -8626,11 +8688,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -8762,6 +8819,8 @@ realclean:
  Endpoint.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -8810,6 +8869,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -8837,8 +8903,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -9089,6 +9153,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -9135,11 +9206,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -9330,6 +9396,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -9376,11 +9449,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -9502,6 +9570,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -9518,8 +9588,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -9595,6 +9663,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -9605,11 +9680,6 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -9782,6 +9852,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -9798,8 +9870,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -9952,6 +10022,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -9968,8 +10040,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10108,6 +10178,8 @@ realclean:
  corbafwd.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Principal.h \
@@ -10158,6 +10230,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -10263,6 +10342,8 @@ realclean:
  corbafwd.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Principal.h \
@@ -10313,14 +10394,20 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
  Marshal.i
 
-.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
- Marshal.h \
+.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -10417,6 +10504,8 @@ realclean:
  corbafwd.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Principal.h \
@@ -10467,6 +10556,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -10573,6 +10669,8 @@ realclean:
  Managed_Types.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -10619,13 +10717,19 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
- Any.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -10733,6 +10837,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -10772,6 +10878,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -10796,8 +10909,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10838,11 +10949,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -11072,7 +11178,12 @@ realclean:
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/SString.h \
+ Exception.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -11085,18 +11196,11 @@ realclean:
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- Exception.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -11160,6 +11264,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -11209,6 +11315,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -11311,6 +11424,8 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Environment.h \
  Environment.i \
@@ -11419,6 +11534,8 @@ realclean:
  ORB_Core.h \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -11465,6 +11582,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -11487,8 +11611,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -11529,11 +11651,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -11655,6 +11772,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -11675,8 +11794,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -11756,6 +11873,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -11769,11 +11893,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -11809,15 +11928,14 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  Connector_Registry.h \
  Connector_Registry.i \
  debug.h \
  Remote_Object_Proxy_Broker.h \
- Remote_Object_Proxy_Impl.h \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ Remote_Object_Proxy_Impl.h
 
 .obj/LocalObject.o .obj/LocalObject.so .shobj/LocalObject.o .shobj/LocalObject.so: LocalObject.cpp \
  LocalObject.h \
@@ -11932,6 +12050,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -11952,8 +12072,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -12033,6 +12151,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -12044,11 +12169,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -12066,9 +12186,6 @@ realclean:
  Context.i \
  Request.i \
  debug.h \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -12179,6 +12296,8 @@ realclean:
  ObjectIDList.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  ORB.h \
@@ -12220,13 +12339,19 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
- ORB.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -12322,6 +12447,8 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -12370,16 +12497,18 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
- MessagingC.i \
- PortableInterceptorC.i \
- PortableInterceptor.i \
- ORB.i \
- ORB_Table.h \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
  TAO_Singleton.h \
  TAO_Singleton.inl \
  TAO_Singleton.cpp \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
+ MessagingC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ ORB_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12393,8 +12522,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -12536,13 +12663,12 @@ realclean:
  Messaging_Policy_i.h \
  Messaging_Policy_i.i \
  Client_Priority_Policy.h \
- TAOC.h \
- TAOC.i \
  Client_Priority_Policy.i \
  Buffering_Constraint_Policy.h \
+ TAOC.h \
+ TAOC.i \
  Buffering_Constraint_Policy.i \
- Object_KeyC.h \
- Object_KeyC.i
+ Object_KeyC.h Object_KeyC.i
 
 .obj/corbafwd.o .obj/corbafwd.so .shobj/corbafwd.o .shobj/corbafwd.so: corbafwd.cpp \
  corbafwd.h \
@@ -12745,6 +12871,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Sequence.h \
  Managed_Types.h \
@@ -12778,8 +12906,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -12852,6 +12978,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -12865,11 +12998,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -12899,6 +13027,8 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  NVList.h \
  NVList.i
@@ -13106,6 +13236,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Sequence.h \
  Managed_Types.h \
@@ -13150,8 +13282,6 @@ realclean:
  RTCORBAS.i \
  LocalObject.h \
  LocalObject.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  RT_Policy_i.i
 
 .obj/Abstract_Servant_Base.o .obj/Abstract_Servant_Base.so .shobj/Abstract_Servant_Base.o .shobj/Abstract_Servant_Base.so: Abstract_Servant_Base.cpp \
@@ -13648,6 +13778,8 @@ realclean:
  Environment.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -13693,6 +13825,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -13706,8 +13845,6 @@ realclean:
  Context.i \
  Request.i \
  TAO_Server_Request.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  GIOP_Message_Base.h \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -13791,11 +13928,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -13826,6 +13958,8 @@ realclean:
  target_specification.h \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  ObjectIDList.h \
  ObjectIDList.i \
@@ -13834,7 +13968,6 @@ realclean:
  WrongTransactionC.h \
  InterfaceC.h \
  ifrfwd.h \
- InterfaceC.i \
  BoundsC.h \
  BoundsC.i
 
@@ -13931,8 +14064,7 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- PolicyC.h \
+ corbafwd.i PolicyC.h \
  CurrentC.h \
  Object.h \
  corbafwd.h \
@@ -13943,6 +14075,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Sequence.h \
  Managed_Types.h \
@@ -13959,8 +14093,7 @@ realclean:
  Typecode.i \
  Environment.h \
  Environment.i \
- PolicyC.i \
- Request_Info.h \
+ PolicyC.i Request_Info.h \
  PortableInterceptorC.h \
  DynamicC.h \
  Any.h \
@@ -13978,6 +14111,13 @@ realclean:
  PolicyC.h \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  DomainC.i Stub.h \
@@ -13994,8 +14134,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -14065,11 +14203,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -14079,8 +14212,7 @@ realclean:
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  ORB_Core.i \
- Stub.i \
- Invocation.h \
+ Stub.i Invocation.h \
  Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
@@ -14099,10 +14231,11 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
- Invocation.i \
- Exception.h InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i ORB_Core.h
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
+ Invocation.i Exception.h \
+ InterfaceC.h ifrfwd.h \
+ ORB_Core.h
 
 .obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp \
  TimeBaseC.h \
@@ -14214,6 +14347,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -14335,6 +14470,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -14680,6 +14817,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -14707,8 +14846,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -14747,8 +14884,7 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
- Endpoint.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -14855,6 +14991,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -14875,8 +15013,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -14961,6 +15097,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -14974,11 +15117,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -15010,6 +15148,8 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  Asynch_Invocation.h \
  Asynch_Reply_Dispatcher.h \
@@ -15151,6 +15291,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Environment.h \
@@ -15202,6 +15344,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -15310,6 +15459,8 @@ realclean:
  CDR.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -15354,6 +15505,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -15377,8 +15535,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -15419,11 +15575,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -15711,13 +15862,14 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
 
-.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp \
- Timeprobe.h \
+.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp Timeprobe.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -15820,6 +15972,8 @@ realclean:
  ORB_Core.h \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -15864,6 +16018,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -15886,8 +16047,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -15928,11 +16087,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -15979,8 +16133,7 @@ realclean:
  $(ACE_ROOT)/ace/Service_Object.i \
  TAO_Export.h
 
-.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
- debug.h \
+.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp debug.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -16182,6 +16335,8 @@ realclean:
  Object_KeyC.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i
 
@@ -16295,6 +16450,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -16340,7 +16497,19 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
+ Principal.h \
+ Principal.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -16355,8 +16524,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -16394,14 +16561,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
  ORB.h \
  Services.h \
  Services.i \
@@ -16419,6 +16578,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -16430,11 +16596,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -16445,12 +16606,8 @@ realclean:
  Fault_Tolerance_Service.i \
  ORB_Core.i \
  Stub.i \
- Principal.h \
- Principal.i \
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- Endpoint.h \
- Endpoint.i \
  debug.h \
  Connector_Registry.h \
  Connector_Registry.i \
@@ -16458,6 +16615,8 @@ realclean:
  Transport_Mux_Strategy.h \
  Bind_Dispatcher_Guard.h \
  Bind_Dispatcher_Guard.i \
+ Endpoint.h \
+ Endpoint.i \
  RT_Policy_i.h \
  RTCORBAS.h \
  IOPS.h \
@@ -16477,10 +16636,294 @@ realclean:
  RT_Policy_i.i \
  Messaging_Policy_i.h \
  Messaging_Policy_i.i \
- Client_Priority_Policy.h \
- Client_Priority_Policy.i \
  GIOP_Utils.h \
  GIOP_Utils.i
+
+.obj/Invocation_Endpoint_Selectors.o .obj/Invocation_Endpoint_Selectors.so .shobj/Invocation_Endpoint_Selectors.o .shobj/Invocation_Endpoint_Selectors.so: Invocation_Endpoint_Selectors.cpp \
+ Invocation_Endpoint_Selectors.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ TAO_Export.h \
+ corbafwd.i \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ IOPC.h \
+ CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ CDR.i \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ IOPC.i \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ PolicyC.h \
+ CurrentC.h \
+ Object.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object_Proxy_Impl.h \
+ Object.i \
+ CurrentC.i \
+ Encodable.h \
+ Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ Exception.i \
+ Typecode.h \
+ Typecode.i \
+ Environment.h \
+ Environment.i \
+ PolicyC.i \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
+ Profile.i \
+ MProfile.i \
+ Invocation_Endpoint_Selectors.i \
+ Invocation.h \
+ Any.h \
+ Any.i \
+ Synch_Reply_Dispatcher.h \
+ Reply_Dispatcher.h \
+ Reply_Dispatcher.i \
+ Synch_Reply_Dispatcher.i \
+ TAOC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ Priority_Mapping_Manager.h \
+ Priority_Mapping.h \
+ RTCORBAC.h \
+ RTCORBAC.i \
+ Priority_Mapping.i \
+ LocalObject.h \
+ LocalObject.i \
+ Priority_Mapping_Manager.i \
+ TAOC.i \
+ operation_details.h \
+ target_specification.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ target_specification.i \
+ operation_details.i \
+ Invocation.i \
+ RT_Policy_i.h \
+ RTCORBAS.h \
+ IOPS.h \
+ IOPS_T.h \
+ IOPS_T.i \
+ IOPS_T.cpp \
+ IOPS.i \
+ TimeBaseS.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RTCORBAS_T.h \
+ RTCORBAS_T.i \
+ RTCORBAS_T.cpp \
+ RTCORBAS.i \
+ RT_Policy_i.i \
+ Client_Priority_Policy.h \
+ Client_Priority_Policy.i \
+ Stub.h \
+ Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Process_Mutex.h \
+ $(ACE_ROOT)/ace/Process_Mutex.inl \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ Pluggable.i \
+ ORB.h \
+ Services.h \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ PortableInterceptor.h \
+ Request_Info.h \
+ PortableInterceptorC.h \
+ DynamicC.h \
+ DynamicC.i \
+ MessagingC.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
+ PollableC.h \
+ PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ MessagingC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ Adapter.h \
+ Adapter.i \
+ Service_Callbacks.h \
+ Service_Callbacks.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
+ Fault_Tolerance_Service.h \
+ Fault_Tolerance_Service.i \
+ ORB_Core.i \
+ Stub.i \
+ Endpoint.h \
+ Endpoint.i
 
 .obj/Asynch_Invocation.o .obj/Asynch_Invocation.so .shobj/Asynch_Invocation.o .shobj/Asynch_Invocation.so: Asynch_Invocation.cpp \
  Asynch_Invocation.h \
@@ -16593,6 +17036,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -16638,6 +17083,16 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  MessagingC.h \
  ValueBase.h \
@@ -16646,6 +17101,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Asynch_Reply_Dispatcher.h \
  Asynch_Reply_Dispatcher.i \
@@ -16666,8 +17128,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -16705,14 +17165,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
  ORB.h \
  Services.h \
  Services.i \
@@ -16733,11 +17185,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -16861,6 +17308,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -16906,6 +17355,16 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  DII_Reply_Dispatcher.h \
  DII_Reply_Dispatcher.i \
@@ -16927,6 +17386,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -16951,8 +17417,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -16990,14 +17454,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -17005,11 +17461,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -17253,6 +17704,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -17280,6 +17733,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i
@@ -17395,6 +17855,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -17422,6 +17884,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  corba.h \
@@ -17443,8 +17912,6 @@ realclean:
  Context.i \
  Request.i \
  TAO_Server_Request.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  GIOP_Message_Base.h \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -17528,11 +17995,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -17563,6 +18025,8 @@ realclean:
  target_specification.h \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  ObjectIDList.h \
  ObjectIDList.i \
@@ -17571,7 +18035,6 @@ realclean:
  WrongTransactionC.h \
  InterfaceC.h \
  ifrfwd.h \
- InterfaceC.i \
  BoundsC.h \
  BoundsC.i
 
@@ -17686,6 +18149,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -17713,6 +18178,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  corba.h \
@@ -17734,8 +18206,6 @@ realclean:
  Context.i \
  Request.i \
  TAO_Server_Request.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  GIOP_Message_Base.h \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -17819,11 +18289,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -17854,6 +18319,8 @@ realclean:
  target_specification.h \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  ObjectIDList.h \
  ObjectIDList.i \
@@ -17862,7 +18329,6 @@ realclean:
  WrongTransactionC.h \
  InterfaceC.h \
  ifrfwd.h \
- InterfaceC.i \
  BoundsC.h \
  BoundsC.i
 
@@ -17975,6 +18441,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -18011,6 +18479,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -18025,8 +18500,6 @@ realclean:
  Context.i \
  Request.i \
  TAO_Server_Request.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  GIOP_Message_Base.h \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -18110,11 +18583,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -18145,6 +18613,8 @@ realclean:
  target_specification.h \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i \
  ObjectIDList.h \
  ObjectIDList.i \
@@ -18153,7 +18623,6 @@ realclean:
  WrongTransactionC.h \
  InterfaceC.h \
  ifrfwd.h \
- InterfaceC.i \
  BoundsC.h \
  BoundsC.i
 
@@ -18358,6 +18827,8 @@ realclean:
  corbafwd.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -18406,6 +18877,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -18428,8 +18906,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -18470,11 +18946,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -18576,6 +19047,8 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i
 
 .obj/ORB_Table.o .obj/ORB_Table.so .shobj/ORB_Table.o .shobj/ORB_Table.so: ORB_Table.cpp \
@@ -18757,6 +19230,8 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -18904,6 +19379,8 @@ realclean:
  corbafwd.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -18952,6 +19429,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -18974,8 +19458,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -19016,11 +19498,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -19232,6 +19709,8 @@ realclean:
  ORB_Core.h \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -19280,6 +19759,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -19302,8 +19788,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -19344,11 +19828,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -19532,6 +20011,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -19578,11 +20064,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -19903,6 +20384,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -19913,11 +20401,6 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -20136,6 +20619,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -20156,8 +20641,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -20256,6 +20739,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -20267,11 +20757,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -20461,14 +20946,181 @@ realclean:
  IIOP_Factory.h \
  UIOP_Factory.h \
  SHMIOP_Factory.h \
- FILE_Parser.h \
+ CORBANAME_Parser.h \
+ Object_Loader.h \
+ Object_Loader.i \
+ Object.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object_Proxy_Impl.h \
+ Object.i \
+ corba.h \
+ Environment.h \
+ Environment.i \
+ ORB.h \
+ Services.h \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ PortableInterceptor.h \
+ Request_Info.h \
+ PortableInterceptorC.h \
+ DynamicC.h \
+ Any.h \
+ Any.i \
+ DynamicC.i \
+ MessagingC.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ PolicyC.i \
+ PollableC.h \
+ PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ MessagingC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ NVList.h \
+ NVList.i \
+ Principal.h \
+ Principal.i \
+ Request.h \
+ Context.h \
+ Context.i \
+ Request.i \
+ TAO_Server_Request.h \
+ GIOP_Message_Base.h \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
+ GIOP_Message_Base.i \
+ Tagged_Profile.h \
+ GIOPC.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ GIOPC.i \
+ Tagged_Profile.i \
+ TAO_Server_Request.i \
+ LocalObject.h \
+ LocalObject.i \
+ Stub.h \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ params.h \
+ params.i \
+ Adapter.h \
+ Adapter.i \
+ Service_Callbacks.h \
+ Service_Callbacks.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
+ Fault_Tolerance_Service.h \
+ Fault_Tolerance_Service.i \
+ ORB_Core.i \
+ Stub.i \
+ debug.h \
+ Invocation.h \
+ Synch_Reply_Dispatcher.h \
+ Reply_Dispatcher.h \
+ Reply_Dispatcher.i \
+ Synch_Reply_Dispatcher.i \
+ TAOC.h \
+ Priority_Mapping_Manager.h \
+ Priority_Mapping.h \
+ RTCORBAC.h \
+ RTCORBAC.i \
+ Priority_Mapping.i \
+ Priority_Mapping_Manager.i \
+ TAOC.i \
+ operation_details.h \
+ target_specification.h \
+ target_specification.i \
+ operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
+ Invocation.i \
+ ObjectIDList.h \
+ ObjectIDList.i \
+ DomainC.h \
+ DomainC.i \
+ WrongTransactionC.h \
+ InterfaceC.h \
+ ifrfwd.h \
+ BoundsC.h \
+ BoundsC.i \
  IOR_Parser.h \
  IOR_Parser.i \
+ ior_corbaname_export.h \
+ CORBANAME_Parser.i \
+ CORBALOC_Parser.h \
+ Connector_Registry.h \
+ Connector_Registry.i \
+ PortableServer/POA.h \
+ PortableServer/Object_Adapter.h \
+ PortableServer/portableserver_export.h \
+ PortableServer/Key_Adapters.h \
+ PortableServer/PortableServerC.h \
+ PortableServer/PortableServerC.i \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ PortableServer/Key_Adapters.i \
+ PortableServer/poa_macros.h \
+ PortableServer/RTPortableServerC.h \
+ PortableServer/RTPortableServerC.i \
+ PortableServer/Servant_Base.h \
+ PortableServer/Servant_Base.i \
+ PortableServer/Active_Object_Map.h \
+ PortableServer/Active_Object_Map.i \
+ PortableServer/Object_Adapter.i \
+ PortableServer/POAManager.h \
+ PortableServer/POAManager.i \
+ PortableServer/POA.i \
+ ior_corbaloc_export.h \
+ CORBALOC_Parser.i \
+ FILE_Parser.h \
  FILE_Parser.i \
  DLL_Parser.h \
- DLL_Parser.i \
- Object_Loader.h \
- Object_Loader.i
+ DLL_Parser.i
 
 .obj/TAO_Server_Request.o .obj/TAO_Server_Request.so .shobj/TAO_Server_Request.o .shobj/TAO_Server_Request.so: TAO_Server_Request.cpp \
  TAO_Server_Request.h \
@@ -20618,6 +21270,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -20704,11 +21363,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -20821,6 +21475,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  ORB.h \
@@ -20869,6 +21525,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -21087,6 +21750,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -21107,8 +21772,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -21254,6 +21917,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -21274,8 +21939,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -21347,6 +22010,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -21359,11 +22029,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -21481,6 +22146,8 @@ realclean:
  Sequence_T.cpp \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  IOPC.h \
@@ -21501,8 +22168,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -21574,6 +22239,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -21586,11 +22258,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -21831,6 +22498,8 @@ realclean:
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
@@ -21851,8 +22520,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -22295,6 +22962,8 @@ realclean:
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
@@ -22335,6 +23004,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -22357,8 +23033,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -22399,11 +23073,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -22541,6 +23210,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -22553,6 +23224,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Asynch_Reply_Dispatcher.i \
  GIOP_Message_State.h \
@@ -22593,8 +23271,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -22635,11 +23311,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -22768,6 +23439,8 @@ realclean:
  Pluggable.h \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -22782,8 +23455,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -22861,6 +23532,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -22872,8 +23550,7 @@ realclean:
  Request.i \
  debug.h
 
-.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h $(ACE_ROOT)/ace/pre.h \
  TAO_Export.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -22977,8 +23654,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- IOPC.i Any.h \
+ Sequence_T.cpp IOPC.i \
+ Any.h \
  Environment.h \
  Environment.i \
  Object.h \
@@ -22988,13 +23665,14 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i
 
-.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h \
- $(ACE_ROOT)/ace/pre.h IOPC.h \
- TAO_Export.h \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h $(ACE_ROOT)/ace/pre.h \
+ IOPC.h TAO_Export.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
@@ -23097,8 +23775,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- IOPC.i IOPS_T.h IOPS_T.i IOPS_T.cpp IOPS.i
+ Sequence_T.cpp IOPC.i \
+ IOPS_T.h IOPS_T.i IOPS_T.cpp IOPS.i
 
 .obj/PollableC.o .obj/PollableC.so .shobj/PollableC.o .shobj/PollableC.so: PollableC.cpp PollableC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -23201,12 +23879,13 @@ realclean:
  Object_Proxy_Impl.h \
  Object.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- PollableC.i \
+ CDR.i PollableC.i \
  Stub.h \
  Pluggable.h \
  Sequence.h \
@@ -23232,8 +23911,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -23312,6 +23989,13 @@ realclean:
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -23325,11 +24009,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -23359,6 +24038,8 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i
 
 .obj/PollableS.o .obj/PollableS.so .shobj/PollableS.o .shobj/PollableS.so: PollableS.cpp PollableS.h PollableC.h \
@@ -23462,12 +24143,14 @@ realclean:
  Object_Proxy_Impl.h \
  Object.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -23587,6 +24270,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i
@@ -23828,6 +24513,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -23863,6 +24550,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -23885,8 +24579,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -23927,11 +24619,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -23942,8 +24629,7 @@ realclean:
  Fault_Tolerance_Service.i \
  ORB_Core.i
 
-.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp \
- GIOPC.h \
+.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp GIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -24064,6 +24750,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i
@@ -24177,12 +24865,10 @@ realclean:
  Sequence_T.cpp \
  IOPC.i \
  Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
+ Object_KeyC.i GIOPC.i \
  GIOPS_T.h \
  GIOPS_T.i \
- GIOPS_T.cpp \
- GIOPS.i
+ GIOPS_T.cpp GIOPS.i
 
 .obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp \
  BoundsC.h \
@@ -24281,6 +24967,8 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -24299,8 +24987,7 @@ realclean:
  Any.i \
  BoundsC.i
 
-.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -24404,6 +25091,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Sequence.h \
  Managed_Types.h \
@@ -24535,8 +25224,8 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- TAOS_T.h TAOS_T.i TAOS_T.cpp TAOS.i
+ corbafwd.i TAOS_T.h \
+ TAOS_T.i TAOS_T.cpp TAOS.i
 
 .obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -24757,12 +25446,13 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i
 
-.obj/DLL_ORB.o .obj/DLL_ORB.so .shobj/DLL_ORB.o .shobj/DLL_ORB.so: DLL_ORB.cpp \
- $(ACE_ROOT)/ace/ARGV.h \
+.obj/DLL_ORB.o .obj/DLL_ORB.so .shobj/DLL_ORB.o .shobj/DLL_ORB.so: DLL_ORB.cpp $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24971,13 +25661,18 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
- DLL_ORB.inl \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl
+ DLL_ORB.inl
 
 .obj/Adapter.o .obj/Adapter.so .shobj/Adapter.o .shobj/Adapter.so: Adapter.cpp \
  Adapter.h \
@@ -25076,6 +25771,8 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -25133,6 +25830,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -25151,8 +25855,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -25193,11 +25895,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Service_Callbacks.h \
  Service_Callbacks.i \
  Parser_Registry.h \
@@ -25449,6 +26146,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -25562,6 +26261,8 @@ realclean:
  ORB_Core.h \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -25610,6 +26311,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -25628,8 +26336,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -25670,11 +26376,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -25923,8 +26624,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DLL_Parser.i Object_Loader.h Object_Loader.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DLL_Parser.i \
+ Object_Loader.h Object_Loader.i \
  Object.h \
  Abstract_Servant_Base.h \
  Object_Proxy_Broker.h \
@@ -26055,8 +26756,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- FILE_Parser.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h FILE_Parser.i \
  Object_Loader.h \
  Object_Loader.i \
  Object.h \
@@ -26109,6 +26809,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -26213,6 +26920,8 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -26261,6 +26970,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -26279,8 +26995,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -26345,11 +27059,6 @@ realclean:
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -26400,6 +27109,305 @@ realclean:
  Object_KeyC.i \
  PortableServer/POA.i \
  ior_corbaloc_export.h CORBALOC_Parser.i
+
+.obj/CORBANAME_Parser.o .obj/CORBANAME_Parser.so .shobj/CORBANAME_Parser.o .shobj/CORBANAME_Parser.so: CORBANAME_Parser.cpp CORBANAME_Parser.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Object_Loader.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ TAO_Export.h \
+ corbafwd.i \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ Object_Loader.i \
+ Object.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object_Proxy_Impl.h \
+ Object.i \
+ corba.h \
+ Environment.h \
+ Environment.i \
+ ORB.h \
+ Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ Exception.i \
+ Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ PortableInterceptor.h \
+ Request_Info.h \
+ PortableInterceptorC.h \
+ DynamicC.h \
+ Any.h \
+ CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ CDR.i \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
+ IOPC.h \
+ IOPC.i \
+ DynamicC.i \
+ MessagingC.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ PolicyC.i \
+ PollableC.h \
+ PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ MessagingC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ NVList.h \
+ NVList.i \
+ Principal.h \
+ Principal.i \
+ Request.h \
+ Context.h \
+ Context.i \
+ Request.i \
+ TAO_Server_Request.h \
+ GIOP_Message_Base.h \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
+ GIOP_Message_Base.i \
+ Tagged_Profile.h \
+ GIOPC.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ GIOPC.i \
+ Tagged_Profile.i \
+ TAO_Server_Request.i \
+ LocalObject.h \
+ LocalObject.i \
+ Stub.h \
+ Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Process_Mutex.h \
+ $(ACE_ROOT)/ace/Process_Mutex.inl \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ Pluggable.i \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ Adapter.h \
+ Adapter.i \
+ Service_Callbacks.h \
+ Service_Callbacks.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
+ Fault_Tolerance_Service.h \
+ Fault_Tolerance_Service.i \
+ ORB_Core.i \
+ Stub.i \
+ debug.h \
+ Client_Strategy_Factory.h \
+ Server_Strategy_Factory.h \
+ Invocation.h \
+ Synch_Reply_Dispatcher.h \
+ Reply_Dispatcher.h \
+ Reply_Dispatcher.i \
+ Synch_Reply_Dispatcher.i \
+ TAOC.h \
+ Priority_Mapping_Manager.h \
+ Priority_Mapping.h \
+ RTCORBAC.h \
+ RTCORBAC.i \
+ Priority_Mapping.i \
+ Priority_Mapping_Manager.i \
+ TAOC.i \
+ operation_details.h \
+ target_specification.h \
+ target_specification.i \
+ operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
+ Invocation.i \
+ ObjectIDList.h \
+ ObjectIDList.i \
+ DomainC.h \
+ DomainC.i \
+ WrongTransactionC.h \
+ InterfaceC.h \
+ ifrfwd.h \
+ BoundsC.h \
+ BoundsC.i \
+ IOR_Parser.h \
+ IOR_Parser.i \
+ ior_corbaname_export.h CORBANAME_Parser.i
 
 .obj/Bind_Dispatcher_Guard.o .obj/Bind_Dispatcher_Guard.so .shobj/Bind_Dispatcher_Guard.o .shobj/Bind_Dispatcher_Guard.so: Bind_Dispatcher_Guard.cpp \
  Bind_Dispatcher_Guard.h \
@@ -26690,6 +27698,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -26732,11 +27747,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Parser_Registry.h \
@@ -26843,6 +27853,8 @@ realclean:
  Context.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Environment.h \
@@ -26893,6 +27905,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -26996,6 +28015,8 @@ realclean:
  corbafwd.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -27044,6 +28065,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -27067,8 +28095,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -27129,11 +28155,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -27263,6 +28284,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i
@@ -27416,6 +28439,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -27557,6 +28587,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -27594,6 +28626,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -27722,6 +28761,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -27743,8 +28784,14 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- MessagingC.i \
- Stub.h \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ MessagingC.i Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -27758,8 +28805,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -27834,11 +28879,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -27868,6 +28908,8 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  operation_details.i \
+ Invocation_Endpoint_Selectors.h \
+ Invocation_Endpoint_Selectors.i \
  Invocation.i
 
 .obj/Policy_Manager.o .obj/Policy_Manager.so .shobj/Policy_Manager.o .shobj/Policy_Manager.so: Policy_Manager.cpp \
@@ -27978,6 +29020,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Sequence.h \
  Managed_Types.h \
@@ -28020,6 +29064,13 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -28038,8 +29089,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -28080,11 +29129,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -28241,6 +29285,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -28262,6 +29308,13 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  LocalObject.h \
  LocalObject.i \
@@ -28295,118 +29348,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- TAOC.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- try_macros.h \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Abstract_Servant_Base.h \
- Object_Proxy_Broker.h \
- Object_Proxy_Impl.h \
- Object.i \
- CurrentC.i \
- Encodable.h \
- Exception.h \
- Exception.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Typecode.h \
- Typecode.i \
- Environment.h \
- Environment.i \
- PolicyC.i \
- TimeBaseC.h \
- Any.h \
- Any.i \
- TimeBaseC.i \
- Priority_Mapping_Manager.h \
- Priority_Mapping.h \
- RTCORBAC.h \
- IOPC.h \
- IOPC.i \
- RTCORBAC.i \
- Priority_Mapping.i \
- LocalObject.h \
- LocalObject.i \
- Priority_Mapping_Manager.i \
- TAOC.i \
  Client_Priority_Policy.i
 
 .obj/Buffering_Constraint_Policy.o .obj/Buffering_Constraint_Policy.so .shobj/Buffering_Constraint_Policy.o .shobj/Buffering_Constraint_Policy.so: Buffering_Constraint_Policy.cpp \
@@ -28516,6 +29457,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Sequence.h \
  Managed_Types.h \
@@ -28670,6 +29613,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -28804,6 +29749,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -28941,6 +29888,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -29079,6 +30028,8 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
@@ -29223,6 +30174,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -29259,8 +30212,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -29329,6 +30280,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -29340,11 +30298,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -29485,6 +30438,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -29635,6 +30590,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -29656,8 +30613,6 @@ realclean:
  RTCORBAS.i \
  LocalObject.h \
  LocalObject.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  RT_Policy_i.i
 
 .obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp \
@@ -29787,6 +30742,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -29810,8 +30767,6 @@ realclean:
  LocalObject.i \
  RT_ORB.i \
  RT_Policy_i.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  RT_Policy_i.i \
  RT_Mutex.h \
  RT_Mutex.i
@@ -29914,6 +30869,8 @@ realclean:
  corbafwd.i \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Sequence.h \
@@ -29962,6 +30919,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -29983,8 +30947,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -30038,11 +31000,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -30157,8 +31114,8 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- IOPC.h CDR.h \
+ corbafwd.i IOPC.h \
+ CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -30169,8 +31126,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- IOPC.i PolicyC.h \
+ Sequence_T.cpp IOPC.i \
+ PolicyC.h \
  CurrentC.h \
  Object.h \
  Abstract_Servant_Base.h \
@@ -30180,17 +31137,17 @@ realclean:
  CurrentC.i \
  Encodable.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
  Typecode.i \
  Environment.h \
  Environment.i \
- PolicyC.i \
- TimeBaseC.h \
+ PolicyC.i TimeBaseC.h \
  Any.h \
  Any.i \
- TimeBaseC.i \
- RTCORBAC.i \
+ TimeBaseC.i RTCORBAC.i \
  TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
@@ -30222,9 +31179,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBAS.h \
- orbconf.h IOPS.h IOPC.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAS.h orbconf.h \
+ IOPS.h IOPC.h TAO_Export.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -30303,8 +31259,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- IOPC.i IOPS_T.h IOPS_T.i IOPS_T.cpp IOPS.i TimeBaseS.h \
+ Sequence_T.cpp IOPC.i \
+ IOPS_T.h IOPS_T.i IOPS_T.cpp IOPS.i TimeBaseS.h \
  TimeBaseC.h \
  Any.h \
  Environment.h \
@@ -30316,6 +31272,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -30323,15 +31281,13 @@ realclean:
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h corbafwd.h \
- PolicyC.h \
+ TimeBaseS.i RTCORBAC.h \
+ corbafwd.h PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
- PolicyC.i \
- TimeBaseC.h RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp \
- RTCORBAS.i
+ PolicyC.i TimeBaseC.h \
+ RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp RTCORBAS.i
 
 .obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -30448,6 +31404,8 @@ realclean:
  Object.i \
  Typecode.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.i \
  Any.i \
@@ -30457,146 +31415,7 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- InterfaceC.i \
- Stub.h \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Encodable.h \
- PolicyC.i \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Profile.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- PortableInterceptor.h \
- Request_Info.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- MessagingC.i \
- PortableInterceptorC.i \
- PortableInterceptor.i \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- LocalObject.h \
- LocalObject.i \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- Adapter.h \
- Adapter.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Parser_Registry.h \
- Parser_Registry.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- Synch_Reply_Dispatcher.i \
- TAOC.h \
- Priority_Mapping_Manager.h \
- Priority_Mapping.h \
- RTCORBAC.h \
- RTCORBAC.i \
- Priority_Mapping.i \
- Priority_Mapping_Manager.i \
- TAOC.i \
- operation_details.h \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- NVList.h \
- NVList.i
+ Sequence_T.cpp
 
 .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.so .shobj/Pluggable_Messaging.o .shobj/Pluggable_Messaging.so: Pluggable_Messaging.cpp \
  Pluggable_Messaging.h \
@@ -30710,6 +31529,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  debug.h \
@@ -30728,8 +31549,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -30993,6 +31812,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
@@ -31025,8 +31846,6 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -31181,6 +32000,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
@@ -31343,6 +32164,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
@@ -31367,8 +32190,6 @@ realclean:
  Object.i \
  GIOP_Utils.i \
  TAO_Server_Request.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  ORB.h \
  Services.h \
  Services.i \
@@ -31399,6 +32220,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -31466,11 +32294,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -31600,6 +32423,8 @@ realclean:
  Tagged_Profile.i \
  GIOP_Message_Headers.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  GIOP_Message_Accept_State.i \
  GIOP_Message_Base.h \
@@ -31612,8 +32437,6 @@ realclean:
  GIOP_Message_Base.i \
  debug.h \
  TAO_Server_Request.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  ORB.h \
  Services.h \
  Services.i \
@@ -31649,6 +32472,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -31773,6 +32603,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  Object.h \
@@ -31812,6 +32644,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -31834,8 +32673,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -31876,11 +32713,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -32235,6 +33067,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  Object.h \
@@ -32288,6 +33122,13 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -32308,8 +33149,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -32350,11 +33189,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -32496,6 +33330,8 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
@@ -32537,6 +33373,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -32559,8 +33402,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -32601,11 +33442,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
@@ -32733,6 +33569,8 @@ realclean:
  ORB_Core.h \
  ORB.h \
  Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Services.h \
  Services.i \
@@ -32768,6 +33606,13 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
+ Smart_Proxies.h \
+ Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
@@ -32790,8 +33635,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -32832,11 +33675,6 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Service_Callbacks.h \
