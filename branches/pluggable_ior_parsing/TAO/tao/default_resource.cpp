@@ -397,7 +397,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
       this->parser_names_[index] = "DLL_Parser";
       index++;
     }
-  
+
   // FILE_Parser
   tmp =
     ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("FILE_Parser");
@@ -444,7 +444,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
       this->parser_names_[index] = "CORBALOC_Parser";
       index++;
     }
-  
+
   // CORBANAME_Parser
   tmp =
     ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBANAME_Parser");
@@ -462,14 +462,16 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
                              "Error Configuring CORBANAME Parser\n"), -1);
         }
     }
-    
+
   if (tmp != 0)
     {
       this->parser_names_[index] = "CORBANAME_Parser";
       index++;
     }
   names = this->parser_names_;
-  number_of_names = this->parser_names_count_;
+ 
+  //  number_of_names = this->parser_names_count_;
+  number_of_names = index;
 
   return 0;
 }
@@ -478,7 +480,7 @@ int
 TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
 {
   this->parser_names_[this->index_] = CORBA::string_dup (curarg);
-  
+
   ++this->index_;
 
   return 0;
