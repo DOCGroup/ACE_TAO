@@ -2,9 +2,9 @@
  *  $Id$
  */
 
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h"
+#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 
 #include "tao/TimeBaseC.h"
 #include "tao/corba.h"
