@@ -131,8 +131,8 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
                      this->codeset_info_.ForCharData);
        if (TAO_debug_level > 2)
          ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager::set_tcs ")
-                     ACE_TEXT("setting char translator(%08x)\n"),
+                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
+                     ACE_TEXT("setting char translator (%08x)\n"),
                      tcs));
        trans.char_translator(this->get_char_trans (tcs));
 
@@ -141,7 +141,7 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
 
        if (TAO_debug_level > 2)
          ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager::set_tcs ")
+                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
                      ACE_TEXT("setting wchar translator (%08x)\n"),
                      tcs));
        trans.wchar_translator(this->get_wchar_trans (tcs));

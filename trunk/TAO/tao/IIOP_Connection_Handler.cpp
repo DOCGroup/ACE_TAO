@@ -255,6 +255,14 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   // Get the size of the list
   const CORBA::ULong len = listen_list.length ();
 
+  if (TAO_debug_level > 0 && len == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                  ACE_TEXT("process_listen_point_list, ")
+                  ACE_TEXT("Received list of size 0, check client config.\n")));
+    }
+
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];

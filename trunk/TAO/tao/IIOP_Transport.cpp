@@ -320,12 +320,23 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
             {
               if (TAO_debug_level > 0)
                 ACE_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - IIOP_Transport::set_bidir_info, "
-                            "error getting listen_point \n"));
+                            "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
+                            "error getting listen_point\n"));
 
               return;
             }
         }
+    }
+
+  if (listen_point_list.length () == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
+                    "listen_point list is empty, client should send a list "
+                    "with at least one point\n"));
+
+      return;
     }
 
   // We have the ListenPointList at this point. Create a output CDR
@@ -370,9 +381,8 @@ TAO_IIOP_Transport::get_listen_point (
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local ")
-                         ACE_TEXT ("host address in ")
-                         ACE_TEXT ("get_listen_point()\n")),
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
+                         ACE_TEXT ("could not resolve local host address\n")),
                         -1);
     }
 
@@ -387,8 +397,8 @@ TAO_IIOP_Transport::get_listen_point (
                                local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local host ")
-                         ACE_TEXT ("name \n")),
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
+                         ACE_TEXT ("could not resolve local host name\n")),
                         -1);
     }
 
@@ -396,7 +406,7 @@ TAO_IIOP_Transport::get_listen_point (
        index < count;
        ++index)
     {
-      if (local_addr.get_ip_address()
+      if (local_addr.get_ip_address ()
           == endpoint_addr[index].get_ip_address ())
         {
           // Get the count of the number of elements
