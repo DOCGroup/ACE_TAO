@@ -1039,7 +1039,7 @@ TAO::FT_ReplicationManager::create_object (
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
   PortableGroup::ObjectGroupId group_id = group->get_object_group_id ();
-  *factory_id <<= group_id;
+  factory_id <<= group_id;
   factory_creation_id = factory_id._retn();
 
   METHOD_RETURN (TAO::FT_ReplicationManager::create_object) group->reference ();
