@@ -210,8 +210,8 @@ public:
   size_t hash (void) const;
   // Returns the hash value.
 
-  virtual int operator != (const Hash_Addr &);
-  // Overload the inequality operator...
+  virtual int operator == (const Hash_Addr &) const;
+  // Overload the equality operator...
 
 private:
   size_t hash_value_;
@@ -225,7 +225,7 @@ private:
 // ****************************************
 
 int
-Hash_Addr::operator != (const Hash_Addr &rhs)
+Hash_Addr::operator == (const Hash_Addr &rhs) const
 {
   if (this->svc_handler_ == 0)
     {
@@ -236,8 +236,9 @@ Hash_Addr::operator != (const Hash_Addr &rhs)
       // <ACE_Hash_Map_Manager>'s use of a sentinel node.  Note that
       // this will never be a real match since <svc_handler_> == 0,
       // which signifies that we've never allocated a <Svc_Handler>
-      // for this address.
-      return !(*this == rhs);
+      // for this address.  Note that we can't use *this == rhs since
+      // that would trigger a recursive call!
+      return !(*this != rhs);
     }
   else
     {
@@ -246,11 +247,11 @@ Hash_Addr::operator != (const Hash_Addr &rhs)
 		  this->get_port_number (),
 		  this->svc_handler_->in_use () ? "" : "not ",
 		  this->svc_handler_));
-      // This function returns "true" (i.e., the addresses don't
-      // match) if either the associated <Svc_Handler> is in use or
-      // the two addresses aren't equal.  Note that we can't use *this
-      // != rhs since that would trigger a recursive call!
-      return this->svc_handler_->in_use () || !(*this == rhs);
+      // This function returns "true" (i.e., the addresses match) if
+      // either the associated <Svc_Handler> is not in use or the two
+      // addresses are equal.  Note that we can't use *this == rhs
+      // since that would trigger a recursive call!
+      return this->svc_handler_->in_use () == 0 && !(*this != rhs);
     }
 }
 
