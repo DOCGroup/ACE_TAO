@@ -108,11 +108,6 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::release (
 PortableInterceptor::ObjectReferenceFactory *
 PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase *v)
 {
-  if (v == 0)
-    {
-      return 0;
-    }
-  
   return dynamic_cast< ::PortableInterceptor::ObjectReferenceFactory * > (v);
 }
 
@@ -209,11 +204,6 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::release (
 PortableInterceptor::ObjectReferenceTemplate *
 PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
 {
-  if (v == 0)
-    {
-      return 0;
-    }
-  
   return dynamic_cast< ::PortableInterceptor::ObjectReferenceTemplate * > (v);
 }
 
