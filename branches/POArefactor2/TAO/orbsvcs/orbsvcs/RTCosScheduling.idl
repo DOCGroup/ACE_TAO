@@ -22,7 +22,7 @@
 #define _RT_COS_SCHEDULING_
 
 #include <orb.idl>
-#include "tao/PortableServer/PortableServer.pidl"
+#include "tao/PortableServer/PortableServer_include.pidl"
 
 /**
  * @module RTCosScheduling
@@ -30,8 +30,6 @@
  * @brief This module contains the interfaces for the RTCORBA 1.0
  * Scheduling Service.
  */
-
-
 module RTCosScheduling {
 
   /**
@@ -103,7 +101,6 @@ module RTCosScheduling {
       raises (UnknownName);
 
   };
-
 };
 
 

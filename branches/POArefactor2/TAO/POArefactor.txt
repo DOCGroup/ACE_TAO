@@ -1,3 +1,24 @@
+Thu Dec  2 09:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        Prevent that users can include PortableServerC.h, they must include
+        PortableServer.h, thanks to Bala for giving the hint how to do this.
+
+        * tao/PortableServer/PortableServer_include.pidl:
+          New file, this file should be included by people using
+          PortableServer.pidl
+
+        * tao/PortableServer/PortableServer_includeC.h:
+        * tao/PortableServer/PortableServer_includeS.h:
+          New generated files
+
+        * tao/PortableServer/PortableServerC.h:
+          Added check that users can't include this file, they must include
+          PortableServer.h.
+
+        * orbsvcs/orbsvcs/RTCosScheduling.idl:
+          Include PortableServer_include.pidl
+
 Wed Dec  1 14:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:

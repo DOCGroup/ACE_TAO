@@ -48,3 +48,7 @@ diff -wub orig/AdapterActivatorC.h AdapterActivatorC.h > diffs/AdapterActivator.
 diff -wub orig/AdapterActivatorC.cpp AdapterActivatorC.cpp >> diffs/AdapterActivator.diff
 diff -wub orig/AdapterActivatorA.cpp AdapterActivatorA.cpp >> diffs/AdapterActivator.diff
 unix2dos diffs\AdapterActivator.diff
+
+diff -wub orig/PortableServer_includeC.h PortableServer_includeC.h > diffs/PortableServer_include.diff
+unix2dos diffs\PortableServer_include.diff
+

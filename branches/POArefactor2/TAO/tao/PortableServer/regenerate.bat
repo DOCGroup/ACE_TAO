@@ -17,6 +17,8 @@ tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ServerObject.pidl
 
+tao_idl.exe -o orig -St -Sc -Sp -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" PortableServer_include.pidl
+
 copy orig\*A.cpp .
 copy orig\*C.cpp .
 copy orig\*C.h .
@@ -34,3 +36,4 @@ patch < diffs/ServantLocator.diff
 patch < diffs/ServantManager.diff
 patch < diffs/ServantRetentionPolicy.diff
 patch < diffs/ThreadPolicy.diff
+patch < diffs/PortableServer_include.diff
