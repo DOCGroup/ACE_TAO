@@ -156,8 +156,8 @@ main (int, ASYS_TCHAR *[])
   // Dynamically allocate signalled so that we can control when it
   // gets deleted.  Specifically, we need to delete it before the main
   // thread's TSS is cleaned up.
-  ACE_NEW_RETURN (signalled, 
-                  ACE_thread_t[n_threads], 
+  ACE_NEW_RETURN (signalled,
+                  ACE_thread_t[n_threads],
                   1);
   // Initialize each ACE_thread_t to avoid Purify UMR's.
   for (i = 0; i < n_threads; ++i)
@@ -263,8 +263,9 @@ main (int, ASYS_TCHAR *[])
   thr_mgr->kill_grp (grp_id,
                      SIGINT);
 #elif defined (sun)
-  // There seem to be bugs with Solaris that cause problems when
-  // thr_self() is called within a signal handler.
+  // thr_self () can't be used safely on Solaris within a signal
+  // handler.  It's not documented as being Async-Signal-Safe.
+  // So, don't signal them in this test on Solaris.
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4)
   ACE_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGINT) != -1);
@@ -283,8 +284,7 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
   // Perform a barrier wait until all the threads have shut down.
-  // But, wait for a limited time because sometimes the test hangs on
-  // SunOS 5.5.1 and 5.7.
+  // But, wait for a limited time, just in case.
   const ACE_Time_Value max_wait (60);
   const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
   if (thr_mgr->wait (&wait_time) == -1)
@@ -298,12 +298,6 @@ main (int, ASYS_TCHAR *[])
                     "%p\n", "wait"));
       status = -1;
     }
-
-#if defined (sun)
-  // To help avoid thread panics on SunOS 2.5.1 and 2.7.  It doesn't
-  // solve the problem, but it does seem to help.
-  ACE_OS::sleep (5);
-#endif /* sun */
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) main thread finished\n")));
