@@ -1,3 +1,9 @@
+Tue Jun 19 21:24:41 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.i (mutex_lock): Fiddled around with the #else so that
+	  we'll avoid "statement not reached" warnings on KCC.  Thanks to
+ 	  J Shane Culpepper <pepper@channelogics.com> for reporting this.
+
 Wed Jun 20 07:35:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
@@ -22,8 +28,7 @@ Tue Jun 19 16:08:34 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 	  Fixed the skip_wchar() according to the changes in WChar
 	  implementation of GIOP 1.2. Thanks to
 	  Peter Phillips  <pphillip@opentext.com> for reporting the problem
-	  the fix.
-
+	  the fix.  This fixes BIGID 945.
 
 Tue Jun 19 08:13:52 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
