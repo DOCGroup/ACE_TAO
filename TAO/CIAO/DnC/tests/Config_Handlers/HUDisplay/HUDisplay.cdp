@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:DeploymentPlan
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -87,13 +87,13 @@
     <name>BMClosedED_Stub</name>
     <source>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</source>
     <node>BMClosedED</node>
-    <location>BMClosedED_stub.so</location>
+    <location>BMClosedED_stub</location>
   </artifact>
   <artifact xmi:id="BMClosedED_Svnt">
     <name>BMClosedED_Svnt</name>
     <source>88f66272-bdb6-488b-9d95-cfa63317c616</source>
     <node>BMClosedED</node>
-    <location>BMClosedED_svnt.so</location>
+    <location>BMClosedED_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -110,7 +110,7 @@
     <name>BMClosedED_Exec</name>
     <source>0f76b3d3-3d50-4d65-88b1-e26b60b624dd</source>
     <node>BMClosedED</node>
-    <location>BMClosedED_exec.so</location>
+    <location>BMClosedED_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -127,13 +127,13 @@
     <name>BMDevice_Stub</name>
     <source>c7264c15-d373-4d01-84ee-d37536599240</source>
     <node>BMDevice</node>
-    <location>BMDevice_stub.so</location>
+    <location>BMDevice_stub</location>
   </artifact>
   <artifact xmi:id="BMDevice_Svnt">
     <name>BMDevice_Svnt</name>
     <source>657440e8-9143-494b-928c-2a3df84e509f</source>
     <node>BMDevice</node>
-    <location>BMDevice_svnt.so</location>
+    <location>BMDevice_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -150,7 +150,7 @@
     <name>BMDevice_Exec</name>
     <source>9617ed9a-d127-4797-836a-0a3b3d7d8b12</source>
     <node>BMDevice</node>
-    <location>BMDevice_exec.so</location>
+    <location>BMDevice_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -167,13 +167,13 @@
     <name>BMDisplay_Stub</name>
     <source>4d02c22b-768e-4d1a-bf07-76da2f5d1fbf</source>
     <node>BMDisplay</node>
-    <location>BMDisplay_stub.so</location>
+    <location>BMDisplay_stub</location>
   </artifact>
   <artifact xmi:id="BMDisplay_Svnt">
     <name>BMDisplay_Svnt</name>
     <source>ad052b10-0806-43c7-9ccc-2dfeda0e0e03</source>
     <node>BMDisplay</node>
-    <location>BMDisplay_svnt.so</location>
+    <location>BMDisplay_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -190,7 +190,7 @@
     <name>BMDisplay_Exec</name>
     <source>412f8156-7913-4651-9110-f7a3f98c7a83</source>
     <node>BMDisplay</node>
-    <location>BMDisplay_exec.so</location>
+    <location>BMDisplay_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -207,13 +207,13 @@
     <name>EC_Stub</name>
     <source>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</source>
     <node>EC</node>
-    <location>EC_stub.so</location>
+    <location>EC_stub</location>
   </artifact>
   <artifact xmi:id="EC_Svnt">
     <name>EC_Svnt</name>
     <source>04e4d246-e6eb-4b0e-8e32-60b996497cea</source>
     <node>EC</node>
-    <location>EC_svnt.so</location>
+    <location>EC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -230,7 +230,7 @@
     <name>EC_Exec</name>
     <source>5e4f2366-3810-4d4c-a269-5788a525cbe1</source>
     <node>EC</node>
-    <location>EC_exec.so</location>
+    <location>EC_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -246,9 +246,9 @@
   <artifact xmi:id="ACE_TAO_CIAO">
     <name>Common Libraries</name>
     <source>6bae4fcd-c71c-44b4-a0d4-0e4199ce1a49</source>
-    <location>$ACE_ROOT/lib/libACE.so</location>
-    <location>$ACE_ROOT/lib/libTAO.so</location>
-    <location>$ACE_ROOT/lib/libCIAO_Client.so</location>
+    <location>$ACE_ROOT/lib/libACE</location>
+    <location>$ACE_ROOT/lib/libTAO</location>
+    <location>$ACE_ROOT/lib/libCIAO_Client</location>
   </artifact>
   <connection>
     <name>Timer_NavDisplay</name>
