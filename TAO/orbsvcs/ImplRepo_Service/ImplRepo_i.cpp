@@ -49,14 +49,9 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       // @@ Would new_addr->host_ be different from object_addr()?
       // if so I will add another ctor  fred
       ACE_NEW_RETURN (new_pfile,
-                      TAO_IIOP_Profile (new_addr->host_,
-                                        new_addr->port_,
+                      TAO_IIOP_Profile (iiop_pfile->object_addr (),
                                         iiop_pfile->object_key ()),
                       0);
-
-      // over write and possibly change the value set from
-      // that set by new_addr!
-      new_pfile->object_addr (&iiop_pfile->object_addr ());
 
       // create new obj, pfile will be copied!
       new_stub_obj = new STUB_Object (stub_obj->type_id, new_pfile);
