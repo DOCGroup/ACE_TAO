@@ -35,6 +35,11 @@ Wed Jul 07 16:06:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Jul  7 13:27:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/config-win32-borland.h,
+	  ace/config-win32.h: Added support for the ACE::major_versions(), etc.
+	  for PC versions of ACE, as well as UNIX.  Thanks to 
+	  Jeff Hellzen <jhellzen@my-deja.com> for suggesting this.
+
 	* ace: Added a new Based_Pointer_T.i file that inlines the
 	  small methods.
 
