@@ -4,15 +4,38 @@
 #define _FT_REPLICA_IDL_
 
 // The OMG FT file has been split into sevaral pieces.  This is one of them.
+// It contains the interfaces that a typical FT Replica (replicated servant)
+// will need to implement.
+
+#include "FT_CORBA.idl"   // common FT definitions
 
 #pragma prefix "omg.org"
 
 module FT
 {
+#if 0
+  // Specification of GenericFactory Interface
+  // which ReplicationManager Inherits and Application Objects Implement
+  interface GenericFactory {
+    typedef any FactoryCreationId;
+    Object create_object(in _TypeId type_id,
+                         in Criteria the_criteria,
+                         out FactoryCreationId factory_creation_id)
+      raises (NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              InvalidProperty,
+              CannotMeetCriteria);
+
+    void delete_object(in FactoryCreationId factory_creation_id)
+      raises (ObjectNotFound);
+  };
+#endif
+
   // Specification of PullMonitorable Interface
   // which Application Objects Inherit
-  interface PullMonitorable { 
-    boolean is_alive(); 
+  interface PullMonitorable {
+    boolean is_alive();
   };
 
   // Specifications for Logging and Recovery
@@ -26,20 +49,20 @@ module FT
 
   // Specification of Checkpointable Interface
   // which Updateable and Application Objects Inherit
-  interface Checkpointable { 
+  interface Checkpointable {
     State get_state()
       raises(NoStateAvailable);
-    void set_state(in State s) 
-      raises(InvalidState); 
+    void set_state(in State s)
+      raises(InvalidState);
   };
 
   // Specification of Updateable Interface
   // which Application Objects Inherit
-  interface Updateable : Checkpointable 
-  { 
+  interface Updateable : Checkpointable
+  {
     State get_update()
       raises(NoUpdateAvailable);
-    void set_update(in State s) 
+    void set_update(in State s)
       raises(InvalidUpdate);
   };
 };

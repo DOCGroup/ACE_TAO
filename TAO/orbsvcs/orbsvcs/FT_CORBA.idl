@@ -12,7 +12,13 @@
 
 #include "orbsvcs/FT_CORBA_ORB.idl"
 
-#include "orbsvcs/CosNaming.idl" // 98-10-19.idl
+#define FT_USES_PORTABLE_GROUP
+#ifdef FT_USES_PORTABLE_GROUP
+# include "orbsvcs/PortableGroup.idl"
+#else // FT_USES_PORTABLE_GROUP
+# include "orbsvcs/CosNaming.idl" // 98-10-19.idl
+#endif // FT_USES_PORTABLE_GROUP
+
 #include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
 #include "orbsvcs/CosNotifyFilter.idl"
 
@@ -20,12 +26,32 @@
 
 module FT
 {
-  /// Specification for the Common Types and Exceptions for
-  /// ReplicationManager
-
   /// Forward declarations
-  interface GenericFactory;
   interface FaultNotifier;
+
+#ifdef FT_USES_PORTABLE_GROUP
+  /////////////////////////////////////////
+  // The following typedefs "import"
+  // definitions from the PortableGroup module
+  // definitions into the FT module.
+  // This is an interim step during the process
+  // of having FT depend on the commmon
+  // of PortableGroup module rather than defining
+  // everything itself.
+
+  typedef PortableGroup::_TypeId _TypeId;
+  typedef PortableGroup::ObjectGroup ObjectGroup;
+  typedef PortableGroup::Name Name;
+  typedef PortableGroup::Value Value;
+  typedef PortableGroup::Property Property;
+  typedef PortableGroup::Properties Properties;
+  typedef PortableGroup::Location Location;
+  typedef PortableGroup::Locations Locations;
+  typedef PortableGroup::Criteria Criteria;
+  typedef PortableGroup::FactoryInfo FactoryInfo;
+  typedef PortableGroup::FactoryInfos FactoryInfos;
+#else // (not) FT_USES_PORTABLE_GROUP
+  interface GenericFactory;
 
   /// Useful typedefs.
   typedef CORBA::RepositoryId _TypeId;
@@ -50,6 +76,7 @@ module FT
   typedef sequence<Location> Locations;
   typedef Properties Criteria;
 
+
   /**
    * @struct FactoryInfo
    *
@@ -63,6 +90,8 @@ module FT
   };
 
   typedef sequence<FactoryInfo> FactoryInfos;
+#endif // FT_USES_PORTABLE_GROUP
+
 
   typedef long ReplicationStyleValue;
   const ReplicationStyleValue STATELESS = 0;
@@ -122,6 +151,13 @@ module FT
   exception CannotMeetCriteria {
     Criteria unmet_criteria; };
 
+
+#ifdef FT_USES_PORTABLE_GROUP
+  typedef PortableGroup::PropertyManager PropertyManager;
+  typedef PortableGroup::ObjectGroupManager ObjectGroupManager;
+  typedef PortableGroup::GenericFactory GenericFactory;
+
+#else // FT_USES_PORTABLE_GROUP
   // Specification of PropertyManager Interface
   // which ReplicationManager Inherits
 
@@ -149,7 +185,7 @@ module FT
       raises(ObjectGroupNotFound, InvalidProperty, UnsupportedProperty);
 
     Properties get_properties(in ObjectGroup object_group)
-      raises(ObjectGroupNotFound); 
+      raises(ObjectGroupNotFound);
   };
 
   // Specification of ObjectGroupManager Interface
@@ -196,7 +232,7 @@ module FT
 
     Object get_member_ref(in ObjectGroup object_group,
                           in Location loc)
-      raises(ObjectGroupNotFound, MemberNotFound); 
+      raises(ObjectGroupNotFound, MemberNotFound);
   };
 
 
@@ -214,8 +250,9 @@ module FT
               CannotMeetCriteria);
 
     void delete_object(in FactoryCreationId factory_creation_id)
-      raises (ObjectNotFound); 
+      raises (ObjectNotFound);
   };
+#endif // FT_USES_PORTABLE_GROUP
 
   // Specification of ReplicationManager Interface
   interface ReplicationManager : PropertyManager,
@@ -223,7 +260,7 @@ module FT
     GenericFactory {
     void register_fault_notifier(in FaultNotifier fault_notifier);
     FaultNotifier get_fault_notifier()
-      raises (InterfaceNotFound); 
+      raises (InterfaceNotFound);
   };
 
   // Specifications for Fault Management moved to FT_Replica.idl
