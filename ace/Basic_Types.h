@@ -46,6 +46,7 @@
 
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
+# include "ace/pre.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
@@ -536,4 +537,5 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   include "ace/Basic_Types.i"
 # endif /* __ACE_INLINE__ */
 
+# include "ace/post.h"
 #endif /* ACE_BASIC_TYPES_H */
