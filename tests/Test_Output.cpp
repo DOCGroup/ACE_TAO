@@ -30,6 +30,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
+#if defined (VXWORKS)
+# include "ace/OS_NS_unistd.h"
+# include "ace/OS_NS_fcntl.h"
+#endif /* VXWORKS */
+
 ACE_Test_Output *ACE_Test_Output::instance_ = 0;
 
 ACE_Test_Output::ACE_Test_Output (void)
