@@ -3,6 +3,93 @@
 
 // Thread_Manager.i
 
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+ACE_INLINE
+ACE_At_Thread_Exit::ACE_At_Thread_Exit()
+  : td_(0),
+    was_applied_(0),
+    is_owner_(1)
+
+{
+}
+
+ACE_INLINE int
+ACE_At_Thread_Exit::was_applied() const
+
+{
+   return was_applied_;
+}
+
+ACE_INLINE int
+ACE_At_Thread_Exit::was_applied(int applied)
+
+{
+   was_applied_ = applied;
+   if (was_applied_)
+    td_ = 0;
+   return was_applied_;
+}
+
+ACE_INLINE int
+ACE_At_Thread_Exit::is_owner() const
+
+{
+   return is_owner_;
+}
+
+ACE_INLINE int
+ACE_At_Thread_Exit::is_owner(int owner)
+
+{
+   is_owner_ = owner;
+   return is_owner_;
+}
+
+ACE_INLINE void
+ACE_At_Thread_Exit::do_apply()
+
+{
+   if (!this->was_applied_ && this->is_owner_)
+    {
+      td_->at_pop();
+    }
+}
+
+ACE_INLINE
+ACE_At_Thread_Exit::~ACE_At_Thread_Exit()
+
+{
+   this->do_apply();
+}
+
+ACE_INLINE
+ACE_At_Thread_Exit_Func::ACE_At_Thread_Exit_Func (
+  void* object,
+  ACE_CLEANUP_FUNC func,
+  void* param
+)
+  : object_(object),
+    func_(func),
+    param_(param)
+
+{
+}
+
+ACE_INLINE
+ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func()
+
+{
+   this->do_apply();
+}
+
+ACE_INLINE void
+ACE_At_Thread_Exit_Func::apply()
+
+{
+   func_(object_, param_);
+}
+#endif /* ! ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+
 ACE_INLINE
 ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
   : thr_id_ (ACE_OS::NULL_thread),
@@ -76,6 +163,15 @@ ACE_Thread_Descriptor::flags (void) const
   ACE_TRACE ("ACE_Thread_Descriptor::flag");
   return flags_;
 }
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+ACE_INLINE void
+ACE_Thread_Descriptor::log_msg_cleanup(ACE_Log_Msg* log_msg)
+
+{
+  log_msg_ = log_msg;
+}
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
 // Set the <next_> pointer
 ACE_INLINE void
