@@ -21,12 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pseudo_VarOut_T.h"
 #include "ace/CORBA_macros.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Object.h"  /* For CORBA::Object_var */
+#include "tao/Pseudo_VarOut_T.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;

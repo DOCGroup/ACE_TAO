@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
-#include "tao/Pseudo_VarOut_T.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -31,10 +30,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "tao/CORBA_methods.h"
+#include "tao/Pseudo_VarOut_T.h"
+
 namespace CORBA
 {
-  class Object;
-  typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
 }

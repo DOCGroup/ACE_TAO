@@ -158,11 +158,11 @@ namespace TAO
     ///////////////
     // Data Members
   private:
+
     /**
      * Protect internal state.
      */
-    TAO_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
+    mutable TAO_SYNCH_MUTEX internals_;
 
     ValueMap values_;
     /**

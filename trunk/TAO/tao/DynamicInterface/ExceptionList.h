@@ -30,6 +30,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "DII_CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
@@ -47,12 +48,6 @@
 
 namespace CORBA
 {
-  class ExceptionList;
-  typedef ExceptionList *ExceptionList_ptr;
-
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ExceptionList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ExceptionList_ptr);
-
   typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
   typedef TAO_Pseudo_Out_T<ExceptionList, ExceptionList_var> ExceptionList_out;
 

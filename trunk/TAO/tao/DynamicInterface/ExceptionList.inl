@@ -27,21 +27,21 @@ CORBA::ExceptionList::ExceptionList (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 CORBA::ExceptionList::count (void)
 {
   return (CORBA::ULong) this->tc_list_.size ();
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_nil (void)
 {
   return (CORBA::ExceptionList_ptr)0;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_duplicate (CORBA::ExceptionList_ptr x)
 {
@@ -52,4 +52,3 @@ CORBA::ExceptionList::_duplicate (CORBA::ExceptionList_ptr x)
 
   return x;
 }
-
