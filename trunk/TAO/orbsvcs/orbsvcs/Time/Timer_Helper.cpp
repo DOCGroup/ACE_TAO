@@ -36,6 +36,8 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 	   server_iterator.next (value) != 0;
 	   server_iterator.advance ())
 	{
+
+	  printf("Making a remote Call\n");
 	  // This is a remote call.
 	  CosTime::UTO_var UTO_server =
 	    (*value)->universal_time (TAO_TRY_ENV);
@@ -49,8 +51,8 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 		      UTO_server->inaccuracy (TAO_TRY_ENV),
 		      UTO_server->tdf (TAO_TRY_ENV),
 		      (UTO_server->utc_time ()).time,
-		      (UTO_server->utc_time ()).inacclo,
-		      (UTO_server->utc_time ()).inacchi,
+		      ACE_U64_TO_U32 ((UTO_server->utc_time ()).inacclo),
+		       ACE_U64_TO_U32 ((UTO_server->utc_time ()).inacchi),
 		      (UTO_server->utc_time ()).tdf));
 
 	  // This is a remote call.
