@@ -1,3 +1,7 @@
+Thu Feb 14 16:16:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* COPYING: Updated copyright years.
+
 Thu Feb 14 01:12:23 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Makefile.bor: Renamed XML directory to ACEXML.  Thanks to Johnny
