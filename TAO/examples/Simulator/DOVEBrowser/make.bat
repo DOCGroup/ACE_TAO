@@ -19,15 +19,17 @@
 @if %1. == jDk. goto JDK
 @if %1. == Jdk. goto JDK
 @if %1. == jdk. goto JDK
+@if %1. == setup. goto setup
 @if %1. == realclean. goto realclean
 @if %1. == clean. goto clean
 
 
 @echo Usage:
-@echo make vb    (makes all VB classes)
-@echo make jdk   (makes all JDK classes)
-@echo make clean (removes classes, IDL generated files)
-@echo make realclean (removes classes, updates IDL files, calls make clean)
+@echo make setup     (sets up IDL files)
+@echo make vb        (makes all VB classes)
+@echo make jdk       (makes all JDK classes)
+@echo make clean     (removes old classes, IDL generated files)
+@echo make realclean (updates IDL files, calls make clean)
 @goto end
 
 REM This part build with JDK
@@ -48,7 +50,21 @@ javac RtecEventComm\EventChannelPackage\*.java
 javac RtecEventChannelAdmin\*.java
 javac *.java
 
-goto end
+@goto end
+
+:setup
+
+@REM This part updates IDL files
+
+@del *.idl
+@xcopy ..\NavWeap.idl
+@xcopy ..\..\..\orbsvcs\CosTimeBase.idl
+@xcopy ..\..\..\orbsvcs\CosNaming.idl
+@xcopy ..\..\..\orbsvcs\RtecEventComm.idl
+@xcopy ..\..\..\orbsvcs\RtecEventChannelAdmin.idl
+@xcopy ..\..\..\orbsvcs\RtecScheduler.idl
+
+@goto end
 
 @REM This part cleans up everything, and updates IDL files
 
@@ -126,5 +142,4 @@ REM This part build with VB
 @vbjc *.java
 
 :end
-
 
