@@ -124,6 +124,7 @@ exprtype_to_string(AST_Expression::ExprType et)
   case AST_Expression::EV_wchar:
     return "wchar";
   case AST_Expression::EV_wstring:
+    return "wstring";
   case AST_Expression::EV_longdouble:
     return NULL;
   }

@@ -140,7 +140,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
 	          this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
-          this->TAO_OutStream::print ("%ld", ev->u.wcval);
+          this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);
           break;
         case AST_Expression::EV_octet:
           this->TAO_OutStream::print ("%d", ev->u.oval);
