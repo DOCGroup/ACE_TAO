@@ -50,7 +50,7 @@ namespace CIAO {
      *
      */
 
-    class Utils
+    class Config_Handler_Export Utils
     {
     public:
       static char * parse_string (DOMNodeIterator * iter);

@@ -62,6 +62,8 @@ findPackageByName (const char* name
     {
       return pc;
     }
+
+  return 0;
 }
 
 Deployment::PackageConfiguration*
@@ -71,6 +73,7 @@ findPackageByUUID (const char* name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
+  return 0;
 }
 
 CORBA::StringSeq*
@@ -79,6 +82,7 @@ findNamesByType (const char* type
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  return 0;
 }
 
 CORBA::StringSeq*
@@ -86,6 +90,7 @@ CIAO::RepositoryManager_Impl::
 getAllNames (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  return 0;
 }
 
 CORBA::StringSeq*
@@ -93,6 +98,7 @@ CIAO::RepositoryManager_Impl::
 getAllTypes (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  return 0;
 }
 
 void
