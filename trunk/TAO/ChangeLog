@@ -29,7 +29,7 @@ Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	 the receiver is created by the create () call. 
 
 	 Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
-         Noseworthy" <j.russell.noseworthy@objectsciences.com> for
+         Noseworthy <j.russell.noseworthy@objectsciences.com> for
 	 providing these patches.
 
 Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
