@@ -41,8 +41,8 @@ main (int argc, char **argv)
 
       if (CORBA::is_nil (ns_obj))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "failed to resolve Name Service\n",
-                           -1));
+                           "failed to resolve Name Service\n"),
+                           -1);
 
       CosNaming::NamingContext_var ns_ctx = 
 	CosNaming::NamingContext::_narrow (ns_obj.in (),
@@ -65,8 +65,8 @@ main (int argc, char **argv)
 
       if (CORBA::is_nil (myobj))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "unabled to resolve naming context \"MyContext\"\n",
-                           -1));
+                           "unabled to resolve naming context \"MyContext\"\n"),
+                           -1);
       
       CosNaming::NamingContext_var my_context = 
       	CosNaming::NamingContext::_narrow (myobj.in (),
@@ -96,8 +96,8 @@ main (int argc, char **argv)
       
       if (CORBA::is_nil (myobj))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "unabled to resolve naming context \"MyContext\"\n",
-                           -1));
+                           "unabled to resolve naming context \"MyContext\"\n"),
+                           -1);
       CosNaming::NamingContext_var my_context = 
       	CosNaming::NamingContext::_narrow (myobj.in (),
                                            TAO_TRY_ENV);
@@ -133,4 +133,5 @@ main (int argc, char **argv)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
