@@ -712,7 +712,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out_hi, deps_out_hi_, 
+             infos_out_hi, deps_out_hi, 
              configs_out_hi, anomalies_out_hi ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -725,7 +725,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out_lo, deps_out_lo_, 
+             infos_out_lo, deps_out_lo, 
              configs_out_lo, anomalies_out_lo ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
