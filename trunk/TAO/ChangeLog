@@ -1,3 +1,8 @@
+Fri Nov 26 09:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Fixed link to acedefaults.mpb
+
 Fri Nov 26 07:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
