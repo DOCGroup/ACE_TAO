@@ -1,144 +1,151 @@
+Tue Dec 07 15:27:24 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guideline to use THR_BOUND
+          for time-critical threads.  Thanks to Marina for reminding
+          me about this, and for running some experiments on Solaris
+          that demonstrate that it's necessary (and really works :-).
+
 Tue Dec 07 13:25:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Based_Pointer_T.{h,cpp}: Added two constructors that take a
-	  base pointer for base_offset_ calculation.  They can be used
-	  when we already know the base address of the pointer to avoid an
-	  extra lookup from the Based_Pointer_Repository.
+        * ace/Based_Pointer_T.{h,cpp}: Added two constructors that take a
+          base pointer for base_offset_ calculation.  They can be used
+          when we already know the base address of the pointer to avoid an
+          extra lookup from the Based_Pointer_Repository.
 
-	* ace/Malloc_T.i (init_malloc_header_ptr): Changed to initialize
-	  the pointer using the address of control block.  Notice that
-	  the address of the control block should never change during the
-	  lifetime of ACE_Malloc.
+        * ace/Malloc_T.i (init_malloc_header_ptr): Changed to initialize
+          the pointer using the address of control block.  Notice that
+          the address of the control block should never change during the
+          lifetime of ACE_Malloc.
 
-	  Thanks to Irfan for noticing the performance issue.
+          Thanks to Irfan for noticing the performance issue.
 
 Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SOCK_Dgram.cpp (send): Added missing timed send.
-	  Thanks to Yuval Yosef <yuvi@isdn.net.il> for motivating this.
+        * ace/SOCK_Dgram.cpp (send): Added missing timed send.
+          Thanks to Yuval Yosef <yuvi@isdn.net.il> for motivating this.
 
-	* ace/SOCK_IO.h (ACE_SOCK_IO): Most methods now support an
-	  optional timeout parameter.
+        * ace/SOCK_IO.h (ACE_SOCK_IO): Most methods now support an
+          optional timeout parameter.
 
-	* ace/SOCK_Stream.h (ACE_SOCK_Stream): All methods now support an
-	  optional timeout parameter.  Also fixed the <len> parameter type
-	  in recv_urg and send_urg to be size_t instead of int.
+        * ace/SOCK_Stream.h (ACE_SOCK_Stream): All methods now support an
+          optional timeout parameter.  Also fixed the <len> parameter type
+          in recv_urg and send_urg to be size_t instead of int.
 
-	* ace/ACE:
+        * ace/ACE:
 
           - All the I/O function were made consistent in ACE.  This
-	  included matching send and recv functions, all of which now
-	  support timeouts.
+          included matching send and recv functions, all of which now
+          support timeouts.
 
-	  - Many of the timed functions, e.g., ACE::readv() and
-	  ACE::sendto(), were changed such that the <timeout == 0> case
-	  was made common between the code that expected OS provided timed
-	  functions and the other where the timed function was simulated
-	  by ACE.
+          - Many of the timed functions, e.g., ACE::readv() and
+          ACE::sendto(), were changed such that the <timeout == 0> case
+          was made common between the code that expected OS provided timed
+          functions and the other where the timed function was simulated
+          by ACE.
 
-	  - Certain file I/O operation were made simple by removing the
-	  extra <timeout> parameter.  Timeouts are not supported in file
-	  I/O.  In some cases, e.g., the timed writev and readv functions,
-	  the function was removed since it was not necessary as taking
-	  the <timeout> parameter made it redundant with the function in
-	  ACE_OS.
+          - Certain file I/O operation were made simple by removing the
+          extra <timeout> parameter.  Timeouts are not supported in file
+          I/O.  In some cases, e.g., the timed writev and readv functions,
+          the function was removed since it was not necessary as taking
+          the <timeout> parameter made it redundant with the function in
+          ACE_OS.
 
-	  - The "_n" methods were given a performance boost when they are
-	  used with timeouts.  We only set the handle into non-blocking
-	  mode only once rather than for every iteration in the loop.
+          - The "_n" methods were given a performance boost when they are
+          used with timeouts.  We only set the handle into non-blocking
+          mode only once rather than for every iteration in the loop.
 
-	  - Added send/recv/send_n/recv/recv_n methods that take a message
-	  block as the data container.
+          - Added send/recv/send_n/recv/recv_n methods that take a message
+          block as the data container.
 
-	  - Here is the description of the updated functions from the
-	  documentation:
+          - Here is the description of the updated functions from the
+          documentation:
           ________________________________________
 
-	  The <timeout> parameter in the following methods indicates how
-	  long to blocking trying to transfer data.  If <timeout> == 0,
-	  then the call behaves as a normal send/recv call, i.e., for
-	  blocking sockets, the call will block until action is possible;
-	  for non-blocking sockets, EWOULDBLOCK will be returned if no
-	  action is immediately possible.
+          The <timeout> parameter in the following methods indicates how
+          long to blocking trying to transfer data.  If <timeout> == 0,
+          then the call behaves as a normal send/recv call, i.e., for
+          blocking sockets, the call will block until action is possible;
+          for non-blocking sockets, EWOULDBLOCK will be returned if no
+          action is immediately possible.
 
           If <timeout> != 0, the call will wait until the relative time
-	  specified in *<timeout> elapses.
+          specified in *<timeout> elapses.
 
-	  Errors are reported by -1 and 0 return values.  If the operation
-	  times out, -1 is returned with <errno == ETIME>.  If it succeeds
-	  the number of bytes transferred is returned.
+          Errors are reported by -1 and 0 return values.  If the operation
+          times out, -1 is returned with <errno == ETIME>.  If it succeeds
+          the number of bytes transferred is returned.
 
-	  The "_n" I/O methods keep looping until all the data has been
-	  transferred.  These methods also work for sockets in
-	  non-blocking mode i.e., they keep looping on EWOULDBLOCK.
-	  <timeout> is used to make sure we keep making progress, i.e.,
-	  the same timeout value is used for every I/O operation in the
-	  loop and the timeout is not counted down.  If the transfer times
-	  out, the number of bytes transferred so far are returned.
+          The "_n" I/O methods keep looping until all the data has been
+          transferred.  These methods also work for sockets in
+          non-blocking mode i.e., they keep looping on EWOULDBLOCK.
+          <timeout> is used to make sure we keep making progress, i.e.,
+          the same timeout value is used for every I/O operation in the
+          loop and the timeout is not counted down.  If the transfer times
+          out, the number of bytes transferred so far are returned.
 
-	  Methods with <iovec> parameter are I/O vector variants of the
-	  I/O operations.
-	  ________________________________________
+          Methods with <iovec> parameter are I/O vector variants of the
+          I/O operations.
+          ________________________________________
 
-	* ace/config-win32-common.h: Set IOV_MAX on Win32 to be 1024.  It
-	  seems like Win32 does not have a limit on the number of buffers
-	  that can be transferred by the scatter/gather type of I/O
-	  functions, e.g., WSASend and WSARecv.  We are arbitrarily
-	  setting this to be 1k for now.  The typically use case is to
-	  create an I/O vector array of size IOV_MAX on the stack and then
-	  filled in.  Note that we probably don't want too big a value for
-	  IOV_MAX since it may mostly go to waste or the size of the
-	  activation record may become excessively large.
+        * ace/config-win32-common.h: Set IOV_MAX on Win32 to be 1024.  It
+          seems like Win32 does not have a limit on the number of buffers
+          that can be transferred by the scatter/gather type of I/O
+          functions, e.g., WSASend and WSARecv.  We are arbitrarily
+          setting this to be 1k for now.  The typically use case is to
+          create an I/O vector array of size IOV_MAX on the stack and then
+          filled in.  Note that we probably don't want too big a value for
+          IOV_MAX since it may mostly go to waste or the size of the
+          activation record may become excessively large.
 
-	* ace/OS:
+        * ace/OS:
 
-	  The "faked" readv() in ACE for operating systems without it was
-	  calling read_n().  This was changed to call read() since readv()
-	  makes no guarantee that everything requested will be read.  Same
-	  changes applied for writev().
+          The "faked" readv() in ACE for operating systems without it was
+          calling read_n().  This was changed to call read() since readv()
+          makes no guarantee that everything requested will be read.  Same
+          changes applied for writev().
 
-	  send_n() does not belong in the OS class.  It belongs in the ACE
-	  class.  Therefore, it was moved.
+          send_n() does not belong in the OS class.  It belongs in the ACE
+          class.  Therefore, it was moved.
 
-	  read_n() is only called for file handles (and not for socket
-	  handles). Therefore, there is no point in checking for
-	  EWOULDBLOCK.  Same change was made to write_n().
+          read_n() is only called for file handles (and not for socket
+          handles). Therefore, there is no point in checking for
+          EWOULDBLOCK.  Same change was made to write_n().
 
-	* ace/Handle_Set.h (ACE_Handle_Set): Added an explicit fdset()
-	  function to get to the fd_set *.  This eliminates the need for
-	  the stupid cast operator.
+        * ace/Handle_Set.h (ACE_Handle_Set): Added an explicit fdset()
+          function to get to the fd_set *.  This eliminates the need for
+          the stupid cast operator.
 
 Mon Dec  6 21:13:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Configuration.cpp (set_string_value): When setting a value
-	  in the registry, the specified length must include the NUL
- 	  terminating character.  Thanks to Chris Hafey
- 	  <chris@stentorsoft.com> for reporting this.
+        * ace/Configuration.cpp (set_string_value): When setting a value
+          in the registry, the specified length must include the NUL
+          terminating character.  Thanks to Chris Hafey
+          <chris@stentorsoft.com> for reporting this.
 
 Mon Dec  6 11:06:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* m4/acinclude.m4 (ACE_TRY_COMPILE):
+        * m4/acinclude.m4 (ACE_TRY_COMPILE):
 
-	  Make choice of compiler flags to use dependent on the current
-	  autoconf test language.  This fixes a problem with C++ compiler
-	  flags potentially passed as C flags to libtool.
+          Make choice of compiler flags to use dependent on the current
+          autoconf test language.  This fixes a problem with C++ compiler
+          flags potentially passed as C flags to libtool.
 
-	  (ACE_USE_TEMP_FILE):
+          (ACE_USE_TEMP_FILE):
 
-	  Added checks for existing files that should be directories and
-	  vice versa.
+          Added checks for existing files that should be directories and
+          vice versa.
 
-	  If the file passed as argument is in a directory and the
-	  directory doesn't exist then create the directory.  In order to
-	  be as general as possible a script fragment was implemented with
-	  the same functionality as "mkdir -p" because "mkdir -p" may not
-	  be portable.
+          If the file passed as argument is in a directory and the
+          directory doesn't exist then create the directory.  In order to
+          be as general as possible a script fragment was implemented with
+          the same functionality as "mkdir -p" because "mkdir -p" may not
+          be portable.
 
-	* m4/threads.m4 (ACE_SEARCH_THREAD_FLAGS):
+        * m4/threads.m4 (ACE_SEARCH_THREAD_FLAGS):
 
-	  Make choice of compiler flags to use dependent on the current
-	  autoconf test language.  This fixes a problem with C++ compiler
-	  flags potentially passed as C flags to libtool.
+          Make choice of compiler flags to use dependent on the current
+          autoconf test language.  This fixes a problem with C++ compiler
+          flags potentially passed as C flags to libtool.
 
 Mon Dec 06 08:25:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -161,12 +168,12 @@ Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * netsvcs/lib/Client_Logging_Handler.cpp (handle_signal):
           If SIGPIPE occurs, ACE_Client_Logging_Handler::handle_signal()
- 	  returns -1, thus removing svc handler from reactor.  Since svc
- 	  handler is implemented as a singleton here, all next incoming
- 	  SPIPE connections operate on object that is already destroyed ->
- 	  SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
-  	  Thanks to Alexander Dergatch <dergy@websci.ru> for reporting
- 	  this.
+          returns -1, thus removing svc handler from reactor.  Since svc
+          handler is implemented as a singleton here, all next incoming
+          SPIPE connections operate on object that is already destroyed ->
+          SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
+          Thanks to Alexander Dergatch <dergy@websci.ru> for reporting
+          this.
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp (svc): The following
           loop
@@ -175,13 +182,13 @@ Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
               continue;
 
           causes server thread to leave its execution loop, because
-	  handle_input() always returns 0 or -1.  This should be replaced
-	  with
+          handle_input() always returns 0 or -1.  This should be replaced
+          with
 
             while ((result = this->handle_input ()) == 0)
 
           Thanks to Alexander Dergatch <dergy@websci.ru> for reporting
- 	  this.
+          this.
 
 Sun Dec 05 21:54:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
