@@ -31,7 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Notify_StructuredPushConsumer
@@ -45,31 +45,36 @@ class TAO_Notify_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotify
   // Constructor.
 
   void init (PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV);
-  // Init
+  // Saves the POA ref.
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV);
-  // Connect the CosECConsumer to the EventChannel.
-  // Creates a new proxy supplier and connects to it.
+  // Activates this servant with the POA supplied in init.
+  // Creates a new proxy supplier via the <consumer_admin> supplied and connects
+  // to it.
 
   virtual void disconnect (CORBA::Environment &ACE_TRY_ENV);
   // Disconnect from the supplier.
 
-  void deactivate (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Deactivate the object from the POA.
+  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+  // Deactivate the object from the default POA.
+
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
+  // Accessor for <proxy_supplier_>.
 
   // = ServantBase operations
   PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
+protected:
+  // = Data Members
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
   // The proxy that we are connected to.
 
-  // @@ Pradeep: you may want to be consitent about your field names,
-  // here is <proxy_id> for the supplier is <my_id_>, for the
-  // TAO_Notify_Proxy is just <myID_>....
-  CosNotifyChannelAdmin::ProxyID proxy_id_;
-  // The proxy_supplier id.
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  // The <proxy_supplier_> id.
 
-protected:
+  PortableServer::POA_var default_POA_;
+  // The default POA.
+
   virtual ~TAO_Notify_StructuredPushConsumer (void);
   // Destructor
 
@@ -92,7 +97,8 @@ protected:
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected
-       )) = 0;
+       ));
+  // Default does nothing.
 
   virtual void disconnect_structured_push_consumer (
         CORBA::Environment &ACE_TRY_ENV
@@ -100,10 +106,6 @@ protected:
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-  // = Data members
-  PortableServer::POA_var default_POA_;
-  // The default POA.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

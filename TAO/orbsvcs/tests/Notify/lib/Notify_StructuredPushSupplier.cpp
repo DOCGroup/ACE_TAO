@@ -19,27 +19,33 @@ TAO_Notify_StructuredPushSupplier::init (PortableServer::POA_ptr poa, CORBA::Env
   this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }
 
+CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr
+TAO_Notify_StructuredPushSupplier::get_proxy_consumer (void)
+{
+  return proxy_consumer_.in ();
+}
+
 void
 TAO_Notify_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV)
 {
-  CosNotifyComm::StructuredPushSupplier_var objref =
+  CosNotifyComm::StructuredPushSupplier_var supplier_ref =
     this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, my_id_, ACE_TRY_ENV);
+    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_, ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
-  this->consumer_proxy_ =
+  this->proxy_consumer_ =
     CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  ACE_ASSERT (!CORBA::is_nil (consumer_proxy_.in ()));
+  ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
-  consumer_proxy_->connect_structured_push_supplier (objref.in (),
+  proxy_consumer_->connect_structured_push_supplier (supplier_ref.in (),
                                                      ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -47,9 +53,9 @@ TAO_Notify_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin
 void
 TAO_Notify_StructuredPushSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_ASSERT (!CORBA::is_nil (this->consumer_proxy_.in ()));
+  ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->consumer_proxy_->disconnect_structured_push_consumer(ACE_TRY_ENV);
+  this->proxy_consumer_->disconnect_structured_push_consumer(ACE_TRY_ENV);
   ACE_CHECK;
 
   this->deactivate (ACE_TRY_ENV);
@@ -90,7 +96,7 @@ TAO_Notify_StructuredPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
   // release all resources ...
   this->default_POA_ = PortableServer::POA::_nil ();
 
-  this->consumer_proxy_ =
+  this->proxy_consumer_ =
     CosNotifyChannelAdmin::StructuredProxyPushConsumer::_nil ();
 }
 
@@ -102,7 +108,7 @@ TAO_Notify_StructuredPushSupplier::disconnect_structured_push_supplier (
         CORBA::SystemException
       ))
 {
-  this->consumer_proxy_->disconnect_structured_push_consumer (ACE_TRY_ENV);
+  this->proxy_consumer_->disconnect_structured_push_consumer (ACE_TRY_ENV);
   ACE_CHECK;
   this->deactivate (ACE_TRY_ENV);
 }
@@ -110,8 +116,8 @@ TAO_Notify_StructuredPushSupplier::disconnect_structured_push_supplier (
 void
 TAO_Notify_StructuredPushSupplier::send_event (const CosNotification::StructuredEvent& event, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_ASSERT (!CORBA::is_nil (this->consumer_proxy_.in ()));
+  ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  consumer_proxy_->push_structured_event (event, ACE_TRY_ENV);
+  this->proxy_consumer_->push_structured_event (event, ACE_TRY_ENV);
   ACE_CHECK;
 }
