@@ -452,6 +452,15 @@ public:
   ACE_InputCDR (ACE_Data_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER);
 
+  /// Create an input stream from an ACE_Data_Block. It also sets the
+  /// read and write pointers at the desired positions. This would be
+  /// helpful if the applications desires to create a new CDR stream
+  /// from a semi-processed datablock.
+  ACE_InputCDR (ACE_Data_Block *data,
+                size_t read_pointer_position,
+                size_t write_pointer_position,
+                int byte_order = ACE_CDR_BYTE_ORDER);
+
   /**
    * These make a copy of the current stream state, but do not copy
    * the internal buffer, so the same stream can be read multiple

@@ -525,6 +525,28 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 {
 }
 
+ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
+                            size_t rd_pos,
+                            size_t wr_pos,
+                            int byte_order)
+  : start_ (data),
+    do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
+{
+  // Set the read pointer
+  this->start_.rd_ptr (rd_pos);
+
+  // Set the write pointer after doing a sanity check.
+  char* wrpos = this->start_.rd_ptr () + wr_pos;
+  if (this->start_.end () >= wrpos)
+    {
+      this->start_.wr_ptr (wr_pos);
+    }
+}
+
+
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             size_t size,
                             ACE_CDR::Long offset)
