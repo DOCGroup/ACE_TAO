@@ -12,7 +12,6 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 #define ACE_LACKS_GETPGID
-#define ACE_HAS_ANSI_CASTS
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 #define ACE_HAS_EXCEPTIONS
 #define ACE_LACKS_SIGACTION
@@ -27,6 +26,10 @@
 #define ACE_LACKS_FIFO
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
+
+#if defined ACE_HAS_ANSI_CASTS && (ACE_HAS_ANSI_CASTS == 0)
+#undef  ACE_HAS_ANSI_CASTS
+#endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
 
 // Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100 || __BORLANDC__ >= 0x500)

@@ -116,6 +116,13 @@
 	#define ACE_HAS_MT_ORBIX 0
 #endif
 
+// By default, we disable the C++ casting because
+// it requires the RTTI support to be turned on which
+// is not something we usually do.
+#if !defined (ACE_HAS_ANSI_CASTS)
+        #define ACE_HAS_ANSI_CASTS 0
+#endif
+
 // ----------------------- platform specific defines --------------------
 
 #include <ace/config-win32-common.h>
