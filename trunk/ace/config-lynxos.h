@@ -90,9 +90,6 @@
 // Platform has union semun defined
 #define ACE_HAS_SEMUN
 
-// Compiler/platform supports the "long long" datatype.
-#define ACE_HAS_LONGLONG_T
-
 // Compiler/platform supports alloca()
 #define ACE_HAS_ALLOCA
 

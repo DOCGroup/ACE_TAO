@@ -30,7 +30,6 @@
 //
 // Compiler-related definitions.  These are set for C Set ++ V3
 #define ACE_HAS_EXCEPTIONS
-#define ACE_HAS_LONGLONG_T
 #define ACE_TEMPLATES_REQUIRE_PRAGMA
 
 // Optimize ACE_Handle_Set for select().

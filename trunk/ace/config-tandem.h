@@ -31,9 +31,6 @@
 // Tandem has a function to set t_errno (set_t_errno)
 #define ACE_HAS_SET_T_ERRNO         // jjpp
 
-// Compiler/platform supports the "long long" datatype.
-#define ACE_HAS_LONGLONG_T
-
 // It does but problems with wcstok
 // ACE_HAS_UNICODE			Platform/compiler supports UNICODE
 

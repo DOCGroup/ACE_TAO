@@ -58,9 +58,6 @@
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
 
-// Compiler/platform supports the "long long" datatype.
-#define ACE_HAS_LONGLONG_T
-
 // Platform defines MAP_FAILED as a long constant.
 #define ACE_HAS_LONG_MAP_FAILED
  

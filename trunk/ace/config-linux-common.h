@@ -118,8 +118,6 @@
 // If you do anything else, we've never tested it!
 #define ACE_HAS_IP_MULTICAST
 
-#define ACE_HAS_LONGLONG_T
-
 #define ACE_HAS_LONG_FDMASK
 
 #define ACE_HAS_STRING_CLASS
