@@ -1,3 +1,9 @@
+Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of 
+	  putmsg().  Thanks to David Trusty <david.trusty@westwave.com>
+ 	  for reporting this.
+
 Fri Jun 29 22:31:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Reverted the changes in this entry.
