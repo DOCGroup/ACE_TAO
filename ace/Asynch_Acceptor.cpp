@@ -217,7 +217,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   result.message_block ().release ();
 
   // Start off another asynchronous accept to keep the backlog going
-  if (this->reissue_accept_)
+  if (this->should_reissue_accept ())
     {
       this->accept (this->bytes_to_read_);
     }
@@ -292,6 +292,60 @@ template <class HANDLER> size_t
 ACE_Asynch_Acceptor<HANDLER>::address_size (void)
 {
   return sizeof (sockaddr) + sizeof (sockaddr_in);
+}
+
+template <class HANDLER> int 
+ACE_Asynch_Acceptor<HANDLER>::pass_addresses (void) const
+{
+  return this->pass_addresses_;
+}
+
+template <class HANDLER> void
+ACE_Asynch_Acceptor<HANDLER>::pass_addresses (int new_value)
+{
+  this->pass_addresses_ = new_value;
+}
+
+template <class HANDLER> int 
+ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (void) const
+{
+  return this->validate_new_connection_;
+}
+
+template <class HANDLER> void
+ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (int new_value)
+{
+  this->validate_new_connection_ = new_value;
+}
+
+template <class HANDLER> int 
+ACE_Asynch_Acceptor<HANDLER>::reissue_accept (void) const
+{
+  return this->reissue_accept_;
+}
+
+template <class HANDLER> void
+ACE_Asynch_Acceptor<HANDLER>::reissue_accept (int new_value)
+{
+  this->reissue_accept_ = new_value;
+}
+
+template <class HANDLER> int 
+ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (void) const
+{
+  return this->bytes_to_read_;
+}
+
+template <class HANDLER> void
+ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (int new_value)
+{
+  this->bytes_to_read_ = new_value;
+}
+
+template <class HANDLER> int 
+ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void) 
+{
+  return this->reissue_accept_;
 }
 
 #endif /* ACE_WIN32 */
