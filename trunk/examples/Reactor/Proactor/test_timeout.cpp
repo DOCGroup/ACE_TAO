@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_timeout.cpp
 //
@@ -18,7 +18,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali and Alexander Babu Arulanthu
-// 
+//
 // ============================================================================
 
 #include "ace/Proactor.h"
@@ -47,19 +47,19 @@ public:
 				const void *arg)
     {
       // Print out when timeouts occur.
-      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n", 
+      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
 		  ++count_,
 		  (char *) arg,
 		  (tv - this->start_time_).sec ()));
-      
+
       // Sleep for a while
       ACE_OS::sleep (4);
     }
-  
+
 private:
   ACE_Atomic_Op <ACE_Thread_Mutex, int> count_;
   // Number of the timer event.
-  
+
   ACE_Time_Value start_time_;
   // Starting time of the test.
 };
@@ -67,24 +67,24 @@ private:
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  int svc (void) 
+  int svc (void)
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);
-      
+
       ACE_DEBUG ((LM_DEBUG, "(%t):Starting svc routine\n"));
-      
+
       if (ACE_Proactor::run_event_loop(run_time) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "(%t):%p.\n", "Worker::svc"), -1);
-      
+
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
-      
+
       return 0;
     }
 };
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Timeout_Handler handler;
 
@@ -105,12 +105,12 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   Worker worker;
-  
+
   if (worker.activate (THR_NEW_LWP, 10) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
 
   ACE_Thread_Manager::instance ()->wait ();
-  
+
   return 0;
 }
 
@@ -124,7 +124,7 @@ template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
-int 
+int
 main (int, char *[])
 {
   ACE_DEBUG ((LM_DEBUG,
