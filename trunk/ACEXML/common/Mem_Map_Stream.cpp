@@ -6,6 +6,7 @@
 ACE_RCSID(common, Mem_Map_Stream, "$Id$")
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
+  : svc_handler_ (0)
 {
 
 }
@@ -260,6 +261,7 @@ ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream (void)
 {
   // Remove the mapping and the file.
   this->mem_map_.remove ();
+  delete this->svc_handler_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

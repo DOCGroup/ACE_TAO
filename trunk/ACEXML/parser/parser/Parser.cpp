@@ -55,6 +55,7 @@ ACEXML_Parser::ACEXML_Parser (void)
 
 ACEXML_Parser::~ACEXML_Parser (void)
 {
+
 }
 
 int
@@ -73,7 +74,8 @@ ACEXML_Parser::initialize(ACEXML_InputSource* input)
                                              ACEXML_ParserInt::predef_val_[i])
           != 0)
         {
-          ACE_ERROR ((LM_DEBUG, ACE_TEXT ("Error adding entity %s to Manager"),
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT ("Error adding entity %s to Manager\n"),
                       ACEXML_ParserInt::predef_ent_[i]));
           return -1;
         }
@@ -474,45 +476,64 @@ ACEXML_Parser::parse_conditional_section (ACEXML_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char ch = this->get ();
+  int include = 0;
   if (ch != '[')
     {
       this->fatal_error(ACE_TEXT ("Internal Parser Error")
                         ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
     }
-  if (this->skip_whitespace() != 'I')
+  ch = this->skip_whitespace();
+  if (ch == '%')
+    {
+      this->parse_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+      ch = this->skip_whitespace();
+    }
+  if (ch == 'I')
+    {
+      ch = this->get();
+      switch (ch)
+        {
+          case 'N':
+            if (this->parse_token (ACE_TEXT ("CLUDE")) < 0)
+              {
+                this->fatal_error (ACE_TEXT ("Expecting keyword INCLUDE in ")
+                                   ACE_TEXT ("conditionalSect")
+                                   ACEXML_ENV_ARG_PARAMETER);
+                ACEXML_CHECK_RETURN (-1);
+              }
+            include = 1;
+            break;
+          case 'G':
+            if (this->parse_token (ACE_TEXT ("GNORE")) < 0)
+              {
+                this->fatal_error (ACE_TEXT ("Expecting keyword IGNORE in ")
+                                   ACE_TEXT ("conditionalSect")
+                                   ACEXML_ENV_ARG_PARAMETER);
+                ACEXML_CHECK_RETURN (-1);
+              }
+            include = 0;
+            break;
+          default:
+            this->fatal_error (ACE_TEXT ("Invalid conditionalSect")
+                               ACEXML_ENV_ARG_PARAMETER);
+            ACEXML_CHECK_RETURN (-1);
+        }
+      ACEXML_Char fwd = '\xFF';
+      this->skip_whitespace_count (&fwd);
+      if (fwd == 0)
+        {
+          this->get(); // Consume the 0
+          this->pop_context (0 ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK_RETURN (-1);
+        }
+    }
+  else
     {
       this->fatal_error (ACE_TEXT ("Invalid conditionalSect")
                          ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
-    }
-  ch = this->get();
-  int include = 0;
-  switch (ch)
-    {
-      case 'N':
-        if (this->parse_token (ACE_TEXT ("CLUDE")) < 0)
-          {
-            this->fatal_error (ACE_TEXT ("Expecting keyword INCLUDE in ")
-                               ACE_TEXT ("conditionalSect") ACEXML_ENV_ARG_PARAMETER);
-            ACEXML_CHECK_RETURN (-1);
-          }
-        include = 1;
-        break;
-      case 'G':
-        if (this->parse_token (ACE_TEXT ("GNORE")) < 0)
-          {
-            this->fatal_error (ACE_TEXT ("Expecting keyword IGNORE in ")
-                               ACE_TEXT ("conditionalSect")
-                               ACEXML_ENV_ARG_PARAMETER);
-            ACEXML_CHECK_RETURN (-1);
-          }
-        include = 0;
-        break;
-      default:
-        this->fatal_error (ACE_TEXT ("Invalid conditionalSect")
-                           ACEXML_ENV_ARG_PARAMETER);
-        ACEXML_CHECK_RETURN (-1);
     }
   if (this->skip_whitespace() != '[')
     {
@@ -1386,6 +1407,10 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
       this->skip_whitespace_count (&fwd);
       if (fwd == '>')
         break;
+
+      count = this->check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+
       attname = this->parse_attname (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
 
@@ -2006,6 +2031,26 @@ ACEXML_Parser::parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL)
           return -1;
     }
 
+  // Check for trailing '?', '*', '+'
+  nextch = this->peek ();
+  switch (nextch)
+    {
+      case '?':
+        // @@ Consume the character and inform validator as such,
+        this->get ();
+        break;
+      case '*':
+        // @@ Consume the character and inform validator as such,
+        this->get ();
+        break;
+      case '+':
+        // @@ Consume the character and inform validator as such,
+        this->get ();
+        break;
+      default:
+        break;                    // not much to do.
+    }
+
   return 0;
 }
 
@@ -2123,7 +2168,6 @@ ACEXML_Parser::parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL)
     this->skip_whitespace_count (&nextch);
   } while (nextch != ')');
 
-
   // Check for trailing '?', '*', '+'
   nextch = this->peek ();
   switch (nextch)
@@ -2143,6 +2187,8 @@ ACEXML_Parser::parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL)
       default:
         break;                    // not much to do.
     }
+
+
   return 0;
 }
 
@@ -3069,6 +3115,7 @@ ACEXML_Parser::fatal_error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
   ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
   if (this->error_handler_)
     this->error_handler_->fatalError (*exception ACEXML_ENV_ARG_PARAMETER);
+  this->reset();
   ACEXML_ENV_RAISE (exception);
   return;
 }
@@ -3298,7 +3345,10 @@ ACEXML_Parser::reset (void)
   if (this->ctx_stack_.pop (this->current_) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Mismatched push/pop of Context stack")));
-  delete this->current_->getLocator();
+  this->current_->getInputSource()->getCharStream()->rewind();
+
+  this->current_->setInputSource (0);
+  delete this->current_;
   this->current_ = 0;
 
   ACEXML_Char* temp = 0;

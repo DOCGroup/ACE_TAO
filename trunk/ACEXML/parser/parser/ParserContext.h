@@ -38,12 +38,6 @@ public:
   ACEXML_Parser_Context (ACEXML_InputSource* instream,
                          ACEXML_LocatorImpl* locator);
 
-  /// Copy constructor
-  ACEXML_Parser_Context (const ACEXML_Parser_Context& src);
-
-  /// Assignment operator
-  ACEXML_Parser_Context& operator= (const ACEXML_Parser_Context& src);
-
   /// Comparison operator
   int operator!= (const ACEXML_Parser_Context& src);
 
@@ -61,7 +55,19 @@ public:
   /// Get the underlying locator.
   virtual ACEXML_LocatorImpl* getLocator(void);
 
+  /// Set the underlying input source.
+  virtual void setInputSource(ACEXML_InputSource* ip);
+
+  /// Set the underlying locator.
+  virtual void setLocator(ACEXML_LocatorImpl* locator);
+
 private:
+
+  /// Copy constructor
+  ACEXML_Parser_Context (const ACEXML_Parser_Context& src);
+
+  /// Assignment operator
+  ACEXML_Parser_Context& operator= (const ACEXML_Parser_Context& src);
 
   /// Current input char stream.
   ACEXML_InputSource *instream_;
