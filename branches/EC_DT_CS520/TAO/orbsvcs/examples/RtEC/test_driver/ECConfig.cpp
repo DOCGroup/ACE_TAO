@@ -35,6 +35,9 @@ namespace TestConfig {
   struct spawn_data_t {
     ACE_RW_Mutex *lock;
     CORBA::ORB_var *orb;
+    int *ready;
+    int use_federated;
+    int is_server;
   };
 
 //TODO: Obviously, we can't just hardcode these!
@@ -67,6 +70,7 @@ ECConfig<SCHED_STRAT>::ECConfig (void)
   , configured (0) //false
   , use_federated (1) //TODO Check whether or not FEDERATED; default to true
   //, use_federated (0) //TODO Check whether or not FEDERATED; default to false
+  , ready (0)
 {
   this->test_done = new ACE_RW_Mutex();
 }
@@ -146,6 +150,7 @@ ECConfig<SCHED_STRAT>::reset (ACE_ENV_SINGLE_ARG_DECL)
   //TODO clear RT_Infos from scheduler?
 
   configured = 0; //false
+  this->ready = 0;
 }
 
 template <class SCHED_STRAT> int
@@ -395,6 +400,8 @@ ECConfig<SCHED_STRAT>::run (void)
     return 1;
   }
 
+  this->ready = 0; //ensure suppliers don't start when orb runs yet
+
   ACE_TRY
     {
       ACE_Thread_Manager *inst = ACE_Thread_Manager::instance();
@@ -410,6 +417,9 @@ ECConfig<SCHED_STRAT>::run (void)
       printf("data->lock = %p\n",(void*)(data->lock));
       data->orb = &(this->orb);
       printf("data->orb = %p\n",(void*)(data->orb));
+      data->ready = &(this->ready);
+      data->use_federated = this->use_federated;
+      data->is_server = this->suppliers.size()>0; //assume client if no suppliers
       int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,data);
       //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,reactor);
       //no need for getting tid?
@@ -615,7 +625,8 @@ ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
           entry_prefix << "Supplier " << supp_idx;
 
           ACE_DEBUG((LM_DEBUG,"Supplier.connect() for %s\n",entry_prefix.str().c_str()));
-          this->suppliers[supp_idx]->connect (this->test_done,
+          this->suppliers[supp_idx]->connect (&(this->ready),
+                                              this->test_done,
                                               this->scheduler.in(),
                                               entry_prefix.str().c_str(),
                                               this->periods[i], //period
@@ -821,6 +832,18 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
   //printf("acquire_write(): %d\n",test_done->acquire_write());
   //std::exit(0);
 
+  if (data_ptr->use_federated)
+    {
+      //assume if have no suppliers that we are client
+      ACE_DEBUG((LM_DEBUG,"Barrier to wait until both apps configured and orbs running\n"));
+      ECConfig<SCHED_STRAT>::barrier(data_ptr->is_server); //wait until both apps are ready to run
+      *(data_ptr->ready) = 1; //checked by suppliers to start reacting to timeouts
+    }
+  else
+    {
+      ACE_DEBUG((LM_DEBUG,"No barrier after configured&orbrun because not federated\n"));
+    }
+
   //      Block waiting for consumers to finish
   //when can acquire write lock, all Suppliers are finished
   int ret = data_ptr->lock->acquire_write();
@@ -835,8 +858,14 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
 
   //REACTOR CHANGE
   // Shutdown ORB
-  (*(data_ptr->orb))->shutdown(1); //argument is TRUE so orb waits until work
-                              //done before shutting down
+  //TODO: Client stops immediately when it should wait for gateway to finish
+  if (data_ptr->is_server)
+    {
+      //HACK: client doesn't shutdown!
+      ACE_DEBUG((LM_DEBUG,"Supplier shutting down ORB\n"));
+      (*(data_ptr->orb))->shutdown(1); //argument is TRUE so orb waits until work
+      //done before shutting down
+    }
   /*
   //orb->orb_core()->reactor()->end_reactor_event_loop();
   ACE_DEBUG((LM_DEBUG,"DONE; stopping reactor event loop\n"));

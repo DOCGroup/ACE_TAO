@@ -149,7 +149,8 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
   ACE_DEBUG((LM_DEBUG,"\tEvent type: %d\n",event_type));
 
   //calibrate
-  this->_work.calibrate();
+  //TODO: calibrate seems to cause Consumer's connect_push_consumer() to hang!
+  //this->_work.calibrate();
 }
 
 void
@@ -203,6 +204,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   //when work triggered by event starts.
 
   //do work
+  //what happens when run w/o calibratin?
   timeval load = (timeval) this->_work_time;
   this->_work.run(load);
 

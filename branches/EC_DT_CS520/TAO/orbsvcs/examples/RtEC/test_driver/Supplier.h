@@ -51,7 +51,8 @@ public:
 
   virtual void update(ACE_ENV_SINGLE_ARG_DECL);
 
-  void connect (ACE_RW_Mutex* done,
+  void connect (int *ready, //variable to check for readiness
+                ACE_RW_Mutex* done,
                 RtecScheduler::Scheduler_ptr scheduler,
                 const char *entry_prefix,
                 TimeBase::TimeT period,
@@ -93,6 +94,9 @@ private:
 
   RtecEventComm::EventSet _events;
   // set of events to push when a timeout event is received.
+
+  int *_ready; //do not respond to timeouts until this variable = 1
+
 };
 
 #endif /* SUPPLIER_H */

@@ -130,10 +130,13 @@ private:
 
   RtecEventChannelAdmin::Observer_var gateway_obs;
 
+  //Becomes true when client signals (through barrier) that it is ready to run
+  int ready; //boolean
+
   ///Blocks the application using ACE_SOCK_Connector or
   ///ACE_SOCK_Acceptor.  Used for barrier synchronization between the
   ///application and others in the system.
-  void barrier(bool is_supplier);
+  static void barrier(bool is_supplier);
 };
 
 } /* namespace TestConfig */
