@@ -10,7 +10,7 @@ Sat Jul 18 14:12:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Added the 
 	  ORBiiopprofilelock switch to the client configuration to
-	  switch of the lock needed for forwarding. We know, we
+	  switch off the lock needed for forwarding. We know, we
 	  do not need it, so we use a null lock instead. This
 	  should improve the performance a little bit.
 
