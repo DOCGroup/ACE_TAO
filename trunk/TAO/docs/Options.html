@@ -109,6 +109,13 @@ If not specified, the system-dependent default is used.</TD></TR>
 be established, a warning is announced and it continues with the
 next listed.  Listing the same combination multiple times will
 properly establish multiple connections to that endpoint.</TD></TR>
+<TR>
+<TD><CODE>-ORBCDRtradeoff</CODE> <EM>maxsize</EM></TD>
+<TD><A name="-ORBCDRtradeoff"></a>Control the strategy to tradeoff
+between copy vs no copy marshalling of octet sequences. 
+If an octet sequence is smaller than <EM>maxsize</EM> and the current
+message block contains enough space for it the octet sequence is
+copied instead of appended to the CDR stream.</TD></TR>
 </TABLE>
 </P>
 </blockquote>

@@ -91,6 +91,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   CORBA::UShort port = defport;
   CORBA::Boolean use_ior = CORBA::B_TRUE;
   CORBA::Boolean opt_collocation = CORBA::B_TRUE;
+  int cdr_tradeoff = TAO_DEFAULT_CDR_MEMCPY_TRADEOFF;
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
 
@@ -291,6 +292,15 @@ TAO_ORB_Core::init (int& argc, char** argv)
           if (arg_shifter.is_parameter_next ())
             {
               preconnections = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
+        }
+      else if (ACE_OS::strcmp (current_arg, "-ORBCDRtradeoff") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              cdr_tradeoff = ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }

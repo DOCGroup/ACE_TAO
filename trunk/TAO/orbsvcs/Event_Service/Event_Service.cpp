@@ -71,7 +71,7 @@ int main (int argc, char *argv[])
 	orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
+			   " (%P|%t) Unable to initialize the Naming Service.\n"),
 			  1);
 
       CosNaming::NamingContext_var naming_context = 

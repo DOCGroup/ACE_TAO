@@ -105,6 +105,13 @@ public:
   // After reaching their maximum exponential size limit CDR streams
   // grow linearly in chunks of this size.
 
+  int cdr_memcpy_tradeoff (void) const;
+  void cdr_memcpy_tradeoff (int);
+  // Octet sequences are marshalled without doing any copies, we
+  // simply append a block to the CDR message block chain. When the
+  // octet sequence is small enough and there is room in the current
+  // message block it is more efficient just to copy the buffer.
+
 private:
   ACE_INET_Addr addr_;
   // host + port number we are listening on
@@ -135,6 +142,10 @@ private:
 
   int cdr_linear_chunk_;
   // Control for linear growth of CDR buffers.
+
+  int cdr_memcpy_tradeoff_;
+  // Control the strategy for copying vs. appeding octet sequences in
+  // CDR streams.
 };
 
 typedef enum

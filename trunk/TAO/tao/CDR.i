@@ -123,16 +123,6 @@ TAO_OutputCDR::write_wchar_array (const CORBA::WChar* x,
 }
 
 ACE_INLINE CORBA_Boolean
-TAO_OutputCDR::write_octet_array (const CORBA::Octet* x,
-				  CORBA::ULong length)
-{
-  return this->write_array (x,
-			    CDR::OCTET_SIZE,
-			    CDR::OCTET_ALIGN,
-			    length);
-}
-
-ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_short_array (const CORBA::Short* x,
 				  CORBA::ULong length)
 {
@@ -228,10 +218,16 @@ TAO_OutputCDR::good_bit (void) const
   return this->good_bit_;
 }
 
-ACE_INLINE const ACE_Message_Block*
-TAO_OutputCDR::start (void) const
+ACE_INLINE ACE_Message_Block*
+TAO_OutputCDR::begin (void) const
 {
   return this->start_;
+}
+
+ACE_INLINE ACE_Message_Block*
+TAO_OutputCDR::end (void) const
+{
+  return this->current_->cont ();
 }
 
 ACE_INLINE const char*

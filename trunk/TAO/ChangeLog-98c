@@ -1,3 +1,87 @@
+Wed May 20 12:10:12 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	  OutputCDR buffers grow by appending a message blocks using the
+	  cont() field.
+
+	* tao/GIOP.cpp: 
+	  When sending an OutputCDR use writev to send the message block
+	  chain.
+
+	* tao/decode.cpp: 
+	  Added support for no copy marshalling of octet sequences.
+	
+	* tao/decode.cpp: 
+	* tao/encode.cpp: 
+	  Reverted part of a change by Andy because it simply breaks tons
+	  of code. The change in question was passing the address of a
+	  pointer to a string (or wstring) to the
+	  marshlling/dermarshalling interpreter, but only when the string
+	  was a field of a structure.
+
+	* tao/orbconf.h: 
+	* tao/params.h: 
+	* tao/params.i: 
+	* tao/params.cpp: 
+	* tao/ORB_Core.cpp: 
+	* docs/Options.html: 
+	  Added options to control the tradeoff between copy vs. no copy
+	  marshalling of octet sequences. If the octet sequence is "small
+	  enough" and the current CDR buffer contains enough space the
+	  octet sequence is copied instead of chained with the buffer.
+
+	* tao/Typecode.cpp: 
+	  More fixes to avoid crashes at shutdown.
+
+	* tao/Any.cpp: 
+	  The start() method was changed to begin() it looks more STL
+	  like. Also removed a bunch of casts that are no longer needed. 
+
+	* tao/Align.h: 
+	  Corrected a typo in a comment.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	  Reduce the maximum number of suppliers, consumers and messages,
+	  otherwise we exceed the maximum stack size on NT.
+
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	  Fixed error message.
+
+	* tests/CDR/CDR.dsw: 
+	* tests/CDR/growth.dsw: 
+	* tests/CDR/growth.dsp: 
+	  Added growth to the project file.
+
+	* tests/CDR/growth.cpp: 
+	  Workaound MSVC++ bug wrt conversions from UINT64 to double.
+
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
+	  Use larger sequences.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	  Fixed ambiguous use of [] operator.
+
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp: 
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp: 
+	  For Win32 Debug we use aced.lib.
+
+	* tests/Cubit/TAO/MT_Cubit/server.dsp: 
+	  Added orbsvcs.lib to the library list. The client will not
+	  compile due to unportable use of getrusage.
+
+	* tests/OctetSeq/OctetSeq.dsw: 
+	* tests/OctetSeq/OctetSeq.dsp: 
+	  Added a project file for this test.
+
+	* tests/OctetSeq/OctetSeq.cpp: 
+	  Fixed several portability problems.
+	  The OutputCDR is not preallocated.
+
+	* tests/Param_Test/tests.cpp: 
+	  Fixed bug in bounded string sequence test.
+
 1998-05-20  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/CC_client.cpp

@@ -444,10 +444,10 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
                         case CORBA::tk_array:
                         case CORBA::tk_alias:
                         case CORBA::tk_except:
-                          retval = stream->encode (param, data, 0, env);
-                          break;
                         case CORBA::tk_string:
                         case CORBA::tk_wstring:
+                          retval = stream->encode (param, data, 0, env);
+                          break;
                         case CORBA::tk_TypeCode:
                         case CORBA::tk_objref:
                           retval = stream->encode (param, &data, 0, env);
@@ -801,6 +801,14 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               break;
 
                             case CORBA::tk_char:
+                              // For primitives, compute the size only once
+                              continue_encoding = continue_encoding &&
+                                stream->write_char_array
+                                ((CORBA::Char*)value, bounds);
+                              if (continue_encoding == CORBA::B_TRUE)
+                                return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                              break;
+
                             case CORBA::tk_octet:
                               // For primitives, compute the size only once
                               continue_encoding = continue_encoding &&

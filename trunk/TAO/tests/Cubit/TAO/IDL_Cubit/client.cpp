@@ -778,7 +778,7 @@ Cubit_Client::run (void)
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
-    this->cube_sequence (this->loop_count_, 256);
+    this->cube_sequence (this->loop_count_, 1024);
 
   timer.stop ();
 
@@ -810,7 +810,7 @@ Cubit_Client::run (void)
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
-    this->cube_raw (this->loop_count_, 1024);
+    this->cube_raw (this->loop_count_, 4096);
 
   timer.stop ();
 

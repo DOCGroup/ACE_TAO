@@ -80,17 +80,17 @@ public:
     // Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "long
     // double", size as above).
 
-    DEFAULT_BUFSIZE = 512,
+    DEFAULT_BUFSIZE = TAO_DEFAULT_CDR_BUFSIZE,
     // The default buffer size.
     // @@ TODO We want to add options to the ORB to control this
     // default value, so this constant should be read as the, default
     // default value ;-)
 
-    EXP_GROWTH_MAX = 4096,
+    EXP_GROWTH_MAX = TAO_DEFAULT_CDR_EXP_GROWTH_MAX,
     // The buffer size grows exponentially until it reaches this size;
     // afterwards it grows linearly using the next constant
 
-    LINEAR_GROWTH_CHUNK = 4096
+    LINEAR_GROWTH_CHUNK = TAO_DEFAULT_CDR_LINEAR_GROWTH_CHUNK
     // Once exponential growth is ruled out the buffer size increases
     // in chunks of this size, note that this constants have the same
     // value right now, but it does not need to be so.
@@ -246,15 +246,22 @@ public:
   // Returns 0 if an error has ocurred, the only expected error is to
   // run out of memory.
 
-  const ACE_Message_Block* start (void) const;
+  ACE_Message_Block* begin (void) const;
   // Return the start of the message block chain for this CDR stream.
-  // NOTE: In the current implementation the chain has length 1, but
-  // we are planning to change that.
+  // NOTE: The complete CDR stream is represented by a chain of
+  // message blocks.
+
+  ACE_Message_Block* end (void) const;
+  // Return the last message in the chain that is is use.
 
   const char* buffer (void) const;
   size_t length (void) const;
   // Return the start and size of the internal buffer.
-  // NOTE: In future implementations these methods may be removed.
+  // NOTE: This methods only return information about the first block
+  // in the chain.
+
+  size_t total_length (void) const;
+  // Add the length of each message block in the chain.
 
   CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                            const void *data,
@@ -267,10 +274,6 @@ private:
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
   TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
   // disallow copying...
-
-  char* wr_ptr (void) const;
-  char* end (void) const;
-  // The write pointer and end of the current message block.
 
   int adjust (size_t size, char*& buf);
   // Returns (in <buf>) the next position in the buffer aligned to
@@ -310,8 +313,10 @@ private:
 
 private:
   ACE_Message_Block* start_;
-  // The start of the chain of message blocks, even though in the
-  // current version the chain always has length 1.
+  // The start of the chain of message blocks.
+
+  ACE_Message_Block* current_;
+  // The current block in the chain were we are writing.
 
   TAO_Marshal_Factory *factory_;
   // maintain a factory that can make specialized marshaling objects
