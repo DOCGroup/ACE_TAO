@@ -300,7 +300,6 @@ David Trumble <trumble@cvg.enet.dec.com>
 John Morey <jmorey@crl.com>
 George Reynolds <george@dvcorp.com>
 Hans Rohnert <hans.rohnert@mchp.siemens.de>
-Hans Horsmann <Hans.Horsmann@icn.siemens.de>
 Alex V. Maclinovsky <alexm@teltrunk1.tait.co.nz>
 Todd Blanchard <tblancha@evolving.com>
 Rob Clairmont <rclairmo@bnr.ca>
@@ -755,6 +754,7 @@ Eric Covington <eric@nowsol.com>
 Darren Whobrey <whobrey@fecit.co.uk>
 Mason Taube <taube@westcon.prc.com>
 Rod Joseph <rodjoseph@adt.com>
+Hans Horsmann <Hans.Horsmann@icn.siemens.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
