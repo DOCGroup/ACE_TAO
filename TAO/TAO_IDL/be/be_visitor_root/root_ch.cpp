@@ -67,9 +67,12 @@ be_visitor_root_ch::init (void)
 
       *os << "class Collocation_Proxy_Broker;" << be_nl;
 
-      *os << "template<typename T> class Narrow_Utils;" << be_nl
-          << "template<typename T> class AbstractBase_Narrow_Utils;" << be_uidt_nl
-          << "}";
+      if (idl_global->abstract_iface_seen_)
+        {
+          *os << "template<typename T> class AbstractBase_Narrow_Utils;" << be_nl;
+        }
+
+      *os << "template<typename T> class Narrow_Utils;" << be_uidt_nl << "};" ;
     }
 
   return 0;
