@@ -1,3 +1,9 @@
+Wed Jul 30 22:11:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/IDL3_Test.dsp:
+
+          Update project settings.
+
 Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
