@@ -43,7 +43,8 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     tcp_properties_ (*(ACE_static_cast
-                     (TAO_IIOP_Properties *, arg)))
+                       (TAO_IIOP_Properties *, arg))),
+    dscp_codepoint_ (0)
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
