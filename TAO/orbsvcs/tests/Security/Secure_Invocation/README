@@ -13,5 +13,18 @@ functioning properly.  It does so by the doing the following:
 	  SSLIOP.  The AccessId associated with the given request is
 	  obtained from the SecurityCurrent object, and displayed.
 
-The expected test output is the following:
+The expected test output is the following (actual "certificate issuer"
+contents may differ):
 
+Activated as <IOR:...>
+(1768|1628) Received CORBA::NO_PERMISSION from server, as expected.
+
+Secure_Invocation test passed.
+
+Security::SecAttribute 0 -- Certificate Issuer
+===============================================
+/C=US/ST=CA/L=Irvine/O=UCI/OU=DOC/CN=Foo/Email=nobody@doc.ece.uci.edu
+
+Secure_Invocation test passed.
+
+Event loop finished.
