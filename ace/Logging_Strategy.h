@@ -18,6 +18,7 @@
 #define ACE_LOGGING_STRATEGY_H
 
 #include "ace/Service_Object.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
