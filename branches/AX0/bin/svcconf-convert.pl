@@ -99,8 +99,18 @@ while ( $#ARGV >= 0)
         $nocomment = 1;
     }
     elsif ($ARGV[0] =~ m/^-(\?|h|help)/i) {     # Help information
-        print "Options\n";
-        print "-verbose       - Make some noise\n";
+        print
+" Usage: svcconf-convert.pl [-i infile] [-o outfile] [-verbose] [-nocomment]
+           -i: Specify the input classic svc.conf filename.
+               If omitted, the default input filename is 'svc.conf'.
+           -o: Specify the output XML svc.conf filename.
+               If this argument is omitted, the resulting XML file will
+               be written to file called <input filename>.xml.
+           -verbose: Verbose output.
+           -nocomment: Remove all comments.  Use this argument if you
+                       have comments mixing in the middle of a classic
+                       svc.conf directive.
+";
         exit;
     }
     elsif ($ARGV[0] =~ m/^-/) {
@@ -122,6 +132,7 @@ if ($outfile eq "") {
     $outfile = "$infile.xml";
 }
 print "OUTFILE = $outfile \n";
+
 open (OUT, "> $outfile") or die "Unable to open $outfile\n";
 
 undef $/;

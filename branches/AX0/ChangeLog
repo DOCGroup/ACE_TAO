@@ -1,3 +1,43 @@
+Thu Apr 25 00:31:57 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/apps/XML_Apps.dsw: Added new workspace for XML
+	  applications.  This should contains all projects under this
+	  subdirectory.
+
+	* ACEXML/apps/svcconf/README:
+	* ACEXML/apps/svcconf/Svcconf.cpp:
+	* ACEXML/apps/svcconf/Svcconf.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+	* ACEXML/apps/svcconf/Svcconf_Handler.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.i:
+	* ACEXML/apps/svcconf/XML_Svc_Conf_Parser.dsp: Added new files
+	  that implement the parser for XML-based Service Configurator.
+
+	* bin/svcconf-convert.pl: Updated the help message.
+
+	* ace/config-all.h: Added ACE_DEFAULT_SVC_CONF_EXT to define the
+	  default file extention name for svc.conf files.  It is ".conf"
+	  when using classic Service Configurator and ".conf.xml" when
+	  using XML Service Configurator.
+
+	* tests/Service_Config_Test.cpp: Changed to use different file
+	  extension with different Service Configurator.
+
+	* tests/Service_Config_Test.conf.xml: Added the converted XML
+	  based svc.conf file.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	* ace/XML_Svc_Conf.h:
+	* ace/XML_Svc_Conf.cpp: Added abstract interface definition for
+	  DLL based XML parser.
+
+	* ace/OS.h: Defined ACE_DEFAULT_SVC_CONF_FILE to "svc.conf.xml" if
+	  ACE_USES_CLASSIC_SVC_CONF is not defined.
+
+	* ace/Service_Config.cpp: Adapt Service_Config to use XML parser
+	  to process an svc.conf.xml file.
+
 Sat Feb 23 16:49:25 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_export_file.pl: Added code to record the flags used
