@@ -62,11 +62,11 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = static_cast<CORBA::TCKind> (_tao_temp);
     }
-  
+
   return _tao_result;
 }

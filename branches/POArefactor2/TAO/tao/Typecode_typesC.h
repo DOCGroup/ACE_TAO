@@ -190,13 +190,6 @@ namespace TAO
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface_fwd/cdr_op_ch.cpp:66
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TypeCode_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TypeCode_ptr &);
-
-
-// TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_ch.cpp:50
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
