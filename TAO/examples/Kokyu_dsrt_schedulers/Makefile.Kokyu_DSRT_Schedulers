@@ -37,7 +37,7 @@ FILES = \
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-ACE_SHLIBS = -lTAO_RTScheduler -lTAO_RTCORBA -lKokyu -lTAO -lACE
+ACE_SHLIBS = -lTAO_RTScheduler -lTAO_RTCORBA -lwrappers -lKokyu -ldsui -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -109,7 +109,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../../Kokyu -I../../orbsvcs -I../.. -I../../tao -I../../.. 
+CPPFLAGS     += -I../../../Kokyu -I../../orbsvcs -I../.. -I../../tao -I../../..
+
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DKOKYU_DSRT_SCHEDULERS_BUILD_DLL
@@ -121,8 +122,9 @@ ifeq ($(static_libs),1)
   endif
 endif
 
-# CPPFLAGS += -DKOKYU_DSRT_LOGGING 
-LDFLAGS      += -L../../../lib
+# CPPFLAGS += -DKOKYU_DSRT_LOGGING
+CPPFLAGS += -I$(DATASTREAM_ROOT)/include
+LDFLAGS	+= -L../../../lib -L$(DATASTREAM_ROOT)/lib
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -131,9 +133,15 @@ require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo rt_corba
 
+EDF_SCHEDULE_DSUI = edf_sched_dsui_families.h edf_sched_dsui_info.h edf_sched_dsui_table.h
+DSUI_PARSE=$(DATASTREAM_ROOT)/bin/dsui-parse
+edf_sched_dsui_families.h: EDF_Scheduler.dsui
+	$(DSUI_PARSE) -n EDF_Scheduler.dsui -t edf_sched
 
-realclean: clean 
+realclean: clean
+	-$(RM) $(EDF_SCHEDULE_DSUI)
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif
+
 

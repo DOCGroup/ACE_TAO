@@ -64,7 +64,7 @@ public TAO_Local_RefCounted_Object
 {
  public:
 
-  EDF_Scheduler (CORBA::ORB_ptr orb, 
+  EDF_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,
                  int ace_sched_scope);

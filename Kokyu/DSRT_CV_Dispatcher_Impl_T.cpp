@@ -9,11 +9,15 @@
 //#include "DSRT_CV_Dispatcher_Impl_T.i"
 #endif /* __ACE_INLINE__ */
 
+#include "kokyu_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
+
 ACE_RCSID(Kokyu, DSRT_CV_Dispatcher_Impl_T, "$Id$")
 
 namespace Kokyu
 {
-  
+
 /*
 //@@VS: This is somehow not being recognized by MSVC, which results
 //in a link error. For now, the definition has been moved to the .h
@@ -41,7 +45,7 @@ operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
 
 template <class DSRT_Scheduler_Traits>
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                          int sched_scope)
   :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> (sched_policy, sched_scope),
    run_cond_ (run_cond_lock_)
@@ -61,16 +65,16 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 {
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i enter\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i enter\n"));
 #endif
-
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_ENTER, 0,0,NULL);
   DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
 
-  if (ACE_OS::thr_setprio (thr_handle, 
-                           this->blocked_prio_, 
+  if (ACE_OS::thr_setprio (thr_handle,
+                           this->blocked_prio_,
                            this->sched_policy_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -90,10 +94,10 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 #ifdef KOKYU_DSRT_LOGGING
   this->ready_queue_.dump ();
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i after ready_q.insert\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i after ready_q.insert\n"));
 #endif
-  
+
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var;
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, cond_guard, run_cond_lock_, -1);
@@ -161,27 +165,27 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                   thr_handle));
 #endif
 
-  if (ACE_OS::thr_setprio (thr_handle, 
-                           this->active_prio_, 
+  if (ACE_OS::thr_setprio (thr_handle,
+                           this->active_prio_,
                            this->sched_policy_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("thr_setprio failed")));
     }
-    
-#ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i exit\n")); 
-#endif
 
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i exit\n"));
+#endif
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_EXIT, 0,0,NULL);
   return 0;
 }
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
-{ 
+{
   return this->schedule_i (guid, qos);
 }
 
