@@ -30,6 +30,9 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Process_Strategy.cpp (handle_signal): suppress printouts during
 	  shutdown, to prevent using ACE_Log_Msg while it's being deleted.
 
+	* ace/Timer_List.cpp: replace ACE_Recursive_Thread_Mutex with
+	  ACE_SYNCH_RECURSIVE_MUTEX, for non-threaded platforms.
+
 	* tests/Reactors_Test (~Test_Task): moved ASSERT after the printout,
 	  so we can see why it failed.  (svc): added printout with thread ID.
 	  (main): deleted reactor at end of test to prevent leak.
