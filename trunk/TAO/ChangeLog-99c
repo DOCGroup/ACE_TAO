@@ -1,3 +1,10 @@
+Tue Mar 30 18:30:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Added a paragraph describing the relation and
+	  useage of command-line options, environment variables, and
+	  svc.conf files.  Thanks to Don Busch <busch_d@ociweb.com> for
+	  pointing this out.
+
 Tue Mar 30 12:33:06 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.16 released.
