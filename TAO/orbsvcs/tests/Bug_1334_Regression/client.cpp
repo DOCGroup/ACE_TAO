@@ -24,12 +24,12 @@ int main( int argc, char *argv[] )
             return 1 ;
          }
       }
-      catch( CORBA::Exception& e )
+      catch( CORBA::Exception&  )
       {
          return 1 ;
       }
    }
-   catch( CORBA::Exception& e )
+   catch( CORBA::Exception&  )
    {
       return 2 ;
    }
