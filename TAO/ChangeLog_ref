@@ -1,3 +1,9 @@
+Fri Sep  5 13:48:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Valuetype/TAO_Valuetype.dsp:
+
+          Turned on RTTI in this project.
+
 Fri Sep  5 12:46:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/IFR_Client_Adapter.h:
