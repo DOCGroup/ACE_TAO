@@ -57,6 +57,7 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushConsumer
 {
@@ -78,13 +79,13 @@ public:
   // Get the local endpoint used to send the events.
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-	     RtecScheduler::Scheduler_ptr lcl_sched,
-	     const char* lcl_name,
-	     const ACE_INET_Addr& ipaddr,
-	     CORBA::Environment &_env);
+             RtecScheduler::Scheduler_ptr lcl_sched,
+             const char* lcl_name,
+             const ACE_INET_Addr& ipaddr,
+             CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
-  // scheduler. 
+  // scheduler.
   // It only keeps a copy of its SupplierProxy, used for later
   // connection and disconnections.
   // @@ TODO part of the RT_Info is hardcoded, we need to make it
@@ -95,7 +96,7 @@ public:
   // work unless init() is called again.
 
   void open (RtecEventChannelAdmin::ConsumerQOS& sub,
-	     CORBA::Environment& env);
+             CORBA::Environment& env);
   // Connect (or reconnect) to the EC with the given subscriptions.
 
   void close (CORBA::Environment& _env);
@@ -103,7 +104,7 @@ public:
 
   virtual void disconnect_push_consumer (CORBA::Environment &);
   virtual void push (const RtecEventComm::EventSet &events,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // The PushConsumer methods.
 
 private:
@@ -138,21 +139,21 @@ public:
   TAO_ECG_UDP_Receiver (void);
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-	     RtecScheduler::Scheduler_ptr lcl_sched,
-	     const char* lcl_name,
-	     const ACE_INET_Addr& ignore_from,
-	     CORBA::Environment &_env);
+             RtecScheduler::Scheduler_ptr lcl_sched,
+             const char* lcl_name,
+             const ACE_INET_Addr& ignore_from,
+             CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
-  // scheduler. 
+  // scheduler.
   // @@ TODO part of the RT_Info is hardcoded, we need to make it
   // parametric.
 
   void shutdown (CORBA::Environment&);
-  // Disconnect and shutdown the gateway, no further connectsions 
+  // Disconnect and shutdown the gateway, no further connectsions
 
   void open (RtecEventChannelAdmin::SupplierQOS& pub,
-	     CORBA::Environment &env);
+             CORBA::Environment &env);
   // Connect to the EC using the given publications lists.
 
   virtual void close (CORBA::Environment& env);
@@ -227,11 +228,11 @@ public:
 
   int open (const ACE_INET_Addr& mcast_group);
   // Open the datagram (join the mcast group) and register with
-  // this->reactor() 
+  // this->reactor()
 
   int close (void);
   // Close the datagram (leave the mcast group) and unregister with
-  // the reactor. 
+  // the reactor.
 
   // Reactor callbacks
   virtual int handle_input (ACE_HANDLE fd);

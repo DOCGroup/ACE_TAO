@@ -7,6 +7,7 @@
 #define ORBSVCS_TIME_UTILITIES_H
 
 #include "orbsvcs/CosTimeBaseC.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export ORBSVCS_Time
 {
@@ -30,21 +31,21 @@ public:
   // as nanoseconds.
   static void
   hrtime_to_TimeT (TimeBase::TimeT& lhs,
-		   ACE_hrtime_t rhs);
+                   ACE_hrtime_t rhs);
   static void
   TimeT_to_hrtime (ACE_hrtime_t &lhs,
-		   const TimeBase::TimeT& rhs);
+                   const TimeBase::TimeT& rhs);
   static ACE_hrtime_t
   to_hrtime (const TimeBase::TimeT& t);
 
   // = ACE_Time_Value conversion routines, recall that they are
   // <seconds,useconds> pairs.
   static void
-  Time_Value_to_TimeT (TimeBase::TimeT& lhs, 
-		       const ACE_Time_Value& rhs);
+  Time_Value_to_TimeT (TimeBase::TimeT& lhs,
+                       const ACE_Time_Value& rhs);
   static void
   TimeT_to_Time_Value (ACE_Time_Value& lrs,
-		       const TimeBase::TimeT& rhs);
+                       const TimeBase::TimeT& rhs);
   static ACE_Time_Value
   to_Time_Value (const TimeBase::TimeT& rhs);
 };
@@ -54,4 +55,3 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ORBSVCS_TIME_UTILITIES_H */
-

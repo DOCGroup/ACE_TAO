@@ -10,6 +10,7 @@
 #include "ace/OS.h"
 
 #include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export ACE_RT_Info : public RtecScheduler::RT_Info
   // = TITLE
@@ -25,18 +26,18 @@ class TAO_ORBSVCS_Export ACE_RT_Info : public RtecScheduler::RT_Info
 {
 public:
   ACE_RT_Info (const char* entry_point,
-	       RtecScheduler::Time worst_time,
-	       RtecScheduler::Time typical_time,
-	       RtecScheduler::Time cached_time,
-	       RtecScheduler::Period period,
-	       RtecScheduler::Importance importance,
-	       RtecScheduler::Quantum quantum,
-	       CORBA::Long threads);
+               RtecScheduler::Time worst_time,
+               RtecScheduler::Time typical_time,
+               RtecScheduler::Time cached_time,
+               RtecScheduler::Period period,
+               RtecScheduler::Importance importance,
+               RtecScheduler::Quantum quantum,
+               CORBA::Long threads);
 
   ACE_RT_Info (const RtecScheduler::RT_Info& rt_info);
 
   int add_dependency(RtecScheduler::handle_t dep,
-		     int number_of_calls = 1);
+                     int number_of_calls = 1);
 };
 
 #if defined (__ACE_INLINE__)
