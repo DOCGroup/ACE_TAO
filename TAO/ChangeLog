@@ -1,3 +1,10 @@
+Tue Nov 11 19:30:02 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+          More cleaning: unused args, missing in()s.
+
 Tue Nov 11 18:41:46 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
