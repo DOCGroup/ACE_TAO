@@ -1,3 +1,12 @@
+Thu Jan 22 19:08:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_sys_stat.inl (mkdir):
+
+	  ACE_OS::mkdir for OS PSOS wrote one character behind allocated
+	  memory. Fixed it by adding an extra byte for allocation. Thanks
+	  to Dieter Knueppel <dknueppel@datus.com> for reporting the
+	  problem and suggesting a fix.
+
 Thu Jan 22 19:00:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/os_include/os_signal.h:
