@@ -1,68 +1,76 @@
+Sun Sep 05 08:22:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp,
+          Transient_Naming_Context.cpp
+          use the explicit template instantiations for all instantiations,
+          not just TAO_Bindings_Iterator, even with ACE_HAS_GNU_REPO.
+          g++ 2.91.66 misses (some of) them with -frepo. [Bug 248]
+
 Sat Sep 05 02:00:00 1999  Luther J. Baker  <ljb1@cs.wustl.edu>
 
-	 * ORB_Core.cpp: Part 1 of two part incremental change to allow
-	   ORB_init to correctly parse 'mangled' orb flags and arguments
-	   ie -ORBflag 123, -orbflag 123, -oRbfLAg123, "-orbflag123"
-	   Please note, my day is incorrect. It is Sun... but this is
-	   the associated ChangeLogTag for the file.
+         * ORB_Core.cpp: Part 1 of two part incremental change to allow
+           ORB_init to correctly parse 'mangled' orb flags and arguments
+           ie -ORBflag 123, -orbflag 123, -oRbfLAg123, "-orbflag123"
+           Please note, my day is incorrect. It is Sun... but this is
+           the associated ChangeLogTag for the file.
 
 Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-	
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	  The exit code argument of Process::wait changed from
-	  "int" to "ACE_exitcode".
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          The exit code argument of Process::wait changed from
+          "int" to "ACE_exitcode".
 
 Sat Sep 03 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/simple_client_muxed.conf,
-	  tests/AMI/simple_client_exclusive.conf:
-	  Removed these files and replaced them with more general ones.
+        * tests/AMI/simple_client_muxed.conf,
+          tests/AMI/simple_client_exclusive.conf:
+          Removed these files and replaced them with more general ones.
 
-	* tests/AMI/muxed.conf,
-	  tests/AMI/exclusive.conf: Added as replacement for the above 
-	  mentioned files.
+        * tests/AMI/muxed.conf,
+          tests/AMI/exclusive.conf: Added as replacement for the above
+          mentioned files.
 
-	* tests/AMI/ami_test.idl,
-	  tests/AMI/run_test.pl: 
-	  Made some fine tuning.
+        * tests/AMI/ami_test.idl,
+          tests/AMI/run_test.pl:
+          Made some fine tuning.
 
 Sat Sep  4 18:47:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
 
-	  Exit status of preprocessor process was incorrectly checked
-	  without using WIFEXITED and WEXITSTATUS macros.
+          Exit status of preprocessor process was incorrectly checked
+          without using WIFEXITED and WEXITSTATUS macros.
 
-	  Added check for case where preprocessor child process may have
-	  been interrupted by a signal, instead of exiting properly.
+          Added check for case where preprocessor child process may have
+          been interrupted by a signal, instead of exiting properly.
 
-	* TAO_IDL/Makefile:
+        * TAO_IDL/Makefile:
 
-	  Corrected logic that checks when to define a default value for
-	  TAO_IDL_PREPROCESSOR.
+          Corrected logic that checks when to define a default value for
+          TAO_IDL_PREPROCESSOR.
 
 Sat Sep 03 18:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Asynch_Invocation.i,
-	  tao/Reply_Dispatcher.cpp,
-	  tao/Reply_Dispatcher.h:
-	  Changed the Asynch Reply Dispatcher to own its own 
-	  reply_service_info. This is different from the synchronous 
-	  case, in which the Invocation object holds it and just 
-	  gives the Reply Dispatcher a reference to it.
+        * tao/Asynch_Invocation.i,
+          tao/Reply_Dispatcher.cpp,
+          tao/Reply_Dispatcher.h:
+          Changed the Asynch Reply Dispatcher to own its own
+          reply_service_info. This is different from the synchronous
+          case, in which the Invocation object holds it and just
+          gives the Reply Dispatcher a reference to it.
 
-	* tao/TAO.dsp:
-	  Added Asynch_Invocation.i and Invocation.i to the inline files.
+        * tao/TAO.dsp:
+          Added Asynch_Invocation.i and Invocation.i to the inline files.
 
 
 Sat Sep 03 16:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/ami_test.idl,
-	  tests/AMI/ami_test_i.cpp,
-	  tests/AMI/ami_test_i.h,
-	  tests/AMI/client.cpp,
-	  tests/AMI/simple_client.cpp:
-	  Enhanced the test to have a string as an in parameter. 	  
+        * tests/AMI/ami_test.idl,
+          tests/AMI/ami_test_i.cpp,
+          tests/AMI/ami_test_i.h,
+          tests/AMI/client.cpp,
+          tests/AMI/simple_client.cpp:
+          Enhanced the test to have a string as an in parameter.
 
 Sat Sep 04 09:05:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -295,7 +303,7 @@ Thu Sep 02 14:04:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
           use the explicit template instantiations even with ACE_HAS_GNU_REPO.
-          g++ 2.91.66 misses them with -frepo.
+          g++ 2.91.66 misses them with -frepo. [Bug 248]
 
 Thu Sep  2 11:45:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -399,6 +407,7 @@ Wed Sep 01 16:04:31 1999  David L. Levine  <levine@cs.wustl.edu>
           Transient_Naming_Context.cpp
           use the explicit TAO_Bindings_Iterator template instantiation
           even with ACE_HAS_GNU_REPO.  g++ 2.91.66 misses it with -frepo.
+          [Bug 248]
 
 Wed Sep  1 14:36:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 

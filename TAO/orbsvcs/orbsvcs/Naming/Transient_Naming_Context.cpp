@@ -336,7 +336,11 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       ACE_CHECK;
     }
 }
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+
+template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >;
+
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>;
@@ -351,10 +355,6 @@ template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_Int
 template class ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context>;
 template class ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> > >;
 template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex> >;
-
-#elif defined (ACE_HAS_GNU_REPO)
-
-template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
