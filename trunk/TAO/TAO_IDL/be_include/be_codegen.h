@@ -38,7 +38,7 @@ class TAO_IDL_BE_Export TAO_CodeGen
   //    TAO_CodeGen
   //
   // = DESCRIPTION
-  //    Holds global parameters for the Back End and 
+  //    Holds global parameters for the Back End and
   //    generates the C++ mapping.
   //
 public:
@@ -63,6 +63,8 @@ public:
                                               // ... client header
     TAO_ARGUMENT_ARGLIST_SH,                  // argument in op signature of
                                               // ... server header
+    TAO_ARGUMENT_INVOKE_ARG_LIST,
+
     TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH,     // ... client header
     TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS,     // ... client source
     TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH,    // ... client header
@@ -101,12 +103,21 @@ public:
     TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH,       // in server header for collocated
     TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,       // in server skeletons for
                                               // collocated
+
+    TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH,         // Proxy Impl Related Attribute visitors.
+    
+    TAO_ATTRIBUTE_PROXY_IMPL_XH,
+
+    TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS,
+    TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS,
+    TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS,
+
     TAO_ATTRIBUTE_SMART_PROXY_CH,             // in client header
     TAO_ATTRIBUTE_SMART_PROXY_CS,             // in client source
     TAO_ATTRIBUTE_INTERCEPTORS_CH,            // in client header
-    TAO_ATTRIBUTE_INTERCEPTORS_CS,            // in client source 
+    TAO_ATTRIBUTE_INTERCEPTORS_CS,            // in client source
     TAO_ATTRIBUTE_INTERCEPTORS_SH,            // in server header
-    TAO_ATTRIBUTE_INTERCEPTORS_SS,            // in server source 
+    TAO_ATTRIBUTE_INTERCEPTORS_SS,            // in server source
 
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
@@ -183,6 +194,30 @@ public:
     TAO_INTERFACE_INTERCEPTORS_CS,
     TAO_INTERFACE_INTERCEPTORS_SH,
     TAO_INTERFACE_INTERCEPTORS_SS,
+    TAO_INTERFACE_PROXY_BROKERS_CH,
+    TAO_INTERFACE_PROXY_BROKERS_CS,
+    TAO_INTERFACE_PROXY_BROKERS_SH,
+    TAO_INTERFACE_PROXY_BROKERS_SS,
+    TAO_INTERFACE_BASE_PROXY_BROKER_CH,
+    TAO_INTERFACE_BASE_PROXY_BROKER_CS,
+    TAO_INTERFACE_REMOTE_PROXY_BROKER_CH,
+    TAO_INTERFACE_REMOTE_PROXY_BROKER_CS,
+    TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH,
+    TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS,
+    TAO_INTERFACE_PROXY_IMPLS_CH,
+    TAO_INTERFACE_PROXY_IMPLS_CS,
+
+    TAO_INTERFACE_PROXY_IMPLS_SH,
+
+    TAO_INTERFACE_PROXY_IMPLS_SS,
+    TAO_INTERFACE_BASE_PROXY_IMPL_CH,
+    TAO_INTERFACE_BASE_PROXY_IMPL_CS,
+    TAO_INTERFACE_REMOTE_PROXY_IMPL_CH,
+    TAO_INTERFACE_REMOTE_PROXY_IMPL_CS,
+    TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH,
+    TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS,
+    TAO_INTERFACE_DIRECT_PROXY_IMPL_SH,
+    TAO_INTERFACE_DIRECT_PROXY_IMPL_SS,
 
     // Emitting code for the interface forward declaration.
     TAO_INTERFACE_FWD_CH,
@@ -252,6 +287,13 @@ public:
     TAO_OPERATION_DIRECT_COLLOCATED_SH,     // in collocated server header
     TAO_OPERATION_DIRECT_COLLOCATED_SS,     // in collocated server skel
 
+    TAO_OPERATION_BASE_PROXY_IMPL_CH,       // Proxy_Impl operation gen.
+                                            // in client header
+    TAO_OPERATION_PROXY_IMPL_XH,
+    TAO_OPERATION_REMOTE_PROXY_IMPL_CS,
+    TAO_OPERATION_THRU_POA_PROXY_IMPL_SS,
+    TAO_OPERATION_DIRECT_PROXY_IMPL_SS,
+
     TAO_OPERATION_SMART_PROXY_CH,           // in client header
     TAO_OPERATION_SMART_PROXY_CS,           // in client stubs
     TAO_OPERATION_INTERCEPTORS_CH,          // in client header
@@ -267,6 +309,12 @@ public:
                                             // signature
     TAO_OPERATION_RETTYPE_IS,               // return type in client header op
     TAO_OPERATION_RETTYPE_OTHERS,           // ... in other cases
+
+    TAO_OPERATION_INVOKE_ARG_LIST,           // Generate the signature needed to invoke
+                                            // the operation given. The signature generated
+                                            // consists of the name of the arguments, without
+                                            // any type
+
     TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
                                             // ... for client header
     TAO_OPERATION_ARGLIST_SH,               // ... for server header
@@ -280,7 +328,16 @@ public:
     TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,  // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
-    TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,  // private member list list for request info                                                                  // ... for server source 
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,  // private member list list for request info                                                                  // ... for server source
+
+    //    TAO_OPERATION_ARGLIST_PROXY_IMPL_CH,    // Proxy impl arg list generation
+                                            // in client header
+
+    TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
+                                            // in client/server  header
+    TAO_OPERATION_ARGLIST_PROXY_IMPL_XS,
+
+    TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH,
 
     TAO_OPERATION_ARGLIST_IH,               // ... for implementation header
     TAO_OPERATION_ARGLIST_IS,               // ... for implementation header
@@ -683,7 +740,7 @@ private:
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;
 // Singleton instance of the BE code generator.
 
-extern TAO_IDL_BE_Export TAO_CodeGen *tao_cg; 
+extern TAO_IDL_BE_Export TAO_CodeGen *tao_cg;
 // Code generator instance which is used everywhere.
 
 #endif /* if !defined */

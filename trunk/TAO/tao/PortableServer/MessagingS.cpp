@@ -126,61 +126,153 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsign
 /* ending time is 12:21:06 */
 static TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable tao_Messaging_ReplyHandler_optable;
 
-Messaging::ReplyHandler_ptr _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory (
-    CORBA::Object_ptr obj
+///////////////////////////////////////////////////////////////////////
+//            Strategized Proxy Broker Implementation
+//
+
+// Factory function Implementation.
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker *POA_Messaging::the_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
+{
+  static POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker strategized_proxy_broker;
+  return &strategized_proxy_broker;
+}
+
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+    this->proxy_cache_[i] = 0;
+  
+}
+
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::~_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+    delete this->proxy_cache_[i];
+  
+}
+
+Messaging::_TAO_ReplyHandler_Proxy_Impl&
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::select_proxy (
+    ::Messaging::ReplyHandler *object,
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_Stub *stub = obj->_stubobj ();
-
-  switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
-    {
-    case TAO_ORB_Core::THRU_POA:
-      {
-      Messaging::ReplyHandler_ptr retval = 0;
-      ACE_NEW_RETURN (
-          retval,
-          POA_Messaging::_tao_thru_poa_collocated_ReplyHandler (stub),
-          0
-        );
-      return retval;
-      }
-    case TAO_ORB_Core::DIRECT:
-      if (obj->_is_local () != 0)
-        {
-          TAO_Collocated_Object *local_object =
-            TAO_Collocated_Object::_narrow (obj);
-
-          POA_Messaging::ReplyHandler *servant = ACE_reinterpret_cast (POA_Messaging::ReplyHandler*, local_object->_servant ()->_downcast ("IDL:omg.org/Messaging/ReplyHandler:1.0"));
-          if (servant != 0)
-            {
-              Messaging::ReplyHandler *retval = 0;
-              ACE_NEW_RETURN (
-                  retval,
-                  POA_Messaging::_tao_direct_collocated_ReplyHandler (servant, stub),
-                  0
-                );
-              return retval;
-            }
-        }
-      break;
-    default:
-      break;
-    }
-  return 0;
+  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+    TAO_ORB_Core::collocation_strategy (object);
+  
+  if (this->proxy_cache_[strategy] != 0)
+    return *this->proxy_cache_[strategy];
+  
+  this->create_proxy (strategy, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  return *this->proxy_cache_[strategy];
+  
 }
 
-int _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory_Initializer (long dummy)
+void 
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
+    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  ACE_UNUSED_ARG (dummy);
+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  
+  if (this->proxy_cache_[strategy] == 0)
+    {
+      switch (strategy)
+        {
+        case TAO_ORB_Core::THRU_POA_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_Messaging::_TAO_ReplyHandler_ThruPOA_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_ORB_Core::DIRECT_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_ORB_Core::REMOTE_STRATEGY:
+        default:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              ::Messaging::_TAO_ReplyHandler_Remote_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+        
+      }
+    
+  }
+}
 
-  _TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer =
-    _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory;
 
+//
+//        End Strategized Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+
+Messaging::_TAO_ReplyHandler_Proxy_Broker *
+Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+{
+  ACE_UNUSED_ARG (obj);
+  return POA_Messaging::the_TAO_ReplyHandler_Strategized_Proxy_Broker();
+}
+
+int
+Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long _dummy_)
+{
+  ACE_UNUSED_ARG (_dummy_);
+  
+  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer = 
+    Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function;
+  
   return 0;
 }
 
-static int _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory_Initializer_Scarecrow =
-  _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory_Initializer));
+static int Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer));
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+//                 ThruPOA Proxy  Implementation
+//
+
+POA_Messaging::_TAO_ReplyHandler_ThruPOA_Proxy_Impl::~_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void)
+{}
+
+// ThruPOA Implementation of the IDL interface methods
+
+
+//
+//           End ThruPOA Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+//                 Direct Proxy  Implementation
+//
+
+POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::~_TAO_ReplyHandler_Direct_Proxy_Impl (void)
+{}
+
+
+//
+//           End Direct Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
 
 // skeleton constructor
 POA_Messaging::ReplyHandler::ReplyHandler (void)
@@ -272,148 +364,26 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/ReplyHandler:1.0";
 }
 
+
+
 Messaging::ReplyHandler*
 POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
+  
+  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
-    switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
-      {
-      case TAO_ORB_Core::THRU_POA:
-        {
-          ::Messaging::ReplyHandler_ptr retval = 0;
-          ACE_NEW_RETURN (
-              retval,
-              POA_Messaging::_tao_thru_poa_collocated_ReplyHandler (stub),
-              0
-            );
-          return retval;
-        }
-      case TAO_ORB_Core::DIRECT:
-        {
-          ::Messaging::ReplyHandler_ptr retval = 0;
-          ACE_NEW_RETURN (
-              retval,
-              POA_Messaging::_tao_direct_collocated_ReplyHandler (this, stub),
-              0
-            );
-          return retval;
-        }
-      default:
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-      }
+    ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
-    {
-      // stub->_incr_refcnt ();
-      CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-      ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);
-      CORBA::Object_var obj = tmp;
-      return ::Messaging::ReplyHandler::_unchecked_narrow (obj.in ());
-    }
-}
-
-POA_Messaging::_tao_thru_poa_collocated_ReplyHandler::_tao_thru_poa_collocated_ReplyHandler (
-  TAO_Stub *stub
-)
-  :  CORBA_Object (stub, 1)
-{
-}
-
-CORBA::Boolean POA_Messaging::_tao_thru_poa_collocated_ReplyHandler::_is_a(
-    const CORBA::Char *logical_type_id,
-    CORBA_Environment &ACE_TRY_ENV
-  )
-
-{
-  TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      this->_stubobj ()->servant_orb_var ()->orb_core ()
-    );
-  CORBA::Object_var forward_to;
-  servant_upcall.prepare_for_upcall (
-      this->_object_key (),
-      "_is_a",
-      forward_to.out (),
-      ACE_TRY_ENV
-    );
-  ACE_CHECK_RETURN (0);
-  return ACE_reinterpret_cast (
-      POA_Messaging::ReplyHandler_ptr,
-      servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/Messaging/ReplyHandler:1.0"
-        )
-    )->_is_a (logical_type_id, ACE_TRY_ENV);
+    ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
+  
+  CORBA::Object_var obj = tmp;
+  return ::Messaging::ReplyHandler::_unchecked_narrow (obj.in ());
 }
 
 
-CORBA::Boolean POA_Messaging::_tao_thru_poa_collocated_ReplyHandler::_non_existent(
-    CORBA_Environment &ACE_TRY_ENV
-  )
-
-{
-  TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      this->_stubobj ()->servant_orb_var ()->orb_core ()
-    );
-  CORBA::Object_var forward_to;
-  servant_upcall.prepare_for_upcall (
-      this->_object_key (),
-      "_non_existent",
-      forward_to.out (),
-      ACE_TRY_ENV
-    );
-  ACE_CHECK_RETURN (0);
-  return ACE_reinterpret_cast (
-      POA_Messaging::ReplyHandler_ptr,
-      servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/Messaging/ReplyHandler:1.0"
-        )
-    )->_non_existent (ACE_TRY_ENV);
-}
-
-
-POA_Messaging::_tao_direct_collocated_ReplyHandler::_tao_direct_collocated_ReplyHandler (
-    POA_Messaging::ReplyHandler_ptr  servant,
-    TAO_Stub *stub
-  )
-  : ACE_NESTED_CLASS (Messaging,ReplyHandler) (),
-    TAO_Collocated_Object (stub, 1, servant),
-    CORBA_Object (stub, 1),
-    servant_ (servant)
-{
-}
-
-CORBA::Boolean POA_Messaging::_tao_direct_collocated_ReplyHandler::_is_a(
-    const CORBA::Char *logical_type_id,
-    CORBA_Environment &ACE_TRY_ENV
-  )
-
-{
-  return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);
-}
-
-void *
-POA_Messaging::_tao_direct_collocated_ReplyHandler::_tao_QueryInterface (ptr_arith_t type)
-{
-  void *value =
-    this->TAO_Collocated_Object::_tao_QueryInterface (type);
-  if (value != 0)
-    return value;
-  return this->ACE_NESTED_CLASS (Messaging, ReplyHandler)::_tao_QueryInterface (type);
-}
-
-
-POA_Messaging::ReplyHandler_ptr POA_Messaging::_tao_direct_collocated_ReplyHandler::_get_servant (void) const
-{
-  return this->servant_;
-}
-
-CORBA::Boolean POA_Messaging::_tao_direct_collocated_ReplyHandler::_non_existent(
-    CORBA_Environment &ACE_TRY_ENV
-  )
-
-{
-  return this->servant_->_non_existent (ACE_TRY_ENV);
-}
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 

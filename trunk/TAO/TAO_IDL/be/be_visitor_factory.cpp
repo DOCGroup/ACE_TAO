@@ -166,6 +166,50 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_INTERFACE_IS:
       return new be_visitor_interface_is (new_ctx);
 
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CH:
+      return new be_visitor_interface_proxy_brokers_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CH:
+      return new be_visitor_interface_base_proxy_broker_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CH:
+      return new be_visitor_interface_remote_proxy_broker_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS:
+      return new be_visitor_interface_remote_proxy_broker_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH:
+      return new be_visitor_interface_strategized_proxy_broker_sh (new_ctx);
+      
+    case TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS:
+      return new be_visitor_interface_strategized_proxy_broker_ss (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH:
+      return new be_visitor_interface_proxy_impls_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
+      return new be_visitor_interface_base_proxy_impl_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
+      return new be_visitor_interface_remote_proxy_impl_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
+      return new be_visitor_interface_remote_proxy_impl_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
+      return new be_visitor_interface_thru_poa_proxy_impl_sh (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
+      return new be_visitor_interface_thru_poa_proxy_impl_ss (new_ctx);
+      
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
+      return new be_visitor_interface_direct_proxy_impl_sh (new_ctx);
+
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+      return new be_visitor_interface_direct_proxy_impl_ss (new_ctx);
+
+      // Old Collocation Stuff.
+
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
       return new be_visitor_interface_thru_poa_collocated_sh (new_ctx);
 
@@ -196,7 +240,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_smart_proxy_ch (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
       return new be_visitor_interface_smart_proxy_cs (new_ctx);
- case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
       return new be_visitor_interface_interceptors_ch (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
       return new be_visitor_interface_interceptors_cs (new_ctx);
@@ -438,6 +482,12 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SS:
+      
+    case TAO_CodeGen::TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_ATTRIBUTE_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS:
       return new be_visitor_attribute (new_ctx);
 
     case TAO_CodeGen::TAO_EXCEPTION_CH:
@@ -544,12 +594,26 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS:
       return new be_visitor_operation_interceptors_ss (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_RETTYPE_CH:    
+    case TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH:
+      return new be_visitor_operation_base_proxy_impl_ch (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH:
+      return new be_visitor_operation_proxy_impl_xh (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS:
+      return new be_visitor_operation_remote_proxy_impl_cs (new_ctx);
+      
+    case TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS:
+      return new be_visitor_operation_thru_poa_proxy_impl_ss (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS:
+      return new be_visitor_operation_direct_proxy_impl_ss (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_RETTYPE_CH:
     case TAO_CodeGen::TAO_OPERATION_RETTYPE_SH:
     case TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS:
       return new be_visitor_operation_rettype (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH:    
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH:
       return new be_visitor_operation_interceptors_info_rettype (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
@@ -579,28 +643,35 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
       return new be_visitor_operation_rettype_assign_ss (new_ctx);
 
+    case TAO_CodeGen::TAO_OPERATION_INVOKE_ARG_LIST:
+      return new be_visitor_operation_inv_arglist (new_ctx);
+
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
+
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
       return new be_visitor_operation_arglist (new_ctx);
-    
+
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS: 
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST: 
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS: 
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
      return new be_visitor_operation_interceptors_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT: 
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
       return new be_visitor_operation_interceptors_result (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS:
@@ -628,6 +699,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH:
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS:
       return new be_visitor_args_arglist (new_ctx);
+
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH:
        return new be_visitor_args_request_info_ch (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH:
@@ -637,7 +709,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
        return new be_visitor_args_request_info_cs (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST:
        return new be_visitor_args_paramlist (new_ctx);
-    case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_RESULT: 
+    case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_RESULT:
        return new be_visitor_args_request_info_result (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH:
        return new be_visitor_args_request_info_sh (new_ctx);

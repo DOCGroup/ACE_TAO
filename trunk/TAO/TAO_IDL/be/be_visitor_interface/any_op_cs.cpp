@@ -53,15 +53,16 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   os->indent ();
   if (!node->is_local ())
     {
-      // Generate the stub factory function pointer definition.
-      *os << node->full_name () << "_ptr (*";
+      // Generate the proxy broker factory function pointer definition.
+      *os << node->full_base_proxy_broker_name () << " * (*";
 
-      *os << "_TAO_collocation_"
-          << node->flat_name () << "_Stub_Factory_function_pointer) ("
-          << be_idt << be_idt_nl
+      *os << node->flat_client_enclosing_scope () 
+          << node->base_proxy_broker_name () 
+	  << "_Factory_function_pointer) ("
+          << be_idt << be_idt_nl 
           << "CORBA::Object_ptr obj" << be_uidt_nl
-          << ") = 0;" << be_uidt_nl;
-
+          << ") = 0;" << be_uidt_nl << be_nl;
+ 
       os->indent ();
 
       // generate the Any <<= and >>= operator declarations

@@ -56,8 +56,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // generate the ifdefined macro for  the _ptr type
       os->gen_ifdef_macro (node->flat_name (), "_ptr");
-
-
+      
+      
       // the following two are required to be under the ifdef macro to avoid
       // multiple declarations
 
@@ -99,7 +99,17 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // now the interface definition itself
       os->gen_ifdef_macro (node->flat_name ());
-
+      
+      if (!node->is_local ())
+	{
+	  // Forward class declaration
+	  *os << "// Forward Classes Declaration" << be_nl
+	      << "class " << node->base_proxy_impl_name () << ";" << be_nl
+	      << "class " << node->remote_proxy_impl_name () << ";" << be_nl
+	      << "class " << node->base_proxy_broker_name () << ";" << be_nl
+	      << "class " << node->remote_proxy_broker_name () << ";" << be_nl
+	      << be_nl;
+	}
       // now generate the class definition
       *os << "class " << be_global->stub_export_macro ()
           << " " << node->local_name ();
@@ -217,21 +227,48 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // the _interface_repository_id method
       *os << "virtual const char* _interface_repository_id (void) const;\n"
           << be_uidt_nl;
-
-      // generate the "protected" constructor so that users cannot instantiate
-      // us
-      *os << "protected:" << be_idt_nl
-          << node->local_name () << " (void);" << be_nl;
-
+      
+      if (!node->is_local ())
+	{
+	  // Add the Proxy Broker member variable.
+	  *os << "private:" << be_idt_nl
+	      << node->base_proxy_broker_name () << " *" << "the" << node->base_proxy_broker_name ()
+	      << "_;" << be_nl <<  be_uidt_nl;
+	}
+      *os << "protected:" << be_idt_nl;
+      if (!node->is_local ()) 
+	{
+	  // generate the "protected" constructor so that users cannot instantiate
+	  // us
+	  
+	  *os << node->local_name () << " (int collocated = 0);" << be_nl << be_nl;
+	  
+	  *os << "protected:" << be_idt_nl
+	      << "// This methods travese the inheritance tree and set the" << be_nl
+	      << "// parents piece of the given class in the right mode" << be_nl
+	      << "virtual void setup_collocation (int collocated);" << be_nl << be_nl;
+	}
+      else
+	*os << node->local_name () << " ();" << be_nl << be_nl;
+      
       // Local interfaces don't support stub objects.
-      if (! node->is_local ())
-        *os << node->local_name ()
-            << " (TAO_Stub *objref, " << be_idt << be_idt_nl
-            << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
-            << ");" << be_uidt_nl;
-
+      if (! node->is_local ()) 
+	{
+	  *os << node->local_name ()
+	      << " (" << be_idt << be_nl << "TAO_Stub *objref, " << be_nl
+	      << "CORBA::Boolean _tao_collocated = 0," << be_nl
+	      << "TAO_Abstract_ServantBase *servant = 0" <<  be_nl
+	      << ");" << be_uidt_nl << be_nl;
+	  
+	  // Friends declarations
+	  *os << "friend class " << node->remote_proxy_impl_name () << ";" << be_nl
+	      << "friend class " << node->thru_poa_proxy_impl_name () << ";" << be_nl
+	      << "friend class " << node->direct_proxy_impl_name () << ";" << be_uidt_nl << be_nl;
+	}
       // Protected destructor.
-      *os << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
+      *os << "virtual ~" << node->local_name () << " (void);" << be_nl;
+
+
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
@@ -242,8 +279,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // Generate the embedded RequestInfo classes per operation.
       // This is to be used by interceptors.
-      be_visitor_context ctx (*this->ctx_);
       be_visitor *visitor = 0;
+      be_visitor_context ctx (*this->ctx_);
+
       // Interceptor related classes.
       ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH);
       visitor = tao_cg->make_visitor (&ctx);
@@ -282,7 +320,46 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           delete visitor;
           visitor = 0;
         }
-
+      if (!node->is_local ())
+	{
+	  // Proxy Implementation Declaration
+	  visitor = 0;
+	  ctx = *this->ctx_;
+	  ctx.state (TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH);
+	  visitor = tao_cg->make_visitor (&ctx);
+	  
+	  if (!visitor || (node->accept (visitor) == -1))
+	    {
+	      delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for Proxy Broker classes failed\n"),
+                                -1);
+	    }
+	  delete visitor;
+	}
+      
+      if (!node->is_local ())
+	{
+	  // Proxy Broker Declaration
+	  visitor = 0;
+	  ctx = *this->ctx_;
+	  ctx.state (TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CH);
+	  visitor = tao_cg->make_visitor (&ctx);
+	  
+	  if (!visitor || (node->accept (visitor) == -1))
+	    {
+	      delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for Proxy Broker classes failed\n"),
+                                -1);
+	    }
+	  delete visitor;
+	}
+      
       os->gen_endif ();
 
       if (! node->is_local ())
@@ -304,9 +381,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
 
         }
-
+      
       node->cli_hdr_gen (I_TRUE);
     } // if !cli_hdr_gen
 
   return 0;
 }
+

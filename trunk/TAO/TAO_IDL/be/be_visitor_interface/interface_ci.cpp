@@ -71,11 +71,37 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flat_name (), "");
       *os << "ACE_INLINE" << be_nl;
       *os << node->name () << "::" << node->local_name () <<
-        " (TAO_Stub *objref, "
-          << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
-      *os << "  : CORBA_Object (objref, _tao_collocated)"
-          << be_nl;
-      *os << "{}" << be_nl;
+        " (" << be_idt_nl << "TAO_Stub *objref," << be_nl
+          << "CORBA::Boolean _tao_collocated," << be_nl 
+	  << "TAO_Abstract_ServantBase *servant" << be_nl
+	  << ")" // constructor 
+	  << be_nl;
+      *os << "  : CORBA_Object (objref, _tao_collocated, servant)" << be_nl;
+      *os << "{" << be_idt_nl
+	  << be_idt_nl // idt = 1
+	  << "this->setup_collocation (_tao_collocated);";
+      /*
+      if (node->n_inherits () > 0)
+	{
+	  for (int i = 0; i < node->n_inherits (); i++)
+	    {
+	      be_interface *inherited =
+		be_interface::narrow_from_decl (node->inherits ()[i]);
+	      be_decl *scope = 0;
+	      if (inherited->is_nested ())
+		{
+		  // inherited node is used in the scope of "node" node
+		  scope =
+		    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+		}
+	      
+	      *os << "this->" << inherited->local_name ()<< "::setup_collocation" << " (_tao_collocated);" << be_nl;
+	   } 
+	    
+	}
+      */
+      *os << be_uidt_nl // idt = 0
+	  <<"}" << be_nl;
       os->gen_endif ();
     }
 

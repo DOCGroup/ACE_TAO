@@ -68,5 +68,11 @@
 #include "be_visitor_operation/interceptors_exceptlist.cpp"
 #include "be_visitor_operation/interceptors_info_rettype.cpp"
 #include "be_visitor_operation/interceptors_result.cpp"
+#include "be_visitor_operation/base_proxy_impl_ch.cpp"
+#include "be_visitor_operation/proxy_impl_xh.cpp"
+#include "be_visitor_operation/inv_arglist.cpp"
+#include "be_visitor_operation/remote_proxy_impl_cs.cpp"
+#include "be_visitor_operation/thru_poa_proxy_impl_ss.cpp"
+#include "be_visitor_operation/direct_proxy_impl_ss.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")

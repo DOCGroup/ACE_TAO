@@ -11,8 +11,8 @@
 #define _TAO_IDL_ORIG_MESSAGINGS_H_
 
 #include "ace/pre.h"
-
 #include "tao/orbconf.h"
+#include "tao/ORB_Core.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -21,6 +21,9 @@
 #include "Collocated_Object.h"
 #include "tao/TimeBaseS.h"
 #include "tao/MessagingC.h"
+#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
+#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +40,11 @@ TAO_NAMESPACE  POA_Messaging
 {
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
-
+  
+  // Forward Classes Declaration
+  class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
+  class _TAO_ReplyHandler_Direct_Proxy_Impl;
+  class _TAO_ReplyHandler_Strategized_Proxy_Broker;
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
   class TAO_PortableServer_Export ReplyHandler :  public virtual PortableServer::ServantBase
@@ -94,59 +101,89 @@ TAO_NAMESPACE  POA_Messaging
   };
 
 
-#if !defined (_MESSAGING_REPLYHANDLER___THRU_POA_COLLOCATED_SH_)
-#define _MESSAGING_REPLYHANDLER___THRU_POA_COLLOCATED_SH_
-
-  class TAO_PortableServer_Export _tao_thru_poa_collocated_ReplyHandler     : public virtual ::Messaging::ReplyHandler
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_PortableServer_Export _TAO_ReplyHandler_Strategized_Proxy_Broker : public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Broker
   {
-  public:
-    _tao_thru_poa_collocated_ReplyHandler (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
+  public: 
+    _TAO_ReplyHandler_Strategized_Proxy_Broker (void);
 
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
+    virtual ~_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
 
-      };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_REPLYHANDLER___DIRECT_COLLOCATED_SH_)
-#define _MESSAGING_REPLYHANDLER___DIRECT_COLLOCATED_SH_
-
-  class TAO_PortableServer_Export _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler, public virtual TAO_Collocated_Object
-  {
-  public:
-    _tao_direct_collocated_ReplyHandler (
-        ReplyHandler_ptr  servant,
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-
-    ReplyHandler_ptr _get_servant (void) const;
-
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-
-
+    virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl &select_proxy (
+      ::Messaging::ReplyHandler *object,
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    );
+  
   private:
-    ReplyHandler_ptr servant_;
+  
+  // Helper methods that takes care to create the proxy
+  // as soon as their use is necessary.
+    void create_proxy (
+      TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+  
+  private:
+    
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::Messaging::_TAO_ReplyHandler_Proxy_Impl
+     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
+    
+    ACE_SYNCH_MUTEX mutex_;
+  };
+  
+  // This funxtion is used to get an handle to the unique instance
+  // of the Strategized Proxy Broker that is available for a given
+  // interface.
+  
+  _TAO_ReplyHandler_Strategized_Proxy_Broker *the_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
+  
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+//                    ThruPOA  Impl. Declaration
+//
+
+class TAO_PortableServer_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl : 
+  public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl,
+  public virtual TAO_ThruPOA_Object_Proxy_Impl
+{
+public:
+  ~_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void);
+  
   };
 
 
-#endif /* end #if !defined */
+//
+//                ThruPOA  Proxy Impl. Declaration
+///////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+//                    Direct  Impl. Declaration
+//
+
+ class TAO_PortableServer_Export _TAO_ReplyHandler_Direct_Proxy_Impl : 
+  public virtual Messaging::_TAO_ReplyHandler_Proxy_Impl,
+  public virtual TAO_Direct_Object_Proxy_Impl
+ {
+ public:
+   ~_TAO_ReplyHandler_Direct_Proxy_Impl (void);
+   
+ };
+
+//
+//                Direct  Proxy Impl. Declaration
+///////////////////////////////////////////////////////////////////////
+
 
 
 #if defined (ACE_HAS_USING_KEYWORD)
