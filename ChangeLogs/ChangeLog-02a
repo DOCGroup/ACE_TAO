@@ -1,3 +1,29 @@
+Mon Apr 16 16:13:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.h (ACE_Configuration::root_section): Made this
+          method 'const'; makes today's changes easier to deal with.
+
+        * ace/Configuration_Import_Export.cpp (string_has_white_space):
+        * ace/Configuration.cpp (operator==): Replaced 'true' with 1 and
+          'false' with 0; replace const_cast<> with ACE_const_cast (),
+          per docs/ACE-guidelines.html, and IBM C++ :-)  Also, use two
+          non-const local variables instead of const_casting 'this' and
+          'rhs' on every use.
+          Made ACE_Configuration::root_section (void) const.
+
+        * ace/ace.icc: This was an early hack attempt to use library or DLL
+          build for Visual Age C++ 4. It is now the Visual Age C++ 5
+          configuration for building ACE on AIX. The ace-dll.icc and
+          ace-lib.icc are stilla round for Visual Age C++ 4 users, but may
+          not work and will be removed in a future ACE release. This
+          config is for Visual Age C++ 5 only and can/will be extended to
+          do subset builds as well as debug/optimize/etc variants.
+
+        * bin/make_pretty.pl: Pick out AIX ld errors correctly.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Note HP problem report
+          number and disposition for inability to use -AA and +noeh together.
+
 Mon Apr 16 12:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp: Limited the concurrent connections
