@@ -1,3 +1,9 @@
+Thu Feb 18 17:28:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/dynany_test/Makefile:
+	  Fixed a line that needed to start with a tab. Thanks
+	  to Håkan Källberg for reporting this.
+
 Thu Feb 18 00:50:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/MProfile.cpp: Need to include MProfile.i here when not
@@ -85,9 +91,9 @@ Tue Feb 16 16:45:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Feb 15 21:22:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO_IDL/be/be-visitor_argument/post_upcall_ss.cpp:
-        * TAO_IDL/be/be-visitor_argument/pre_docall_cs.cpp:
-        * TAO_IDL/be/be-visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
           Some g++ unused arg warning fixes I overlooked checking in.
 
 Mon Feb 15 17:24:52 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
