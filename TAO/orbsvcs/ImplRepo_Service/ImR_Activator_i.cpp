@@ -18,7 +18,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_netdb.h"
-
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (ImplRepo_Service,
            ImR_Activator_i,

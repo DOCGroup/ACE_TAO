@@ -6,6 +6,7 @@
 #include "TAO_UTO.h"
 
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_sys_time.h"
 
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,

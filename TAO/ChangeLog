@@ -1,3 +1,32 @@
+Wed Nov  5 04:08:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Event_Comm/Event_Comm_i.h:
+        * examples/Logging/Logging_Test_i.cpp:
+        * examples/OBV/Typed_Events/Client_i.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Starter.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvscs/PSS/PSDL_Scope.cpp:
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory.h:
+        * tests/Blocking_Sync_None/client.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Reliable_Oneways/client.cpp:
+          Added #includes needed due to subsetting in ACE.
+
 Tue Nov  4 21:08:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_argument.cpp:
