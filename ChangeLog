@@ -1,13 +1,21 @@
+Wed Sep 15 15:17:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_string.h:
+
+	  Changed preprocessor conditional for the declaration of the wide
+	  character version of strtok_r_emulation() to use ACE_WCHAR and
+	  ACE_LACKS_WCSTOK instead of ACE_HAS_REENTRANT_FUNCTIONS.
+
 Wed Sep 15 11:41:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/ACE.cpp (set_handle_limit): Removed the 
-  
+	* ace/ACE.cpp (set_handle_limit): Removed the
+
 	  ACE_NOTREACHED (return 0);
-	  
+
 	  and replaced it with
-	  
+
 	  return 0;
-	  
+
 	  Thanks to Martin Corino <mcorino@remedy.nl> for reporting this.
 
 Wed Sep 15 10:46:07 2004  Dale Wilson  <wilson_d@ociweb.com>
