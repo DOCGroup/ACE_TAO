@@ -298,6 +298,9 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -776,6 +779,9 @@ DEP_CPP_HTTP_S=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\

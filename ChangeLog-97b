@@ -13,6 +13,25 @@ Wed Nov 19 04:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Nov 19 01:55:06 1997    <irfan@TWOSTEP>
 
+	* ace/WFMO_Reactor.cpp (resume_handler_i, suspend_handler_i,
+ 	  unbind_i): Since things don't happen immediately in the
+ 	  WFMO_Reactor world, we must make sure that this request is not a
+ 	  duplicate.  If so we must ignore it.
+
+	* ace/Asynch_Acceptor.cpp (open): Fixed addr type mismatch problem.
+
+	* tests/UPIPE_SAP_Test.cpp (main): Make sure to close the socket
+ 	  in ACE_UPIPE_Acceptor.
+
+	* tests/SPIPE_Test.cpp (server): Make sure to close the socket in
+ 	  ACE_SPIPE_Acceptor.
+
+	* tests/SOCK_Test.cpp (spawn): Make sure to close the socket in
+ 	  ACE_SOCK_Acceptor.
+
+	* tests/Reactor_Notify_Test.cpp (Supplier_Task): Make sure to
+ 	  close the pipe down.
+
 	* tests/Process_Strategy_Test.cpp (handle_input): Fixed ACE_DEBUG
  	  statement to pass the correct number of arguments.
 

@@ -231,6 +231,8 @@ spawn (void)
 #else
       ACE_ERROR ((LM_ERROR, "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */	
+
+      peer_acceptor.close ();
     }
 }
 

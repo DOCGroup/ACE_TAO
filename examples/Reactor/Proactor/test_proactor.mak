@@ -290,6 +290,7 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -355,6 +356,7 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -409,6 +411,7 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -434,6 +437,8 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -481,6 +486,9 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -535,6 +543,7 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -560,6 +569,8 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -607,6 +618,9 @@ DEP_CPP_TEST_M=\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
