@@ -1,3 +1,13 @@
+Fri Dec  1 14:44:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/ifrfwd.h:
+	* tao/InterfaceC.h:
+	* tao/diffs/InterfaceC.h.diff:
+
+	  Had to move enum definitions from InterfaceC.h to corbafwd.h,
+	  and #inlucde corbafwd.h in ifrfwd.h, to make sunCC happy.
+
 Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.h:
