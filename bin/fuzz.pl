@@ -19,7 +19,7 @@ use Getopt::Std;
 # - not setting up the release configs correctly in dsp files
 # - Guards in .h files
 # - no global functions
-# - other commit_check checks, missing LF at eof, tabs, trailing spaces.
+# - other commit_check checks, tabs, trailing spaces.
 #
 # And others in ACE_Guidelines and Design Rules
 #
@@ -418,6 +418,27 @@ sub check_for_pre_and_post ()
 }
 
 
+# Check doxygen @file comments
+sub check_for_mismatched_filename () 
+{
+    print "Running doxygen \@file test\n";
+    foreach $file (@files_h, @files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (m/\@file\s*([^\s]*)/ && $file !~ m/$1$/) {
+                    print_error ("\@file mismatch in $file");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 #our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m);
@@ -461,6 +482,7 @@ check_for_line_length () if ($opt_l >= 8);
 check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
+check_for_mismatched_filename () if ($opt_l >= 2);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
