@@ -1,3 +1,10 @@
+Wed Jun 30 15:39:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp;
+	  Removed ACE_NOTREACHED macros and subsituted 'return xxx' statement.
+	  Also removed return statement from catch block so as not to
+	  confuse some compilers.
+
 Wed Jun 30 15:04:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Servant_Manager.cpp: Removed
