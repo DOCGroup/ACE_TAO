@@ -20,6 +20,7 @@ IOR_Multicast::IOR_Multicast (char * ior,
 			      const char *mcast_addr)
   : mcast_addr_ (port, mcast_addr),
     ior_ (ior),
+    response_addr_((u_short) 0),
     response_ (response_addr_)
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
