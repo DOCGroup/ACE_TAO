@@ -111,7 +111,9 @@ class ACE_Thread_Control;
 // problems on g++/VxWorks/i960 with -g.  Note that
 // ACE_Thread_Manager::THR_FUNC is only used internally in
 // ACE_Thread_Manager, so it's not useful for anyone else.
-typedef int (ACE_Thread_Manager::*THR_FUNC)(ACE_Thread_Descriptor *, int);
+#if defined (VXWORKS)
+typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+#endif /* VXWORKS */
 
 class ACE_Export ACE_Thread_Manager
   // = TITLE
@@ -122,6 +124,10 @@ class ACE_Export ACE_Thread_Manager
 {
 friend class ACE_Thread_Control;
 public:
+#if !defined (VXWORKS)
+  typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+#endif /* !VXWORKS */
+
   // = Initialization and termination methods.
   ACE_Thread_Manager (size_t size = 0);
   // <size> is currently unused.
@@ -419,13 +425,13 @@ protected:
   // This call updates the TSS cache if possible to speed up
   // subsequent searches.
 
-  int apply_task (ACE_Task_Base *task, THR_FUNC, int  = 0);
+  int apply_task (ACE_Task_Base *task, ACE_THR_MEMBER_FUNC, int  = 0);
   // Apply <func> to all members of the table that match the <task>
 
-  int apply_grp (int grp_id, THR_FUNC, int  = 0);
+  int apply_grp (int grp_id, ACE_THR_MEMBER_FUNC, int  = 0);
   // Apply <func> to all members of the table that match the <grp_id>.
 
-  int apply_all (THR_FUNC, int  = 0);
+  int apply_all (ACE_THR_MEMBER_FUNC, int  = 0);
   // Apply <func> to all members of the table.
 
   int join_thr (ACE_Thread_Descriptor *tda);
