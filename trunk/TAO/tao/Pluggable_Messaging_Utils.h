@@ -16,10 +16,17 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
+// @@ Bala: blank lines don't cost you any money, please don't try to
+// save them, i can borrow you some if you need them ;-)
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
 #include "tao/IOPC.h"
 
+// @@ Bala: It is not clear that all protocol would use a request id
+// or that they will be able to pass a service context around.  OTOH
+// we can always leave the svc_ctx empty for protocols that don't
+// support it.  And use an internal table to map request ids to
+// whatever underlying request token is used.
 class TAO_Export TAO_Pluggable_Connector_Params
 {
   // = TITLE
@@ -38,10 +45,20 @@ public:
   CORBA::ULong request_id_;
   // The request id for which the reply we (connector) has received 
 
+  // @@ Bala: this is (again) an GIOPism (to coin a word).  Other
+  // protocol may choose to send different *messages* instead.
   CORBA::ULong reply_status_;
   // The reply status
 };
 
+// @@ Bala: Please do not polute the global namespace, and this is C++
+// not C, you can say
+//      enum TAO_Foo { bar, baz, qux };
+// @@ Bala: this is a GIOPism too, there is no such thing as locate
+// request in HTTP (the basis for SOAP and XIOP), i don't know about
+// HTTP-NG, but i wouldn't be surprised if it had.  Furthermore, some
+// very influential people (Michi) is arguing against it in the OMG.
+//
 typedef enum HeaderType
 {
   // = TITLE
@@ -51,7 +68,10 @@ typedef enum HeaderType
   TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER
 }TAO_Pluggable_Header_Type;
 
-
+// @@ Bala: This is a hopeless GIOPism. it should not be exposed in
+// the Pluggable Messaging generic classes.  What we should think
+// about is what *methods* are required to expose this functionality
+// to the rest of the ORB.
 typedef enum MessageType
 {
   // = DESCRIPTION
@@ -71,6 +91,7 @@ typedef enum MessageType
   TAO_PLUGGABLE_MESSAGE_FRAGMENT = 7             
 }TAO_Pluggable_Message_Type;
 
+// @@ Bala: This is a hopeless GIOPism.
 typedef enum Exception_Types
 {
   // = DESCRIPTION

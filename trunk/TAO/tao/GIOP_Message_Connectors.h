@@ -16,6 +16,10 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
+
+// @@ Bala: Please be consisten about the macros, if you are not,
+// somebody will use the same one in another file, it is hard to find
+// them and change them automatically, etc. etc.
 #ifndef TAO_GIOP_MESSAGE_CONNECTORS_
 #define TAO_GIOP_MESSAGE_CONNECTORS_
 #include "tao/GIOP_Message_Base.h"
@@ -96,6 +100,11 @@ private:
   // Our minor and major versions
 };
 
+// @@ Bala: this is *COMPLETELY* backwards, this way we have to change
+// all the classes everytime a new version comes out. We also may want
+// to compile TAO with only support for GIOP 1.1 (say because this is
+// an embedded application that does not need the cool GIOP 1.1 and
+// 1.2 features)!
 class TAO_Export TAO_GIOP_Message_Connector_10:
   public TAO_GIOP_Message_Connector_11
 {

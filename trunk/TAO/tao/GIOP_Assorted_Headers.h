@@ -20,6 +20,10 @@
 #define TAO_GIOP_ASSORTED_HEADERS_H
 #include "tao/GIOPC.h"
 
+// @@ Bala, please pick the names of your files better.
+//    First there is only one header here.  But GIOP_Headers is better
+//    (i.e. sounds more profesional) than 'assorted' (that sounds like
+//    a recipe for vegetable soup)
 
 class TAO_GIOP_Locate_Request_Header
 {

@@ -43,6 +43,7 @@
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
+// @@ Bala: the no-op comments again.
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (void)
 {
   //no-op
@@ -62,7 +63,13 @@ TAO_GIOP_Message_Base::
   msg.reset ();
 
   TAO_GIOP_Message_Type type = TAO_GIOP_MESSAGERROR;
-  
+
+  // @@ Bala: notice that you have to do this translation between the
+  // 'pluggable' types and the GIOP types (there are more efficient
+  // ways to do this, btw).
+  // But only GIOP implements exactly these messages, does that sound
+  // really like a good idea?
+
   // First convert the Pluggable type to the GIOP specific type. 
   switch (t)
     {
@@ -131,6 +138,8 @@ TAO_GIOP_Message_Base::
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &cdr)
 {
+  // @@ Bala: Why not do this right, the application should call the
+  // methods below directly!
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:

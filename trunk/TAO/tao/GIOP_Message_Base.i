@@ -43,7 +43,13 @@ TAO_GIOP_Message_Base::message_type_offset (void)
 
 #endif /*if 0*/
 
-
+// @@ Bala: this is a virtual method. There are very few circumstances
+// where the compiler is able to optimize this call.  And there are
+// even few compilers that actually implement that optimization.
+// Furthermore, many compilers cannot inline functions this complex.
+// Finally, you may want to move the debugging messages to helper
+// functions, so there is less coupling and the header files are
+// lighter.
 ACE_INLINE int
 TAO_GIOP_Message_Base::parse_magic_bytes (
   TAO_GIOP_Message_State  *state) 
@@ -82,6 +88,9 @@ TAO_GIOP_Message_Base::parse_magic_bytes (
   return 0;
 }
 
+// @@ Bala: please look at the implementation of ACE_DEBUG and think
+// about how complex this method would be if inlined, there is no way
+// that the compiler can actually inline it!
 ACE_INLINE int
 TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
 {

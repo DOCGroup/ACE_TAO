@@ -19,7 +19,11 @@
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Assorted_Headers.h"
 
-
+// @@ Bala: do we want to have separate classes for the server side
+//    and client side?  IMHO not, with bi-directional connections the
+//    differences will be completely blurred.
+//    Please think about designs that do not require separate state
+//    objects, a good side effect: that should reduce code size...
 class TAO_GIOP_Message_Accept_State
 {
   // = TITLE
@@ -28,6 +32,7 @@ class TAO_GIOP_Message_Accept_State
   // = DESCRIPTION
   //   An abstract base class for different versions of GIOP. This is
   //   similar to the base class in the strategy pattern
+  //   @@ Bala: Is it an strategy or not!?  
   //  
 public:
 
@@ -56,6 +61,11 @@ public:
  private:
 };
 
+// @@ Bala: again you have the inheritance reversed!  A 1.1 server (or
+//    client) must support 1.0, but not vice-versa.
+// @@ Bala: a physical design issue: if the protocol is truly
+//    pluggable then you should be able to (and you should) put the
+//    classes for each protocol in separate files.
 class TAO_GIOP_Message_Accept_State_11 :
   public TAO_GIOP_Message_Accept_State
 {

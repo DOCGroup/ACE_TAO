@@ -22,10 +22,16 @@
 #define TAO_GIOP_MESSAGE_H
 
 #include "tao/Pluggable_Messaging.h"
+// @@ Bala: Please try not to #include stuff too many times:
+//    GIOP_Utils.h includes Pluggable_Messaging already.
 #include "tao/GIOP_Utils.h"
+
+// @@ Bala: I bet you only need this file in the .cpp file, not in the
+//    .h file!
 #include "tao/debug.h"
 
-
+// @@ Bala: we put all this stuff in a single line.  I hate it too,
+//    but the tools that generate man pages get confused otherwise.
 class TAO_Export TAO_GIOP_Message_Base :
   public TAO_Pluggable_Messaging_Interface
 {
@@ -85,10 +91,15 @@ protected:
   // are along the critical path such fancy stuff results in reduced
   // performance. But let it me here till we get to a time where in we
   // are forced to use these methods
+  // @@ Bala: we will never need this, right?  Each protocol knows how
+  //    to parse its messages, right?
+
   const size_t header_len (void);
   // This will give the size of the header for different versions of
   // GIOP. 
-  
+
+  // @@ Bala: it makes *NO SENSE* to return const size_t! and some
+  // compliers hate it...
   const size_t message_size_offset (void);
   // This will give the message_size offset as specified by different
   // versions of GIOP

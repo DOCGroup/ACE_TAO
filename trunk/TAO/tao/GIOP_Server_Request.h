@@ -22,6 +22,9 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
+// @@ Bala: there is a reasons why the rest of the #includes are after
+// the pragma once, think about it.
+
 //#include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_Base.h"
 

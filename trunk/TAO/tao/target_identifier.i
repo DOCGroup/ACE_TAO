@@ -13,6 +13,9 @@ ACE_INLINE void
 TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
 {
   this->specifier_ = TAO_Target_Specification::Key_Addr;
+  // @@ Bala: this is a good recipe for a crash, if the <key> was on
+  //    the stack or is otherwise destroyed then you are in big
+  //    trouble.
   this->u_.object_key_ = ACE_const_cast (TAO_ObjectKey *,
                                          &key);
 }

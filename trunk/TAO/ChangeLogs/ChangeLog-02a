@@ -1,3 +1,24 @@
+Fri Mar 17 14:20:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/GIOP_Assorted_Headers.h:
+	* tao/GIOP_Message_Accept_State.h:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Connectors.h:
+	* tao/GIOP_Message_Connectors.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Pluggable_Messaging_Utils.i:
+	* tao/Pluggable_Messaging_Utils.cpp:
+	* tao/operation_details.h:
+	* tao/target_identifier.h:
+	* tao/target_identifier.i:
+	* tao/target_identifier.cpp:
+	  Made an overall review of Bala's coding style and basic
+	  design. Left many @@ comments for him.
+
 Fri Mar 17 14:17:00 2000  Shawn Hannan  <hannan@cs.wustl.edu>
 
 	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
