@@ -1,3 +1,11 @@
+Thu Jul 26 22:41:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+       * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+
+         Make TAO_FlowConnection and TAO_MMDevice virtually
+         inherit TAO_PropertySet.  Thanks to Rob Ruff <rruff@scires.com> 
+         for pointing this out.
+
 Thu Jul 26 21:48:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/mpeg/*: REMOVED
