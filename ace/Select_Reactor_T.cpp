@@ -964,8 +964,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Val
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout = 
-    this->timer_queue_->calculate_timeout (&max_wait_time,
+  ACE_Time_Value *max_wait_timep = ACE_const_cast (ACE_Time_Value *,
+                                                   &max_wait_time);
+  ACE_Time_Value *this_timeout =
+    this->timer_queue_->calculate_timeout (max_wait_timep,
                                            &timer_buf);
   u_long width = (u_long) this->handler_rep_.max_handlep1 ();
 
