@@ -277,7 +277,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 {
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
+  TAO_FTRTEC::Log(3, "Received request %s\n", operation.in());
 }
 
 void

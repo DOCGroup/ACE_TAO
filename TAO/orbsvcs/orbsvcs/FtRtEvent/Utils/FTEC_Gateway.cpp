@@ -345,7 +345,7 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
     RtecEventChannelAdmin::AlreadyConnected,
     RtecEventChannelAdmin::TypeError))
 {
-
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushSupplier::connect_push_consumer\n");
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -369,6 +369,7 @@ void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_AR
 void FTEC_Gateway_ProxyPushSupplier::suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushSupplier::suspend_connection\n");
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->suspend_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
@@ -378,6 +379,7 @@ void FTEC_Gateway_ProxyPushSupplier::suspend_connection (ACE_ENV_SINGLE_ARG_DECL
 void FTEC_Gateway_ProxyPushSupplier::resume_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushSupplier::resume_connection\n");
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->resume_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
@@ -427,6 +429,7 @@ void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
     ACE_THROW_SPEC ((CORBA::SystemException,
     RtecEventChannelAdmin::AlreadyConnected))
 {
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushConsumer::connect_push_supplier\n");
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos ACE_ENV_ARG_PARAMETER);
@@ -436,7 +439,7 @@ void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
 void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushSupplier::disconnect_push_consumer\n");
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer\n");
 
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
