@@ -335,9 +335,8 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport * /*transport*/)
 
           return this->message_state_.is_complete (this->current_buffer_);
         }
-#if 1
-      ACE_UNUSED_ARGG (transport);
-#else
+
+#if 0
       // @@ This is the ultimate hack for SHMIOP and related protocols
       // @@ that uses the reactor for signalling rather than for data
       // @@ transfer. This hack was done in the at the last minute for
