@@ -1,3 +1,8 @@
+Tue Jul 06 22:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added explicit
+          template instantiations for auto_ptr classes.
+
 Tue Jul  6 16:54:32 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp:
