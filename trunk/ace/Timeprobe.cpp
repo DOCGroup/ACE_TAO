@@ -22,10 +22,6 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
     max_size_ (size),
     current_size_ (0)
 {
-  // This will calibrate the High_Res_Timers
-  ACE_High_Res_Timer calibrator;
-  ACE_UNUSED_ARG (calibrator);
-
   void *space = this->allocator_->malloc ((sizeof (ACE_timeprobe_t)) * this->max_size_);
   this->timeprobes_ = new ((ACE_timeprobe_t *) space) ACE_timeprobe_t[this->max_size_];
 
@@ -65,11 +61,11 @@ ACE_Timeprobe<ACE_LOCK>::timeprobe (u_long event)
   this->current_size_++;
 
 #if defined (VMETRO_TIME_TEST) && (VXWORKS)
-      
+
   // If we are using the VMETRO board to get time samples, then write
   // to the other boards VME address.
   *this->current_slot_vme_address_ = event;
-      
+
 #endif /* VMETRO_TIME_TEST && VXWORKS */
 }
 
@@ -140,10 +136,10 @@ ACE_Timeprobe<ACE_LOCK>::print_times (void)
 
   for (u_long i = 1; i < this->current_size_; i++)
     {
-      ACE_hrtime_t time_difference = 
+      ACE_hrtime_t time_difference =
         this->timeprobes_[i].time_ - this->timeprobes_[i-1].time_;
 
-      ACE_UINT32 elapsed_time_in_micro_seconds = 
+      ACE_UINT32 elapsed_time_in_micro_seconds =
         (ACE_UINT32) (time_difference / ACE_High_Res_Timer::global_scale_factor ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -168,7 +164,7 @@ ACE_Timeprobe<ACE_LOCK>::find_description_i (u_long i)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
           next_event_descriptions++;
-          
+
           if (this->timeprobes_[i].event_.event_number_ < (*next_event_descriptions).minimum_id_)
             break;
         }
@@ -202,7 +198,7 @@ ACE_Timeprobe<ACE_LOCK>::sort_event_descriptions_i (void)
 }
 
 template <class Timeprobe>
-ACE_Function_Timeprobe<Timeprobe>::ACE_Function_Timeprobe (Timeprobe &timeprobe, 
+ACE_Function_Timeprobe<Timeprobe>::ACE_Function_Timeprobe (Timeprobe &timeprobe,
                                                            u_long event)
   : timeprobe_ (timeprobe),
     event_ (event)
