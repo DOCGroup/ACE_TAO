@@ -1,3 +1,27 @@
+Wed Dec  3 15:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Misc/basic_perf.bor:
+	* performance-tests/Misc/childbirth_time.bor:
+	* performance-tests/Misc/context_switch_time.bor:
+	* performance-tests/Misc/preempt.bor:
+	* performance-tests/Misc/test_mutex.bor:
+	* performance-tests/Misc/test_naming.bor:
+	* performance-tests/Misc/test_singleton.bor:
+	* netsvcs/build.bor:
+	* include/makeinclude/build_example.bor:
+	* include/makeinclude/build_exe.bor:
+	* examples/Timer_Queue/Async_Timer_Queue_Test.bor:
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.bor:
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.bor:
+	* examples/Smart_Pointers/gadget_test.bor:
+	* examples/Smart_Pointers/widget_test.bor:
+	* examples/Reactor/Multicast/client.bor:
+	* examples/Reactor/Multicast/server.bor:
+	* examples/Export/export_dll.bor:
+	* examples/Export/test.bor:
+	* apps/build.bor:
+	  Added missing Id tag
+
 Wed Dec  3 09:48:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
