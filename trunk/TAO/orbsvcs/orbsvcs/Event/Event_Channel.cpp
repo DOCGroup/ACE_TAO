@@ -576,8 +576,8 @@ void
 ACE_Push_Consumer_Proxy::disconnect_push_supplier (CORBA::Environment &_env)
 {
   ACE_TIMEPROBE_PRINT;
-  this->consumer_module_->disconnecting (this, _env);
   this->push_consumer_ = 0;
+  this->consumer_module_->disconnecting (this, _env);
 }
 
 void

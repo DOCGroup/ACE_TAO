@@ -6,8 +6,16 @@ Fri Jul 03 11:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul 03 11:34:38 1998  Carlos O'Ryan  <coryan@JIG>
 
-        * orbsvcs/tests/EC_Throughput/Makefile:
-          Added new object files to the Makefile.
+	* orbsvcs/tests/EC_Throughput/Makefile: 
+	  Added new object files to the Makefile.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  Protected against null publication or subscription list.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Removed a possible race condition in consumer
+	  disconnections. Thanks to Thomas Venturella <tventurell@mdc.com>
+	  for the last two fixes.
 
 Fri Jul 03 08:40:28 1998  Steve Huston  <shuston@riverace.com>
 
