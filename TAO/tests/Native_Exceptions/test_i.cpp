@@ -24,6 +24,8 @@ Simple_Server_i::test_raise (CORBA::Long x)
 # if defined (WIN32) || defined (__HP_aCC)
   // Make HP-UX's aCC happy
   return x;
+#else /*WIN32 & HP */
+  ACE_UNUSED_ARG (x);
 #endif /*WIN32 & HP */
 }
 
