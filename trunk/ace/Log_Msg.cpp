@@ -75,18 +75,19 @@ public:
 #else
   static void atexit (void);
 
-  static void insert (ACE_Log_Msg*);
-  static int remove (ACE_Log_Msg*);
-  // Remove returns true when the last ACE_Log_Msg instance has been
-  // deleted.
+  static void insert (ACE_Log_Msg *);
+  static int remove (ACE_Log_Msg *);
+  // Remove returns the number of ACE_Log_Msg instances remaining.
+  // When there are none left it returns 0.
 #endif /* VXWORKS */
 
 private:
   static ACE_Thread_Mutex *lock_;
 
-  // Holds a list of all logmsg instances.  instances_ requires global
-  // construction/destruction.  If that's a problem, could change it
-  // to a pointer and allocate it dynamically when lock_ is allocated.
+  // Holds a list of all <ACE_Log_Msg> instances.  <instances_>
+  // requires global construction/destruction.  If that's a problem,
+  // could change it to a pointer and allocate it dynamically when
+  // lock_ is allocated.
 #if !defined (VXWORKS)
   static ACE_Log_Msg_Set instances_;
 #endif /* VXWORKS */
@@ -132,14 +133,14 @@ ACE_Log_Msg_Manager::remove (ACE_Log_Msg *log_msg)
 {
   ACE_Log_Msg_Manager::instances_.remove (log_msg);
 
-  return !ACE_Log_Msg_Manager::instances_.size ();
+  return ACE_Log_Msg_Manager::instances_.size ();
 }
 
 void
 ACE_Log_Msg_Manager::atexit (void)
 {
   // The program is exiting, so delete all ACE_Log_Msg instances.
-  ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i (instances_);
+  ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i (ACE_Log_Msg_Manager::instances_);
 
   for (ACE_Log_Msg **log_msg;
        i.next (log_msg) != 0;
@@ -150,7 +151,8 @@ ACE_Log_Msg_Manager::atexit (void)
       // the following call to remove the node.
       i.advance ();
 
-      // Causes a call to ACE_Log_Msg_Manager::remove.
+      // Causes a call to <ACE_Log_Msg_Manager::remove> via the
+      // destructor of <ACE_Log_Msg>.
       delete *log_msg;
     }
 
@@ -196,9 +198,9 @@ ACE_Log_Msg::exists (void)
   ACE_Log_Msg *tss_log_msg = 0;
 
   // Get the tss_log_msg from thread-specific storage.  
-  return (	key_created_
-			&& ACE_OS::thr_getspecific(key_, (void **) &tss_log_msg) != -1
-			&& tss_log_msg);
+  return key_created_
+    && ACE_OS::thr_getspecific (key_, (void **) &tss_log_msg) != -1
+    && tss_log_msg;
 
 #endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #else 
@@ -454,30 +456,30 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 }
 
-ACE_Log_Msg::~ACE_Log_Msg()
+ACE_Log_Msg::~ACE_Log_Msg (void)
 {
-  // On VxWorks, there is no static Log_Msg_Set.  And, the program_name_ and
-  // local_host_ strings weren't duplicated, in order to avoid memory leaks,
-  // because this destructor can't tell when the last thread in the program
-  // exits.
+  // On VxWorks, there is no static Log_Msg_Set.  And, the
+  // <program_name_> and <local_host_> strings weren't duplicated, in
+  // order to avoid memory leaks, because this destructor can't tell
+  // when the last thread in the program exits.
 #if ! defined (VXWORKS)
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
   
-  // Last instance ?
-  if ( ACE_Log_Msg_Manager::remove(this) )
-  {
-	if(ACE_Log_Msg::program_name_) 
+  // If this is the last instance then cleanup.
+  if (ACE_Log_Msg_Manager::remove (this) == 0)
+    {
+      if (ACE_Log_Msg::program_name_) 
 	{
-		ACE_OS::free((void*)ACE_Log_Msg::program_name_);
-		ACE_Log_Msg::program_name_ = 0;
+	  ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
+	  ACE_Log_Msg::program_name_ = 0;
 	}
 
-	if(ACE_Log_Msg::local_host_) 
+      if (ACE_Log_Msg::local_host_) 
 	{
-		ACE_OS::free((void*)ACE_Log_Msg::local_host_);
-		ACE_Log_Msg::local_host_ = 0;
+	  ACE_OS::free ((void *) ACE_Log_Msg::local_host_);
+	  ACE_Log_Msg::local_host_ = 0;
 	}
-  }
+    }
 #endif /* ! VXWORKS */
 }
 
@@ -500,14 +502,13 @@ ACE_Log_Msg::open (const char *prog_name,
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 
-	  // Stop heap checking, block will be freed in
-	  // atexit
-	  {
-		  ACE_NO_HEAP_CHECK;
+      // Stop heap checking, block will be freed in <atexit>.
+      {
+	ACE_NO_HEAP_CHECK;
      
-		  ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
-	  }
-  }
+	ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+      }
+    }
 #endif /* VXWORKS */
 
   int status = 0;
