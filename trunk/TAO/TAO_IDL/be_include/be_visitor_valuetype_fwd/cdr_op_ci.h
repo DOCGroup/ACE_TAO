@@ -23,8 +23,8 @@
 //
 // ============================================================================
 
-#ifndef BE_VISITOR_INTERFACE_FWD_CDR_OP_CI_H
-#define BE_VISITOR_INTERFACE_FWD_CDR_OP_CI_H
+#ifndef BE_VISITOR_VALUETYPE_FWD_CDR_OP_CI_H
+#define BE_VISITOR_VALUETYPE_FWD_CDR_OP_CI_H
 
 class be_visitor_valuetype_fwd_cdr_op_ci : public be_visitor_decl
 {
@@ -49,4 +49,4 @@ public:
 
 };
 
-#endif /* BE_VISITOR_INTERFACE_FWD_CDR_OP_CI_H */
+#endif /* BE_VISITOR_VALUETYPE_FWD_CDR_OP_CI_H */

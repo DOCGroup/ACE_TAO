@@ -1,3 +1,29 @@
+Thu Apr 27 18:00:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype_fwd/interface_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/interface_fwd_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ci.cpp:
+	  Renamed interface_fwd_c?.cpp to valuetype_fwd_c?.cpp and updated
+	  the macros name used in them.
+
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype_fwd/valuetype_fwd_ci.h: Fixed
+	  incorrect macro names.
+
+	* TAO_IDL/be/be_visitor_root/root.cpp (visit_valuetype_fwd):  Some
+	  cosmetic changes.
+
+	* TAO_IDL/be/be_visitor_valuetype_fwd.cpp: Fixed the erroneous
+	  include filenames.  Althought they don't actually get compiled
+	  for now.
+
+	* TAO_IDL/be/be_visitor_factory.cpp (make_visitor): Added but
+	  *disabled* the states for TAO_VALUETYPE_FWD_CH and
+	  TAO_VALUETYPE_FWD_CI so we can simply turn them on when they are
+	  ready.
+
 Thu Apr 27 17:51:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OBV/Typed_Events/Event_Types.idl: I accidentally
