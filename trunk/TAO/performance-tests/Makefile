@@ -13,10 +13,10 @@
 DIRS  = Cubit \
         POA \
         Pluggable \
-        Thruput \
         RTCorba \
 	Latency \
-	Callback
+	Callback \
+	Throughput
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
