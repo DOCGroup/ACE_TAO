@@ -2,7 +2,7 @@ Wed Aug 19 20:34:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/README:
 	* ace/OS.h: Added a new macro directive
-	  "ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER".  By defining
+	  "ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER".  By defining
 	  this macro, it implicitly forces ACE to use non-static object
 	  manager and _NOT_ instantiating ACE_Object_Manager for you and
 	  assumes you will take the responsibility of instantiating
