@@ -25,29 +25,47 @@
     <CENTER><HR></CENTER>
     
     <CENTER>
-      <H4>Pending Tasks</H4>
+      <H4>Work in progress</H4>
     </CENTER>
 
-    <OL>
+    <UL>
       <LI>Support native C++ exceptions.
 	This entails several subtasks:
 	<UL>
-	  <LI>On the server side: catch any exceptions thrown by the
-	    user or the system, and then transform that into the
-	    proper <CODE>Reply</CODE> to the client side
-	  </LI>
-
-	  <LI>On the client side: when receiving an exception from the
-	    server we need to create the object with the right dynamic
-	    type. It is doable because the IDL compiler can give us a
-	    list of the possible exceptions that we will receive,
-	    it could augment this list with factory methods for the
-	    exception objects.  If the received exception is not on
-	    the list we just throw a CORBA::UNKNOWN_EXCEPTION
-	    exception.
+	  <LI><P>Create exceptions with the right dynamic type on the
+	      client side.
+	    </P>
+	    <P>For SII this should be simple:
+	      the stub give us a list of the
+	      possible user exceptions together with the factory methods
+	      to allocate an exception of each type;
+	      if the exception is not on that list we throw a
+	      <CODE>CORBA::UNKNOWN</CODE>.
+	      For DII we have to throw a
+	      <CODE>CORBA::UnknownUserException</CODE>;
+	      the user will receive the real exception inside an
+	      <CODE>Any</CODE> then and she will have to extract it
+	      either using the &gt&gt= operator or using the
+	      forthcoming <CODE>DynAny</CODE>.
+	    </P>
+	    <P>System exceptions are even easier, we always know how
+	      to create them.
+	    </P>
 	  </LI>
 
 	  <LI>Add the _raise() method to the exceptions...
+	  </LI>
+
+	  <LI>On the server side: catch any CORBA exceptions thrown by
+	    the upcall, and then transform that into the
+	    proper <CODE>Reply</CODE> to the client side.
+	    In the case of another C++ exception should we do
+	    something?
+	  </LI>
+
+	  <LI>On the client side, after creating the exception with
+	    the right dynamic type we must invoke
+	    <CODE>_raise()</CODE> on it.
 	  </LI>
 
 	  <LI>Support the alternative mapping with an environment
@@ -57,20 +75,61 @@
 
 	  <LI>Support the standard mapping, without the environment
 	    variable.
+	    <BR>Add throw specs to the required methods (the stub,
+	    skeleton, colocated classes, _tie classes, the
+	    implementations in tests and examples, uf).
+	    <BR>Should throw specs show up on the method
+	    <EM>definition</EM>?
+	  </LI>
+	  
+	  <LI>We <EM>could</EM> write portable server side code with
+	    any of the mappings above if we use a macro for the env
+	    argument, but the results are ugly:
+	    <PRE>
+// IDL
+interface Foo {
+  void bar (in long x);
+};
+
+// C++ 
+class Foo {
+  void bar (CORBA::Long x TAO_ENV_ARG)
+               TAO_THROW_SPEC ((CORBA::SystemException));
+};
+	    </PRE>
+	    note the missing comman before the TAO_ENV_ARG parameter.
 	  </LI>
 
-	  <LI><P>I haven't looked into how would we support exceptions
-	      with DII/DSI, the <CODE>ExceptionList</CODE> that is
-	      received passed in the <CODE>Request</CODE> only contains
-	      the <CODE>TypeCode</CODE> for each exception. Somehow the
-	      ORB needs to map this into methods to create the Exception
-	      objects with the right dynamic type.
-	      </P>
-	    <P>One possible solution is to register this methods with
-	      the ORB when the stub is created, this will avoid the
-	      use of statics that cause us so much pain</P>
+	  <LI>In general we will need to complete and debug the
+	    <CODE>TAO_TRY</CODE> macros;
+	    accepting their limitations when dealing with the
+	    alternative mapping, they are still useful;
+	    but we need some macro to encapsulate a common use of
+	    the CORBA::Environment argument: checking if it contains an
+	    exception and then returning and more flexibility wrt the
+	    argument name.
 	  </LI>
+
 	</UL>
+      </LI>
+
+    </UL>
+
+    <CENTER><HR></CENTER>
+    
+    <CENTER>
+      <H4>Pending Tasks</H4>
+    </CENTER>
+
+    <OL>
+      <LI><B>EC:</B> Automate EC multicast group usage. This probably
+	requires some kind of server that mantains the realtion
+	between event type/source and the mcast groups.
+      </LI>
+
+      <LI><B>EC:</B> Improve configuration support in the EC, give an
+	example of a single threaded EC, support different dispatching
+	strategies, etc.
       </LI>
 
       <LI>Add compiled marshalling
@@ -128,11 +187,6 @@
 	number of calls to ORB_Core_instance()
       </LI>
  
-      <LI>We need some TAO_TRY_* macro to encapsulate a common use of
-	the CORBA::Environment argument: checking if it contains an
-	exception and then returning.
-      </LI>
-
       <LI>The TypeCode internal (private) state needs locking, double
 	checked locking is needed to avoid excessive overhead, there
 	is potential for memory leaks if this locking is not used.
@@ -178,6 +232,22 @@
 	recursive) header dependencies in TAO.
       </LI>
 
+      <LI>Add &lt&lt and &gt&gt operators to the
+	<CODE>CORBA::Request</CODE> class, to simplify DII invocations
+	(this is an Orbix-sism).
+	The IDL compiler has to generate them for the user defined
+	types.
+      </LI>
+
+      <LI>Add the &lt&lt= and &gt&gt= operators for
+	<CODE>CORBA::TypeCode</CODE>
+      </LI>
+
+      <LI>Several helper structs for <CODE>Any</CODE> have to be
+	added, mainly: <CODE>to_object</CODE>, <CODE>to_wchar</CODE>,
+	<CODE>to_wstring</CODE> and their <CODE>from_</CODE>
+      </LI>
+
       <LI>Prepare the 1.0 release:
 	<UL>
 	  <LI>Integrate the compiled marshalling approach.
@@ -198,47 +268,49 @@
 	ACE_DEBUG output destination in all TAO applications
       </LI>
       
-      <LI>Purify, purify, purify the EC
+      <LI><B>EC:</B> Purify, purify, purify the EC
       </LI>
 
-      <LI>Quantify the EC.
+      <LI><B>EC:</B> Quantify the EC.
       </LI>
 
       <LI>Support several calls to ORB_init() on the same thread.
       </LI>
 
-      <LI>Call ORB_init() in the EC threads?
+      <LI><B>EC:</B> Call ORB_init() in the EC threads?
 	[The dispatching threads for Boeing]
       </LI>
 
-      <LI>Build an EC example that uses all the cool features
+      <LI><B>EC:</B> Build an EC example that uses all the cool features
 	(multiple ORBs on each process, collocated EC and Scheduling
 	service, Naming, etc.)
       </LI>
 
-      <LI>Extend the Concurrency Service (or create a new one) that
-	allow us to have global "barriers" to synchronize EC
+      <LI><B>EC:</B> Extend the Concurrency Service (or create a new
+	one) that allow us to have global "barriers" to synchronize EC
 	startup/shutdown.
       </LI>
 
-      <LI>Correlation in the EC has a bug [?]
+      <LI><B>EC:</B> Correlation in the EC has a bug [?]
 	Build regression tests for the EC features (filtering,
 	correlation, timers, etc).
       </LI>
 
-      <LI>Build a COS Event Channel on top of the RTEC Event Service.
+      <LI><B>EC:</B> Build a COS Event Channel on top of the RTEC
+	Event Service.
       </LI>
 
       <LI>Check what is failing in $TAO_ROOT/tests/CDR/tc.
       </LI>
 
-      <LI>Debug interval computation in Linux (and NT?)
+      <LI><B>EC:</B> Debug interval computation in Linux (and NT?)
+      </LI>
+
+      <LI><B>EC:</B> Improve support for fragmentation and reassembly
+	in the multicast implementation of the EC.
       </LI>
 
       <LI>Remove the uneeded methods from CORBA::Object
-      </LI>
-
-      <LI>Implement operation demuxing for clients.
       </LI>
 
       <LI>Study the CORBAlite spec and see how we could implement it
@@ -345,8 +417,8 @@
 	Configurator. We also may need to split the library.
       </LI>
 
-      <LI>Cleanup the IDL structures for subscriptions, publications,
-	etc. (in the EC).
+      <LI><B>EC:</B> Cleanup the IDL structures for subscriptions,
+	publications, etc. (in the EC).
       </LI>
 
       <LI>Resolve the Typecode::equal dilemma: is it structural or
@@ -367,18 +439,9 @@
 	</UL>
       </LI>
 
-      <LI>Automate EC multicast group usage. This probably requires
-	some kind of server that mantains the realtion between event
-	type/source and the mcast groups.
-      </LI>
 
-      <LI>Improve configuration support in the EC, give an example of
-	a single threaded EC, support different dispatching
-	strategies, etc.
-      </LI>
-
-      <LI>Use the Service_Configurator to dynamically load the EC
-	Module_Factory thus making it really configurable.
+      <LI><B>EC:</B> Use the Service_Configurator to dynamically load
+	the EC Module_Factory thus making it really configurable.
       </LI>
 
       <LI>The current scheme for Typecode (keeping a CDR buffer with
