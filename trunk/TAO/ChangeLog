@@ -1,3 +1,17 @@
+Wed Jul  2 22:17:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/default_server.cpp:
+          Changed raw usage of the C++ cast operators to use the
+          ACE_* variety, e.g., ACE_dynamic_cast instead of
+          dynamic_cast.  This clears up warnings on Windows when
+          RTTI is not turned on.
+
 Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * examples/AMH/Sink_Server/Sink_Server.mpc
