@@ -3,6 +3,7 @@
 
 project(JAWS) : acelib {
   sharedname = JAWS
+  dynamicflags = ACE_BUILD_SVC_DLL
   Source_Files {
     HTTP_Server.cpp
     HTTP_Config.cpp
