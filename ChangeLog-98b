@@ -1,3 +1,8 @@
+Tue Oct 27 21:54:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Updated the manual pages to reflect the latest APIs in
+	  the new release.
+
 Tue Oct 27 14:16:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/015/Recv.cpp : Changed atoi() to ACE_OS::atoi()
