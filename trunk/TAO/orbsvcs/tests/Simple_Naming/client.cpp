@@ -269,6 +269,9 @@ MT_Test::svc (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
+  if (name_service.in () == 0)
+    return -1;
+
   // Bind the object.
   ACE_TRY_EX (BIND)
     {
