@@ -605,18 +605,6 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 #endif
 }
 
-ACE_INLINE void *
-ACE_OS::sbrk (int brk)
-{
-  // ACE_TRACE ("ACE_OS::sbrk");
-
-#if defined (VXWORKS)
-  ACE_NOTSUP_RETURN (0);
-#else
-  ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
-#endif /* VXWORKS */
-}
-
 ACE_INLINE pid_t 
 ACE_OS::setsid (void)
 {
@@ -785,15 +773,6 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 
   //	ACE_TRACE ("ACE_OS::rand_r");
   ACE_NOTSUP_RETURN (-1);
-}
-
-ACE_INLINE void *
-ACE_OS::sbrk (int brk)
-{
-  ACE_UNUSED_ARG (brk);
-
-  //	ACE_TRACE ("ACE_OS::sbrk");
-  ACE_NOTSUP_RETURN (0);
 }
 
 ACE_INLINE pid_t 
@@ -2898,7 +2877,7 @@ ACE_INLINE struct servent *
 ACE_OS::getservbyname (const char *svc, const char *proto)
 {
   // ACE_TRACE ("ACE_OS::getservbyname");
-#if defined (VXWORKS)
+#if defined (ACE_LACKS_GETSERVBYNAME)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
@@ -3248,7 +3227,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 			 struct servent *result, ACE_SERVENT_DATA buf)
 {
   // ACE_TRACE ("ACE_OS::getservbyname_r");
-#if defined (VXWORKS)
+#if defined (ACE_LACKS_GETSERVBYNAME)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX)
@@ -4851,13 +4830,13 @@ ACE_INLINE int
 ACE_OS::access (const char *path, int amode)
 {
   // ACE_TRACE ("ACE_OS::access");
-#if defined (ACE_WIN32)  
-  ACE_OSCALL_RETURN (::_access (path, amode), int, -1);  
-#elif defined (VXWORKS)
+#if defined (ACE_LACKS_ACCESS)
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)  
+  ACE_OSCALL_RETURN (::_access (path, amode), int, -1);  
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
-#endif /* ACE_WIN32 && VXWORKS */
+#endif /* ACE_LACKS_ACCESS */
 }
 
 
@@ -6876,4 +6855,15 @@ ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 #endif /* !ACE_LACKS_SIGSET */
 }
 
+ACE_INLINE void *
+ACE_OS::sbrk (int brk)
+{
+  // ACE_TRACE ("ACE_OS::sbrk");
+
+#if defined (ACE_LACKS_SBRK)
+  ACE_NOTSUP_RETURN (0);
+#else
+  ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
+#endif /* VXWORKS */
+}
 
