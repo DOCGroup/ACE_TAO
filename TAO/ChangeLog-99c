@@ -1,4 +1,8 @@
-Wed Aug 11 13:31:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Aug 11 13:35:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Typecode_Constants.cpp (init): I didn't remove all
+	  ServiceContextList related code completely.  Thanks to Carlos
+	  for pointing this out.
 
 	* tao/UIOP_Transport.cpp (handle_client_input): Changed
 	  TAO_GIOP_ServiceContextList to IOP::ServiceContextList.  Thanks
