@@ -148,6 +148,14 @@
 // does not suit your need, you can disable the behavior by defining
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
 //
+// Defining ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER =1,
+// then ACE::init/fini are called automatically for you in DllMain when
+// ACE gets linked in/unlinked automatically.
+//
+// Defining ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER =1
+// automatically define ACE_HAS_NONSTATIC_OBJECT_MANAGER to 1 and define
+// ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
+//
 // MFC users: Since the main function is defined withing MFC library,
 // you'll need to instantiate the ACE_Object_Manager by doing either,
 //
@@ -155,7 +163,15 @@
 // 2. Instantiate Object Manager in your CApplication derived class
 //    and define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
 //
-#if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1) && \
+    defined (ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER) && \
+    (ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER == 1)
+#  if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#    undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#    define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
+#  endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+#  define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+#elif !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
 # undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
