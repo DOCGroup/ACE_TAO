@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author  Chris Gill <cdgill@cs.wustl.edu>
+ *  @author  Chris Gill
  */
 //=============================================================================
+
 
 #ifndef ACE_RB_TREE_H
 #define ACE_RB_TREE_H
@@ -88,15 +89,6 @@ public:
 
   /// Mutator for node's right child pointer
   void right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r);
-
-  void *operator new (size_t size, ACE_Allocator *allocator);
-  void operator delete (void *p, ACE_Allocator *allocator);
-
-public:
-  // No-op, to avoid accident use.
-  void *operator new (size_t size);
-  // No-op, to avoid accident use.
-  void operator delete (void *p);
 
 private:
 
