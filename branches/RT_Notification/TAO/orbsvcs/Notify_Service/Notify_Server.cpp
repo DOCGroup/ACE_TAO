@@ -2,7 +2,7 @@
 
 #include "Notify_Service.h"
 
-TAO_Notify_Service notify_service;
+TAO_Notify_Service_Driver notify_service;
 
 extern "C" void handler (int signum)
 {
