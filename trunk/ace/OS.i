@@ -4766,6 +4766,10 @@ ACE_OS::thr_setconcurrency (int hint)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setconcurrency (hint), 
 				       ace_result_), 
 		     int, -1);
+#elif defined (ACE_HAS_IRIX62_THREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setconcurrency (hint), 
+				       ace_result_), 
+		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
