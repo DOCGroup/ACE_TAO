@@ -143,18 +143,20 @@ main (int, ACE_TCHAR *[])
               ACE::beta_version()));
 
   {
-    ACE_DEBUG ((LM_DEBUG, "Running single threaded test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running single threaded test\n")));
     //! Run the test in single threaded mode
     Tester tester;
     tester.run (100);
   }
   {
-    ACE_DEBUG ((LM_DEBUG, "Running multi threaded test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running multi threaded test\n")));
     //! Run the test in multi-threaded mode
     Tester tester;
     Task task (&tester);
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate the threads\n"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         ACE_TEXT ("Cannot activate the threads\n")), 
+                        1);
     ACE_Thread_Manager::instance ()->wait ();
   }
 
@@ -188,7 +190,7 @@ Tester::run (int iterations)
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Reordering::ack_join returned %d\n",
+                  ACE_TEXT ("Reordering::ack_join returned %d\n"),
                   result));
     }
 
@@ -200,11 +202,12 @@ Tester::run (int iterations)
   if (this->next_expected_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Tester::run - no messages received\n"));
+                  ACE_TEXT ("Tester::run - no messages received\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "Tester::run (%t) - %d messages received\n",
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("Tester::run (%t) - %d messages received\n"),
                   this->next_expected_));
     }
 }
@@ -214,7 +217,7 @@ Tester::reply_ack (ACE_RMCast::Ack &ack)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-  // ACE_DEBUG ((LM_DEBUG, "Received Ack message (%d, %d)\n",
+  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received Ack message (%d, %d)\n"),
   //             ack.next_expected, this->lowest_sequence_number_));
 
   const int success_ratio = 95;
@@ -260,7 +263,7 @@ Tester::generate_messages (int count)
           if (result != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "Reordering::data returned %d\n",
+                          ACE_TEXT ("Reordering::data returned %d\n"),
                           result));
             }
         }
@@ -275,7 +278,8 @@ Tester::data (ACE_RMCast::Data &data)
   if (this->next_expected_ != data.sequence_number)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Tester::data - out of sequence message (%d != %d)\n",
+                  ACE_TEXT ("Tester::data - ")
+                  ACE_TEXT ("out of sequence message (%d != %d)\n"),
                   this->next_expected_,
                   data.sequence_number));
       return -1;

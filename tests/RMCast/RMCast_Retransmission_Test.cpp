@@ -190,19 +190,21 @@ main (int, ACE_TCHAR *[])
               ACE::beta_version()));
 
   {
-    ACE_DEBUG ((LM_DEBUG, "Running single threaded test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running single threaded test\n")));
     //! Run the test in single threaded mode
     Tester tester;
     tester.run (100);
     tester.validate_message_count ();
   }
   {
-    ACE_DEBUG ((LM_DEBUG, "Running multi threaded test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running multi threaded test\n")));
     //! Run the test in multi-threaded mode
     Tester tester;
     Task task (&tester);
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate the threads\n"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         ACE_TEXT ("Cannot activate the threads\n")), 
+                        1);
     ACE_Thread_Manager::instance ()->wait ();
     tester.validate_message_count ();
   }
@@ -261,8 +263,8 @@ Tester::validate_message_count (void)
       if (this->proxy_[i].next_expected () != this->sequence_number_generator_)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Invalid message count for proxy %d, "
-                      "it is %d, should be %d\n",
+                      ACE_TEXT ("Invalid message count for proxy %d, ")
+                      ACE_TEXT ("it is %d, should be %d\n"),
                       i, this->proxy_[i].next_expected (),
                       this->sequence_number_generator_));
         }
@@ -275,7 +277,8 @@ Tester::reply_ack_join (Test_Proxy *, ACE_RMCast::Ack_Join &ack_join)
   if (ack_join.next_sequence_number > this->sequence_number_generator_)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Unexpected sequence number in ack_join (%d,%d)\n",
+                  ACE_TEXT ("Unexpected sequence number in ack_join ")
+                  ACE_TEXT ("(%d,%d)\n"),
                   ack_join.next_sequence_number,
                   this->sequence_number_generator_));
       return -1;
@@ -315,7 +318,7 @@ Tester::send_ack ()
     }
   if (!set)
     return 0;
-  // ACE_DEBUG ((LM_DEBUG, "Tested::ack - (%d,%d)\n",
+  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Tested::ack - (%d,%d)\n"),
   //             ack.next_expected, ack.highest_received));
   return this->retransmission_.ack (ack);
 }
@@ -337,7 +340,7 @@ Tester::generate_one_message (void)
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Retransmission::data returned %d\n",
+                  ACE_TEXT ("Retransmission::data returned %d\n"),
                   result));
     }
 }
@@ -351,7 +354,7 @@ Tester::resend (void)
   if (r == -1)
     {
       // ACE_DEBUG ((LM_DEBUG,
-      //             "Error returned from Retransmission::resend\n"));
+      //             ACE_TEXT ("Error returned from Retransmission::resend\n")));
     }
   return r;
 }
@@ -374,7 +377,7 @@ Tester::data (ACE_RMCast::Data &data)
       if (result != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Proxy::data returned %d for proxy %d\n",
+                      ACE_TEXT ("Proxy::data returned %d for proxy %d\n"),
                       result, i));
           return -1;
         }
@@ -408,7 +411,7 @@ Test_Proxy::Test_Proxy (void)
 int
 Test_Proxy::data (ACE_RMCast::Data &data)
 {
-  // ACE_DEBUG ((LM_DEBUG, " (%t) Proxy receives message %d\n",
+  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) Proxy receives message %d\n"),
   //             data.sequence_number));
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -422,7 +425,7 @@ Test_Proxy::data (ACE_RMCast::Data &data)
       ACE_RMCast::Ack ack;
       ack.next_expected = this->next_expected ();
       ack.highest_received = this->highest_received ();
-      // ACE_DEBUG ((LM_DEBUG, "....it is an already accepted message\n"));
+      // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("....it is an already accepted message\n")));
       // Ack the message....
       return this->ack (ack);
     }
@@ -436,7 +439,7 @@ Test_Proxy::data (ACE_RMCast::Data &data)
         {
           // We ignore the message completely as if it was lost in the
           // network
-          // ACE_DEBUG ((LM_DEBUG, "....and drops it\n"));
+          // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("....and drops it\n")));
           return 0;
         }
 
@@ -450,20 +453,20 @@ Test_Proxy::data (ACE_RMCast::Data &data)
         {
           ack.highest_received = data.sequence_number;
         }
-      // ACE_DEBUG ((LM_DEBUG, "....and accepts it\n"));
+      // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("....and accepts it\n")));
       // Ack the message....
       return this->ack (ack);
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "....the message is out of order\n"));
+  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("....the message is out of order\n")));
   // This is an out of sequence number, maybe it is lost...
   if (c > success_ratio)
     {
-      // ACE_DEBUG ((LM_DEBUG, "........and is dropped\n"));
+      // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("........and is dropped\n")));
       return 0;
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "........and is accepted\n"));
+  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("........and is accepted\n")));
   ACE_RMCast::Ack ack;
   ack.next_expected = this->next_expected ();
   if (data.sequence_number < this->highest_received ())

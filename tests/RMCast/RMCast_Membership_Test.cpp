@@ -169,18 +169,20 @@ main (int, ACE_TCHAR *[])
               ACE::beta_version()));
 
   {
-    ACE_DEBUG ((LM_DEBUG, "Running single threaded test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running single threaded test\n")));
     //! Run the test in single threaded mode
     Tester tester;
     tester.run (100);
   }
   {
-    ACE_DEBUG ((LM_DEBUG, "Running multi threaded test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running multi threaded test\n")));
     //! Run the test in multi-threaded mode
     Tester tester;
     Task task (&tester);
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate the threads\n"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         ACE_TEXT ("Cannot activate the threads\n")), 
+                        1);
     ACE_Thread_Manager::instance ()->wait ();
   }
 
@@ -231,7 +233,7 @@ Tester::join (ACE_RMCast::Join &join)
   if (join.source == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Invalid join message in Tester\n"),
+                         ACE_TEXT ("Invalid join message in Tester\n")),
                         -1);
     }
   for (size_t i = 0; i != nproxy; ++i)
@@ -240,13 +242,15 @@ Tester::join (ACE_RMCast::Join &join)
         continue;
       if (this->proxy_[i].joined () != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid state for proxy %d "
-                           "in Tester::join\n"),
+                           ACE_TEXT ("Invalid state for proxy %d ")
+                           ACE_TEXT ("in Tester::join\n")),
                           -1);
       return 0;
     }
   // Not found
-  ACE_ERROR_RETURN ((LM_ERROR, "Unknown proxy in Tester::join\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     ACE_TEXT ("Unknown proxy in Tester::join\n")), 
+                    -1);
 }
 
 int
@@ -255,7 +259,7 @@ Tester::leave (ACE_RMCast::Leave &leave)
   if (leave.source == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Invalid leave message in Tester\n"),
+                         ACE_TEXT ("Invalid leave message in Tester\n")),
                         -1);
     }
   for (size_t i = 0; i != nproxy; ++i)
@@ -264,13 +268,15 @@ Tester::leave (ACE_RMCast::Leave &leave)
         continue;
       if (this->proxy_[i].joined () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid state for proxy %d "
-                           "in Tester::leave\n"),
+                           ACE_TEXT ("Invalid state for proxy %d ")
+                           ACE_TEXT ("in Tester::leave\n")),
                           -1);
       return 0;
     }
   // Not found
-  ACE_ERROR_RETURN ((LM_ERROR, "Unknown proxy in Tester::leave\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     ACE_TEXT ("Unknown proxy in Tester::leave\n")), 
+                    -1);
 }
 
 int
@@ -280,12 +286,12 @@ Tester::ack (ACE_RMCast::Ack &ack)
   if (ack.source == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Invalid ack message in Tester\n"),
+                         ACE_TEXT ("Invalid ack message in Tester\n")),
                         -1);
     }
 
   //  ACE_DEBUG ((LM_DEBUG,
-  //              "Received ack in Tester %d,%d\n",
+  //              ACE_TEXT ("Received ack in Tester %d,%d\n"),
   //              ack.next_expected,
   //              ack.highest_received));
 
@@ -328,13 +334,13 @@ Tester::ack (ACE_RMCast::Ack &ack)
   if (ack.next_expected != next_expected)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Invalid next_expected in Ack\n"),
+                         ACE_TEXT ("Invalid next_expected in Ack\n")),
                         -1);
     }
   if (ack.highest_received != highest_received)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Invalid highest_received in Ack\n"),
+                         ACE_TEXT ("Invalid highest_received in Ack\n")),
                         -1);
     }
   return 0;
@@ -354,7 +360,7 @@ Tester::join_random (void)
           ACE_RMCast::Join join;
           join.source = &this->proxy_[i];
           //          ACE_DEBUG ((LM_DEBUG,
-          //                      "Sending join mesage for proxy %d\n",
+          //                      ACE_TEXT ("Sending join mesage for proxy %d\n"),
           //                      i));
           this->proxy_[i].join (join);
         }
@@ -375,7 +381,7 @@ Tester::leave_random (void)
           ACE_RMCast::Leave leave;
           leave.source = &this->proxy_[i];
           //          ACE_DEBUG ((LM_DEBUG,
-          //                      "Sending leave mesage for proxy %d\n",
+          //                      ACE_TEXT ("Sending leave mesage for proxy %d\n"),
           //                      i));
           this->proxy_[i].leave (leave);
         }
@@ -420,7 +426,7 @@ Tester::generate_acks (int iterations)
           break;
         }
       //      ACE_DEBUG ((LM_DEBUG,
-      //                  "Sending ack message (%d,%d) through proxy %d\n",
+      //                  ACE_TEXT ("Sending ack message (%d,%d) through proxy %d\n"),
       //                  ack.next_expected,
       //                  ack.highest_received,
       //                  i));
@@ -428,7 +434,7 @@ Tester::generate_acks (int iterations)
       if (result != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Returned %d in proxy %d\n",
+                      ACE_TEXT ("Returned %d in proxy %d\n"),
                       result, i));
         }
     }

@@ -1,3 +1,18 @@
+Thu Oct 26 11:20:43 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+
+          The usual additions of ACE_TEXT to make ACE_USES_WCHAR builds
+          happy.
+
 Thu Oct 26 12:19:45 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp (unmap): Fixed a bug that was preventing
