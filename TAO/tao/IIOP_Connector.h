@@ -143,9 +143,6 @@ private:
   TAO_IIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for IIOP.
 
-  TAO_IIOP_Connect_Creation_Strategy creation_strategy_;
-  // Our creation strategy
-
   CORBA::Boolean lite_flag_;
   // Do we need to use a GIOP_Lite for sending messages?
 };
