@@ -1,3 +1,9 @@
+Tue Jul 21 15:49:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added a new Server
+	class and moved all the static functions and variables to that
+	class.
+
 Tue Jul 21 15:46:49 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): changed 
