@@ -1,3 +1,11 @@
+Fri Jul 30 18:29:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ciao/Servant_Impl_T.cpp (get_all_facets, get_all_consumers):
+
+	  Fixed another instance of incorrect emulated exception
+	  parameter.  The method definition incorrectly used a default
+	  parameter.
+
 Fri Jul 30 17:29:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* NEWS:  Added CIAO 0.4.2 noteworthy items.
