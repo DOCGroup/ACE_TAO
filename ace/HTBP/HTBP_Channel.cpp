@@ -390,7 +390,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
               this->leftovers_.rd_ptr(n);
               result += n;
             }
-          if (n < iov[i].iov_len)
+          if (n < (size_t) iov[i].iov_len)
             {
               iov2[ndx].iov_len = iov[i].iov_len - n;
               iov2[ndx].iov_base = (char *)iov[i].iov_base + n;
