@@ -93,7 +93,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
 
   // Create the parallel
   ACE_NEW (this->timer_ids_,
-           long[size]);
+           ssize_t[size]);
 
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
