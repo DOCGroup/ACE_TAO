@@ -1,3 +1,18 @@
+Thu Jul 01 00:24:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/ACE-guidelines.html: Added a table explaining how to use
+	  all the different ACE_*_STRING macros.
+
+	* tests/DLList_Test.cpp:
+	* tests/Hash_Map_Manager_Test.cpp:
+	* tests/Map_Manager_Test.cpp:
+	* tests/Message_Block_Test.cpp:
+	* tests/Notify_Performance_Test.cpp:
+	* tests/Priority_Task_Test.cpp:
+	* tests/Thread_Pool_Reactor_Test.cpp:
+	* tests/test_config.h: UNICODE fixes.  The usage of ASYS_TCHAR and
+	  LPCTSTR were mistaken in many places.
+
 Wed Jun 30 16:31:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Cache_Map_Manager_Test.cpp (purge_test_cache): Solved
