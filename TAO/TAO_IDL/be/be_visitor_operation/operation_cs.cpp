@@ -390,7 +390,6 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
-  // *os << "ACE_TRY_ENV.clear ();" << be_nl;
   *os << "_tao_call.start (ACE_TRY_ENV);\n";
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
@@ -446,7 +445,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   // Prepare the request header
   os->indent ();
-  *os << "CORBA::Short flag = ";
+  *os << "CORBA::Short _tao_response_flag = ";
 
   switch (node->flags ())
     {
@@ -458,7 +457,9 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   *os << be_nl
-      << "_tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);\n";
+      << "_tao_call.prepare_header (" << be_idt << be_idt_nl
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV"
+      << be_uidt_nl << ");" << be_uidt << "\n";
 
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
@@ -497,7 +498,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                             -1);
         }
       *os << be_uidt << be_uidt_nl
-          << "))" << be_nl;
+          << "))" << be_uidt_nl;
 
       // if marshaling fails, raise exception
       if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL",
@@ -509,7 +510,6 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                              "codegen for return var failed\n"),
                             -1);
         }
-      *os << be_uidt;
     }
 
   *os << be_nl
@@ -534,7 +534,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
         }
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt << "\n";
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -665,7 +665,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
         }
 
       *os << be_uidt << be_uidt << be_nl
-          << "))" << be_nl;
+          << "))" << be_uidt_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_interceptor_exception
           (bt, "CORBA::MARSHAL",
@@ -677,7 +677,6 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                              "codegen for return var failed\n"),
                             -1);
         }
-      *os << be_uidt;
     }
 
   // Invoke postinvoke interceptor
@@ -707,11 +706,10 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   os->indent ();
-  *os << "break;" << be_nl
-      << be_uidt_nl << "}\n";
+  *os << "break;" << be_uidt_nl << "}\n";
 
   // Generate exception occurred interceptor code
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)"// << be_nl
       << be_uidt_nl << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl
