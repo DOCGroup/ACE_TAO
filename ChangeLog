@@ -1,3 +1,24 @@
+Mon Aug 30 23:57:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+	* ace/config-unixware-7.1.0.h:
+	* ace/config-unixware-7.1.0.udk.h:
+
+	  Remove vestigial ACE_HAS_SYS_IOCTL_H definition.  ACE now uses
+	  ACE_LACKS_SYS_IOCTL_H.
+
+	* ace/config-integritySCA.h:
+
+	  Removed vestigial ACE_LACKS_SYS_FILE_H definition.
+
+	* ace/config-integritySCA.h:
+	* ace/config-psos-diab-mips.h:
+	* ace/config-qnx-neutrino.h:
+	* ace/config-rtp-62x.h:
+	* ace/config-rtp-pre62x.h:
+
+	  Removed vestigial ACE_LACKS_RPC_H definition.
+
 Mon Aug 30 23:47:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

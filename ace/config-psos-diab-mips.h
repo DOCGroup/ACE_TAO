@@ -181,8 +181,6 @@
 
 #define ACE_LACKS_RLIMIT
 
-#define ACE_LACKS_RPC_H
-
 #define ACE_LACKS_RWLOCK_T
 
 #define ACE_LACKS_SBRK
