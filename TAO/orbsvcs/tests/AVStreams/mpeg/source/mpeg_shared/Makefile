@@ -13,17 +13,16 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
+#TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
+
+IDL_FILES = Video_ControlS Video_ControlC Audio_ControlS Audio_ControlC ReceiverS ReceiverC
+
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 FILES = $(IDL_FILES)
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
-
-
-#TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
-
-IDL_FILES = Video_ControlS Video_ControlC Audio_ControlS Audio_ControlC
 
 FILES += com fileio filters routine sendpt 
 

@@ -13,6 +13,7 @@ TAO_Video_Repository::TAO_Video_Repository (const char* file_name)
     num_movies_ (0),
     lastchanged_ (0)
 {
+  cout<<"The movie file is "<<filename_<<endl;
 }
 
 TAO_Video_Repository::~TAO_Video_Repository (void)
@@ -27,32 +28,34 @@ TAO_Video_Repository::evalDP (const char* name,
 			      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
+  ACE_DEBUG ((LM_DEBUG,"TAO_Video_Repository::evalDP:%s\n",name));
   CORBA::Any* return_value = 0;
   ACE_NEW_RETURN (return_value, CORBA::Any, 0);
-  
+
   struct stat file_stat;
   if (ACE_OS::stat (this->filename_, &file_stat) == 0)
-    {      
+    {
       if (this->lastchanged_ < file_stat.st_mtime)
 	{
 	  FILE* file = ACE_OS::fopen (this->filename_, "r");
-	  
+
 	  if (file != 0)
 	    {
 	      // Read the file into a buffer
 	      ACE_Read_Buffer read_file (file, 1);
-	      char* database = read_file.read (EOF, '\n', '%');	      
+	      char* database = read_file.read (EOF, '\n', '%');
 
 	      // Parse the file into a sequence and insert it into an
 	      // Any (i.e., this->return_)
 	      TAO_Video_Repository::parse_file (database,
 						read_file.replaced ());
-	      
+
 	      ACE_Allocator* alloc = ACE_Allocator::instance ();
 	      alloc->free (database);
 
 	      this->lastchanged_ = file_stat.st_mtime;
 	    }
+	  else cout<<"The movie_database.txt file does not exist"<<endl;
 	}
 
       TAO_VR::Movie_Info* movie_info = 0;
@@ -62,8 +65,12 @@ TAO_Video_Repository::evalDP (const char* name,
 					  this->movie_info_,
 					  0),
 		      0);
-      
+
       (*return_value) <<= movie_info;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,"TAO_Video_Repository::evalDP::stat failed\n"));
     }
 
   return return_value;
@@ -78,7 +85,7 @@ TAO_Video_Repository::parse_file (const char* database, int num_lines)
   char* current = (char *) database;
 
   ACE_DEBUG ((LM_DEBUG, "Recomputing the movie stats.\n"));
-  
+
   TAO_VR::Movie_Info::freebuf (this->movie_info_);
 
   this->movie_info_ = TAO_VR::Movie_Info::allocbuf (num_lines);
@@ -89,21 +96,21 @@ TAO_Video_Repository::parse_file (const char* database, int num_lines)
       while (current != 0)
 	{
 	  TAO_VR::Movie& movie = this->movie_info_[i];
-	  
+
 	  movie.name_ = (const char*) current;
 	  movie.filename_ = (const char*) ACE_OS::strtok (0, delim);
 	  movie.description_ = (const char*) ACE_OS::strtok (0, delim);
-	  
+
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Movie Name: %s\nFile Name: %s\nDescription: %s\n",
 		      (const char *) movie.name_,
 		      (const char *) movie.filename_,
 		      (const char *) movie.description_));
-	  
+
 	  // From the actual movie file, extract the techincal information.
 	  TAO_Video_Repository::
 	    obtain_movie_info (movie.filename_, movie);
-           
+
 	  current = ACE_OS::strtok (0, delim);
 	  i++;
 	}
@@ -122,7 +129,7 @@ export_properties (TAO_Property_Exporter& prop_exporter)
   CosTradingDynamic::DynamicProp* dp_struct =
     this->construct_dynamic_prop (MOVIE_INFO,
                                   TAO_VR::_tc_Movie_Info,
-                                  extra_info);  
+                                  extra_info);
 
   prop_exporter.add_dynamic_property (MOVIE_INFO, dp_struct);
 }
@@ -143,4 +150,3 @@ define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_s
 
   return 1;
 }
-
