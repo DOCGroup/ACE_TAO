@@ -469,7 +469,7 @@ ifneq ($(fl_reactor),)
   CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
   LIBS += $(PLATFORM_FL_LIBS)
   LDFLAGS += $(PLATFORM_FL_LDFLAGS)
-  ACE_MAKE_OPTIONS += rl_reactor
+  ACE_MAKE_OPTIONS += fl_reactor
 endif # fl_reactor
 
 tk_reactor ?=
