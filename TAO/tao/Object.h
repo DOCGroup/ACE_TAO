@@ -204,7 +204,7 @@ private:
   CORBA::Object_ptr &ptr_;
 };
 
-class TAO_Object_Field
+class TAO_Export TAO_Object_Field
 {
   // = TITLE
   //   Base class to represent fields (in structures) corresponding to
