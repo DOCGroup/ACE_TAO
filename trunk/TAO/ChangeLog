@@ -1,3 +1,11 @@
+Thu Oct 30 10:44:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Makefile.bor:
+          Updated this makefile with all the recent changes
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+          Removed ; after ACE_UNIMPLEMENTED_FUNC
+
 Thu Oct 30 08:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocated_Invocation.h:
