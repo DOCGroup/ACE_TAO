@@ -27,7 +27,7 @@ ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-static long n_iterations = 50;
+static int n_iterations = 50;
 
 // Maximum string length used
 static const size_t MAX_STRING_SIZE = 200;
@@ -161,7 +161,7 @@ Reader_Task::svc (void)
   // We start an ACE_Profile_Timer here...
   timer.start ();
 
-  for (size_t iterations = 1;
+  for (int iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {
@@ -234,7 +234,7 @@ Writer_Task::svc (void)
   // We start an ACE_Profile_Timer here...
   timer.start ();
 
-  for (size_t iterations = 1;
+  for (int iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {

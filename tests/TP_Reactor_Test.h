@@ -45,7 +45,7 @@ class Receiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
   friend class Acceptor;
 public:
 
-  Receiver (Acceptor * acceptor=0, int index=-1);
+  Receiver (Acceptor * acceptor=0, size_t index=MAX_RECEIVERS+1);
 
   ~Receiver (void);
 
@@ -125,7 +125,7 @@ class Sender : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
   friend class Connector;
 
 public:
-  Sender (Connector * connector=0, int index=-1);
+  Sender (Connector * connector=0, size_t index=MAX_SENDERS+1);
 
   ~Sender (void);
 
