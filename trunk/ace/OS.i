@@ -7684,6 +7684,15 @@ ACE_OS::access (const char *path, int amode)
 
   ACE_OS::fclose (handle);
   return (handle == ACE_INVALID_HANDLE ? -1 : 0);
+#  elif defined (VXWORKS)
+  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path), ACE_LIB_TEXT ("r"));
+  ACE_UNUSED_ARG (amode);
+  if (handle != 0)
+    {
+      ACE_OS::fclose (handle);
+      return 0;
+    }
+  return (-1);
 #  else
     ACE_UNUSED_ARG (path);
     ACE_UNUSED_ARG (amode);
@@ -8015,7 +8024,7 @@ ACE_OS::dlerror (void)
 #else /* _M_UNIX */
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
 #endif /* _M_UNIX */
-# elif defined (__hpux)
+# elif defined (__hpux) || defined (VXWORKS)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
@@ -8083,7 +8092,33 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 #   else
   ACE_OSCALL_RETURN (::cxxshl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   endif  /* aC++ vs. Hp C++ */
+# elif defined (VXWORKS)
+  MODULE* handle;
+  // Open readonly
+  ACE_HANDLE filehandle = ACE_OS::open (filename,
+                                        O_RDONLY,
+                                        ACE_DEFAULT_FILE_PERMS);
 
+  if (filehandle != ACE_INVALID_HANDLE)
+    {
+      ACE_OS::last_error(0);
+      ACE_OSCALL ( ::loadModule (filehandle, mode ), MODULE *, 0, handle);
+      int loaderror = ACE_OS::last_error();
+      ACE_OS::close (filehandle);
+
+      if ( (loaderror != 0) && (handle != 0) )
+        {
+          // ouch something went wrong most likely unresolved externals
+          ::unldByModuleId ( handle, 0 );
+          handle = 0;
+        }
+    }
+  else
+    {
+      // couldn't open file
+      handle = 0;
+    }
+  return handle;
 # else
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -8147,6 +8182,18 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
   return status == 0 ? value : 0;
+
+# elif defined (VXWORKS)
+
+  // For now we use the VxWorks global symbol table
+  // which resolves the most recently loaded symbols .. which resolve mostly what we want..
+  ACE_UNUSED_ARG (handle);
+  SYM_TYPE symtype;
+  void *value = 0;
+  STATUS status;
+  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, (char **)&value, &symtype), int, -1, status);
+
+  return status == OK ? value : 0;
 
 # else
 
