@@ -1,3 +1,9 @@
+Mon Mar  1 22:50:51 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+	  Fix this test so that it actually reports
+	  multiple interfaces properly.
+
 Mon Mar 01 14:54:14 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\MT_Reference_Counted_Notify_Test.cpp (Simple_Event_Handler): 
