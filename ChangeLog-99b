@@ -1,8 +1,13 @@
+Fri Feb 12 15:37:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: split FILES up into subsets.  See
+          docs/ACE-subsets.html for more information.
+
 Fri Feb 12 12:31:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile: Removed blank line that was added when troubleshooting
-	  the cvs log problem.  The extra line cause Digital Unix's make to
-	  complain about a missing separator.
+        * ace/Makefile: Removed blank line that was added when troubleshooting
+          the cvs log problem.  The extra line cause Digital Unix's make to
+          complain about a missing separator.
 
 Fri Feb 12 09:19:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
