@@ -1,3 +1,14 @@
+Thu Jan 15 12:43:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* /: Added a bunch of makefile (*.MAK) for one button
+ 	  make-and-test on NT.
+
+	* Makefile (FILTER): Added filter to remove VC one button related
+ 	  makefile from ACE release.
+
+	* ace/ACE_Library.{mdp,mak}: Added Shared_Memory.cpp file into the
+ 	  project makefile.
+
 Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Barrier_Test.cpp,Message_Block_Test.cpp,Priority_Task_Test.cpp,
