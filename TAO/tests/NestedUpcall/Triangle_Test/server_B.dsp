@@ -90,7 +90,7 @@ LINK32=link.exe
 # PROP Default_Filter "*.cpp"
 # Begin Source File
 
-SOURCE=.\Object_B_Impl.cpp
+SOURCE=.\Object_B_i.cpp
 # End Source File
 # Begin Source File
 
@@ -110,7 +110,7 @@ SOURCE=.\Triangle_TestS.cpp
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=.\Object_B_Impl.h
+SOURCE=.\Object_B_i.h
 # End Source File
 # Begin Source File
 

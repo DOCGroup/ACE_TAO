@@ -98,7 +98,7 @@ SOURCE=.\MT_Client_TestS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MT_Object_Impl.cpp
+SOURCE=.\MT_Object_i.cpp
 # End Source File
 # Begin Source File
 
@@ -118,7 +118,7 @@ SOURCE=.\MT_Client_TestS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MT_Object_Impl.h
+SOURCE=.\MT_Object_i.h
 # End Source File
 # Begin Source File
 

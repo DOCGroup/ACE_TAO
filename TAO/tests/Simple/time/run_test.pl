@@ -9,7 +9,7 @@ require Process;
 
 $server_port = 0;
 $iorfile = "theior";
-$sleeptime = 3;
+$sleeptime = 5;
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
                        " -ORBport $server_port -o $iorfile ");

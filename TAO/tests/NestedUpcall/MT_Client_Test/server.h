@@ -24,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
-#include "MT_Object_Impl.h"
+#include "MT_Object_i.h"
 
 class MT_Object_Server
 {
@@ -60,7 +60,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager
 
-  MT_Object_Impl mT_Object_Impl_;
+  MT_Object_i mT_Object_i_;
   // Implementation object MT_OBject
 
   int argc_;

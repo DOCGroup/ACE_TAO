@@ -24,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
-#include "Object_B_Impl.h"
+#include "Object_B_i.h"
 
 class Object_B_Server
 {
@@ -60,7 +60,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager
 
-  Object_B_Impl object_B_Impl_;
+  Object_B_i object_B_i_;
   // Implementation object of the NestedUpCalls reactor.
 
   int argc_;

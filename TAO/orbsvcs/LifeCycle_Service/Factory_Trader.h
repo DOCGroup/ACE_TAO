@@ -45,8 +45,8 @@ public:
 private:
   TAO_Service_Type_Repository repository_;
   TAO_Trader_Factory::TAO_TRADER *trader_ptr_;
-  TAO_Trading_Components_Impl *trading_Components_ptr_;
-  TAO_Support_Attributes_Impl *support_Attributes_ptr_;
+  TAO_Trading_Components_i *trading_Components_ptr_;
+  TAO_Support_Attributes_i *support_Attributes_ptr_;
 };
 
 #endif // FACTORY_TRADER_H

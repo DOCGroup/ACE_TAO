@@ -95,7 +95,7 @@ SOURCE=.\Factory_Finder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Factory_Finder_Impl.cpp
+SOURCE=.\Factory_Finder_i.cpp
 # End Source File
 # Begin Source File
 
@@ -115,7 +115,7 @@ SOURCE=.\Factory_Finder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Factory_Finder_Impl.h
+SOURCE=.\Factory_Finder_i.h
 # End Source File
 # Begin Source File
 

@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = FILENAME
-//    Generic_Factory_Impl.cpp
+//    Generic_Factory_i.cpp
 //
 // = DESCRIPTION
 //    The implementation of a LifeCycle Service GenericFactory for the 
@@ -15,23 +15,23 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "Generic_Factory_Impl.h"
+#include "Generic_Factory_i.h"
 #include "QuoterC.h"
 
-ACE_RCSID(Quoter, Generic_Factory_Impl, "$Id$")
+ACE_RCSID(Quoter, Generic_Factory_i, "$Id$")
 
 // Constructor
-Quoter_Generic_Factory_Impl::Quoter_Generic_Factory_Impl (void)
+Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (void)
 {
 }
 
 // Destructor.
-Quoter_Generic_Factory_Impl::~Quoter_Generic_Factory_Impl (void)
+Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
 {
 }
 
 CORBA::Boolean 
-Quoter_Generic_Factory_Impl::supports (const CosLifeCycle::Key &factory_key,
+Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &factory_key,
                                        CORBA::Environment &_env_there)
 {
   ACE_UNUSED_ARG (factory_key);
@@ -43,7 +43,7 @@ Quoter_Generic_Factory_Impl::supports (const CosLifeCycle::Key &factory_key,
 
 
 CosNaming::NamingContext_ptr
-Quoter_Generic_Factory_Impl::get_naming_context (const CosLifeCycle::Key &factory_key,
+Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_key,
                                                  CORBA::Environment &env_here,
                                                  CORBA::Environment &_env_there)
 {
@@ -106,7 +106,7 @@ Quoter_Generic_Factory_Impl::get_naming_context (const CosLifeCycle::Key &factor
 
   
 CORBA::Object_ptr
-Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key, 
+Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key, 
                                             const CosLifeCycle::Criteria &the_criteria,
                                             CORBA::Environment &_env_there)
 {

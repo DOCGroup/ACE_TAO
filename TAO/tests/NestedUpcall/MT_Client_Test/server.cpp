@@ -81,7 +81,7 @@ MT_Object_Server::init (int argc,
 
   CORBA::String_var str;
   str = this->orb_manager_.activate_under_child_poa ("MT_Object",
-                                                     &this->mT_Object_Impl_,
+                                                     &this->mT_Object_i_,
                                                      env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",

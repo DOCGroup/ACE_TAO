@@ -26,7 +26,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "tao/TAO.h"
-#include "Quoter_Impl.h"
+#include "Quoter_i.h"
 #include "QuoterC.h"
 
 class Quoter_Server 
@@ -67,7 +67,7 @@ private:
   CosNaming::NamingContext_var namingContext_var_;
   // Naming Service context
 
-  Quoter_Factory_Impl  *quoter_Factory_Impl_ptr_;
+  Quoter_Factory_i  *quoter_Factory_i_ptr_;
   // Instantiate the Quoter Factory
 
   TAO_ORB_Manager orb_manager_;

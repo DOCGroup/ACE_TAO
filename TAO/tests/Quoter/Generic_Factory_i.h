@@ -3,31 +3,31 @@
 // ============================================================================
 //
 // = FILENAME
-//    Life_Cycle_Service_Impl.h
+//    Generic_Factory_i.h
 //
 // = DESCRIPTION
-//    A Life Cycle Service for the Quoter example.
+//    A LifeCycle Service Generic Factory for the Quoter example.
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
 // ============================================================================
 
-#include "orbsvcs/LifeCycleServiceS.h"
-#include "Factory_Trader.h"
-#include "Criteria_Evaluator.h"
+#include "QuoterS.h"
 
-#if !defined (LIFE_CYCLE_SERVICE_IMPL_H)
-#define LIFE_CYCLE_SERVICE_IMPL_H
 
-class Life_Cycle_Service_Impl : public POA_LifeCycleService::Life_Cycle_Service
+#if !defined (QUOTER_GENERIC_FACTORY_IMPL_H)
+#define QUOTER_GENERIC_FACTORY_IMPL_H
+
+class Quoter_Generic_Factory_i : public POA_Stock::Quoter_Generic_Factory
 {
   // = TILE
-  //   A CosLifeCycle conforming Generic Factory.
+  //   A CosLifeCycle conforming Generic Factory for the Quoter
+  //   example. It uses the Naming Service to find a fitting factory.
 
 public:
-  Life_Cycle_Service_Impl (void);
-  ~Life_Cycle_Service_Impl (void);
+  Quoter_Generic_Factory_i (void);
+  ~Quoter_Generic_Factory_i (void);
 
   CORBA::Boolean supports (const CosLifeCycle::Key &factory_key,
                            CORBA::Environment &_env_there);
@@ -41,23 +41,12 @@ public:
   // Generic Factory itself cannot create objects, it will forward the
   // request to a more concrete Factory.
 
-  void register_factory (const char * name,
-			 const char * location,
-			 const char * description,
-			 CORBA::Object_ptr object,
-			 CORBA::Environment &_env_there);
-  // Registers a factory with specified properties
-
 private:
-  Factory_Trader *factory_trader_ptr_;  
+  CosNaming::NamingContext_ptr get_naming_context (const CosLifeCycle::Key &factory_key,
+                                                   CORBA::Environment &env_here,
+                                                   CORBA::Environment &_env_there);
+  // a helper to get the proper naming context.
+
 };
 
-#endif /* LIFE_CYCLE_SERVICE_IMPL_H */
-
-
-
-
-
-
-
-
+#endif /* QUOTER_GENERIC_FACTORY_IMPL_H */
