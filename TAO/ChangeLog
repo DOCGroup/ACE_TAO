@@ -1,3 +1,8 @@
+Fri Aug  1 22:33:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Sequence.cpp: Fixed a link error due to a wrong inline
+	  declaration within the cpp file.
+
 Fri Aug  1 21:48:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/IFRService/Container_i.cpp: Fixed a simple
