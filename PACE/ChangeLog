@@ -1,3 +1,9 @@
+Tue Jun 20 15:39:26 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/compiler.h:
+
+	  Removed errant '\\' at end of lines and changed to '\'.
+
 Tue Jun 20 15:31:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/mman.h:
