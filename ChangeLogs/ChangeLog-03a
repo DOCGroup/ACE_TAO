@@ -1,3 +1,9 @@
+Thu Nov 22 05:24:51 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* examples/QOS/Diffserv: Added a simple example to illustrate
+	  how to set Diffserv Codepoints on an ACE_SOCK_CODgram.
+	* examples/QOS/Makefile: Updated.
+
 Wed Nov 21 11:35:50 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
   * ace/Bound_Ptr.h
