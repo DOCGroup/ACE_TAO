@@ -1,3 +1,13 @@
+Sat Mar 25 22:10:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+	
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
+	  Added a check for TAO_Stub pointer in the generated code for
+	  <_unchecked_narrow>. This check allowed <_unchecked_narrow> on 
+	  a smart proxy to succeed. Previously this was failing as the
+	  <protocol_proxy_> member for a smart proxy is nil and it was
+	  used to increment its reference count. Thanks to Brian Wallis
+	  <brian.wallis@ot.com.au> for reporting this bug.
+			
 Sat Mar 25 15:24:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Callback_Quoter/Makefile:
