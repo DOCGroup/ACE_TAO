@@ -1,3 +1,9 @@
+Mon Sep 06 03:31:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Signal_Test.cpp (run_test): Removed a redundant use of
+	  ACE_UNUSED_ARG (synchronous_signal_handler).  Thanks to KCC 3.3e
+	  for pointing this out.
+
 Mon Sep  6 01:03:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/Makefile (BIN): Added process_manager.cpp
@@ -5,8 +11,8 @@ Mon Sep  6 01:03:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Process_Manager: Added some new patches from Dave Madden
 	  <dhm@mersenne.com> that continue to improve the
- 	  ACE_Process_Manager and make it portable between NT and UNIX.	
-  
+ 	  ACE_Process_Manager and make it portable between NT and UNIX.
+
 	* examples/Threads: Readded process_manager.cpp now that
 	  Dave Madden <dhm@mersenne.com> has updated it.
 
