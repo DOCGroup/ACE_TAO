@@ -1,3 +1,14 @@
+Mon May  5 21:24:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+
+          Added 'const' qualifier to the argument of the member
+          mutator for CORBA::Object and CORBA::Any members. Thanks
+          to Eric Malenfant <EMalenfant@interstarinc.com> for
+          pointing out that the non-const reference parameter is
+          non-compliant.
+
 Mon May  5 17:45:36 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/default_resource.cpp (TAO_Default_Resource_Factory):

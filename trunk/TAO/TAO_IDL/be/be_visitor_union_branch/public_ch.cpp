@@ -420,14 +420,14 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " ("
+          << "void " << ub->local_name () << " (const "
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
           << " (void) const;";
       break;
     case AST_PredefinedType::PT_any:
       *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " ("
+          << "void " << ub->local_name () << " (const "
           << bt->nested_type_name (bu) << " &);" << be_nl;
       *os << "const " << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void) const;" << be_nl;
