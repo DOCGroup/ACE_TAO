@@ -1,3 +1,9 @@
+2004-06-28  turkaye  <turkaye@lambada.isis.vanderbilt.edu>
+
+	* DnC/tests/Config_Handlers/RobotAssembly/README.html: 
+
+	Deleted "file://" from -p & -d options of executor.
+
 Mon Jun 28 08:03:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/ServantSourceGenerator.cpp:
