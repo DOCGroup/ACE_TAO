@@ -1,3 +1,26 @@
+Sat Oct 16 11:17:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Latency/Makefile:
+	* performance-tests/Latency/ami-latency-client.cpp:
+	* performance-tests/Latency/ami-throughput-client.cpp:
+	* performance-tests/Latency/client-st-muxed.conf:
+	* performance-tests/Latency/client.cpp:
+	* performance-tests/Latency/dii_client.cpp:
+	* performance-tests/Latency/st_client.cpp:
+	* performance-tests/Latency/test_i.cpp:
+	  Updated the tests to support bursts of events, pacing, and
+	  better statitics.
+
+	* tao/MessagingS.i:
+	  The file was still using the old TAO_POLLER macro, instead of
+	  TAO_HAS_AMI_POLLER
+
+	* tao/Object.cpp:
+	  Minor cosmetic fixes
+
+	* */Makefile:
+	  Updated dependencies
+
 Fri Oct 15 19:25:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (key_to_object, _find_collocated_servant):
