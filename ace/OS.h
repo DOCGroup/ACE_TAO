@@ -727,7 +727,9 @@ typedef int key_t;
       typedef unsigned int  uint_t;
       typedef unsigned long ulong_t;
       typedef char *caddr_t;
-      typedef long pid_t;
+      //typedef long pid_t;
+
+      typedef unsigned long pid_t;
 //      typedef unsigned char wchar_t;
 #     endif
 
@@ -784,7 +786,10 @@ typedef u_long ACE_id_t;
 typedef u_long ACE_pri_t;
 
 // pHILE+ calls the DIR struct XDIR instead
+#    if !defined (ACE_PSOS_DIAB_PPC)
 typedef XDIR DIR;
+#    endif //PSOS_PPC
+
 
 // Use pSOS semaphores, wrapped . . .
 typedef struct
@@ -985,13 +990,17 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
-#   if !defined(USER_INCLUDE_SYS_TIME_TM)
+#   if !defined(USER_INCLUDE_SYS_TIME_TM) && !defined (ACE_PSOS_DIAB_PPC) //sandass
 typedef struct timespec
 {
   time_t tv_sec; // Seconds
   long tv_nsec; // Nanoseconds
 } timespec_t;
 #   endif
+
+#   if !defined(USER_INCLUDE_SYS_TIME_TM) && defined (ACE_PSOS_DIAB_PPC) //sandass
+typedef struct timespec timespec_t; //sandass
+#   endif //sandass
 
 #if defined (ACE_PSOS_HAS_TIME)
 
@@ -3806,7 +3815,7 @@ struct sigaction
 # endif /* SIGALRM */
 
 # if !defined (SIG_DFL)
-#   if defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
 #     define SIG_DFL ((void *) 0)
 #   else
 #     define SIG_DFL ((__sighandler_t) 0)
@@ -3814,7 +3823,7 @@ struct sigaction
 # endif /* SIG_DFL */
 
 # if !defined (SIG_IGN)
-#   if defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
 #     define SIG_IGN ((void *) 1)     /* ignore signal */
 #   else
 #     define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
@@ -3822,7 +3831,7 @@ struct sigaction
 # endif /* SIG_IGN */
 
 # if !defined (SIG_ERR)
-#   if defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
 #     define SIG_ERR ((void *) -1)    /* error return from signal */
 #   else
 #     define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */

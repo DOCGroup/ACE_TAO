@@ -1,3 +1,11 @@
+Wed Apr 14 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/OS.{h, i} 
+          ace/config-psos-diab-ppc.h 
+          include/makeinclude/platform_psos_diab_ppc.GNU: changes to adapt
+          the pSOS Diab 68k/MIPS port to PPC.  Many thanks to Sarmeesha 
+          Reddy <sreddy@tr.comm.mot.com> for contributing these changes.
+
 Wed Apr 14 17:06:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added #define ACE_HAS_DLL 0.
