@@ -1,3 +1,23 @@
+Sun Jun 01 18:02:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/generate_rel_manpages: A new script for man page
+	  generation. This is being moved out of the release scripts for a
+	  number of reasons. A couple of them are 
+	 
+	  - They take a long time and beta/release process has to wait for
+	    completion of documentation generation.
+
+	  - Any problems during documentation generation like machine
+	    reboot or machine hang or whatever you can think off adversely
+	    affects the beta process. The build-czar has to cleanup
+	    numerous files  and start the process all over again. 
+
+	  This will help to decouple the beta cutting process and the
+	  documentation generation process. 
+	
+	* Makefile: A new target that can be used to kick of the
+	  documentation generation.
+
 Fri May 30 17:15:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/NT_Service.cpp (insert): Fixed a compilation eror.
