@@ -10,6 +10,6 @@
     <EVENT name="ENTER_TIMEOUT_GENERATOR" id="5"/>
   </FAMILY>
   <FAMILY name="TIMEOUT" id="12">
-    <EVENT name="TIMEOUT_EVENT" id="0"/>
+    <EVENT name="PROGRAM_STOP" id="0"/>
   </FAMILY>
 </NAMESPACE>
