@@ -81,6 +81,14 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
                                  reuse_addr) == -1)
     return -1;
 
+  // Set the peer acceptor's handle into non-blocking mode.  This is a
+  // safe-guard against the race condition that can otherwise occur
+  // between the time when <select> indicates that a passive-mode
+  // socket handle is "ready" and when we call <accept>.  During this
+  // interval, the client can shutdown the connection, in which case,
+  // the <accept> call can hang!
+  this->peer_acceptor_.enable (ACE_NONBLOCK);
+
   int result = reactor->register_handler
     (this,
      ACE_Event_Handler::ACCEPT_MASK);
@@ -251,7 +259,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (SVC_HANDLER *&
 
 // Bridge method for accepting the new connection into the
 // <svc_handler>.  The default behavior delegates to the
-// PEER_ACCEPTOR::accept() in the Acceptor_Strategy.
+// <PEER_ACCEPTOR::accept> in the Acceptor_Strategy.
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
@@ -266,12 +274,16 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // associations.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
 
+  // Note that it's not really an error if <accept> returns -1 and
+  // <errno> == EWOULDBLOCK because we have set the peer acceptor's
+  // handle into non-blocking mode to prevent the <accept> call from
+  // "hanging" if the connection has been shutdown.
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0, // remote address
                                    0, // timeout
                                    1, // restart
                                    reset_new_handle  // reset new handler
-                                   ) == -1)
+                                   ) == -1 && errno != EWOULDBLOCK)
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
