@@ -240,7 +240,7 @@ create_reactor (void)
   ACE_Reactor::instance (reactor);
 }
 
-static int 
+static int
 test_reactive (const ACE_TCHAR *prog,
                ACE_MEM_Addr &server_addr)
 {
@@ -274,7 +274,7 @@ test_reactive (const ACE_TCHAR *prog,
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
                                                 connect_client,
-                                                &sport) == -1);
+                                                &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
   ACE_Process_Options opts;
@@ -298,10 +298,10 @@ test_reactive (const ACE_TCHAR *prog,
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));    
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
 #else
   if (ACE_Process_Manager::instance ()->wait () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));    
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
 #endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)
@@ -315,7 +315,7 @@ test_reactive (const ACE_TCHAR *prog,
   return status;
 }
 
-static int 
+static int
 test_concurrent (const ACE_TCHAR *prog,
                  ACE_MEM_Addr &server_addr)
 {
@@ -380,7 +380,7 @@ test_concurrent (const ACE_TCHAR *prog,
   else
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
-#if defined (_TEST_USES_THREADS) 
+#if defined (_TEST_USES_THREADS)
 #else
   ACE_Process_Manager::instance ()->wait ();
 
