@@ -1,3 +1,8 @@
+Tue Mar 16 16:46:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Hash_Bucket_T.h: added class to friend
+          ACE_Hash_Bucket_DLCStack_Iterator declaration.
+
 Tue Mar 16 16:35:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: never use TRUE, true, FALSE, false, etc.
