@@ -1,3 +1,19 @@
+Tue Jun 12 17:31:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_Internal.cpp:
+
+          For some reason, there was a call to an 'add' method in
+          CORBA::StringSeq. Changed the code to conform to the
+          other similar cases nearby.
+
+        * tao/TAO.dsp:
+
+          Removed a link in the debug version to the RTCORBA library.
+
+        * RTCORBA/TAO_RTCORBA.dsp:
+
+          Added RTCORBA.h and RTCORBA.cpp to the project.
+
 Tue Jun 12 16:27:10 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/RT_Endpoint_Utils.cpp:
