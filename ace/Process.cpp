@@ -823,6 +823,10 @@ int
 ACE_Process_Options::pass_handle (ACE_HANDLE h)
 {
 # if defined (ACE_WIN32)
+#  if defined (ACE_HAS_WINCE)
+  ACE_NOTSUP_RETURN (-1);
+#  endif /* ACE_HAS_WINCE */
+
   // This is oriented towards socket handles... may need some adjustment
   // for non-sockets.
   // This is all based on an MSDN article:
@@ -838,13 +842,13 @@ ACE_Process_Options::pass_handle (ACE_HANDLE h)
   if (!GetVersionEx (&osvi) || osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
     {
       HANDLE dup_handle;
-      if (!::DuplicateHandle (GetCurrentProcess (),
-                              ACE_static_cast (HANDLE, h),
-                              GetCurrentProcess (),
-                              &dup_handle,
-                              0,
-                              TRUE,   // Inheritable
-                              DUPLICATE_SAME_ACCESS))
+      if (!DuplicateHandle (GetCurrentProcess (),
+                            ACE_static_cast (HANDLE, h),
+                            GetCurrentProcess (),
+                            &dup_handle,
+                            0,
+                            TRUE,   // Inheritable
+                            DUPLICATE_SAME_ACCESS))
         return -1;
       dup_handles_.set_bit (ACE_static_cast (ACE_HANDLE, dup_handle));
     }
