@@ -1,3 +1,9 @@
+Wed Mar  3 12:30:33 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile: 
+
+	  Modified the Makefile to link ACE_QoS lib only when rapi=1.
+
 Wed Mar  3 10:55:13 2004  David Smith  <dts@prismtechnologies.com>
 
 	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
