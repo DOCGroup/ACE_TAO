@@ -49,13 +49,16 @@ be_visitor_interface::visit_interface (be_interface *)
 int
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
-  //If, is implied-IDL
+   //If, is implied-IDL
   if (node->original_interface () != 0) 
+  {
     // and the name starts with AMH
     if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
-      // then it is an AMH node
-      return 1;
-  
+      {
+        // then it is an AMH node
+        return 1;
+      }
+  }
   return 0;
 }
 

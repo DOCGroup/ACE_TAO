@@ -29,9 +29,6 @@ be_visitor_amh_rh_interface_sh::~be_visitor_amh_rh_interface_sh (void)
 int
 be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
 {
-  if (node->srv_hdr_gen () || node->imported () || node->is_local ())
-    return 0;
-  
   TAO_OutStream *os = this->ctx_->stream ();
   
   os->indent ();
@@ -54,12 +51,11 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   inherit_client_parent += "::";
   inherit_client_parent +=  rh_base_class_name;
   
-  ACE_CString inherit_tao_parent = "TAO_AMH_";
-  inherit_tao_parent += node->original_interface ()->local_name ();
+  ACE_CString inherit_tao_parent = "TAO_AMH_ResponseHandler";
   
   // Now generate the class definition
   *os << "class " << be_global->skel_export_macro ()
-      << " " << rh_base_class_name.c_str () << be_idt_nl << ": " 
+      << " " << rh_skel_class_name.c_str () << " : " << be_idt_nl 
       << "public " << inherit_client_parent.c_str () <<"," << be_idt_nl
       << "public " << inherit_tao_parent.c_str () << be_nl;
   
@@ -98,18 +94,6 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
                          "be_visitor_interface_sh::"
                          "visit_interface - "
                          "codegen for scope failed\n"),
-                        -1);
-    }
-  
-  // Generate skeletons for operations of our base classes. These
-  // skeletons just cast the pointer to the appropriate type
-  // before invoking the call.
-  if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
-                         "visit_interface - "
-                         "inheritance graph traversal failed\n"),
                         -1);
     }
   

@@ -44,8 +44,19 @@ be_visitor_interface_ss::~be_visitor_interface_ss (void)
 int
 be_visitor_interface_ss::visit_interface (be_interface *node)
 {
-  if (node->srv_skel_gen () || node->imported () || node->is_local ())
+  if (node->srv_skel_gen () || node->imported ())
     return 0;
+
+  if (node->is_local ())
+    {
+      if (this->is_amh_rh_node (node))
+        {
+          // Create amh_rh_visitors
+          be_visitor_amh_rh_interface_ss amh_rh_ss_intf (this->ctx_);
+          amh_rh_ss_intf.visit_interface (node);
+        }
+        return 0;
+    }
 
   if (this->generate_amh_classes (node) == -1)
     return -1;
@@ -369,8 +380,7 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 int
 be_visitor_interface_ss::generate_amh_classes (be_interface *node)
 {
-  // if we are to generate AMH classes, do it now
-  if (be_global->gen_amh_classes ())
+   if (be_global->gen_amh_classes ())
     {
       be_visitor_amh_interface_ss amh_intf (this->ctx_);
       return amh_intf.visit_interface (node);

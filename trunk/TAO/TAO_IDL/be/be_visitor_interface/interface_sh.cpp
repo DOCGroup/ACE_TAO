@@ -46,6 +46,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (node->srv_hdr_gen () || node->imported ())
     return 0;
 
+  // If this node is a AMH-RH node, then generate code for it
   if (node->is_local ())
     {
       if (this->is_amh_rh_node (node))
@@ -54,18 +55,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
           be_visitor_amh_rh_interface_sh amh_rh_intf (this->ctx_);
           amh_rh_intf.visit_interface (node);
         }
-      else
-        {
-          return 0;
-        }
+        return 0;
     }
 
-  // if we are to generate AMH classes, do it now
-  if (be_global->gen_amh_classes ())
-    {
-      be_visitor_amh_interface_sh amh_intf (this->ctx_);
-      amh_intf.visit_interface (node);
-    }
+  if (this->generate_amh_classes (node) == -1)
+    return -1;
 
   TAO_OutStream *os  = this->ctx_->stream (); // output stream
 
@@ -320,4 +314,15 @@ be_visitor_interface_sh::this_method (be_interface *node)
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
       << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");\n" << be_uidt_nl;
+}
+
+int
+be_visitor_interface_sh::generate_amh_classes (be_interface *node)
+{
+   if (be_global->gen_amh_classes ())
+    {
+      be_visitor_amh_interface_sh amh_intf (this->ctx_);
+      return amh_intf.visit_interface (node);
+    }
+  return 0;
 }
