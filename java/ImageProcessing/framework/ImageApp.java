@@ -24,12 +24,8 @@ public class ImageApp extends Applet
     String testFile = getParameter ("testFile");
     if (testFile != null)
       {
-	String server = getParameter ("server");
-	String portString = getParameter ("port");
-	int port = (new Integer (portString)).intValue ();
-
-	this.tester_ = new Tester (testFile, server, port, this);
-	System.out.println ("Initializing tester...");
+	this.tester_ = new Tester (testFile, this);
+	this.tester_.initialize ();
       }    
   }
 
