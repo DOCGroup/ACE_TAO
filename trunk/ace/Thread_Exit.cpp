@@ -105,6 +105,32 @@ ACE_Thread_Exit::~ACE_Thread_Exit (void)
   ACE_OS_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
 }
 
+ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag = 0)
+  : instance_ (0)
+{
+  if (flag)
+    {
+      ACE_NEW (instance_, ACE_Thread_Exit);
+    }
+}
+
+ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe (void)
+{
+  delete this->instance_;
+}
+
+ACE_Thread_Exit *
+ACE_Thread_Exit_Maybe::operator -> (void) const
+{
+  return this->instance_;
+}
+
+ACE_Thread_Exit *
+ACE_Thread_Exit_Maybe::instance (void) const
+{
+  return this->instance_;
+}
+
 #if (defined (ACE_HAS_THREADS) && \
       (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
        defined (ACE_HAS_TSS_EMULATION)))
