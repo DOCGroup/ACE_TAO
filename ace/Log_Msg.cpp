@@ -466,7 +466,7 @@ ACE_Log_Msg::open (const char *prog_name,
           if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
             ACE_Log_Msg_message_queue->close ();
           ACE_SPIPE_Connector con;
-          status = con.connect (ACE_Log_Msg_message_queue,
+          status = con.connect (*ACE_Log_Msg_message_queue,
                                 ACE_SPIPE_Addr (logger_key));
         }
 #else
