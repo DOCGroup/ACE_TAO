@@ -1,3 +1,15 @@
+Tue Jun  4 06:46:27 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Added the
+	  "1" parameter to the call to deactivate() method to simply
+	  "pulse" the queue.
+
+	* ace/Message_Queue_T.h: Added new pulse parameter to
+	  ACE_Message_Queue::deactivate() so that callers can decide
+ 	  whether to change the state of the queue to be "deactivated" or
+ 	  just to pulse waiting threads to wake up and continue their
+ 	  processing.  This simplies one of the examples in C++NPv2.
+
 Mon Jun  3 16:11:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/FileCharStream.cpp:

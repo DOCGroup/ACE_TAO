@@ -198,7 +198,7 @@ int AC_Output_Handler::handle_input (ACE_HANDLE h) {
   reactor ()->remove_handler
     (h, ACE_Event_Handler::READ_MASK
         | ACE_Event_Handler::DONT_CALL);
-  msg_queue ()->deactivate ();
+  msg_queue ()->deactivate (1);
   return 0;
 }
 
