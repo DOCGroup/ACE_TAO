@@ -488,6 +488,7 @@ module Deployment {
     string UUID;
     string location;
     Properties execParameter;
+    Properties infoProperty;
     Requirements deployRequirement;
     NamedImplementationArtifacts dependsOn;
   };
