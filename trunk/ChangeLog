@@ -10,8 +10,8 @@ Mon Jun 21 13:49:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_macros.h:
 
-	  Use a static_cast<> instead of a C style cast.  The former is
-	  the preferred method of casting in ACE.
+	  Use a static_cast<> instead of a C style cast.  ANSI C++ casts
+	  are the preferred method of casting in ACE.
 
 Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
