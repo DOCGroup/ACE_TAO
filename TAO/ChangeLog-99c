@@ -1,3 +1,9 @@
+Sat Aug 28 16:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/AMI/ami_test.dsw:
+	  MSVC workspace file to contain the already existing
+	  project files.
+
 Sat Aug 28 16:04:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp (open):
