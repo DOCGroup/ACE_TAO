@@ -1,3 +1,10 @@
+Tue Jul 23 15:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Exceptions/client.cpp (main):
+	  Changed 'int time' to 'Test::Timestamp time'.  This should now
+	  fix BCB.  Thanks to Ossama Othman <ossama@doc.ece.uci.edu> for
+	  the suggestion.
+
 Tue Jul 23 17:15:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/PortableServer/Collocated_Object.cpp

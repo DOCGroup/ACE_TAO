@@ -30,7 +30,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      int time = 10;
+      Test::Timestamp time = 10;
       roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
