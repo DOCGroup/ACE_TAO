@@ -1,3 +1,24 @@
+Fri Dec 10 10:40:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        
+          Removed unnecessary text output.
+          
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        
+          Cosmetic changes to code formatting.
+          
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        
+          Removed redundant exception throw of BAD_PARAM - it is
+          already done by a previous function call.
+          
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        
+          Added logical OR of OMGVMCID to the minor code of a
+          BAD_PARAM exception throw, as has been done for all other
+          such CORBA system exception throws in TAO.
+
 Fri Dec 10 09:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Dynamic.pidl:
