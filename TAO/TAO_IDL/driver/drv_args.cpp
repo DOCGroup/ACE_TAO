@@ -260,7 +260,7 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default")
+      ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
       ACE_TEXT ("is thru-POA collocation\n")
     ));
   ACE_DEBUG ((
@@ -868,7 +868,7 @@ DRV_parse_args (long ac, char **av)
                   // path given above. Other platforms don't need the
                   // executable name at all.
                   tmp += "\\gperf.exe";
-#endif                 
+#endif
                   idl_global->gperf_path (tmp.fast_rep ());
                   i++;
                 }
