@@ -1,3 +1,46 @@
+Fri Jun 16 17:30:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/Makefile:
+        * ace/RMCast/RMCast.dsp:
+        * ace/RMCast/RMCast.dsw:
+        * ace/RMCast/RMCast_Export.h:
+          In this library we will implement a simple, small scale reliable
+          multicast protocol for ACE.  The library is based on the ASX
+          classes in ACE (Task, Module and friends).
+
+        * tests/RMCast/Makefile:
+        * tests/RMCast/RMCast_Tests.dsw:
+          The unit test directory for the RMCast library components.
+
+        * ace/RMCast/RMCast_Fragment.h:
+        * ace/RMCast/RMCast_Fragment.i:
+        * ace/RMCast/RMCast_Fragment.cpp:
+          The fragmentation task.  It divides a message block chain in
+          small fragments.  The fragments are limited by the number of
+          bytes and the number of entries in the chain (for platforms with
+          limited IO vectors).
+
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Fragment_Test.dsp:
+          Unit test for the fragmentation layer.
+
+        * ace/RMCast/RMCast_Partial_Message.h:
+        * ace/RMCast/RMCast_Partial_Message.i:
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+          A simply class to maintain a partial received messages, keeps
+          track of the missing bytes and detects when the complete message
+          has been received.
+
+        * ace/RMCast/RMCast_Reassembly.h:
+        * ace/RMCast/RMCast_Reassembly.i:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+          The reassembly layer.  Uses the Partial_Message class to do a
+          great deal of the work.
+
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.dsp:
+          Unit test for the reassembly layer.
+
 Fri Jun 16 17:00:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/rules.bin.GNU:
@@ -7,59 +50,59 @@ Fri Jun 16 17:00:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Jun 16 16:18:21 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile (DIRS):
+        * ace/Makefile (DIRS):
 
-	  Descend into and build the newly added SSL directory if "make
-	  ssl=1" is issued.
+          Descend into and build the newly added SSL directory if "make
+          ssl=1" is issued.
 
-	* ace/SSL/ACE_SSL.dsp:
-	* ace/SSL/Makefile:
-	* ace/SSL/SSL_Context.cpp:
-	* ace/SSL/SSL_Context.h:
-	* ace/SSL/SSL_Export.h:
-	* ace/SSL/SSL_SOCK.cpp:
-	* ace/SSL/SSL_SOCK.h:
-	* ace/SSL/SSL_SOCK_Acceptor.cpp:
-	* ace/SSL/SSL_SOCK_Acceptor.h:
-	* ace/SSL/SSL_SOCK_Connector.cpp:
-	* ace/SSL/SSL_SOCK_Connector.h:
-	* ace/SSL/SSL_SOCK_Stream.cpp:
-	* ace/SSL/SSL_SOCK_Stream.h:
+        * ace/SSL/ACE_SSL.dsp:
+        * ace/SSL/Makefile:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Export.h:
+        * ace/SSL/SSL_SOCK.cpp:
+        * ace/SSL/SSL_SOCK.h:
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Acceptor.h:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Connector.h:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+        * ace/SSL/SSL_SOCK_Stream.h:
 
-	  Integrated the ACE SSL wrappers into the ACE mainline
-	  distribution.  Enable using "make ssl=1."  The library that is
-	  generated is called "libACE_SSL.so" on UNIX, and ACE_SSL{d}.dll on
-	  Win32.
+          Integrated the ACE SSL wrappers into the ACE mainline
+          distribution.  Enable using "make ssl=1."  The library that is
+          generated is called "libACE_SSL.so" on UNIX, and ACE_SSL{d}.dll on
+          Win32.
 
-	* examples/IPC_SAP/Makefile:
+        * examples/IPC_SAP/Makefile:
 
-	  Build SSL_SAP example if "make ssl=1" is issued.
+          Build SSL_SAP example if "make ssl=1" is issued.
 
-	* examples/IPC_SAP/SSL_SAP/SSL_SOCK_SAP.dsw:
-	* examples/IPC_SAP/SSL_SAP/Makefile:
-	* examples/IPC_SAP/SSL_SAP/README:
-	* examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
-	* examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.h:
-	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client.h:
-	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
-	* examples/IPC_SAP/SSL_SAP/dummy.pem:
-	* examples/IPC_SAP/SSL_SAP/key.pem
-	* examples/IPC_SAP/SSL_SAP/local_data:
-	* examples/IPC_SAP/SSL_SAP/summarize:
+        * examples/IPC_SAP/SSL_SAP/SSL_SOCK_SAP.dsw:
+        * examples/IPC_SAP/SSL_SAP/Makefile:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.h:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.h:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+        * examples/IPC_SAP/SSL_SAP/dummy.pem:
+        * examples/IPC_SAP/SSL_SAP/key.pem
+        * examples/IPC_SAP/SSL_SAP/local_data:
+        * examples/IPC_SAP/SSL_SAP/summarize:
 
-	  Integrated example that demonstratres use of the ACE SSL
-	  wrappers.
+          Integrated example that demonstratres use of the ACE SSL
+          wrappers.
 
-	* include/makeinclude/wrapper_macros.GNU (ssl):
+        * include/makeinclude/wrapper_macros.GNU (ssl):
 
-	  Added make flag to enable compilation of OpenSSL support in
-	  ACE.   (e.g. make ssl=1)
+          Added make flag to enable compilation of OpenSSL support in
+          ACE.   (e.g. make ssl=1)
 
 Fri Jun 16 14:40:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
