@@ -21,6 +21,7 @@ ACE_RCSID (Strategies,
            SHMIOP_Connector,
            "$Id$")
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;

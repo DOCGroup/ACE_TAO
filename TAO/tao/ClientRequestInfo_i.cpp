@@ -154,7 +154,7 @@ TAO_ClientRequestInfo_i::received_exception_id (
                         0);
     }
 
-  return CORBA::string_dup (this->caught_exception_->_id ());
+  return CORBA::string_dup (this->caught_exception_->_rep_id ());
 }
 
 IOP::TaggedComponent *

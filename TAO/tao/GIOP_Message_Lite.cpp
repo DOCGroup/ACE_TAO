@@ -1177,22 +1177,22 @@ TAO_GIOP_Message_Lite::write_request_header (
       out_stream << CORBA::Any::from_octet (1);
     }
   // Sync scope - ignored by server if request is not oneway.
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT)
-	   || response_flags == CORBA::Octet (TAO::SYNC_NONE)
+  else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
+	   || response_flags == CORBA::Octet (Messaging::SYNC_NONE)
 	   || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
 	   || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     {
       // No response required.
       out_stream << CORBA::Any::from_octet (0);
     }
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+  else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER))
     {
       // Return before dispatching servant.  We're also setting the high
       // bit here. This is a temporary fix until the rest of GIOP 1.2 is
       // implemented in TAO.
       out_stream << CORBA::Any::from_octet (129);
     }
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
+  else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
     {
       // Return after dispatching servant.
       out_stream << CORBA::Any::from_octet (3);

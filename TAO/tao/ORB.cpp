@@ -82,7 +82,8 @@ int CORBA_ORB::orb_init_count_ = 0;
 // ****************************************************************
 
 CORBA::ORB::InvalidName::InvalidName (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
+                         "InvalidName")
 {
 }
 
@@ -93,7 +94,8 @@ CORBA::ORB::InvalidName::~InvalidName (void)
 
 // Copy constructor.
 CORBA::ORB::InvalidName::InvalidName (const ::CORBA::ORB::InvalidName &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._rep_id (),
+                         _tao_excp._name ())
 {
 }
 
@@ -108,7 +110,7 @@ CORBA::ORB::InvalidName::operator= (const ::CORBA::ORB::InvalidName &_tao_excp)
 CORBA::ORB::InvalidName *
 CORBA::ORB::InvalidName::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InvalidName *, exc);
     }

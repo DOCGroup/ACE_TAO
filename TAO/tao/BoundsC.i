@@ -26,7 +26,7 @@
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::Bounds &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;

@@ -96,11 +96,6 @@ protected:
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
 
-private:
-
-  /// Return the remote endpoint, a helper function
-  TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
-
 protected:
 
   /// TCP configuration properties to be used for all
@@ -110,6 +105,11 @@ protected:
   /// Do we need to use a GIOP_Lite for sending messages?
   CORBA::Boolean lite_flag_;
 
+
+private:
+
+  /// Return the remote endpoint, a helper function
+  TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
 

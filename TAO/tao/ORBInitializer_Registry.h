@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PortableInterceptorC.h"
-#include "TAO_Singleton.h"
 #include "ace/Array_Base.h"
 
 /**
@@ -30,10 +29,17 @@
  *
  * @brief Global list that contains all portable interceptor ORB
  *        initializers.
+ *
+ * @note This class should be instantiated via its instance() method.
+ *       Normally this would be enforced by making the constructor
+ *       protected but that forces a friend declaration containing a
+ *       template type (TAO_Singleton) with a static member to be
+ *       introduced.  In turn, this potentially introduces problems in
+ *       MS Windows DLL environments due to the occurance of multiple
+ *       singleton instances.  There should only be one!
  */
 class TAO_Export TAO_ORBInitializer_Registry
 {
-  friend class TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
   friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init
                                   ACE_ENV_ARG_DECL_NOT_USED);
@@ -42,17 +48,23 @@ class TAO_Export TAO_ORBInitializer_Registry
                                          const char *,
                                          CORBA_Environment &);
 
-protected:
+public:
 
   /// Only allow this class to be instantiated as a singleton
   /// instance, so declare the constructor as protected.
+  /**
+   * @note See the note in the class description for an explanation of
+   *       why this constructor is not protected.
+   */
   TAO_ORBInitializer_Registry (void);
 
   /// Destructor.  Releases duplicated ORBInitializer references.
   ~TAO_ORBInitializer_Registry (void);
 
-  ///< Register an ORBInitializer with the underlying ORBInitializer
-  ///< array.
+protected:
+
+  /// Register an ORBInitializer with the underlying ORBInitializer
+  /// array.
   void register_orb_initializer (
     PortableInterceptor::ORBInitializer_ptr init
     ACE_ENV_ARG_DECL);
@@ -83,25 +95,6 @@ private:
   ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr> initializers_;
 
 };
-
-#if defined (__ACE_INLINE__)
-# include "tao/ORBInitializer_Registry.inl"
-#endif /* __ACE_INLINE__ */
-
-#if defined (_MSC_VER)
-// Disable "nonstandard extension used : 'extern' before template
-// explicit instantiation" warning.
-#pragma warning(disable:4231)
-#endif /* _MSC_VER */
-
-TAO_SINGLETON_DECLARE (TAO_Singleton,
-                       TAO_ORBInitializer_Registry,
-                       TAO_SYNCH_MUTEX)
-
-#if defined (_MSC_VER)
-// Re-enable the warning.
-#pragma warning(default:4231)
-#endif /* _MSC_VER */
 
 #include "ace/post.h"
 
