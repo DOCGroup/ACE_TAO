@@ -4,6 +4,7 @@
 #define ACE_LOCAL_NAME_SPACE_T_C
 
 #include "ace/ACE.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -146,8 +147,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (const ACE_WString
       ACE_USHORT16 *value_rep = (ACE_USHORT16 *) (ptr);
       ACE_USHORT16 *name_rep = (ACE_USHORT16 *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
-      ACE_NS_String new_name (name_rep, name.fast_rep (), name_len);
-      ACE_NS_String new_value (value_rep, value.fast_rep (), value_len);
+
+      ACE_Auto_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
+      ACE_Auto_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
+      ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
+      ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
+
       ACE_OS::strcpy (new_type, type);
       ACE_NS_Internal new_internal (new_value, new_type);
       int result = -1;
@@ -908,5 +913,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
     {
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) 
+template class ACE_Auto_Array_Ptr<ACE_USHORT16>;
+template class ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Array_Ptr<ACE_USHORT16>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */

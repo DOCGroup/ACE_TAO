@@ -66,6 +66,7 @@
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%Lu")
 # define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%Ld")
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+# define ACE_WSTRING_HAS_USHORT_SUPPORT 1
 
 /* need to ensure these are included before <iomanip> */
 # include <time.h>

@@ -1,3 +1,56 @@
+Fri May 12 11:25:10 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Basic_Types.h:
+
+          Didn't understand at first why ACE_SIZEOF_WCHAR wasn't
+          defined to just "sizeof (wchar_t)".  So I changed it, but
+          now I realize that this will not work if ACE_SIZEOF_WCHAR
+          is used in a #if.  Bleh.  Since wchar_t is always different,
+          I just defined it as 2 for WIN32 and 0 for others (so the
+          tests/Basic_Types_Test will catch it).
+
+        * ace/ACE.cpp:
+
+          Chris Kohlhoff <chris@kohlhoff.com> reported that Borland
+          didn't like "sizeof wchar_t", but adding parenthesis worked.
+          Applied this patch, and changed the cast to an ACE_static_cast.
+          [Bug 560]
+
+        * ace/High_Res_Timer.cpp:
+
+          Borland was giving some warnings here since a const method
+          was calling this->global_scale_factor (), which is a static
+          method.  Changed it to ACE_High_Res_Timer::global_scale_factor ()
+          and things compiled cleanly.
+
+        * ace/config-win32-borland.h:
+        * ace/README:
+        * ace/SString.cpp:
+        * ace/SString.h:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+ 
+          On Borland BCB 5, wchar_t is (correctly) a separate type than
+          unsigned short, so all the implicit casting between the two in
+          the ACE Name Space.  So added a new macro, 
+          ACE_WSTRING_HAS_USHORT_SUPPORT, that enables another constructor
+          for ACE_WString.
+
+          Chris Kohlhoff <chris@kohlhoff.com> also reported this problem
+          and a solution, but unfortunately ACE_Name_Space requires that
+          this type is 2 bytes so we couldn't just use ACE_WSTRING_TYPE
+          here.  Instead I added in both the new constructor and a 
+          ushort_rep method on ACE_WString.  I changed the Name Space stuff
+          to use this instead.  BTW, old code shouldn't need to be changed
+          on MSVC, just if you use BCB.
+
+        * tests/SString_Test.cpp:
+
+          We were using ACE_USHORT16 as the single character type for 
+          ACE_WString. This has been changed to wchar_t.  Thanks to Chris 
+          for this one also.  
+
 Fri May 12 10:12:05 2000  James Hu  <jxh@entera.com>
 
         * ace/OS.cpp (ACE_Thread_Adapter::invoke):

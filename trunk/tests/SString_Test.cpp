@@ -130,7 +130,7 @@ main (int, ACE_TCHAR *[])
     ACE_WString s4 ("ello");
     ACE_WString s5 = s1 + " " + s2;
 
-    ACE_USHORT16 single_character = 'z';
+    wchar_t single_character = 'z';
     ACE_WString single_character_string (single_character);
     
     ACE_WString empty_string;

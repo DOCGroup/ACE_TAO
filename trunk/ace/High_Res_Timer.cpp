@@ -353,14 +353,16 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // Please do _not_ rearrange this equation.  It is carefully
   // designed and tested to avoid overflow on machines that don't have
   // native 64-bit ints.
-  nanoseconds = (this->end_ - this->start_) * (1000u / this->global_scale_factor ());
+  nanoseconds = (this->end_ - this->start_) 
+                * (1000u / ACE_High_Res_Timer::global_scale_factor ());
 }
 
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
   // Same as above.
-  nanoseconds = this->total_ / this->global_scale_factor () * 1000u;
+  nanoseconds = this->total_ 
+                / ACE_High_Res_Timer::global_scale_factor () * 1000u;
 }
 
 #if !defined (ACE_HAS_WINCE)
