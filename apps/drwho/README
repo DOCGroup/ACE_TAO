@@ -3,8 +3,15 @@ alleviates certain rwho(1) limitations.  For instance it adds
 functionality that spans subnets.  In addition, drwho prints a much
 more concise listing of who's logged in around a network.
 
-Below are some examples of how to use drwho.  If you'd like to find
-out who's logged in around here, try the following commands:
+Below are some examples of how to use drwho.
+
+0. Start by running the server in a window or as a daemon, e.g., run
+   the following on a local machine, such as tango.cs.wustl.edu:
+
+% drwho-server
+
+Then, If you'd like to find out who's logged in, try the following
+commands:
 
 1. Print out the command-line options.
 
@@ -33,12 +40,12 @@ usage: ./drwho-client
 
 2. Find out where a particular person is logged in:
 
-% drwho-client -r -w schmidt
+% drwho-client -A tango.cs.wustl.edu -r -w schmidt
 tango
 
 This is useful for remote commands that require a hostname, e.g.:
 
-% talk schmidt@`drwho-client -r -w schmidt`
+% talk schmidt@`drwho-client -A tango.cs.wustl.edu -r -w schmidt`
 
 or
 
@@ -61,9 +68,22 @@ or
 
 3. Find out which friends are logged in (* means currently active)
 
-% drwho-client -r -f ~schmidt/.friends.dta
+% drwho-client -A tango.cs.wustl.edu -r -f ~schmidt/.friends.dta
 remote friends logged on
 ------------------------
+*Doug O'las    [tango*(3) mambo]
+ Carlos O'Ryan [tango swarm.cs.wustl.edu macarena]
+ Irfan Pyarali [merengue]
+ Nanbor Wang   [lambada]
+ Marina Spivak [mambo]
+ Chris Gill    [tango]
+*Vishal        [merengue*(2)]
+ Kirthika      [tango waltz]
+ Naga          [tango polka]
+ Alex          [lindy]
+ Bala          [cumbia]
+ Pradeep       [flamenco]
+ Matt Braun    [lambada]
 ------------------------
 friends: 5      users: 168
 
@@ -71,14 +91,192 @@ friends: 5      users: 168
 
 4. Find out everyone who is logged in everywhere!
 
-% drwho-client -r -a 
+% drwho-client -A tango.cs.wustl.edu -r -a 
 remote users logged on
 ------------------------
+ rlneblet                          [ascc]
+ woody                             [fixer]
+ Jyoti Parwatikar                  [hopscotch]
+ Stephen D. Scott                  [occam]
+ klkramer                          [ascc]
+ dmorris                           [ascc]
+*pabacard                          [ascc*]
+ sestasne                          [ascc]
+ Sumedh Mungee                     [merengue lindy]
+ Alexander Babu Arulanthu          [lindy]
+ Robert A. Rouse                   [siesta]
+ asamarak                          [ascc]
+ Tom Chaney                        [snoodles]
+ Joe Hoffert                       [monkeybars]
+ ircornel                          [ascc]
+ Chris Cleeland                    [macarena]
+*Matthew Karl Lundberg             [enz lcs*(2)]
+ dmschult                          [ascc]
+ sherlia                           [owen]
+*wmwhites                          [ascc*]
+ Marius Mihai Tutunaru             [siesta]
+ Ken Wong                          [ackbar sarlacc]
+ abstutts                          [ascc]
+ Barry L. Kalman                   [sachel]
+ Yunhong Zhou                      [siesta]
+ Marina Igorevna Spivak            [mambo]
+ mschraed                          [ascc]
+ tuck                              [ascc]
+ Daniel Robert Dooly               [cardinal]
+ emlentz                           [ascc]
+ Margaret Flucke                   [honker yoda brainmap]
+ Jonathan S. Pollack               [siesta]
+ Gurudatta M. Parulkar             [ackbar]
+ Mike Richards                     [teebo]
+*Vishal Kachroo                    [merengue*(1)]
+ The dump man                      [tapeworm]
+ Uooyeol Yoon                      [siesta]
+ jtlink                            [ascc]
+ Dan Rosenstein                    [tubman]
+ cdnorden                          [ascc]
+ Jon Turner                        [spanky]
+ Stan C. Kwasny                    [lambda]
+ aymessin                          [ascc]
+ Nanbor Wang                       [lambada]
+ wolf                              [sarlacc]
+ jgbers                            [ascc]
+ Pradeep Gore                      [flamenco]
+ Chris D. Gill                     [tango]
+ sduseja                           [ascc]
+ amgarcia                          [ascc]
+*Hongyin Quan                      [ackbar*(2)]
+ firemen                           [helen]
+*lskafenb                          [ascc*]
+ Sally Goldman                     [occam]
+ Marcel Waldvogel                  [tiger]
+ klforesm                          [ascc]
+ Andy Fingerhut                    [yoda leia]
+ root@tango                        [tango emperor siren flora helen boushi tapeworm siesta rainier taumsauk honker polka]
+ Nagarajan Surendran               [tango polka]
+ ajeckste                          [ascc]
+ Linda Suri                        [kavita]
+ Sarah Elizabeth Burcham           [helen]
+ Salathiel Sawyer                  [helen]
+ A. Maynard Engebretson            [wicket]
+ Theresa Manzara                   [siesta]
+ aagrillo                          [ascc]
+ ksviehen                          [ascc]
+ Will Gillett                      [gel]
+ Elaine M Ashton                   [helen]
+ James C. Gray                     [siesta]
+ Ian Flanigan                      [siesta]
+ jacrank                           [ascc]
+ Matthew J Braun                   [lambada]
+*pjhanrah                          [ascc*]
+ Vadim Adamov                      [siesta]
+*rbherrin                          [ascc*]
+ kslee                             [ascc]
+ Balachandran Natarajan            [cumbia]
+*Qianbo Huai                       [ecommerce*(2)]
+ Scott Thomas Haug                 [bacon kato]
+ Yuhua Chen                        [beru]
+ blawrenc                          [ascc]
+ dcoats                            [ascc]
+*sdsinger                          [ascc*]
+ Katherine Skirving Larson         [odysseus mas]
+ rmcarbon                          [ascc]
+ rer                               [luke honker leia]
+ Ron Loui                          [ai siesta]
+ Sergio Flores                     [tango siesta]
+ maint                             [helen]
+ mewedeha                          [ascc]
+ Scott Simon                       [ackbar]
+ weathert                          [anakin hobbie honker]
+ Kirthika Parameswaran             [waltz tango]
+ Scott Douglas Powers              [greedo buster]
+*vehays                            [ascc*]
+ Multiagent Systems Research Group [siren]
+*Douglas C. Schmidt                [tango*(3) mambo]
+ sunyh                             [r2d2]
+*jbbrooks                          [ascc*]
+ mweisema                          [ascc]
+*baruethe                          [ascc*]
+ Yan Zhou                          [thunderball]
+*jennyc                            [ascc*]
+ Karl Stiefvater                   [tamarin helen]
+ John Roman                        [helen]
+ slstraus                          [ascc]
+ Subhash Suri                      [kavita]
+ Sandeep Sikka                     [siesta]
+ Dna Mutants                       [lcs]
+ Irfan Pyarali                     [merengue]
+ ajhingst                          [ascc]
+ Tuomas Sandholm                   [siren]
+ Carlos O'Ryan                     [tango swarm.cs.wustl.edu macarena]
+ Tilman Wolf                       [siesta]
+------------------------
+friends: 20	users: 20
+
 ------------------------
 friends: 37	users: 163
 ----------------------------------------
 
 5. Print out all machines and who is logged into each one
 
-% drwho-client -R -l
+% drwho-client -A tango.cs.wustl.edu -R -l
 ----------------------------------------
+kavita             Subhash Suri, Linda Suri
+lcs                Matthew Karl Lundberg*(2), Dna Mutants
+leia               Andy Fingerhut, rer
+rainier            root@tango
+thunderball        Yan Zhou
+lindy              Sumedh Mungee, Alexander Babu Arulanthu
+flamenco           Pradeep Gore
+ai                 Ron Loui
+wicket             A. Maynard Engebretson
+occam              Stephen D. Scott, Sally Goldman
+helen              firemen, Sarah Elizabeth Burcham, Elaine M Ashton, root@tango, maint, John Roman, Karl Stiefvater, Salathiel Sawyer
+enz                Matthew Karl Lundberg
+tamarin            Karl Stiefvater
+tiger              Marcel Waldvogel
+cumbia             Balachandran Natarajan
+r2d2               sunyh
+fixer              woody
+ecommerce          Qianbo Huai*(2)
+lambda             Stan C. Kwasny
+boushi             root@tango
+mambo              Douglas C. Schmidt, Marina Igorevna Spivak
+ascc               slstraus, rmcarbon, aymessin, aagrillo, sdsinger*, dmschult, sestasne, dmorris, jgbers, jennyc*, sduseja, baruethe*, gzhou*, vehays*, pjhanrah*, dcoats, saduthie*, ksviehen, cdnorden, ajhingst*, mschraed, asamarak, pabacard*, mewedeha, ajeckste, jbbrooks, blawrenc, amgarcia, abstutts, klforesm, klkramer, pkshah*, jtlink, jacrank, wmwhites*, kslee, mweisema, emlentz, rlneblet, tuck
+beru               Yuhua Chen
+emperor            root@tango
+siren              Tuomas Sandholm, root@tango, Multiagent Systems Research Group
+tubman             Dan Rosenstein
+gel                Will Gillett
+honker             Margaret Flucke, root@tango, weathert, rer
+greedo             Scott Douglas Powers
+swarm.cs.wustl.edu Carlos O'Ryan
+tapeworm           root@tango, The dump man
+siesta             Uooyeol Yoon, Marius Mihai Tutunaru, Vadim Adamov, Robert A. Rouse, Jonathan S. Pollack, James C. Gray, Sergio Flores, Sandeep Sikka, Ron Loui, Yunhong Zhou, Tilman Wolf, Theresa Manzara, Ian Flanigan, root@tango
+luke               rer
+snoodles           Tom Chaney
+ackbar             Ken Wong, Scott Simon, Gurudatta M. Parulkar, Hongyin Quan*(1)
+buster             Scott Douglas Powers
+tango              Nagarajan Surendran, Sergio Flores, Chris D. Gill, Kirthika Parameswaran, Carlos O'Ryan, root@tango, Douglas C. Schmidt*(3)
+teebo              Mike Richards
+cardinal           Daniel Robert Dooly
+lambada            Nanbor Wang, Matthew J Braun
+merengue           Sumedh Mungee, Vishal Kachroo*(1), Irfan Pyarali
+macarena           Chris Cleeland, Carlos O'Ryan
+sarlacc            wolf, Ken Wong
+spanky             Jon Turner
+brainmap           Margaret Flucke
+polka              Nagarajan Surendran, root@tango
+waltz              Kirthika Parameswaran
+flora              root@tango
+anakin             weathert
+bacon              Scott Thomas Haug
+hopscotch          Jyoti Parwatikar
+mas                Katherine Skirving Larson
+kato               Scott Thomas Haug
+hobbie             weathert
+odysseus           Katherine Skirving Larson
+sachel             Barry L. Kalman
+taumsauk           root@tango
+yoda               Margaret Flucke, Andy Fingerhut
+owen               sherlia
+monkeybars         Joe Hoffert
