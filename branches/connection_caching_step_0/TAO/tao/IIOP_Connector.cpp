@@ -72,11 +72,12 @@ TAO_IIOP_Connect_Creation_Strategy::
                                       TAO_ORB_Core *orb_core,
                                       void *arg,
                                       CORBA::Boolean flag)
-    :  ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core),
-       arg_ (arg),
-       lite_flag_ (flag)
+    : ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler> (t),
+      orb_core_ (orb_core),
+      arg_ (arg),
+      lite_flag_ (flag)
 {
+
 }
 
 int
