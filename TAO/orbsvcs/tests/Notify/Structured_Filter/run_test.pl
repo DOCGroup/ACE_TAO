@@ -71,6 +71,7 @@ $NS->Kill ();
 unlink $ior;
 unlink $notifyior;
 
+sleep 2;
 
 print "*************** Running Structured Client No Filters Test ****************\n";
 

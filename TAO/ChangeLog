@@ -1,3 +1,14 @@
+Fri Feb 11 07:29:34 2005  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl
+        * orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl
+          Some Notification test scripts were timing out on the
+          scoreboard. Increased the wait-time.
+
 Fri Feb 11 07:08:12 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:

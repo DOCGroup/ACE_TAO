@@ -88,7 +88,7 @@ for($i = 0; $i <= $#policies; $i++) {
   }
 
   $STC->Arguments($client_args . " -d $discard_policy");
-  $client = $STC->SpawnWaitKill (60);
+  $client = $STC->SpawnWaitKill (200);
 
   $STS->Kill ();
   if ($client != 0) {
