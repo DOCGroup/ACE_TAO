@@ -1,3 +1,12 @@
+Tue Jul 18 16:37:44 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/: Fixed non-const string warnings in the following:
+
+	 - DSI/server.cpp
+	 - Default_Servant/server.cpp
+	 - On_Demand_Activation/server.cpp
+	 - Reference_Counted_Servant/server.cpp
+
 Tue Jul 18 11:54:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/AliasDef_i.cpp:
