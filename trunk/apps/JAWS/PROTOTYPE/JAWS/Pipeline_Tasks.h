@@ -35,7 +35,17 @@ public:
   virtual JAWS_IO_Handler * new_handler (JAWS_Data_Block *data);
 };
 
+class JAWS_Pipeline_Done_Task : public JAWS_Pipeline_Handler
+{
+public:
+  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+};
+
 typedef ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>
         JAWS_Pipeline_Accept_Task_Singleton;
+
+typedef ACE_Singleton<JAWS_Pipeline_Done_Task, ACE_SYNCH_NULL_MUTEX>
+        JAWS_Pipeline_Done_Task_Singleton;
 
 #endif /* !defined (JAWS_PIPELINE_TASKS_H) */

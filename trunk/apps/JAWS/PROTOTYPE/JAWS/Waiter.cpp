@@ -3,6 +3,7 @@
 #include "ace/Proactor.h"
 
 #include "JAWS/Waiter.h"
+#include "JAWS/IO_Handler.h"
 
 ACE_RCSID(JAWS, Waiter, "$Id$")
 
