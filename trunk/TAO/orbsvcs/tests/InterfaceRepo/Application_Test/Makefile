@@ -54,10 +54,10 @@ LDFLAGS += -L$(TAO_ROOT)/tao
         testS_T.h testS_T.cpp testS_T.i
 
 client: $(addprefix $(VDIR),$(CLNT_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(VLDLIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SVR_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 
