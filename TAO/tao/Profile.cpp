@@ -22,7 +22,6 @@ TAO_Profile::~TAO_Profile (void)
 void
 TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component,
                                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Sanity checks.
   this->verify_orb_configuration (ACE_TRY_ENV);
