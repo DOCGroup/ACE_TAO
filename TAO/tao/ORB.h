@@ -346,7 +346,7 @@ namespace CORBA
         CORBA::ULong bound,
         CORBA::TypeCode_ptr element_type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     CORBA::TypeCode_ptr create_array_tc (
         CORBA::ULong length,
@@ -394,28 +394,28 @@ namespace CORBA
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     CORBA::TypeCode_ptr create_component_tc (
-      const char *id,
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        const char *id,
+        const char *name
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-   CORBA::TypeCode_ptr create_home_tc (
-      const char *id,
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::TypeCode_ptr create_home_tc (
+        const char *id,
+        const char *name
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-   CORBA::TypeCode_ptr create_event_tc (
-      const char *id,
-      const char *name,
-      CORBA::ValueModifier type_modifier,
-      CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::TypeCode_ptr create_event_tc (
+        const char *id,
+        const char *name,
+        CORBA::ValueModifier type_modifier,
+        CORBA::TypeCode_ptr concrete_base,
+        const CORBA::ValueMemberSeq &members
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

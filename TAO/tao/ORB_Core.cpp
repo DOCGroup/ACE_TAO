@@ -1406,7 +1406,7 @@ TAO_ORB_Core::service_raise_comm_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO_INVOKE_EXCEPTION);
+      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
 }
 
 
@@ -1429,7 +1429,7 @@ TAO_ORB_Core::service_raise_transient_failure (
           TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
           errno),
         CORBA::COMPLETED_MAYBE),
-        TAO_INVOKE_EXCEPTION);
+        TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
 }
 
 void

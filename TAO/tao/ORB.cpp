@@ -897,7 +897,7 @@ CORBA::ORB::create_home_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_home_tc (id,
