@@ -1,15 +1,16 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Notify Structured Supplier): notifytest, naming {
+project(*Ntf Struct Supp): notifytest, naming {
   exename = Structured_Supplier
 
   Source_Files {
+    Notify_Push_Supplier.cpp
     Structured_Supplier.cpp
   }
 }
 
-project(*Notify Structured Consumer): notifytest, naming {
+project(*Ntf Struct Cons): notifytest, naming {
   exename = Structured_Consumer
 
   Source_Files {
