@@ -294,6 +294,7 @@
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
+#define ACE_HAS_MEMCHR
 
 #if defined (__SUNPRO_CC)
 # define ACE_CC_NAME "SunPro C++"
