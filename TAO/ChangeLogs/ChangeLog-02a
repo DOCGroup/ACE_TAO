@@ -1,3 +1,8 @@
+Mon Sep 18 14:33:44 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+          More fine tuning of the interceptor changes, this time for enums
+
 Mon Sep 18 10:37:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
@@ -1395,6 +1400,20 @@ Mon Sep 11 12:56:11 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/ORB_Core.cpp:
         * tao/IOR_LookupTable.h:
         * tao/IOR_LookupTable.cpp:
+        * tao/IORTable/Makefile:
+        * tao/IORTable/iortable_export.h:
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/IORTable/IORTableC.i:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IORTable/diffs/IORTableC.h.diff:
+        * tao/IORTable/diffs/IORTableC.i.diff:
+        * tao/IORTable/diffs/IORTableC.cpp.diff:
           Removed the IOR_LookupTable to a separate pluggable adapter.
           That one it is only linked by applications that truly need it.
 
@@ -1457,7 +1476,7 @@ Mon Sep 11 12:56:11 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/params.h:
         * tao/params.i:
         * tao/params.cpp:
-
+	  Simplify #includes, use the IORTable classes.
 
         * */Makefile:
           Update dependencies
