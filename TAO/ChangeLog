@@ -1,3 +1,11 @@
+Fri Jul  9 07:29:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+	* tao/DynamicInterface/DII_Invocation_Adapter.h:
+
+	  Fixed warnings in the daily builds. Thanks to Johnny for letting
+	  me know about this.
+
 Thu Jul  8 17:48:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Invocation_Adapter.cpp:
