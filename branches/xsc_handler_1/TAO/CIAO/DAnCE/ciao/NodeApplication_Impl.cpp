@@ -153,8 +153,9 @@ CIAO::NodeApplication_Impl::start_i (Funct_Ptr functor
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
+  Component_Iterator end = this->component_map_.end ();
   for (Component_Iterator iter (this->component_map_.begin ());
-       iter != this->component_map_.end ();
+       iter != end;
        ++iter)
   {
     (((*iter).int_id_)->*functor) (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -182,8 +183,6 @@ CIAO::NodeApplication_Impl::install (
 
       retv->length (0);
 
-      CORBA::ULong num_containers = node_impl_info.length ();
-
       // Call init_containers to create all the necessary containers..
       this->init_containers (node_impl_info);
 
@@ -191,6 +190,7 @@ CIAO::NodeApplication_Impl::install (
       // the ComponentInfo for components installed in each container.
       // Merge all the returned ComponentInfo, which will be used
       // as the return value of this method.
+      const CORBA::ULong num_containers = node_impl_info.length ();
       for (CORBA::ULong i = 0; i < num_containers; ++i)
         {
           Deployment::ComponentInfos_var comp_infos =
@@ -224,7 +224,8 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
                    Components::RemoveFailure))
 {
   // For each container, invoke <remove> operation to remove home and components.
-  for (CORBA::ULong i = 0; i < this->container_set_.size (); ++i)
+  const CORBA::ULong set_size = this->container_set_.size ();
+  for (CORBA::ULong i = 0; i < set_size; ++i)
     {
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
