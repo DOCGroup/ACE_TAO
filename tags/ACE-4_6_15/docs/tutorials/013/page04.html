@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 013</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 013</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Multiple thread pools</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+Let's look now at the changes to our ACE_Message_Block derivative and
+the new ACE_Data_Block derivative.
+<P>
+The important thing to remember is that the data block (not the
+message block) is reference counted.  When you instantiate a new
+ACE_Message_Block, it will create one or more ACE_Data_Block objects
+to contain the data you need.  Optionally, you can provide it with a
+pointer to a data block.
+<P>
+When you finish with a message block, you should use the release()
+method to make it go away.  Do not ever <em>delete</em> an instance of
+a message block!  When you invoke release(), the message block will
+invoke release() on the data block(s) it contains.  If the block's
+reference count goes to zero as a result then the block will <em>delete</em>
+itself.
+<P>
+To increment the reference count of a data block, use the
+duplicate() method of the message block (or blocks) to get a new
+message block referencing the same data block.  This is very efficient 
+since the actual data is not copied.
+<P>
+<HR WIDTH="100%">
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>BLOCK_H</font>
+<font color=blue>#define</font> <font color=purple>BLOCK_H</font>
+
+<font color=blue>#include</font> "<font color=green>ace/Message_Block.h</font>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=blue>#include</font> "<font color=green>ace/Synch.h</font>"
+<font color=blue>#include</font> "<font color=green>mld.h</font>"
+<font color=blue>#include</font> "<font color=green>work.h</font>"
+
+<font color=red>/*
+   In this Tutorial, we derive from ACE_Data_Block for our special data.  With
+   the possiblilty that our Task object may forward the unit of work on to
+   another thread pool, we have to make sure that the data object doesn't go
+   out of scope unexpectedly.  An ACE_Message_Block will be deleted as soon as
+   it's release() method is called but the ACE_Data_Blocks it uses are
+   reference counted and only delete when the last reference release()es the
+   block.  We use that trait to simplify our object memory management.
+ */</font>
+class Data_Block : public ACE_Data_Block
+{
+public:
+    typedef ACE_Data_Block inherited;
+
+        <font color=red>// Create a data block with a unit of work to be done</font>
+    Data_Block (Unit_Of_Work * _data);
+
+    ~Data_Block (void);
+
+        <font color=red>// Returns the work pointer</font>
+    Unit_Of_Work *data (void);
+
+protected:
+    Unit_Of_Work * data_;
+    MLD;                        <font color=red>// Our memory leak detector</font>
+
+        <font color=red>// The ACE_Data_Block allows us to choose a locking strategy</font>
+        <font color=red>// for making the reference counting thread-safe.  The</font>
+        <font color=red>// ACE_Lock_Adaptor&lt;> template adapts the interface of a</font>
+        <font color=red>// number of lock objects so that the ACE_Message_Block will</font>
+        <font color=red>// have an interface it can use.</font>
+    class Lock : public ACE_Lock_Adapter &lt; ACE_Mutex >
+    {
+    public:
+        typedef ACE_Lock_Adapter &lt; ACE_Mutex > inherited;
+
+        Lock (void);
+        ~Lock (void);
+
+            <font color=red>// destroy() will be called to explicitly delete the</font>
+            <font color=red>// lock when we no longer need it.  The method will then</font>
+            <font color=red>// cleanup to prevent any memory leaks.</font>
+        int destroy (void);
+ 
+    protected:
+        MLD;
+    };
+};
+
+<font color=red>/*
+   This simple derivative of ACE_Message_Block will construct our Data_Block
+   object to contain a unit of work.
+ */</font>
+class Message_Block : public ACE_Message_Block
+{
+public:
+    typedef ACE_Message_Block inherited;
+
+    Message_Block (void);
+    Message_Block (Unit_Of_Work * _data);
+
+    ~Message_Block (void);
+
+protected:
+    MLD;
+};
+
+<font color=blue>#endif</font>
+</PRE>
+<HR WIDTH="100%">
+<P>
+One of the most difficult parts of this to get right was the Lock
+object.  I didn't even have it in the beginning but I soon realized
+that the reference counts were getting weird.  A little careful
+reading of the comments and the source informed me that some sort of
+locking is necessary to keep the counter sane.  The simplest thing at
+that point was to use the ACE_Lock_Adaptor&lt;&gt; to adapt ACE_Mutex
+appropriately.  The next trick was to ensure that the lock object was
+destroyed at the proper time to prevent both memory leaks and core
+dumps.  The finaly product may be a little bit intimidating at first
+but it's really quite simple once you understand the motivation.
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
