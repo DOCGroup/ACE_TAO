@@ -1,3 +1,13 @@
+Mon Aug 16 23:56:21 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+
+	  Changed FTRT_EventChannel project to inherit from core.
+
+	* orbsvcs/orbsvcs/RTCosScheduling.mpc:
+
+	  Changed RTCosScheduling project to inherit from core.
+
 Tue Aug 17 06:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
