@@ -88,6 +88,12 @@ ACE_Thread_Adapter::invoke (void)
 
 #endif /* ! ACE_USE_THREAD_MANAGER_ADAPTER */
 
+  return this->invoke_i ();
+}
+
+void *
+ACE_Thread_Adapter::invoke_i (void)
+{
   // Extract the arguments.
   ACE_THR_FUNC_INTERNAL func = ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
                                                      this->user_func_);
