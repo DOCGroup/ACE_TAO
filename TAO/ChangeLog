@@ -1,3 +1,17 @@
+Fri Sep 24 12:58:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        
+          Eliminated data conversion warnings on MSVC 7.1.
+
 Fri Sep 24 12:39:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Sequence_Unit_Tests/run_test.pl:
