@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef ORB_STRATEGIES_T_C
+#define ORB_STRATEGIES_T_C
+
 #include "tao/ORB_Strategies_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -46,3 +49,5 @@ TAO_Reactive_Strategy<SH>::activate_svc_handler (SH *svc_handler, void *arg)
 
   return result;
 }
+
+#endif /* ! ORB_STRATEGIES_T_C */
