@@ -13,17 +13,19 @@ public:
   File_Module (void);
 
   /// Return 1 if all the data has been received
-  int all_received (void) const;
+  int status (void) const;
 
   /// Initialize the module
   int open (const char *filename);
 
   int close (void);
   int data (ACE_RMCast::Data &data);
+  int ack_join (ACE_RMCast::Ack_Join &ack_join);
+  int ack_leave (ACE_RMCast::Ack_Leave &ack_leave);
 
 private:
   /// Set to 1 when the last block is received
-  int all_received_;
+  int status_;
 
   /// Used to dump the received data into a file
   ACE_FILE_IO file_io_;
@@ -56,7 +58,8 @@ main (int argc, char *argv[])
   if (mcast_group.set (argv[2]) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot read file <%s>\n", filename),
+                         "Cannot setup multicast group <%s>\n",
+                         argv[2]),
                         1);
     }
 
@@ -78,14 +81,14 @@ main (int argc, char *argv[])
   do
     {
       // Try for 50 milliseconds...
-      ACE_Time_Value tv(0, 50000);
+      ACE_Time_Value tv (5, 0); // 0, 50000);
       int r = reactor->handle_events (&tv);
       if (r == -1)
         break;
     }
-  while (file_module.all_received () == 0);
+  while (file_module.status () != 2);
 
-  (void) file_module.close ();
+  ACE_DEBUG ((LM_DEBUG, "event loop completed\n"));
 
   return 0;
 }
@@ -93,20 +96,22 @@ main (int argc, char *argv[])
 // ****************************************************************
 
 File_Module::File_Module (void)
-  :  all_received_ (0)
+  :  status_ (0)
 {
 }
 
 int
-File_Module::all_received (void) const
+File_Module::status (void) const
 {
-  return this->all_received_;
+  return this->status_;
 }
 
 int
 File_Module::open (const char * filename)
 {
-  ACE_HANDLE handle = ACE_OS::open (filename, O_WRONLY|O_BINARY|O_CREAT);
+  ACE_HANDLE handle = ACE_OS::open (filename,
+                                    O_WRONLY|O_BINARY|O_CREAT,
+                                    0644);
   if (handle == ACE_INVALID_HANDLE)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -120,6 +125,7 @@ File_Module::open (const char * filename)
 int
 File_Module::close (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "File_Module closed\n"));
   (void) this->file_io_.close ();
   return 0;
 }
@@ -127,11 +133,34 @@ File_Module::close (void)
 int
 File_Module::data (ACE_RMCast::Data &data)
 {
+  if (this->status_ == 1)
+    return -1;
+
   size_t length = data.payload->length () - 1;
   (void) this->file_io_.send (data.payload->rd_ptr () + 1, length);
 
   if (*(data.payload->rd_ptr ()) == 'E')
-    this->all_received_ = 1;
-    
+    {
+      this->status_ = 1;
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+File_Module::ack_join (ACE_RMCast::Ack_Join &)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "File_Module::ack_join\n"));
+  return 0;
+}
+
+int
+File_Module::ack_leave (ACE_RMCast::Ack_Leave &)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "File_Module::ack_leave\n"));
+  this->status_ = 2;
   return 0;
 }

@@ -42,7 +42,13 @@ public:
   virtual ~ACE_RMCast_Reassembly (void);
 
   // = The ACE_RMCast_Module methods
+  virtual int close (void);
   virtual int data (ACE_RMCast::Data &data);
+
+private:
+  /// Cleanup resources, but do not close the other modules in the
+  /// stack
+  void close_i (void);
 
 private:
   //! A mutex used to synchronize all the internal operations.

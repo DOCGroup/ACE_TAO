@@ -65,7 +65,7 @@ main (int argc, char *argv[])
   sender.reactive_incoming_messages (reactor);
   {
     // Resend the messages every 20 milliseconds..
-    ACE_Time_Value tv (0, 20000);
+    ACE_Time_Value tv (2, 0);
     sender.reactive_resends (reactor, tv);
   }
 
@@ -96,7 +96,7 @@ main (int argc, char *argv[])
         }
 
       // Handle incoming events, without blocking...
-      ACE_Time_Value tv (0);
+      ACE_Time_Value tv (4, 0);
       reactor->handle_events (&tv);
     }
 
@@ -104,12 +104,12 @@ main (int argc, char *argv[])
   do
     {
       // Try for 50 milliseconds...
-      ACE_Time_Value tv(0, 50000);
+      ACE_Time_Value tv (5, 0);
       int r = reactor->handle_events (&tv);
       if (r == -1)
         break;
     }
-  while (sender.has_data ());
+  while (sender.has_data () || sender.has_members ());
 
   return 0;
 }

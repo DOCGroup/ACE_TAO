@@ -328,7 +328,10 @@ Tester::generate_one_message (void)
 
   ACE_RMCast::Data data;
   data.payload = &payload;
-  data.sequence_number = -1;
+  {
+    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    data.sequence_number = this->sequence_number_generator_++;
+  }
 
   int result = this->retransmission_.data (data);
   if (result != 0)
@@ -362,13 +365,9 @@ Tester::data (ACE_RMCast::Data &data)
   //  - IO_XXX: send to all known members
   //  - Reassembly: reconstruct the message on the receiving side.
 
-  if (data.sequence_number == -1)
-    {
-      data.total_size = 1024;
-      data.fragment_offset = 0;
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-      data.sequence_number = this->sequence_number_generator_++;
-    }
+  data.total_size = 1024;
+  data.fragment_offset = 0;
+
   for (size_t i = 0; i != nproxy; ++i)
     {
       int result = this->proxy_[i].data (data);

@@ -28,8 +28,8 @@
 
 class ACE_RMCast_Proxy;
 
-//! Track peer membership
-/*!
+/// Track peer membership
+/**
  * Reliable senders of events need to know exactly how many peers are
  * receiving the events, and how many events has each peer received so
  * far.
@@ -40,14 +40,17 @@ class ACE_RMCast_Proxy;
 class ACE_RMCast_Export ACE_RMCast_Membership : public ACE_RMCast_Module
 {
 public:
-  //! Constructor
+  /// Constructor
   ACE_RMCast_Membership (void);
 
-  //! Destructor
+  /// Destructor
   virtual ~ACE_RMCast_Membership (void);
 
-  //! Receive an process an Ack message
-  /*!
+  /// Return 1 if there are still members in the group
+  int has_members (void);
+
+  /// Receive an process an Ack message
+  /**
    * After receiving the Ack message we find out what is the lowest
    * sequence number received in order among all the acks received by
    * the proxies in the collection. We also find out what is the
@@ -57,29 +60,38 @@ public:
    */
   virtual int ack (ACE_RMCast::Ack &);
 
-  //! Add a new member to the collection, using the <source> field in
-  //! the Join message
+  /// Add a new member to the collection, using the <source> field in
+  /// the Join message
   virtual int join (ACE_RMCast::Join &);
 
-  //! Remove a member from the collection, using the <source> field in
-  //! the Join message
+  /// Remove a member from the collection, using the <source> field in
+  /// the Join message
   virtual int leave (ACE_RMCast::Leave &);
 
+private:
+  /// Generate an Ack message, normally due to changes in the
+  /// collection, such as new proxys joining or leaving
+  int generate_ack (ACE_RMCast_Proxy *proxy);
+
+  /// Compute an Ack message to propagate to the upper layers.
+  int compute_ack_i (ACE_RMCast_Proxy *source,
+                     ACE_RMCast::Ack &next_ack);
+
 protected:
-  //! Use an unbounded set to maintain the collection of proxies.
+  /// Use an unbounded set to maintain the collection of proxies.
   typedef ACE_Unbounded_Set<ACE_RMCast_Proxy*> Proxy_Collection;
   typedef ACE_Unbounded_Set_Iterator<ACE_RMCast_Proxy*> Proxy_Iterator;
 
-  //! The collection of proxies
+  /// The collection of proxies
   Proxy_Collection proxies_;
 
-  //! The smallest value of \param next_expected for all the proxies
+  /// The smallest value of \param next_expected for all the proxies
   ACE_UINT32 next_expected_;
 
-  //! The highest value of \param highest_received for all the proxies
+  /// The highest value of \param highest_received for all the proxies
   ACE_UINT32 highest_received_;
 
-  //! Synchronization
+  /// Synchronization
   ACE_SYNCH_MUTEX mutex_;
 };
 

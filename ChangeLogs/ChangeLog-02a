@@ -1,25 +1,155 @@
+Tue Oct 10 17:25:32 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Finally the Send_File example works correctly.  In my tests four
+          nodes received the same file successfully.
+          I also tried some features to cleanly terminate receivers and
+          senders.
+          However, I still need to work on flow control, and in strategies
+          to limit the maximum number of messages buffered by the sender
+          and/or receiver.
+
+        * ace/RMCast/Makefile:
+          Add the new files to the Makefile
+
+        * ace/RMCast/RMCast.h:
+          Move the state transition matrix to RMCast_Receiver_Module.h
+
+        * ace/RMCast/RMCast_Ack_Worker.h:
+        * ace/RMCast/RMCast_Ack_Worker.i:
+        * ace/RMCast/RMCast_Ack_Worker.cpp:
+          Move the ACE_RMCast_Ack_Worker class to its own file. Only used
+          in the Retransmission module.
+
+        * ace/RMCast/RMCast_Fork.h:
+        * ace/RMCast/RMCast_Fork.i:
+        * ace/RMCast/RMCast_Fork.cpp:
+          This class superseeds Control_Splitter.  I realized that forking
+          the control messages to the user layer is a more general and
+          cleaner solution for this problem.
+
+        * ace/RMCast/RMCast_Control_Splitter.h:
+        * ace/RMCast/RMCast_Control_Splitter.i:
+        * ace/RMCast/RMCast_Control_Splitter.cpp:
+          Removed.
+
+        * ace/RMCast/RMCast_Fragment.cpp:
+          Fixed bug when computing the length of the message, it should be
+          total_length() but I was using total_size().
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+          Destroy proxys that return -1 from receive_message().
+          Add multiple debug messages, now commented out.
+
+        * ace/RMCast/RMCast_Membership.h:
+        * ace/RMCast/RMCast_Membership.cpp:
+          When a new member joins or leaves the group we need to resend
+          the ack messages to the upper layer.
+          The code to compute the correct Ack message is factored out.
+          Many debug messages, but they are commented out.
+          New method so clients can know how many members the group has,
+          it can be used for safe termination of senders.
+
+        * ace/RMCast/RMCast_Module.cpp:
+          The open() and close() methods propagate through the stack as
+          any other message.
+
+        * ace/RMCast/RMCast_Reassembly.h:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+          Cleanup is performed in the close() operation.
+          Old messages are dropped from the map immediately, the
+          Reordering layer is the right place to reject them (if any).
+
+        * ace/RMCast/RMCast_Reliable_Factory.cpp:
+          Use ACE_RMCast_Receiver_Module to validate and process the
+          messages in the proxy, for example, Ack messages are a clear
+          error on the receiver side.
+
+        * ace/RMCast/RMCast_Receiver_Module.h:
+        * ace/RMCast/RMCast_Receiver_Module.i:
+        * ace/RMCast/RMCast_Receiver_Module.cpp:
+          This module implements message validation and state transitions
+          for a receiver.
+          It also generates the correct responses for an Ack_Join or Poll
+          message.
+
+        * ace/RMCast/RMCast_Reordering.h:
+        * ace/RMCast/RMCast_Reordering.cpp:
+          Cleanup resources in the close() method
+
+        * ace/RMCast/RMCast_Resend_Worker.h:
+        * ace/RMCast/RMCast_Resend_Worker.i:
+        * ace/RMCast/RMCast_Resend_Worker.cpp:
+          Move the ACE_RMCast_Resend_Worker class to its own file. Only
+          used in the Retransmission module.
+
+        * ace/RMCast/RMCast_Resend_Handler.cpp:
+          Resend all the messages after each timeout.
+
+        * ace/RMCast/RMCast_Retransmission.h:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+          Worker classes moved to their own files.
+
+        * ace/RMCast/RMCast_Sequencer.h:
+        * ace/RMCast/RMCast_Sequencer.i:
+        * ace/RMCast/RMCast_Sequencer.cpp:
+          Assign unique sequence numbers to each message, used on the
+          sender side.
+
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+          Incoming message must pass through the proxy before going up the
+          stack.
+          The source field was not set in the messages.
+
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.i:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
+          Use the new ACE_RMCast_Sequencer module to assign message
+          sequence numbers.
+          Use the new ACE_RMCast_Fork class to send incoming control
+          messages both to the user and the retransmission/membership
+          modules.
+          Add method to detect how many members are currently registered
+          with the membership layer.
+
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+          Assign the sequence numbers before going into the retransmission
+          layer, as would be done in a normal application.
+
+        * examples/RMCast/Send_File/Makefile:
+          Update dependencies
+
+        * examples/RMCast/Send_File/Sender.cpp:
+          Only shutdown once all the members have left the group.
+          Use long periods to make debugging easier.
+
+        * examples/RMCast/Send_File/Receiver.cpp:
+          Only shutdown once the Ack_Leave message is received.
+          Return -1 from the data() method once the complete file is
+          received, that initiates the termination.
+          Use long periods to make debugging easier.
+
 Tue Oct 10 16:34:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Changed ACE_HAS_SVC_DLL to
-	  ACE_SVC_HAS_DLL and commented out its definition.  The default
-	  definition of ACE_SVC_HAS_DLL has been moved to
-	  ace/Svc_export.h.  The comment-out code here only serves as a
-	  reminder to users.  Thanks to McCurry <mccurry@my-deja.com> for
-	  pointing this out.
+        * ace/config-win32-common.h: Changed ACE_HAS_SVC_DLL to
+          ACE_SVC_HAS_DLL and commented out its definition.  The default
+          definition of ACE_SVC_HAS_DLL has been moved to
+          ace/Svc_export.h.  The comment-out code here only serves as a
+          reminder to users.  Thanks to McCurry <mccurry@my-deja.com> for
+          pointing this out.
 
-	* netsvcs/lib/Base_Optimizer.cpp:  Removed redundant definition of
-	  ACE_BUILD_DLL.
+        * netsvcs/lib/Base_Optimizer.cpp:  Removed redundant definition of
+          ACE_BUILD_DLL.
 
-	* ace/ACE_export.h:
-	* ace/OS_Export.h:
-	  Added a new macro ACE_AS_STATIC_LIBS that controls the default
-	  value of ACE_OS_HAS_DLL and ACE_HAS_DLL so we can build static
-	  ACE library easily.
+        * ace/ACE_export.h:
+        * ace/OS_Export.h:
+          Added a new macro ACE_AS_STATIC_LIBS that controls the default
+          value of ACE_OS_HAS_DLL and ACE_HAS_DLL so we can build static
+          ACE library easily.
 
-	* ace/ace_lib.dsp:
-	* apps/gperf/src/gperf.dsp:
-	* apps/gperf/src/gperf_lib.dsp:  Changed to use ACE_AS_STATIC_LIBS
-	  for static configurations.
+        * ace/ace_lib.dsp:
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:  Changed to use ACE_AS_STATIC_LIBS
+          for static configurations.
 
 Mon Oct 09 16:45:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
