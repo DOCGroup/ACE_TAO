@@ -234,7 +234,7 @@ spawn (void)
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
                   server_addr.get_port_number ()));
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
+#if !defined (ACE_LACKS_FORK)
       for (size_t i = 0; i < ACE_MAX_CLIENTS; i++)
         {
           switch (ACE_OS::fork ("child"))
@@ -280,7 +280,7 @@ spawn (void)
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
                   1));
-#endif /* ACE_HAS_THREADS */    
+#endif /* !ACE_LACKS_FORK */    
 
       peer_acceptor.close ();
     }
