@@ -49,6 +49,10 @@ public:
 		    CORBA::Environment &_env);
 
 private:
+  ACE_Log_Priority priority_conversion (Logger::Log_Priority priority);
+  // This converts from the IDL defined <Log_Priority> enumerated type
+  // to the <ACE_Log_Priority> enumerated type.
+
   char *name_;
   // Logger identification.
 };
