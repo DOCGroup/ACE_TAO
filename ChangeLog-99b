@@ -1,3 +1,25 @@
+Sat Feb 13 22:06:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	The following changes are based on the patch Eric Covington
+	<eric@nowsol.com> submitted.  Thanks very much to Eric for
+	bringing ACE/CE up-to-date.
+
+	* ace/ace_ce_dll.dsp: Updated.
+
+	* ace/OS.cpp: (open): CE doesn't support opening files with
+	  attribute FILE_SHARE_DELETE.
+
+	* ace/OS.i (abort): CE doesn't support abort.
+
+	* ace/Stats.cpp (print_summary): CE doesn't support strerror.
+
+	* ace/Stats.i (dump): Changed to use ACE_DEBUG.
+
+	* tests/Thread_Manager_Test.cpp (main):
+	* ace/tests/SOCK_Connector_Test.cpp (find_another_host):
+	* ace/Log_Msg.cpp (log):
+	* ace/INET_Addr.cpp (addr_to_string): Fixed Unicode problems.
+
 Fri Feb 12 16:14:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Remote_Tokens.cpp: Replaced the typedef for
