@@ -1,3 +1,10 @@
+Mon Jun  7 14:21:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp (main): ANSI C++ spec doesnt allow void * to
+  	  be typecasted to a function_pointer. Hence made changes to
+	  remove the warning due to this. Thanks to Nanbor
+	  <nanbor@cs.wustl.edu> for pointing it out.
+
 Mon Jun  7 14:12:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added a general section explaining the order
@@ -76,6 +83,7 @@ Sun Jun  6 18:05:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Added const-correct version of the command_line() method, in the
           future we should remove the non-const version, but I don't feel
           like breaking an interface today.
+
 
 Sun Jun 06 09:08:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
