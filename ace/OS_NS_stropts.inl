@@ -4,7 +4,9 @@
 #include "ace/os_include/os_errno.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_macros.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_QoS.h"
 
 #if defined (ACE_LACKS_CONST_STRBUF_PTR)
 typedef struct strbuf *ACE_STRBUF_TYPE;

@@ -27,6 +27,7 @@
 
 #include "ace/os_include/os_signal.h"
 #include "ace/ACE_export.h"
+#include "ace/OS_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

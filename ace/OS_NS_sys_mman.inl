@@ -3,6 +3,9 @@
 
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_macros.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/os_include/sys/os_mman.h"
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)

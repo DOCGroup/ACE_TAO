@@ -1,6 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/OS_NS_errno.h"
+#include "ace/Global_Macros.h"
+
 ACE_INLINE pid_t
 ACE_OS::wait (int *status)
 {

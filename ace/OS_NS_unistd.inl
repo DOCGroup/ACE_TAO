@@ -4,6 +4,9 @@
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_macros.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/Default_Constants.h"
 
 ACE_INLINE int
 ACE_OS::access (const char *path, int amode)
