@@ -1,3 +1,9 @@
+Mon Mar 27 09:05:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Basic/Makefile:
+	* orbsvcs/tests/Event/Basic: Needed the library libTAO_Svc_Utils
+	  for successful linking. 
+
 Mon Mar 27 08:57:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Mcast/Makefile: Needed the library
