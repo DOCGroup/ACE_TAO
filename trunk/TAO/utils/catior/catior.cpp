@@ -18,10 +18,10 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
-#include <tao/corba.h>
-#include <tao/debug.h>
-#include <tao/Typecode.h>
-#include <tao/IIOP_Object.h>
+#include "tao/corba.h"
+#include "tao/debug.h"
+#include "tao/Typecode.h"
+#include "tao/Stub.h"
 
 static CORBA::Boolean
 catiiop (CORBA::String string,
