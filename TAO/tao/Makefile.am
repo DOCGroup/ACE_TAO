@@ -1057,6 +1057,8 @@ nobase_include_HEADERS += \
   PortableServer/PortableServer.h \
   PortableServer/PortableServerC.h \
   PortableServer/PortableServerS.h \
+  PortableServer/PortableServer_includeC.h \
+  PortableServer/PortableServer_includeS.h \
   PortableServer/PortableServer_ORBInitializer.h \
   PortableServer/PortableServer_PolicyFactory.h \
   PortableServer/Servant_Base.h \
@@ -1082,7 +1084,8 @@ nobase_include_HEADERS += \
   PortableServer/ServerRequestInfo.inl \
   PortableServer/PolicyS_T.cpp \
   PortableServer/ImplRepo.pidl \
-  PortableServer/PortableServer.pidl
+  PortableServer/PortableServer.pidl \
+  PortableServer/PortableServer_include.pidl
 
 pkgconfigdata_DATA += TAO_PortableServer.pc
 
