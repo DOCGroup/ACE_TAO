@@ -238,7 +238,7 @@ private:
 
   virtual unsigned int hash (const char *str, int len) = 0;
 
-  virtual const struct TAO_operation_db_entry* lookup (const char *str, int len) = 0;
+  virtual const TAO_operation_db_entry* lookup (const char *str, int len) = 0;
 };
 
 class TAO_Export TAO_Operation_Table_Parameters
