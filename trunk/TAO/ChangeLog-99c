@@ -1,3 +1,8 @@
+Tue Aug 31 13:33:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Quoter/Makefile:
+	  The dependencies where broken so the test wouldn't compile.
+
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Added a series of fixes that allow TAO to build and
