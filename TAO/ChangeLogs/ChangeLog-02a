@@ -1,3 +1,14 @@
+Wed Oct 18 10:49:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Had to put back the context substate and the set/unset
+	  code removed in the checkin below. It's necessary to
+	  keep the ACE_NESTED_CLASS macro from being generated
+	  in skeleton code for portable interceptors.
+
 Tue Oct 17 16:08:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
