@@ -80,6 +80,12 @@ Cubit_Task::svc (void)
                            "run"),
                           -1);
       ACE_TRY_CHECK;
+
+      CORBA::ORB_var orb =
+        this->orb_manager_.orb ();
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
