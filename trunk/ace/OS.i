@@ -347,62 +347,6 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
 #endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
-ACE_INLINE ACE_Time_Value
-ACE_OS::gettimeofday (void)
-{
-  // ACE_TRACE ("ACE_OS::gettimeofday");
-  timeval tv;
-#if defined (ACE_WIN32)
-  // From Todd Montgomery...
-  struct _timeb tb;
-  ::_ftime (&tb);
-  tv.tv_sec = tb.time;
-  tv.tv_usec = 1000 * tb.millitm;
-#if 0
-  // This version of the code has bugs -- don't use until it's been fixed...
-  // Alternative form.
-  SYSTEMTIME system_time;
-  FILETIME   file_time;
-
-  ::GetSystemTime (&system_time);
-  ::SystemTimeToFileTime (&system_time, &file_time);
-  ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime, 
-				     file_time.dwHighDateTime);
-  // Convert 100ns units to seconds;
-  tv.tv_sec = long (_100ns / (10000 * 1000));
-  // Convert remainder to microseconds;
-  tv.tv_usec = long ((_100ns - (tv.tv_sec * (10000 * 1000))) * 10);
-#endif 
-
-#elif defined (ACE_HAS_AIX_HI_RES_TIMER)
-  timebasestruct_t tb;
-
-  ::read_real_time(&tb, TIMEBASE_SZ);
-  ::time_base_to_time(&tb, TIMEBASE_SZ);
-
-  tv.tv_sec = tb.tb_high;
-  tv.tv_usec = tb.tb_low / 1000L;
-
-#else
-  int result;
-#if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k))
-  ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
-#elif defined (VXWORKS)
-  // Assumes that struct timespec is same size as struct timeval,
-  // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
-  struct timespec ts;
-
-  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
-
-  tv.tv_sec = ts.tv_sec;
-  tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
-#else
-  ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
-#endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
-#endif /* ACE_WIN32 */
-  return ACE_Time_Value (tv);
-}
-
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)
 {
@@ -848,6 +792,62 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 }
 
 #endif /* WIN32 */
+
+ACE_INLINE ACE_Time_Value
+ACE_OS::gettimeofday (void)
+{
+  // ACE_TRACE ("ACE_OS::gettimeofday");
+  timeval tv;
+#if defined (ACE_WIN32)
+  // From Todd Montgomery...
+  struct _timeb tb;
+  ::_ftime (&tb);
+  tv.tv_sec = tb.time;
+  tv.tv_usec = 1000 * tb.millitm;
+#if 0
+  // This version of the code has bugs -- don't use until it's been fixed...
+  // Alternative form.
+  SYSTEMTIME system_time;
+  FILETIME   file_time;
+
+  ::GetSystemTime (&system_time);
+  ::SystemTimeToFileTime (&system_time, &file_time);
+  ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime, 
+				     file_time.dwHighDateTime);
+  // Convert 100ns units to seconds;
+  tv.tv_sec = long (_100ns / (10000 * 1000));
+  // Convert remainder to microseconds;
+  tv.tv_usec = long ((_100ns - (tv.tv_sec * (10000 * 1000))) * 10);
+#endif 
+
+#elif defined (ACE_HAS_AIX_HI_RES_TIMER)
+  timebasestruct_t tb;
+
+  ::read_real_time(&tb, TIMEBASE_SZ);
+  ::time_base_to_time(&tb, TIMEBASE_SZ);
+
+  tv.tv_sec = tb.tb_high;
+  tv.tv_usec = tb.tb_low / 1000L;
+
+#else
+  int result;
+#if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k))
+  ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
+#elif defined (VXWORKS)
+  // Assumes that struct timespec is same size as struct timeval,
+  // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
+  struct timespec ts;
+
+  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
+
+  tv.tv_sec = ts.tv_sec;
+  tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
+#else
+  ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
+#endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
+#endif /* ACE_WIN32 */
+  return ACE_Time_Value (tv);
+}
 
 ACE_INLINE int 
 ACE_OS::stat (const char *file, struct stat *stp)
