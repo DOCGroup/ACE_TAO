@@ -1,3 +1,14 @@
+Thu Feb 14 17:03:48 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp (shutdown): 
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp (shutdown): 
+	  Fixed event channel shutdown problems:  the event channel
+	  removes some Event_Handlers from the Reactor, but did not reset
+	  the reactor pointer in those Event_Handlers. If the ORB Reactor is
+	  deleted before the event channel (not that strange in some cases
+	  because the Reactor) the Event_Handler destructor tries to
+	  remove itself from the Reactor, and all hell breaks loose.
+
 Thu Feb 14 15:20:19 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp (supplier_non_existent): 
