@@ -1,10 +1,30 @@
+Sun Apr 25 16:59:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_kcc.GNU: Fixed incorrect
+	  compiler flags.
+
+	* ace/config-sunos5.7.h: Added definition of uint64_t on KAI.
+
+	* ace/config-kcc-common.h: Changed to use non-static object
+	  manager.
+	  Defined ACE_SIZEOF_LONGLONG.  KAI compiler has type long long.
+
+	* ace/OS.h: ACE_NOTREACHED should expand to nothing on KAI
+	  compiler.
+
+	* ace/CDR_Stream.h (ACE_CDR): KAI compiler doesn't have
+	  longlong_t.
+
+	* ace/Basic_Types.h: KAI compiler should define ACE_UINT64 as
+	  unsigned long long.
+
 Sun Apr 25 14:52:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* COPYING,
 	  TAO/COPYING: Updated the ACE+TAO COPYING information to
  	  emphasize the relationship to open source.  Thanks to Malcolm
  	  Spence <spence_m@ociweb.com> for suggesting the wording.
-	  
+
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
@@ -27,20 +47,20 @@ Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	- Introduced another constructor for ACE_POSIX_SIG_Proactor for taking
 	  signal mask to be used with the Proactor.
-	
+
 	- Thanks to Dave Butenhof <butenhof@zko.dec.com> for helping a lot to
 	  understand the various things in the POSIX4 standard.
-	
+
 	- Thanks to Dave suggestion of keeping null_handler for the sigaction
 	  to real-time signals. With this and a couple of other correct POSIX
 	  things SIG proactor is now working with in Solaris 2.7.
-	
+
 	- Lynx OS doesnt support <pthread_sigmask>, so it couldnt be
 	  multithreaded. Enabled AIOCB_Proactor for this platform.
-	
+
 	- Added an example to make use of the real-time signal numbers for the
 	   asynchronous I/O calls.
-	
+
 	* examples/Reactor/Proactor/test_posix_sig_proactor.cpp: This
  	  program demonstrates how to post fake completions to The
  	  Proactor. It also shows the how to specify the particular
