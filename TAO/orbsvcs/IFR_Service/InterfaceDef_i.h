@@ -246,10 +246,11 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void inherited_contents (
+  void interface_contents (
       ACE_Unbounded_Queue<IR_DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       IR_DefinitionKind limit_type,
+      CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

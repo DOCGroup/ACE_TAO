@@ -468,26 +468,24 @@ TAO_Container_i::contents_i (IR_DefinitionKind limit_type,
 
   // Base interfaces
 
-  if (exclude_inherited == 0)
+  IR_DefinitionKind def_kind = this->def_kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  if (def_kind == dk_Interface)
     {
-      IR_DefinitionKind def_kind = this->def_kind (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      if (def_kind == dk_Interface)
+      if (limit_type == dk_Operation
+          || limit_type == dk_Attribute
+          || limit_type == dk_all)
         {
-          if (limit_type == dk_Operation
-              || limit_type == dk_Attribute
-              || limit_type == dk_all)
-            {
-              TAO_InterfaceDef_i iface (this->repo_,
-                                        this->section_key_);
+          TAO_InterfaceDef_i iface (this->repo_,
+                                    this->section_key_);
 
-              iface.inherited_contents (kind_queue,
-                                        path_queue,
-                                        limit_type,
-                                        ACE_TRY_ENV);
-              ACE_CHECK_RETURN (0);
-            }
+          iface.interface_contents (kind_queue,
+                                    path_queue,
+                                    limit_type,
+                                    exclude_inherited,
+                                    ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
     }
 
