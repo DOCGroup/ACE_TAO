@@ -76,7 +76,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
 
   ACE_Time_Value t;
   ACE_Time_Value *timeout =
-    ACE_const_cast (ACE_Time_Value *, max_wait_time);
+    const_cast<ACE_Time_Value *> (max_wait_time);
 
   if (max_wait_time != 0)
     {
@@ -115,7 +115,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           // This avoids a subtle problem where "holes" in the data
           // stream would occur if partial sends of a given buffer in
           // the iovec array occured.
-          if (ACE_static_cast (size_t, result) < iov[i].iov_len)
+          if (static_cast<size_t> (result) < iov[i].iov_len)
             break;
         }
 

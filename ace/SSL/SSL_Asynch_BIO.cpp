@@ -80,7 +80,7 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
   BIO_clear_retry_flags (pBIO);
 
   ACE_SSL_Asynch_Stream * p_stream =
-    ACE_static_cast (ACE_SSL_Asynch_Stream *, pBIO->ptr);
+    static_cast<ACE_SSL_Asynch_Stream *> (pBIO->ptr);
 
   if (pBIO->init == 0 || p_stream == 0)
     return -1;
@@ -97,7 +97,7 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
 
   int retval =
     p_stream->ssl_bio_read (buf,
-                            ACE_static_cast (size_t, len),
+                            static_cast<size_t> (len),
                             errval);
 
   if (retval >= 0)
@@ -115,7 +115,7 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
   BIO_clear_retry_flags (pBIO);
 
   ACE_SSL_Asynch_Stream * p_stream =
-    ACE_static_cast (ACE_SSL_Asynch_Stream *, pBIO->ptr);
+    static_cast<ACE_SSL_Asynch_Stream *> (pBIO->ptr);
 
   if (pBIO->init == 0 || p_stream == 0)
     return -1;
@@ -132,7 +132,7 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
 
   int retval =
     p_stream->ssl_bio_write (buf,
-                             ACE_static_cast (size_t, len),
+                             static_cast<size_t> (len),
                              errval);
 
   if (retval >= 0)
@@ -152,7 +152,7 @@ ACE_Asynch_BIO_ctrl (BIO * pBIO, int cmd, long num, void *ptr)
   switch (cmd)
     {
     case BIO_C_SET_FILE_PTR:
-      pBIO->shutdown = ACE_static_cast (int, num);
+      pBIO->shutdown = static_cast<int> (num);
       pBIO->ptr = ptr;
       pBIO->init = 1;
       break;
@@ -166,7 +166,7 @@ ACE_Asynch_BIO_ctrl (BIO * pBIO, int cmd, long num, void *ptr)
       break;
 
     case BIO_CTRL_SET_CLOSE:
-      pBIO->shutdown = ACE_static_cast (int, num);
+      pBIO->shutdown = static_cast<int> (num);
       break;
 
     case BIO_CTRL_PENDING:

@@ -1,3 +1,21 @@
+Wed Jun  2 00:03:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Log_Msg.cpp
+	* ace/Timer_Hash_T.cpp:
+
+          Converted all ACE cast macro calls to their ANSI C++ cast
+          counterparts.
+
+          Use prefix {in,dec}rement operators where applicable instead of
+          postfix operators.  The former are more efficient.
+
+	* ace/SSL/SSL_Asynch_BIO.cpp:
+	* ace/SSL/SSL_SOCK_Stream.cpp:
+	* ace/SSL/SSL_SOCK_Stream.i:
+
+          Converted all ACE cast macro calls to their ANSI C++ cast
+          counterparts.
+
 Tue Jun  1 18:31:44 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Lib_Find.cpp: Added /**/ to naked platform-specific #includes
@@ -9,7 +27,7 @@ Tue Jun  1 16:37:30 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	  broadcast address before sending the iovec.  Thanks to Dave
  	  Wolfe <dwolfe@gforcetech.com> for this patch, which fixes
 	  bugid 1830.
-  
+
 	* ace/OS_NS_Thread.cpp: Added a cast for (ACE_TSS_DESTRUCTOR)
 	  so the code will compile properly on Solaris when
  	  ACE_HAS_TSS_EMULATION is enabled.  Thanks to Kevin Christian
@@ -33,7 +51,7 @@ Sat May 29 16:12:28 2004  Olli Savia  <ops@iki.fi>
         * include/makeinclude/platform_lynxos.GNU:
 
           Added X11 related libs needed to build XtReactor.
-        
+
 Fri May 28 18:35:41 2004  Steve Huston  <shuston@riverace.com>
 
         * tests/FIFO_Test.cpp (server): The select() trick to wait for the
