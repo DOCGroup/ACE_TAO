@@ -33,6 +33,7 @@
 
 #include <tao/Policy.pidl>
 #include <tao/Services.pidl>
+#include <tao/ParameterMode.pidl>
 
 #pragma prefix "omg.org"
 
@@ -98,13 +99,6 @@ module CORBA
     NO_EXCEPTION,
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
-  };
-
-  enum ParameterMode
-  {
-    PARAM_IN,
-    PARAM_OUT,
-    PARAM_INOUT
   };
 
   typedef short ValueModifier;

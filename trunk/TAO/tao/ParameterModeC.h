@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_DYNAMIC_PARAMETERC_H_
-#define _TAO_IDL_ORIG_DYNAMIC_PARAMETERC_H_
+#ifndef _TAO_IDL_ORIG_PARAMETERMODEC_H_
+#define _TAO_IDL_ORIG_PARAMETERMODEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -43,10 +43,6 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Any.h"
-#include "tao/VarOut_T.h"
-
-#include "tao/ParameterModeC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -72,48 +68,25 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
-namespace Dynamic
+namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
-  // be\be_type.cpp:258
-
-  struct Parameter;
-
-  typedef
-    TAO_Var_Var_T<
-        Parameter
-      >
-    Parameter_var;
-
-  typedef
-    TAO_Out_T<
-        Parameter,
-        Parameter_var
-      >
-    Parameter_out;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
-
-  struct TAO_Export Parameter
+  // be\be_visitor_enum/enum_ch.cpp:57
+  
+  enum ParameterMode
   {
-    typedef Parameter_var _var_type;
-
-    static void _tao_any_destructor (void *);
-    CORBA::Any argument;
-    CORBA::ParameterMode mode;
+    PARAM_IN,
+    PARAM_OUT,
+    PARAM_INOUT
   };
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Parameter;
+  
+  typedef ParameterMode &ParameterMode_out;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
 
-} // module Dynamic
+} // module CORBA
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:59
@@ -124,24 +97,16 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_enum/cdr_op_ch.cpp:50
 
-TAO_Export void operator<<= (CORBA::Any &, const Dynamic::Parameter &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Dynamic::Parameter*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::Parameter *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::Parameter *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/cdr_op_ch.cpp:54
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ParameterMode &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ParameterMode &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:963
 
 #if defined (__ACE_INLINE__)
-#include "Dynamic_ParameterC.inl"
+#include "ParameterModeC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

@@ -1,3 +1,49 @@
+Thu Dec  9 18:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ParameterMode.pidl:
+          Moved the enum ParameterMode to its own file
+
+        * tao/orb.idl:
+          Removed enum ParameterMode and include ParameterMode.pidl
+
+        * tao/ParameterMode.{h,cpp}:
+          Removed these files
+
+        * tao/ParameterModeC.{h,cpp}:
+          Added new generated files
+
+        * tao/DomainC.cpp:
+          Removed include of ParameterMode.cpp, it is not needed and will be
+          gone with the next regeneration
+
+        * tao/Dynamic_Parameter.pidl:
+          Added include of ParameterMode.pidl and removed include of orb.idl
+
+        * tao/Dynamic_ParameterC.{h,cpp,i,inl}:
+        * tao/Dynamic_ParameterA.cpp:
+          Regenerated and replaced i with inl file
+
+        * tao/Makefile.am:
+          Updated for changes above
+
+        * tao/tao.mpc:
+          Updated for changes above
+
+        * tao/IFR_Client/IFR_Basic.pidl:
+          Added include of ParameterMode.pidl
+
+        * tao/IFR_Client/IFR_BasicC.h:
+          Replaced include ParameterMode.h with ParameterModeC.h
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+          Removed special handling of ParameterMode, it is now in a separate
+          pidl file and included in orb.idl. Normal users could just use orb.idl
+          but if you are worried about your footprint, include
+          ParameterMode.pidl directly.
+
 Thu Dec  9 07:33:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:

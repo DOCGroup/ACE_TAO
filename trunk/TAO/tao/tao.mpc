@@ -136,7 +136,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       DynamicA.cpp
       Dynamic_ParameterC.cpp
       Dynamic_ParameterA.cpp
-      ParameterMode.cpp
+      ParameterModeC.cpp
       AnySeqA.cpp
       AnySeqC.cpp
       BooleanSeqA.cpp

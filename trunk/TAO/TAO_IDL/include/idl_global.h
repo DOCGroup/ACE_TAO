@@ -299,7 +299,6 @@ public:
   bool object_arg_seen_;
   bool octet_seq_seen_;
   bool operation_seen_;
-  bool parametermode_seen_;
   bool pseudo_seq_seen_;
   bool seq_seen_;
   bool short_seq_seen_;
@@ -523,17 +522,17 @@ public:
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
   file_prefixes (void);
   // Accessor for the IDL file prefix container.
-  
+
   idl_bool pass_orb_idl (void) const;
   void pass_orb_idl (idl_bool val);
   // Accessor for the pass_orb_idl_ member.
-  
+
   bool using_ifr_backend (void) const;
   void using_ifr_backend (bool val);
-  
+
   int check_gperf (void);
   // Currently called only from IDL backend, but could be useful elsewhere.
-  
+
   void fini (void);
   // Do final cleanup just before process exits.
 
@@ -581,7 +580,7 @@ private:
 
   char *tao_root_;
   // Needed if orb.idl is included.
-  
+
   char *gperf_path_;
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
@@ -621,10 +620,10 @@ private:
 
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
-  
+
   idl_bool pass_orb_idl_;
   // Treat orb.idl like any other included IDL file.
-  
+
   bool using_ifr_backend_;
   // Set by the IFR backend itself.
 };

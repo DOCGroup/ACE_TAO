@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:302
 
 
-#include "Dynamic_ParameterC.h"
+#include "ParameterModeC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)
@@ -37,7 +37,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "Dynamic_ParameterC.inl"
+#include "ParameterModeC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -49,40 +49,26 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
-
-void 
-Dynamic::Parameter::_tao_any_destructor (
-    void *_tao_void_pointer
-  )
-{
-  Parameter *_tao_tmp_pointer =
-    static_cast<Parameter *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
 // TAO_IDL - Generated from
-// be\be_visitor_structure/cdr_op_cs.cpp:61
+// be\be_visitor_enum/cdr_op_cs.cpp:51
 
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Dynamic::Parameter &_tao_aggregate
-  )
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::ParameterMode &_tao_enumval)
 {
-  return
-    (strm << _tao_aggregate.argument) &&
-    (strm << _tao_aggregate.mode);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Dynamic::Parameter &_tao_aggregate
-  )
+CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::ParameterMode &_tao_enumval)
 {
-  return
-    (strm >> _tao_aggregate.argument) &&
-    (strm >> _tao_aggregate.mode);
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = static_cast<CORBA::ParameterMode> (_tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 // TAO_IDL - Generated from
@@ -90,38 +76,6 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class
-    TAO_Var_Var_T<
-        Dynamic::Parameter
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        Dynamic::Parameter
-      >;
-
-  template class
-    TAO_Out_T<
-        Dynamic::Parameter,
-        Dynamic::Parameter_var
-      >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO_Var_Var_T< \
-        Dynamic::Parameter \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        Dynamic::Parameter \
-      >
-
-# pragma instantiate \
-    TAO_Out_T< \
-        Dynamic::Parameter, \
-        Dynamic::Parameter_var \
-      >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

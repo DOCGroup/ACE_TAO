@@ -26,10 +26,10 @@
 // Piece of module Dynamic generated separately for use by
 // template argument helper classes.
 
-#include <orb.idl>
-
 #ifndef _DYNAMIC_PARAMETER_IDL_
 #define _DYNAMIC_PARAMETER_IDL_
+
+#include <ParameterMode.pidl>
 
 module Dynamic
 {
