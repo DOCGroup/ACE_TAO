@@ -1,3 +1,10 @@
+Sun Jul 27 19:23:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * RTScheduling/Scheduling_Interceptor/test_server.cpp:
+
+          Changed filename string literal assignment at top of file
+          to const char *.
+
 Sun Jul 27 19:11:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
