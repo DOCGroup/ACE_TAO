@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MEM_ACCEPTOR_H
 #define ACE_MEM_ACCEPTOR_H
 #include "ace/pre.h"
