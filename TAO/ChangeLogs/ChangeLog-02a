@@ -1,3 +1,19 @@
+Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/QoS_UDP.h: 
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 	
+	* orbsvcs/orbsvcs/AV/Transport.h: 	
+	* orbsvcs/orbsvcs/AV/Transport.cpp: 		
+
+	  Provided a mechanism to modify QoS when there is a change in QoS. Also added the QoS negotiator mechanism as a means of notifying change in QoS.
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 
+
+	 Enhanced the test to test the notification and modification of change in QoS.
+
 Tue May 22 15:34:20 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	* tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
