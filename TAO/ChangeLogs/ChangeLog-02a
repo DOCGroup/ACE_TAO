@@ -36,6 +36,21 @@ Fri Nov  3 14:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  added in each class, since the method from which it is
 	  called is private in each class.
 
+Fri Nov  3 09:16:13 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+        * tests/Exposed_Policies/Client.dsp:
+        * tests/Exposed_Policies/Server.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Portable_Interceptors/Benchmark/client.dsp:
+        * tests/Portable_Interceptors/Benchmark/server.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+
+          Touched up the Release versions of these projects.
+
 Fri Nov  3 10:48:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/DSI_Gateway/DSI_Gateway_Client.dsp:
