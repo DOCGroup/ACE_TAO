@@ -7,7 +7,7 @@ Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
 	  instead of always dynamically allocating it.
 
 	* ace/OS.cpp (ACE_Thread_Adapter::invoke): allocate TSS_Emulation
- 	  storage on thread stack.  (ACE_TSS_Cleanup::exit): only call
+	  storage on thread stack.  (ACE_TSS_Cleanup::exit): only call
 	  a TSS destructor if the thread's value is non-zero.
 
 	* ace/Thread_Manager.cpp: support TSS_Emulation.
@@ -20,7 +20,7 @@ Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Log_Msg.h: befriend ACE_OS::cleanup_tss () instead of
 	  ACE_Object_Manager, because the cleanup path is now indirect
- 	  from the ACE_Object_Manager.
+	  from the ACE_Object_Manager.
 
 	* ace/Log_Msg.cpp: use TSS_Emulation on VxWorks, so
 	  VxWorks-specific code was removed.
@@ -28,6 +28,12 @@ Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Task.cpp: removed unused #include of ace/Dynamic.h.  (It had
 	  been used for template instantiations, but they were moved.)
 	  Also, removed unused #include of ace/Object_Manager.h.
+
+	* ace/Svc_Handler.{h,cpp}: register the Svc_Handler instance for
+	  deletion with the ACE_Object_Manager.
+
+	* tests/Process_Strategy_Test (Options): added a destructor so that
+	  the dynamically allocated concurrency_strategy_ can be deleted.
 
 Wed Sep  3 08:05:26 1997  Steve Huston  <shuston@riverace.com>
 
