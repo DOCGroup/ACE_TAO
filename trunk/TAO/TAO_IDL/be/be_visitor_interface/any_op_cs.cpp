@@ -105,6 +105,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << node->full_name () << "_ptr &_tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Object_ptr *tmp = 0;" << be_nl
+      << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
@@ -112,6 +113,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "if (!type->equivalent (" << node->tc_name ()
       << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
       << "{" << be_idt_nl
+      << "delete tmp;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
@@ -120,7 +122,6 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "_tao_any._tao_byte_order ()" << be_uidt_nl
       << ");" << be_uidt_nl
       << "CORBA::Object_var _tao_obj_var;" << be_nl
-      << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl
       << "if (stream >> _tao_obj_var.out ())" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = " << node->full_name ()
@@ -137,16 +138,19 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "ACE_TRY_CHECK;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
-      << "// failure" << be_uidt_nl
+      << "else    // failure" << be_nl
+      << "{" << be_idt_nl
+      << "delete tmp;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "delete tmp;" << be_nl
-      << "_tao_elem = 0;" << be_nl
+      << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
-      << "_tao_elem = 0;" << be_nl
+      << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
       << "return 0;" << be_uidt_nl
       << "}\n\n";
 
