@@ -17,14 +17,9 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-#if !defined (__ACE_INLINE__)
-# include "UIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (Strategies,
            UIOP_Transport,
            "$Id$")
-
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,

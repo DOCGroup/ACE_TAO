@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
-
 ACE_INLINE const char *
 TAO_DIOP_Endpoint::host (void) const
 {

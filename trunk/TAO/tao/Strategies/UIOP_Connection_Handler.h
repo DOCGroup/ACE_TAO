@@ -100,12 +100,6 @@ protected:
   //@}
 };
 
-
-
-#if defined (__ACE_INLINE__)
-#include "UIOP_Connection_Handler.inl"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"

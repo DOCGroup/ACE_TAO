@@ -23,15 +23,9 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
-#if !defined (__ACE_INLINE__)
-# include "SCIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 ACE_RCSID (tao,
            SCIOP_Transport,
            "$Id$")
-
 
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,

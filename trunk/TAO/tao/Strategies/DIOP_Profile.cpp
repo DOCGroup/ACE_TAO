@@ -16,15 +16,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-
 ACE_RCSID (Strategies,
            DIOP_Profile,
            "$Id$")
-
-
-#if !defined (__ACE_INLINE__)
-# include "DIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
 
 static const char prefix_[] = "diop";
 

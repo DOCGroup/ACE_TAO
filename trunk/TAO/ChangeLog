@@ -1,3 +1,29 @@
+Tue Jan  4 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/DIOP_Connection_Handler.{h,cpp,i}:
+        * tao/Strategies/DIOP_Profile.{h,cpp,i}:
+        * tao/Strategies/DIOP_Transport.{h,cpp,i}:
+        * tao/Strategies/SCIOP_Connection_Handler.{h,cpp,i}:
+        * tao/Strategies/SCIOP_Profile.{h,cpp,i}:
+        * tao/Strategies/SCIOP_Transport.{h,cpp,i}:
+        * tao/Strategies/SHMIOP_Acceptor.{h,cpp,i}:
+        * tao/Strategies/SHMIOP_Connection_Handler.{h,cpp,inl}:
+        * tao/Strategies/SHMIOP_Profile.{h,cpp,i}:
+        * tao/Strategies/SHMIOP_Transport.{h,cpp,i}:
+        * tao/Strategies/UIOP_Connection_Handler.{h,cpp,inl}:
+        * tao/Strategies/UIOP_Endpoint.cpp
+        * tao/Strategies/UIOP_Endpoint.h
+        * tao/Strategies/UIOP_Profile.{h,cpp,i}:
+        * tao/Strategies/UIOP_Transport.{h,cpp,i}:
+        * tao/Strategies/advanced_resource.{h,cpp,i}:
+          All .i/.inl files above where empty, so removed them from the repo
+          and updated the h/cpp files to not include the removed file. In case
+          someone want to inline a method, must re-add the file at that moment
+          with the .inl extension
+
+        * tao/Makefile.am
+          Updated for changes above
+
 Tue Jan  4 19:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDirPolicyC.{h,cpp,i,inl}:

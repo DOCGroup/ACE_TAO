@@ -57,7 +57,7 @@ public:
 
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. 
+  /// Constructor.
   TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                CORBA::Boolean flag);
 
@@ -129,7 +129,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  
+
 protected:
 
   //@{
@@ -159,10 +159,6 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "DIOP_Connection_Handler.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

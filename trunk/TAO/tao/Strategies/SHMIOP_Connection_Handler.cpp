@@ -17,10 +17,6 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
-#if !defined (__ACE_INLINE__)
-# include "SHMIOP_Connection_Handler.inl"
-#endif /* ! __ACE_INLINE__ */
-
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 

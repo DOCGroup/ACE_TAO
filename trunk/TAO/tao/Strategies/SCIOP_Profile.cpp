@@ -16,10 +16,6 @@ ACE_RCSID(Strategies,
           SCIOP_Profile,
           "$Id$")
 
-#if !defined (__ACE_INLINE__)
-# include "SCIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 static const char prefix_[] = "sciop";
 
 const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
