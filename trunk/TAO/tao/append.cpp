@@ -229,7 +229,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
               {
                 // write the encapsulation i.e., octet sequence
                 retval =
-                  TAO_Marshal_Object::perform_append (TAO::TC_opaque,
+                  TAO_Marshal_Object::perform_append (CORBA::_tc_OctetSeq,
                                                       src,
                                                       dest
                                                       ACE_ENV_ARG_PARAMETER);
@@ -274,7 +274,7 @@ TAO_Marshal_Principal::append (CORBA::TypeCode_ptr,
                                ACE_ENV_ARG_DECL)
 {
   // write the octet sequence representing the Principal
-  return TAO_Marshal_Object::perform_append (TAO::TC_opaque,
+  return TAO_Marshal_Object::perform_append (CORBA::_tc_OctetSeq,
                                              src,
                                              dest
                                              ACE_ENV_ARG_PARAMETER);

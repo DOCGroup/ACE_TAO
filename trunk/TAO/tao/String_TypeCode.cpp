@@ -79,7 +79,8 @@ TAO::TypeCode::String<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
   // tk_string-based TypeCodes.
-  return this->equal_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->equal_i (tc
+                        ACE_ENV_ARG_PARAMETER);
 }
 
 template <class RefCountPolicy>
@@ -95,10 +96,14 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  // Already compact since tk_string TypeCodes have no name or member
-  // names, meaning that we can simply call _duplicate() on this
-  // TypeCode.
-  return CORBA::TypeCode::_duplicate (this);
+  // Already compact since tk_string and tk_wstring TypeCodes have no
+  // name or member names, meaning that we can simply call
+  // _duplicate() on this TypeCode.
+
+  CORBA::TypeCode_ptr mutable_tc =
+    const_cast<TAO::TypeCode::String<RefCountPolicy> *> (this);
+
+  return CORBA::TypeCode::_duplicate (mutable_tc);
 }
 
 template <class RefCountPolicy>

@@ -105,6 +105,14 @@ namespace TAO
 # include "tao/String_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
+#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
+# include "tao/String_TypeCode.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
+# pragma implementation ("String_TypeCode.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_STRING_TYPECODE_H */
