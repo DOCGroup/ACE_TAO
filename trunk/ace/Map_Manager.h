@@ -189,11 +189,11 @@ public:
   // failures occur.
 
   int find (const EXT_ID &ext_id,
-            INT_ID &int_id);
+            INT_ID &int_id) const;
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
   // returns and non-negative integer; returns -1 if not found.
 
-  int find (const EXT_ID &ext_id);
+  int find (const EXT_ID &ext_id) const;
   // Returns a non-negative integer if the <ext_id> is in the mapping, otherwise -1.
 
   int unbind (const EXT_ID &ext_id);

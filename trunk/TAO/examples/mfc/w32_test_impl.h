@@ -5,20 +5,17 @@
 
 #include "w32_testS.h"
 
-
 class W32_Test_Impl : public POA_W32_Test_Interface
 {
 public:
-    ~W32_Test_Impl();
+  ~W32_Test_Impl (void);
 
-	W32_Test_Impl();
+  W32_Test_Impl (void);
 
-
-	char * getresponse (
-      CORBA::Long respnr);
+  char *getresponse (CORBA::Long respnr);
 
 private:
-	int blabla;
+  int blabla;
 };
 
 #endif

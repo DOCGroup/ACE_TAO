@@ -190,19 +190,26 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find_
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
-                                                                                 INT_ID &int_id)
+                                                                                 INT_ID &int_id) const
 {
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *nc_this =
+    (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *)
+    this;
 
-  return this->find_i (ext_id, int_id);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
+
+  return nc_this->find_i (ext_id, int_id);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id)
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id) const
 {
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *nc_this =
+    (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *)
+    this;
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
 
-  return this->find_i (ext_id);
+  return nc_this->find_i (ext_id);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
@@ -215,11 +222,15 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find_
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
-                                                                                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
+                                                                                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const
 {
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *nc_this =
+    (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *)
+    this;
 
-  return this->find_i (ext_id, entry);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
+
+  return nc_this->find_i (ext_id, entry);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int

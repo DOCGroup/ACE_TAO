@@ -225,15 +225,15 @@ public:
   // created entry, or the existing one.
 
   int find (const EXT_ID &ext_id,
-            INT_ID &int_id);
+            INT_ID &int_id) const;
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
   // return 0, returns -1 if not found.
 
-  int find (const EXT_ID &ext_id);
+  int find (const EXT_ID &ext_id) const;
   // Returns 0 if the <ext_id> is in the mapping, otherwise -1.
 
   int find (const EXT_ID &ext_id,
-            ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
+            ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const;
   // Locate <ext_id> and pass out parameter via <entry>.  If found,
   // return 0, returns -1 if not found.
 

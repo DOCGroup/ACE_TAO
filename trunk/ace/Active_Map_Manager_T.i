@@ -55,7 +55,7 @@ ACE_Active_Map_Manager<T>::bind (const T &value)
 
 template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
-                                 T *&internal_value)
+                                 T *&internal_value) const
 {
   size_t slot_index = key.slot_index ();
   size_t slot_generation = key.slot_generation ();
@@ -79,7 +79,7 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key)
+ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key) const
 {
   T *internal_value = 0;
   return this->find (key,
@@ -88,16 +88,14 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key)
 
 template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
-                                 T &value)
+                                 T &value) const
 {
   T *internal_value = 0;
   int result = this->find (key,
                            internal_value);
 
   if (result == 0)
-    {
-      value = *internal_value;
-    }
+    value = *internal_value;
 
   return result;
 }
