@@ -1,3 +1,12 @@
+Fri Sep 12 10:42:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+
+	  Moved typedefs within the preprocessor block that is enabled
+	  when ACE_ENABLE_TIMEPROBES and ACE_COMPILE_TIMEPROBES are
+	  defined.  Fixes compile-time errors on builds that do not enable
+	  timeprobe support.
+
 Fri Sep 12 10:29:13 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:

@@ -1,10 +1,13 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef METRICS_LOCAL_CACHE_H
 #define METRICS_LOCAL_CACHE_H
 
+#include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,9 +26,9 @@
 
 #include "Metrics_Utils.h"
 
-#if defined (__ACE_INLINE__)
-#include "Metrics_LocalCache.i"
-#endif /* __ACE_INLINE__ */
+#if defined (ACE_METRICS_COLLECTION)
+
+#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
 #include "Metrics_LocalCache_T.h"
 
@@ -48,11 +51,6 @@ typedef TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE TAO_METRICS_CACHE_SINGLETON;
 typedef TAO_METRICS_CACHE_TYPE TAO_METRICS_CACHE;
 typedef TAO_METRICS_CACHE_SINGLETON_TYPE TAO_METRICS_CACHE_SINGLETON;
 #endif
-
-
-#if defined (ACE_METRICS_COLLECTION)
-
-#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
 /**
  * NOTE: This is a simple macro which calls the appropriate registration function with the cache to
@@ -99,8 +97,14 @@ PROBE_TYPE, \
 METRICS_LOGGER_REF); \
 } } while (0)
 
+#if defined (__ACE_INLINE__)
+#include "Metrics_LocalCache.i"
+#endif /* __ACE_INLINE__ */
+
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */
+
+#include /**/ "ace/post.h"
 
 #endif /* METRICS_LOCAL_CACHE_H */
 
