@@ -7,18 +7,24 @@ module Stock
 
   interface Quoter
   {
-    // Returns the current stock value or throws and exception
-    long get_quote (in string stock_name) raises (Invalid_Stock, Invalid_Quoter);
+    // = TITLE
+    //   Access Stock information.
 
-    // Destroy a Quoter session and release resources.
+    long get_quote (in string stock_name) 
+      raises (Invalid_Stock, Invalid_Quoter);
+    // Returns the current stock value or throws and exception.
+
     void destroy ();
+    // Destroy a Quoter session and release resources.
   };
   
-  // Manage the lifecycle of a Quoter object.
   interface Quoter_Factory 
   {
-    // Returns a new Quoter selected by name
-    // e.g., "Dow Jones," "Reuters,", etc
-    Quoter create_quoter (in string name) raises (Invalid_Quoter);
+    // = TITLE
+    //   Manage the lifecycle of a Quoter object.
+    Quoter create_quoter (in string name)
+      raises (Invalid_Quoter);
+    // Returns a new Quoter selected by name e.g., "Dow Jones,"
+    // "Reuters,", etc
   };
 };
