@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_PRIORITY_REACTOR_H
 #define ACE_PRIORITY_REACTOR_H
@@ -73,7 +72,7 @@ private:
   void init_bucket (void);
 
   /// There is a queue per-priority, which simply holds the
-  /// Event_Handlers until we knwo who goes first.
+  /// Event_Handlers until we know who goes first.
   typedef ACE_Unbounded_Queue<ACE_Event_Tuple> QUEUE;
   QUEUE** bucket_;
 
