@@ -1,3 +1,8 @@
+Thu Nov  6 02:04:32 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* TAO_IDL/driver/{drv_preproc.cpp, drv_fork.cpp}: NetBSD has
+	sys/wait.h, instead of wait.h. Added #define to fix it.
+
 Thu Nov  6 01:40:29 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/tao_internals.h: #defined ACE_Thread_Mutex to be
