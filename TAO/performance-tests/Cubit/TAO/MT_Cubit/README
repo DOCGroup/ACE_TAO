@@ -78,7 +78,7 @@ by the client.
          [-r]                   // run thread-per-rate test.
          [-o]                   // makes client use oneway calls.  By default, twoway calls are used.
          [-x]                   // makes a call to servant to shutdown
-         [-u <seconds> ]        // run the client utilization test for a number of <seconds>.
+         [-u <requests> ]       // run the client utilization test for a number of <requests>.
          [-1]                   // run the one-to-n test.
          [-g <granularity>]     // choose the granularity of the timing of CORBA calls
          [-c]                   // run the number of context switches test.
@@ -122,7 +122,12 @@ by the client.
 
         Default Value: Disabled
 
-[-u <seconds>] runs the client/server utilization test for a number of <seconds>.
+[-u <seconds>] runs the client/server utilization test for a number of <requests>.  
+        The output is the number of seconds for the test to make such number of requests.  
+        Now run the same test but with the -l option to make the same number of requests,
+        this time not using CORBA, instead directly making function calls.  The difference 
+        in time for each test to make the same number of requests is the utilization of
+        the OS/ORB combined.
      (Note: This option overrides any specified "-t" option)
 
         Default Value: Disabled
