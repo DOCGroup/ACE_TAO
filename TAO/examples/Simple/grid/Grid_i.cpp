@@ -52,7 +52,8 @@ Grid_i::set (CORBA::Short x,
 	     CORBA::Short y,
 	     CORBA::Long value,
 	     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Grid::RANGE_ERROR))
 {
   if (x < 0
       || y < 0
@@ -69,7 +70,8 @@ CORBA::Long
 Grid_i::get (CORBA::Short x,
              CORBA::Short y,
              CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Grid::RANGE_ERROR))
 {
   if (x < 0
       || y < 0
