@@ -61,7 +61,7 @@ TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory (void)
 CosPropertyService::PropertySetDef_ptr 
 TAO_PropertySetDefFactory::create_propertysetdef ( CORBA::Environment &env)
 {
-  CosPropertyService::PropertySetDef_ptr return_val;
+  CosPropertyService::PropertySetDef_ptr return_val = 0;
   
   return return_val;
 }  
@@ -71,7 +71,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
                                                              const CosPropertyService::PropertyDefs &allowed_property_defs, 
                                                              CORBA::Environment &env)
 {
-  CosPropertyService::PropertySetDef_ptr return_val;
+  CosPropertyService::PropertySetDef_ptr return_val = 0;
   
   return return_val;
 }
@@ -80,7 +80,7 @@ CosPropertyService::PropertySetDef_ptr
 TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
                                                           CORBA::Environment &env)
 {
-  CosPropertyService::PropertySetDef_ptr return_val;
+  CosPropertyService::PropertySetDef_ptr return_val = 0;
 
   return return_val;
 }
@@ -169,7 +169,7 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
                                  CosPropertyService::Properties_out nproperties,
                                  CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
 
   return return_val;
 }
@@ -208,7 +208,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 CORBA::Boolean
 TAO_PropertySet::delete_all_properties (CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
 
   return return_val;
 }  
@@ -263,7 +263,7 @@ CosPropertyService::PropertyModeType
 TAO_PropertySetDef::get_property_mode (const char *property_name,
                                        CORBA::Environment &env)
 {
-  CosPropertyService::PropertyModeType return_val;
+  CosPropertyService::PropertyModeType return_val = CosPropertyService::undefined;
 
   return return_val;
 }
@@ -273,7 +273,7 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
                                         CosPropertyService::PropertyModes_out property_modes,
                                         CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
 
   return return_val;
 }  
@@ -308,7 +308,7 @@ CORBA::Boolean
 TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
                                      CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
 
   return return_val;
 }
@@ -318,7 +318,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
                                    CosPropertyService::PropertyNames_out property_names, 
                                    CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
 
   return return_val;
 
@@ -346,7 +346,7 @@ CORBA::Boolean
 TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
                                   CORBA::Environment &env)
 {    
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
 
   return return_val;
 }  
@@ -356,7 +356,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
                                 CosPropertyService::Properties_out nproperties, 
                                 CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
+  CORBA::Boolean return_val = CORBA::B_FALSE;
   
   return return_val;
 }

@@ -1,5 +1,9 @@
 Thu Feb 19 12:54:50 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	(create_initial_propertysetdef):  Assigned dummy return values in
+	order to avoid Warnings.
+
 	* orbsvcs/orbsvcs/Property/CosProeprtyService.idl file removed
 	from here. It is supposed to be there in ./..
 
