@@ -619,7 +619,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE &type,
                                                        const ACE_Time_Value &future_time,
                                                        const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("ACE_Timer_Heap_T::schedule");
+  ACE_TRACE ("ACE_Timer_Heap_T::schedule_i");
 
   if ((this->cur_size_ + this->cur_limbo_) < this->max_size_)
     {

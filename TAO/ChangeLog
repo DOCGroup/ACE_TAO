@@ -1,3 +1,8 @@
+Tue Jul 22 06:05:31 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ReactorTask.h:
+          Fixed compile error.
+
 Tue Jul 22 03:35:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/examples/Notify/ThreadPool/Consumer.h:
@@ -157,7 +162,7 @@ Mon Jul 21 15:41:09 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	Added an example to show how to use ThreadPools with
 	RT-Notification.
-	
+
 	* orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
 	* orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
 	* orbsvcs/examples/Notify/ThreadPool/Consumer.h:
@@ -184,9 +189,9 @@ Mon Jul 21 15:41:09 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/examples/Notify/Notify_Examples.dsw:
 	* orbsvcs/examples/Notify/Makefile:
-	
+
 	  Added ThreadPool example
-	
+
 	* orbsvcs/orbsvcs/Event_Forwarder.idl:
 
   	  Make all the forwarding methods as oneways.
@@ -198,7 +203,7 @@ Mon Jul 21 15:41:09 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  this method a oneway, the receving thread can make progress on
 	  other events entering the system while the dispatching thread
 	  continues with its dispatching efforts.
-	  
+
  	* orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
  	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
 
@@ -210,7 +215,7 @@ Mon Jul 21 15:41:09 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  ID for its Proxy Objects. Though this is consistent with the
 	  spec., in practice it is more convinient for each and every object
 	  to have a unique id.
-	
+
 	* orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
 	  Include "Object.h"
 
@@ -230,7 +235,7 @@ Mon Jul 21 16:28:46 2003 Stephen Torri  <storri@cs.wustl.edu>
 	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
 	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
 	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
-	
+
 	  Hide class behind #ifdef statements if the configuration for
 	  ACE lacks ACE_METRICS_COLLECTION and ACE_COMPILE_TIMEPORBES
 
@@ -239,7 +244,7 @@ Mon Jul 21 16:24:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/append.cpp:
 
-	  Applied a fix for unions with an enum discriminator similar to 
+	  Applied a fix for unions with an enum discriminator similar to
 	  what is used for the same case in skip.cpp. Thanks to
 	  Sunil Rottoo <srottoo@adacelcanada.com> for pointing out the
 	  problem and suggesting the fix.

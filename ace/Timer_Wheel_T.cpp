@@ -387,7 +387,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE& type,
                                                         const ACE_Time_Value& future_time,
                                                         const ACE_Time_Value& interval)
 {
-  ACE_TRACE ("ACE_Timer_Wheel_T::schedule");
+  ACE_TRACE ("ACE_Timer_Wheel_T::schedule_i");
 
   ACE_Timer_Node_T<TYPE>* n = this->alloc_node ();
 
