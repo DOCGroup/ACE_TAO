@@ -1,3 +1,14 @@
+Mon Dec 16 12:28:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Fixed some broken links.  Thanks to 
+	  Jonathan Wackley <jwackley@legato.com> for reporting this.
+
+Sat Dec 14 13:06:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/ACE-categories.html: Removed all mention of the
+	  ACE_Multiplexor class.  Thanks to Marc Tardif <marc@sitepak.com>
+ 	  for reporting this.
+
 Tue Dec 17 07:37:40 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/README: Fixed typos.
