@@ -1,3 +1,16 @@
+Sun Jul 18 20:33:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tao/Invocation.cpp
+	* tao/Pluggable.cpp
+	* tao/Pluggable.h
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	  
+    	  Removed the unnessary accessors for the reply_received
+	  flag. Added comments about addressing the problem of "idling the
+	  Transport after an asynchronous reply is received over an
+	  exclusive connection.
+	  	
 Sat Jul 17 10:53:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
 	* tao/GIOP.h
