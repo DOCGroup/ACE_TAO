@@ -636,7 +636,9 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << "," << linebreak
                     << be_nl;
-                *os << elem->nested_type_name (ctx_scope) << "_slice"
+                *os << elem->nested_type_name (ctx_scope) << "_slice,"
+                    << linebreak << be_nl
+                    << elem->nested_type_name (ctx_scope) << "_tag"
                     << linebreak << be_uidt_nl
                     << ">" << be_uidt;
               }
@@ -647,6 +649,8 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                     << elem->nested_type_name (ctx_scope) << "," << linebreak
                     << be_nl;
                 *os << elem->nested_type_name (ctx_scope) << "_slice,"
+                    << linebreak << be_nl
+                    << elem->nested_type_name (ctx_scope) << "_tag,"
                     << linebreak << be_nl
                     << this->max_size ()->ev ()->u.ulval << linebreak
                     << be_uidt_nl

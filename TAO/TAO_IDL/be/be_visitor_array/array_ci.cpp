@@ -186,15 +186,17 @@ int be_visitor_array_ci::visit_array (be_array *node)
     }
 
   unique += "_traits";
-  os->gen_ifdef_macro (unique.fast_rep ());
+//  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_free ("
-      << be_idt << be_idt_nl
+      << "TAO::Array_Traits<" << be_idt << be_idt_nl
+      << fname << "," << be_nl
+      << fname << "_slice," << be_nl
+      << fname << "_tag" << be_uidt_nl
+      << ">::tao_free ("<< be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -205,9 +207,11 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_dup ("
-      << be_idt << be_idt_nl
+      << "TAO::Array_Traits<" << be_idt << be_idt_nl
+      << fname << "," << be_nl
+      << fname << "_slice," << be_nl
+      << fname << "_tag" << be_uidt_nl
+      << ">::tao_dup (" << be_idt_nl
       << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -218,9 +222,11 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_copy ("
-      << be_idt << be_idt_nl
+      << "TAO::Array_Traits<" << be_idt << be_idt_nl
+      << fname << "," << be_nl
+      << fname << "_slice," << be_nl
+      << fname << "_tag" << be_uidt_nl
+      << ">::tao_copy (" << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
       << "const " << fname << "_slice * _tao_from" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -232,13 +238,16 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_alloc (void)" << be_nl
+      << "TAO::Array_Traits<" << be_idt << be_idt_nl
+      << fname << "," << be_nl
+      << fname << "_slice," << be_nl
+      << fname << "_tag" << be_uidt_nl
+      << ">::tao_alloc (void)" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";
 
-  os->gen_endif ();
+//  os->gen_endif ();
 
   *os << be_nl;
 

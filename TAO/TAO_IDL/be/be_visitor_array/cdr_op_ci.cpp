@@ -102,7 +102,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
     }
 
   unique += "_cdr_op";
-  os->gen_ifdef_macro (unique.fast_rep ());
+//  os->gen_ifdef_macro (unique.fast_rep ());
 
   // If the node is an array of anonymous sequence, we need to
   // generate the sequence's cdr operator declaration here.
@@ -248,7 +248,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
   *os << "}";
 
-  os->gen_endif ();
+//  os->gen_endif ();
 
   node->cli_inline_cdr_op_gen (1);
   return 0;
