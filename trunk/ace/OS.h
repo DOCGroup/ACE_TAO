@@ -3327,7 +3327,7 @@ public:
 			 size_t nbyte,
 			 off_t offset);
   static int writev (ACE_HANDLE handle,
-		     ACE_WRITEV_TYPE *iov,
+		     const struct iovec *iov,
 		     int iovcnt);
 
   // = A set of wrappers for event demultiplexing and IPC.

@@ -242,6 +242,13 @@ ACE_Semaphore::release (void)
   return ACE_OS::sema_post (&this->semaphore_);
 }
 
+ACE_INLINE int
+ACE_Semaphore::release (size_t release_count)
+{
+// ACE_TRACE ("ACE_Semaphore::release");
+  return ACE_OS::sema_post (&this->semaphore_, release_count);
+}
+
 // Acquire semaphore ownership.  This calls <acquire> and is only
 // here to make the <ACE_Semaphore> interface consistent with the
 // other synchronization APIs.
