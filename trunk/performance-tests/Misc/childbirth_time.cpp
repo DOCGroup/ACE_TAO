@@ -15,11 +15,14 @@
 //   are possible as described below.   James Hu provides the idea to
 //   batch measuring threads creation.
 //
-//   Usage: childbirth_time [-n ###] [-p|-f|-t|-a|-m] [-h] [-e]
+//   Usage: childbirth_time [-n ###] [-l ###] [-p|-f|-t|-a|-m|-x] [-h] [-e]
 //
 //          -n ###: Specify number of iteration in tens.  If this
-//                  option is not specified, the default is 10 (100
-//                  iterations,) which is equivalent to -n 10.
+//                  option is not specified, the default is
+//                  MULTIPLY_FACTOR * (100 iterations,) which is
+//                  equivalent to -n 10.
+//
+//          -l ###: Specify MULTIPLY_FACTOR.  Default is 10.
 //
 //             *-p: Measure the performance of forking a child process
 //                  and exec an "empty" program.  This test uses
@@ -37,6 +40,9 @@
 //
 //              -m: Measure the performance of Thread_Manager::spawn_n
 //                  method.
+//
+//              -x: Test the baseline performance of ACE_Thread_Mutex.
+//                  This really doesn't belong here
 //
 //              -a: Measure the performance of thread creation using
 //                  ACE_OS::thr_create ().
@@ -327,7 +333,7 @@ prof_mutex_base (size_t iteration)
 int
 main (int argc, char* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:pftahmxe");
+  ACE_Get_Opt get_opt (argc, argv, "n:l:pftahmxe");
   int c;
   size_t iteration = 10;
   Profiler profiler = 0;
@@ -339,6 +345,9 @@ main (int argc, char* argv[])
         {
         case 'n':
           iteration = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'l':
+          MULTIPLY_FACTOR = ACE_OS::atoi (get_opt.optarg);
           break;
         case 'p':                       // test ACE_Process.spawn ()
           profiler = prof_ace_process;
@@ -363,7 +372,6 @@ main (int argc, char* argv[])
         case 'x':
           profiler = prof_mutex_base;
           profile_name = "ACE_Thread_Mutex Baseline";
-          MULTIPLY_FACTOR = 100;
           break;
         case 'h':                       // use high resolution timer
           ACE_High_Res_Timer::get_env_global_scale_factor ();
