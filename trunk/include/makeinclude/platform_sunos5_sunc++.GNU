@@ -24,9 +24,15 @@
 # size should not be penalized.  We don't use it because it's not
 # necessary with automatic template instantiation.
 
-debug = 1
-distrib = 0
-threads = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(distrib))
+  distrib = 0
+endif
+ifeq (,$(threads))
+  threads = 1
+endif
 
 tk_reactor = 0
 ace_with_x11 = 0

@@ -4,8 +4,12 @@
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
-debug = 1
-optimize = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(optimize))
+  optimize = 1
+endif
 
 CC              = gcc
 CXX             = g++

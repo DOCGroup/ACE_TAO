@@ -5,8 +5,12 @@
 # environment variable to -n32.  This causes a new compiler to be
 # invoked.
 
-debug = 1
-optimize = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(optimize))
+  optimize = 1
+endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
