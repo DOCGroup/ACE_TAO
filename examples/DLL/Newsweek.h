@@ -10,7 +10,7 @@
 //    Newsweek.h
 //
 // = DESCRIPTION
-//    This is a derived class from Magazine which is a magazine 
+//    This is a derived class from Magazine which is a magazine
 //    pertaining to news and information.
 //
 // = AUTHOR
@@ -30,16 +30,22 @@
 
 class Newsweek : public Magazine
 {
-  //= TITLE 
+  //= TITLE
   //   This is an derived class of Magazine.
-  // 
+  //
   //= DESCRIPTION
   //   Polymoriphism is exploited and an object pointer
   //   of Magazine is bound to the Newsweek object at runtime.
 public:
 
-  void title (void);
   // This is the abstract class method which describes the magazine.
+  void title (void);
+
+  // Overload the new/delete opertors so the object will be
+  // created/deleted using the memory allocator associated with the
+  // DLL/SO.
+  void *operator new (size_t bytes);
+  void operator delete (void *ptr);
 };
 
 # endif /* NEWSWEEK_H */

@@ -12,7 +12,18 @@
 void Newsweek::title (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Newsweek: Vol 23 Dec87\n"));
+              "Newsweek: Vol. 44923 Stardate: 12.3054\n"));
+}
+
+void *
+Newsweek::operator new (size_t bytes)
+{
+  return ::new char[bytes];
+}
+void
+Newsweek::operator delete (void *ptr)
+{
+  delete [] ((char *) ptr);
 }
 
 // Returns the Newsweek class pointer.

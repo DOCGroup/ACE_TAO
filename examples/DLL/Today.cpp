@@ -13,7 +13,18 @@ void
 Today::title (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Today: Information Technology Special Nov98\n"));
+              "Today: XML Special Apr 02\n"));
+}
+
+void *
+Today::operator new (size_t bytes)
+{
+  return ::new char[bytes];
+}
+void
+Today::operator delete (void *ptr)
+{
+  delete [] ((char *) ptr);
 }
 
 // Returns the pointer to the Today class.
