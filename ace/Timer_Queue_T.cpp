@@ -17,7 +17,7 @@
 #include "ace/OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Timer_Queue_T.i"
+#include "ace/Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,

@@ -2,7 +2,7 @@
 #include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Manager.i"
+#include "ace/Token_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

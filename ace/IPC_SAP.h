@@ -78,7 +78,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/IPC_SAP.i"
+#include "ace/IPC_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

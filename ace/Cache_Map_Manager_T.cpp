@@ -13,7 +13,7 @@
 #include "ace/Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Cache_Map_Manager_T.i"
+#include "ace/Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")

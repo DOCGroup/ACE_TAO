@@ -10,7 +10,7 @@
 #include "ace/Vector_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Vector_T.i"
+#include "ace/Vector_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Vector_T, "$Id$")

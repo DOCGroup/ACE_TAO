@@ -4,7 +4,7 @@
 #include "ace/Shared_Memory_SV.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_SV.i"
+#include "ace/Shared_Memory_SV.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Shared_Memory_SV, "$Id$")
@@ -20,10 +20,10 @@ ACE_Shared_Memory_SV::dump (void) const
 }
 
 ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (key_t id,
-					    int length, 
-					    int create, 
-					    int perms, 
-					    void *addr, 
+					    int length,
+					    int create,
+					    int perms,
+					    void *addr,
 					    int flags)
   : shared_memory_ (id, length, create, perms, addr, flags)
 {

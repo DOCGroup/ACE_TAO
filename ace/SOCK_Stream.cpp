@@ -4,7 +4,7 @@
 #include "ace/SOCK_Stream.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Stream.i"
+#include "ace/SOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Stream, "$Id$")

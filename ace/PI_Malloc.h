@@ -191,7 +191,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/PI_Malloc.i"
+#include "ace/PI_Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

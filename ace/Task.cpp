@@ -4,7 +4,7 @@
 #include "ace/Module.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task.i"
+#include "ace/Task.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Task, "$Id$")

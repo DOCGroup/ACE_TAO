@@ -13,7 +13,7 @@
 #include "ace/Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Module.i"
+#include "ace/Module.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Module, "$Id$")

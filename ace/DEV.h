@@ -67,7 +67,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/DEV.i"
+#include "ace/DEV.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

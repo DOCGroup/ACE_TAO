@@ -11,7 +11,7 @@ ACE_RCSID(ace, ATM_Acceptor, "$Id$")
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Acceptor.i"
+#include "ace/ATM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 // Put the actual definitions of the ACE_ATM_Request and

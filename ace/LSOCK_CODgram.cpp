@@ -9,7 +9,7 @@
 ACE_RCSID(ace, LSOCK_CODgram, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/LSOCK_CODgram.i"
+#include "ace/LSOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_CODgram)

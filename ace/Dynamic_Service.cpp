@@ -13,7 +13,7 @@
 #include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dynamic_Service.i"
+#include "ace/Dynamic_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 template <class TYPE> TYPE *

@@ -177,7 +177,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_Acceptor.i"
+#include "ace/MEM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

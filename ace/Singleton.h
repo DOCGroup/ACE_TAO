@@ -22,7 +22,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/TSS_T.h"  
+#include "ace/TSS_T.h"
 #include "ace/Cleanup.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -309,7 +309,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Singleton.i"
+#include "ace/Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

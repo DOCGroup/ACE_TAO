@@ -179,7 +179,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Acceptor.i"
+#include "ace/SOCK_SEQPACK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

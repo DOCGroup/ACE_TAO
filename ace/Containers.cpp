@@ -7,7 +7,7 @@ ACE_RCSID (ace,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Containers.i"
+#include "ace/Containers.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

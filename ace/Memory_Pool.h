@@ -808,7 +808,7 @@ private:
 #endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Memory_Pool.i"
+#include "ace/Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

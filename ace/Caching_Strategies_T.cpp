@@ -7,7 +7,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Caching_Strategies_T.i"
+#include "ace/Caching_Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

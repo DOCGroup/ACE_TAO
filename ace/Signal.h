@@ -515,7 +515,7 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context);
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Signal.i"
+#include "ace/Signal.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -622,7 +622,7 @@ class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_POSIX_Proactor;
-#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS) 
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
   friend class ACE_POSIX_SIG_Proactor;
 #endif
 
@@ -649,7 +649,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/POSIX_Proactor.i"
+#include "ace/POSIX_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS  && ACE_HAS_POSIX_REALTIME_SIGNALS */

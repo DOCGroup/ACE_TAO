@@ -137,7 +137,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor_T.i"
+#include "ace/Functor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -10,7 +10,7 @@
 #   define ACE_TRACEX(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Based_Pointer_T.i"
+#include "ace/Based_Pointer_T.inl"
 #endif /* __ACE_INLINE__ */
 
 template <class CONCRETE>
@@ -28,7 +28,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntarget_ = %d\n"), this->target_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("base_offset_ = %d\n"), this->base_offset_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("computed pointer = %x\n"), 
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("computed pointer = %x\n"),
               (CONCRETE *)(ACE_COMPUTE_BASED_POINTER (this))));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

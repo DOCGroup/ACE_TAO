@@ -13,7 +13,7 @@
 ACE_RCSID(ace, Auto_IncDec_T, "Auto_IncDec_T.cpp, by Edan Ayal")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Auto_IncDec_T.i"
+#include "ace/Auto_IncDec_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_IncDec)

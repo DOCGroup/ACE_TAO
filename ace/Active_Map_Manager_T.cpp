@@ -10,7 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Active_Map_Manager_T.i"
+#include "ace/Active_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Active_Map_Manager_T, "$Id$")

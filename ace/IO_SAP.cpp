@@ -10,7 +10,7 @@
 #include "ace/os_include/os_signal.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/IO_SAP.i"
+#include "ace/IO_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, IO_SAP, "$Id$")

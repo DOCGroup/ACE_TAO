@@ -212,7 +212,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram.i"
+#include "ace/SOCK_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

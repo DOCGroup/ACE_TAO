@@ -11,7 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc_T.i"
+#include "ace/Malloc_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ACE.h"

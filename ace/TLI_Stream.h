@@ -127,7 +127,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI_Stream.i"
+#include "ace/TLI_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */

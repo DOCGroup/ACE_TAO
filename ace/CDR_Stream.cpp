@@ -1,7 +1,7 @@
 #include "ace/CDR_Stream.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/CDR_Stream.i"
+# include "ace/CDR_Stream.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/SString.h"

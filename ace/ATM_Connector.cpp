@@ -9,7 +9,7 @@
 ACE_RCSID(ace, ATM_Connector, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Connector.i"
+#include "ace/ATM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)

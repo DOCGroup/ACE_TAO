@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *  @author Seth Widoff 
+ *  @author Seth Widoff
  */
 //==========================================================================
 
@@ -115,7 +115,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/Read_Buffer.i"
+# include "ace/Read_Buffer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

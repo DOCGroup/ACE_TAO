@@ -3,7 +3,7 @@
 #include "ace/Token_Request_Reply.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Request_Reply.i"
+#include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
@@ -70,7 +70,7 @@ ACE_Token_Request::decode (void)
       return -1;
     }
   else // Skip this->tokenName_ + '\0' + ':'.
-    this->client_id_ = 
+    this->client_id_ =
       &this->token_name_[(token_len + 2) * sizeof (ACE_TCHAR)];
 
   // Fixed size header

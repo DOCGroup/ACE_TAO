@@ -474,7 +474,7 @@ public:
 #endif  // ACE_HAS_WCHAR
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor.i"
+#include "ace/Functor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

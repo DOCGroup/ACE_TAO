@@ -346,7 +346,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TP_Reactor.i"
+#include "ace/TP_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

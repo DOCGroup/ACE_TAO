@@ -241,7 +241,7 @@ public:
                       int priority,
                       int signal_number) = 0;
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
-  
+
 protected:
   /// Do-nothing constructor.
   ACE_Asynch_Write_Stream_Impl (void);
@@ -305,7 +305,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * NOTE: In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   virtual int readv (ACE_Message_Block &message_block,
@@ -394,7 +394,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * NOTE: In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   virtual int writev (ACE_Message_Block &message_block,
@@ -666,10 +666,10 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
    * <message_block->size()> bytes will be read into each <message block> for
    * a total of <message_block->total_size()> bytes.  All <message_block>'s
-   * <wr_ptr>'s will be updated to reflect the added bytes for each 
+   * <wr_ptr>'s will be updated to reflect the added bytes for each
    * <message_block>
    *
    * Priority of the operation is specified by <priority>. On POSIX4-Unix,
@@ -742,7 +742,7 @@ public:
   virtual ~ACE_Asynch_Write_Dgram_Impl (void);
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <message_block->total_length()> will be sent.  <message_block>'s
    * <rd_ptr> will be updated to reflect the sent bytes if the send operation
    * is successful completed.
    * Return code of 1 means immediate success and <number_of_bytes_sent>
@@ -752,7 +752,7 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
    * <message_block->length()> bytes will be sent from each <message block>
    * for a total of <message_block->total_length()> bytes.  All
    * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
@@ -812,7 +812,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Asynch_IO_Impl.i"
+#include "ace/Asynch_IO_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS  || !ACE_HAS_WINCE && ACE_WIN32 */

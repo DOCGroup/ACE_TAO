@@ -8,7 +8,7 @@ ACE_RCSID(ace, MEM_Connector, "$Id$")
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_Connector.i"
+#include "ace/MEM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Connector)

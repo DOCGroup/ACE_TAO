@@ -656,7 +656,7 @@ typedef ptrdiff_t ptr_arith_t;
 #define ACE_DBL_MAX 1.7976931348623158e+308
 
 # if defined (__ACE_INLINE__)
-#   include "ace/Basic_Types.i"
+#   include "ace/Basic_Types.inl"
 # endif /* __ACE_INLINE__ */
 
 # include /**/ "ace/post.h"

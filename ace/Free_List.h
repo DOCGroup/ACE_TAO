@@ -135,7 +135,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Free_List.i"
+#include "ace/Free_List.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

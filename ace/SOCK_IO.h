@@ -139,7 +139,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_IO.i"
+#include "ace/SOCK_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -257,7 +257,7 @@ private:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Request_Reply.i"
+#include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -6,7 +6,7 @@
 #include "ace/Handle_Ops.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/DEV_Connector.i"
+#include "ace/DEV_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV_Connector, "$Id$")

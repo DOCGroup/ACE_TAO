@@ -480,7 +480,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SString.i"
+#include "ace/SString.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

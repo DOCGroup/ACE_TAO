@@ -1343,7 +1343,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/WFMO_Reactor.i"
+#include "ace/WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 */

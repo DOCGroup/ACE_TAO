@@ -4,7 +4,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Capabilities.i"
+#include "ace/Capabilities.inl"
 #endif /* !__ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"

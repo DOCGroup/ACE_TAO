@@ -9,7 +9,7 @@ ACE_RCSID(ace, Message_Block_T, "$Id$")
 #include "ace/Malloc_Base.h"     /* Need ACE_Allocator */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Block_T.i"
+#include "ace/Message_Block_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_errno.h"

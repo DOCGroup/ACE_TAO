@@ -93,7 +93,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Message_Queue.i"
+#include "ace/SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -217,7 +217,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Stream.i"
+#include "ace/Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

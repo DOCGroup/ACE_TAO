@@ -459,7 +459,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Get_Opt.i"
+#include "ace/Get_Opt.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

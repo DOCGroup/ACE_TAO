@@ -78,7 +78,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/DEV_Addr.i"
+#include "ace/DEV_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

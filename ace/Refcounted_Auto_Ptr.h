@@ -187,7 +187,7 @@ private:
   ~ACE_Refcounted_Auto_Ptr_Rep (void);
 };
 
-#include "ace/Refcounted_Auto_Ptr.i"
+#include "ace/Refcounted_Auto_Ptr.inl"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_REFCOUNTED_AUTO_PTR_H */

@@ -7,7 +7,7 @@
 #include "ace/os_include/sys/os_socket.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SPIPE_Addr.i"
+#include "ace/SPIPE_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE_Addr, "$Id$")

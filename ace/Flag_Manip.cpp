@@ -8,7 +8,7 @@
 #endif /* ACE_WIN32 || VXWORKS || ACE_LACKS_FCNTL */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Flag_Manip.i"
+#include "ace/Flag_Manip.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (CYGWIN32)

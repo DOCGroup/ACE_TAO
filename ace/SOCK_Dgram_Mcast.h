@@ -431,7 +431,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram_Mcast.i"
+#include "ace/SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

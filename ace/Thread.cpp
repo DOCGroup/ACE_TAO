@@ -4,7 +4,7 @@
 #include "ace/Thread.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread.i"
+#include "ace/Thread.inl"
 #endif /* !defined (__ACE_INLINE__) */
 
 ACE_RCSID(ace,

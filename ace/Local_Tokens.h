@@ -1112,7 +1112,7 @@ protected:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Local_Tokens.i"
+#include "ace/Local_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 #include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_MUTEX_H */

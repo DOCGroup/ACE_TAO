@@ -335,7 +335,7 @@ protected:
    * reached or the service doesn't update its state any further.  The
    * svc_status_ class member is updated upon return.
    */
-  void wait_for_service_state (DWORD desired_state, 
+  void wait_for_service_state (DWORD desired_state,
                                ACE_Time_Value *wait_time);
 
   /// Called by <handle_control> when a stop/shutdown was requested.
@@ -425,7 +425,7 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
   int RET = ACE_TEXT_StartServiceCtrlDispatcher(_ace_nt_svc_table);
 
 #if defined (__ACE_INLINE__)
-#include "ace/NT_Service.i"
+#include "ace/NT_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 && !ACE_HAS_PHARLAP && !ACE_HAS_WINCE */

@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FIFO_Recv_Msg.i"
+#include "ace/FIFO_Recv_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Recv_Msg, "$Id$")

@@ -54,7 +54,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Message.i"
+#include "ace/SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

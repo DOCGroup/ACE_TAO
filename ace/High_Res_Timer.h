@@ -305,7 +305,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/High_Res_Timer.i"
+#include "ace/High_Res_Timer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -6,7 +6,7 @@
 #include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc.i"
+#include "ace/Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Object_Manager.h"

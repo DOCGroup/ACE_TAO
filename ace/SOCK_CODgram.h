@@ -66,7 +66,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_CODgram.i"
+#include "ace/SOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

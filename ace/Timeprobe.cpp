@@ -9,7 +9,7 @@ ACE_RCSID(ace, Timeprobe, "$Id$")
 #include "ace/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Timeprobe.i"
+#include "ace/Timeprobe.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -13,7 +13,7 @@
 #endif  // ACE_HAS_WINCE
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Connector.i"
+#include "ace/SOCK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Connector, "$Id$")

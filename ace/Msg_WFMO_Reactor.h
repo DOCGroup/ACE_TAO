@@ -109,7 +109,7 @@ protected:
 #endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Msg_WFMO_Reactor.i"
+#include "ace/Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -445,7 +445,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Config.i"
+#include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
 // These must go here to avoid circular includes...  (only left here

@@ -8,7 +8,7 @@ ACE_RCSID(ace, TLI_Connector, "$Id$")
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TLI_Connector.i"
+#include "ace/TLI_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Handle_Set.h"

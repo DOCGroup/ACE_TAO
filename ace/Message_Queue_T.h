@@ -240,7 +240,7 @@ public:
    * receiving a message -1 is returned and <errno> is set to
    * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
    * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
-   * else the number of items still on the queue.  
+   * else the number of items still on the queue.
    */
   virtual int dequeue_prio (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
@@ -1225,7 +1225,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue_T.i"
+#include "ace/Message_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

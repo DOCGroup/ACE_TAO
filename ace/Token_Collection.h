@@ -233,7 +233,7 @@ protected:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Collection.i"
+#include "ace/Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

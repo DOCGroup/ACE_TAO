@@ -8,8 +8,8 @@ ACE_RCSID(ace, UPIPE_Stream, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (__ACE_INLINE__) 
-#include "ace/UPIPE_Stream.i"
+#if !defined (__ACE_INLINE__)
+#include "ace/UPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 
@@ -37,7 +37,7 @@ ACE_UPIPE_Stream::control (int cmd,
 {
   ACE_TRACE ("ACE_UPIPE_Stream::control");
 
-  return ((ACE_UPIPE_Stream *) this)->stream_.control 
+  return ((ACE_UPIPE_Stream *) this)->stream_.control
     ((ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds) cmd, val);
 }
 
@@ -49,7 +49,7 @@ ACE_UPIPE_Stream::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-int 
+int
 ACE_UPIPE_Stream::close (void)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::close");
@@ -71,7 +71,7 @@ ACE_UPIPE_Stream::close (void)
   return 0;
 }
 
-int 
+int
 ACE_UPIPE_Stream::get_remote_addr (ACE_UPIPE_Addr &remote_sap) const
 {
   ACE_TRACE ("ACE_UPIPE_Stream::get_remote_addr");
@@ -80,14 +80,14 @@ ACE_UPIPE_Stream::get_remote_addr (ACE_UPIPE_Addr &remote_sap) const
 }
 
 int
-ACE_UPIPE_Stream::send (ACE_Message_Block *mb_p, 
+ACE_UPIPE_Stream::send (ACE_Message_Block *mb_p,
                         ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::send_msg");
   return this->stream_.put (mb_p, timeout) == -1 ? -1 : 0;
 }
 
-int ACE_UPIPE_Stream::recv (ACE_Message_Block *& mb_p, 
+int ACE_UPIPE_Stream::recv (ACE_Message_Block *& mb_p,
                             ACE_Time_Value *timeout)
 {
   return this->stream_.get (mb_p, timeout) == -1 ? -1 : 0;
@@ -96,8 +96,8 @@ int ACE_UPIPE_Stream::recv (ACE_Message_Block *& mb_p,
 // Send a buffer.
 
 ssize_t
-ACE_UPIPE_Stream::send (const char *buffer, 
-                        size_t n, 
+ACE_UPIPE_Stream::send (const char *buffer,
+                        size_t n,
                         ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::send");
@@ -116,13 +116,13 @@ ACE_UPIPE_Stream::send (const char *buffer,
 // Receive a buffer.
 
 ssize_t
-ACE_UPIPE_Stream::recv (char *buffer, 
+ACE_UPIPE_Stream::recv (char *buffer,
                         size_t n,
                         ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::recv");
   // Index in buffer.
-  size_t bytes_read = 0;   
+  size_t bytes_read = 0;
 
   while (bytes_read < n)
     if (this->mb_last_ != 0)
@@ -133,8 +133,8 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             // The remaining data is not enough.
 
-            ACE_OS::memcpy ((void *) &buffer[bytes_read], 
-                            this->mb_last_->rd_ptr (), 
+            ACE_OS::memcpy ((void *) &buffer[bytes_read],
+                            this->mb_last_->rd_ptr (),
                             this_len);
             bytes_read += this_len;
             this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
@@ -144,8 +144,8 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             // The remaining data is at least enough.  If there's
             // more, we'll get it the next time through.
-            ACE_OS::memcpy (&buffer[bytes_read], 
-                            this->mb_last_->rd_ptr (), 
+            ACE_OS::memcpy (&buffer[bytes_read],
+                            this->mb_last_->rd_ptr (),
                             n);
             bytes_read += n;
 
@@ -166,7 +166,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             if (errno == EWOULDBLOCK && bytes_read > 0)
               // Return the number of bytes read before we timed out.
-              return bytes_read; 
+              return bytes_read;
             else
               return -1;
           }
@@ -176,7 +176,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
 }
 
 ssize_t
-ACE_UPIPE_Stream::send_n (const char *buf, 
+ACE_UPIPE_Stream::send_n (const char *buf,
                           size_t n,
                           ACE_Time_Value *timeout)
 {
@@ -185,12 +185,12 @@ ACE_UPIPE_Stream::send_n (const char *buf,
   size_t bytes_written;
   ssize_t len = 0;
 
-  for (bytes_written = 0; 
+  for (bytes_written = 0;
        bytes_written < n;
        bytes_written += len)
     {
       len = this->send (buf + bytes_written,
-                        n - bytes_written, 
+                        n - bytes_written,
                         timeout);
 
       if (len == -1)
@@ -201,19 +201,19 @@ ACE_UPIPE_Stream::send_n (const char *buf,
 }
 
 ssize_t
-ACE_UPIPE_Stream::recv_n (char *buf, 
-                          size_t n, 
+ACE_UPIPE_Stream::recv_n (char *buf,
+                          size_t n,
                           ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::recv_n");
   size_t bytes_read;
   ssize_t len = 0;
 
-  for (bytes_read = 0; 
+  for (bytes_read = 0;
        bytes_read < n;
        bytes_read += len)
     {
-      len = this->recv (buf + bytes_read, 
+      len = this->recv (buf + bytes_read,
                         n - bytes_read,
                         timeout);
       if (len == -1)
@@ -222,7 +222,7 @@ ACE_UPIPE_Stream::recv_n (char *buf,
         break;
     }
 
-  return bytes_read;      
+  return bytes_read;
 }
 
 

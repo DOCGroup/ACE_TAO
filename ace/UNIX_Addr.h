@@ -94,7 +94,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/UNIX_Addr.i"
+#include "ace/UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

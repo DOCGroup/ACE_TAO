@@ -395,7 +395,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Process_Manager.i"
+#include "ace/Process_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

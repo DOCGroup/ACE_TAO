@@ -1,7 +1,7 @@
 #include "ace/Synch_Options.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Synch_Options.i"
+#include "ace/Synch_Options.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Global_Macros.h"

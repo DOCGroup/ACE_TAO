@@ -1,7 +1,7 @@
 #include "ace/Service_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Manager.i"
+#include "ace/Service_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Get_Opt.h"

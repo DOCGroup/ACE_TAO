@@ -104,7 +104,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_Connector.i"
+#include "ace/FILE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

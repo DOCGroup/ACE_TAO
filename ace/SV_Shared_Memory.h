@@ -110,7 +110,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Shared_Memory.i"
+#include "ace/SV_Shared_Memory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

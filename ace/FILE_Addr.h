@@ -79,7 +79,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_Addr.i"
+#include "ace/FILE_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

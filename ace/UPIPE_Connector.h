@@ -103,7 +103,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/UPIPE_Connector.i"
+#include "ace/UPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */

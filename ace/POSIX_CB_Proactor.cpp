@@ -11,7 +11,7 @@
 #include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/POSIX_CB_Proactor.i"
+#include "ace/POSIX_CB_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)

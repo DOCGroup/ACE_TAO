@@ -95,7 +95,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_QoS.i"
+#include "ace/ATM_QoS.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */

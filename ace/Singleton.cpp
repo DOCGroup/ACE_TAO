@@ -10,7 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Singleton.i"
+#include "ace/Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Object_Manager.h"

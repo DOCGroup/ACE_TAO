@@ -5,7 +5,7 @@
 #include "ace/Singleton.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Remote_Tokens.i"
+#include "ace/Remote_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
