@@ -1,3 +1,18 @@
+Tue Aug 26 09:06:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (generate_class_definition):
+
+	  Declared a constant variable in interceptor related code in the
+	  generated stub as "const".
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
+	  (visit_union):
+
+	  Distinguish between variable and fixed length unions when
+	  generating the PortableInterceptor::RequestInfo::result()
+	  implementation.
+
 Tue Aug 26 11:03:01 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
@@ -24,7 +39,6 @@ Mon Aug 25 20:20:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
 	* orbsvcs/orbsvcs/RtecScheduler.idl: Fixed throw specifications to
 	  fix compile warnings in Win2K_BCB6_Pro_Static_Release build.
-
 
 Mon Aug 25 14:47:53 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
