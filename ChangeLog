@@ -3,6 +3,12 @@ Sun Jan 27 15:03:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
         * Makefile.bor:
           Build the XML library with BCB
 
+        * XML/parser/Makefile.bor:
+          Added debug_validator
+
+        * XML/parser/debug_validator/Makefile.bor:
+          Added BCB makefile
+
 Sat Jan 26 19:02:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Process_Manager.cpp (register_handler):

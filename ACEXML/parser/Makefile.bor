@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        debug_validator \
         parser
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
