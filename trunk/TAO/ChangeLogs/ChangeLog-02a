@@ -1,3 +1,17 @@
+Tue Apr 25 19:45:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IORManipulation.cpp:
+	* tao/Object.cpp:
+
+	  Moved template instantations for auto_ptr<TAO_MProfile> to
+	  IORManipulation.cpp.  auto_ptr<TAO_MProfile> is only used by
+	  TAO_IOR_Manipulation.  One less potential contributor to
+	  footprint.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Tue Apr 25 15:05:48 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.h:
