@@ -1,3 +1,18 @@
+Tue Jun  8 18:57:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Default_Servant/server.cpp
+	* examples/POA/Default_Servant/client.cpp
+	* examples/POA/Generic_Servant/MyFooServant.cpp
+	* examples/POA/Identity/Identity.cpp
+	* examples/POA/NewPOA/NewPOA.cpp
+	* examples/POA/On_Demand_Activation/server.cpp
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
+	* examples/POA/RootPOA/RootPOA.cpp
+	* TIE/client.cpp
+	* TIE/server.cpp: Made changes to the way exceptions were being
+	handled. Some comments were added to make the printout from  ACE_PRINT_EXCEPTION
+	look meaningful. 
+
 Tue Jun 08 18:50:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	
 	* /orbsvcs/tests/AVStreams/benchmark/svc.conf

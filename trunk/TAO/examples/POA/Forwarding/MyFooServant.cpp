@@ -84,6 +84,7 @@ MyFirstFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
       tao_poa->forward_object (oid.in (),
                                this->forward_to_var_.in (),
                                ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
