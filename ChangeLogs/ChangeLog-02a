@@ -1,3 +1,7 @@
+Thu Mar 28 14:26:19 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Cached_Allocator_Test.cpp: Added a missing template instantiation.
+
 Thu Mar 28 10:45:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
