@@ -1,9 +1,7 @@
 package JACE.ServiceConfigurator;
 
 import java.io.*;
-import java.lang.*;
 import java_cup.runtime.*;
-import JACE.ServiceConfigurator.*;
 import JACE.OS.*;
 
 parser code {: 

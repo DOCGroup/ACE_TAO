@@ -20,8 +20,7 @@ package JACE.ServiceConfigurator;
 
 import java.io.*;
 import java.util.*;
-import JACE.ServiceConfigurator.*;
-
+ 
 public class ServiceRepository
 {
   /**

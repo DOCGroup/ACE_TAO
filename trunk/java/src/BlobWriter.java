@@ -31,6 +31,23 @@ public class BlobWriter extends BlobHandler
     this.returnCode_ = -1;
   }
 
+  /*******************************
+   *  This constructor should be used when using the basic HTTP 1.1 
+   *  authentication scheme
+   *******************************/
+  public BlobWriter (MessageBlock mb,
+		     int length, 
+		     int offset, 
+		     String filename,
+		     String authentication)
+  {
+    super (length, offset, filename);
+    this.mb_ = mb;
+    this.returnCode_ = -1;
+    this.authentication_ = authentication;
+  }
+
+
   public int open (Object obj)
   {
     if (this.sendRequest () != 0)
@@ -88,8 +105,16 @@ public class BlobWriter extends BlobHandler
       filename = "/" + this.filename_;
 
     // Create the header, store the actual length in mesglen 
-    String mesg = this.requestPrefix_ + " " + filename + " " + this.requestSuffix_ + " " + this.length_ + "\n\n";
-    System.out.print (mesg);
+    String mesg = this.requestPrefix_ + " " + filename + " " + this.requestSuffix_;
+
+    if (this.authentication_ != null) {
+      mesg += "Authorization: Basic " + JACE.Connection.HTTPHelper.EncodeBase64(this.authentication_) + '\n';
+
+      System.err.println("Real password: " + this.authentication_);
+    }
+    mesg += "Content-length: " + this.length_ + "\n\n";
+
+    ACE.DEBUG("Sending header: " + mesg);
 
     try
       {
@@ -181,11 +206,12 @@ public class BlobWriter extends BlobHandler
     return this.returnCode_;
   }
 
+  protected String authentication_ = null;
   protected String protocol_ = "http://";
   protected int bytesWritten_ = 0;
   protected MessageBlock mb_ = null;
   protected String requestPrefix_ = "PUT";
-  protected String requestSuffix_ = "HTTP/1.0\nContent-length:";
+  protected String requestSuffix_ = "HTTP/1.0\n";
   protected String replyPrefix_ = "HTTP/1.0";
   protected int returnCode_;
 }

@@ -27,9 +27,7 @@
 package JACE.ServiceConfigurator;
 
 import java.io.*;
-import java.lang.*;
 import java.lang.reflect.*;
-import JACE.ServiceConfigurator.*;
 import JACE.OS.*;
 
 public class ServiceRecord

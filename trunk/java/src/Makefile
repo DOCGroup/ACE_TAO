@@ -88,7 +88,8 @@ pkg_connection = \
 	Blob \
 	BlobHandler \
 	BlobReader \
-	BlobWriter
+	BlobWriter \
+	HTTPHelper
 
 connection:	os socksap svcconfig $(addsuffix .java,$(pkg_connection))
 	$(COMPILE.java)

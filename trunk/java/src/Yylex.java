@@ -1,5 +1,4 @@
 package JACE.ServiceConfigurator;
-import java.lang.*;
 import java.io.*;
 import JACE.OS.*;
 import java_cup.runtime.*;

@@ -22,7 +22,6 @@ package JACE.ServiceConfigurator;
 import java.io.*;
 import java.util.*;
 import java.net.*;
-import java.lang.*;
 import JACE.OS.*;
 import JACE.Misc.*;
 
