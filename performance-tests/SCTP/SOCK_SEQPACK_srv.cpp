@@ -65,7 +65,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
-    ACE_CDR::Octet * msgBuf=NULL;
+    ACE_CDR::Octet * msgBuf = 0;
     ACE_NEW_RETURN(msgBuf,
                    ACE_CDR::Octet[msgBufSize],
                    0);
@@ -96,7 +96,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
   dataModeStream->close();
   delete dataModeStream;
 
-  return NULL;
+  return 0;
 }
 
 // sets up the dataModeSocket Stream, reads the test header infomation
@@ -278,8 +278,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) Accepting connections, using %C on ")
                 ACE_TEXT ("port %u on interfaces %C"),
-               (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP", 
-               serverAddr.get_port_number(), 
+               (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP",
+               serverAddr.get_port_number(),
                ACE_OS::inet_ntoa( addresses[0].sin_addr)  ));
 
    unsigned int i;
