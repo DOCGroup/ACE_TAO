@@ -186,7 +186,7 @@ static int listen_once = 1;
 static int iterations = 2000;
 static int user_has_specified_iterations = 0;
 static double purge_percentage = 20;
-static size_t keep_available_handles = 10;
+static size_t keep_available_handles = 1024;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 
 //====================================================================
@@ -254,10 +254,6 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // Stop the event loop.
   int result = ACE_Reactor::instance ()->end_event_loop ();
   ACE_ASSERT (result != 1);
-
-  // Note: The base class method isnt called since it closes the
-  // svc_handler on error which we want to avoid as we are trying to
-  // accept after purging.
 
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
@@ -567,6 +563,10 @@ main (int argc,
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
+
+#if defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+  caching_strategy_type = ACE_LRU;
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
