@@ -9,6 +9,9 @@ Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
           put these in #ifndef STHREADS && #ifndef POSIX_SEM protection
           to avoid compiler warnings about unused variable/function.
 
+        * ACE-INSTALL.html: added note about segfault when attempting to
+          register a signal handler on LynxOS 3.0.0/PowerPC.
+
 Tue Oct 27 05:47:21 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.65 released.
