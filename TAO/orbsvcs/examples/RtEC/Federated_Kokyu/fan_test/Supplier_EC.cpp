@@ -310,7 +310,7 @@ main (int argc, char* argv[])
 #ifdef ACE_HAS_DSUI
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+      ACE_OS::printf("Supplier_EC STOP at %u\n",ACE_OS::gettimeofday().msec());
       DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 #endif //ACE_HAS_DSUI
       // ****************************************************************
@@ -322,7 +322,7 @@ main (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier_EC");
       return 1;
     }
   ACE_ENDTRY;

@@ -32,7 +32,7 @@ namespace
   ACE_CString sched_type ="rms";
   FILE * ior_output_file;
 }
-
+/*
 class Once_Handler: public Service_Handler
 {
 public:
@@ -106,7 +106,7 @@ private:
   long timer_handle_;
 
 };
-
+*/
 class Consumer_EC : public Kokyu_EC
 {
 public:
@@ -261,7 +261,7 @@ main (int argc, char* argv[])
 #ifdef ACE_HAS_DSUI
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+      ACE_OS::printf("Consumer_EC STOP at %u\n",ACE_OS::gettimeofday().msec());
       DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 #endif //ACE_HAS_DSUI
 
