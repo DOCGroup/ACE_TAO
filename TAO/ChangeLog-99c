@@ -3,7 +3,8 @@ Mon Jul 05 16:06:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/Exception.cpp (_info): Added _info() to CORBA::Exception and
 	  CORBA::SystemException. This allows the user to get the
 	  exception information as a string and does not force the user to
-	  have the print out the information.
+	  have the print out the information.  Note that _info() is a TAO
+	  specific method.
 
 Mon Jul 05 15:16:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
