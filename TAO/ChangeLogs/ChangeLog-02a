@@ -23,40 +23,49 @@ Tue Apr  3 20:56:48 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/diffs/PolicyS_T.h.diff:
         * tao/diffs/PolicyS_T.i.diff:
         * tao/diffs/PolicyS_T.cpp.diff:
-	  Regenerate Policy and Domain, the new versions support
-	  collocation and interceptors.
+        * tao/diffs/DomainC.cpp.diff:
+        * tao/diffs/DomainC.h.diff:
+        * tao/diffs/DomainC.i.diff:
+        * tao/diffs/DomainS.cpp.diff:
+        * tao/diffs/DomainS.h.diff:
+        * tao/diffs/DomainS.i.diff:
+        * tao/diffs/DomainS_T.cpp.diff:
+        * tao/diffs/DomainS_T.h.diff:
+        * tao/diffs/DomainS_T.i.diff:
+          Regenerate Policy and Domain, the new versions support
+          collocation and interceptors.
 
 Tue Apr  3 21:14:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tao/Leader_Follower.{i,h,cpp}:
-	* tao/Wait_On_Leader_Follower.cpp:
+        * tao/Leader_Follower.{i,h,cpp}:
+        * tao/Wait_On_Leader_Follower.cpp:
 
-	Fixed Bug Id 721 (this time for real).
+        Fixed Bug Id 721 (this time for real).
 
 Tue Apr  3 18:23:36 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/Security/Send_File/Makefile:
-	  Updated dependencies.
+        * orbsvcs/examples/Security/Send_File/Makefile:
+          Updated dependencies.
 
 Tue Apr  3 18:16:04 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	  Updated dependencies.
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+          Updated dependencies.
 
 Tue Apr  3 15:54:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.cpp (run): Don't printout
-	  startup messages unless the TAO_debug_level > 0.  Thanks to Mike
- 	  Letchworth <mletchwo@cisco.com> for reporting this.
+        * orbsvcs/Notify_Service/Notify_Service.cpp (run): Don't printout
+          startup messages unless the TAO_debug_level > 0.  Thanks to Mike
+          Letchworth <mletchwo@cisco.com> for reporting this.
 
-	* orbsvcs/Naming_Service/Naming_Service.h (class TAO_Naming_Service),
-	* orbsvcs/Notify_Service/Notify_Service.h (class Notify_Service):
-	  Made some methods virtual so users can override them.  Thanks to
- 	  Mike Letchworth <mletchwo@cisco.com> for reporting this.
+        * orbsvcs/Naming_Service/Naming_Service.h (class TAO_Naming_Service),
+        * orbsvcs/Notify_Service/Notify_Service.h (class Notify_Service):
+          Made some methods virtual so users can override them.  Thanks to
+          Mike Letchworth <mletchwo@cisco.com> for reporting this.
 
 Tue Apr 03 12:40:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/PortableServerC.cpp: Fixed fuzz warnings.
+        * tao/PortableServer/PortableServerC.cpp: Fixed fuzz warnings.
 
 Tue Apr  3 13:04:55 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -75,11 +84,11 @@ Tue Apr  3 13:04:55 2001  Carlos O'Ryan  <coryan@uci.edu>
           Eliminating the macros removed the need for a sub_state, and I
           was able to remove 1000 lines of code from the IDL compiler.
 
-	* TAO_IDL/driver/drv_prepoc.cpp:
-	  Don't predefine IDL because this is a legal IDL identifier.
-	  Instead we predefine __TAO_IDL and set it to the current ACE
-	  version.  Thanks to Stelios Sfakianakis <ssfak@ics.forth.gr> for
-	  pointing out this problem.
+        * TAO_IDL/driver/drv_prepoc.cpp:
+          Don't predefine IDL because this is a legal IDL identifier.
+          Instead we predefine __TAO_IDL and set it to the current ACE
+          version.  Thanks to Stelios Sfakianakis <ssfak@ics.forth.gr> for
+          pointing out this problem.
 
 Tue Apr  3 10:54:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
