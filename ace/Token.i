@@ -38,3 +38,31 @@ ACE_Token::current_owner (void)
   return this->owner_;
 }
 
+ACE_INLINE int
+ACE_Token::acquire_read (void)
+{
+  ACE_TRACE ("ACE_Token::acquire_read");
+  return this->acquire ();
+}
+
+ACE_INLINE int
+ACE_Token::acquire_write (void)
+{
+  ACE_TRACE ("ACE_Token::acquire_write");
+  return this->acquire ();
+}
+
+ACE_INLINE int
+ACE_Token::tryacquire_read (void)
+{
+  ACE_TRACE ("ACE_Token::tryacquire_read");
+  return this->tryacquire ();
+}
+
+ACE_INLINE int
+ACE_Token::tryacquire_write (void)
+{
+  ACE_TRACE ("ACE_Token::tryacquire_write");
+  return this->tryacquire ();
+}
+

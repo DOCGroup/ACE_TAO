@@ -203,13 +203,13 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads, 
 			    Timer_Queue *tq,
-			    int used_with_reactorEx_event_loop)
+			    int used_with_reactor_event_loop)
   : completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
     number_of_threads_ (number_of_threads),
     timer_queue_ (0),
     delete_timer_queue_ (0),
     timer_handler_ (0),
-    used_with_reactorEx_event_loop_ (used_with_reactorEx_event_loop)
+    used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
   // create the completion port
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,						     
@@ -476,7 +476,7 @@ ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
     continue;
   
   // If our handle_events failed, we'll report a failure to the
-  // ReactorEx.
+  // Reactor.
   return result == -1 ? -1 : 0;
 }
 
@@ -493,7 +493,7 @@ ACE_Proactor::handle_close (ACE_HANDLE handle,
 ACE_HANDLE 
 ACE_Proactor::get_handle (void) const
 {
-  if (this->used_with_reactorEx_event_loop_)
+  if (this->used_with_reactor_event_loop_)
     return this->event_.handle ();
   else
     return 0;

@@ -10,6 +10,41 @@ ACE_Token_Proxy::type (void) const
   return 0;
 }
 
+
+ACE_INLINE int
+ACE_Token_Proxy::acquire_read (int notify,
+			       void (*sleep_hook)(void *),
+			       ACE_Synch_Options &options)
+{
+  return this->acquire (notify,
+			sleep_hook,
+			options);
+}
+
+ACE_INLINE int
+ACE_Token_Proxy::acquire_write (int notify,
+				void (*sleep_hook)(void *),
+				ACE_Synch_Options &options)
+{
+  return this->acquire (notify,
+			sleep_hook,
+			options);
+}
+
+ACE_INLINE int
+ACE_Token_Proxy::tryacquire_read (void (*sleep_hook)(void *))
+{
+  return this->tryacquire (sleep_hook);
+}
+
+ACE_INLINE int
+ACE_Token_Proxy::tryacquire_write (void (*sleep_hook)(void *))
+{
+  return this->tryacquire (sleep_hook);
+}
+
+// ************************************************************
+
 ACE_INLINE int
 ACE_Token_Proxy_Queue::size (void)
 {

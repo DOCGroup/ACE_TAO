@@ -21,7 +21,6 @@
 
 // Forward decls.
 class ACE_Reactor;
-class ACE_ReactorEx;
 
 class ACE_Export ACE_Notification_Strategy 
   // = TITLE
@@ -78,32 +77,6 @@ public:
   
 protected:
   ACE_Reactor *reactor_;
-};
-
-class ACE_Export ACE_ReactorEx_Notification_Strategy : public ACE_Notification_Strategy
-  // = TITLE
-  //     Used to notify an ACE_ReactorEx
-  //
-  // = DESCRIPTION
-  //     Integrates the ACE_Message_Queue notification into the
-  //     ACE_ReactorEx::notify() method.
-{
-public:
-  ACE_ReactorEx_Notification_Strategy (ACE_ReactorEx *reactorEx,
-				       ACE_Event_Handler *eh,
-				       ACE_Reactor_Mask mask);
-
-  virtual int notify (void);
-
-  virtual int notify (ACE_Event_Handler *,
-		      ACE_Reactor_Mask mask);
-
-  // Get/Set the reactorEx
-  ACE_ReactorEx *reactorEx (void);
-  void reactorEx (ACE_ReactorEx *r);
-  
-protected:
-  ACE_ReactorEx *reactorEx_;
 };
 
 // This needs to come here to avoid circular dependencies.
