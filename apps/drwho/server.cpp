@@ -25,6 +25,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_socket.h"
 
 static char *
