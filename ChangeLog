@@ -1,3 +1,9 @@
+Sat Jan 22 21:13:11 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
+
+	* tests/Test_Output.cpp(close): Fixed when ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose
+        should be called only when output_file_ is valid, and it points to the same current
+        ACE_LOG_MSG->msg_ostream ().
+	
 Fri Jan 21 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
