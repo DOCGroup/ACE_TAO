@@ -1,20 +1,25 @@
+Thu Mar 28 10:45:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/tests.dsw:
+	* tests/Cached_Allocator_Test.dsp: Added this new MSVC project.
+
 Thu Mar 28 10:12:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Malloc_T.{h,i,cpp}: Added support for ACE_Dynamic_Cached_Allocator. 
+	* ace/Malloc_T.{h,i,cpp}: Added support for ACE_Dynamic_Cached_Allocator.
 	  Thanks to Jaroslaw Nozderko <jareknz@polbox.com> for
  	  contributing this.
-  
+
 	* tests: Added Cached_Allocator_Test.cpp.  Thanks to
 	  Jaroslaw Nozderko <jareknz@polbox.com> for contributing this.
 
-	* tests/Makefile (BIN): 
+	* tests/Makefile (BIN):
 	* tests/run_test.lst: Added Cached_Allocator_Test.
 
 Thu Mar 28 06:15:22 2002  Alex Libman <AlexL@rumblegroup.com>
 
         * ace/POSIX_Asynch_IO.cpp,
-	  ace/POSIX_Asynch_IO.h: 
-	  ACE_POSIX_AOICB_Asynch_Operation and ACE_POSIX_Asynch_Operation	
+	  ace/POSIX_Asynch_IO.h:
+	  ACE_POSIX_AOICB_Asynch_Operation and ACE_POSIX_Asynch_Operation
 	  merged in one class ACE_POSIX_Asynch_Operation
 
 	  Since POSIX_SIG_Proactor and SUN_Proactor are based on
@@ -23,7 +28,7 @@ Thu Mar 28 06:15:22 2002  Alex Libman <AlexL@rumblegroup.com>
  	  support extra class tree.
 
         * ace/POSIX_Asynch_IO.cpp,
-	  ace/POSIX_Asynch_IO.h: 
+	  ace/POSIX_Asynch_IO.h:
 	  ACE_POSIX_AOICB_Transmit_Handler and ACE_POSIX_Transmit_Handler
 	  merged in ACE_POSIX_Transmit_Handler for same reason as previous
 	  change.
@@ -42,7 +47,7 @@ Thu Mar 28 06:15:22 2002  Alex Libman <AlexL@rumblegroup.com>
 
 	  // start asynch accept task
 	  this->get_asynch_accept_task.start ();
-  
+
           All POSIX_Proactors implementations ( AIOCB,SIG,SUN ) should
  	  stop ACE_POSIX_Asynch_Accept_Task in their destructors to avoid
  	  post_completions from based classes
@@ -51,7 +56,7 @@ Thu Mar 28 06:15:22 2002  Alex Libman <AlexL@rumblegroup.com>
 	  this->get_asynch_accept_task.stop ();
 
 Thu Mar 28 06:14:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-  
+
 	* ace/TTY_IO.cpp (Serial_Params): Zero out the values in the
 	  Serial_Params constructor.  Thanks to Pavel Repin
  	  <pavel@repin.com> for reporting this.
