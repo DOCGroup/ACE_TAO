@@ -2424,14 +2424,14 @@ TAO_POA::encode_sequence_to_string (CORBA::String &str,
   // OR, we could just return this space.  The classic time-space tradeoff,
   // and for now we'll let time win out, which means that we only do the
   // allocation once.
-  u_int len = 3 * seq.length() + 1 /* for zero termination */;
+  u_int len = 3 * seq.length (); /* space for zero termination not needed */;
   str = CORBA::string_alloc (len);
 
   char *cp = str;
 
   for (u_int i = 0;
-       cp < (cp+len) && i < seq.length();
-       i++)
+       cp < (cp + len) && i < seq.length();
+       ++i)
     {
       u_char byte = seq[i];
       if (isprint (byte) && byte != '\\')
