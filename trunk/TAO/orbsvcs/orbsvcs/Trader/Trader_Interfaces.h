@@ -19,7 +19,7 @@
 #ifndef TAO_TRADER_INTERFACES_H
 #define TAO_TRADER_INTERFACES_H
 
-#include "Attributes_T.h"
+#include "Trader_T.h"
 #include "Trader_Utils.h"
 #include "Offer_Iterators_T.h"
 #include "Constraint_Interpreter.h"

@@ -265,8 +265,6 @@ lookup_one_type (const char* type,
 		 TAO_Preference_Interpreter& pref_inter,
 		 TAO_Offer_Filter& offer_filter)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Lookup: Performing query for %s\n", type));
-  
   // Retrieve an iterator over the offers for a given type.
   Offer_Database::offer_iterator offer_iter (type, offer_database);
 
