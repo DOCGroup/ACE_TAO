@@ -47,13 +47,3 @@ TAO threaded version            1               1.170             854
                                 2               1.3               769
                                 3               1.600             625
 
-
-Cubit results over ATM with 20,000 calls
-----------------------------------------
-
-                               Clients  Latency (ms)          Calls/Sec
-
-Visibroker without filters     1        1.060                 943
-                               2        1.327                 753
-                               3        2.108                 474
-
