@@ -15,7 +15,7 @@ $iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "\n            RTCORBA Private Connection Unit Test\n\n";
+print STDERR "\n********** RTCORBA Private Connection Unit Test\n\n";
 
 unlink $iorfile;
 
