@@ -1,3 +1,19 @@
+Fri Nov 17 14:24:42 2000 Darrell Brunsch <brunsch@uci.edu>
+
+        * include/makeinclude/clean.bor:
+
+          Added the removal of *Cli.cpp, *Ser.cpp, etc. files which
+          is the output style of the TAO Param_Test.
+
+        * tests/Reactor_Exceptions_Test.cpp:
+
+          Put the handler in its own scope so it must be cleaned up
+          before the handler.  For whatever reason, it wasn't happening
+          in the right order before.
+
+          Also changed the exception error to a debug message, since
+          it really isn't an error.
+
 Fri Nov 17 11:22:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_sunos5_kcc.GNU:
