@@ -471,7 +471,7 @@ be_interpretive_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->local_name () << "\", ";
+  *os << node->original_local_name () << "\", ";
 
       // are we oneway or two operation?
   if (node->flags () == AST_Operation::OP_oneway)
