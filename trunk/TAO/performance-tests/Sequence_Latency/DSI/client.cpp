@@ -41,12 +41,12 @@ parse_args (int argc, char *argv[])
             ACE_OS::strcmp (data_type, "longlong") != 0)
           return -1;
         break;
-	  
-			case 's':
+
+                        case 's':
         sz = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      
-			case 'h':
+
+                        case 'h':
         do_dump_history = 1;
         break;
 
@@ -350,9 +350,6 @@ test_double_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
-
-  int mydummy = 0;
-
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -397,9 +394,9 @@ main (int argc, char *argv[])
                              ior),
                             1);
         }
-			
-			
-			Test::octet_load oc;	
+
+
+                        Test::octet_load oc;
 
       for (int j = 0; j < 100; ++j)
         {
