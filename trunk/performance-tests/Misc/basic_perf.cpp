@@ -53,9 +53,7 @@ inline
 double
 per_iteration (const ACE_hrtime_t elapsed /* nanoseconds */)
 {
-  // The division by (ACE_UINT32) 1u allows transparent support of
-  // ACE_U_LongLong; its operator/ produces a u_long result.
-  double ms_per_iteration = (double) (elapsed/ (ACE_UINT32) 1u) / 1000.0 /
+  double ms_per_iteration = (double) ACE_U64_TO_U32 (elapsed) / 1000.0 /
                             (double) iterations;
 
   // Don't print out "-0.000" or "-0.001" . . .
