@@ -600,11 +600,26 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
               // Check the state of the POA Manager.
               this->poa_manager_.check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
-// @todo, when this call gives a ssytem exception, then obj_adapter should be thrown with minor code 1 (see 11.3.9.2)
-              CORBA::Boolean success =
-                this->adapter_activator_->unknown_adapter (this,
-                                                           child_name.c_str ()
-                                                           ACE_ENV_ARG_PARAMETER);
+
+              CORBA::Boolean success = false;
+              ACE_TRY_EX (UnknownAdapter)
+                {
+                  // When unknown_adapter gives a system exception, the POA
+                  // should raise OBJ_ADAPTER with standard minor code 1.
+                  // See 11.3.9.2 of the Corba spec
+                  success =
+                    this->adapter_activator_->unknown_adapter (this,
+                                                               child_name.c_str ()
+                                                               ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK_EX (UnknownAdapter);
+                }
+              ACE_CATCH (CORBA::SystemException, ex)
+                {
+                  ACE_TRY_THROW_EX (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 1,
+                                    CORBA::COMPLETED_NO),
+                                    UnknownAdapter);
+                }
+              ACE_ENDTRY;
               ACE_CHECK_RETURN (0);
 
               if (success)
@@ -1125,7 +1140,10 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
                    PortableServer::POA::WrongPolicy))
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
-    activate_object (servant, priority, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+    activate_object (servant,
+                     priority,
+                     wait_occurred_restart_call
+                     ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -1204,7 +1222,11 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                    PortableServer::POA::WrongPolicy))
 {
   this->active_policy_strategies_.servant_retention_strategy()->
-    activate_object_with_id (id, servant, priority, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+    activate_object_with_id (id,
+                             servant,
+                             priority,
+                             wait_occurred_restart_call
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -1287,7 +1309,8 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects
                    PortableServer::POA::WrongPolicy))
 {
   this->active_policy_strategies_.servant_retention_strategy()->
-    deactivate_all_objects (etherealize_objects ACE_ENV_ARG_PARAMETER);
+    deactivate_all_objects (etherealize_objects
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -1313,7 +1336,9 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  this->active_policy_strategies_.servant_retention_strategy()->deactivate_object (id ACE_ENV_ARG_PARAMETER);
+  this->active_policy_strategies_.servant_retention_strategy()->
+    deactivate_object (id
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
