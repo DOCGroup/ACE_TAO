@@ -1,4 +1,10 @@
+Tue Mar 22 21:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+          Fixed fuzz error
+
 Tue Mar 22 13:08:32 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
 	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_Base.h
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.h
@@ -6,16 +12,16 @@ Tue Mar 22 13:08:32 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* DAnCE/examples/Swapping/Sender/Sender_exec_2.h
 
 	Silence some Fuzz errors.
-	
+
 Tue Mar 22 11:45:57 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Config_Handlers/ADD_Handler.cpp
 	* DAnCE/Config_Handlers/Any_Handler.cpp
 	* DAnCE/Config_Handlers/CCD_Handler.cpp
 	* DAnCE/Config_Handlers/XSCRT/Elements.hpp
-	
+
 	Changes to accomodate broken compilers (VC6).
-	
+
 Tue Mar 22 10:40:21 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender_exec.cpp:
