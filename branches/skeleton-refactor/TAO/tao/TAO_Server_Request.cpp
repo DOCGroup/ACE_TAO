@@ -6,6 +6,8 @@
 #include "debug.h"
 #include "Pluggable_Messaging.h"
 #include "GIOP_Utils.h"
+#include "Stub.h"
+#include "operation_details.h"
 #include "Transport.h"
 #include "CDR.h"
 #include "SystemException.h"
@@ -20,7 +22,7 @@ ACE_RCSID (tao,
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-  static const char *TAO_Server_Request_Timeprobe_Description[] =
+static const char * TAO_Server_Request_Timeprobe_Description[] =
 {
   "TAO_ServerRequest::TAO_ServerRequest - start",
   "TAO_ServerRequest::TAO_ServerRequest - end",
@@ -118,7 +120,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
                                       TAO_Operation_Details const & details,
                                       CORBA::Object_ptr target)
   : mesg_base_ (0),
-    operation_ (details->opname ()),
+    operation_ (details.opname ()),
     incoming_ (0),
     outgoing_ (0),
     transport_ (0),
@@ -141,7 +143,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   , result_seq_ (0)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
-  this->profile_.object_key (target->_stubobj ()->object_key ());
+  // Have to use a const_cast<>.  *sigh*
+  this->profile_.object_key (const_cast<TAO::ObjectKey &> (target->_stubobj ()->object_key ()));
 }
 
 TAO_ServerRequest::~TAO_ServerRequest (void)
