@@ -3,7 +3,8 @@ Wed Dec 17 12:54:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/TMCast/Group.cpp:
 	* ace/TMCast/LinkListener.hpp:
 
-	  More fixes for VC 71.
+	  More fixes for VC 71. Thanks to Chad Elliott for helping
+	  me checking the results.
 
 Wed Dec 17 09:52:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
