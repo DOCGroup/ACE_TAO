@@ -29,13 +29,13 @@ size_t ACE::allocation_granularity_ = 0;
 int
 ACE::init (void)
 {
-  return ACE_Object_Manager::instance()->init ();
+  return ACE_Object_Manager::instance ()->init ();
 }
 
 int
 ACE::fini (void)
 {
-  return ACE_Object_Manager::instance()->fini ();
+  return ACE_Object_Manager::instance ()->fini ();
 }
 
 u_int
@@ -1053,30 +1053,6 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 // Miscellaneous static methods used throughout ACE.
 
 ssize_t
-ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
-{
-  ACE_TRACE ("ACE::send_n");
-  size_t bytes_written;
-  ssize_t n;
-
-  for (bytes_written = 0; bytes_written < len; bytes_written += n)
-    {
-      n = ACE::send (handle,
-                     (const char *) buf + bytes_written,
-                     len - bytes_written);
-      if (n == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            n = 0; // Keep trying to send.
-          else
-            return -1;
-        }
-    }
-
-  return bytes_written;
-}
-
-ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const void *buf,
              size_t len,
@@ -1092,35 +1068,6 @@ ACE::send_n (ACE_HANDLE handle,
                         (const char *) buf + bytes_written,
                         len - bytes_written,
                         flags);
-      if (n == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            n = 0; // Keep trying to send.
-          else
-            return -1;
-        }
-    }
-
-  return bytes_written;
-}
-
-// Receive <len> bytes into <buf> from <handle> (uses the <write>
-// system call on UNIX and the <WriteFile> call on Win32).
-
-ssize_t
-ACE::write_n (ACE_HANDLE handle,
-              const void *buf,
-              size_t len)
-{
-  ACE_TRACE ("ACE::write_n");
-
-  size_t bytes_written;
-  ssize_t n;
-
-  for (bytes_written = 0; bytes_written < len; bytes_written += n)
-    {
-      n = ACE_OS::write (handle, (const char *) buf + bytes_written,
-                         len - bytes_written);
       if (n == -1)
         {
           if (errno == EWOULDBLOCK)
@@ -1172,39 +1119,6 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
                      (char *) buf + bytes_read,
                      len - bytes_read,
                      flags);
-
-      if (n == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            n = 0; // Keep trying to read.
-          else
-            return -1;
-        }
-      else if (n == 0)
-        break;
-    }
-
-  return bytes_read;
-}
-
-// Receive <len> bytes into <buf> from <handle> (uses the <read>
-// system call on UNIX and the <ReadFile> call on Win32).
-
-ssize_t
-ACE::read_n (ACE_HANDLE handle,
-             void *buf,
-             size_t len)
-{
-  ACE_TRACE ("ACE::read_n");
-
-  size_t bytes_read;
-  ssize_t n;
-
-  for (bytes_read = 0; bytes_read < len; bytes_read += n)
-    {
-      n = ACE_OS::read (handle,
-                        (char *) buf + bytes_read,
-                        len - bytes_read);
 
       if (n == -1)
         {

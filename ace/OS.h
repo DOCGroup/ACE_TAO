@@ -5138,6 +5138,14 @@ public:
                        void *buf,
                        size_t len,
                        ACE_OVERLAPPED *);
+  static ssize_t read_n (ACE_HANDLE handle,
+                         void *buf,
+                         size_t len);
+  // Receive <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::read> call, which uses the <read> system call on UNIX
+  // and the <ReadFile> call on Win32).  If <handle> is set to
+  // non-blocking mode this call will poll until all <len> bytes are
+  // received.
   static int readlink (const char *path,
                        char *buf,
                        size_t bufsiz);
@@ -5158,6 +5166,13 @@ public:
                         const void *buf,
                         size_t nbyte,
                         ACE_OVERLAPPED *);
+  static ssize_t write_n (ACE_HANDLE handle,
+                          const void *buf,
+                          size_t len);
+  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
+  // calls, which is uses the <write> system call on UNIX and the
+  // <WriteFile> call on Win32).  If <handle> is set to non-blocking
+  // mode this call will poll until all <len> bytes are sent.
   static ssize_t pwrite (ACE_HANDLE handle,
                          const void *buf,
                          size_t nbyte,
@@ -5389,6 +5404,9 @@ public:
                    const char *buf,
                    int len, int
                    flags = 0);
+  static ssize_t send_n (ACE_HANDLE handle,
+                         const void *buf,
+                         size_t len);
   static int sendto (ACE_HANDLE handle,
                      const char *buf,
                      int len,
