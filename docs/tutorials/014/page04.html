@@ -22,38 +22,39 @@ As stated in the comments below, the default action of the task at the
 <P>
 Read on...
 <P>
-<HR WIDTH="100%"><PRE>
+<HR WIDTH="100%">
+<PRE>
 
-// $Id$
+<font color=red>// $Id$</font>
 
-// EndTask.h
-//
-// Tutorial regarding a way to use ACE_Stream.
-//
-// written by bob mcwhirter (bob@netwrench.com)
-//
-//
+<font color=red>// EndTask.h</font>
+<font color=red>//</font>
+<font color=red>// Tutorial regarding a way to use ACE_Stream.</font>
+<font color=red>//</font>
+<font color=red>// written by bob mcwhirter (bob@netwrench.com)</font>
+<font color=red>//</font>
+<font color=red>//</font>
 
-#ifndef ENDTASK_H
-#define ENDTASK_H
+<font color=blue>#ifndef</font> <font color=purple>ENDTASK_H</font>
+<font color=blue>#define</font> <font color=purple>ENDTASK_H</font>
 
-#include "Task.h"
+<font color=blue>#include</font> "<font color=green>Task.h</font>"
 
-// When you setup a Stream and push your modules on,
-// there are two additional modules that go unseen
-// by the user.
-//
-// The Stream pushes on a Stream_Head in front of
-// your first module, and a Stream_Tail behind your
-// last module.
-//
-// If your put() a message to the Stream Tail, it 
-// assumes you did so in error. This simple EndTask
-// class allows you to push a message to it and just 
-// have it safely Go Away.
-//
-// All this Task does is release the Message_Block
-// and return 0.  It's a suitable black-hole.
+<font color=red>// When you setup a Stream and push your modules on,</font>
+<font color=red>// there are two additional modules that go unseen</font>
+<font color=red>// by the user.</font>
+<font color=red>//</font>
+<font color=red>// The Stream pushes on a Stream_Head in front of</font>
+<font color=red>// your first module, and a Stream_Tail behind your</font>
+<font color=red>// last module.</font>
+<font color=red>//</font>
+<font color=red>// If your put() a message to the Stream Tail, it</font>
+<font color=red>// assumes you did so in error. This simple EndTask</font>
+<font color=red>// class allows you to push a message to it and just</font>
+<font color=red>// have it safely Go Away.</font>
+<font color=red>//</font>
+<font color=red>// All this Task does is release the Message_Block</font>
+<font color=red>// and return 0.  It's a suitable black-hole.</font>
 
 
 class EndTask : public Task
@@ -64,45 +65,45 @@ public:
   typedef Task inherited;
 
   EndTask(const char *nameOfTask) :
-    inherited(nameOfTask, 0) { 
+    inherited(nameOfTask, 0) {
 
-    // when we get open()'d, it with 0 threads
-    // since there is actually no processing to do.
+    <font color=red>// when we get open()'d, it with 0 threads</font>
+    <font color=red>// since there is actually no processing to do.</font>
 
-	cerr &lt;&lt; __LINE__ &lt;&lt; " " &lt;&lt; __FILE__ &lt;&lt; endl;
+        cerr &lt;&lt; __LINE__ &lt;&lt; "<font color=green> </font>" &lt;&lt; __FILE__ &lt;&lt; endl;
   };
 
   virtual int open(void *)
   {
-	cerr &lt;&lt; __LINE__ &lt;&lt; " " &lt;&lt; __FILE__ &lt;&lt; endl;
-	return 0;
+        cerr &lt;&lt; __LINE__ &lt;&lt; "<font color=green> </font>" &lt;&lt; __FILE__ &lt;&lt; endl;
+        return 0;
   }
 
   virtual int open(void)
   {
-	cerr &lt;&lt; __LINE__ &lt;&lt; " " &lt;&lt; __FILE__ &lt;&lt; endl;
-	return 0;
+        cerr &lt;&lt; __LINE__ &lt;&lt; "<font color=green> </font>" &lt;&lt; __FILE__ &lt;&lt; endl;
+        return 0;
   }
 
   virtual ~EndTask(void) {
   };
 
   virtual int put(ACE_Message_Block *message,
-		  ACE_Time_Value *timeout) {
+                  ACE_Time_Value *timeout) {
 
-	cerr &lt;&lt; __LINE__ &lt;&lt; " " &lt;&lt; __FILE__ &lt;&lt; endl;
+        cerr &lt;&lt; __LINE__ &lt;&lt; "<font color=green> </font>" &lt;&lt; __FILE__ &lt;&lt; endl;
     ACE_UNUSED_ARG(timeout);
 
-    // we don't have anything to do, so
-    // release() the message.
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s EndTask::put() -- releasing Message_Block\n", this->nameOfTask()));
+    <font color=red>// we don't have anything to do, so</font>
+    <font color=red>// release() the message.</font>
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) %s <font color=#008888>EndTask::put</font>() -- releasing Message_Block\n</font>", this->nameOfTask()));
     message->release();
     return 0;
   };
 
 };
 
-#endif // ENDTASK_H
+<font color=blue>#endif</font> <font color=red>// ENDTASK_H</font>
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
