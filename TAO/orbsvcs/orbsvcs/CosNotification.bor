@@ -1,3 +1,4 @@
+#$Id$
 #
 # Makefile for building	the TAO	CosNotification	library
 #
@@ -13,7 +14,9 @@ IDLFILES = \
 	$(IDLDIR)\CosNotification.idl \
 	$(IDLDIR)\CosNotifyChannelAdmin.idl \
 	$(IDLDIR)\CosNotifyComm.idl \
-	$(IDLDIR)\CosNotifyFilter.idl
+	$(IDLDIR)\CosNotifyFilter.idl \
+        $(IDLDIR)\NotifyExt.idl \     
+        $(IDLDIR)\Notify\Event_Forwarder.idl
 
 OBJFILES = \
 	$(OBJDIR)\CosNotificationC.obj \
@@ -24,44 +27,73 @@ OBJFILES = \
 	$(OBJDIR)\CosNotifyCommS.obj \
 	$(OBJDIR)\CosNotifyFilterC.obj \
 	$(OBJDIR)\CosNotifyFilterS.obj \
-	$(OBJDIR)\Notify_Collection.obj	\
-	$(OBJDIR)\Notify_Command.obj	\
-	$(OBJDIR)\Notify_Constraint_Interpreter.obj \
-	$(OBJDIR)\Notify_Constraint_Visitors.obj \
-	$(OBJDIR)\Notify_ConsumerAdmin_i.obj \
-	$(OBJDIR)\Notify_Default_CO_Factory.obj	\
-	$(OBJDIR)\Notify_Default_Collection_Factory.obj	\
-	$(OBJDIR)\Notify_Default_EMO_Factory.obj \
-	$(OBJDIR)\Notify_Default_POA_Factory.obj \
-	$(OBJDIR)\Notify_Event.obj \
-	$(OBJDIR)\Notify_Event_Dispatch_Command.obj \
-	$(OBJDIR)\Notify_Event_Manager.obj \
-	$(OBJDIR)\Notify_Event_Map.obj \
-	$(OBJDIR)\Notify_Event_Processor.obj \
-	$(OBJDIR)\Notify_EventChannel_i.obj \
-	$(OBJDIR)\Notify_EventChannelFactory_i.obj \
-	$(OBJDIR)\Notify_Extensions.obj \
-	$(OBJDIR)\Notify_Factory.obj \
-	$(OBJDIR)\Notify_Filter_i.obj \
-	$(OBJDIR)\Notify_FilterAdmin_i.obj \
-	$(OBJDIR)\Notify_FilterFactory_i.obj \
-	$(OBJDIR)\Notify_Listener_Filter_Eval_Command.obj \
-	$(OBJDIR)\Notify_Lookup_Command.obj \
-	$(OBJDIR)\Notify_ProxyPushConsumer_i.obj \
-	$(OBJDIR)\Notify_ProxyPushSupplier_i.obj \
-	$(OBJDIR)\Notify_QoSAdmin_i.obj	\
-	$(OBJDIR)\Notify_SequenceProxyPushConsumer_i.obj \
-	$(OBJDIR)\Notify_SequenceProxyPushSupplier_i.obj \
-	$(OBJDIR)\Notify_Source_Filter_Eval_Command.obj	\
-	$(OBJDIR)\Notify_StructuredEvents.obj \
-	$(OBJDIR)\Notify_StructuredProxyPushConsumer_i.obj \
-	$(OBJDIR)\Notify_StructuredProxyPushSupplier_i.obj \
-	$(OBJDIR)\Notify_SupplierAdmin_i.obj \
-	$(OBJDIR)\Notify_Update_Dispatch_Command.obj \
-	$(OBJDIR)\Notify_Worker_Task.obj \
-	$(OBJDIR)\Notify_AdminProperties.obj \
-	$(OBJDIR)\Notify_Buffering_Strategy.obj \
-	$(OBJDIR)\Notify_MT_Worker_Task.obj
+	$(OBJDIR)\NotifyExtC.obj \
+	$(OBJDIR)\NotifyExtS.obj \
+	$(OBJDIR)\Event_ForwarderC.obj \
+	$(OBJDIR)\Event_ForwarderS.obj \
+        $(OBJDIR)\Notify_Extensions \
+        $(OBJDIR)\Event_Manager \
+        $(OBJDIR)\Admin \
+        $(OBJDIR)\AdminProperties\
+        $(OBJDIR)\Any\AnyEvent \
+        $(OBJDIR)\Any\CosEC_ProxyPushConsumer \
+        $(OBJDIR)\Any\CosEC_ProxyPushSupplier \
+        $(OBJDIR)\Any\ProxyPushConsumer \
+        $(OBJDIR)\Any\ProxyPushSupplier \
+        $(OBJDIR)\Any\PushConsumer \
+        $(OBJDIR)\Any\PushSupplier \
+        $(OBJDIR)\Buffering_Strategy \
+        $(OBJDIR)\Builder \
+        $(OBJDIR)\Consumer \
+        $(OBJDIR)\ConsumerAdmin \
+        $(OBJDIR)\Container \
+        $(OBJDIR)\Event \
+        $(OBJDIR)\EventChannel \
+        $(OBJDIR)\EventChannelFactory \
+        $(OBJDIR)\EventType \
+        $(OBJDIR)\EventTypeSeq \
+        $(OBJDIR)\Factory \
+        $(OBJDIR)\FilterAdmin \
+        $(OBJDIR)\ID_Factory \
+        $(OBJDIR)\Method_Request \
+        $(OBJDIR)\Method_Request_Dispatch \
+        $(OBJDIR)\Method_Request_Dispatch_No_Filtering \
+        $(OBJDIR)\Object \
+        $(OBJDIR)\Method_Request_Lookup \
+        $(OBJDIR)\Method_Request_Shutdown \
+        $(OBJDIR)\Notify_Service \
+        $(OBJDIR)\Peer \
+        $(OBJDIR)\POA_Helper \
+        $(OBJDIR)\Properties \
+        $(OBJDIR)\PropertySeq \
+        $(OBJDIR)\Property_Boolean \
+        $(OBJDIR)\Proxy \
+        $(OBJDIR)\ProxyConsumer \
+        $(OBJDIR)\ProxySupplier \
+        $(OBJDIR)\QoSProperties \
+        $(OBJDIR)\Reactive_Task \
+        $(OBJDIR)\Refcountable \
+        $(OBJDIR)\Sequence\EventBatch \
+        $(OBJDIR)\Sequence\Method_Request_Dispatch_EventBatch \
+        $(OBJDIR)\Sequence\SequenceProxyPushConsumer \
+        $(OBJDIR)\Sequence\SequenceProxyPushSupplier \
+        $(OBJDIR)\Sequence\SequencePushConsumer \
+        $(OBJDIR)\Sequence\SequencePushSupplier \
+        $(OBJDIR)\Structured\StructuredEvent \
+        $(OBJDIR)\Structured\StructuredProxyPushConsumer \
+        $(OBJDIR)\Structured\StructuredProxyPushSupplier \
+        $(OBJDIR)\Structured\StructuredPushConsumer \
+        $(OBJDIR)\Structured\StructuredPushSupplier \
+        $(OBJDIR)\Supplier \
+        $(OBJDIR)\Subscription_Change_Worker \
+        $(OBJDIR)\SupplierAdmin \
+        $(OBJDIR)\ThreadPool_Task \
+        $(OBJDIR)\Types \
+        $(OBJDIR)\Worker_Task
+        $(OBJDIR)\ETCL_Filter \
+        $(OBJDIR)\ETCL_FilterFactory \
+        $(OBJDIR)\Constraint_Interpreter \
+        $(OBJDIR)\Constraint_Visitors
 
 RESOURCE = $(OBJDIR)\CosNotification.res
 
@@ -76,7 +108,7 @@ CFLAGS = \
 	$(TAO_NOTIFY_CFLAGS) \
 	-DTAO_NOTIFY_BUILD_DLL
 
-CPPDIR = .;Notify
+CPPDIR = .;Notify;Notify\Any;Notify\Structured\;Notify\Sequence;
 
 IDLDIR = .
 
@@ -113,4 +145,10 @@ $(IDLDIR)\CosNotifyCommC.cpp $(IDLDIR)\CosNotifyCommS.cpp: $(IDLDIR)\CosNotifyCo
 	$(TAO_IDL) $**
 
 $(IDLDIR)\CosNotifyFilterC.cpp $(IDLDIR)\CosNotifyFilterS.cpp: $(IDLDIR)\CosNotifyFilter.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\NotifyExtC.cpp $(IDLDIR)\NotifyExtS.cpp: $(IDLDIR)\NotifyExt.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\Notify\Event_ForwarderC.cpp $(IDLDIR)\Notify\Event_ForwarderS.cpp: $(IDLDIR)\Notify\Event_Forwarder.idl
 	$(TAO_IDL) $**
