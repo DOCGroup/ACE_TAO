@@ -17,7 +17,8 @@ foreach my $process (qw(unbounded_value_sequence_ut
                         unbounded_string_sequence_ut
                         testing_allocation_traits_ut
                         Unbounded_Simple_Types
-                        Bounded_Simple_Types)) {
+                        Bounded_Simple_Types
+                        Unbounded_String)) {
 
   # Not all the binaries are generated in all configurations.
   next unless -x $process;

@@ -1,3 +1,13 @@
+Thu Sep 23 22:48:14 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  New smoke test to verify that unbounded string sequences compile
+	  across all platforms.  The test is incomplete because the
+	  sequences are, but there is enough code there to start shaking
+	  out the bugs.
+
 Thu Sep 23 22:38:39 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
