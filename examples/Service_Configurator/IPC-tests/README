@@ -23,7 +23,7 @@ There are several types of entries in this file.  The two most
 important are the lines beginning with the keywords "static" and
 "dynamic".  For example, the first non-commented line says:
 
-static Svc_Manager "-d -p 3911"
+static ACE_Service_Manager "-d -p 3911"
 
 When this line is parsed at startup time by the Service Configurator
 object in the ./server_test executable, it causes the pre-configured
