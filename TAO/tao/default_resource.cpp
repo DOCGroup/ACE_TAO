@@ -557,6 +557,11 @@ TAO_Allocated_Resources::TAO_Allocated_Resources (void)
 
 TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
 {
+  // The destruction of the Reactor must come before the destruction
+  // of the allocators.  The handlers deleted when the Reactors die
+  // access these allocators.
+  delete this->r_;
+
   if (this->input_cdr_dblock_allocator_ != 0)
     this->input_cdr_dblock_allocator_->remove ();
   delete this->input_cdr_dblock_allocator_;
@@ -572,8 +577,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   if (this->output_cdr_buffer_allocator_ != 0)
     this->output_cdr_buffer_allocator_->remove ();
   delete this->output_cdr_buffer_allocator_;
-
-  delete this->r_;
 }
 
 // ****************************************************************
