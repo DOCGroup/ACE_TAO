@@ -1,5 +1,10 @@
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
+	  users to control whether wide character strings use the "L"
+ 	  prefix via their config.h files.  Thanks to Albert Wijnja for
+ 	  this fix.
+
 	* examples/Misc/test_read_buffer.cpp (main): Changed <int> to
 	  <ACE_HANDLE> so this will work properly on Win32 platforms.
 	  Thanks to Johnny Willemsen for reporting the problem.
