@@ -27,7 +27,9 @@
 #endif /* _POSIX_C_SOURCE >= 199506L  ||  __EXTENSIONS__ */
 
 // SunOS 5.6 has AIO calls.
+#if !defined (ACE_HAS_AIO_CALLS)
 #define ACE_HAS_AIO_CALLS
+#endif /* ACE_HAS_AIO_CALLS */
 
 // Sunos 5.6's aio_* with RT signals is broken.
 #define ACE_POSIX_AIOCB_PROACTOR
