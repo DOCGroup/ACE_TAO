@@ -311,6 +311,70 @@ IDL3_Client::component_inheritance_test (
     comp_def->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  CORBA::ULong length = supported->length ();
+
+  if (length != 2)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_test: "
+                      "wrong number of supported interfaces\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::String_var str = supported[1U].in()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  const char *tmp = str.in ();
+
+  if (tmp == 0 || ACE_OS::strcmp (tmp, "IDL:help/c_supp2:1.0") != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_test: "
+                      "bad id on supported interface\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ComponentIR::ComponentDef_var comp_base =
+    comp_def->base_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (comp_base.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_test: "
+                      "base component is null\n"));
+        }
+
+      return -1;
+    }
+
+  str = comp_base->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  tmp = str.in ();
+
+  if (tmp == 0 || ACE_OS::strcmp (tmp, "IDL:help/c_base:1.0") != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_test: "
+                      "bad id on base component\n"));
+        }
+
+      return -1;
+    }
+
   return 0;
 }
 

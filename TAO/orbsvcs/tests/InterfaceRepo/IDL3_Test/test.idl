@@ -11,11 +11,13 @@ module help
 {
   interface c_supp1 {};
   interface c_supp2 {};
+  component c_base {};
 };
 
 module mod
 {
-  component test_component supports help::c_supp1, help::c_supp2
+  component test_component 
+    : help::c_base supports help::c_supp1, help::c_supp2
   {
     attribute long c_attr 
       getraises (help::doh) 
