@@ -44,6 +44,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   if (params.input_cdr_ == 0)
     return -1;
 
+  bool cont_dispatch =
+    this->try_dispatch_reply ();
 
   if (this->timeout_handler_)
     {
@@ -55,6 +57,13 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       // AMI Timeout Handling End
     }
 
+  // A simple protocol that we follow. If the timeout had been handled
+  // by another thread, the last refcount for us will be held by the
+  // timeout handler. Hence the above call to remove_reference () will
+  // delete us. We then have to rely on the status of our stack
+  // variable to exit safely.
+  if (!cont_dispatch)
+    return 0;
 
   this->reply_status_ = params.reply_status_;
 
@@ -96,8 +105,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
                   ACE_TEXT ("dispatch_reply\n")));
     }
 
-  if (!this->try_dispatch_reply ())
-    return 0;
+
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (this->reply_status_)
@@ -151,6 +159,9 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
   ACE_TRY_NEW_ENV
     {
+      bool cont_dispatch =
+        this->try_dispatch_reply ();
+
       if (this->timeout_handler_)
         {
           // If we had registered timeout handlers just cancel them and
@@ -161,6 +172,14 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
         }
 
       // AMI Timeout Handling End
+
+      // A simple protocol that we follow. If the timeout had been handled
+      // by another thread, the last refcount for us will be held by the
+      // timeout handler. Hence the above call to remove_reference () will
+      // delete us. We then have to rely on the status of our stack
+      // variable to exit safely.
+      if (!cont_dispatch)
+        return;
 
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
@@ -218,6 +237,9 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
       timeout_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // This is okay here... Everything relies on our refcount being
+      // held by the timeout handler, whose refcount in turn is held
+      // by the reactor.
       if (!this->try_dispatch_reply ())
         return;
 
