@@ -289,10 +289,10 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
 
 ACE_TS_Clerk_Processor::ACE_TS_Clerk_Processor ()
 : timeout_ (ACE_DEFAULT_TIMEOUT),
-  poolname_ (ACE_DEFAULT_BACKING_STORE),
   blocking_semantics_ (0),
   cur_sequence_num_ (0)
 {
+  ACE_OS::strcpy (poolname_, ACE_DEFAULT_BACKING_STORE);
 }
 
 void
@@ -559,7 +559,9 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	  break;
 	case 'p':
 	  // Get the poolname
-	  this->poolname_ = ACE_WIDE_STRING (get_opt.optarg);
+	  ACE_OS::strncpy (this->poolname_,
+			   ACE_WIDE_STRING (get_opt.optarg),
+			   sizeof this->poolname_ / sizeof TCHAR);
 	  break;
 	case 'b':
 	  // Blocking semantics

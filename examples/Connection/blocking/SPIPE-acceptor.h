@@ -53,7 +53,7 @@ private:
   int n_threads_;
   // Size of thread pool to use.
 
-  const char *rendezvous_;
+  TCHAR rendezvous_[MAXPATHLEN + 1];
   // Meeting place for pipe.
 
   ACE_Sig_Adapter done_handler_;
