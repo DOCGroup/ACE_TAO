@@ -1,3 +1,10 @@
+Thu Jan 31 13:06:12 2002  Boris Kolpackov <bosk@ipmce.ru>
+	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+
+	  Eliminated code that triggers bug with fully-qualified names
+	  in VC++ 6. Thanks to Koushik Banerjee <koushik.banerjee@icmg.nu>
+	  for reporting this.
+	
 Wed Jan 30 21:08:22 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:

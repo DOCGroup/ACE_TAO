@@ -55,7 +55,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     {
       if (inh->opt_accessor ())
         {
-          *os << "if (!";
+          *os << "if (!this->";
           this->class_name (inh, os);
           *os << "::_tao_marshal_state (strm)) return 0;" << be_nl;
         }
@@ -97,7 +97,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     {
       if (inh->opt_accessor ())
         {
-          *os << "if (!";
+          *os << "if (!this->";
           this->class_name (inh, os);
           *os << "::_tao_unmarshal_state (strm)) return 0;" << be_nl;
         }
