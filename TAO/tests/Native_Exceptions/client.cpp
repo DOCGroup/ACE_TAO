@@ -66,8 +66,6 @@ main (int argc, char *argv[])
 
       for (int i = 0; i != niterations; ++i)
         {
-          CORBA::Long number = i;
-
           if (server->test_method (i) != i)
             {
               ACE_ERROR ((LM_ERROR,

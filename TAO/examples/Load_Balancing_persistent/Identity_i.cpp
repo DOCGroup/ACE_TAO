@@ -38,6 +38,5 @@ PortableServer::POA_ptr
 Identity_i::_default_POA (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return PortableServer::POA::_duplicate (this->poa_);
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
-

@@ -9,7 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LIBS     += -lAVsvc -lTAO_CosNaming -lTAO
+LIBS     += -lTAO_AV -lTAO_CosNaming -lTAO
 
 SERVER_OBJS = server.o
 CLIENT_OBJS = ftp.o

@@ -670,7 +670,7 @@ protected:
                      AVStreams::notSupported,
                      AVStreams::streamOpFailed));
   // Helper methods to implement add_fep()
-  
+
   int translate_qos (const AVStreams::streamQoS& application_qos,
                      AVStreams::streamQoS& network_qos);
   // translate from application level to network level qos.

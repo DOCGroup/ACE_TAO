@@ -221,13 +221,15 @@ Subscribe::create_consumers (CORBA::Environment &ACE_TRY_ENV)
   consumer_1_ = new Subscribe_StructuredConsumer ();
   consumer_1_->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  consumer_1_->connect (this->consumer_admin_, ACE_TRY_ENV);
+  consumer_1_->connect (this->consumer_admin_.in (),
+                        ACE_TRY_ENV);
   ACE_CHECK;
 
   consumer_2_ = new Subscribe_StructuredConsumer ();
   consumer_2_->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  consumer_2_->connect (this->consumer_admin_, ACE_TRY_ENV);
+  consumer_2_->connect (this->consumer_admin_.in (),
+                        ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -237,13 +239,15 @@ Subscribe::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
   supplier_1_ = new Subscribe_StructuredSupplier ();
   supplier_1_->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  supplier_1_->connect (this->supplier_admin_, ACE_TRY_ENV);
+  supplier_1_->connect (this->supplier_admin_.in (),
+                        ACE_TRY_ENV);
   ACE_CHECK;
 
   supplier_2_ = new Subscribe_StructuredSupplier ();
   supplier_2_->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  supplier_2_->connect (this->supplier_admin_, ACE_TRY_ENV);
+  supplier_2_->connect (this->supplier_admin_.in (),
+                        ACE_TRY_ENV);
   ACE_CHECK;
 }
 
