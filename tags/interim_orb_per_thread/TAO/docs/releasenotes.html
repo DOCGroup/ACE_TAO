@@ -1,0 +1,196 @@
+<HTML>
+<HEAD>
+  <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
+  <TITLE>TAO Release Information</TITLE>
+</HEAD>
+<BODY>
+
+<H1 ALIGN=CENTER>Release Information</H1>
+
+<H3 ALIGN=CENTER>Version 0.8b</H3>
+<H3 ALIGN=CENTER>30-September-1997</H3>
+
+<H2><HR ALIGN=LEFT>Roadmap</H2>
+
+<P>Information is available on the following topics:</P>
+
+<UL>
+  <LI><A HREF="#orb">ORB &amp; ORB Core</A>
+  <LI><A HREF="#idl">IDL Compiler</A>
+  <LI><A HREF="#eventchannel">Event Channel</A>
+  <LI><A HREF="#apps">Test &amp; Example Applications</A>
+  <LI><A HREF="#poa">Portable Object Adapter</A>
+  <LI><A HREF="#services">CORBA Services</A>
+</UL>
+
+<H2><HR ALIGN=LEFT><A NAME="orb"></A>ORB &amp; ORB Core</H2>
+
+<BLOCKQUOTE>
+  <P>Current status:</P>
+  <UL>
+    <LI>There is a bug in the ORB-per-thread concurrency model caused by its
+    use of the ACE Service Configurator.  The bug is understood,
+    and a patch being readied and should be released no later than week's end.
+    <LI>Provides dynamically linked wholesale strategy assignment using the
+    ACE Service Configurator framework.
+    <LI>Supports several concurrency models out of the box: Reactive, Thread-per-connection,
+    and ORB-per-thread. Others can be easily crafted.
+    <LI>The ORB-per-thread model is not well integrated with the other concurrency
+    models; it must be selected at <EM>compile time</EM> rather than run time.
+    In order to use it, one must add <CODE>-DTAO_HAS_TSS_ORBCORE</CODE> to the compile
+    line in both the library (<code>$(TAO_ROOT)/tao</code>) and the application
+    (<em>e.g.</em>, <code>$(TAO_ROOT)/tests/multiCubit</code>).
+  </UL>
+  <P>Future work:</P>
+  <UL>
+    <LI>Add Orbix-like <CODE>bind</CODE> calls.
+    <LI>Better integrate ORB-per-thread.
+    <LI>Clean up the internals and analyze for performance bottlenecks using
+    Quantify.
+    <LI>Integrate with <A HREF="#poa">POA</A> work.
+    <LI>Add support for <CODE>resolve_initial_references</CODE>.
+    <LI>Assist in porting higher level services (e.g., <A HREF="#eventchannel">Event
+    Channel</A>) to TAO.
+  </UL>
+</BLOCKQUOTE>
+
+<H2><HR ALIGN=LEFT><A NAME="idl"></A>IDL Compiler</H2>
+
+<BLOCKQUOTE>
+  <P>Current status</P>
+  <UL>
+    <LI>Generates stubs and skeletons which use the interpretive IIOP marshaling
+    engine.
+    <LI>Works with <EM>most</EM> IDL constructs. Although code is generated
+    for everything, support for unions, sequences whose element types are anonymous
+    sequences or strings, arrays of strings, and other very complicated types
+    may result in compilation errors.
+  </UL>
+  <P>Future work:</P>
+  <UL>
+    <LI>Improve IDL compiler
+    <LI>Fix bugs in the SunSoft IDL front-end uncovered by us.
+    <LI>Use <A HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A>
+    (from the University of Utah) to generate compiled stubs.
+    <LI>Goal is to measure the code size of the interpretive stubs generated
+    by TAO IDL compiler <I>vs</I> code size of compiled stubs. Then compare
+    the performance of each. We want to prove the thesis that TAO IDL compiler
+    generated interpretive stubs have a small code size, yet are comparable
+    in performance (or slightly less) than compiled stubs. Hence, it will be
+    useful for small distributed equipment such as handsets, PDAs, etc.
+    <LI>In doing the above, improvements to the IIOP protocol engine in terms
+    of size/performance will be made.
+  </UL>
+</BLOCKQUOTE>
+
+<H2><HR ALIGN=LEFT><A NAME="eventchannel"></A>Event Channel</H2>
+
+<BLOCKQUOTE>
+  <P>Current status:</P>
+  <UL>
+    <LI>The current Event Channel is running under Orbix, fully distributed,
+    the main test I've running has three processes, one runs the EC itself,
+    one a Supplier and yet another a Consumer.
+    <LI>The configuration runs can be done even on the distributed scenario,using
+    a IDL &quot;Scheduling Service&quot;.
+    <LI>At run-time (no config runs) there is no need to use the Scheduling
+    Service, a faster, collocated implementation for the service is available.
+    Obviously the information is generated on the config runs and linked into
+    the program.
+  </UL>
+  <P>Future work:</P>
+  <UL>
+    <LI>Port to TAO (on availability of stable IDL compiler).
+    <LI>Change to use standard naming service rather than current Orbix <CODE>_bind</CODE>/<CODE>_marker</CODE>
+    calls.
+    <LI>The <A HREF="#naming">Naming Service</A> must be ported to TAO in order
+    for suppliers and consumers to obtain an object reference to the Event
+    Channel in a portable and reliable fashion.
+    <LI>The Scheduling Service is completely independant of the EC and the
+    configuration of suppliers or consumers. I think it would be convenient
+    to have a library and binaries for it, including a tool to dump the results
+    in a C++ compilable form.
+  </UL>
+</BLOCKQUOTE>
+
+<H2><HR ALIGN=LEFT><A NAME="apps"></A>Test &amp; Example Applications</H2>
+
+<BLOCKQUOTE>
+  <P>Current status:</P>
+  <P>The TAO test application is meant to serve as a starting point for real-time
+  tests on the TAO system. It comprises the following parts:</P>
+  <UL>
+    <LI><EM>Server.</EM> The server creates multiple CORBA objects (servants),
+    each with different real-time priorities. This priority is implemented
+    by using real-time thread support provided by the operating system. Thus,
+    requests sent to a high-priority servant are handled by a high-priority
+    real-time thread, and those sent to a lower priority servant are handled
+    by correspondingly lower priority threads.
+    <LI><EM>Client.</EM> The client component binds to the servants, and sends
+    a stream of CORBA requests to the servants. It measures the response time,
+    i.e. the time taken for the request to complete successfully. In particular,
+    it measures the time taken for requests sent to the high priority servant
+    to complete. The volume of lower priority requests is configurable. The
+    client is thus able to measure the performance of the high-priority servant
+    in the presence of competition from several lower-priority servants.
+  </UL>
+  <P>Clearly, if the ORB endsystem handles the priorities of the various
+  requests correctly, increasing the volume of lower priority requests should
+  not affect the performance seen by the higher priority requests. The application
+  thus serves as a tool to measure and confirm this behavior.</P>
+  <P>Future work:</P>
+  <UL>
+    <LI>Study the impacts of scheduling &amp; concurrency strategies on performance.
+    <LI>Evolve into a testbed for discovering sources of performance non-determinism
+    &amp; priority inversion.
+  </UL>
+</BLOCKQUOTE>
+
+<H2><HR ALIGN=LEFT><A NAME="poa"></A>Portable Object Adapter</H2>
+
+<BLOCKQUOTE>
+  <P>Current Status:</P>
+  <UL>
+    <LI>The POA is not integrated into this release.
+  </UL>
+  <P>Future work:</P>
+  <UL>
+    <LI>Mostly compliant with the <A HREF="http://siesta.cs.wustl.edu/~cleeland/tao/POA.pdf">ORB
+    Portability Specifications [orbos/97-05-15]</A> published by OMG.
+    <LI>Provide extensions of the specification to ensure real-time delivery
+    of messages.
+  </UL>
+</BLOCKQUOTE>
+
+<H2><HR ALIGN=LEFT><A NAME="services"></A>CORBA Services</H2>
+
+<BLOCKQUOTE>
+  <H4><A NAME="naming"></A>NAMING SERVICE</H4>
+  <P>The Naming Service is a nonpersistent implementation of the OMG Naming
+  Service specification.</P>
+  <P>Current status:</P>
+  <UL>
+    <LI>This implementation works on ORBIX 2.0.
+  </UL>
+  <P>Future work:</P>
+  <UL>
+    <LI>Port to TAO (on availability of stable IDL compiler).
+  </UL>
+  <H4><A NAME="trading"></A>TRADING SERVICE</H4>
+  <P>The Trading Service is an implementation conforming to OMG Trading Service
+  specification.</P>
+  <P>Current status:</P>
+  <UL>
+    <LI>This is a simple trader (registers/withdraws/describes offers and does
+    constraint based lookup for those offers) working on VisiBroker 2.0 v1.51.
+  </UL>
+  <P>Future work:</P>
+  <UL>
+    <LI>Port to TAO.
+    <LI>Implement Type Repository and Admin Interfaces for Trading Service.
+  </UL>
+</BLOCKQUOTE>
+
+<P><HR ALIGN=LEFT>
+</BODY>
+</HTML>

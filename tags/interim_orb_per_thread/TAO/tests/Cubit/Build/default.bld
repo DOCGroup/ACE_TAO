@@ -1,0 +1,25 @@
+#!build
+default:
+	nobuild
+	:cx_e_option=msgnumbers
+	:target=vxwppc
+	:cx_silent=21
+	:cx_silent=191
+	:cx_silent=610
+	:sourcedirs=../../..
+	:sourcedirs=/home/ace/ACE_wrappers.vxworks
+	:sourcedirs=../../..
+	:sourcedirs=../TAO
+	:sourcedirs=../../../tao/compat
+	:libdirs=../../../tao
+	:libdirs=/home/ace/ACE_wrappers.vxworks/ace
+	:libraries=tao.a
+	:libraries=libACE.a
+	:libraries=/appl/newgreen/vxppc603/indlib.o
+	:defines=DEBUG
+	:defines=FORCE_ARGS
+clnt.bld
+	program
+svr.bld
+	program
+	:defines=USE_ACE_EVENT_HANDLING

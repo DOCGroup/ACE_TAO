@@ -1,0 +1,10 @@
+#!build
+default:
+	program
+	:debuglevel=multi
+../TAO/svr.cpp
+	C++
+cubit_i.cpp
+	C++
+cubitS.cpp
+	C++

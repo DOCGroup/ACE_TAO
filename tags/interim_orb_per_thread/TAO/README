@@ -1,0 +1,49 @@
+Welcome to the alpha release of The ACE ORB (TAO).  TAO is an
+implementation of a CORBA2-compliant ORB that will support real-time
+extensions.  Please see http://www.cs.wustl.edu/~schmidt/TAO.html for
+more information on TAO.
+
+The current alpha release of TAO contains the following:
+
+* An ORB Core based on ACE components and an optimized version of
+  the SunSoft IIOP protocol engine;
+
+* An implementation of a Basic Object Adapter (BOA);
+
+* Various tests illustrating how to use TAO in its current state.
+
+We've gotten TAO to interoperate with other ORBs (e.g., Orbix and
+Visigenic), so we're confident that the implementation of IIOP is
+robust.  However, this alpha release of TAO does not yet contain the
+following:
+
+* An IDL compiler;
+
+* An real-time version of the new Portable Object Adapter (POA);
+
+* The real-time scheduling service.
+
+We're currently working on these features and we plan to release them
+throughout the summer of 1997.  Please note that no amount of proding
+will get them out any faster, unless you are willing to contribute
+time and/or $$$ to the effort.
+
+Please feel free to experiment with, dissect, repair, use, etc., TAO.
+We gratefully accept bug reports, appreciate bug fixes/enhancements,
+and will strive to integrate correct bug fixes quickly!  Just remember
+that TAO does not provide all the features of a commercial ORB at the
+moment.
+
+Key components in TAO (e.g., the Object Adapter) will change
+substantially over the summer.  Thus, any development performed in the
+interim will require additional effort (e.g., writing stubs and
+skeletons by hand), and applications may need to be re-written to work
+with new features in the forthcoming releases.
+
+If you have any questions, please post them to the ACE mailing list
+(ace-users@cs.wustl.edu) until we get a TAO mailing list established.
+
+Thanks,
+
+	Douglas C. Schmidt
+	schmidt@cs.wustl.edu
