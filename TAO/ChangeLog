@@ -1,3 +1,60 @@
+Mon May  5 17:50:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Latency/AMH/Single_Threaded/Makefile:
+        * performance-tests/Latency/AMH/Single_Threaded/client.bor:
+        * performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+        * performance-tests/Latency/AMH/Single_Threaded/server.bor:
+        * performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+        * performance-tests/Latency/AMI/client.bor:
+        * performance-tests/Latency/AMI/client.dsp:
+        * performance-tests/Latency/AMI/server.bor:
+        * performance-tests/Latency/AMI/server.dsp:
+        * performance-tests/Latency/DII/client.dsp:
+        * performance-tests/Latency/DII/server.dsp:
+        * performance-tests/Latency/DSI/Makefile:
+        * performance-tests/Latency/DSI/client.bor:
+        * performance-tests/Latency/DSI/client.dsp:
+        * performance-tests/Latency/DSI/server.bor:
+        * performance-tests/Latency/DSI/server.dsp:
+        * performance-tests/Latency/Deferred/client.bor:
+        * performance-tests/Latency/Deferred/client.dsp:
+        * performance-tests/Latency/Deferred/server.bor:
+        * performance-tests/Latency/Deferred/server.dsp:
+        * performance-tests/Latency/Single_Threaded/Makefile:
+        * performance-tests/Latency/Single_Threaded/client.bor:
+        * performance-tests/Latency/Single_Threaded/client.dsp:
+        * performance-tests/Latency/Single_Threaded/server.bor:
+        * performance-tests/Latency/Single_Threaded/server.dsp:
+        * performance-tests/Latency/Thread_Per_Connection/Makefile:
+        * performance-tests/Latency/Thread_Per_Connection/client.bor:
+        * performance-tests/Latency/Thread_Per_Connection/client.dsp:
+        * performance-tests/Latency/Thread_Per_Connection/server.bor:
+        * performance-tests/Latency/Thread_Per_Connection/server.dsp:
+        * performance-tests/Latency/Thread_Pool/Makefile:
+        * performance-tests/Latency/Thread_Pool/client.bor:
+        * performance-tests/Latency/Thread_Pool/client.dsp:
+        * performance-tests/Latency/Thread_Pool/server.bor:
+        * performance-tests/Latency/Thread_Pool/server.dsp:
+        * performance-tests/Throughput/client.bor:
+        * performance-tests/Throughput/client.dsp:
+        * performance-tests/Throughput/server.bor:
+        * performance-tests/Throughput/server.dsp:
+        * tests/Bug_1482_Regression/client.bor:
+        * tests/Bug_1482_Regression/client.dsp:
+        * tests/Bug_1482_Regression/server.bor:
+        * tests/Bug_1482_Regression/server.dsp:
+        * tests/LongUpcalls/ami_client.bor:
+        * tests/LongUpcalls/ami_client.dsp:
+        * tests/LongUpcalls/ami_server.bor:
+        * tests/LongUpcalls/ami_server.dsp:
+        * tests/LongUpcalls/blocking_client.bor:
+        * tests/LongUpcalls/blocking_client.dsp:
+        * tests/LongUpcalls/blocking_server.bor:
+        * tests/LongUpcalls/blocking_server.dsp:
+
+	  Added link and dependency of TAO_Valuetype library
+	  for these projects and makefiles.
+
 Mon May  5 17:03:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/OctetSeq/server.cpp:
