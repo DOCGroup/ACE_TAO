@@ -31,6 +31,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
+# PROP Target_Last_Scanned "clients - Win32 Debug"
 RSC=rc.exe
 CPP=cl.exe
 
@@ -258,6 +259,8 @@ DEP_CPP_UTIL_=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
@@ -294,8 +297,10 @@ DEP_CPP_UTIL_=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\types.h"\
+	
+NODEP_CPP_UTIL_=\
+	"d:\sumedh\ACE_Wrappers\ace\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\util.obj" : $(SOURCE) $(DEP_CPP_UTIL_) "$(INTDIR)"
@@ -376,6 +381,8 @@ DEP_CPP_HTTP_=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
@@ -412,8 +419,10 @@ DEP_CPP_HTTP_=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\types.h"\
+	
+NODEP_CPP_HTTP_=\
+	"d:\sumedh\ACE_Wrappers\ace\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\http_tester.obj" : $(SOURCE) $(DEP_CPP_HTTP_) "$(INTDIR)"
@@ -489,6 +498,8 @@ DEP_CPP_STATS=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
@@ -525,8 +536,10 @@ DEP_CPP_STATS=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\types.h"\
+	
+NODEP_CPP_STATS=\
+	"d:\sumedh\ACE_Wrappers\ace\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\stats.obj" : $(SOURCE) $(DEP_CPP_STATS) "$(INTDIR)"
@@ -602,6 +615,8 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
@@ -638,8 +653,10 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\types.h"\
+	
+NODEP_CPP_CONNE=\
+	"d:\sumedh\ACE_Wrappers\ace\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\connection.obj" : $(SOURCE) $(DEP_CPP_CONNE) "$(INTDIR)"
