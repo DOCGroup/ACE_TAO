@@ -6,7 +6,7 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-BIN = server
+BIN_UNCHECKED = server
 
 LSRC = 	$(addsuffix .cpp,$(BIN))
 
@@ -25,6 +25,11 @@ TAO_IDLFLAGS += -Ge 1
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN = $(BIN_UNCHECKED)
+endif # minimum_corba
+
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU

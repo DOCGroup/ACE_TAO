@@ -32,7 +32,7 @@ BASIC_TEST_FILES = 	da_testsC		\
 BASIC_TEST_OBJS = $(addsuffix .o, $(BASIC_TEST_FILES))
 SRC = $(addsuffix .cpp, $(BASIC_TEST_FILES))
 
-BIN = basic_test
+BIN_UNCHECKED = basic_test
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -43,6 +43,11 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+BIN=$(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

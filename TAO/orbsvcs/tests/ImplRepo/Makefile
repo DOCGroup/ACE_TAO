@@ -52,7 +52,8 @@ NESTEA_SERVER_OBJS =  NesteaC.o \
                       nestea_server_i.o \
                       nestea_i.o
 
-BIN = airplane_server \
+BIN_UNCHECKED = \
+      airplane_server \
       airplane_client \
       nestea_server \
       nestea_client 
@@ -66,6 +67,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN = $(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

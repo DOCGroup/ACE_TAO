@@ -25,7 +25,7 @@ CUBIT_CLT_OBJS = client.o
 
 CFLAGS += -I../IDL_Cubit
 
-BIN = client
+BIN_UNCHECKED = client
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -34,10 +34,15 @@ TAO_IDLFLAGS += -Ge 1
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-BUILD := ../IDL_Cubit/server $(BUILD)
+BUILD += ../IDL_Cubit/server
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN=$(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

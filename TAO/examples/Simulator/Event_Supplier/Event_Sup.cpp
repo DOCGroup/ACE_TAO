@@ -282,7 +282,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         navigation_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Navigation, &navigation_, 0, ACE_TRY_ENV);
+        data <<= navigation_;
       }
       else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
                (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
@@ -327,7 +327,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         weapons_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Weapons, &weapons_, 0, ACE_TRY_ENV);
+        data <<= weapons_;
       }
       else {
         ACE_ERROR ((LM_ERROR,

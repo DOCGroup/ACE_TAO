@@ -1,3 +1,27 @@
+Wed Apr 19 12:11:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+        * tests/Explicit_Event_Loop/server.h:
+        * tests/Explicit_Event_Loop/server.cpp:
+          This directories were not in the daily builds, so they needed
+          some updating to compile.
+
+        * */Makefile:
+          Many Makefiles were missing from the automatic builds.
+          I updated as many as I could find.
+          Some directories cannot compile in certain configurations, for
+          example when minimum corba is present many tests and examples
+          cannot work.  Before this change the higher level Makefile would
+          not recurse to that directory, but that breaks encapsulation,
+          and the priciple of least surprise: somebody may still try to
+          compile in that directory and get spurious failures.
+          I have changed the higher-level Makefiles to always recurse, and
+          each Makefile decides if it is able to compile with the current
+          configuration, using the BIN2 trick.
+
 Wed Apr 19 11:00:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:

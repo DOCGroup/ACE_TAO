@@ -44,9 +44,11 @@ LDLIBS  = -lTAO_CosTrading -lTAO_CosNaming -lTAO
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-  LIB = $(LIB2)
-  SHLIB = $(SHLIB2)
+  ifeq ($(minimum_corba),0)
+    BIN = $(BIN2)
+    LIB = $(LIB2)
+    SHLIB = $(SHLIB2)
+  endif # minimum_corba
 endif # Trader
 
 TAO_IDLFLAGS += -Ge 1

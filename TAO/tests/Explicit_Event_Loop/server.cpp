@@ -28,7 +28,7 @@
 
 TimeOfDay
 Time_impl::
-get_gmt ( CORBA_Environment &) 
+get_gmt ( CORBA_Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   time_t time_now = time (0);
@@ -53,7 +53,7 @@ int
 main (int argc, char *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY 
+  ACE_TRY
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
       while (1)
         {
           if (orb->work_pending())
-            {  
+            {
               orb->perform_work();
             }
           do_something_else();
@@ -105,11 +105,3 @@ main (int argc, char *argv[])
   ACE_CHECK_RETURN(-1);
   return 0;
 }
-
-
-
-
-
-
-
-

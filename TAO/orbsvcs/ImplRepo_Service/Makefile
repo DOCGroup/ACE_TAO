@@ -42,7 +42,9 @@ BIN2 = ImplRepo_Service \
 #### And Naming should give us the multicast component we need.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifeq ($(minimum_corba),0)
+    BIN = $(BIN2)
+  endif # minimum_corba
 endif # Time
 
 #----------------------------------------------------------------------------
