@@ -1,3 +1,15 @@
+Tue Aug  5 17:31:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
+
+          Added test of eventtype support, and fixed related bugs.
+
 Tue Aug  5 15:51:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
