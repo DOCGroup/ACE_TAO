@@ -10,6 +10,10 @@ Mon Jul 20 10:35:33 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp,Trader_Utils.cpp:
           fixed exceptions specs to match declarations in .h files.
 
+        * orbsvcs/tests/Trading/TT_Info.cpp (dump_properties): changed
+          types of locals "seq_length" and "i" from CORBA::ULong to
+          CORBA::Long to avoid signed/unsigned comparison.
+
 Mon Jul 20 10:20:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * docs/releasenotes/index.html: Added a reference to the
