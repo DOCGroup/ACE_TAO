@@ -1,5 +1,12 @@
 Sun Jan 31 18:19:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/Process_Strategy_Test: Updated the test to use ACE::fork()
+ 	  and the new "avoid zombies" feature of ACE_Process_Strategy.
+
+	* ace/ACE: Added a new version of fork() that can avoid creating
+ 	  zombies.  Thanks to Garry Brother <gmbroth@romulus.ncsc.mil> for
+ 	  this code.
+
 	* ace/Strategies_T: Changed the ACE_Process_Strategy so that
  	  programmers can designate to not create zombies.  Thanks to
  	  Garry Brother <gmbroth@romulus.ncsc.mil> for this suggestion.

@@ -537,6 +537,13 @@ public:
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
 
+  static pid_t fork (const char *program_name = "<unknown>",
+                     int avoid_zombies = 0);
+  // if <avoid_zombies> == 0 call <ACE_OS::fork> directly, else create
+  // an orphan process that's inherited by the init process; init
+  // cleans up when the orphan process terminates so we don't create
+  // zombies.
+
   static int daemonize (const char pathname[] = "/",
                         int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
                         const char program_name[] = "<unknown>");

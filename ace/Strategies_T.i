@@ -238,10 +238,13 @@ template <class SVC_HANDLER> ASYS_INLINE
 ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
                                                          ACE_Event_Handler *acceptor,
                                                          ACE_Reactor *reactor,
-                                                         int flags)
+                                                         int avoid_zombies)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
-  this->open (n_processes, acceptor, reactor, flags);
+  this->open (n_processes,
+              acceptor,
+              reactor,
+              avoid_zombies);
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
