@@ -894,10 +894,10 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     }
 
 #if defined (ACE_HAS_EVENT_POLL)
-  
+
   // Allocating event table:
   ACE_NEW_RETURN (this->events_, epoll_event[size], -1);
-  
+
   // Initializing epoll:
   this->poll_fd_ = ::epoll_create (size);
   if (this->poll_fd_ == -1)
@@ -1111,12 +1111,12 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
    // Waiting for events...
    const int nfds = ::epoll_wait (this->poll_fd_,
                                   this->events_,
-                                  this->size_, 
+                                  this->size_,
                                   static_cast<int> (timeout));
 
   // all detected events are put in this->events_:
    this->start_pevents_ = this->events_;
-  
+
    // If nfds == 0 then end_pevents_ == start_pevents_ meaning that there is
    // no work pending.  If nfds > 0 then there is work pending.
    // Otherwise an error occurred.
