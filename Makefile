@@ -200,7 +200,7 @@ AUTOCONF_RELEASE_FILES = \
 	ACE_wrappers/Makefile.in \
 	ACE_wrappers/configure \
 	ACE_wrappers/aclocal.m4 \
-	ACE_wrappers/aux 
+	ACE_wrappers/aux_config
 
 ALL_RELEASE_FILES = \
 	$(RELEASE_FILES) \
