@@ -1,3 +1,36 @@
+Mon Jul 30 05:43:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch.h (ACE_Semaphore): Corrected the comment on
+	  how to get POSIX Pthreads "implementation" of semaphores (which
+ 	  supports the timed acquire() option).  Thanks to Grzegorz
+ 	  Sikora <GSikora1@era.pl> for reporting this.
+
+Sun Jul 29 19:03:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Thread_Mutex_Test.cpp (test): Fixed this test to be
+	  consistent wrt the errno for the timed acquire(), which should
+ 	  now always be set to ETIME rather than ETIMEDOUT and EBUSY.
+
+	* ace/Message_Queue_T.cpp (wait_not_full_cond,
+	  wait_not_empty_cond): Fixed a nasty bug with the semaphore
+ 	  version of ACE_Message_Queue that would have reared it's ugly
+ 	  head if ACE_NULL_SYNCH were used when
+ 	  ACE_HAS_OPTIMIZED_MESSAGE_QUEUE was enabled.  Fixing this bug
+ 	  also triggered the following changes.
+
+	* ace/OS.{h,i}: Added support for ACE_OS::sema_wait(),
+	  ACE_OS::mutex_lock(), ACE_OS::thread_mutex_lock() that take
+ 	  ACE_Time_Value *.
+	
+	* ace/OS.i: For some odd reason the timeouts for the timed version
+	  of mutex_lock() were returning a random smattering of errnos.
+  	  I've changed them to all be consistent with the
+ 	  ACE_Condition_Thread_Mutex::wait() errno, which is ETIME.
+
+	* ace/Synch.h: Updated the documentation of all the timed
+	  acquire() methods to explain what the various return values
+ 	  mean.
+	
 Sun Jul 29 22:10:40 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Service_Config_DLL.cpp:

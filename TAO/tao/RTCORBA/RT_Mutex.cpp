@@ -36,10 +36,8 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
   int result;
 
   if (wait_time == 0)
-    {
-      // No wait.
-      result = this->mu_.tryacquire ();
-    }
+    // No wait.
+    result = this->mu_.tryacquire ();
   else
     {
       // Wait for the specified amount of time before giving up.
@@ -57,18 +55,13 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
       result = this->mu_.acquire (absolute_time);
     }
 
-  // Check result.
-  if (result == 0 )
+  if (result == 0)
     return 1;
-  else
-  if (result == -1
-      && (errno == EBUSY || errno == ETIMEDOUT))
+  else if (result == -1 && errno == ETIME)
     return 0;
   else
-    {
-      // Some really bad error.
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
-    }
+    // Some really bad error.
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
 const char *
