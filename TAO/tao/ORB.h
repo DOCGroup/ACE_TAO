@@ -744,8 +744,8 @@ public:
 
   static ORB_ptr ORB_init (int &argc,
                            char *const *argv,
-                           const char *orb_name,
-                           Environment &env);
+                           const char *orb_name = 0,
+                           Environment &env = CORBA_Environment::default_environment ());
   // ORB initialisation, per OMG document 94-9-46.
 
   enum
