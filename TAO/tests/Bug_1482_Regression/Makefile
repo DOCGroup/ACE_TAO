@@ -415,8 +415,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Hello.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TestS.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
   $(TAO_ROOT)/tao/Messaging/MessagingS.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -1116,8 +1115,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Hello.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TestS.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
   $(TAO_ROOT)/tao/Messaging/MessagingS.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -1467,8 +1465,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.cpp
 
 .obj/Reply_Handler.o .obj/Reply_Handler.so .shobj/Reply_Handler.o .shobj/Reply_Handler.so: Reply_Handler.cpp Reply_Handler.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TestS.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
   $(TAO_ROOT)/tao/Messaging/MessagingS.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -1771,8 +1768,7 @@ realclean: clean
   TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
 .obj/Client_Task.o .obj/Client_Task.so .shobj/Client_Task.o .shobj/Client_Task.so: Client_Task.cpp Client_Task.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TestC.h \
+  $(ACE_ROOT)/ace/pre.h TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
