@@ -1823,6 +1823,17 @@ struct stat
 #       define ACE_THR_PRI_RR_MAX    PRIORITY_MAX
 #       define ACE_THR_PRI_OTHER_MIN PRIORITY_MIN
 #       define ACE_THR_PRI_OTHER_MAX PRIORITY_MAX
+#     elif defined (sun)
+        // SunOS 5.6 could use sched_get_priority_min/max () for FIFO
+        // and RR.  But for OTHER, it returns negative values, which
+        // can't be used.  sched_get_priority_min/max () aren't
+        // supported in SunOS 5.5.1.
+#       define ACE_THR_PRI_FIFO_MIN  0
+#       define ACE_THR_PRI_FIFO_MAX  59
+#       define ACE_THR_PRI_RR_MIN    0
+#       define ACE_THR_PRI_RR_MAX    59
+#       define ACE_THR_PRI_OTHER_MIN 0
+#       define ACE_THR_PRI_OTHER_MAX 59
 #     else
 #       define ACE_THR_PRI_FIFO_MIN  ACE_PROC_PRI_FIFO_MIN
 #       define ACE_THR_PRI_FIFO_MAX  ACE_PROC_PRI_FIFO_MAX
