@@ -1,5 +1,8 @@
 Thu Jul  8 11:33:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Based_Pointer_Repository.cpp (unbind): Rearranged the
+	  iterator code a bit to see if that'll make DEC C++ happy.
+
 	* ace/OS.h: Moved the ACE_MALLOC_ALIGN macro into OS.h.
 
         * config-aix-4.x.h,
