@@ -235,7 +235,7 @@ AST_ValueType::fe_add_factory (AST_Factory *f)
 }
 
   // Narrowing.
-IMPL_NARROW_METHODS1(AST_ValueType, AST_Interface);
-IMPL_NARROW_FROM_DECL(AST_ValueType);
-IMPL_NARROW_FROM_SCOPE(AST_ValueType);
+IMPL_NARROW_METHODS1(AST_ValueType, AST_Interface)
+IMPL_NARROW_FROM_DECL(AST_ValueType)
+IMPL_NARROW_FROM_SCOPE(AST_ValueType)
 

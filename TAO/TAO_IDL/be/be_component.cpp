@@ -86,6 +86,6 @@ be_component::accept (be_visitor *visitor)
 }
 
 // Narrowing.
-IMPL_NARROW_METHODS2 (be_component, be_interface, AST_Component);
-IMPL_NARROW_FROM_DECL (be_component);
-IMPL_NARROW_FROM_SCOPE (be_component);
+IMPL_NARROW_METHODS2 (be_component, be_interface, AST_Component)
+IMPL_NARROW_FROM_DECL (be_component)
+IMPL_NARROW_FROM_SCOPE (be_component)

@@ -1580,21 +1580,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           // set of nodes referenced here.
           if (treat_as_ref && d != 0)
             {
-              Identifier *id = 0;
-              AST_Decl::NodeType nt = d->node_type ();
-
-              if (nt == AST_Decl::NT_typedef)
-                {
-                  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
-                  nt = td->base_type ()->node_type ();
-                }
-
-              if (d->imported () == I_FALSE
-                  && nt != AST_Decl::NT_except)
-                {
-                  id = e->head ();
-                }
-
               AST_Type *t = AST_Type::narrow_from_decl (d);
 
               // Are we a type, rather than an identifier?
