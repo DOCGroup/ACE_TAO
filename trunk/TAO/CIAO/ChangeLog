@@ -1,3 +1,17 @@
+Wed Feb 11 11:36:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+	  
+	* examples/Hello/descriptors/run_test_debug.pl:
+
+	  A new script that uses -ORBdebuglevel while running the
+	  component server.  
+	  
+ 	* examples/Hello/step-by-step.html:
+
+	  Added a pointer to the above script.
+
+	  Thanks to Gary Duzan <gduzan@bbn.com> and Praveen Sharma
+	  <psharma@bbn.com> for motivating this.
+
 Tue Feb 10 18:15:59 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
