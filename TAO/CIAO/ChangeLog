@@ -14,7 +14,7 @@ Fri May  7 17:19:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           inherited from a base home, but this problem will be fixed
           with the upcoming refactoring of the CIAO-specific
           _ciao_activate_component() and _ciao_passivate_component()
-          methods in the home servant class.
+          methods in the home servant class. This fix closes [BUGID:1800].
 
 Fri May  7 14:46:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
