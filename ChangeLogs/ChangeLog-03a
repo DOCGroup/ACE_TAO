@@ -1,3 +1,9 @@
+Sat Jan 19 10:23:39 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Future_Set.h: Updated the documentation to explain how
+	  various features work better.  Thanks to Johnny Tucker for
+ 	  contributing this.
+
 Fri Jan 18 19:09:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Re-enabled Process_Manager_Test for all but
