@@ -1,0 +1,10 @@
+# $Id$
+
+Simply run the server and the client, as follows:
+
+$ server -o foo.ior
+$ client -k file://foo.ior
+
+	The test only does something useful if the Xtoolkit  is
+enabled and the executables linked against the following libraries
+Xm, Xt & X11
