@@ -1,8 +1,20 @@
+Thu Sep 24 18:01:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao (Current.pidl Object_Key.pidl POA.pidl Policy.pidl): The
+ 	  makefiles in ACE look for files with the .idl extension to run
+ 	  the IDL compiler on.  Therefore, to prevent the IDL files in
+ 	  TAO/tao to get compiled by the user, we named them with a .IDL
+ 	  extension.  Unfortunately, the NT filesystem is not case
+ 	  sensitive.  Therefore, when one typed make, it ran the IDL
+ 	  compiler on those files.
+
+	  I have fixed this by renaming the IDL files in TAO/tao with a
+ 	  .pidl extension instead of the .IDL extension.
+
 Thu Sep 24 15:39:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corba.h: 
-	* tao/try_macros.h: 
-	  Moved the TAO_TRY macros (and friends) to a separate file.
+	* tao/corba.h: * tao/try_macros.h: Moved the TAO_TRY macros (and
+ 	friends) to a separate file.
 
 	* tao/poa_macros.h: 
 	  Removed extra scope that was releasing locks too soon.
