@@ -214,9 +214,9 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   // Activate the RootPOA.
   PortableServer::POAManager_var poa_mgr =
-    this->poa_->the_POAManager (ACE_ENV_ARG_PARAMETER);
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  poa_mgr->activate (ACE_ENV_ARG_PARAMETER);
+  poa_mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Register our IOR in the IORTable with the key-string
@@ -350,7 +350,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 //public
-int TAO::FT_ReplicationManager::idle (int & result)
+int TAO::FT_ReplicationManager::idle (int & result ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG (result);
   return this->quit_;
@@ -499,7 +499,7 @@ TAO::FT_ReplicationManager::get_fault_notifier (
 ::PortableGroup::FactoryRegistry_ptr
 TAO::FT_ReplicationManager::get_factory_registry (
   const PortableGroup::Criteria & selection_criteria
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   ACE_UNUSED_ARG (selection_criteria);
@@ -509,7 +509,7 @@ TAO::FT_ReplicationManager::get_factory_registry (
 // TAO-specific shutdown operation.
 //public
 void TAO::FT_ReplicationManager::shutdown (
-  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   this->quit_ = 1;
@@ -525,8 +525,7 @@ char * TAO::FT_ReplicationManager::type_id (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-    result = group->get_type_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    result = group->get_type_id ();
   }
   else
   {
@@ -543,12 +542,12 @@ void
 TAO::FT_ReplicationManager::set_default_properties (
   const PortableGroup::Properties & props
   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
 
-  this->properties_support_.set_default_properties (props);
+  this->properties_support_.set_default_properties (props ACE_ENV_ARG_PARAMETER);
   //@@ validate properties?
 }
 
@@ -656,12 +655,11 @@ TAO::FT_ReplicationManager::get_properties (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-    group->get_properties (result ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    group->get_properties (result);
   }
   else
   {
-    ACE_THROW (PortableGroup::ObjectGroupNotFound ());
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), 0);
   }
   return result._retn();
 }
@@ -695,7 +693,7 @@ TAO::FT_ReplicationManager::set_primary_member (
     TAO_FT_IOGR_Property prop (tag_component);
 
     int sts = group->set_primary_member (&prop, the_location ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (FT_ObjectGroup::_nil ());
+    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
     if (sts)
     {
       result = group->reference ();
@@ -878,7 +876,7 @@ TAO::FT_ReplicationManager::get_object_group_id (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-    group->get_object_group_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+    group->get_object_group_id ();
     ACE_CHECK_RETURN (result);
     result = group->get_object_group_id ();
   }
@@ -1091,4 +1089,70 @@ int TAO::FT_ReplicationManager::write_ior ()
   }
   return result;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
