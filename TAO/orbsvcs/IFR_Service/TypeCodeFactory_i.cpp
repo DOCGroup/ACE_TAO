@@ -14,6 +14,38 @@ TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i (void)
 {
 }
 
+TAO_TypeCodeFactory_i *
+TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr obj,
+                                CORBA::Environment &)
+{
+  if (CORBA::is_nil (obj))
+    return 0;
+
+  return ACE_reinterpret_cast (
+             TAO_TypeCodeFactory_i *,
+             obj->_tao_QueryInterface (
+                      ACE_reinterpret_cast (
+                          ptr_arith_t,
+                          &TAO_TypeCodeFactory_i::_narrow
+                        )
+                    )
+           );
+}
+
+void *
+TAO_TypeCodeFactory_i::_tao_QueryInterface (ptr_arith_t type)
+{
+  ptr_arith_t mytype =
+    ACE_reinterpret_cast (ptr_arith_t,
+                          &TAO_TypeCodeFactory_i::_narrow);
+  if (type == mytype)
+    {
+      this->_add_ref ();
+      return this;
+    }
+  return this->CORBA_TypeCodeFactory::_tao_QueryInterface (type);
+}
+
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_struct_tc (
     const char *id,

@@ -962,7 +962,7 @@ module CORBA
   // the TypeCodeFactory interface.
   // A reference to this interface can be obtained from
   // resolve_initial_references with argument "TypeCodeFactory".
-  interface TypeCodeFactory 
+  local interface TypeCodeFactory 
   { // PIDL
     TypeCode create_struct_tc (
         in RepositoryId id,

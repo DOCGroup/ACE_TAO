@@ -19,7 +19,7 @@ LIB_UNCHECKED = $(LIBNAME).a
 SHLIB_UNCHECKED = $(LIBNAME).$(SOEXT)
 
 LSRC = \
-	TypeCodeFactory_skel.cpp \
+	TypeCodeFactoryC.cpp \
 	TypeCodeFactory_i.cpp \
 	TCF_Loader.cpp
 
