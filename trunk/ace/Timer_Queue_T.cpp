@@ -85,6 +85,44 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_w
     }
 }
 
+template <class TYPE, class FUNCTOR, class LOCK> ACE_Time_Value *
+ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time,
+							   ACE_Time_Value*& the_timeout)
+{
+  ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
+  
+  if (the_timeout == 0)
+    return 0;
+
+  if (this->is_empty ())
+    // Nothing on the Timer_Queue, so use whatever the caller gave us.
+    *the_timeout = *max_wait_time;
+  else
+    {
+      ACE_Time_Value cur_time = this->gettimeofday ();
+
+      if (this->earliest_time () > cur_time)
+        {
+	  // The earliest item on the Timer_Queue is still in the
+	  // future.  Therefore, use the smaller of (1) caller's wait
+	  // time or (2) the delta time between now and the earliest
+	  // time on the Timer_Queue.
+
+          *the_timeout = this->earliest_time () - cur_time;
+          if (!(max_wait_time == 0 || *max_wait_time > *the_timeout))
+	    *the_timeout = *max_wait_time;
+        }
+      else 	  
+        {
+	  // The earliest item on the Timer_Queue is now in the past.
+	  // Therefore, we've got to "poll" the Reactor, i.e., it must
+	  // just check the descriptors and then dispatch timers, etc.
+	  *the_timeout = ACE_Time_Value::zero;
+        }
+    }
+  return the_timeout;
+}
+
 template <class TYPE, class FUNCTOR, class LOCK> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::dump (void) const
 {

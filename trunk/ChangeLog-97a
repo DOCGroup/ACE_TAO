@@ -1,3 +1,18 @@
+Thu Jun  5 12:06:45 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.h (ACE_Timer_Queue_T): Overloaded
+ 	calculate_timeout with a version that accepts a pointer to storage
+ 	for the ACE_Time_Value as an argument.  This has a small
+ 	performance win over the other b/c it does not take a lock.  The
+ 	change was made after examining Quantify output for TAO and
+ 	observing that this lock caused
+ 	Reactor::wait_for_multiple_events() to consume a substantial
+ 	percentage of processing time.
+
+	* ace/Reactor.cpp (wait_for_multiple_events): This now uses a
+ 	different version of calculate_timeout() that doesn't require
+ 	taking a lock.
+
 Thu Jun 05 08:48:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Reactor.cpp: added template specializations.

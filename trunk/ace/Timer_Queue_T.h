@@ -96,7 +96,6 @@ public:
   // Dump the state of an TYPE.
 
 private:
-  
   TYPE type_;
   // Type of object stored in the Queue
   
@@ -242,6 +241,12 @@ public:
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
   // Determine the next event to timeout.  Returns <max> if there are
   // no pending timers or if all pending timers are longer than max.
+
+  virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max, ACE_Time_Value*& the_timeout);
+  // Determine the next event to timeout.  Returns <max> if there are
+  // no pending timers or if all pending timers are longer than max.
+  // <the_timeout> should be a pointer to storage for the timeout value,
+  // and this value is also returned.
 
   // = Set/get the timer skew for the Timer_Queue.
   void timer_skew (const ACE_Time_Value &skew);
