@@ -1,3 +1,15 @@
+Mon Feb 14 18:45:28 2005  Steve Huston  <shuston@riverace.com>
+
+	* protocols/ace/RMCast/Acknowledge.{h cpp}:
+	* protocols/ace/RMCast/Link.h:
+	* protocols/ace/RMCast/Protocol.{h cpp}:
+	* protocols/ace/RMCast/Retransmit.{h cpp}:
+	* protocols/ace/RMCast/Simulator.{h cpp}:
+	* protocols/ace/RMCast/Socket.{h cpp}:
+	* protocols/ace/RMCast/Stack.{h cpp}:
+	  Get RMCast's includes by #include "file.h", not
+	  #include <ace/RMCast/file.h>.
+
 Mon Feb 14 18:24:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_TLI.inl: Added "namespace ACE_OS" around all the methods,

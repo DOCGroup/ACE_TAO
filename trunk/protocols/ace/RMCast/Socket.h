@@ -7,18 +7,18 @@
 #ifndef ACE_RMCAST_SOCKET_H
 #define ACE_RMCAST_SOCKET_H
 
-#include "ace/RMCast/Stack.h"
-#include "ace/RMCast/Protocol.h"
-#include "ace/RMCast/Bits.h"
-
-#include "ace/RMCast/Link.h"
-#include "ace/RMCast/Simulator.h"
-#include "ace/RMCast/Retransmit.h"
-#include "ace/RMCast/Acknowledge.h"
-
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_T.h"
+
+#include "Stack.h"
+#include "Protocol.h"
+#include "Bits.h"
+
+#include "Link.h"
+#include "Simulator.h"
+#include "Retransmit.h"
+#include "Acknowledge.h"
 
 
 namespace ACE_RMCast
