@@ -55,6 +55,8 @@ Wed May 14 16:32:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed May 14 15:00:58 1997    <irfan@TWOSTEP>
 
+	* examples/Naming: Replaced multiple makefiles with one makefile.
+
 	* ace/OS.h: Added UNICODE support for some #defines.
 
 	* OS.i (vsprintf): Added support for this in ACE_OS.
