@@ -3,7 +3,6 @@
 #include "ace/Env_Value_T.h"
 #include "ace/Read_Buffer.h"
 #include "Cubit_Client.h"
-#include "orbsvcs/CosNamingC.h"
 
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
@@ -97,7 +96,6 @@ Cubit_Client::Cubit_Client (void)
     error_count_ (0),
     cubit_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
-    use_naming_service_ (1),
     only_void_ (0),
     only_oneway_ (0)
 {
@@ -179,9 +177,6 @@ Cubit_Client::parse_args (void)
       case 'x':
 	ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
         this->shutdown_ = 1;
-        break;
-      case 's': // Don't use the TAO Naming Service.
-        this->use_naming_service_ = 0;
         break;
       case '?':
       default:
@@ -889,9 +884,6 @@ Cubit_Client::run (int testing_collocation)
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
-      if (this->init_naming_service () == -1)
-        return -1;
-
       TAO_TRY
         {
           this->cubit_ =
@@ -997,67 +989,6 @@ Cubit_Client::~Cubit_Client (void)
 }
 
 int
-Cubit_Client::init_naming_service (void)
-{
-  TAO_TRY
-    {
-      /*
-	// @@ This code should use the new TAO_Naming_Client helper
-	// class.
-	CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
-	
-	if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-	" (%P|%t) Unable to resolve the NameService.\n"),
-	-1);
-	
-	CosNaming::NamingContext_var naming_context =
-	CosNaming::NamingContext::_narrow (naming_obj.in (),
-	TAO_TRY_ENV);
-	TAO_CHECK_ENV;
-	
-      */
-      
-      // Initialize the naming services
-      if (my_name_client_.init (orb_.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
-      
-      CosNaming::Name cubit_factory_name (2);
-      cubit_factory_name.length (2);
-      cubit_factory_name[0].id =
-        CORBA::string_dup ("IDL_Cubit");
-      cubit_factory_name[1].id =
-        CORBA::string_dup ("cubit_factory");
-      CORBA::Object_var factory_obj =
-        my_name_client_->resolve (cubit_factory_name,
-				  TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->factory_ =
-        Cubit_Factory::_narrow (factory_obj.in (),
-                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (this->factory_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve cubit factory in Naming service <%s>\n"),
-                          -1);
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Cubit::init_naming_service");
-      return -1;
-    }
-  TAO_ENDTRY;
-
-  return 0;
-}
-
-int
 Cubit_Client::init (int argc, char **argv)
 {
   this->argc_ = argc;
@@ -1076,35 +1007,27 @@ Cubit_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->use_naming_service_)
-        {
-          if (this->init_naming_service () == -1)
-            return -1;
-        }
-      else
-        {
-          if (this->cubit_factory_key_ == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: no cubit factory key specified\n",
-                               this->argv_[0]),
-                              -1);
+      if (this->cubit_factory_key_ == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%s: no cubit factory key specified\n",
+                           this->argv_[0]),
+                          -1);
 
-          CORBA::Object_var factory_object =
-            this->orb_->string_to_object (this->cubit_factory_key_,
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CORBA::Object_var factory_object =
+        this->orb_->string_to_object (this->cubit_factory_key_,
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-          this->factory_ =
-            Cubit_Factory::_narrow (factory_object.in(),
-                                    TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      this->factory_ =
+        Cubit_Factory::_narrow (factory_object.in(),
+                                TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-          if (CORBA::is_nil (this->factory_.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid factory key <%s>\n",
-                               this->cubit_factory_key_),
-                              -1);
-        }
+      if (CORBA::is_nil (this->factory_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid factory key <%s>\n",
+                           this->cubit_factory_key_),
+                          -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
