@@ -81,11 +81,12 @@ private:
   CORBA::ULong length_;
   // length
 
+  T *buffer_;
+  // buffer
+
   CORBA::Boolean release_;
   // memory management
 
-  T *buffer_;
-  // buffer
 };
 
 // bounded sequences

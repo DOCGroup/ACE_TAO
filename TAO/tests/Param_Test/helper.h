@@ -34,16 +34,18 @@ public:
   // destructor
 
   CORBA::Short gen_short (void);
-#if 0
   CORBA::Long gen_long (void);
+#if 0
   CORBA::Char gen_char (void);
   CORBA::Octet gen_octet (void);
   CORBA::Float gen_float (void);
   CORBA::Double gen_double (void);
 #endif
   CORBA::String gen_string (void);
+  const Param_Test::Fixed_Struct gen_fixed_struct (void);
 private:
+  Param_Test::Fixed_Struct fixed_struct_;
 };
 
 typedef ACE_Singleton<Generator, ACE_SYNCH_RECURSIVE_MUTEX> GENERATOR;
-#endif /* !defined */
+#endif /* HELPER_H */

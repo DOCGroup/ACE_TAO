@@ -29,18 +29,9 @@ public:
   {
     NO_TEST,
     TEST_SHORT,
-#if 0
-    TEST_LONG,
-    TEST_CHAR,
-    TEST_OCTET,
-    TEST_FLOAT,
-    TEST_DOUBLE,
-#endif
-    TEST_UNBOUNDED_STRING
-#if 0
-    TEST_BOUNDED_STRING,
-    TEST_TYPEDEFED_STRING
-#endif
+    TEST_UNBOUNDED_STRING,
+    TEST_FIXED_STRUCT,
+    TEST_STRING_SEQUENCE
   };
 
   enum INVOKE_TYPE
@@ -75,6 +66,9 @@ public:
 
   CORBA::ULong loop_count (void);
   // number of times to run the test
+
+  CORBA::Boolean debug (void) const;
+  // whether debug option is on or not
 private:
   char *param_test_key_;
   // Key of the obj ref to be retrieved
@@ -94,6 +88,8 @@ private:
   CORBA::ULong loop_count_;
   // Number of times to do the "test_*" operations.
 
+  CORBA::Boolean debug_;
+  // debugging output values
 };
 
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;

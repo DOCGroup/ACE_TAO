@@ -25,7 +25,8 @@ Options::Options (void)
     portnum_ (TAO_DEFAULT_SERVER_PORT),
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
-    loop_count_ (1)
+    loop_count_ (1),
+    debug_ (0)
 {
 }
 
@@ -50,6 +51,7 @@ Options::parse_args (int argc, char **argv)
       {
       case 'd':  // debug flag
         TAO_debug_level++;
+        this->debug_ = 1;
         break;
       case 'n':			// loop count
         this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.optarg);
@@ -72,8 +74,12 @@ Options::parse_args (int argc, char **argv)
       case 't': // data type
         if (!ACE_OS::strcmp (get_opts.optarg, "short"))
           this->test_type_ = Options::TEST_SHORT;
-        if (!ACE_OS::strcmp (get_opts.optarg, "ubstring"))
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ubstring"))
           this->test_type_ = Options::TEST_UNBOUNDED_STRING;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "fixed_struct"))
+          this->test_type_ = Options::TEST_FIXED_STRUCT;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "strseq"))
+          this->test_type_ = Options::TEST_STRING_SEQUENCE;
         break;
       case '?':
       default:
@@ -129,6 +135,12 @@ CORBA::ULong
 Options::loop_count (void)
 {
   return this->loop_count_;
+}
+
+CORBA::Boolean
+Options::debug (void) const
+{
+  return this->debug_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
