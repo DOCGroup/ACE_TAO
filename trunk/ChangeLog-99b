@@ -1,3 +1,10 @@
+Thu Aug 19 12:59:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Message_Block.i:
+	  Moved ACE_Message_Block::replace_data_block() down in the file
+	  because it was using inline functions that were defined after it 
+	  was. Thanks to David for pointing this out.
+
 Thu Aug 19 10:53:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (setuid): added ACE_UNUSED_ARG (uid) for VxWorks,
