@@ -3,6 +3,7 @@
 #include "EC_Default_Factory.h"
 #include "EC_Priority_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
+#include "EC_Sched_Filter_Builder.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
@@ -10,8 +11,11 @@
 #include "EC_Trivial_Supplier_Filter.h"
 #include "EC_Per_Supplier_Filter.h"
 #include "EC_ObserverStrategy.h"
+#include "EC_Null_Scheduling.h"
+#include "EC_Priority_Scheduling.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
+#include "EC_Event_Channel.h"
 #include "ace/Arg_Shifter.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -80,6 +84,10 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
               else if (ACE_OS::strcasecmp (opt, "basic") == 0)
                 {
                   this->filtering_ = 1;
+                }
+               else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+                {
+                  this->filtering_ = 2;
                 }
               else
                 {
@@ -166,6 +174,32 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                   ACE_ERROR ((LM_ERROR,
                               "EC_Default_Factory - "
                               "unsupported observer <%s>\n",
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcmp (arg, "-ECscheduling") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "null") == 0)
+                {
+                  this->scheduling_ = 0;
+                }
+              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+                {
+                  this->scheduling_ = 1;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "EC_Default_Factory - "
+                              "unsupported scheduling <%s>\n",
                               opt));
                 }
               arg_shifter.consume_arg ();
@@ -343,12 +377,12 @@ TAO_EC_Default_Factory::fini (void)
 // ****************************************************************
 
 TAO_EC_Dispatching*
-TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *ec)
 {
   if (this->dispatching_ == 0)
     return new TAO_EC_Reactive_Dispatching ();
   else if (this->dispatching_ == 1)
-    return new TAO_EC_Priority_Dispatching ();
+    return new TAO_EC_Priority_Dispatching (ec);
   return 0;
 }
 
@@ -365,6 +399,8 @@ TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
     return new TAO_EC_Null_Filter_Builder ();
   else if (this->filtering_ == 1)
     return new TAO_EC_Basic_Filter_Builder (ec);
+  else if (this->filtering_ == 2)
+    return new TAO_EC_Sched_Filter_Builder (ec);
   return 0;
 }
 
@@ -478,6 +514,25 @@ TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel *ec)
 
 void
 TAO_EC_Default_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
+{
+  delete x;
+}
+
+TAO_EC_Scheduling_Strategy*
+TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel* ec)
+{
+  if (this->scheduling_ == 0)
+    return new TAO_EC_Null_Scheduling;
+  else if (this->scheduling_ == 1)
+    {
+      RtecScheduler::Scheduler_var scheduler = ec->scheduler ();
+      return new TAO_EC_Priority_Scheduling (scheduler.in ());
+    }
+  return 0;
+}
+
+void
+TAO_EC_Default_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
 {
   delete x;
 }

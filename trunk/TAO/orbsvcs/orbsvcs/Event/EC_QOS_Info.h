@@ -24,7 +24,7 @@
 #ifndef TAO_EC_QOS_INFO_H
 #define TAO_EC_QOS_INFO_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/RtecSchedulerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@ class TAO_ORBSVCS_Export TAO_EC_QOS_Info
   //   filters.
   //
   // = DESCRIPTION
-  //   Filters compute QOS information for real-time dispatching, this 
+  //   Filters compute QOS information for real-time dispatching, this
   //   class encapsulates that information.
   //   This first implementation is just a place-holder.
   //
@@ -45,6 +45,8 @@ public:
   TAO_EC_QOS_Info (void);
   // constructor
 
+  RtecScheduler::handle_t rt_info;
+  RtecScheduler::Preemption_Priority_t preemption_priority;
 };
 
 #if defined (__ACE_INLINE__)

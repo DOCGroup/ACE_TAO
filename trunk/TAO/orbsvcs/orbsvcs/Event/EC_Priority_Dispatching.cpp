@@ -2,6 +2,8 @@
 
 #include "EC_Priority_Dispatching.h"
 #include "EC_Dispatching_Task.h"
+#include "EC_Event_Channel.h"
+#include "EC_QOS_Info.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/Sched_Params.h"
 
@@ -10,6 +12,14 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
+
+ACE_INLINE
+TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel *ec)
+  :  ntasks_ (0),
+     tasks_ (0),
+     scheduler_ (ec->scheduler ())
+{
+}
 
 void
 TAO_EC_Priority_Dispatching::activate (void)
@@ -21,6 +31,7 @@ TAO_EC_Priority_Dispatching::activate (void)
   this->ntasks_ = ACE_Scheduler_MAX_PRIORITIES;
   ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task*[this->ntasks_]);
 
+  // @@ Query the scheduler to obtain the priorities!
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -77,13 +88,18 @@ void
 TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           RtecEventComm::EventSet& event,
                                           TAO_EC_QOS_Info& qos_info,
-                                          CORBA::Environment& ACE_TRY_ENV)
+                                          CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->tasks_ == 0)
     this->activate ();
 
-  // @@ Use the QOS_Info to select the right queue....
-  this->tasks_[0]->putq (new TAO_EC_Push_Command (proxy,
-                                                  event,
-                                                  this->data_block_.duplicate ()));
+  int i = qos_info.preemption_priority;
+  if (i < 0 || i >= this->ntasks_)
+    {
+      // @@ Throw something?
+      i = 0;
+    }
+
+
+  this->tasks_[i]->push (proxy, event, ACE_TRY_ENV);
 }

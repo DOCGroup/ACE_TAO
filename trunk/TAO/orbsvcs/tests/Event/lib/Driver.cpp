@@ -45,8 +45,8 @@ EC_Driver::EC_Driver (void)
      use_old_ec_ (0),
 #if !defined(TAO_EC_DISABLE_OLD_EC)
      module_factory_ (0),
-     scheduler_impl_ (0),
 #endif
+     scheduler_impl_ (0),
      ec_impl_ (0)
 {
   TAO_EC_Default_Factory::init_svcs ();
@@ -499,7 +499,8 @@ EC_Driver::connect_consumer (
 {
   RtecEventChannelAdmin::ConsumerQOS qos;
   int shutdown_event_type;
-  this->build_consumer_qos (i, qos, shutdown_event_type);
+  this->build_consumer_qos (i, qos, shutdown_event_type, ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->consumers_[i]->connect (consumer_admin,
                                 qos,
@@ -511,7 +512,8 @@ void
 EC_Driver::build_consumer_qos (
   int i,
   RtecEventChannelAdmin::ConsumerQOS& qos,
-  int& shutdown_event_type)
+  int& shutdown_event_type,
+  CORBA::Environment&)
 {
   RtecScheduler::handle_t rt_info = 0;
 
@@ -553,7 +555,8 @@ EC_Driver::connect_supplier (
 {
   RtecEventChannelAdmin::SupplierQOS qos;
   int shutdown_event_type;
-  this->build_supplier_qos (i, qos, shutdown_event_type);
+  this->build_supplier_qos (i, qos, shutdown_event_type, ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->suppliers_[i]->connect (supplier_admin,
                                 qos,
@@ -565,7 +568,8 @@ void
 EC_Driver::build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type)
+      int& shutdown_event_type,
+      CORBA::Environment&)
 {
   int type_start = this->supplier_type_start_ + i*this->supplier_type_shift_;
   int supplier_id = i + 1;
@@ -975,8 +979,8 @@ void
 EC_Driver::cleanup_ec (void)
 {
   delete this->ec_impl_;
-#if !defined(EC_DISABLE_OLD_EC)
   delete this->scheduler_impl_;
+#if !defined(EC_DISABLE_OLD_EC)
   delete this->module_factory_;
 #endif
 }

@@ -110,7 +110,8 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
 {
   RtecEventChannelAdmin::ConsumerQOS qos;
   int shutdown_event_type;
-  this->build_consumer_qos (0, qos, shutdown_event_type);
+  this->build_consumer_qos (0, qos, shutdown_event_type, ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (this->allow_consumer_reconnect_)
     {
@@ -173,7 +174,8 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
 {
   RtecEventChannelAdmin::SupplierQOS qos;
   int shutdown_event_type;
-  this->build_supplier_qos (0, qos, shutdown_event_type);
+  this->build_supplier_qos (0, qos, shutdown_event_type, ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (this->allow_supplier_reconnect_)
     {

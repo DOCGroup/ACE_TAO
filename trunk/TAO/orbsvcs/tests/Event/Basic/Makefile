@@ -13,7 +13,8 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 BIN2 =   Reconnect \
-	Shutdown
+	Shutdown \
+	Schedule
 
 #### If the orbsvcs library wasn't built with all components, don't
 #### try to build certain tests.

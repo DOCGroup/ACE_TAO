@@ -37,10 +37,6 @@ class EC_Supplier;
 #include "orbsvcs/CosNamingC.h"
 #endif
 
-#if !defined(EC_DISABLE_OLD_EC)
-#include "orbsvcs/RtecSchedulerC.h"
-#endif
-
 class EC_Test_Export EC_Driver
 {
   //
@@ -98,7 +94,8 @@ public:
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
-      int& shutdown_event_type);
+      int& shutdown_event_type,
+      CORBA::Environment&);
   // Build the QoS requirements for consumer <i>
 
   virtual void connect_suppliers (CORBA::Environment& env);
@@ -114,7 +111,8 @@ public:
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type);
+      int& shutdown_event_type,
+      CORBA::Environment&);
   // Build the QoS requirements for supplier <i>
 
   virtual void execute_test (CORBA::Environment &env);
@@ -352,13 +350,13 @@ protected:
 #if !defined(TAO_EC_DISABLE_OLD_EC)
   TAO_Module_Factory* module_factory_;
   // The module factory for the OLD ec
+#endif
 
   POA_RtecScheduler::Scheduler *scheduler_impl_;
   // The scheduler implementation
 
   RtecScheduler::Scheduler_var scheduler_;
   // The scheduler object reference
-#endif
 
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
   // The event channel implementation

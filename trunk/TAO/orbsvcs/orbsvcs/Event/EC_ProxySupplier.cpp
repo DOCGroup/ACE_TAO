@@ -3,6 +3,7 @@
 #include "EC_ProxySupplier.h"
 #include "EC_Dispatching.h"
 #include "EC_Filter_Builder.h"
+#include "EC_QOS_Info.h"
 #include "EC_Event_Channel.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -187,7 +188,10 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
 
     this->child_ =
       this->event_channel_->filter_builder ()->build (this,
-                                                      this->qos_);
+                                                      this->qos_,
+                                                      ACE_TRY_ENV);
+    ACE_CHECK;
+
     this->adopt_child (this->child_);
   }
 
@@ -431,6 +435,22 @@ TAO_EC_ProxyPushSupplier::can_match (
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
   return this->child_->can_match (header);
+}
+
+int
+TAO_EC_ProxyPushSupplier::add_dependencies (
+      const RtecEventComm::EventHeader &header,
+      const TAO_EC_QOS_Info &qos_info,
+      CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+          ACE_Lock, ace_mon, *this->lock_,
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK_RETURN (0);
+
+  return this->child_->add_dependencies (header,
+                                         qos_info,
+                                         ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr

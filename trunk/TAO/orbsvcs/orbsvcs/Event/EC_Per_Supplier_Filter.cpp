@@ -5,6 +5,7 @@
 #include "EC_ProxyPushSupplier_Set.h"
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h"
+#include "EC_Scheduling_Strategy.h"
 #include "EC_QOS_Info.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -87,12 +88,21 @@ void
 TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
+  TAO_EC_Scheduling_Strategy* scheduling_strategy =
+    this->event_channel_->scheduling_strategy ();
   for (CORBA::ULong j = 0; j < event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
         ACE_const_cast(RtecEventComm::Event*, &e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
+
+      TAO_EC_QOS_Info event_info;
+      scheduling_strategy->init_event_qos (e.header,
+                                           this->consumer_,
+                                           event_info,
+                                           ACE_TRY_ENV);
+      ACE_CHECK;
 
       ACE_GUARD_THROW_EX (TAO_EC_ProxyPushSupplier_Set::Busy_Lock,
           ace_mon, this->supplier_set_->busy_lock (),
@@ -107,7 +117,7 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
            i != end;
            ++i)
         {
-          TAO_EC_QOS_Info qos_info;
+          TAO_EC_QOS_Info qos_info = event_info;
 
           (*i)->filter (single_event, qos_info, ACE_TRY_ENV);
           ACE_CHECK;

@@ -25,15 +25,16 @@
 #ifndef TAO_EC_PRIORITY_DISPATCHING_H
 #define TAO_EC_PRIORITY_DISPATCHING_H
 
-#include "EC_Dispatching.h"
+#include "orbsvcs/RtecSchedulerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Block.h"
+#include "EC_Dispatching.h"
 
 class TAO_EC_Dispatching_Task;
+class TAO_EC_Event_Channel;
 
 class TAO_ORBSVCS_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
 {
@@ -53,7 +54,7 @@ class TAO_ORBSVCS_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
   //   analyze and schedule.
   //
 public:
-  TAO_EC_Priority_Dispatching (void);
+  TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel* ec);
   // The scheduler is used to find the range of priorities and similar
   // info.
 
@@ -79,9 +80,8 @@ private:
   TAO_EC_Dispatching_Task** tasks_;
   // The tasks..
 
-  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
-  // Helper data structure to minimize memory allocations...
-  // @@ Should be a per-queue object!
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler
 };
 
 #if defined (__ACE_INLINE__)

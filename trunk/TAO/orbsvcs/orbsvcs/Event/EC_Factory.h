@@ -48,6 +48,7 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ObserverStrategy;
 class TAO_EC_ProxyPushSupplier_Set;
 class TAO_EC_Timeout_Generator;
+class TAO_EC_Scheduling_Strategy;
 
 class TAO_ORBSVCS_Export TAO_EC_Factory : public ACE_Service_Object
 {
@@ -119,6 +120,12 @@ public:
       create_observer_strategy (TAO_EC_Event_Channel*) = 0;
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*) = 0;
+  // Create and destroy the observer strategy.
+
+  virtual TAO_EC_Scheduling_Strategy*
+      create_scheduling_strategy (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*) = 0;
   // Create and destroy the observer strategy.
 
   virtual TAO_EC_ProxyPushSupplier_Set*
