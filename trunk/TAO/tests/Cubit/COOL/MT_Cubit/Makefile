@@ -55,7 +55,7 @@ ifdef CHORUS
 	CLT_OBJS += pccTimer.o
 	LDLIBS += -lOrb
 else
-	LDLIBS += -lsocket -lACE -lOrb-mt
+	LDLIBS += -lsocket -lACE -lposix4 -lOrb-mt
 endif
 
 VLDLIBS	 = $(LDLIBS:%=%$(VAR))
