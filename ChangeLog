@@ -1,16 +1,39 @@
+Thu Feb 12 09:34:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/depgen.pl:
+
+          Added the ACE_PLATFORM_CONFIG environment variable to the
+          replacement list.  I'm not sure why this is desirable, but g++dep
+          does it so now depgen.pl does it.
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/GNUDependencyWriter.pm:
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+        * bin/DependencyGenerator/NMakeObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGenerator.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+
+          Made many optimizations to compensate for the additional
+          replacement variable.
+
+        * bin/MakeProjectCreator/config/fault_tolerance.mpb:
+
+          The fault_tolerance base project needs the ftorb base project.
+
 Wed Feb 11 16:25:11 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/INET_Addr.cpp (get_host_addr): On Windows for IPv6, don't try
-	  to call ACE_OS::inet_ntop() - it's not supported. The rough
-	  equivalent is getnameinfo(). Rather than add this at the ACE_OS
-	  layer after BFO (getnameinfo() may have been replaced by newer
-	  APIs in other OSes) add the getnameinfo() call in here.
-	  This fixes the crash in INET_Addr_Test on Windows w/ IPv6.
+        * ace/INET_Addr.cpp (get_host_addr): On Windows for IPv6, don't try
+          to call ACE_OS::inet_ntop() - it's not supported. The rough
+          equivalent is getnameinfo(). Rather than add this at the ACE_OS
+          layer after BFO (getnameinfo() may have been replaced by newer
+          APIs in other OSes) add the getnameinfo() call in here.
+          This fixes the crash in INET_Addr_Test on Windows w/ IPv6.
 
 Wed Feb 11 13:14:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/INET_Addr_Test_IPV6.cpp: Cast INADDR_ANY to ACE_UINT32 to
-	  disambiguate it from a 0 char*. Fixes compile error on Windows.
+        * tests/INET_Addr_Test_IPV6.cpp: Cast INADDR_ANY to ACE_UINT32 to
+          disambiguate it from a 0 char*. Fixes compile error on Windows.
 
 Wed Feb 11 15:39:29 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
         * examples/APG/Signals/SigAction.cpp
