@@ -78,7 +78,6 @@ public:
   // Returns a <NamingContext_ptr>.
 
 protected:
-
   int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
                        size_t context_size);
@@ -100,19 +99,18 @@ protected:
 class TAO_ORBSVCS_Export TAO_Naming_Client
 {
   // = TITLE
-  //
   //    Defines a wrapper class that simplifies initialization and
   //    access to a <NamingContext>.
   //
   // = DESCRIPTION
-  //
   //    This class takes an ORB reference and contacts the
   //    NamingService naming context object under that.  It also
   //    defines the operator-> so that <NamingContext> functions like
-  //    <resolve>, etc. can be called on a <NameServer> object.
-  //    This class is intended to simplify programs that want to play
-  //    the role of a Naming Service clients.
+  //    <resolve>, etc. can be called on a <NameServer> object.  This
+  //    class is intended to simplify programs that want to play the
+  //    role of a Naming Service clients.
 public:
+  // = Initialization and termination methods.
   TAO_Naming_Client (void);
   // Default constructor.
 

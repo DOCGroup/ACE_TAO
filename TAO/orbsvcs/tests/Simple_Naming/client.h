@@ -33,6 +33,7 @@ class Naming_Test
   //    provides a common interface for different tests (or
   //    "strategies"), so that a specific test to be used can be
   //    chosen at runtime.
+
 public:
   virtual int execute (TAO_Naming_Client &root_context) = 0;
   // Execute the test code.  <root_context> is the context to assume
@@ -62,16 +63,16 @@ class Tree_Test : public Naming_Test
   //    Bind_context() under the root context with the name level1.
   //    Create_new_context(), bind() foo object into it, and 
   //    bind the context into root/level1 under the name level2.
-  //    Resolve( root/level1/level2/foo).
-  //    Unbind( root/level1/level2/foo).
-  //    Bind ( root/level1/level2/foo, obj)
+  //    Resolve (root/level1/level2/foo).
+  //    Unbind (root/level1/level2/foo).
+  //    Bind (root/level1/level2/foo, obj)
   //    Create_new_context()
   //    and invoke rebind_context() to substitute it for the current 
   //    level2 context.
-  //    Bind ( root/level1/level2/foo, obj)
-  //    Resolve( root/level1/level2/foo).
+  //    Bind (root/level1/level2/foo, obj)
+  //    Resolve (root/level1/level2/foo).
   //    Rebind() to have a different object under the name bar.
-  //    Resolve( root/level1/level2/foo) to make sure correct reference is returned.
+  //    Resolve (root/level1/level2/foo) to make sure correct reference is returned.
 public:
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the tree test code.
@@ -154,13 +155,11 @@ public:
   // Execute the destroy test code.
 
 private:
-  // the following functions isolate specific tests.
-
+  // = The following functions isolate specific tests.
   void not_empty_test (CosNaming::NamingContext_var &ref,
 		       CORBA::Environment &_env);
   void not_exist_test (CosNaming::NamingContext_var &ref,
 		       CORBA::Environment &_env);
-
 };
 
 class CosNaming_Client 
@@ -208,7 +207,8 @@ private:
   // arguments from command line.
 
   Naming_Test *test_;
-  // A pointer to the specific Naming Service test a client will execute.
+  // A pointer to the specific Naming Service test a client will
+  // execute.
 
   TAO_ORB_Manager orbmgr_;
   // Our ORB manager helper class.

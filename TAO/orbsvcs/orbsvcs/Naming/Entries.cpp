@@ -24,7 +24,7 @@ TAO_IntId::TAO_IntId (void)
 }
 
 TAO_IntId::TAO_IntId (CORBA::Object_ptr obj,
-		    CosNaming::BindingType type)
+                      CosNaming::BindingType type)
   : type_ (type)
 {
   ref_ = CORBA::Object::_duplicate (obj);
