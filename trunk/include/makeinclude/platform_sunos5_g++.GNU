@@ -2,7 +2,7 @@
 #
 # SOBUILD - compile into .so directly
 #
-CXX		= gcc -I. -Wall -Wpointer-arith -D__ACE_INLINE__ # -O2 -Winline
+CXX		= g++ -I. -Wall -Wpointer-arith -D__ACE_INLINE__ # -O2 -Winline
 CC		= $(CXX)
 DLD		= $(CXX)
 LD		= $(CXX)

@@ -4,7 +4,7 @@
 CC              = gcc -w
 # for threads
 # for no threads
-CXX		= gcc -fno-implicit-templates -w -I. -fno-strict-prototypes -D__ACE_INLINE__
+CXX		= g++ -fno-implicit-templates -w -I. -fno-strict-prototypes -D__ACE_INLINE__
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS            = -lstdc++ -lsocket

@@ -2,7 +2,7 @@
 # should allow ACE to be built on Linux.
 
 CC              = gcc -w
-CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__ 
+CXX		= g++ -w -I. -fno-strict-prototypes -D__ACE_INLINE__ 
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            = -lstdc++

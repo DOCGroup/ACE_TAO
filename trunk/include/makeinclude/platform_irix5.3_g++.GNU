@@ -1,7 +1,7 @@
 # Irix 5.3 with GNU C++
 
 CC              = gcc
-CXX             = gcc
+CXX             = g++
 DLD             = $(CXX)
 LD		= $(CXX) 
 LDFLAGS         += -L$(WRAPPER_ROOT)/ace
