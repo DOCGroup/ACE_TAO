@@ -15,8 +15,9 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                         const char *svc_name);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
+
 // Force the pretty debugging code to compile.
-#define YYDEBUG 1
+// #define YYDEBUG 1
 
 // Efficient memory allocation technique.
 ACE_Obstack *ace_obstack;
