@@ -1,6 +1,6 @@
-This is Info file gperf.info, produced by Makeinfo version 1.68 from
-the input file gperf.texi.
+This is gperf.info, produced by makeinfo version 4.0f from gperf.texi.
 
+INFO-DIR-SECTION GNU programming tools
 START-INFO-DIR-ENTRY
 * Gperf: (gperf).                Perfect Hash Function Generator.
 END-INFO-DIR-ENTRY
@@ -55,7 +55,7 @@ bugs.
 * Implementation::		Implementation Details for GNU GPERF.
 * Bibliography::		Material Referenced in this Report.
 
- -- The Detailed Node Listing --
+ --- The Detailed Node Listing ---
 
 High-Level Description of GNU `gperf'
 
@@ -75,7 +75,6 @@ GNU GENERAL PUBLIC LICENSE
 **************************
 
                        Version 1, February 1989
-
      Copyright (C) 1989 Free Software Foundation, Inc.
      675 Mass Ave, Cambridge, MA 02139, USA
      
@@ -125,7 +124,6 @@ authors' reputations.
 modification follow.
 
                          TERMS AND CONDITIONS
-
   1. This License Agreement applies to any program or other work which
      contains a notice placed by the copyright holder saying it may be
      distributed under the terms of this General Public License.  The
@@ -365,12 +363,12 @@ Introduction
 ************
 
    `gperf' is a perfect hash function generator written in C++.  It
-transforms an *n* element user-specified keyword set *W* into a perfect
-hash function *F*.  *F* uniquely maps keywords in *W* onto the range
-0..*k*, where *k* >= *n*.  If *k = n* then *F* is a *minimal* perfect
-hash function.  `gperf' generates a 0..*k* element static lookup table
+transforms an _n_ element user-specified keyword set _W_ into a perfect
+hash function _F_.  _F_ uniquely maps keywords in _W_ onto the range
+0.._k_, where _k_ >= _n_.  If _k = n_ then _F_ is a _minimal_ perfect
+hash function.  `gperf' generates a 0.._k_ element static lookup table
 and a pair of C functions.  These functions determine whether a given
-character string *s* occurs in *W*, using at most one probe into the
+character string _s_ occurs in _W_, using at most one probe into the
 lookup table.
 
    `gperf' currently generates the reserved keyword recognizer for
@@ -391,12 +389,12 @@ Static search structures and GNU `gperf'
 ****************************************
 
    A "static search structure" is an Abstract Data Type with certain
-fundamental operations, *e.g.*, *initialize*, *insert*, and *retrieve*.
+fundamental operations, _e.g._, _initialize_, _insert_, and _retrieve_.
 Conceptually, all insertions occur before any retrievals.  In
 practice, `gperf' generates a `static' array containing search set
 keywords and any associated attributes specified by the user.  Thus,
 there is essentially no execution-time cost for the insertions.  It is
-a useful data structure for representing *static search sets*.  Static
+a useful data structure for representing _static search sets_.  Static
 search sets occur frequently in software system applications.  Typical
 static search sets include compiler reserved words, assembler
 instruction opcodes, and built-in shell interpreter commands.  Search
@@ -404,42 +402,42 @@ set members, called "keywords", are inserted into the structure only
 once, usually during program initialization, and are not generally
 modified at run-time.
 
-   Numerous static search structure implementations exist, *e.g.*,
+   Numerous static search structure implementations exist, _e.g._,
 arrays, linked lists, binary search trees, digital search tries, and
 hash tables.  Different approaches offer trade-offs between space
-utilization and search time efficiency.  For example, an *n* element
+utilization and search time efficiency.  For example, an _n_ element
 sorted array is space efficient, though the average-case time
 complexity for retrieval operations using binary search is proportional
-to log *n*.  Conversely, hash table implementations often locate a
+to log _n_.  Conversely, hash table implementations often locate a
 table entry in constant time, but typically impose additional memory
 overhead and exhibit poor worst case performance.
 
-   *Minimal perfect hash functions* provide an optimal solution for a
+   _Minimal perfect hash functions_ provide an optimal solution for a
 particular class of static search sets.  A minimal perfect hash
 function is defined by two properties:
 
    * It allows keyword recognition in a static search set using at most
-     *one* probe into the hash table.  This represents the "perfect"
+     _one_ probe into the hash table.  This represents the "perfect"
      property.
 
    * The actual memory allocated to store the keywords is precisely
-     large enough for the keyword set, and *no larger*.  This is the
+     large enough for the keyword set, and _no larger_.  This is the
      "minimal" property.
 
-   For most applications it is far easier to generate *perfect* hash
-functions than *minimal perfect* hash functions.  Moreover, non-minimal
+   For most applications it is far easier to generate _perfect_ hash
+functions than _minimal perfect_ hash functions.  Moreover, non-minimal
 perfect hash functions frequently execute faster than minimal ones in
 practice.  This phenomena occurs since searching a sparse keyword table
 increases the probability of locating a "null" entry, thereby reducing
 string comparisons.  `gperf''s default behavior generates
-*near-minimal* perfect hash functions for keyword sets.  However,
+_near-minimal_ perfect hash functions for keyword sets.  However,
 `gperf' provides many options that permit user control over the degree
 of minimality and perfection.
 
    Static search sets often exhibit relative stability over time.  For
 example, Ada's 63 reserved words have remained constant for nearly a
 decade.  It is therefore frequently worthwhile to expend concerted
-effort building an optimal search structure *once*, if it subsequently
+effort building an optimal search structure _once_, if it subsequently
 receives heavy use multiple times.  `gperf' removes the drudgery
 associated with constructing time- and space-efficient search
 structures by hand.  It has proven a useful and practical tool for
@@ -504,7 +502,7 @@ utilities `lex' and `yacc').  Here's an outline of the general format:
      %%
      functions
 
-   *Unlike* `flex' or `bison', all sections of `gperf''s input are
+   _Unlike_ `flex' or `bison', all sections of `gperf''s input are
 optional.  The following sections describe the input format for each
 section.
 
@@ -522,8 +520,8 @@ File: gperf.info,  Node: Declarations,  Next: Keywords,  Prev: Input Format,  Up
 
    The keyword input file optionally contains a section for including
 arbitrary C declarations and definitions, as well as provisions for
-providing a user-supplied `struct'.  If the `-t' option *is* enabled,
-you *must* provide a C `struct' as the last component in the
+providing a user-supplied `struct'.  If the `-t' option _is_ enabled,
+you _must_ provide a C `struct' as the last component in the
 declaration section from the keyfile file.  The first field in this
 struct must be a `char *' identifier called "name," although it is
 possible to modify this field's name with the `-K' option described
@@ -570,7 +568,7 @@ fragment based on the previous example that illustrates this feature:
      ...
 
    It is possible to omit the declaration section entirely.  In this
-case the keyfile begins directly with the first keyword line, *e.g.*:
+case the keyfile begins directly with the first keyword line, _e.g._:
 
      january,   1, 31, 31
      february,  2, 28, 29
@@ -590,7 +588,7 @@ the first column is considered a comment.  Everything following the `#'
 is ignored, up to and including the following newline.
 
    The first field of each non-comment line is always the key itself.
-It should be given as a simple name, *i.e.*, without surrounding string
+It should be given as a simple name, _i.e._, without surrounding string
 quotation marks, and be left-justified flush against the first column.
 In this context, a "field" is considered to extend up to, but not
 include, the first blank, comma, or newline.  Here is a simple example
@@ -615,7 +613,7 @@ elided if the declaration section is empty.
 should be separated by commas, and terminate at the end of line.  What
 these fields mean is entirely up to you; they are used to initialize the
 elements of the user-defined `struct' provided by you in the
-declaration section.  If the `-t' option is *not* enabled these fields
+declaration section.  If the `-t' option is _not_ enabled these fields
 are simply ignored.  All previous examples except the last one contain
 keyword attributes.
 
@@ -655,7 +653,7 @@ array.  The associated values table is constructed internally by
 `gperf' and later output as a static local C array called HASH_TABLE;
 its meaning and properties are described below.  *Note
 Implementation::. The relevant key positions are specified via the `-k'
-option when running `gperf', as detailed in the *Options* section
+option when running `gperf', as detailed in the _Options_ section
 below. *Note Options::.
 
    Two options, `-g' (assume you are compiling with GNU C and its
@@ -692,7 +690,7 @@ File: gperf.info,  Node: Options,  Next: Bugs,  Prev: Description,  Up: Top
 Options to the `gperf' Utility
 ******************************
 
-   There are *many* options to `gperf'.  They were added to make the
+   There are _many_ options to `gperf'.  They were added to make the
 program more convenient for use with real applications.  "On-line" help
 is readily available via the `-h' option.  Other options include:
 
@@ -706,7 +704,7 @@ is readily available via the `-h' option.  Other options include:
 
     `-C'
           Makes the contents of all generated lookup tables constant,
-          *i.e.*, "readonly."  Many compilers can generate more
+          _i.e._, "readonly."  Many compilers can generate more
           efficient code for this by putting the tables in readonly
           memory.
 
@@ -739,7 +737,7 @@ is readily available via the `-h' option.  Other options include:
                organizing the output.
 
           Option `-D' is extremely useful for certain large or highly
-          redundant keyword sets, *i.e.*, assembler instruction opcodes.
+          redundant keyword sets, _i.e._, assembler instruction opcodes.
           Using this option usually means that the generated hash
           function is no longer perfect.  On the other hand, it permits
           `gperf' to work on keyword sets that it otherwise could not
@@ -766,12 +764,12 @@ is readily available via the `-h' option.  Other options include:
           times to iterate when resolving a collision.  `0' means
           `iterate by the number of keywords.  This option is probably
           most useful when used in conjunction with options `-D' and/or
-          `-S' for *large* keyword sets.
+          `-S' for _large_ keyword sets.
 
     `-g'
-          Assume a GNU compiler, *e.g.*, `g++' or `gcc'.  This makes
+          Assume a GNU compiler, _e.g._, `g++' or `gcc'.  This makes
           all generated routines use the "inline" keyword to remove the
-          cost of function calls.  Note that `-g' does *not* imply
+          cost of function calls.  Note that `-g' does _not_ imply
           `-a', since other non-ANSI C compilers may have provisions
           for a function `inline' feature.
 
@@ -798,7 +796,7 @@ is readily available via the `-h' option.  Other options include:
           `-r' option is used.
 
     `-j JUMP VALUE'
-          Affects the "jump value," *i.e.*, how far to advance the
+          Affects the "jump value," _i.e._, how far to advance the
           associated character value upon collisions.  JUMP VALUE is
           rounded up to an odd number, the default is 5.  If the JUMP
           VALUE is 0 `gper f' jumps by random amounts.
@@ -807,7 +805,7 @@ is readily available via the `-h' option.  Other options include:
           Allows selection of the character key positions used in the
           keywords' hash function. The allowable choices range between
           1-126, inclusive.  The positions are separated by commas,
-          *e.g.*, `-k 9,4,13,14'; ranges may be used, *e.g.*, `-k 2-7';
+          _e.g._, `-k 9,4,13,14'; ranges may be used, _e.g._, `-k 2-7';
           and positions may occur in any order.  Furthermore, the
           meta-character '*' causes the generated hash function to
           consider *all* character positions in each key, whereas '$'
@@ -867,15 +865,15 @@ is readily available via the `-h' option.  Other options include:
           more minimal perfect hash functions.  The reason for this is
           that the reordering helps prune the search time by handling
           inevitable collisions early in the search process.  On the
-          other hand, if the number of keywords is *very* large using
-          `-o' may *increase* `gperf''s execution time, since
+          other hand, if the number of keywords is _very_ large using
+          `-o' may _increase_ `gperf''s execution time, since
           collisions will begin earlier and continue throughout the
           remainder of keyword processing.  See Cichelli's paper from
           the January 1980 Communications of the ACM for details.
 
     `-p'
           Changes the return value of the generated function
-          `in_word_set' from boolean (*i.e.*, 0 or 1), to either type
+          `in_word_set' from boolean (_i.e._, 0 or 1), to either type
           "pointer to user-defined struct," (if the `-t' option is
           enabled), or simply to `char *', if `-t' is not enabled.
           This option is most useful when the `-t' option (allowing
@@ -897,7 +895,7 @@ is readily available via the `-h' option.  Other options include:
           smaller" the maximum associated value range should be, in
           relationship to the number of keys.  If the SIZE-MULTIPLE is
           negative the maximum associated value is calculated by
-          *dividing* it into the total number of keys.  For example, a
+          _dividing_ it into the total number of keys.  For example, a
           value of 3 means "allow the maximum associated value to be
           about 3 times larger than the number of input keys."
 
@@ -907,7 +905,7 @@ is readily available via the `-h' option.  Other options include:
           size of the generated hash table, though this usually
           increases the number of duplicate hash values.
 
-          If `generate switch' option `-S' is *not* enabled, the maximum
+          If `generate switch' option `-S' is _not_ enabled, the maximum
           associated value influences the static array table size, and
           a larger table should decrease the time required for an
           unsuccessful search, at the expense of extra table space.
@@ -976,17 +974,17 @@ Known Bugs and Limitations with `gperf'
      occurs on every run.  On the other hand, it is usually easy to
      obtain a solution by varying the option parameters.  In
      particular, try the `-r' option, and also try changing the default
-     arguments to the `-s' and `-j' options.  To *guarantee* a
+     arguments to the `-s' and `-j' options.  To _guarantee_ a
      solution, use the `-D' and `-S' options, although the final
-     results are not likely to be a *perfect* hash function anymore!
+     results are not likely to be a _perfect_ hash function anymore!
      Finally, use the `-f' option if you want `gperf' to generate the
-     perfect hash function *fast*, with less emphasis on making it
+     perfect hash function _fast_, with less emphasis on making it
      minimal.
 
-   * The size of the generate static keyword array can get *extremely*
+   * The size of the generate static keyword array can get _extremely_
      large if the input keyword file is large or if the keywords are
      quite similar.  This tends to slow down the compilation of the
-     generated C code, and *greatly* inflates the object code size.  If
+     generated C code, and _greatly_ inflates the object code size.  If
      this situation occurs, consider using the `-S' option to reduce
      data size, potentially increasing keyword recognition time a
      negligible amount.  Since many C compilers cannot correctly
@@ -1050,7 +1048,7 @@ Implementation Details of GNU `gperf'
 and algorithms used to implement `gperf' will soon be available.  This
 paper is useful not only from a maintenance and enhancement perspective,
 but also because they demonstrate several clever and useful programming
-techniques, *e.g.*, `Iteration Number' boolean arrays, double hashing,
+techniques, _e.g._, `Iteration Number' boolean arrays, double hashing,
 a "safe" and efficient method for reading arbitrarily long input from a
 file, and a provably optimal algorithm for simultaneously determining
 both the minimum and maximum elements in a list.
@@ -1110,21 +1108,21 @@ Foundation, 1989.
 
 
 Tag Table:
-Node: Top1224
-Node: Copying2511
-Node: Contributors15814
-Node: Motivation16914
-Node: Search Structures18181
-Node: Description21734
-Node: Input Format23554
-Node: Declarations24349
-Node: Keywords26656
-Node: Functions28247
-Node: Output Format28741
-Node: Options31211
-Node: Bugs44581
-Node: Projects47268
-Node: Implementation48845
-Node: Bibliography49564
+Node: Top1238
+Node: Copying2527
+Node: Contributors15828
+Node: Motivation16928
+Node: Search Structures18195
+Node: Description21748
+Node: Input Format23568
+Node: Declarations24363
+Node: Keywords26670
+Node: Functions28261
+Node: Output Format28755
+Node: Options31225
+Node: Bugs44595
+Node: Projects47282
+Node: Implementation48859
+Node: Bibliography49578
 
 End Tag Table

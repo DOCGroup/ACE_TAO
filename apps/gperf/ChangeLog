@@ -1,3 +1,17 @@
+Tue Feb 26 23:15:47 2002  Ossama Othman  <ossama@uci.edu>
+
+	* gperf.texi:
+
+	  Added missing "@dircategory" entry.  It is required for proper
+	  installation when using `install-info'.
+
+	  Use "@direntry" instead of "{START,END}-INFO-DIR-ENTRY"
+	  directly.
+
+	* gperf.info:
+
+	  Regenerated this file.
+
 Mon Jan 14 14:43:53 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Makefile:
