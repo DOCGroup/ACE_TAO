@@ -133,7 +133,7 @@ TAO_GIOP::dump_msg (const char *label,
         ACE_HEX_DUMP ((LM_DEBUG,
                        (const char*)ptr,
                        len,
-                       "(%P|%t) data bytes\n"));
+                       "\n"));
     }
 }
 
@@ -254,11 +254,9 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
   // socket never gets set to a nonblocking mode ... some Linux
   // versions seem to need it though.  Leaving it costs little.
 
-#if 0
   TAO_GIOP::dump_msg ("send",
                       ACE_reinterpret_cast (u_char *, buf),
-                      total_len);
-#endif
+                      stream.length ());
 
   // this guarantees to send all data (bytes) or return an error
   ssize_t n = transport->send (stream.begin ());
@@ -527,7 +525,7 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
       TAO_GIOP::send_error (transport);
        // We didn't really receive anything useful here.
       return TAO_GIOP::CommunicationError;
-                                  
+
     }
 
   // Make sure we have the full length in memory, growing the buffer

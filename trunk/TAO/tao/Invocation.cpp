@@ -457,7 +457,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // STUB_Object.)
 
   // @@ Why do we clear the environment?
-  ACE_TRY_ENV.clear ();
+  // ACE_TRY_ENV.clear ();
 
   // We may not need to do this since TAO_GIOP_Invocations
   // get created on a per-call basis. For now we'll play it safe.
@@ -611,6 +611,11 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     exception, 0,
                                     ACE_TRY_ENV);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+          if (TAO_debug_level > 5)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO: (%P|%t) Raising exception %s\n",
+                        buf.in ()));
 
           // @@ Think about a better way to raise the exception here,
           // maybe we need some more macros?
@@ -813,8 +818,12 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   switch (reply_status)
     {
     case TAO_GIOP_NO_EXCEPTION:
+      return TAO_INVOKE_OK;
+      // NOTREACHED
+
     case TAO_GIOP_USER_EXCEPTION:
-      break;
+      return TAO_INVOKE_EXCEPTION;
+      // NOTREACHED
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
@@ -872,7 +881,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
     }
 
-  return reply_status;
+  ACE_NOTREACHED (return TAO_INVOKE_EXCEPTION);
 }
 
 // ****************************************************************

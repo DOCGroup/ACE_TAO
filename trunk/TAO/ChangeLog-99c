@@ -1,3 +1,20 @@
+Tue Mar 23 21:36:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	  The error codes returned from invoke_i() were wrong. Resulting
+	  in missing user exceptions and other evil things.
+
+	* docs/Options.html: 
+	* tao/ORB_Core.cpp: 
+	  Added option to control TAO_debug_level directly.
+
+	* tao/GIOP.cpp: 
+	  Enabled more debugging messages for the beginning of an outgoing 
+	  buffer, only if TAO_debug_level > 3.
+
+	* orbsvcs/tests/Simple_Naming/client.cpp: 
+	  Print some debugging messages if the tests fail.
+
 Tue Mar 23 19:14:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tao/ORB.cpp (multicast_query): Printed the error message in
