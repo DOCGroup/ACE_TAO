@@ -1,0 +1,21 @@
+# $Id$
+
+This test can be pretty complicated to run, a sample configuration file is
+included to help you startup.
+
+	The basic idea to remember is that a "Federation" is a logical
+grouping of incoming and outgoing mcast addresses that share the same
+multicast port.  The test reads the configuration file to find out
+which Federations are globally available defined, but the comand line
+is used to specify the list of federations that are actually running
+on each process.
+
+	To make the test interesting you should run at least two
+copies of the test, on different windows (to keep the output appart):
+
+$ ./EC_Mcast -p ECM1.pid -c sample.cfg -n 200 -t 500000 -f Set02
+$ ./EC_Mcast -p ECM2.pid -c sample.cfg -n 200 -t 500000 -f Set02
+
+	the test will report the number of events received, if you run
+just one of the processes you will notice that this number is smaller,
+this indicates that some events come from a "remote" event.

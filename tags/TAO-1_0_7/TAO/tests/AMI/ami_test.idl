@@ -1,0 +1,40 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    ami_test.idl
+//
+// = DESCRIPTION
+//    IDL description of the AMI Test interface
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
+
+
+module A 
+  {
+    exception DidNotWork {
+      long id;
+      string whatDidNotWork;
+    };
+
+    interface AMI_Test
+      {
+        long foo (out long out_l, 
+                  in long in_l,
+                  in string in_str)
+          raises (DidNotWork);
+  
+        attribute long yadda;
+        
+        oneway void shutdown ();
+      };
+
+  };

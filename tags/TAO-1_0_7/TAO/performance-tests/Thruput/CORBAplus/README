@@ -1,0 +1,47 @@
+		CORBAplus TTCP Benchmark README file
+
+This directory contains a modified version of the TTCP benchmark that
+uses the TAO ORB. TTCP is used to measure the throughput of CORBAplus
+for sending different data types. This code tests sequences of short,
+long, octet, char, double, and richly-typed data such as a struct.
+
+Organization
+------------
+
+client.cpp		Client main program
+server.cpp		Server main program
+ttcp.cpp		Client side stubs
+ttcp_s.cpp		Server side skeletons
+ttcp.h			Header file for stubs
+ttcp_s.h		Header file for the skeletons
+ttcp_i.cpp		Implementaion of the interface
+ttcp_i.h		Header for the implementation
+utils.cpp		Utilities to calculate throughput
+ttcp_decls.h		Common declarations
+
+Results
+-------
+//Throughput results are stored under the results directory. If testing
+//for REMOTE transfers, use the ./results/REMOTE directory.
+
+Running the tests
+-----------------
+Three scripts are provided
+
+(0) run_tests  : run several clients sequentially.  transmits 10Mb
+
+(1) run_server : runs the server. Be sure to change the host name
+(2) run_client : runs tests for various data types
+(3) run_test : called by run_client
+
+Compiling
+---------
+
+Type make
+
+To provide for 2way tests (no data is sent in the reverse
+direction. Sender blocks for a minimal ACK), comment out the -DONEWAY
+flag from the CPPFLAGS
+
+-Aniruddha Gokhale
+(gokhale@cs.wustl.edu)

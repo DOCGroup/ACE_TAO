@@ -1,0 +1,54 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    array.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has 
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+// Multidimensional arrays - constant vigilance.
+typedef short TwoDArray[64][63];
+
+typedef short ThreeDArray[64][63][62];
+
+// This problem is a combination of two others
+// that have long been fixed, but you never know...
+
+typedef long inside_array[5];
+
+struct wrap
+  {
+    inside_array member;
+  };
+
+typedef wrap outside_array[10];
+
+
+// Once a problem with expressions in the brackets,
+// as well as the typedef'd/anonymous thing.
+
+interface tdef 
+{
+  const short byteslen = 12;
+  typedef octet Bytes[byteslen + 1];
+
+  struct bytes_or_longs 
+    {
+      Bytes the_bytes;	          // typedef'd
+      long Longs[byteslen];       // anonymous
+    }; 
+};
+
