@@ -812,7 +812,7 @@ dnl    fi
   ],)
 
  AC_ARG_ENABLE([stdcpplib],
-  AS_HELP_STRING(--enable-stdcpplib,enable standard C++ library [[[yes]]]),
+  AS_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -830,6 +830,27 @@ dnl    fi
    ace_user_enable_stdcpplib=yes
   ])
 
+])
+
+AC_DEFUN([ACE_WITH_USES_WCHAR],
+[AC_ARG_ENABLE([uses-wchar],
+             AS_HELP_STRING([--enable-uses-wchar],
+                            [enable use of wide characters [[no]]]),
+             [case "${withval}" in
+               yes) 
+                AC_DEFINE([ACE_USES_WCHAR])
+                ace_user_enable_wide_char=yes
+                ;;
+               no)
+                ace_user_enable_wide_char=no
+                ;;
+               *)
+                AC_MSG_ERROR(bad value ${enableval} for --enable-uses-wchar)
+                ;;
+              esac])
+AC_CACHE_CHECK([whether to use wide characters internally],
+               [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
+AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
 ])
 
 AC_DEFUN([ACE_WITH_RMCAST],
@@ -913,25 +934,4 @@ AC_DEFUN([ACE_WITH_ACEXML],
 AC_CACHE_CHECK([whether to compile/use the ACEXML library],
                [ace_user_with_acexml], [ace_user_with_acexml=yes])
 AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_with_acexml = Xyes])
-])
-
-AC_DEFUN([ACE_WITH_USES_WCHAR],
-[AC_ARG_WITH([uses-wchar],
-             AS_HELP_STRING([--with-uses-wchar],
-                            [select use of wide characters [[no]]]),
-             [case "${withval}" in
-               yes) 
-                AC_DEFINE([ACE_USES_WCHAR])
-                ace_user_with_wide_char=yes
-                ;;
-               no)
-                ace_user_with_wide_char=no
-                ;;
-               *)
-                AC_MSG_ERROR(bad value ${withval} for --with-uses-wchar)
-                ;;
-              esac])
-AC_CACHE_CHECK([whether to use wide characters internally],
-               [ace_user_with_wide_char], [ace_user_with_wide_char=no])
-AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_with_wide_char = Xyes])
 ])
