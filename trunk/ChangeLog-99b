@@ -1,3 +1,8 @@
+Sat Jul 17 12:20:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/servers/main.cpp (main): Fixed a typo caused by recent
+	  integration of Jerry De Master's fixes.
+
 Fri Jul 16 19:41:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (out_of_handles): Added a function to check if a
