@@ -1,14 +1,17 @@
+Mon Feb 08 14:32:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/exceptions.html: Added guidelines of switching from TAO try
+	  macros to ACE try macros.  Other cosmetic changes.
+
 Mon Feb  8 13:54:32 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* docs/tutorials/011/task.cpp : 
+	* docs/tutorials/011/task.cpp :
 	In the open return this->activate (THR_NEW_LWP,
         this->n_threads_); was taking an udefined variable threads.
-	
-	* docs/tutorials/011/message_queue.cpp: 
+
+	* docs/tutorials/011/message_queue.cpp:
 	Corrected Compilation error due to a typo (static misspelt as
 	statuc!!!)
- 	
-	
 
 Mon Feb  8 09:21:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
