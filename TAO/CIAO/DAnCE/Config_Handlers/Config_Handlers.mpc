@@ -30,6 +30,19 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
     iad.cpp
     pcd.cpp
     toplevel.cpp
+    CPD_Handler.cpp
+    CID_Handler.cpp
+    ANY_Handler.cpp
+    Prop_Handler.cpp
+    ComponentPropertyDescription_Handler.cpp
+    DataType_Handler.cpp
+    MDD_Handler.cpp
+    Req_Handler.cpp
+    PCD_Handler.cpp
+    CEPE_Handler.cpp
+    PSPE_Handler.cpp
+    ERE_Handler.cpp
+    CRDD_Handler.cpp
   }
 
   Header_Files {
@@ -53,5 +66,38 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
     iad.hpp
     pcd.hpp
     toplevel.hpp
+    CPD_Handler.h
+    CID_Handler.h
+    ANY_Handler.h
+    Prop_Handler.h
+    ComponentPropertyDescription_Handler.h
+    DataType_Handler.h
+    MDD_Handler.h
+    Req_Handler.h
+    PCD_Handler.h
+    CEPE_Handler.h
+    PSPE_Handler.h
+    ERE_Handler.h
+    CRDD_Handler.h
   }
 }
+
+project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
+                                                                                
+                                                                                
+  exename = test
+  dynamicflags   = CONFIG_HANDLER_BUILD_DLL
+  macros   += XML_USE_PTHREADS
+  requires += exceptions
+  includes += $(XERCESCROOT)/include  .
+  libpaths += $(XERCESCROOT)/lib
+  libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client XSC_Config_Handlers
+                                                                                
+  Source_Files {
+    test.cpp
+  }
+                                                                                
+                                                                                
+}
+
+
