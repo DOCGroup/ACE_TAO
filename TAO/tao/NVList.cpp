@@ -445,7 +445,12 @@ CORBA::NVList::_tao_target_alignment (void)
     }
 
   const char* rd = this->incoming_->start ()->rd_ptr ();
-  return ptrdiff_t(rd) % ACE_CDR::MAX_ALIGNMENT;
+  ptrdiff_t t = ptrdiff_t (rd) % ACE_CDR::MAX_ALIGNMENT;
+
+  if (t < 0)
+    t += ACE_CDR::MAX_ALIGNMENT;
+
+  return t;
 }
 
 void

@@ -1,3 +1,17 @@
+Fri May 16 18:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.cpp:
+	* tao/CDR_Encaps_Codec.cpp:
+	* tao/NVList.cpp: Few hours of nonstop debugging opened up a
+	  problem with a way ptrdiff_t was used. ptrdiff_t is signed
+	  whereas ptr_arith_t was unsigned. This lead to cases where
+	  alignments got a negative value on Linux and memcpy data into
+	  and from CDR streams were totally busted. This lead to crashes
+	  in Any tests in our daily builds. 
+
+	  This will not fix all the problems with Any's. There are some
+	  more fixes which would be checked in in the next few days. 
+
 Thu May 15 14:54:31 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tests/Smart_Proxies/Makefile:
