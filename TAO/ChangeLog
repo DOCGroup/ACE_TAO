@@ -1,3 +1,14 @@
+Wed Aug  7 16:12:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+	
+	* tests/RTCORBA/Diffserv/Makefile:
+	* tests/RTCORBA/Diffserv/README:	
+	* tests/RTCORBA/Diffserv/client.cpp:
+ 	* tests/RTCORBA/Diffserv/server.cpp: 	
+	* tests/RTCORBA/Diffserv/test.idl: 		
+	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h: 	
+
+	  Added the Diffserv test to demonstrate the setting of Diffserv Codepoints in the GIOP request and replies.
+
 Wed Aug  7 11:59:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/PSS/Client.dsp: 
