@@ -18,7 +18,7 @@ class node_impl :
   public virtual CORBA::DefaultValueRefCountBase
 {
   
- public:
+public:
 
   node_impl (void);
   
@@ -62,12 +62,14 @@ class vt_graph_impl :
   
   vt_graph_impl (void);
   
-  vt_graph_impl (int num_nodes);
+  vt_graph_impl (int num_nodes
+                 ACE_ENV_ARG_DECL);
   
   virtual CORBA::Long size (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
-  virtual void add_node (const char * name ACE_ENV_ARG_DECL)
+  virtual void add_node (const char * name
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual void print (ACE_ENV_SINGLE_ARG_DECL)
