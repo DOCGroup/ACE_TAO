@@ -1,3 +1,12 @@
+Fri Nov 16 16:41:45 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report):  Moved code
+	  around to eliminate VC++ warning about casting arguments.
+	* orbsvcs/orbsvcs/AV/RTP.cpp (TAO_AV_RTP_Object): Imported
+	  code from AVStreams_i.cpp for calling alloc_srcid() to eliminate
+	  IA64 warning.
+	  Thanks to Rob Ruff for providing these fixes.
+
 Fri Nov 16 13:36:09 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:  Removed deletes from
