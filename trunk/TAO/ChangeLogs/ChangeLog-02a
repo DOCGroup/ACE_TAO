@@ -1,3 +1,16 @@
+Mon Feb 26 00:19:28 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        Time to do some spring cleaning...
+
+        * TAO/examples/Simple/time/client.dsp:
+        * TAO/examples/Simple/time/server.dsp:
+        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * TAO/orbsvcs/Naming_Service/Naming_Service.dsp:
+        * TAO/tao/TAO.dsp:
+
+          Removed Win32 Alpha configurations.  See ACE changelog
+          for more info.
+
 Mon Feb 26 01:47:04 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp:

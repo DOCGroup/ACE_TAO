@@ -2,7 +2,6 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (ALPHA) Static Library" 0x0604
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
 CFG=ACE LIB - Win32 Static Debug
@@ -18,8 +17,6 @@ CFG=ACE LIB - Win32 Static Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE LIB - Win32 Alpha Static Release" (based on "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE LIB - Win32 Alpha Static Debug" (based on "Win32 (ALPHA) Static Library")
 !MESSAGE "ACE LIB - Win32 Pharlap ETS Static Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 Pharlap ETS Static Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 Static Release" (based on "Win32 (x86) Static Library")
@@ -30,52 +27,10 @@ CFG=ACE LIB - Win32 Static Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "ACE_stat"
-# PROP BASE Intermediate_Dir "ACE_stat"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Lib\Release"
-# PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "../" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /FD /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "../" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\aces.lib"
-# ADD LIB32 /nologo /out:".\aces.lib"
+RSC=rc.exe
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_stat"
-# PROP BASE Intermediate_Dir "ACE_stat"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Lib\Debug"
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP nologo Gt0 W3 GX Zi Od Gy I "../" D "_DEBUG" D "WIN32" D "_WINDOWS" D ACE_HAS_DLL=0 D "ACE_NO_INLINE" FD c
-# ADD CPP nologo Gt0 W3 GX Zi Od Gy I "../" D "_DEBUG" D "WIN32" D "_WINDOWS" D ACE_HAS_DLL=0 FD MTd c
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\acesd.lib"
-# ADD LIB32 /nologo /out:".\acesd.lib"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -87,12 +42,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-CPP=cl.exe
 # ADD BASE CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MT /W3 /GX /O1 /I "../" /I "../PACE" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
-RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -114,12 +67,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-CPP=cl.exe
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
-RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -141,11 +92,9 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /I "../PACE" /D "_WINDOWS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
-RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -167,11 +116,9 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_WINDOWS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
-RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -185,8 +132,6 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "ACE LIB - Win32 Alpha Static Release"
-# Name "ACE LIB - Win32 Alpha Static Debug"
 # Name "ACE LIB - Win32 Pharlap ETS Static Release"
 # Name "ACE LIB - Win32 Pharlap ETS Static Debug"
 # Name "ACE LIB - Win32 Static Release"
@@ -197,686 +142,146 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=.\ACE.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Activation_Queue.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Active_Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Arg_Shifter.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ARGV.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ATM_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ATM_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ATM_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ATM_Params.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ATM_QoS.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ATM_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Base_Thread_Adapter.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Based_Pointer_Repository.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Basic_Stats.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Basic_Types.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Capabilities.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CDR_Base.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CDR_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Configuration.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Containers.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBA_Handler.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBA_Ref.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Date_Time.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dirent.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DLL.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dump.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Service.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Service_Base.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -885,3289 +290,694 @@ SOURCE=.\Dynamic_Service_Base.h
 # Begin Source File
 
 SOURCE=.\Event_Handler.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event_Handler_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Recv.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Recv_Msg.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Send.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Send_Msg.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\File_Lock.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Filecache.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Flag_Manip.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Functor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Get_Opt.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Handle_Ops.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Handle_Set.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\High_Res_Timer.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\INET_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Init_ACE.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IO_Cntl_Msg.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IO_SAP.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOStream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IPC_SAP.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Lib_Find.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Tokens.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Msg.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Msg_Backend.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Msg_Callback.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Msg_IPC.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Record.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Logging_Strategy.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_CODgram.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Dgram.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc_Allocator.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc_Instantiations.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\MEM_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\MEM_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\MEM_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\MEM_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Mem_Map.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\MEM_SAP.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\MEM_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Memory_Pool.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Block.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Method_Request.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Msg_WFMO_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Multiplexor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Name_Proxy.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Name_Request_Reply.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming_Context.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\NT_Service.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Object_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Obstack.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_Dirent.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_Errno.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_Log_Msg_Attributes.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_Memory.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_String.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_Thread_Adapter.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS_TLI.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Pair.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Parse_Node.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\PI_Malloc.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Pipe.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Priority_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Proactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Process.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Process_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Process_Mutex.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Process_Semaphore.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Profile_Timer.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Reactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Read_Buffer.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Registry.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Registry_Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Remote_Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Remote_Tokens.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\RW_Process_Mutex.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sample_History.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sched_Params.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Select_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Select_Reactor_Base.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Config.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Object.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Repository.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Templates.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Types.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Memory.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Memory_MM.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Memory_SV.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Object.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Signal.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_CODgram.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sock_Connect.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Dgram.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Dgram_Bcast.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Dgram_Mcast.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SString.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stats.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Strategies.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Message.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Semaphore_Complex.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Semaphore_Simple.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Shared_Memory.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Svc_Conf_l.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Svc_Conf_y.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Svc_Handler.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch_Options.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\System_Time.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Template_Instantiations.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread_Adapter.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread_Control.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread_Exit.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread_Hook.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time_Request_Reply.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timeprobe.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Hash.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Heap.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_List.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue_Adapters.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Wheel.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Collection.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Invariants.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Request_Reply.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TP_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trace.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TTY_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Typed_SV_Message.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Typed_SV_Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UNIX_Addr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UPIPE_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UPIPE_Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\WFMO_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\WIN32_Asynch_IO.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\WIN32_Proactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\XtReactor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -6335,21 +3145,6 @@ SOURCE=..\Version
 # Begin Source File
 
 SOURCE=.\ace.rc
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target

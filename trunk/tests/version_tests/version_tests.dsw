@@ -159,6 +159,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Config_Test.dsp"=.\Config_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Conn_Test.dsp"=.\Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -196,6 +208,18 @@ Package=<4>
 ###############################################################################
 
 Project: "DLL_Test.dsp"=.\DLL_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DLL_Test_Impl.dsp"=.\DLL_Test_Impl.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -339,6 +363,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Log_Msg_Test.dsp"=.\Log_Msg_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Malloc_Test.dsp"=.\Malloc_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -424,6 +460,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Message_Queue_Test.dsp"=.\Message_Queue_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Message_Queue_Test_Ex.dsp"=.\Message_Queue_Test_Ex.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
