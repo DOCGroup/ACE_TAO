@@ -25,6 +25,7 @@ The -o option makes it easier to run from a script because the ior
 passing is done through the <ior_output_file>.
 
 -d    Debug flag 
+-n    Use the naming service
 
 Using -d turns on debugging messages.  This option is additive, i.e.,
 the more -d options provided, the more debugging you can get.  At the
@@ -41,7 +42,7 @@ Options:
 -d    Debug flag
 -x    Tells the server to shutdown at the end of the test.
 -f    Reads the server ior from the file
--n    number of iterations
+-n    Use the naming service
 -k    IOR or The IOR can also be given in the format like file://[file.ior]
       with the full path
 	
