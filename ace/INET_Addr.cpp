@@ -99,7 +99,14 @@ ACE_INET_Addr::ACE_INET_Addr (void)
   (void) ACE_OS::memset ((void *) &this->inet_addr_,
                          0,
                          sizeof this->inet_addr_);
-  this->set((u_short)0,INADDR_ANY);
+  if (this->get_type() == AF_INET) {
+    this->inet_addr_.in4_.sin_family = AF_INET;
+  }
+#if defined (ACE_HAS_IPV6)
+  else if (this->get_type() == AF_INET6) {
+    this->inet_addr_.in6_.sin6_family = AF_INET6;
+  }
+#endif  /* ACE_HAS_IPV6 */
 }
 
 int
