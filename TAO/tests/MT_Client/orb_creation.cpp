@@ -4,7 +4,7 @@
 #include "ace/Task.h"
 #include "testC.h"
 
-ACE_RCSID(MT_Client, client, "$Id$")
+ACE_RCSID(MT_Client, orb_creation, "$Id$")
 
 const char *ior = "file://test.ior";
 int nthreads = 5;
@@ -52,18 +52,19 @@ class Client : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (Simple_Server_ptr server, int niterations);
+  Client (int niterations,
+          const char* ior);
   // ctor
 
   virtual int svc (void);
   // The thread entry point.
 
 private:
-  Simple_Server_var server_;
-  // The server.
-
   int niterations_;
   // The number of iterations on each client thread.
+
+  const char* ior_;
+  // The IOR that we should use.
 };
 
 int
@@ -72,7 +73,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "");
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -94,7 +95,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Client client (server.in (), niterations);
+      Client client (niterations, ior);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -120,10 +121,10 @@ main (int argc, char *argv[])
 
 // ****************************************************************
 
-Client::Client (Simple_Server_ptr server,
-                int niterations)
-  :  server_ (Simple_Server::_duplicate (server)),
-     niterations_ (niterations)
+Client::Client (int niterations,
+                const char* ior)
+  :  niterations_ (niterations),
+     ior_ (ior)
 {
 }
 
@@ -132,17 +133,33 @@ Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // If we are using a global ORB this is a nop, otherwise it
-      // initializes the ORB resources for this thread.
-      int argc = 0;
-      char* argv[] = { "" };
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       for (int i = 0; i < this->niterations_; ++i)
         {
-          this->server_->test_method (ACE_TRY_ENV);
+          // If we are using a global ORB this is a nop, otherwise it
+          // initializes the ORB resources for this thread.
+          int argc = 0;
+          char* argv[] = { "" };
+          CORBA::ORB_var orb =
+            CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          CORBA::Object_var object =
+            orb->string_to_object (this->ior_, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          Simple_Server_var server =
+            Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (server.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%P|%t) Object reference <%s> is nil\n",
+                                 ior),
+                                1);
+            }
+
+          server->test_method (ACE_TRY_ENV);
           ACE_TRY_CHECK;
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
