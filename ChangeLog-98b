@@ -19,6 +19,17 @@ Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Makefile,examples/Bounded_Packet_Relay/Makefile:
           updated dependencies.
 
+        * ace/OS.[hi],config-fsu-pthread.h,config-aix-4.[12].x.h,
+          config-mit-pthread.h,config-hpux-10.x.h,config-hpux11.h,
+          config-irix6.x-{g++,sgic++}.h,config-mvs.h,config-tandem.h,
+          config-osf1-3.2.h,config-osf1-4.0.h,config-sco-5.0.0-mit-pthread.h,
+          config-irix6.x-common.h:
+          removed ACE_HAS_TID_T and ACE_HAS_PTHREAD_T support.  ACE_hthread_t
+          is now a simple typedef of pthread_t.  It was before, also, but not
+          so simple :-)  Before, it was a typedef of tid_t on platforms
+          that had ACE_HAS_TID_T but not ACE_HAS_PTHREAD_T.  There were
+          no such platforms; so, it was pthread_t on all PTHREADS platforms.
+
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.i (sema_destroy): I believe I've fixed the rats nest of
