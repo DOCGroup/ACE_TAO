@@ -21,6 +21,11 @@ Thu Mar 30 00:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tao/corba.h: Included Smart_PRoxies.h
 	* tao/Smart_proxies.{h,i,cpp}: Contains the TAO_Smart_Proxy_Base
 	  class.
+	* tests/Smart_Proxies/Smart_Proxy_Impl.cpp:
+	* tests/Smart_Proxies/On_Demand/Smart_Proxy_Impl.cpp:
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+	  Added delegation of the real proxy to TAO_Smart_Proxy_Base 
+	  instead of the local proxy base class.
 	* docs/Smart_Proxies.html: Added a paragraph about this addition
 	  to the Smart Proxies in TAO.
 	
