@@ -2,13 +2,14 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
+#include "Protocol.h"
+
+#include "ace/RMCast/Socket.h"
+#include "ace/OS_NS_string.h"
+
 #include <vector>
 #include <iostream>
-#include <cstring> // memcmp
 
-#include <ace/RMCast/Socket.h>
-
-#include "Protocol.h"
 
 using std::cout;
 using std::cerr;
@@ -58,7 +59,7 @@ main (int argc, char* argv[])
       {
         received[msg.sn] = 1;
 
-        if (std::memcmp (expected_msg.payload, msg.payload, payload_size) != 0)
+        if (ACE_OS::memcmp (expected_msg.payload, msg.payload, payload_size) != 0)
         {
           damaged[msg.sn] = 1;
         }
