@@ -111,12 +111,14 @@ ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
     // event).
     int result = 0;
     for (size_t i = 2; i < this->max_handlep1_ && error == 0; i++)
-      if (this->current_handles_[i] == handle)
-	{
-	  result = this->remove_handler_i (i, mask);
-	  if (result == -1)
-	    error = 1;
-	}
+      {
+	if (this->current_handles_[i] == handle)
+	  {
+	    result = this->remove_handler_i (i, mask);
+	    if (result == -1)
+	      error = 1;
+	  }
+      }
   }
   // The guard is released here
 
@@ -152,7 +154,6 @@ ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
   // Make sure that the <handle> is valid
   if (handle == ACE_INVALID_HANDLE)
     handle = event_handler->get_handle ();
-
   if (this->invalid_handle (handle))
     return -1;
   
@@ -178,22 +179,22 @@ ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
       // Wake up all threads in WaitForMultipleObjects so that they can
       // reconsult the handle set
       this->reactorEx_.wakeup_all_threads ();
-      return 0;
     }
   else
     return -1;
+  
+  return 0;
 }
 
 int
-ACE_ReactorEx_Handler_Repository::changes_required (void)
+ACE_ReactorEx_Handler_Repository::changes_required ()
 {
   // Check if handles have be scheduled for additions or removal
-  return this->handles_to_be_added_ > 0 
-    || this->handles_to_be_deleted_ > 0;
+  return (this->handles_to_be_added_ > 0) || (this->handles_to_be_deleted_ > 0);
 }
 
 int
-ACE_ReactorEx_Handler_Repository::make_changes (void)
+ACE_ReactorEx_Handler_Repository::make_changes ()
 {
   // This method must ONLY be called by the
   // <ReactorEx->change_state_thread_>. We therefore assume that there
@@ -210,7 +211,7 @@ ACE_ReactorEx_Handler_Repository::make_changes (void)
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_deletions (void)
+ACE_ReactorEx_Handler_Repository::handle_deletions ()
 {
   // This will help us in keeping track of the last valid index in the
   // handle arrays
@@ -218,7 +219,7 @@ ACE_ReactorEx_Handler_Repository::handle_deletions (void)
 
   // Go through the entire valid array and check for all handles that
   // have been schedule for deletion
-  for (size_t i = last_valid_index; i > 0; i--)
+  for (int i = last_valid_index; i > 0; i--)
     if (this->to_be_deleted_set_[i] == 1)
       {
 	if (i == last_valid_index)
@@ -249,7 +250,7 @@ ACE_ReactorEx_Handler_Repository::handle_deletions (void)
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_additions (void)
+ACE_ReactorEx_Handler_Repository::handle_additions ()
 {
   // Go through the <to_be_added_*> arrays
   for (int i = 0; i < this->handles_to_be_added_; i++)
@@ -387,7 +388,7 @@ ACE_ReactorEx::~ACE_ReactorEx (void)
 }
 
 void
-ACE_ReactorEx::wakeup_all_threads (void)
+ACE_ReactorEx::wakeup_all_threads ()
 {
   this->wakeup_all_threads_.signal ();
 }
@@ -412,6 +413,13 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 			       ACE_Reactor_Mask mask)
 {
   return this->handler_rep_.unbind (eh->get_handle (), mask);
+}
+
+int 
+ACE_ReactorEx::remove_handler (ACE_HANDLE handle,
+			       ACE_Reactor_Mask mask)
+{
+  return this->handler_rep_.unbind (handle, mask);
 }
 
 int
@@ -487,6 +495,7 @@ ACE_ReactorEx::ok_to_wait (ACE_Time_Value *max_wait_time,
 					   TRUE,
 					   timeout,
 					   alertable);
+  
   switch (result)
     {
     case WAIT_TIMEOUT: 
@@ -505,7 +514,7 @@ ACE_ReactorEx::ok_to_wait (ACE_Time_Value *max_wait_time,
 }
 
 int 
-ACE_ReactorEx::update_state (void)
+ACE_ReactorEx::update_state ()
 {
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
@@ -546,15 +555,19 @@ ACE_ReactorEx::update_state (void)
 	  // Reset this flag
 	  this->change_state_thread_ = 0;
 	}
-      else if (this->active_threads_ == 0)
-	// This thread did not get a chance to become the change
-	// thread. If it is the last one out, it will wakeup the
-	// change thread
-	this->waiting_to_change_state_.signal ();
+      else
+	{
+	  if (this->active_threads_ == 0)
+	    // This thread did not get a chance to become the change
+	    // thread. If it is the last one out, it will wakeup the
+	    // change thread
+	    this->waiting_to_change_state_.signal ();
+	}
     }
 
   return 0;
 }
+
 
 int
 ACE_ReactorEx::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
@@ -671,7 +684,7 @@ ACE_ReactorEx::dispatch_handler (int index)
 
 // ************************************************************
 
-ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void) 
+ACE_ReactorEx_Notify::ACE_ReactorEx_Notify () 
 {
 }
 
