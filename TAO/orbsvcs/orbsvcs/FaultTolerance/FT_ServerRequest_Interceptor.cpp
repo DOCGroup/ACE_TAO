@@ -27,14 +27,13 @@ namespace TAO
   FT_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::string_dup ("FT_ServerRequest_Interceptor");
+    return CORBA::string_dup ("TAO_FT_ServerRequest_Interceptor");
   }
 
   void
   FT_ServerRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    delete this;
   }
 
   void
@@ -124,7 +123,7 @@ namespace TAO
       const IOP::ServiceContext &svc
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest))
+                     PortableInterceptor::ForwardRequest))
   {
     TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                             svc.context_data.get_buffer ()
