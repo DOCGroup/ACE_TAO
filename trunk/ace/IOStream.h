@@ -16,7 +16,7 @@
 #define ACE_IOSTREAM_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,6 +35,7 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
+#include "ace/OS.h"
 #include "ace/streams.h"
 
 #if defined (ACE_HAS_STRING_CLASS)

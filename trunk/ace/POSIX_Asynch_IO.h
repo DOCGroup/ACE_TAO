@@ -20,7 +20,7 @@
 #ifndef ACE_POSIX_ASYNCH_IO_H
 #define ACE_POSIX_ASYNCH_IO_H
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -28,6 +28,7 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
+#include "ace/OS.h"
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"

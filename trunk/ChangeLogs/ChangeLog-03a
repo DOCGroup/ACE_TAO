@@ -1,3 +1,60 @@
+Fri Apr  5 11:40:00 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/ATM_Acceptor.h
+	* ace/ATM_Addr.cpp
+	* ace/ATM_Addr.h
+	* ace/ATM_Connector.cpp
+	* ace/ATM_Connector.h
+	* ace/ATM_Params.h
+	* ace/ATM_QoS.h
+	* ace/ATM_Stream.h
+	* ace/Asynch_Acceptor.h
+	* ace/Asynch_IO.h
+	* ace/Asynch_IO_Impl.cpp
+	* ace/Asynch_IO_Impl.h
+	* ace/CE_Screen_Output.cpp
+	* ace/CE_Screen_Output.h
+	* ace/FlReactor.cpp
+	* ace/FlReactor.h
+	* ace/IOStream.h
+	* ace/LSOCK.cpp
+	* ace/LSOCK.h
+	* ace/LSOCK_Acceptor.cpp
+	* ace/LSOCK_Acceptor.h
+	* ace/LSOCK_CODgram.cpp
+	* ace/LSOCK_CODgram.h
+	* ace/LSOCK_Connector.cpp
+	* ace/LSOCK_Connector.h
+	* ace/LSOCK_Dgram.cpp
+	* ace/LSOCK_Dgram.h
+	* ace/LSOCK_Stream.cpp
+	* ace/LSOCK_Stream.h
+	* ace/Local_Tokens.cpp
+	* ace/Local_Tokens.
+	* ace/Msg_WFMO_Reactor.h
+	* ace/POSIX_Asynch_IO.h
+	* ace/POSIX_Proactor.h
+	* ace/Proactor.cpp
+	* ace/Proactor.h
+	* ace/Proactor_Impl.h
+	* ace/QtReactor.h
+	* ace/Reactor.cpp
+	* ace/SUN_Proactor.h
+	* ace/TkReactor.cpp
+	* ace/TkReactor.h
+	* ace/UNIX_Addr.cpp
+	* ace/UNIX_Addr.h
+	* ace/WFMO_Reactor.cpp
+	* ace/WFMO_Reactor.h
+	* ace/WIN32_Asynch_IO.h
+	* ace/WIN32_Proactor.h
+	* ace/XTI_ATM_Mcast.h
+	* ace/XtReactor.cpp
+	* ace/XtReactor.h
+	  Moved all includes inside the platform- or feature-specific
+	  macro guards and added config-all.h to the headers in order
+	  to speed up compiles when the guard isn't defined.
+
 Fri Apr  5 08:51:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Peer/Peer.h:

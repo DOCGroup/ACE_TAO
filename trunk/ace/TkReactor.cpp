@@ -1,11 +1,13 @@
+#include "ace/TkReactor.h"
+
+#if defined (ACE_HAS_TK)
+
+
 #include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/TkReactor.h"
 
 ACE_RCSID(ace, TkReactor, "$Id$")
-
-#if defined (ACE_HAS_TK)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_TkReactor)
 

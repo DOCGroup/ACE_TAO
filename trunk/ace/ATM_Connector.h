@@ -14,15 +14,17 @@
 #define ACE_ATM_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/ATM_Stream.h"
-#include "ace/ATM_Params.h"
-#include "ace/ATM_QoS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ATM)
+
+#include "ace/ATM_Stream.h"
+#include "ace/ATM_Params.h"
+#include "ace/ATM_QoS.h"
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_LINUX_ATM)
 #include "SOCK_Connector.h"

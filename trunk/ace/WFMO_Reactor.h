@@ -16,12 +16,15 @@
 #define ACE_WFMO_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Signal.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_WIN32)
+
+#include "ace/Signal.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Event_Handler.h"
 #include "ace/Synch.h"
@@ -29,7 +32,6 @@
 #include "ace/Message_Queue.h"
 #include "ace/Process_Mutex.h"
 
-#if defined (ACE_WIN32)
 // If we don't have WinSOCK2, we need these defined
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 /*
@@ -67,7 +69,6 @@ int WSAEnumNetworkEvents (SOCKET s,
                           LPWSANETWORKEVENTS lpNetworkEvents);
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
-#endif /* defined (ACE_WIN32) && !define (ACE_HAS_WINCE) */
 
 // Forward decl.
 class ACE_WFMO_Reactor;
@@ -573,10 +574,7 @@ private:
   /// thread up (e.g., when the <notify> method is called).
   ACE_Auto_Event wakeup_one_thread_;
 
-#if defined (ACE_WIN32)
-// because Sun C++ 4.1 can't cope with this declaration:
   ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
-#endif /* ACE_WIN32 */
   // Message queue that keeps track of pending <ACE_Event_Handlers>.
   // This queue must be thread-safe because it can be called by
   // multiple threads of control.
@@ -592,7 +590,6 @@ private:
   int max_notify_iterations_;
 };
 
-#if defined (ACE_WIN32)
 /**
  * @class ACE_WFMO_Reactor
  *
@@ -1315,10 +1312,10 @@ private:
   ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &);
 };
 
-#endif /* ACE_WIN32 */
-
 #if defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_WIN32 */
 #include "ace/post.h"
 #endif /* ACE_WFMO_REACTOR_H */

@@ -10,11 +10,17 @@
 #ifndef ACE_CE_Screen_Output_h
 #define ACE_CE_Screen_Output_h
 
+#include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (ACE_HAS_WINCE)
+
 #include "ace/OS.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
-
-#if defined (ACE_HAS_WINCE)
 
 const ACE_TCHAR endl[] = ACE_LIB_TEXT("\r\n");
 const ACE_TCHAR tab[]  = ACE_LIB_TEXT("\t");

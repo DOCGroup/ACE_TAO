@@ -1,13 +1,13 @@
 // $Id$
 
+#include "ace/XtReactor.h"
+#if defined (ACE_HAS_XT)
+
 #include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/XtReactor.h"
 
 ACE_RCSID(ace, XtReactor, "$Id$")
-
-#if defined (ACE_HAS_XT)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
 

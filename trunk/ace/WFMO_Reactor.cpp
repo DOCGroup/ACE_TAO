@@ -2,6 +2,8 @@
 
 #include "ace/WFMO_Reactor.h"
 
+#if defined (ACE_WIN32)
+
 #include "ace/Handle_Set.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Thread.h"
@@ -11,9 +13,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")
-
-
-#if defined (ACE_WIN32)
 
 #include "ace/Auto_Ptr.h"
 

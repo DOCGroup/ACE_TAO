@@ -16,15 +16,16 @@
 #define ACE_LOCAL_SOCK_DGRAM_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Dgram.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/LSOCK.h"
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+
+#include "ace/SOCK_Dgram.h"
+#include "ace/LSOCK.h"
 
 /**
  * @class ACE_LSOCK_Dgram

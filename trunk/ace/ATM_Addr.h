@@ -12,12 +12,16 @@
 #define ACE_ATM_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
-#include "ace/Addr.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (ACE_HAS_ATM)
+
+#include "ace/ACE.h"
+#include "ace/Addr.h"
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 typedef ATMSAPAddress ATM_Addr;
@@ -175,5 +179,6 @@ private:
 #include "ace/ATM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#endif /* ACE_HAS_ATM */
 #include "ace/post.h"
 #endif /* ACE_ATM_ADDR_H */

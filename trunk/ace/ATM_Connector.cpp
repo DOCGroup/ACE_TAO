@@ -1,12 +1,12 @@
 // ATM_Connector.cpp
 // $Id$
 
-#include "ace/Handle_Set.h"
 #include "ace/ATM_Connector.h"
+#if defined (ACE_HAS_ATM)
+
+#include "ace/Handle_Set.h"
 
 ACE_RCSID(ace, ATM_Connector, "$Id$")
-
-#if defined (ACE_HAS_ATM)
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Connector.i"

@@ -17,13 +17,15 @@
 #define ACE_XTREACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_XT)
+
+#include "ace/Select_Reactor.h"
 
 //#define String XtString
 #include /**/ <X11/Intrinsic.h>
