@@ -26,6 +26,10 @@
 #include "orbsvcs/CosEvent/ConsumerAdmin_i.h"
 #include "orbsvcs/CosEvent/SupplierAdmin_i.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export TAO_CosEC_EventChannel_i :
 public virtual POA_CosEventChannelAdmin::EventChannel,
 public virtual PortableServer::RefCountServantBase
@@ -84,5 +88,9 @@ private:
   // The reference to the SupplierAdmin interface returned after
   // activating the servant in the ORB.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* EVENTCHANNEL_I_H */

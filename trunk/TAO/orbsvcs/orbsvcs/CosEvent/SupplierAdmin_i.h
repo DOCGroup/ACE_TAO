@@ -25,6 +25,10 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosEvent/ProxyPushConsumer_i.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export TAO_CosEC_SupplierAdmin_i :
   public virtual POA_CosEventChannelAdmin::SupplierAdmin,
   public virtual PortableServer::RefCountServantBase
@@ -64,5 +68,9 @@ private:
   // The RtecEventChannelAdmin::SupplierAdmin specified by the user of
   // this class.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* SUPPLIER_ADMIN_I_H */
