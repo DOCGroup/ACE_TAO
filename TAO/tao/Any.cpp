@@ -109,7 +109,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : value_ (0),
     cdr_ (0),
-    any_owns_data_ (0)
+    any_owns_data_ (1)
 {
   if (src.type_ != 0)
     this->type_ = CORBA::TypeCode::_duplicate (src.type_);
@@ -121,10 +121,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   // CDR stream always contains encoded object, if any holds anything at all.
   this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
 
-  // If src owns data, then we borrow it's <value_>.  Notice that we
-  // still don't owns the data.
-  if (src.any_owns_data_)
-    this->value_ = src.value_;
+  // No need to copy src's value_.  We can always get that from cdr.
 }
 
 // assignment operator
