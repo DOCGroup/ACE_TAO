@@ -666,6 +666,9 @@ public:
 
   u_long hash (void) const;
   // Computes and returns hash value.  
+
+  int operator== (const ACE_Recyclable<T> &rhs) const;
+  // Compares two values.
 };
 
 template <class ADDR_T>

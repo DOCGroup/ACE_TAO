@@ -1,3 +1,35 @@
+Fri Aug 07 01:00:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.i (operator==): Added a method to compare a
+ 	  ACE_Hash_Recyclable and a ACE_Recyclable. Also inlined a shit
+ 	  load of small methods.
+
+	* ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
+ 	  connected to the correct address or is busy, we will not use it.
+  	  Therefore we need to set it to zero.
+
+	* ace/Synch: Added template specializations for
+ 	  ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
+ 	  ACE_Read_Guard<ACE_Null_Mutex>.
+
+Thu Aug 06 14:59:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Thread_Manager.cpp: Updated all uses of cancel_thr for the
+ 	  various apply*() methods so that they pass along the
+ 	  async_cancel flag.
+	
+	* ace/Thread_Manager.cpp: Added a new ARG to the ACE_EXECUTE_OP
+ 	  macro.  Believe it or not, this change actually reduced the
+ 	  amount of special-case code because we can now treat kill_thr()
+ 	  just like the other *_thr() methods.  Irfan was amazed ;-).
+
+	* ace/Thread_Manager: Added a new flag called "async_cancel" to
+ 	  all the Thread Manager cancel*() methods.  This flag is disabled
+ 	  by default (hence, there are no changes to the ACE Thread
+ 	  Manager semantics).  If it is enabled, however, it will attempt
+ 	  to perform an asychronous thread cancellation on the
+ 	  corresponding thread id(s).
+
 Thu Aug  6 17:44:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Priority_Task_Test.cpp: Enhanced this test so that it runs
