@@ -15,8 +15,8 @@ ACE_RCSID (IFRService,
 
 ACE_TEMPLATE_SPECIALIZATION
 void
-TAO_IFR_Generic_Utils<TAO_Attribute_i>::set_initializers (
-    const TAO_Attribute_i &,
+TAO_IFR_Generic_Utils<TAO_AttributeDef_i>::set_initializers (
+    const TAO_AttributeDef_i &,
     ACE_Configuration *,
     ACE_Configuration_Section_Key &
   )
@@ -25,8 +25,8 @@ TAO_IFR_Generic_Utils<TAO_Attribute_i>::set_initializers (
 
 ACE_TEMPLATE_SPECIALIZATION
 void
-TAO_IFR_Generic_Utils<TAO_Operation_i>::set_initializers (
-    const TAO_Operation_i &,
+TAO_IFR_Generic_Utils<TAO_OperationDef_i>::set_initializers (
+    const TAO_OperationDef_i &,
     ACE_Configuration *,
     ACE_Configuration_Section_Key &
   )
