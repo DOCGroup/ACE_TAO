@@ -55,7 +55,6 @@
 #define ACE_HAS_SYS_SIGLIST 
 #define ACE_HAS_SYS_FILIO_H 
 #define ACE_HAS_SEMUN 
-#define ACE_PAGE_SIZE 4096
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
