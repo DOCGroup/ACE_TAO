@@ -1,30 +1,36 @@
+Mon Aug 17 10:06:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * netsvcs/lib/Server_Logging_Handler_T.cpp: replaced
+          #include <string.h> with #include "ace/OS.h", so that
+          _REENTRANT gets defined with g++.
+
 Mon Aug 17 00:05:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/ReactorEx/test_removals.cpp (main): Fixed
- 	  signed/unsigned mismatch.
+        * examples/Reactor/ReactorEx/test_removals.cpp (main): Fixed
+          signed/unsigned mismatch.
 
-	* examples/Reactor/ReactorEx/test_talker.cpp (handle_read_stream):
- 	  Fixed incorrect unary minus operator application.
+        * examples/Reactor/ReactorEx/test_talker.cpp (handle_read_stream):
+          Fixed incorrect unary minus operator application.
 
 Sun Aug 16 20:57:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (dlerror): Fixed a typo.  Thanks to Ossama Othman
-	  <othman@astrosun.tn.cornell.edu> for reporting this.
+        * ace/OS.i (dlerror): Fixed a typo.  Thanks to Ossama Othman
+          <othman@astrosun.tn.cornell.edu> for reporting this.
 
 Fri Aug 14 18:58:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Aio_Platform_Test.cpp	:	Changed <sysconf>'s to
-	ACE_OS::sysconf's.
+        * tests/Aio_Platform_Test.cpp   :       Changed <sysconf>'s to
+        ACE_OS::sysconf's.
 
 Fri Aug 14 11:41:23 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (ACE_OS::dlclose): On HP-UX 10.x and 32-bit 11.00, do
-	  not actually call shl_unload if the library's ref count is more than
-	  1.  If shl_unload is called, it unloads the library, regardless of
-	  the reference count.  This has the affect of never unloading a
-	  library that's been loaded more than once, until the OS unloads it
-	  at process run-down.  Better than invalidating references to it,
-	  though.  The wonder of wrappers at work for you...
+        * ace/OS.i (ACE_OS::dlclose): On HP-UX 10.x and 32-bit 11.00, do
+          not actually call shl_unload if the library's ref count is more than
+          1.  If shl_unload is called, it unloads the library, regardless of
+          the reference count.  This has the affect of never unloading a
+          library that's been loaded more than once, until the OS unloads it
+          at process run-down.  Better than invalidating references to it,
+          though.  The wonder of wrappers at work for you...
 
 Fri Aug 14 10:01:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
