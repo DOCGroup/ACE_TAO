@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project: taoexe, portableserver {
+  exename = create_reference
+}

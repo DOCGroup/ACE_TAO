@@ -1,0 +1,58 @@
+Nexus II - A chat application in Java with image support
+--------------------------------------------------------
+
+        Rajeev Bector (rajeev@cs.wustl.edu)
+        Aravind Gopalan (aravind@cs.wustl.edu)
+        Sumedh Mungee (sumedh@cs.wustl.edu)
+
+This is the README file. This distribution contains the NexusII
+server, which is a java application that can be started by a command
+similar to the one contained in the sample "start" shell-script.
+
+It also contains a "start.html" file, which serves as an example on how
+a client applet can be included within a .html file.
+
+A sample use of this, alongwith a simple users manual, can be found at
+http://cumbia.cs.wustl.edu/NexusII/
+
+Compiling (optional, all the class files are already present)
+-------------------------------------------------------------
+
+All the source .java files, alongwith the makefile should be placed in
+the  same directory, and can then be compiled using make. 
+
+The client/server use the following packages:
+
+        awtCommand: This package provides a GUI toolkit for the applet
+        ACE:        This is used both by the client/server for
+                    networking. ACE documentation can be found at:
+                    http://www.cs.wustl.edu/~schmidt/ACE.html
+                
+Running
+-------
+
+See the "start" and "start.html" files for examples on how to run the
+server and client applet, respectively. The "mywebaddress" variable is
+the "temporary" URL of the server, and the "mywebdir" variable is the
+temporary directory in which images are cached by the server. Make
+sure that both these exist and are world-readable. The "mywebdir"
+should be writable to by the server. The "mywebdir" and "mywebaddress"
+variables should thus point to the same location, of which mywebdir
+contains the path, and mywebaddress contains the URL. 
+
+See "start" for an example on how to do this.
+
+If you only want to use an existing running server, all you need to
+know is the server host-name and port number, and you can directly run
+the start.html file via appletviewer.
+
+Notes
+-----
+
+1. You can compile the client and server using the same makefile.
+2. The client applet MUST reside on the same host as the server is running on.
+4. run the server using start script. Change the paramters in the start script,
+   suitable to your configurations. The start script contains further
+   information on this.
+
+

@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server): orbsvcsexe, portablegroup, portableserver {
+  Source_Files {
+    McastHello.cpp
+    server.cpp
+  }
+}
+
+project(*client): orbsvcsexe, portablegroup, portableserver {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

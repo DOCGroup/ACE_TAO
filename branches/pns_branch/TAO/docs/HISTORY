@@ -1,0 +1,44 @@
+@(#)HISTORY	1.1 95/09/13
+
+Mmmmmmmm DD, 1995 -- RELEASE 1.3:
+---------------------------------
+Release 1.3 includes bugfixes, and support for the COM binary interface
+model, both on UNIX and on MS-Windows platforms.  The source tree has
+been considerably restructured, with the goal of enabling addition of
+other components at both the binary and source levels.
+
+
+September 1, 1995 -- RELEASE 1.2:
+---------------------------------
+Release 1.2 includes fixes for problems noted in the recent multivendor
+interoperability testing at Object World, and as reported by other users on
+the Internet.  The most notable of these is that in some cases, when using
+multiple connections to IIOP servers and clients, the connection management
+code previously would get confused about which connection was which.  (One
+consequence of fixing this is that an old test has been removed.)  Also,
+there was no simple way to use Solaris 2.4 threads; see the Makefile for
+details.  A few other minor features were added to facilitate use of this
+code for more than just protocol testing.
+
+
+June 28, 1995 -- RELEASE 1.1:
+-----------------------------
+Release 1.1 includes support for several new platforms.  Particular thanks
+go to the team at APM, which contributed the bulk of the new "autoconf"
+support (substantially enhancing portability), support for DEC Alpha and
+HP 9000 platforms, runtime initialization of the size and alignment table
+used to drive the typecode interpreter, and more; see README.apm for details.
+
+Release 1.1 includes POSIX.1c threading support; on platforms which provide
+POSIX.1c threads, applications will be able to take advantage of them.
+
+Union and indirection support has been added to the TypeCode interpreter,
+and more typecode utility APIs have been implemented.  Various bugfixes and
+cleanup have also been provided.  Unfinished stubs for the COS Naming service
+are included; these rely on C++ exception support.
+
+
+March 21, 1995 -- RELEASE 1.0:
+------------------------------
+The original release ran on a set of UNIX platforms (including Solaris,
+SunOS, Linux, and NEXTSTEP) as well as with 16-bit and 32-bit MS-Windows.
