@@ -892,7 +892,7 @@ TAO_ORB_Core::add_to_collocation_table (void)
 }
 
 TAO_POA *
-TAO_ORB_Core::get_collocated_poa (ACE_INET_Addr &addr)
+TAO_ORB_Core::get_collocated_poa (const ACE_INET_Addr &addr)
 {
   if (this->using_collocation ())
     {

@@ -41,8 +41,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
                           env,
                           0);
   TAO_IIOP_Profile *iiop_profile =
-    ACE_dynamic_cast (TAO_IIOP_Profile *,
-                      profile);
+    ACE_dynamic_cast (TAO_IIOP_Profile *, profile);
 
   if (iiop_profile == 0)
     TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
@@ -78,12 +77,12 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 //  else
 //#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
-  // @@ think about making this a friend class!  FRED
-  const ACE_INET_Addr &oa =
-    ACE_dynamic_cast (const ACE_INET_Addr &,
-                      iiop_profile->object_addr ());
+  const ACE_INET_Addr &oa = iiop_profile->object_addr ();
 
-  if (base_connector_.connect (iiop_profile->hint (), oa) == -1)
+  TAO_Client_Connection_Handler* result;
+  if (this->base_connector_.connect (iiop_profile->hint (),
+                                     result,
+                                     oa) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
@@ -101,7 +100,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
   // the connect call will set the hint () stored in the Profile
   // object.
 
-  return iiop_profile->transport ();
+  return result->transport ();
 }
 
 int

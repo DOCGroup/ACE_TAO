@@ -202,7 +202,7 @@ public:
   int add_to_collocation_table (void);
   // Added this ORB into collocation table.
 
-  TAO_POA *get_collocated_poa (ACE_INET_Addr &addr);
+  TAO_POA *get_collocated_poa (const ACE_INET_Addr &addr);
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 

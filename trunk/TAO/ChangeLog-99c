@@ -1,3 +1,28 @@
+Sat Mar 20 19:10:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_ORB.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Profile.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	  Fixed a nasty concurency problem in the Cached_Connector. The
+	  solution is to separate the path to return the new hint and the
+	  new Svc_Handler from the Cached_Connector (check the ACE
+	  changelog for details).
+	  We store the profile and transport used for an invocation in the 
+	  Invocation object to avoid the same concurrency problems. In
+	  this way if another thread changes the profile_in_use() of the
+	  stub object that we are using we are not affected.
+	  We still need to check that the modifications to the MProfile
+	  and to STUB_Object object are thread-safe.
+
 Sat Mar 20 15:21:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/nestea_i.cpp:

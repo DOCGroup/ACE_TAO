@@ -38,12 +38,12 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   TAO_IIOP_Connector (void);
-  // Constructor. 
+  // Constructor.
   // @@ Do we want to pass in the tag here or should it be statically
   // defined?
 
   int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
-  //  Initialize object and register with reactor. 
+  //  Initialize object and register with reactor.
 
   int close (void);
   // Shutdown Connector bridge and concreate Connector.

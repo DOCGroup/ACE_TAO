@@ -76,12 +76,6 @@ protected:
                                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Sends the request, does not wait for the response.
 
-  TAO_GIOP_ReplyStatusType invoke_i (TAO_Profile *profile,
-                                     TAO_Transport *transport,
-                                     CORBA::Boolean is_roundtrip,
-                                     CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  // This method implements invoke(), using a pre-determined profile and transport.
-
   TAO_GIOP_ReplyStatusType close_connection (void);
   // resets the forwarding profile and behaves like
   // we are fowarded (to the same server)
@@ -138,6 +132,12 @@ protected:
 
   TAO_ORB_Core* orb_core_;
   // The orb_core context where we make this invocation.
+
+  TAO_Transport *transport_;
+  // This invocation is using this transport, may change...
+
+  TAO_Profile *profile_;
+  // This invocation is using this transport, may change...
 };
 
 class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation

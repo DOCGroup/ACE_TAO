@@ -316,16 +316,6 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 
 }
 
-TAO_Transport *
-TAO_IIOP_Profile::transport (void)
-{
-  // do I need to do a dynamic cast here?
-  if (hint_)
-    return hint_->transport ();
-  else
-    return 0;
-}
-
 // return codes:
 // -1 -> error
 //  0 -> can't understand this version
@@ -563,21 +553,6 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
   return hashval % max;
 }
 
-ACE_Addr &
-TAO_IIOP_Profile::object_addr (const ACE_Addr *addr)
-{
-  const ACE_INET_Addr *inet_addr =
-    ACE_dynamic_cast (const ACE_INET_Addr *,
-                      addr);
-
-  if (inet_addr != 0)
-    this->object_addr_ = *inet_addr;
-  else if (this->host_)
-    this->object_addr_.set (this->port_,
-                            this->host_);
-  return this->object_addr_;
-}
-
 char *
 TAO_IIOP_Profile::addr_to_string(void)
 {
@@ -747,7 +722,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   // do we write the TAG here? That's generic code and should be
   // handled by the object reference writer (IMHO).
   stream.write_ulong (TAO_IOP_TAG_INTERNET_IOP);
- 
+
   // UNSIGNED LONG, number of succeeding bytes in the
   // encapsulation.  We don't actually need to make the
   // encapsulation, as nothing needs stronger alignment than
