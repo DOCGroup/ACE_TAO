@@ -1,6 +1,10 @@
 Sat Oct  4 20:08:57 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* tao/tao_internals.h (TAO_Internal): Added ACE_Svc_Export.
+	* tao/TAO.{dsp,dsw}: Added tao_internals.cpp into project file
+	  list. 
+
+	* tao/tao_internals.h (TAO_Internal): Added ACE_Svc_Export and
+	  $Id$ tag.
 
 	* tao/tao_internals.i (open_services): Added default return value
 	  0. 
