@@ -52,7 +52,7 @@ Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
 //         ACE_ERROR_RETURN ((LM_ERROR,
 //                            "(%p|%t) Audio_Control_i::init_audio () failed\n"),
 //                           CORBA::B_FALSE);
-        cerr << "init_audio failed" << __LINE__;
+        cerr << "init_audio failed in line " << __LINE__ << endl;
         return CORBA::B_FALSE;
 
       }

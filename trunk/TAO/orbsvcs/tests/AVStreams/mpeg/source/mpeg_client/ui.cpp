@@ -775,7 +775,7 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
   }
   if (cmd == CmdDONE || cmd == CmdFAIL)
   {
-    cmdBusy --;
+    cmdBusy = 0;
     if (shared->cmd == CmdINIT)
     {
       if (cmd == CmdDONE)

@@ -174,6 +174,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
       switch (cmd)
         {
         case CmdINIT:
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
           this->init_av ();
           // automatic experiment code zapped :-)
           fp = NULL;
@@ -503,7 +504,7 @@ Command_Handler::init_audio_channel (char *phostname, char *audiofile)
 int
 Command_Handler::init_video_channel (char *phostname, char *videofile)
 {  
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
   int dataSocket = -1;
 
   //  if (ComOpenConnPair(phostname, &videoSocket,
@@ -519,7 +520,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
 
   /* Initialize with VS */
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+    //    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
     Video_Control::INITvideoPara_var  para (new
                                             Video_Control::INITvideoPara);
     Video_Control::INITvideoReply *reply_ptr = 0;
@@ -633,7 +634,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
         videoSocket = -1;
         return -1;
       }
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+    //    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
   
     /* create VB, and put INIT frame to VB*/
     {
@@ -656,7 +657,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
           exit(1);
           break;
         case 0:
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+          //          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
           if (realTimeFlag) {
             SetRTpriority("VB", -1);
           }
@@ -697,18 +698,20 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
               exit(1);
             }
             while (msgo + msgs < pkts) {
-              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
-              //              cerr << "expecting a packet of size " << sizeof (*msg)
-              //                   << endl;
+              //              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+              //              cerr << "expecting a packet of size " << sizeof (*msg)                   << endl;
+
               VideoRead(buf, sizeof(*msg));
               //~~ we need to read the first frame from the 
               //  data socket instead of control socket.
               //              SocketRecv(dataSocket, buf, size);
+              //              ACE_DEBUG ((LM_DEBUG,"packetsn = %d,msgsn = %d\n",
+              //                          msg->packetsn,msg->msgsn));
               pkts = ntohl(msg->packetSize);
               msgo = ntohl(msg->msgOffset);
               msgs = ntohl(msg->msgSize);
               if (shared->videoMaxPktSize >= 0) {  /* non-discard mode */
-                ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+                //                ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
                 write_bytes(sp[0], buf, sizeof(*msg));
                 bytes = msgs;
                 while (bytes > 0) {
@@ -719,8 +722,8 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
                 }
               }
               else {
-                //                cerr << "expecting a packet of size " << msgs
-                //                     << endl;
+                //                cerr << "expecting a packet of size " << msgs                     << endl;
+
                 VideoRead(buf + sizeof(*msg), msgs);
                 bytes = sizeof(*msg) + msgs;
                 while ((res = write(sp[0], buf, bytes)) == -1) {
@@ -992,11 +995,6 @@ int
 Command_Handler::play (int auto_exp,
                        CORBA::Environment& env)
 {
-  /*
-  ::play (auto_exp);
-  return 0;
-  */
-
   CORBA::Long vts;
   CORBA::Long ats;
   CORBA::Boolean result;
@@ -1028,10 +1026,16 @@ Command_Handler::play (int auto_exp,
   if (shared->nextFrame < 0)
     shared->nextFrame = 0;
   else if (shared->nextFrame >= shared->totalFrames)
-    shared->nextFrame = shared->totalFrames - 1;
+    {
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) nextframe is > totalframes\n"));
+      shared->nextFrame = shared->totalFrames - 1;
+    }
 
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) nextsample=%d,totalsamples=%d",
+  //          shared->nextSample,shared->totalSamples));
   if (audioSocket >= 0 && shared->nextSample < shared->totalSamples && rtplay)
     {
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) %s,%d\n",__FILE__,__LINE__));
       Audio_Control::PLAYPara_var para (new Audio_Control::PLAYPara);
       if (cmdstarted == 0)
         {
@@ -1065,10 +1069,12 @@ Command_Handler::play (int auto_exp,
       startTime = get_usec ();
       // CORBA call.
 
+      cerr << "Calling audio_control_->play ()" << endl;
       result =this->audio_control_->play (para,
                                           ats,
                                           env);
 
+      cerr << "audio_control_ result is " << (int) result << endl;
       if (result == CORBA::B_FALSE)
         return -1;
       TAO_CHECK_ENV_RETURN (env,-1);
@@ -1077,8 +1083,11 @@ Command_Handler::play (int auto_exp,
       //      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
     }
 
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) nextFrame=%d,totalFrames=%d",
+  //          shared->nextFrame,shared->totalFrames));
   if (videoSocket >= 0 && shared->nextFrame < shared->totalFrames)
     {
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) %s,%d\n",__FILE__,__LINE__));
       Video_Control::PLAYpara_var para (new Video_Control::PLAYpara);
         
       if (cmdstarted == 0)
@@ -1151,7 +1160,7 @@ Command_Handler::play (int auto_exp,
       if (result == CORBA::B_FALSE)
         return -1;
       TAO_CHECK_ENV_RETURN (env,-1);
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
       if (shared->config.qosEffective) {
         /*
           fprintf (stderr, "CTR start FeedBack with init frameRateLimit %lf\n",
@@ -1212,6 +1221,8 @@ Command_Handler::position_action (int operation_tag)
   int val;
   unsigned char tmp = CmdDONE;
   CmdRead ((char*)&val, 4);
+
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) position_action called\n"));
   if (shared->live) {
     beep();
   }
@@ -1255,8 +1266,10 @@ Command_Handler::position_action (int operation_tag)
       }
       if (operation_tag && audioSocket >= 0) /* needs to adjust audio position */
       {
+
         shared->nextSample = (int)((double)shared->audioPara.samplesPerSecond *
                              ((double)shared->nextFrame / shared->pictureRate));
+        //        ACE_DEBUG ((LM_DEBUG,"shared->nextsample = %d\n",shared->nextSample));
       }
     }
     else if (audioSocket >= 0)
@@ -1347,9 +1360,9 @@ Command_Handler::speed (void)
               result = this->video_control_->speed (para.in (),
                                                     TAO_TRY_ENV);
               TAO_CHECK_ENV;
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) CORBA call returned %d\n",
-                          result));
+              //              ACE_DEBUG ((LM_DEBUG,
+              //                          "(%P|%t) CORBA call returned %d\n",
+              //                          result));
               if (result == (CORBA::B_FALSE))
                 return -1;
               if (fbstate) {
@@ -1408,6 +1421,7 @@ Command_Handler::stop (void)
 	    shared->pictureRate * displayedFrames / shared->nextFrame);
   }
   unsigned char tmp = CmdDONE;
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler::Stop cmdone sent\n"));
   CmdWrite(&tmp, 1);
 
   return 0;
@@ -1422,7 +1436,7 @@ Command_Handler::stop_playing (void)
     {
       if (precmd == CmdFF || precmd == CmdFB || precmd == CmdPLAY)
         {
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+          //          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
           unsigned char tmp = CmdSTOP;
           NewCmd(CmdSTOP);
     
@@ -1431,19 +1445,19 @@ Command_Handler::stop_playing (void)
               && precmd == CmdPLAY
               && rtplay)
             {
-              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+              //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
               // CORBA call
               CORBA::Boolean result =
                 this->audio_control_->stop (shared->cmdsn,
                                             TAO_TRY_ENV);
-              cerr << "audio_control_->stop result is " << result << endl;
+              //              cerr << "audio_control_->stop result is " << result << endl;
               if (result == (CORBA::B_FALSE))
                   return -1;
               TAO_CHECK_ENV;
             }
           if (CORBA::is_nil (this->video_control_.in ()) == CORBA::B_FALSE)
             {
-              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+              //              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
               // CORBA call
               CORBA::Boolean result =
                 this->video_control_->stop (shared->cmdsn,
@@ -1452,7 +1466,7 @@ Command_Handler::stop_playing (void)
                 return -1;
               TAO_CHECK_ENV;
             }
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+          //          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
           
           /* stop timer and sleep for a while */
           //          cerr << "stopping timer" << endl;
@@ -1516,9 +1530,9 @@ Command_Handler::connect_to_video_server (char *address,
   int ack;
   this->video_stream_.recv_n (&ack, sizeof (ack));
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) got ack :%d\n", 
-              ack));
+  //  ACE_DEBUG ((LM_DEBUG, 
+  //              "(%P|%t) got ack :%d\n", 
+  //              ack));
   
   // initialize the command handler , ORB
   if (this->resolve_video_reference () == -1)
@@ -1529,6 +1543,7 @@ Command_Handler::connect_to_video_server (char *address,
   CORBA::UShort server_port;
   ACE_INET_Addr local_addr;
   CORBA::String client_address_string;
+  
   TAO_TRY
     {
       ACE_NEW_RETURN (client_address_string,
@@ -1537,6 +1552,23 @@ Command_Handler::connect_to_video_server (char *address,
       // Get the local UDP address
       if (this->video_dgram_.open (ACE_Addr::sap_any) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram open failed %p"),-1);
+
+      // set the socket buffer sizes to 64k.
+      int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+      int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+
+      if (this->video_dgram_.set_option (SOL_SOCKET,
+                                         SO_SNDBUF,
+                                         (void *) &sndbufsize,
+                                         sizeof (sndbufsize)) == -1
+          && errno != ENOTSUP)
+        return -1;
+      else if (this->video_dgram_.set_option (SOL_SOCKET,
+                                              SO_RCVBUF,
+                                              (void *) &rcvbufsize,
+                                              sizeof (rcvbufsize)) == -1
+               && errno != ENOTSUP)
+        return -1;
 
       if (this->video_dgram_.get_local_addr (local_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),-1);
@@ -1576,9 +1608,9 @@ Command_Handler::connect_to_video_server (char *address,
   // set the pointers to the correct values
   *ctr_fd = *data_fd = this->video_dgram_.get_handle ();
   // set both the control and data socket the same UDP socket.
-  ACE_DEBUG ((LM_DEBUG,
-              "Control and data fd = %d\n",
-              *ctr_fd));
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "Control and data fd = %d\n",
+  //              *ctr_fd));
   return 0;
 }
 
@@ -1611,9 +1643,9 @@ Command_Handler::connect_to_audio_server (char *address,
   int ack;
   this->audio_stream_.recv_n (&ack, sizeof (ack));
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) got ack :%d\n", 
-              ack));
+  //  ACE_DEBUG ((LM_DEBUG, 
+  //          "(%P|%t) got ack :%d\n", 
+  //          ack));
   
   // initialize the command handler , ORB
   if (this->resolve_audio_reference () == -1)
@@ -1641,9 +1673,9 @@ Command_Handler::connect_to_audio_server (char *address,
                  local_addr.get_host_name (),
                  local_addr.get_port_number ());
       
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Client string is %s\n",
-                  client_address_string));
+      //      ACE_DEBUG ((LM_DEBUG,
+      //          "(%P|%t) Client string is %s\n",
+      //          client_address_string));
       
       server_port = this->audio_control_->set_peer (client_address_string,
                                                     TAO_TRY_ENV);
@@ -1671,10 +1703,83 @@ Command_Handler::connect_to_audio_server (char *address,
   // set the pointers to the correct values
   *ctr_fd = *data_fd = this->audio_dgram_.get_handle ();
   // set both the control and data socket the same UDP socket.
-  ACE_DEBUG ((LM_DEBUG,
-              "Control and data fd = %d\n",
-              *ctr_fd));
+  //  ACE_DEBUG ((LM_DEBUG,
+  //          "Control and data fd = %d\n",
+  //          *ctr_fd));
   return 0;
+}
+
+void
+Client_Sig_Handler::PlayAudioOnly(void)
+{
+  int maxSize;
+  int size, csize;  /* all in samples */
+  unsigned int AFtime;
+  
+  if (audioFirst)
+  {
+    audioFirst = 0;
+    nextAFtime = GetAudioTime() + audioForward;
+  }
+  else
+    if ((int)(nextAFtime - GetAudioTime()) >= bufferedSamples)
+      return;
+  
+  if (timer_on >4)
+  {
+    // ~~we may need to uncomment this ??
+    this->stop_timer ();
+
+    // stop both the audio and video servers
+    this->command_handler_->stop ();
+    /* tries to rewind and play again */
+    if (shared->loopBack)
+    {
+      /*
+      fprintf(stderr, "CTR: trying loopBack().\n");
+      */
+      loopBack();
+    }
+ 
+    return;
+  }
+  if (nextASSample >= shared->totalSamples)
+  {
+    timer_on ++;
+    return;
+  }
+  if (shared->samplesPerSecond >= shared->audioPara.samplesPerSecond)
+    maxSize = (AudioBufSize/shared->audioPara.bytesPerSample);
+  else
+    maxSize = ((AudioBufSize/shared->audioPara.bytesPerSample) *
+               shared->samplesPerSecond) /
+              shared->audioPara.samplesPerSecond;
+  for (;;)
+  {
+    size = ABgetSamples(rawBuf, maxSize);
+    csize = AudioConvert(size);
+    AFtime = PlayAudioSamples(nextAFtime, convBuf, csize);
+    nextASSample += size;
+    shared->nextSample += size;
+    nextAFtime += csize;
+    if ((int)(nextAFtime - AFtime) < 0)
+      nextAFtime = AFtime;
+    if (nextASSample >= shared->totalSamples)
+    {
+      timer_on ++;
+      break;
+    }
+    /*
+    Fprintf(stderr, "CTR: nextAFtime:%d, AFtime:%d, bufferedSamples:%d\n",
+            nextAFtime, AFtime, bufferedSamples);
+            */
+    if ((int)(nextAFtime - AFtime) >= bufferedSamples)
+      break;
+  }
+  {
+    unsigned char tmp = CmdVPaudioPosition;
+    CmdWrite(&tmp, 1);
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -1768,23 +1873,23 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   int status;
   pid_t pid;
-  //  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
 
   switch (signum)
     {
     case SIGALRM:
       // Handle the timeout
-      ::TimerHandler (signum);
+      this->TimerHandler (signum);
       // %% ??!!!
       break;
     case SIGUSR1:
-      usr1_handler (signum);
+      ::usr1_handler (signum);
       break;
     case SIGUSR2:
-      default_usr2_handler (signum);
+      ::default_usr2_handler (signum);
       break;
     case SIGCHLD:
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
+      //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
       pid = ACE_OS::wait (&status);
       // if (pid == UIpid)
 //         {
@@ -1806,6 +1911,553 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
                   signum));
       return 0;
     }
-  TimerProcessing ();
+  this->TimerProcessing ();
   return 0;
+}
+
+void
+Client_Sig_Handler::TimerHandler(int sig)
+{
+  int currentUPF = shared->currentUPF;
+  /*
+  Fprintf(stderr, "CTR in TimerHandler.\n");
+  */
+  if (videoSocket >= 0 && shared->cmd == CmdPLAY && currentUPF != timerUPF)
+  {
+    struct itimerval val;
+    {
+      val.it_interval.tv_sec =  val.it_value.tv_sec = currentUPF / 1000000;
+      val.it_interval.tv_usec = val.it_value.tv_usec = currentUPF % 1000000;
+      setitimer(ITIMER_REAL, &val, NULL);
+      /*
+      fprintf(stderr, "CTR: timer speed changed to %d upf.\n", shared->currentUPF);
+      */
+    }
+    timerUPF = currentUPF;
+#ifdef STAT
+    if (shared->collectStat && speedPtr < SPEEDHIST_SIZE)
+    {
+      speedHistory[speedPtr].frameId = shared->nextFrame;
+      speedHistory[speedPtr].usecPerFrame = timerUPF;
+      speedHistory[speedPtr].frameRateLimit = shared->frameRateLimit;
+      speedHistory[speedPtr].frames = shared->sendPatternGops * shared->patternSize;
+      speedHistory[speedPtr].framesDropped = shared->framesDropped;
+    }
+    speedPtr ++;
+#endif
+  }
+  /*
+  fprintf(stderr, "+\n");
+  */
+  if (!timerCount) {
+    int addedVSwat;
+    if (shared->cmd == CmdPLAY) {
+      addedVSwat = shared->usecPerFrame * (shared->VBheadFrame - shared->nextFrame);
+    }
+    else if (shared->cmd == CmdFF) {
+      addedVSwat = shared->usecPerFrame * (shared->VBheadFrame - shared->nextGroup);
+    }
+    else { /* shared->cmd == CmdFB */
+      addedVSwat = shared->usecPerFrame * (shared->nextGroup - shared->VBheadFrame);
+    }
+    shared->VStimeAdvance += addedVSwat;
+  }
+  timerCount += timer_signals_skip + 1;
+  timer_signals_skip = 0;
+  
+  if (shared->live ) {
+    if (audioSocket <= 0) {  /* video only */
+      unsigned t = shared->VBheadFrame - startVSA;
+      if (timerCount < t) {
+        /*
+        Fprintf(stderr, "CTR: (av) timerCount %d, t %d\n", timerCount, t);
+        */
+        timerCount = t;
+      }
+    }
+  }
+  if (audioSocket > 0)
+    {
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Adjusting audio nextsample value\n"));
+      double frames_per_group =
+        (double)shared->totalFrames/shared->totalGroups;
+      long nextframe = shared->nextGroup * frames_per_group;
+      shared->nextSample = (int)((double)shared->audioPara.samplesPerSecond *
+                                 ((double)nextframe / shared->pictureRate));
+      
+    /* audio involved,  TimerProcessing() will adjust the rate automatically */
+    }
+}
+
+void
+Client_Sig_Handler::stop_timer(void)
+{
+  struct itimerval val;
+  
+  if (!timer_on)
+    return;
+  
+  timer_on = 0;
+ 
+  //  setsignal(SIGALRM, SIG_IGN);
+  
+  val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
+  val.it_interval.tv_usec = val.it_value.tv_usec = 0;
+  setitimer(ITIMER_REAL, &val, NULL);
+  
+  fprintf(stderr, "CTR: timer stopped.\n");
+  
+  /*
+  usleep(200000);
+  */
+}
+
+void
+Client_Sig_Handler::DisplayPicture(void)
+{
+  int toDisplay = 1;
+  int count = timerCount;
+  
+  if ((shared->cmd != CmdPLAY &&
+       shared->cmd != CmdFF &&
+       shared->cmd != CmdFB) ||
+      lastCount == count)
+    return;
+  if (timer_on >4)   /* 4 is a magic number */
+    {
+      this->stop_timer();
+      
+      // stop both the audio and video.
+      this->command_handler_->stop ();
+      
+      /* tries to rewind and play again */
+      if (shared->cmd == CmdPLAY && shared->loopBack)
+        loopBack();
+      
+      return;
+    }
+  /*
+    Fprintf(stderr, "CTR in diplayPicture().\n");
+  */
+  {
+    int i, j;
+    FrameBlock *buf, *next;
+#if 0
+    if (shared->cmd == CmdPLAY && rtplay &&
+        (i = shared->nextFrame - shared->firstGopFrames) > 0) {
+      j = (i / shared->patternSize) % shared->sendPatternGops;
+      i %= shared->patternSize;
+      if (shared->pattern[i] != 'B') {
+        while (i > 0) {
+          if (shared->pattern[--i] != 'B') break;
+        }
+      }
+      toDisplay = (shared->sendPattern + j * shared->patternSize)[i];
+    }
+    else if (shared->cmd != CmdPLAY) {
+      if (last_disp_fid != shared->nextGroup) toDisplay = 1;
+      else toDisplay = 0;
+    }
+    if (toDisplay)
+#endif
+    {
+      if (shared->cmd == CmdPLAY && !rtplay) {  /* if play with best effort */
+        while (VDcheckMsg() <= 0)  /* keep sleeping for 10 millisec until a decoded
+                                      frame show up in VD buffer */
+          usleep(10000);
+      }
+#ifdef STAT
+      if (shared->collectStat)
+      {
+        shared->stat.VBfillLevel[shared->nextFrame] =
+            shared->VBheadFrame - shared->nextFrame;
+        i = VDcheckMsg();
+        if (i < 0) i = 0;
+        else if (i >= MAX_VDQUEUE_SIZE) i = MAX_VDQUEUE_SIZE - 1;
+        shared->stat.VDqueue[i] ++;
+      }
+#endif
+      toDisplay = 0;
+      for (;;)
+      {
+        buf = VDpeekMsg();
+ 
+        if (buf == NULL) {
+          goto loop_end;
+        }
+ 
+        switch (shared->cmd)
+        {
+          int position;
+        case CmdPLAY:
+          position = shared->nextFrame;
+          /*
+          Fprintf(stderr, "CTR PLAY: buf->display %d, position %d\n",
+                  buf->display, position);
+          */
+          if (buf->display == position)
+          {  /* display it */
+            buf = VDgetMsg();
+            shared->nextGroup = buf->gop + 1;
+#ifdef STAT
+            shared->stat.CTRdispOnTime ++;
+#endif
+            goto display_picture;
+          }
+          else if (buf->display > position)
+          {  /* too early, wait for future display */
+            goto loop_end;
+          }
+          else  /* this picture too late */
+          {
+            // this line gets the buffer or dequeues from the shared memory queue
+            buf = VDgetMsg();
+            if (((next = VDpeekMsg()) == NULL || next->display > position) &&
+                buf->display > last_disp_fid) {
+#ifdef STAT
+              shared->stat.CTRdispLate ++;
+#endif
+              /* buf is the last one, or next too to early, display it anyway */
+              goto display_picture;
+            }
+            else   /* next not too early, discard buf */
+            {
+#ifdef STAT
+              if (buf->display < last_disp_fid)
+                shared->stat.CTRdropOutOrder ++;
+              else
+                shared->stat.CTRdropLate ++;
+#endif
+              /*
+              Fprintf(stderr, "CTR drops frame display=%d, shared->nextFrame=%d\n",
+                      buf->display, shared->nextFrame);
+              */
+              VDreclaimMsg(buf);
+              continue;
+            }
+          }
+          break;
+        case CmdFF:
+          position = shared->nextGroup;
+          if (buf->gop == position)
+          {  /* display it */
+            buf = VDgetMsg();
+            shared->nextFrame = buf->display;
+            goto display_picture;
+          }
+          else if (buf->gop > position)
+          {  /* hold it for future display */
+            goto loop_end;
+          }
+          else   /* discard late picture */
+          {
+            buf = VDgetMsg();
+            if ((next = VDpeekMsg()) == NULL || next->gop > position)
+              /* buf is the last one, or next too to early, display it anyway */
+              goto display_picture;
+            else   /* next not too early, discard buf */
+            {
+              VDreclaimMsg(buf);
+              continue;
+            }
+          }
+          break;
+        case CmdFB:
+          position = shared->nextGroup;
+          if (buf->gop == position)
+          {  /* display it */
+            buf = VDgetMsg();
+            shared->nextFrame = buf->display;
+            goto display_picture;
+          }
+          else if (buf->gop < position)
+          {  /* hold it for future display */
+            goto loop_end;
+          }
+          else   /* discard late picture */
+          {
+            buf = VDgetMsg();
+            if ((next = VDpeekMsg()) == NULL || next->gop < position)
+              /* buf is the last one, or next too to early, display it anyway */
+              goto display_picture;
+            else   /* next not too early, discard buf */
+            {
+              VDreclaimMsg(buf);
+              continue;
+            }
+          }
+          break;
+        default:
+          goto loop_end;
+        }
+      }
+    display_picture:
+      toDisplay = 1;
+      if (shared->cmd == CmdPLAY) last_disp_fid = buf->display;
+      else last_disp_fid = buf->gop;
+#ifdef STAT
+      if (shared->live) displayedFrames ++;
+      if (shared->collectStat)
+        shared->stat.VPframesDisplayed[buf->display >> 3] |= 1 << (buf->display % 8);
+#endif
+      {
+        unsigned char tmp = CmdVPdisplayFrame;
+        CmdWrite(&tmp, 1);
+      }
+      CmdWrite((unsigned char *)&buf, sizeof(char *));
+    loop_end:;
+    }
+  }
+  
+  if (shared->cmd == CmdPLAY)
+  {
+    shared->nextFrame += rtplay ? count - lastCount : 1;
+    if (shared->nextFrame >= shared->totalFrames)
+    {
+      timer_on ++;
+      shared->nextFrame = shared->totalFrames;
+    }
+    
+    /* following is frameRate feedback algorithm */
+    if (fbstate && toDisplay && rtplay) {
+      static Filter *fr = NULL;  /* frame-rate filter */
+      static int start;  /* feedback action time, in microseconds */
+      static int delay;  /* time to delay after each action, and to charge
+                          the filter after action-delay */
+      static int pretime; /* time of previous frame, in microseconds */
+      static int throw_outlier = 0;
+      /* tag to throw away outlier. In case there are outliers, this
+         tag is flipped by the algorithm, so that If there are two
+         consecutive sample deviating very much from the filtered mean
+         value, the second is not considered outlier. This may mean
+         that the frame rate has dropped significantly. */
+      static double vr; /* filtered frame-rate value, in microseconds/frame */
+      double r, nr;
+      int t = get_usec();
+ 
+      switch (fbstate) {
+      case 3:  /* working, monitoring */
+        {
+          int interval = get_duration(pretime, t);
+          if (throw_outlier) {
+            if (interval >> 2 >= vr) {
+              /* at least four times the filtered mean value to be
+                 considered outlier */
+              /* In case an outlier is detected and thrown away, then
+                 the following sample will never be classified as an
+                 outlier, and the current time is recorded */
+              throw_outlier = 0;
+              pretime = t;
+              Fprintf(stderr, "CTR detected a gap %d (vr = %d) us\n",
+                      interval, (int)vr);
+              break;
+            }
+          }
+          else {
+            throw_outlier = 1;
+          }
+          vr = DoFilter(fr, (double)interval);
+        }
+        pretime = t;
+ 
+        r = minupf / vr; /* convert the display fps to percentage of maxfr */
+        
+        nr = 0; /* This variable contains the newly computed server frame rate */
+ 
+        /* let nr oscillate around 1.5 ~ 2.5 */
+        if (min(frate, maxrate) - r >= 3.0 * adjstep) {
+          /* pipeline is considered overloaded if server fps is more than 3 adjsteps
+           higher than display fps */
+          nr = min(frate, maxrate) - adjstep; /* slow down server frame rate
+                                                 one step */
+          if (fb_startup) {  /* startup feedback action: jump set the server fps
+                                to a value close to actually measure display
+                                frame rate */
+            fb_startup = 0;
+            while (nr >= r + 2.5 * adjstep) {
+              nr -= adjstep;
+            }
+          }
+        }
+        else if (frate - r <= 0.5 * adjstep && frate < maxrate) {
+          /* pipeline load is considered too light if the server frame rate
+             is less than 0.5fps higher than display frame rate, while the server
+             fps is no maximum yet. The server fps then is stepped up. */
+          nr = min(frate + adjstep, maxrate);
+        }
+        if (nr > 0) { /* nr = 0 if not feedback action needs to be taken */
+          shared->frameRateLimit = maxfr * nr;
+          compute_sendPattern();
+          /*
+          fprintf(stderr,
+            "CTR adjust frameRate to %lf, vr=%lf minupf=%d, r=%lf, frate=%lf, nr=%lf\n",
+                  shared->frameRateLimit, vr, minupf, r, frate, nr);
+           */
+          frate = nr;  /* remember new server frame rate */
+          shared->qosRecomputes ++;
+          start = t;  /* remember the action time */
+          /* delay for some time before restarts, to let feedback take effect */
+          delay = shared->usecPerFrame * (shared->VBheadFrame - shared->nextFrame) +
+                  shared->playRoundTripDelay;
+          if (delay < 0) delay = shared->usecPerFrame;
+          fbstate = 4;
+        }
+        break;
+      case 4:  /* delay and reset after action*/
+        if (get_duration(start, t) >= delay) {
+          /*
+          fprintf(stderr,
+                  "CTR VB from s2 to s3, vr %lf, frate %lf, maxrate %lf, step %lf\n",
+                  vr, frate, maxrate, adjstep);
+           */
+          fr = ResetFilter(fr, shared->config.filterPara >= 1 ?
+                           shared->config.filterPara : 100);
+          delay = shared->usecPerFrame *
+                  max(shared->sendPatternGops * shared->patternSize,
+                      shared->config.filterPara);
+                  /* charge filter for time */
+          start = pretime = t;
+          throw_outlier = 0;
+          fbstate = 2;
+        }
+        break;
+      case 2:  /* charge the filter */
+        {
+          int interval = get_duration(pretime, t);
+          if (throw_outlier) {
+            if (interval >> 2 >= vr) {  /* at least four times the previous average */
+              throw_outlier = 0;
+              pretime = t;
+              Fprintf(stderr, "CTR detected a gap %d (vr = %d) us\n",
+                      interval, (int)vr);
+              break;
+            }
+          }
+          else {
+            throw_outlier = 1;
+          }
+          vr = DoFilter(fr, (double)interval);
+        }
+        pretime = t;
+        if (get_duration(start, t) >= delay) {
+          /*
+          fprintf(stderr,
+                  "CTR VB from s2 to s3, vr %lf, frate %lf, maxrate %lf, step %lf\n",
+                  vr, frate, maxrate, adjstep);
+           */
+          fbstate = 3;
+        }
+        break;
+      case 1:  /* start or speed change, wait until speed data consistant */
+        if (shared->currentUPF == shared->usecPerFrame) {
+          if (fr == NULL) {
+            fr = NewFilter(FILTER_LOWPASS, shared->config.filterPara >= 1 ?
+                          shared->config.filterPara : 100);
+          }
+          else {
+            fr = ResetFilter(fr, shared->config.filterPara >= 1 ?
+                            shared->config.filterPara : 100);
+          }
+          if (fr == NULL) {
+            perror("CTR failed to allocate space for fr filter");
+            fbstate = 0;
+          }
+          vr = DoFilter(fr, (double)shared->usecPerFrame);
+          delay = shared->usecPerFrame *
+                  shared->sendPatternGops * shared->patternSize;
+                  /* charge filter for some time */
+          pretime = start = t;
+          throw_outlier = 0;
+          fbstate = 2;
+        }
+        break;
+      default:
+        fprintf(stderr, "CTR error: unknown feedback state: %d\n", fbstate);
+        fbstate = 1;
+        break;
+      }
+    }
+    /* end of frame rate control algorithm */
+    
+  }
+  else if (shared->cmd == CmdFF)
+  {
+    shared->nextGroup += count - lastCount;
+    if (shared->nextGroup >= shared->totalGroups)
+    {
+      timer_on ++;
+      shared->nextGroup = shared->totalGroups - 1;
+    }
+  }
+  else
+  {
+    shared->nextGroup -= count - lastCount;
+    if (shared->nextGroup < 0)
+    {
+      timer_on ++;
+      shared->nextGroup = 0;
+    }
+  }
+  lastCount = count;
+}
+
+void 
+Client_Sig_Handler::TimerProcessing (void)
+{
+  //  cerr << "Timerprocessing signal went off\n";
+  if (audioSocket >= 0 && shared->cmd == CmdPLAY)
+  {
+    if (videoSocket < 0)
+      this->PlayAudioOnly ();
+    else if (rtplay)
+    {
+      //  cerr << "TimerProcessing: calling PlayAudio ()\n";
+      int res = PlayAudio();
+      /* and also tries to sync audio and video */
+      if (res)
+      {
+        int jit;
+        res = forward - audioForward;
+        jit = (res>0 ? res : -res);
+        jit = (int)(((double)jit / (double)shared->samplesPerSecond) * 1000000.0);
+        if (res < -audioForward/2) /* needs to speedup the clock */
+        {
+          struct itimerval val;
+          getitimer(ITIMER_REAL, &val);
+          if ((int)val.it_value.tv_usec > jit)
+            val.it_value.tv_usec -= jit;
+          else
+          {
+            timer_signals_skip ++;
+            val.it_value.tv_usec = 2;
+          }
+          setitimer(ITIMER_REAL, &val, NULL);
+        }
+        else if (res > audioForward) /* needs to slow down the clock */
+        {
+          struct itimerval val;
+          /*
+          val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
+          val.it_interval.tv_usec = val.it_value.tv_usec = 0;
+          */
+          getitimer(ITIMER_REAL, &val);
+          val.it_value.tv_usec += (jit % 1000000);
+          val.it_value.tv_sec += (jit / 1000000);
+          setitimer(ITIMER_REAL, &val, NULL);
+        }
+        /*
+        if (res < -audioForward || res > audioForward)
+        */
+        if (res < -16000 || res > 16000)
+        {
+          Fprintf(stderr, "Audio forward jit %d samples\n", res);
+        }
+      }
+    }
+  }
+  if (videoSocket >= 0 &&
+      (shared->cmd == CmdPLAY || shared->cmd == CmdFF || shared->cmd == CmdFB)) {
+    DisplayPicture();
+  }
+  //  cerr << "Timerprocessing signal-handler done\n";
 }

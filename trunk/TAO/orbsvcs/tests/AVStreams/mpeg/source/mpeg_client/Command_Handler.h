@@ -119,6 +119,7 @@ public:
                                int *data_fd,
                                int *max_pkt_size);
 
+
 private:
   ACE_SOCK_Dgram video_dgram_;
   // UDP socket on which to send/recv data
@@ -184,6 +185,17 @@ public:
                              siginfo_t * = 0,
                              ucontext_t* = 0);
   // handles SIGALRM
+
+  void TimerHandler (int signum);
+
+  void stop_timer (void);
+
+  void DisplayPicture (void);
+  // display the picture.
+
+  void TimerProcessing (void);
+
+  void PlayAudioOnly (void);
 
 private:
   ACE_HANDLE handle_;

@@ -342,7 +342,7 @@ Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
   //            "(%P|%t)Video_Control_Waiting_State::play () called \n"));
   VIDEO_SINGLETON::instance ()->init_play (para,
                                            vts);
-  cerr << "vts is " << vts << endl;
+  //  cerr << "vts is " << vts << endl;
   this->vci_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
   return CORBA::B_TRUE;
 }

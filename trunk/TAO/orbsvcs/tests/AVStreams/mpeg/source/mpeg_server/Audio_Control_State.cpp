@@ -62,7 +62,7 @@ Audio_Control_Waiting_State::play (const Audio_Control::PLAYPara & para,
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Control_Waiting_State::play ()\n"));
   this->audio_global_->cmd = CmdPLAY;
   
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) play_audio () called \n"));
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) play_audio () called \n"));
  
   this->audio_global_->nextsample = para.nextSample;
   this->audio_global_->cmdsn = para.sn;
@@ -76,9 +76,9 @@ Audio_Control_Waiting_State::play (const Audio_Control::PLAYPara & para,
   /*
       SFprintf(stderr, "AS got CmdPLAY: sps %d\n", sps);
     */
-  /*
-      fprintf(stderr, "AS: nextSampe=%d for PLAY.\n", para.nextSample);
-    */
+  
+  fprintf(stderr, "AS: nextSample = %d for PLAY.\n", para.nextSample);
+
 
   this->audio_global_->upp = (int)(1000000.0 / ((double)(this->audio_global_->sps) / (double)(this->audio_global_->spp)));
   this->audio_global_->nextTime = get_usec();
@@ -87,6 +87,10 @@ Audio_Control_Waiting_State::play (const Audio_Control::PLAYPara & para,
   if (this->audio_global_->live_source) {
     StartPlayLiveAudio();
   }
+
+  this->audio_global_->hasdata = 1;
+  this->audio_global_->packets = 0;
+
   this->audio_global_->send_audio ();
 
   this->audio_global_->state = Audio_Global::AUDIO_PLAY;
