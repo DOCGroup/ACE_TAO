@@ -15,6 +15,9 @@ AR            = <%ar%>
 <%if(nm)%>
 NM            = <%nm%>
 <%endif%>
+<%if(cputype)%>
+CPUTYPE       = <%cputype%>
+<%endif%>
 <%if(cpu)%>
 CPU           = <%cpu%>
 <%endif%>
@@ -61,7 +64,7 @@ IDL_SRC       =<%foreach(idl_files)%> <%noextension(idl_file)%>C.cpp <%noextensi
 SRC           =<%foreach(source_files)%> <%source_file%><%endfor%>
 OBJS          =<%foreach(source_files)%> <%noextension(source_file)%>.o<%endfor%>
 LDFLAGS       =<%if(libpaths)%><%foreach(libpaths)%> -L<%libpath%><%endfor%><%endif%><%foreach(configurations)%><%if(linkflags)%> <%linkflags%><%endif%><%endfor%>
-LDLIBS        =<%foreach(platforms)%> <%ldlibs%><%endfor%><%if(libs)%><%foreach(libs)%> -l<%lib%><%endfor%><%endif%><%if(defaultlibs)%><%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%><%endif%><%if(lit_libs)%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%endif%>
+LDLIBS        =<%if(libs)%><%foreach(libs)%> -l<%lib%><%endfor%><%endif%><%if(defaultlibs)%><%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%><%endif%><%if(lit_libs)%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%endif%><%foreach(platforms)%> <%ldlibs%><%endfor%>
 LINK.cc       = $(LD) $(LDFLAGS)
 COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS)  -c
 RM            = rm -f
@@ -143,8 +146,12 @@ all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%>
 
 $(SHLIB): $(OBJS)
 	<%foreach(configurations)%><%foreach(platforms)%><%if(dld)%><%dld%> $(LDFLAGS)<%else%>$(LINK.cc)<%endif%><%endfor%><%endfor%> $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
+<%else%>
+INSTARGET = $(LIB)
 
+all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 <%endif%>
+
 <%else%>
 <%if(staticname)%>
 INSTARGET = $(LIB)
