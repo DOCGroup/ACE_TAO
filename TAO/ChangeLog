@@ -1,3 +1,9 @@
+Mon Feb  3 16:14:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_recursive_tc):
+
+          Added comments and cosmetic changes.   
+
 Mon Feb  3 11:30:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_recursive_tc):
