@@ -106,8 +106,8 @@ Collocation_Test::test_narrow (ACE_ENV_SINGLE_ARG_DECL)
   // the lifetime of the factory object can be managed by the framework.
   Smart_Diamond_Top_Factory *factory = 0;
   ACE_NEW_RETURN (factory,
-                                  Smart_Diamond_Top_Factory,
-                                  -1);
+                  Smart_Diamond_Top_Factory,
+                  -1);
 
   Diamond::Top_var top =
     Diamond::Top::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
