@@ -1,3 +1,11 @@
+
+Tue Jun  1 10:16:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Export.h
+
+	  Added this file for Windows to export library.
+
+
 Tue Jun  1 10:12:46 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/RepositoryManager.idl:
@@ -60,6 +68,7 @@ Mon May 31 18:25:30 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * DnC/Config_Handlers/Property_Handler.cpp:
 
           Made some changes to fix some testing errors.
+
 
 Mon May 31 17:18:55 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
