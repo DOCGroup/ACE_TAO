@@ -1,4 +1,6 @@
 #!/bin/sh -f
+# $Id$
+#
 # This is the UNIX version of the one-button ACE tests.
 # Contributed by Michael Rueger <m_rueger@SYSCOMP.DE>
 
@@ -39,6 +41,7 @@ run Basic_Types_Test
 #run TSS_Test                            # uses Task, Mutex, Guard
 
 run Time_Value_Test
+run High_Res_Timer_Test
 run SString_Test
 
 # SYS V IPC not supported
