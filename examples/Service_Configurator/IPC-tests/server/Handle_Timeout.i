@@ -12,11 +12,11 @@ Handle_Timeout::Handle_Timeout (void): count (0)
 }
 
 ACE_INLINE int
-Handle_Timeout::info (char **strp, size_t length) const
+Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, "%s", "# tests timeout facility\n");
+  ACE_OS::sprintf (buf, ACE_TEXT("%s"), ACE_TEXT("# tests timeout facility\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -26,11 +26,11 @@ Handle_Timeout::info (char **strp, size_t length) const
 }
 
 ACE_INLINE int
-Handle_Timeout::init (int argc, char *argv[])
+Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Time_Value delta (10);
   ACE_Time_Value interval (1);
-  ACE_Get_Opt    get_opt (argc, argv, "a:d:i:", 0);
+  ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("a:d:i:"), 0);
   int        arg = 0;
 
   for (int c; (c = get_opt ()) != -1; )

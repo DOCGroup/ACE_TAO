@@ -40,17 +40,17 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor (void)
 }
 
 template <class SVH, PR_AC_1> int
-Handle_Thr_Acceptor<SVH, PR_AC_2>::info (char **strp,
+Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
 					size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr sa;
 
   if (this->acceptor ().get_local_addr (sa) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%d/%s %s", sa.get_port_number (), "tcp",
-	     "# tests threaded remote stream\n");
+  ACE_OS::sprintf (buf, ACE_TEXT("%d/%s %s"), sa.get_port_number (), ACE_TEXT("tcp"),
+       ACE_TEXT("# tests threaded remote stream\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -60,12 +60,12 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::info (char **strp,
 }
 
 template <class SVH, PR_AC_1> int
-Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, char *argv[])
+Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_INET_Addr local_addr (ACE_DEFAULT_THR_PORT);
   int n_threads = ACE_DEFAULT_THREADS;
 
-  ACE_Get_Opt get_opt (argc, argv, "p:t:", 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:t:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -192,7 +192,7 @@ typedef Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR> HANDLE_THR_ACCEPTOR;
 
 // Service object.
 HANDLE_THR_ACCEPTOR remote_thr_stream;
-ACE_Service_Object_Type rts (&remote_thr_stream, "Remote_Thr_Stream");
+ACE_Service_Object_Type rts (&remote_thr_stream, ACE_TEXT("Remote_Thr_Stream"));
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<CLI_STREAM, THR_ACCEPTOR>;

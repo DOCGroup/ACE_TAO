@@ -5,7 +5,7 @@
 ACE_RCSID(server, Handle_Timeout, "$Id$")
 
 #if defined (SunOS4)
-extern "C" 
+extern "C"
 {
   int init (void);
   int fini (void);
@@ -13,14 +13,14 @@ extern "C"
   void __std__Handle_Timeout_C_init_();
 }
 
-int 
+int
 init (void)
 {
   __sti__Handle_Timeout_C_init_();
   return 0;
 }
 
-int 
+int
 fini (void)
 {
   __std__Handle_Timeout_C_init_();
@@ -33,4 +33,4 @@ fini (void)
 #endif /* __ACE_INLINE__ */
 
 Handle_Timeout timer_1;
-ACE_Service_Object_Type t1 (&timer_1, "Timer_1");
+ACE_Service_Object_Type t1 (&timer_1, ACE_TEXT("Timer_1"));

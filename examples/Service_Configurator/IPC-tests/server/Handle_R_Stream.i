@@ -27,19 +27,19 @@ Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
 }
 
 ACE_INLINE int
-Handle_R_Stream::info (char **strp, size_t length) const
+Handle_R_Stream::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr sa;
 
   if (this->get_local_addr (sa) == -1)
     return -1;
 
   ACE_OS::sprintf (buf,
-                   "%d/%s %s",
+                   ACE_TEXT("%d/%s %s"),
                    sa.get_port_number (),
-                   "tcp",
-                   "# tests remote stream\n");
+                   ACE_TEXT("tcp"),
+                   ACE_TEXT("# tests remote stream\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -49,10 +49,10 @@ Handle_R_Stream::info (char **strp, size_t length) const
 }
 
 ACE_INLINE int
-Handle_R_Stream::init (int argc, char *argv[])
+Handle_R_Stream::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_INET_Addr sis (Handle_R_Stream::DEFAULT_PORT);
-  ACE_Get_Opt   get_opt (argc, argv, "p:", 0);
+  ACE_Get_Opt   get_opt (argc, argv, ACE_TEXT("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
