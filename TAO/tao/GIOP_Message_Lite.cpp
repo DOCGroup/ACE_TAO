@@ -356,19 +356,8 @@ TAO_GIOP_Message_Lite::
                            ASYS_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
-      // Handle after the switch
-      break;
     case TAO_GIOP_REPLY:
-      if ((state->cdr >> params.svc_ctx_) == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t) parse_reply, ")
-                        ASYS_TEXT ("extracting context\n")));
-          return -1;
-        }
-      // Rest of the stuff after the switch
-      break;
+      // Handle after the switch
     case TAO_GIOP_FRAGMENT:
       // Never happens: why??
       break;
@@ -385,6 +374,7 @@ TAO_GIOP_Message_Lite::
     }
 
   CORBA::ULong rep_stat = 0;
+
   // and the reply status type.  status can be NO_EXCEPTION,
   // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD
   // CAnnot handle LOCATION_FORWARD_PERM here
@@ -477,108 +467,6 @@ TAO_GIOP_Message_Lite::
   // Write the GIOP Lite header first
   this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
                                output);
-
-  // Write the service context list
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  output << reply.service_context_notowned ();
-#else
-  if (reply.params_ == 0)
-    {
-      output << reply.service_context_notowned ();
-    }
-  else
-    {
-      // If lazy evaluation is enabled then we are going to insert an
-      // extra node at the end of the service context list, just to
-      // force the appropiate padding.
-      // But first we take it out any of them..
-      CORBA::ULong count = 0;
-      IOP::ServiceContextList &svc_ctx =
-        reply.service_context_notowned ();
-      CORBA::ULong l = svc_ctx.length ();
-      CORBA::ULong i;
-      for (i = 0; i != l; ++i)
-        {
-          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
-          count++;
-        }
-
-      // Now increment it to account for the last dummy one...
-      count++;
-
-      // Now marshal the rest of the service context objects
-      output << count;
-      for (i = 0; i != l; ++i)
-        {
-          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
-          output << svc_ctx[i];
-        }
-
-      // @@ Much of this code is GIOP 1.1 specific and should be
-      ptr_arith_t target =
-        reply.params_->_tao_target_alignment ();
-
-      ptr_arith_t current =
-        ptr_arith_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
-
-      CORBA::ULong pad = 0;
-      if (target == 0)
-        {
-          // We want to generate adequate padding to start the request
-          // id on a 8 byte boundary, two cases:
-          // - If the dummy tag starts on a 4 byte boundary and the
-          //   dummy sequence has 0 elements then we have:
-          //   4:tag 8:sequence_length 4:sequence_body 4:request_id
-          //   8:payload
-          // - If the dummy tag starts on an 8 byte boundary, with 4
-          //   elements we get:
-          //   8:tag 4:sequence_length 8:sequence_body 4:request_id
-          //   8:payload
-          if (current != 0 && current <= ACE_CDR::LONG_ALIGN)
-            {
-              pad = 4;
-            }
-        }
-      else if (target != ACE_CDR::LONG_ALIGN)
-        {
-          // The situation reverses, we want to generate adequate
-          // padding to start the request id on a 4 byte boundary, two
-          // cases:
-          // - If the dummy tag starts on a 4 byte boundary and the
-          //   dummy sequence has 4 elements then we have:
-          //   4:tag 8:sequence_length 4:sequence_body 8:request_id
-          //   4:payload
-          // - If the dummy tag starts on an 8 byte boundary, with 0
-          //   elements we get:
-          //   8:tag 4:sequence_length 8:sequence_body 8:request_id
-          //   4:payload
-          if (current > ACE_CDR::LONG_ALIGN)
-            {
-              pad = 4;
-            }
-        }
-      else if (target == ACE_CDR::MAX_ALIGNMENT)
-        {
-          pad = 0;
-        }
-      else
-        {
-          // <target> can only have the values above
-          ACE_THROW_RETURN (CORBA::MARSHAL (),
-                            0);
-        }
-
-      output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
-      output << pad;
-      for (CORBA::ULong j = 0; j != pad; ++j)
-        {
-          output << ACE_OutputCDR::from_octet(0);
-        }
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // Write the request ID
   output.write_ulong (reply.request_id_);

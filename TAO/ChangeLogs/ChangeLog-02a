@@ -1,3 +1,11 @@
+Thu Apr 13 11:56:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp: Removed the reply header in the
+	  Service Context List. This was a waste. We don't send the
+	  Service_Context with the Request header, that is how GIOPlite
+	  has been designed, and it looks like a waste to send that in the
+	  reply header. 
+
 Thu Apr 13 08:58:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
