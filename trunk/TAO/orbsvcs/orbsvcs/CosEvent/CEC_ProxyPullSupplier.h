@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_ProxyPullSupplier.h
@@ -12,6 +13,7 @@
 
 #ifndef TAO_CEC_PROXYPULLSUPPLIER_H
 #define TAO_CEC_PROXYPULLSUPPLIER_H
+
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -21,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Message_Queue.h"
+#include "ace/Condition_Thread_Mutex.h"
 #include "event_export.h"
 
 class TAO_CEC_EventChannel;
@@ -157,4 +160,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_CEC_PROXYPULLSUPPLIER_H */
+
+#endif  /* TAO_CEC_PROXYPULLSUPPLIER_H */

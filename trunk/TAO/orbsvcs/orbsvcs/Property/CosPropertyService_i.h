@@ -1,21 +1,18 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   CosPropertyService_i.h
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CosPropertyService_i.h
+ *
+ *  $Id$
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
 
-#ifndef COSPROPERTYSERVICE_I_H
-#define COSPROPERTYSERVICE_I_H
+#ifndef TAO_COSPROPERTYSERVICE_I_H
+#define TAO_COSPROPERTYSERVICE_I_H
+
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Property/property_export.h"
@@ -27,6 +24,7 @@
 #include "orbsvcs/CosPropertyServiceS.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -613,4 +611,5 @@ private:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /* COSPROPERTYSERVICE_I_H */
+
+#endif  /* TAO_COSPROPERTYSERVICE_I_H */

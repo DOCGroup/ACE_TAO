@@ -17,6 +17,7 @@
 
 #include "Trader.h"
 #include "Offer_Iterators.h"
+#include "ace/Null_Mutex.h"
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
 
