@@ -1,5 +1,12 @@
 Wed Apr 14 13:10:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* ace/config-sunos5.7.h:
+	 	Enabled ACE_HAS_AIO_CALLS for Solaris
+	 	7. ACE_POSIX_AIOCB_PROACTOR works now on this. 
+	* examples/Reactor/Proactor/test_aiocb.cpp: Updated comments.
+	* ace/config-sunos5.6.h: Removed the ACE_AIORETURN/ERROR macros. 
+	* ace/Proactor.cpp (ACE_Proactor): Removed debug print statments.
+	* ace/config-lynxos.h: Removed the ACE_AIORETURN/ERROR macros. 
 	* ace/POSIX_Proactor.cpp:
  	* ace/WIN32_Asynch_IO.h:
 	* ace/WIN32_Asynch_IO.cpp:
