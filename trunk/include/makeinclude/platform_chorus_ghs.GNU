@@ -21,19 +21,18 @@ optimize = 1
 shared_libs =
 static_libs = 1
 
-CC              = $(GHS_DIR)/build -driver ch68
-CXX             = $(CC)
-CFLAGS          = -I$(MVME_INCL)/stdc \
-                  -I$(MVME_INCL)/posix \
-                  -I$(MVME_INCL)/chorus \
-                  -I$(MVME_INCL)/CC
-CCFLAGS         += $(CFLAGS) --no_rtti --multibyte_chars --wchar_t_keyword \
-                   -tnone
-DCFLAGS         += -g
-DLD             = $(CXX)
-LD              = $(CXX)
-LDFLAGS         = --no_auto_instantiation
-OFLAGS          += -O -OM -OL
-AR              = $(GHS_DIR)/ax
-ARFLAGS         = rv
-RANLIB          = /bin/true
+CC      = $(GHS_DIR)/build -driver ch68
+CXX     = $(CC)
+CFLAGS  = -I$(MVME_INCL)/stdc \
+          -I$(MVME_INCL)/posix \
+          -I$(MVME_INCL)/chorus \
+          -I$(MVME_INCL)/CC
+CCFLAGS += $(CFLAGS) --no_rtti --multibyte_chars --wchar_t_keyword -tnone
+DCFLAGS += -g
+DLD     = $(CXX)
+LD      = $(CXX)
+LDFLAGS = --no_auto_instantiation
+OFLAGS  += -O -OM -OL
+AR      = $(GHS_DIR)/gnuch68/bin/ar
+ARFLAGS = rv
+RANLIB  = /bin/true
