@@ -1,3 +1,16 @@
+Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ACE-INSTALL.html: updated DEC CXX 6.0 build/test status.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i
+	  (handle_timeout): convert arg to long if ACE_HAS_64BIT_LONGS.
+
+	* examples/Shared_Malloc/test_malloc.cpp (worker): convert arg to
+	  long if ACE_HAS_64BIT_LONGS.
+
+	* examples/Timer_Queue/Driver.cpp (run_test,parse_commands):
+	  added ACE_NOTREACHED.
+
 Wed Oct 22 05:04:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.25, released Wed Oct 22 05:04:07 1997.
@@ -30,7 +43,7 @@ Tue Oct 21 22:55:36 1997    <irfan@TWOSTEP>
  	  twice (once for FD_READ and once for FD_CLOSE) unless the user
  	  returns -1 from the first callback.
 
-	* ace/Event_Handler: Removed the CLOSE_MASK. 
+	* ace/Event_Handler: Removed the CLOSE_MASK.
 
 	* examples/Logger/simple-server/Logging_Handler.cpp: Minor fixes.
 
