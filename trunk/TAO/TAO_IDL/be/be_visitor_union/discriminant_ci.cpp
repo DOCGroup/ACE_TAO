@@ -117,9 +117,6 @@ be_visitor_union_discriminant_ci::visit_predefined_type (be_predefined_type
 int
 be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
   this->ctx_->alias (node); // save the typedef node for use in code generation
                            // as we visit the base type
 

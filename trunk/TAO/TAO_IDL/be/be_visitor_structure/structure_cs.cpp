@@ -42,12 +42,8 @@ be_visitor_structure_cs::~be_visitor_structure_cs (void)
 // visit the Structure_Cs node and its scope
 int be_visitor_structure_cs::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os; // output stream
-
   if (!node->cli_stub_gen () && !node->imported ())
     {
-      os = this->ctx_->stream ();
-
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
       // based on the command line options. This is still TO-DO

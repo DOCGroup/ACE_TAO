@@ -122,18 +122,10 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 int
 be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -143,7 +135,8 @@ be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+
+  TAO_OutStream *os = this->ctx_->stream ();
   *os << "break;" << be_uidt_nl;
 
   return 0;
@@ -152,18 +145,10 @@ be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -173,7 +158,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
   *os << "CORBA::release (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
 
@@ -183,18 +168,10 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -204,7 +181,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
   *os << "CORBA::release (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
 
@@ -214,18 +191,10 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
 int
 be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -235,16 +204,19 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_ty
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << "CORBA::release (this->u_." << ub->local_name () << "_);" << be_nl;
+      *os << "CORBA::release (this->u_."
+	  << ub->local_name () << "_);" << be_nl;
       *os << "break;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_any:
-      *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
+      *os << "delete this->u_."
+	  << ub->local_name () << "_;" << be_nl;
       *os << "break;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_void:
@@ -258,18 +230,10 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_ty
 int
 be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -279,7 +243,8 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+
+  TAO_OutStream *os = this->ctx_->stream ();
   *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
   *os << "break;" << be_uidt_nl;
 
@@ -289,18 +254,10 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -310,7 +267,8 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+
+  TAO_OutStream *os = this->ctx_->stream ();
   *os << "CORBA::string_free (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
 
@@ -355,9 +313,6 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
 int
 be_visitor_union_branch_public_reset_cs::visit_typedef (be_typedef *node)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
   this->ctx_->alias (node); // save the typedef node for use in code generation
                            // as we visit the base type
 
@@ -379,18 +334,10 @@ be_visitor_union_branch_public_reset_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_public_reset_cs::visit_union (be_union *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -400,7 +347,8 @@ be_visitor_union_branch_public_reset_cs::visit_union (be_union *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+
+  TAO_OutStream *os = this->ctx_->stream ();
   *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
   *os << "break;" << be_uidt_nl;
 

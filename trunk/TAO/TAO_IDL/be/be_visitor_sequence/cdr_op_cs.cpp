@@ -11,8 +11,8 @@
 //    cdr_op_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor for code generation of Sequences for the CDR operators in the client
-//    stubs.
+//    Visitor for code generation of Sequences for the CDR operators
+//    in the client stubs.
 //
 // = AUTHOR
 //    Aniruddha Gokhale
@@ -78,8 +78,11 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       //  set the sub state as generating code for the output operator
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-      *os << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
-          << "const " << node->name () << " &_tao_sequence)" << be_nl
+      *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+	  << "TAO_OutputCDR &strm," << be_nl
+          << "const " << node->name ()
+	  << " &_tao_sequence" << be_uidt_nl
+	  << ")" << be_uidt_nl
           << "{" << be_idt_nl;
 
       // first encode the sequence length
@@ -215,12 +218,10 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
     };
 
   // we get here if the "type" of individual elements of the sequence is a
-  // primitive type. In this case, we treat the sequence as a single dimensional
-  // sequence (even of it was multi-dimensional), and pass the total length of the
-  // sequence as a cross product of the dimensions
-
-  // index
-  unsigned long i;
+  // primitive type. In this case, we treat the sequence as a single
+  // dimensional sequence (even of it was multi-dimensional), and pass
+  // the total length of the sequence as a cross product of the
+  // dimensions
 
   // grab the sequence node
   be_sequence *sequence = this->ctx_->be_node_as_sequence ();
@@ -398,7 +399,6 @@ int
 be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  unsigned long i;
   be_sequence *node = this->ctx_->be_node_as_sequence ();
 
   if (!node)
@@ -429,8 +429,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
     }
   if (expr->ev ()->et == AST_Expression::EV_ulong)
     {
-      *os << "for (CORBA::ULong i = 0; i < "
-          << expr->ev ()->u.ulval << " && _tao_marshal_flag; "
+      *os << "for (CORBA::ULong i = 0; i < _tao_sequence.length ()"
+	  << " && _tao_marshal_flag; "
           << "i++)" << be_idt_nl;
     }
   else

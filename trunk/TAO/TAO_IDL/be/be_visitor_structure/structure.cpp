@@ -81,7 +81,6 @@ be_visitor_structure::visit_field (be_field *node)
                            "Bad context state\n"
                            ), -1);
       }
-      break;
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);

@@ -112,7 +112,6 @@ static long	    iused = 0;
 static void
 add_inheritance(AST_Interface *i)
 {
-  long			oiallocated;
   long			k;
   AST_Interface	      **oiseen;
 
@@ -124,7 +123,6 @@ add_inheritance(AST_Interface *i)
       iallocated = INCREMENT;
       iseen = new AST_Interface *[iallocated];
     } else {
-      oiallocated = iallocated;
       oiseen = iseen;
       iallocated += INCREMENT;
       iseen = new AST_Interface *[iallocated];

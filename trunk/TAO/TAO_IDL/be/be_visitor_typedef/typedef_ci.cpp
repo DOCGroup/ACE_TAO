@@ -43,10 +43,6 @@ be_visitor_typedef_ci::~be_visitor_typedef_ci (void)
 int
 be_visitor_typedef_ci::visit_typedef (be_typedef *node)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-
   // In general, we may have a chain of typedefs. i.e.,
   // typedef sequence<long> X;
   // typedef X Y;

@@ -49,12 +49,7 @@ int
 be_visitor_union_branch_public_ci::
 visit_union_branch (be_union_branch *node)
 {
-  TAO_OutStream *os;
-  be_type *bt; // union_branch's type
-
-  os = this->ctx_->stream ();
-  // first generate the type information
-  bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -675,18 +670,10 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_public_ci::visit_string (be_string *node)
 {
-  TAO_OutStream *os; // output stream
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   if (!ub || !bu)
     {
@@ -696,7 +683,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // three methods to set the string value
 
@@ -973,9 +960,6 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
 int
 be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
   this->ctx_->alias (node); // save the typedef node for use in code generation
                            // as we visit the base type
 

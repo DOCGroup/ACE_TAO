@@ -49,12 +49,9 @@ be_visitor_field_ci::~be_visitor_field_ci (void)
 int
 be_visitor_field_ci::visit_field (be_field *node)
 {
-  TAO_OutStream *os;
-  be_type *bt; // field's type
-
-  os = this->ctx_->stream ();
+  be_type *bt =
+    be_type::narrow_from_decl (node->field_type ());
   // first generate the type information
-  bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,16 +79,6 @@ be_visitor_field_ci::visit_field (be_field *node)
 int
 be_visitor_field_ci::visit_array (be_array *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;
-
-  os = this->ctx_->stream ();
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   // if not a typedef and we are defined in the use scope, we must be defined
 
   if (!this->ctx_->alias () // not a typedef
