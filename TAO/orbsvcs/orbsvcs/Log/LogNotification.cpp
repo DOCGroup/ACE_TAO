@@ -1,8 +1,12 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
+
+
+ACE_RCSID (Log,
+           LogNotification,
+           "$Id$")
+
 
 LogNotification::LogNotification (void)
 {
@@ -15,13 +19,12 @@ LogNotification::~LogNotification (void)
 }
 
 void
-LogNotification::object_creation (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id
-                                 ACE_ENV_ARG_DECL)
+LogNotification::object_creation (DsLogAdmin::Log_ptr /* log */,
+                                  DsLogAdmin::LogId id
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (log);
-  
+
   CORBA::Any any;
   DsLogNotification::ObjectCreation event;
 
@@ -36,12 +39,14 @@ LogNotification::object_creation (DsLogAdmin::Log_ptr log,
 
   any <<= event;
 
-  send_notification (any);
+  this->send_notification (any
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::object_deletion (DsLogAdmin::LogId id
-                                 ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
@@ -58,13 +63,15 @@ LogNotification::object_deletion (DsLogAdmin::LogId id
 
   any <<= event;
 
-  send_notification (any);
+  this->send_notification (any
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::processing_error_alarm (CORBA::ULong error_num,
-                                 const char* error_string
-                                 ACE_ENV_ARG_DECL)
+                                         const char* error_string
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
@@ -75,16 +82,18 @@ LogNotification::processing_error_alarm (CORBA::ULong error_num,
 
   any <<= event;
 
-  send_notification (any);
+  this->send_notification (any
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogNotification::AttributeType type,
-                                 CORBA::Any oldValue,
-                                 CORBA::Any newValue
-                                 ACE_ENV_ARG_DECL)
+                                         DsLogAdmin::LogId id,
+                                         DsLogNotification::AttributeType type,
+                                         CORBA::Any oldValue,
+                                         CORBA::Any newValue
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
@@ -106,147 +115,189 @@ LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
 
   any <<= event;
 
-  send_notification (any);
+  this->send_notification (any
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-LogNotification::capacity_alarm_threshold_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 const DsLogAdmin::CapacityAlarmThresholdList& oldValue,
-                                 const DsLogAdmin::CapacityAlarmThresholdList& newValue
-                                 ACE_ENV_ARG_DECL)
+LogNotification::capacity_alarm_threshold_value_change (
+    DsLogAdmin::Log_ptr log,
+    DsLogAdmin::LogId id,
+    const DsLogAdmin::CapacityAlarmThresholdList& oldValue,
+    const DsLogAdmin::CapacityAlarmThresholdList& newValue
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::capacityAlarmThreshold,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::capacityAlarmThreshold,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::log_full_action_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 CORBA::ULong oldValue,
-                                 CORBA::ULong newValue
-                                 ACE_ENV_ARG_DECL)
+                                               DsLogAdmin::LogId id,
+                                               CORBA::ULong oldValue,
+                                               CORBA::ULong newValue
+                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::logFullAction,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::logFullAction,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::max_log_size_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 CORBA::ULongLong oldValue,
-                                 CORBA::ULongLong newValue
-                                 ACE_ENV_ARG_DECL)
+                                            DsLogAdmin::LogId id,
+                                            CORBA::ULongLong oldValue,
+                                            CORBA::ULongLong newValue
+                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::maxLogSize,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::maxLogSize,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::start_time_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogAdmin::TimeT oldValue,
-                                 DsLogAdmin::TimeT newValue
-                                 ACE_ENV_ARG_DECL)
+                                          DsLogAdmin::LogId id,
+                                          DsLogAdmin::TimeT oldValue,
+                                          DsLogAdmin::TimeT newValue
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::startTime,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::startTime,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::stop_time_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogAdmin::TimeT oldValue,
-                                 DsLogAdmin::TimeT newValue
-                                 ACE_ENV_ARG_DECL)
+                                         DsLogAdmin::LogId id,
+                                         DsLogAdmin::TimeT oldValue,
+                                         DsLogAdmin::TimeT newValue
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::stopTime,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::stopTime,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::week_mask_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 const DsLogAdmin::WeekMask& oldValue,
-                                 const DsLogAdmin::WeekMask& newValue
-                                 ACE_ENV_ARG_DECL)
+                                         DsLogAdmin::LogId id,
+                                         const DsLogAdmin::WeekMask& oldValue,
+                                         const DsLogAdmin::WeekMask& newValue
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::weekMask,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::weekMask,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::max_record_life_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 CORBA::ULong oldValue,
-                                 CORBA::ULong newValue
-                                 ACE_ENV_ARG_DECL)
+                                               DsLogAdmin::LogId id,
+                                               CORBA::ULong oldValue,
+                                               CORBA::ULong newValue
+                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::maxRecordLife,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::maxRecordLife,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-LogNotification::quality_of_service_value_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 const DsLogAdmin::QoSList& oldValue,
-                                 const DsLogAdmin::QoSList& newValue
-                                 ACE_ENV_ARG_DECL)
+LogNotification::quality_of_service_value_change (
+    DsLogAdmin::Log_ptr log,
+    DsLogAdmin::LogId id,
+    const DsLogAdmin::QoSList& oldValue,
+    const DsLogAdmin::QoSList& newValue
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
   newV <<= newValue;
 
-  attribute_value_change (log, id, DsLogNotification::qualityOfService,
-                          oldV, newV ACE_ENV_ARG_PARAMETER);
+  this->attribute_value_change (log,
+                                id,
+                                DsLogNotification::qualityOfService,
+                                oldV,
+                                newV
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-LogNotification::state_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogNotification::StateType type,
-                                 CORBA::Any newValue
-                                 ACE_ENV_ARG_DECL)
+LogNotification::state_change (DsLogAdmin::Log_ptr /* log */,
+                               DsLogAdmin::LogId id,
+                               DsLogNotification::StateType type,
+                               CORBA::Any newValue
+                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (log);
-
   CORBA::Any any;
   DsLogNotification::StateChange event;
 
@@ -265,62 +316,77 @@ LogNotification::state_change (DsLogAdmin::Log_ptr log,
 
   any <<= event;
 
-  send_notification (any);
+  this->send_notification (any
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-LogNotification::administrative_state_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogAdmin::AdministrativeState newValue
-                                 ACE_ENV_ARG_DECL)
+LogNotification::administrative_state_change (
+    DsLogAdmin::Log_ptr log,
+    DsLogAdmin::LogId id,
+    DsLogAdmin::AdministrativeState newValue
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any newV;
   newV <<= newValue;
 
-  state_change (log, id, DsLogNotification::administrativeState,
-                        newV ACE_ENV_ARG_PARAMETER);
+  this->state_change (log,
+                      id,
+                      DsLogNotification::administrativeState,
+                      newV
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-LogNotification::operational_state_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogAdmin::OperationalState newValue
-                                 ACE_ENV_ARG_DECL)
+LogNotification::operational_state_change (
+    DsLogAdmin::Log_ptr log,
+    DsLogAdmin::LogId id,
+    DsLogAdmin::OperationalState newValue
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any newV;
   newV <<= newValue;
 
-  state_change (log, id, DsLogNotification::operationalState,
-                        newV ACE_ENV_ARG_PARAMETER);
+  this->state_change (log,
+                      id,
+                      DsLogNotification::operationalState,
+                      newV
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 LogNotification::forwarding_state_change (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogAdmin::ForwardingState newValue
-                                 ACE_ENV_ARG_DECL)
+                                          DsLogAdmin::LogId id,
+                                          DsLogAdmin::ForwardingState newValue
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any newV;
   newV <<= newValue;
 
-  state_change (log, id, DsLogNotification::forwardingState,
-                        newV ACE_ENV_ARG_PARAMETER);
+  this->state_change (log,
+                      id,
+                      DsLogNotification::forwardingState,
+                      newV
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-LogNotification::threshold_alarm (DsLogAdmin::Log_ptr log,
-                                 DsLogAdmin::LogId id,
-                                 DsLogAdmin::Threshold crossedValue,
-                                 DsLogAdmin::Threshold observedValue,
-                                 DsLogNotification::PerceivedSeverityType severity
-                                 ACE_ENV_ARG_DECL)
+LogNotification::threshold_alarm (
+    DsLogAdmin::Log_ptr /* log */,
+    DsLogAdmin::LogId id,
+    DsLogAdmin::Threshold crossedValue,
+    DsLogAdmin::Threshold observedValue,
+    DsLogNotification::PerceivedSeverityType severity
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (log);
-
   CORBA::Any any;
   DsLogNotification::ThresholdAlarm event;
 
@@ -337,6 +403,14 @@ LogNotification::threshold_alarm (DsLogAdmin::Log_ptr log,
 
   any <<= event;
 
-  send_notification (any);
+  this->send_notification (any
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
+void
+LogNotification::send_notification (const CORBA::Any & /* any */
+                                    ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
