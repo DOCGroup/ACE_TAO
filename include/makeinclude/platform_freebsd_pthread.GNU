@@ -19,7 +19,7 @@ versioned_so = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -fno-strict-prototypes -D_POSIX_THREADS
+CFLAGS          += -w -fno-strict-prototypes -D_THREAD_SAFE
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld
