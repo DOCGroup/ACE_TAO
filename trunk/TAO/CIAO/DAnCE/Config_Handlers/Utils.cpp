@@ -26,7 +26,7 @@ char *
 CIAO::Config_Handler::Utils::parse_string (DOMNodeIterator * iter)
 {
   DOMNode * node = iter->nextNode();
-  DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+  DOMText* text = reinterpret_cast<DOMText*> (node);
   return XMLString::transcode (text->getNodeValue ());
 }
 
@@ -69,7 +69,7 @@ CIAO::Config_Handler::Utils::parse_double (DOMNodeIterator * iter)
 CORBA::Float
 CIAO::Config_Handler::Utils::parse_float (DOMNodeIterator * iter)
 {
-  return ACE_static_cast (CORBA::Float, Utils::parse_double (iter));
+  return static_cast<CORBA::Float> (Utils::parse_double (iter));
 }
 
 CORBA::Boolean
@@ -78,7 +78,7 @@ CIAO::Config_Handler::Utils::parse_bool (DOMNodeIterator * iter)
   XStr true_val ("true");
   XStr true_cap_val ("TRUE");
 
-  DOMText * text = ACE_reinterpret_cast (DOMText *, iter->nextNode ());
+  DOMText * text = reinterpret_cast<DOMText *> (iter->nextNode ());
   XStr value (text->getNodeValue ());
 
   if (value == true_val || value == true_cap_val)
@@ -90,7 +90,7 @@ CIAO::Config_Handler::Utils::parse_bool (DOMNodeIterator * iter)
 CORBA::Char
 CIAO::Config_Handler::Utils::parse_char (DOMNodeIterator * iter)
 {
-  DOMText * text = ACE_reinterpret_cast (DOMText *, iter->nextNode ());
+  DOMText * text = reinterpret_cast<DOMText *> (iter->nextNode ());
   char * temp_string = XMLString::transcode (text->getNodeValue ());
 
   // Should be non-null
@@ -117,7 +117,7 @@ CIAO::Config_Handler::Utils::process_string (DOMNodeIterator* iter,
   if (result == true)
     {
       DOMNode* node = iter->nextNode();
-      const XMLCh* text = ACE_reinterpret_cast(DOMText*, node)->getNodeValue
+      const XMLCh* text = reinterpret_cast<DOMText*> (node)->getNodeValue
 ();
       if (text)
         var = XMLString::transcode (text);
@@ -135,8 +135,7 @@ CIAO::Config_Handler::Utils::process_string_seq (DOMNodeIterator* iter,
   if (result == true)
     {
       DOMNode* node = iter->nextNode ();
-      const XMLCh* text = ACE_reinterpret_cast
-                            (DOMText*, node)->getNodeValue ();
+      const XMLCh* text = reinterpret_cast<DOMText*> (node)->getNodeValue ();
 
       if (text)
         {
@@ -159,13 +158,12 @@ CIAO::Config_Handler::Utils::process_ulong (DOMNodeIterator* iter,
   if (result == true)
     {
       DOMNode* node = iter->nextNode ();
-      const XMLCh* text = ACE_reinterpret_cast
-                            (DOMText*, node)->getNodeValue ();
+      const XMLCh* text = reinterpret_cast<DOMText*> (node)->getNodeValue ();
 
       if (text)
         {
           CORBA::String_var temp = XMLString::transcode (text);
-          var = ACE_static_cast (CORBA::ULong, ACE_OS::strtol (temp.in (),
+          var = static_cast<CORBA::ULong> (ACE_OS::strtol (temp.in (),
                                  0, 10));
         }
     }
@@ -183,13 +181,12 @@ CIAO::Config_Handler::Utils::process_boolean (DOMNodeIterator* iter,
   if (result == true)
     {
       DOMNode* node = iter->nextNode ();
-      const XMLCh* text = ACE_reinterpret_cast
-                            (DOMText*, node)->getNodeValue ();
+      const XMLCh* text = reinterpret_cast<DOMText*> (node)->getNodeValue ();
 
       if (text)
         {
           CORBA::String_var temp = XMLString::transcode (text);
-          var = ACE_static_cast (CORBA::Boolean, ACE_OS::strtol (temp.in (),
+          var = static_cast<CORBA::Boolean> (ACE_OS::strtol (temp.in (),
                                  0, 10));
         }
     }

@@ -1,3 +1,15 @@
+Thu Jan 20 18:29:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Any_Handler.cpp:
+	* DAnCE/Config_Handlers/Utils.cpp:
+	* performance-tests/Protocols/Sender/Sender_exec.cpp:
+	* tools/Daemon/Daemon_Impl.cpp:
+
+	  Converted all ACE_{static,dynamic,reinterpret,const}_cast macros
+	  calls to their standard C++ counterparts using new
+	  bin/ACE-casts-convert script.  The ACE cast macros were
+	  deprecated back in ACE 5.4.2.
+
 Thu Jan 20 09:54:04 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OEP/Display/descriptors/NOTE.txt: 
