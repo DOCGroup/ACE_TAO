@@ -700,7 +700,9 @@ public:
  * <ACE_Hash_Map_Manager_Ex>'s internal lock, which is
  * accessible via its <mutex> method.
  * Note that this iterator cannot be created by calling a method
- * on the map, since this would require
+ * on the map, since this would require adding explicit template
+ * instantiations for bucket iterators on platforms with broken
+ * templates.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Map_Bucket_Iterator
