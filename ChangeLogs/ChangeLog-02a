@@ -1,3 +1,8 @@
+Tue Sep  4 07:08:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ACE.cpp: Fixed a unicode error in teh Win32 builds. Acted as
+	  a dumbo when I made this change yesterday:(
+
 Mon Sep  3 20:08:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Fixed a warning in TRU 64 builds.
