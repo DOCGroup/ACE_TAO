@@ -1,3 +1,11 @@
+Mon Nov 20 15:55:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Connector.cpp (TAO_IIOP_Connector):
+
+	  Removed "tcp_properties_" from the base member initializer
+	  list.  G++ 2.7.x gets confused about the fact that the
+	  TAO_IIOP_Properties class doesn't have a constructor.
+
 Mon Nov 20 15:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/TAO_Service/TAO_Service.cpp:

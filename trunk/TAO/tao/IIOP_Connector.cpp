@@ -54,7 +54,6 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_IIOP_PROFILE),
-    tcp_properties_ (),
     lite_flag_ (flag),
     null_activation_strategy_ (),
     connect_strategy_ (),
