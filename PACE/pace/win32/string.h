@@ -31,6 +31,10 @@ extern "C" {
   typedef size_t pace_size_t;
 #endif /* PACE_SIZE_T */
 
+#if (PACE_HAS_POSIX_CLSR_UOF)
+char * strtok_r (char * s, const char * sep, char ** lasts);
+#endif /* PACE_HAS_POSIX_CLSR_UOF */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */

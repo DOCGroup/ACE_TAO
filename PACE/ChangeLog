@@ -1,3 +1,13 @@
+Fri Jul 20 15:44:02 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/win32/string.h: 
+
+        * pace/win32/string.inl (strtok_r): 
+
+        * pace/win32/string.c (strtok_r):
+          Added support for strtok_r. Stole code from ACE_OS_String.
+          Was causing a problem with the TAO IDL compiler. 
+
 Tue Jul 10 10:43:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * Makefile: 

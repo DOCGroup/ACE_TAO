@@ -191,11 +191,7 @@ PACE_INLINE
 char *
 pace_strtok_r (char * s, const char * sep, char ** lasts)
 {
-  PACE_UNUSED_ARG (s);
-  PACE_UNUSED_ARG (sep);
-  PACE_UNUSED_ARG (lasts);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
+  return strtok_r (s, sep, lasts);
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
