@@ -1,3 +1,13 @@
+Wed Jul  2 15:59:53 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/High_Res_Timer.cpp: Created a function get_registry_scale_factor
+	  that finds out the speed of the processor using the NT registry (in
+	  megahertz).  This means that ACE_High_Res_Timers should automatically 
+	  get the correct scale factor.
+
+	* tests/Timer_Queue_Test.cpp: Removed the call to 
+	  get_env_global_scale_factor().
+
 Wed Jul  2 15:39:33 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
 
 	* ace/Process.cpp: Modified spawn to check for the NO_EXEC
