@@ -112,11 +112,22 @@ int Client_Handler::open (void *_acceptor)
 
      If we are told to use the single-threaded strategy, there is no difference
      between this and the Tutorial 5 implementation.
+
+     Note that if we're in thread-per-connection mode, open() is
+     exited at this point.  Furthermore, thread-per-connection mode
+     does not use the reactor which means that handle_input() and it's 
+     fellows are not invoked.
    */
   if( acceptor->thread_per_connection() )
   {
     return this->activate();
   }
+
+   // ************************************************************************
+   // From here on, we're doing the traditional reactor thing.  If
+   // you're operating in thread-per-connection mode, this code does
+   // not apply.
+   // ************************************************************************
 
   /*
      Our reactor reference will be set when we register ourselves but I decided
@@ -186,7 +197,9 @@ int Client_Handler::close(u_long flags)
    it will invoke this handle_input() method on us.  As I mentioned, the _handle
    parameter isn't useful to us but it narrows the list of methods the reactor
    has to worry about and the list of possible virtual functions we would have
-   to override. 
+   to override.
+
+   Again, this is not used if we're in thread-per-connection mode.
  */
 int Client_Handler::handle_input (ACE_HANDLE _handle)
 {
@@ -234,6 +247,10 @@ int Client_Handler::handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask)
    create a multi-threaded application, these are your tools!  Simply override
    the svc() method in your derivative and arrange for your activate() method
    to be called.  The svc() method then executes in the new thread.
+
+   Of course, this is only valid if we're in thread-per-connection
+   mode.  If we're using the reactor model, then svc() never comes
+   into play.
  */
 int Client_Handler::svc(void)
 {
