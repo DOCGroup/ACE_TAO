@@ -34,7 +34,7 @@ registered with the Naming Service. The default is "CosEC_Factory"
 FACTORYCLIENT
 =============
 
-The factory client is a test driver for the factory. It excersises all
+The factory client is a test driver for the factory. It exercises all
 the features of the factory.  A Naming Service and a factory must be
 running prior to running the factoryclient.  factoryclient does not
 take any command line options.
