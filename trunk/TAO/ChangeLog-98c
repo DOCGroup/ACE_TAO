@@ -1,3 +1,7 @@
+Sat Oct 17 00:44:10 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.29 released.
+
 Fri Oct 16 15:48:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao: Replaced all #if !defined (TAO_FOO_H) with #ifndef
