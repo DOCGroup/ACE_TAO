@@ -23,6 +23,7 @@ CIAO::RTPolicy_Set_Manager::RTPolicy_Set_Manager
 {
 }
 
+ACE_INLINE
 CIAO::RTPolicy_Set_Manager::~RTPolicy_Set_Manager ()
 {
 }

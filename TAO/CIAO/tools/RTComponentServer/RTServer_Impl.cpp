@@ -13,7 +13,8 @@ CIAO::RTServer::RTComponentServer_Impl::~RTComponentServer_Impl ()
 int
 CIAO::RTServer::RTComponentServer_Impl::init (Components::ConfigValues &options
                                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::InvalidConfiguration))
 {
   // @@ Initialize ComponentServer and create the internal container
   // implementation that actually interacts with installed
@@ -144,7 +145,8 @@ int
 CIAO::RTServer::RTContainer_Impl::init (const Components::ConfigValues &options,
                                         Components::Deployment::ComponentInstallation_ptr inst
                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::InvalidConfiguration))
 {
   ACE_DEBUG ((LM_DEBUG, "RTContainer_Impl::init\n"));
 
@@ -190,7 +192,7 @@ parse_container_config_values (const Components::ConfigValues &options
 
       if (ACE_OS::strcmp (options[i]->name (), "CIAO-RTPolicySet") == 0)
         {
-          char *ps_name;
+          const char *ps_name;
           if (options[i]->value () >>= ps_name)
             {
               ACE_DEBUG ((LM_DEBUG,

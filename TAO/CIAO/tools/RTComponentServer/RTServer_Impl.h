@@ -80,7 +80,8 @@ namespace CIAO
     protected:
       void parse_server_config_values (const Components::ConfigValues &options
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Components::InvalidConfiguration));
 
       // Real-time resource manager
       CIAO::RTResource_Config_Manager resource_manager_;
@@ -112,7 +113,8 @@ namespace CIAO
       int init (const Components::ConfigValues &options,
                 Components::Deployment::ComponentInstallation_ptr installation
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Components::InvalidConfiguration));
 
     protected:
       void parse_container_config_values (const Components::ConfigValues &options

@@ -1,3 +1,12 @@
+Tue Aug 26 16:59:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTConfig_Manager.cpp:
+	* tools/RTComponentServer/RTConfig_Manager.inl:
+	* tools/RTComponentServer/RTServer_Impl.cpp:
+	* tools/RTComponentServer/RTServer_Impl.h:
+	* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed compilation
+	  problem on Linux.  
+
 Tue Aug 26 10:14:03 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIDLC/ServantSourceGenerator.cpp: Correctly generate get and set

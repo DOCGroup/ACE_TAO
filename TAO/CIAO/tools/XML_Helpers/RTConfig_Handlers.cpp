@@ -7,8 +7,8 @@
 #endif /* __ACE_INLINE__ */
 
 void
-CIAO::RTConfig_Handler::startElement (const ACEXML_Char *namespaceURI,
-                                      const ACEXML_Char *localName,
+CIAO::RTConfig_Handler::startElement (const ACEXML_Char *,
+                                      const ACEXML_Char *,
                                       const ACEXML_Char *qName,
                                       ACEXML_Attributes *alist
                                       ACEXML_ENV_ARG_DECL)
