@@ -3,9 +3,6 @@ Wed Jan 22 09:05:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Local_Tokens.cpp (dump): replaced "ACE_TSS<ACE_TPQ_Entry>"
 	  with "ACE_TPQ_ENTRY" so that ACE_NO_TSS_TOKENS is supported.
 
-	* ace/config-vxworks-ghs-1.8.h: added ACE_NO_TSS_TOKENS because
-	  Green Hills 1.8.8 needs it with inlining disabled.
-
 	* ace/config-vxworks-ghs-1.8.h,config-vxworks5.2-g++.h:
 	  protect ACE_HAS_INLINED_OSCALLS #defined with
 	  #if defined (__ACE_INLINE__).
