@@ -1,3 +1,9 @@
+Thu Feb 24 15:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Fixed_Array_SArgument_T.h:
+        * tao/PortableServer/Var_Array_SArgument_T.h:
+          Removed trailing semi-colon after namespace closure
+
 Thu Feb 24 07:13:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/PSS/Makefile.am:
