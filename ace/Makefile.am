@@ -758,7 +758,7 @@ INLINE_FILES = \
   Auto_Ptr.i \
   Based_Pointer_T.i \
   Basic_Types.i \
-  CDR_Base.i \
+  CDR_Base.inl \
   CDR_Stream.i \
   CORBA_Handler.i \
   Cache_Map_Manager_T.i \
