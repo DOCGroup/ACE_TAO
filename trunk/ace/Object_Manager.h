@@ -155,6 +155,9 @@ public:
   enum Preallocated_Object
     {
       ACE_FILECACHE_LOCK,
+#if defined (ACE_HAS_THREADS)
+      ACE_STATIC_OBJECT_LOCK,
+#endif /* ACE_HAS_THREADS */
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_LOG_MSG_INSTANCE_LOCK,
       ACE_MT_CORBA_HANDLER_LOCK,
@@ -253,6 +256,27 @@ private:
   ACE_Object_Manager (const ACE_Object_Manager &);
   ACE_Object_Manager &operator= (const ACE_Object_Manager &);
 };
+
+#if defined (ACE_HAS_THREADS)
+
+class ACE_Recursive_Thread_Mutex;
+
+class ACE_Export ACE_Static_Object_Lock
+  // = TITLE
+  //     Provide an interface to access a global lock.
+  //
+  // = DESCRIPTION
+  //     This class is used to serialize the creation of static
+  //     singleton objects.  It really isn't needed any more, because
+  //     anyone can access ACE_STATIC_OBJECT_LOCK directly.  But, it
+  //     is retained for backward compatibility.
+{
+public:
+  static ACE_Recursive_Thread_Mutex *instance (void);
+  // static lock access point
+};
+
+#endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Object_Manager.i"
