@@ -1,3 +1,10 @@
+Sat Apr 29 20:02:39 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/autoconf_compile (BUILD_LIST):
+
+	  Remove TAO from the build list.  It's autoconf support hasn't
+	  been fully integrated yet.
+
 Sat Apr 29 19:45:41 2000  Ossama Othman  <ossama@uci.edu>
 
 	* netsvcs/lib/Log_Message_Receiver.cpp (attach, detach):
