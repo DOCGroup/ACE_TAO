@@ -1,3 +1,10 @@
+Wed Sep  3 20:32:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/RTScheduling/Scheduler.cpp (TAO_Scheduler):
+
+	  Added missing "ACE_ENV_ARG_PARAMETER" argument to
+	  "ORB::resolve_initial_references()" call.
+
 Wed Sep  3 20:25:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Pseudo_VarOut_T.cpp (operator=):
