@@ -1,3 +1,18 @@
+Tue Oct 19 10:24:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
+	* orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+	  Fixed several warnings about incorrect format strings
+
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	* tests/DSI_Gateway/test_dsi.cpp:
+	  Fixed several warnings about ambiguous conversions from T_var to
+	  T_ptr
+
+	* tests/DSI_Gateway/run_test.pl:
+	  The test was not killing the right processes on a failure.
+
 Mon Oct 18 13:47:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/UIOP_Connect.cpp (handle_timeout):
