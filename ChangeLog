@@ -1,3 +1,20 @@
+Sun Aug  8 17:38:05 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/README:
+	* ace/config-g++-common.h:
+	  Removed vestigial mentions of ACE_HAS_GNUG_PRE_2_8.
+
+	* m4/compiler.m4:
+	* m4/config_h.m4:
+	  Removed check for ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
+	  and ACE_HAS_GNUG_PRE_2_8, as those feature test macros have been
+	  removed from ACE for some time.
+
+	* m4/config_h.m4:
+	* m4/threads.m4:
+	  Replaced AH_TEMPLATE for ACE_HAS_STHREADS and ACE_HAS_PTHREADS
+	  with third argument to AC_DEFINE.
+
 Sun Aug  8 07:12:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
