@@ -1,3 +1,7 @@
+Sun Sep 13 22:40:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.10 released.
+
 Sun Sep 13 18:16:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Converted some old
