@@ -6,7 +6,9 @@ Fri Jul  6 15:59:17 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Integrated patch from Jody Hagins <jody@atdesk.com>.  Take
 	  advantage of the methods provided by the
-	  CosNaming::NamingContextExt interface.
+	  CosNaming::NamingContextExt interface so that the Notification
+	  Service does the right thing with an option such as
+	  "-Factory Foo.Bar/My_Event_Channel".
 
 Fri Jul  6 18:02:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
