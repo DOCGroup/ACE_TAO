@@ -499,7 +499,6 @@ public:
   };
 };
 
-
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
 {
   // = TITLE
@@ -521,7 +520,7 @@ public:
 	    ACE_HANDLE handle = ACE_INVALID_HANDLE,
 	    const void *completion_key = 0,
 	    ACE_Proactor *proactor = 0);
-  // (We will call base class's <open> from here).
+  // (We will also call base class's <open> from here).
 #endif /* ACE_HAS_AIO_CALLS */
 
   int accept (ACE_Message_Block &message_block,
