@@ -1,3 +1,11 @@
+Tue Oct 31 20:17:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp:
+
+	  Changes corresponding those made to TAO.dsp in
+
+	  Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
 Tue Oct 31 20:03:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
