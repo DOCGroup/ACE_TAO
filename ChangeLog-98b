@@ -1,14 +1,26 @@
+Fri Jul 24 09:05:24 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (thr_create): with ACE_HAS_DCE_DRAFT4_THREADS and
+          ACE_LACKS_SETDETACH (LynxOS and HP/UX 10.x), call
+          ::pthread_detach () on the newly spawned thread.  Only do
+          it if the THR_DETACHED flag is enabled.
+
+        * ace/Thread_Manager.cpp (join_thr,wait,wait_grp,wait_task):
+          with ACE_HAS_DCE_DRAFT4_THREADS and ACE_LACKS_SETDETACH
+          (LynxOS and HP/UX 10.x), call ::pthread_detach () on joined
+          threads.  Only do it if the THR_DETACHED flag is not enabled.
+
 Fri Jul 24 00:39:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp (Message_Queue_T.cpp): This file contains
-	  template definitions and should not be included while building
-	  ACE library. 
+        * ace/ace_dll.dsp (Message_Queue_T.cpp): This file contains
+          template definitions and should not be included while building
+          ACE library.
 
-	* ace/config-win32.h (ACE_HAS_NONSTATIC_OBJECT_MANAGER): Use
- 	  non-static object manager by default on Win32 (except CE.)  This
- 	  at least fixed the problem of WSACleanup getting called too late. 
+        * ace/config-win32.h (ACE_HAS_NONSTATIC_OBJECT_MANAGER): Use
+          non-static object manager by default on Win32 (except CE.)  This
+          at least fixed the problem of WSACleanup getting called too late.
 
-	  To disable this, define ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
+          To disable this, define ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
 
 Thu Jul 23 22:17:41 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
