@@ -59,17 +59,21 @@ ACE_Timeprobe::print_times (void) const
       ACE_hrtime_t elapsed =
         timeprobes [i].time_ - timeprobes [i-1].time_;
 
+#if defined (ACE_WIN32)
       ACE_DEBUG ((LM_DEBUG,
                   "\"%-50s\" %8.8x %10.3f\n",
                   timeprobes [i].id_,
                   timeprobes [i].thread_,
-#if defined (ACE_WIN32)
                   (double) (__int64) (elapsed /
-                                      (ACE_UINT32) 1000u)));
+                            (ACE_UINT32) 1000u) /* nanosec/microsec */));
 #else
+      ACE_DEBUG ((LM_DEBUG,
+                  "\"%-50s\" %8.8x %10.3f\n",
+                  timeprobes [i].id_,
+                  timeprobes [i].thread_,
                   (double) (elapsed /
                             (ACE_UINT32) 1000u) /* nanosec/microsec */));
-#endif
+#endif /* ACE_WIN32 */
     }
 #if 0
   ACE_hrtime_t elapsed2 = (timeprobes [current_slot_ - 1].time_
