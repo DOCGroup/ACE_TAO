@@ -8,6 +8,9 @@
 
 ACE_RCSID(BiDir_GIOP, BiDirGIOP, "$Id$")
 
+// Set the flag to zero to start with
+int TAO_BiDirGIOP_Loader::validator_loaded_ = 0;
+
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
   : validator_ (0)
 {
@@ -70,16 +73,29 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add our validator
-  val.add_validator (this->validator_);
+  if (!validator_loaded_)
+    val.add_validator (this->validator_);
 }
-
-
 
 int
 TAO_BiDirGIOP_Loader::Initializer (void)
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_BiDirGIOP_Loader);
 }
+
+/*static */ int
+TAO_BiDirGIOP_Loader::validator_loaded (void)
+{
+  return validator_loaded_;
+}
+
+/*static */ void
+TAO_BiDirGIOP_Loader::validator_loaded (int f)
+{
+  // @@ TODO: Do we need synchronization?
+  validator_loaded_ = f;
+}
+
 
 ACE_STATIC_SVC_DEFINE (TAO_BiDirGIOP_Loader,
                        ACE_TEXT ("BiDirGIOP_Loader"),
