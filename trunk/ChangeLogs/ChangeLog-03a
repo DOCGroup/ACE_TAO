@@ -1,3 +1,18 @@
+Tue Dec 18 11:11:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SPIPE.h: Improved comments for Doxygen processing.
+
+Mon Dec 17 18:30:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SPIPE_Acceptor.(h cpp): For Windows, use the event handle
+          instead of the pipe handle for the handle value stored in the
+          ACE_IPC_SAP class. The pipe handle is pretty useless for doing
+          anything like detecting when the pipe connect is done - the
+          event handle is what's really useful there, and it stays
+          consistent across accepts, while the pipe handle changes.
+          This change allows the get_handle() value to be registered
+          with the reactor, albeit for signal, not input.
+
 Mon Dec 17 00:13:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/String_Base_Const.h:
