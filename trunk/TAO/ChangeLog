@@ -1,3 +1,10 @@
+Thu Oct 28 07:39:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Latency/AMI/run_test.pl:
+
+          Increase the client timeout to allow this test to run on slower
+          machines.
+
 Thu Oct 28 06:24:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.h:
