@@ -1,3 +1,9 @@
+Wed May 15 16:44:27 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/DLL.cpp (save_last_error):
+
+	  Use ACE::strnew to make a copy of the saved string.
+
 Wed May 15 15:58:07 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/DLL_Test.cpp:
