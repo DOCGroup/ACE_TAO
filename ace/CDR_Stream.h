@@ -126,7 +126,7 @@ public:
   // classes. The cleanest way to avoid complaints from all compilers
   // is to define them all.
   #if defined (ghs) && defined (CHORUS)
-    // This is non-compliant, but a nasty bout with 
+    // This is non-compliant, but a nasty bout with
     // Green Hills C++68000 1.8.8 forces us into it.
     typedef unsigned long Boolean;
   #else  /* ! (ghs && CHORUS) */
@@ -242,28 +242,28 @@ public:
   friend class ACE_InputCDR;
   // For reading from an output CDR stream.
 
-  ACE_OutputCDR (size_t size = 0, 
+  ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
-                 size_t memcpy_tradeoff = 
+                 size_t memcpy_tradeoff =
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
   // Default constructor, allocates <size> bytes in the internal
   // buffer, if <size> == 0 it allocates the default size.
 
-  ACE_OutputCDR (char *data, 
+  ACE_OutputCDR (char *data,
                  size_t size,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
-                 size_t memcpy_tradeoff= 
+                 size_t memcpy_tradeoff=
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
   // Build a CDR stream with an initial buffer, it will *not* remove
   // <data>, since it did not allocated it.
 
   ACE_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
-                 size_t memcpy_tradeoff= 
+                 size_t memcpy_tradeoff=
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
   // Build a CDR stream with an initial Message_Block chain, it will
   // *not* remove <data>, since it did not allocate it.
@@ -330,7 +330,7 @@ public:
   CDR::Boolean write_string (CDR::ULong len, const CDR::Char *x);
   CDR::Boolean write_string (const ACE_CString &x);
   CDR::Boolean write_wstring (const CDR::WChar *x);
-  CDR::Boolean write_wstring (CDR::ULong length, 
+  CDR::Boolean write_wstring (CDR::ULong length,
                               const CDR::WChar *x);
 
   // = We add one method to write arrays of basic IDL types.
@@ -338,25 +338,25 @@ public:
   // The length is *NOT* stored into the CDR stream.
   CDR::Boolean write_boolean_array (const CDR::Boolean *x,
                                     CDR::ULong length);
-  CDR::Boolean write_char_array (const CDR::Char *x, 
+  CDR::Boolean write_char_array (const CDR::Char *x,
                                  CDR::ULong length);
   CDR::Boolean write_wchar_array (const CDR::WChar* x,
                                   CDR::ULong length);
   CDR::Boolean write_octet_array (const CDR::Octet* x,
                                   CDR::ULong length);
-  CDR::Boolean write_short_array (const CDR::Short *x, 
+  CDR::Boolean write_short_array (const CDR::Short *x,
                                   CDR::ULong length);
-  CDR::Boolean write_ushort_array (const CDR::UShort *x, 
+  CDR::Boolean write_ushort_array (const CDR::UShort *x,
                                    CDR::ULong length);
-  CDR::Boolean write_long_array (const CDR::Long *x, 
+  CDR::Boolean write_long_array (const CDR::Long *x,
                                  CDR::ULong length);
-  CDR::Boolean write_ulong_array (const CDR::ULong *x, 
+  CDR::Boolean write_ulong_array (const CDR::ULong *x,
                                   CDR::ULong length);
   CDR::Boolean write_longlong_array (const CDR::LongLong* x,
                                      CDR::ULong length);
   CDR::Boolean write_ulonglong_array (const CDR::ULongLong *x,
                                       CDR::ULong length);
-  CDR::Boolean write_float_array (const CDR::Float *x, 
+  CDR::Boolean write_float_array (const CDR::Float *x,
                                   CDR::ULong length);
   CDR::Boolean write_double_array (const CDR::Double *x,
                                    CDR::ULong length);
@@ -422,8 +422,8 @@ private:
   CDR::Boolean write_8 (const CDR::ULongLong *x);
   CDR::Boolean write_16 (const CDR::LongDouble *x);
 
-  CDR::Boolean write_array (const void *x, 
-                            size_t size, 
+  CDR::Boolean write_array (const void *x,
+                            size_t size,
                             size_t align,
                             CDR::ULong length);
   // write an array of <length> elements, each of <size> bytes and the
@@ -437,21 +437,21 @@ private:
   // could be interesting to find the break even point and optimize
   // for that case, but that would be too platform dependent.
 
-  int adjust (size_t size, 
+  int adjust (size_t size,
               char *&buf);
   // Returns (in <buf>) the next position in the buffer aligned to
   // <size>, it advances the Message_Block wr_ptr past the data
   // (i.e. <buf> + <size>). If necessary it grows the Message_Block
   // buffer.  Sets the good_bit to 0 and returns a -1 on failure.
 
-  int adjust (size_t size, 
-              size_t align, 
+  int adjust (size_t size,
+              size_t align,
               char *&buf);
   // As above, but now the size and alignment requirements may be
   // different.
-  
-  int grow_and_adjust (size_t size, 
-                       size_t align, 
+
+  int grow_and_adjust (size_t size,
+                       size_t align,
                        char *&buf);
   // Grow the CDR stream. When it returns <buf> contains a pointer to
   // memory in the CDR stream, with at least <size> bytes ahead of it
@@ -616,27 +616,27 @@ public:
   // They return -1 on failure and 0 on success.
   CDR::Boolean read_boolean_array (CDR::Boolean* x,
                                    CDR::ULong length);
-  CDR::Boolean read_char_array (CDR::Char *x, 
+  CDR::Boolean read_char_array (CDR::Char *x,
                                 CDR::ULong length);
   CDR::Boolean read_wchar_array (CDR::WChar* x,
                                  CDR::ULong length);
   CDR::Boolean read_octet_array (CDR::Octet* x,
                                  CDR::ULong length);
-  CDR::Boolean read_short_array (CDR::Short *x, 
+  CDR::Boolean read_short_array (CDR::Short *x,
                                  CDR::ULong length);
-  CDR::Boolean read_ushort_array (CDR::UShort *x, 
+  CDR::Boolean read_ushort_array (CDR::UShort *x,
                                   CDR::ULong length);
-  CDR::Boolean read_long_array (CDR::Long *x, 
+  CDR::Boolean read_long_array (CDR::Long *x,
                                 CDR::ULong length);
-  CDR::Boolean read_ulong_array (CDR::ULong *x, 
+  CDR::Boolean read_ulong_array (CDR::ULong *x,
                                  CDR::ULong length);
   CDR::Boolean read_longlong_array (CDR::LongLong* x,
                                     CDR::ULong length);
   CDR::Boolean read_ulonglong_array (CDR::ULongLong* x,
                                      CDR::ULong length);
-  CDR::Boolean read_float_array (CDR::Float *x, 
+  CDR::Boolean read_float_array (CDR::Float *x,
                                  CDR::ULong length);
-  CDR::Boolean read_double_array (CDR::Double *x, 
+  CDR::Boolean read_double_array (CDR::Double *x,
                                   CDR::ULong length);
   CDR::Boolean read_longdouble_array (CDR::LongDouble* x,
                                       CDR::ULong length);
@@ -695,8 +695,8 @@ private:
   // alignment requirements of CDR streams and implement the
   // operations using asignment.
 
-  CDR::Boolean read_array (void* x, 
-                           size_t size, 
+  CDR::Boolean read_array (void* x,
+                           size_t size,
                            size_t align,
                            CDR::ULong length);
   // Read an array of <length> elements, each of <size> bytes and the
@@ -714,19 +714,19 @@ private:
   char* end (void);
   // Short cuts for the underlying message block.
 
-  int adjust (size_t size, 
+  int adjust (size_t size,
               char *&buf);
   // Returns (in <buf>) the next position in the buffer aligned to
   // <size>, it advances the Message_Block rd_ptr past the data
   // (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
   // on failure.
 
-  int adjust (size_t size, 
-              size_t align, 
+  int adjust (size_t size,
+              size_t align,
               char *&buf);
   // As above, but now the size and alignment requirements may be
   // different.
-  
+
 protected:
   ACE_Message_Block start_;
   // The start of the chain of message blocks, even though in the
@@ -745,13 +745,13 @@ protected:
 #else
 
 // CDR output operators for primitive types
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::Short x);
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::UShort x);
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::Long x);
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::ULong x);
 extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::LongLong x);
@@ -759,11 +759,11 @@ extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::ULongLong x);
 extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR& os,
                                            CDR::LongDouble x);
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::Float x);
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            CDR::Double x);
-extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os, 
+extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            const ACE_CString &x);
 
 // CDR output operator from helper classes
@@ -780,13 +780,13 @@ extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export CDR::Boolean operator<< (ACE_OutputCDR &os,
                                            const CDR::Char* x);
 // CDR input operators for primitive types
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::Short &x);
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::UShort &x);
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::Long &x);
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::ULong &x);
 extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::LongLong &x);
@@ -794,11 +794,11 @@ extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::ULongLong &x);
 extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::LongDouble &x);
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::Float &x);
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            CDR::Double &x);
-extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is, 
+extern ACE_Export CDR::Boolean operator>> (ACE_InputCDR &is,
                                            ACE_CString &x);
 
 // CDR input operator from helper classes

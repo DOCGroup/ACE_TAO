@@ -110,7 +110,7 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
                               size_t memcpy_tradeoff)
   :  start_ (size ? size : CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT,
              ACE_Message_Block::MB_DATA,
-             0, 
+             0,
              0,
              buffer_allocator,
              0,
@@ -157,7 +157,7 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
      memcpy_tradeoff_ (memcpy_tradeoff)
-{ 
+{
   // We cannot trust the buffer to be properly aligned
   CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
@@ -193,8 +193,8 @@ ACE_OutputCDR::total_length (void) const
 }
 
 int
-ACE_OutputCDR::grow_and_adjust (size_t size, 
-                                size_t align, 
+ACE_OutputCDR::grow_and_adjust (size_t size,
+                                size_t align,
                                 char*& buf)
 {
   if (this->current_->cont () == 0
@@ -214,7 +214,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       ACE_NEW_RETURN (tmp,
                       ACE_Message_Block (block_size,
                                          ACE_Message_Block::MB_DATA,
-                                         0, 
+                                         0,
                                          0,
                                          this->current_->data_block ()->allocator_strategy (),
                                          0,
@@ -251,7 +251,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
 }
 
 CDR::Boolean
-ACE_OutputCDR::write_string (CDR::ULong len, 
+ACE_OutputCDR::write_string (CDR::ULong len,
                              const char *x)
 {
   if (len != 0)
@@ -272,7 +272,7 @@ ACE_OutputCDR::write_string (CDR::ULong len,
           return this->write_char (0);
         }
     }
-  
+
   return 0;
 }
 
@@ -441,13 +441,13 @@ ACE_OutputCDR::write_8 (const CDR::ULongLong *x)
 
   return 0;
 }
-      
+
 CDR::Boolean
 ACE_OutputCDR::write_16 (const CDR::LongDouble *x)
 {
   char* buf;
-  if (this->adjust (CDR::LONGDOUBLE_SIZE, 
-                    CDR::LONGDOUBLE_ALIGN, 
+  if (this->adjust (CDR::LONGDOUBLE_SIZE,
+                    CDR::LONGDOUBLE_ALIGN,
                     buf) == 0)
     {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
@@ -512,7 +512,7 @@ ACE_OutputCDR::write_array (const void *x,
               this->good_bit_ = 0;
               return 0;
             }
-	  
+
           const char *source = ACE_reinterpret_cast (const char *, x);
           const char *end = source + size*length;
 
@@ -548,7 +548,7 @@ ACE_OutputCDR::write_boolean_array (const CDR::Boolean* x,
 
 // ****************************************************************
 
-ACE_InputCDR::ACE_InputCDR (const char *buf, 
+ACE_InputCDR::ACE_InputCDR (const char *buf,
                             size_t bufsiz,
                             int byte_order)
   : start_ (buf, bufsiz),
@@ -769,7 +769,7 @@ ACE_InputCDR::read_array (void* x,
                 {
                   CDR::swap_8 (buf, target);
                 }
-              break;	      
+              break;
             case 16:
               for (; target != end; target += size, buf += size)
                 {
@@ -893,8 +893,8 @@ CDR::Boolean
 ACE_InputCDR::read_16 (CDR::LongDouble *x)
 {
   char *buf;
-  if (this->adjust (CDR::LONGLONG_SIZE, 
-                    CDR::LONGLONG_ALIGN, 
+  if (this->adjust (CDR::LONGLONG_SIZE,
+                    CDR::LONGLONG_ALIGN,
                     buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
