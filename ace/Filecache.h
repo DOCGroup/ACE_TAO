@@ -20,6 +20,7 @@
 
 #include "ace/Mem_Map.h"
 #include "ace/Synch_T.h"
+#include "ace/Hash_Map_Manager.h"
 
 // = Forward declarations.
 class ACE_Filecache_Object;
@@ -135,6 +136,12 @@ private:
   // A dup()'d version of the one from this->file_.
 };
 
+typedef ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
+        ACE_Filecache_Hash_Entry;
+
+typedef ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>
+        ACE_Filecache_Hash;
+
 class ACE_Export ACE_Filecache
   // = TITLE
   //     A hash table holding the information about entry point into
@@ -148,9 +155,9 @@ public:
 
   ~ACE_Filecache (void);
 
-  ACE_Filecache_Object *find (const char *filename);
-  // Return the file associated with ``filename'' if it is in the cache,
-  // or NULL if not.
+  int find (const char *filename);
+  // Returns 0 if the file associated with ``filename'' is in the cache,
+  // or -1 if not.
 
   ACE_Filecache_Object *fetch (const char *filename);
   // Return the file associated with ``filename'' if it is in the cache,
@@ -159,11 +166,17 @@ public:
   ACE_Filecache_Object *remove (const char *filename);
   // Remove the file associated with ``filename'' from the cache.
 
-  ACE_Filecache_Object *insert (ACE_Filecache_Object *new_file);
-  // Add a new file to the cache.
+  ACE_Filecache_Object *create (const char *filename, int size);
+  // Create a new Filecache_Object, returns it.
 
-  ACE_Filecache_Object *replace (ACE_Filecache_Object *new_file);
-  // Replace an existing file in the cache (or insert if not already in).
+  ACE_Filecache_Object *finish (ACE_Filecache_Object *&new_file);
+  // Release an acquired Filecache_Object, returns it again or NULL if it
+  // was deleted.
+
+protected:
+  ACE_Filecache_Object *insert_i (const char *filename, ACE_SYNCH_RW_MUTEX &);
+  ACE_Filecache_Object *remove_i (const char *filename);
+  ACE_Filecache_Object *update_i (const char *filename, ACE_SYNCH_RW_MUTEX &);
 
 public:
 
@@ -183,20 +196,18 @@ protected:
   // Prevent it from being called.
 
 private:
-  int fetch_i (const char *filename);
-  // Internal fetch method does not require locking.
-
-  ACE_Filecache_Object *remove_i (int index);
-  // Internal remove method, no locking.
-
-  ACE_Filecache_Object *insert_i (ACE_Filecache_Object *new_file);
-  // Internal insertion method, no locking.
-
-  ACE_Filecache_Object *table_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
   int size_;
 
+  ACE_Filecache_Hash hash_;
+  // The hash table
+
   static ACE_Filecache *cvf_;
+  // The reference to the instance
+
   static ACE_SYNCH_RW_MUTEX lock_;
+  static ACE_SYNCH_RW_MUTEX hash_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
+  static ACE_SYNCH_RW_MUTEX file_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
+  // Synchronization variables
 };
 
 #endif /* ACE_FILECACHE_H */
