@@ -274,13 +274,14 @@ public:
   // cubed.
 
 private:
-  int init_orb (void);
+  CORBA::ORB_ptr init_orb (CORBA::Environment &ACE_TRY_ENV);
   // initialize the ORB.
 
   void read_ior (void);
   // reads the cubit ior from a file.
 
-  int get_cubit (void);
+  int get_cubit (CORBA::ORB_ptr orb,
+                 CORBA::Environment &ACE_TRY_ENV);
   // gets the cubit object.
 
   int run_tests (void);
@@ -354,9 +355,6 @@ private:
 
   ACE_timer_t frequency_;
   // frequency of CORBA requests.
-
-  CORBA::ORB_var orb_;
-  // ORB pointer.
 
   ACE_timer_t latency_;
   // aggregate latency of the requests.
