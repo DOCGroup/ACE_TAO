@@ -2342,7 +2342,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   // ACE_TRACE ("ACE_OS::sema_destroy");
 # if defined (ACE_HAS_POSIX_SEM)
   int result;
-#   if ! defined (ACE_LACKS_NAMED_POSIX_SEM)
+#   if !defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (s->name_)
     {
       ACE_OS::free ((void *) s->name_);
@@ -2351,7 +2351,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
     }
   else
 #   endif /* ! ACE_LACKS_NAMED_POSIX_SEM */
-#  if defined(CHORUS)
+#  if defined (CHORUS)
     {
       if (s->name_) 
         {
@@ -2427,7 +2427,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              O_CREAT,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
-      return (s->sema_ == (sem_t *)-1 ? -1 : 0);
+      return s->sema_ == (sem_t *) -1 ? -1 : 0;
     }
   else
 #   endif /*ACE_LACKS_NAMED_POSIX_SEM */
