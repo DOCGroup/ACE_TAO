@@ -1,46 +1,54 @@
+Mon May 03 21:57:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/tao_idl.cpp,TAO_IDL/be/be_init.cpp,
+          TAO_IDL/driver/drv_{args,fork,preproc}.cpp,
+          TAO_IDL/fe/fe_init.cpp,TAO_IDL/fe/lex.yy.cpp:
+          replaced exit (n) with ACE_OS::exit (n).  Thanks
+          to Steve Huston for reporting this abomination.
+
 Mon May  3 18:31:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/examples/POA/DSI/Database_i.{h,cpp}:
-	  Updated format of a CORBA::NO_IMPLEMENT exception and
-	  removed a leading underbar from an 'is_a' so that
-	  declaration, definition and call signature all agree.
+        * TAO/examples/POA/DSI/Database_i.{h,cpp}:
+          Updated format of a CORBA::NO_IMPLEMENT exception and
+          removed a leading underbar from an 'is_a' so that
+          declaration, definition and call signature all agree.
 
 Mon May  3 17:19:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.{h,i}:
-	  Added insertion and extraction operators for Any_var.
-	  CORBA spec requires these for all extraction and 
-	  copying insertion operators defined as members of
-	  Any.
+        * tao/Any.{h,i}:
+          Added insertion and extraction operators for Any_var.
+          CORBA spec requires these for all extraction and
+          copying insertion operators defined as members of
+          Any.
 
 Mon May  3 16:09:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Server_Reqeust.*:
-	* tao/GIOP_Server_Request.*:
- 	
-	  Changed all references to IIOP_ServerRequest to GIOP_ServerRequest
-	  since the implementation is GIOP-specific, not IIOP-specific.
+        * tao/IIOP_Server_Reqeust.*:
+        * tao/GIOP_Server_Request.*:
 
-	* tao/UIOP_Server_Request.*:
+          Changed all references to IIOP_ServerRequest to GIOP_ServerRequest
+          since the implementation is GIOP-specific, not IIOP-specific.
 
-	  A UIOP-specific ServerRequest class is no longer needed since
-	  the UIOP case falls under the GIOP case.  Removed these files.
+        * tao/UIOP_Server_Request.*:
 
-	* tao/Connect.cpp:
-	* tao/UIOP_Connect.cpp:
+          A UIOP-specific ServerRequest class is no longer needed since
+          the UIOP case falls under the GIOP case.  Removed these files.
 
-	  Changed references to IIOP_ServerRequest and UIOP_ServerRequest
-	  to GIOP_ServerRequest since both transport protocols fall under
-	  GIOP.
-	
+        * tao/Connect.cpp:
+        * tao/UIOP_Connect.cpp:
+
+          Changed references to IIOP_ServerRequest and UIOP_ServerRequest
+          to GIOP_ServerRequest since both transport protocols fall under
+          GIOP.
+
 Mon May  3 15:53:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/AST_Expression.h:
-	  Used #if defined (ACE_LACKS_LONGLONG_T) to conditionally
-	  define a longlong and unsigned longlong as a long and
-	  an unsigned long, respectively. This in only to make
-	  GreenHills/Solaris happy. Thanks to David Levine for
-	  reporting the problem.
+        * TAO_IDL/include/AST_Expression.h:
+          Used #if defined (ACE_LACKS_LONGLONG_T) to conditionally
+          define a longlong and unsigned longlong as a long and
+          an unsigned long, respectively. This in only to make
+          GreenHills/Solaris happy. Thanks to David Levine for
+          reporting the problem.
 
 Mon May 03 15:26:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
