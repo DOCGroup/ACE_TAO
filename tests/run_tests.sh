@@ -135,7 +135,7 @@ run Service_Config_Test                 # uses Service_Config
 run Priority_Task_Test                  # uses Task with priorities
 run IOStream_Test                       # uses ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # uses ACE::get_ip_interfaces()
-run Upgradable_RW_Test                  # uses RW locks
+test $chorus || test $LynxOS || run Upgradable_RW_Test # uses RW locks
 test $chorus || run Conn_Test           # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
 
 echo "Tests complete..."
