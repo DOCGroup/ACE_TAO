@@ -37,8 +37,8 @@ Legend:
 [ 101  ] 	POA/Generic_Servant runs
 [1101  ] POA/On_Demand_Activation compiles
 [1100  ] 	POA/On_Demand_Activation runs
-[ 101  ] POA/Explicit_Activation compiles
-[ 100  ] 	POA/Explicit_Activation runs
+[1101  ] POA/Explicit_Activation compiles
+[0100  ] 	POA/Explicit_Activation runs
 [x1xxxx] POA/Default_Servant compiles
 [xxxxxx] 	POA/Default_Servant runs
 
