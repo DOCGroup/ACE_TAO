@@ -1,3 +1,11 @@
+Mon Jul 05 20:50:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: added missing explicit
+          template instantiations, fixed TAO_String_Manager warnings and
+          incorrect type instantiation errors.
+
 Mon Jul  5 20:44:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp (open, open_default):
@@ -57,7 +65,7 @@ Mon Jul  5 19:47:04 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  Updated test to reflect changes in the behaviour of the Naming
  	  Service (due to clarifications in the INS spec).
 
-Mon Jul  5 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+Mon Jul 05 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
           orbsvcs/orbsvcs/RtecScheduler.idl
