@@ -41,8 +41,8 @@ class TAO_LB_ObjectGroup_Equal_To
 
 public:
 
-  int operator() (const TAO_LoadBalancing::ObjectGroup_ptr &lhs,
-                  const TAO_LoadBalancing::ObjectGroup_ptr &rhs) const;
+  int operator() (const TAO_PortableGroup::ObjectGroup_ptr &lhs,
+                  const TAO_PortableGroup::ObjectGroup_ptr &rhs) const;
   // Invokes the CORBA::Object::_is_equivalent() method to determine
   // if both references refer to the same object group.  However, this
   // is a weak test since is_equivalent() can only conclusively
@@ -64,8 +64,8 @@ class TAO_LB_FactoryCreationId_Equal_To
 public:
 
   int operator() (
-    const TAO_LoadBalancing::FactoryCreationId &lhs,
-    const TAO_LoadBalancing::FactoryCreationId &rhs) const;
+    const TAO_PortableGroup::FactoryCreationId &lhs,
+    const TAO_PortableGroup::FactoryCreationId &rhs) const;
   // Check if two FactoryCreationId values are the same.
 };
 

@@ -40,7 +40,7 @@ class TAO_LB_ObjectGroup_Hash
 
 public:
 
-  CORBA::ULong operator() (const TAO_LoadBalancing::ObjectGroup_ptr &) const;
+  CORBA::ULong operator() (const TAO_PortableGroup::ObjectGroup_ptr &) const;
   // Invokes the _hash() method on the ObjectGroup reference.
 };
 
@@ -56,7 +56,7 @@ class TAO_LB_FactoryCreationId_Hash
 
 public:
 
-  CORBA::ULong operator() (const TAO_LoadBalancing::FactoryCreationId &) const;
+  CORBA::ULong operator() (const TAO_PortableGroup::FactoryCreationId &) const;
   // Generates a hash value based on the contents of the
   // FactoryCreationId.
 };

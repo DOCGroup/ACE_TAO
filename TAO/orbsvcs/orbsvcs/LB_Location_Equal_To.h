@@ -31,7 +31,7 @@
  *        names are the same.
  *
  * This functor simply does a string comparison of each of the
- * elements in the given TAO_LoadBalancing::Location name sequences.
+ * elements in the given TAO_PortableGroup::Location name sequences.
  */
 class TAO_LB_Location_Equal_To
 {
@@ -39,8 +39,8 @@ public:
 
   /// Perform a string comparison on each of the sequence elements in
   /// the given locations.
-  int operator() (const LoadBalancing::Location &lhs,
-                  const LoadBalancing::Location &rhs) const;
+  int operator() (const PortableGroup::Location &lhs,
+                  const PortableGroup::Location &rhs) const;
 
 };
 

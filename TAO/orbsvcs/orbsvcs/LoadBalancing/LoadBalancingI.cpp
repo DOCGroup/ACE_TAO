@@ -66,7 +66,7 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (
 void
 TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
     LoadBalancing::LoadMonitor_ptr load_monitor,
-    const LoadBalancing::Location &the_location,
+    const PortableGroup::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::MonitorAlreadyPresent))
@@ -130,7 +130,7 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
 
 LoadBalancing::LoadMonitor_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_load_monitor (
-    const LoadBalancing::Location &the_location,
+    const PortableGroup::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::LocationNotFound))
@@ -151,7 +151,7 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_monitor (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_load_monitor (
-    const LoadBalancing::Location &the_location,
+    const PortableGroup::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::LocationNotFound))
@@ -175,17 +175,17 @@ TAO_LoadBalancing_ReplicationManager_i::remove_load_monitor (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::set_default_properties (
-    const LoadBalancing::Properties &props,
+    const PortableGroup::Properties &props,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::InvalidProperty,
-                   LoadBalancing::UnsupportedProperty))
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.set_default_properties (props,
                                                   ACE_TRY_ENV);
 }
 
-LoadBalancing::Properties *
+PortableGroup::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_default_properties (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -196,11 +196,11 @@ TAO_LoadBalancing_ReplicationManager_i::get_default_properties (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
-    const LoadBalancing::Properties &props,
+    const PortableGroup::Properties &props,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::InvalidProperty,
-                   LoadBalancing::UnsupportedProperty))
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.remove_default_properties (props,
                                                      ACE_TRY_ENV);
@@ -209,18 +209,18 @@ TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
     const char *type_id,
-    const LoadBalancing::Properties &overrides,
+    const PortableGroup::Properties &overrides,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::InvalidProperty,
-                   LoadBalancing::UnsupportedProperty))
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.set_type_properties (type_id,
                                                overrides,
                                                ACE_TRY_ENV);
 }
 
-LoadBalancing::Properties *
+PortableGroup::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
     const char *type_id,
     CORBA::Environment &ACE_TRY_ENV)
@@ -234,11 +234,11 @@ TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
     const char *type_id,
-    const LoadBalancing::Properties &props,
+    const PortableGroup::Properties &props,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::InvalidProperty,
-                   LoadBalancing::UnsupportedProperty))
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.remove_type_properties (type_id,
                                                   props,
@@ -247,45 +247,45 @@ TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::set_properties_dynamically (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Properties &overrides,
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Properties &overrides,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::InvalidProperty,
-                   LoadBalancing::UnsupportedProperty))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.set_properties_dynamically (object_group,
                                                       overrides,
                                                       ACE_TRY_ENV);
 }
 
-LoadBalancing::Properties *
+PortableGroup::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_properties (
-    LoadBalancing::ObjectGroup_ptr object_group,
+    PortableGroup::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->property_manager_.get_properties (object_group,
                                             ACE_TRY_ENV);
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::create_member (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Location &the_location,
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Location &the_location,
     const char *type_id,
-    const LoadBalancing::Criteria &the_criteria,
+    const PortableGroup::Criteria &the_criteria,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberAlreadyPresent,
-                   LoadBalancing::NoFactory,
-                   LoadBalancing::ObjectNotCreated,
-                   LoadBalancing::InvalidCriteria,
-                   LoadBalancing::CannotMeetCriteria))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberAlreadyPresent,
+                   PortableGroup::NoFactory,
+                   PortableGroup::ObjectNotCreated,
+                   PortableGroup::InvalidCriteria,
+                   PortableGroup::CannotMeetCriteria))
 {
   return
     this->object_group_manager_.create_member (object_group,
@@ -295,16 +295,16 @@ TAO_LoadBalancing_ReplicationManager_i::create_member (
                                                ACE_TRY_ENV);
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::add_member (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Location &the_location,
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Location &the_location,
     CORBA::Object_ptr member,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberAlreadyPresent,
-                   LoadBalancing::ObjectNotAdded))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberAlreadyPresent,
+                   PortableGroup::ObjectNotAdded))
 {
   return
     this->object_group_manager_.add_member (object_group,
@@ -313,14 +313,14 @@ TAO_LoadBalancing_ReplicationManager_i::add_member (
                                             ACE_TRY_ENV);
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::remove_member (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Location &the_location,
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberNotFound))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberNotFound))
 {
   return
     this->object_group_manager_.remove_member (object_group,
@@ -328,36 +328,36 @@ TAO_LoadBalancing_ReplicationManager_i::remove_member (
                                                ACE_TRY_ENV);
 }
 
-LoadBalancing::Locations *
+PortableGroup::Locations *
 TAO_LoadBalancing_ReplicationManager_i::locations_of_members (
-    LoadBalancing::ObjectGroup_ptr object_group,
+    PortableGroup::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.locations_of_members (object_group,
                                                       ACE_TRY_ENV);
 }
 
-LoadBalancing::ObjectGroupId
+PortableGroup::ObjectGroupId
 TAO_LoadBalancing_ReplicationManager_i::get_object_group_id (
-    LoadBalancing::ObjectGroup_ptr object_group,
+    PortableGroup::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.get_object_group_id (object_group,
                                                      ACE_TRY_ENV);
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_object_group_ref (
-    LoadBalancing::ObjectGroup_ptr object_group,
+    PortableGroup::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.get_object_group_ref (object_group,
@@ -366,12 +366,12 @@ TAO_LoadBalancing_ReplicationManager_i::get_object_group_ref (
 
 CORBA::Object_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_member_ref (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Location &the_location,
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberNotFound))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberNotFound))
 {
   return
     this->object_group_manager_.get_member_ref (object_group,
@@ -382,16 +382,16 @@ TAO_LoadBalancing_ReplicationManager_i::get_member_ref (
 CORBA::Object_ptr
 TAO_LoadBalancing_ReplicationManager_i::create_object (
     const char * type_id,
-    const LoadBalancing::Criteria & the_criteria,
-    LoadBalancing::GenericFactory::FactoryCreationId_out
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::NoFactory,
-                   LoadBalancing::ObjectNotCreated,
-                   LoadBalancing::InvalidCriteria,
-                   LoadBalancing::InvalidProperty,
-                   LoadBalancing::CannotMeetCriteria))
+                   PortableGroup::NoFactory,
+                   PortableGroup::ObjectNotCreated,
+                   PortableGroup::InvalidCriteria,
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::CannotMeetCriteria))
 {
   CORBA::Object_ptr obj =
     this->generic_factory_.create_object (type_id,
@@ -407,13 +407,13 @@ TAO_LoadBalancing_ReplicationManager_i::create_object (
 #if 0
 void
 TAO_LoadBalancing_ReplicationManager_i::process_criteria (
-  const LoadBalancing::Criteria & the_criteria,
+  const PortableGroup::Criteria & the_criteria,
   CORBA::Environment &ACE_TRY_ENV)
 {
   // List of invalid criteria.  If this list has a length greater than
-  // zero, then the LoadBalancing::InvalidCriteria exception will
+  // zero, then the PortableGroup::InvalidCriteria exception will
   // be thrown.
-  LoadBalancing::Criteria invalid_criteria;
+  PortableGroup::Criteria invalid_criteria;
 
   int found_factory = 0; // If factory was found in the_criteria, then
                          // set to 1.
@@ -423,7 +423,7 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
   for (CORBA::ULong i = 0; i < criteria_size; ++i)
     {
       CORBA::UShort initial_number_replicas = 0;
-      LoadBalancing::FactoryInfos factory_infos;
+      PortableGroup::FactoryInfos factory_infos;
 
       // Obtain the InitialNumberReplicas from the_criteria.
       if (this->get_initial_number_replicas (type_id,
@@ -444,25 +444,25 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
 
       // Unknown property
       else
-        ACE_THROW (LoadBalancing::InvalidProperty (the_criteria[i].nam,
+        ACE_THROW (PortableGroup::InvalidProperty (the_criteria[i].nam,
                                                    the_criteria[i].val));
     }
 
   if (invalid_criteria.length () != 0)
-    ACE_THROW (LoadBalancing::InvalidCriteria (invalid_criteria));
+    ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
 
   if (found_factory == 0)
-    ACE_THROW (LoadBalancing::NoFactory ());
+    ACE_THROW (PortableGroup::NoFactory ());
 }
 #endif  /* 0 */
 
 void
 TAO_LoadBalancing_ReplicationManager_i::delete_object (
-    const LoadBalancing::GenericFactory::FactoryCreationId &
+    const PortableGroup::GenericFactory::FactoryCreationId &
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectNotFound))
+                   PortableGroup::ObjectNotFound))
 {
   this->generic_factory_.delete_object (factory_creation_id,
                                         ACE_TRY_ENV);

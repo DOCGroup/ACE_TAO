@@ -39,7 +39,7 @@ class TAO_LB_LoadBalancer;
 // Forward declaration
 
 class TAO_LoadBalancing_Export TAO_LB_ReplicaProxy :
-  public virtual POA_LoadBalancing::ReplicaProxy,
+  public virtual POA_PortableGroup::ReplicaProxy,
   public virtual PortableServer::RefCountServantBase
 {
   friend class TAO_LB_LoadBalancer;
@@ -70,7 +70,7 @@ public:
   // react proactively to those...
 
   virtual void disconnect (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
+    ACE_THROW_SPEC ((PortableGroup::ReplicaProxy::NotConnected,
                      CORBA::SystemException));
   // Send a request to disconnect from the LoadBalancer.
 
@@ -81,7 +81,7 @@ public:
   // @@ Ossama: i added this flag to avoid multiple nomimal load
   // advisories and high load advisories to be sent.
 
-  LoadBalancing::ReplicaControl_var control_;
+  PortableGroup::ReplicaControl_var control_;
   // Reference to the ReplicaControl.
 
 private:
@@ -91,11 +91,11 @@ private:
   // the heap.
 
   void connect (TAO_LB_LoadBalancer *balancer,
-                LoadBalancing::ReplicaControl_ptr control,
+                PortableGroup::ReplicaControl_ptr control,
                 CORBA::Object_ptr replica,
                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
-                     LoadBalancing::ReplicaProxy::NilReplica,
+    ACE_THROW_SPEC ((PortableGroup::ReplicaProxy::NilControl,
+                     PortableGroup::ReplicaProxy::NilReplica,
                      CORBA::SystemException));
   // Register the ReplicaControl and the Object being load balanced
   // with the ReplicaProxy.

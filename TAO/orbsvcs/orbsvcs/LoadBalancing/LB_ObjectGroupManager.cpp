@@ -21,40 +21,40 @@ TAO_LB_ObjectGroupManager::TAO_LB_ObjectGroupManager (
 {
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::create_member (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const LoadBalancing::Location & /* the_location */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    const PortableGroup::Location & /* the_location */,
     const char * /* type_id */,
-    const LoadBalancing::Criteria & /* the_criteria */,
+    const PortableGroup::Criteria & /* the_criteria */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberAlreadyPresent,
-                   LoadBalancing::NoFactory,
-                   LoadBalancing::ObjectNotCreated,
-                   LoadBalancing::InvalidCriteria,
-                   LoadBalancing::CannotMeetCriteria))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberAlreadyPresent,
+                   PortableGroup::NoFactory,
+                   PortableGroup::ObjectNotCreated,
+                   PortableGroup::InvalidCriteria,
+                   PortableGroup::CannotMeetCriteria))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    LoadBalancing::ObjectGroup::_nil ());
+                    PortableGroup::ObjectGroup::_nil ());
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::add_member (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const LoadBalancing::Location & /* the_location */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    const PortableGroup::Location & /* the_location */,
     CORBA::Object_ptr /* member */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberAlreadyPresent,
-                   LoadBalancing::ObjectNotAdded))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberAlreadyPresent,
+                   PortableGroup::ObjectNotAdded))
 {
 #if 0
   TAO_LB_ObjectGroup_Map_Entry group_entry =
     this->object_group_map_.get_group_entry (object_group, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (LoadBalancing::ObjectGroup::_nil ());
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   ACE_NEW_THROW_EX (replica_info,
                     TAO_LB_Replica_Info,
@@ -63,7 +63,7 @@ TAO_LB_ObjectGroupManager::add_member (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (LoadBalancing::ObjectGroup::_nil ());
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   auto_ptr<TAO_LB_Replica_Info> safe_replica_info = replica_info;
 
@@ -71,50 +71,50 @@ TAO_LB_ObjectGroupManager::add_member (
 
   int result = this->location_map_.bind (the_location, member);
   if (result == 1)
-    ACE_THROW_RETURN (LoadBalancing::MemberAlreadyPresent (),
-                      LoadBalancing::ObjectGroup::_nil ());
+    ACE_THROW_RETURN (PortableGroup::MemberAlreadyPresent (),
+                      PortableGroup::ObjectGroup::_nil ());
   else if (result == -1)
-    ACE_THROW_RETURN (LoadBalancing::ObjectNotAdded (),
-                      LoadBalancing::ObjectGroup::_nil ());
+    ACE_THROW_RETURN (PortableGroup::ObjectNotAdded (),
+                      PortableGroup::ObjectGroup::_nil ());
 
   // Transfer ownership to the location map.
   (void) obj._retn ();
 #else
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    LoadBalancing::ObjectGroup::_nil ());
+                    PortableGroup::ObjectGroup::_nil ());
 #endif  /* 0 */
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::remove_member (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const LoadBalancing::Location & /* the_location */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    const PortableGroup::Location & /* the_location */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberNotFound))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberNotFound))
 {
   // @@ DO NOT REMOVE MEMBER IF ITS GENERICFACTORY REFERENCE IS NOT
   //    NIL!
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    LoadBalancing::ObjectGroup::_nil ());
+                    PortableGroup::ObjectGroup::_nil ());
 }
 
-LoadBalancing::Locations *
+PortableGroup::Locations *
 TAO_LB_ObjectGroupManager::locations_of_members (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
 #if 0
   TAO_LB_ObjectGroup_Map_Entry group_entry =
     this->get_group_entry (object_group, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (LoadBalancing::ObjectGroup::_nil ());
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
-  LoadBalancing::Locations *temp = 0;
+  PortableGroup::Locations *temp = 0;
   ACE_NEW_THROW_EX (temp,
-                    LoadBalancing::Locations,
+                    PortableGroup::Locations,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -122,7 +122,7 @@ TAO_LB_ObjectGroupManager::locations_of_members (
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  LoadBalancing::Locations_var locations = temp;
+  PortableGroup::Locations_var locations = temp;
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, object_group->lock);
@@ -147,35 +147,35 @@ TAO_LB_ObjectGroupManager::locations_of_members (
 #endif  /* 0 */
 }
 
-LoadBalancing::ObjectGroupId
+PortableGroup::ObjectGroupId
 TAO_LB_ObjectGroupManager::get_object_group_id (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-LoadBalancing::ObjectGroup_ptr
+PortableGroup::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::get_object_group_ref (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
+                   PortableGroup::ObjectGroupNotFound))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    LoadBalancing::ObjectGroup::_nil ());
+                    PortableGroup::ObjectGroup::_nil ());
 }
 
 CORBA::Object_ptr
 TAO_LB_ObjectGroupManager::get_member_ref (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const LoadBalancing::Location & /* loc */,
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    const PortableGroup::Location & /* loc */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberNotFound))
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberNotFound))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     CORBA::Object::_nil ());

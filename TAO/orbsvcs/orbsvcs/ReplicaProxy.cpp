@@ -40,7 +40,7 @@ TAO_LB_ReplicaProxy::current_load (CORBA::Float load,
 
 void
 TAO_LB_ReplicaProxy::disconnect (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
+  ACE_THROW_SPEC ((PortableGroup::ReplicaProxy::NotConnected,
                    CORBA::SystemException))
 {
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -56,17 +56,17 @@ TAO_LB_ReplicaProxy::disconnect (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW (LoadBalancing::ReplicaProxy::NotConnected ());
+      ACE_THROW (PortableGroup::ReplicaProxy::NotConnected ());
     }
 }
 
 void
 TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
-                              LoadBalancing::ReplicaControl_ptr control,
+                              PortableGroup::ReplicaControl_ptr control,
                               CORBA::Object_ptr replica,
                               CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
-                   LoadBalancing::ReplicaProxy::NilReplica,
+  ACE_THROW_SPEC ((PortableGroup::ReplicaProxy::NilControl,
+                   PortableGroup::ReplicaProxy::NilReplica,
                    CORBA::SystemException))
 {
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -83,14 +83,14 @@ TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
     this->balancer_ = balancer;
 
   if (!CORBA::is_nil (control))
-    this->control_ = LoadBalancing::ReplicaControl::_duplicate (control);
+    this->control_ = PortableGroup::ReplicaControl::_duplicate (control);
   else
-    ACE_THROW (LoadBalancing::ReplicaProxy::NilControl ());
+    ACE_THROW (PortableGroup::ReplicaProxy::NilControl ());
 
   if (!CORBA::is_nil (control))
       this->replica_ = CORBA::Object::_duplicate (replica);
   else
-    ACE_THROW (LoadBalancing::ReplicaProxy::NilReplica ());
+    ACE_THROW (PortableGroup::ReplicaProxy::NilReplica ());
 
   // Now indicate that connection to LoadBalancer has been made.
   this->connected_ = 1;

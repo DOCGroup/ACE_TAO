@@ -22,7 +22,6 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/LoadBalancingS.h"
 #include "ace/Containers.h"
 #include "ace/Synch.h"
 
@@ -70,9 +69,9 @@ public:
 
 private:
 
-//   /// Lock used to ensure atomic access to state retained by this
-//   /// class.
-//   TAO_SYNCH_MUTEX lock_;
+  /// Lock used to ensure atomic access to state retained by this
+  /// class.
+  /// TAO_SYNCH_MUTEX lock_;
 
 };
 

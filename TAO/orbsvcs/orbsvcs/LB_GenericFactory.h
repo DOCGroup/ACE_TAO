@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServerC.h"
-#include "orbsvcs/LoadBalancingC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #include "LB_Location_Map.h"
 
@@ -37,7 +37,7 @@ struct TAO_LB_ObjectGroup_Map_Entry;
 /**
  * @class TAO_LB_GenericFactory
  *
- * @brief LoadBalancing::GenericFactory implementation used by the
+ * @brief PortableGroup::GenericFactory implementation used by the
  *        load balancer when creating object groups.
  *
  * This GenericFactory creates an object group reference for given set
@@ -45,7 +45,7 @@ struct TAO_LB_ObjectGroup_Map_Entry;
  * if the "infrastructure-controlled" membership style is configured.
  */
 class TAO_LB_GenericFactory
-  : public virtual LoadBalancing::GenericFactory
+  : public virtual PortableGroup::GenericFactory
 {
 public:
 
@@ -67,16 +67,16 @@ public:
    */
   virtual CORBA::Object_ptr create_object (
       const char * type_id,
-      const LoadBalancing::Criteria & the_criteria,
-      LoadBalancing::GenericFactory::FactoryCreationId_out
+      const PortableGroup::Criteria & the_criteria,
+      PortableGroup::GenericFactory::FactoryCreationId_out
         factory_creation_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::NoFactory,
-                     LoadBalancing::ObjectNotCreated,
-                     LoadBalancing::InvalidCriteria,
-                     LoadBalancing::InvalidProperty,
-                     LoadBalancing::CannotMeetCriteria));
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::CannotMeetCriteria));
 
   /**
    * Delete the object corresponding to the provided
@@ -85,11 +85,11 @@ public:
    * Afterward, the ObjectGroup itself will be deleted.
    */
   virtual void delete_object (
-      const LoadBalancing::GenericFactory::FactoryCreationId &
+      const PortableGroup::GenericFactory::FactoryCreationId &
         factory_creation_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectNotFound));
+                     PortableGroup::ObjectNotFound));
 
   //@}
 
@@ -103,7 +103,7 @@ private:
   /// object group being created.
   void populate_object_group (
          TAO_LB_ObjectGroup_Map_Entry *entry,
-         const LoadBalancing::FactoryInfos &factory_infos,
+         const PortableGroup::FactoryInfos &factory_infos,
          CORBA::Environment &ACE_TRY_ENV);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.

@@ -16,7 +16,7 @@
 
 #include "ace/pre.h"
 
-#include "orbsvcs/LoadBalancingC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,13 +33,13 @@ class TAO_LB_PropertyManager;
 /**
  * @class TAO_LB_ObjectGroupManager
  *
- * @brief LoadBalancing::ObjectGroupManager implementation.
+ * @brief PortableGroup::ObjectGroupManager implementation.
  *
  * The ObjectGroupManager provides the interface necessary to
  * facilitate application-controlled object group membership.
  */
 class TAO_LB_ObjectGroupManager
-  : public virtual LoadBalancing::ObjectGroupManager
+  : public virtual PortableGroup::ObjectGroupManager
 {
 public:
 
@@ -49,36 +49,36 @@ public:
                              TAO_LB_PropertyManager &property_manager);
 
   /**
-   * @name TAO_LoadBalancer::ObjectGroupManager methods
+   * @name PortableGroup::ObjectGroupManager methods
    */
   //@{
 
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
-  virtual LoadBalancing::ObjectGroup_ptr create_member (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  virtual PortableGroup::ObjectGroup_ptr create_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       const char * type_id,
-      const LoadBalancing::Criteria & the_criteria,
+      const PortableGroup::Criteria & the_criteria,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberAlreadyPresent,
-                     LoadBalancing::NoFactory,
-                     LoadBalancing::ObjectNotCreated,
-                     LoadBalancing::InvalidCriteria,
-                     LoadBalancing::CannotMeetCriteria));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberAlreadyPresent,
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::CannotMeetCriteria));
 
   /// Add an existing object to the ObjectGroup.
-  virtual LoadBalancing::ObjectGroup_ptr add_member (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  virtual PortableGroup::ObjectGroup_ptr add_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       CORBA::Object_ptr member,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberAlreadyPresent,
-                     LoadBalancing::ObjectNotAdded));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberAlreadyPresent,
+                     PortableGroup::ObjectNotAdded));
 
   /**
    * Remove an object at a specific location from the given
@@ -87,45 +87,45 @@ public:
    * infrastructure (load balancer) will be deleted by the
    * infrastructure.
    */
-  virtual LoadBalancing::ObjectGroup_ptr remove_member (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  virtual PortableGroup::ObjectGroup_ptr remove_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberNotFound));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberNotFound));
 
   /// Return the locations of the members in the given ObjectGroup.
-  virtual LoadBalancing::Locations * locations_of_members (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::Locations * locations_of_members (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   /// @note Does this method make sense for load balanced objects?
-  virtual LoadBalancing::ObjectGroupId get_object_group_id (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::ObjectGroupId get_object_group_id (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   /// @note Does this method make sense for load balanced objects?
-  virtual LoadBalancing::ObjectGroup_ptr get_object_group_ref (
-      LoadBalancing::ObjectGroup_ptr object_group,
+  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
+      PortableGroup::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound));
+                     PortableGroup::ObjectGroupNotFound));
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
   virtual CORBA::Object_ptr get_member_ref (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & loc,
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & loc,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::ObjectGroupNotFound,
-                     LoadBalancing::MemberNotFound));
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberNotFound));
 
   //@}
 
@@ -137,18 +137,18 @@ public:
 
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
-  LoadBalancing::ObjectGroup_ptr create_member_i (
-      LoadBalancing::ObjectGroup_ptr object_group,
-      const LoadBalancing::Location & the_location,
+  PortableGroup::ObjectGroup_ptr create_member_i (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
       const char * type_id,
-      const LoadBalancing::Criteria & the_criteria,
+      const PortableGroup::Criteria & the_criteria,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::MemberAlreadyPresent,
-                     LoadBalancing::NoFactory,
-                     LoadBalancing::ObjectNotCreated,
-                     LoadBalancing::InvalidCriteria,
-                     LoadBalancing::CannotMeetCriteria));
+                     PortableGroup::MemberAlreadyPresent,
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::CannotMeetCriteria));
 
   //@}
 

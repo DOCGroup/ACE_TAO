@@ -12,7 +12,7 @@ TAO_LB_Replica_Hash::operator() (
 
 ACE_INLINE CORBA::ULong
 TAO_LB_Location_Hash::operator() (
-  const TAO_LoadBalancing::Location &location) const
+  const TAO_PortableGroup::Location &location) const
 {
   CORBA::ULong hash = 0;
 

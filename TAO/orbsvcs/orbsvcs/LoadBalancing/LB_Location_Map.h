@@ -24,6 +24,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/LoadBalancingC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #include "LB_ReplicaInfo.h"
 #include "LB_Location_Hash.h"
@@ -55,7 +56,7 @@ struct TAO_LB_Location_Map_Entry
 
 /// Location hash map.
 typedef ACE_Hash_Map_Manager_Ex<
-  LoadBalancing::Location,
+  PortableGroup::Location,
   TAO_LB_Location_Map_Entry *,
   TAO_LB_Location_Hash,
   TAO_LB_Location_Equal_To,

@@ -37,7 +37,7 @@ TAO_LB_RPMS_Monitor::init (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-LoadBalancing::LoadList *
+PortableGroup::LoadList *
 TAO_LB_RPMS_Monitor::current_load (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -49,9 +49,9 @@ TAO_LB_RPMS_Monitor::current_load (CORBA::Environment &ACE_TRY_ENV)
   // This optimization won't make a difference on single-threaded
   // server replicas.
 
-  LoadBalancing::LoadList *tmp_loads = 0;
+  PortableGroup::LoadList *tmp_loads = 0;
   ACE_NEW_THROW_EX (tmp_loads,
-                    LoadBalancing::LoadList,
+                    PortableGroup::LoadList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -59,7 +59,7 @@ TAO_LB_RPMS_Monitor::current_load (CORBA::Environment &ACE_TRY_ENV)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  LoadBalancing::LoadList_var loads = tmp_loads;
+  PortableGroup::LoadList_var loads = tmp_loads;
 
   loads->length (1);
 
