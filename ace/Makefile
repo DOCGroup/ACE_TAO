@@ -865,10 +865,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -901,6 +897,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -941,10 +941,6 @@ endif # GHS
  Synch.h \
  ACE.h \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -995,6 +991,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -1092,10 +1092,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1128,6 +1124,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  ARGV.i
 
@@ -1162,10 +1162,6 @@ endif # GHS
  Synch.h \
  ACE.h \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1216,6 +1212,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -1293,10 +1293,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1329,6 +1325,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i
 
 .obj/Configuration.o .obj/Configuration.so .shobj/Configuration.o .shobj/Configuration.so: Configuration.cpp \
@@ -1378,10 +1378,6 @@ endif # GHS
  Log_Record.i \
  Hash_Map_Manager_T.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1430,6 +1426,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Service_Config.i \
@@ -1513,10 +1513,6 @@ endif # GHS
  Event_Handler.h \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -1654,10 +1650,6 @@ endif # GHS
  Log_Record.i \
  Hash_Map_Manager_T.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1707,6 +1699,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  SString.h \
@@ -1772,10 +1768,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1808,6 +1800,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Stats.i
 
@@ -1876,10 +1872,6 @@ endif # GHS
  Synch.h \
  ACE.h \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1926,6 +1918,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -2080,10 +2076,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -2121,6 +2113,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -2190,10 +2186,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -2226,6 +2218,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Stats.i
 
@@ -2264,10 +2260,6 @@ endif # GHS
  Event_Handler.i \
  Signal.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -2312,6 +2304,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i
 
 .obj/Time_Request_Reply.o .obj/Time_Request_Reply.so .shobj/Time_Request_Reply.o .shobj/Time_Request_Reply.so: Time_Request_Reply.cpp \
@@ -2418,10 +2414,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -2467,6 +2459,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Hash_T.cpp \
@@ -2514,10 +2510,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -2563,6 +2555,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Heap_T.cpp
@@ -2604,10 +2600,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -2653,6 +2645,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_List_T.cpp
@@ -2703,10 +2699,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -2739,6 +2731,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Timer_Queue.h \
  Timer_Queue_T.h \
@@ -2782,10 +2778,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -2831,6 +2823,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Wheel_T.cpp \
@@ -2873,10 +2869,6 @@ endif # GHS
  Event_Handler.h \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -2933,6 +2925,10 @@ endif # GHS
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  SString.h \
@@ -2981,10 +2977,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -3045,10 +3037,6 @@ endif # GHS
  Thread_Adapter.inl \
  Thread.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -3091,6 +3079,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Thread_Manager.i \
  SOCK_Connector.h \
@@ -3184,10 +3176,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -3234,6 +3222,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Reactor.i \
@@ -3310,10 +3302,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -3361,6 +3349,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -3410,6 +3402,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -3466,10 +3460,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -3502,6 +3492,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  ARGV.i
 
@@ -3538,10 +3532,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -3590,6 +3580,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Process_Manager.h \
@@ -3642,10 +3636,6 @@ endif # GHS
  Event_Handler.h \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Atomic_Op.i \
@@ -3686,6 +3676,184 @@ endif # GHS
  OS.i \
  ACE.i \
  Synch_Options.i
+
+.obj/Process_Semaphore.o .obj/Process_Semaphore.so .shobj/Process_Semaphore.o .shobj/Process_Semaphore.so: Process_Semaphore.cpp \
+ Process_Semaphore.h \
+ pre.h \
+ Synch.h \
+ ACE.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ ACE.i \
+ Synch.i \
+ Synch_T.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Atomic_Op.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Process_Semaphore.inl
+
+.obj/Process_Mutex.o .obj/Process_Mutex.so .shobj/Process_Mutex.o .shobj/Process_Mutex.so: Process_Mutex.cpp \
+ Process_Mutex.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ ACE.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ ACE.i \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Process_Mutex.inl \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Atomic_Op.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
+
+.obj/RW_Process_Mutex.o .obj/RW_Process_Mutex.so .shobj/RW_Process_Mutex.o .shobj/RW_Process_Mutex.so: RW_Process_Mutex.cpp \
+ RW_Process_Mutex.h \
+ pre.h \
+ File_Lock.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ File_Lock.inl \
+ RW_Process_Mutex.inl \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
+
+.obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp \
+ File_Lock.h \
+ pre.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ File_Lock.inl \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
 .obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp Thread.h \
  pre.h \
@@ -3755,10 +3923,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -3805,6 +3969,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Thread_Manager.i \
  Dynamic.h \
@@ -3853,10 +4021,6 @@ endif # GHS
  ACE.i \
  Thread.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -3899,6 +4063,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Thread_Manager.i \
  Thread_Exit.h \
@@ -3939,10 +4107,6 @@ endif # GHS
  Synch.h \
  ACE.h \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4005,10 +4169,6 @@ endif # GHS
  Thread_Adapter.inl \
  Thread.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4051,6 +4211,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Thread_Manager.i
 
@@ -4090,10 +4254,6 @@ endif # GHS
  Thread.i \
  Token.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4151,10 +4311,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -4190,6 +4346,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -4242,10 +4402,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4292,6 +4448,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -4383,10 +4543,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4433,6 +4589,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -4486,6 +4646,8 @@ endif # GHS
  Service_Repository.i \
  Strategies.i \
  Message_Queue.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Msg_WFMO_Reactor.i
 
@@ -4566,10 +4728,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4602,6 +4760,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Select_Reactor.h \
  Select_Reactor_T.h \
@@ -4677,10 +4839,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4713,6 +4871,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -4762,6 +4924,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -4809,10 +4973,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -4863,6 +5023,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Reactor.i \
@@ -4910,6 +5074,8 @@ endif # GHS
  Service_Repository.i \
  Strategies.i \
  Message_Queue.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Msg_WFMO_Reactor.h \
  Msg_WFMO_Reactor.i \
@@ -4963,10 +5129,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -5013,6 +5175,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5067,10 +5233,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -5117,6 +5279,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5221,10 +5387,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -5271,6 +5433,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5327,10 +5493,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -5397,6 +5559,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5451,10 +5617,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -5501,6 +5663,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5554,6 +5720,8 @@ endif # GHS
  Service_Repository.i \
  Strategies.i \
  Message_Queue.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Timer_Heap.h \
  Timer_Heap_T.h \
@@ -5592,10 +5760,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -5662,6 +5826,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5719,10 +5887,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -5769,6 +5933,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Timer_Queue.h \
@@ -5912,10 +6080,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -5966,6 +6130,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Reactor.i \
@@ -6012,6 +6180,8 @@ endif # GHS
  Message_Queue_T.i \
  Message_Queue_T.cpp \
  Message_Queue.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i
 
@@ -6455,10 +6625,6 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -6613,10 +6779,6 @@ endif # GHS
  Handle_Set.h \
  Handle_Set.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -7858,10 +8020,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -7906,6 +8064,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i
 
@@ -8604,10 +8766,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -8645,6 +8803,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -8697,6 +8859,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -8771,10 +8935,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -8812,6 +8972,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -8864,6 +9028,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -8936,10 +9102,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -8977,6 +9139,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -9029,6 +9195,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -9114,10 +9282,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -9155,7 +9319,13 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  MEM_SAP.i \
  Message_Block.h \
  Message_Block.i \
@@ -9269,10 +9439,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -9310,7 +9476,13 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  MEM_SAP.i \
  Message_Block.h \
  Message_Block.i \
@@ -9374,10 +9546,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -9415,7 +9583,13 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  MEM_SAP.i \
  Message_Block.h \
  Message_Block.i \
@@ -9468,10 +9642,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -9509,7 +9679,13 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  MEM_SAP.i
 
 .obj/MEM_Stream.o .obj/MEM_Stream.so .shobj/MEM_Stream.o .shobj/MEM_Stream.so: MEM_Stream.cpp \
@@ -9565,10 +9741,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -9606,7 +9778,13 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  MEM_SAP.i \
  Message_Block.h \
  Message_Block.i \
@@ -9688,10 +9866,6 @@ endif # GHS
  Service_Object.i \
  Signal.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -9736,6 +9910,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  SString.h \
@@ -9786,6 +9964,8 @@ endif # GHS
  Strategies_T.i \
  Strategies_T.cpp \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -9842,10 +10022,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -9883,6 +10059,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Obstack.i \
  Service_Config.h \
@@ -9934,7 +10114,6 @@ endif # GHS
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
- Proactor.h \
  Thread_Manager.h \
  Thread_Manager.i \
  Process_Manager.h \
@@ -9982,10 +10161,6 @@ endif # GHS
  Event_Handler.i \
  Service_Object.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -10034,6 +10209,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  SString.h \
@@ -10097,6 +10276,8 @@ endif # GHS
  Strategies_T.cpp \
  Strategies.i \
  Message_Queue.i \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i
 
 .obj/Service_Object.o .obj/Service_Object.so .shobj/Service_Object.o .shobj/Service_Object.so: Service_Object.cpp \
@@ -10136,10 +10317,6 @@ endif # GHS
  Event_Handler.i \
  Service_Object.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -10195,10 +10372,6 @@ endif # GHS
  Event_Handler.i \
  Service_Object.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -10259,10 +10432,6 @@ endif # GHS
  Event_Handler.i \
  Service_Object.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -10313,6 +10482,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Thread_Manager.i \
  Task.i \
@@ -10359,6 +10532,8 @@ endif # GHS
  Service_Repository.h \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -10448,10 +10623,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -10489,6 +10660,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Obstack.i \
  Service_Config.h \
@@ -10561,10 +10736,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -10597,6 +10768,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  ARGV.i \
  Svc_Conf.h \
@@ -10656,6 +10831,8 @@ endif # GHS
  Service_Repository.h \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -10715,10 +10892,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -10756,6 +10929,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -10807,10 +10984,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -10848,6 +11021,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -10913,10 +11090,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -10954,6 +11127,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -11004,10 +11181,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -11045,6 +11218,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
@@ -11094,6 +11271,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i
@@ -11141,10 +11320,6 @@ endif # GHS
  Thread_Adapter.inl \
  Thread.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -11185,6 +11360,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Thread_Manager.i \
  Task.i \
@@ -11233,6 +11412,8 @@ endif # GHS
  Service_Types.i \
  Service_Repository.i \
  WFMO_Reactor.h \
+ Process_Mutex.h \
+ Process_Mutex.inl \
  WFMO_Reactor.i \
  Strategies.i \
  Message_Queue.i \
@@ -11275,10 +11456,6 @@ endif # GHS
  Synch.h \
  ACE.h \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -11329,6 +11506,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -11389,10 +11570,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -11430,6 +11607,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i
 
 .obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp \
@@ -11502,10 +11683,6 @@ endif # GHS
  Event_Handler.i \
  Signal.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -11550,6 +11727,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
@@ -11597,10 +11778,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -11638,6 +11815,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Obstack.i
 
@@ -11683,10 +11864,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -11724,6 +11901,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Read_Buffer.i \
  Service_Config.h \
@@ -11886,10 +12067,6 @@ endif # GHS
  Event_Handler.h \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Atomic_Op.i \
@@ -11929,6 +12106,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Synch_Options.h \
  Synch_Options.i \
@@ -12010,10 +12191,6 @@ endif # GHS
  Event_Handler.h \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -12059,6 +12236,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Map_Manager.h \
  Map_Manager.i \
@@ -12118,10 +12299,6 @@ endif # GHS
  Synch.h \
  ACE.h \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -12172,6 +12349,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -12228,10 +12409,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -12283,6 +12460,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -12338,10 +12519,6 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -12393,6 +12570,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Config.h \
  Service_Object.h \
@@ -12453,10 +12634,6 @@ endif # GHS
  ACE.i \
  Event_Handler.i \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -12502,6 +12679,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Synch_Options.h \
  Synch_Options.i \
@@ -12569,10 +12750,6 @@ endif # GHS
  Service_Object.i \
  Signal.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -12617,6 +12794,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  SString.h \
@@ -12722,10 +12903,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -12758,6 +12935,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Local_Name_Space_T.h \
  Name_Space.h \
@@ -12810,7 +12991,11 @@ endif # GHS
  Local_Name_Space_T.cpp \
  Auto_Ptr.h \
  Auto_Ptr.i \
- Auto_Ptr.cpp
+ Auto_Ptr.cpp \
+ RW_Process_Mutex.h \
+ File_Lock.h \
+ File_Lock.inl \
+ RW_Process_Mutex.inl
 
 .obj/Name_Proxy.o .obj/Name_Proxy.so .shobj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
  Name_Proxy.h \
@@ -12867,10 +13052,6 @@ endif # GHS
  Service_Object.i \
  Signal.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -12915,6 +13096,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  SString.h \
@@ -13022,10 +13207,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13058,6 +13239,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Name_Proxy.h \
  INET_Addr.h \
@@ -13147,10 +13332,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13183,6 +13364,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Service_Object.h \
  Shared_Object.h \
@@ -13237,7 +13422,11 @@ endif # GHS
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
- Registry_Name_Space.h
+ Registry_Name_Space.h \
+ RW_Process_Mutex.h \
+ File_Lock.h \
+ File_Lock.inl \
+ RW_Process_Mutex.inl
 
 .obj/Registry_Name_Space.o .obj/Registry_Name_Space.so .shobj/Registry_Name_Space.o .shobj/Registry_Name_Space.so: Registry_Name_Space.cpp \
  Registry_Name_Space.h \
@@ -13317,10 +13506,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13353,6 +13538,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Name_Proxy.h \
  INET_Addr.h \
@@ -13456,10 +13645,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13492,6 +13677,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  SOCK_Dgram_Mcast_QoS.i
 
@@ -13551,10 +13740,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13587,6 +13772,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  QoS_Session_Impl.h \
  QoS_Session_Impl.i
@@ -13643,10 +13832,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13679,6 +13864,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  QoS_Session_Impl.h \
  QoS_Session_Impl.i
@@ -13734,10 +13923,6 @@ endif # GHS
  Based_Pointer_Repository.h \
  Singleton.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13770,6 +13955,10 @@ endif # GHS
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i
 
 .obj/QoS_Decorator.o .obj/QoS_Decorator.so .shobj/QoS_Decorator.o .shobj/QoS_Decorator.so: QoS_Decorator.cpp \
@@ -13807,10 +13996,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Synch.i \
  Synch_T.h \
  Event_Handler.h \
@@ -13861,6 +14046,10 @@ endif # GHS
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
  Memory_Pool.i \
  Signal.i \
  Reactor.i \
