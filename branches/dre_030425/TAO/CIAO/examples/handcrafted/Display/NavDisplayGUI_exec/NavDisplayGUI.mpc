@@ -1,0 +1,31 @@
+// $Id$
+project(NavDisplayGUI_exec) : ciao_server {
+  depends   += NavDisplay_exec
+  sharedname = NavDisplayGUI_exec
+  lit_libs  += qtmain qt-mt230nc
+  libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths  += .. ../NavDisplay $(QTDIR)/lib
+  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL QT_THREAD_SUPPORT
+  includes  += ../NavDisplay $(QTDIR)/include
+
+  IDL_Files {
+  }
+
+  Source_Files {
+        ../NavDisplay/NavDisplayEIC.cpp
+        AddNavUnitCmd.cpp
+        DetailView.cpp
+        MapView.cpp
+        moc_DetailView.cpp
+        moc_MapView.cpp
+        moc_NodeItem.cpp
+        moc_RootPanel.cpp
+        NavUnit.cpp
+        NodeItem.cpp
+        QuitCmd.cpp
+        RootPanel.cpp
+        UpdatePositionCmd.cpp
+        Worker.cpp
+        NavDisplayGUI_exec.cpp
+  }
+}

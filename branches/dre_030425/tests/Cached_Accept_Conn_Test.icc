@@ -1,0 +1,28 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Cached_Accept_Conn_Test"
+	{
+	   source type (cpp) "Cached_Accept_Conn_Test.cpp"
+	   if ($__IBMCPP__ >= 500) {
+	     option macros(global) {
+	       source type (hpp) "test_config.h"
+	     }
+	     source type (cpp) "test_config.h"
+	     source type (cpp) "../ace/Singleton.cpp"
+             source type (cpp) "../ace/Unbounded_Set.cpp"
+             source type (cpp) "../ace/Acceptor.cpp"
+             source type (cpp) "../ace/Connector.cpp"
+             source type (cpp) "../ace/Svc_Handler.cpp"
+             source type (cpp) "../ace/Caching_Strategies_T.cpp"
+             source type (cpp) "../ace/Strategies_T.cpp"
+	   }
+	   source type (lib) platformLinkLibs
+	}
+    }
