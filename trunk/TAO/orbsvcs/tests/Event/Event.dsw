@@ -78,6 +78,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Control"=.\Basic\Control.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Disconnect"=.\Basic\Disconnect.dsp - Package Owner=<4>
 
 Package=<5>
@@ -101,6 +116,21 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "Gateway"=.\Basic\Gateway.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
 }}}
 
 ###############################################################################
