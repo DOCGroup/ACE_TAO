@@ -60,10 +60,6 @@ namespace CIAO
 
       this->idl_dp_.reset (tmp);
 
-      // *************************
-      // Steve's stuff starts here
-      // *************************
-
       // Read in the label, if present, since minoccurs = 0
       if (this->dp_.label_p ())
 	{
@@ -97,7 +93,7 @@ namespace CIAO
       
       /* @@ Not needed at this time...
 
-      // ... and the property stuff
+      // ... An the property stuff
       for (DeploymentPlan::infoProperty_const_iterator pstart = this->dp_.begin_infoProperty ();
 	   pstart != this->dp_.end_infoProperty ();
 	   ++pstart)
@@ -112,9 +108,6 @@ namespace CIAO
 	    this->idl_dp_->infoProperty [len]);
 	}
       */
-      // *************************
-      // Steve's stuff ends here
-      // *************************
 
       this->retval_ =
         CCD_Handler::component_interface_descr (

@@ -80,7 +80,8 @@ namespace CIAO
       CORBA::ULong tmp = 0;
       bool r = MDD_Handler::IDREF.find_ref 
           (src.implementation ().id ().c_str (), tmp);
-
+      
+      // @@ MAJO:  What shouold we do if find_ref fails??
       dest.implementationRef = tmp;
 
       InstanceDeploymentDescription::configProperty_const_iterator pend =
@@ -141,8 +142,8 @@ namespace CIAO
     void
     IDD_Handler::instance_resource_depl_descr (
         const InstanceResourceDeploymentDescription &src,
-        ::Deployment::InstanceResourceDeploymentDescription &dest,
-        CORBA::ULong pos)
+        ::Deployment::InstanceResourceDeploymentDescription &dest
+        )
     {
       // resourceUsage is an enumerated type
       switch (src.resourceUsage ().integral ())
