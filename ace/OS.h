@@ -7465,6 +7465,10 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
+// Though we are defining a extern "C" function to match the prototype of
+// pthread_cleanup_push, it is undone by the Solaris header file
+// /usr/include/pthread.h. So this macro generates a warning under Solaris
+// with SunCC. This is a bug in the Solaris header file.
 extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
