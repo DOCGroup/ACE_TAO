@@ -7,9 +7,9 @@
 #include "Memory_Pools.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_TSS<ACE_ES_Dispatch_Request_Allocator> ACE_ES_Memory_Pools::Dispatch_Request_;
-ACE_TSS<ACE_ES_Event_Container_Allocator> ACE_ES_Memory_Pools::Event_Container_;
-ACE_TSS<ACE_ES_Event_Allocator> ACE_ES_Memory_Pools::Event_;
+//ACE_TSS<ACE_ES_Dispatch_Request_Allocator> ACE_ES_Memory_Pools::Dispatch_Request_;
+//ACE_TSS<ACE_ES_Event_Container_Allocator> ACE_ES_Memory_Pools::Event_Container_;
+//ACE_TSS<ACE_ES_Event_Allocator> ACE_ES_Memory_Pools::Event_;
 
 // ************************************************************
 
@@ -17,9 +17,9 @@ int
 ACE_ES_Memory_Pools::thr_init (void)
 {
   // Allocate the memory pool for this thread.
-  Event_Container_.ts_object ();
-  Dispatch_Request_.ts_object ();
-  Event_.ts_object ();
+  //Event_Container_.ts_object ();
+  //Dispatch_Request_.ts_object ();
+  //Event_.ts_object ();
   return 0;
 }
 
