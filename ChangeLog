@@ -1,3 +1,17 @@
+Fri Jun 18 12:04:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACE_INSTALL.html:
+	  Added description of --enable-ipv6 and --enable-ipv4-ipv6
+	  flags.
+
+	* m4/ace.m4:
+	  Added --enable-ipv6 flag which sets ACE_HAS_IPV6.
+	  Added --enable-ipv4-ipv6 flag which sets 
+	  ACE_USES_IPV4_IPV6_MIGRATION.
+	
+	* m4/config_h.m4:
+	  Added ACE_USES_IPV4_IPV6_MIGRATION template.
+
 Fri Jun 18 10:23:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ACE-INSTALL.html:
