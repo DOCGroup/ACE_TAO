@@ -231,6 +231,6 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
       return 0;
     }
 
-  return this->make_connect (invocation,
-                             desc);
+  return this->make_connection (invocation,
+                                desc);
 }

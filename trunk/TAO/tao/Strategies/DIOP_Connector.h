@@ -62,9 +62,9 @@ public:
 protected:
 
   /// = More TAO_Connector methods, please check the documentation on
-  ///   Pluggable.h
-  int make_connect (TAO_GIOP_Invocation *invocation,
-                    TAO_Transport_Descriptor_Interface *desc);
+  ///   Transport_Acceptor.h
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
 
   virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
