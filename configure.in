@@ -175,15 +175,6 @@ AC_CHECK_PROGS(PROF, gprof prof,) dnl
 dnl Call ACE_SET_COMPILER_FLAGS before AC_PROG_LIBTOOL
 ACE_SET_COMPILER_FLAGS
 
-dnl Disable building of static libraries by default
-AC_DISABLE_STATIC
-
-dnl Tell libtool to build a C++ shared library
-AC_LIBTOOL_BUILD_CXX_LIBRARY
-
-dnl Check for libtool and turn on Automake processing for Libtool
-AC_PROG_LIBTOOL
-
 
 dnl
 dnl SECTION 2: Configure script command line options
@@ -926,6 +917,20 @@ dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
 ACE_SEARCH_LIBS(clock_gettime, posix4, AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)dnl
 
+dnl Setup Libtool
+dnl
+dnl This should be done in the "programs" section of this file but compiler
+dnl potentially set by the thread checks will have been missed by libtool
+dnl if the libtool setup was done prior to the thread checks.
+
+dnl Disable building of static libraries by default
+AC_DISABLE_STATIC
+
+dnl Tell libtool to build a C++ shared library
+AC_LIBTOOL_BUILD_CXX_LIBRARY
+
+dnl Check for libtool and turn on Automake processing for Libtool
+AC_PROG_LIBTOOL
 
 dnl
 dnl SECTION 5: checks for header files
