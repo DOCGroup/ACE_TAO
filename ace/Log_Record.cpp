@@ -224,30 +224,6 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
   return 0;
 }
 
-#if defined (ACE_HAS_WINCE)
-
-int
-ACE_Log_Record::print (const ACE_TCHAR *host_name,
-                       u_long verbose_flag,
-                       ACE_CE_Bridge *log_window)
-{
-  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
-  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
-
-  if (result == 0)
-    {
-      if (log_window == 0)
-        log_window = ACE_CE_Bridge::get_default_winbridge ();
-
-      // <verbose_cstring> will be deleted by <write_msg> function
-      log_window->write_msg (verbose_msg);
-    }
-
-  return result;
-}
-
-#endif /* defined (ACE_HAS_WINCE) */
-
 int
 ACE_Log_Record::print (const ACE_TCHAR *host_name,
                        u_long verbose_flag,
