@@ -4031,7 +4031,7 @@ ACE_OS::unique_name (const void *object,
   ACE_OS::sprintf (temp_name,
                    ACE_TEXT ("%lx%d"),
                    ACE_reinterpret_cast (long, object),
-                   ACE_OS::getpid ());
+                   ACE_static_cast (int, ACE_OS::getpid ()));
   ACE_OS::strncpy (name,
                    temp_name,
                    length);

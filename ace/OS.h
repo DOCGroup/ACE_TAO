@@ -2950,7 +2950,8 @@ typedef unsigned int size_t;
 # if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
 #   if ACE_SIZEOF_LONG == 8
       typedef off_t ACE_LOFF_T;
-#   elif defined (__sgi) || defined (AIX) || defined (HPUX)
+#   elif defined (__sgi) || defined (AIX) || defined (HPUX) \
+    || defined (__QNX__)
       typedef off64_t ACE_LOFF_T;
 #   elif defined (__sun)
       typedef offset_t ACE_LOFF_T;
@@ -3850,6 +3851,7 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <sys/sem.h>
 #     include /**/ <sys/time.h>
 #     include /**/ <sys/wait.h>
+// #     include /**/ <sys/resource.h>   // David, I'd like to add this.
 #     include /**/ <pwd.h>
       // sets O_NDELAY
 #     include /**/ <unix.h>
