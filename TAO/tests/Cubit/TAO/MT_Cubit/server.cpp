@@ -21,14 +21,14 @@
 #endif /* NO_ACE_QUANTIFY */
 
 // Global options used to configure various parameters.
-static char hostname[BUFSIZ];
-static char *ior_file = 0;
-static int base_port = ACE_DEFAULT_SERVER_PORT;
-static u_int num_of_objs = 2;
-static u_int use_name_service = 1;
-static u_int thread_per_rate = 0;
-static u_int use_multiple_priority = 0; 
-static u_int run_utilization_test = 0;
+// static char hostname[BUFSIZ];
+// static char *ior_file = 0;
+// static int base_port = ACE_DEFAULT_SERVER_PORT;
+// static u_int num_of_objs = 2;
+// static u_int use_name_service = 1;
+// static u_int thread_per_rate = 0;
+// static u_int use_multiple_priority = 0; 
+// static u_int run_utilization_test = 0;
 
 Cubit_Task::Cubit_Task (void)
 {
@@ -189,7 +189,7 @@ Cubit_Task::initialize_orb (void)
         }
       TAO_CHECK_ENV;
 
-      if (use_name_service == 0)
+      if (this->ts_->use_name_service_ == 0)
         return 0;
 
       CORBA::Object_var naming_obj =
@@ -358,13 +358,20 @@ Cubit_Task::create_servants ()
   return 0;
 }
 
-// Parses the command line arguments and returns an error status.
-// @@ This method should be integrated into one of the classes
-// (preferably into an Options singleton) rather than kept as a
-// stand-alone function.
+Server::Server (Task_State *ts)
+  :ior_file (0),
+   base_port (ACE_DEFAULT_SERVER_PORT),
+   num_of_objs (2),
+   use_name_service (1),
+   thread_per_rate (0),
+   use_multiple_priority (0),
+   run_utilization_test (0),
+   ts_ (ts)
+{
+}
 
-static int
-parse_args (int argc, char *argv[])
+int
+Server::parse_args (int argc,char *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rmU");
   int c;
@@ -388,7 +395,7 @@ parse_args (int argc, char *argv[])
         thread_per_rate = 1;
         break;
       case 's':
-        use_name_service = 0;
+        this->ts_->use_name_service_ = 0;
         break;
       case 'f':
         ior_file = opts.optarg;
@@ -428,11 +435,8 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-// @@ This method should be integrated into one of the classes rather
-// than kept as a stand-alone function.
-
-static int
-initialize (int argc, char **argv)
+int
+Server::initialize (int argc, char **argv)
 {
 #if defined (VXWORKS)
 #if defined (VME_DRIVER)
@@ -479,13 +483,8 @@ initialize (int argc, char **argv)
    return 0;
 }
 
-// Starts up the servants
-
-// @@ This method should be integrated into one of the classes rather
-// than kept as a stand-alone function.
-
-static int
-start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts)
+int
+Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts)
 {
   char *args1;
 
@@ -714,7 +713,7 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
 }
 
 Util_Thread *
-start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
+Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 {
   Util_Thread *util_task;
 
@@ -743,6 +742,392 @@ start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
   return util_task;
 }
 
+
+// Parses the command line arguments and returns an error status.
+// @@ This method should be integrated into one of the classes
+// (preferably into an Options singleton) rather than kept as a
+// stand-alone function.
+
+// static int
+// parse_args (int argc, char *argv[])
+// {
+//   ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rmU");
+//   int c;
+
+//   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
+//     {
+//       perror ("gethostname");
+//       return -1;
+//     }
+
+//   while ((c = opts ()) != -1)
+//     switch (c)
+//       {
+//       case 'U':
+// 	run_utilization_test = 1;
+// 	break;
+//       case 'm':
+//         use_multiple_priority = 1;
+//         break;
+//       case 'r':
+//         thread_per_rate = 1;
+//         break;
+//       case 's':
+//         use_name_service = 0;
+//         break;
+//       case 'f':
+//         ior_file = opts.optarg;
+//         break;
+//       case 'h':
+//         ACE_OS::strcpy (hostname, opts.optarg);
+//         ACE_DEBUG ((LM_DEBUG, "h\n"));
+//         break;
+//       case 'p':
+//         base_port = ACE_OS::atoi (opts.optarg);
+//         ACE_DEBUG ((LM_DEBUG, "p\n"));
+//         break;
+//       case 't':
+//         num_of_objs = ACE_OS::atoi (opts.optarg);
+//         break;
+//       case '?':
+//       default:
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "usage:  %s"
+//                            " \t[-s Means NOT to use the name service] \n"
+//                            " \t[-p <port>]\n"
+//                            " \t[-h <my_hostname>]\n"
+//                            " \t[-t <num_objects>]\n"
+//                            " \t[-f <ior_file>]\n"
+//                            " \t[-r Use thread per rate]\n"
+//                            "\n", argv [0]),
+//                           1);
+//       }
+
+//   if (thread_per_rate == 1)
+//     num_of_objs = 4;
+
+//   if (run_utilization_test == 1)
+//     num_of_objs = 1;
+
+//   // Indicates successful parsing of command line
+//   return 0;
+// }
+
+// // @@ This method should be integrated into one of the classes rather
+// // than kept as a stand-alone function.
+
+// static int
+// initialize (int argc, char **argv)
+// {
+// #if defined (VXWORKS)
+// #if defined (VME_DRIVER)
+//    STATUS status = vmeDrv ();
+
+//    if (status != OK)
+//      printf ("ERROR on call to vmeDrv()\n");
+
+//    status = vmeDevCreate ("/vme");
+
+//    if (status != OK)
+//      printf ("ERROR on call to vmeDevCreate()\n");
+// #endif /* defined (VME_DRIVER) */
+
+// #if defined (FORCE_ARGS)
+//    int argc = 4;
+//    char *argv[] = { "server",
+//                     "-s",
+//                     "-f",
+//                     "ior.txt" };
+
+// #endif /* defined (FORCE_ARGS) */
+// #endif /* defined (VXWORKS) */
+
+//    // Standard command line parsing utilities used.
+//    if (parse_args (argc, argv) != 0) return 1;
+
+//    if (hostname == 0 || base_port == 0)
+//      ACE_ERROR_RETURN ((LM_ERROR,
+//                         "usage:  %s"
+//                         " [-s Means NOT to use the name service] "
+//                         " [-p port]"
+//                         " [-h my_hostname]"
+//                         " [-t num_objects]"
+//                         " [-f <ior_file>]"
+//                         " [-r Use thread per rate]"
+//                         "\n", argv [0]),
+//                        1);
+
+//    // Make sure we've got plenty of socket handles.  This call will use
+//    // the default maximum.
+//    ACE::set_handle_limit ();
+
+//    return 0;
+// }
+
+// // Starts up the servants
+
+// // @@ This method should be integrated into one of the classes rather
+// // than kept as a stand-alone function.
+
+// static int
+// start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts)
+// {
+//   char *args1;
+
+//   ACE_NEW_RETURN (args1,
+//                   char[BUFSIZ],
+//                   -1);
+//   u_int i;
+
+//   // Create an array to hold pointers to the Cubit objects.
+//   CORBA::String *cubits;
+
+//   ACE_NEW_RETURN (cubits,
+//                   CORBA::String [num_of_objs],
+//                   -1);
+
+//   ACE_OS::sprintf (args1,
+//                    "rate20 -ORBport %d "
+//                    "-ORBhost %s "
+//                    "-ORBobjrefstyle URL "
+//                    "-ORBsndsock 32768 "
+//                    "-ORBrcvsock 32768 ",
+//                    base_port,
+//                    hostname);
+
+//   Cubit_Task *high_priority_task;
+
+//   ACE_NEW_RETURN (high_priority_task,
+//                   Cubit_Task (args1,
+//                               "internet",
+//                               1,
+//                               &start_barrier,
+// 			      ts,
+// 			      serv_thr_mgr,
+//                               0), //task id 0.
+//                   -1);
+
+// #if defined (VXWORKS)
+//   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
+// #elif defined (ACE_WIN32)
+//   ACE_Sched_Priority priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+//                                                                 ACE_SCOPE_THREAD);
+// #else
+//   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
+// #endif /* VXWORKS */
+
+//   if (run_utilization_test == 1)
+//      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+//                                                  ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+//                                                                                  ACE_SCOPE_THREAD),
+//                                                  ACE_SCOPE_THREAD);
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "Creating servant 0 with high priority %d\n",
+//               priority));
+
+//   // Make the high priority task an active object.
+//   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
+//                                     1,
+//                                     0,
+//                                     priority) == -1)
+//     {
+//       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+//                   "\thigh_priority_task->activate failed"));
+//     }
+
+//   // Create an array to hold pointers to the low priority tasks.
+//   Cubit_Task **low_priority_task;
+
+//   ACE_NEW_RETURN (low_priority_task,
+//                   Cubit_Task *[num_of_objs],
+//                   -1);
+
+//   u_int number_of_low_priority_servants = 0;
+//   u_int number_of_priorities = 0;
+//   u_int grain = 0;
+//   u_int counter = 0;
+
+//   number_of_low_priority_servants = num_of_objs - 1;
+
+//   // Drop the priority
+//   if (thread_per_rate == 1 || use_multiple_priority == 1)
+//     {
+//       ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
+//                                                      ACE_SCOPE_THREAD);
+
+//       number_of_priorities = 0;
+
+//       while (priority_iterator.more ())
+//         {
+//           number_of_priorities ++;
+//           priority_iterator.next ();
+//         }
+
+//       // 1 priority is exclusive for the high priority client.
+//       number_of_priorities --;
+
+//       // Drop the priority, so that the priority of clients will increase
+//       // with increasing client number.
+//       for (i = 0; i < number_of_low_priority_servants; i++)
+//         priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+//                                                         priority,
+//                                                         ACE_SCOPE_THREAD);
+
+//       // granularity of the assignment of the priorities.  Some OSs have
+//       // fewer levels of priorities than we have threads in our test, so
+//       // with this mechanism we assign priorities to groups of threads when
+//       // there are more threads than priorities.
+//       grain = number_of_low_priority_servants / number_of_priorities;
+//       counter = 0;
+
+//       if (grain <= 0)
+//         grain = 1;
+
+//     }
+//   else
+//     {
+//       priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+//                                                       priority,
+//                                                       ACE_SCOPE_THREAD);
+//     }
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "Creating %d servants starting at priority %d\n",
+//               number_of_low_priority_servants,
+//               priority));
+
+//   // Create the low priority servants.
+
+//   for (i = number_of_low_priority_servants; i > 0; i--)
+//     {
+//       char *args;
+
+//       ACE_NEW_RETURN (args,
+//                       char [BUFSIZ],
+//                       -1);
+
+//       ACE_OS::sprintf (args,
+//                        "rate10 -ORBport %d "
+//                        "-ORBhost %s "
+//                        "-ORBobjrefstyle URL "
+//                        "-ORBsndsock 32768 "
+//                        "-ORBrcvsock 32768 ",
+//                        base_port + i,
+//                        hostname);
+
+//       ACE_NEW_RETURN (low_priority_task [i - 1],
+//                       Cubit_Task (args, 
+// 				  "internet", 
+// 				  1, 
+// 				  &start_barrier, 
+// 				  ts,
+// 				  serv_thr_mgr,
+// 				  i),
+//                       -1);
+
+//       // Make the low priority task an active object.
+//       if (low_priority_task [i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
+//                                            1,
+//                                            0,
+//                                            priority) == -1)
+//         {
+//           ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+//                       "\tlow_priority_task[i]->activate"));
+//         }
+
+//       ACE_DEBUG ((LM_DEBUG,
+//                   "Created servant %d with priority %d\n",
+//                   i,
+//                   priority));
+
+//       // use different priorities on thread per rate or multiple priority.
+//       if (use_multiple_priority == 1 || thread_per_rate == 1)
+//         {
+//           counter = (counter + 1) % grain;
+//           if ( (counter == 0) &&
+//                //Just so when we distribute the priorities among the
+//                //threads, we make sure we don't go overboard.
+//                ((number_of_priorities * grain) > (number_of_low_priority_servants - (i - 1))) )
+//               {
+//                       // Get the next higher priority.
+//                       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+//                                                              priority,
+//                                                              ACE_SCOPE_THREAD);
+//               }
+
+//         }
+//     } /* end of for() */
+
+//   start_barrier.wait ();
+
+//   // Write the ior's to a file so the client can read them.
+//   {
+//     cubits[0] = high_priority_task->get_servant_ior (0);
+
+//     for (i = 0; i < num_of_objs-1; ++i)
+//       cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
+
+//     FILE *ior_f = 0;
+
+//     if (ior_file != 0)
+//       {
+//         ACE_DEBUG ((LM_DEBUG,"(%P|%t) Opening file:%s\n",ior_file));
+//         ior_f = ACE_OS::fopen (ior_file, "w");
+//       }
+
+//     for (i = 0; i < num_of_objs; ++i)
+//       {
+//         if (ior_f != 0)
+//           {
+//             ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",ior_file));
+//             ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
+//             ACE_OS::printf ("cubits[%d] ior = %s\n",
+//                             i,
+//                             cubits[i]);
+//           }
+//       }
+
+//     if (ior_f != 0)
+//       {
+//         ACE_DEBUG ((LM_DEBUG,"(%P|%t) Closing ior file\n"));
+//         ACE_OS::fclose (ior_f);
+//       }
+//   }
+//   return 0;
+
+// }
+
+// Util_Thread *
+// start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
+// {
+//   Util_Thread *util_task;
+
+//   ACE_NEW_RETURN (util_task,
+//                   Util_Thread (ts,
+// 			       util_thr_mgr),
+// 		  0);
+
+//   ACE_Sched_Priority priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+// 								ACE_SCOPE_THREAD);
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "Creating Utilization Task with priority %d\n",
+//               priority));
+
+//   // Make the high priority task an active object.
+//   if (util_task->activate (THR_BOUND | ACE_SCHED_FIFO,
+// 			   1,
+// 			   0,
+// 			   priority) == -1)
+//     {
+//       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+//                   "\tutil_task->activate failed"));
+//     }
+
+//   return util_task;
+// }
+
 // main routine.
 
 #if defined (VXWORKS)
@@ -758,7 +1143,14 @@ int
 main (int argc, char *argv[])
 {
 #endif
+  int _argc = 3;
+  char *_argv[] = {"server",
+                  "-t",
+                  "1"};
 
+  Task_State ts ( _argc, _argv);
+
+  Server server(&ts);
 #if defined (ACE_HAS_THREADS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (
@@ -784,18 +1176,11 @@ main (int argc, char *argv[])
                           -1);
     }
 
-  if (initialize (argc, argv) != 0)
+  if (server.initialize (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
-  int _argc = 3;
-  char *_argv[] = {"server",
-                  "-t",
-                  "1"};
-
-  Task_State ts ( _argc, _argv);
-
-  if (run_utilization_test == 1)
+  if (server.run_utilization_test == 1)
     {
       ts.run_server_utilization_test_ = 1;
       ts.loop_count_ = 0;
@@ -812,9 +1197,9 @@ main (int argc, char *argv[])
   double total_latency_servants = 0.0;
   double total_util_task_duration = 0.0;
 
-  if (run_utilization_test == 1)
+  if (server.run_utilization_test == 1)
     {
-      if ((util_task = start_utilization (&util_thr_mgr, &ts)) == 0)
+      if ((util_task = server.start_utilization (&util_thr_mgr, &ts)) == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "Error creating the utilization thread!\n"),
 			  1);
@@ -851,7 +1236,7 @@ main (int argc, char *argv[])
     }
   // Barrier for the multiple clients to synchronize after binding to
   // the servants.
-  ACE_Barrier start_barrier (num_of_objs + 1);
+  ACE_Barrier start_barrier (server.num_of_objs + 1);
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
@@ -859,7 +1244,7 @@ main (int argc, char *argv[])
   quantify_start_recording_data();
 #endif /* NO_ACE_QUANTIFY */
 
-  if (start_servants (&servant_thread_manager, start_barrier, &ts) != 0)
+  if (server.start_servants (&servant_thread_manager, start_barrier, &ts) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
@@ -871,7 +1256,7 @@ main (int argc, char *argv[])
   servant_thread_manager.wait ();
   //  ACE_Thread_Manager::instance ()->wait ();
 
-  if (run_utilization_test == 1)
+  if (server.run_utilization_test == 1)
     {
       util_task->done_ = 1;
     
