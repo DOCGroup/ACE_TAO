@@ -1,6 +1,6 @@
 Mon Dec  1 16:51:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tao/except.{h,i,cpp}: Changed semantics of CORBA::Exception so
+	* tao/except.{h,cpp}: Changed semantics of CORBA::Exception so
  	that the mere creation of them does not take a reference.
   	Instead, the user of the exception is expected to call AddRef().
   	CORBA::Environment has been modified (and even documented!) to
