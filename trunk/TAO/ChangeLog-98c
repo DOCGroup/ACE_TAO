@@ -1,3 +1,7 @@
+Sun Nov 01 09:03:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.39 released.
+
 Sun Nov 01 08:24:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
