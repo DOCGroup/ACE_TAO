@@ -1,5 +1,17 @@
-Tue Aug 29 00:39:49 2000  Marina Spivak  <marina@cs.wustl.edu>
+Tue Aug 29 01:26:06 2000  Marina Spivak  <marina@cs.wustl.edu>
 
+	* tests/RTCORBA/Server_Protocol/client.dsp
+	* tests/RTCORBA/Client_Propagated/client.dsp
+	* tests/RTCORBA/Server_Protocol/server.dsp
+	* tests/RTCORBA/Client_Propagated/server.dsp:
+
+	  Changed project names, so they are more descriptive when
+	  included into big workspaces.
+
+	* tests/RTCORBA/RTCORBA_tests.dsw:
+
+	  Added workspace for RTCORBA tests.
+	
 	* tests/RTCORBA/Server_Protocol/Makefile
 	* tests/RTCORBA/Client_Propagated/Makefile:
 
