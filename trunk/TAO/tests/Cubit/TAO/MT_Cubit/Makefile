@@ -70,6 +70,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao/compat
 ifdef CHORUS
 	LSRC += pccTimer.cpp
 	CUBIT_CLIENT_OBJS += pccTimer.o
+        CUBIT_SVR_OBJS += pccTimer.o
 	LDLIBS += -lOrb
 else
 	LDLIBS += -lOrb-mt
