@@ -121,7 +121,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
 int 
 Write_Handler::open (void *)
 {
-  return this->svc ();
+  return 0;
 }
 
 int 
@@ -137,7 +137,7 @@ Write_Handler::svc (void)
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
       ACE_OS::sleep (pause);
     }
-  return -1;
+  return 0;
 }
 
 // Execute the client tests.
@@ -150,7 +150,29 @@ client (void *arg)
 
   Write_Handler *writer = 0;
 
-  connector.connect (writer, *connection_addr);
+  // Do exponential backoff connections
+  ACE_Synch_Options options = ACE_Synch_Options::synch;
+
+  ACE_Time_Value msec(0,1000); // start with one msec timeouts.
+  options.timeout (msec);
+
+  while (connector.connect (writer,
+			    *connection_addr,
+			    options) == -1)
+    {
+      // Double the timeout...
+      ACE_Time_Value tmp = options.timeout ();
+      tmp += options.timeout ();
+      options.timeout (tmp);
+      writer = 0;
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) still trying to connect\n"));
+    }
+
+  // Let the new Svc_Handler to its jobs....
+  writer->svc ();
+
+  // Close the connection...
+  writer->destroy ();
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
   return 0;
