@@ -1,8 +1,10 @@
 # $Id$
 
+debug = 1
+
 CC              = gcc
 CXX		= g++
-CFLAGS		+= $(DCFLAGS) -w -O2
+CFLAGS		+= -w -O2
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
 DCFLAGS		+= -g #### should this be -gstabs?
 DLD             = $(CXX)

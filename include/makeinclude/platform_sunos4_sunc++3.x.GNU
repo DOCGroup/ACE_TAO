@@ -1,13 +1,13 @@
 # $Id$
 
-# SunOS 4.x with SunC++ 3.x (note that this is a very old C++
+# SunOS 4.x (Solaris 1.x) with SunC++ 3.x (note that this is a very old C++
 # compiler, based on cfront.  In paricular, it's not the same thing as
 # SunC++ 4.x (which is also known as SPARCWorks 3.x).
 
-# SunOS 4.x (Solaris 1.x) with SunC++ 3.x
+debug = 1
+
 CC		= cc
 CXX		= CC
-CFLAGS		+= $(DCFLAGS)
 CCFLAGS		+= $(CFLAGS)
 DCFLAGS		+= -g
 DLD		= /bin/ld

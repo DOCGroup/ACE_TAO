@@ -1,9 +1,11 @@
 # $Id$
 
 # SunOS 4.x (Solaris 1.x) with SunC++ 4.x
+
+debug = 1
+
 CC              = cc
 CXX             = CC
-CFLAGS		+= $(DCFLAGS)
 CCFLAGS		+= $(CFLAGS)
 DCFLAGS		+= -g
 DLD             = $(CXX)

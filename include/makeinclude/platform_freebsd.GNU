@@ -5,9 +5,11 @@
 # ***** Notice: This file is still under testing. *****
 # To be used on FreeBSD platform without pthread support.
 
+debug = 1
+
 CC              = gcc
 CXX		= g++
-CFLAGS          += $(DCFLAGS) -w -O2 -fno-strict-prototypes
+CFLAGS          += -w -O2 -fno-strict-prototypes
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld

@@ -2,9 +2,11 @@
 
 # VxWorks 5.2-5.3.1 with Green Hills 1.8.8
 
+debug = 1
+static_libs_only = 1
+
 CC              = cxvxppc
 CXX             = $(CC)
-CFLAGS          += $(DCFLAGS)
 CCFLAGS         += $(CFLAGS) --no_rtti -tnone
 DCFLAGS         += -g
 DLD             = $(CXX)
@@ -15,6 +17,3 @@ PIC             =
 AR              = ax
 ARFLAGS         = rv
 RANLIB          = /bin/true
-
-#### don't build shared objects:
-static_libs_only = 1

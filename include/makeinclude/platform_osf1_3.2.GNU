@@ -2,9 +2,11 @@
 
 # This platform macros file is intended to work with Digital UNIX 3.2 (OSF/1 3.2).
 
+debug = 1
+
 CC		= cxx
 CXX		= $(CC)
-CFLAGS          += $(DCFLAGS) -ptr $(ACE_ROOT)/ptrepository
+CFLAGS          += -ptr $(ACE_ROOT)/ptrepository
 CCFLAGS		+= $(CFLAGS) -x cxx -w0
 DCFLAGS		+= -g -threads
 DLD		= ld -shared -expect_unresolved '*'

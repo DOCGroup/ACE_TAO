@@ -2,6 +2,8 @@
 
 # Chorus 3.1b with GNU g++ 2.7.2
 
+debug = 1
+
 include         $(CLASSIXDIR)/dtool/htgt-cf.rf
 INC_DIR         = $(CLASSIXDIR)/include
 BIN_DIR		= 
@@ -9,7 +11,7 @@ LIB_DIR		= $(CLASSIXDIR)/lib
 #CC		= gcc
 #CXX		= g++
 CXX             = $(CC)
-CFLAGS		+= $(DCFLAGS) -w -O2
+CFLAGS		+= -w -O2
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates	\
 		   -fno-strict-prototypes     		\
 		   -nostdinc 				\

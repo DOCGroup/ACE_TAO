@@ -1,9 +1,12 @@
 # $Id$
 
 # SunOS 5.x (Solaris 2.x) with Centerline C++
+
+debug = 1
+
 CC		= cc
 CXX		= CC
-CFLAGS          += $(DCFLAGS) -mt
+CFLAGS          += -mt
 CCFLAGS         += $(CFLAGS)
 DCFLAGS		+= -g
 DLD		= $(CXX) -mt 

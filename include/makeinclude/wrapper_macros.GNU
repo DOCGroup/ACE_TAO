@@ -1,4 +1,4 @@
->#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 #  $Id$
 #----------------------------------------------------------------------------
 #
@@ -68,14 +68,14 @@
 #  ACE_ROOT     Pathname for the root of the build tree
 #
 #----------------------------------------------------------------------------
-#       Platform-dependent macro definitions
-#       (link to the appropriate platform-specific config file).
+#      Platform-dependent macro definitions
+#      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 #----------------------------------------------------------------------------
-#       Platform-independent macro definitions
+#      Platform-independent macro definitions
 #----------------------------------------------------------------------------
 
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
@@ -106,28 +106,48 @@ endif # VSHDIR
 YACC            = yacc
 
 #----------------------------------------------------------------------------
-#       Conditional macro definitions
+#      make flags
 #----------------------------------------------------------------------------
 
-ifdef debug
-CFLAGS  += $(DCFLAGS)
-CCFLAGS += $(DCCFLAGS)
-
-else
-ifdef profile
-CFLAGS  += $(PCFLAGS)
-CCFLAGS += $(PCCFLAGS)
-
-else
-ifdef optimize
-CFLAGS  += $(OCFLAGS) -DNDEBUG
-CCFLAGS += $(OCCFLAGS) -DNDEBUG
-
-else # default settings
-
+ifeq ($(optimize),0)
+  override optimize =
 endif # optimize
-endif # profile
+
+ifneq ($(optimize),)
+  #### Disable debug, unconditionally.
+  override debug =
+  CFLAGS  += $(OCFLAGS)
+  CCFLAGS += $(OCCFLAGS)
+endif # optimize
+
+ifeq ($(debug),0)
+  override debug =
 endif # debug
+
+ifeq ($(debug),)
+  CFLAGS  += -DACE_NDEBUG
+  CCFLAGS += -DACE_NDEBUG
+else
+  CFLAGS  += $(DCFLAGS)
+  CCFLAGS += $(DCCFLAGS)
+endif # debug
+
+ifeq ($(profile),0)
+  override profile =
+endif # profile
+
+ifneq ($(profile),)
+  CFLAGS  += $(PCFLAGS)
+  CCFLAGS += $(PCCFLAGS)
+endif # profile
+
+
+ifeq ($(shared_libs_only),0)
+  override shared_libs_only =
+endif # shared_libs_only
+ifeq ($(static_libs_only),0)
+  override static_libs_only =
+endif # static_libs_only
 
 ifdef shared_libs_only
   #### don't build static objects:
@@ -156,12 +176,10 @@ else
   VLDLIBS := $(LDLIBS) $(ACELIB) $(LIBS)
 endif # SHLIBA
 
-ifdef quantify
-  #### You might want to adjust the Quantify options below.
-  #### -best-effort is undocumented but supported, and seems
-  #### to help avoid occasional link failure.
-  PRELINK += quantify -best-effort -cache-dir=/tmp/purifycache -max_threads=100
-endif # quantify
+
+ifeq ($(purify),0)
+  override purify =
+endif # purify
 
 ifdef purify
   #### You might want to adjust the Purify options below.
@@ -172,6 +190,22 @@ ifdef purify
              -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
              -max_threads=100
 endif # purify
+
+ifeq ($(quantify),0)
+  override quantify =
+endif # quantify
+
+ifdef quantify
+  #### You might want to adjust the Quantify options below.
+  #### -best-effort is undocumented but supported, and seems
+  #### to help avoid occasional link failure.
+  PRELINK += quantify -best-effort -cache-dir=/tmp/purifycache -max_threads=100
+endif # quantify
+
+
+#----------------------------------------------------------------------------
+#      Conditional macro definitions
+#----------------------------------------------------------------------------
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c

@@ -7,9 +7,10 @@
 # apply the update available at:
 # ftp://service.boulder.ibm.com/aix/fixes/v4/os/bos.rte.bind_cmds.4.2.0.4.bff
 
+debug = 1
+
 CC	    = xlC
 CXX	    = xlC_r
-CFLAGS      += $(DCFLAGS)
 CCFLAGS     += $(CFLAGS)
 DCFLAGS     += -g
 DLD	    = makeC++SharedLib_r
