@@ -210,7 +210,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_tao_skel_environment," << be_nl
       << "&" << node->flatname () << "_non_existent_calldata, " << be_nl
       << "&_tao_retval " << be_uidt_nl
-      << ");" << be_nl;
+      << ");" << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();

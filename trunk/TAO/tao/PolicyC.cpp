@@ -18,7 +18,7 @@
 CORBA_Policy_ptr CORBA_Policy::_duplicate (CORBA_Policy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -37,7 +37,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
          || obj->_servant()->_downcast ("IDL:CORBA/Policy:1.0") == 0
       )
   {
-    CORBA_Policy_ptr new_obj = new CORBA_Policy(obj->_get_parent ());
+    CORBA_Policy_ptr new_obj = new CORBA_Policy(obj->_stubobj ());
     return new_obj;
   } // end of if
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
@@ -68,7 +68,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
   {"_get_policy_type", 1, 1, _get_CORBA_Policy_policy_type_paramdata, 0, 0};
 
   CORBA::PolicyType _tao_retval = 0;
-  STUB_Object *istub = this->stubobj (_tao_environment);
+  STUB_Object *istub = this->_stubobj ();
   if (istub)
   {
     istub->do_static_call (
@@ -93,7 +93,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
   {"copy", 1, 1, CORBA_Policy_copy_paramdata, 0, 0};
 
   CORBA_Policy_ptr _tao_retval = CORBA_Policy::_nil ();
-  STUB_Object *istub = this->stubobj (_tao_environment);
+  STUB_Object *istub = this->_stubobj ();
   if (istub)
   {
     CORBA::Object_ptr _tao_base_retval = CORBA::Object::_nil ();
@@ -120,7 +120,7 @@ void CORBA_Policy::destroy (
   static const TAO_Call_Data CORBA_Policy_destroy_calldata =
   {"destroy", 1, 1, CORBA_Policy_destroy_paramdata, 0, 0};
 
-  STUB_Object *istub = this->stubobj (_tao_environment);
+  STUB_Object *istub = this->_stubobj ();
   if (istub)
   {
     istub->do_static_call (

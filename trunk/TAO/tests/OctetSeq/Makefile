@@ -42,7 +42,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 OctetSeq: $(addprefix $(VDIR),$(OCTETSEQ_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -206,7 +206,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -429,7 +428,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -652,7 +650,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \

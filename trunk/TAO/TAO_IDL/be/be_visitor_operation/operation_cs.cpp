@@ -296,7 +296,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     {
       // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
-      *os << "STUB_Object *istub = this->stubobj (_tao_environment);" << be_nl
+      *os << "STUB_Object *istub = this->_stubobj ();" << be_nl
           << "if (istub)" << be_nl
           << "{\n";
       os->incr_indent (0);

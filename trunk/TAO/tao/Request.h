@@ -58,8 +58,8 @@ public:
   // Send a oneway request.
 
   // = Required for COM IUnknown support
-  CORBA::ULong AddRef (void);
-  CORBA::ULong Release (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
 private:
   friend class CORBA_Object;

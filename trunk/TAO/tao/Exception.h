@@ -63,8 +63,8 @@ public:
   virtual int _is_a (const char* repository_id) const;
 
   // = Methods required for memory management support.
-  CORBA::ULong AddRef (void);
-  CORBA::ULong Release (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
 protected:
   CORBA_Exception (void);
@@ -227,8 +227,8 @@ public:
   // dtor
 
   CORBA::Exception_ptr exception (void) const;
-  // Return the exception.  Caller must call AddRef() in order to keep
-  // the ptr.
+  // Return the exception.  Caller must call _incr_refcnf() in order
+  // to keep the ptr.
 
   void exception (CORBA::Exception *ex);
   // Set the exception to <ex>, taking a reference on it.

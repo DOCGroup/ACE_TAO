@@ -4,7 +4,7 @@ ACE_INLINE void
 CORBA::release (CORBA_ServerRequest *req)
 {
    if (req)
-     req->Release ();
+     req->_decr_refcnt ();
 }
 
 ACE_INLINE TAO_InputCDR &

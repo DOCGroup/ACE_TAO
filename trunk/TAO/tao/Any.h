@@ -269,8 +269,8 @@ public:
 
   // = Memory management methods.
 
-  CORBA::ULong AddRef (void);
-  CORBA::ULong Release (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
   // = Debugging method.
 

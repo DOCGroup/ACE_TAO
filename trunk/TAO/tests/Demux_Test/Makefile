@@ -43,7 +43,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS    += -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
+CPPFLAGS += -I$(TAO_ROOT)
 
 ifdef quantify
 LDFLAGS	+= -L/pkg/purify/quantify-2.1-solaris2/ -lquantify_stubs

@@ -1123,7 +1123,7 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
       // exception ID.  We just copy that typecode.
 
       *(CORBA::TypeCode_ptr *) dest = *(CORBA::TypeCode_ptr *) source;
-      (void) (*(CORBA::TypeCode_ptr *) dest)->AddRef ();
+      (void) (*(CORBA::TypeCode_ptr *) dest)->_incr_refcnt ();
 
       // compute the number of fields in the struct
       int member_count = tc->member_count (env);

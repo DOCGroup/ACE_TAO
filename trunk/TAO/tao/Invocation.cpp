@@ -941,16 +941,14 @@ TAO_GIOP_Twoway_Invocation::location_forward (CORBA::Environment &env)
   // The object pointer has to be changed to a IIOP_Object pointer
   // in order to extract the profile.
 
-  IIOP_Object *iIOP_Object_ptr = 0;
-
-  if (object_ptr->QueryInterface (IID_IIOP_Object,
-                                  (void **) &iIOP_Object_ptr) != TAO_NOERROR)
-  {
-    dexc (env, "invoke, location forward (QueryInterface)");
-    TAO_GIOP::send_error (this->handler_);
-    return TAO_GIOP_SYSTEM_EXCEPTION;
-  }
-
+  IIOP_Object *iiopobj =
+    ACE_dynamic_cast (IIOP_Object*, object_ptr->_stubobj ());
+  
+  if (iiopobj == 0)
+    {
+      TAO_GIOP::send_error (this->handler_);
+      return TAO_GIOP_SYSTEM_EXCEPTION;
+    }
 
   // Make a copy of the IIOP profile in the forwarded objref,
   // reusing memory where practical.  Then delete the forwarded
@@ -963,14 +961,12 @@ TAO_GIOP_Twoway_Invocation::location_forward (CORBA::Environment &env)
   // related to correctness.)
 
   // the copy method on IIOP::Profile will be used to copy the content
-  data_->set_fwd_profile (&iIOP_Object_ptr->profile);
+  data_->set_fwd_profile (&iiopobj->profile);
   // store the new profile in the forwarding profile
   // note: this has to be and is thread safe
 
   // The object is no longer needed, because we have now the IIOP_Object
   CORBA::release (object_ptr); 
-  // We have a refcount of 2 because of the Query_Inteface method.
-  CORBA::release (object_ptr);
 
   env.clear ();
 

@@ -23,7 +23,7 @@ CORBA::TypeCode_ptr
 CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 {
   if (tc)
-    tc->AddRef ();
+    tc->_incr_refcnt ();
   return tc;
 }
 
@@ -211,7 +211,7 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 void CORBA::release (CORBA::TypeCode_ptr tc)
 {
   if (tc)
-    tc->Release ();
+    tc->_decr_refcnt ();
 }
 
 // returns true if the typecode is NULL
@@ -585,7 +585,7 @@ TC_Private_State::~TC_Private_State (void)
 }
 
 CORBA::ULong
-CORBA_TypeCode::AddRef (void)
+CORBA_TypeCode::_incr_refcnt (void)
 {
   assert (this != 0);
 
@@ -600,7 +600,7 @@ CORBA_TypeCode::AddRef (void)
 }
 
 CORBA::ULong
-CORBA_TypeCode::Release (void)
+CORBA_TypeCode::_decr_refcnt (void)
 {
   ACE_ASSERT (this != 0);
 
@@ -609,7 +609,7 @@ CORBA_TypeCode::Release (void)
   if (this->orb_owns_)
     result = this->refcount_; // 1
   else if (this->parent_)
-    // return parent_->Release ();
+    // return parent_->_decr_refcnt ();
     result = this->refcount_; // 1
   else
     {
@@ -2226,7 +2226,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       else if (!stream.read_ulong (temp) // default used
                  || !stream.read_ulong (temp))   // member count
         {
-          tc->Release ();
+          tc->_decr_refcnt ();
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
@@ -2246,7 +2246,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
             || !stream.skip_string ()         // member name
             || !skip_typecode (stream))
           {   // member typecode
-            tc->Release ();
+            tc->_decr_refcnt ();
             env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
             return 0;
           }
@@ -2257,11 +2257,11 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
                          env) != CORBA::TypeCode::TRAVERSE_CONTINUE
           || !stream.skip_string ())            // member name
         {
-          tc->Release ();
+          tc->_decr_refcnt ();
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
-      tc->Release ();
+      tc->_decr_refcnt ();
 
       if (stream.decode (CORBA::_tc_TypeCode,
                         &tc, this,

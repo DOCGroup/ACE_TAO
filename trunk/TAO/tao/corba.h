@@ -70,10 +70,6 @@
 #  define TAO_SINGLETON_DECLARATION(T)
 #endif /* TAO_HAS_DLL */
 
-// COM stuff
-#include "tao/compat/objbase.h"
-// #include "tao/compat/initguid.h"
-
 // For some reason, PC compilers don't implement "natural" alignment,
 // but only use fixed alignment policies.  The following #pragmas
 // configure fixed one-byte alignment policy, since some fixed policy

@@ -16,34 +16,15 @@
 
     <UL>
 	<LI>
-	  The user can register a set of <CODE>EC_Gateways</CODE> with
-	  the <CODE>EventChannel</CODE> implementation, the event
-	  channel will automatically update the subscription list as
-	  consumers subscribe to the EC.
+	  Added a prototype Consumer and Supplier that can send events
+	  though multicast groups (or regular UDP sockets).
 	</LI>
 	<LI>
-	  The code for consumer and supplier disconnection was
-	  improved and seems to work without problems now
-	</LI>
-	<LI>
-	  The <CODE>Event_Service</CODE> program creates a collocated
-	  <CODE>Scheduling Service</CODE> this works around a problem
-	  in the ORB when running on multiprocessor.
-	</LI>
-	<LI>
-	  Startup and shutdown were revised, the event channel
-	  shutdown cleanly now.
-	</LI>
-	<LI>
-	  Added yet another example
-	  (<CODE>$TAO_ROOT/orbsvcs/tests/EC_Throughput</CODE>), this
-	  one ilustrate how to use the 
-	  TAO extensions to create octet sequences based on CDR
-	  streams, without incurring in extra copies.
-	  This is useful to implement custom marshalling or late
-	  dermashalling of the event payload.
-	  Future versions of the test will help measuring the EC
-	  throughput, hence the name.
+	  The Event Channel can be configured using a Factory that
+	  constructs the right modules (like changing the dispatching
+	  module),
+	  in the current release only the default Factory is
+	  implemented.
 	</LI>
     </UL>
 
@@ -216,6 +197,37 @@ $ cd tests/Event_Latency ; ./Event_Latency -ORBport 0 -m 20 -j &
 	moved from a test to the library.
 	The corresponding test (<CODE>EC_Multiple</CODE>) has been
 	expanded and improved.</LI>
+
+	<LI>
+	  The user can register a set of <CODE>EC_Gateways</CODE> with
+	  the <CODE>EventChannel</CODE> implementation, the event
+	  channel will automatically update the subscription list as
+	  consumers subscribe to the EC.
+	</LI>
+	<LI>
+	  The code for consumer and supplier disconnection was
+	  improved and seems to work without problems now
+	</LI>
+	<LI>
+	  The <CODE>Event_Service</CODE> program creates a collocated
+	  <CODE>Scheduling Service</CODE> this works around a problem
+	  in the ORB when running on multiprocessor.
+	</LI>
+	<LI>
+	  Startup and shutdown were revised, the event channel
+	  shutdown cleanly now.
+	</LI>
+	<LI>
+	  Added yet another example
+	  (<CODE>$TAO_ROOT/orbsvcs/tests/EC_Throughput</CODE>), this
+	  one ilustrate how to use the 
+	  TAO extensions to create octet sequences based on CDR
+	  streams, without incurring in extra copies.
+	  This is useful to implement custom marshalling or late
+	  dermashalling of the event payload.
+	  Future versions of the test will help measuring the EC
+	  throughput, hence the name.
+	</LI>
     </UL>
 
   </BODY>

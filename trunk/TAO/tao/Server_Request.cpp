@@ -32,20 +32,12 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// {77420086-F276-11ce-9598-0000C07CA898}
-TAO_DEFINE_GUID (IID_IIOP_ServerRequest,
-0x77420086, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-// {4B48D881-F7F0-11ce-9598-0000C07CA898}
-TAO_DEFINE_GUID (IID_CORBA_ServerRequest,
-0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
 CORBA_ServerRequest *
 CORBA_ServerRequest::_duplicate (CORBA_ServerRequest *req)
 {
   if (req)
     {
-      req->AddRef ();
+      req->_incr_refcnt ();
       return req;
     }
   return (CORBA_ServerRequest *) 0;
@@ -155,15 +147,15 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
     delete this->exception_;
 }
 
-ULONG
-IIOP_ServerRequest::AddRef (void)
+CORBA::ULong
+IIOP_ServerRequest::_incr_refcnt (void)
 {
   ACE_ASSERT (this->refcount_ > 0);
   return this->refcount_++;
 }
 
-ULONG
-IIOP_ServerRequest::Release (void)
+CORBA::ULong
+IIOP_ServerRequest::_decr_refcnt (void)
 {
   ACE_ASSERT (this != 0);
 
@@ -172,25 +164,6 @@ IIOP_ServerRequest::Release (void)
 
   delete this;
   return 0;
-}
-
-TAO_HRESULT
-IIOP_ServerRequest::QueryInterface (TAO_REFIID riid,
-                                    void **ppv)
-{
-  ACE_ASSERT (this->refcount_ > 0);
-  *ppv = 0;
-
-  if (IID_IIOP_ServerRequest == riid
-      || IID_CORBA_ServerRequest == riid
-      || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return TAO_ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) this->AddRef ();
-  return TAO_NOERROR;
 }
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
@@ -228,7 +201,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       CORBA::Any_ptr any = nv->value ();
       CORBA::TypeCode_ptr tc = any->type ();
 
-      tc->AddRef ();
+      tc->_incr_refcnt ();
 
       void *value;
       if (!any->value ())
@@ -244,14 +217,15 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
           // Decrement the refcount of "tc".
           //
-          // The earlier AddRef is needed since Any::replace () releases
-          // the typecode inside the Any.  Without the dup, the reference
-          // count can go to zero, and the typecode would then be deleted.
+          // The earlier _incr_refcnt is needed since Any::replace ()
+	  // releases the typecode inside the Any.  Without the dup,
+	  // the reference count can go to zero, and the typecode
+	  // would then be deleted.
           //
-          // This Release ensures that the reference count is correct so
-          // the typecode can be deleted some other time.
+          // This _decr_refcnt ensures that the reference count is
+	  // correct so the typecode can be deleted some other time.
 
-          tc->Release ();
+          tc->_decr_refcnt ();
         }
       else
         value = (void *)any->value (); // memory was already preallocated

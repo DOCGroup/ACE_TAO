@@ -9,6 +9,10 @@ LIBNAME  = libmpeg_server
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 FILES= as las lvs vs Globals Video_Server Video_Control_State Video_Control_i Audio_Server Audio_Control_State Audio_Control_i
@@ -40,7 +44,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #LDFLAGS +=  -L/project/doc/pkg/X11/lib/ -lXm -lXt -lXext -lSM -lICE -lX11 -L/project/doc/pkg/X11/lib -lsocket -lnsl -ldl
 LDFLAGS +=  -lsocket -lnsl -ldl
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
 CPPFLAGS += -DSH_MEM  -I/project/doc/pkg/X11/include
 
 clean:
@@ -57,6 +61,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -96,7 +102,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/server_proto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h \
@@ -108,19 +121,29 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -128,8 +151,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -137,69 +168,67 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -209,8 +238,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -219,22 +246,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -242,10 +284,17 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -254,10 +303,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -268,16 +323,24 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i
 .obj/las.o .obj/las.so .shobj/las.o .shobj/las.so: las.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -314,7 +377,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
@@ -329,19 +399,29 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -349,8 +429,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -358,69 +446,67 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -430,8 +516,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -440,22 +524,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -463,10 +562,17 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -475,10 +581,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -489,16 +601,24 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i
 .obj/lvs.o .obj/lvs.so .shobj/lvs.o .shobj/lvs.so: lvs.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -536,7 +656,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
@@ -550,19 +677,29 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -570,8 +707,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -579,69 +724,67 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -651,8 +794,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -661,22 +802,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -684,10 +840,17 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -696,10 +859,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -710,16 +879,24 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i
 .obj/vs.o .obj/vs.so .shobj/vs.o .shobj/vs.so: vs.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -760,7 +937,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/server_proto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.h \
@@ -771,19 +955,29 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -791,8 +985,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -800,69 +1002,67 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -872,8 +1072,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -882,22 +1080,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -905,10 +1118,17 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -917,10 +1137,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -931,10 +1157,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i
 .obj/Globals.o .obj/Globals.so .shobj/Globals.o .shobj/Globals.so: Globals.cpp Globals.h \
  $(ACE_ROOT)/ace/SOCK_CODgram.h \
@@ -944,6 +1176,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -975,7 +1209,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
@@ -991,19 +1232,29 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -1011,8 +1262,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -1020,69 +1279,67 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1092,8 +1349,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1102,22 +1357,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1125,10 +1395,17 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -1137,10 +1414,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -1151,10 +1434,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i
 .obj/Video_Server.o .obj/Video_Server.so .shobj/Video_Server.o .shobj/Video_Server.so: Video_Server.cpp Video_Server.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -1163,6 +1452,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1188,22 +1479,38 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -1219,8 +1526,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -1228,71 +1543,70 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1302,8 +1616,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1312,22 +1624,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1335,6 +1662,10 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
@@ -1344,6 +1675,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/server_proto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h \
@@ -1353,6 +1687,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -1361,10 +1698,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -1375,6 +1718,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i
 .obj/Video_Control_State.o .obj/Video_Control_State.so .shobj/Video_Control_State.o .shobj/Video_Control_State.so: Video_Control_State.cpp Video_Control_State.h \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -1383,6 +1729,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1405,10 +1753,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -1424,15 +1780,7 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1441,79 +1789,102 @@ realclean: clean
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1523,8 +1894,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1533,22 +1902,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1556,8 +1940,15 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.h \
@@ -1574,6 +1965,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
@@ -1581,10 +1975,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -1595,15 +1995,21 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  Video_Server.h
 .obj/Video_Control_i.o .obj/Video_Control_i.so .shobj/Video_Control_i.o .shobj/Video_Control_i.so: Video_Control_i.cpp Video_Control_i.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1642,16 +2048,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1660,81 +2059,110 @@ realclean: clean
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1744,8 +2172,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1754,22 +2180,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1777,10 +2218,18 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
- Video_Server.h $(TAO_ROOT)/tao/TAO.h \
+ Video_Server.h \
+ $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
@@ -1794,6 +2243,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -1802,10 +2254,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -1816,12 +2274,17 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i
 .obj/Audio_Server.o .obj/Audio_Server.so .shobj/Audio_Server.o .shobj/Audio_Server.so: Audio_Server.cpp Audio_Server.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1861,7 +2324,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/server_proto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h \
@@ -1873,19 +2343,29 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -1893,8 +2373,16 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -1902,69 +2390,67 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1974,8 +2460,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1984,22 +2468,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2007,10 +2506,17 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -2019,10 +2525,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -2033,10 +2545,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
  Audio_Control_i.h Audio_Control_State.h
 .obj/Audio_Control_State.o .obj/Audio_Control_State.so .shobj/Audio_Control_State.o .shobj/Audio_Control_State.so: Audio_Control_State.cpp Audio_Control_State.h \
@@ -2046,6 +2564,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2068,10 +2588,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -2087,15 +2615,7 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2104,79 +2624,102 @@ realclean: clean
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2186,8 +2729,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -2196,22 +2737,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2219,10 +2775,18 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
- Globals.h $(ACE_ROOT)/ace/SOCK_CODgram.h \
+ Globals.h \
+ $(ACE_ROOT)/ace/SOCK_CODgram.h \
  $(ACE_ROOT)/ace/SOCK_CODgram.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
@@ -2236,6 +2800,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -2244,10 +2811,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -2258,6 +2831,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  Audio_Control_i.h Audio_Server.h server_proto.h
 .obj/Audio_Control_i.o .obj/Audio_Control_i.so .shobj/Audio_Control_i.o .shobj/Audio_Control_i.so: Audio_Control_i.cpp Audio_Control_State.h \
@@ -2267,6 +2843,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2289,10 +2867,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -2308,15 +2894,7 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2325,79 +2903,102 @@ realclean: clean
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2407,8 +3008,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -2417,22 +3016,37 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2440,10 +3054,18 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
- Globals.h $(ACE_ROOT)/ace/SOCK_CODgram.h \
+ Globals.h \
+ $(ACE_ROOT)/ace/SOCK_CODgram.h \
  $(ACE_ROOT)/ace/SOCK_CODgram.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
@@ -2457,6 +3079,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlC.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
@@ -2465,10 +3090,16 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/Process.h \
@@ -2479,6 +3110,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  Audio_Control_i.h Audio_Server.h server_proto.h
 

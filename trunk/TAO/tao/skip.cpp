@@ -693,7 +693,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
     {
       retval = stream->skip (tc2, env);
     }
-  //  tc2->Release ();
+  //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_skipping == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

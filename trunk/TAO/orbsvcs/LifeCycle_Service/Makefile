@@ -49,7 +49,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs \
-	-I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+	-I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 realclean: clean
 
@@ -210,7 +210,6 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -458,7 +457,6 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -704,7 +702,6 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -927,7 +924,6 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \

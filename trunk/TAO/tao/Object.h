@@ -28,7 +28,7 @@
 class TAO_ServantBase;
 class STUB_Object;
 
-class TAO_Export CORBA_Object : public TAO_IUnknown
+class TAO_Export CORBA_Object
 {
 public:
   static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
@@ -60,7 +60,10 @@ public:
   virtual CORBA::Boolean _is_collocated (void) const;
   // are we collocated with the servant?
 
-  virtual CORBA::ImplementationDef_ptr _get_implementation (CORBA::Environment &);
+  virtual CORBA::ImplementationDef_ptr
+      _get_implementation (CORBA::Environment &);
+  // This method is deprecated in the CORBA 2.2 spec, we just return 0
+  // every time.
 
   virtual CORBA::Boolean _non_existent (CORBA::Environment &);
 
@@ -94,15 +97,9 @@ public:
   virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
                                          CORBA::Environment &env);
 
-  // = COM-like IUnknown Support
-  //
-  // This class is intended to aggregate or be contained with others,
-  // which in combination provide all requisite CORBA/COM support.
-
-  ULONG AddRef (void);
-  ULONG Release (void);
-  TAO_HRESULT QueryInterface (TAO_REFIID riid,
-                              void **ppv);
+  // = Reference count managment.
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
   CORBA_Object (STUB_Object *p = 0,
                 TAO_ServantBase *servant = 0,
@@ -116,16 +113,8 @@ public:
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
-  virtual STUB_Object *stubobj (CORBA::Environment &env);
+  virtual STUB_Object *_stubobj (void);
   // get the underlying stub object
-
-  // = Non-standard
-
-  void _set_parent (STUB_Object *p);
-  // Set the protocol proxy object.
-
-  STUB_Object *_get_parent (void) const;
-  // Get the protocol proxy object.
 
 protected:
   TAO_ServantBase *servant_;
@@ -136,15 +125,13 @@ protected:
   // objects.
 
 private:
-  STUB_Object *parent_;
+  STUB_Object *protocol_proxy_;
   // Pointer to the protocol-specific "object" containing important
   // profiling information regarding this proxy.
-  //
-  // This used to be a TAO_IUnknown, but that seemed overtly general.
-  // It's changed to a STUB_Object to make the relationship of the
-  // target more explicit and sensible.
+  // The protocol proxy is (potentially) shared among several
+  // CORBA_Objects
 
-  u_int refcount_;
+  CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
   // = Unimplemented methods

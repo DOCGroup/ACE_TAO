@@ -44,12 +44,6 @@ int CORBA_ORB::orb_init_count_ = 0;
 CORBA::Boolean CORBA::B_FALSE = 0;
 CORBA::Boolean CORBA::B_TRUE = 1;
 
-// COM's IUnknown support
-
-// {A201E4C7-F258-11ce-9598-0000C07CA898}
-TAO_DEFINE_GUID (IID_STUB_Object,
-                 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
 CORBA::String_var::String_var (char *p)
   : ptr_ (p)
 {
@@ -178,8 +172,8 @@ CORBA_ORB::shutdown (CORBA::Boolean /* wait_for_completion */)
   return;
 }
 
-ULONG
-CORBA_ORB::Release (void)
+CORBA::ULong
+CORBA_ORB::_decr_refcnt (void)
 {
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
@@ -650,7 +644,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   // Clean up in case of errors.
   if (new_obj == 0)
     {
-      data->Release ();
+      data->_decr_refcnt ();
       env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 

@@ -45,7 +45,7 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/Benchmark -I$(TAO_ROOT)/tao/compat
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/Benchmark
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 

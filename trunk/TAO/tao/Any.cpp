@@ -84,7 +84,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
     any_owns_data_ (any_owns_data),
     refcount_ (1)
 {
-  tc->AddRef ();
+  tc->_incr_refcnt ();
   // if the Any owns the data, we encode the "value" into a CDR stream and
   // store it. We also destroy the "value" since we own it.
   if (this->any_owns_data_)
@@ -113,7 +113,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 {
   CORBA::Environment env;
 
-  this->type_->AddRef ();
+  this->type_->_incr_refcnt ();
 
   // does the source own its data? If not, then it is not in the message block
   // form and must be encoded. Else we must simply duplicate the message block
@@ -143,7 +143,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   // check if it is a self assignment
   if (this == &src)
     {
-      this->AddRef ();
+      this->_incr_refcnt ();
       return *this;
     }
 
@@ -167,12 +167,12 @@ CORBA_Any::operator= (const CORBA_Any &src)
         }
 
       if (this->type_)
-        this->type_->Release ();
+        this->type_->_decr_refcnt ();
     }
 
   // Now copy the contents of the source to ourselves.
   this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
-  this->type_->AddRef ();
+  this->type_->_incr_refcnt ();
   this->value_ = 0;
   this->any_owns_data_ = CORBA::B_TRUE;
   this->refcount_ = 1;
@@ -197,7 +197,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
 // Destructor for an "Any" deep-frees memory if needed.
 //
 // NOTE that the assertion below will fire on application programmer
-// errors, such as using AddRef/Release out of sync with the true
+// errors, such as using _incr/_decr_refcnt out of sync with the true
 // lifetime of an Any value allocated on the stack.  BUT it involves
 // changing the refcounting policy so that it's initialized to zero,
 // not one ... which policy affects the whole source base, and not
@@ -230,7 +230,7 @@ CORBA_Any::~CORBA_Any (void)
     }
 
   if (this->type_)
-    this->type_->Release ();
+    this->type_->_decr_refcnt ();
 
 }
 
@@ -244,7 +244,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 {
   // we may be replacing ourselves. So before releasing our typecode, we
   // increment the refcount of the one that will be assigned to us.
-  tc->AddRef ();
+  tc->_incr_refcnt ();
 
   // decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -266,7 +266,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 
   // release our current typecode
   if (this->type_ != 0)
-    this->type_->Release ();
+    this->type_->_decr_refcnt ();
 
   // assign new typecode
   this->type_ = tc;
@@ -630,13 +630,13 @@ CORBA_Any::operator>>= (to_object obj) const
 }
 
 CORBA::ULong
-CORBA_Any::AddRef (void)
+CORBA_Any::_incr_refcnt (void)
 {
   return ++refcount_;
 }
 
 CORBA::ULong
-CORBA_Any::Release (void)
+CORBA_Any::_decr_refcnt (void)
 {
   {
     ACE_ASSERT (this != 0);

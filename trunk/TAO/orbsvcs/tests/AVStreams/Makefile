@@ -1,22 +1,17 @@
-## $Id$
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	
 #
-#	Makefile for MPEG stuff
+# $Id$
+#
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-INFO  = README
-
-DIRS  =	mpeg_shared \
-	mpeg_mib \
-	mpeg_server \
-	mpeg_client \
-	client \
-	server
+DIRS  =	benchmark \
+	mpeg \
+	server_discovery \
+	sfp \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -27,6 +22,4 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-
-
 

@@ -89,27 +89,20 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
       // ORB that's configured differently.
+      IIOP_Object *iiopobj = 
+	ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
 
-      IIOP_Object *obj2;
-
-      if (obj->QueryInterface (IID_IIOP_Object,
-                               (void **) &obj2) != TAO_NOERROR)
-        {
-          env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-          return 0;
-        }
-
-      if (!obj2)                        // null?
+      if (iiopobj == 0)
         return CORBA::string_copy ((CORBA::String) iiop_prefix);
 
       CORBA::String_var key;
       TAO_POA::encode_sequence_to_string (key.inout(),
-                                          obj2->profile.object_key);
+                                          iiopobj->profile.object_key);
 
       u_int buflen = (ACE_OS::strlen (iiop_prefix) +
                       1 /* major # */ + 1 /* minor # */ +
                       2 /* double-slash separator */ +
-                      ACE_OS::strlen (obj2->profile.host) +
+                      ACE_OS::strlen (iiopobj->profile.host) +
                       1 /* colon separator */ +
                       5 /* port number */ +
                       1 /* slash separator */ +
@@ -118,9 +111,9 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       CORBA::String buf = CORBA::string_alloc (buflen);
 
       ACE_OS::sprintf (buf, "%s%c.%c//%s:%d/%s", iiop_prefix,
-                       digits [obj2->profile.iiop_version.major],
-                       digits [obj2->profile.iiop_version.minor],
-                       obj2->profile.host, obj2->profile.port,
+                       digits [iiopobj->profile.iiop_version.major],
+                       digits [iiopobj->profile.iiop_version.minor],
+                       iiopobj->profile.host, iiopobj->profile.port,
                        key.in ());
 
       return buf;
@@ -221,7 +214,7 @@ iiop_string_to_object (CORBA::String string,
   else
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->Release ();
+      data->_decr_refcnt ();
       return 0;
     }
 
@@ -229,7 +222,7 @@ iiop_string_to_object (CORBA::String string,
       || data->profile.iiop_version.minor > IIOP::MY_MINOR)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->Release ();
+      data->_decr_refcnt ();
       return 0;
     }
 
@@ -239,7 +232,7 @@ iiop_string_to_object (CORBA::String string,
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->Release ();
+      data->_decr_refcnt ();
       return 0;
     }
 
@@ -259,7 +252,7 @@ iiop_string_to_object (CORBA::String string,
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (data->profile.host);
       data->profile.host = 0;
-      data->Release ();
+      data->_decr_refcnt ();
       return 0;
     }
 
@@ -280,7 +273,7 @@ iiop_string_to_object (CORBA::String string,
 
   // Set the ref_count on data to 1, which is correct, because only
   // obj has now a reference to it.
-  data->Release ();
+  data->_decr_refcnt ();
 
   return obj;
 }
@@ -316,10 +309,12 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 
   if (this->optimize_collocation_objects_ && sobj != 0)
     {
-      IIOP_Object *iiopobj;
+      IIOP_Object *iiopobj = 
+	ACE_dynamic_cast (IIOP_Object*, sobj);
+      
       // Make sure users passed in an IIOP_Object otherwise, we don't
       // know what to do next.
-      if (sobj->QueryInterface (IID_IIOP_Object, (void **) &iiopobj) != TAO_NOERROR)
+      if (iiopobj == 0)
         {
 #if 0
           ACE_ERROR ((LM_ERROR,

@@ -45,8 +45,8 @@ public:
 
   // = Methods required for COM IUnknown support.
 
-  CORBA::ULong AddRef (void);
-  CORBA::ULong Release (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
 private:
   u_int refcount_;
@@ -129,8 +129,8 @@ public:
 
   // = Methods required for COM IUnknown support
 
-  CORBA::ULong AddRef (void);
-  CORBA::ULong Release (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
 private:
   CORBA_NVList (void);

@@ -89,7 +89,7 @@ public:
 
 };
 
-class TAO_Export CORBA_ServerRequest : public TAO_IUnknown
+class TAO_Export CORBA_ServerRequest
 {
   // = TITLE
   //    Class representing a CORBA ServerRequest object.
@@ -174,6 +174,10 @@ public:
 
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
+
+  // = Stuff required for memory management.
+  virtual CORBA::ULong _incr_refcnt (void) = 0;
+  virtual CORBA::ULong _decr_refcnt (void) = 0;
 };
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
@@ -258,11 +262,9 @@ public:
 
   virtual const TAO_GIOP_ServiceContextList &service_info (void) const;
 
-  // = Stuff required for memory management and COM
-  ULONG  AddRef (void);
-  ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (TAO_REFIID riid,
-                               void **ppv);
+  // = Stuff required for memory management.
+  virtual CORBA::ULong _incr_refcnt (void);
+  virtual CORBA::ULong _decr_refcnt (void);
 
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
@@ -301,7 +303,7 @@ private:
   CORBA::ULong exception_type_;
   // exception type (will be NO_EXCEPTION in the majority of the cases)
 
-  u_int refcount_;
+  CORBA::ULong refcount_;
   // Number of things hold references to here.
 
   CORBA::ORB_ptr orb_;

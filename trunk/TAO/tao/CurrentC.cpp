@@ -16,7 +16,7 @@
 CORBA_Current_ptr CORBA_Current::_duplicate (CORBA_Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -35,7 +35,7 @@ CORBA_Current_ptr CORBA_Current::_narrow (
          || obj->_servant()->_downcast ("IDL:CORBA/Current:1.0") == 0
       )
   {
-    CORBA_Current_ptr new_obj = new CORBA_Current(obj->_get_parent ());
+    CORBA_Current_ptr new_obj = new CORBA_Current(obj->_stubobj ());
     return new_obj;
   } // end of if
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
