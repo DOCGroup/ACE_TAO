@@ -213,18 +213,22 @@ public:
     // names of subtypes.
   };
 
-  typedef ACE_Hash_Map_Manager
+  typedef ACE_Hash_Map_Manager_Ex
     <
     TAO_String_Hash_Key,
     CosTradingRepos::ServiceTypeRepository::PropStruct*,
+    ACE_Hash<TAO_String_Hash_Key>,
+    ACE_Equal_To<TAO_String_Hash_Key>,
     ACE_Null_Mutex
     >
     Prop_Map;
 
-  typedef ACE_Hash_Map_Manager
+  typedef ACE_Hash_Map_Manager_Ex
     <
     TAO_String_Hash_Key,
     Type_Info*,
+    ACE_Hash<TAO_String_Hash_Key>,
+    ACE_Equal_To<TAO_String_Hash_Key>,
     ACE_Null_Mutex
     >
     Service_Type_Map;

@@ -95,10 +95,12 @@ public:
     LOCK_TYPE lock_;
   };
 
-  typedef ACE_Hash_Map_Manager
+  typedef ACE_Hash_Map_Manager_Ex
     <
     TAO_String_Hash_Key,
     Offer_Map_Entry*,
+    ACE_Hash<TAO_String_Hash_Key>,
+    ACE_Equal_To<TAO_String_Hash_Key>,
     ACE_Null_Mutex
     >
     Offer_Database;

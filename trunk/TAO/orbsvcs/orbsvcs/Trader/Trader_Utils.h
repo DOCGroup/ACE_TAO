@@ -614,10 +614,12 @@ private:
   TAO_Offer_Modifier (const TAO_Offer_Modifier&);
   TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
 
-  typedef ACE_Hash_Map_Manager
+  typedef ACE_Hash_Map_Manager_Ex
     <
     TAO_String_Hash_Key,
     CosTrading::Property*,
+    ACE_Hash<TAO_String_Hash_Key>,
+    ACE_Equal_To<TAO_String_Hash_Key>,
     ACE_Null_Mutex
     >
     Property_Table;
