@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#define ACE_ENABLE_TIMEPROBES
+//#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 
