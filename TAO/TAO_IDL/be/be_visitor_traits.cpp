@@ -99,6 +99,8 @@ be_visitor_traits::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
   // Since the three blocks below generate specialized (i.e., non-template)
   // classes, we don't want to generate them unless it's necessary - thus
   // the logic surrounding each one.
@@ -108,7 +110,7 @@ be_visitor_traits::visit_interface (be_interface *node)
   if (!node->imported ())
     {
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
@@ -131,10 +133,8 @@ be_visitor_traits::visit_interface (be_interface *node)
   // multiple declarations.
   if (node->seen_in_operation ())
     {
-      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
-
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl
@@ -145,9 +145,9 @@ be_visitor_traits::visit_interface (be_interface *node)
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
-
-      os->gen_endif ();
     }
+
+  os->gen_endif ();
 
   int status = this->visit_scope (node);
 
@@ -204,12 +204,14 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
   // This is used by the _var and _out classes, so it should always be
   // generated in the main file.
   if (!node->imported ())
     {
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
@@ -223,10 +225,8 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
   // multiple declarations.
   if (node->seen_in_operation ())
     {
-      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
-
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl
@@ -237,9 +237,9 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
-
-      os->gen_endif ();
     }
+
+  os->gen_endif ();
 
   int status = this->visit_scope (node);
 
@@ -307,8 +307,10 @@ be_visitor_traits::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
   *os << be_nl << be_nl
-      << "template<>" << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " Arg_Traits<"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
@@ -319,6 +321,8 @@ be_visitor_traits::visit_sequence (be_sequence *node)
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
+
+  os->gen_endif ();
 
   node->cli_traits_gen (I_TRUE);
   return 0;
@@ -343,15 +347,17 @@ be_visitor_traits::visit_string (be_string *node)
       return 0;
     }
 
+  idl_bool wide = (node->width () != 1);
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  idl_bool wide = (node->width () != 1);
+  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " Arg_Traits<"
       << alias->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
@@ -360,6 +366,8 @@ be_visitor_traits::visit_string (be_string *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
+
+  os->gen_endif ();
 
   node->cli_traits_gen (I_TRUE);
   return 0;
@@ -379,12 +387,14 @@ be_visitor_traits::visit_array (be_array *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
   // This is used by the _var and _out classes, so it should always be
   // generated in the main file.
   if (!node->imported ())
     {
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "struct " << be_global->stub_export_macro () << " Array_Traits<"
           << be_idt << be_idt_nl
           << node->name () << "," << be_nl
@@ -408,10 +418,8 @@ be_visitor_traits::visit_array (be_array *node)
   // multiple declarations.
   if (node->seen_in_operation ())
     {
-      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
-
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl;
@@ -431,9 +439,9 @@ be_visitor_traits::visit_array (be_array *node)
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
-
-      os->gen_endif ();
     }
+
+  os->gen_endif ();
 
   node->cli_traits_gen (I_TRUE);
   return 0;
@@ -457,7 +465,7 @@ be_visitor_traits::visit_enum (be_enum *node)
   os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
@@ -494,7 +502,7 @@ be_visitor_traits::visit_structure (be_structure *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl;
@@ -580,7 +588,7 @@ be_visitor_traits::visit_union (be_union *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
       *os << be_nl << be_nl
-          << "template<>" << be_nl
+          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl;
@@ -642,7 +650,6 @@ be_visitor_traits::visit_union_branch (be_union_branch *node)
     }
 
   node->cli_traits_gen (I_TRUE);
-  bt->cli_traits_gen (I_TRUE);
   return 0;
 }
 

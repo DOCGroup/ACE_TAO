@@ -8,7 +8,7 @@
 ACE_RCSID (tao,
            Object_Argument_T,
            "$Id$")
-#if 0
+
 template<typename S_ptr>
 TAO::In_Object_Argument_T<S_ptr>::In_Object_Argument_T (S_ptr x)
   : x_ (x)
@@ -278,5 +278,5 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::arg (void)
 {
   return this->x_.out ();
 }
-#endif
+
 #endif /* TAO_OBJECT_ARGUMENT_T_C */

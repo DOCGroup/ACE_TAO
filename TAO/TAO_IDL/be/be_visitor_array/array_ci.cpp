@@ -159,7 +159,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << node->name () << ", " 
@@ -172,7 +171,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << node->name () << ", " 
@@ -185,7 +183,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << node->name () << ", " 
@@ -199,7 +196,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << node->name () << ", " 
