@@ -4,12 +4,12 @@ Wed Feb  4 04 23:54:55 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
           Fixed include path for FtRtecEventCommS.h.
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.h:
-          orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.inl:
-          orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.cpp:
-          orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
-          orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
-          orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
-          orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
           Fixed alignment problems when using TAO_InputCDR.
 
 
