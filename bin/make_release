@@ -282,7 +282,6 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   }
 
 
-
   $status = &create_kit ();
 
   if (! $status  &&  $install) {
