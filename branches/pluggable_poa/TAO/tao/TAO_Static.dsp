@@ -1139,10 +1139,6 @@ SOURCE=.\Acceptor_Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Active_Object_Map.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1243,10 +1239,6 @@ SOURCE=.\DomainC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DomainS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\DynamicC.cpp
 # End Source File
 # Begin Source File
@@ -1267,15 +1259,7 @@ SOURCE=.\Exclusive_TMS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Forwarding_Servant.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\FT_CORBAC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\FT_CORBAS.cpp
 # End Source File
 # Begin Source File
 
@@ -1403,10 +1387,6 @@ SOURCE=.\MessagingC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MessagingS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\MProfile.cpp
 # End Source File
 # Begin Source File
@@ -1488,10 +1468,6 @@ SOURCE=.\Pool_Per_Endpoint.cpp
 # Begin Source File
 
 SOURCE=.\PortableInterceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableServerC.cpp
 # End Source File
 # Begin Source File
 

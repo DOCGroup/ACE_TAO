@@ -193,6 +193,7 @@ public:
       const CORBA::Char *logical_type_id,
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
 
   POA_CORBA_DomainManager_ptr _get_servant (void) const;
 

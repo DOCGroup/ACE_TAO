@@ -1,3 +1,55 @@
+Wed Aug 30 18:48:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsw:
+        * tao/TAO_Static.dsp:
+          Removed more files from the static build.
+          Add dependencies for the static PortableServer library.
+
+        * TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_collocated_ss.cpp:
+          Generate a _tao_QueryInterface for the direct_collocated
+          classes.
+
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/MessagingS.cpp:
+          Fixed problems with ambiguous definitions of _tao_QueryInterface
+          and some missing ACE_NESTED_CLASS() macros.
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.dsp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+        * orbsvcs/Event_Service/Event_Service.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+        * orbsvcs/Trading_Service/Trading_Service.dsp:
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency.dsp:
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosProperty.dsp:
+        * orbsvcs/orbsvcs/CosTime.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent.dsp:
+        * orbsvcs/orbsvcs/RTSched.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+          Fixed project files to link the TAO_PortableServer library when
+          needed.
+
 Wed Aug 30 17:06:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

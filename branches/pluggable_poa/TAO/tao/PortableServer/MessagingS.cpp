@@ -389,6 +389,16 @@ CORBA::Boolean POA_Messaging::_tao_direct_collocated_ReplyHandler::_is_a(
   return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);
 }
 
+void *
+POA_Messaging::_tao_direct_collocated_ReplyHandler::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *value =
+    this->TAO_Collocated_Object::_tao_QueryInterface (type);
+  if (value != 0)
+    return value;
+  return this->ACE_NESTED_CLASS (Messaging, ReplyHandler)::_tao_QueryInterface (type);
+}
+
 
 POA_Messaging::ReplyHandler_ptr POA_Messaging::_tao_direct_collocated_ReplyHandler::_get_servant (void) const
 {
