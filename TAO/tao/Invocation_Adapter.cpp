@@ -49,7 +49,6 @@ namespace TAO
       this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-
     TAO_Operation_Details op_details (this->operation_,
                                       this->op_len_,
                                       this->number_args_ != 0,

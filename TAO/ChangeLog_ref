@@ -1,3 +1,20 @@
+Fri Oct 10 11:12:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp: Cosmetic fix. 
+
+	* tao/LocateRequest_Invocation_Adapter.cpp: Fixed a crash with
+	  locate requests. 
+
+	* tao/Remote_Object_Proxy_Broker.cpp: Fixed problems that were
+	  identified with _is_a (), _non_existent () and other hard coded
+	  invocations. 
+
+	* tao/Synch_Invocation.cpp: Fixed bugs that prevented timeouts
+	  tests to fail. 
+
+	* TAO_IDL/be/be_codegen.cpp: Removed an unnecessary extra
+	  character. 
+
 Fri Oct 10 11:12:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Valuetype/ValueBase.h:
