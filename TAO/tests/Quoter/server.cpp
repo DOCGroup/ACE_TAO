@@ -17,15 +17,14 @@
 
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),
-    use_naming_service_ (1),
-    ior_output_file_ (0)
+    quoter_Factory_Impl_ (0)
 {
 }
 
 int
 Quoter_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dln:o:s");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,28 +36,19 @@ Quoter_Server::parse_args (void)
       case 'n': // number of Quoter objects we export
         this->num_of_objs_ = ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'o': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
-        break;
-      case 's': // Don't use the TAO Naming Service.
-        this->use_naming_service_=0;
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-n] <num of Quoter objects>"
-                           " [-o] <ior_output_file>"
-                           " [-s]"
                            "\n",
                            argv_ [0]),
                           1);
       }
+
+
+  ACE_NEW_RETURN (quoter_Factory_Impl_, Quoter_Factory_Impl(this->num_of_objs_), 0);
 
   // Indicates successful parsing of command line.
   return 0;
@@ -79,32 +69,29 @@ Quoter_Server::init (int argc,
 
   // Copy them, because parse_args expects them there.
   this->argc_ = argc;
-  this->argv_ = argv;
+  int i;
+
+  // Make a copy of argv since ORB_init will change it.
+  this->argv_ = new char *[argc];
+  
+  for (i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
 
   this->parse_args ();
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (&this->quoter_Factory_Impl_,
+    this->orb_manager_.activate (this->quoter_Factory_Impl_,
                                  env);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
 
-  if (this->ior_output_file_)
-  {
-    ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
-    ACE_OS::fclose (this->ior_output_file_);
-  }
-   
-  if (this->use_naming_service_)
-    return this->init_naming_service (env);
-
-  return 0;
+  return this->init_naming_service (env);
 }
 
-// Initialisation of Naming Service and register IDL_Quoter Context
+// Initialization of Naming Service and register IDL_Quoter Context
 // and Quoter_factory object.
 
 int
@@ -141,7 +128,7 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
     quoterFactoryContextName.length (1);
     quoterFactoryContextName[0].id = CORBA::string_dup ("Quoter_Factory");
     quoterNameContext->bind (quoterFactoryContextName,
-                             quoter_Factory_Impl_._this(env),
+                             quoter_Factory_Impl_->_this(env),
                              env);
     TAO_CHECK_ENV_RETURN (env, -1);
 
@@ -200,10 +187,10 @@ main (int argc, char *argv[])
   Quoter_Server quoter_server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tIDL_Quoter:SERVER \n \n"));
+              "\n\tQuoter:SERVER \n \n"));
   TAO_TRY
     {
-      if (quoter_server.init (argc,argv,TAO_TRY_ENV) == -1)
+      if (quoter_server.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
       else
         {
