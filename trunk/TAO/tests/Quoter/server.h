@@ -10,10 +10,11 @@
 //    quoter_server.h
 //
 // = DESCRIPTION
-//    @@ Working on it
+//    Implements the Quoter_Server class which handles the initialization of
+//    the quoter implementations.
 //
 // = AUTHORS
-//    Darrell Brunsch 
+//    Darrell Brunsch (brunsch@cs.wustl.edu)
 //
 // ============================================================================
 
@@ -57,31 +58,21 @@ private:
   // Parses the commandline arguments.
 
   int init_naming_service (CORBA::Environment &env);
-  // Initialises the name server and registers cubit factory with the
+  // Initializes the name server and registers cubit factory with the
   // name server.
 
   int num_of_objs_;
-  // Number of cubit objects we export.
-
-  int use_naming_service_;
-  //Flag to tell server not to use the TAO Naming Service to register
-  //the cubit factory.
-
-  FILE* ior_output_file_;
-  // File to output the cubit factory IOR.
+  // Number of quoter objects we export.
 
   CosNaming::NamingContext_var namingContext_var_;
   // Naming Service context
 
-  Quoter_Factory_Impl  quoter_Factory_Impl_;
+  Quoter_Factory_Impl  *quoter_Factory_Impl_;
   // Instantiate the Quoter Factory
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  Quoter_Factory_Impl factory_impl_;
-  // Implementation object of the cubit factory.
-       
   int argc_;
   // Number of commandline arguments.
 

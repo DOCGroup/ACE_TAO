@@ -49,9 +49,6 @@ private:
   int init_naming_service (void);
   // Function to initialize the naming service.
 
-  int read_ior (char *filename);
-  // Function to read the Quoter factory ior from a file.
-
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
@@ -88,15 +85,6 @@ private:
   CORBA::ORB_var orb_;
   // Remember our orb.
 
-  FILE *quoter_factory_ior_file_;
-  // File from which to obtain the IOR.
-
-  ACE_HANDLE f_handle_;
-  // File handle to read the IOR.
-
-  int use_naming_service_;
-  // Flag to tell client not to use Namingservice to find the cubit
-  // Factory.  
   int useLifeCycleService_;
   // Flag to tell if the a Generic Factory is going to be used
   // or the LifeCycle Service (0 means Generic Factory, 1 means LCS)
