@@ -284,6 +284,7 @@ TEMPLATE_FILES = \
            Strategies_T \
            Stream \
            Stream_Modules \
+	   String_Base \
            Svc_Handler \
            Synch_T \
            Task_T \

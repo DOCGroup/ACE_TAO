@@ -204,6 +204,17 @@
 
 typedef ACE_UINT16 ACE_USHORT16;
 
+// Define a pseudo wide character type when wchar is not supported so we
+// can support basic wide character string operations.
+
+# if defined (ACE_HAS_WCHAR)
+#   define ACE_WINT_T wint_t
+#   define ACE_WCHAR_T wchar_t
+# else
+#   define ACE_WINT_T ACE_USHORT16
+#   define ACE_WCHAR_T ACE_USHORT16
+# endif /* ACE_HAS_WCHAR */
+
 # if ACE_SIZEOF_INT == 4
   typedef int ACE_INT32;
   typedef unsigned int ACE_UINT32;
