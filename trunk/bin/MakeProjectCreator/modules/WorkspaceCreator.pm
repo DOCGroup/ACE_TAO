@@ -708,6 +708,7 @@ sub generate_project_files {
   my($previmpl)  = $impl;
   my($prevcache) = $self->{'cacheok'};
   my(%gstate)    = $generator->save_state();
+  my($genimpdep) = $self->generate_implicit_project_dependencies();
 
   ## Remove the address portion of the $self string
   $postkey =~ s/=.*//;
@@ -804,6 +805,13 @@ sub generate_project_files {
             $self->{'projects'}     = \@perprojects;
             $self->{'project_info'} = \%perpi;
 
+            ## Add implict project dependencies based on source files
+            ## that have been used by multiple projects
+            if ($genimpdep) {
+              $self->add_implicit_project_dependencies($generator,
+                                                       $self->getcwd());
+            }
+
             ## Write our per project workspace
             my($error) = '';
             ($status, $error) = $self->write_workspace($generator);
@@ -857,7 +865,7 @@ sub generate_project_files {
 
   ## Add implict project dependencies based on source files
   ## that have been used by multiple projects
-  if ($status && $self->generate_implicit_project_dependencies()) {
+  if ($status && $genimpdep) {
     $self->add_implicit_project_dependencies($generator, $cwd);
   }
 
