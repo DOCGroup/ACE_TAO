@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       load_manager->set_default_properties (props
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb->object_to_string (load_manager.in ()
