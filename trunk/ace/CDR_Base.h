@@ -205,12 +205,6 @@ public:
           ACE_CDR::Long h;
 #     endif /* ! ACE_BIG_ENDIAN	*/
 
-          LongLong (const ACE_INT32);
-          LongLong (const ACE_UINT32);
-
-          void operator= (ACE_CDR::Long rhs);
-          void operator= (ACE_CDR::ULong rhs);
-
           /**
            * @name Overloaded Relation Operators.
            *
@@ -219,17 +213,6 @@ public:
           //@{
           int operator== (const LongLong &rhs) const;
           int operator!= (const LongLong &rhs) const;
-          int operator< (const ACE_CDR::LongLong &) const;
-          int operator<= (const ACE_CDR::LongLong &) const;
-          int operator> (const ACE_CDR::LongLong &) const;
-          int operator>= (const ACE_CDR::LongLong &) const;
-
-          int operator== (ACE_UINT32) const;
-          int operator!= (ACE_UINT32) const;
-          int operator< (ACE_UINT32) const;
-          int operator<= (ACE_UINT32) const;
-          int operator> (ACE_UINT32) const;
-          int operator>= (ACE_UINT32) const;
           //@}
         };
 #   endif /* no	native 64 bit integer type */
