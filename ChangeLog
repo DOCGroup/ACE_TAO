@@ -1,3 +1,15 @@
+Fri Apr 30 14:20:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_aix_g++.GNU: For AIX 5.x, changed the
+	  SOFLAGS link option -Wl,-bexpall to -Wl,-bexpfull. This allows the
+	  gcc 3.x type information to be exported to the library and useable
+	  by applications. Thanks very much to Randy Hammon
+	  <randy@trancekat.com> for this fix!
+	  Also, if rtti=0, add -DACE_LACKS_RTTI to CFLAGS in addition to adding
+	  -fno-rtti. Also changed the rrti default from 0 to 1.
+
+	* THANKS: Added Randy Hammon to the Hall of Fame.
+
 Fri Apr 30 10:19:28 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_sys_socket.inl (read): Fix typo, missing _.
