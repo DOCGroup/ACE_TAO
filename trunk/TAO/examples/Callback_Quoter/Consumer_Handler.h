@@ -59,6 +59,7 @@ public:
   // Destructor.
 
   int init (int argc, char *argv[]);
+
   // Initialize the client communication with the server.
 
   int run (void);
@@ -81,6 +82,14 @@ public:
 
   ACE_Reactor *Consumer_Handler::reactor (void) const;
   // This method gives the reactor pointer.
+
+  int registered_;
+  // Flag which notes whether the consumer has got registered with the
+  // Notifier-server.
+
+  int unregistered_;
+  // Flag which notes whether the consumer has got unregistered from
+  // the Notifier-server.
 
 private:
   int read_ior (char *filename);
@@ -121,7 +130,10 @@ private:
   // Our orb.
 
  Consumer_Input_Handler *consumer_input_handler_;
+  // Reference to the input_event_handler.
+
  Consumer_Signal_Handler *consumer_signal_handler_;
+  // Reference to the signal_event_handler.
 
 };
 

@@ -21,8 +21,6 @@
 #include "ace/OS.h"
 
 Consumer_Input_Handler::Consumer_Input_Handler (Consumer_Handler *consumer_handler)
-    :registered_(0),
-     unregistered_(0)
   {
     consumer_handler_ = consumer_handler;
 
@@ -79,7 +77,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
 }
 
 
-void
+int
 Consumer_Input_Handler::register_consumer ()
 {
 
@@ -125,7 +123,9 @@ Consumer_Input_Handler::register_consumer ()
       TAO_CHECK_ENV;
 
       // Note the registration.
-      registered_ = 1;
+      consumer_handler_->registered_ = 1;
+      consumer_handler_->unregistered_ = 0;
+
       ACE_DEBUG ((LM_DEBUG,
 		  "registeration done!\n"));
     }
@@ -136,11 +136,13 @@ Consumer_Input_Handler::register_consumer ()
       return -1;
     }
   TAO_ENDTRY;
+
+return 0;
 }
 
 
 
-void
+int
 Consumer_Input_Handler::unregister_consumer ()
 {
   // Only if the consumer is registered can the
@@ -150,7 +152,7 @@ Consumer_Input_Handler::unregister_consumer ()
 
   TAO_TRY
     {
-      if (registered_ == 1)
+      if (consumer_handler_->registered_ == 1)
 	{
 	  this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in());
 
@@ -158,7 +160,8 @@ Consumer_Input_Handler::unregister_consumer ()
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      " Consumer Unregistered \n "));
-	  unregistered_ = 1;
+	  consumer_handler_->unregistered_ = 1;
+	  consumer_handler_->registered_ = 0;
 	}
       else
 	ACE_DEBUG ((LM_DEBUG,
@@ -171,9 +174,11 @@ Consumer_Input_Handler::unregister_consumer ()
       return -1;
     }
   TAO_ENDTRY;
+
+return 0;
 }
 
-void
+int
 Consumer_Input_Handler::quit_consumer_process ()
 {
   // Only if the consumer is registered and wants to shut
@@ -183,13 +188,14 @@ Consumer_Input_Handler::quit_consumer_process ()
 
   TAO_TRY
     {
-      if (unregistered_ != 1 && registered_ == 1)
+      if (consumer_handler_->unregistered_ != 1 && consumer_handler_->registered_ == 1)
 	{
 	  this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ());
 	  ACE_DEBUG ((LM_DEBUG,
 		      " Consumer Unregistered \n "));
-
 	  TAO_CHECK_ENV;
+	  consumer_handler_->unregistered_ = 0;
+          consumer_handler_->registered_ = 0;
 	}
       this->consumer_handler_->consumer_servant_->shutdown (TAO_TRY_ENV);
 
@@ -202,4 +208,6 @@ Consumer_Input_Handler::quit_consumer_process ()
       return -1;
     }
   TAO_ENDTRY;
+
+return 0;
 }

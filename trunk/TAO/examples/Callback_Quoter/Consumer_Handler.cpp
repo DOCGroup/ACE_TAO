@@ -26,11 +26,13 @@
 #include <ace/Event_Handler.h>
 
 Consumer_Handler::Consumer_Handler ()
-  : ior_ (0),
-    shutdown_ (0),
-    stock_name_ ("Unknown"),
+  : stock_name_ ("Unknown"),
     threshold_value_ (0),
-    server_ ()
+    server_ (),
+    registered_ (0),
+    unregistered_ (0),
+    ior_ (0),
+    shutdown_ (0)
 {
 
 }
@@ -45,6 +47,8 @@ Consumer_Handler::~Consumer_Handler ()
      ACE_ERROR ((LM_ERROR,
        	       "%p\n",
        	       "remove_stdin_handler"));
+
+
 
 }
 

@@ -50,17 +50,20 @@ public:
 
    Consumer_Input_Handler (Consumer_Handler *consumer_handler);
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE);
   // Handle the user input.
 
-  void register_consumer ();
+  int register_consumer ();
   // Registration with the notifier.
 
-  void unregister_consumer ();
+  int unregister_consumer ();
   // Cancelling the registration with the notifier.
 
-  void quit_consumer_process ();
+  int quit_consumer_process ();
   // Ends the consumer process.
+
+  friend class ACE_Shutup_GPlusPlus;
+  // Turn off g++ warning
 
 private:
 
@@ -72,13 +75,6 @@ private:
   Consumer_Handler *consumer_handler_;
   // The Consumer_Handler object.
 
-  int registered_;
-  // Flag which notes whether the consumer has got registered with the
-  // Notifier-server.
-
-  int unregistered_;
-  // Flag which notes whether the consumer has got unregistered from
-  // the Notifier-server.
 };
 
 #define REGISTER 'r'
