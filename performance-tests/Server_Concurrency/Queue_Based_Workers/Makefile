@@ -6,7 +6,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-BIN     = workers
+BIN     = workers RT_CORBA_Workers
 
 FILES   = $(BIN)
 PSRC    = $(addsuffix .cpp,$(FILES))
