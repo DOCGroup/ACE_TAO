@@ -629,11 +629,12 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 
   if (s != 0)
     {
+      // If we have a dot, we have a suffix
+      got_suffix = 1;
+
       // Check whether this matches the appropriate platform-specific
       // suffix.
-      if (ACE_OS::strcmp (s, dll_suffix) == 0)
-        got_suffix = 1;
-      else
+      if (ACE_OS::strcmp (s, dll_suffix) != 0)
         ACE_ERROR ((LM_WARNING,
                     ASYS_TEXT ("Warning: improper suffix for a ")
                     ASYS_TEXT ("shared library on this platform: %s\n"),
