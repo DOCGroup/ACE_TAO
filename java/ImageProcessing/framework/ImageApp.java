@@ -281,7 +281,6 @@ public class ImageApp extends Applet
 
   private StatusDisplay statusDisplay_;
   private Hashtable filterTable_ = new Hashtable ();
-  private ImageFilterFactory iff_ = new ImageFilterFactory ();
   private Tester tester_;
   
 }
