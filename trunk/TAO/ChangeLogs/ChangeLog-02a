@@ -1,3 +1,8 @@
+Tue Apr 18 14:37:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html:
+	  Update to item about the Typecode factory.
+
 Tue Apr 18 09:42:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/Options.html:
