@@ -57,11 +57,11 @@ class CosEvent_Service
   // run the COS Event Service.
   // Returns 0 on success, -1 on error.
 
-  int shutdown (void);
+  virtual int shutdown (void);
   // Shutdown the COS Event Service.
   // Returns 0 on success, -1 on error.
 
- private:
+protected:
   int init_ORB  (int argc, char *argv []);
   // initialize the ORB.
 
@@ -76,12 +76,12 @@ class CosEvent_Service
   // Gets a reference to a Rtec via the  naming service.
   // Returns 0 on success, -1 on error.
 
-  int start_Scheduler (void);
-  // start the Scheduler used ny the RtEC.
+  virtual int create_local_RtecService (void);
+  // Creates a local Rtec.
   // Returns 0 on success, -1 on error.
 
-  int create_local_RtecService (void);
-  // Creates a local Rtec.
+  int start_Scheduler (void);
+  // start the Scheduler used ny the RtEC.
   // Returns 0 on success, -1 on error.
 
   void init_SupplierQOS (RtecScheduler::handle_t supp_handle);
@@ -126,8 +126,8 @@ class CosEvent_Service
   RtecScheduler::Scheduler_var scheduler_;
   // Reference to the Scheduler after activating it in the ORB.
 
-  TAO_EC_Event_Channel* ec_impl_;
-  // The servant object of the Rtec.
+  POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
+  // The Event Channel implementation.
 
   RtecEventChannelAdmin::EventChannel_var rtec_;
   // Reference to the Rtec returned after activating it in the ORB.
@@ -161,4 +161,29 @@ class CosEvent_Service
   char *source_type_pairs_;
   // The pairs of Source and EventType Ids (for the SupplierQOS).
 };
+
+class OLD_CosEvent_Service : public CosEvent_Service
+{
+  // = TITLE
+  //    class  OLD_CosEvent_Service
+  // = DESCRIPTION
+  //   class to keep the old rtEC implementation around.
+public:
+  // = Initialization and termination methods.
+  OLD_CosEvent_Service (void);
+  ~OLD_CosEvent_Service (void);
+
+  virtual int create_local_RtecService (void);
+  // Creates a local Rtec.
+  // Returns 0 on success, -1 on error.
+
+  virtual int shutdown (void);
+  // Shutdown the COS Event Service.
+  // Returns 0 on success, -1 on error.
+
+protected:
+ TAO_Module_Factory *module_factory_;
+  // The module factory for the EC.
+};
+
 #endif /* COSEVENT_SERVICE_H */

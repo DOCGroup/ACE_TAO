@@ -265,59 +265,19 @@ CosEvent_Service::start_Scheduler (void)
   ACE_NOTREACHED (return 0;)
 }
 
-#if 0
 int
 CosEvent_Service::create_local_RtecService (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      ACE_NEW_RETURN (this->ec_impl_,
-                      ACE_EventChannel(0,
-                                       ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                       &module_factory_), -1);
-
-      this->rtec_ = this->ec_impl_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
-                                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "CosEvent_Service: The RTEC IOR is <%s>\n",
-                  str.in ()));
-
-      this->ec_impl_->activate ();
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in CosEvent_Service::create_local_RtecService\n");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  ACE_NOTREACHED (return 0;)
-}
-
-#endif
-
-int
-CosEvent_Service::create_local_RtecService (void)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      ACE_NEW_RETURN (this->ec_impl_,
+      TAO_EC_Event_Channel* ec;
+      ACE_NEW_RETURN (ec,
                       TAO_EC_Event_Channel (this->root_poa_.in (),
                                             this->root_poa_.in ()),
                       1);
-
-      ec_impl_->activate (ACE_TRY_ENV);
+      this->ec_impl_ = ec;
+      ec->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->rtec_ = this->ec_impl_->_this (ACE_TRY_ENV);
@@ -344,6 +304,7 @@ CosEvent_Service::create_local_RtecService (void)
 
   ACE_NOTREACHED (return 0;)
 }
+
 
 void
 CosEvent_Service::init_SupplierQOS (RtecScheduler::handle_t supp_handle)
@@ -699,7 +660,8 @@ CosEvent_Service::shutdown (void)
 int
 main (int argc, char *argv[])
 {
-  CosEvent_Service service;
+  // CosEvent_Service service;
+  OLD_CosEvent_Service service;
 
   if (service.startup (argc, argv) == -1)
     {
@@ -720,4 +682,67 @@ main (int argc, char *argv[])
   service.shutdown ();
 
   return 0;
+}
+
+// ----  The OLD_CosEvent_Service -----
+
+OLD_CosEvent_Service::OLD_CosEvent_Service (void)
+ :module_factory_ (0)
+{
+  // No-Op.
+}
+
+OLD_CosEvent_Service::~OLD_CosEvent_Service (void)
+{
+  // No-Op.
+}
+
+int
+OLD_CosEvent_Service::create_local_RtecService (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      ACE_NEW_RETURN (this->module_factory_,
+                      TAO_Reactive_Module_Factory,
+                      1);
+      ACE_NEW_RETURN (this->ec_impl_,
+                      ACE_EventChannel (this->scheduler_.in (),
+                                        1,
+                                        ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                        this->module_factory_),
+                      1);
+
+      this->rtec_ = this->ec_impl_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
+                                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "CosEvent_Service: The RTEC IOR is <%s>\n",
+                  str.in ()));
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::create_local_RtecService\n");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  ACE_NOTREACHED (return 0;)
+}
+
+int
+OLD_CosEvent_Service::shutdown (void)
+{
+  delete this->module_factory_;
+  this->module_factory_ = 0;
+
+  return CosEvent_Service::shutdown ();
 }
