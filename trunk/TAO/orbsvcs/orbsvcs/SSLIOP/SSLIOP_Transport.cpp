@@ -28,7 +28,7 @@ TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
   TAO_SSLIOP_Connection_Handler *handler,
   TAO_ORB_Core *orb_core,
   CORBA::Boolean /*flag*/)
-  : TAO_Transport (TAO_TAG_IIOP_PROFILE, orb_core),
+  : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
     connection_handler_ (handler),
     messaging_object_ (0)
 {
@@ -167,9 +167,16 @@ TAO_SSLIOP_Transport::register_handler_i (void)
   // Set the flag in the Connection Handler
   this->ws_->is_registered (1);
 
-  // Register the handler with the reactor
-  return  r->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
+  // Set the reactor and handler in the ACE_SSL_SOCK_Stream so that
+  // the reactor is notified if data is still pending for read or
+  // write.  This is necessary since SSL is record-oriented, and the
+  // underlying SSL implementation may buffer data.
+  this->connection_handler_->peer ().reactor (r);
+  this->connection_handler_->peer ().handler (this->connection_handler_);
+
+  // Register the handler with the reactor.
+  return r->register_handler (this->connection_handler_,
+                              ACE_Event_Handler::READ_MASK);
 }
 
 
@@ -309,7 +316,7 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
        acceptor++)
     {
       // Check whether it is a IIOP acceptor
-      if ((*acceptor)->tag () == TAO_TAG_IIOP_PROFILE)
+      if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
         {
           this->get_listen_point (listen_point_list,
                                   *acceptor);
