@@ -1,13 +1,13 @@
 Tue Aug 15 10:23:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp : 
+	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
 	  Added a missing header file.
 
-	* tests/Object_Loader/Loader.h   : 
-	* tests/Object_Loader/Loader.cpp : 
+	* tests/Object_Loader/Loader.h   :
+	* tests/Object_Loader/Loader.cpp :
 	  Changed the signatur of create_object () to comply with the
 	  changes done in Object_Loader.h.
-	
+
 Tue Aug 15 09:42:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
