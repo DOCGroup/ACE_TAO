@@ -15,6 +15,8 @@
 //============================================================================
 
 #include "Stock_Factory_i.h"
+#include "tao/IORTable/IORTable.h"
+
 #include <iostream>
 
 int
@@ -90,7 +92,7 @@ main (int argc, char* argv[])
       {
         CORBA::String_var ior =
           orb->object_to_string (stock_factory.in ());
-        
+
         adapter->bind ("childPOA", ior.in ());
       }
 
