@@ -320,10 +320,6 @@ public:
    */
   virtual int activate (void);
 
-  /// Returns the current state of the queue, which can either
-  /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
-  virtual int state (void);
-
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
   virtual int deactivated (void);
@@ -457,10 +453,6 @@ protected:
 
   /// Current number of messages in the queue.
   size_t cur_count_;
-
-  /// Indicates the state of the queue, which can be
-  /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
-  int state_;
 
   /// The notification strategy used when a new message is enqueued.
   ACE_Notification_Strategy *notification_strategy_;

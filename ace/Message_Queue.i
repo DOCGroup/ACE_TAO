@@ -11,6 +11,14 @@ ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
 {
 }
 
+ACE_INLINE int
+ACE_Message_Queue_Base::state (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Base::state");
+
+  return this->state_;
+}
+
 #if defined (VXWORKS)
 // Specialization to use native VxWorks Message Queues.
 
@@ -184,14 +192,6 @@ ACE_Message_Queue_NT::max_threads (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::max_threads");
   return this->max_cthrs_;
-}
-
-template <ACE_SYNCH_DECL> ACE_INLINE int
-ACE_Message_Queue_NT<ACE_SYNCH_USE>::state (void)
-{
-  ACE_TRACE ("ACE_Message_Queue_NT<ACE_SYNCH_USE>::state");
-
-  return this->state_;
 }
 
 ACE_INLINE int
