@@ -1,3 +1,15 @@
+	* ace/SOCK_Dgram.cpp (send,recv): added casts of addr.get_addr ()
+	  to caddr_t so it will compile with Sun C++.
+
+	* ace/IOStream.cpp: fixed "#define ACE_IOSTREAM_C" to keep g++ sane.
+
+	* tests/Naming_Test.cpp: moved declaration of "i" out of for loop
+	  because it is used after the loop.
+
+	* examples/ASX/UPIPE_Event_server.cpp (open): return 1 if init ()
+	  succeeds.  There's a commented-out call to activate the object
+	  that would (should?) return a value.
+
 Tue Feb  4 19:06:52 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Signal.cpp: Fixed all the ACE_Sig_Handler[s] methods so that
