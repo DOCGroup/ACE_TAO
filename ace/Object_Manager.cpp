@@ -689,9 +689,10 @@ ACE_Object_Manager::fini (void)
   if (dynamically_allocated_)
     {
       delete instance_;
-      instance_ = 0;
     }
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+  instance_ = 0;
 
   return 0;
 }
