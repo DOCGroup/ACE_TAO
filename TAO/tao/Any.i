@@ -383,13 +383,6 @@ CORBA_Any_out::operator= (CORBA_Any *s)
   return *this;
 }
 
-ACE_INLINE CORBA_Any_out &
-CORBA_Any_out::operator= (const CORBA_Any *s)
-{
-  this->ptr_ = new CORBA::Any (*s);
-  return *this;
-}
-
 ACE_INLINE
 CORBA_Any_out::operator CORBA_Any *&()
 {
