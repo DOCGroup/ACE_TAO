@@ -8,7 +8,7 @@
 # Example: TAO\examples\foo\run_test.pl: !MINIMUM !ST
 #
 # NOTE: This file contains tests only for TAO's ORB. Please do not
-# include things like performance-tests, and examples here. 
+# include things like performance-tests, and examples here.
 TAO/tests/Param_Test/run_test.pl: !MINIMUM
 TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
 TAO/tests/AMI/run_test.pl: !MINIMUM
@@ -25,18 +25,19 @@ TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM
+TAO/tests/Bug_1495_Regression/run_test.pl: !MINIMUM !ST !DISABLE_INTERCEPTORS
 TAO/tests/Bug_1568_Regression/run_test.pl
 TAO/tests/Bug_1670_Regression/run_test.pl
 TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM
 TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
 TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
 TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32
-TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !ST 
+TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST 
-TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST 
-TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM 
-TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST
@@ -47,7 +48,7 @@ TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM  !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Private_Connection/run_test.pl:  !MINIMUM
-TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:  !MINIMUM !ST 
+TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:  !MINIMUM !ST
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
