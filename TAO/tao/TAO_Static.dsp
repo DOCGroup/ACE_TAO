@@ -1343,10 +1343,6 @@ SOURCE=.\Pool_Per_Endpoint.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableInterceptor.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptorC.i
 # End Source File
 # Begin Source File
@@ -2040,10 +2036,6 @@ SOURCE=.\PollableC.cpp
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableInterceptor.cpp
 # End Source File
 # Begin Source File
 
