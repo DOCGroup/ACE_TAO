@@ -26,7 +26,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (addr),
@@ -39,7 +38,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
   for (int i = 0; i < l; ++i)
     this->object_key_[i] = object_key[i];
 
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
@@ -47,14 +45,12 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0)
 {
   this->set (addr);
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
@@ -63,7 +59,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (version),
     object_key_ (),
     object_addr_ (addr),
@@ -76,7 +71,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
   for (int i = 0; i < l; ++i)
     this->object_key_[i] = object_key[i];
 
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
@@ -85,14 +79,12 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0)
 {
   this->set (addr);
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
@@ -101,7 +93,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (port),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (port, host),
@@ -115,7 +106,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     ACE_OS::strcpy (this->host_, host);
   }
 
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
@@ -125,7 +115,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (port),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
@@ -139,7 +128,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     ACE_OS::strcpy (this->host_, host);
   }
 
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
@@ -149,7 +137,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (port),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (port, host),
@@ -161,14 +148,12 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
            char[ACE_OS::strlen (host) + 1]);
   ACE_OS::strcpy (this->host_, host);
 
-  this->create_body ();
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
   : TAO_Profile (pfile->tag ()),
     host_(0),
     port_(pfile->port_),
-    body_(pfile->body_),
     version_(pfile->version_),
     object_key_(pfile->object_key_),
     object_addr_(pfile->object_addr_),
@@ -186,7 +171,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
   : TAO_Profile (pfile.tag ()),
     host_(0),
     port_(pfile.port_),
-    body_(pfile.body_),
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
@@ -204,7 +188,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (version),
     object_key_ (),
     object_addr_ (),
@@ -217,7 +200,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -230,7 +212,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (void)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -437,41 +418,6 @@ TAO_IIOP_Profile::parse_string (const char *string,
   return 1;
 }
 
-//  TAO_InputCDR cdr (body.get_buffer (), body.length (), body[0]);
-//
-// @@
-//  CORBA::Boolean byte_order;
-//  cdr >> CORBA::Any::to_boolean (byte_order);
-//  cdr >> this->version_.major;
-//  cdr >> this->version_.minor;
-//  cdr >> this->host_ ();
-//  cdr >> this->port_;
-//  cdr >> this->object_key_;
-//  this->object_addr_.set(this->port_, this->host_);
-// }
-
-void
-TAO_IIOP_Profile::create_body (void)
-{
-}
-// @@
-//  TAO_OutputCDR cdr;
-//   cdr << TAO_ENCAP_BYTE_ORDER;
-//   cdr << this->version_.major;
-//   cdr << this->version_.minor;
-//   cdr << this->host_;
-//   cdr << this->port_;
-//   cdr << this->object_key_;
-//
-//   // Create a copy by making a temporary TAO_opaque object.
-//   // @@ TODO the CDR stream may contain several fragments, need to
-//   // merge them...
-//   this->body_ = TAO_opaque (cdr.length (), // length
-//                             cdr.length (), // maximum
-//                             cdr.buffer (), // buffer
-//                             0);            // not own
-// }
-
 CORBA::Boolean
 TAO_IIOP_Profile::is_equivalent (TAO_Profile *other_profile,
                                  CORBA::Environment &env)
@@ -516,13 +462,19 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
   return hashval % max;
 }
 
-char *
-TAO_IIOP_Profile::addr_to_string(void)
+int
+TAO_IIOP_Profile::addr_to_string(char *buffer, size_t length)
 {
-  static char s[MAXHOSTNAMELEN + MAXHOSTNAMELEN];
-  ACE_OS::sprintf (s, "%s:%d",
+  int actual_len = ACE_OS::strlen (this->host_) // chars in host name
+                   + sizeof (':')               // delimiter
+                   + ACE_OS::strlen ("65536")    // max port
+                   + sizeof ('\0');
+  if (length < actual_len)
+    return -1;
+
+  ACE_OS::sprintf (buffer, "%s:%d",
                    this->host_, port_);
-  return s;
+  return 0;
 }
 
 const char *

@@ -127,12 +127,6 @@ TAO_Unknown_Profile::to_string (CORBA::Environment &)
   return 0;
 }
 
-const TAO_opaque&
-TAO_Unknown_Profile::body (void) const
-{
-  return this->body_;
-}
-
 int
 TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
 {
@@ -157,9 +151,8 @@ TAO_Unknown_Profile::object_key (void) const
 }
 
 TAO_ObjectKey *
-TAO_Unknown_Profile::_key (CORBA::Environment &) const
+TAO_Unknown_Profile::_key (void) const
 {
-  // @@ THROW something???
   return 0;
 }
 
@@ -185,8 +178,8 @@ TAO_Unknown_Profile::hash (CORBA::ULong max,
                          this->body_.length ()) % max);
 }
 
-ASYS_TCHAR *
-TAO_Unknown_Profile::addr_to_string(void)
+int
+TAO_Unknown_Profile::addr_to_string(char *buffer, size_t length)
 {
   return 0;
 }

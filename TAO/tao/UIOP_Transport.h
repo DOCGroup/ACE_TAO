@@ -38,7 +38,7 @@ class TAO_Export TAO_UIOP_Transport : public TAO_Transport
   //   connection handler (handler_).
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Implements common IIOP methods for the Transport adaptor class.
 public:
   TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
                       TAO_ORB_Core *orb_core);
@@ -110,7 +110,7 @@ class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
   //   server.
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Implements the methods specific to the client.
 public:
   TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
