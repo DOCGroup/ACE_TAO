@@ -5,7 +5,7 @@ Wed Mar 07 08:01:16 2001  Ossama Othman  <ossama@uci.edu>
 	  Make sure the returned TAO_Endpoint pointer is non-zero before
 	  invoking methods through it.  It could be zero in the case of
 	  profiles created by other ORBs.  Thanks to Goran Lowkrantz
-	  <Goran.Lowkrantz@ismobile.com> for submitting the fix.
+	  <goran.lowkrantz@ismobile.com> for submitting the fix.
 
 Wed Mar  7 08:39:56 2001  Chad Elliott  <elliott_c@ociweb.com>
 
