@@ -1,3 +1,8 @@
+Tue Feb 22 15:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Upcall.{h,cpp,inl}:
+          Added :: before TAO_Root_POA to fix compile errors with Sun Forte
+
 Tue Feb 22 15:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Current_Impl.{h,cpp,inl}:
