@@ -119,6 +119,7 @@ public:
 private:
   CONCURRENCY_STRATEGY* concurrency_strategy_;
   ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;
+  ACE_Reactive_Strategy<ROA_Handler> reactive_strategy_;
 
 #if 0
   // Someday we'll need these!
