@@ -384,3 +384,94 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   return 0;
 }
+
+int
+be_visitor_valuetype_cs::visit_operation (be_operation *node)
+{
+  if (node->cli_stub_gen () || node->imported ())
+    {
+      return 0;
+    }
+
+  be_valuetype *parent =
+    be_valuetype::narrow_from_scope (node->defined_in ());
+
+  if (parent == 0 || ! this->is_amh_exception_holder (parent))
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  // STEP I: Generate the return type.
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cs::"
+                         "visit_operation - "
+                         "Bad return type\n"),
+                        -1);
+    }
+
+  // Grab the right visitor to generate the return type.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
+  be_visitor_operation_rettype or_visitor (&ctx);
+
+  if (bt->accept (&or_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cs::"
+                         "visit_operation - "
+                         "codegen for return type failed\n"),
+                        -1);
+    }
+
+  // STEP 2: Generate the operation name.
+  *os << be_nl << parent->name () << "::" << node->local_name ();
+
+  // STEP 3: Generate the argument list with the appropriate mapping. For these
+  // we grab a visitor that generates the parameter listing.
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CS);
+  be_visitor_obv_operation_arglist ooa_visitor (&ctx);
+
+  if (node->accept (&ooa_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cs::"
+                         "visit_operation - "
+                         "codegen for argument list failed\n"),
+                        -1);
+    }
+
+  // We need to throw an exceptions that was assigned in a
+  // different place (by the app-developer). ACE_THROW does
+  // not fit the bill since the ACE_THROW macro contructs the
+  // exception passed to it.  Also exception->_raise() is
+  // ruled out since in platforms without native exception
+  // support, the _raise() function does not do anything. Below we
+  // explicitly take care of both cases (platforms with
+  // and without native exception support).
+  *os << be_nl
+      << "{" << be_nl
+      << "#if defined (TAO_HAS_EXCEPTIONS)" << be_idt_nl
+      << "auto_ptr<CORBA::Exception> safety (this->exception);" << be_nl
+      << "// Direct throw because we don't have the ACE_TRY_ENV." << be_nl
+      << "this->exception->_raise ();" << be_uidt_nl
+      << "#else" << be_idt_nl
+      << "// We can not use ACE_THROW here." << be_nl
+      << "ACE_TRY_ENV.exception (this->exception);" << be_uidt_nl
+      << "#endif" << be_nl
+      << "}" 
+      << be_uidt_nl;
+
+  return 0;
+}
+

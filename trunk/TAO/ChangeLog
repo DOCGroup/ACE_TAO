@@ -1,3 +1,17 @@
+Thu Jan  2 17:51:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_cs.h:
+
+	  Moved generation of AMH exception holder raise_* method
+	  body from the stub header file to the stub source file. Also
+	  added explicit include of ace/Auto_Ptr when generating AMH
+	  classes (needed to correct AIX build errors).
+
 Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:

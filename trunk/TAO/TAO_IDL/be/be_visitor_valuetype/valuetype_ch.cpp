@@ -466,7 +466,6 @@ int
 be_visitor_valuetype_ch::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
   this->ctx_->node (node); // save the node
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -513,7 +512,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   if (node->accept (&ooa_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ch::"
+                         "(%N:%l) be_visitor_valuetype_ch::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
