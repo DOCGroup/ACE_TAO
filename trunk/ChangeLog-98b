@@ -1,3 +1,8 @@
+Thu Sep 03 00:26:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Time_Request_Reply.cpp (ACE_Time_Request): The second
+	  parameter should be of type ACE_UINT32.
+
 Wed Sep  2 22:52:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Name_Handler.cpp,
