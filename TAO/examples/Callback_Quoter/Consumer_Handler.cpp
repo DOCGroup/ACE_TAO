@@ -35,7 +35,7 @@ Consumer_Handler::Consumer_Handler (void)
     ior_ (0),
     shutdown_ (0),
     use_naming_service_ (1),
-    interactive_ (0)
+    interactive_ (1)
 {
 
 }
@@ -44,12 +44,15 @@ Consumer_Handler::~Consumer_Handler (void)
 {
   // Make sure to cleanup the STDIN handler.
 
-  if (ACE_Event_Handler::remove_stdin_handler
-      (TAO_ORB_Core_instance ()->reactor (),
-       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-       	       "%p\n",
-       	       "remove_stdin_handler"));
+  if (this->interactive_ == 1)
+    {
+      if (ACE_Event_Handler::remove_stdin_handler
+          (this->orb_->orb_core ()->reactor (),
+           this->orb_->orb_core ()->thr_mgr ()) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "remove_stdin_handler"));
+    }
 }
 
 // Reads the Server factory IOR from a file.
@@ -62,7 +65,7 @@ Consumer_Handler::read_ior (char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "Unable to open %s for reading: %p\n",
                        filename),
                       -1);
 
@@ -115,7 +118,7 @@ Consumer_Handler::parse_args (void)
 	this->use_naming_service_ = 0;
 	break;
 
-      case 'a':
+      case 'a': // to be given only on using run_test.pl
         this->stock_name_ = get_opts.optarg;
         this->interactive_ = 0;
         break;
@@ -123,6 +126,7 @@ Consumer_Handler::parse_args (void)
       case 't':
         this->threshold_value_ = ACE_OS::atoi (get_opts.optarg);
         break;
+
 
       case 'x':
         this->shutdown_ = 1;
@@ -181,9 +185,9 @@ Consumer_Handler::via_naming_service (void)
       ACE_TRY_CHECK;
 
     }
-  ACE_CATCHANY
+  ACE_CATCHANY 
     {
-      ACE_TRY_ENV.print_exception ("Consumer_Handler::via_naming_service\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_Handler::via_naming_service\n");
       return -1;
     }
   ACE_ENDTRY;
@@ -196,6 +200,7 @@ Consumer_Handler::via_naming_service (void)
 int
 Consumer_Handler::init (int argc, char **argv)
 {
+  
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -212,68 +217,40 @@ Consumer_Handler::init (int argc, char **argv)
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+    
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "parse_args failed\n"),
-			   -1);
-
-      // use the naming service.
-       if (this->use_naming_service_)
-	 return  via_naming_service ();
-
-
-       if (this->ior_ == 0)
-         ACE_ERROR_RETURN ((LM_ERROR,
-                            "%s: no ior specified\n",
-                            this->argv_[0]),
-                           -1);
-
-      CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->ior_,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (server_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid ior <%s>\n",
-                           this->ior_),
                           -1);
-      // The downcasting from CORBA::Object_var to Notifier_var is
-      // done using the <_narrow> method.
-      this->server_ = Notifier::_narrow (server_object.in (),
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_NEW_RETURN (this->consumer_servant_,
-		      Consumer_i (),
-		      -1);
-      // Get the consumer stub (i.e consumer object) pointer.
-      this->consumer_var_ =
-	this->consumer_servant_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->interactive_)
+      
+      if (this->interactive_ == 1)
         {
+          ACE_DEBUG ((LM_DEBUG,
+                      " Services provided:\n "
+                      " * Registration <type 'r'>\n "
+                      " * Unregistration <type 'u'>\n "
+                      " * Quit <type 'q'>\n "));
+          
           ACE_NEW_RETURN (consumer_input_handler_,
                           Consumer_Input_Handler (this),
                           -1);
-
+      
           if (ACE_Event_Handler::register_stdin_handler
               (consumer_input_handler_,
-               TAO_ORB_Core_instance ()->reactor (),
-               TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+               this->orb_->orb_core ()->reactor (),
+               this->orb_->orb_core ()->thr_mgr ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
                                "register_stdin_handler"),
                               -1);
-
+          
           // Register the signal event handler for ^C
           ACE_NEW_RETURN (consumer_signal_handler_,
                           Consumer_Signal_Handler (this),
                           -1);
-
-          if( this->reactor_used ()->register_handler
+          
+          if (this->reactor_used ()->register_handler
               (SIGINT,
                consumer_signal_handler_) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -281,17 +258,95 @@ Consumer_Handler::init (int argc, char **argv)
                                "register_handler for SIGINT"),
                               -1);
         }
+      // use the naming service.
+      if (this->use_naming_service_)
+        {
+          if (via_naming_service () == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                                "via_naming_service failed\n"),
+                              -1);
+         }
       else
         {
-          // @@ Encapsulate this in a little method...
+          
+          if (this->ior_ == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: no ior specified\n",
+                               this->argv_[0]),
+                              -1);
+          
+          CORBA::Object_var server_object =
+            this->orb_->string_to_object (this->ior_,
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          
+          if (CORBA::is_nil (server_object.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid ior <%s>\n",
+                               this->ior_),
+                              -1);
+          // The downcasting from CORBA::Object_var to Notifier_var is
+          // done using the <_narrow> method.
+          this->server_ = Notifier::_narrow (server_object.in (),
+                                             ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "Consumer_Handler::init");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
+}
+
+int
+Consumer_Handler::run (void)
+{
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Obtain and activate the RootPOA.
+     CORBA::Object_var obj = 
+            this->orb_->resolve_initial_references ("RootPOA");
+
+     PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+     ACE_TRY_CHECK;
+     
+     PortableServer::POAManager_var poa_manager=
+       root_poa->the_POAManager (ACE_TRY_ENV);
+     ACE_TRY_CHECK;
+
+     poa_manager->activate (ACE_TRY_ENV);
+     ACE_TRY_CHECK;
+
+     ACE_NEW_RETURN (this->consumer_servant_,
+                     Consumer_i (),
+                     -1);
+     // Set the orb in the consumer_ object.
+     this->consumer_servant_->orb (this->orb_.in ());
+     
+     // Get the consumer stub (i.e consumer object) pointer.
+     this->consumer_var_ =
+       this->consumer_servant_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;  
+      
+      if (this->interactive_ == 0)
+        {
+          
           // Register with the server.
           this->server_->register_callback (this->stock_name_,
                                             this->threshold_value_,
                                             this->consumer_var_.in (),
                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
+          
           // Note the registration.
           this->registered_ = 1;
           this->unregistered_ = 0;
@@ -300,41 +355,22 @@ Consumer_Handler::init (int argc, char **argv)
                       "registeration done!\n"));
         }
 
+      // Run the ORB.
+      this->orb_->run ();
+  
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Consumer_Handler::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_Handler::init");
       return -1;
     }
   ACE_ENDTRY;
-
-  return 0;
-}
-
-int
-Consumer_Handler::run (void)
-{
-  // Set the orb in the consumer_ object.
-  this->consumer_servant_->orb (this->orb_.in ());
-
-  ACE_DEBUG ((LM_DEBUG,
-              " Services provided:\n "
-              " * Registration <type 'r'>\n "
-              " * Unregistration <type 'u'>\n "
-              " * Quit <type 'q'>\n "));
-
-  // Run the ORB.
-  this->orb_->run ();
+  
   return 0;
 }
 
 ACE_Reactor *
 Consumer_Handler::reactor_used (void) const
 {
-  //*done* @@ Please check with Pradeep and see how to remove the reliance
-  // on <TAO_ORB_Core_instance()>.  This is non-portable and we want
-  // to try to use only CORBA-compliant code in our examples.
-
-  // Cant do anything as the reactor is not accessible in any other way.
-  return TAO_ORB_Core_instance ()->reactor ();
+  return this->orb_->orb_core ()->reactor ();
 }
