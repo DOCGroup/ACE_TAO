@@ -1,3 +1,14 @@
+Sun Feb 11 15:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/QoS/ACE_QoS_Export.h:
+
+          Added ACE_AS_STATIC_LIBS support.
+
+        * ace/QoS/ACE_QoS.dsp:
+        * ace/QoS/ACE_QoS_Lib.dsp:
+
+          Fixed to comply with ACE standards.
+
 Sun Feb 11 10:15:08 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:
