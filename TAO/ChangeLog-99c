@@ -5,6 +5,9 @@ Mon Apr 12 10:38:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Removed warnings about unused variables, the variables are
 	  required for platforms without native C++ exceptions.
 
+	* docs/Options.html:
+	  Fixed description of the ORBinputcdrallocator option.
+
 Mon Apr 12 09:52:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Makefile:
