@@ -1,3 +1,9 @@
+Mon Mar  6 17:56:56 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/make_release (release_tag_files):
+
+	  Added missing declaration of this variable.
+
 Mon Mar  6 13:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/run_tests.vxworks: Removed Cached_Conn_Test from the
@@ -5,7 +11,7 @@ Mon Mar  6 13:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           researched completely, it has been disabled on vxworks.
 	  Thanks to David Hall <David.Hall@grc.nasa.gov> for reporting
 	  this bug.
-				
+
 Sun Mar  5 21:32:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
