@@ -7,7 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//     GIOP_Message.h
+//     GIOP_Message_Base.h
 //
 // = DESCRIPTION
 //     Interface for the GIOP messaging protocol
@@ -28,15 +28,13 @@ class TAO_Export TAO_GIOP_Message_Base :
   public TAO_Pluggable_Messaging_Interface
 {
   // = TITLE
-  //   Definitions of client side of the GIOP specific stuff
+  //   Definitions of GIOP specific stuff
   //
   // = DESCRIPTION
   //   This class will hold the specific details common to all the
   //   GIOP versions. Some of them which are here may be shifted if
   //   things start changing between versions
 
-  // IMPORTANT: This code was based on the GIOP.h & GIOP.cpp
-  
 public:
   TAO_GIOP_Message_Base (void);
   
@@ -45,24 +43,26 @@ public:
 
   virtual CORBA::Boolean write_protocol_header (TAO_Pluggable_Message_Type t,
                                                 TAO_OutputCDR &msg);
-  // Shouldnt be needed here but for compilation
+  // Writes the GIOP header in to <msg>
 
   int handle_input (TAO_Transport *transport,
                     TAO_ORB_Core *orb_core,
                     TAO_Message_State_Factory &mesg_state,
                     ACE_Time_Value *max_time_value = 0);
+  // Reads input from the transport 
   
   virtual CORBA::Boolean 
   write_message_header (const TAO_Pluggable_Connector_Params &params,
                         TAO_Pluggable_Header_Type header_type,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg);
-  // Write the  header.
+  // Write the  header defined by <header_type> in to <msg>
 
   int send_message (TAO_Transport *transport,
                     TAO_OutputCDR &stream,
                     ACE_Time_Value *max_wait_time = 0,
                     TAO_Stub *stub = 0);
+  // Sends the encapsulated stream in <stream> on to the transport
   
   virtual int parse_reply (TAO_Message_State_Factory &mesg_state,
                            TAO_Pluggable_Connector_Params &params,
@@ -108,12 +108,13 @@ protected:
   // later date use wherein things can changes in GIOP
 
   int  send_error (TAO_Transport *transport);
+  // Send error messages
 
 private:
-
-
   virtual CORBA::Octet major_version (void) = 0;
   virtual CORBA::Octet minor_version (void) = 0;
+  // These virtual methods need will give the major and minor versions
+  // of the GIOP classes that are active. 
 
   virtual CORBA::Boolean 
   write_request_header (const IOP::ServiceContextList& svc_ctx,
@@ -122,25 +123,29 @@ private:
                         TAO_Target_Specification &spec,
                         const char* opname,
                         TAO_OutputCDR &msg) = 0;
-  // Write the GIOP request header.
+  // Write the GIOP request header in to <msg>
   
   virtual CORBA::Boolean 
   write_locate_request_header (CORBA::ULong request_id,
                                TAO_Target_Specification &spec,
                                TAO_OutputCDR &msg) = 0;
-  // Write the GIOP locate request header.
+  // Write the GIOP locate request header in to <msg>
   
-
   int read_bytes_input (TAO_Transport *transport,
                         TAO_InputCDR &input,
                         CORBA::ULong read_size,
                         ACE_Time_Value *max_wait_time);
+  // This a helper that would read the <reade_size> bytes from
+  // <transport> in to the <inout> stream.
 
   virtual int validate_version (TAO_GIOP_Message_State *state) = 0;
+  // This will do a validation of the versions that arrive in the transport.
 
   virtual int parse_header (TAO_GIOP_Message_State *state);
+  // Parses the header of the GIOP messages for validity
 
   virtual int parse_magic_bytes (TAO_GIOP_Message_State *state);
+  // validates the first 4 bytes that contain the magic word "GIOP"
 
   ssize_t read_buffer (TAO_Transport *transport,
                        char *buf,
@@ -148,7 +153,6 @@ private:
                        ACE_Time_Value *max_wait_time);
   // The above method seems to be redundant with read_input_bytes. I
   // will trim it down in the next iteration... @@Bala
-
 
 
   void send_close_connection (const TAO_GIOP_Version &version,
@@ -163,7 +167,6 @@ const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
 const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
 const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
 const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
-//const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET  = 8;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Base.i"
