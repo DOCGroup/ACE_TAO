@@ -1,3 +1,14 @@
+Mon Nov  5 06:51:16 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* utils/IOR-parser/ior-handler.{h,cpp}: Changed struct IOR to
+	  IOR_Manager to avoid clashes with macros named IOR on HP/UX.
+  	  Thanks to Steve Osselton <steve@prismtechnologies.com> for
+ 	  reporting this.
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.h: #undef the lock_held
+	  macro to work around clashing macros on HP/UX.  Thanks to Steve
+ 	  Osselton <steve@prismtechnologies.com> for reporting this.
+
 Mon Nov  5 13:53:21 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/include/idl_defines.h:

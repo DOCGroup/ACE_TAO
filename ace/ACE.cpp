@@ -2599,9 +2599,9 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                    timebuf,
                    sizeof timebuf);
   // date_and_timelen > sizeof timebuf!
-  ACE_OS::strncpy (date_and_time,
-                   timebuf,
-                   date_and_timelen);
+  ACE_OS::strsncpy (date_and_time,
+                    timebuf,
+                    date_and_timelen);
   char yeartmp[5];
   ACE_OS::strsncpy (yeartmp,
                     &date_and_time[20],

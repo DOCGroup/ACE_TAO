@@ -35,7 +35,7 @@
 #define MAX_OBJ_KEY_LEN     100
 #define MAX_HOSTNAME_LEN     64
 
-struct IOR
+struct IOR_Manager
 {
   // = TITLE
   //     This is the useful information obtained from parsing an IOR.
@@ -87,7 +87,7 @@ public:
   IorHandler (void);
   // Constructor
 
-  void interpretIor (char *thisIor, struct IOR *thisIorInfo);
+  void interpretIor (char *thisIor, struct IOR_Manager *thisIorInfo);
   // The main IOR parsing routine
 
   char *getIdlInterface (char *typeId, int *validTypeId);
@@ -99,7 +99,7 @@ public:
   char stringIOR[MAX_IOR_LEN];
   // Holds the stringified IOR during parsing
 
-  struct IOR parsedIOR;
+  struct IOR_Manager parsedIOR;
   // Holds the parsed IOR
 
 private:

@@ -47,7 +47,7 @@
 #include "concurrency_export.h"
 
 #if defined (lock_held)
-# undef lock_held
+#undef lock_held
 #endif /* lock_held */
 
 #define NUMBER_OF_LOCK_MODES 5

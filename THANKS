@@ -1007,7 +1007,7 @@ Michael Ravits <miquel@bitsmart.com>
 Derek Viljoen <derek@viljoen.com>
 Hamed Azizadah <Azizadah@ix.netcom.com>
 Keo Kelly <kkelly@fallschurch.esys.com>
-Joachim Achtzehnter <joachima@realtimeint.com>
+Joachim Achtzehnter <joachima@netacquire.com>
 Tomer Amiaz <Tomer@bandwiz.com>
 Sergey Osokin <osa@freebsd.org.ru>
 Nick Logvinov <nl@rpb.ru>
@@ -1359,7 +1359,9 @@ Steve Osselton <steve@prismtechnologies.com>
 Doron Rajwan <doron@BANDWIZ.COM>
 Stuart Jones <sjones@clcsmail.ksc.nasa.gov>
 Guillaume Renaud <guillaume.renaud@valtech.fr>
+Tommy Svensson <tommysvensson@yahoo.com>
 Jstwo <jstwo@writeme.com>
+Hartmut Quast <HartmutQuast@t-online.de> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
