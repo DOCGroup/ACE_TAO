@@ -13,12 +13,12 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 DIRS = \
   PortableServer \
+  Messaging \
   DynamicAny \
   DynamicInterface \
   BiDir_GIOP \
   IORManipulation \
   IORTable \
-  Messaging \
   Strategies \
   SmartProxies
 
