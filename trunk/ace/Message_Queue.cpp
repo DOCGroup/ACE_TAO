@@ -244,6 +244,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::close (void)
 
 template <ACE_SYNCH_1> int
 ACE_Message_Queue<ACE_SYNCH_2>::signal_enqueue_waiters (void)
+{
 #if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->not_full_cond_.signal () != 0)
     return -1;
@@ -499,9 +500,9 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T>
     {
       ++this->enqueue_waiters_;
       // @@ Need to add sanity checks for failure...
-      ace_mon.release ();
+      mon.release ();
       this->not_full_cond_.acquire ();
-      ace_mon.acquire ();
+      mon.acquire ();
     }
 #else
   // Wait while the queue is full.
@@ -521,6 +522,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T>
         }
     }
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
+  return 0;
 }
 
 template <ACE_SYNCH_1> int
@@ -532,9 +534,9 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T
     {
       ++this->dequeue_waiters_;
       // @@ Need to add sanity checks for failure...
-      ace_mon.release ();
+      mon.release ();
       this->not_empty_cond_.acquire ();
-      ace_mon.acquire ();
+      mon.acquire ();
     }
 #else
   // Wait while the queue is empty.
@@ -554,6 +556,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T
         }
     }
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
+  return 0;
 }
 
 // Block indefinitely waiting for an item to arrive,
