@@ -46,11 +46,14 @@ class TAO_EC_SupplierAdmin;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ObserverStrategy;
-class TAO_EC_ProxyPushSupplier_Set;
+template<class PROXY> class TAO_EC_Proxy_Collection;
 class TAO_EC_Timeout_Generator;
 class TAO_EC_Scheduling_Strategy;
 class TAO_EC_ConsumerControl;
 class TAO_EC_SupplierControl;
+
+typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushConsumer> TAO_EC_ProxyPushConsumer_Collection;
+typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier> TAO_EC_ProxyPushSupplier_Collection;
 
 class TAO_ORBSVCS_Export TAO_EC_Factory : public ACE_Service_Object
 {
@@ -130,11 +133,17 @@ public:
       destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*) = 0;
   // Create and destroy the observer strategy.
 
-  virtual TAO_EC_ProxyPushSupplier_Set*
-      create_proxy_push_supplier_set (TAO_EC_Event_Channel*) = 0;
+  virtual TAO_EC_ProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (TAO_EC_Event_Channel*) = 0;
   virtual void
-      destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*) = 0;
-  // Create and destroy a ProxyPushSupplier_Set
+      destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*) = 0;
+  // Create and destroy a collection of TAO_EC_ProxyPushConsumers
+
+  virtual TAO_EC_ProxyPushSupplier_Collection*
+      create_proxy_push_supplier_collection (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*) = 0;
+  // Create and destroy a collection of TAO_EC_ProxyPushSuppliers
 
   virtual ACE_Lock* create_consumer_lock (void) = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
@@ -142,13 +151,6 @@ public:
   virtual void destroy_supplier_lock (ACE_Lock*) = 0;
   // Create and destroy the locking strategies for both
   // ProxyPushConsumers and ProxyPushSuppliers
-
-  virtual ACE_Lock* create_consumer_admin_lock (void) = 0;
-  virtual void destroy_consumer_admin_lock (ACE_Lock*) = 0;
-  virtual ACE_Lock* create_supplier_admin_lock (void) = 0;
-  virtual void destroy_supplier_admin_lock (ACE_Lock*) = 0;
-  // Create and destroy the locking strategies for both
-  // ConsumerAdmin and SupplierAdmin classes.
 
   virtual TAO_EC_ConsumerControl*
       create_consumer_control (TAO_EC_Event_Channel*) = 0;

@@ -26,11 +26,13 @@
 #define TAO_EC_SUPPLIERADMIN_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "EC_Proxy_Collection.h"
+#include "EC_Worker.h"
 
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
@@ -63,8 +65,9 @@ public:
   virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
-  // Override the ServantBase method.
+  void for_each (TAO_EC_Worker<TAO_EC_ProxyPushConsumer> *worker,
+                 CORBA::Environment &ACE_TRY_ENV);
+  // For each elements call <worker->work()>.
 
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
@@ -93,29 +96,97 @@ public:
       obtain_push_consumer (CORBA::Environment &)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
-  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*> ConsumerSet;
-  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*> ConsumerSetIterator;
-
-  ConsumerSetIterator begin (void);
-  ConsumerSetIterator end (void);
-  // Iterators over the set of ProxyPushConsumers
-
-  typedef ACE_Lock Busy_Lock;
-  Busy_Lock &busy_lock (void);
-  // Get the lock
+  // = The PortableServer::ServantBase methods
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
 
 private:
   TAO_EC_Event_Channel *event_channel_;
   // The Event Channel we belong to
 
+  typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushConsumer> Collection;
+
+  Collection *collection_;
+  // The consumer container
+
   PortableServer::POA_var default_POA_;
   // Store the default POA.
+};
 
-  ACE_Lock* lock_;
-  // The locking strategy
+// ****************************************************************
 
-  ConsumerSet all_consumers_;
-  // The set of consumers...
+class TAO_EC_Connect_Supplier : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+{
+  // = TITLE
+  //   TAO_EC_Connect_Supplier
+  //
+  // = DESCRIPTION
+  //   Worker class to connect the ProxyPushConsumer objects with all
+  //   the ProxyPushConsumer objects in the collection.
+  //
+public:
+  TAO_EC_Connect_Supplier (TAO_EC_ProxyPushSupplier *supplier);
+  // Constructor
+
+  void work (TAO_EC_ProxyPushConsumer *consumer,
+             CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_EC_ProxyPushSupplier *supplier_;
+};
+
+// ****************************************************************
+
+class TAO_EC_Reconnect_Supplier : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+{
+  // = TITLE
+  //   TAO_EC_Reconnect_Supplier
+  //
+  // = DESCRIPTION
+  //   Worker class to reconnect the ProxyPushConsumer objects with all
+  //   the ProxyPushConsumer objects in the collection.
+  //
+public:
+  TAO_EC_Reconnect_Supplier (TAO_EC_ProxyPushSupplier *supplier);
+  // Constructor
+
+  void work (TAO_EC_ProxyPushConsumer *consumer,
+             CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_EC_ProxyPushSupplier *supplier_;
+};
+
+// ****************************************************************
+
+class TAO_EC_Disconnect_Supplier : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+{
+  // = TITLE
+  //   TAO_EC_Disconnect_Supplier
+  //
+  // = DESCRIPTION
+  //   Worker class to disconnect the ProxyPushConsumer objects with all
+  //   the ProxyPushConsumer objects in the collection.
+  //
+public:
+  TAO_EC_Disconnect_Supplier (TAO_EC_ProxyPushSupplier *supplier);
+  // Constructor
+
+  void work (TAO_EC_ProxyPushConsumer *consumer,
+             CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_EC_ProxyPushSupplier *supplier_;
+};
+
+// ****************************************************************
+
+class TAO_EC_Shutdown_Consumer : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+{
+public:
+  TAO_EC_Shutdown_Consumer (void);
+
+  void work (TAO_EC_ProxyPushConsumer *consumer,
+             CORBA::Environment &ACE_TRY_ENV);
 };
 
 #if defined (__ACE_INLINE__)

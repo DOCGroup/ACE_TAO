@@ -75,16 +75,28 @@ TAO_EC_Event_Channel::create_proxy_push_consumer (void)
   return this->factory_->create_proxy_push_consumer (this);
 }
 
-ACE_INLINE TAO_EC_ProxyPushSupplier_Set*
-TAO_EC_Event_Channel::create_proxy_push_supplier_set (void)
+ACE_INLINE TAO_EC_ProxyPushConsumer_Collection*
+TAO_EC_Event_Channel::create_proxy_push_consumer_collection (void)
 {
-  return this->factory_->create_proxy_push_supplier_set (this);
+  return this->factory_->create_proxy_push_consumer_collection (this);
 }
 
 ACE_INLINE void
-TAO_EC_Event_Channel::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set* x)
+TAO_EC_Event_Channel::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection* x)
 {
-  this->factory_->destroy_proxy_push_supplier_set (x);
+  this->factory_->destroy_proxy_push_consumer_collection (x);
+}
+
+ACE_INLINE TAO_EC_ProxyPushSupplier_Collection*
+TAO_EC_Event_Channel::create_proxy_push_supplier_collection (void)
+{
+  return this->factory_->create_proxy_push_supplier_collection (this);
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection* x)
+{
+  this->factory_->destroy_proxy_push_supplier_collection (x);
 }
 
 ACE_INLINE void
@@ -127,30 +139,6 @@ ACE_INLINE void
 TAO_EC_Event_Channel::destroy_supplier_lock (ACE_Lock* x)
 {
   this->factory_->destroy_supplier_lock (x);
-}
-
-ACE_INLINE ACE_Lock*
-TAO_EC_Event_Channel::create_consumer_admin_lock (void)
-{
-  return this->factory_->create_consumer_admin_lock ();
-}
-
-ACE_INLINE void
-TAO_EC_Event_Channel::destroy_consumer_admin_lock (ACE_Lock* x)
-{
-  this->factory_->destroy_consumer_admin_lock (x);
-}
-
-ACE_INLINE ACE_Lock*
-TAO_EC_Event_Channel::create_supplier_admin_lock (void)
-{
-  return this->factory_->create_supplier_admin_lock ();
-}
-
-ACE_INLINE void
-TAO_EC_Event_Channel::destroy_supplier_admin_lock (ACE_Lock* x)
-{
-  this->factory_->destroy_supplier_admin_lock (x);
 }
 
 ACE_INLINE int

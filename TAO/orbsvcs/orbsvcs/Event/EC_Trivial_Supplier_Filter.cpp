@@ -67,25 +67,11 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
         ACE_const_cast(RtecEventComm::Event*, &e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
 
-      ACE_GUARD_THROW_EX (
-          TAO_EC_ConsumerAdmin::Busy_Lock,
-          ace_mon, consumer_admin->busy_lock (),
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+      TAO_EC_QOS_Info qos_info;
+
+      TAO_EC_Filter_Worker worker (single_event, qos_info);
+      consumer_admin->for_each (&worker, ACE_TRY_ENV);
       ACE_CHECK;
-
-      TAO_EC_ConsumerAdmin::SupplierSetIterator end =
-        consumer_admin->end ();
-
-      for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
-             consumer_admin->begin ();
-           i != end;
-           ++i)
-        {
-          TAO_EC_QOS_Info qos_info;
-
-          (*i)->filter (single_event, qos_info, ACE_TRY_ENV);
-          ACE_CHECK;
-        }
     }
 }
 

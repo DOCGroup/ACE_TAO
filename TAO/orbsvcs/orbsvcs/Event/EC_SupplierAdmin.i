@@ -1,20 +1,43 @@
 // $Id$
 
-ACE_INLINE TAO_EC_SupplierAdmin::ConsumerSetIterator
-TAO_EC_SupplierAdmin::begin (void)
+ACE_INLINE void
+TAO_EC_SupplierAdmin::
+    for_each (TAO_EC_Worker<TAO_EC_ProxyPushConsumer> *worker,
+              CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->all_consumers_.begin ();
+  this->collection_->for_each (worker, ACE_TRY_ENV);
 }
 
-ACE_INLINE TAO_EC_SupplierAdmin::ConsumerSetIterator
-TAO_EC_SupplierAdmin::end (void)
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Connect_Supplier::
+    TAO_EC_Connect_Supplier (TAO_EC_ProxyPushSupplier *supplier)
+      :  supplier_ (supplier)
 {
-  return this->all_consumers_.end ();
 }
 
-ACE_INLINE TAO_EC_SupplierAdmin::Busy_Lock&
-TAO_EC_SupplierAdmin::busy_lock (void)
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Reconnect_Supplier::
+    TAO_EC_Reconnect_Supplier (TAO_EC_ProxyPushSupplier *supplier)
+      :  supplier_ (supplier)
 {
-  return *this->lock_;
 }
 
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Disconnect_Supplier::
+    TAO_EC_Disconnect_Supplier (TAO_EC_ProxyPushSupplier *supplier)
+      :  supplier_ (supplier)
+{
+}
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Shutdown_Consumer::TAO_EC_Shutdown_Consumer (void)
+{
+}

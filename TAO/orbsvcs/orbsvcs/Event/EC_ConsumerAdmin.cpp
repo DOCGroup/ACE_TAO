@@ -13,16 +13,20 @@
 ACE_RCSID(Event, EC_ConsumerAdmin, "$Id$")
 
 TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec,
-                                            TAO_EC_ProxyPushSupplier_Set* ss)
+                                            Collection *collection)
   :  event_channel_ (ec),
-     supplier_set_ (ss)
+     collection_ (collection)
 {
-  if (this->supplier_set_ == 0)
+  if (this->collection_ == 0)
     {
-      this->supplier_set_ =
-        this->event_channel_->create_proxy_push_supplier_set ();
-      this->supplier_set_->busy_hwm (this->event_channel_->busy_hwm ());
-      this->supplier_set_->max_write_delay (this->event_channel_->max_write_delay ());
+      this->collection_ =
+        this->event_channel_->create_proxy_push_supplier_collection ();
+
+      // @@
+      // @@ this->collection_->busy_hwm (this->event_channel_->busy_hwm ());
+      // @@ this->collection_->max_write_delay (
+      // @@           this->event_channel_->max_write_delay ()
+      // @@ );
     }
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
@@ -30,121 +34,65 @@ TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec,
 
 TAO_EC_ConsumerAdmin::~TAO_EC_ConsumerAdmin (void)
 {
-  this->event_channel_->destroy_proxy_push_supplier_set (this->supplier_set_);
-  this->supplier_set_ = 0;
+  this->event_channel_->destroy_proxy_push_supplier_collection (this->collection_);
+  this->collection_ = 0;
 }
 
 void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
+  TAO_EC_Connect_Consumer worker (consumer);
 
-  SupplierSetIterator end = this->end ();
-  for (SupplierSetIterator i = this->begin ();
-       i != end;
-       ++i)
-    {
-      (*i)->connected (consumer, ACE_TRY_ENV);
-      ACE_CHECK;
-      consumer->connected (*i, ACE_TRY_ENV);
-      ACE_CHECK;
-    }
+  this->collection_->for_each (&worker, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::reconnected (TAO_EC_ProxyPushConsumer *consumer,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
+  TAO_EC_Reconnect_Consumer worker (consumer);
 
-  SupplierSetIterator end = this->end ();
-  for (SupplierSetIterator i = this->begin ();
-       i != end;
-       ++i)
-    {
-      (*i)->reconnected (consumer, ACE_TRY_ENV);
-      ACE_CHECK;
-      consumer->reconnected (*i, ACE_TRY_ENV);
-      ACE_CHECK;
-    }
+  this->collection_->for_each (&worker, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
+  TAO_EC_Disconnect_Consumer worker (consumer);
 
-  SupplierSetIterator end = this->end ();
-  for (SupplierSetIterator i = this->begin ();
-       i != end;
-       ++i)
-    {
-      (*i)->disconnected (consumer, ACE_TRY_ENV);
-      ACE_CHECK;
-      consumer->disconnected (*i, ACE_TRY_ENV);
-      ACE_CHECK;
-    }
+  this->collection_->for_each (&worker, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->connected (supplier, ACE_TRY_ENV);
+  this->collection_->connected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::reconnected (TAO_EC_ProxyPushSupplier *supplier,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->connected (supplier, ACE_TRY_ENV);
+  this->collection_->connected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
+  this->collection_->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
-  {
-    ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
+  TAO_EC_Shutdown_Supplier worker;
 
-    SupplierSetIterator end = this->end ();
-    for (SupplierSetIterator i = this->begin ();
-         i != end;
-         ++i)
-      {
-        ACE_TRY
-          {
-            (*i)->shutdown (ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-        ACE_CATCHANY
-          {
-            /* ignore all exceptions */
-          }
-        ACE_ENDTRY;
-      }
-  }
-  this->supplier_set_->shutdown (ACE_TRY_ENV);
+  this->collection_->for_each (&worker, ACE_TRY_ENV);
+  this->collection_->shutdown (ACE_TRY_ENV);
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
@@ -163,8 +111,67 @@ TAO_EC_ConsumerAdmin::_default_POA (CORBA::Environment&)
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
+// ****************************************************************
+
+void
+TAO_EC_Connect_Consumer::work (TAO_EC_ProxyPushSupplier *supplier,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  supplier->connected (this->consumer_, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->consumer_->connected (supplier, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+// ****************************************************************
+
+void
+TAO_EC_Reconnect_Consumer::work (TAO_EC_ProxyPushSupplier *supplier,
+                                 CORBA::Environment &ACE_TRY_ENV)
+{
+  supplier->reconnected (this->consumer_, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->consumer_->reconnected (supplier, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+// ****************************************************************
+
+void
+TAO_EC_Disconnect_Consumer::work (TAO_EC_ProxyPushSupplier *supplier,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  supplier->disconnected (this->consumer_, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->consumer_->disconnected (supplier, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+// ****************************************************************
+
+void
+TAO_EC_Shutdown_Supplier::work (TAO_EC_ProxyPushSupplier *supplier,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      supplier->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions
+    }
+  ACE_ENDTRY;
+}
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_EC_Worker<TAO_EC_ProxyPushSupplier>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_EC_Worker<TAO_EC_ProxyPushSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

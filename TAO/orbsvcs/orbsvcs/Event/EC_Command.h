@@ -73,6 +73,47 @@ private:
 // ****************************************************************
 
 template<class Target, class Object>
+class TAO_EC_Reconnected_Command : public ACE_Command_Base
+{
+  // = TITLE
+  //   EC_Reconnected_Command
+  //
+  // = DESCRIPTION
+  //   Implements a Command object that invokes the reconnected_i() method
+  //   on the target, passing an argument of type Object.
+  //
+  // = MEMORY MANAGMENT
+  //   It does not assume ownership of Object nor the Target
+  //   arguments.
+  //   Usually allocated from the heap or an allocator; but it is not
+  //   self-managed.
+  //
+  // = LOCKING
+  //   No provisions for locking, access must be serialized
+  //   externally.
+  //
+  // = TODO
+  //
+public:
+  TAO_EC_Reconnected_Command (Target *target,
+                            Object *object);
+  // constructor...
+
+  virtual int execute (void *arg);
+  // The callback method, if the argument is not nil it is interpreted
+  // as a CORBA::Environment.
+
+private:
+  Target *target_;
+  // The target
+
+  Object *object_;
+  // The argument
+};
+
+// ****************************************************************
+
+template<class Target, class Object>
 class TAO_EC_Disconnected_Command : public ACE_Command_Base
 {
   // = TITLE
@@ -114,7 +155,7 @@ private:
 // ****************************************************************
 
 template<class Target>
-class TAO_EC_Shutdown_Command_T : public ACE_Command_Base
+class TAO_EC_Shutdown_Command : public ACE_Command_Base
 {
   // = TITLE
   //   EC_Shutdown_Command
@@ -136,7 +177,7 @@ class TAO_EC_Shutdown_Command_T : public ACE_Command_Base
   // = TODO
   //
 public:
-  TAO_EC_Shutdown_Command_T (Target *target);
+  TAO_EC_Shutdown_Command (Target *target);
   // constructor...
 
   virtual int execute (void *arg);

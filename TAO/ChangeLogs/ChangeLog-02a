@@ -1,3 +1,147 @@
+Sun Jan 30 19:59:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Changed the basic collection classes that keep both the consumer
+          and supplier proxies.  The new scheme uses the strategy pattern:
+          the concrete collection (such as a list or RB-tree) is the
+          strategy to store/retrieve objects, while different classes
+          implement the serialization protocol (such as using
+          copy-on-read, or delayed changes).
+          This new implementation uses templates, because the code is
+          generic for both the consumer and supplier proxies.  It is
+          possible that the same implementation can be used for other
+          Event Services (such as Notification or CosEvents)
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp:
+          Implement the different serialization protocols for the proxy
+          collections.
+          In this new implementation there are no iterators exposed to the
+          rest of the EC, instead a for_each() method is implemented, each
+          component that needs to iterate over a consumer or supplier
+          collection implements a different Worker object for the task.
+
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
+          Implement the concrete collections, currently we have two of
+          them, one based on RB-trees and another based on an ordered
+          list.
+
+        * orbsvcs/orbsvcs/Event/EC_Worker.h:
+        * orbsvcs/orbsvcs/Event/EC_Worker.i:
+        * orbsvcs/orbsvcs/Event/EC_Worker.cpp:
+          Defines the interfaces for the Worker objects.
+
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+          Modified to create the new collection classes.
+          Removed the methods to create consumer and supplier admin locks,
+          because they have been superseeded by the collection classes.
+
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          Added support for the new collection scheme, and removed old
+          defaults for the previous style.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Added support for the new proxy collections.
+          The factory can create both list-based or RB-tree-based
+          collections, decorated with any of the three basic algorithms
+          (i.e. simple locking, aka immediate changes, delayed changes or
+           copy-on-read)
+          The file contains most of the template instantiations, must fix
+          that.
+
+        * docs/ec_options.html:
+          The options in the default resource factory have changed, to
+          handle the new collection types.
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Changed all the iterations in the Event Service implementation
+          to use Workers instead of iterators.
+
+        * orbsvcs/orbsvcs/Event/EC_Command.h:
+        * orbsvcs/orbsvcs/Event/EC_Command.i:
+        * orbsvcs/orbsvcs/Event/EC_Command.cpp:
+          Added new Reconnected command for delayed reconnections.
+          Normalized the name of the Shutdown command.
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+          Create the equivalent proxy collections corresponding to the old
+          strategies.
+
+        * docs/tutorials/Quoter/Event_Service/ec.conf:
+        * orbsvcs/CosEvent_Service/svc.conf:
+        * orbsvcs/Event_Service/svc.conf:
+        * orbsvcs/examples/RtEC/Schedule/svc.conf:
+        * orbsvcs/examples/RtEC/Simple/ec.conf:
+        * orbsvcs/tests/EC_Mcast/svc.conf:
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/EC_Throughput/ec.mt.conf:
+        * orbsvcs/tests/Event/Basic/mt.svc.conf:
+        * orbsvcs/tests/Event/Basic/observer.conf:
+        * orbsvcs/tests/Event/Basic/sched.conf:
+        * orbsvcs/tests/Event/Basic/svc.conf:
+        * orbsvcs/tests/Event/Performance/ec.mt.conf:
+        * orbsvcs/tests/Event/Performance/ec.st.conf:
+        * orbsvcs/tests/Event/Performance/ec.rb_tree.conf:
+        * orbsvcs/tests/Event/Performance/ec.list.conf:
+          All the configuration files were updated to avoid any obsolete
+          flags.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          Normalized the name of the Shutdown_Command, the one to shutdown
+          a task is now called Shutdown_Task.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.i:
+          Removed, the EC_Proxy_Collection and EC_Concreate_Proxy_Set
+          classes have superseeded this implementation.
+
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Supplier.h:
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+          Optimized activation and de-activation of consumers and
+          suppliers.
+
 Sun Jan 30 18:52:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -10,12 +154,12 @@ Sun Jan 30 18:52:45 2000  Darrell Brunsch <brunsch@uci.edu>
           be controlled by the -t option.
 
           Also replaced the ACE_Process code with the ACE_Process_Manager.
-          This should automatically clean up the child processes 
+          This should automatically clean up the child processes
           when they exit.
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
           Prints out more information when a CannotActivate exception
-          occurs.  
+          occurs.
 
 Sat Jan 29 12:57:53 2000  bala  <bala@cs.wustl.edu>
 
@@ -23,126 +167,126 @@ Sat Jan 29 12:57:53 2000  bala  <bala@cs.wustl.edu>
 
 Fri Jan 28 20:11:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/ORB_Core.cpp:
-	  When the last ORB is detroyed it must reset the first_orb_
-	  variable in TAO_ORB_Table to 0.  Thanks to Alex for reporting
- 	  this bug and providing a fix.
+        * tao/ORB_Core.cpp:
+          When the last ORB is detroyed it must reset the first_orb_
+          variable in TAO_ORB_Table to 0.  Thanks to Alex for reporting
+          this bug and providing a fix.
 
 Fri Jan 28 18:35:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Request.cpp:
-	  Removed the check on work_pending() in method
-	  get_repsonse(), used in deferred synchronous requests.
-	  Recent changes to perform_work() and/or work_pending()
-	  have made it possible for work_pending() to return 0
-	  even if the DII request has not completed (received its
-	  response). This was causing get_response() to return
-	  TRUE erroneously, and the resulting null message
-	  block pointer would eventually cause a client crash.
-	  Now get_response() returns TRUE only if the
-	  repsonse has been received.
+        * tao/Request.cpp:
+          Removed the check on work_pending() in method
+          get_repsonse(), used in deferred synchronous requests.
+          Recent changes to perform_work() and/or work_pending()
+          have made it possible for work_pending() to return 0
+          even if the DII request has not completed (received its
+          response). This was causing get_response() to return
+          TRUE erroneously, and the resulting null message
+          block pointer would eventually cause a client crash.
+          Now get_response() returns TRUE only if the
+          repsonse has been received.
 
 Fri Jan 28 17:27:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  Fix sent in by Alex Arulanthu <Alex.Arulanthu@sylantro.com> that
- 	  plugs a memory leak in generated code when decoding a sequence
- 	  of length 0.  Thanks to Jianfei Xu <jxu@yahoo.com> for reporting
- 	  this.
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Fix sent in by Alex Arulanthu <Alex.Arulanthu@sylantro.com> that
+          plugs a memory leak in generated code when decoding a sequence
+          of length 0.  Thanks to Jianfei Xu <jxu@yahoo.com> for reporting
+          this.
 
 Fri Jan 28 14:05:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/Latency/st_client.cpp:
-	  Added 'x' to the string passed to get_opts(). It was in
-	  the switch statement and in the usage message, as it is
-	  in the other client types in this test suite.
+        * performance-tests/Latency/st_client.cpp:
+          Added 'x' to the string passed to get_opts(). It was in
+          the switch statement and in the usage message, as it is
+          in the other client types in this test suite.
 
 Fri Jan 28 12:51:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Leader_Followers: Minor changes to make it work with
-	  different compilers.
+        * tests/Leader_Followers: Minor changes to make it work with
+          different compilers.
 
 Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Leader_Follower:
+        * tao/Leader_Follower:
 
-	  wait_for_client_leader_to_complete: If a client thread (a thread
-	  making a remote request) is currently running the event loop, an
-	  event loop thread (a thread running ORB->run or
-	  ORB->perform_work) must wait for that client thread to complete.
+          wait_for_client_leader_to_complete: If a client thread (a thread
+          making a remote request) is currently running the event loop, an
+          event loop thread (a thread running ORB->run or
+          ORB->perform_work) must wait for that client thread to complete.
 
-	  Additional state: <client_thread_is_leader_> keep track of
-	  whether a client thread the current leader.
-	  <server_threads_waiting_> keeps track of whether server threads
-	  waiting for the client leader to complete.
-	  <server_threads_condition_> is the condition variable used by
-	  event loop threads waiting for the client leader to complete.
+          Additional state: <client_thread_is_leader_> keep track of
+          whether a client thread the current leader.
+          <server_threads_waiting_> keeps track of whether server threads
+          waiting for the client leader to complete.
+          <server_threads_condition_> is the condition variable used by
+          event loop threads waiting for the client leader to complete.
 
-	  TAO_LF_Server_Thread_Helper: Auto-pointer like class similar to
-	  TAO_LF_Client_Thread_Helper and TAO_LF_Leader_Thread_Helper that
-	  helps manage the leader follower object.  This class helps with
-	  grabbing the lock and calling set_server_thread and grabbing the
-	  lock, calling reset_server_thread, and electing a new leader.
+          TAO_LF_Server_Thread_Helper: Auto-pointer like class similar to
+          TAO_LF_Client_Thread_Helper and TAO_LF_Leader_Thread_Helper that
+          helps manage the leader follower object.  This class helps with
+          grabbing the lock and calling set_server_thread and grabbing the
+          lock, calling reset_server_thread, and electing a new leader.
 
-	  set_server_thread: This method now calls
-	  wait_for_client_leader_to_complete if needed.  Also it now has a
-	  relevant return value for timeouts and errors.
+          set_server_thread: This method now calls
+          wait_for_client_leader_to_complete if needed.  Also it now has a
+          relevant return value for timeouts and errors.
 
-	  set_leader_thread and reset_leader_thread: Added the setting and
-	  resetting <client_thread_is_leader_>.
+          set_leader_thread and reset_leader_thread: Added the setting and
+          resetting <client_thread_is_leader_>.
 
-	  elect_new_leader: Election of new leader must first consider
-	  event loop threads before considering waiting clients.  If
-	  server threads are waiting, we wake them all up.  Note that it
-	  is necessary to give precedence to server threads over client
-	  threads since only one client runs at any given time; with a tp
-	  reactor, multiple server threads can execute simultaneously.
+          elect_new_leader: Election of new leader must first consider
+          event loop threads before considering waiting clients.  If
+          server threads are waiting, we wake them all up.  Note that it
+          is necessary to give precedence to server threads over client
+          threads since only one client runs at any given time; with a tp
+          reactor, multiple server threads can execute simultaneously.
 
-	* tao/ORB_Core.cpp (run): Use of TAO_LF_Server_Thread_Helper
-	  helped with abstracting and simplifying some of the leader
-	  follower code.  In additions, timeouts are determined by
-	  examining the <timeout> variable.  Therefore, we don't need
-	  <break_on_timeouts> anymore.
+        * tao/ORB_Core.cpp (run): Use of TAO_LF_Server_Thread_Helper
+          helped with abstracting and simplifying some of the leader
+          follower code.  In additions, timeouts are determined by
+          examining the <timeout> variable.  Therefore, we don't need
+          <break_on_timeouts> anymore.
 
-	* tao/ORB (run and perform_work): The new ORB_Core::run simplified
-	  ORB::run and ORB::perform_work.
+        * tao/ORB (run and perform_work): The new ORB_Core::run simplified
+          ORB::run and ORB::perform_work.
 
-	* tao/Wait_Strategy.cpp (TAO_Wait_On_Reactor::wait,
-	  TAO_Exclusive_Wait_On_Leader_Follower::wait, and
-	  TAO_Muxed_Wait_On_Leader_Follower::wait): The while loop in
-	  TAO_Wait_On_Reactor::wait and
-	  TAO_Exclusive_Wait_On_Leader_Follower::wait was incorrect.
+        * tao/Wait_Strategy.cpp (TAO_Wait_On_Reactor::wait,
+          TAO_Exclusive_Wait_On_Leader_Follower::wait, and
+          TAO_Muxed_Wait_On_Leader_Follower::wait): The while loop in
+          TAO_Wait_On_Reactor::wait and
+          TAO_Exclusive_Wait_On_Leader_Follower::wait was incorrect.
 
-	  This:
+          This:
 
-	  *max_wait_time != ACE_Time_Value::zero
+          *max_wait_time != ACE_Time_Value::zero
 
-	  should have been:
+          should have been:
 
-	  *max_wait_time == ACE_Time_Value::zero
+          *max_wait_time == ACE_Time_Value::zero
 
-	  While fixing this, I simplified the while loop making it easier
-	  to read and understand.
+          While fixing this, I simplified the while loop making it easier
+          to read and understand.
 
-	  Also fixed TAO_Muxed_Wait_On_Leader_Follower::wait which did not
-	  handle timeouts correctly.
+          Also fixed TAO_Muxed_Wait_On_Leader_Follower::wait which did not
+          handle timeouts correctly.
 
-	* tests/Leader_Followers: This is a test for server applications
-	  that have client threads (threads making remote calls) starting
-	  before server threads (threads running the event loop).
+        * tests/Leader_Followers: This is a test for server applications
+          that have client threads (threads making remote calls) starting
+          before server threads (threads running the event loop).
 
-	  The event loop threads should wait for the client threads that
-	  become leaders to give up leadership before continuing.
+          The event loop threads should wait for the client threads that
+          become leaders to give up leadership before continuing.
 
-	* version_tests.dsw:
-	* tests/Makefile (DIRS):
-	* run_all_list.pm:
+        * version_tests.dsw:
+        * tests/Makefile (DIRS):
+        * run_all_list.pm:
 
-	  Added new test Leader_Followers.
+          Added new test Leader_Followers.
 
 Thu Jan 27 08:36:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: The help messages
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp: The help messages
           were still displaying "tao_ir" instead of "tao_imr".  Also,
           if an Implementation Repository wasn't running, tao_imr
           wouldn't get a chance to parse the command line arguments -
@@ -152,46 +296,46 @@ Thu Jan 27 08:36:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Jan 26 16:17:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
-	  A fix for what I broke yesterday. At least we should now
-	  again be able to compile files where a forward declared
-	  interface is defined later in the file.
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+          A fix for what I broke yesterday. At least we should now
+          again be able to compile files where a forward declared
+          interface is defined later in the file.
 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
-	  Cosmetic changes.
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+          Cosmetic changes.
 
-	* tests/IDL_Test/interface.idl:
-	  Commented out the forward declared interface that's not
-	  defined in the same file for now, until it is working on
-	  more platforms.
+        * tests/IDL_Test/interface.idl:
+          Commented out the forward declared interface that's not
+          defined in the same file for now, until it is working on
+          more platforms.
 
 Tue Jan 25 19:42:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/UIOP_Profile.cpp (decode):
-	* tao/IIOP_Profile.cpp : A problem when TAO clients were
-	  interacting with GIOP 1.2 servers. The profile received by the
-	  TAO client is parsed in decode (). In the code for IIOP_Profile,
-	  a check was made for a higher minor version but no action was
-	  taken. In the process, the version information that the
-	  IIOP_Profile class was holding had the minor version information
-	  of the received profile and  not what the TAO client can
-	  send. So, changes have been made to check for the minor version
-	  number. If the minor version is less than or equal to the minor
-	  version that TAO supports, we save that information. If it is
-	  greater than the one we support, the {IIOP, UIOP}_Profile
-	  classes would highest minor version that we support. This
-	  information gets passed on through the invocation classes to the
-	  transport and then to the messaging classes. Thanks to Klemen
-	  Zagar <klemen.zagar@irj.si> for reporting this problem.
+        * tao/UIOP_Profile.cpp (decode):
+        * tao/IIOP_Profile.cpp : A problem when TAO clients were
+          interacting with GIOP 1.2 servers. The profile received by the
+          TAO client is parsed in decode (). In the code for IIOP_Profile,
+          a check was made for a higher minor version but no action was
+          taken. In the process, the version information that the
+          IIOP_Profile class was holding had the minor version information
+          of the received profile and  not what the TAO client can
+          send. So, changes have been made to check for the minor version
+          number. If the minor version is less than or equal to the minor
+          version that TAO supports, we save that information. If it is
+          greater than the one we support, the {IIOP, UIOP}_Profile
+          classes would highest minor version that we support. This
+          information gets passed on through the invocation classes to the
+          transport and then to the messaging classes. Thanks to Klemen
+          Zagar <klemen.zagar@irj.si> for reporting this problem.
 
 Tue Jan 25 19:27:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Added entry for forward declared interface change to
-	  IDL compiler.
+        * docs/releasenotes/index.html:
+          Added entry for forward declared interface change to
+          IDL compiler.
 
 Tue Jan 25 19:01:33 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

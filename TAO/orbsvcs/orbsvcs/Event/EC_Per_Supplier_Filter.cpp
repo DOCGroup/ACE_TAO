@@ -2,10 +2,10 @@
 
 #include "EC_Per_Supplier_Filter.h"
 #include "EC_Event_Channel.h"
-#include "EC_ProxyPushSupplier_Set.h"
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_Scheduling_Strategy.h"
+#include "EC_Proxy_Collection.h"
 #include "EC_QOS_Info.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -21,16 +21,19 @@ TAO_EC_Per_Supplier_Filter::
      consumer_ (0),
      refcnt_ (1)
 {
-  this->supplier_set_ =
-    this->event_channel_->create_proxy_push_supplier_set ();
-  this->supplier_set_->busy_hwm (this->event_channel_->busy_hwm ());
-  this->supplier_set_->max_write_delay (this->event_channel_->max_write_delay ());
+  this->collection_ =
+    this->event_channel_->create_proxy_push_supplier_collection ();
+  // @@
+  // @@ this->collection_->busy_hwm (this->event_channel_->busy_hwm ());
+  // @@ this->collection_->max_write_delay (
+  // @@           this->event_channel_->max_write_delay ()
+  // @@ );
 }
 
 TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)
 {
-  this->event_channel_->destroy_proxy_push_supplier_set (this->supplier_set_);
-  this->supplier_set_ = 0;
+  this->event_channel_->destroy_proxy_push_supplier_collection (this->collection_);
+  this->collection_ = 0;
 }
 
 void
@@ -89,7 +92,7 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
       if (supplier->can_match (event.header))
         {
           //          ACE_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
-          this->supplier_set_->connected (supplier, ACE_TRY_ENV);
+          this->collection_->connected (supplier, ACE_TRY_ENV);
           return;
         }
     }
@@ -118,24 +121,24 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier,
       if (supplier->can_match (event.header))
         {
           //          ACE_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
-          this->supplier_set_->connected (supplier, ACE_TRY_ENV);
+          this->collection_->connected (supplier, ACE_TRY_ENV);
           return;
         }
     }
-  this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
+  this->collection_->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                           CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
+  this->collection_->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_Per_Supplier_Filter::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->shutdown (ACE_TRY_ENV);
+  this->collection_->shutdown (ACE_TRY_ENV);
 }
 
 void
@@ -170,29 +173,14 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
       }
 
       // We don't use the consumer_ field anymore, just the
-      // supplier_set_, and that one is safe until we reach the
+      // collection_, and that one is safe until we reach the
       // destructor.  However, the caller has to increase the
       // reference count before calling us, i.e. we won't be destroyed
       // until push() returns.
 
-      ACE_GUARD_THROW_EX (TAO_EC_ProxyPushSupplier_Set::Busy_Lock,
-          ace_mon, this->supplier_set_->busy_lock (),
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+      TAO_EC_Filter_Worker worker (single_event, event_info);
+      this->collection_->for_each (&worker, ACE_TRY_ENV);
       ACE_CHECK;
-
-      TAO_EC_ProxyPushSupplier_Set::SupplierSetIterator end =
-        this->supplier_set_->end ();
-
-      for (TAO_EC_ProxyPushSupplier_Set::SupplierSetIterator i =
-             this->supplier_set_->begin ();
-           i != end;
-           ++i)
-        {
-          TAO_EC_QOS_Info qos_info = event_info;
-
-          (*i)->filter (single_event, qos_info, ACE_TRY_ENV);
-          ACE_CHECK;
-        }
     }
 }
 

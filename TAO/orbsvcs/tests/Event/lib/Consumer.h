@@ -114,6 +114,9 @@ private:
 
   int is_active_;
   // Is the consumer active in the POA?
+
+  RtecEventComm::PushConsumer_var myself_;
+  // Cache the object reference to speed up connect/disconnect calls.
 };
 
 #endif /* ECT_CONSUMER_H */
