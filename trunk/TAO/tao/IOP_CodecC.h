@@ -45,7 +45,7 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Any.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/VarOut_T.h"

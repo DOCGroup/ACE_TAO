@@ -46,8 +46,10 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      be_visitor_typecode_defn visitor (&ctx);
+      // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+      TAO::be_visitor_struct_typecode visitor (
+        &ctx,
+        false /* Not an exception TypeCode */);
 
       if (visitor.visit_structure (node) == -1)
         {

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Any_SystemException.h"
+#include "Any.h"
 #include "Any_Unknown_IDL_Type.h"
 #include "CDR.h"
 #include "Exception.h"
@@ -8,7 +9,7 @@
 #include "Marshal.h"
 #include "CORBA_String.h"
 #include "SystemException.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"

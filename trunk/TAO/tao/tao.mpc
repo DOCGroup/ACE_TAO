@@ -80,6 +80,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Dynamic_ParameterC.cpp
     DynamicA.cpp
     DynamicC.cpp
+    Empty_Param_TypeCode.cpp
     Encodable.cpp
     Endpoint.cpp
     Endpoint_Selector_Factory.cpp
@@ -256,7 +257,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Mux_Strategy.cpp
     Transport_Timer.cpp
     TSS_Resources.cpp
-    Typecode.cpp
+    TypeCode.cpp
     Typecode_typesC.cpp
     Typecode_Constants.cpp
     TypeCodeFactory_Adapter.cpp
@@ -294,6 +295,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Adapter_Factory.h
     Adapter.h
     Adapter_Registry.h
+    Alias_TypeCode.h
     Allocator.h
     Any_Arg_Traits.h
     Any_Array_Impl_T.h
@@ -393,6 +395,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     FILE_Parser.h
     Fixed_Array_Argument_T.h
     Fixed_Size_Argument_T.h
+    Fixed_TypeCode.h
     FloatSeqC.h
     FloatSeqS.h
     Flushing_Strategy.h
@@ -479,6 +482,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Proxy_Impl.h
     Object_Ref_Table.h
     Object_T.h
+    Objref_TypeCode.h
     Objref_VarOut_T.h
     OctetSeqC.h
     OctetSeqS.h
@@ -537,6 +541,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Seq_Out_T.h
     Sequence.h
     Sequence_T.h
+    Sequence_TypeCode.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
     Service_Callbacks.h
@@ -551,6 +556,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Special_Basic_Argument_T.h
     StringSeqC.h
     StringSeqS.h
+    Struct_TypeCode.h
     Stub_Factory.h
     Stub.h
     Synch_Invocation.h
@@ -586,9 +592,15 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Mux_Strategy.h
     Transport_Timer.h
     TSS_Resources.h
-    Typecode_Constants.h
+    TypeCode_Constants.h
+    TypeCode_Case.h
+    TypeCode_Default_Case.h
+    TypeCode_Enumerator.h
+    TypeCode_Non_Default_Case.h
+    TypeCode_Struct_Field.h
+    TypeCode_Value_Field.h
+    TypeCode.h
     TypeCodeFactory_Adapter.h
-    Typecode.h
     Typecode_typesC.h
     Typecode_typesS.h
     UB_String_Arguments.h
@@ -597,11 +609,14 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ULongLongSeqS.h
     ULongSeqC.h
     ULongSeqS.h
+    Union_TypeCode.h
     UserException.h
     UShortSeqC.h
     UShortSeqS.h
     UTF16_BOM_Factory.h
     UTF16_BOM_Translator.h
+    Value_Box_TypeCode.h
+    Value_TypeCode.h
     Valuetype_Adapter.h
     Var_Array_Argument_T.h
     varbase.h
@@ -630,9 +645,25 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
   Template_Files {
     *_T.cpp
     Acceptor_Impl.cpp
+    Alias_TypeCode.cpp
     Condition.cpp
     Connector_Impl.cpp
+    Fixed_TypeCode.cpp
+    Objref_TypeCode.cpp
+    Sequence_TypeCode.cpp
+    String_TypeCode.cpp
+    Struct_TypeCode.cpp
     TAO_Singleton.cpp
+    TypeCode_Base_Attributes.cpp
+    TypeCode_Case.cpp
+    TypeCode_Default_Case.cpp
+    TypeCode_Enumerator.cpp
+    TypeCode_Non_Default_Case.cpp
+    TypeCode_Struct_Field.cpp
+    TypeCode_Value_Field.cpp
+    Union_TypeCode.cpp
+    Value_Box_TypeCode.cpp
+    Value_TypeCode.cpp
     orb.idl
   }
 

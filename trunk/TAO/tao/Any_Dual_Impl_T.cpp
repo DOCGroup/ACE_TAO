@@ -1,16 +1,17 @@
 // $Id$
 
-#ifndef TAO_ANY_DUAL_IMPL_T_C
-#define TAO_ANY_DUAL_IMPL_T_C
+#ifndef TAO_ANY_DUAL_IMPL_T_CPP
+#define TAO_ANY_DUAL_IMPL_T_CPP
 
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/Any.h"
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
@@ -198,4 +199,4 @@ TAO::Any_Dual_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
     }
 }
 
-#endif /* TAO_ANY_DUAL_IMPL_T_C */
+#endif /* TAO_ANY_DUAL_IMPL_T_CPP */
