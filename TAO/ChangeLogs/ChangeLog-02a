@@ -1,3 +1,11 @@
+Wed Jan 10 15:57:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Policy_Manager.cpp:
+
+          Tried a new patch to get by a compiler problem in MSVC 5. 
+          Now I am using a intermediate variable to help MSVC do
+          the conversion.
+
 Wed Jan 10 12:07:21 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Policy_Manager.cpp:
