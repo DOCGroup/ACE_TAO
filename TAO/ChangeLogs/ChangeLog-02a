@@ -1,3 +1,13 @@
+Mon Mar  4 12:24:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao.Any.h:
+        * tao/Any.i:
+
+          Removed Any_out's assignment operator from const Any *. The C++
+          mapping for Any_out is supposed to be the same as for any T_out
+          class, which contains no such assignment operator. Thanks to 
+          Don Hinton <dhinton@ieee.org> for pointing this out.
+
 Mon Mar  4 11:47:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
