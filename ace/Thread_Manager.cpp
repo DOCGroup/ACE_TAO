@@ -2184,6 +2184,8 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
   template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
+  template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+  template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   template class ACE_Node<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
@@ -2197,6 +2199,8 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
