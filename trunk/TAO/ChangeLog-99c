@@ -1,3 +1,24 @@
+Mon Nov  8 19:25:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Changes to implement the CORBA 2.3 scoping rule that
+	  a type defined or referenced inside an enclosing scope
+	  which is itself inside an interface or valuetype should
+	  also be exported to the interface (or valuetype) scope.
+	  Thanks to Jon Biggar <jon@floorboard.com> for clarifying
+	  this point.
+
+	* TAO_IDL/ast/ast_interface.cpp:
+	  Changes to implement the CORBA 2.3 name resolution rule
+	  that any parent interface members may be redefined in the
+	  child *except* operations and attributes. Thanks to Michi
+	  Henning <michi@ooc.com.au>, the author of these rules, for
+	  his explanation.
+
+	  And thanks to Erik Johannes <ejohannes@oresis.com> for 
+	  sending in the example IDL file that brought these bugs
+	  to light.
+
 Sun Nov  7 13:34:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods): 
