@@ -9,11 +9,11 @@
 ACE_RCSID(Notify, Notify_Proxy_T, "$Id$")
 
 template <class SERVANT_TYPE>
-TAO_Notify_Proxy<SERVANT_TYPE>::TAO_Notify_Proxy (TAO_Notify_Resource_Manager* resource_manager)
-  : resource_manager_ (resource_manager),
-    is_connected_ (0),
-    is_destroyed_ (0),
-    updates_on_ (1)
+TAO_Notify_Proxy<SERVANT_TYPE>::TAO_Notify_Proxy (void)
+  :lock_ (0),
+   refcount_ (1),
+   is_connected_ (0),
+   updates_on_ (1)
 {
   // No-Op.
 }
@@ -22,20 +22,40 @@ TAO_Notify_Proxy<SERVANT_TYPE>::TAO_Notify_Proxy (TAO_Notify_Resource_Manager* r
 template <class SERVANT_TYPE>
 TAO_Notify_Proxy<SERVANT_TYPE>::~TAO_Notify_Proxy (void)
 {
-  if (!is_destroyed_)
-    this->cleanup_i ();
+  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Proxy\n"));
+}
+
+template <class SERVANT_TYPE> CORBA::ULong
+TAO_Notify_Proxy<SERVANT_TYPE>::_incr_refcnt (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+  return this->refcount_++;
+}
+
+template <class SERVANT_TYPE> CORBA::ULong
+TAO_Notify_Proxy<SERVANT_TYPE>::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  delete this;
+  return 0;
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Proxy<SERVANT_TYPE>::_add_ref (CORBA_Environment &/*ACE_TRY_ENV*/)
 {
-  this->myID_ = myID;
+  this->_incr_refcnt ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::cleanup_i (CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Proxy<SERVANT_TYPE>::_remove_ref (CORBA_Environment &/*ACE_TRY_ENV*/)
 {
-  this->is_destroyed_ = 1;
+  this->_decr_refcnt ();
 }
 
 template <class SERVANT_TYPE> void
@@ -56,7 +76,7 @@ TAO_Notify_Proxy<SERVANT_TYPE>::MyType (CORBA::Environment &/*ACE_TRY_ENV*/)
                    CORBA::SystemException
                    ))
 {
-  return mytype_;
+  return proxy_type_;
 }
 
 template <class SERVANT_TYPE> void

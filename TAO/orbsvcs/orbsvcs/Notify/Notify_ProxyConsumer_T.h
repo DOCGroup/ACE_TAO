@@ -18,8 +18,14 @@
 #ifndef TAO_NOTIFY_PROXYCONSUMER_T_H
 #define TAO_NOTIFY_PROXYCONSUMER_T_H
 #include "ace/pre.h"
-
 #include "Notify_Proxy_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Notify_Listeners.h"
+
 class TAO_Notify_SupplierAdmin_i;
 
 #if defined(_MSC_VER)
@@ -30,7 +36,7 @@ class TAO_Notify_SupplierAdmin_i;
 #endif /* _MSC_VER */
 
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_ProxyConsumer : public TAO_Notify_Proxy<SERVANT_TYPE>
+class TAO_Notify_Export TAO_Notify_ProxyConsumer : public TAO_Notify_Proxy<SERVANT_TYPE>, virtual public TAO_Notify_EventSource
 {
   // = TITLE
   //   TAO_Notify_ProxyConsumer
@@ -40,19 +46,23 @@ class TAO_Notify_Export TAO_Notify_ProxyConsumer : public TAO_Notify_Proxy<SERVA
   //
 
 public:
-  TAO_Notify_ProxyConsumer (TAO_Notify_SupplierAdmin_i* supplieradmin,
-                            TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_ProxyConsumer (TAO_Notify_SupplierAdmin_i* supplier_admin);
   // Constructor
 
   virtual ~TAO_Notify_ProxyConsumer (void);
   // Destructor
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  void init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment &ACE_TRY_ENV);
+  // Init the Proxy.
+
+  // = TAO_Notify_EventSource methods.
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+  // Evaluates true if this event is acceptable by the Source.
+
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode,
@@ -74,17 +84,11 @@ virtual void offer_change (
 
  protected:
 // = Helper methods
- virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
- // Cleanup all resources used by this object.
-
- CORBA::Boolean check_filters_i (const TAO_Notify_Event& event, CORBA::Environment& ACE_TRY_ENV);
- // Check filters.
-
  void on_connected (CORBA::Environment &ACE_TRY_ENV);
  // Derived classes should call this when their suppliers connect.
 
  // = Data members
- TAO_Notify_SupplierAdmin_i* myadmin_;
+ TAO_Notify_SupplierAdmin_i* supplier_admin_;
  // My parent supplier admin.
 };
 

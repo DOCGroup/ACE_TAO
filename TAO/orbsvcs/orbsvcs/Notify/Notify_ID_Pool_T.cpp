@@ -60,8 +60,8 @@ TAO_Notify_ID_Pool<ID_TYPE>::next (void)
       iter.first ();
       iter.next (id_next);
 
-      this->reuse_list_.remove (*id_next);
       this->id_ = *id_next;
+      this->reuse_list_.remove (*id_next);
     }
 }
 
