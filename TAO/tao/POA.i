@@ -3,6 +3,9 @@
 // Exception macros
 #include "tao/poa_macros.h"
 
+// Timeprobes class
+#include "tao/Timeprobe.h"
+
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
 {
