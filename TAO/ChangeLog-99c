@@ -1,3 +1,10 @@
+Sat Jul  3 19:06:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	  Initialized some pointers at declaration to avoid
+	  Linux/egcs warnings.
+
 Sat Jul  3 18:00:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp:
