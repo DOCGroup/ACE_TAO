@@ -69,11 +69,21 @@ public:
   /// Set cancellation id.
   void cancellation_id (long timer_id);
 
+  /// Increment and decrement refcount within the context of the lock
+  /// on the ACE_Connector
+  long incr_refcount (void);
+
+  long decr_refcount (void);
+
   /// Dump the state of an object.
   void dump (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+
+protected:
+  /// Prevent direct deletion
+  ~ACE_Svc_Tuple (void);
 
 private:
   /// Associated SVC_HANDLER.
@@ -87,6 +97,11 @@ private:
 
   /// Associated cancellation id.
   long cancellation_id_;
+
+  /// Reference count manipulated within the context of the connector
+  /// lock.
+  /// @@ TODO: Things will change after 5.3 goes out of the way.
+  long refcount_;
 };
 
 /**
@@ -352,9 +367,15 @@ protected:
                          int flags,
                          int perms);
 
+
+  /// Helper method for manipulating the refcount on AST. It holds the
+  /// lock before manipulating the refcount on AST.
+  /// @@ TODO: Needs to be out after 5.3
+  long incr_ast_refcount (AST *ast);
+  long decr_ast_refcount (AST *ast);
+
   /// Lookup table that maps an I/O handle to a SVC_HANDLER *.
   MAP_MANAGER handler_map_;
-
 private:
   /// This is the concrete connector factory (it keeps no state so the
   /// <ACE_Connector> is reentrant).
@@ -371,6 +392,11 @@ private:
    * the <SVC_HANDLER> when it is opened.
    */
   int flags_;
+
+  /// Lock to synchronize access to the internal state of the
+  /// connector.
+  /// @@TODO: This needs to go after 1.3
+  ACE_SYNCH_MUTEX mutex_;
 };
 
 /**
@@ -396,7 +422,7 @@ public:
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
           creation_strategy_type;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
           connect_strategy_type;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
           concurrency_strategy_type;
