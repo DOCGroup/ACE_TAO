@@ -432,18 +432,19 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
         }
       else
         {
-          char** p = hp->h_addr_list;
-          for (; *p != 0; ++p)
-            {
-              if (ACE_OS::memcmp (&inet_addr_.sin_addr,
-                                  *p, 
-                                  hp->h_length) == 0)
-                break;
-            }
+          char **p;
+
+          for (p = hp->h_addr_list; *p != 0; ++p)
+            if (ACE_OS::memcmp (&inet_addr_.sin_addr,
+                                *p, 
+                                hp->h_length) == 0)
+              break;
+
           if (*p == 0)
             return -1;
 
-          char* h = hp->h_aliases[p - hp->h_addr_list];
+          char *h = hp->h_aliases[p - hp->h_addr_list];
+
           if (h == 0)
             h = hp->h_name;
           if (ACE_OS::strlen (h) >= len)
@@ -453,7 +454,8 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
             }
           else
             {
-              ACE_OS::strcpy (hostname, ASYS_WIDE_STRING (h));
+              ACE_OS::strcpy (hostname,
+                              ASYS_WIDE_STRING (h));
               return 0;
             }
         }
