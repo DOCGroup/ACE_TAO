@@ -136,6 +136,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // But the putmsg signature doesn't have it as const...
 #define ACE_LACKS_CONST_STRBUF_PTR
 
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
 // Platform supports STREAM pipes
 // This is possible, but not by default - need to rebuild the kernel to
 // get them enabled - see pipe(2) and "STREAMS/UX for the HP 9000"
