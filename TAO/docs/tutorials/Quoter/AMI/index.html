@@ -9,6 +9,7 @@
     link="#000fff"
     vlink="#ff0f0f"
     bgcolor="#ffffff">
+
     <h3>Asynchronous Method Invocation - CORBA for impatient clients</h3>
 
     <P>Our <A HREF="../../Simple/Client/index.html">simple client</A>
@@ -22,7 +23,7 @@
       parallelism in distributed systems, since we are waiting for the 
       first response to come back before sending the next query.
       Traditionally this problem has been attacked using either
-      <TT>oneway</TT> calls or multiple threads, both approaches can
+      <CODE>oneway</CODE> calls or multiple threads, both approaches can
       work, but they have some disadvantages:
       multi-threading programming can be hard and error-prone,
       oneways are unreliable and require callback interfaces to return 
@@ -41,25 +42,28 @@
 
     <P>For this problem we will extend the IDL interface to include a
       new operation:
+    </P>
 <PRE>
   interface Single_Query_Stock : Stock {
     double get_price_and_names (out string symbol,
                                out string full_name);
   };
 </PRE>
-      This will simplify some of the examples.
+    <P>This will simplify some of the examples.
     </P>
 
     <P>The first step is to generate the stubs and skeletons with
-      support for the callback AMI, we do this with the <TT>-GC</TT>
+      support for the callback AMI, we do this with the <CODE>-GC</CODE>
       flag:
+    </P>
 <PRE>
 $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GC Quoter.idl
 </PRE>
-      You may want to take a brief look at the generated client side
+    <P>You may want to take a brief look at the generated client side
       interface,
-      the IDL compiler adds new methods to the <TT>Quoter::Stock</TT>
+      the IDL compiler adds new methods to the <CODE>Quoter::Stock</CODE>
       interface, in particular pay attention this operation:
+    </P>
 <PRE>
   virtual void sendc_get_price_and_names (
       AMI_Single_Query_StockHandler_ptr ami_handler
@@ -68,9 +72,10 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GC Quoter.idl
       CORBA::SystemException
     ));
 </PRE>
-      this is the operation used to send a request asynchornously, the 
+    <P>This is the operation used to send a request asynchornously, the 
       response is received in the handler object. This is a regular
       CORBA object with the following IDL interface:
+    </P>
 <PRE>
 interface AMI_Single_Query_StockHandler {
   void get_price_and_names (in double ami_return_val,
@@ -78,7 +83,7 @@ interface AMI_Single_Query_StockHandler {
                            in string full_name);
 };
 </PRE>
-      you don't have to write this IDL interface, the IDL compiler
+    <P>You don't have to write this IDL interface, the IDL compiler
       automatically generates the so-called <EM>implied IDL</EM>
       constructs from your original IDL.
       Notice how the arguments are generated, the first argument is
@@ -86,9 +91,13 @@ interface AMI_Single_Query_StockHandler {
       this as <EM>input</EM> only since the handler as to received the 
       reply.
     </P>
+
+    <H3>Implementing the reply handler</H3>
+
     <P>We will have to implement a servant for this new IDL interface
       so we can receive the reply,
-      exactly as we do for servers
+      exactly as we do for servers:
+    </P>
 <PRE>
 class Single_Query_Stock_Handler_i : public POA_Quoter::AMI_Single_Query_StockHandler
 {
@@ -111,18 +120,22 @@ private:
   int *response_count_;
 };
 </PRE>
-      The <TT>response_count_</TT> field will be used to terminate the 
-      client when all the responses are received.
+    <P>The <CODE>response_count_</CODE> field will be used to
+      terminate the client when all the responses are received.
     </P>
 
+    <H3>Sending asynchronous method invocations</H3>
+
     <P>The handler servant is activated as any other CORBA object:
+    </P>
 <PRE>
     int response_count = 0;
     Single_Query_Stock_Handler_i handler_i (&response_count);
     Quoter::AMI_Single_Query_StockHandler_var handler =
       handler_i._this ();
 </PRE>
-    and now we change the loop to send all the requests at once:
+    <P>and now we change the loop to send all the requests at once:
+    </P>
 <PRE>
     int request_count = 0;
     for (int i = 2; i != argc; ++i) {
@@ -137,18 +150,18 @@ private:
         request_count++;
       }
 </PRE>
-      after the loop we wait until all the responses have arrived:
+    <P>after the loop we wait until all the responses have arrived:
+    </P>
 <PRE>
     while (response_count < request_count
            && orb->work_pending ()) {
       orb->perform_work ();
     }
 </PRE>
-    </P>
 
     <H3>Exercise 1</H3>
 
-    <P>Complete the <TT>client.cpp</TT> file.  Does this client play
+    <P>Complete the <CODE>client.cpp</CODE> file.  Does this client play
       the server role too?  If not, what is the role with respect to
       the handler servant?  If you think it is a server too, what
       should you do about the POA?
@@ -197,10 +210,11 @@ private:
       all we need to do is create a
       <A HREF="svc.conf">svc.conf</A> file with the following
       contents:
+    </P>
 <PRE>
 static Client_Strategy_Factory "-ORBTransportMuxStrategy MUXED"
 </PRE>
-      there are many other configuration options, all of them
+    <P>there are many other configuration options, all of them
       documented in
       <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/Options.html">Options.html</A>,
       in 
@@ -213,7 +227,7 @@ static Client_Strategy_Factory "-ORBTransportMuxStrategy MUXED"
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sun Nov 28 18:08:38 CST 1999
+Last modified: Sun Nov 28 18:57:49 CST 1999
 <!-- hhmts end -->
   </body>
 </html>

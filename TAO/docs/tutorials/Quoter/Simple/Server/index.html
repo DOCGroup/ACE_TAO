@@ -15,16 +15,17 @@
     <P>Now that we know how to implement a
       <A HREF="../Client/index.html">simple client</A> we need to
       implement a server to test it out.
-      We have to provide implementations for both the <TT>Stock</TT>
-      and <TT>Stock_Factory</TT> interfaces,
+      We have to provide implementations for both the <CODE>Stock</CODE>
+      and <CODE>Stock_Factory</CODE> interfaces,
       and then create an executable that implements those interfaces.
     </P>
 
-    <H2>Implementing the <TT>Stock</TT> interface</H2>
+    <H3>Implementing the <CODE>Stock</CODE> interface</H3>
 
-    <P>To keep things simple why don't we implement a <TT>Stock</TT>
+    <P>To keep things simple why don't we implement a <CODE>Stock</CODE>
       object with a fixed price, the constructor will receive all the
       parameters:
+    </P>
 <PRE>
 class Quoter_Stock_i : public POA_Quoter::Stock {
 public:
@@ -38,7 +39,7 @@ private:
   CORBA::Double price_;
 };
 </PRE>
-      Notice the name of the base class, TAO implements the CORBA 2.2
+    <P>Notice the name of the base class, TAO implements the CORBA 2.2
       specification, that includes the Portable Object Adapter (hence
       the POA prefix).  This new Object Adapter fixes many problems
       with the previous versions of the CORBA specification, where the
@@ -54,6 +55,7 @@ private:
       most cases.
     </P>
     <P>We have to implement the operations and attributes:
+    </P>
 <PRE>
 class Quoter_Stock_i : public POA_Quoter::Stock {
 public:
@@ -70,23 +72,25 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
   return CORBA::string_dup (this->symbol_.c_str ());
 }
 </PRE>
-
-    The other attributes and methods are similar, so we don't
-    reproduce them here.
+    <P>The other attributes and methods are similar, so we don't
+      reproduce them here.
     </P>
-    <P>The first question is what are those <TT>throw()</TT>
+    <P>The first question is what are those <CODE>throw()</CODE>
       specifications doing there?  Any CORBA operation or attribute
-      can raise a <TT>CORBA::SystemException</TT> the IDL compiler
+      can raise a <CODE>CORBA::SystemException</CODE> the IDL compiler
       must generate a throw specification that includes the CORBA
       system exceptions and any user exceptions listed in the
-      <TT>raise</TT> clause.  In turn, the C++ specification requires
+      <CODE>raise</CODE> clause.  In turn, the C++ specification requires
       that any derived classes cannot add exceptions to a throw
       specification, so you must have a throw specification in your
-      methods, either including <TT>CORBA::SystemException</TT> or
+      methods, either including <CODE>CORBA::SystemException</CODE> or
       empty.
     </P>
+
+    <H4>Memory managment rules for arguments</H4>
+
     <P>It is important to copy the strings before returning them,
-      because the ORB will use <TT>CORBA::string_free</TT> to release
+      because the ORB will use <CODE>CORBA::string_free</CODE> to release
       them. The rationale is that over the network the string must be
       copied anyway, hence, the client must be responsible for releasing
       the received string.  When both client and servers are in the same
@@ -120,19 +124,22 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
       help with this? After all it seems like the method declarations
       are completely specified!  The answer is yes, TAO's IDL compiler
       can generate empty implementations that you can modify, simply
-      use the <TT>-GI</TT> option:
+      use the <KBD>-GI</KBD> option:
 <PRE>
 $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GI Quoter.idl
 </PRE>
       the empty implementations are generated in the
-      <TT>QuoterI.h</TT> and <TT>QuoterI.cpp</TT> files.
-      Be advised that the <TT>-GI</TT> option overwrites these files
+      <CODE>QuoterI.h</CODE> and <CODE>QuoterI.cpp</CODE> files.
+      Be advised that the <CODE>-GI</CODE> option overwrites these files
       every time, so it is better to copy your implementation to
       another file.
     </P>
 
+    <H3>The Stock Factory implementation</H3>
+
     <P>Our first implementation of the factory will serve only two
       stocks, "RHAT" and "MSFT":
+    </P>
 <PRE>
 class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory
 {
@@ -146,11 +153,12 @@ private:
   Quoter_Stock_i rhat_;
   Quoter_Stock_i msft_;
 };
-    </P>
+</PRE>
 
-    <P>The implementation of the <TT>get_stock()</TT> method is
+    <P>The implementation of the <CODE>get_stock()</CODE> method is
       simple, just compare the symbol name and return the appropriate
       object reference:
+    </P>
 <PRE>
 Quoter::Stock_ptr
 Quoter_Stock_Factory_i::get_stock (const char *symbol)
@@ -164,12 +172,11 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
   throw Quoter::Invalid_Stock_Symbol ();
 }
 </PRE>
-    </P>
 
-    <P>So what is that <TT>_this()</TT> method?  In the POA mapping
+    <P>So what is that <CODE>_this()</CODE> method?  In the POA mapping
       the client-side stubs and server-side skeletons are not related
       through inheritance, you must either explicitly activate the
-      servant (your implementation object) or use <TT>_this()</TT> to
+      servant (your implementation object) or use <CODE>_this()</CODE> to
       activate it with its default POA.  We will discuss more about
       explicit and implicit activation later, but at this point it is
       important to remove any thoughts about converting pointers to
@@ -177,8 +184,12 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
       work that way.
     </P>
 
-    <P>Now that we have all the helper classes in place we must create
-      the server executable, we start with the ORB initialization:
+    <H3>Implementing a CORBA server</H3>
+
+    <P>Now that we have all the object implementations in place we
+      must create the server executable, we start with the ORB
+      initialization:
+    </P>
 <PRE>
 int main (int argc, char* argv[])
 {
@@ -188,7 +199,6 @@ int main (int argc, char* argv[])
       CORBA::ORB_init (argc, argv,
                        "" /* the ORB name, it can be anything! */);
 </PRE>
-    </P>
 
     <P>On startup the ORB starts the POA in the {\em holding state},
       where all requests received are not processed until the POA is
@@ -206,7 +216,7 @@ int main (int argc, char* argv[])
     PortableServer::POA_var poa =
       PortableServer::POA::_narrow (poa_object.in ());
 </PRE>
-      The <TT>resolve_initial_references()</TT> is used to bootstrap
+    <P>The <CODE>resolve_initial_references()</CODE> is used to bootstrap
       all kinds of services, like the Naming Service, the Trading
       Service, but it is also used to gain access to other ORB
       interfaces, such as the RootPOA, the Current objects and the
@@ -215,19 +225,21 @@ int main (int argc, char* argv[])
     <P>Now that we have gained access to the Root POA we must obtain
       its POA manager, the POA managers provide interfaces to activate
       and deactivate one or more POAs:
+    </P>
 <PRE>
     PortableServer::POAManager_var poa_manager =
       poa->the_POAManager ();
 </PRE>
-       and now we activate the POA:
+    <P>and now we activate the POA:
+    </P>
 <PRE>
     poa_manager->activate ();
 </PRE>
-    </P>
 
     <P>The shutdown process is similar to the client side, but now we
       must also remember to destroy the POA, putting all the code
       above together we get:
+    </P>
 <PRE>
 int main (int argc, char* argv[])
 {
@@ -256,30 +268,30 @@ int main (int argc, char* argv[])
   return 0;
 }
 </PRE>
-    </P>
 
     <P>Now we create an instance of our stock factory implementation
-      and activate it using <TT>_this()</TT>
+      and activate it using <CODE>_this()</CODE>
+    </P>
 <PRE>
     Quoter_Stock_Factory_i stock_factory_i;
 
     Quoter::Stock_Factory_var stock_factory =
       stock_factory_i._this ();
 </PRE>
-      next we convert the object reference into an IOR string, so it
+    <P>next we convert the object reference into an IOR string, so it
       can be used by the client:
+    </P>
 <PRE>
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
     std::cerr << ior.in () << std::endl;
 </PRE>
-    </P>
 
     <P>There is only one final detail, we must run the ORB event loop
       to start processing requests from the client:
+    </P>
 <PRE>
     orb->run ();
 </PRE>
-    </P>
 
     <P>There are many details that we have left out from this server,
       such as how to terminate the event loop, how to perform servant
@@ -297,7 +309,7 @@ int main (int argc, char* argv[])
       <A HREF="Stock_i.cpp">Stock_i.cpp</A>,
       <A HREF="Stock_Factory_i.h">Stock_Factory_i.h</A>
       <A HREF="Stock_Factory_i.cpp">Stock_Factory_i.cpp</A>,
-      <A HREF="Quoter.idl">Quoter.idl</A>
+      <A HREF="../Quoter.idl">Quoter.idl</A>
       and the always useful
       <A HREF="Makefile">Makefile</A>
     </P>
@@ -324,7 +336,7 @@ $ client file://ior_file MSFT RHAT
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sun Nov 28 14:27:33 CST 1999
+Last modified: Sun Nov 28 18:47:07 CST 1999
 <!-- hhmts end -->
   </body>
 </html>

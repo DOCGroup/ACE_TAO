@@ -1,3 +1,19 @@
+Sun Nov 28 19:00:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.cpp:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.cpp:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/stock_list.txt:
+
+	* docs/tutorials/Quoter/index.html:
+	* docs/tutorials/Quoter/AMI/index.html:
+	* docs/tutorials/Quoter/Simple/Client/index.html:
+	* docs/tutorials/Quoter/Simple/Server/index.html:
+	  Validated using weblint.
+
 Sun Nov 28 18:08:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/tutorials/Quoter/AMI/index.html: Changed the backgrounds
