@@ -27,7 +27,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   Implementation_Repository::INET_Addr *new_addr;
   IIOP_Object *new_iiop_obj = 0;
 
-  if (this->debug_level_ >= 1)
+  if (this->debug_level_ >= 1) 
     ACE_DEBUG ((LM_DEBUG,
                 "Activating Object: %s\n",
                 this->orb_manager_.orb ()->object_to_string (obj)));
@@ -40,14 +40,30 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
 
       IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
                                                 obj->_stubobj ());
+      TAO_IIOP_Profile *iiop_pfile =
+                ACE_dynamic_cast (TAO_IIOP_Profile *,
+                                  iiop_obj->profile_in_use ());
 
-      ACE_NEW_RETURN (new_iiop_obj,
-                      IIOP_Object (iiop_obj->type_id,
-                                   ACE::strnew (new_addr->host_),
-                                   new_addr->port_,
-                                   iiop_obj->profile_in_use ()->object_key (),
-                                   iiop_obj->profile_in_use ()->object_addr ()),
+      TAO_IIOP_Profile *new_pfile;
+      // @@ Would new_addr->host_ be different from object_addr()?
+      // if so I wil add another ctor  frde
+      ACE_NEW_RETURN (new_pfile,
+                      TAO_IIOP_Profile (new_addr->host_,
+                                        new_addr->port_,
+                                        iiop_pfile->object_key ()),
                       0);
+                                   
+      // over write and possibly change the value set from
+      // that set by new_addr!
+      new_pfile->object_addr (&iiop_pfile->object_addr ());
+
+      // create new obj, pfile will be copied!
+      new_iiop_obj = new IIOP_Object (iiop_obj->type_id, new_pfile);
+
+      delete new_pfile;
+
+      if (new_iiop_obj == 0)
+        return 0;
     }
   TAO_CATCHANY
     {
@@ -758,8 +774,12 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
                                             forward_object->_stubobj ());
 
-  iiop_obj->profile_in_use ()->port (new_addr->port_);
-  iiop_obj->profile_in_use ()->host (new_addr->host_);
+  TAO_IIOP_Profile *iiop_pfile =
+            ACE_dynamic_cast (TAO_IIOP_Profile *,
+                              iiop_obj->profile_in_use ());
+
+  iiop_pfile->port (new_addr->port_);
+  iiop_pfile->host (new_addr->host_);
 
 //  if (TAO_debug_level > 0)
 //    ACE_DEBUG ((LM_DEBUG,
