@@ -1,3 +1,11 @@
+Mon May  3 17:19:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.{h,i}:
+	  Added insertion and extraction operators for Any_var.
+	  CORBA spec requires these for all extraction and 
+	  copying insertion operators defined as members of
+	  Any.
+
 Mon May  3 16:09:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Server_Reqeust.*:
