@@ -1674,13 +1674,13 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 #elif defined (ACE_HAS_WTHREADS)
 #if defined (ACE_HAS_WIN32_TRYLOCK)
   BOOL result = ::TryEnterCriticalSection (m);
-  if (result == TRUE) 
+  if (result == TRUE)
     return 0;
   else
     {
       errno = EBUSY;
       return -1;
-    }    
+    }
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -5497,7 +5497,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-#elif defined (VXWORKS)
+#elif defined (VXWORKS) || defined (CHORUS)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #else /* !ACE_WIN32 */
   struct utsname host_info;
@@ -6583,9 +6583,9 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
-                                                        LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 
-                                                        0, len, 0, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
+                                                        LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK,
+                                                        0, len, 0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
@@ -6620,9 +6620,9 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
-                                                        LOCKFILE_FAIL_IMMEDIATELY, 
-                                                        0, len, 0, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
+                                                        LOCKFILE_FAIL_IMMEDIATELY,
+                                                        0, len, 0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
