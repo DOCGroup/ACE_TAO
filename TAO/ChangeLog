@@ -1,3 +1,10 @@
+Fri Sep 17 07:22:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Fixed mismatches between printf formatting directives and
+	  parameter types.
+
 Fri Sep 17 08:44:44 2004  Steve Totten  <totten_s@ociweb.com>
 
         * tao/PortableServer/POA.cpp:

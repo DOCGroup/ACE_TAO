@@ -1020,7 +1020,7 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
 
       // The offset must point to the tc_kind value of the first occurrence of
       // this type.
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1142,7 +1142,7 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1309,7 +1309,7 @@ be_visitor_typecode_defn::gen_typecode (be_interface *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1469,7 +1469,7 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
             this->tc_offset_ += sizeof (ACE_CDR::ULong);
             // the offset must point to the tc_kind value of the first occurrence of
             // this type
-            os->print ("0x%x, // negative offset (%ld)\n",
+            os->print ("0x%x, // negative offset (%d)\n",
                        (qnode->offset - this->tc_offset_),
                        (qnode->offset - this->tc_offset_));
             this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1704,7 +1704,7 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1815,7 +1815,7 @@ be_visitor_typecode_defn::gen_typecode (be_typedef *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -1931,7 +1931,7 @@ be_visitor_typecode_defn::gen_typecode (be_union *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -2262,7 +2262,7 @@ be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
       // the offset must point to the tc_kind value of the first occurrence of
       // this type
-      os->print ("0x%x, // negative offset (%ld)\n",
+      os->print ("0x%x, // negative offset (%d)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
