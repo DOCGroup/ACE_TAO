@@ -80,9 +80,15 @@ public:
                                now - stamp);
 
       if (TAO_debug_level > 0)
+#if defined (ACE_LACKS_LONGLONG_T)
+        ACE_DEBUG ((LM_DEBUG, "AMI %d %s\n",
+                    this->nreplies_received_,
+                    (now - stamp).as_string ().c_str ()));
+#else
         ACE_DEBUG ((LM_DEBUG, "AMI %d %Q\n",
                     this->nreplies_received_,
                     now - stamp));
+#endif
 
       if (TAO_debug_level > 0 && this->nreplies_received_ % 100 == 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) received = %d\n",
