@@ -33,7 +33,8 @@ class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 
 public:
   // = Initialization routines.
-  ACE_SOCK_Dgram_Mcast_QoS (void);
+  /// Ctor, has same defaults as ACE_SOCK_Dgram_Mcast
+  ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
 
   // Note that there is no public <open> method.  Therefore, this
   // class cannot be used unless you <subscribe> to a multicast group.
@@ -102,7 +103,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  int open (const ACE_Addr &addr,
+  int open (const ACE_INET_Addr &addr,
             const ACE_QoS_Params &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,

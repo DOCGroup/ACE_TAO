@@ -23,13 +23,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
 // Dummy default constructor...
 
-ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (void)
+ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (options opts)
+  : ACE_SOCK_Dgram_Mcast (opts)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS");
 }
 
 int
-ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &addr,
+ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_INET_Addr &addr,
                                 const ACE_QoS_Params &qos_params,
                                 int protocol_family,
                                 int protocol,
@@ -42,54 +43,24 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &addr,
 
   ACE_UNUSED_ARG (qos_params);
 
-  // Make a copy of address to use in the <send> methods.
-  // Note: Sun C++ 4.2 needs the useless const_cast.
-  this->mcast_addr_.set (ACE_reinterpret_cast (const ACE_INET_Addr &,
-                                               ACE_const_cast (ACE_Addr &,
-                                                               addr)));
-
   // Only perform the <open> initialization if we haven't been opened
   // earlier.
-  if (this->get_handle () == ACE_INVALID_HANDLE)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-		  "Get Handle Returns Invalid Handle\n"));
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    return 0;
 
-      if (ACE_SOCK::open (SOCK_DGRAM,
-                          protocol_family,
-                          protocol,
-                          protocolinfo,
-                          g,
-                          flags,
-                          reuse_addr) == -1)
-        return -1;
+  ACE_DEBUG ((LM_DEBUG,
+              "Get Handle Returns Invalid Handle\n"));
 
-      int one = 1;
-      if (reuse_addr
-          && this->ACE_SOCK::set_option (SOL_SOCKET,
-                                         SO_REUSEADDR,
-                                         &one,
-                                         sizeof one) == -1)
-        return -1;
-#if defined (SO_REUSEPORT)
-      else if (this->ACE_SOCK::set_option (SOL_SOCKET,
-                                           SO_REUSEPORT,
-                                           &one,
-                                           sizeof one) == -1)
-        return -1;
-#endif /* SO_REUSEPORT */
+  if (ACE_SOCK::open (SOCK_DGRAM,
+                      protocol_family,
+                      protocol,
+                      protocolinfo,
+                      g,
+                      flags,
+                      reuse_addr) == -1)
+    return -1;
 
-      // Create an address to bind the socket to.
-      ACE_INET_Addr local;
-
-      if (local.set (this->mcast_addr_.get_port_number ()) == -1)
-        return -1;
-      else if (ACE_SOCK_Dgram::shared_open (local,
-                                            protocol_family) == -1)
-        return -1;
-    }
-
-  return 0;
+  return this->open_i (addr, 0, reuse_addr);
 }
 
 
@@ -190,8 +161,9 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   // Otherwise, do it like everyone else...
 
   // Create multicast request.
-  if (this->make_multicast_address (this->mcast_addr_,
-                                    net_if) == -1)
+  if (this->make_multicast_ifaddr (0,
+                                   mcast_addr,
+                                   net_if) == -1)
     return -1;
   else
     return 0;
@@ -259,25 +231,18 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
                               -1);
 	}
 
-      sockaddr_in mult_addr;
-      
-      if (protocol_family == ACE_FROM_PROTOCOL_INFO)
-        mult_addr.sin_family = protocolinfo->iAddressFamily;
-      else
-        mult_addr.sin_family = protocol_family;
-
-      mult_addr.sin_port = ACE_HTONS (mcast_addr.get_port_number ());
-
-      mult_addr.sin_addr = this->mcast_request_if_.IMR_MULTIADDR;
+      ip_mreq ret_mreq;
+      this->make_multicast_ifaddr (&ret_mreq, mcast_addr, net_if);
 
       // XX This is windows stuff only. fredk
       if (ACE_OS::join_leaf (this->get_handle (),
                              ACE_reinterpret_cast (const sockaddr *,
-                                                   &mult_addr),
-                             sizeof mult_addr,
+                                                   &ret_mreq.IMR_MULTIADDR.s_addr),
+                             sizeof ret_mreq.IMR_MULTIADDR.s_addr,
                              qos_params) == ACE_INVALID_HANDLE
           && errno != ENOTSUP)
         return -1;
+
       else
 	if (qos_params.socket_qos () != 0)
 	  qos_session->qos (*(qos_params.socket_qos ()));
