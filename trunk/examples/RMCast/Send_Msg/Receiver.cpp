@@ -124,9 +124,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     if (total != lost_count) cerr << "trouble" << endl;
 
+    return 0;
   }
   catch (args const&)
   {
     cerr << "usage: " << argv[0] << " <IPv4 Multicast Address>" << endl;
   }
+
+  return 1;
 }
