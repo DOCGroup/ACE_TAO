@@ -47,6 +47,7 @@ call %0 MT_SOCK_Test
 call %0 Naming_Test
 call %0 New_Fail_Test
 call %0 Notify_Performance_Test
+call %0 Object_Manager_Test
 call %0 OrdMultiSet_Test
 call %0 Pipe_Test
 call %0 Priority_Buffer_Test

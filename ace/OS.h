@@ -4601,6 +4601,9 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
 
+// Marker for cleanup, used by ACE_Exit_Info.
+extern int ace_exit_hook_marker;
+
 // For use by <ACE_OS::exit>.
 extern "C"
 {
@@ -4654,6 +4657,40 @@ public:
 
   void *param_;
   // Parameter passed to the <cleanup_hook_>.
+};
+
+class ACE_Cleanup_Info_Node;
+
+class ACE_OS_Exit_Info
+{
+  // = TITLE
+  //     Hold Object Manager cleanup (exit) information.
+  //
+  // = DESCRIPTION
+  //     For internal use by the ACE library, only.
+public:
+  ACE_OS_Exit_Info (void);
+  // Default constructor.
+
+  ~ACE_OS_Exit_Info (void);
+  // Destructor.
+
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
+  // Use to register a cleanup hook.
+
+  int find (void *object);
+  // Look for a registered cleanup hook object.  Returns 1 if already
+  // registered, 0 if not.
+
+  void call_hooks ();
+  // Call all registered cleanup hooks, in reverse order of
+  // registration.
+
+private:
+  ACE_Cleanup_Info_Node *registered_objects_;
+  // Keeps track of all registered objects.  The last node is only
+  // used to terminate the list (it doesn't contain a valid
+  // ACE_Cleanup_Info).
 };
 
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
@@ -6801,15 +6838,6 @@ public:
   // Destructor.
 
 private:
-  friend class ACE_OS;
-  friend class ACE_Object_Manager;
-  friend class ACE_OS_Object_Manager_Manager;
-  friend class ACE_TSS_Cleanup;
-  friend class ACE_TSS_Emulation;
-  friend class ACE_Log_Msg;
-  friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
-  // This class is for internal use by ACE_OS, etc., only.
-
   static ACE_OS_Object_Manager *instance (void);
   // Accessor to singleton instance.
 
@@ -6818,6 +6846,21 @@ private:
 
   static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
   // Table of preallocated objects.
+
+  ACE_OS_Exit_Info exit_info_;
+  // For at_exit support.
+
+  int at_exit (ACE_EXIT_HOOK func);
+  // For ACE_OS::atexit () support, with ACE_LACKS_ATEXIT.
+
+  friend class ACE_OS;
+  friend class ACE_Object_Manager;
+  friend class ACE_OS_Object_Manager_Manager;
+  friend class ACE_TSS_Cleanup;
+  friend class ACE_TSS_Emulation;
+  friend class ACE_Log_Msg;
+  friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
+  // This class is for internal use by ACE_OS, etc., only.
 };
 
 # if defined (ACE_HAS_WINCE)

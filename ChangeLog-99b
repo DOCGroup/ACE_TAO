@@ -1,50 +1,62 @@
+Tue Aug 24 07:11:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.*,Object_Manager.{h,cpp},README: with ACE_LACKS_ATEXIT,
+          use ACE_OS_Object_Manager::at_exit () to emulate atexit ().
+          [Bug 246]
+
+        * tests/Object_Manager_Test.cpp,tests/Makefile,
+          tests/run_pharlap_tests.bat,tests/run_tests.bat,
+          tests/run_tests.lst,tests/run_tests.psosim,
+          tests/run_tests.vxworks,tests/t.icc,tests/icc.bat:
+          added Object_Manager_Test.
+
 Mon Aug 23 22:03:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/rules.lib.GNU:
-	* include/makeinclude/rules.local.GNU:
-	  When compiling both shared and static libraries only one of them 
-	  was installed. Thanks to Paul Calabrese <calabrese_p@ociweb.com> 
-	  for providing this fix.
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+          When compiling both shared and static libraries only one of them
+          was installed. Thanks to Paul Calabrese <calabrese_p@ociweb.com>
+          for providing this fix.
 
 Mon Aug 23 21:41:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/run_tests.pl:
-	  We search for "Starting" instead of "starting" because that's
-	  what the tests print out now.
+        * tests/run_tests.pl:
+          We search for "Starting" instead of "starting" because that's
+          what the tests print out now.
 
 Mon Aug 23 21:20:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/ACE-guidelines.html:
-	  Added new guidelines relevant to ACE+TAO.
+        * docs/ACE-guidelines.html:
+          Added new guidelines relevant to ACE+TAO.
 
 Mon Aug 23 16:57:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/RPC/README:
-	* performance-tests/RPC/client.cpp:
-	  Changed the options to make it more consistent with other tests
-	  like this one.
-	  Added a README file
+        * performance-tests/RPC/README:
+        * performance-tests/RPC/client.cpp:
+          Changed the options to make it more consistent with other tests
+          like this one.
+          Added a README file
 
 Mon Aug 23 16:53:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Makefile:
-	* performance-tests/TCP/README:
-	  Added a README file for the test
+        * performance-tests/Makefile:
+        * performance-tests/TCP/README:
+          Added a README file for the test
 
-	* performance-tests/TCP/tcp_test.cpp:
-	  Added options to pace the events and to control the message size 
-	  on the server side.
+        * performance-tests/TCP/tcp_test.cpp:
+          Added options to pace the events and to control the message size
+          on the server side.
 
-	* performance-tests/RPC/Makefile:
-	* performance-tests/RPC/client.cpp:
-	* performance-tests/RPC/ping.x:
-	* performance-tests/RPC/server.c:
-	  Added a simple RPC test to compare sockets (ACE), RPC and TAO.
+        * performance-tests/RPC/Makefile:
+        * performance-tests/RPC/client.cpp:
+        * performance-tests/RPC/ping.x:
+        * performance-tests/RPC/server.c:
+          Added a simple RPC test to compare sockets (ACE), RPC and TAO.
 
 Mon Aug 23 13:30:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_kcc.GNU: The optimization
-	  flag for KCC should be +K3, not -K2.
+        * include/makeinclude/platform_sunos5_kcc.GNU: The optimization
+          flag for KCC should be +K3, not -K2.
 
 Mon Aug 23 10:56:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
