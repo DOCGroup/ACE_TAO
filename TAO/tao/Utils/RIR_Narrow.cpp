@@ -42,7 +42,7 @@ TAO::Utils::RIR_Narrow<T>::narrow (PortableInterceptor::ORBInitInfo_ptr info,
 
 template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object
-                                          ACE_ENV_ARG_DECL);
+                                          ACE_ENV_ARG_DECL)
 {
   _var_type narrowed_object = T::_narrow (object
                                           ACE_ENV_ARG_PARAMETER);

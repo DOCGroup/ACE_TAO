@@ -1,10 +1,5 @@
 // $Id$
 
-#include "ace/pre.h"
-
-//#include "ace/Sched_Params.h"
-//#include "tao/Strategies/advanced_resource.h"
-
 #include "TestC.h"
 
 const char *ior = "file://test.ior";
@@ -12,6 +7,7 @@ const char *ior = "file://test.ior";
 int
 main (int argc, char *argv[])
 {
+  int received_expected_exception = 0;
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -38,12 +34,24 @@ main (int argc, char *argv[])
       roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH(Test::ServerOverload, ov)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
+      received_expected_exception = 1;
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
       return 1;
     }
   ACE_ENDTRY;
+
+  if(!received_expected_exception)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR, expecting a ServerOverload exception!!\n"),
+                        1);
+    }
 
   return 0;
 }

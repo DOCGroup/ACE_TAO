@@ -33,8 +33,6 @@ public:
   static _ptr_type narrow (CORBA::ORB_ptr orb,
                            char const * id
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-                           ACE_ENV_ARG_
-
 
   /// Use resolve_initial_references to find an object and then
   /// narrow it.
