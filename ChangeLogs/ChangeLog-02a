@@ -1,3 +1,12 @@
+Wed Mar 28 11:34:54 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * ace/CDR_Base.inl:
+          Removed memset in ACE_CDR::mb_align when ACE_HAS_PURIFY ==
+          1, since it was causing some TAO unit tests to break (in
+          particular, the Portable_Interceptors/Service_Context_Manipulation
+          test).  After running Cubit and a few other tests, Purify didn't
+          notice any more uninitialized memory accesses.  Fixes bug #828.
+
 Wed Mar 28 11:55:39 2001  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: New file, replaces

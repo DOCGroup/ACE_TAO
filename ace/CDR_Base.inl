@@ -156,15 +156,6 @@ ACE_CDR::mb_align (ACE_Message_Block *mb)
                                       ACE_CDR::MAX_ALIGNMENT);
   mb->rd_ptr (start);
   mb->wr_ptr (start);
-
-#if defined (ACE_HAS_PURIFY)
-  // This is a good place to zero the buffer; this is not needed
-  // by IIOP, but makes Purify happy.
-  if (mb->base () != 0)
-    {
-      (void) ACE_OS::memset (mb->base (), 0, mb->size ());
-    }
-#endif /* ACE_HAS_PURIFY */
 }
 
 ACE_INLINE size_t
