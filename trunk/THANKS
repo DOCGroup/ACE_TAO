@@ -1184,7 +1184,7 @@ Ram Ben-Yakir <Ram@bandwiz.com>
 Eric Desamore <Eric.Desamore@idtv.bull.net>
 John Ashmun <John.ASHMUN@esca.com>
 Przemyslaw Marciniak <pmarciniak@lucent.com>
-Alain Decamps <Alain.Decamps@PIDPA.be>
+Boris Kolpackov <bosk@ipmce.ru>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -1196,10 +1196,16 @@ Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to
 compile with GCC!
 
-In conclusion, my goal is to see ACE continue to evolve and become a
-more comprehensive, robust, and well-documented C++ class library that
-is freely available to researchers and developers.  If you have any
-improvements, suggestions, and or comments, I'd like to hear about it.
+In conclusion, our goal is to see ACE+TAO continue to evolve and
+become a more comprehensive, robust, and well-documented C++ class
+library that is freely available to researchers and developers.  If
+you have any improvements, suggestions, and or comments, we'd like to
+hear about it.  Please see the instructions in
+
+$ACE_ROOT/PROBLEM-REPORT-FORM
+$TAO_ROOT/PROBLEM-REPORT-FORM
+
+for instructions on submitting suggestions or fixes.
 
         Thanks,
 
