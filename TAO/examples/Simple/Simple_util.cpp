@@ -85,7 +85,9 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
                 this->ins_,
                 ior.in ()));
 
-  ACE_NEW_TRY_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       CORBA::Object_var table_object =
         orb->resolve_initial_references ("IORTable",
