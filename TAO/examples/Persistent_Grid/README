@@ -1,16 +1,15 @@
 $Id$
 
-This is a simple example based that shows how to use the persistent
-memory. The example is a derivative with a slight variation of the
-Grid example in $TAO_ROOT/Simple/grid. 
+This example shows how to store the state of CORBA servants in
+persistent memory.  The example is a variation of the Grid example in
+$TAO_ROOT/examples/Simple/grid.
 
-The server hosts the Grid servant.  A client comes along and sets
-some values in the grid. These values are written out by the server in
-to a Memory map file. The servant is then brought down. A new server
-is started again which reads from the same meory map file. A new
-client by name persistent_grid is started which reads the value from
-the locations, where the client stored the values. The values are
-printed for clarity purposes.
+The server hosts the Grid servant.  A client sets some values in the
+grid.  These values are written out by the server in to a
+memory-mapped file, at which point the server shuts down.  A new
+server is then started, which reads from the same memory-mapped file.
+Another client (named persistent_client) then reads and prints the
+values from the locations where the original client stored the values.
 
 server:
 -------
