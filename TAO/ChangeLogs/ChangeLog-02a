@@ -1,3 +1,14 @@
+Sun Apr 14 23:05:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Fixed wrong
+	  includes. They were including Pluggable.h which doesnt exist
+	  anymore. 
+	
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Generated dependency
+	  again. 
+
 Sun Apr 14 20:17:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp: Fixed a compile error. Improper merge :(

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Connector.h"
 #include "UIPMC_Connection_Handler.h"
 #include "portablegroup_export.h"
 
