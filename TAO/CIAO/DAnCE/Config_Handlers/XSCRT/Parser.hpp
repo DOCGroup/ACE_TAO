@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include <XSCRT/XML.hpp>
+#include "XSCRT/XML.hpp"
 
 namespace XSCRT
 {
@@ -62,7 +62,7 @@ namespace XSCRT
   };
 }
 
-#include <XSCRT/Parser.ipp>
-#include <XSCRT/Parser.tpp>
+#include "XSCRT/Parser.ipp"
+#include "XSCRT/Parser.tpp"
 
 #endif  // XSCRT_PARSER_HPP
