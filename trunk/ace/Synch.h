@@ -1821,6 +1821,9 @@ public:
   /// Returns a reference to the underlying mutex;
   ACE_Recursive_Thread_Mutex &mutex (void);
 
+  /// Dump the state of an object.
+  void dump (void) const;
+
 private:
   /// A normal (i.e., non-recursive) condition variable.
   ACE_cond_t cond_;
