@@ -17,59 +17,63 @@ int main (int argc, char *argv[])
   TAO_TRY
     {
       // Initialize ORB.
-      CORBA::ORB_ptr orb = 
+      CORBA::ORB_var orb = 
 	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::POA_ptr poa =
-	orb->POA_init(argc, argv, "POA");
-      if (poa == 0)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     " (%P|%t) Unable to initialize the POA.\n"),
-			    1);
-	}
+      CORBA::Object_var poa_object = 
+	orb->resolve_initial_references("RootPOA");
+      if (poa_object == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  1);
 
-      CORBA::Object_ptr objref =
-	orb->resolve_initial_references ("NameService");
+      PortableServer::POA_var root_poa =
+	PortableServer::POA::_narrow (poa_object, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      PortableServer::POAManager_var poa_manager =
+	root_poa->the_POAManager (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::Object_var naming_obj =
+	orb->resolve_initial_references ("NameService");
+      if (naming_obj == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  1);
 
       CosNaming::NamingContext_var naming_context = 
-        CosNaming::NamingContext::_narrow (objref, TAO_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "got reference to NameService\n"));
-
-      ACE_Scheduler_Factory::use_config (naming_context.ptr ());
+      ACE_Scheduler_Factory::use_config (naming_context.in ());
 
       // Register Event_Service with Naming Service.
-      ACE_EventChannel* ec;
-      ACE_NEW_RETURN (ec, ACE_EventChannel, -1);
+      ACE_EventChannel ec_impl;
+
+      RtecEventChannelAdmin::EventChannel_var ec = 
+	ec_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      RtecEventChannelAdmin::EventChannel_ptr impl = 
-	ec->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::String_var str =
+	orb->object_to_string (ec.in (), TAO_TRY_ENV);
 
-      CORBA::String str =
-	orb->object_to_string (impl, TAO_TRY_ENV);
-      ACE_OS::puts ((char *) str);
+      ACE_DEBUG ((LM_DEBUG, "The EC IOR is <%s>\n", str.in ()));
 
       CosNaming::Name channel_name (1);
-      channel_name[0].id = CORBA::string_dup ("EventService");
       channel_name.length (1);
-      naming_context->bind (channel_name, impl, TAO_TRY_ENV);
+      channel_name[0].id = CORBA::string_dup ("EventService");
+      naming_context->bind (channel_name, ec, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      orb->run ();
-
-      naming_context->unbind (channel_name, TAO_TRY_ENV);
+      poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::release (impl);
-      TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG, "running scheduling service\n"));
+      if (orb->run () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
-      delete ec;
     }
   TAO_CATCHANY
     {

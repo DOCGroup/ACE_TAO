@@ -377,7 +377,6 @@ ACE_ES_Event_Container::dump (void)
 
 ACE_Push_Supplier_Proxy::ACE_Push_Supplier_Proxy (ACE_ES_Supplier_Module *sm)
   : supplier_module_ (sm),
-    me_ (this),
     push_supplier_ (0)
 {
 }
@@ -455,8 +454,7 @@ ACE_Push_Supplier_Proxy::shutdown (void)
 // ************************************************************
 
 ACE_Push_Consumer_Proxy::ACE_Push_Consumer_Proxy (ACE_ES_Consumer_Module *cm)
-  : me_ (this),
-    push_consumer_ (0),
+  : push_consumer_ (0),
     consumer_module_ (cm)
 {
 }
@@ -527,25 +525,16 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 // ************************************************************
 
 ACE_EventChannel::ACE_EventChannel (u_long type)
-  : POA_RtecEventChannelAdmin::EventChannel ("EventChannel"),
-    rtu_manager_ (0),
+  : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
-    me_ (this),
     destroyed_ (0)
 {
   consumer_module_ = new ACE_ES_Consumer_Module (this);
   // RtecEventChannelAdmin::ConsumerAdmin_duplicate(consumer_module_);
 
-#if defined(ACE_ES_LACKS_ORB)
-  UPSSingleProcessorOrb_startup(type,
-				dispatching_module,
-				rtu_active,
-				rtu_manager);
-#else
   ACE_NEW(dispatching_module_,
 	  ACE_ES_Priority_Dispatching(this, THREADS_PER_DISPATCH_QUEUE));
-#endif
 
   correlation_module_ = new ACE_ES_Correlation_Module (this);
   subscription_module_ = new ACE_ES_Subscription_Module (this);
@@ -869,7 +858,6 @@ ACE_ES_Consumer_Module::ACE_ES_Consumer_Module (ACE_EventChannel* channel)
   :  lock_ (),
      all_consumers_ (),
      channel_ (channel),
-     me_ (this),
      down_ (0)
 {
 }
@@ -2466,7 +2454,6 @@ ACE_ES_Subscription_Module::shutdown (void)
 ACE_ES_Supplier_Module::ACE_ES_Supplier_Module (ACE_EventChannel *channel) :
   all_suppliers_ (),
   lock_ (),
-  me_ (this),
   up_ (0),
   channel_ (channel)
 {

@@ -52,7 +52,7 @@ IOR_Multicast::handle_input (ACE_HANDLE)
   if (retcode == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "Received multicast.\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Received multicast.\n"));
   
   // @@ validate data string received is from a valid client here
   // @@ Probably not needed
@@ -78,7 +78,9 @@ IOR_Multicast::handle_input (ACE_HANDLE)
 			    0);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      "ior_ '%s' sent through port %u.\nretcode=%d\n", 
+	      "(%P|%t) ior_: <%s>\n"
+	      " sent through port %u.\n"
+	      "retcode=%d\n", 
 	      this->ior_, 
 	      this->remote_addr_.get_port_number (), 
 	      retcode));
@@ -89,95 +91,129 @@ IOR_Multicast::handle_input (ACE_HANDLE)
   return 0;
 }
 
-
 int
 main (int argc, char ** argv)
 {
-  CORBA::Environment env;
-  char *orb_name = "internet";
-
-  CORBA::ORB_ptr orb_ptr = CORBA::ORB_init (argc, 
+  TAO_TRY
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
 					    argv, 
-					    orb_name, 
-					    env);
+					    "internet", 
+					    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  if (env.exception () != 0)
-    {
-      env.print_exception ("ORB init");
-      return 1;
-    }
+      // Initialize the Object Adapter
+      CORBA::Object_var poa_object = 
+	orb->resolve_initial_references("RootPOA");
+      if (poa_object == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  1);
 
-  // Initialize the Object Adapter
-  CORBA::POA_ptr oa_ptr = orb_ptr->POA_init (argc, argv, "POA");
+      PortableServer::POA_var root_poa =
+	PortableServer::POA::_narrow (poa_object, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  if (oa_ptr == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to initialize the POA.\n"),
-		      1);
+      PortableServer::POAManager_var poa_manager =
+	root_poa->the_POAManager (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  // Create a naming context object.
-  NS_NamingContext *naming_context = new NS_NamingContext ("NameService");
+      // We use a different POA. The RootPOA lifespan policy is
+      // "TRANSIENT", hence whatever object key we export (for
+      // instance in an environment variable) is invalid next time we
+      // run.  To avoid this (and make the user life easier) we create
+      // a new POA:
   
-  // Stringify the objref we'll be implementing, and print it to
-  // stdout.  Someone will take that string and give it to a
-  // client.  Then release the object.
-  CosNaming::NamingContext_ptr obj =
-	  naming_context->_this (env);
-  if (env.exception () != 0)
-  {
-	env.print_exception ("_this");
-	return 1;
-  }
-  CORBA::String str;
-  str = ACE_OS::strdup (orb_ptr->object_to_string (obj, env));
+      PortableServer::PolicyList policies (2);
+      policies.length (2);  
+      policies[0] =
+	root_poa->create_id_assignment_policy (PortableServer::USER_ID,
+					       TAO_TRY_ENV);
+      policies[1] =
+	root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
+					  TAO_TRY_ENV);
 
-  if (env.exception () != 0)
-    {
-      env.print_exception ("object2string");
-      return 1;
-    }
+      PortableServer::POA_var good_poa =
+	root_poa->create_POA ("RootPOA_is_BAD",
+			      poa_manager.in (),
+			      policies,
+			      TAO_TRY_ENV);  
+      TAO_CHECK_ENV;
 
-  ACE_DEBUG ((LM_DEBUG, "listening as object '%s'\n", str));
-  CORBA::release (obj);
+      // Create a naming context object.
+      NS_NamingContext naming_context_impl;
+
+      PortableServer::ObjectId_var id = 
+	PortableServer::string_to_ObjectId ("NameService");
+      good_poa->activate_object_with_id (id.in (),
+					 &naming_context_impl,
+					 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Stringify the objref we'll be implementing, and print it to
+      // stdout.  Someone will take that string and give it to a
+      // client.  Then release the object.
+      CORBA::Object_var obj = 
+	good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::String_var str =
+	orb->object_to_string (obj.in (),
+			       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG, "listening as object <%s>\n", str.in ()));
 
 #if defined (ACE_HAS_IP_MULTICAST)
-  // get reactor instance from TAO
-  ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
+      // get reactor instance from TAO
+      ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
   
-  // First, see if the user has given us a multicast port number
-  // for the name service on the command-line;
-  u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
-  if (port == 0)
-    {
-      const char *port_number = ACE_OS::getenv ("NameServicePort");
+      // First, see if the user has given us a multicast port number
+      // for the name service on the command-line;
+      u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+      if (port == 0)
+	{
+	  const char *port_number = ACE_OS::getenv ("NameServicePort");
 
-      if (port_number != 0)
-	port = ACE_OS::atoi (port_number);
-    }
+	  if (port_number != 0)
+	    port = ACE_OS::atoi (port_number);
+	}
 
-  if (port == 0)
-    port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+      if (port == 0)
+	port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
 
-  // Instantiate a server which will receive requests for an ior
-  IOR_Multicast ior_multicast (str,
-			       port,
-			       ACE_DEFAULT_MULTICAST_ADDR);
+      // Instantiate a server which will receive requests for an ior
+      IOR_Multicast ior_multicast (str,
+				   port,
+				   ACE_DEFAULT_MULTICAST_ADDR);
 
-  // register event handler for the ior multicast.
-  if (reactor->register_handler (&ior_multicast,
-				 ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+      // register event handler for the ior multicast.
+      if (reactor->register_handler (&ior_multicast,
+				     ACE_Event_Handler::READ_MASK) == -1)
+	ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
     
-  ACE_DEBUG ((LM_DEBUG, "The multicast server setup is done.\n"));
+      ACE_DEBUG ((LM_DEBUG, "The multicast server setup is done.\n"));
 #endif /* ACE_HAS_IP_MULTICAST */
 
-  // Handle requests for this object until we're killed, or one of the
-  // methods asks us to exit.
-  if (orb_ptr->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+      poa_manager->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  // free memory with "free" because we used strdup which uses malloc
-  ACE_OS::free (str);
+      // Handle requests for this object until we're killed, or one of
+      // the methods asks us to exit.
+      if (orb->run () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+
+      root_poa->destroy (CORBA::B_TRUE, 
+			 CORBA::B_TRUE, 
+			 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Naming Service");
+      return 1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
