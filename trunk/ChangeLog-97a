@@ -1,3 +1,8 @@
+Mon Jun 23 16:06:35 1997  James C. Hu  <jxh@swarm.cs.wustl.edu>
+
+	* ace/OS.i: Moved definition of sema_* methods to follow cond_*
+	  methods to remove compiler warnings on SGI.
+
 Mon Jun 23 09:42:08 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp: added testing for cancellation 
