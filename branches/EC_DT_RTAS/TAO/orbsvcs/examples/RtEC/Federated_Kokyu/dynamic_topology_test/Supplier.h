@@ -21,6 +21,7 @@
 #include "ace/Vector_T.h"
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 

@@ -46,18 +46,22 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   and it is up to the driver program to use the right one.
   //
 public:
+  typedef RtecEventComm::EventSourceID SourceID;
   typedef RtecScheduler::handle_t InfoHandle;
+  typedef RtecEventComm::EventType EventType;
 
-  Consumer (RtecEventComm::EventSourceID normal_type,
-            RtecEventComm::EventSourceID ft_type,
+  Consumer (SourceID normal_type,
+            SourceID ft_type,
             ACE_Time_Value& worktime,
             Supplier *fwddest = 0, Service_Handler *handler = 0);
   // Constructor
 
-  Consumer (RtecEventComm::EventSourceID normal_type,
-            RtecEventComm::EventSourceID ft_type,
+  Consumer (SourceID normal_type,
+            SourceID ft_type,
             Supplier *fwddest = 0, Service_Handler *handler = 0);
   // Constructor
+
+  virtual ~Consumer(void);
 
   // = The RtecEventComm::PushConsumer methods
 
@@ -77,7 +81,7 @@ public:
 
   Service_Handler * handler(void) const;
 
-private:
+protected:
   int deadline_missed_;
   ACE_Time_Value worktime_;
 
@@ -87,8 +91,8 @@ private:
 
   Service_Handler * handler_;
 
-  RtecEventComm::EventType norm_type_;
-  RtecEventComm::EventType ft_type_;
+  EventType norm_type_;
+  EventType ft_type_;
 };
 
 #endif /* CONSUMER_H */

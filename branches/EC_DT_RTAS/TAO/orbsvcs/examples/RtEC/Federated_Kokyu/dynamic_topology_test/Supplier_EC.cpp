@@ -225,7 +225,7 @@ public:
 
     Mode_Handler *mode_handler;
     ACE_NEW(mode_handler,
-            Mode_Handler(5)); //mode switch after first event
+            Mode_Handler(1)); //mode switch after first event
     Supplier *supplier_impl1_1;
     Timeout_Consumer *timeout_consumer_impl1_1;
     ACE_NEW(supplier_impl1_1,
