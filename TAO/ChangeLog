@@ -1,3 +1,14 @@
+Wed May  5 17:07:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Plugged several holes in error checking for components
+          and homes, and created new error messages to be more
+          informative in some of these cases.
+
 Wed May  5 09:13:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/tao.mpc:

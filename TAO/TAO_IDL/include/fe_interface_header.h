@@ -128,8 +128,8 @@ protected:
   // Compile the flattened unique list of interfaces which this
   // interface inherits from.
 protected:
-  virtual void compile_inheritance (UTL_NameList *ifaces,
-                                    idl_bool for_valuetype);
+  void compile_inheritance (UTL_NameList *ifaces,
+                            idl_bool for_valuetype);
 
   void compile_one_inheritance (AST_Interface *i);
 
@@ -168,6 +168,8 @@ protected:
   idl_bool pd_truncatable;
 
 protected:
+  void compile_inheritance (UTL_NameList *vtypes,
+                            idl_bool is_eventtype);
   void compile_supports (UTL_NameList *supports);
   idl_bool check_concrete_supported_inheritance (AST_Interface *d);
 };
@@ -203,6 +205,10 @@ public:
   long n_supports (void) const;
   AST_Interface **supports_flat (void) const;
   long n_supports_flat (void) const;
+  
+protected:
+  void compile_inheritance (UTL_ScopedName *base_component);
+  void compile_supports (UTL_NameList *supports);
 
 protected:
   AST_Component *pd_base_component;
@@ -231,11 +237,13 @@ public:
 
 protected:
   AST_Home *pd_base_home;
+  AST_Component *pd_managed_component;
   AST_ValueType *pd_primary_key;
 
 protected:
-  virtual void compile_inheritance (UTL_NameList *supports,
-                                    idl_bool for_valuetype);
+  void compile_inheritance (UTL_ScopedName *base_home);
+  void compile_managed_component (UTL_ScopedName *managed_compoent);
+  void compile_primary_key (UTL_ScopedName *primary_key);
 };
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH
