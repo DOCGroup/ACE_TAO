@@ -1,3 +1,30 @@
+Sun Apr 30 19:52:56 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl
+	* tests/Endpoint_Per_Priority/client.cpp:
+	  Return value from the mapping of corba to native priority was
+	  not checked, causing invalid corba priority values to go
+	  undetected.  Thanks to Paulo Breda Vieira for reporting the problem.
+
+	* utils/NamingViewer/NamingTreeCtrl.cpp:
+	  added a patch from Chris Hafey.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+	  A pointer was incremented instead of the value it was pointing
+	  too, causing corruption of the memory-mapped file.  Thanks to
+	  Mathew.Samuel@msdw.com for reporting the problem.  This fixes
+	  bugzilla bug 551.
+
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp (destroy):
+	  When Persistent_Naming_Contexts were <destroyed>, their entries weren't
+	  removed from the Persistent_Context_Index.  Changed <destroy>
+	  method to set <destroyed_> variable to a higher value to insure 
+	  complete cleanup.
+
+        * docs/releasenotes/index.html:
+          Naming section.
+
 Sun Apr 30 17:45:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Messaging.pidl:
@@ -19,26 +46,6 @@ Sun Apr 30 17:45:29 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tests/AMI/run_test.pl:
           The test was using absolute paths for the IOR files and the
           programs.
-
-Sun Apr 30 17:07:57 2000  Marina Spivak  <marina@cs.wustl.edu>
-
-        * utils/NamingViewer/NamingTreeCtrl.cpp:
-          added a patch from Chris Hafey.
-
-        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
-          A pointer was incremented instead of the value it was pointing
-          too, causing corruption of the memory-mapped file.  Thanks to
-          Mathew.Samuel@msdw.com for reporting the problem.  This fixes
-          bugzilla bug 551.
-
-        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp (destroy):
-          When Persistent_Naming_Contexts were <destroyed>, their entries weren't
-          removed from the Persistent_Context_Index.  Changed <destroy>
-          method to set <destroyed_> variable to a higher value to insure
-          complete cleanup.
-
-        * docs/releasenotes/index.html:
-          Naming section.
 
 Sun Apr 30 10:48:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
