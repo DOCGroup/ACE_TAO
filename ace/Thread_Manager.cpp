@@ -481,7 +481,6 @@ ACE_Thread_Exit::instance (void)
 // destructor.
 
 ACE_Thread_Exit::ACE_Thread_Exit (void)
-  : status_ ((void *) -1)
 {
   ACE_TRACE ("ACE_Thread_Exit::ACE_Thread_Exit");
 }
@@ -495,22 +494,6 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
 
   if (tm != 0)
     this->thread_control_.insert (tm, 0);
-}
-
-// Set the thread exit status value.
-
-void *
-ACE_Thread_Exit::status (void *s)
-{
-  ACE_TRACE ("ACE_Thread_Exit::status");
-  return this->status_ = s;
-}
-
-void *
-ACE_Thread_Exit::status (void)
-{
-  ACE_TRACE ("ACE_Thread_Exit::status");
-  return this->status_;
 }
 
 // When this object is destroyed the Task is automatically closed
