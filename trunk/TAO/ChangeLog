@@ -1,3 +1,9 @@
+Mon Jul 19 19:00:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/ORBEndpoint.html:
+
+	  Fixed typo.
+
 Mon Jul 19 13:21:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
