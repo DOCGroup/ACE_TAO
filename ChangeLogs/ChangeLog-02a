@@ -1,3 +1,8 @@
+Mon Sep 10 08:17:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Will not run the File_IO test in the
+	  Minimum CORBA configuration.
+
 Mon Sep 10 08:05:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Prevented the DLL_ORB test from running
