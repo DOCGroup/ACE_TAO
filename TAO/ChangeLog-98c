@@ -15,6 +15,9 @@ Fri Jan 01 16:48:23 1999  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp: added
           ACE_Array_Base<TAO_EC_Event> explicit instantiation.
 
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: added
+          a bunch of TAO_find explicit instantiations.
+
 Fri Jan  1 13:33:33 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Removed a ; at the end of a
