@@ -75,7 +75,7 @@ main (int, ACE_TCHAR *[])
     "   integer#2,\n"
     "   string=000030,\n\n";
 
-  ACE_HANDLE fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC, 0600);
+  ACE_HANDLE fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC);
 
   if (fd == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::open")), -1);
