@@ -953,7 +953,11 @@ Test_ECG::push_consumer (void *consumer_cookie,
 	  // is the end of the frame.
 	  // + Use the start of the test to keep the current frame.
 	  // + Use the last execution.
-	  this->stats_[ID].laxity_[count] = 1 + (s - now)/interval/1000.0;
+
+	  // Work around MSVC++ bug, it does not not how to convert an
+	  // unsigned 64 bit int into a long....
+	  CORBA::ULong tmp = ACE_static_cast(CORBA::ULong,(s - now));
+	  this->stats_[ID].laxity_[count] = 1 + tmp/1000.0/interval;
 	  count++;
 	}
       else
@@ -1042,7 +1046,10 @@ Test_ECG::dump_results (void)
       ACE_OS::sprintf (buf, "LP%02.2d", i);
       this->dump_results (buf, this->stats_[i + this->hp_consumers_]);
     }
-  double usec = (this->test_stop_ - this->test_start_) / 1000.0;
+  // the cast is to workaround a msvc++ bug...
+  CORBA::ULong tmp = ACE_static_cast(CORBA::ULong,
+				     this->test_stop_ - this->test_start_);
+  double usec =  tmp / 1000.0;
   ACE_DEBUG ((LM_DEBUG, "Time[TOTAL]: %.3f\n", usec));
 }
 
@@ -1050,23 +1057,27 @@ void
 Test_ECG::dump_results (const char* name, Stats& stats)
 {
   // @@ We are reporting the information without specifics about 
-  double usec = stats.total_time_ / 1000.0;
+  // the cast is to workaround a msvc++ bug...
+  double usec = ACE_static_cast(CORBA::ULong,stats.total_time_) / 1000.0;
   ACE_DEBUG ((LM_DEBUG, "Time[LCL,%s]: %.3f\n", name, usec));
   int i;
   for (i = 1; i < stats.lcl_count_ - 1; ++i)
     {
-      usec = stats.lcl_latency_[i] / 1000.0;
+      // the cast is to workaround a msvc++ bug...
+      usec = ACE_static_cast(CORBA::ULong,stats.lcl_latency_[i]) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Latency[LCL,%s]: %.3f\n", name, usec));
 
       double percent = stats.laxity_[i] * 100.0;
       ACE_DEBUG ((LM_DEBUG, "Laxity[LCL,%s]: %.3f\n", name, percent));
 
-      usec = (stats.end_[i] - this->test_start_) / 1000.0;
+      // the cast is to workaround a msvc++ bug...
+      usec = ACE_static_cast(CORBA::ULong,stats.end_[i] - this->test_start_) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Completion[LCL,%s]: %.3f\n", name, usec));
     }
   for (i = 1; i < stats.rmt_count_ - 1; ++i)
     {
-      double usec = stats.rmt_latency_[i] / 1000.0;
+      // the cast is to workaround a msvc++ bug...
+      double usec = ACE_static_cast(CORBA::ULong,stats.rmt_latency_[i]) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Latency[RMT,%s]: %.3f\n", name, usec));
     }
 }
@@ -1127,24 +1138,24 @@ Test_ECG::parse_args (int argc, char *argv [])
 	case 'h':
 	  {
 	    char* aux;
-	    char* arg = strtok_r (get_opt.optarg, ",", &aux);
+		char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
 	    this->hp_suppliers_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hp_consumers_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hp_workload_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hp_interval_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hp_message_count_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hps_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hps_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hpc_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->hpc_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
 	  }
 	  break;
@@ -1152,24 +1163,24 @@ Test_ECG::parse_args (int argc, char *argv [])
 	case 'w':
 	  {
 	    char* aux;
-	    char* arg = strtok_r (get_opt.optarg, ",", &aux);
+		char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
 	    this->lp_suppliers_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lp_consumers_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lp_workload_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lp_interval_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lp_message_count_ = ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lps_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lps_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lpc_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-	    arg = strtok_r (0, ",", &aux);
+		arg = ACE_OS::strtok_r (0, ",", &aux);
 	    this->lpc_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
 	  }
 	  break;

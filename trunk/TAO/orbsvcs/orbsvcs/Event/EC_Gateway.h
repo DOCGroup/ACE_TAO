@@ -37,7 +37,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
-class TAO_Export TAO_EC_Gateway
+class TAO_ORBSVCS_Export TAO_EC_Gateway
 //
 // = TITLE
 //   Event Channel Gateway.

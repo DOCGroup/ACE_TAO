@@ -1,3 +1,20 @@
+Wed May 06 23:51:37 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsw: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  The test now compiles on NT, it lacked a project file and we had
+	  to workaround some MSVC++ bugs.
+
+	* orbsvcs/orbsvcs.dsw: 
+	  Added the tests to the main workspace.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
+	  The export macro was wrong and Event/EC_Gateway files were not
+	  in the project file.
+
 Wed May  6 18:16:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/NestedUpcall: Added the new "one-button" features for the

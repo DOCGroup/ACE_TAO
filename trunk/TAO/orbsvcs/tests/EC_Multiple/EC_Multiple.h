@@ -227,7 +227,7 @@ private:
   void wait_until_ready (void);
   // Block event delivery until all the consumers are ready.
 
-  class Stats;
+  struct Stats;
   void dump_results (const char* name, Stats& stats);
   // Dump the results for a particular consumer.
 
@@ -327,13 +327,13 @@ private:
 
   struct Stats {
     ACE_hrtime_t total_time_;
-    float laxity_[Test_ECG::MAX_EVENTS];
-    ACE_hrtime_t lcl_latency_[Test_ECG::MAX_EVENTS];
-    ACE_hrtime_t end_[Test_ECG::MAX_EVENTS];
+    float laxity_[MAX_EVENTS];
+    ACE_hrtime_t lcl_latency_[MAX_EVENTS];
+    ACE_hrtime_t end_[MAX_EVENTS];
     int lcl_count_;
     // We keep laxity and total_time stats only for the local events.
 
-    ACE_hrtime_t rmt_latency_[Test_ECG::MAX_EVENTS];
+    ACE_hrtime_t rmt_latency_[MAX_EVENTS];
     int rmt_count_;
   };
   Stats stats_[Test_ECG::MAX_CONSUMERS];
