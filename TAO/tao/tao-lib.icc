@@ -36,6 +36,8 @@ option
 	   source type (cpp) "Active_Object_Map.cpp"
 	   source type (cpp) "Any.cpp"
 	   source type (cpp) "CDR.cpp"
+	   source type (cpp) "Codeset_Manager.cpp"
+	   source type (cpp) "Codeset_Translator_Factory.cpp"
 	   source type (cpp) "CORBA_String.cpp"
 	   source type (cpp) "Client_Strategy_Factory.cpp"
 	   source type (cpp) "Connect.cpp"
