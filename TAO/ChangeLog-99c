@@ -1,3 +1,9 @@
+Thu Jan 14 14:07:17 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/Request.{h,i,cpp}:
+          Added the argument manipulation helper functions, as shown
+          in the C++ mapping of ORBOS 98-09-03.
+
 Thu Jan 14 11:51:31 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Event_Channel.h,
