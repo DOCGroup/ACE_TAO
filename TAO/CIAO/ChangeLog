@@ -7,7 +7,7 @@ Wed Apr 06 10:30:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/examples/BasicSP/descriptors/DeploymentPlan.cdp
 
 	  Added this file, which is a copy of the old HUDisplay.cdp
-	  file.
+	  file. This is the old version deployment plan XML metadata.
 
 	* DAnCE/examples/BasicSP/descriptors/BasicSP.cdp
 	* DAnCE/examples/BasicSP/descriptors/HUDisplay.cdp
@@ -15,6 +15,13 @@ Wed Apr 06 10:30:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  Removed these two files since they are redundant. The
 	  former one now is "flattern_deploymentplan.cdp",
 	  the latter one is "DeploymentPlan.cdp".
+
+	* DAnCE/examples/BasicSP/descriptors/flattern_deploymentplan.cdp
+
+	  Fixed this file, which contains a invalid connection, i.e.,
+	  connecting a EventPublisher to a SimplexReceptacle. The root
+	  of this problem is that "data_read" is a Facet instead of
+	  a EventPublisher. 
 
 Tue Apr 05 19:29:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
