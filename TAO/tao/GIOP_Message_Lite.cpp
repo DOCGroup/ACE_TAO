@@ -16,6 +16,8 @@
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP_Message_Lite, "$Id$")
+
 static const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 static const size_t TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET = 0;
 static const size_t TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET = 4;
@@ -1369,7 +1371,9 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_LITE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block,
+                                                    bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)

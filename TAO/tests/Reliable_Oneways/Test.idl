@@ -24,6 +24,6 @@ module Test
   interface Shutdown_Helper
   {
     /// Shutdown the server
-    oneway void shutdown ();
+    void shutdown ();
   };
 };

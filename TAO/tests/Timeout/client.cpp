@@ -47,6 +47,9 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
+static int timeout_count = 0;
+static int in_time_count = 0;
+
 void
 send_echo (CORBA::ORB_ptr orb,
            Simple_Server_ptr server,
@@ -58,9 +61,12 @@ send_echo (CORBA::ORB_ptr orb,
       server->echo (0, t, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      in_time_count++;
     }
   ACE_CATCH (CORBA::TIMEOUT, timeout)
     {
+      timeout_count++;
+
       // Trap this exception and continue...
       // ACE_DEBUG ((LM_DEBUG,
       //             "==> Trapped a TIMEOUT exception (expected)\n"));
@@ -242,10 +248,25 @@ int main (int argc, char* argv[])
 
       server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (timeout_count == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: No messaged timed out\n"));
+        }
+      if (in_time_count == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: No messages on time\n"));
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "In time = %d, timed out = %d\n",
+                  in_time_count, timeout_count));
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Catched exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;

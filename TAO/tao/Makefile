@@ -238,7 +238,14 @@ ORB_CORE_FILES = \
   CodecFactory_ORBInitializer \
   CDR_Encaps_Codec \
   Endpoint_Selector_Factory \
-  RT_Endpoint_Selector_Factory
+  RT_Endpoint_Selector_Factory \
+  Flushing_Strategy \
+  Block_Flushing_Strategy \
+  Reactive_Flushing_Strategy \
+  Queued_Message \
+  Synch_Queued_Message \
+  Asynch_Queued_Message \
+  Transport_Timer
 
 DYNAMIC_ANY_FILES =
 

@@ -64,33 +64,24 @@ public:
 protected:
   /** @name Overridden Template Methods
    *
-   * These are implementations of template methods declared by TAO_Transport.
+   * Please check the documentation in "tao/Transport.h" for more
+   * details.
    */
   //@{
 
-  /// Access connection_handler_ as an <code>ACE_Event_Handler</code>.
-  /// Must be called with transport's lock held.
   virtual ACE_Event_Handler *event_handler_i (void);
 
   /// Access the underlying messaging object
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
-  /// Write the complete Message_Block chain to the connection.
-  /// Must be called with transport's lock held.
-  virtual ssize_t send_i (const ACE_Message_Block *mblk,
-                          const ACE_Time_Value *s = 0,
-                          size_t *bytes_transferred = 0);
+  virtual ssize_t send_i (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *timeout = 0);
 
-
-  /// Read len bytes from into buf.
-  /// Must be called with transport's lock held.
   virtual ssize_t recv_i (char *buf,
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
-  /// Read and process the message from the connection. The processing
-  /// of the message is done by delegating the work to the underlying
-  /// messaging object
   virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
                                     int block =0);
 
@@ -118,11 +109,9 @@ public:
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
 
-  /// Initialising the messaging object
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
-  /// Open the service context list and process it.
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
   //@}

@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 #include "tao/IIOP_Transport.h"
@@ -23,9 +22,7 @@
 # include "tao/IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
-           IIOP_Transport,
-           "$Id$")
+ACE_RCSID (tao, IIOP_Transport, "$Id$")
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
@@ -54,14 +51,6 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
   delete this->messaging_object_;
 }
 
-#if 0
-ACE_HANDLE
-TAO_IIOP_Transport::handle (void)
-{
-  return this->connection_handler_->get_handle ();
-}
-#endif
-
 ACE_Event_Handler *
 TAO_IIOP_Transport::event_handler_i (void)
 {
@@ -75,14 +64,16 @@ TAO_IIOP_Transport::messaging_object (void)
 }
 
 ssize_t
-TAO_IIOP_Transport::send_i (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *bytes_transferred)
+TAO_IIOP_Transport::send_i (iovec *iov, int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
-  return ACE::send_n (this->connection_handler_->get_handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
+                                                             max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
+
+  return retval;
 }
 
 ssize_t
@@ -135,6 +126,21 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 int
 TAO_IIOP_Transport::register_handler_i (void)
 {
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
+                  this->id ()));
+    }
+  if (this->connection_handler_->is_registered ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d"
+                  ", already registered\n",
+                  this->id ()));
+      return 0;
+    }
+
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core_->reactor ();
@@ -187,7 +193,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -200,17 +206,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing transport %d\n"),
-                    this->id ()));
       return -1;
     }
 
@@ -273,7 +268,6 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   this->bidirectional_flag (1);
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
-
 
 int
 TAO_IIOP_Transport::process_message (void)
@@ -521,11 +515,3 @@ TAO_IIOP_Transport::transition_handler_state_i (void)
 {
   this->connection_handler_ = 0;
 }
-
-#if 0
-TAO_Connection_Handler*
-TAO_IIOP_Transport::connection_handler (void) const
-{
-  return this->connection_handler_;
-}
-#endif

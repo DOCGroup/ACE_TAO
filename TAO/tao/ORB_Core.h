@@ -75,6 +75,8 @@ class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
 class TAO_BiDir_Adapter;
 
+class TAO_Flushing_Strategy;
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Eager_Buffering_Sync_Strategy;
@@ -831,11 +833,20 @@ public:
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
 
-
   /// Return the table that maps object key/name to de-stringified
   /// object reference.  It is needed for supporting local objects in
   /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
+
+  /// Return the flushing strategy
+  /**
+   * The flushing strategy is created by the resource factory, and it
+   * is used by the ORB to control the mechanism used to flush the
+   * outgoing data queues.
+   * The flushing strategies are stateless, therefore, there is only
+   * one per ORB.
+   */
+  TAO_Flushing_Strategy *flushing_strategy (void);
 
 protected:
 
@@ -1180,6 +1191,9 @@ protected:
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
+
+  /// Hold the flushing strategy
+  TAO_Flushing_Strategy *flushing_strategy_;
 };
 
 // ****************************************************************
