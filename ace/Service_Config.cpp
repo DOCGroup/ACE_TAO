@@ -240,7 +240,8 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         if (ACE_Service_Config::svc_queue_->enqueue_head
             (ACE_CString (getopt.optarg)) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"), "enqueue_head"));
+                      ASYS_TEXT ("%p\n"),
+                      "enqueue_head"));
         break;
       default:
         ACE_ERROR ((LM_ERROR,
@@ -261,15 +262,23 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
   ACE_Service_Type *srp = 0;
 
   if (ACE_Service_Config::debug_)
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening static service %s\n"), svc_name));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("opening static service %s\n"),
+                svc_name));
 
   if (ACE_Service_Repository::instance ()->find (svc_name,
                                                  (const ACE_Service_Type **) &srp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%s not found\n"), svc_name), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%s not found\n"),
+                       svc_name),
+                      -1);
 
-  else if (srp->type ()->init (args.argc (), args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("static initialization failed, %p\n"),
-                       svc_name), -1);
+  else if (srp->type ()->init (args.argc (),
+                               args.argv ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("static initialization failed, %p\n"),
+                       svc_name),
+                      -1);
   else
     {
       srp->active (1);
@@ -288,14 +297,20 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   ACE_ARGV args (parameters);
 
   if (ACE_Service_Config::debug_)
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening dynamic service %s\n"), sr->name ()));
+    ACE_DEBUG ((LM_DEBUG,  
+                ASYS_TEXT ("opening dynamic service %s\n"),
+                sr->name ()));
 
   if (ACE_Service_Repository::instance ()->insert (sr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("insertion failed, %p\n"), sr->name ()), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("insertion failed, %p\n"),
+                       sr->name ()),
+                      -1);
   else if (sr->type ()->init (args.argc (), args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("dynamic initialization failed for %s\n"),
-                      sr->name ()), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("dynamic initialization failed for %s\n"),
+                       sr->name ()),
+                      -1);
   else
     return 0;
 }
@@ -303,7 +318,6 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 int
 ACE_Service_Config::process_directives_i (void)
 {
-
   // AC 970827 Skip the heap check because yacc allocates a buffer
   // here which will be reported as a memory leak for some reason.
   ACE_NO_HEAP_CHECK
@@ -316,7 +330,9 @@ ACE_Service_Config::process_directives_i (void)
 
   // Use an auto_ptr to make sure that we release this memory
   // regardless of how we exit...
-  ACE_NEW_RETURN (ace_obstack, ACE_Obstack, -1);
+  ACE_NEW_RETURN (ace_obstack,
+                  ACE_Obstack,
+                  -1);
 
   auto_ptr<ACE_Obstack> holder (ace_obstack);
 
@@ -481,7 +497,8 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
   else
     {
       if (ACE_Service_Config::debug_)
-        ACE_DEBUG ((LM_STARTUP, ASYS_TEXT ("starting up daemon %n\n")));
+        ACE_DEBUG ((LM_STARTUP,
+                    ASYS_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -529,7 +546,8 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), program_name));
+    ACE_ERROR ((LM_ERROR, 
+                ASYS_TEXT ("%p\n"), program_name));
 }
 
 // Signal handling API to trigger dynamic reconfiguration.
@@ -542,10 +560,13 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
   if (ACE_Service_Config::signum_ != sig)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("error, signal %S does match %S\n"),
-                sig, ACE_Service_Config::signum_));
+                sig, 
+                ACE_Service_Config::signum_));
 
   if (ACE_Service_Config::debug_)
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("signal %S occurred\n"), sig));
+    ACE_DEBUG ((LM_DEBUG,  
+                ASYS_TEXT ("signal %S occurred\n"), 
+                sig));
 
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
@@ -563,7 +584,9 @@ ACE_Service_Config::reconfigure (void)
     {
       time_t t = ACE_OS::time (0);
       if (ACE_Service_Config::debug_)
-        ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("beginning reconfiguration at %s"), ACE_OS::ctime (&t)));
+        ACE_DEBUG ((LM_DEBUG,  
+                    ASYS_TEXT ("beginning reconfiguration at %s"), 
+                    ACE_OS::ctime (&t)));
     }
 
   if (ACE_Service_Config::process_directives () == -1)
@@ -706,7 +729,7 @@ ACE_Service_Config::reconfig_occurred (int config_occurred)
   ACE_Service_Config::reconfig_occurred_ = config_occurred;
 }
 
-// Become a daemon (i.e., run as a ASYS_TEXT ("background") process).
+// Become a daemon (i.e., run as a "background" process).
 
 int
 ACE_Service_Config::start_daemon (void)
