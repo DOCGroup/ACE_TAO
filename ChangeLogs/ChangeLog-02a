@@ -4,6 +4,10 @@ Tue Dec 11 07:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
           Updated BCB makefile with the changes of the changelog entry
           Mon Dec 10 15:39:22 2001 Balachandran Natarajan <bala@cs.wustl.edu>
 
+        * tests/MEM_Stream_Test.cpp:
+          Removed wrong ; after an if statement in this test. This should fix
+          the warning in the MSVC builds
+
 Mon Dec 10 19:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Refcountable.h:
