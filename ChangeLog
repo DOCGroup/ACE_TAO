@@ -1,3 +1,12 @@
+Thu Dec 16 16:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timeprobe_T.cpp:
+          Removed checking of ACE_HAS_BROKEN_DES_ARRAY_FREE. This define is
+          not set for any compiler, so removed it.
+
+        * tests/Timeprobe_Test.cpp:
+          Added missing include to get this test compiling
+
 Thu Dec 16 16:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
