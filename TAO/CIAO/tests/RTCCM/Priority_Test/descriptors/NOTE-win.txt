@@ -1,3 +1,7 @@
+
+cd $CIAO_ROOT/tests/RTCCM/Priority_Test/descriptors/
+$CIAO_ROOT/tools/Daemon/CIAO_Daemon -ORBEndpoint iiop://`hostname`:10000 -n $CIAO_ROOT/tools/ComponentServer/ComponentServer
+
 Conventional test:
 ==================
 
