@@ -608,7 +608,8 @@ endif # GHS
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp OS.h \
+.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -701,7 +702,8 @@ endif # GHS
  OS_Thread_Adapter.inl \
  OS_QoS.h
 
-.obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp OS_Dirent.h \
+.obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp \
+ OS_Dirent.h \
  pre.h \
  OS_Export.h \
  config-all.h \
@@ -738,7 +740,8 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp OS_Memory.h \
+.obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
+ OS_Memory.h \
  pre.h \
  OS_Export.h \
  config-all.h \
@@ -753,7 +756,8 @@ endif # GHS
  OS_Errno.inl \
  OS_Memory.inl
 
-.obj/OS_QoS.o .obj/OS_QoS.so .shobj/OS_QoS.o .shobj/OS_QoS.so: OS_QoS.cpp OS_QoS.h \
+.obj/OS_QoS.o .obj/OS_QoS.so .shobj/OS_QoS.o .shobj/OS_QoS.so: OS_QoS.cpp \
+ OS_QoS.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -787,7 +791,8 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp OS_String.h \
+.obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp \
+ OS_String.h \
  pre.h \
  OS_Export.h \
  config-all.h \
@@ -807,7 +812,8 @@ endif # GHS
  OS_Errno.inl \
  OS_Memory.inl
 
-.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp OS_TLI.h \
+.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
+ OS_TLI.h \
  pre.h \
  config-all.h \
  config.h \
@@ -822,7 +828,8 @@ endif # GHS
  OS_Errno.inl \
  OS_TLI.inl
 
-.obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp OS_Errno.h \
+.obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp \
+ OS_Errno.h \
  pre.h \
  OS_Export.h \
  config-all.h \
@@ -1179,7 +1186,6 @@ endif # GHS
  Active_Map_Manager_T.h \
  Map_Manager.h \
  Synch.h \
- ACE.h \
  OS.h \
  OS_Dirent.h \
  OS_Errno.h \
@@ -1197,17 +1203,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -1235,6 +1230,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -1306,10 +1313,10 @@ endif # GHS
  OS_Errno.h \
  OS_Errno.inl
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ ARGV.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -1318,6 +1325,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -1325,7 +1333,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -1340,17 +1347,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -1396,7 +1392,7 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl \
  Synch.h \
- ACE.h \
+ ACE_export.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -1405,7 +1401,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -1420,17 +1415,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -1458,6 +1442,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -1584,6 +1580,8 @@ endif # GHS
 .obj/Configuration.o .obj/Configuration.so .shobj/Configuration.o .shobj/Configuration.so: Configuration.cpp \
  Configuration.h \
  pre.h \
+ SString.h \
+ String_Base.h \
  ACE.h \
  OS.h \
  config-all.h \
@@ -1627,8 +1625,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -1719,6 +1715,8 @@ endif # GHS
  Configuration_Import_Export.h \
  pre.h \
  Configuration.h \
+ SString.h \
+ String_Base.h \
  ACE.h \
  OS.h \
  config-all.h \
@@ -1762,8 +1760,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -1849,7 +1845,8 @@ endif # GHS
  Hash_Map_With_Allocator_T.i \
  Hash_Map_With_Allocator_T.cpp
 
-.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp Dirent.h \
+.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
+ Dirent.h \
  pre.h \
  ACE_export.h \
  config-all.h \
@@ -1912,10 +1909,10 @@ endif # GHS
  Dirent_Selector.h \
  Dirent_Selector.inl
 
-.obj/Dynamic.o .obj/Dynamic.so .shobj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp Dynamic.h \
+.obj/Dynamic.o .obj/Dynamic.so .shobj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp \
+ Dynamic.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -1924,6 +1921,10 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Dynamic.i \
+ Singleton.h \
+ Synch.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -1931,7 +1932,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -1946,20 +1946,8 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Synch_T.h \
- Synch.h \
  Synch.i \
+ Synch_T.h \
  Synch_T.i \
  Thread.h \
  Thread_Adapter.h \
@@ -1972,15 +1960,13 @@ endif # GHS
  Synch_T.cpp \
  Log_Msg.h \
  Log_Priority.h \
- Singleton.h \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
  Object_Manager.i \
  Managed_Object.h \
  Managed_Object.i \
- Managed_Object.cpp \
- Dynamic.i
+ Managed_Object.cpp
 
 .obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp Flag_Manip.h \
  pre.h \
@@ -2021,8 +2007,7 @@ endif # GHS
  Framework_Component.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -2031,6 +2016,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -2038,7 +2024,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -2053,17 +2038,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -2088,7 +2062,8 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp Functor_T.h \
+.obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp \
+ Functor_T.h \
  pre.h \
  Functor.h \
  ACE.h \
@@ -2138,8 +2113,11 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp
 
-.obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp Get_Opt.h \
+.obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp \
+ Get_Opt.h \
  pre.h \
+ SString.h \
+ String_Base.h \
  ACE.h \
  OS.h \
  config-all.h \
@@ -2183,8 +2161,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -2392,7 +2368,8 @@ endif # GHS
  ace_wchar.inl \
  Recyclable.inl
 
-.obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp Hashable.h \
+.obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp \
+ Hashable.h \
  pre.h \
  ACE_export.h \
  config-all.h \
@@ -2409,8 +2386,7 @@ endif # GHS
  Notification_Strategy.h \
  pre.h \
  Event_Handler.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -2419,6 +2395,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -2426,7 +2403,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -2441,17 +2417,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Event_Handler.i \
  Notification_Strategy.inl
 
@@ -2519,7 +2484,8 @@ endif # GHS
  OS.i \
  Handle_Ops.i
 
-.obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp Init_ACE.h \
+.obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
+ Init_ACE.h \
  pre.h \
  ACE_export.h \
  config-all.h \
@@ -2559,7 +2525,8 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Lib_Find.o .obj/Lib_Find.so .shobj/Lib_Find.o .shobj/Lib_Find.so: Lib_Find.cpp Lib_Find.h \
+.obj/Lib_Find.o .obj/Lib_Find.so .shobj/Lib_Find.o .shobj/Lib_Find.so: Lib_Find.cpp \
+ Lib_Find.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -2600,9 +2567,8 @@ endif # GHS
 
 .obj/Message_Block.o .obj/Message_Block.so .shobj/Message_Block.o .shobj/Message_Block.so: Message_Block.cpp \
  Message_Block.h \
- ACE.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -2611,6 +2577,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -2618,7 +2585,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -2633,64 +2599,26 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
  Message_Block_T.cpp \
+ Malloc_Base.h \
+ Synch_T.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
  Timeprobe.h
 
 .obj/Method_Request.o .obj/Method_Request.so .shobj/Method_Request.o .shobj/Method_Request.so: Method_Request.cpp \
@@ -2748,18 +2676,6 @@ endif # GHS
  Managed_Object.cpp \
  Token_Manager.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -2788,6 +2704,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -2864,7 +2792,8 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp
 
-.obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp Registry.h \
+.obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp \
+ Registry.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -2911,10 +2840,10 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp Malloc.h \
+.obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp \
+ Malloc.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -2923,6 +2852,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -2930,7 +2860,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -2945,17 +2874,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -2981,6 +2899,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -3008,10 +2938,10 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.i
 
-.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp Stats.h \
+.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp \
+ Stats.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -3020,18 +2950,24 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS_Dirent.h \
+ Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
+ OS_Memory.h \
  OS_Export.h \
  OS_Errno.h \
  OS_Errno.inl \
+ OS_Memory.inl \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Malloc_Base.h \
+ OS.h \
+ OS_Dirent.h \
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
  OS_TLI.h \
  OS_TLI.inl \
  Time_Value.h \
@@ -3042,23 +2978,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Unbounded_Queue.h \
- Node.h \
- Node.cpp \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -3111,11 +3030,11 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp Filecache.h \
+.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp \
+ Filecache.h \
  pre.h \
  Mem_Map.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -3124,6 +3043,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -3131,7 +3051,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -3146,17 +3065,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Mem_Map.i \
  Synch_T.h \
  Synch.h \
@@ -3176,6 +3084,18 @@ endif # GHS
  Hash_Map_Manager.h \
  Hash_Map_Manager_T.h \
  Functor.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Functor.i \
  Functor_T.h \
  Functor_T.i \
@@ -3245,11 +3165,11 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp Synch_T.h \
+.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
+ Synch_T.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -3258,6 +3178,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -3265,7 +3186,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -3280,17 +3200,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -3313,7 +3222,8 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp config-all.h \
+.obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp \
+ config-all.h \
  pre.h \
  config.h \
  config-linux.h \
@@ -3467,7 +3377,10 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -3490,8 +3403,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -3501,11 +3416,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -3635,6 +3545,8 @@ endif # GHS
 .obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
  Get_Opt.h \
  pre.h \
+ SString.h \
+ String_Base.h \
  ACE.h \
  OS.h \
  config-all.h \
@@ -3678,8 +3590,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -3760,7 +3670,8 @@ endif # GHS
  Shared_Object.i \
  Service_Object.i
 
-.obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp Trace.h \
+.obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp \
+ Trace.h \
  pre.h \
  ACE_export.h \
  config-all.h \
@@ -3802,8 +3713,7 @@ endif # GHS
  pre.h \
  Synch_T.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -3812,6 +3722,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -3819,7 +3730,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -3834,17 +3744,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -3860,34 +3759,6 @@ endif # GHS
  Log_Priority.h \
  Message_Queue.h \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -3897,12 +3768,16 @@ endif # GHS
  Message_Queue_T.i \
  Message_Queue_T.cpp \
  Notification_Strategy.h \
+ Event_Handler.h \
+ Event_Handler.i \
  Notification_Strategy.inl \
  Message_Queue.i \
  Method_Request.h \
- Activation_Queue.i
+ Activation_Queue.i \
+ Malloc_Base.h
 
-.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp OS.h \
+.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -4012,8 +3887,7 @@ endif # GHS
  Synch_T.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4022,6 +3896,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4029,7 +3904,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4044,17 +3918,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -4073,6 +3936,18 @@ endif # GHS
  Handle_Set.i \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -4127,10 +4002,10 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp Thread.h \
+.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
+ Thread.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4139,6 +4014,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4146,7 +4022,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4161,17 +4036,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
  OS_Log_Msg_Attributes.h \
@@ -4190,8 +4054,7 @@ endif # GHS
 .obj/Synch_Options.o .obj/Synch_Options.so .shobj/Synch_Options.o .shobj/Synch_Options.so: Synch_Options.cpp \
  Synch_Options.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4200,6 +4063,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4207,7 +4071,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4222,25 +4085,13 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch_Options.i
 
 .obj/Process_Semaphore.o .obj/Process_Semaphore.so .shobj/Process_Semaphore.o .shobj/Process_Semaphore.so: Process_Semaphore.cpp \
  Process_Semaphore.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4249,6 +4100,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4256,7 +4108,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4271,17 +4122,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -4315,7 +4155,7 @@ endif # GHS
  ace_wchar.inl \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
- ACE.h \
+ ACE_export.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -4324,7 +4164,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4339,17 +4178,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
  Process_Mutex.inl \
@@ -4367,7 +4195,19 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Priority.h
+ Log_Priority.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i
 
 .obj/RW_Process_Mutex.o .obj/RW_Process_Mutex.so .shobj/RW_Process_Mutex.o .shobj/RW_Process_Mutex.so: RW_Process_Mutex.cpp \
  RW_Process_Mutex.h \
@@ -4423,7 +4263,8 @@ endif # GHS
  Sock_Connect.i \
  ACE.i
 
-.obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp File_Lock.h \
+.obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp \
+ File_Lock.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -4462,10 +4303,10 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp Thread.h \
+.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
+ Thread.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4474,6 +4315,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4481,7 +4323,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4496,17 +4337,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
  OS_Log_Msg_Attributes.h \
@@ -4519,8 +4349,7 @@ endif # GHS
  Synch_T.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4529,6 +4358,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4536,7 +4366,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4551,17 +4380,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -4655,18 +4473,6 @@ endif # GHS
  OS.i \
  Thread_Manager.h \
  Thread.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread.i \
  Synch.h \
  Synch.i \
@@ -4746,18 +4552,6 @@ endif # GHS
  Thread_Control.h \
  Thread_Control.inl \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -4815,18 +4609,6 @@ endif # GHS
  Thread_Control.inl \
  Thread_Manager.h \
  Thread.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
  OS_Log_Msg_Attributes.h \
@@ -4871,10 +4653,10 @@ endif # GHS
  Managed_Object.cpp \
  Thread_Manager.i
 
-.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp Thread.h \
+.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
+ Thread.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4883,6 +4665,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4890,7 +4673,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4905,17 +4687,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
  OS_Log_Msg_Attributes.h \
@@ -4936,8 +4707,7 @@ endif # GHS
 .obj/Event_Handler.o .obj/Event_Handler.so .shobj/Event_Handler.o .shobj/Event_Handler.so: Event_Handler.cpp \
  Event_Handler.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -4946,6 +4716,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -4953,7 +4724,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -4968,60 +4738,8 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Event_Handler.i \
  Message_Block.h \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -5030,24 +4748,50 @@ endif # GHS
  Handle_Set.h \
  Handle_Set.i \
  Timer_Queue.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
  Timer_Queue_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
  Test_and_Set.h \
  Test_and_Set.i \
  Test_and_Set.cpp \
  Timer_Queue_T.i \
  Timer_Queue_T.cpp \
+ Signal.h \
+ Signal.i \
  Reactor.i \
  Reactor_Impl.h \
  Thread_Manager.h \
  Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
  Unbounded_Queue.inl \
  Unbounded_Queue.cpp \
+ Malloc_Base.h \
  Containers.h \
  Containers.i \
  Containers_T.h \
  Array_Base.h \
  Array_Base.inl \
  Array_Base.cpp \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
  Containers_T.i \
  Containers_T.cpp \
  Singleton.h \
@@ -5060,7 +4804,8 @@ endif # GHS
  Managed_Object.cpp \
  Thread_Manager.i
 
-.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp FlReactor.h \
+.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
+ FlReactor.h \
  pre.h \
  config-all.h \
  config.h \
@@ -5125,18 +4870,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -5187,6 +4920,18 @@ endif # GHS
  Malloc_Allocator.i \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Mem_Map.h \
  Mem_Map.i \
@@ -5343,18 +5088,6 @@ endif # GHS
  Select_Reactor_Base.h \
  Signal.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -5389,6 +5122,18 @@ endif # GHS
  Reactor.h \
  Reactor.i \
  Select_Reactor_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Timer_Heap.h \
  Timer_Heap_T.h \
  Unbounded_Set.h \
@@ -5412,7 +5157,8 @@ endif # GHS
  Malloc_T.i \
  Malloc_T.cpp
 
-.obj/Proactor.o .obj/Proactor.so .shobj/Proactor.o .shobj/Proactor.so: Proactor.cpp Proactor.h \
+.obj/Proactor.o .obj/Proactor.so .shobj/Proactor.o .shobj/Proactor.so: Proactor.cpp \
+ Proactor.h \
  pre.h \
  config-all.h \
  config.h \
@@ -5450,18 +5196,6 @@ endif # GHS
  Asynch_IO_Impl.i \
  Thread_Manager.h \
  Thread.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
  OS_Log_Msg_Attributes.h \
@@ -5537,21 +5271,6 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -5579,9 +5298,36 @@ endif # GHS
  Service_Config.h \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Memory_Pool.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
@@ -5612,7 +5358,8 @@ endif # GHS
  Select_Reactor_T.i \
  POSIX_Proactor.i
 
-.obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp Reactor.h \
+.obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp \
+ Reactor.h \
  pre.h \
  Handle_Set.h \
  OS.h \
@@ -5649,18 +5396,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -5706,6 +5441,18 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
@@ -5763,8 +5510,7 @@ endif # GHS
  Select_Reactor_Base.h \
  Signal.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -5773,6 +5519,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -5780,7 +5527,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -5795,17 +5541,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -5844,6 +5579,18 @@ endif # GHS
  Reactor.h \
  Reactor.i \
  Select_Reactor_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Timer_Heap.h \
  Timer_Heap_T.h \
  Unbounded_Set.h \
@@ -5860,8 +5607,7 @@ endif # GHS
  pre.h \
  Signal.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -5870,6 +5616,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -5877,7 +5624,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -5892,17 +5638,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -5947,8 +5682,20 @@ endif # GHS
  Addr.h \
  Addr.i \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SOCK.i \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -5986,8 +5733,7 @@ endif # GHS
  Select_Reactor_Base.h \
  Signal.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -5996,6 +5742,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -6003,7 +5750,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -6018,17 +5764,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -6067,6 +5802,18 @@ endif # GHS
  Reactor.h \
  Reactor.i \
  Select_Reactor_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Timer_Heap.h \
  Timer_Heap_T.h \
  Unbounded_Set.h \
@@ -6079,7 +5826,8 @@ endif # GHS
  Select_Reactor_T.i \
  TP_Reactor.i
 
-.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp TkReactor.h \
+.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp \
+ TkReactor.h \
  pre.h \
  config-all.h \
  config.h \
@@ -6102,7 +5850,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp XtReactor.h \
+.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
+ XtReactor.h \
  pre.h \
  config-all.h \
  config.h \
@@ -6113,7 +5862,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp QtReactor.h \
+.obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp \
+ QtReactor.h \
  pre.h \
  config-all.h \
  config.h \
@@ -6124,7 +5874,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp Asynch_IO.h \
+.obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp \
+ Asynch_IO.h \
  pre.h \
  config-all.h \
  config.h \
@@ -6162,18 +5913,6 @@ endif # GHS
  Asynch_IO_Impl.i \
  Thread_Manager.h \
  Thread.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
  OS_Log_Msg_Attributes.h \
@@ -6241,26 +5980,13 @@ endif # GHS
  High_Res_Timer.i \
  Proactor.i \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
  Message_Block_T.cpp \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
  Addr.h \
  Addr.i \
  INET_Addr.i
@@ -6341,18 +6067,6 @@ endif # GHS
  Handle_Set.i \
  Timer_Queue.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -6391,6 +6105,18 @@ endif # GHS
  Pipe.i \
  Select_Reactor_Base.i \
  Select_Reactor_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Timer_Heap.h \
  Timer_Heap_T.h \
  Unbounded_Set.h \
@@ -6431,21 +6157,6 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -6514,18 +6225,6 @@ endif # GHS
  OS_Log_Msg_Attributes.inl \
  Map_Manager.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -6548,6 +6247,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -6677,7 +6388,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+ Addr.h \
  pre.h \
  ACE_export.h \
  config-all.h \
@@ -6716,10 +6428,11 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp INET_Addr.h \
+.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
+ INET_Addr.h \
  pre.h \
- ACE.h \
- OS.h \
+ Sock_Connect.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -6728,6 +6441,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -6735,7 +6449,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -6750,17 +6463,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
  Sock_Connect.i \
- ACE.i \
  Addr.h \
  Addr.i \
  INET_Addr.i \
@@ -6769,7 +6472,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp IPC_SAP.h \
+.obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
+ IPC_SAP.h \
  pre.h \
  Flag_Manip.h \
  ACE_export.h \
@@ -6810,7 +6514,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp LSOCK.h \
+.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
+ LSOCK.h \
  pre.h \
  config-all.h \
  config.h \
@@ -6821,7 +6526,11 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl \
  SOCK.h \
- ACE.h \
+ ACE_export.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -6830,7 +6539,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -6845,20 +6553,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  LSOCK.i \
@@ -6882,7 +6577,11 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
+ ACE_export.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -6891,7 +6590,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -6906,8 +6604,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -6917,11 +6617,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -6951,7 +6646,11 @@ endif # GHS
  ace_wchar.inl \
  LSOCK.h \
  SOCK.h \
- ACE.h \
+ ACE_export.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -6960,7 +6659,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -6975,8 +6673,13 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ LSOCK.i \
+ SOCK_CODgram.h \
+ SOCK_IO.h \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -6986,14 +6689,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
- LSOCK.i \
- SOCK_CODgram.h \
- SOCK_IO.h \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -7019,7 +6714,11 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
+ ACE_export.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -7028,7 +6727,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7043,8 +6741,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7054,11 +6754,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -7089,7 +6784,11 @@ endif # GHS
  ace_wchar.inl \
  SOCK_Dgram.h \
  SOCK.h \
- ACE.h \
+ ACE_export.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -7098,7 +6797,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7113,23 +6811,12 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
  INET_Addr.i \
  SOCK_Dgram.i \
  LSOCK.h \
@@ -7154,7 +6841,11 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
+ ACE_export.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -7163,7 +6854,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7178,8 +6868,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7189,11 +6881,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -7208,10 +6895,10 @@ endif # GHS
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+ SOCK.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7220,6 +6907,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7227,7 +6919,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7242,20 +6933,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  Log_Msg.h \
@@ -7269,8 +6947,7 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7279,6 +6956,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7286,7 +6968,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7301,8 +6982,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7312,11 +6995,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -7344,8 +7022,7 @@ endif # GHS
  pre.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7354,6 +7031,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7361,7 +7043,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7376,8 +7057,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7387,11 +7070,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -7404,7 +7082,7 @@ endif # GHS
 .obj/Sock_Connect.o .obj/Sock_Connect.so .shobj/Sock_Connect.o .shobj/Sock_Connect.so: Sock_Connect.cpp \
  Sock_Connect.h \
  pre.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7413,6 +7091,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7420,7 +7099,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7437,16 +7115,6 @@ endif # GHS
  OS.i \
  Sock_Connect.i \
  INET_Addr.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- ACE.i \
  Addr.h \
  Addr.i \
  INET_Addr.i \
@@ -7461,6 +7129,16 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -7511,8 +7189,7 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7521,6 +7198,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7528,7 +7210,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7543,8 +7224,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7554,11 +7237,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -7574,8 +7252,7 @@ endif # GHS
  SOCK_Dgram.h \
  pre.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7584,6 +7261,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7591,7 +7273,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7606,23 +7287,12 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
  INET_Addr.i \
  SOCK_Dgram.i \
  Handle_Set.h \
@@ -7641,14 +7311,22 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Priority.h
+ Log_Priority.h \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i
 
 .obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.so .shobj/SOCK_Dgram_Bcast.o .shobj/SOCK_Dgram_Bcast.so: SOCK_Dgram_Bcast.cpp \
  SOCK_Dgram_Bcast.h \
  pre.h \
  INET_Addr.h \
- ACE.h \
- OS.h \
+ Sock_Connect.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7657,6 +7335,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7664,7 +7343,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7679,23 +7357,15 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
  Sock_Connect.i \
- ACE.i \
  Addr.h \
  Addr.i \
  INET_Addr.i \
  SOCK_Dgram.h \
  SOCK.h \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SOCK.i \
  SOCK_Dgram.i \
@@ -7703,15 +7373,22 @@ endif # GHS
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS_Log_Msg_Attributes.inl \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i
 
 .obj/SOCK_Dgram_Mcast.o .obj/SOCK_Dgram_Mcast.so .shobj/SOCK_Dgram_Mcast.o .shobj/SOCK_Dgram_Mcast.so: SOCK_Dgram_Mcast.cpp \
  SOCK_Dgram_Mcast.h \
  pre.h \
  SOCK_Dgram.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7720,6 +7397,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7727,7 +7409,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7742,32 +7423,29 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
  INET_Addr.i \
  SOCK_Dgram.i \
- SOCK_Dgram_Mcast.i
+ SOCK_Dgram_Mcast.i \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i
 
-.obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp SOCK_IO.h \
+.obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp \
+ SOCK_IO.h \
  pre.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7776,6 +7454,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7783,7 +7466,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7798,8 +7480,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7809,11 +7493,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  Handle_Set.h \
  Handle_Set.i
@@ -7823,8 +7502,7 @@ endif # GHS
  pre.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -7833,6 +7511,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -7840,7 +7523,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -7855,8 +7537,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -7866,17 +7550,13 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
  SOCK_Stream.i
 
-.obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp ATM_Addr.h \
+.obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp \
+ ATM_Addr.h \
  pre.h \
  config-all.h \
  config.h \
@@ -7923,7 +7603,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp ATM_QoS.h \
+.obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp \
+ ATM_QoS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -7998,6 +7679,9 @@ endif # GHS
  DEV_Addr.h \
  Addr.h \
  Addr.i \
+ DEV_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8008,9 +7692,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- DEV_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -8063,7 +7744,8 @@ endif # GHS
  SString.i \
  DEV.i
 
-.obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp DEV_Addr.h \
+.obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp \
+ DEV_Addr.h \
  pre.h \
  Addr.h \
  ACE_export.h \
@@ -8076,7 +7758,6 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl \
  Addr.i \
- ACE.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -8099,6 +7780,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ DEV_Addr.i \
+ SString.h \
+ String_Base.h \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -8110,9 +7795,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- DEV_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -8207,6 +7889,9 @@ endif # GHS
  DEV_Addr.h \
  Addr.h \
  Addr.i \
+ DEV_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8217,9 +7902,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- DEV_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -8274,7 +7956,8 @@ endif # GHS
  DEV_IO.i \
  DEV_Connector.i
 
-.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp DEV_IO.h \
+.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
+ DEV_IO.h \
  pre.h \
  DEV.h \
  IO_SAP.h \
@@ -8315,6 +7998,9 @@ endif # GHS
  DEV_Addr.h \
  Addr.h \
  Addr.i \
+ DEV_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8325,9 +8011,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- DEV_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -8381,7 +8064,8 @@ endif # GHS
  DEV.i \
  DEV_IO.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+ FIFO.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -8418,23 +8102,14 @@ endif # GHS
  OS.i \
  Flag_Manip.i \
  IPC_SAP.i \
- ACE.h \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  FIFO.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp FIFO_Recv.h \
+.obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp \
+ FIFO_Recv.h \
  pre.h \
  FIFO.h \
  IPC_SAP.h \
@@ -8472,6 +8147,7 @@ endif # GHS
  OS.i \
  Flag_Manip.i \
  IPC_SAP.i \
+ FIFO.i \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8482,7 +8158,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- FIFO.i \
  FIFO_Recv.i \
  Log_Msg.h \
  Log_Priority.h \
@@ -8529,6 +8204,7 @@ endif # GHS
  OS.i \
  Flag_Manip.i \
  IPC_SAP.i \
+ FIFO.i \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8539,7 +8215,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- FIFO.i \
  FIFO_Recv.i \
  FIFO_Recv_Msg.i \
  Log_Msg.h \
@@ -8547,7 +8222,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp FIFO_Send.h \
+.obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp \
+ FIFO_Send.h \
  pre.h \
  FIFO.h \
  IPC_SAP.h \
@@ -8585,6 +8261,7 @@ endif # GHS
  OS.i \
  Flag_Manip.i \
  IPC_SAP.i \
+ FIFO.i \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8595,7 +8272,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- FIFO.i \
  FIFO_Send.i \
  Log_Msg.h \
  Log_Priority.h \
@@ -8642,6 +8318,7 @@ endif # GHS
  OS.i \
  Flag_Manip.i \
  IPC_SAP.i \
+ FIFO.i \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -8652,7 +8329,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- FIFO.i \
  FIFO_Send.i \
  FIFO_Send_Msg.i \
  Log_Msg.h \
@@ -8660,7 +8336,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp FILE_Addr.h \
+.obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp \
+ FILE_Addr.h \
  pre.h \
  Addr.h \
  ACE_export.h \
@@ -8761,7 +8438,8 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.i
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+ FILE.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
@@ -8976,7 +8654,8 @@ endif # GHS
  FILE_IO.i \
  FILE_Connector.i
 
-.obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp FILE_IO.h \
+.obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp \
+ FILE_IO.h \
  pre.h \
  FILE.h \
  IO_SAP.h \
@@ -9083,7 +8762,8 @@ endif # GHS
  FILE.i \
  FILE_IO.i
 
-.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp IO_SAP.h \
+.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
+ IO_SAP.h \
  pre.h \
  Flag_Manip.h \
  ACE_export.h \
@@ -9124,7 +8804,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp IOStream.h \
+.obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp \
+ IOStream.h \
  pre.h \
  config-all.h \
  config.h \
@@ -9159,18 +8840,8 @@ endif # GHS
  OS.i \
  IOStream_T.h \
  INET_Addr.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
  Sock_Connect.h \
  Sock_Connect.i \
- ACE.i \
  Addr.h \
  Addr.i \
  INET_Addr.i \
@@ -9179,10 +8850,10 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp Pipe.h \
+.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
+ Pipe.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -9191,6 +8862,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -9198,7 +8870,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -9213,8 +8884,19 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ Pipe.i \
+ SOCK_Acceptor.h \
+ SOCK_Stream.h \
+ SOCK_IO.h \
+ SOCK.h \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
  Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -9224,16 +8906,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Pipe.i \
- SOCK_Acceptor.h \
- SOCK_Stream.h \
- SOCK_IO.h \
- SOCK.h \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -9246,11 +8918,11 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp Synch_T.h \
+.obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp \
+ Synch_T.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -9259,6 +8931,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -9266,7 +8939,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -9281,17 +8953,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -9335,7 +8996,6 @@ endif # GHS
 .obj/SPIPE_Addr.o .obj/SPIPE_Addr.so .shobj/SPIPE_Addr.o .shobj/SPIPE_Addr.so: SPIPE_Addr.cpp \
  SPIPE_Addr.h \
  pre.h \
- Addr.h \
  ACE_export.h \
  config-all.h \
  config.h \
@@ -9345,8 +9005,8 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
  Addr.i \
- ACE.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -9369,6 +9029,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ SPIPE_Addr.i \
+ SString.h \
+ String_Base.h \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -9380,9 +9044,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SPIPE_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -9434,7 +9095,8 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.i
 
-.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
+.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
+ SPIPE.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -9474,6 +9136,9 @@ endif # GHS
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
+ SPIPE_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -9484,9 +9149,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SPIPE_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -9582,6 +9244,9 @@ endif # GHS
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
+ SPIPE_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -9592,9 +9257,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SPIPE_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -9691,6 +9353,9 @@ endif # GHS
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
+ SPIPE_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -9701,9 +9366,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SPIPE_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -9800,6 +9462,9 @@ endif # GHS
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
+ SPIPE_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -9810,9 +9475,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SPIPE_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -9869,8 +9531,7 @@ endif # GHS
 .obj/SV_Message.o .obj/SV_Message.so .shobj/SV_Message.o .shobj/SV_Message.so: SV_Message.cpp \
  SV_Message.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -9879,6 +9540,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -9886,7 +9548,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -9901,24 +9562,11 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  SV_Message.i
 
 .obj/SV_Message_Queue.o .obj/SV_Message_Queue.so .shobj/SV_Message_Queue.o .shobj/SV_Message_Queue.so: SV_Message_Queue.cpp \
  SV_Message_Queue.h \
  pre.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -9927,6 +9575,9 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ SV_Message.h \
+ ACE_export.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -9934,7 +9585,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -9949,18 +9599,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- SV_Message.h \
  SV_Message.i \
  SV_Message_Queue.i \
  Log_Msg.h \
@@ -9972,8 +9610,7 @@ endif # GHS
  SV_Semaphore_Complex.h \
  pre.h \
  SV_Semaphore_Simple.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -9982,6 +9619,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -9989,7 +9627,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -10004,17 +9641,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
  Log_Msg.h \
@@ -10025,8 +9651,7 @@ endif # GHS
 .obj/SV_Semaphore_Simple.o .obj/SV_Semaphore_Simple.so .shobj/SV_Semaphore_Simple.o .shobj/SV_Semaphore_Simple.so: SV_Semaphore_Simple.cpp \
  SV_Semaphore_Simple.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -10035,6 +9660,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -10042,7 +9668,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -10057,28 +9682,28 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  SV_Semaphore_Simple.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS_Log_Msg_Attributes.inl \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i
 
 .obj/SV_Shared_Memory.o .obj/SV_Shared_Memory.so .shobj/SV_Shared_Memory.o .shobj/SV_Shared_Memory.so: SV_Shared_Memory.cpp \
  SV_Shared_Memory.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -10087,6 +9712,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -10094,7 +9720,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -10109,17 +9734,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  SV_Shared_Memory.i \
  Log_Msg.h \
  Log_Priority.h \
@@ -10213,6 +9827,13 @@ endif # GHS
  Addr.i \
  TLI_Stream.h \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ INET_Addr.i \
+ Log_Msg.h \
+ Log_Priority.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -10220,14 +9841,7 @@ endif # GHS
  Lib_Find.i \
  Init_ACE.h \
  Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- INET_Addr.i \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ ACE.i
 
 .obj/TLI_Connector.o .obj/TLI_Connector.so .shobj/TLI_Connector.o .shobj/TLI_Connector.so: TLI_Connector.cpp \
  Handle_Set.h \
@@ -10274,6 +9888,13 @@ endif # GHS
  Addr.h \
  Addr.i \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ INET_Addr.i \
+ Log_Msg.h \
+ Log_Priority.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -10281,14 +9902,7 @@ endif # GHS
  Lib_Find.i \
  Init_ACE.h \
  Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- INET_Addr.i \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ ACE.i
 
 .obj/TLI_Stream.o .obj/TLI_Stream.so .shobj/TLI_Stream.o .shobj/TLI_Stream.so: TLI_Stream.cpp \
  TLI_Stream.h \
@@ -10332,6 +9946,9 @@ endif # GHS
  Addr.h \
  Addr.i \
  INET_Addr.h \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ INET_Addr.i \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -10339,12 +9956,10 @@ endif # GHS
  Lib_Find.i \
  Init_ACE.h \
  Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- INET_Addr.i
+ ACE.i
 
-.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp TTY_IO.h \
+.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
+ TTY_IO.h \
  OS.h \
  pre.h \
  config-all.h \
@@ -10386,6 +10001,9 @@ endif # GHS
  DEV_Addr.h \
  Addr.h \
  Addr.i \
+ DEV_Addr.i \
+ SString.h \
+ String_Base.h \
  ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
@@ -10396,9 +10014,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- DEV_Addr.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -10452,7 +10067,8 @@ endif # GHS
  DEV.i \
  DEV_IO.i
 
-.obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp UNIX_Addr.h \
+.obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp \
+ UNIX_Addr.h \
  pre.h \
  config-all.h \
  config.h \
@@ -10510,8 +10126,6 @@ endif # GHS
  pre.h \
  UPIPE_Stream.h \
  Stream.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -10520,6 +10134,9 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ IO_Cntl_Msg.h \
+ ACE_export.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -10527,7 +10144,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -10542,62 +10158,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- IO_Cntl_Msg.h \
  Message_Block.h \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -10606,9 +10167,26 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Queue_T.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
  Message_Queue_T.i \
  Message_Queue_T.cpp \
  Notification_Strategy.h \
+ Event_Handler.h \
+ Event_Handler.i \
  Notification_Strategy.inl \
  Message_Queue.i \
  Task.h \
@@ -10618,16 +10196,25 @@ endif # GHS
  Service_Object.i \
  Thread_Manager.h \
  Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
  Unbounded_Queue.inl \
  Unbounded_Queue.cpp \
+ Malloc_Base.h \
  Containers.h \
  Containers.i \
  Containers_T.h \
  Array_Base.h \
  Array_Base.inl \
  Array_Base.cpp \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
  Containers_T.i \
  Containers_T.cpp \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
  Singleton.h \
  Singleton.i \
  Singleton.cpp \
@@ -10648,6 +10235,8 @@ endif # GHS
  Stream.cpp \
  SPIPE.h \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
@@ -10655,9 +10244,36 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Memory_Pool.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
@@ -10675,8 +10291,6 @@ endif # GHS
  pre.h \
  UPIPE_Stream.h \
  Stream.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -10685,6 +10299,9 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ IO_Cntl_Msg.h \
+ ACE_export.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -10692,7 +10309,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -10707,62 +10323,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- IO_Cntl_Msg.h \
  Message_Block.h \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -10771,9 +10332,26 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Queue_T.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
  Message_Queue_T.i \
  Message_Queue_T.cpp \
  Notification_Strategy.h \
+ Event_Handler.h \
+ Event_Handler.i \
  Notification_Strategy.inl \
  Message_Queue.i \
  Task.h \
@@ -10783,16 +10361,25 @@ endif # GHS
  Service_Object.i \
  Thread_Manager.h \
  Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
  Unbounded_Queue.inl \
  Unbounded_Queue.cpp \
+ Malloc_Base.h \
  Containers.h \
  Containers.i \
  Containers_T.h \
  Array_Base.h \
  Array_Base.inl \
  Array_Base.cpp \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
  Containers_T.i \
  Containers_T.cpp \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
  Singleton.h \
  Singleton.i \
  Singleton.cpp \
@@ -10813,6 +10400,8 @@ endif # GHS
  Stream.cpp \
  SPIPE.h \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
@@ -10820,9 +10409,36 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Memory_Pool.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
@@ -10838,8 +10454,6 @@ endif # GHS
  UPIPE_Stream.h \
  pre.h \
  Stream.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -10848,6 +10462,9 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ IO_Cntl_Msg.h \
+ ACE_export.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -10855,7 +10472,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -10870,62 +10486,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- IO_Cntl_Msg.h \
  Message_Block.h \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -10934,9 +10495,26 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Queue_T.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
  Message_Queue_T.i \
  Message_Queue_T.cpp \
  Notification_Strategy.h \
+ Event_Handler.h \
+ Event_Handler.i \
  Notification_Strategy.inl \
  Message_Queue.i \
  Task.h \
@@ -10946,16 +10524,25 @@ endif # GHS
  Service_Object.i \
  Thread_Manager.h \
  Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
  Unbounded_Queue.inl \
  Unbounded_Queue.cpp \
+ Malloc_Base.h \
  Containers.h \
  Containers.i \
  Containers_T.h \
  Array_Base.h \
  Array_Base.inl \
  Array_Base.cpp \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
  Containers_T.i \
  Containers_T.cpp \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
  Singleton.h \
  Singleton.i \
  Singleton.cpp \
@@ -10976,6 +10563,8 @@ endif # GHS
  Stream.cpp \
  SPIPE.h \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
@@ -10983,9 +10572,36 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Memory_Pool.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
@@ -11001,8 +10617,7 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11011,6 +10626,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11018,7 +10638,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11033,8 +10652,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -11044,11 +10665,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -11131,10 +10747,10 @@ endif # GHS
  OS_QoS.h \
  MEM_Acceptor.i
 
-.obj/MEM_Addr.o .obj/MEM_Addr.so .shobj/MEM_Addr.o .shobj/MEM_Addr.so: MEM_Addr.cpp MEM_Addr.h \
+.obj/MEM_Addr.o .obj/MEM_Addr.so .shobj/MEM_Addr.o .shobj/MEM_Addr.so: MEM_Addr.cpp \
+ MEM_Addr.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11143,6 +10759,9 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ INET_Addr.h \
+ Sock_Connect.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11150,7 +10769,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11165,18 +10783,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
  Sock_Connect.i \
- ACE.i \
- INET_Addr.h \
  Addr.h \
  Addr.i \
  INET_Addr.i \
@@ -11193,8 +10800,7 @@ endif # GHS
  SOCK_Stream.h \
  SOCK_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11203,6 +10809,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11210,7 +10821,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11225,8 +10835,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
+ IPC_SAP.i \
+ SOCK.i \
+ ACE.h \
  Handle_Ops.h \
  Handle_Ops.i \
  Lib_Find.h \
@@ -11236,11 +10848,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
- IPC_SAP.i \
- SOCK.i \
  SOCK_IO.i \
  INET_Addr.h \
  INET_Addr.i \
@@ -11322,11 +10929,11 @@ endif # GHS
  MEM_Addr.i \
  MEM_Connector.i
 
-.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp MEM_IO.h \
+.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp \
+ MEM_IO.h \
  pre.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11335,6 +10942,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11342,7 +10954,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11357,20 +10968,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  MEM_SAP.h \
@@ -11401,6 +10999,16 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -11445,11 +11053,11 @@ endif # GHS
  Handle_Set.h \
  Handle_Set.i
 
-.obj/MEM_SAP.o .obj/MEM_SAP.so .shobj/MEM_SAP.o .shobj/MEM_SAP.so: MEM_SAP.cpp MEM_SAP.h \
+.obj/MEM_SAP.o .obj/MEM_SAP.so .shobj/MEM_SAP.o .shobj/MEM_SAP.so: MEM_SAP.cpp \
+ MEM_SAP.h \
  pre.h \
  PI_Malloc.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11458,6 +11066,8 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Malloc.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11465,7 +11075,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11480,18 +11089,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Malloc.h \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -11517,6 +11114,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -11556,8 +11165,7 @@ endif # GHS
  pre.h \
  MEM_IO.h \
  SOCK.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11566,6 +11174,11 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Addr.h \
+ Addr.i \
+ IPC_SAP.h \
+ Flag_Manip.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11573,7 +11186,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11588,20 +11200,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
  Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
  MEM_SAP.h \
@@ -11632,6 +11231,16 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -11706,8 +11315,7 @@ endif # GHS
 .obj/High_Res_Timer.o .obj/High_Res_Timer.so .shobj/High_Res_Timer.o .shobj/High_Res_Timer.so: High_Res_Timer.cpp \
  High_Res_Timer.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11716,6 +11324,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11723,7 +11332,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -11738,17 +11346,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  High_Res_Timer.i \
  Stats.h \
  Unbounded_Queue.h \
@@ -11784,8 +11381,6 @@ endif # GHS
 .obj/Profile_Timer.o .obj/Profile_Timer.so .shobj/Profile_Timer.o .shobj/Profile_Timer.so: Profile_Timer.cpp \
  Profile_Timer.h \
  pre.h \
- ACE.h \
- OS.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -11794,6 +11389,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -11816,17 +11412,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  High_Res_Timer.h \
  High_Res_Timer.i \
  Profile_Timer.i \
@@ -12024,7 +11609,8 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.i
 
-.obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp OS.h \
+.obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -12096,18 +11682,6 @@ endif # GHS
  OS.i \
  Synch_T.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -12185,18 +11759,6 @@ endif # GHS
  OS.i \
  Synch_T.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -12268,18 +11830,6 @@ endif # GHS
  OS.i \
  Synch_T.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -12362,18 +11912,6 @@ endif # GHS
  Containers_T.cpp \
  Timer_Queue.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -12437,18 +11975,6 @@ endif # GHS
  OS.i \
  Synch_T.h \
  Synch.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.i \
  Thread.h \
@@ -12542,7 +12068,6 @@ endif # GHS
  Service_Config.h \
  Service_Object.h \
  Shared_Object.h \
- ACE.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -12565,17 +12090,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Shared_Object.i \
  Event_Handler.h \
  Event_Handler.i \
@@ -12608,6 +12122,18 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
@@ -12657,8 +12183,7 @@ endif # GHS
  pre.h \
  Service_Object.h \
  Shared_Object.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -12667,6 +12192,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -12674,7 +12200,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -12689,17 +12214,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Shared_Object.i \
  Event_Handler.h \
  Event_Handler.i \
@@ -12732,6 +12246,18 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
@@ -12827,8 +12353,7 @@ endif # GHS
  Obstack_T.h \
  Obchunk.h \
  Malloc.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -12837,6 +12362,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -12844,7 +12370,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -12859,17 +12384,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -12895,6 +12409,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -13000,6 +12526,8 @@ endif # GHS
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
  Get_Opt.h \
  pre.h \
+ SString.h \
+ String_Base.h \
  ACE.h \
  OS.h \
  config-all.h \
@@ -13043,8 +12571,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -13153,8 +12679,7 @@ endif # GHS
  pre.h \
  Service_Object.h \
  Shared_Object.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13163,6 +12688,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13170,7 +12696,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -13185,6 +12710,11 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ Shared_Object.i \
+ Event_Handler.h \
+ Event_Handler.i \
+ Service_Object.i \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -13196,10 +12726,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Shared_Object.i \
- Event_Handler.h \
- Event_Handler.i \
- Service_Object.i \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -13223,8 +12749,7 @@ endif # GHS
  Service_Types.h \
  Service_Object.h \
  Shared_Object.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13233,6 +12758,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13240,7 +12766,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -13255,6 +12780,11 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ Shared_Object.i \
+ Event_Handler.h \
+ Event_Handler.i \
+ Service_Object.i \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -13266,10 +12796,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Shared_Object.i \
- Event_Handler.h \
- Event_Handler.i \
- Service_Object.i \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -13298,8 +12824,7 @@ endif # GHS
  pre.h \
  Service_Object.h \
  Shared_Object.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13308,6 +12833,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13315,7 +12841,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -13330,6 +12855,11 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ Shared_Object.i \
+ Event_Handler.h \
+ Event_Handler.i \
+ Service_Object.i \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -13341,10 +12871,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Shared_Object.i \
- Event_Handler.h \
- Event_Handler.i \
- Service_Object.i \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -13397,23 +12923,6 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -13443,8 +12952,7 @@ endif # GHS
  Obstack_T.h \
  Obchunk.h \
  Malloc.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13453,6 +12961,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13460,7 +12969,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -13475,17 +12983,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -13511,6 +13008,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -13615,8 +13124,7 @@ endif # GHS
 .obj/Shared_Object.o .obj/Shared_Object.so .shobj/Shared_Object.o .shobj/Shared_Object.so: Shared_Object.cpp \
  Shared_Object.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13625,6 +13133,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13632,7 +13141,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -13647,20 +13155,10 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Shared_Object.i
 
-.obj/Svc_Conf_l.o .obj/Svc_Conf_l.so .shobj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp OS.h \
+.obj/Svc_Conf_l.o .obj/Svc_Conf_l.so .shobj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -13702,18 +13200,6 @@ endif # GHS
  Obstack_T.h \
  Obchunk.h \
  Malloc.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -13739,6 +13225,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -13797,10 +13295,10 @@ endif # GHS
  Parse_Node.i \
  Svc_Conf_Lexer_Guard.h
 
-.obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp ARGV.h \
+.obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp \
+ ARGV.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13809,6 +13307,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13816,7 +13315,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -13831,17 +13329,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -13878,6 +13365,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -13981,8 +13480,7 @@ endif # GHS
  Obstack_T.h \
  Obchunk.h \
  Malloc.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -13991,6 +13489,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -13998,7 +13497,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14013,17 +13511,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -14049,6 +13536,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -14107,7 +13606,8 @@ endif # GHS
  Parse_Node.i \
  Svc_Conf_Lexer_Guard.h
 
-.obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp CDR_Base.h \
+.obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
+ CDR_Base.h \
  pre.h \
  config-all.h \
  config.h \
@@ -14121,7 +13621,6 @@ endif # GHS
  ACE_export.h \
  Basic_Types.i \
  Message_Block.h \
- ACE.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -14142,60 +13641,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -14218,7 +13663,6 @@ endif # GHS
  ACE_export.h \
  Basic_Types.i \
  Message_Block.h \
- ACE.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -14239,6 +13683,14 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ Message_Block.i \
+ Message_Block_T.h \
+ Message_Block_T.i \
+ Message_Block_T.cpp \
+ CDR_Base.inl \
+ SString.h \
+ String_Base.h \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -14250,6 +13702,10 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
+ String_Base.i \
+ Malloc_Base.h \
+ String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
  Log_Priority.h \
@@ -14269,7 +13725,6 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
- Malloc_Base.h \
  Malloc_Allocator.i \
  Free_List.h \
  Free_List.i \
@@ -14293,16 +13748,6 @@ endif # GHS
  Unbounded_Set.inl \
  Unbounded_Set.cpp \
  Memory_Pool.i \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- CDR_Base.inl \
- SString.h \
- String_Base.h \
- String_Base_Const.h \
- String_Base.i \
- String_Base.cpp \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
@@ -14325,8 +13770,7 @@ endif # GHS
  Message_Queue.h \
  pre.h \
  Message_Block.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -14335,6 +13779,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -14342,7 +13787,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14357,24 +13801,12 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
+ Message_Block.i \
+ Message_Block_T.h \
+ Message_Block_T.i \
+ Message_Block_T.cpp \
+ IO_Cntl_Msg.h \
+ Message_Queue_T.h \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -14382,44 +13814,19 @@ endif # GHS
  Thread.h \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
  Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
- Message_Block.i \
- Message_Block_T.h \
- Message_Block_T.i \
- Message_Block_T.cpp \
- IO_Cntl_Msg.h \
- Message_Queue_T.h \
+ Log_Msg.h \
+ Log_Priority.h \
  Message_Queue_T.i \
  Message_Queue_T.cpp \
  Notification_Strategy.h \
+ Event_Handler.h \
+ Event_Handler.i \
  Notification_Strategy.inl \
  Message_Queue.i
 
@@ -14428,8 +13835,7 @@ endif # GHS
  pre.h \
  Notification_Strategy.h \
  Event_Handler.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -14438,6 +13844,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -14445,7 +13852,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14460,17 +13866,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Event_Handler.i \
  Notification_Strategy.inl \
  Reactor_Notification_Strategy.inl \
@@ -14507,12 +13902,12 @@ endif # GHS
  Reactor.i \
  Reactor_Impl.h
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+ Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -14521,6 +13916,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -14528,7 +13924,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14543,17 +13938,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Shared_Object.i \
  Event_Handler.h \
  Event_Handler.i \
@@ -14607,23 +13991,6 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -14655,7 +14022,7 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl \
  Synch.h \
- ACE.h \
+ ACE_export.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -14664,7 +14031,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14679,17 +14045,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -14717,6 +14072,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -14775,10 +14142,10 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp Malloc.h \
+.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
+ Malloc.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -14787,6 +14154,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -14794,7 +14162,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14809,17 +14176,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -14845,6 +14201,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -14868,10 +14236,10 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/PI_Malloc.o .obj/PI_Malloc.so .shobj/PI_Malloc.o .shobj/PI_Malloc.so: PI_Malloc.cpp PI_Malloc.h \
+.obj/PI_Malloc.o .obj/PI_Malloc.so .shobj/PI_Malloc.o .shobj/PI_Malloc.so: PI_Malloc.cpp \
+ PI_Malloc.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -14880,6 +14248,8 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Malloc.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -14887,7 +14257,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -14902,18 +14271,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Malloc.h \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -14939,6 +14296,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -14975,7 +14344,6 @@ endif # GHS
 .obj/Malloc_Allocator.o .obj/Malloc_Allocator.so .shobj/Malloc_Allocator.o .shobj/Malloc_Allocator.so: Malloc_Allocator.cpp \
  Malloc_Allocator.h \
  pre.h \
- ACE.h \
  OS.h \
  config-all.h \
  config.h \
@@ -15007,17 +14375,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Malloc_Base.h \
  Log_Msg.h \
  Log_Priority.h \
@@ -15044,8 +14401,7 @@ endif # GHS
 .obj/Malloc_Instantiations.o .obj/Malloc_Instantiations.so .shobj/Malloc_Instantiations.o .shobj/Malloc_Instantiations.so: Malloc_Instantiations.cpp \
  Malloc.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15054,6 +14410,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15061,7 +14418,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15076,17 +14432,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -15112,6 +14457,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -15130,10 +14487,10 @@ endif # GHS
  Unbounded_Set.cpp \
  Memory_Pool.i
 
-.obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp Mem_Map.h \
+.obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp \
+ Mem_Map.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15142,6 +14499,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15149,7 +14507,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15164,17 +14521,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Mem_Map.i \
  Log_Msg.h \
  Log_Priority.h \
@@ -15275,11 +14621,11 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Obchunk.o .obj/Obchunk.so .shobj/Obchunk.o .shobj/Obchunk.so: Obchunk.cpp Obchunk.h \
+.obj/Obchunk.o .obj/Obchunk.so .shobj/Obchunk.o .shobj/Obchunk.so: Obchunk.cpp \
+ Obchunk.h \
  pre.h \
  Malloc.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15288,6 +14634,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15295,7 +14642,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15310,17 +14656,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -15346,6 +14681,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -15365,13 +14712,13 @@ endif # GHS
  Memory_Pool.i \
  Obchunk.i
 
-.obj/Obstack.o .obj/Obstack.so .shobj/Obstack.o .shobj/Obstack.so: Obstack.cpp Obstack.h \
+.obj/Obstack.o .obj/Obstack.so .shobj/Obstack.o .shobj/Obstack.so: Obstack.cpp \
+ Obstack.h \
  pre.h \
  Obstack_T.h \
  Obchunk.h \
  Malloc.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15380,6 +14727,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15387,7 +14735,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15402,17 +14749,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Log_Msg.h \
  Log_Priority.h \
  OS_Log_Msg_Attributes.h \
@@ -15438,6 +14774,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -15462,8 +14810,7 @@ endif # GHS
 .obj/Read_Buffer.o .obj/Read_Buffer.so .shobj/Read_Buffer.o .shobj/Read_Buffer.so: Read_Buffer.cpp \
  Read_Buffer.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15472,6 +14819,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15479,7 +14827,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15494,6 +14841,43 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
+ Read_Buffer.i \
+ Service_Config.h \
+ Service_Object.h \
+ Shared_Object.h \
+ Shared_Object.i \
+ Event_Handler.h \
+ Event_Handler.i \
+ Service_Object.i \
+ Signal.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
+ Signal.i \
+ Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Malloc_Base.h \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ SString.h \
+ String_Base.h \
+ ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -15505,26 +14889,13 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
+ String_Base.i \
+ String_Base.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Priority.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
  Malloc.i \
  Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Synch_T.cpp \
  Malloc_Allocator.h \
- Malloc_Base.h \
  Malloc_Allocator.i \
  Free_List.h \
  Free_List.i \
@@ -15532,36 +14903,13 @@ endif # GHS
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
  Mem_Map.h \
  Mem_Map.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
  Memory_Pool.i \
- Read_Buffer.i \
- Service_Config.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- SString.h \
- String_Base.h \
- String_Base_Const.h \
- String_Base.i \
- String_Base.cpp \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
@@ -15584,8 +14932,7 @@ endif # GHS
 .obj/Shared_Memory.o .obj/Shared_Memory.so .shobj/Shared_Memory.o .shobj/Shared_Memory.so: Shared_Memory.cpp \
  Shared_Memory.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15594,6 +14941,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15601,7 +14949,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15615,25 +14962,13 @@ endif # GHS
  Min_Max.h \
  streams.h \
  Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i
+ OS.i
 
 .obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
  Shared_Memory_MM.h \
  pre.h \
  Shared_Memory.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15642,6 +14977,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15649,7 +14985,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15664,17 +14999,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Mem_Map.h \
  Mem_Map.i \
  Shared_Memory_MM.i
@@ -15683,8 +15007,7 @@ endif # GHS
  Shared_Memory_SV.h \
  pre.h \
  Shared_Memory.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15693,6 +15016,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15700,7 +15024,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15715,17 +15038,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  SV_Shared_Memory.h \
  SV_Shared_Memory.i \
  Shared_Memory_SV.i
@@ -15747,8 +15059,8 @@ endif # GHS
  Remote_Tokens.h \
  pre.h \
  INET_Addr.h \
- ACE.h \
- OS.h \
+ Sock_Connect.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15757,6 +15069,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15764,7 +15077,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15779,17 +15091,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
  Sock_Connect.i \
- ACE.i \
  Addr.h \
  Addr.i \
  INET_Addr.i \
@@ -15798,8 +15100,18 @@ endif # GHS
  SOCK_IO.h \
  SOCK.h \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SOCK.i \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i \
  SOCK_IO.i \
  SOCK_Stream.i \
  SOCK_Connector.i \
@@ -15847,7 +15159,7 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl \
  Synch.h \
- ACE.h \
+ ACE_export.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -15856,7 +15168,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15871,17 +15182,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -15909,6 +15209,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -15965,8 +15277,7 @@ endif # GHS
  Token_Invariants.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -15975,6 +15286,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -15982,7 +15294,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -15997,17 +15308,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -16036,6 +15336,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -16096,8 +15408,7 @@ endif # GHS
  Token_Manager.h \
  pre.h \
  Synch.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -16106,6 +15417,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -16113,7 +15425,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -16128,17 +15439,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
  Synch.i \
  Synch_T.h \
  Synch_T.i \
@@ -16167,6 +15467,18 @@ endif # GHS
  Free_List.cpp \
  Malloc_T.i \
  Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
  Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -16411,8 +15723,8 @@ endif # GHS
  Name_Proxy.h \
  pre.h \
  INET_Addr.h \
- ACE.h \
- OS.h \
+ Sock_Connect.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -16421,6 +15733,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -16428,7 +15741,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -16443,17 +15755,7 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
  Sock_Connect.i \
- ACE.i \
  Addr.h \
  Addr.i \
  INET_Addr.i \
@@ -16462,8 +15764,18 @@ endif # GHS
  SOCK_IO.h \
  SOCK.h \
  IPC_SAP.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  SOCK.i \
+ ACE.h \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i \
  SOCK_IO.i \
  SOCK_Stream.i \
  SOCK_Connector.i \
@@ -16647,8 +15959,7 @@ endif # GHS
 .obj/Name_Space.o .obj/Name_Space.so .shobj/Name_Space.o .shobj/Name_Space.so: Name_Space.cpp \
  Name_Space.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -16657,6 +15968,10 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ SString.h \
+ String_Base.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -16664,7 +15979,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -16690,8 +16004,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -16786,6 +16098,8 @@ endif # GHS
 .obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
  Get_Opt.h \
  pre.h \
+ SString.h \
+ String_Base.h \
  ACE.h \
  OS.h \
  config-all.h \
@@ -16829,8 +16143,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
@@ -16989,8 +16301,7 @@ endif # GHS
 .obj/Remote_Name_Space.o .obj/Remote_Name_Space.so .shobj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
  Remote_Name_Space.h \
  pre.h \
- ACE.h \
- OS.h \
+ ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -16999,6 +16310,10 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ SString.h \
+ String_Base.h \
+ ACE.h \
+ OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -17006,7 +16321,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -17032,8 +16346,6 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- SString.h \
- String_Base.h \
  String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
