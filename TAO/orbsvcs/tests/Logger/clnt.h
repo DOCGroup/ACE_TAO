@@ -23,8 +23,8 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
+#include "orbsvcs/CosNamingC.h"
 #include "loggerC.h"
-#include "CosNamingC.h"
 
 class Logger_Client 
   // = TITLE
