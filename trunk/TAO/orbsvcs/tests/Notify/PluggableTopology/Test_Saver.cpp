@@ -3,6 +3,7 @@
 #include "Test_Saver.h"
 
 #include <ace/streams.h>
+#include <ace/OS_NS_stdio.h>
 
 Test_Saver::Test_Saver()
 {
