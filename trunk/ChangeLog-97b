@@ -1,4 +1,10 @@
-Tue Oct 21 01:22:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Tue Oct 21 02:18:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Makefile: Things are happier now, so we've added back
+ 	  the Timer_Queue directory to the Makefile.
+
+	* examples/Timer_Queue: Added lots of annoying template
+ 	  specializations so that the timer queue tests now work with GCC.
 
 	* ace/Svc_Conf.l: Changed the regular expression for a
 	  {string} so that it maches the null string (i.e., "").

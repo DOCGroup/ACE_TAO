@@ -26,19 +26,6 @@
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-typedef ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex> 
-	Upcall;
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-	                 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
-			 ACE_Null_Mutex>
-	Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-                                  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
-				  ACE_Null_Mutex> 
-        Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-        Thread_Timer_Queue;
-
 template <class RECEIVER, class ACTION>
 class Command 
   // = TITLE
@@ -128,5 +115,13 @@ protected:
   Command<RECEIVER, ACTION> *shutdown_cmd_;
   // shutdown the driver.
 };
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Driver.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Driver.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _DRIVER_H_ */

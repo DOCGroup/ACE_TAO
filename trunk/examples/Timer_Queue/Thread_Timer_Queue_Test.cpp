@@ -84,7 +84,7 @@ int
 Input_Task::svc (void)
 {
   for (;;)
-    // call bacck to the driver's implementation on how to read and parse input.
+    // call back to the driver's implementation on how to read and parse input.
     if (this->driver_.get_next_request () == -1)
       break;
 
@@ -143,16 +143,16 @@ Input_Task::list_timer (void *argument)
 
   // Thread cancellation point, if ACE supports it.
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_PUSH(&this->queue_->lock ());
-#endif
+  ACE_PTHREAD_CLEANUP_PUSH (&this->queue_->lock ());
+#endif /* ACE_LACKS_PTHREAD_CANCEL */
 
-  // dump the timer queue contents.
+  // Dump the timer queue contents.
   this->dump ();
 
   // Thread cancellation point (POP)
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_POP(1);
-#endif
+  ACE_PTHREAD_CLEANUP_POP (1);
+#endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   return 0;
 }
@@ -250,17 +250,23 @@ Thread_Timer_Queue_Test_Driver::init (void)
     
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
+template class Timer_Queue_Test_Driver<Thread_Timer_Queue,
+                                       Input_Task,
+                                       Input_Task::ACTION>;
+template class Command<Input_Task, Input_Task::ACTION>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if !defined(ACE_MT_SAFE)
-
-// These templates will specialized in liACE.* if the platforms does
+#if defined (ACE_MT_SAFE)
+// These templates will specialized in libACE.* if the platforms does
 // not define ACE_MT_SAFE.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
+template class ACE_Thread_Condition<ACE_Thread_Mutex>;
+template class ACE_Condition<ACE_Thread_Mutex>;
 template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>;
+template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
 template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
 template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
+template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_MT_SAFE */

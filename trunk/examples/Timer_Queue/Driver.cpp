@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 // = LIBRARY
 //    examples
@@ -15,6 +17,9 @@
 // 
 // ============================================================================
 
+#if !defined (_DRIVER_CPP_)
+#define _DRIVER_CPP_
+
 #include "ace/Auto_Ptr.h"
 #include "Driver.h"
 
@@ -25,7 +30,8 @@ Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
 				    ACTION action)
   : receiver_ (recvr), 
     action_ (action)
-{}
+{
+}
 
 // invokes an operation.
 
@@ -34,7 +40,6 @@ Command<RECEIVER, ACTION>::execute (void *arg)
 {
   return (receiver_.*action_) (arg);
 }
-
 
 // gets the next request from the user input.
 
@@ -140,3 +145,4 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
   return 0;
 }  
 
+#endif /* _DRIVER_CPP_ */

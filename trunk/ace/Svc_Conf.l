@@ -24,7 +24,7 @@ digit           [0-9]
 ident           {letter}{letter_or_digit}*
 pathname        ([A-Za-z]:)?[a-zA-Z_0-9/\.\\-]+
 symbol		[ -~]
-string		\"{symbol}+\"
+string		\"{symbol}*\"
 white_space	[ \t]
 newline         \n
 other		.

@@ -1,6 +1,3 @@
-// $Id$
-
-#define ACE_BUILD_DLL
 #include "ace/config.h"
 #if defined (ACE_HAS_TERM_IOCTLS) /* to avoid conflict with sys/termios.h ECHO */
 #undef ACE_HAS_TERM_IOCTLS
@@ -144,9 +141,7 @@ extern "C" {
 		} \
 	while ( 0 )
 
-#if 0
 #define unput(c) ace_yyunput( c, ace_yytext_ptr )
-#endif /* 0 */
 
 
 struct ace_yy_buffer_state
@@ -221,9 +216,7 @@ static int ace_yy_start = 0;	/* start state number */
  */
 static int ace_yy_did_buffer_switch_on_eof;
 
-#if 0
 static void ace_yyunput YY_PROTO(( int c, char *buf_ptr ));
-#endif /* 0 */
 void ace_yyrestart YY_PROTO(( FILE *input_file ));
 void ace_yy_switch_to_buffer YY_PROTO(( YY_BUFFER_STATE new_buffer ));
 void ace_yy_load_buffer_state YY_PROTO(( void ));
@@ -231,14 +224,12 @@ YY_BUFFER_STATE ace_yy_create_buffer YY_PROTO(( FILE *file, int size ));
 void ace_yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
 void ace_yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
 
-#if 0
 static int ace_yy_start_stack_ptr = 0;
 static int ace_yy_start_stack_depth = 0;
 static int *ace_yy_start_stack = 0;
 static void ace_yy_push_state YY_PROTO(( int new_state ));
 static void ace_yy_pop_state YY_PROTO(( void ));
 static int ace_yy_top_state YY_PROTO(( void ));
-#endif /* 0 */
 
 static void *ace_yy_flex_alloc YY_PROTO(( unsigned int ));
 static void *ace_yy_flex_realloc YY_PROTO(( void *, unsigned int ));
@@ -286,8 +277,8 @@ static const short int ace_yy_accept[103] =
         0,    0,    0,    0,    0,    0,   26,   24,   22,   23,
        24,   15,   16,   14,   21,   13,   20,   20,   20,   20,
        20,   20,   20,   20,   20,   17,   18,   24,   22,    0,
-       21,   20,    0,   20,   20,   20,   20,   20,   20,   20,
-       20,   20,    0,    1,   19,   20,   20,   20,   20,   20,
+       19,   21,   20,    0,   20,   20,   20,   20,   20,   20,
+       20,   20,   20,    0,    1,   20,   20,   20,   20,   20,
        20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
        20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
        20,   20,   20,   20,   20,   20,   20,   20,    8,   10,
@@ -340,11 +331,11 @@ static const int ace_yy_meta[43] =
 
 static const short int ace_yy_base[107] =
     {   0,
-        0,  111,    0,  107,    0,   90,   91,  313,   41,  313,
-        0,  313,  313,  313,    0,  313,   33,   36,   37,   40,
+        0,  112,    0,  111,    0,  107,   97,  313,   41,  313,
+       85,  313,  313,  313,    0,  313,   33,   36,   37,   40,
        41,   44,   48,   49,   52,  313,  313,   82,   66,   76,
-        0,   60,    0,   61,   64,   68,   75,   81,   82,   85,
-       88,   89,   75,  313,   61,   93,  104,   96,  111,  115,
+       72,    0,   60,    0,   61,   64,   68,   75,   81,   82,
+       85,   88,   89,   64,  313,   93,  104,   96,  111,  115,
       116,   97,  121,  129,  133,  134,  137,  138,  142,  143,
       150,  151,  158,  161,  162,  166,  167,  172,  185,  180,
       173,  190,  193,  196,  197,  200,  201,  204,  209,  215,
@@ -359,8 +350,8 @@ static const short int ace_yy_def[107] =
       102,    1,    1,    1,    1,    1,  102,  102,  102,  102,
       103,  102,  102,  102,  104,  102,  105,  105,  105,  105,
       105,  105,  105,  105,  105,  102,  102,  106,  102,  103,
-      104,  105,  104,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  106,  102,  103,  105,  105,  105,  105,  105,
+      103,  104,  105,  104,  105,  105,  105,  105,  105,  105,
+      105,  105,  105,  106,  102,  105,  105,  105,  105,  105,
       105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
       105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
       105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
@@ -376,37 +367,37 @@ static const short int ace_yy_nxt[356] =
        15,   15,   16,   17,   17,   17,   18,   17,   17,   19,
        17,   20,   21,   17,   17,   22,   17,   23,   17,   17,
        17,   17,   17,   17,   24,   25,   17,   17,   17,   17,
-       26,   27,   29,   31,   29,   33,   31,   31,   33,   33,
-       31,   31,  102,   33,   31,   31,   33,   35,   31,   31,
-       33,   33,   31,   36,   33,   37,   45,   29,   34,   29,
-       31,   31,  102,  102,   31,   40,  102,   44,   31,   39,
-      102,   45,   47,   38,   44,   31,   46,  102,   41,   42,
-      102,   31,   31,  102,  102,   31,   28,  102,   31,   31,
+       26,   27,   29,   32,   29,   34,   32,   32,   34,   34,
+       32,   32,  102,   34,   32,   32,   34,   36,   32,   32,
+       34,   34,   32,   37,   34,   38,   45,   29,   35,   29,
+       32,   32,  102,  102,   32,   41,  102,   31,   32,   40,
+      102,   31,   47,   39,   45,   32,   46,  102,   42,   43,
+       31,   32,   32,  102,  102,   32,  102,  102,   32,   32,
 
-      102,  102,   48,   31,   51,  102,   31,   31,  102,  102,
-       54,   49,   50,   28,   31,   52,  102,   28,  102,   58,
-       53,   31,   55,  102,   56,   31,   31,  102,  102,   63,
-       57,   31,  102,  102,   59,  102,  102,   61,   60,   31,
-       62,  102,  102,   31,   31,  102,  102,   31,   31,  102,
-      102,   69,   31,   31,  102,  102,  102,  102,   64,   66,
-       31,   31,  102,  102,  102,   65,   68,   67,   31,   70,
-      102,   31,   31,  102,  102,  102,   31,   31,  102,  102,
-       72,   71,   31,   31,  102,  102,  102,   73,   77,   76,
-       31,   75,  102,   78,  102,   31,   74,  102,   79,   82,
+      102,  102,   48,   32,   51,  102,   32,   32,  102,  102,
+       54,   49,   50,   28,   32,   52,  102,   28,   28,   58,
+       53,   32,   55,  102,   56,   32,   32,  102,  102,   63,
+       57,   32,  102,  102,   59,  102,  102,   61,   60,   32,
+       62,  102,  102,   32,   32,  102,  102,   32,   32,  102,
+      102,   69,   32,   32,  102,  102,  102,  102,   64,   66,
+       32,   32,  102,  102,  102,   65,   68,   67,   32,   70,
+      102,   32,   32,  102,  102,  102,   32,   32,  102,  102,
+       72,   71,   32,   32,  102,  102,  102,   73,   77,   76,
+       32,   75,  102,   78,  102,   32,   74,  102,   79,   82,
 
-       31,   80,  102,   31,   81,  102,   31,   31,  102,  102,
-       31,   31,  102,  102,   31,  102,  102,   83,  102,   31,
-       84,  102,   85,   86,   87,   31,   31,  102,  102,  102,
-       31,   88,  102,  102,   31,   89,  102,   31,   31,  102,
-      102,   31,   90,  102,   31,   31,  102,  102,   91,   31,
-       31,  102,  102,   31,   31,  102,  102,   31,  102,  102,
-       31,   94,  102,  102,   93,   92,   31,   96,  102,   31,
-       95,  102,   31,   31,  102,  102,   31,   31,  102,  102,
-      102,   31,   97,  102,  102,  102,  102,  102,  102,   99,
+       32,   80,  102,   32,   81,  102,   32,   32,  102,  102,
+       32,   32,  102,  102,   32,  102,  102,   83,  102,   32,
+       84,  102,   85,   86,   87,   32,   32,  102,  102,  102,
+       32,   88,  102,  102,   32,   89,  102,   32,   32,  102,
+      102,   32,   90,  102,   32,   32,  102,  102,   91,   32,
+       32,  102,  102,   32,   32,  102,  102,   32,  102,  102,
+       32,   94,  102,  102,   93,   92,   32,   96,  102,   32,
+       95,  102,   32,   32,  102,  102,   32,   32,  102,  102,
+      102,   32,   97,  102,  102,  102,  102,  102,  102,   99,
        98,  100,  102,  102,  102,  102,  102,  102,  102,  102,
 
-      102,  102,  101,   30,   30,   30,   32,   32,   43,   43,
-       43,   43,    7,  102,  102,  102,  102,  102,  102,  102,
+      102,  102,  101,   30,   30,   30,   33,   33,   44,   44,
+       44,   44,    7,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
       102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
@@ -421,14 +412,14 @@ static const short int ace_yy_chk[356] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    9,   17,    9,   17,   18,   19,   18,   19,
        20,   21,   20,   21,   22,  104,   22,   19,   23,   24,
-       23,   24,   25,   19,   25,   21,   45,   29,   18,   29,
-       32,   34,   32,   34,   35,   24,   35,   43,   36,   23,
-       36,   30,   35,   22,   28,   37,   34,   37,   25,   25,
-        7,   38,   39,   38,   39,   40,    6,   40,   41,   42,
+       23,   24,   25,   19,   25,   21,   44,   29,   18,   29,
+       33,   35,   33,   35,   36,   24,   36,   31,   37,   23,
+       37,   30,   36,   22,   28,   38,   35,   38,   25,   25,
+       11,   39,   40,   39,   40,   41,    7,   41,   42,   43,
 
-       41,   42,   36,   46,   39,   46,   48,   52,   48,   52,
-       41,   37,   38,    4,   47,   40,   47,    2,    0,   47,
-       40,   49,   41,   49,   42,   50,   51,   50,   51,   52,
+       42,   43,   37,   46,   40,   46,   48,   52,   48,   52,
+       42,   38,   39,    6,   47,   41,   47,    4,    2,   47,
+       41,   49,   42,   49,   43,   50,   51,   50,   51,   52,
        46,   53,    0,   53,   48,    0,    0,   50,   49,   54,
        51,   54,    0,   55,   56,   55,   56,   57,   58,   57,
        58,   58,   59,   60,   59,   60,    0,    0,   53,   55,
@@ -670,87 +661,87 @@ case 2:
 YY_USER_ACTION
 # line 35 "Svc_Conf.l"
 { return token (ACE_DYNAMIC); }
-	/* YY_BREAK */
+	YY_BREAK
 case 3:
 YY_USER_ACTION
 # line 36 "Svc_Conf.l"
 { return token (ACE_STATIC); }
-	/* YY_BREAK */
+	YY_BREAK
 case 4:
 YY_USER_ACTION
 # line 37 "Svc_Conf.l"
 { return token (ACE_SUSPEND); }
-	/* YY_BREAK */
+	YY_BREAK
 case 5:
 YY_USER_ACTION
 # line 38 "Svc_Conf.l"
 { return token (ACE_RESUME); }
-	/* YY_BREAK */
+	YY_BREAK
 case 6:
 YY_USER_ACTION
 # line 39 "Svc_Conf.l"
 { return token (ACE_REMOVE); }
-	/* YY_BREAK */
+	YY_BREAK
 case 7:
 YY_USER_ACTION
 # line 40 "Svc_Conf.l"
 { return token (ACE_USTREAM); }
-	/* YY_BREAK */
+	YY_BREAK
 case 8:
 YY_USER_ACTION
 # line 41 "Svc_Conf.l"
 { return token (ACE_MODULE_T); }
-	/* YY_BREAK */
+	YY_BREAK
 case 9:
 YY_USER_ACTION
 # line 42 "Svc_Conf.l"
 { return token (ACE_SVC_OBJ_T); }
-	/* YY_BREAK */
+	YY_BREAK
 case 10:
 YY_USER_ACTION
 # line 43 "Svc_Conf.l"
 { return token (ACE_STREAM_T); }
-	/* YY_BREAK */
+	YY_BREAK
 case 11:
 YY_USER_ACTION
 # line 44 "Svc_Conf.l"
 { return token (ACE_ACTIVE); }
-	/* YY_BREAK */
+	YY_BREAK
 case 12:
 YY_USER_ACTION
 # line 45 "Svc_Conf.l"
 { return token (ACE_INACTIVE); }
-	/* YY_BREAK */
+	YY_BREAK
 case 13:
 YY_USER_ACTION
 # line 46 "Svc_Conf.l"
 { return token (ACE_COLON); }
-	/* YY_BREAK */
+	YY_BREAK
 case 14:
 YY_USER_ACTION
 # line 47 "Svc_Conf.l"
 { return token (ACE_STAR); }
-	/* YY_BREAK */
+	YY_BREAK
 case 15:
 YY_USER_ACTION
 # line 48 "Svc_Conf.l"
 { return token (ACE_LPAREN); }
-	/* YY_BREAK */
+	YY_BREAK
 case 16:
 YY_USER_ACTION
 # line 49 "Svc_Conf.l"
 { return token (ACE_RPAREN); }
-	/* YY_BREAK */
+	YY_BREAK
 case 17:
 YY_USER_ACTION
 # line 50 "Svc_Conf.l"
 { return token (ACE_LBRACE); }
-	/* YY_BREAK */
+	YY_BREAK
 case 18:
 YY_USER_ACTION
 # line 51 "Svc_Conf.l"
 { return token (ACE_RBRACE); }
-	/* YY_BREAK */
+	YY_BREAK
 case 19:
 YY_USER_ACTION
 # line 52 "Svc_Conf.l"
@@ -759,7 +750,7 @@ YY_USER_ACTION
 			ace_yyleng -= 1;
                         ace_yylval.ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng); 
 			return token (ACE_STRING); }
-	/* YY_BREAK */
+	YY_BREAK
 case 20:
 YY_USER_ACTION
 # line 57 "Svc_Conf.l"
@@ -767,7 +758,7 @@ YY_USER_ACTION
 		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
 			return token (ACE_IDENT); 
 		      }
-	/* YY_BREAK */
+	YY_BREAK
 case 21:
 YY_USER_ACTION
 # line 61 "Svc_Conf.l"
@@ -775,7 +766,7 @@ YY_USER_ACTION
 		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
 			return token (ACE_PATHNAME); 
 		      }
-	/* YY_BREAK */
+	YY_BREAK
 case 22:
 YY_USER_ACTION
 # line 65 "Svc_Conf.l"
@@ -796,7 +787,7 @@ case YY_STATE_EOF(PARAMETERS):
 case YY_STATE_EOF(NORMAL):
 # line 68 "Svc_Conf.l"
 { YY_NEW_FILE; ace_yyterminate(); }
-	/* YY_BREAK */
+	YY_BREAK
 case 25:
 YY_USER_ACTION
 # line 69 "Svc_Conf.l"
@@ -1129,7 +1120,6 @@ ace_yy_state_type ace_yy_current_state;
 	}
 
 
-#if 0
 #ifdef YY_USE_PROTOS
 static void ace_yyunput( int c, register char *ace_yy_bp )
 #else
@@ -1174,7 +1164,6 @@ register char *ace_yy_bp;
 	 */
 	YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
 	}
-#endif /* 0 */
 
 
 #ifdef __cplusplus
@@ -1383,7 +1372,6 @@ FILE *file;
 	}
 
 
-#if 0
 #ifdef YY_USE_PROTOS
 static void ace_yy_push_state( int new_state )
 #else
@@ -1429,7 +1417,6 @@ static int ace_yy_top_state()
 	{
 	return ace_yy_start_stack[ace_yy_start_stack_ptr - 1];
 	}
-#endif /* 0 */
 
 
 #ifdef YY_USE_PROTOS
