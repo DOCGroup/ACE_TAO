@@ -24,10 +24,10 @@
 static char hostname[BUFSIZ];
 static char *ior_file = 0;
 static int base_port = ACE_DEFAULT_SERVER_PORT;
-static int num_of_objs = 2;
+static u_int num_of_objs = 2;
 static u_int use_name_service = 1;
 static u_int thread_per_rate = 0;
-static u_int use_multiple_priority = 0; 
+static u_int use_multiple_priority = 0;
 
 Cubit_Task::Cubit_Task (void)
 {
@@ -363,11 +363,11 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'm':
-	use_multiple_priority = 1;
-	break;
+        use_multiple_priority = 1;
+        break;
       case 'r':
-	thread_per_rate = 1;
-	break;
+        thread_per_rate = 1;
+        break;
       case 's':
         use_name_service = 0;
         break;
@@ -446,7 +446,7 @@ initialize (int argc, char **argv)
                         " [-h my_hostname]"
                         " [-t num_objects]"
                         " [-f <ior_file>]"
-			" [-r Use thread per rate]"
+                        " [-r Use thread per rate]"
                         "\n", argv [0]),
                        1);
 
@@ -470,7 +470,7 @@ start_servants (ACE_Barrier &start_barrier)
   ACE_NEW_RETURN (args1,
                   char[BUFSIZ],
                   -1);
-  int i;
+  u_int i;
 
   // Create an array to hold pointers to the Cubit objects.
   CORBA::String *cubits;
@@ -480,11 +480,11 @@ start_servants (ACE_Barrier &start_barrier)
                   -1);
 
   ACE_OS::sprintf (args1,
-                   "rate20 -ORBport %d " 
-		   "-ORBhost %s "
-		   "-ORBobjrefstyle URL "
-		   "-ORBsndsock 32768 "
-		   "-ORBrcvsock 32768 ",
+                   "rate20 -ORBport %d "
+                   "-ORBhost %s "
+                   "-ORBobjrefstyle URL "
+                   "-ORBsndsock 32768 "
+                   "-ORBrcvsock 32768 ",
                    base_port,
                    hostname);
 
@@ -539,42 +539,42 @@ start_servants (ACE_Barrier &start_barrier)
   if (thread_per_rate == 1 || use_multiple_priority == 1)
     {
       ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-	                                             ACE_SCOPE_THREAD);
+                                                     ACE_SCOPE_THREAD);
 
       number_of_priorities = 0;
 
       while (priority_iterator.more ())
-	{
-	  number_of_priorities ++;
-	  priority_iterator.next ();
-	}
-  
+        {
+          number_of_priorities ++;
+          priority_iterator.next ();
+        }
+
       // 1 priority is exclusive for the high priority client.
       number_of_priorities --;
 
       // Drop the priority, so that the priority of clients will increase
       // with increasing client number.
       for (i = 0; i < number_of_low_priority_servants; i++)
-	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-							priority,
-							ACE_SCOPE_THREAD);
+        priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                        priority,
+                                                        ACE_SCOPE_THREAD);
 
-      // granularity of the assignment of the priorities.  Some OSs have 
-      // fewer levels of priorities than we have threads in our test, so 
-      // with this mechanism we assign priorities to groups of threads when 
+      // granularity of the assignment of the priorities.  Some OSs have
+      // fewer levels of priorities than we have threads in our test, so
+      // with this mechanism we assign priorities to groups of threads when
       // there are more threads than priorities.
       grain = number_of_low_priority_servants / number_of_priorities;
       counter = 0;
 
-      if (grain <= 0) 
-	grain = 1;
-  
+      if (grain <= 0)
+        grain = 1;
+
     }
   else
     {
       priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-						      priority,
-						      ACE_SCOPE_THREAD);
+                                                      priority,
+                                                      ACE_SCOPE_THREAD);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -593,11 +593,11 @@ start_servants (ACE_Barrier &start_barrier)
                       -1);
 
       ACE_OS::sprintf (args,
-		       "rate10 -ORBport %d " 
-		       "-ORBhost %s "
-		       "-ORBobjrefstyle URL "
-		       "-ORBsndsock 32768 "
-		       "-ORBrcvsock 32768 ",
+                       "rate10 -ORBport %d "
+                       "-ORBhost %s "
+                       "-ORBobjrefstyle URL "
+                       "-ORBsndsock 32768 "
+                       "-ORBrcvsock 32768 ",
                        base_port + i,
                        hostname);
 
@@ -616,25 +616,25 @@ start_servants (ACE_Barrier &start_barrier)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Created servant %d with priority %d\n",
-		  i,
-		  priority));
+                  "Created servant %d with priority %d\n",
+                  i,
+                  priority));
 
       // use different priorities on thread per rate or multiple priority.
       if (use_multiple_priority == 1 || thread_per_rate == 1)
-        {    
+        {
           counter = (counter + 1) % grain;
-          if ( (counter == 0) && 
+          if ( (counter == 0) &&
                //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
                ((number_of_priorities * grain) > (number_of_low_priority_servants - (i - 1))) )
               {
-          	      // Get the next higher priority.
-          	      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-          						     priority,
-          						     ACE_SCOPE_THREAD);
+                      // Get the next higher priority.
+                      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                             priority,
+                                                             ACE_SCOPE_THREAD);
               }
-          
-        }          
+
+        }
     } /* end of for() */
 
   start_barrier.wait ();
@@ -654,13 +654,13 @@ start_servants (ACE_Barrier &start_barrier)
 
     for (i = 0; i < num_of_objs; ++i)
       {
-	if (ior_f != 0)
-	  {
-	    ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
-	  }
-	ACE_OS::printf ("cubits[%d] ior = %s\n",
-			i,
-			cubits[i]);
+        if (ior_f != 0)
+          {
+            ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
+          }
+        ACE_OS::printf ("cubits[%d] ior = %s\n",
+                        i,
+                        cubits[i]);
       }
 
     if (ior_f != 0)
@@ -693,9 +693,9 @@ main (int argc, char *argv[])
 #if defined (__Lynx__)
           30,
 #elif defined (VXWORKS) /* ! __Lynx__ */
-	  6,
+          6,
 #else
-	  ACE_THR_PRI_FIFO_DEF,
+          ACE_THR_PRI_FIFO_DEF,
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {
