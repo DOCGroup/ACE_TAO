@@ -108,13 +108,15 @@ public:
   // = Initialization and termination methods.
 
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0);
+                  ACE_Timer_Queue * = 0,
+                  int mask_signals = 1);
   // Initialize <ACE_TP_Reactor> with the default size.
 
   ACE_TP_Reactor (size_t max_number_of_handles,
                   int restart = 0,
                   ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0);
+                  ACE_Timer_Queue * = 0,
+                  int mask_signals = 1);
   // Initialize the <ACE_TP_Reactor> to manage
   // <max_number_of_handles>.  If <restart> is non-0 then the
   // <ACE_Reactor>'s <handle_events> method will be restarted
