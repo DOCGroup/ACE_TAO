@@ -699,3 +699,4 @@ template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *
 #pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
