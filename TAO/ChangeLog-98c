@@ -1,3 +1,34 @@
+Wed Nov 11 17:44:10 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+        * tests/NestedUpcall/Reactor/run_test.pl:
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+        * tests/CDR/run_test.pl:
+        * tests/DynAny_Test/run_test.pl:
+        * tests/Multiple_Inheritance/run_test.pl:
+        * tests/OctetSeq/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * examples/POA/DSI/run_test.pl:
+        * examples/POA/Default_Servant/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/FindPOA/run_test.pl:
+        * examples/POA/NewPOA/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/Simple/echo/run_test.pl:
+        * examples/Simple/grid/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+        * orbsvcs/tests/EC_Basic/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/Logger/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+
+          General updates, including switching to the ACE class 
+          and using .\ or ./ before executable names.
+
 Wed Nov 11 14:47:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
