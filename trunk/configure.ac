@@ -3536,7 +3536,7 @@ dnl Temporarily select C as the test language to work around a bug in
 dnl some versions of Autoconf when C++ is selected as the test
 dnl language.
 AC_LANG_PUSH([C])
-ACE_CHECK_LACKS_FUNCS(mktemp)
+ACE_CHECK_LACKS_FUNCS(mkstemp mktemp)
 AC_LANG_POP([C])
 
 ACE_CHECK_LACKS_FUNCS(madvise)
