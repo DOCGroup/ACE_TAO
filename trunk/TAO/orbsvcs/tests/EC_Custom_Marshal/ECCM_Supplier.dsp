@@ -17,13 +17,12 @@ CFG=ECCM_Supplier - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ECCM_Supplier - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "ECCM_Supplier - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "ECCM_Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "ECCM_Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -135,10 +134,10 @@ SOURCE=.\ECM_Supplier.h
 # Begin Source File
 
 SOURCE=.\data.idl
-USERDEP__DATA_="..\..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "ECCM_Supplier - Win32 Release"
 
+USERDEP__DATA_="..\..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\data.idl
 InputName=data
@@ -176,12 +175,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "ECCM_Supplier - Win32 Debug"
 
+USERDEP__DATA_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\data.idl
 InputName=data
 
 BuildCmds= \
-	..\..\..\TAO_IDL\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
