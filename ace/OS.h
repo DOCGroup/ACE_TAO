@@ -2063,6 +2063,10 @@ typedef int ACE_hthread_t;
 // use u_int, so the ACE TSS emulation is compatible with them.)
 typedef u_int ACE_thread_key_t;
 
+      // Marker for ACE_Thread_Manager to indicate that it allocated
+      // an ACE_thread_t.  It is placed at the beginning of the ID.
+#     define ACE_THR_ID_ALLOCATED '\022'
+
 #   elif defined (ACE_HAS_WTHREADS)
 
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
