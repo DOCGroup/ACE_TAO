@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
- *  EXPERIMENTAL /dev/poll (or Linux /dev/epoll) based Reactor
- *  implementation.
+ *  @em Experimental @c /dev/poll (or Linux @c /dev/epoll) based
+ *  Reactor implementation.
  *
- *  @author  Ossama Othman <ossama@uci.edu>
+ *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // =========================================================================
 
@@ -309,8 +309,11 @@ protected:
 /**
  * @class ACE_Dev_Poll_Reactor_Handler_Repository
  *
+ * @internal
+
  * @brief Used to map ACE_HANDLEs onto the appropriate
  *        ACE_Event_Handler *.
+ *
  *
  * This class is simply a container that maps a handle to its
  * corresponding event handler.  It is not meant for use outside of
@@ -337,8 +340,8 @@ public:
   //@{
 
   /**
-   * Return the ACE_Event_Handler associated with ACE_HANDLE.  If
-   * index_p is non-zero, then return the index location of the
+   * Return the @c ACE_Event_Handler associated with @c ACE_HANDLE.  If
+   * @a index_p is non-zero, then return the index location of the
    * handle, if found.
    */
   ACE_Event_Handler *find (ACE_HANDLE handle, size_t *index_p = 0);
@@ -362,16 +365,16 @@ public:
   /// Is the event handler for the given handle suspended?
   int suspended (ACE_HANDLE handle) const;
 
-  /// Bind the ACE_Event_Handler to the ACE_HANDLE with the
+  /// Bind the ACE_Event_Handler to the @c ACE_HANDLE with the
   /// appropriate ACE_Reactor_Mask settings.
   int bind (ACE_HANDLE handle,
             ACE_Event_Handler *handler,
             ACE_Reactor_Mask mask);
 
-  /// Remove the binding of ACE_HANDLE in accordance with the <mask>.
+  /// Remove the binding of @c ACE_HANDLE in accordance with the <mask>.
   int unbind (ACE_HANDLE handle);
 
-  /// Remove all the (ACE_HANDLE, ACE_Event_Handler) tuples.
+  /// Remove all the (@c ACE_HANDLE, @c ACE_Event_Handler) tuples.
   int unbind_all (void);
 
   /// Increase the reference count on the event handler corresponding
@@ -397,14 +400,14 @@ public:
    */
   //@{
 
-  // Check the <handle> to make sure it's a valid ACE_HANDLE that
+  // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
   // within the range of legal handles (i.e., greater than or equal to
-  // zero and less than max_size_).
+  // zero and less than @c max_size_).
   int invalid_handle (ACE_HANDLE handle) const;
 
-  // Check the handle to make sure it's a valid ACE_HANDLE that is
+  // Check the handle to make sure it's a valid @c ACE_HANDLE that is
   // within the range of currently registered handles (i.e., greater
-  // than or equal to zero and less than max_handlep1_).
+  // than or equal to zero and less than @c max_handlep1_).
   int handle_in_range (ACE_HANDLE handle) const;
 
   //@}
@@ -426,7 +429,7 @@ private:
   /// The underlying array of event handlers.
   /**
    * The array of event handlers is directly indexed directly using
-   * an ACE_HANDLE value.  This is Unix-specific.
+   * an @c ACE_HANDLE value.  This is Unix-specific.
    */
   ACE_Dev_Poll_Event_Tuple *handlers_;
 
@@ -439,19 +442,19 @@ private:
  *
  * @brief A `/dev/poll' or `/dev/epoll' based Reactor implemenatation.
  *
- * @note This reactor is EXPERIMENTAL.
+ * @attention This reactor is @em experimental.
  *
  * The ACE_Dev_Poll_Reactor uses the `/dev/poll' or '/dev/epoll'
  * character devices to demultiplex events on a given set of file
- * descriptors.  Unlike select(), `/dev/poll' and `/dev/epoll' have no
- * hard-coded limit on the number of file descriptors that may be
+ * descriptors.  Unlike @c select(), `/dev/poll' and `/dev/epoll' have
+ * no hard-coded limit on the number of file descriptors that may be
  * handled at any given time.  As such, the ACE_Dev_Poll_Reactor can
  * generally handle a much larger number of file descriptors than
- * select()-based reactors.  Furthermore, since `/dev/poll' and
+ * @c select() -based reactors.  Furthermore, since `/dev/poll' and
  * `/dev/epoll' both return a set of file descriptors that are active,
  * there is no need to "walk" the set of file descriptors to determine
- * which ones are active, such as what is done with the select() and
- * poll() system calls.  All returned file descriptors are active.
+ * which ones are active, such as what is done with the @c select() and
+ * @c poll() system calls.  All returned file descriptors are active.
  * This makes event dispatching very efficient.
  *
  * @note In general, this reactor may only be used to demultiplex
@@ -460,7 +463,7 @@ private:
  *       underlying `/dev/poll' device driver.
  *
  * @note It is only possible to achieve millisecond timeout
- *       resolutions with the ACE_Dev_Poll_Reactor.  However, the
+ *       resolutions with the @c ACE_Dev_Poll_Reactor.  However, the
  *       timeout resolution for timers is independent of the reactors
  *       timeout resolution.  As such, it may be possible to achieve
  *       sub-millisecond timeout resolutions for timers but that is
@@ -470,9 +473,9 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 {
 public:
 
-  /// Initialize ACE_Dev_Poll_Reactor with the default size.
+  /// Initialize @c ACE_Dev_Poll_Reactor with the default size.
   /**
-   * The default size for the ACE_Dev_Poll_Reactor is the maximum
+   * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
    * number of open file descriptors for the process.
    */
   ACE_Dev_Poll_Reactor (ACE_Sig_Handler * = 0,
@@ -481,16 +484,17 @@ public:
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1);
 
-  /// Initialize ACE_Dev_Poll_Reactor with size "size."
+  /// Initialize ACE_Dev_Poll_Reactor with size "@a size."
   /**
-   * @note On Unix platforms, the size parameter should be as large as
-   *       the maximum number of file descriptors allowed for a given
-   *       process.  This is necessary since a file descriptor is used
-   *       to directly index the array of event handlers maintained by
-   *       the Reactor's handler repository.  Direct indexing is used
-   *       for efficiency reasons.  If the size parameter is less than
-   *       the process maximum, then the process maximum will be
-   *       decreased in order to prevent potential access violations.
+   * @note On Unix platforms, the @a size parameter should be as large
+   *       as the maximum number of file descriptors allowed for a
+   *       given process.  This is necessary since a file descriptor
+   *       is used to directly index the array of event handlers
+   *       maintained by the Reactor's handler repository.  Direct
+   *       indexing is used for efficiency reasons.  If the size
+   *       parameter is less than the process maximum, the process
+   *       maximum will be decreased in order to prevent potential
+   *       access violations.
    */
   ACE_Dev_Poll_Reactor (size_t size,
                         int restart = 0,
@@ -512,11 +516,13 @@ public:
                     ACE_Reactor_Notify * = 0);
 
   /**
-   * Returns 0, if the size of the current message has been put in
-   * size.  Returns -1, if not.  ACE_HANDLE allows the reactor to
-   * check if the caller is valid.
+   * @param handle allows the reactor to check if the caller is
+   *        valid.
+   *
+   * @return 0 if the size of the current message has been put in
+   *         size.  -1 if not.
    */
-  virtual int current_info (ACE_HANDLE, size_t & /* size */);
+  virtual int current_info (ACE_HANDLE handle, size_t & /* size */);
 
   /// Use a user specified signal handler instead.
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
@@ -524,7 +530,7 @@ public:
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
-  /// Return the current ACE_Timer_Queue.
+  /// @return The current @c ACE_Timer_Queue.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 
   /// Close down and release all resources.
@@ -537,46 +543,46 @@ public:
    * don't block while checking this, i.e., "poll".
    *
    * @note It is only possible to achieve millisecond timeout
-   *       resolutions with the ACE_Dev_Poll_Reactor.
+   *       resolutions with the @c ACE_Dev_Poll_Reactor.
    */
   virtual int work_pending (
     const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
   /**
-   * This event loop driver blocks for up to max_wait_time before
+   * This event loop driver blocks for up to @a max_wait_time before
    * returning.  It will return earlier if events occur.  Note that
-   * max_wait_time can be 0, in which case this method blocks
+   * @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    * @par
-   * max_wait_time is decremented to reflect how much time this call
-   * took.  For instance, if a time value of 3 seconds is passed to
-   * handle_events and an event occurs after 2 seconds,
-   * max_wait_time will equal 1 second.  This can be used if an
+   * @a max_wait_time is decremented to reflect how much time this
+   * call took.  For instance, if a time value of 3 seconds is passed
+   * to @c handle_events() and an event occurs after 2 seconds,
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    * @par
-   * Returns the total number of ACE_Event_Handlers that were
-   * dispatched, 0 if the max_wait_time elapsed without dispatching
-   * any handlers, or -1 if an error occurs.
-   * @par
-   * The only difference between alertable_handle_events and
-   * handle_events is that in the alertable case, the event loop
+   * The only difference between @c alertable_handle_events() and
+   * handle_events() is that in the alertable case, the event loop
    * will return when the system queues an I/O completion routine or
    * an Asynchronous Procedure Call.
    *
+   * @return  The total number of @c ACE_Event_Handlers that were
+   *          dispatched, 0 if the @a max_wait_time elapsed without
+   *          dispatching any handlers, or -1 if an error occurs.
+
    * @note It is only possible to achieve millisecond timeout
-   *       resolutions with the ACE_Dev_Poll_Reactor.
+   *       resolutions with the @c ACE_Dev_Poll_Reactor.
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
   virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
 
   /**
    * This method is just like the one above, except the
-   * max_wait_time value is a reference and can therefore never be
-   * NULL.
+   * @a max_wait_time value is a reference and can therefore never be
+   * @c NULL.
    *
    * @note It is only possible to achieve millisecond timeout
-   *       resolutions with the ACE_Dev_Poll_Reactor.
+   *       resolutions with the @c ACE_Dev_Poll_Reactor.
    */
   virtual int handle_events (ACE_Time_Value &max_wait_time);
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
@@ -584,16 +590,16 @@ public:
   // = Event handling control.
 
   /**
-   * Return the status of Reactor.  If this function returns 0, the
-   * reactor is actively handling events.  If it returns non-zero,
-   * handle_events() and handle_alertable_events() return -1
-   * immediately.
+   * @return The status of Reactor.  If this function returns 0, the
+   *         reactor is actively handling events.  If it returns
+   *         non-zero, @c handle_events() and
+   *         @c handle_alertable_events() return -1 immediately.
    */
   virtual int deactivated (void);
 
   /**
    * Control whether the Reactor will handle any more incoming events
-   * or not.  If do_stop == 1, the Reactor will be disabled.  By
+   * or not.  If @a do_stop == 1, the Reactor will be disabled.  By
    * default, a reactor is in active state and can be
    * deactivated/reactived as desired.
    */
@@ -601,36 +607,38 @@ public:
 
   // = Register and remove Handlers.
 
-  /// Register event_handler with mask.  The I/O handle will always
-  /// come from get_handle on the event_handler.
+  /// Register @a event_handler with @a mask.  The I/O handle will
+  /// always come from get_handle on the event_handler.
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
-  /// Register event_handler with mask.  The I/O handle is provided
-  /// through the io_handle parameter.
+  /// Register @a event_handler with @a mask.  The I/O handle is
+  /// provided through the @a io_handle parameter.
   virtual int register_handler (ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
   /**
-   * Register an <event_handler> that will be notified when
-   * <event_handle> is signaled.  <mask> specifies the network events
-   * that the <event_handler> is interested in.
+   * Register an @a event_handler that will be notified when
+   * @a event_handle is signaled.  @a mask specifies the network
+   * events that the @a event_handler is interested in.
    */
   virtual int register_handler (ACE_HANDLE event_handle,
                                 ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
-  /// Register <event_handler> with all the <handles> in the <Handle_Set>.
+  /// Register @a event_handler> with all the @a handles> in the @c
+  /// Handle_Set.
   virtual int register_handler (const ACE_Handle_Set &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
   /**
-   * Register <new_sh> to handle the signal <signum> using the
-   * <new_disp>.  Returns the <old_sh> that was previously registered
-   * (if any), along with the <old_disp> of the signal handler.
+   * Register @a new_sh to handle the signal @a signum using the
+   * @a new_disp.  Returns the @a old_sh that was previously
+   * registered (if any), along with the @a old_disp of the signal
+   * handler.
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
@@ -644,11 +652,12 @@ public:
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = 0);
 
+  /// Removes @a event_handler.
   /**
-   * Removes <event_handler>.  Note that the I/O handle will be
-   * obtained using <get_handle> method of <event_handler> .  If
-   * <mask> == <ACE_Event_Handler::DONT_CALL> then the <handle_close>
-   * method of the <event_handler> is not invoked.
+   * @note The I/O handle will be obtained using @c get_handle()
+   *       method of @a event_handler .  If @a mask ==
+   *       @c ACE_Event_Handler::DONT_CALL then the @c handle_close()
+   *       method of the @a event_handler is not invoked.
    */
   virtual int remove_handler (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask mask);
