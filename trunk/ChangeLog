@@ -1,3 +1,16 @@
+Fri Mar 14 22:26:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/MakeProjectCreator/config/ciao_client.mpb:
+	* bin/MakeProjectCreator/config/ciao_component.mpb:
+	* bin/MakeProjectCreator/config/ciao_server.mpb:
+	* bin/MakeProjectCreator/modules/Driver.pm: Merged in CIAO
+	  specific rules and default environment settings.  These changes
+	  help me take advantage of Chad's and other's work without
+	  complicating my workspace.  Most of other CIAO stuff are rather
+	  localized.
+
+	  These changes have no effect on others whatsoever.
+
 Fri Mar 14 11:49:27 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/Cached_Allocator_Test.cpp: Fix access out-of-bounds error.
