@@ -201,8 +201,9 @@ void POA_Test_Interceptors::Visual::normal_skel (
 
   // Object_id and adapter_id???
 
+  // Hey why not use _tao_server_request.operation () ?
   CORBA::String_var name ("normal");
-  
+   
   ServerRequest_Info ri (ACE_const_cast (char *,
                                          name.in()),
                                          _tao_server_request.service_info ());
