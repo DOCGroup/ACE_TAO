@@ -8,6 +8,7 @@ Sat Aug  9 20:55:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * examples/Connection/blocking/SPIPE-connector.cpp:
         * examples/OS/Process/process.cpp:
         * examples/Reactor/Proactor/test_proactor.cpp:
+          Added const to char* declarations to quash warnings.
 
         * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
           Added #include Condition_T.h and Thread_Mutex.h needed for
