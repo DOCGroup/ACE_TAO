@@ -1,20 +1,21 @@
 // -*- C++ -*-
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
 //   TAO
 //
 // = FILENAME
-//   IIOP_Factory.h
+//   IIOP_Lite_factory.h
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>
-//
+//   
 // ============================================================================
 
-#ifndef TAO_IIOP_FACTORY_H
-#define TAO_IIOP_FACTORY_H
+#ifndef TAO_IIOP_LITE_FACTORY_H
+#define TAO_IIOP_LITE_FACTORY_H
 
 #include "tao/Protocol_Factory.h"
 
@@ -25,11 +26,13 @@
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Export TAO_IIOP_Protocol_Factory : public TAO_Protocol_Factory
+class TAO_Export TAO_IIOP_Lite_Protocol_Factory : 
+  public TAO_Protocol_Factory
 {
 public:
-  TAO_IIOP_Protocol_Factory (void);
-  virtual ~TAO_IIOP_Protocol_Factory (void);
+  TAO_IIOP_Lite_Protocol_Factory (void);
+  
+  virtual ~TAO_IIOP_Lite_Protocol_Factory (void);
 
   // = Service Configurator hooks.
   virtual int init (int argc, char* argv[]);
@@ -57,7 +60,7 @@ private:
   // compatibility with old clients.
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_IIOP_Protocol_Factory)
-ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Protocol_Factory)
+ACE_STATIC_SVC_DECLARE (TAO_IIOP_Lite_Protocol_Factory)
+ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Lite_Protocol_Factory)
 
-#endif /* TAO_IIOP_FACTORY_H */
+#endif /* TAO_IIOP_Lite_factory_H */

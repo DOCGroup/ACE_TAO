@@ -27,7 +27,6 @@ TAO_GIOP_Message_Base::
   // Reset the message type
   msg.reset ();
 
-  cout << "Thaye parameshi "<<endl;
   TAO_GIOP_Message_Type type = TAO_GIOP_MESSAGERROR;
   
   // First convert the Pluggable type to the GIOP specific type. 
