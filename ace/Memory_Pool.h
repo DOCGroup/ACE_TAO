@@ -114,7 +114,8 @@ public:
   ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
                                   size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
                                   size_t file_perms = ACE_DEFAULT_FILE_PERMS,
-                                  off_t minimum_bytes = 0);
+                                  off_t minimum_bytes = 0,
+                                  size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
 
   char *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -127,6 +128,9 @@ public:
 
   size_t file_perms_;
   // File permissions to use when creating/opening a segment.
+
+  size_t segment_size_;
+  // Shared memory segment size.
 };
 
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
@@ -219,6 +223,9 @@ protected:
 
   off_t minimum_bytes_;
   // What the minimim bytes of the initial segment should be.
+
+  size_t segment_size_;
+  // Shared memory segment size.
 
   key_t base_shm_key_;
   // Base shared memory key for the segment.
