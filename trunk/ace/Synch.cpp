@@ -83,8 +83,8 @@ ACE_Process_Mutex::~ACE_Process_Mutex (void)
 }
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
-                                            void *arg)
-  : lock_ (name, int (arg))
+                                            int flags)
+  : lock_ (name, flags)
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }
@@ -180,7 +180,7 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
-  if (ACE_OS::flock_init (&this->lock_, flags, name, perms) == -1)
+  if (this->open (&this->lock_, flags, name, perms) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::ACE_File_Lock"));
 }
 

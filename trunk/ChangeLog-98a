@@ -1,3 +1,11 @@
+Sun Nov 30 16:31:41 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Synch.h: 
+	* ace/Synch.cpp: 
+	  ACE_File_Lock should create the file if it does not exist, to do
+	  so the constructor takes the <flags> parameter to ACE_OS::open()
+	  and defaults to O_CREAT|O_RDWR.
+
 Sat Nov 29 21:31:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Proactor.cpp (~ACE_Proactor_Timer_Handler): Removed explicit
