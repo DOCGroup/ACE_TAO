@@ -733,6 +733,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_endif ();
 
 
+      // generate the Any <<= and >>= operators
+      os->indent ();
+      if (node->is_nested ())
+        *os << "friend ";
+      *os << "void operator<<= (CORBA::Any &, " << node->local_name ()
+          << "_ptr); // copying version" << be_nl;
+      if (node->is_nested ())
+        *os << "friend ";
+      *os << "void operator<<= (CORBA::Any &, " << node->local_name ()
+          << "_ptr *); // noncopying version" << be_nl;
+      if (node->is_nested ())
+        *os << "friend ";
+      *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+          << node->local_name () << "_ptr &);\n";
+
       // generate the typecode decl. If we are in the outermost scope, our typecode
       // decl is extern
       if (node->is_nested ())
@@ -966,6 +981,46 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
 
+  // Any <<= and >>= operators
+  os->indent ();
+  *os << "void operator<<= (CORBA::Any &_tao_any, "
+      << node->name () << "_ptr _tao_elem) // copying" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", &"
+      << "_tao_elem, 1, _tao_env);" << be_uidt_nl
+      << "}" << be_nl;
+
+  *os << "void operator<<= (CORBA::Any &_tao_any, "
+      << node->name () << "_ptr *_tao_elem) // non copying" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", "
+      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
+      << "}" << be_nl;
+
+  *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
+      << node->name () << "_ptr *&_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "*_tao_elem = " << node->name () << "::_nil ();" << be_nl
+      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
+      << ", _tao_env)) return 0; // not equal" << be_nl
+      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
+      << be_nl
+      << "CORBA::Object_ptr _tao_obj;" << be_nl
+      << "if (stream.decode (" << node->tc_name ()
+      << ", &_tao_obj, 0, _tao_env)" << be_nl
+      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "{" << be_idt_nl
+      << "*_tao_elem = " << node->name () << "::_narrow (_tao_obj, _tao_env);"
+      << be_nl
+      << "CORBA::release (_tao_obj);" << be_nl
+      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}\n\n";
+
+  os->indent ();
   // generate the typecode information here
   os->indent (); // start from current indentation level
   *os << "static const CORBA::Long _oc_" << node->flatname () << "[] =" <<
