@@ -1,3 +1,15 @@
+Sun Apr 18 16:36:30 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/config-linux-common.h (ACE_LACKS_MADVISE): 
+
+	  Re-enabled #define ACE_LACKS_MADVISE.  Linux doesn't appear
+	  to have an madvise() system call.
+	
+	* configure.in:
+	* tests/Makefile.am:
+
+	  Added libtool support for modules (dlopened libraries).
+	
 Sun Apr 18 08:48:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Auto_Ptr.i: reordered inline methods to avoid use before
@@ -22,6 +34,7 @@ Sat Apr 17 18:52:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           David Levine and Jean-Marc Strauss <strauss@club-internet.fr>
           for reporting this.
 
+>>>>>>> 4.753
 Sat Apr 17 08:34:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Naming/Makefile,performance-tests/Misc/Makefile,
@@ -89,6 +102,7 @@ Fri Apr 16 07:52:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
           Marchewka <AndyM@who.net> for returning rusage information
           from elapsed_time.
 
+>>>>>>> 4.749
 Thu Apr 15 16:50:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated discussion of "dir unexpected"
@@ -201,6 +215,7 @@ Wed Apr 14 02:34:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         platforms. For others, they are 0.
 
 
+>>>>>>> 4.739
 Tue Apr 13 15:29:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.cpp: moved ACE_Service_Config signal
