@@ -173,15 +173,13 @@ main (int, char *[])
 #if defined (ACE_HAS_THREADS)
   ACE_Token_Proxy *A = 0, *B = 0, *R = 0, *W = 0;
 
-#if 0
-
   ACE_NEW_RETURN (A, ACE_Local_Mutex ("L Mutex A", 0, 0), -1);
   ACE_NEW_RETURN (B, ACE_Local_Mutex ("L Mutex B", 0, 0), -1);
   ACE_NEW_RETURN (R, ACE_Local_RLock ("L Reader Lock", 0, 0), -1);
   ACE_NEW_RETURN (W, ACE_Local_WLock ("L Writer Lock", 0, 0), -1);
 
   run_test (A, B, R, W);
-#endif
+
   LPCTSTR cl = 
     __TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
     __TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
