@@ -13,6 +13,7 @@
 //
 // ========================================================================
 
+#define TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
 
 module CosTrading
 {

@@ -15,11 +15,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-# In the Trading Service TAO has difficulty marshalling a struct that
-# has an object reference field. For more information about this
-# macro, see the trading service release notes.
-TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h \
-	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h 
 
 IDL_FILES = \
 	CosConcurrencyControlC \
@@ -146,8 +142,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG) \
-	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
 
 .PRECIOUS: CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h
 .PRECIOUS: CosTimeBaseC.cpp CosTimeBaseS.cpp CosTimeBaseC.h CosTimeBaseS.h
