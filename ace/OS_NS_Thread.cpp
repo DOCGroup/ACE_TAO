@@ -96,6 +96,12 @@ ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
 {
 }
 
+ACE_Thread_ID::ACE_Thread_ID (void)
+{
+  thread_id_ = ACE_OS::thr_self ();
+  ACE_OS::thr_self (thread_handle_);
+}
+
 ACE_thread_t
 ACE_Thread_ID::id (void)
 {
