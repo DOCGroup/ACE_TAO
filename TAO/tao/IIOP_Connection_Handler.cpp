@@ -107,6 +107,7 @@ TAO_IIOP_Connection_Handler::open (void*)
     }
   ACE_CATCHANY
     {
+      return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);

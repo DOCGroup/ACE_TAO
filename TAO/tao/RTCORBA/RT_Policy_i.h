@@ -883,7 +883,7 @@ public:
    */
   static RTCORBA::ProtocolProperties *create_transport_protocol_property (
       IOP::ProfileId id,
-      TAO_ORB_Core *orb_core = 0);
+      TAO_ORB_Core *orb_core);
 
   /**
    * Creates the proper orb ProtocolProperties subclass for
