@@ -1694,5 +1694,7 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Routi
 #pragma option pop
 #endif /* __BORLANDC__ */
 
+#include /**/ "ace/post.h"
+
 #endif /* ifndef */
 

@@ -251,5 +251,7 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 #pragma option pop
 #endif /* __BORLANDC__ */
 
+#include /**/ "ace/post.h"
+
 #endif /* ifndef */
 

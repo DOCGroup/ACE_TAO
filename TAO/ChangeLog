@@ -1,3 +1,14 @@
+Sun Nov  9 07:53:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Messaging_No_ImplC.h:
+	* tao/Messaging/Messaging_RT_PolicyC.h:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
+	* tao/Messaging/TAO_ExtC.h:
+	  
+	  Fixed post.h inclusions in the above files. Looks like they got
+	  missed during regeneration. Thanks to Johnny for poitning this
+	  out.
+
 Sun Nov  9 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/IORInterceptor/Makefile.bor:
