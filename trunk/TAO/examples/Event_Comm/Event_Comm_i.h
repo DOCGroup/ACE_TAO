@@ -38,6 +38,7 @@ class ShutdownCallback
   //   Helper callback class to shutdown the application.
 public:
   virtual void close (void) = 0;
+  // This method is to be called to shutdown the application.
 };
 
 class Consumer_i : public POA_Event_Comm::Consumer
