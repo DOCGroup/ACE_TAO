@@ -20,7 +20,7 @@
 #if !defined (IMPLREPO_I_H)
 #define IMPLREPO_I_H
 
-#include "ImplRepoS.h"
+#include "orbsvcs/ImplRepoS.h"
 #include "Repository.h"
 #include "tao/TAO.h"
 
