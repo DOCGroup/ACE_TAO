@@ -1,3 +1,14 @@
+Tue Oct 12 14:08:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.cpp.diff:
+	  Increased stack size to 10000, and enabled internal
+	  error function to report stack overflow. Thanks to
+	  Brian Wallis <brian.wallis@ot.com.au> for reporting
+	  and helping to track down these bugs.
+
 Tue Oct 12 12:58:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
