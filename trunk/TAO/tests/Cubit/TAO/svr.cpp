@@ -147,9 +147,5 @@ main (int argc, char *argv[])
   // methods asks us to exit.
   orb_ptr->run ();
 
-  // Shut down the OA -- recycles all underlying resources (e.g. file
-  // descriptors, etc).
-
-  oa_ptr->clean_shutdown (env);
   return 0;
 }

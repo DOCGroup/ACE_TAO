@@ -134,6 +134,7 @@ CORBA_POA::get_key (CORBA::Object_ptr,
   return 0;
 }
 
+#if 0
 // Used by method code to ask the OA to shut down.
 void
 CORBA_POA::please_shutdown (CORBA::Environment &env)
@@ -161,6 +162,7 @@ CORBA_POA::clean_shutdown (CORBA::Environment &env)
 
   // Here we need to tell all the endpoints to shut down...
 }
+#endif /* 0 */
 
 // For POA -- POA operations for which we provide the vtable entry
 void

@@ -1,3 +1,32 @@
+Fri Oct 24 17:33:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/poa.*: #ifdef'd out the IIOP 1.4 references to shutdown.
+  	I'm leaving them in there right now because they might be useful
+ 	as private member later when we need to figure out how to get OAs
+ 	to cooperate and shut themselves down in the face of an ORB
+ 	shutdown.
+
+	* tao/orbobj.h (shutdown): Fixed up documentation.
+
+	* tao/orbobj.i (shutdown): Provided appropriate arg default.
+
+	* tests/Cubit/TAO/svr.cpp: Eliminated unnecessary Object Adapter
+ 	name from POA_init() invocation.
+
+	* tests/Cubit/TAO/cubit_i.cpp (Cubit_please_exit): Revised to use
+ 	the new ORB::shutdown() method.
+
+	* tests/Cubit/TAO/clnt.cpp: Got rid of IIOP 1.4-style debug
+ 	message calls.
+
+	* tao/orbobj.cpp (CORBA_ORB::ORB_init): Corrected a heinous
+ 	problem in the option parsing loop where argvec_shift() would be
+ 	asked to shift two argv elements when there was only one.  This
+ 	could cause problems if an option that required an argument didn't
+ 	include the argument.  Thanks to Manojkumar Acharya
+ 	<cvsf325.gpt.co.uk> for sending in a bug report that lead to my
+ 	finding this!
+
 Fri Oct 24 14:08:12  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* Improved the compiler to make Unions work. The most subtle error
