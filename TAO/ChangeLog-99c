@@ -1,5 +1,6 @@
 Tue Apr  6 17:55:48 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* examples/POA/Loader/server.cpp: 
 	* examples/POA/Identity/Identity.cpp: 
 	* examples/POA/Generic_Servant/client.cpp: Changed ACE_TRY_NEW_ENV
 	as ACE_TRY with appropriate declaration
