@@ -21,7 +21,7 @@ FILES	=  TS_Server_Handler \
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-LIBS 	+= -lACE
+LIBS 	+= $(ACELIB)
 
 BUILD	= $(VLIB) $(VSHLIB) 
 
