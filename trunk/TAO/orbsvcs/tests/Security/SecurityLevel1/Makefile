@@ -75,6 +75,8 @@ SRVR_LIBS += -lTAO_Security $(TAO_SRVR_LIBS) -lssl -lcrypto
 realclean: clean
 	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
+$(CLIENT_OBJS) $(SERVER_OBJS): $(IDL_SRC)
+
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(SRVR_LIBS) $(POSTLINK)
 

@@ -1,3 +1,14 @@
+Sat Mar 20 18:39:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	* tests/RTScheduling/Scheduling_Interceptor/Makefile:
+	* tests/RTScheduling/VoidData/Makefile:
+
+	  Added dependencies on the IDL_SRC for the for client and server
+	  objects. 
+
 Sat Mar 20 08:41:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:

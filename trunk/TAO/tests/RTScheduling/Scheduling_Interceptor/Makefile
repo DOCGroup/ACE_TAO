@@ -49,6 +49,8 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
+$(CLIENT_OBJS) $(SERVER_OBJS): $(IDL_SRC)
+
 Scheduler_Interceptor_Client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
