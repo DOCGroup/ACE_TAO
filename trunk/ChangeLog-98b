@@ -22,6 +22,9 @@ Tue Jan 05 08:08:06 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-osf1-4.0.h: with Draft 4 pthreads, added
           ACE_LACKS_READDIR_R.
 
+        * tests/MT_Reactor_Timer_Test.cpp (main): added printout if
+          wait () fails.
+
 Tue Jan  5 00:59:04 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/Synch: Changed the remove() method of ACE_Thread_Mutex,
