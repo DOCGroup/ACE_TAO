@@ -120,7 +120,7 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                      const void *completion_key)
 {
 #if defined (ACE_WIN64)
-  ULONG_PTR comp_key (ACE_static_cast (ULONG_PTR, completion_key));
+  ULONG_PTR comp_key (ACE_reinterepret_cast (ULONG_PTR, completion_key));
 #else
   ULONG comp_key (ACE_reinterpret_cast (ULONG, completion_key));
 #endif /* ACE_WIN64 */
