@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ftrtec_export.h"
+
 #include "tao/orbconf.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
-#include "ftrtec_export.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
