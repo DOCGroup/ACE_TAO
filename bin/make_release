@@ -120,6 +120,7 @@ $gzip = "${gnu}gzip";
 $mv = '/bin/mv';
 chop ($now = `$date +"%a %b %d %T %Y"`);
 
+
 ########
 ######## Setup signal handler.
 ########
@@ -338,10 +339,16 @@ sub diff () {
 
     my $module = $kit eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
 
-    system ("sleep 60; " .
-            "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
+    if ("$exec_prefix") {
+      print "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
             "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
-            "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
+            "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &";
+    } else {
+      system ("sleep 60; " .
+              "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
+              "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
+              "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
+    }
   }
 
   #### Ignore return value.  No promises on diffs.
@@ -360,6 +367,7 @@ sub create_kit () {
 
   if ($kit eq 'ace') {
     system ("$exec_prefix" .
+            "/bin/rm -f ACE.zip ACE-lib.zip; " .
             "$find $release_files $release_filter | " .
             "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE.zip -q9@ &&" .
@@ -381,6 +389,7 @@ sub create_kit () {
             "$mv ACE.tar.gz ACE-lib.tar.gz ACE_wrappers/ $exec_suffix");
   } elsif ($kit eq 'ace+tao') {
     system ("$exec_prefix" .
+            "/bin/rm -f ACE+TAO.zip; " .
             "$find $release_files $release_filter | " .
             "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.exe\" | " .
             "zip ACE+TAO.zip -q9@ &&" .
