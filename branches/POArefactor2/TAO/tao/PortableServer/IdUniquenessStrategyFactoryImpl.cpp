@@ -31,14 +31,11 @@ namespace TAO
             ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
 
           if (strategy == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic IdUniquenessStrategyMultiple Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyMultiple()"));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("IdUniquenessStrategyMultiple")));
 
-              strategy =
-                ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
-            }
           break;
         }
         case ::PortableServer::UNIQUE_ID :

@@ -26,23 +26,16 @@ namespace TAO
       {
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-          ThreadStrategyFactory *thread_strategy_factory =
+          ThreadStrategyFactory *strategy_factory =
             ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
 
-          if (thread_strategy_factory == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ThreadStrategyFactory Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ThreadStrategySingleFactoryImpl()"));
-
-              thread_strategy_factory =
-                ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
-            }
-
-          if (thread_strategy_factory != 0)
-            {
-              strategy = thread_strategy_factory->create (value);
-            }
+          if (strategy_factory != 0)
+            strategy = strategy_factory->create (value);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("ThreadStrategySingleFactory")));
 
           break;
         }
@@ -52,14 +45,11 @@ namespace TAO
             ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
 
           if (strategy == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ThreadStrategy Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ThreadStrategyORBControl()"));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("ThreadStrategyORBControl")));
 
-              strategy =
-                ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
-            }
           break;
         }
       }
@@ -68,7 +58,9 @@ namespace TAO
     }
 
     void
-    ThreadStrategyFactoryImpl::destroy (ThreadStrategy *strategy)
+    ThreadStrategyFactoryImpl::destroy (
+      ThreadStrategy *strategy
+      ACE_ENV_ARG_DECL)
     {
       switch (strategy->type ())
       {
@@ -79,7 +71,8 @@ namespace TAO
 
           if (thread_strategy_factory != 0)
             {
-              thread_strategy_factory->destroy (strategy);
+              thread_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
             }
           break;
         }

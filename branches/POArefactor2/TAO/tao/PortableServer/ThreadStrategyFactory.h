@@ -38,7 +38,9 @@ namespace TAO
         ::PortableServer::ThreadPolicyValue value) = 0;
 
       /// Cleanup the given strategy instance
-      virtual void destroy (ThreadStrategy *strategy) = 0;
+      virtual void destroy (
+        ThreadStrategy *strategy
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }

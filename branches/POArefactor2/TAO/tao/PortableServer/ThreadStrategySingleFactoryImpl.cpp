@@ -43,8 +43,13 @@ namespace TAO
     }
 
     void
-    ThreadStrategySingleFactoryImpl::destroy (ThreadStrategy *strategy)
+    ThreadStrategySingleFactoryImpl::destroy (
+      ThreadStrategy *strategy
+      ACE_ENV_ARG_DECL)
     {
+      strategy->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
       delete strategy;
     }
 

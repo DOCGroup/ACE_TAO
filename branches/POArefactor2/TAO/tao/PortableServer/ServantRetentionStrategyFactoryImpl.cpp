@@ -19,55 +19,41 @@ namespace TAO
     ServantRetentionStrategyFactoryImpl::create (
       ::PortableServer::ServantRetentionPolicyValue value)
     {
-      ServantRetentionStrategy* strategy = 0;
+      ServantRetentionStrategyFactory *strategy_factory = 0;
 
       switch (value)
       {
         case ::PortableServer::RETAIN :
         {
-          ServantRetentionStrategyFactory *servantretention_strategy_factory =
+          strategy_factory =
             ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
 
-          if (servantretention_strategy_factory == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyRetainFactoryImpl()"));
+          if (strategy_factory == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) %p\n"),
+                               ACE_TEXT ("Unable to get ")
+                               ACE_TEXT ("ServantRetentionStrategyRetainFactory")),
+                               0);
 
-              servantretention_strategy_factory =
-                ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
-            }
-
-          if (servantretention_strategy_factory != 0)
-            {
-              strategy = servantretention_strategy_factory->create (value);
-            }
           break;
         }
         case ::PortableServer::NON_RETAIN :
         {
-          ServantRetentionStrategyFactory *servantretention_strategy_factory =
+          strategy_factory =
             ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
 
-          if (servantretention_strategy_factory == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyNonRetainFactoryImpl()"));
+          if (strategy_factory == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) %p\n"),
+                               ACE_TEXT ("Unable to get ")
+                               ACE_TEXT ("ServantRetentionStrategyNonRetainFactory")),
+                               0);
 
-              servantretention_strategy_factory =
-                ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
-            }
-
-          if (servantretention_strategy_factory != 0)
-            {
-              strategy = servantretention_strategy_factory->create (value);
-            }
           break;
         }
       }
 
-      return strategy;
+      return strategy_factory->create (value);
     }
 
     void

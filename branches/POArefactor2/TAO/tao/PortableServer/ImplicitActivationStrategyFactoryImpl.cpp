@@ -30,14 +30,10 @@ namespace TAO
             ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyImplicit");
 
           if (strategy == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ImplicitActivationStrategy Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationStrategyImplicit()"));
-
-              strategy =
-                ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyImplicit");
-            }
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("ImplicitActivationStrategyImplicit")));
           break;
         }
         case ::PortableServer::NO_IMPLICIT_ACTIVATION :
@@ -46,14 +42,10 @@ namespace TAO
             ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyExplicit");
 
           if (strategy == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ImplicitActivationStrategy Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationStrategyExplicit()"));
-
-              strategy =
-                ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyExplicit");
-            }
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("ImplicitActivationStrategyExplicit")));
           break;
         }
       }

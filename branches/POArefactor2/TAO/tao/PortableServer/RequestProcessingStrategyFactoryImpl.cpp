@@ -96,7 +96,8 @@ namespace TAO
 
           if (strategy_factory != 0)
             {
-              strategy_factory->destroy (strategy);
+              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
             }
           break;
         }
@@ -107,7 +108,8 @@ namespace TAO
 
           if (strategy_factory != 0)
             {
-              strategy_factory->destroy (strategy);
+              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
             }
           break;
         }
