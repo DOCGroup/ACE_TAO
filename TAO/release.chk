@@ -88,7 +88,8 @@ NOTES
 * Solaris/CC
 **orbsvcs/tests/Logger does not compile
 **Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
-**ParamTest/Var_struct - seg. fault
+**ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but able to fix manually
+  the tao_idl compiler generated files.						
 
 * NT
 ** Warnings on libTAO and tao_idl compilation.
