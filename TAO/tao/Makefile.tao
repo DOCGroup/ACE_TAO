@@ -410,7 +410,7 @@ ORB_CORE_FILES += \
   Policy_Manager \
   Buffering_Constraint_Policy \
   Messaging_PolicyValueC \
-  Messaging_PolicyValueA 
+  Messaging_PolicyValueA
 
 endif # corba_messaging
 

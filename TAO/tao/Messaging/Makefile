@@ -30,7 +30,7 @@ CPP_SRCS += \
   TAO_ExtC \
   Messaging_ORBInitializer \
   Messaging_PolicyFactory \
-  Messaging_Policy_i 
+  Messaging_Policy_i
 
 
 FILES = $(CPP_SRCS)
