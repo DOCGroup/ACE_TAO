@@ -1,3 +1,15 @@
+Mon Feb 28 21:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/Default_ORTA.cpp:
+        * tao/ObjRefTemplate/Default_ORTC.{h,cpp.inl}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp,inl}:
+        * tao/Messaging/*A.cpp:
+        * tao/Messaging/*C.{h,cpp,inl}:
+        * tao/Messaging/*S.{h,cpp,inl}:
+        * tao/Messaging/*S_T.{h,cpp,inl}:
+          Regenerated
+
 Mon Feb 28 13:29:36 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/CORBALOC_Parser.cpp:
