@@ -1,3 +1,16 @@
+Fri Jun 18 11:47:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* docs/ACE-SSL.html:
+	* docs/ACE-bug-process.html:
+	* docs/ACE-development-process.html:
+	* docs/ACE-guidelines.html:
+	* docs/ACE-porting.html:
+	* docs/msvc_notes.txt:
+	* docs/usage-bugzilla.html:
+
+	  Updated all these documents with new links. Tried removing
+	  outdated information as much as possible. 
+
 Fri Jun 18 10:12:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ACE-INSTALL.html:

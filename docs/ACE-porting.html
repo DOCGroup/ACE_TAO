@@ -13,9 +13,9 @@
 
 <HR><P> <H3>Porting ACE, TAO, and CIAO to a New OS Platform</H3><P>
 
-<A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>, <A
-HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>, and <A
-HREF="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</A> have been
+<A HREF="http://www.dre.vanderbilt.edu/ACE">ACE</A>, <A
+HREF="http://www.dre.vanderbilt.edu/TAO">TAO</A>, and <A
+HREF="http://www.dre.vanderbilt.edu/CIAO">CIAO</A> have been
 ported to <A HREF="http://www.dre.vanderbilt.edu/versions.html">many
 OS platforms</A>.  Porting ACE, TAO, and CIAO to new platforms is
 fairly easy.  The following document describes the step-by-step
@@ -141,18 +141,20 @@ order to compile ACE and TAO:
 
 <UL>
 <LI> <B>Templates</B> -- The C++ compiler must support templates.
-    However, it need not support template member functions nor must it
-    support template traits. <P>
+    However, it need not support template member functions and of
+    the advanced concepts outlined in <A
+    HREF="http://www.moderncppdesign.com/"> Modern C++ Design</A>. <P>
 
 <LI> <B>Multiple inheritance and dynamic binding</B> -- The C++
     compiler must support multiple inheritance and dynamic
     binding. <P>
 
-<LI> <B>Namespaces</B> -- ACE utilizes C++ namespaces, so the C++ compiler
-    must support them.<P>
+<LI> <B>Namespaces</B> -- ACE+TAO+CIAO utilizes C++ namespaces, so the
+    C++ compiler must support them.<P>
 
-<LI> <B>ANSI casts and RTTI</B> -- ACE uses the new ANSI C++ casts, so the C++ compiler
-    must support them, which implies support for RTTI.<P>
+<LI> <B>ANSI casts and RTTI</B> -- ACE+TAO+CIAO uses the ANSI C++
+    casts, so the C++ compiler  must support them, which implies
+    support for RTTI.<P> 
 
 </UL>
 
