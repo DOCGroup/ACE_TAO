@@ -4,6 +4,8 @@
 
 #include "HTTP_Helpers.h"
 
+ACE_RCSID(server, HTTP_Helpers, "$Id$")
+
 // = Static initialization.
 const char *const
 HTTP_Helper::months_[12]= 

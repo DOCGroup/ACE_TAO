@@ -3,6 +3,8 @@
 #include "JAWS/Server.h"
 #include "HTTP_10.h"
 
+ACE_RCSID(PROTOTYPE, main, "$Id$")
+
 #ifdef ACE_HAS_SIG_C_FUNC
 extern "C"
 {

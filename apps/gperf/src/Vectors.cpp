@@ -1,4 +1,3 @@
-/* This may look like C code, but it is really -*- C++ -*- */
 // $Id$
 
 /* Copyright (C) 1989 Free Software Foundation, Inc.
@@ -22,6 +21,8 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
 #include "Vectors.h"
+
+ACE_RCSID(src, Vectors, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
 

@@ -9,6 +9,8 @@
 #include "HTTP_Config.h"
 #include "IO.h"
 
+ACE_RCSID(server, HTTP_Response, "$Id$")
+
 static char * const EMPTY_HEADER = (char *)"";
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)

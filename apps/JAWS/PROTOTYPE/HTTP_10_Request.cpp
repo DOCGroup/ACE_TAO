@@ -1,8 +1,9 @@
 // $Id$
 
 #include "JAWS/JAWS.h"
-
 #include "HTTP_10.h"
+
+ACE_RCSID(PROTOTYPE, HTTP_10_Request, "$Id$")
 
 #define ACCESSOR(T,C,x) \
 T C##::##x (void) const { return this->##x##_; }\

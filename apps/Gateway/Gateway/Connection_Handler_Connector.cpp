@@ -2,6 +2,8 @@
 
 #include "Connection_Handler_Connector.h"
 
+ACE_RCSID(Gateway, Connection_Handler_Connector, "$Id$")
+
 Connection_Handler_Connector::Connection_Handler_Connector (void)
 {
 }

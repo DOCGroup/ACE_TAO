@@ -2,6 +2,7 @@
 
 #include "stats.h"
 
+ACE_RCSID(stress_testing, stats, "$Id$")
 
 Stats::Stats(int size) {
   throughput_ = new float[size];

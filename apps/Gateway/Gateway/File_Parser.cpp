@@ -1,10 +1,13 @@
-#if !defined (FILE_PARSER_C)
 // $Id$
+
+#if !defined (FILE_PARSER_C)
 
 #define FILE_PARSER_C
 
 #include "ace/OS.h"
 #include "File_Parser.h"
+
+ACE_RCSID(Gateway, File_Parser, "$Id$")
 
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).

@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 // $Id$
 
 #if !defined (ACE_URL_LOCATOR_C)
@@ -10,6 +8,8 @@
 #if !defined (__ACE_INLINE__)
 #include "URL_Locator.i"
 #endif
+
+ACE_RCSID(Caching, URL_Locator, "$Id$")
 
 const char * const
 ACE_URL_Locator::opname[] =

@@ -1,8 +1,11 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
+
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
+
+ACE_RCSID(Gateway, Concrete_Connection_Handlers, "$Id$")
 
 Consumer_Handler::Consumer_Handler (const Connection_Config_Info &pci)
   : Connection_Handler (pci)

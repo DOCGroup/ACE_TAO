@@ -24,6 +24,8 @@ USA.  */
 
 #include "Options.h"
 
+ACE_RCSID(src, Options, "$Id$")
+
 #if defined (ACE_HAS_GPERF)
 
 #include "ace/Get_Opt.h"

@@ -1,3 +1,58 @@
+Fri Jul 31 18:31:32 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* PROTOTYPE/HTTP_10.cpp
+	* PROTOTYPE/HTTP_10_Parse.cpp
+	* PROTOTYPE/HTTP_10_Read.cpp
+	* PROTOTYPE/HTTP_10_Request.cpp
+	* PROTOTYPE/HTTP_10_Write.cpp
+	* PROTOTYPE/HTTP_Policy.cpp
+	* PROTOTYPE/main.cpp
+	* PROTOTYPE/JAWS/Assoc_Array.cpp
+	* PROTOTYPE/JAWS/Concurrency.cpp
+	* PROTOTYPE/JAWS/Data_Block.cpp
+	* PROTOTYPE/JAWS/IO.cpp
+	* PROTOTYPE/JAWS/IO_Acceptor.cpp
+	* PROTOTYPE/JAWS/IO_Handler.cpp
+	* PROTOTYPE/JAWS/Pipeline.cpp
+	* PROTOTYPE/JAWS/Pipeline_Handler.cpp
+	* PROTOTYPE/JAWS/Pipeline_Tasks.cpp
+	* PROTOTYPE/JAWS/Policy.cpp
+	* PROTOTYPE/JAWS/Reaper.cpp
+	* PROTOTYPE/JAWS/Server.cpp
+	* PROTOTYPE/JAWS/Waiter.cpp
+	* clients/Blobby/Blob.cpp
+	* clients/Blobby/Blob_Handler.cpp
+	* clients/Blobby/Options.cpp
+	* clients/Blobby/blobby.cpp
+	* clients/Caching/ID_Generator.cpp
+	* clients/Caching/Local_Locator.cpp
+	* clients/Caching/Locator_Request_Reply.cpp
+	* clients/Caching/URL_Array_Helper.cpp
+	* clients/Caching/URL_Locator.cpp
+	* clients/Caching/URL_Properties.cpp
+	* clients/Caching/http_client.cpp
+	* clients/Caching/http_handler.cpp
+	* clients/Caching/test_URL.cpp
+	* server/HTTP_Config.cpp
+	* server/HTTP_Handler.cpp
+	* server/HTTP_Helpers.cpp
+	* server/HTTP_Request.cpp
+	* server/HTTP_Response.cpp
+	* server/HTTP_Server.cpp
+	* server/IO.cpp
+	* server/JAWS_Concurrency.cpp
+	* server/JAWS_Pipeline.cpp
+	* server/JAWS_Pipeline_Handler.cpp
+	* server/Parse_Headers.cpp
+	* server/main.cpp
+	* stress_testing/benchd.cpp
+	* stress_testing/connection.cpp
+	* stress_testing/cp.cpp
+	* stress_testing/http_tester.cpp
+	* stress_testing/stats.cpp
+	* stress_testing/util.cpp
+	Added ACE_RCSID to these files.
+
 Thu Feb 19 22:14:09 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* server/JAWS_Concurrency.cpp (put): Modified line number 11 to

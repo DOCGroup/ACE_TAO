@@ -1,9 +1,11 @@
-/* -*- C++ -*- */
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
+
 #include "Connection_Handler_Connector.h"
 #include "Event_Channel.h"
+
+ACE_RCSID(Gateway, Event_Channel, "$Id$")
 
 Event_Channel::~Event_Channel (void)
 {

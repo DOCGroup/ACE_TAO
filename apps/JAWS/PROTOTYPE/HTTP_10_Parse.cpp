@@ -3,10 +3,11 @@
 #include "HTTP_10.h"
 
 #include "JAWS/JAWS.h"
-
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
+
+ACE_RCSID(PROTOTYPE, HTTP_10_Parse, "$Id$")
 
 // --------------- PARSE TASK ----------------------
 

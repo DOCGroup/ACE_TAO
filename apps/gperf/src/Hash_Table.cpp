@@ -22,6 +22,8 @@ USA.  */
 
 #include "Hash_Table.h"
 
+ACE_RCSID(src, Hash_Table, "$Id$")
+
 #if defined (ACE_HAS_GPERF)
 
 #include "ace/ACE.h"

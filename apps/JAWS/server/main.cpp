@@ -6,6 +6,8 @@
 
 #include "HTTP_Server.h"
 
+ACE_RCSID(server, main, "$Id$")
+
 ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 
 #ifdef ACE_HAS_SIG_C_FUNC

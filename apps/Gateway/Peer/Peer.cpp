@@ -4,6 +4,8 @@
 
 #include "Peer.h"
 
+ACE_RCSID(Peer, Peer, "$Id$")
+
 Peer_Handler::Peer_Handler (void)
   : connection_id_ (0),
     msg_frag_ (0),

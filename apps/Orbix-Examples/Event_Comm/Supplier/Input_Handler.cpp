@@ -1,8 +1,10 @@
-#include "Event_Comm.hh"
 // $Id$
 
+#include "Event_Comm.hh"
 #include "Notifier_Handler.h"
 #include "Input_Handler.h"
+
+ACE_RCSID(Supplier, Input_Handler, "$Id$")
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
