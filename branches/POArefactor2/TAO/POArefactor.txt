@@ -1,3 +1,10 @@
+Tue Nov  9 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+          Extended this test to check if the correct exception is thrown when
+          we try to retrieve the default servant when none is set and when we
+          try to get/set the servant manager
+
 Tue Nov  9 14:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
