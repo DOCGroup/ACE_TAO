@@ -77,8 +77,8 @@ private:
 
 
 FTClientMain::FTClientMain ()
-  : commandIn_(stdin)
-  , inFile_(0)
+  : inFile_(0)
+  , commandIn_(stdin)
   , verbose_(NORMAL)
   , replica_pos_(0)
   , replica_name_("none")
@@ -255,7 +255,7 @@ int FTClientMain::pass (
 
       if (this->verbose_ >= NOISY)
       {
-        ACE_OS::fprintf (stdout,  "FT Client: %s\n", command);
+        ACE_OS::fprintf (stdout,  "FT Client: %s\n", command.c_str());
       }
 
       // turn echo on (based on verbose)
@@ -475,7 +475,7 @@ int FTClientMain::pass (
         {
           if (op != '?')
           {
-            ACE_OS::fprintf (stdout, "FT Client: Unknown: %s\n", command);
+            ACE_OS::fprintf (stdout, "FT Client: Unknown: %s\n", command.c_str());
           }
           commandUsage(stderr);
           break;
@@ -601,7 +601,7 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
               ACE_OS::fprintf (stdout, "FT Client:   Last command may have completed.  Retrying anyway.\n");
             }
             retry = 1;
-            ACE_OS::fprintf (stdout, "FT Client:   Retrying command: %s\n", command);
+            ACE_OS::fprintf (stdout, "FT Client:   Retrying command: %s\n", command.c_str());
           }
         }
         if (! handled)
