@@ -28,37 +28,37 @@ Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
 
 Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Unbind the Quoter Factory Finder.
       CosNaming::Name generic_Factory_Name (2);
       generic_Factory_Name.length (2);
       generic_Factory_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       generic_Factory_Name[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
-      this->quoterNamingContext_var_->unbind (generic_Factory_Name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->quoterNamingContext_var_->unbind (generic_Factory_Name,ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_TRY_ENV.print_exception ("System Exception");
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_TRY_ENV.print_exception ("User Exception");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 int
 Quoter_Generic_Factory_Server::init (int argc,
                                      char *argv[],
-                                     CORBA::Environment& env)
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->orb_manager_.init (argc,
                                argv,
-                               env) == -1)
+                               ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init"),
@@ -78,10 +78,10 @@ Quoter_Generic_Factory_Server::init (int argc,
   // Activate the object.
   CORBA::String_var str  =
     this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_,
-                                 env);
+                                 ACE_TRY_ENV);
 
   // Failure while activating the Quoter Factory Finder object
-  if (env.exception () != 0)
+  if (ACE_TRY_ENV.exception () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init: Failure while activating the Quoter Generic Factory Impl.\n"),
@@ -93,7 +93,7 @@ Quoter_Generic_Factory_Server::init (int argc,
               str.in ()));
 
   // Register the Quoter GenericFactory with the Naming Service.
-  TAO_TRY
+  ACE_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Trying to get a reference to the Naming Service.\n"));
@@ -101,7 +101,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
         orb_manager_.orb()->resolve_initial_references ("NameService");
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
@@ -110,14 +110,14 @@ Quoter_Generic_Factory_Server::init (int argc,
       // Narrow the object reference to a Naming Context.
       CosNaming::NamingContext_var namingContext_var =
         CosNaming::NamingContext::_narrow (namingObj_var.in (),
-                                           TAO_TRY_ENV);
+                                           ACE_TRY_ENV);
 
       if (CORBA::is_nil (namingContext_var.in ()))
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Naming Service.\n"));
 
@@ -128,12 +128,12 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       CORBA::Object_var quoterNamingObj_var =
         namingContext_var->resolve (quoterContextName,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       quoterNamingContext_var_ =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
-                                           TAO_TRY_ENV);
+                                           ACE_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Quoter Naming Context.\n"));
@@ -145,9 +145,9 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
-                                      this->quoter_Generic_Factory_i_ptr_->_this(TAO_TRY_ENV),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      this->quoter_Generic_Factory_i_ptr_->_this(ACE_TRY_ENV),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
 
@@ -166,34 +166,34 @@ Quoter_Generic_Factory_Server::init (int argc,
 
         CORBA::Object_var life_Cycle_Service_Obj_var =
           namingContext_var->resolve (life_Cycle_Service_Name,
-                                           TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+        ACE_TRY_CHECK;
 
         LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
           LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in (),
-                                                         TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+                                                         ACE_TRY_ENV);
+        ACE_TRY_CHECK;
 
         ACE_DEBUG ((LM_DEBUG, "Have a proper reference to Life Cycle Service.\n"));
 
-        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this(TAO_TRY_ENV);
+        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this(ACE_TRY_ENV);
 
         life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
-				  		                                    "Bryan 503",               // location
-					  	                                    "Generic Factory",         // description
-						                                      object_var.in (),
-						                                      TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+                                                  "Bryan 503",               // location
+                                                  "Generic Factory",         // description
+                                                  object_var.in (),
+                                                  ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         ACE_DEBUG ((LM_DEBUG,
                     "Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
       }
             
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Quoter_Generic_Factory_Server::init: Exception");
+      ACE_TRY_ENV.print_exception ("Quoter_Generic_Factory_Server::init: Exception");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
 
   return 0;
@@ -253,30 +253,30 @@ main (int argc, char *argv [])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_Quoter: Quoter_Generic_Factory_Server \n\n"));
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (quoter_Generic_Factory_Server.init (argc,
                                               argv,
-                                              TAO_TRY_ENV) == -1)
+                                              ACE_TRY_ENV) == -1)
         return 1;
       else
         {
-          quoter_Generic_Factory_Server.run (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          quoter_Generic_Factory_Server.run (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
