@@ -85,7 +85,8 @@ template <class SVC_HANDLER> int
 TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                                                              void *arg)
 {
-  sh->transport ()->opened_as (TAO_SERVER_ROLE);
+  sh->transport ()->opened_as (TAO::TAO_SERVER_ROLE);
+
   // Indicate that this transport was opened in the server role
   if (TAO_debug_level > 6)
     ACE_DEBUG ((LM_DEBUG,

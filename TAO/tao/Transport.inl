@@ -38,22 +38,23 @@ TAO_Transport::bidirectional_flag (int flag)
   this->bidirectional_flag_ = flag;
 }
 
-ACE_INLINE TAO_Connection_Role
+ACE_INLINE TAO::Connection_Role
 TAO_Transport::opened_as () const
-{ 
+{
   return this->opening_connection_role_;
 }
 
 ACE_INLINE void
-TAO_Transport::opened_as (TAO_Connection_Role role)
+TAO_Transport::opened_as (TAO::Connection_Role role)
 {
   this->opening_connection_role_ = role;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Transport::acts_as_server (void) const
 {
-  return (this->opened_as() == TAO_SERVER_ROLE || this->bidirectional_flag_ == 1) ? 1 : 0;
+  return (this->opened_as () == TAO::TAO_SERVER_ROLE ||
+          this->bidirectional_flag_ == 1) ? true : false;
 }
 
 ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *

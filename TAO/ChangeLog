@@ -1,3 +1,24 @@
+Fri Aug 20 19:15:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Wait_On_LF_No_Upcall.cpp:
+	* tao/Wait_On_LF_No_Upcall.h:
+
+	  Moved the classes within the TAO namespace. The TAO_* classes
+	  have to die. New classes needs to go in TAO namespace. 
+
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+	* tao/Transport.inl:
+
+	  The Connection_Role enum is now in TAO namespace instead of the
+	  the global namespace. 
+	
+ 	* tao/Acceptor_Impl.cpp:
+	* tao/Transport_Connector.cpp:
+	* tao/default_client.cpp:
+
+	  Changes that got propagated from above. 
+
 Fri Aug 20 10:36:57 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/Wait_On_LF_No_Upcall.h: Fix fuzz build errors from missing

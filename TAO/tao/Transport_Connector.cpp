@@ -244,26 +244,30 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                                      timeout);
       if (result == 0)
         {
-          r->transport ()->opened_as (TAO_CLIENT_ROLE);
+          r->transport ()->opened_as (TAO::TAO_CLIENT_ROLE);
+
           if (TAO_debug_level > 4)
             ACE_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - Transport_Connector::connect, "
                         "opening Transport[%d] in TAO_CLIENT_ROLE\n",
                         r->transport ()->id ()));
         }
+
       return result;
     }
 
   if (TAO_debug_level > 4)
     {
-      TAO_Connection_Role cr = base_transport->opened_as ();
+      TAO::Connection_Role cr =
+        base_transport->opened_as ();
+
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport_Connector::connect, "
                   "got an existing %s Transport[%d] in role %s\n",
                   base_transport->is_connected () ? "connected" : "unconnected",
                   base_transport->id (),
-                  cr == TAO_SERVER_ROLE ? "TAO_SERVER_ROLE" :
-                  cr == TAO_CLIENT_ROLE ? "TAO_CLIENT_ROLE" :
+                  cr == TAO::TAO_SERVER_ROLE ? "TAO_SERVER_ROLE" :
+                  cr == TAO::TAO_CLIENT_ROLE ? "TAO_CLIENT_ROLE" :
                   "TAO_UNSPECIFIED_ROLE" ));
     }
 
