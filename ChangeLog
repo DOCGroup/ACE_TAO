@@ -1,8 +1,12 @@
+Mon Jul 22 18:28:48 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.h: Doxygen fixes.
+
 Mon Jul 22 16:57:19 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * bin/g++dep: Added a -R option that allows you to specify a
-        variable which should be used to generate relative paths if it's
-        defined.
+          variable which should be used to generate relative paths if it's
+          defined.
 
 Mon Jul 22 17:45:48 2002  Steve Huston  <shuston@riverace.com>
 

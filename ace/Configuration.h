@@ -98,7 +98,7 @@ public:
 
   /// Constructor that initializes to a pointer to a concrete internal key.
   /**
-   * @arg key The section key to reference. Calls add_ref() with @a key.
+   * @param key The section key to reference. Calls add_ref() with @a key.
    */
   ACE_EXPLICIT ACE_Configuration_Section_Key (ACE_Section_Key_Internal *key);
 
@@ -154,11 +154,12 @@ public:
   /**
    * Opens a named section in an existing section.
    *
-   * @arg base        Existing section in which to open the named section.
-   * @arg sub_section Name of the section to open.
-   * @arg create      If zero, the named section must exist. If non-zero,
-   *                  the named section will be created if it does not exist.
-   * @arg result      Reference; receives the section key for the new section.
+   * @param base        Existing section in which to open the named section.
+   * @param sub_section Name of the section to open.
+   * @param create      If zero, the named section must exist. If non-zero,
+   *                    the named section will be created if it does not exist.
+   * @param result      Reference; receives the section key for the new
+   *                    section.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -170,10 +171,10 @@ public:
 
   /// Removes a named section.
   /**
-   * @arg key          Section key to remove the named section from.
-   * @arg sub_section  Name of the section to remove.
-   * @arg recursive    If non zero, any subkeys below @a sub_section are
-   *                   removed as well.
+   * @param key          Section key to remove the named section from.
+   * @param sub_section  Name of the section to remove.
+   * @param recursive    If non zero, any subkeys below @a sub_section are
+   *                     removed as well.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -185,12 +186,12 @@ public:
   /**
    * Enumerates through the values in a section.
    *
-   * @arg key    Section key to iterate through.
-   * @arg index  Iteration position. Must be zero on the first call to iterate
-   *             through @a key. Increment @a index by one on each successive
-   *             call to this method.
-   * @arg name   Receives the value's name.
-   * @arg type   Receives the value's data type.
+   * @param key    Section key to iterate through.
+   * @param index  Iteration position. Must be zero on the first call to
+   *               iterate through @a key. Increment @a index by one on each
+   *               successive call to this method.
+   * @param name   Receives the value's name.
+   * @param type   Receives the value's data type.
    *
    * @note  You may not delete or add values while enumerating.  If the
    *        section is modified during enumeration, results are undefined;
@@ -208,11 +209,11 @@ public:
   /**
    * Enumerates through the subsections in a section.
    *
-   * @arg key    Section key to iterate through.
-   * @arg index  Iteration position. Must be zero on the first call to iterate
-   *             through @a key. Increment @a index by one on each successive
-   *             call to this method.
-   * @arg name   Receives the subsection's name.
+   * @param key    Section key to iterate through.
+   * @param index  Iteration position. Must be zero on the first call to
+   *               iterate through @a key. Increment @a index by one on each
+   *               successive call to this method.
+   * @param name   Receives the subsection's name.
    *
    * @note  You may not modify the @a key section while enumerating.  If the
    *        section is modified during enumeration, results are undefined;
@@ -227,10 +228,10 @@ public:
 
   /// Sets a string-typed value.
   /**
-   * @arg key     Configuration section to set the value in.
-   * @arg name    Name of the configuration value to set. If a value with
-   *              the specified name exists, it is replaced.
-   * @arg value   The string to set the configuration value to.
+   * @param key     Configuration section to set the value in.
+   * @param name    Name of the configuration value to set. If a value with
+   *                the specified name exists, it is replaced.
+   * @param value   The string to set the configuration value to.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -241,10 +242,10 @@ public:
 
   /// Sets a integer-typed value.
   /**
-   * @arg key     Configuration section to set the value in.
-   * @arg name    Name of the configuration value to set. If a value with
-   *              the specified name exists, it is replaced.
-   * @arg value   The integer to set the configuration value to.
+   * @param key     Configuration section to set the value in.
+   * @param name    Name of the configuration value to set. If a value with
+   *                the specified name exists, it is replaced.
+   * @param value   The integer to set the configuration value to.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -255,11 +256,11 @@ public:
 
   /// Sets a binary-typed value.
   /**
-   * @arg key     Configuration section to set the value in.
-   * @arg name    Name of the configuration value to set. If a value with
-   *              the specified name exists, it is replaced.
-   * @arg data    Pointer to the binary data for the value.
-   * @arg length  Number of bytes for the new value.
+   * @param key     Configuration section to set the value in.
+   * @param name    Name of the configuration value to set. If a value with
+   *                the specified name exists, it is replaced.
+   * @param data    Pointer to the binary data for the value.
+   * @param length  Number of bytes for the new value.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -271,10 +272,10 @@ public:
 
   /// Gets a string-typed value.
   /**
-   * @arg key     Configuration section to get the value from.
-   * @arg name    Name of the configuration value to get.
-   * @arg value   Receives the configuration value if it exists and
-   *              has type STRING.
+   * @param key     Configuration section to get the value from.
+   * @param name    Name of the configuration value to get.
+   * @param value   Receives the configuration value if it exists and
+   *                has type STRING.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -285,10 +286,10 @@ public:
 
   /// Gets an integer-typed value.
   /**
-   * @arg key     Configuration section to get the value from.
-   * @arg name    Name of the configuration value to get.
-   * @arg value   Receives the configuration value if it exists and
-   *              has type INTEGER.
+   * @param key     Configuration section to get the value from.
+   * @param name    Name of the configuration value to get.
+   * @param value   Receives the configuration value if it exists and
+   *                has type INTEGER.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -299,13 +300,13 @@ public:
 
   /// Gets a binary-typed value.
   /**
-   * @arg key     Configuration section to get the value from.
-   * @arg name    Name of the configuration value to get.
-   * @arg data    Receives a pointer to memory holding the binary data
-   *              for the value. This method allocates the memory pointed
-   *              to using operator new[]. The caller is responsible for
-   *              freeing the memory using operator delete[].
-   * @arg length  Receives the number of bytes in the value.
+   * @param key     Configuration section to get the value from.
+   * @param name    Name of the configuration value to get.
+   * @param data    Receives a pointer to memory holding the binary data
+   *                for the value. This method allocates the memory pointed
+   *                to using operator new[]. The caller is responsible for
+   *                freeing the memory using operator delete[].
+   * @param length  Receives the number of bytes in the value.
    *
    * @retval   0 for success; caller is responsible for freeing the
    *             returned memory.
@@ -319,9 +320,9 @@ public:
   /**
    * Retrieves the type of a named configuration value.
    *
-   * @arg key     Configuration section to look up the name in.
-   * @arg name    Name of the configuration value to get the type of.
-   * @arg type    Receives the data type of the named value, if it exists.
+   * @param key     Configuration section to look up the name in.
+   * @param name    Name of the configuration value to get the type of.
+   * @param type    Receives the data type of the named value, if it exists.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
@@ -332,8 +333,8 @@ public:
 
   /// Removes a named value.
   /**
-   * @arg key     Configuration section to remove the named value from.
-   * @arg name    Name of the configuration value to remove.
+   * @param key     Configuration section to remove the named value from.
+   * @param name    Name of the configuration value to remove.
    *
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
