@@ -1,3 +1,12 @@
+Mon Nov 10 16:49:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/Time_Service/Clerk_i.cpp:
+	  Added #include ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+	  Added #include ace/OS_NS_stdio.h to get ACE_OS::sprintf
+	  Added #include ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
+
 Mon Nov 10 16:41:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
