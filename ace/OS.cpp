@@ -1266,7 +1266,50 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                       ACE_id_t id)
 {
   ACE_TRACE ("ACE_OS::sched_params");
-# if defined (CHORUS)
+#if defined (ACE_HAS_PACE)
+  ACE_UNUSED_ARG (id);
+  if (sched_params.quantum () != ACE_Time_Value::zero)
+  {
+    // quantums not supported
+    errno = EINVAL;
+    return -1;
+  }
+
+  // Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+  // providing this code for 1003.1c PThreads.  Please note that this
+  // has only been tested for POSIX 1003.1c threads, and may cause problems
+  // with other PThreads flavors!
+
+  struct sched_param param;
+  param.sched_priority = sched_params.priority ();
+
+  if (sched_params.scope () == ACE_SCOPE_PROCESS)
+  {
+    return pace_sched_setscheduler (0, // this process
+                                    sched_params.policy (),
+                                    &param) == -1 ? -1 : 0;
+  }
+  else if (sched_params.scope () == ACE_SCOPE_THREAD)
+  {
+    ACE_thread_t thr_id = ACE_OS::thr_self ();
+    return pthread_setschedparam (thr_id,
+                                  sched_params.policy (),
+                                  &param);
+  }
+#if defined (sun)
+  // We need to be able to set LWP priorities on Suns, even without
+  // ACE_HAS_STHREADS, to obtain preemption.
+  else if (sched_params.scope () == ACE_SCOPE_LWP)
+  {
+    return ACE_OS::set_scheduling_params (sched_params, id);
+  }
+#endif /* sun */
+  else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
+  {
+    errno = EINVAL;
+    return -1;
+  }
+# elif defined (CHORUS)
   ACE_UNUSED_ARG (id);
   int result;
   struct sched_param param;
@@ -1402,7 +1445,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   ACE_UNUSED_ARG (sched_params);
   ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* CHORUS */
+#endif /* ACE_HAS_PACE */
 }
 
 // = Static initialization.
