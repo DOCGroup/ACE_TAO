@@ -38,6 +38,7 @@ Mistakes page</a>.<P>
   <LI><A HREF="#egcs">Compiling ACE with egcs</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
   <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
+  <LI><A HREF="#resource requirements">System Resource Requirements</A>
   <LI><A HREF="#advanced">Advanced Topics</A>
 </UL>
 
@@ -1217,17 +1218,15 @@ A few additional Windows Notes, from Paul von Behren:<p>
   <li>Cygnus has created a Win32 API which is compatible with a
       ``generic'' Unix environment.  Using this library, they have ported a
       large collection of GNU tools to WinNT/95 - including a port of
-      gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">
-      http://www.cygnus.com/misc/gnu-win32/</A>
+      gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">http://www.cygnus.com/misc/gnu-win32/</A>
       WindRiver provides a subset of these tools - including make
       and gcc cross-compilers.<p>
   <li>To set up the command-prompt build environemnt, run
       <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
       implicitly within the Tornado IDE.<p>
   <li>To run <code>ace_ld</code>, you still need perl installed -
-      see <A href="http://www.activestate.com/software/default.htm">
-      http://www.activestate.com/software/default.htm</A> for Windows
-      perl.<p>
+      see <A href="http://www.activestate.com/software/default.htm">http://www.activestate.com/software/default.htm</A>
+      for Windows perl.<p>
   <li>But make does work in "leaf" directories (those with no
       subdirectories).  You can make the <code>ACE_ROOT\ace directory</code>
       creating the library libACE.a.  If perl is available, make also works
@@ -1454,6 +1453,34 @@ If you are using MSVC 4.x, you will need to add another directory to
 your global include and library paths, ACE_ROOT/netsvcs/lib.  When you
 use the dynamic libraries, make sure to also include ACE_ROOT/netsvcs/lib
 in your PATH.<P>
+
+
+<HR><P>
+<H3><A NAME="resource requirements">System Resource Requirements</A></H3>
+The amount of system resources required to build ACE (and TAO) varies
+greatly.  Platform, build options, and components built primarily
+influence the required system resources.  As a rough guide, the
+typical peak memory requirement is about 256 Mb.  An entire build of
+ACE+TAO can use over 700 Mb of disk space.<p>
+
+If you run out of memory when building, you might consider trying
+some or all of these suggestions:<p>
+<ul>
+  <li>Enable or increase virtual memory.  If you're on a Linux platform,
+    see the <code>mkswap</code> man page.<p>
+  <li>Disable/enable optimization and/or debugging.  See the
+    <a href="#flags">Makefile Flags</a> discussion for information
+    on how to do that via ACE's Makefiles.<p>
+  <li>If you're using g++, try removing <code>-pipe</code> from
+    <code>CFLAGS</code> in your
+    <code>include/makeinclude/platform_macros.GNU</code> file.<p>
+  <li>Restrict the components that you build.  For ACE and TAO, see the
+    discussion of <code>ACE_COMPONENTS</code> in the
+    <a href="docs/ACE-subsets.html">ACE subsets</a> page.  For TAO's
+    orbsvcs, see the discussion of <code>TAO_ORBSVCS</code> in
+    <a href="TAO/docs/configurations.html#orbsvcs">orbsvcs Library configuration information</a>.<p>
+</ul>
+
 
 <HR><P>
 <H3><A NAME="advanced">Advanced Topics</A></H3>
