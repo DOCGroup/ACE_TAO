@@ -253,6 +253,34 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
     }
 }
 
+// copying version for typecodes
+void
+CORBA_Any::operator<<= (CORBA::TypeCode_ptr& tc)
+{
+  CORBA::Environment env;
+  CORBA::TypeCode_ptr *_tao_tc;
+  ACE_NEW (_tao_tc, CORBA::TypeCode_ptr);
+  *_tao_tc = CORBA::TypeCode::_duplicate (tc);
+  this->replace (CORBA::_tc_TypeCode,
+                 _tao_tc,
+                 CORBA::B_TRUE,
+                 env);
+}
+
+// copying insertion for CORBA objects
+void
+CORBA::Any::operator<<= (CORBA::Object_ptr& _tao_elem)
+{
+  CORBA::Environment env;
+  CORBA::Object_ptr *_tao_object_ptr;
+  ACE_NEW (_tao_object_ptr, CORBA::Object_ptr);
+  *_tao_object_ptr = CORBA::Object::_duplicate (_tao_elem);
+  this->replace (CORBA::_tc_Object,
+                 _tao_object_ptr,
+                 CORBA::B_TRUE,
+                 env);
+}
+
 // insertion of from_string
 void
 CORBA_Any::operator<<= (from_string s)
@@ -469,6 +497,33 @@ CORBA_Any::operator>>= (char *&s) const
     return CORBA::B_FALSE;
 }
 
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_TypeCode, env))
+    {
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+          CORBA::Boolean flag = 
+            (stream.decode (CORBA::_tc_TypeCode,
+                            &tc,
+                            0,
+                            env)
+              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? CORBA::B_TRUE : CORBA::B_FALSE;
+          return flag;
+        }
+      else
+        {
+          tc = *(CORBA::TypeCode_ptr *) this->value_;
+          return CORBA::B_TRUE;
+        }
+    }
+  else
+    return CORBA::B_FALSE;
+}
 // = extraction into the special types
 
 CORBA::Boolean
