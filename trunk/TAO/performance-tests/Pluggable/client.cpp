@@ -22,8 +22,5 @@ main (int argc, char **argv)
 
   ACE_TIMEPROBE_PRINT;
 
-  int status;
-  ACE_OS::thr_exit (&status);
-
   return retval;
 }
