@@ -7211,7 +7211,7 @@ ACE_OS::thr_sigsetmask (int how,
 #   elif defined(ACE_HAS_PTHREADS_DRAFT4) || \
     defined (ACE_HAS_PTHREADS_DRAFT6) || (defined (_UNICOS) && _UNICOS == 9)
   ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
-#   else
+#   elif !defined (ACE_LACKS_PTHREAD_SIGMASK)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
                                        ace_result_), int, -1);
 #   endif /* AIX */
