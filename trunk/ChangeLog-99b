@@ -1,3 +1,10 @@
+Fri May 14 09:51:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Message_Block.h:
+	* ace/Message_Block.cpp:
+	  Modified default constructor and constructor taking a Data_Block
+	  to also take an Allocator.
+
 Fri May 14 09:14:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_cxx.GNU:

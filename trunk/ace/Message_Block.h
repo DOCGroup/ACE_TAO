@@ -100,10 +100,11 @@ public:
   };
 
   // = Initialization and termination.
-  ACE_Message_Block (void);
+  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
   // Create an empty message.
 
-  ACE_Message_Block (ACE_Data_Block *);
+  ACE_Message_Block (ACE_Data_Block *,
+                     ACE_Allocator *message_block_allocator = 0);
   // Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *.
 
   ACE_Message_Block (const char *data,
