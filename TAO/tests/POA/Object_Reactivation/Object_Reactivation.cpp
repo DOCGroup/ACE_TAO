@@ -19,6 +19,34 @@
 
 #include "testS.h"
 #include "ace/Task.h"
+#include "ace/Get_Opt.h"
+
+static int debug = 1;
+
+static int
+parse_args (int argc, char **argv)
+{
+  ACE_Get_Opt get_opts (argc, argv, "d:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'd':
+        debug = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-d debug "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+
+  return 0;
+}
 
 class test_i : public POA_test
 {
@@ -48,18 +76,24 @@ test_i::deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) Deactivating servant\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, "(%t) Deactivating servant\n"));
+
   poa->deactivate_object (id.in ()
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete: signaling main thread and going to sleep\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete: signaling main thread and going to sleep\n"));
+
   int result = this->event_.signal ();
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   ACE_OS::sleep (3);
-  ACE_DEBUG ((LM_DEBUG, "(%t) test_i::deactivate_self complete\n"));
+
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, "(%t) test_i::deactivate_self complete\n"));
 }
 
 class Activator : public ACE_Task_Base
@@ -100,13 +134,15 @@ Activator::Activator (test_ptr t,
 int
 Activator::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for deactivation to complete\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for deactivation to complete\n"));
 
   int result = this->event_.wait ();
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete, trying to activate\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete, trying to activate\n"));
 
   ACE_TRY_NEW_ENV
     {
@@ -125,7 +161,8 @@ Activator::svc (void)
           ACE_TRY_CHECK;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) Activation complete\n"));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG, "(%t) Activation complete\n"));
     }
   ACE_CATCHANY
     {
@@ -183,6 +220,12 @@ main (int argc, char **argv)
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      int parse_args_result =
+        parse_args (argc, argv);
+
+      if (parse_args_result != 0)
+        return parse_args_result;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -242,10 +285,10 @@ main (int argc, char **argv)
 
       Deactivator deactivator2 (test_object2.in ());
 
-      if (activator1.activate (THR_BOUND) != 0 ||
-          activator2.activate (THR_BOUND) != 0 ||
-          deactivator1.activate (THR_BOUND) != 0 ||
-          deactivator2.activate (THR_BOUND) != 0)
+      if (activator1.activate () != 0 ||
+          activator2.activate () != 0 ||
+          deactivator1.activate () != 0 ||
+          deactivator2.activate () != 0)
         return -1;
 
       int result = ACE_Thread_Manager::instance ()->wait ();

@@ -183,8 +183,8 @@ main (int argc, char **argv)
       Worker worker2 (object2.in ());
 
       int result =
-        worker1.activate (THR_BOUND) != 0 ||
-        worker2.activate (THR_BOUND) != 0;
+        worker1.activate () != 0 ||
+        worker2.activate () != 0;
       ACE_ASSERT (result == 0);
 
       result = ACE_Thread_Manager::instance ()->wait ();
