@@ -305,7 +305,8 @@ public:
   // Helper method to initialize the obj_ member of each generated abstract
   // base class.
 
-  int gen_operation_table (void);
+  int gen_operation_table (const char *flat_name,
+                           const char *skeleton_class_name);
   // Generate the operation table including entries for inherited interfaces.
 
   int gen_optable_entries (be_interface *derived_interface,
