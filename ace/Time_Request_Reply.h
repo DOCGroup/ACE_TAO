@@ -60,20 +60,28 @@ public:
   // Get the fixed size of message
   ssize_t size (void) const;
 
-  // = Set/get the type of the message.
+  /// Get the type of the message.
   ACE_INT32 msg_type (void) const;
+
+  /// Set the type of the message.
   void msg_type (ACE_INT32);
 
-  // = Set/get the time
+  /// Get the time
   ACE_UINT32 time (void) const;
+
+  // Set the time
   void time (ACE_UINT32 t);
 
-  // = Set/get the blocking semantics.
+  /// Get the blocking semantics.
   ACE_UINT32 block_forever (void) const;
+
+  ///  Set the blocking semantics.
   void block_forever (ACE_UINT32);
 
-  // = Set/get the timeout.
+  /// Get the timeout.
   ACE_Time_Value timeout (void) const;
+
+  /// Set the timeout.
   void timeout (const ACE_Time_Value timeout);
 
   /// Encode the message before transmission.
@@ -92,21 +100,21 @@ private:
 
   struct Transfer
   {
+    /// Type of the request (i.e., <TIME_UPDATE>)
     ACE_INT32 msg_type_;
-    // Type of the request (i.e., <TIME_UPDATE>)
 
+    /// Indicates if we should block forever.  If 0, then <secTimeout_>
+    /// and <usecTimeout_> indicates how long we should wait.
     ACE_UINT32 block_forever_;
-    // Indicates if we should block forever.  If 0, then <secTimeout_>
-    // and <usecTimeout_> indicates how long we should wait.
 
+    /// Max seconds willing to wait for name if not blocking forever.
     ACE_UINT32 sec_timeout_;
-    // Max seconds willing to wait for name if not blocking forever.
 
+    /// Max micro seconds to wait for name if not blocking forever.
     ACE_UINT32 usec_timeout_;
-    // Max micro seconds to wait for name if not blocking forever.
 
+    /// The data portion contains <time_>
     ACE_UINT32 time_;
-    // The data portion contains <time_>
   };
 
   /// Transfer buffer.
