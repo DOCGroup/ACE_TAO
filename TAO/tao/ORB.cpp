@@ -1822,7 +1822,6 @@ template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 template class CACHED_CONNECT_STRATEGY;
 template class ACE_Guard<TAO_Cached_Connector_Lock>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>;
 template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>;
 template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
 template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
@@ -1854,7 +1853,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
 #pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>
 #pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
 #pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
