@@ -77,8 +77,6 @@ class JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
   //     activate.
 {
 public:
-  JAWS_Thread_Per_Task (long flags = THR_NEW_LWP, int maxthreads = 20);
-
   virtual int open (long flags = THR_NEW_LWP, int maxthreads = 20);
   // Initiate the thread_per task
 
