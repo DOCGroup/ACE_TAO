@@ -4154,6 +4154,14 @@ typedef fd_set ACE_FD_SET_TYPE;
 #   define INET6_ADDRSTRLEN 46
 # endif /* INET6_ADDRSTRLEN */
 
+#if defined (ACE_HAS_IPV6)
+#define ACE_ADDRESS_FAMILY_INET AF_INET6
+#define ACE_PROTOCOL_FAMILY_INET PF_INET6
+#else
+#define ACE_ADDRESS_FAMILY_INET AF_INET
+#define ACE_PROTOCOL_FAMILY_INET PF_INET
+#endif
+
 # if defined (ACE_LACKS_SIGSET)
 #    if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 typedef pace_sigset_t sigset_t;
