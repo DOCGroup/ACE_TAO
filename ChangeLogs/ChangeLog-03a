@@ -1,3 +1,8 @@
+Tue Dec 18 13:04:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/make_pretty.pl:
+	  Incorporate numerous pending changes and improvements.
+
 Tue Dec 18 12:45:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/nightlybuilds/builds.lst:
