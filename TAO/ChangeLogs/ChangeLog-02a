@@ -1,3 +1,15 @@
+Sun Mar 18 10:40:32 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Static.dsp:
+
+	  Removed apparently obsolete references to
+	  Transport_Connection_Property.cpp.  Whoever removed that file
+	  neglected to document that fact, and neglected to update this
+	  project file.  Strike one, whoever you are!
+
+	  Added missing files `Base_Transport_Property.*' to this project
+	  file.
+
 Sun Mar 18 08:53:34 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h:
