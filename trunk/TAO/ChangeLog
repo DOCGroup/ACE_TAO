@@ -1,3 +1,73 @@
+Mon Apr 19 08:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDirPolicyC.{h,cpp,i}:
+        * tao/Domain/DomainS_T.{h,cpp,i}:
+        * tao/Domain/DomainS.{h,cpp,i}:
+        * tao/DynamicAny/DynamicAnyC.{h,cpp,i}:
+        * tao/IFR_Client/IFR_BaseC.{h,cpp,i}:
+        * tao/IFR_Client/IFR_BasicC.{h,cpp,i}:
+        * tao/IFR_Client/IFR_ComponentsC.{h,cpp,i}:
+        * tao/IFR_Client/IFR_ExtendedC.{h,cpp,i}:
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp,i}:
+        * tao/IORTable/IORTableC.{h,cpp,i}:
+        * tao/Messaging/Messaging_No_ImplC.{h,cpp,i}:
+        * tao/Messaging/Messaging_RT_PolicyC.{h,cpp,i}:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.{h,cpp,i}:
+        * tao/Messaging/MessagingC.{h,cpp,i}:
+        * tao/Messaging/MessagingS.{h,cpp,i}:
+        * tao/Messaging/MessagingS_T.{h,cpp,i}:
+        * tao/Messaging/TAO_ExtC.{h,cpp,i}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp,i}:
+        * tao/RTCORBA/RTCORBAC.{h,cpp,i}:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTPortableServer/RTPortableServerC.{h,cpp,i}:
+        * tao/RTScheduling/RTSchedulerC.{h,cpp,i}:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.{h,cpp,inl}:
+        * tao/PortableServer/Default_ORTC.{h,cpp,i}:
+        * tao/PortableServer/ImplRepoC.{h,cpp,i}:
+        * tao/PortableServer/ImplRepoS.{h,cpp,i}:
+        * tao/PortableServer/ImR_LocatorC.{h,cpp,i}:
+        * tao/PortableServer/ImR_LocatorS.{h,cpp,i}:
+        * tao/PortableServer/PolicyS.{h,cpp,i}:
+        * tao/PortableServer/PolicyS_T.{h,cpp,i}:
+        * tao/IORManipulation/IORC.{h,cpp,i}:
+          Regenerated these files
+
+        * tao/IFR_Client/IFR_BaseA.cpp:
+        * tao/IFR_Client/IFR_BasicA.cpp:
+        * tao/IFR_Client/IFR_ComponentsA.cpp:
+        * tao/IFR_Client/IFR_ExtendedA.cpp:
+        * tao/IORManipulation/IORA.cpp:
+          Added these new files to the repo
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/Messaging/Messaging.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+          Added include of tao/CDR.h
+
+        * tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_Extended.pidl:
+        * tao/Policy/Policy.pidl:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+        * tao/RTCORBA/RTCORBA.pidl:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/IORManipulation/IOR.pidl:
+          Updated regeneration message
+
+        * tao/IFR_Client/Makefile:
+        * tao/IORManipulation/Makefile:
+          Added new files
+
 Fri Apr 16 16:32:32 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args):
