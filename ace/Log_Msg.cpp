@@ -25,10 +25,8 @@
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
 #include "ace/streams.h"
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-# include "ace/Object_Manager.h"
-#endif /* ACE_MT_SAFE */
+#include "ace/Object_Manager.h"
+#include "ace/Managed_Object.h"
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
@@ -104,7 +102,7 @@ ACE_Log_Msg_Manager::get_lock (void)
 
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
 
-      // Allocated the ACE_Log_Msg IPC instance.
+      // Allocate the ACE_Log_Msg IPC instance.
       ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
     }
 
@@ -128,11 +126,6 @@ ACE_Log_Msg_Manager::close (void)
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
-
-  // Destroy the static message queue instance.
-  ACE_Log_Msg_message_queue->close ();
-  delete ACE_Log_Msg_message_queue;
-  ACE_Log_Msg_message_queue = 0;
 }
 
 /* static */
@@ -241,9 +234,15 @@ ACE_Log_Msg::instance (void)
     ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
 
   // Singleton implementation.
-  static ACE_Log_Msg log_msg;
+  static ACE_Cleanup_Adapter<ACE_Log_Msg> *log_msg = 0;
+  if (log_msg == 0)
+    {
+      ACE_NEW_RETURN (log_msg, ACE_Cleanup_Adapter<ACE_Log_Msg>, 0);
+      // Register the instance for destruction at program termination.
+      ACE_Object_Manager::at_exit (log_msg);
+    }
 
-  return &log_msg;
+  return &log_msg->object ();
 #endif /* defined (ACE_MT_SAFE) */
 }
 #undef ACE_NEW_RETURN_I
@@ -419,12 +418,12 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
     {
 #     if defined (ACE_HAS_TSS_EMULATION)
         ACE_Log_Msg_Manager::close ();
-#     elif !defined (ACE_MT_SAFE) || ACE_MT_SAFE == 0
-        // Destroy the static message queue instance.
-        ACE_Log_Msg_message_queue->close ();
-        delete ACE_Log_Msg_message_queue;
-        ACE_Log_Msg_message_queue = 0;
-#     endif /* ACE_HAS_TSS_EMULATION || ! ACE_MT_SAFE */
+#     endif /* ACE_HAS_TSS_EMULATION */
+
+      // Destroy the message queue instance.
+      ACE_Log_Msg_message_queue->close ();
+      delete ACE_Log_Msg_message_queue;
+      ACE_Log_Msg_message_queue = 0;
 
       if (ACE_Log_Msg::program_name_)
         {
@@ -1205,3 +1204,13 @@ ACE_Log_Msg::getpid (void) const
 
   return ACE_Log_Msg::pid_;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+# if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+    template class ACE_Cleanup_Adapter<ACE_Log_Msg>;
+# endif /* ! ACE_MT_SAFE */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+#   pragma instantiate ACE_Cleanup_Adapter<ACE_Log_Msg>
+# endif /* ! ACE_MT_SAFE */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
