@@ -61,49 +61,47 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
   if (CORBA::is_nil (naming_obj.in ()))
     {
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "\nNameService not found; calling init\n"));
-      return (this->init_new_naming
-	      (orb, child_poa, argc, argv));  
+        ACE_DEBUG ((LM_DEBUG,
+                   "\nNameService not found; calling init\n"));
+      return (this->init_new_naming (orb, child_poa, argc, argv));
     }
-  
   else
     {
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "\nNameService found!\n")); 
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nNameService found!\n")); 
       
       if (this->naming_context_impl_.init () == -1)
-	return -1;
+        return -1;
       TAO_TRY
-	{
-	  this->naming_context_ =
-	    CosNaming::NamingContext::_narrow (naming_obj.in (),
-					       TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+        {
+          this->naming_context_ =
+            CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                               TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-	  CORBA::String_var str =
-	    orb->object_to_string (naming_obj.in (),
-				   TAO_TRY_ENV);
+          CORBA::String_var str =
+            orb->object_to_string (naming_obj.in (),
+                                   TAO_TRY_ENV);
 	  
-	  TAO_CHECK_ENV;
+          TAO_CHECK_ENV;
 	      
-	  this->naming_service_ior_ = str.in ();
-	  this->naming_context_name_ = ""; // No name
-	}
+          this->naming_service_ior_ = str.in ();
+          this->naming_context_name_ = ""; // No name
+        }
       TAO_ENDTRY;
       
       char* naming_ior = ACE_OS::strdup (this->naming_service_ior_.in ());
-      u_short port = TAO_ORB_Core_instance ()->orb_params ()
-	->name_service_port ();
+      u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
 
       ACE_NEW_RETURN (this->ior_multicast_,
-		      TAO_IOR_Multicast (naming_ior,
-					 port,
-					 ACE_DEFAULT_MULTICAST_ADDR,
-					 TAO_SERVICEID_NAMESERVICE),
-		      -1);
+                      TAO_IOR_Multicast (naming_ior,
+                                         port,
+                                         ACE_DEFAULT_MULTICAST_ADDR,
+                                         TAO_SERVICEID_NAMESERVICE),
+                      -1);
     }
+  return 0;
 }
 	    
 // Function to initialize the name server object under the passed ORB
