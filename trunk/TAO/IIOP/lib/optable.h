@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+//
 // ============================================================================
 //
 // = LIBRARY
@@ -23,81 +25,90 @@
 #include "orb.h"
 
 // Dynamic Hashing scheme
-typedef ACE_Hash_Map_Manager<ACE_CString, skeleton, ACE_RW_Mutex>
-                                              OP_MAP_MANAGER;
+typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> OP_MAP_MANAGER;
 
-class TAO_Dynamic_Hash_OpTable: public virtual TAO_Operation_Table
+class TAO_Dynamic_Hash_OpTable: public TAO_Operation_Table
 {
 public:
   TAO_Dynamic_Hash_OpTable(CORBA_ULong size=0);
 
   ~TAO_Dynamic_Hash_OpTable();
 
-  virtual int register_op(const CORBA_String &opname, skeleton skel_ptr);
-  // registers a operation skeleton into the operation table and associates the key with
-  // it
-  virtual skeleton lookup(const CORBA_String &opname);
-  // CORBA operation name lookup strategy
+  virtual int bind(const CORBA_String &opname, const TAO_Skeleton skel_ptr);
+  // Associate the skeleton <{skel_ptr}> with an operation named
+  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+
+  virtual int find(const CORBA_String &opname, TAO_Skeleton &skelfunc);
+  // Uses <{opname}> to look up the skeleton function and pass it back
+  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
+  // on failure.
 
 private:
   OP_MAP_MANAGER  hash_;
 };
 
 // Linear strategy
-class TAO_Linear_OpTable: public virtual TAO_Operation_Table
+struct TAO_Linear_OpTable_Entry
+{
+  CORBA_String_var opname;
+  TAO_Skeleton skel_ptr;
+
+  TAO_Linear_OpTable_Entry();
+  ~TAO_Linear_OpTable_Entry();
+};
+
+class TAO_Linear_OpTable: public TAO_Operation_Table
 {
 public:
   TAO_Linear_OpTable(CORBA_ULong size);
 
   ~TAO_Linear_OpTable();
 
-  virtual skeleton lookup(const CORBA_String &opname);
-  // CORBA Object key lookup strategy
+  virtual int find(const CORBA_String &opname, TAO_Skeleton &skel_ptr);
+  // Uses <{opname}> to look up the skeleton function and pass it back
+  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
+  // on failure.
 
-  virtual int register_op(const CORBA_String &opname, skeleton skelptr);
-  // registers a CORBA_Object into the object table and associates the key with
-  // it
+  virtual int bind(const CORBA_String &opname, TAO_Skeleton skelptr);
+  // Associate the skeleton <{skel_ptr}> with an operation named
+  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
-  struct Entry {
-    CORBA_String_var   opname;
-    skeleton           skel_ptr;
-
-    Entry();
-    ~Entry();
-  };
 
   CORBA_ULong next_;
   CORBA_ULong tablesize_;
-  Entry       *tbl_;
+  TAO_Linear_OpTable_Entry *tbl_;
 };
 
 // Active Demux
-class TAO_Active_Demux_OpTable: public virtual TAO_Operation_Table
+struct TAO_Active_Demux_OpTable_Entry
+{
+  TAO_Skeleton  skel_ptr;
+
+  TAO_Active_Demux_OpTable_Entry();
+  ~TAO_Active_Demux_OpTable_Entry();
+};
+
+class TAO_Active_Demux_OpTable: public TAO_Operation_Table
 {
 public:
   TAO_Active_Demux_OpTable(CORBA_ULong size);
 
   ~TAO_Active_Demux_OpTable();
 
-  virtual skeleton lookup(const CORBA_String &opname);
-  // CORBA Object key lookup strategy
+  virtual int find(const CORBA_String &opname, TAO_Skeleton &skel_ptr);
+  // Uses <{opname}> to look up the skeleton function and pass it back
+  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
+  // on failure.
 
-  virtual int register_op(const CORBA_String &opname, skeleton skel_ptr);
-  // registers a CORBA_Object into the object table and associates the key with
-  // it
+  virtual int bind(const CORBA_String &opname, TAO_Skeleton skelptr);
+  // Associate the skeleton <{skel_ptr}> with an operation named
+  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
-  struct Entry {
-    skeleton  skel_ptr;
-
-    Entry();
-    ~Entry();
-  };
-
   CORBA_ULong next_;
   CORBA_ULong tablesize_;
-  Entry       *tbl_;
+  TAO_Active_Demux_OpTable_Entry *tbl_;
 };
 
 

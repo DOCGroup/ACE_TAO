@@ -1,5 +1,7 @@
+// This may look like C, but it's really -*- C++ -*-
+//
 /* orbconf.hh.  Generated automatically by configure.  */
-// @(#)orbconf.hh	1.2 95/10/02
+// @(#) $Id$
 // Copyright 1995 by Sun Microsystems, Inc
 //
 // Build configuration file for the Inter-ORB Engine, and application

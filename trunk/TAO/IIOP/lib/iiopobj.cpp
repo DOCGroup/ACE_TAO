@@ -20,24 +20,39 @@
 
 #include	"iiopobj.h"
 
+#if !defined(__ACE_INLINE__)
+#  include "iiopobj.i"
+#endif
 
-IIOP::ProfileBody::ProfileBody (
-    const IIOP::ProfileBody	&src
-) :
-    iiop_version		(src.iiop_version),
-    port			(src.port)
+IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
+  : iiop_version(src.iiop_version),
+    port(src.port)
 {
-    assert (src.iiop_version.major == MY_MAJOR);
-    assert (src.iiop_version.minor == MY_MINOR);
+  assert (src.iiop_version.major == MY_MAJOR);
+  assert (src.iiop_version.minor == MY_MINOR);
 
-    host = ACE_OS::strdup (src.host);
+  host = ACE_OS::strdup (src.host);
 
-    object_key.length = object_key.maximum = src.object_key.length;
-    object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
-    (void) ACE_OS::memcpy (object_key.buffer, src.object_key.buffer,
-			   object_key.length);
+  object_key.length = object_key.maximum = src.object_key.length;
+  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
+  (void) ACE_OS::memcpy (object_key.buffer, src.object_key.buffer,
+                         object_key.length);
 }
 
+IIOP::ProfileBody::ProfileBody(const IIOP::Version& v,
+                               const CORBA_String& h,
+                               const CORBA_UShort& p,
+                               const opaque& key)
+  : iiop_version(v),
+    port(p)
+{
+  host = ACE_OS::strdup(h);
+  
+  object_key.length = object_key.maximum = key.length;
+  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
+  (void) ACE_OS::memcpy (object_key.buffer, key.buffer,
+                         object_key.length);
+}
 
 //
 // Quick'n'dirty hash of objref data, for partitioning objrefs into sets

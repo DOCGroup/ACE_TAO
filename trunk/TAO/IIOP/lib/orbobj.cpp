@@ -32,56 +32,6 @@ extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 #	define	SIG_IGN		((RETSIGTYPE (*)(int))1)
 #endif	// NeXT
 
-
-//
-// Constructor and destructor are accessible to subclasses
-//
-CORBA_ORB::CORBA_ORB ()
-{
-    _refcount = 1;
-}
-
-CORBA_ORB::~CORBA_ORB ()
-{
-    assert (_refcount == 0);
-}
-
-//
-// CORBA dup/release build on top of COM's (why not).
-//
-void
-CORBA_release (
-    CORBA_ORB_ptr	obj
-)
-{
-    if (obj)
-	obj->Release ();
-}
-
-CORBA_ORB_ptr
-CORBA_ORB::_duplicate (CORBA_ORB_ptr obj)
-{
-    if (obj)
-	obj->AddRef ();
-    return obj;
-}
-
-//
-// Null pointers represent nil objects.
-//
-CORBA_ORB_ptr
-CORBA_ORB::_nil ()
-{
-    return 0;
-}
-
-CORBA_Boolean
-CORBA_is_nil (CORBA_ORB_ptr	obj)
-{
-    return (CORBA_Boolean) (obj == 0);
-}
-
-
 //
 // COM's IUnknown support
 //
@@ -95,16 +45,6 @@ DEFINE_GUID (IID_CORBA_ORB,
 DEFINE_GUID (IID_STUB_Object,
 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 #endif
-
-
-ULONG
-__stdcall
-CORBA_ORB::AddRef ()
-{
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
-
-  return _refcount++;
-}
 
 ULONG
 __stdcall
@@ -134,12 +74,10 @@ CORBA_ORB::Release ()
 static CORBA_ORB_ptr	the_orb;
 
 CORBA_ORB_ptr
-CORBA_ORB_init (
-    int			&,		// argc
-    char		*const *,	// argv
-    char		*orb_name,
-    CORBA_Environment	&env
-)
+CORBA_ORB_init (int &argc,
+		char *const *argv,
+		char *orb_name,
+		CORBA_Environment &env)
 {
   static ACE_Thread_Mutex lock;
   ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock, 0);
@@ -242,6 +180,7 @@ CORBA_ORB_init (
 #if defined(ACE_INVALID_HANDLE)
   ACE_OS::socket_init(ACE_WSOCK_VERSION);
 #elif	defined (_WINSOCKAPI_)
+  // GADS!  Do we need this anymore?
   //
   // winsock needs explicit initialization, and applications must manage
   // versioning problems directly.
@@ -280,10 +219,8 @@ CORBA_ORB_init (
 }
 
 void
-CORBA_ORB::create_list (
-    CORBA_Long		count,
-    CORBA_NVList_ptr	&retval
-)
+CORBA_ORB::create_list (CORBA_Long count,
+                        CORBA_NVList_ptr &retval)
 {
     assert (count <= UINT_MAX);
 
@@ -308,7 +245,7 @@ CORBA_ORB::create_list (
 CORBA_ORB_ptr
 _orb ()
 {
-    return the_orb;
+  return the_orb;
 }
 
 CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identifier)
@@ -433,7 +370,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
     }
 
   // set all parameters
-  params->using_threads(use_threads?1:0);
+  params->using_threads(use_threads);
   params->demux_strategy(demux);
   params->addr(rendezvous);
   params->upcall(CORBA_BOA::dispatch);
@@ -447,3 +384,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
 
   return rp;
 }
+
+#if !defined(__ACE_INLINE__)
+#  include "orbobj.i"
+#endif

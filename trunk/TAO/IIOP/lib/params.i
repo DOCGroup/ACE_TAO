@@ -142,3 +142,9 @@ ROA_Factory::scheduling_strategy()
   return 0;
 }
 
+ACE_INLINE
+ROA_Factory::CONCURRENCY_STRATEGY*
+ROA_Factory::client_concurrency_strategy()
+{
+  return 0;
+}

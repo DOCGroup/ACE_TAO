@@ -37,46 +37,34 @@ public:
   static ROA_ptr init(CORBA_ORB_ptr which_orb, 
 		      ACE_INET_Addr& addr,
 		      CORBA_Environment& env);
-				// NON-STANDARD CALL.
-				// According to CORBA V2.0, this
-				// functionality should really be
-				// <ROA_ptr
-				// ORB::ROA_init(argc,argv,ident)>.
-				//
-				// The current signature is residue
-				// from when this code was part of
-				// the SunSoft IIOP reference
-				// implementation.
+  // NON-STANDARD CALL.  According to CORBA V2.0, this functionality
+  // should really be <ROA_ptr ORB::ROA_init(argc,argv,ident)>.
+  //
+  // The current signature is residue from when this code was part of
+  // the SunSoft IIOP reference implementation.
 
 
   void clean_shutdown(CORBA_Environment& env);
-				// NON-STANDARD CALL.
-				// OA user asks for a clean shutdown
-				// of the OA after currently active
-				// calls complete.  OA "requester"
-				// (calls <get_request>) asks if we're
-				// shutting down, and if so closes
-				// down transport cleanly.
+  // NON-STANDARD CALL.  OA user asks for a clean shutdown of the OA
+  // after currently active calls complete.  OA "requester" (calls
+  // <get_request>) asks if we're shutting down, and if so closes down
+  // transport cleanly.
+
   CORBA_Boolean shutting_down();
-				// NON-STANDARD CALL.
-				// Returns <TRUE> if we're in the process
-				// of shutting down.
+  // NON-STANDARD CALL.  Returns <TRUE> if we're in the process of
+  // shutting down.
 
 
   CORBA_OctetSeq* get_key(CORBA_Object_ptr obj,
 			  CORBA_Environment& env);
-				// NON-STANDARD CALL.
-				// When dispatching a request to an
-				// object, you need to be able to get
-				// the object key you used to create
-				// the reference.  It's the main way
-				// servers distinguish two object
-				// references from each other.
+  // NON-STANDARD CALL.  When dispatching a request to an object, you
+  // need to be able to get the object key you used to create the
+  // reference.  It's the main way servers distinguish two object
+  // references from each other.
     
   virtual CORBA_ORB_ptr orb() const;
-				// Returns pointer to the ORB with which
-				// this OA is associated.
-				// SHOULD PROBABLY MOVE TO BOA!
+  // Returns pointer to the ORB with which this OA is associated.
+  // SHOULD PROBABLY MOVE TO BOA!
 
 #if defined(ROA_NEED_REQ_KEY)
   CORBA_OctetSeq* get_target_key(CORBA_Environment& env);
@@ -84,11 +72,9 @@ public:
 #endif
 
   virtual int handle_message (Dispatch_Context& context,
-		      CORBA_Environment& env);
-				// Reads incoming GIOP messages,
-				// dispatches them, and sends back any
-				// required replies.  Returns 1 for
-				// success, 0==EOF, -1==error.
+                              CORBA_Environment& env);
+  // Reads incoming GIOP messages, dispatches them, and sends back any
+  // required replies.  Returns 1 for success, 0==EOF, -1==error.
 
   // = BOA Support
   CORBA_Object_ptr create(CORBA_OctetSeq& obj_id,
@@ -120,20 +106,21 @@ public:
       CORBA_Environment& env);
   virtual ~ROA();
 
-  virtual ACE_INET_Addr get_addr() const { return addr; }
+  virtual ACE_INET_Addr get_addr() const;
+  
 private:
-  ACE_INET_Addr addr;		// The address of the endpoint
+  ACE_INET_Addr addr_;		// The address of the endpoint
 				// on which we're listening for
 				// connections and requests.
-  CORBA_Boolean do_exit;	// Flag set by <clean_shutdown()>
+  CORBA_Boolean do_exit_;	// Flag set by <clean_shutdown()>
   ROA_Acceptor client_acceptor_;// The acceptor listening for requests.
-  CORBA_ORB_ptr _orb;		// Pointer to our ORB.
+  CORBA_ORB_ptr orb_;		// Pointer to our ORB.
 
-  u_int call_count;		// Used by COM stuff
-  u_int refcount;		// Used by COM stuff
+  u_int call_count_;		// Used by COM stuff
+  u_int refcount_;		// Used by COM stuff
 
-  CORBA_BOA::dsi_handler skeleton;	// Skeleton function
-  void* context;		// Who knows!?!
+  CORBA_BOA::dsi_handler skeleton_;	// Skeleton function
+  void* context_;		// Who knows!?!
 
   ACE_Thread_Mutex lock_;	// Locks critical sections within ROA code methods (was tcpoa_mutex)
   ACE_Thread_Mutex com_lock_;	// Locks critical sections in COM-related code (was tcpoa_lock)

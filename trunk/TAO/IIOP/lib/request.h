@@ -1,4 +1,6 @@
-// @(#)request.hh	1.2 95/10/02
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1994-1995 by Sun Microsystems, Inc.
 //
 // Header file for Win32 C/C++/COM interface to CORBA's Dynamic

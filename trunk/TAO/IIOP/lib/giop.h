@@ -1,4 +1,6 @@
-// @(#)giop.hh	1.2 95/09/06
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //

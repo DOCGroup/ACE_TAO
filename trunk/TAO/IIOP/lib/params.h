@@ -27,6 +27,95 @@ class ROA;
 class ROA_Handler;
 typedef ROA* ROA_ptr;
 
+class ORB_Parameters
+// = TITLE
+//    Parameters that are specific to the ORB.  These parameters can be
+//    for the client, the server, or for both.
+//
+{
+public:
+  // = SERVER-SIDE
+};
+
+class TAO_Client_Factory
+// = TITLE
+//    Abstract factory used by the client to turn out various strategies
+//    used on the client side.
+{
+public:
+  // = CLIENT-SIDE
+  typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
+  typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
+  typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_RW_Thread_Mutex> CACHED_CONNECT_STRATEGY;
+
+  CONCURRENCY_STRATEGY* concurrency_strategy();
+  CONNECTOR*            connector();
+
+  TAO_Client_Factory();
+  
+private:
+  // = CLIENT
+  CONCURRENCY_STRATEGY*   concurrency_strategy_;
+  CONNECTOR               connector_;
+  NULL_CREATION_STRATEGY  null_creation_strategy_;
+  CACHED_CONNECT_STRATEGY caching_connect_strategy_;
+};
+
+class TAO_Server_Factory
+// = TITLE
+//    Abstract factory used by the server side to turn out various
+//    strategies of special utility to it.
+{
+public:
+  // = SERVER-SIDE
+  typedef ACE_Creation_Strategy<ROA_Handler> CREATION_STRATEGY;
+  typedef ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<ROA_Handler> CONCURRENCY_STRATEGY;
+  typedef ACE_Scheduling_Strategy<ROA_Handler> SCHEDULING_STRATEGY;
+
+  CREATION_STRATEGY*    creation_strategy();
+  ACCEPT_STRATEGY*      accept_strategy();
+  CONCURRENCY_STRATEGY* concurrency_strategy();
+  SCHEDULING_STRATEGY*  scheduling_strategy();
+  TAO_Object_Table*     objlookup_strategy();
+
+  void set_userdef_objtable(TAO_Object_Table *ot);
+				// hook provided to user
+
+  TAO_Server_Factory();
+  
+private:
+  // = COMMON
+  ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;
+  ACE_Reactive_Strategy<ROA_Handler> reactive_strategy_;
+
+  // = SERVER
+  CONCURRENCY_STRATEGY* concurrency_strategy_;
+  TAO_Object_Table*     objtable_;
+#if 0
+  // Someday we'll need these!
+  CREATION_STRATEGY*    creation_strategy_;
+  ACCEPT_STRATEGY*      accept_strategy_;
+  SCHEDULING_STRATEGY*  scheduling_strategy_;
+#endif
+};
+
+
+
+
+class OA_Parameters
+// = TITLE
+//    Parameters specific to an Object Adapter.  By definition, this
+//    is only on the server side, since a client does not have an object
+//    adapter.
+//
+// = NOTES
+//    This can be subclassed in order to have OA-specific parameters, e.g.,
+//    the Realtime Object Adapter might subclass this and add its own
+//    parameters.
+{
+};
+
 class ROA_Parameters
 // = TITLE
 //     Currently a catch-all for "global" information needed by TAO
@@ -115,41 +204,6 @@ private:
 
 // Create a type for the singleton
 typedef ACE_Singleton<ROA_Parameters, ACE_Thread_Mutex> ROA_PARAMS;
-
-class ROA_Factory
-{
-public:
-  typedef ACE_Creation_Strategy<ROA_Handler> CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<ROA_Handler> CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<ROA_Handler> SCHEDULING_STRATEGY;
-
-  CREATION_STRATEGY*    creation_strategy();
-  ACCEPT_STRATEGY*      accept_strategy();
-  CONCURRENCY_STRATEGY* concurrency_strategy();
-  SCHEDULING_STRATEGY*  scheduling_strategy();
-  TAO_Object_Table*     objlookup_strategy();
-  
-  void set_userdef_objtable(TAO_Object_Table *ot);
-  // hook provided to user
-
-  ROA_Factory();
-private:
-  CONCURRENCY_STRATEGY* concurrency_strategy_;
-  ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;
-  ACE_Reactive_Strategy<ROA_Handler> reactive_strategy_;
-
-  TAO_Object_Table*     objtable_;
-#if 0
-  // Someday we'll need these!
-  CREATION_STRATEGY*    creation_strategy_;
-  ACCEPT_STRATEGY*      accept_strategy_;
-  SCHEDULING_STRATEGY*  scheduling_strategy_;
-#endif
-};
-
-typedef ACE_Singleton<ROA_Factory, ACE_Thread_Mutex> ROA_FACTORY;
-
 
 #  if defined(__ACE_INLINE__)
 #    include "params.i"

@@ -1,4 +1,6 @@
-// @(#)xdr.hh	1.3 95/11/07
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1995 by Sun Microsystems, Inc.
 //
 // XDR stream interface and implementation (partially implemented)

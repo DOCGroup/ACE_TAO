@@ -1,4 +1,6 @@
-// @(#)nvlist.hh	1.5 95/09/12
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1995 by Sun Microsystems, Inc.
 //
 // NamedValue ... these occur only in "NVList" (named value list)

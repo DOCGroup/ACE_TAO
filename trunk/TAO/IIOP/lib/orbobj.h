@@ -1,3 +1,6 @@
+// This may look like C, but it's really -*- C++ -*-
+//
+// $Id$
 //
 // Header file for Win32 interface to CORBA's "ORB" type.
 //
@@ -74,6 +77,10 @@ private:
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB			&operator = (const CORBA_ORB &);
 };
+
+#  if defined(__ACE_INLINE__)
+#    include "orbobj.i"
+#  endif
 
 #endif
 

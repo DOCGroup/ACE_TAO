@@ -27,7 +27,7 @@ ROA_Parameters::ROA_Parameters()
 #  endif
 
 ROA_Factory::CONCURRENCY_STRATEGY*
-ROA_Factory::concurrency_strategy()
+ROA_Factory::server_concurrency_strategy()
 {
   ROA_Parameters* p = ROA_PARAMS::instance();
 
@@ -36,21 +36,22 @@ ROA_Factory::concurrency_strategy()
     {
       // Set the strategy parameters
       threaded_strategy_.open(ACE_Service_Config::thr_mgr(), ROA_DEFAULT_THREADFLAGS);
-      concurrency_strategy_ = &threaded_strategy_;
+      server_concurrency_strategy_ = &threaded_strategy_;
     }
   else
     {
       reactive_strategy_.open(ACE_Service_Config::reactor());
-      concurrency_strategy_ = &reactive_strategy_;
+      server_concurrency_strategy_ = &reactive_strategy_;
     }
 
-  return concurrency_strategy_;
+  return server_concurrency_strategy_;
 }
 
 TAO_Object_Table* ROA_Factory::objlookup_strategy()
 {
   ROA_Parameters* p = ROA_PARAMS::instance();
 
+  // Since these are dynamically created, when do they get destroyed?
   switch(p->demux_strategy())
     {
     case ROA_Parameters::TAO_LINEAR:
@@ -76,9 +77,17 @@ void ROA_Factory::set_userdef_objtable(TAO_Object_Table *ot)
 }
 
 ROA_Factory::ROA_Factory()
-  : concurrency_strategy_(0),
-    objtable_(0)
+  : server_concurrency_strategy_(0),
+    objtable_(0),
+    client_concurrency_strategy_(0)
 {
+  // When should I do this open()?  It seems like this is way too early,
+  // but doing it in the accessor for connector() seems like it would be
+  // too late as well.
+  connector_.open(ACE_Service_Config::reactor(),
+		  &null_creation_strategy_,
+		  &caching_connect_strategy_,
+		  client_concurrency_strategy_());
 }
 
 

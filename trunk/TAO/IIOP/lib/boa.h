@@ -1,4 +1,6 @@
-// @(#)toa.hh	1.6 95/10/02
+// This may look like C, but it's really -*- C++ -*-
+// 
+// @(#) $Id$
 // Copyright 1995 by Sun Microsystems, Inc.
 //
 // (Early) BOA
@@ -23,25 +25,29 @@ extern const IID IID_BOA;
 
 class TAO_Object_Table
   // = TITLE
-  //     Abstract class for maintaining and lookup of CORBA Object keys
+  //     Abstract class for maintaining a mapping of CORBA object
+  //     keys to pointers to CORBA objects.
 {
 public:
-  // = 
 
-  virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key) = 0;
-  // CORBA Object key lookup strategy
+  virtual int find(const CORBA_OctetSeq &key, CORBA_Object_ptr &obj) = 0;
+  // Find object associated with <{key}>, setting <{obj}> to the pointer
+  // and returning a non-negative integer.
+  // If not found, <{obj}> is unchanged and the value <-1> is returned.
 
-  virtual int register_obj(const CORBA_OctetSeq &key, CORBA_Object_ptr obj)=0;
-  // registers a CORBA_Object into the object table and associates the key with
-  // it
+  virtual int bind(const CORBA_OctetSeq &key, CORBA_Object_ptr obj) = 0;
+  // Associated <{key}> with <{obj}>, returning 0 if object is registered
+  // successfully, 1 if it's already registered, and -1 if a failure occurs
+  // during registration.
 
   virtual ~TAO_Object_Table();
 };
 
-struct Dispatch_Context;
+struct TAO_Dispatch_Context;
+
 class CORBA_BOA : public IUnknown
-// = TITLE
-//    The <{TAO}> Basic Object Adapter
+  // = TITLE
+  //    The <{TAO}> Basic Object Adapter
 {
 public:
   virtual CORBA_Object_ptr create (CORBA_OctetSeq& obj_id,
@@ -75,12 +81,10 @@ public:
 			       CORBA_Environment	&env
 			       );
 
-  virtual int handle_message (Dispatch_Context& context,
+  virtual int handle_message (TAO_Dispatch_Context& context,
 		      CORBA_Environment& env) = 0;
-				// Reads incoming GIOP messages,
-				// dispatches them, and sends back any
-				// required replies.  Returns 1 for
-				// success, 0==EOF, -1==error.
+  // Reads incoming GIOP messages, dispatches them, and sends back any
+  // required replies.  Returns 1 for success, 0==EOF, -1==error.
 
   virtual void 	register_dir (dsi_handler skeleton,
 			      void* context,
@@ -120,95 +124,61 @@ public:
   virtual void get_request(CORBA_Boolean use_threads,
 			   struct timeval* tvp,
 			   CORBA_Environment& env) = 0;
-  // Get/handle requests ... this starts
-  // processing a request, or times out.
+  // Get/handle requests ... this starts processing a request, or
+  // times out.
   // 
-  // If the "use threads" flag is FALSE,
-  // then any request processing will
-  // have completed when the call
+  // If the "use threads" flag is FALSE, then any request processing
+  // will have completed when the call returns.
+  // 
+  // If the "use threads" flag is TRUE, then applications may see
+  // concurrent execution of method code (and processing may not be
+  // complete when this call returns).  This value is only legal in
+  // environments which support threads.
+  // 
+  // Normal timeout semantics apply: if the timeval pointer is NULL
+  // the call will not time out.  Otherwise the value pointed to is
+  // the minimum amount of time that will elapse before this call
   // returns.
   // 
-  // If the "use threads" flag is TRUE,
-  // then applications may see
-  // concurrent execution of method code
-  // (and processing may not be complete
-  // when this call returns).  This
-  // value is only legal in environments
-  // which support threads.
-  // 
-  // Normal timeout semantics apply: if
-  // the timeval pointer is NULL the
-  // call will not time out.  Otherwise
-  // the value pointed to is the minimum
-  // amount of time that will elapse
-  // before this call returns.
-  // 
-  // Reports INITIALIZE exception if no
-  // DIR was registered.  Reports
-  // BAD_INV_ORDER if this is shutting
-  // down.
+  // Reports INITIALIZE exception if no DIR was registered.  Reports
+  // BAD_INV_ORDER if this is shutting down.
 
   virtual void please_shutdown(CORBA_Environment& env) = 0;
-  // Please Shutdown -- reject all
-  // further incoming requests, and
-  // allow all currently active calls
-  // (e.g. "this one") to complete.
-  // This ensures that OS resources
-  // associated with this OA can be
-  // reclaimed even if some buggy
-  // applications code mismanages
+  // Please Shutdown -- reject all further incoming requests, and
+  // allow all currently active calls (e.g. "this one") to complete.
+  // This ensures that OS resources associated with this OA can be
+  // reclaimed even if some buggy applications code mismanages
   // refcounting on this BOA.
 
   void run (struct timeval	*tvp,
 	    CORBA_Environment &env);
-  // Run -- call get_request() in a loop
-  // until shutdown completes.  Uses as
-  // much concurrency as is provided in
-  // this environment.  Initiate
-  // shutdown if we've been idle for the
-  // specified time.
+  // Run -- call get_request() in a loop until shutdown completes.
+  // Uses as much concurrency as is provided in this environment.
+  // Initiate shutdown if we've been idle for the specified time.
   // 
-  // This uses only the public APIs
-  // defined above; the function is
-  // defined here purely for
-  // convenience, to help some
-  // applications avoid writing that
-  // loop.
+  // This uses only the public APIs defined above; the function is
+  // defined here purely for convenience, to help some applications
+  // avoid writing that loop.
 
-  //
-  //
   static CORBA_BOA_ptr get_boa (CORBA_ORB_ptr orb,
 			  CORBA_Environment& env);
-  // Get an "anonymous" BOA
-  // pseudo-objref ... this is the API
-  // that most applications will use.
-  // It returns a BOA which is not
-  // otherwise in use (though it may
-  // have been used in the past).
+  // Get an "anonymous" BOA pseudo-objref ... this is the API that
+  // most applications will use.  It returns a BOA which is not
+  // otherwise in use (though it may have been used in the past).
   // 
-  // Any given BOA (named or otherwise)
-  // will create equivalent object
-  // references when BOA::create() is
-  // called with the same object and
-  // type IDs.  This is not true for two
-  // different BOAs.
+  // Any given BOA (named or otherwise) will create equivalent object
+  // references when BOA::create() is called with the same object and
+  // type IDs.  This is not true for two different BOAs.
 
   static CORBA_BOA_ptr get_named_boa (CORBA_ORB_ptr orb,
 				CORBA_String name,
 				CORBA_Environment& env);
-  // Get a "named" BOA ... most
-  // applications don't use/need this
-  // API.
+  // Get a "named" BOA ... most applications don't use/need this API.
   // 
-  // BOA names are for ORB/system
-  // bootstrapping purposes, and need
-  // not be shared between different
-  // systems.  The scope of the name
-  // isn't guaranteed to include more
-  // than one system.  The names
-  // themselves are administered using
-  // system-specific mechanisms and
-  // policies.
+  // BOA names are for ORB/system bootstrapping purposes, and need not
+  // be shared between different systems.  The scope of the name isn't
+  // guaranteed to include more than one system.  The names themselves
+  // are administered using system-specific mechanisms and policies.
 
   virtual void clean_shutdown(CORBA_Environment& env) = 0;
 				// NON-STANDARD CALL.
@@ -226,23 +196,24 @@ public:
 
   void dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
 			*context, CORBA_Environment &env);
-  virtual int register_obj(const CORBA_OctetSeq &key, CORBA_Object_ptr obj)
-    {
-      return objtable_->register_obj(key, obj);
-    }
-  // registers a CORBA_Object into the object table and associates the key with
-  // it
+  virtual int bind(const CORBA_OctetSeq &key, CORBA_Object_ptr obj);
+  // Registers a CORBA_Object into the object table and associates the
+  // key with it.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
-  virtual CORBA_Object_ptr lookup(CORBA_OctetSeq &key) { return
-							   objtable_->lookup(key);}
+  virtual int find(const CORBA_OctetSeq &key, CORBA_Object_ptr &obj);
+  // Looks up an object in the object table using <{key}>.  Returns
+  // non-negative integer on success, or -1 on failure.
+
   virtual CORBA_ORB_ptr orb() const = 0;
   virtual ACE_INET_Addr get_addr() const = 0;
+  
 protected:
   TAO_Object_Table  *objtable_;
+  
 private:
 };
 
-struct Dispatch_Context
+struct TAO_Dispatch_Context
 // = TITLE
 //    Structure holding information necessary for GIOP functionality.
 // = DESCRIPTION
@@ -250,30 +221,27 @@ struct Dispatch_Context
 // calls back one of the two helper routines as part of handling any
 // particular incoming request.
 {
-  CORBA_BOA::dsi_handler	skeleton;
-				// Function pointer to skeleton glue
-				// function.
-  void (*check_forward) (CORBA_OctetSeq& key,
+  CORBA_BOA::dsi_handler	skeleton_;
+  // Function pointer to skeleton glue function.
+  void (*check_forward_) (CORBA_OctetSeq& key,
 			 CORBA_Object_ptr& fwd_ref,
 			 void* context,
 			 CORBA_Environment& env);
-				// Function to check if the request
-				// should be forwarded (whatever that
-				// means)
-  void* context;
-				// Who knows...another overloading of
-				// the word "context"
-  CORBA_BOA_ptr oa;
-				// This should really be a BOA_ptr,
-				// but currently it doesn't support
-				// the one call we need to make
-				// through here: <handle_message()>.
-  ACE_SOCK_Stream endpoint;
-				// The communication endpoint from
-				// which the data needs to be read.
-				// NOTE!!!  This type MUST match that
-				// used for ROA_Handler!
+  // Function to check if the request should be forwarded (whatever
+  // that means)
+  void* context_;
+  // Who knows...another overloading of the word "context"
+  CORBA_BOA_ptr oa_;
+  // This should really be a BOA_ptr, but currently it doesn't support
+  // the one call we need to make through here: <handle_message()>.
+  ACE_SOCK_Stream endpoint_;
+  // The communication endpoint from which the data needs to be read.
+  // NOTE!!!  This type MUST match that used for ROA_Handler!
 };
+
+#  if defined(__ACE_INLINE__)
+#    include "boa.i"
+#  endif
 
 #endif	// _BOA_HH
 
