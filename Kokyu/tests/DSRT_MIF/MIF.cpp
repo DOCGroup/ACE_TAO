@@ -5,6 +5,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Synch.h"
+#include "ace/High_Res_Timer.h"
+
 #include "Kokyu_dsrt.h"
 
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> guid=0;
@@ -46,55 +48,81 @@ public:
 
   MyTask (ACE_Barrier& barrier,
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
-          mif_scheduler_traits::QoSDescriptor_t& qos)
+          mif_scheduler_traits::QoSDescriptor_t& qos,
+          int exec_duration)
     :barrier_ (barrier),
      dispatcher_ (dispatcher),
      qos_ (qos),
-     guid_ (++guid)
+     guid_ (++guid),
+     exec_duration_ (exec_duration)
   {}
 
-  int svc (void)
-  {
-    ACE_hthread_t thr_handle;
-    ACE_Thread::self (thr_handle);
-    int prio;
+  int svc (void);
 
-    ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
-    ACE_ASSERT (dispatcher_ != 0);
-    barrier_.wait ();
-    prio = dispatcher_->schedule (guid_, qos_);
-
-    if (ACE_Thread::getprio (thr_handle, prio) == -1)
-      {
-        if (errno == ENOTSUP)
-          {
-            ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT ("getprio not supported on this platform\n")
-                       ));
-            return 0;
-          }
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("getprio failed")));
-      }
-
-    ACE_DEBUG ((LM_DEBUG, "(%t) Thread prio=%d, guid=%d, qos_.importance=%d \n", prio, guid_, qos_.importance_));
-    dispatcher_->cancel_schedule (this->guid_);
-    return 0;
-  }
-
-private:
+ private:
   ACE_Barrier& barrier_;
   Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher_;
   mif_scheduler_traits::QoSDescriptor_t qos_;
   mif_scheduler_traits::Guid_t guid_;
+  int exec_duration_;
 };
+
+int MyTask::svc (void)
+{
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  int prio;
+  
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
+  ACE_ASSERT (dispatcher_ != 0);
+
+  prio = dispatcher_->schedule (guid_, qos_);
+
+  barrier_.wait ();
+
+  long prime_number = 9619899;
+  
+  ACE_High_Res_Timer timer;
+  ACE_Time_Value elapsed_time;
+  ACE_Time_Value seconds_tracker(0,0);
+
+  ACE_Time_Value one_second (1,0);
+  ACE_Time_Value compute_count_down_time (exec_duration_, 0);
+  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+  
+  timer.start ();
+  while (compute_count_down_time > ACE_Time_Value::zero)
+    {
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+      
+      compute_count_down.update ();
+      timer.stop ();
+      timer.elapsed_time (elapsed_time);
+      seconds_tracker += elapsed_time;
+      if (seconds_tracker >= one_second)
+      {
+        seconds_tracker.set (0,0);
+        ACE_DEBUG ((LM_DEBUG, 
+                    ACE_TEXT ("(%t) Currently running guid=%d")
+                    ACE_TEXT (", qos_.importance=%d \n"),
+                    guid_, qos_.importance_));
+      }
+      timer.reset ();
+      timer.start ();
+    }
+
+  dispatcher_->cancel_schedule (this->guid_);
+  return 0;
+}
 
 int main (int,char**)
 {
   Kokyu::DSRT_ConfigInfo config_info;
 
   //  config_info.scheduler_type_ = Kokyu::SCHED_MIF;
+  config_info.impl_type_ = Kokyu::DSRT_OS_BASED;
 
   ACE_Barrier barrier (3);
 
@@ -114,11 +142,11 @@ int main (int,char**)
 
   qos1.importance_ = 1;
   qos2.importance_ = 2;
-  qos3.importance_ = 1;
+  qos3.importance_ = 3;
 
-  MyTask mytask1 (barrier, disp.get (), qos1);
-  MyTask mytask2 (barrier, disp.get (), qos2);
-  MyTask mytask3 (barrier, disp.get (), qos3);
+  MyTask mytask1 (barrier, disp.get (), qos1, 15);
+  MyTask mytask2 (barrier, disp.get (), qos2, 6);
+  MyTask mytask3 (barrier, disp.get (), qos3, 4);
 
   long flags = THR_BOUND | THR_SCHED_FIFO;
 
@@ -146,11 +174,7 @@ int main (int,char**)
                         "EC (%P|%t) cannot activate task\n"));
     }
 
-  ACE_OS::sleep (5);
-
   disp->shutdown ();
-
-  ACE_OS::sleep (5);
 
   ACE_DEBUG ((LM_DEBUG, "main thread exiting\n"));
 

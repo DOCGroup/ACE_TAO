@@ -19,9 +19,14 @@ public:
     :Kokyu::Dispatch_Command(1),id_(i)
   {
   }
+  int execute();
 
-  int execute()
-  {
+private:
+  int id_;
+};
+
+int MyCommand::execute()
+{
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -45,12 +50,7 @@ public:
                 ACE_TEXT (("(%t|prio=%d) | command %d executed\n")),
                 prio, id_));
     return 0;
-  }
-
-private:
-  int id_;
-};
-
+}
 
 int main (int argc, char** argv)
 {
@@ -113,12 +113,17 @@ int main (int argc, char** argv)
   qos3.preemption_priority_ = 1;
   qos3.deadline_ = deadline3;
 
+  ACE_DEBUG ((LM_DEBUG, "Deadline of command1 is %d\n",
+              qos1.deadline_.sec ()));
   disp->dispatch (&cmd1, qos1);
-  printf("inserted 1\n");
+
+  ACE_DEBUG ((LM_DEBUG, "Deadline of command2 is %d\n",
+              qos2.deadline_.sec ()));
   disp->dispatch (&cmd2, qos2);
-  printf("inserted 2\n");
+
+  ACE_DEBUG ((LM_DEBUG, "Deadline of command3 is %d\n",
+              qos3.deadline_.sec ()));
   disp->dispatch (&cmd3, qos3);
-  printf("inserted 3\n");
 
   disp->activate ();
 
