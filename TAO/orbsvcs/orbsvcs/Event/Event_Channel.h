@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace ORB
-// 
+//
 // = FILENAME
 //    Event_Channel
 //
@@ -40,10 +40,10 @@
 #include "ReactorTask.h"
 
 //ACE_INLINE void operator += (ACE_CORBA_Sequence<RtecEventComm::Event_var> &dest,
-//				 RtecEventComm::Event *item);
+//                               RtecEventComm::Event *item);
 
-ACE_INLINE int operator == (const RtecEventComm::Event &event1, 
-			    const RtecEventComm::Event &event2);
+ACE_INLINE int operator == (const RtecEventComm::Event &event1,
+                            const RtecEventComm::Event &event2);
 // This operation could be part of the classes, but in order to stay
 // CORBA compliant, we're adding them as global operators.
 
@@ -96,7 +96,7 @@ private:
 typedef ACE_CORBA_var<ACE_ES_Event_Container> ACE_ES_Event_Container_var;
 
 ACE_INLINE void operator += (ACE_CORBA_Sequence<ACE_ES_Event_Container_var> &dest,
-			     ACE_ES_Event_Container *item);
+                             ACE_ES_Event_Container *item);
 
 #if defined(ACE_ES_LACKS_ORB)
 // Utility for debugging sequences.
@@ -111,7 +111,7 @@ void dump_event (const RtecEventComm::Event &event);
 class ACE_RTU_Manager
 // = TITLE
 //   ACE RTU Manager
-//   
+//
 // = DESCRIPTION
 {
 public:
@@ -164,15 +164,15 @@ typedef ACE_ES_Dispatching_Base ACE_ES_Dispatching_Module;
 class ACE_EventChannel : public RtecEventChannelAdmin_EventChannelBOAImpl
 // = TITLE
 //   ACE Event Channel.
-//   
+//
 // = DESCRIPTION
 //   Implementation of COSS Event Channel.  For more detailed
 //   information, see http://www.cs.wustl.edu/~mda/event.html.
 {
 public:
   enum { INITIAL_STATE = 0,
-	 CONSUMER = 1, SUPPLIER = 2, 
-	 SHUTDOWN = CONSUMER | SUPPLIER };
+         CONSUMER = 1, SUPPLIER = 2,
+         SHUTDOWN = CONSUMER | SUPPLIER };
 
   ACE_EventChannel (u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE);
   // Construction of the given <type>.  Check the **_CHANNEL
@@ -242,7 +242,7 @@ private:
 // ************************************************************
 
 class ACE_ES_Dependency_Iterator
-// = TITLE 
+// = TITLE
 //    ConsumerQOS Iterator
 //
 // = DESCRIPTION
@@ -255,7 +255,7 @@ public:
   int advance_dependency (void);
   // Returns 0 if the advance succeeded.  Returns -1 if there are no
   // more dependencies in the group.
-  
+
   int parse (void);
   // Cache values for n_** methods.
 
@@ -332,6 +332,9 @@ public:
   ACE_ES_Disjunction_Group (void);
   // Default construction.
 
+  virtual ~ACE_ES_Disjunction_Group (void);
+  // Destructor.
+
   void set_correlation_module (ACE_ES_Correlation_Module *cm);
   // <cm> is needed for rescheduling deadlines.
 
@@ -343,10 +346,10 @@ public:
   // success, -1 on failure.
 
   typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-  
+
   virtual void add_events (Event_Set *outbox,
-			   Event_Set *pending_events,
-			   u_long &pending_flags);
+                           Event_Set *pending_events,
+                           u_long &pending_flags);
   // Does nothing.  This is the only virtual method in this little
   // heirarchy with the conjunction group.
 
@@ -378,6 +381,9 @@ public:
   ACE_ES_Conjunction_Group (void);
   // Default construction.
 
+  virtual ~ACE_ES_Conjunction_Group (void);
+  // Destructor.
+
   int add_type (int type_id);
   // Set the <type_id>th bit in the forward_value_.
 
@@ -386,10 +392,10 @@ public:
   // satisfied.  Returns 0 otherwise.
 
   typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-  
+
   virtual void add_events (Event_Set *outbox,
-			   Event_Set *pending_events,
-			   u_long &pending_flags);
+                           Event_Set *pending_events,
+                           u_long &pending_flags);
   // For each bit set in forward_value_, the corresponding events in
   // <pending_events> is added to <outbox>.  Each bit set in
   // <forward_value_> is cleared in <pending_flags>.  If <oubox> == 0,
@@ -421,7 +427,7 @@ public:
   // Default construction.
 
   void init (ACE_ES_Consumer_Correlation *correlation,
-	     RtecEventChannelAdmin::Dependency &dep);
+             RtecEventChannelAdmin::Dependency &dep);
   // <dep> describes the event subscribed to and the method handling
   // the event.   <correlation> is the parent correlation object.
 
@@ -440,8 +446,8 @@ public:
   // Set the correlation group index of this consumer rep's event
   // type.
 
-  enum Correlation_Type 
-  { 
+  enum Correlation_Type
+  {
     NO_CORRELATION,
     CORRELATE,
     DEADLINE_TIMEOUT,
@@ -465,7 +471,7 @@ public:
 
   void reschedule_deadlines (void);
   // Calls reschedule_deadline on all disjunction groups added through
-  // this->add_disjunction_group. 
+  // this->add_disjunction_group.
 
   int receiving_events (void);
   // Returns 1 if events should be sent to this consumer.  Returns 0
@@ -537,16 +543,16 @@ class ACE_ES_Consumer_Rep_Timeout : public ACE_ES_Consumer_Rep
 public:
   ACE_ES_Consumer_Rep_Timeout (void);
   // Default construction.
-  
+
   void init (ACE_ES_Consumer_Correlation *correlation,
-	     RtecEventChannelAdmin::Dependency &dep);
+             RtecEventChannelAdmin::Dependency &dep);
   // <dep> describes the event subscribed to and the method handling
   // the event.   <correlation> is the parent correlation object.
 
   // = Get/set timer returned from the reactor.
   int timer_id (void);
   void timer_id (int);
-  
+
   // = Get/set preemption priority.
   RtecScheduler::OS_Priority preemption_priority (void);
   void preemption_priority (RtecScheduler::OS_Priority pp);
@@ -633,41 +639,41 @@ public:
   // Serializes writes to source_subscribers_ and type_subscribers_.
 
   static int insert_or_allocate (SourceID_Map &source_subscribers,
-				 ACE_ES_Consumer_Rep *consumer,
-				 RtecEventComm::EventSourceID sid);
+                                 ACE_ES_Consumer_Rep *consumer,
+                                 RtecEventComm::EventSourceID sid);
   // <source_subscribers> contains a mapping of source id to consumer
   // list.  Insert <consumer> into the list of consumers subscribed to
   // <sid>.  Allocate a list for <sid> if necessary.
 
   static int insert_or_allocate (Subscriber_Map &type_subscribers,
-				 ACE_ES_Consumer_Rep *consumer,
-				 RtecEventComm::EventType type);
+                                 ACE_ES_Consumer_Rep *consumer,
+                                 RtecEventComm::EventType type);
   // Add <consumer> to the set of consumers bound to <type> in
   // <type_subscribers>.  If there is consumer set for <type>, one is
   // allocated.  Returns -1 on failure, 0 otherwise.
 
   static int insert_or_fail (Subscriber_Map &type_subscribers,
-			     ACE_ES_Consumer_Rep *consumer,
-			     RtecEventComm::EventType type,
-			     RtecScheduler::Dependency_Info *&dependency);
+                             ACE_ES_Consumer_Rep *consumer,
+                             RtecEventComm::EventType type,
+                             RtecScheduler::Dependency_Info *&dependency);
   // Add <consumer> to the set of consumers bound to <type> in
   // <type_subscribers>.  If there is consumer set for <type>, the
   // operation fails.  Returns -1 on failure, 0 otherwise.
 
   static int remove (Subscriber_Map &type_map,
-		     ACE_ES_Consumer_Rep *consumer,
-		     RtecEventComm::EventType type);
+                     ACE_ES_Consumer_Rep *consumer,
+                     RtecEventComm::EventType type);
   // Remove <consumer> from the consumer set in <type_map> set
   // corresponding to <type>.
 
   static int remove (SourceID_Map &source_subscribers,
-		     ACE_ES_Consumer_Rep *consumer,
-		     RtecEventComm::EventSourceID sid);
+                     ACE_ES_Consumer_Rep *consumer,
+                     RtecEventComm::EventSourceID sid);
   // Remove <consumer> from the consumer set in the
   // <source_subscribers> set corresponding to <sid>.
 
   static void append_subscribers (Subscriber_Set &dest,
-				  Subscriber_Set &src);
+                                  Subscriber_Set &src);
   // Insert all elements of <src> into <dest>.
 };
 
@@ -694,8 +700,8 @@ public:
   virtual ~ACE_ES_Consumer_Correlation (void);
   // Deletes lock_.
 
-  int connected (ACE_Push_Consumer_Proxy *consumer, 
-		 ACE_ES_Correlation_Module *correlation_module);
+  int connected (ACE_Push_Consumer_Proxy *consumer,
+                 ACE_ES_Correlation_Module *correlation_module);
   // Initialization.  <correlation_module> is stored for delegating
   // channel operations.  <consumer> is stored to access the consumers
   // qos and filterin data.  Returns 0 on success, -1 on failure.
@@ -704,7 +710,7 @@ public:
   // Shutdown.
 
   ACE_ES_Dispatch_Request *push (ACE_ES_Consumer_Rep *consumer,
-				 ACE_ES_Event_Container *event);
+                                 ACE_ES_Event_Container *event);
   // Takes <event> and adds it to the correlation.  Returns the
   // dispatch request that should be forwarded.
 
@@ -719,7 +725,7 @@ public:
   // that ACE_ES_Consumer_Rep_Timeout::execute can access it.
 
   typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-  
+
 private:
   virtual void disconnect_push_supplier (CORBA::Environment &);
   // Called when the channel disconnects us.
@@ -728,29 +734,29 @@ private:
   // Dynamically allocates structures needed for correlations.  0 on
   // success, -1 on failure.
 
-  ACE_ES_Dispatch_Request * correlate (ACE_ES_Consumer_Rep *cr, 
-				       ACE_ES_Event_Container *event);
+  ACE_ES_Dispatch_Request * correlate (ACE_ES_Consumer_Rep *cr,
+                                       ACE_ES_Event_Container *event);
   // Helper function for this->push.
-  
+
   // = Registration helper functions.
   int register_deadline_timeout (RtecEventChannelAdmin::Dependency &dependency,
-				 RtecEventComm::EventType group_type,
-				 int cgindex,
-				 int dgindex,
-				 int &trep_index);
+                                 RtecEventComm::EventType group_type,
+                                 int cgindex,
+                                 int dgindex,
+                                 int &trep_index);
   int register_interval_timeout (RtecEventChannelAdmin::Dependency &dependency,
-				 RtecEventComm::EventType group_type,
-				 int cgindex,
-				 int dgindex,
-				 int &trep_index);
+                                 RtecEventComm::EventType group_type,
+                                 int cgindex,
+                                 int dgindex,
+                                 int &trep_index);
   int register_event (RtecEventChannelAdmin::Dependency &dependency,
-		      RtecEventComm::EventType group_type,
-		      int cgindex,
-		      int dgindex,
-		      int &crep_index);
-  
+                      RtecEventComm::EventType group_type,
+                      int cgindex,
+                      int dgindex,
+                      int &crep_index);
+
   ACE_ES_Consumer_Rep *get_consumer_rep (RtecEventChannelAdmin::Dependency &dependency,
-					  int &crep_index);
+                                          int &crep_index);
   int new_type_id (void);
 
   int type_id_index_;
@@ -795,7 +801,7 @@ class ACE_ES_ACT
 //    Event Service ACT
 //
 // = DESCRIPTION
-//    
+//
 {
 public:
   ACE_ES_ACT (void);
@@ -826,16 +832,16 @@ public:
   // Factory method for push consumer proxies.
 
   void connected (ACE_Push_Consumer_Proxy *consumer,
-		  CORBA::Environment &);
+                  CORBA::Environment &);
   // Register the consumer with the Event Service.  This handles all
   // the details regarding Correlation_Module and Subscription_Module.
 
   void disconnecting (ACE_Push_Consumer_Proxy *consumer,
-		      CORBA::Environment &);
+                      CORBA::Environment &);
   // Unregister the consumer from the Event Service.
 
   void push (const ACE_ES_Dispatch_Request *request,
-	     CORBA::Environment &);
+             CORBA::Environment &);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (void);
   // Allow transformations to RtecEventChannelAdmin::ConsumerAdmin.
@@ -873,27 +879,27 @@ class ACE_ES_Correlation_Module
 //    Event Service Correlation Module
 //
 // = DESCRIPTION
-//    
+//
 {
 public:
   ACE_ES_Correlation_Module (ACE_EventChannel *channel);
   // Default construction.
 
   void open (ACE_ES_Dispatching_Module *up,
-	     ACE_ES_Subscription_Module *down);
+             ACE_ES_Subscription_Module *down);
   // Link to adjacent modules.
 
   void connected (ACE_Push_Consumer_Proxy *consumer,
-		  CORBA::Environment &);
+                  CORBA::Environment &);
   // Create the consumers filter object.
 
   void disconnecting (ACE_Push_Consumer_Proxy *consumer,
-		      CORBA::Environment &);
+                      CORBA::Environment &);
   // Release the consumers filter object.
 
   void push (ACE_ES_Consumer_Rep *consumer,
-	     ACE_ES_Event_Container *event,
-	     CORBA::Environment &);
+             ACE_ES_Event_Container *event,
+             CORBA::Environment &);
   // Take in an event and its subscriber.  Apply consumer-specific
   // filters to each event and forward any dispatch requests to the
   // Dispatching Module.
@@ -941,7 +947,7 @@ class ACE_ES_Subscription_Module
 //    Event Service Subscription Module
 //
 // = DESCRIPTION
-// 
+//
 // = SYNCHRONIZATION
 //    This is currently implemented with very coarse-grain
 //    synchronization.  Basically, there is a single readers/writer
@@ -958,7 +964,7 @@ public:
   // Default construction.
 
   void open (ACE_ES_Correlation_Module *up,
-	     ACE_ES_Supplier_Module *down);
+             ACE_ES_Supplier_Module *down);
   // Link to the adjacent modules.
 
   ~ACE_ES_Subscription_Module (void);
@@ -972,13 +978,13 @@ public:
   // Removes the -consumer- from any subscription lists.
 
   void connected (ACE_Push_Supplier_Proxy *supplier,
-		  CORBA::Environment &);
+                  CORBA::Environment &);
   void disconnecting (ACE_Push_Supplier_Proxy *supplier,
-		      CORBA::Environment &);
+                      CORBA::Environment &);
 
   void push (ACE_Push_Supplier_Proxy *source,
-	     ACE_ES_Event_Container *event,
-	     CORBA::Environment &);
+             ACE_ES_Event_Container *event,
+             CORBA::Environment &);
   // Takes in a set of events and pushes subscriber sets to the
   // Correlation Module.
 
@@ -1012,41 +1018,41 @@ private:
   int subscribe_all (ACE_ES_Consumer_Rep *consumer);
 
   int subscribe_type (ACE_ES_Consumer_Rep *consumer,
-		      RtecEventComm::EventType type);
+                      RtecEventComm::EventType type);
 
   int subscribe_source (ACE_ES_Consumer_Rep *consumer,
-			RtecEventComm::EventSourceID source);
+                        RtecEventComm::EventSourceID source);
 
   int subscribe_source_type (ACE_ES_Consumer_Rep *consumer,
-			     RtecEventComm::EventSourceID source,
-			     RtecEventComm::EventType type);
+                             RtecEventComm::EventSourceID source,
+                             RtecEventComm::EventType type);
 
   int unsubscribe_all (ACE_ES_Consumer_Rep *consumer);
 
   int unsubscribe_type (ACE_ES_Consumer_Rep *consumer,
-			RtecEventComm::EventType type);
+                        RtecEventComm::EventType type);
 
   int unsubscribe_source (ACE_ES_Consumer_Rep *consumer,
-			  RtecEventComm::EventSourceID source);
+                          RtecEventComm::EventSourceID source);
 
   int unsubscribe_source_type (ACE_ES_Consumer_Rep *consumer,
-			       RtecEventComm::EventSourceID source,
-			       RtecEventComm::EventType type);
+                               RtecEventComm::EventSourceID source,
+                               RtecEventComm::EventType type);
 
   // = Push helper methods.
 
   int push_source (ACE_Push_Supplier_Proxy *source,
-		    ACE_ES_Event_Container *event);
+                    ACE_ES_Event_Container *event);
   // Push <event> to all consumers subscribed to all events from
   // <source>.  Returns 0 on success, -1 on failure.
 
   int push_source_type (ACE_Push_Supplier_Proxy *source,
-			 ACE_ES_Event_Container *event);
+                         ACE_ES_Event_Container *event);
   // Push <event> to all consumers subscribed to <event>.type_ from
   // <source>.  Returns 0 on success, -1 on failure.
 
   void push_all (ACE_ES_Event_Container *event,
-		 CORBA::Environment &);
+                 CORBA::Environment &);
   // Push <event> to all_suppliers_.
 
   ACE_ES_Correlation_Module *up_;
@@ -1091,18 +1097,18 @@ public:
   // Factory method for push supplier proxies.
 
   void push (ACE_Push_Supplier_Proxy *proxy,
-	     const RtecEventComm::EventSet &event,
-	     CORBA::Environment &);
+             const RtecEventComm::EventSet &event,
+             CORBA::Environment &);
   // The supplier module acts on behalf of the supplier proxy to
   // forward events through the channel.
 
   void connected (ACE_Push_Supplier_Proxy *supplier,
-		  CORBA::Environment &);
+                  CORBA::Environment &);
   // Register the consumer with the Event Service.  This handles all
   // the details regarding Correlation_Module and Subscription_Module.
 
   void disconnecting (ACE_Push_Supplier_Proxy *supplier,
-		      CORBA::Environment &);
+                      CORBA::Environment &);
   // Unregister the consumer from the Event Service.
 
   RtecEventChannelAdmin::SupplierAdmin_ptr get_ref (void);
@@ -1152,14 +1158,14 @@ public:
   // = Operations public to suppliers.
 
   virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier,
-				      const RtecEventChannelAdmin::SupplierQOS& qos,
-				      CORBA::Environment &);
+                                      const RtecEventChannelAdmin::SupplierQOS& qos,
+                                      CORBA::Environment &);
   // Suppliers connect via this interface.  <push_supplier> is a
   // reference to the supplier.  <qos> represents the publish types of
   // the supplier.
 
   virtual void push (const RtecEventComm::EventSet &event,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // Data arriving from a PushSupplier that must be sent to
   // consumers.  This is the entry point of all events.
 
@@ -1200,7 +1206,7 @@ private:
 
   RtecEventComm::EventSourceID source_id_;
   // We keep a proxy of the Supplier source_id_;
-  
+
   RtecEventComm::PushSupplier_ptr push_supplier_;
   // CORBA reference to remote push supplier.
 };
@@ -1227,8 +1233,8 @@ public:
   // = Interfaces exported to consumers.
 
   virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer,
-				      const RtecEventChannelAdmin::ConsumerQOS& qos,
-				      CORBA::Environment &);
+                                      const RtecEventChannelAdmin::ConsumerQOS& qos,
+                                      CORBA::Environment &);
   // A push consumer is connecting.  <push_consumer> is a reference to
   // the consumer.  <qos> is the subscription types for the consumer.
 
@@ -1244,7 +1250,7 @@ public:
   // = Event Channel operations.
 
   void push (const RtecEventComm::EventSet &events,
-	     CORBA::Environment &);
+             CORBA::Environment &);
   // Push <events> to push_consumer_.
 
   int connected (void);
@@ -1272,7 +1278,7 @@ private:
 
   RtecEventComm::PushConsumer_ptr push_consumer_;
   // Reference to our push consumer.
-  
+
   ACE_ES_Consumer_Module *consumer_module_;
   // TODO: Maybe this should be a _var or _duplicate/_release should
   // be used
@@ -1297,4 +1303,3 @@ typedef ACE_ES_Array_Iterator <ACE_ES_Consumer_Rep *> ACE_ES_CRSet_Iterator;
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_EVENT_CHANNEL_H */
-
