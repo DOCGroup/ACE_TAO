@@ -327,7 +327,11 @@ TAO_Naming_Client::~TAO_Naming_Client (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
   template class TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
+  template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
+  template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
   #pragma instantiate TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
+  #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
+  #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
