@@ -1,4 +1,10 @@
-Sun May 12 23:20:06 2002  Alex Libman <AlexL@rumblegroup.com>
+Mon May 13 07:33:43 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Fix the Debian build by using ACEXML_Char instead of ACE_TCHAR.
+
+Sun May 12 23:20:06 2002  Alex Libman  <AlexL@rumblegroup.com>
 
 	* tests/TP_Reactor_Test.{h,cpp}:
 	  Improved flow-control in full-duplex mode by increasing the
