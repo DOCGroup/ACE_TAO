@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "ace/Log_Msg.h"
@@ -21,17 +19,17 @@ ACE_Logging_Strategy::tokenize (char *flag_string)
        flag = ACE_OS::strtok (0, "|"))
     {
       if (ACE_OS::strcmp (flag, "STDERR") == 0)
-	ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
       else if (ACE_OS::strcmp (flag, "LOGGER") == 0)
-	ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
       else if (ACE_OS::strcmp (flag, "OSTREAM") == 0)
-	ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
       else if (ACE_OS::strcmp (flag, "VERBOSE") == 0)
-	ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
       else if (ACE_OS::strcmp (flag, "VERBOSE_LITE") == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE_LITE);
       else if (ACE_OS::strcmp (flag, "SILENT") == 0)
-	ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
     }
 }
 
@@ -51,37 +49,37 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'f':
-	  temp = get_opt.optarg;
-	  // Now tokenize the string to get all the flags
-	  this->tokenize (temp);
-	  break;
-	case 'i':
-	  // Interval (in secs) at which logfile size is sampled.
-	  this->interval_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
-	  break;
-	case 'm':
-	  // Maximum logfile size (in KB).  Must be a non-zero value.
-	  this->max_size_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
-	  if (this->max_size_ == 0)
-	    this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
-	  this->max_size_ <<= 10;       // convert to KB
-	  break;
-	case 's':
-	  // Ensure that the OSTREAM flag is set
-	  ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
+        {
+        case 'f':
+          temp = get_opt.optarg;
+          // Now tokenize the string to get all the flags
+          this->tokenize (temp);
+          break;
+        case 'i':
+          // Interval (in secs) at which logfile size is sampled.
+          this->interval_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+          break;
+        case 'm':
+          // Maximum logfile size (in KB).  Must be a non-zero value.
+          this->max_size_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+          if (this->max_size_ == 0)
+            this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
+          this->max_size_ <<= 10;       // convert to KB
+          break;
+        case 's':
+          // Ensure that the OSTREAM flag is set
+          ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
           delete [] this->filename_;
-	  this->filename_ = ACE::strnew (get_opt.optarg);
-	  break;
+          this->filename_ = ACE::strnew (get_opt.optarg);
+          break;
         case 'w':
           // Cause the logfile to be wiped out, both on startup and on
           // reconfigure.
           this->wipeout_logfile_ = 1;
           break;
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
     }
   return 0;
 }
@@ -128,16 +126,16 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
   if (this->flags_ != 0)
     {
       // Clear all flags
-      ACE_Log_Msg::instance ()->clr_flags (ACE_Log_Msg::STDERR  
-                                          | ACE_Log_Msg::LOGGER  
-                                          | ACE_Log_Msg::OSTREAM 
-                                          | ACE_Log_Msg::VERBOSE 
-                                          | ACE_Log_Msg::VERBOSE_LITE 
+      ACE_Log_Msg::instance ()->clr_flags (ACE_Log_Msg::STDERR
+                                          | ACE_Log_Msg::LOGGER
+                                          | ACE_Log_Msg::OSTREAM
+                                          | ACE_Log_Msg::VERBOSE
+                                          | ACE_Log_Msg::VERBOSE_LITE
                                           | ACE_Log_Msg::SILENT);
       // Check if OSTREAM bit is set
-      if (ACE_BIT_ENABLED (this->flags_, 
+      if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Log_Msg::OSTREAM))
-	{
+        {
           ofstream *output_file = 0;
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
@@ -164,7 +162,7 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
                                                 ACE_Time_Value (this->interval_),
                                                 ACE_Time_Value (this->interval_));
             }
-	}
+        }
       // Now set the flags for Log_Msg
       ACE_Log_Msg::instance ()->set_flags (this->flags_);
     }
@@ -192,10 +190,10 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       output_file->close ();
 
       // Save current logfile to logfile.old
-      if (ACE_OS::strlen (this->filename_) + 4 <= MAXPATHLEN)	// 4 for ".old"
+      if (ACE_OS::strlen (this->filename_) + 4 <= MAXPATHLEN)   // 4 for ".old"
         {
           char backup[MAXPATHLEN+1];
-  
+
           ACE_OS::strcpy (backup, this->filename_);
           ACE_OS::strcat (backup, ".old");
 
@@ -205,7 +203,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
           // Rename the current log file to the name of the backup log
           // file.
-          ACE_OS::rename (this->filename_, 
+          ACE_OS::rename (this->filename_,
                           backup);
         }
       else
@@ -225,4 +223,4 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 // The following is a "Factory" used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the Logging_Strategy.
 
-ACE_SVC_FACTORY_DEFINE (ACE_Logging_Strategy)
+ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)

@@ -104,8 +104,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "netsvcs"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /MDd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -134,8 +134,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "netsvcs"
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -163,21 +163,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\Client_Logging_Handler.cpp
-
-!IF  "$(CFG)" == "NETSVCS Library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "NETSVCS Library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "NETSVCS Library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "NETSVCS Library - Win32 Alpha Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Logging_Strategy.cpp
 
 !IF  "$(CFG)" == "NETSVCS Library - Win32 Release"
 
@@ -272,10 +257,6 @@ SOURCE=.\TS_Server_Handler.cpp
 # Begin Source File
 
 SOURCE=.\Client_Logging_Handler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Logging_Strategy.h
 # End Source File
 # Begin Source File
 
