@@ -75,6 +75,9 @@ private:
 
   CORBA::ULong ret_;
   // return value
+
+  CORBA::ULong iterations_;
+  // Current iterations.
 };
 
 #endif /* PARAM_TEST_EXCEPTION_H */
