@@ -45,6 +45,7 @@ public:
   // Priority mapping types
   enum
   {
+    TAO_PRIORITY_MAPPING_CONTINUOUS,
     TAO_PRIORITY_MAPPING_LINEAR,
     TAO_PRIORITY_MAPPING_DIRECT
   };

@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
+#include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
 
@@ -69,6 +70,25 @@ main (int argc, char **argv)
 
       int result =
         parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      // The following sets the current thread to the lowest priority
+      // for this scheduling policy.  This will give us the biggest
+      // range on NT since the default priority is 0 where as the
+      // lowest priority is -15.
+      ACE_hthread_t current_thread;
+      ACE_Thread::self (current_thread);
+
+      long sched_policy =
+        orb->orb_core ()->orb_params ()->sched_policy ();
+
+      int minimum_priority =
+        ACE_Sched_Params::priority_min (sched_policy);
+
+      result =
+        ACE_Thread::setprio (current_thread,
+                             minimum_priority);
       if (result != 0)
         return result;
 

@@ -328,6 +328,22 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           class such that it is really direct, i.e., corba priority
           maps verbatim to native priority and vice versa.
 
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp: Maps the first
+          n CORBA priorities to the range of native priorities, where
+          n is the number of native priorities.
+          
+          The lowest native priority is mapped to CORBA priority 0,
+          next higher native priority is mapped to CORBA priority 1,
+          and so on. Since in all the operating systems where TAO is
+          supported the native priority set contains less than 32767
+          priorities, part of the CORBA priority range is left unused.
+          Consider NT as an example. NT native priorities -15 -2 -1 0
+          1 2 15 are mapped to CORBA priorities 0 1 2 3 4 5 6,
+          respectively, and the rest of the CORBA priority range is
+          not used.
+
+          This class was previously called Direct_Priority_Mapping.
+
 	* tao/RTCORBA/RT_ORBInitializer.cpp (pre_init): Set the
           scheduling policy and scope policy into ORB Parameters.
           Also, converted THR_SCHED_* values into ACE_SCHED_* values.
@@ -366,7 +382,8 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/RTCORBA/TAO_RTCORBA_Static.dsp: 
 
 	  Removed Pool_Per_Endpoint; added
-	  RT_Thread_Lane_Resources_Manager.
+	  RT_Thread_Lane_Resources_Manager and
+	  Continuous_Priority_Mapping.
 
 	* tao/ORB_Core.cpp: 
 
@@ -804,23 +821,28 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - In addition to testing servants in the RootPOA and in a
             simple child POA, the following policy combinations are
             tested in this example:
-            ________________________________________
+            ________________________________________________________________________________
+          
+            Thread-pool    BANDS   PRIORITY MODEL    Client Priority    Server Priority
+            ________________________________________________________________________________
+          
+            Default Pool     NO   CLIENT_PROPAGATED        3                  3
+            Default Pool     NO   SERVER_DECLARED          3                  5
+            Without Lanes    NO   CLIENT_PROPAGATED        1                  1
+            Without Lanes    NO   SERVER_DECLARED          1                  5
+            With Lanes       NO   CLIENT_PROPAGATED        2                  2
+            With Lanes       NO   SERVER_DECLARED          3                  5
+            Default Pool    YES   CLIENT_PROPAGATED        3                  3
+            Default Pool    YES   SERVER_DECLARED          1                  5
+            Without Lanes   YES   CLIENT_PROPAGATED        1                  1
+            Without Lanes   YES   SERVER_DECLARED          3                  5
+            With Lanes      YES   CLIENT_PROPAGATED        3                  2
+            With Lanes      YES   SERVER_DECLARED          1                  5
 
-            Thread-pool    BANDS   PRIORITY MODEL
-            ________________________________________
+            where the priorities are relative to the minimum priority
+            of the thread scheduling policy used for the test.
 
-            Default Pool     NO   CLIENT_PROPAGATED
-            Default Pool     NO   SERVER_DECLARED
-            Without Lanes    NO   CLIENT_PROPAGATED
-            Without Lanes    NO   SERVER_DECLARED
-            With Lanes       NO   CLIENT_PROPAGATED
-            With Lanes       NO   SERVER_DECLARED
-            Default Pool    YES   CLIENT_PROPAGATED
-            Default Pool    YES   SERVER_DECLARED
-            Without Lanes   YES   CLIENT_PROPAGATED
-            Without Lanes   YES   SERVER_DECLARED
-            With Lanes      YES   CLIENT_PROPAGATED
-            With Lanes      YES   SERVER_DECLARED
+          - This test uses the -ORBPriorityMapping continuous option.
 
 	* tests/RTCORBA/Linear_Priority: This is a test for the Linear
           Priority mapping in TAO.  In addition, this test combines
