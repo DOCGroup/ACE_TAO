@@ -10238,7 +10238,7 @@ ACE_INLINE DIR *
 ACE_OS::opendir (const char *filename)
 {
 #if defined (ACE_HAS_DIRENT)
-  return opendir (dirname);
+  return ::opendir (filename);
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
@@ -10249,7 +10249,7 @@ ACE_INLINE void
 ACE_OS::closedir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-  closedir (d);
+  ::closedir (d);
 #else
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
@@ -10259,20 +10259,26 @@ ACE_INLINE struct dirent *
 ACE_OS::readdir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-  return readdir (d);
+  return ::readdir (d);
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE int *
+ACE_INLINE int
 ACE_OS::readdir_r (DIR *dirp,
                    struct dirent *entry,
-                   struct dirent **result);
+                   struct dirent **result)
 {
 #if defined (ACE_HAS_DIRENT)
-  return readdir_r (dirp, entry, result);
+#if defined (_POSIX_PTHREAD_SEMANTICS)
+  return ::readdir_r (dirp, entry, result);
+#else
+  // <result> had better not be 0!
+  *result = ::readdir_r (dirp, entry);
+  return 0;
+#endif /* _POSIX_PTHREAD_SEMANTICS */
 #else
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);
@@ -10285,7 +10291,7 @@ ACE_INLINE long
 ACE_OS::telldir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-  return telldir (d);
+  return ::telldir (d);
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (-1);
@@ -10296,7 +10302,7 @@ ACE_INLINE void
 ACE_OS::seekdir (DIR *d, long loc)
 {
 #if defined (ACE_HAS_DIRENT)
-  seekdir (d, loc);
+  ::seekdir (d, loc);
 #else
   ACE_UNUSED_ARG (d);
   ACE_UNUSED_ARG (loc);
@@ -10307,7 +10313,9 @@ ACE_INLINE void
 ACE_OS::rewinddir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-  rewinddir (d);
+  // We need to implement <rewinddir> using <seekdir> since it's often
+  // defined as a macro...
+  ::seekdir (d, long (0));
 #else
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
