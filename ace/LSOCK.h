@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -58,12 +57,6 @@ protected:
 
   void set_handle (ACE_HANDLE handle);
   // Set handle.
-
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-  static const int msg_control_len_
-      = sizeof(struct cmsghdr) + sizeof(ACE_HANDLE) ;
-  // control message size to pass a file descriptor
-#endif // ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
 private:
   ACE_HANDLE aux_handle_;

@@ -34,20 +34,35 @@ ACE_LSOCK_Stream::dump (void) const
 ssize_t
 ACE_LSOCK_Stream::send_msg (const iovec iov[], 
 			    size_t n, 
-			    int fd)
+			    ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_LSOCK_Stream::send_msg");
   msghdr send_msg;
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   send_msg.msg_iov = (iovec *) iov;
   send_msg.msg_iovlen = n;
   send_msg.msg_name = 0;
   send_msg.msg_namelen = 0;
-  send_msg.msg_accrights = (char *) &fd;
-  send_msg.msg_accrightslen = sizeof fd;
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  cmsgptr->cmsg_level = SOL_SOCKET;
+  cmsgptr->cmsg_type = SCM_RIGHTS;
+  cmsgptr->cmsg_len = sizeof cmsgbuf;
+  send_msg.msg_control = cmsgbuf;
+  send_msg.msg_controllen = sizeof cmsgbuf;
+  *(ACE_HANDLE *) CMSG_DATA (cmsgptr) = handle;
+  send_msg.msg_flags = 0 ;
+#else
+  send_msg.msg_accrights    = (char *) &handle;
+  send_msg.msg_accrightslen = sizeof handle;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   return ACE_OS::sendmsg (this->ACE_SOCK_Stream::get_handle (), 
-		    &send_msg, 0);
+			  &send_msg, 0);
 }
 
 // Read a readv-style vector of buffers, along with an open I/O
@@ -56,20 +71,34 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
 ssize_t
 ACE_LSOCK_Stream::recv_msg (iovec iov[], 
 			    size_t n, 
-			    int &fd)
+			    ACE_HANDLE &handle)
 {
   ACE_TRACE ("ACE_LSOCK_Stream::recv_msg");
   msghdr recv_msg;
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
   
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
   recv_msg.msg_name = 0;
   recv_msg.msg_namelen = 0;
-  recv_msg.msg_accrights = (char *) &fd;
-  recv_msg.msg_accrightslen = sizeof fd;
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  recv_msg.msg_control = cmsgbuf;
+  recv_msg.msg_controllen = sizeof cmsgbuf;
+  ssize_t result = ACE_OS::recvmsg (this->ACE_SOCK_Stream::get_handle (), 
+				    &recv_msg, 0);
+  handle = *(ACE_HANDLE*) CMSG_DATA (cmsgptr) ;
+  return result;
+#else
+  recv_msg.msg_accrights = (char *) &handle;
+  recv_msg.msg_accrightslen = sizeof handle;
 
   return ACE_OS::recvmsg (this->ACE_SOCK_Stream::get_handle (), 
-		    &recv_msg, 0);
+			  &recv_msg, 0);
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 }
 #endif /* ACE_HAS_MSG */
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

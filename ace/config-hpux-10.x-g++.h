@@ -15,6 +15,9 @@
 #define ACE_HAS_BROKEN_CONVERSIONS
 #define ACE_HAS_STREAMS
 
+// They forgot a const in the prototype of putmsg and putpmsg...
+#define ACE_LACKS_CONST_STRBUF_PTR
+
 // They forgot a const in the prototype of const_timewait...
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
@@ -27,9 +30,23 @@
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_CLOCK_GETTIME
+
+// Compiler/platform supports struct strbuf.
+#define ACE_HAS_STRBUF_T
+#define ACE_HAS_STREAM_PIPES
+#define ACE_HAS_STREAMS
+
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r
+// functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
+
+// Platform supports the tid_t type (e.g., AIX and Irix 6.2)
+#define ACE_HAS_TID_T
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC

@@ -271,7 +271,7 @@ private:
   // This is a normal C function.
 };
 
-#if !defined (HPUX)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
   // = TITLE
   //    This is an alternative signal handling dispatcher for ACE.  It
@@ -339,7 +339,7 @@ private:
   // If this is > 0 then a 3rd party library has registered a
   // handler...  
 };
-#endif /* HPUX */
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Signal.i"
