@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file  DSRT_Dispatch_Item.h
+ *  @file  DSRT_Dispatch_Item_T.h
  *
  *  $Id$
  *
@@ -10,7 +10,7 @@
 
 #ifndef DSRT_DISPATCH_ITEM_H
 #define DSRT_DISPATCH_ITEM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Copy_Disabled.h"
 
@@ -99,5 +99,5 @@ namespace Kokyu
 #pragma implementation ("DSRT_Dispatch_Item_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DSRT_DISPATCH_ITEM_H */

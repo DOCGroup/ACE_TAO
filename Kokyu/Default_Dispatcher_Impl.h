@@ -12,14 +12,16 @@
 
 #ifndef DEFAULT_DISPATCHER_IMPL_H
 #define DEFAULT_DISPATCHER_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
+
 #include "ace/Task.h"
-#include "ace/Auto_Ptr.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Auto_Ptr.h"
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 #include "Dispatcher_Impl.h"
@@ -71,5 +73,5 @@ namespace Kokyu
 #include "Default_Dispatcher_Impl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DEFAULT_DISPATCHER_IMPL_H */

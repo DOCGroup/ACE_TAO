@@ -10,17 +10,17 @@
 
 #ifndef KOKYU_DEFS_H
 #define KOKYU_DEFS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Array.h"
-#include "ace/Time_Value.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Message_Block.h"
-#include "ace/Sched_Params.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
+#include "ace/Time_Value.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Message_Block.h"
+#include "ace/Sched_Params.h"
 #include "kokyu_export.h"
 
 namespace Kokyu
@@ -135,5 +135,5 @@ ACE_INLINE int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInf
 #include "Kokyu_defs.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* KOKYU_DEFS_H */

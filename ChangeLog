@@ -1,3 +1,19 @@
+Tue Sep 30 10:40:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.h:
+	* Kokyu/DSRT_Dispatch_Item_T.h:
+	* Kokyu/DSRT_Dispatch_Item_T.i:
+	* Kokyu/DSRT_Dispatcher_Impl_T.h:
+	* Kokyu/DSRT_Sched_Queue_T.h:
+	* Kokyu/Default_Dispatcher_Impl.h:
+	* Kokyu/Dispatcher_Impl.h:
+	* Kokyu/Dispatcher_Task.h:
+	* Kokyu/Kokyu.h:
+	* Kokyu/Kokyu_defs.h:
+	* Kokyu/Kokyu_dsrt.h:
+
+	  Fixed fuzz errors.
+
 Tue Sep 30 10:10:17 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/ChangeLogEditor/ChangeLogEntry.pm:
