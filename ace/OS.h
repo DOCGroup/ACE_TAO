@@ -1061,7 +1061,11 @@ struct strrecvfd {};
 #    include /**/ <wchar.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #else
-typedef long wchar_t;
+#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#    include /**/ <wchar.h>
+#  else
+     typedef long wchar_t;
+#  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_HAS_BROKEN_WRITEV)

@@ -7403,12 +7403,16 @@ ACE_OS::strlen (const wchar_t *s)
 #if defined (ACE_HAS_UNICODE)
   return ::wcslen (s);
 #else
+#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  return wcslen (s);
+#  else
   u_int len = 0;
 
   while (*s++ != 0)
     len++;
 
   return len;
+#  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #endif /* ACE_HAS_UNICODE */
 }
 
@@ -7419,12 +7423,16 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 #if defined (ACE_HAS_UNICODE)
   return ::wcscpy (s, t);
 #else
+#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  return wcscpy (s, t);
+#  else
   wchar_t *result = s;
 
   while ((*s++ = *t++) != 0)
     continue;
 
   return result;
+#  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #endif /* ACE_HAS_UNICODE */
 }
 
