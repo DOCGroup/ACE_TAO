@@ -6,6 +6,11 @@ Thu Apr 27 14:17:52 2000  Darrell Brunsch <brunsch@uci.edu>
           takes an int was hidden by a ACE_WIN32 block.  This has been
           moved outside again.
 
+        * ace/OS.cpp:
+
+          Weird, somehow part of a section that should have been removed
+          with the CE changes was still present.  Removed again.
+
 Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl: 
