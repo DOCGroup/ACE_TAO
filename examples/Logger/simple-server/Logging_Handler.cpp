@@ -106,27 +106,39 @@ Logging_Handler::open (void)
     return -1;
   else
     {
-      ACE_OS::strncpy (this->host_name_, addr.get_host_name (), MAXHOSTNAMELEN + 1);
+      ACE_OS::strncpy (this->host_name_, 
+		       addr.get_host_name (), 
+		       MAXHOSTNAMELEN + 1);
 
       if (REACTOR::instance ()->register_handler 
 	  (this, ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR, 
+			   "(%P|%t) can't register with reactor\n"), 
+			   -1);
       else if (REACTOR::instance ()->schedule_timer
-	  (this, (const void *) this, ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "can'(%P|%t) t register with reactor\n"), -1);
+	  (this, (const void *) this, 
+	   ACE_Time_Value (2), 
+	   ACE_Time_Value (2)) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, 
+			   "can'(%P|%t) t register with reactor\n"), 
+			  -1);
       else
-      	ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected with %s\n", this->host_name_));
+      	ACE_DEBUG ((LM_DEBUG, 
+		    "(%P|%t) connected with %s\n", 
+		    this->host_name_));
       return 0;
     }
 }
 
-// Perform termination activities when deregistered from the ACE_Reactor.
+// Perform termination activities when deregistered from the
+// ACE_Reactor.
 
 int
-Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
   // Must be allocated dynamically!
-  delete this;		
+  if (mask == ACE_Event_Handler::READ_MASK)
+    delete this;
   return 0;
 }
 
@@ -136,5 +148,5 @@ int
 Logging_Handler::close (void)
 {
   return this->handle_close (ACE_INVALID_HANDLE, 
-			     ACE_Event_Handler::ALL_EVENTS_MASK);
+			     ACE_Event_Handler::READ_MASK);
 }
