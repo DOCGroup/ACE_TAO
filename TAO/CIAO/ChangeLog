@@ -1,3 +1,13 @@
+Fri Jun 25 23:59:00 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* Process_Element.cpp
+	* Process_Element.h
+	* Process_Element.i
+	* Process_Element.tpp
+
+          Re-organize the code to avoid sutble potential problems.
+          Bala made above changes on my machine.
+
 Fri Jun 25 17:35:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
