@@ -3,28 +3,28 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.2 or earlier
 # *not* using Orbix
 #
-# Note:	 some ACE files might generate these kinds of warnings:
+# Note: some ACE files might generate these kinds of warnings:
 # 1) "template manager : Warning: No valid template database available.
 #     Creating default repository "Templates.DB"":
 #    self explanatory, and apparently harmless.
 # 2) "Warning: Could not find source for " one of the following:
 #    default constructor, copy constructor, destructor, or assignment
-#    operator.	It appears that with +w, Sun C++ 4.x issues this warning
+#    operator.  It appears that with +w, Sun C++ 4.x issues this warning
 #    whenever it has to generate one of these functions (because it wasn't
 #    defined by the user).  This isn't really a problem.
 # 3) "Warning: <foo> hides the function " or "hides the same name in an
 #    outer scope".  A useful warning, perhaps, but not really a problem.
 # There should be no other warnings from Sun C++ when building ACE.
 #
-CC		= cc
-CXX		= CC
-CFLAGS		+= $(DCFLAGS) -mt
+CC              = cc
+CXX             = CC
+CFLAGS          += $(DCFLAGS) -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
-CCFLAGS		+= $(CFLAGS) $(EXFLAGS) -pta
-DCFLAGS		+= -g
-DLD		= $(CXX) 
+CCFLAGS         += $(CFLAGS) $(EXFLAGS) -pta
+DCFLAGS         += -g
+DLD             = $(CXX)
 
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
 #### with jumbo patch 104631-02, see ace/config-sunos5.5-sunc++-4.x.h.
@@ -39,23 +39,44 @@ else
 EXFLAGS += -noex
 endif # exceptions
 
-LD		= $(CXX)
+LD              = $(CXX)
 
 ifdef orbix
-LDFLAGS		+= $(PIC) -L$(ORBIX_ROOT)/lib -R $(ACE_ROOT)/ace -R $(ORBIX_ROOT)/lib
-LIBS		+= -lorbixmt -lsocket -ldl -lnsl -lthread -lgen -lposix4
+  LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/lib -R $(ACE_ROOT)/ace -R $(ORBIX_ROOT)/lib
+  LIBS          += -lorbixmt -lsocket -ldl -lnsl -lthread -lgen -lposix4
 else
-LDFLAGS		+= -R $(ACE_ROOT)/ace 
-LIBS		+= -lsocket -ldl -lnsl -lgen
+  LDFLAGS       += -R $(ACE_ROOT)/ace
+  LIBS          += -lsocket -ldl -lnsl -lgen
 endif # orbix
 
-PIC		= -PIC
-AR		= CC
-ARFLAGS		= -xar -o
-RANLIB		= echo
-SOFLAGS		= -G $(CPPFLAGS)
-SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
-		  $(SOLINK.cc) -o $@ -h $@ $(LDFLAGS) $(VSHDIR)$*.o
+PIC             = -PIC
+AR              = CC
+ARFLAGS         = -xar -o
+RANLIB          = echo
+SOFLAGS         = -G $(CPPFLAGS)
+
+ifdef BIN
+  #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files
+  #### are used for building libraries and executables.  But, it seems
+  #### to be necessary to build the .so files (with -G) in order to get
+  #### all template instantiations.
+  SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
+            $(SOLINK.cc) -o $@ -h $@ $(LDFLAGS) $(VSHDIR)$*.o
+else
+  #### Optimize builds when no executables are built in the current
+  #### directory.  Only a library is being created, and -G is used
+  #### in that step.  Therefore, all templates instantations are
+  #### included in the library.  This optimization saves almost 11 Mb
+  #### (2.6 percent) and 27 minutes (22 percent) on the entire ACE
+  #### build on a 168 MHz Sun Ultra2.
+  ####
+  #### Sun C++ won't allow the output from a compile to be named with
+  #### a .so extension.  Rather than muck with the ACE build rules and
+  #### risk upsetting builds on other platforms, just ln the output
+  #### after building it.
+  SOBUILD = /bin/rm -f $@; \
+           $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && /bin/ln $(VSHDIR)$*.o $@
+endif # BIN
 
 #### The following macro overrides enable creation of fast executables.
 #### They _don't_ support fast compilation :-)
@@ -65,10 +86,10 @@ SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 #### use "-fast -O3".
 ####
 #### Dynamic casting and RTTI can coexist with ACE, but it doesn't
-#### use them.	To disable, add: -features=no%castop,no%rtti
+#### use them.  To disable, add: -features=no%castop,no%rtti
 #### Sun C++ 4.2 (and later?) only support this option.
 ifdef fast
-CFLAGS += -fast
-CCFLAGS += -features=no%castop,no%rtti
-DCFLAGS =
+  CFLAGS += -fast
+  CCFLAGS += -features=no%castop,no%rtti
+  DCFLAGS =
 endif # fast
