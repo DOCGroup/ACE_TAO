@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Task.h"
+#include "ace/Service_Config.h"
 
 #include "TestC.h"
 
