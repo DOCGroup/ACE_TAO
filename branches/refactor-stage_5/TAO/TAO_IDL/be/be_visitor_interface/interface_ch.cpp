@@ -213,13 +213,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  if (! node->is_local ())
-    {
-      *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-          << "const char *type_id" << be_nl
-          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
+  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char *type_id" << be_nl
+      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id (void) const;";

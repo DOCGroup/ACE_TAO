@@ -1,3 +1,27 @@
+Fri Aug 29 16:31:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+
+          Removed the check for non-local interface around the 
+          generation of the declaration of the _is_a() method -
+          this was overlooked in
+
+          Fri Aug 29 15:05:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Added the global :: qualifier before the generated scoped
+          names on the lhs and in the template parameter of the
+          dynamic_cast statement at the end of _unchecked_narrow().
+          MSVC needs this for nested scoped with repeated names.
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+
+          Removed the default arg value in create_name() - it is never
+          used. Also made minor changes to gen_name() to correct its
+          use in the traits visitor when handling sequences of strings.
+
 Fri Aug 29 15:35:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Thread_Lane_Resources.cpp (finalize): Initialize the output

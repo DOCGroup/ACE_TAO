@@ -717,8 +717,8 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
     }
 
   *os << "{" << be_idt_nl
-      << node->name () << "_ptr p =" << be_idt_nl
-      << "dynamic_cast<" << node->name () << "_ptr> (obj);" 
+      << "::" << node->name () << "_ptr p =" << be_idt_nl
+      << "dynamic_cast<::" << node->name () << "_ptr> (obj);" 
       << be_uidt_nl << be_nl
       << "p->_add_ref ();" << be_nl << be_nl
       << "return p;" << be_uidt_nl
