@@ -1,7 +1,8 @@
 Thu Apr  8 12:59:21 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tao/orbconf.h (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT): 
-	  Changed the value from 1 to 4.
+	* tao/orbconf.h (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT): Changed
+ 	  the value from 1 to 4 to prevent premature timeouts.  Thanks to
+ 	  Margaret Reitz <margaret@veritas.com> for motivating this.
 
 	  Also removed the #ifdef for TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS
 	  since this is obsolete now.
