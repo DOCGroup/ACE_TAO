@@ -39,7 +39,8 @@
 /* Define if your processor stores words with the most significant
    byte first (like Motorola and SPARC, unlike Intel and VAX).  */
 #if defined(i386) || defined(_M_IX86) || defined(vax)
-#    define WORDS_BIGENDIAN 1
+#else
+#  define WORDS_BIGENDIAN 1
 #endif
 
 /* The number of bytes in an int.  */
