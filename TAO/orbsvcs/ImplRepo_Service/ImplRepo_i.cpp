@@ -41,11 +41,11 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
     
       IIOP::Profile *new_profile = new IIOP::Profile (iiop_obj->profile);
     
-      new_profile->port = new_addr->port_;
-      delete [] new_profile->host;
-      new_profile->host = ACE::strnew (new_addr->host_);
-    
-      new_iiop_obj = new IIOP_Object (iiop_obj->type_id, *new_profile);
+      new_iiop_obj = new IIOP_Object (iiop_obj->type_id, 
+                                      ACE::strnew (new_addr->host_),
+                                      new_addr->port_,
+                                      iiop_obj->profile.object_key,
+                                      iiop_obj->profile.object_addr ());
     }
   TAO_CATCHANY
     {
@@ -295,7 +295,7 @@ ImplRepo_i::server_is_running (const char *server,
   if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "The old host/port was: %Lu:%hu\n", rec.host, rec.port));
 
-  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
+  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
 
   // @@ We are assuming that we are on the same machine right now
   new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());
