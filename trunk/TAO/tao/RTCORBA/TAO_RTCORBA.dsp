@@ -1,3 +1,4 @@
+
 # Microsoft Developer Studio Project File - Name="RTCORBA" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
@@ -176,6 +177,18 @@ SOURCE=.\Priority_Mapping_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Linear_Network_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping_Manager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Private_Transport_Descriptor.cpp
 # End Source File
 # Begin Source File
@@ -269,6 +282,18 @@ SOURCE=.\Priority_Mapping.h
 # Begin Source File
 
 SOURCE=.\Priority_Mapping_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Network_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
@@ -369,6 +394,18 @@ SOURCE=.\Priority_Mapping.i
 # Begin Source File
 
 SOURCE=.\Priority_Mapping_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Network_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
