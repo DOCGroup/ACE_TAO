@@ -10,6 +10,10 @@ Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
           specifying the full path.  (acquire_release):  removed printout
           at top.
 
+        * ACE+TAO.tgz,ACE.tgz,ACE-lib.tgz,FSU-threads.tgz: added these
+          symlinks to their corresponding .tar.gz files.  Thanks to
+          Gonzo and Darrell for suggesting this.
+
 Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/OS.h: Moved the #define's and typedef's (related to Proactor
