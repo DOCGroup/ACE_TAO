@@ -1,29 +1,50 @@
+Wed Apr  4 07:18:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Messaging.pidl:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/MessagingS.i:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/MessagingS_T.h:
+        * tao/PortableServer/MessagingS_T.i:
+        * tao/PortableServer/MessagingS_T.cpp:
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingC.i.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingS.cpp.diff:
+        * tao/diffs/MessagingS.h.diff:
+        * tao/diffs/MessagingS_T.i.diff:
+          Regenerate the code without smart proxies support, this should
+          cleanup the Win32 builds.
+
 Wed Apr  4 08:35:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/BiDir_Adapter.h:
-	* tao/TypeCodeFactory_Adapter.h: Included Exception.h in place of
-	  corbafwd.h. Builds with exceptions=1 like Core builds on Redhat
-	  were complaining about incomplete type for
-	  CORBA::SystemException. 
+        * tao/BiDir_Adapter.h:
+        * tao/TypeCodeFactory_Adapter.h: Included Exception.h in place of
+          corbafwd.h. Builds with exceptions=1 like Core builds on Redhat
+          were complaining about incomplete type for
+          CORBA::SystemException.
 
-	* tao/ORB_Core.cpp: 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i: Removed the #include of BiDir_Adapter.h from
-	  ORB_Core.h and moved it to ORB_Core.cpp. Forward declared that
-	  class in the .h file. Moved the method that is dependant on the
-	  include in .h file, from .i file to .cpp file -- basically
-	  uninlined that method. The method is not on the critical path
-	  and so shouldn't matter.
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i: Removed the #include of BiDir_Adapter.h from
+          ORB_Core.h and moved it to ORB_Core.cpp. Forward declared that
+          class in the .h file. Moved the method that is dependant on the
+          include in .h file, from .i file to .cpp file -- basically
+          uninlined that method. The method is not on the critical path
+          and so shouldn't matter.
 
 Wed Apr  4 08:05:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.cpp: Added a missing
-	  #include to fix compile error on Linux. 
+        * orbsvcs/Notify_Service/Notify_Service.cpp: Added a missing
+          #include to fix compile error on Linux.
 
 Wed Apr  4 07:49:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/BiDir_GIOP/BiDirPolicyC.cpp: Fixed a compile error by adding
-	  a #include. 
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp: Fixed a compile error by adding
+          a #include.
 
 Tue Apr  3 22:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
