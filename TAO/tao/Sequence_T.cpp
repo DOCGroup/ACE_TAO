@@ -1016,8 +1016,12 @@ TAO_Unbounded_Array_Sequence (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
       T *tmp1 = 
         TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (this->maximum_);
 
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+      const T *tmp2 = (const T *) rhs.buffer_;
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       const T *tmp2 = ACE_reinterpret_cast (const T *, 
                                             rhs.buffer_);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
@@ -1095,8 +1099,12 @@ TAO_Unbounded_Array_Sequence<T, T_var>::_allocate_buffer (CORBA::ULong length)
 
   if (this->buffer_ != 0)
     {
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+      T *old = (T *) this->buffer_;
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       T *old = ACE_reinterpret_cast (T *, 
                                      this->buffer_);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -1120,8 +1128,12 @@ TAO_Unbounded_Array_Sequence<T, T_var>::_deallocate_buffer (void)
       return;
     }
 
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+  T *tmp = (T *) this->buffer_;
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
   T *tmp = ACE_reinterpret_cast (T *, 
                                  this->buffer_);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
   TAO_Unbounded_Array_Sequence<T, T_var>::freebuf (tmp);
 
@@ -1142,8 +1154,12 @@ TAO_Bounded_Array_Sequence (const TAO_Bounded_Array_Sequence<T, T_var, MAX> &rhs
       T *tmp1 =
         TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (MAX);
 
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+      const T *tmp2 = (const T *) rhs.buffer_;
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       const T *tmp2 = ACE_reinterpret_cast (const T *, 
                                             rhs.buffer_);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
       for (CORBA::ULong i = 0; i < rhs.length_; i++)
         {
@@ -1215,8 +1231,12 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::_deallocate_buffer (void)
       return;
     }
 
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+  T *tmp = (T *) this->buffer_;
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
   T *tmp = ACE_reinterpret_cast (T *, 
                                  this->buffer_);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
   TAO_Bounded_Array_Sequence<T, T_var, MAX>::freebuf (tmp);
 
