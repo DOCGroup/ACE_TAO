@@ -29,7 +29,7 @@ ORT_test_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 ORT_test_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr info
+    PortableInterceptor::IORInfo_ptr /* info */
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -42,7 +42,7 @@ ORT_test_IORInterceptor::establish_components (
 
 void
 ORT_test_IORInterceptor::
-components_established (PortableInterceptor::IORInfo_ptr ior_info)
+components_established (PortableInterceptor::IORInfo_ptr /* ior_info */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->components_establish_count_;
