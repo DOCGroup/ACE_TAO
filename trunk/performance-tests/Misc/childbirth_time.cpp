@@ -385,7 +385,7 @@ main (int argc, char* argv[])
     }
 
   if (profiler == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a} [-n ###] [-h] [-e]\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a|-m|-x} [-n ###] [-L ###] [-h] [-e]\n"), 1);
   else
     {
       double time = profiler (iteration);
