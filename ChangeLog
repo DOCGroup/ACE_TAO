@@ -1,3 +1,8 @@
+Fri Jan 28 16:02:28 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp: Fixed compile diagnostics.
+
 Fri Jan 28 20:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
