@@ -399,7 +399,7 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_connections (double percentage)
 {
   // Set the percentage of entries to remove and then call purge on the cache.
-  this->caching_strategy_ ().purge_percent (percentage);
+  this->caching_strategy ().purge_percent (percentage);
   return this->connection_cache_.purge ();
 }
 
