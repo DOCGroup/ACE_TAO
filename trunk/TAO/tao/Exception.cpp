@@ -613,13 +613,13 @@ CORBA_SystemException::_tao_get_omg_exception_description (
   const CORBA::SystemException &exc,
   CORBA::ULong minor_code)
 {
-  static char *UNKNOWN_TABLE[] =
+  static const char *UNKNOWN_TABLE[] =
     {
         "Unlisted user exception received by client.",    // 1
         "Non-standard System Exception not supported."    // 2
     };
 
-  static char *BAD_PARAM_TABLE[] =
+  static const char *BAD_PARAM_TABLE[] =
     {
         "Failure to register, unregister, or lookup value factory." // 1
         "RID already defined in IFR.",                              // 2
@@ -649,17 +649,17 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Invalid profile ID in portable interceptor."               // 26
     };
 
-  static char *IMP_LIMIT_TABLE[] =
+  static const char *IMP_LIMIT_TABLE[] =
   {
         "Unable to use any profile in IOR." // 1
     };
 
-  static char *INV_OBJREF_TABLE[] =
+  static const char *INV_OBJREF_TABLE[] =
     {
         "wchar Code Set support not specified." // 1
     };
 
-  static char *MARSHAL_TABLE[] =
+  static const char *MARSHAL_TABLE[] =
     {
         "Unable to locate value factory.",  // 1
         "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
@@ -667,13 +667,13 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Attempt to marshal Local object.", // 4
     };
 
-  static char *BAD_TYPECODE_TABLE[] =
+  static const char *BAD_TYPECODE_TABLE[] =
     {
         "Attempt to marshal incomplete TypeCode.",             // 1
         "Member type code illegitimate in TypeCode operation." // 2
     };
 
-  static char *NO_IMPLEMENT_TABLE[] =
+  static const char *NO_IMPLEMENT_TABLE[] =
     {
         "Missing local value implementation.", // 1
         "Incompatible value implementation version.", // 2
@@ -681,12 +681,12 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Attempt to use DII on Local object." // 4
     };
 
-  static char *NO_RESOURCE_TABLE[] =
+  static const char *NO_RESOURCE_TABLE[] =
     {
         "Portable Interceptor operation not support in this binding." // 1
     };
 
-  static char *BAD_INV_ORDER_TABLE[] =
+  static const char *BAD_INV_ORDER_TABLE[] =
     {
         "Dependency exists in IFR preventing destruction of this object", // 1
         "Attempt to destroy indestructible objects in IFR.", // 2
@@ -702,13 +702,13 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Registration of PolicyFactory failed because a factory already exists for the given type." // 12
     };
 
-  static char *TRANSIENT_TABLE[] =
+  static const char *TRANSIENT_TABLE[] =
     {
         "Request discarded due to resource exhaustion in POA.", // 1
         "Request cancelled."                                    // 2
     };
 
-  static char *OBJ_ADAPTER_TABLE[] =
+  static const char *OBJ_ADAPTER_TABLE[] =
     {
         "System exception in POA::unknown_adapter.",              // 1
         "Servant not found [ServantManager].",                    // 2
@@ -717,18 +717,18 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Violation of POA policy by ServantActivator::incarnate." // 5
     };
 
-  static char *DATA_CONVERSION_TABLE[] =
+  static const char *DATA_CONVERSION_TABLE[] =
     {
         "Character does not map to negotiated transmission code set." // 1
     };
 
-  static char *OBJECT_NOT_EXIST_TABLE[] =
+  static const char *OBJECT_NOT_EXIST_TABLE[] =
     {
         "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
         "POAManager::incarnate failed to create POA." // 2
     };
 
-  static char *INV_POLICY_TABLE[] =
+  static const char *INV_POLICY_TABLE[] =
     {
         "Invalid PolicyType.", // 1
         "No PolicyFactory has been registered for the given PolicyType." // 2
