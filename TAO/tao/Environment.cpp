@@ -44,7 +44,12 @@ CORBA_Environment::operator= (const CORBA_Environment& rhs)
 CORBA_Environment::~CORBA_Environment (void)
 {
   this->clear ();
-  TAO_ORB_Core_instance ()->default_environment (this->previous_);
+
+  // If previous is 0 then this is the first Environment, allocated
+  // with the ORB, it shouldn't try to pop because the ORB is beign
+  // destroyed also.
+  if (this->previous_ != 0)
+    TAO_ORB_Core_instance ()->default_environment (this->previous_);
 }
 
 void
