@@ -1,3 +1,9 @@
+Mon Nov  3 22:37:58 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Timer_Wheel_T.cpp:
+	* ace/Timer_List_T.cpp:
+	* ace/Timer_Hash_T.cpp:  Changed the use of lock_ to mutex_.
+
 Mon Nov 03 21:29:32 1997    <nw1@COYOTE>
 
 	* ace/OS.cpp (cleanup_tss): Added TSS cleanup codes for Win32 when
