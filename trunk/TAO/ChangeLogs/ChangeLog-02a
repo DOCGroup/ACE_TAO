@@ -1,3 +1,8 @@
+Fri Jan 18 18:25:55 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO_AMH_Response_Handler.cpp:
+	  Fixed inconsistency in _tao_out field name.
+
 Fri Jan 18 18:02:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IFR_Client/IFR_BaseC.cpp:
@@ -59,7 +64,7 @@ Fri Jan 18 16:42:18 2002  Ossama Othman  <ossama@uci.edu>
 	  class.
 
 	  Added "TAO_ClientRequestInfo_Guard" class implementation.
-	
+
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.cpp:
 
