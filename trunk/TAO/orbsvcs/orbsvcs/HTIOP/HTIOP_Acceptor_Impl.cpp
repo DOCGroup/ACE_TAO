@@ -23,14 +23,9 @@
 
 #include "ace/Object_Manager.h"
 
-#if !defined(__ACE_INLINE__)
-#include "HTIOP_Acceptor_Impl.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(HTIOP,
           TAO_HTIOP_Acceptor_Impl,
           "$Id$")
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

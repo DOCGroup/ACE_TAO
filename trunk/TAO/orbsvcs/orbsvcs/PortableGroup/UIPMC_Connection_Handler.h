@@ -144,10 +144,5 @@ protected:
 
 };
 
-
-#if defined (__ACE_INLINE__)
-#include "UIPMC_Connection_Handler.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_CONNECTION_HANDLER_H */

@@ -16,11 +16,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Impl.h"
 
-#if !defined (__ACE_INLINE__)
-# include "HTIOP_Completion_Handler.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 ACE_RCSID (HTIOP,
            TAO_HTIOP_Completion_Handler,
            "$Id$")

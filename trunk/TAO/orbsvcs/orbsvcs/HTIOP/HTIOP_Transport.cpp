@@ -24,12 +24,6 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
-
-#if !defined (__ACE_INLINE__)
-# include "HTIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 ACE_RCSID (HTIOP,
            TAO_HTIOP_Transport,
            "$Id$")

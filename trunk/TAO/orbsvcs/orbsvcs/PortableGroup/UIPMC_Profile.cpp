@@ -19,10 +19,6 @@ ACE_RCSID (PortableGroup,
            UIPMC_Profile,
            "$Id$")
 
-#if !defined (__ACE_INLINE__)
-# include "UIPMC_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 static const char prefix_[] = "uipmc";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
