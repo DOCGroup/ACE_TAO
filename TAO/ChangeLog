@@ -1,3 +1,9 @@
+Mon Aug 25 12:30:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated load balancer release notes.
+
 Mon Aug 25 12:00:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
