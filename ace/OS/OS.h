@@ -7095,7 +7095,7 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 # if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
 
 #   if !defined (ACE_HAS_MINIMAL_ACE_OS)
-#     include "ace/Object_Manager.h"
+#     include "ace/Utils/Object_Manager.h"
 #   endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 // Rename "main ()" on platforms that don't allow it to be called "main ()".
