@@ -48,8 +48,7 @@ class TAO_LB_GenericFactory
 public:
 
   /// Constructor.
-  TAO_LB_GenericFactory (PortableServer::POA_ptr poa,
-                         TAO_LB_PropertyManager &property_manager,
+  TAO_LB_GenericFactory (TAO_LB_PropertyManager &property_manager,
                          TAO_LB_ObjectGroup_Map &object_group_map);
 
   /**
@@ -90,6 +89,9 @@ public:
                      LoadBalancing::ObjectNotFound));
 
   //@}
+
+  /// Set the POA to use when creating object references.
+  void poa (PortableServer::POA_ptr p);
 
 private:
 

@@ -253,6 +253,11 @@ module LoadBalancing
 
   };
 
+  /// It's not clear this interface is needed for the Load Balancer.
+  interface LoadNotifier
+  {
+  };
+
   /// Interface that all load monitors must implement.
   interface LoadMonitor
   {

@@ -12,10 +12,9 @@ ACE_RCSID (LoadBalancing,
 
 
 TAO_LB_GenericFactory::TAO_LB_GenericFactory (
-  PortableServer::POA_ptr poa,
   TAO_LB_PropertyManager &property_manager,
   TAO_LB_ObjectGroup_Map &object_group_map)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
+  : poa_ (),
     property_manager_ (property_manager),
     object_group_map_ (object_group_map),
     next_fcid_ (0)
@@ -183,6 +182,12 @@ TAO_LB_GenericFactory::delete_object (
     }
   else
     ACE_THROW (LoadBalancing::ObjectNotFound ());
+}
+
+void
+TAO_LB_GenericFactory::poa (PortableServer::POA_ptr p)
+{
+  this->poa_ = PortableServer::POA::_duplicate (p);
 }
 
 void

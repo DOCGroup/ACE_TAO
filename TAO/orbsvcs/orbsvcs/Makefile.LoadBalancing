@@ -3105,7 +3105,7 @@ realclean: clean
  LoadBalancingS_T.i \
  LoadBalancingS_T.cpp \
  LoadBalancingS.i \
- LoadBalancing/LB_ObjectGroup_Map.h \
+ LoadBalancing/LB_ReplicaLocator.h LoadBalancing/LB_ObjectGroup_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3154,7 +3154,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
  LoadBalancing/LB_ReplicaInfo.h LoadBalancing/LB_PropertyManager.h \
  LoadBalancing/LB_GenericFactory.h \
- LoadBalancing/LB_ObjectGroupManager.h
+ LoadBalancing/LB_ObjectGroupManager.h \
+ LoadBalancing/LB_Balancing_Strategy.h \
+ LoadBalancing/LoadBalancing_export.h
 
 .obj/LoadBalancingS.o .obj/LoadBalancingS.so .shobj/LoadBalancingS.o .shobj/LoadBalancingS.so: LoadBalancingS.cpp LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \
