@@ -1,9 +1,16 @@
+Sat Jul 31 06:35:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Added missing items for ACE 5.4.2.  Thanks to Olli Savia for
+	  pointing out what was missing.
+
 Sat Jul 31 05:47:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
 	* bin/make_release:
-	  
-	  Changed the pattern for looking at borland makefiles. 
+
+	  Changed the pattern for looking at borland makefiles.
 
 Sat Jul 31 03:15:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
