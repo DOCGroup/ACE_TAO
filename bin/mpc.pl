@@ -1,5 +1,5 @@
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
+eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
+    & eval 'exec perl -w -S $0 $argv:q'
     if 0;
 
 # ******************************************************************
@@ -16,8 +16,8 @@ use strict;
 use Cwd;
 use File::Basename;
 
-my($basePath) = getExecutePath($0) . "/MakeProjectCreator";
-unshift(@INC, $basePath . "/modules");
+my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
+unshift(@INC, $basePath . '/modules');
 
 require Driver;
 
@@ -42,28 +42,27 @@ my(@creators) = ('GNUACEProjectCreator',
 
 sub which {
   my($prog)   = shift;
-  my($exec)   = "$prog";
-  my($part)   = "";
-  my($isWin)  = ($^O eq "MSWin32");
-  my($envSep) = ($isWin ? ";" : ":");
+  my($exec)   = $prog;
+  my($part)   = '';
+  my($envSep) = ($^O eq 'MSWin32' ? ';' : ':');
 
   if (defined $ENV{'PATH'}) {
     foreach $part (split(/$envSep/, $ENV{'PATH'})) {
       $part .= "/$prog";
-      if ( -x $part ) { 
-        $exec = $part;  
+      if ( -x $part ) {
+        $exec = $part;
         last;
       }
-    }  
-  }    
-       
+    }
+  }
+
   return $exec;
 }
 
 
 sub getExecutePath {
   my($prog) = shift;
-  my($loc)  = "";   
+  my($loc)  = '';
 
   if ($prog ne basename($prog)) {
     if ($prog =~ /^[\/\\]/ ||
@@ -71,21 +70,21 @@ sub getExecutePath {
       $loc = dirname($prog);
     }
     else {
-      $loc = getcwd() . "/" . dirname($prog);
+      $loc = getcwd() . '/' . dirname($prog);
     }
-  }  
+  }
   else {
     $loc = dirname(which($prog));
   }
-   
-  if ($loc eq ".") {
+
+  if ($loc eq '.') {
     $loc = getcwd();
   }
-   
-  if ($loc ne "") {
-    $loc .= "/";   
+
+  if ($loc ne '') {
+    $loc .= '/';
   }
-   
+
   return $loc;
 }
 
