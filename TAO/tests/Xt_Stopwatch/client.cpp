@@ -3,7 +3,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(FL_Cube, client, "$Id$")
+ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
 #if !defined (ACE_HAS_XT)
 
@@ -18,14 +18,17 @@ int main (int, char *[])
 
 #include "Control.h"
 #include "Client.h"
+#include "tao/xt_resource.h"
 
-int 
-main (int argc, 
+int
+main (int argc,
       char* argv[])
 {
   XtAppContext  app;
   Widget        toplevel = XtAppInitialize ( &app, "Start & Stop", NULL, 0,
                                              &argc, argv, NULL, NULL, 0 );
+
+  TAO_XT_Resource_Factory::set_context (app);
 
   Control control (toplevel);
 
@@ -41,7 +44,7 @@ main (int argc,
 
       client.parse_args (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       client.add_callback (control);
 
       // Manage the widgets
@@ -97,7 +100,7 @@ Client::parse_args (int argc, char *argv[],
   this->server_ =
     Stopwatch::_narrow (object.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   if (CORBA::is_nil(this->server_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -115,7 +118,7 @@ Client::add_callback (Control &ctrl)
                   XmNactivateCallback,
                   &Client::start_callback,
                   client_data);
-  
+
   XtAddCallback ( ctrl.stopwidget (),
                   XmNactivateCallback,
                   &Client::stop_callback,

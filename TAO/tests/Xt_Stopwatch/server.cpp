@@ -3,7 +3,7 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(FL_Cube, server, "$Id$")
+ACE_RCSID(Xt_Stopwatch, server, "$Id$")
 
 #if !defined (ACE_HAS_XT)
 
@@ -18,6 +18,7 @@ int main (int, char *[])
 
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
+#include "tao/xt_resource.h"
 
 const char *ior_output_file = 0;
 
@@ -50,13 +51,15 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  // We do the command line parsing first 
+  // We do the command line parsing first
   if (parse_args (argc, argv) != 0)
     return 1;
 
   XtAppContext  app;
   Widget        toplevel = XtAppInitialize ( &app, "Stopwatch", NULL, 0,
                                              &argc, argv, NULL, NULL, 0 );
+
+  TAO_XT_Resource_Factory::set_context (app);
 
   Stopwatch_display stopwatch (toplevel);
 
@@ -72,7 +75,7 @@ main (int argc, char *argv[])
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
-      
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -113,7 +116,7 @@ main (int argc, char *argv[])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       XtRealizeWidget (toplevel );
       XtAppMainLoop ( app );
     }

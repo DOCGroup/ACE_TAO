@@ -75,7 +75,8 @@ PLUGGABLE_PROTOCOLS_FILES = \
 DEFAULT_RESOURCES_FILES = \
   default_client \
   default_server \
-  default_resource
+  default_resource \
+  xt_resource
 
 INTERPRETIVE_MARSHALING_FILES = \
   append \

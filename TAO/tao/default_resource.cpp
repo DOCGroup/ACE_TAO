@@ -11,7 +11,6 @@
 #include "tao/Connector_Registry.h"
 
 #include "ace/Select_Reactor.h"
-#include "ace/XtReactor.h"
 #include "ace/FlReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
@@ -110,15 +109,6 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - FlReactor"
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
-            else if (ACE_OS::strcasecmp (name,
-                                         "xt") == 0)
-#if defined(ACE_HAS_XT)
-              reactor_type_ = TAO_REACTOR_XT;
-#else
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO_Default_Factory - XtReactor"
-                          " not supported on this platform\n"));
-#endif /* ACE_HAS_XT */
             else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
 #if defined(ACE_WIN32)
@@ -355,12 +345,6 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
     case TAO_REACTOR_FL:
 #if defined(ACE_HAS_FL)
       ACE_NEW_RETURN (impl, ACE_FlReactor, 0);
-#endif /* ACE_HAS_FL */
-      break;
-
-    case TAO_REACTOR_XT:
-#if defined(ACE_HAS_XT)
-      ACE_NEW_RETURN (impl, ACE_XtReactor, 0);
 #endif /* ACE_HAS_FL */
       break;
 
