@@ -1,3 +1,8 @@
+Tue Apr 22 12:35:44 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/Collocation_Tests/Collocation_Test.dsp:
+	  Fixed test run errors.
+
 Mon Apr 21 14:20:00 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp:   
