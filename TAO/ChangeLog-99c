@@ -1,3 +1,9 @@
+Mon Jan 11 00:34:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.cpp (handle_input): Ifdef'ed out TAO_CATCHALL block
+	  if compilers don't support c++ exceptions.  It causes warning
+	  messages for some of them.
+
 Sun Jan 10 22:43:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Active_Object_Map.h:
