@@ -76,14 +76,14 @@ namespace TAO
      *                       user exception array.
      */
     void upcall (TAO_ServerRequest & server_request,
-                 TAO::Argument * args[],
+                 TAO::Argument * const args[],
                  size_t nargs,
                  TAO::Upcall_Command & command
 
 #if TAO_HAS_INTERCEPTORS == 1
                  , void * servant_upcall
                  , PortableServer::ServantBase * servant
-                 , CORBA::TypeCode_ptr * exceptions[]
+                 , CORBA::TypeCode_ptr const exceptions[]
                  , size_t nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -98,7 +98,7 @@ namespace TAO
      * @c INOUT argument demarshaling.
      */
     void pre_upcall (TAO_InputCDR & cdr,
-                     TAO::Argument ** args,
+                     TAO::Argument * const * args,
                      size_t nargs
                      ACE_ENV_ARG_DECL);
 
@@ -108,7 +108,7 @@ namespace TAO
      * and @c OUT argument marshaling.
      */
     void post_upcall (TAO_OutputCDR & cdr,
-                      TAO::Argument ** args,
+                      TAO::Argument * const * args,
                       size_t nargs
                       ACE_ENV_ARG_DECL);
 
