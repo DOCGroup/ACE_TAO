@@ -4993,6 +4993,9 @@ public:
   static int memcmp (const void *t,
                      const void *s,
                      size_t len);
+  static void *memchr(const void *s,
+                      int c,
+                      size_t len);
   static void *memcpy (void *t,
                        const void *s,
                        size_t len);

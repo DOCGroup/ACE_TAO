@@ -1188,6 +1188,26 @@ ACE_OS::memcmp (const void *t, const void *s, size_t len)
 }
 
 ACE_INLINE void *
+ACE_OS::memchr (const void *s, int c, size_t len)
+{
+#if defined (ACE_HAS_MEMCHR)
+  // ACE_TRACE ("ACE_OS::memchr");
+  return ::memchr (s, c, len);
+#else
+  unsigned char *t = (char *) s;
+  unsigned char *e = (char *) s + len;
+  while (t < e)
+    {
+      if (((int) *t) == c)
+        return t;
+      else
+        t++;
+    }
+  return 0;
+#endif /* ACE_HAS_MEMCHR */
+}
+
+ACE_INLINE void *
 ACE_OS::memcpy (void *t, const void *s, size_t len)
 {
   // ACE_TRACE ("ACE_OS::memcpy");
