@@ -93,7 +93,7 @@ TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters::Active_Objec
     use_active_hint_in_ids_ (1),
     allow_reactivation_of_system_ids_ (1)
 {
-};
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Creation_Strategy<TAO_Server_Connection_Handler>;
