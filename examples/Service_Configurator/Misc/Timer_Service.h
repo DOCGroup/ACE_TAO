@@ -3,8 +3,11 @@
 
 #include "ace/Service_Config.h"
 
-class Timer_Service : public ACE_Service_Object
+class Timer_Service_1 : public ACE_Service_Object
 {
+  // = TITLE
+  //   Demonstrates a simple timer service that can be configured
+  //   statically.
 public:
   virtual int init (int argc, char *argv[]);
   // Initialization hook.
@@ -30,5 +33,11 @@ private:
   // Current number of timeouts.
 };
 
-ACE_STATIC_SVC_DECLARE (Timer_Service)
+class Timer_Service_2 : public Timer_Service_1
+{
+};
+
+// Declare both static and dynamic services.
+ACE_STATIC_SVC_DECLARE (Timer_Service_1)
+ACE_SVC_FACTORY_DECLARE (Timer_Service_2)
 

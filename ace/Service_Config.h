@@ -20,6 +20,7 @@
 #include "ace/Service_Object.h"
 #include "ace/Signal.h"
 #include "ace/Containers.h"
+#include "ace/SString.h"
 
 // Forward decl.
 class ACE_Service_Repository;
@@ -33,8 +34,12 @@ extern "C"
   typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (ACE_Service_Object_Exterminator *);
 }
 
-struct ACE_Static_Svc_Descriptor
+class ACE_Static_Svc_Descriptor
 {
+  // = TITLE
+  //   Holds the information necessary to describe a statically linked
+  //   Svc.
+public:
   ASYS_TCHAR *name_;
   // Name of the service.
 
@@ -61,12 +66,18 @@ public:
   // Compare two service descriptors for equality.
 };
 
-// = Maintain a set of the statically linked service descriptor.
-
+// Maintain a set of the statically linked service descriptors.
 typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *> 
         ACE_STATIC_SVCS;
 typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *> 
         ACE_STATIC_SVCS_ITERATOR;
+
+// Maintain a queue of services to be configured from the
+// command-line.
+typedef ACE_Unbounded_Queue<ACE_CString>
+        ACE_SVC_QUEUE;
+typedef ACE_Unbounded_Queue_Iterator<ACE_CString>
+        ACE_SVC_QUEUE_ITERATOR;
 
 class ACE_Export ACE_Service_Config
 {
@@ -98,15 +109,15 @@ public:
   static int open (const ASYS_TCHAR program_name[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.  Returns
-  // -1 on failure and 0 otherwise.
+  // number of errors that occurred on failure and 0 otherwise.
 
   static int open (int argc,
                    ASYS_TCHAR *argv[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
-  // arguments passed in from the command-line.  Returns -1 on failure
-  // and 0 otherwise.
+  // arguments passed in from the command-line.  Returns number of
+  // errors that occurred on failure and 0 otherwise.
 
   virtual ~ACE_Service_Config (void);
   // Perform user-specified close activities and remove dynamic
@@ -242,7 +253,8 @@ public:
   // from the ACE_Reactor, and unlinking it if necessary.
 
 #if defined (ACE_HAS_WINCE)
-  // We must provide these function to bridge Svc_Conf parser with ACE.
+  // We must provide these function to bridge the <Svc_Conf> parser
+  // with ACE.
   static int initialize (const ACE_Service_Type *, char parameters[]);
   static int initialize (const char svc_name[], char parameters[]);
   static int resume (const char svc_name[]);
@@ -261,17 +273,22 @@ public:
 
 protected:
   static int process_directives (void);
-  // Process service configuration requests as indicated in the
-  // <service_config_file>.  Returns -1 if errors occur, else 0.
+  // Process service configuration requests that are provided in the
+  // <service_config_file>.  Returns the number of errors that
+  // occurred.
 
-  static int process_directive (ASYS_TCHAR directive[]);
+  static int process_commandline_directives (void);
+  // Process service configuration requests that were provided on the
+  // command-line.  Returns the number of errors that occurred.
+
+  static int process_directive (const ASYS_TCHAR directive[]);
   // Process one service configuration <directive>, which is passed as
-  // a string.  Returns -1 if errors occur, else 0.
+  // a string.  Returns the number of errors that occurred.
 
   static int process_directives_i (void);
   // This is the implementation function that <process_directives> and
-  // <process_directive> both call.  Returns -1 if errors occur, else
-  // 0.
+  // <process_directive> both call.  Returns the number of errors that
+  // occurred.
 
   static void parse_args (int, ASYS_TCHAR *argv[]);
   // Handle the command-line options intended for the
@@ -295,11 +312,11 @@ private:
   static LPCTSTR logger_key_;
   // Where to write the logging output.
 
-  //static ACE_Static_Svc_Descriptor service_list_[];
-  // List of statically linked services.
-
   static ACE_STATIC_SVCS *static_svcs_;
   // Singleton repository of statically linked services.
+
+  static ACE_SVC_QUEUE *svc_queue_;
+  // Queue of services requested on the command-line.
 
   static sig_atomic_t reconfig_occurred_;
   // True if reconfiguration occurred.
@@ -320,9 +337,9 @@ private:
 #include "ace/Service_Config.i"
 #endif /* __ACE_INLINE__ */
 
-// These must go here to avoid circular includes...
-// (only left here for to not break applications
-//  which rely on this - no real need any longer)
+// These must go here to avoid circular includes...  (only left here
+// for to not break applications which rely on this - no real need any
+// longer)
 #include "ace/Reactor.h"
 #include "ace/Svc_Conf_Tokens.h"
 #endif /* ACE_SERVICE_CONFIG_H */

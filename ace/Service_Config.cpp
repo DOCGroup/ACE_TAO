@@ -65,6 +65,7 @@ const ASYS_TCHAR *ACE_Service_Config::service_config_file_ = ASYS_TEXT (ACE_DEFA
 // List of statically configured services.
 
 ACE_STATIC_SVCS *ACE_Service_Config::static_svcs_ = 0;
+ACE_SVC_QUEUE *ACE_Service_Config::svc_queue_ = 0;
 
 ACE_STATIC_SVCS *
 ACE_Service_Config::static_svcs (void)
@@ -241,11 +242,13 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
           break;
         }
       case 'S':
-        // Process just a single directive.
-        if (ACE_Service_Config::process_directive (getopt.optarg) == -1)
+        if (ACE_Service_Config::svc_queue_ == 0)
+          ACE_Service_Config::svc_queue_ = new ACE_SVC_QUEUE;
+
+        if (ACE_Service_Config::svc_queue_->enqueue_head 
+            (ACE_CString (getopt.optarg)) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("process_directives")));
+                      ASYS_TEXT ("%p\n"), "enqueue_head"));
         break;
       default:
         ACE_ERROR ((LM_ERROR,
@@ -263,7 +266,7 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
-  ACE_Service_Type  *srp = 0;
+  ACE_Service_Type *srp = 0;
 
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening static service %s\n"), svc_name));
 
@@ -335,15 +338,21 @@ ACE_Service_Config::process_directives_i (void)
 }
 
 int
-ACE_Service_Config::process_directive (ASYS_TCHAR directive[])
+ACE_Service_Config::process_directive (const ASYS_TCHAR directive[])
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
   ACE_UNUSED_ARG (directive);
 
-  // @@ What needs to happen at this point is for the <directive> to
-  // be placed into a buffer that the YY_INPUT macro knows how to
-  // process correctly.
-  return ACE_Service_Config::process_directives_i ();
+  // Place <directive> into a buffer that the YY_INPUT macro knows how
+  // to process correctly.
+  ace_yydirective = directive;
+
+  int result = ACE_Service_Config::process_directives_i ();
+
+  // Reset to 0 to avoid confusing the YY_INPUT macro on subsequent
+  // requests.
+  ace_yydirective = 0;
+  return result;
 }
 
 // Process service configuration requests as indicated in the
@@ -367,6 +376,37 @@ ACE_Service_Config::process_directives (void)
       ace_yyrestart (fp);
       return ACE_Service_Config::process_directives_i ();
     }
+}
+
+int
+ACE_Service_Config::process_commandline_directives (void)
+{
+  int result = 0;
+
+  if (ACE_Service_Config::svc_queue_ != 0)
+    {
+      ACE_CString *sptr = 0;
+      ACE_SVC_QUEUE &queue = *ACE_Service_Config::svc_queue_;
+
+      for (ACE_SVC_QUEUE_ITERATOR iter (queue);
+           iter.next (sptr) != 0;
+           iter.advance ())
+        {
+          // Process just a single directive.
+          if (ACE_Service_Config::process_directive (sptr->fast_rep ()) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("process_directive")));
+              result = -1;
+            }
+        }
+
+      delete ACE_Service_Config::svc_queue_;
+      ACE_Service_Config::svc_queue_ = 0;
+    }
+
+  return result;
 }
 
 // Add the default statically-linked services to the Service
@@ -400,8 +440,10 @@ ACE_Service_Config::load_static_svcs (void)
 
       ACE_Service_Type *sr;
 
-      ACE_NEW_RETURN (sr, ACE_Service_Type (ssd->name_, stp,
-                                              0, ssd->active_), -1);
+      ACE_NEW_RETURN (sr, ACE_Service_Type (ssd->name_,
+                                            stp,
+                                            0,
+                                            ssd->active_), -1);
 
       if (ACE_Service_Repository::instance ()->insert (sr) == -1)
         return -1;
@@ -450,14 +492,15 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
       // same size as the ACE_Service_Repository).
       ACE_Reactor::instance ();
 
-      // Register ourselves to receive reconfiguration requests via
-      // signals!
-
+      // See if we need to load the static services.
       if (ACE_Service_Config::no_static_svcs_ == 0
           && ACE_Service_Config::load_static_svcs () == -1)
         return -1;
       else
-        return ACE_Service_Config::process_directives ();
+        {
+          int result = ACE_Service_Config::process_commandline_directives ();
+          return ACE_Service_Config::process_directives () + result;
+        }
     }
 }
 
@@ -637,6 +680,9 @@ ACE_Service_Config::start_daemon (void)
 template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
+template class ACE_Node<ACE_CString>;
+template class ACE_Unbounded_Set<ACE_CString>;
+template class ACE_Unbounded_Set_Iterator<ACE_CString>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class auto_ptr<ACE_Obstack>;
@@ -645,6 +691,9 @@ template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #pragma instantiate ACE_Node<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
+#pragma instantiate ACE_Node<ACE_CString>
+#pragma instantiate ACE_Unbounded_Set<ACE_ACE_CString>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #pragma instantiate auto_ptr<ACE_Obstack>

@@ -10,13 +10,19 @@
 #----------------------------------------------------------------------------
 
 BIN   	= main
+LIB   	= libTimer.a
+SHLIB 	= libTimer.$(SOEXT)
 
 FILES  	= Timer_Service
 
-SRC	= $(addsuffix .cpp,$(FILES))
-OBJ	= $(addsuffix .o,$(FILES))
+PSRC   	= $(addsuffix .cpp,$(BIN))
+LSRC	= $(addsuffix .cpp,$(FILES))
 
-BUILD 	= $(VBIN)
+LDLIBS 	= -lTimer
+
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -58,109 +58,109 @@
  // Keeps track of the number of errors encountered so far.
 @@ -682,112 +691,112 @@
  ACE_YY_USER_ACTION
- # line 35 "Svc_Conf.l"
+ # line 39 "Svc_Conf.l"
  { return token (ACE_DYNAMIC); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 3:
  ACE_YY_USER_ACTION
- # line 36 "Svc_Conf.l"
+ # line 40 "Svc_Conf.l"
  { return token (ACE_STATIC); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 4:
  ACE_YY_USER_ACTION
- # line 37 "Svc_Conf.l"
+ # line 41 "Svc_Conf.l"
  { return token (ACE_SUSPEND); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 5:
  ACE_YY_USER_ACTION
- # line 38 "Svc_Conf.l"
+ # line 42 "Svc_Conf.l"
  { return token (ACE_RESUME); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 6:
  ACE_YY_USER_ACTION
- # line 39 "Svc_Conf.l"
+ # line 43 "Svc_Conf.l"
  { return token (ACE_REMOVE); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 7:
  ACE_YY_USER_ACTION
- # line 40 "Svc_Conf.l"
+ # line 44 "Svc_Conf.l"
  { return token (ACE_USTREAM); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 8:
  ACE_YY_USER_ACTION
- # line 41 "Svc_Conf.l"
+ # line 45 "Svc_Conf.l"
  { return token (ACE_MODULE_T); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 9:
  ACE_YY_USER_ACTION
- # line 42 "Svc_Conf.l"
+ # line 46 "Svc_Conf.l"
  { return token (ACE_SVC_OBJ_T); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 10:
  ACE_YY_USER_ACTION
- # line 43 "Svc_Conf.l"
+ # line 47 "Svc_Conf.l"
  { return token (ACE_STREAM_T); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 11:
  ACE_YY_USER_ACTION
- # line 44 "Svc_Conf.l"
+ # line 48 "Svc_Conf.l"
  { return token (ACE_ACTIVE); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 12:
  ACE_YY_USER_ACTION
- # line 45 "Svc_Conf.l"
+ # line 49 "Svc_Conf.l"
  { return token (ACE_INACTIVE); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 13:
  ACE_YY_USER_ACTION
- # line 46 "Svc_Conf.l"
+ # line 50 "Svc_Conf.l"
  { return token (ACE_COLON); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 14:
  ACE_YY_USER_ACTION
- # line 47 "Svc_Conf.l"
+ # line 51 "Svc_Conf.l"
  { return token (ACE_STAR); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 15:
  ACE_YY_USER_ACTION
- # line 48 "Svc_Conf.l"
+ # line 52 "Svc_Conf.l"
  { return token (ACE_LPAREN); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 16:
  ACE_YY_USER_ACTION
- # line 49 "Svc_Conf.l"
+ # line 53 "Svc_Conf.l"
  { return token (ACE_RPAREN); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 17:
  ACE_YY_USER_ACTION
- # line 50 "Svc_Conf.l"
+ # line 54 "Svc_Conf.l"
  { return token (ACE_LBRACE); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 18:
  ACE_YY_USER_ACTION
- # line 51 "Svc_Conf.l"
+ # line 55 "Svc_Conf.l"
  { return token (ACE_RBRACE); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 19:
  ACE_YY_USER_ACTION
- # line 52 "Svc_Conf.l"
+ # line 56 "Svc_Conf.l"
  { // Eliminate the opening and closing double quotes
 -		        *strrchr (ace_yytext, '"') = '\0';
 +		        *ACE_OS::strrchr (ace_yytext, '"') = '\0';
@@ -172,7 +172,7 @@
 +	/* ACE_YY_BREAK */
  case 20:
  ACE_YY_USER_ACTION
- # line 57 "Svc_Conf.l"
+ # line 61 "Svc_Conf.l"
 -{ 
 -		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
 -			return token (ACE_IDENT); 
@@ -184,7 +184,7 @@
 +	/* ACE_YY_BREAK */
  case 21:
  ACE_YY_USER_ACTION
- # line 61 "Svc_Conf.l"
+ # line 65 "Svc_Conf.l"
 -{ 
 -		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
 -			return token (ACE_PATHNAME); 
@@ -196,11 +196,11 @@
 +	/* ACE_YY_BREAK */
  case 22:
  ACE_YY_USER_ACTION
- # line 65 "Svc_Conf.l"
+ # line 69 "Svc_Conf.l"
 @@ -801,14 +810,15 @@
  case 24:
  ACE_YY_USER_ACTION
- # line 67 "Svc_Conf.l"
+ # line 71 "Svc_Conf.l"
 -{ ACE_ERROR ((LM_ERROR, "unknown char = %d\n", *ace_yytext)); }
 +{ ACE_ERROR ((LM_ERROR, ASYS_TEXT ("unknown char = %d\n"),
 +              *ace_yytext)); }
@@ -208,13 +208,13 @@
  case ACE_YY_STATE_EOF(INITIAL):
  case ACE_YY_STATE_EOF(PARAMETERS):
  case ACE_YY_STATE_EOF(NORMAL):
- # line 68 "Svc_Conf.l"
+ # line 72 "Svc_Conf.l"
  { ACE_YY_NEW_FILE; ace_yyterminate(); }
 -	ACE_YY_BREAK
 +	/* ACE_YY_BREAK */
  case 25:
  ACE_YY_USER_ACTION
- # line 69 "Svc_Conf.l"
+ # line 73 "Svc_Conf.l"
 @@ -1141,6 +1151,7 @@
  	}
  

@@ -97,8 +97,8 @@ ACE_Sig_Adapter *ace_service_config_sig_handler = 0;
 class ACE_Object_Manager_Preallocations
 {
 public:
-  ACE_Object_Manager_Preallocations ();
-  ~ACE_Object_Manager_Preallocations();
+  ACE_Object_Manager_Preallocations (void);
+  ~ACE_Object_Manager_Preallocations (void);
 
 private:
 #if !defined (ACE_HAS_WINCE)
@@ -157,7 +157,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
     insert (&ace_svc_desc_ACE_Service_Manager);
 }
 
-ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations ()
+ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations (void)
 {
 }
 
@@ -631,12 +631,12 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
-  // No mutex here.  Only the main thread should destroy the
-  // singleton ACE_Object_Manager instance.
+  // No mutex here.  Only the main thread should destroy the singleton
+  // ACE_Object_Manager instance.
 
   // First, indicate that the ACE_Object_Manager instance is (being)
-  // destroyed.  If an object tries to register after this, it will
-  // be refused.
+  // destroyed.  If an object tries to register after this, it will be
+  // refused.
   ACE_Object_Manager::shutting_down_ = 1;
 
   ACE_Trace::stop_tracing ();

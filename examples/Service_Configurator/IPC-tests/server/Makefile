@@ -25,7 +25,6 @@ FILES	= Handle_L_Dgram \
 	  Handle_Thr_Stream
 
 PSRC   	= $(addsuffix .cpp,$(BIN))
-
 LSRC	= $(addsuffix .cpp,$(FILES))
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
