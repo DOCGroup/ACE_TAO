@@ -40,14 +40,14 @@
 class TAO_EC_Dispatching;
 class TAO_EC_Filter_Builder;
 
-class TAO_EC_ProxyPushConsumer : public TAO_EC_Filter
+class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
   // = TITLE
   //   ProxyPushConsumer
   //
   // = DESCRIPTION
   //   Implements the ProxyPushConsumer interface, i.e. the object
-  //   used to communicate with a particular consumer.
+  //   used to communicate with a particular supplier.
   //
   // = MEMORY MANAGMENT
   //   It makes a copy of the SupplierQOS and the supplier object
@@ -81,6 +81,9 @@ public:
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
 
+  void set_default_poa (PortableServer::POA_ptr poa);
+  // Set this servant's default POA
+
   // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
 		RtecEventComm::PushConsumer_ptr push_consumer,
@@ -89,6 +92,9 @@ public:
   virtual void push (const RtecEventComm::EventSet& event,
                      CORBA::Environment &);
   virtual void disconnect_push_consumer (CORBA::Environment &);
+
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  // Override the ServantBase method.
 
 private:
   TAO_EC_SupplierAdmin* supplier_admin_;
@@ -99,6 +105,9 @@ private:
 
   RtecEventChannelAdmin::SupplierQOS qos_;
   // The publication and QoS information...
+
+  PortableServer::POA_var default_POA_;
+  // Store the default POA.
 };
 
 #if defined (__ACE_INLINE__)

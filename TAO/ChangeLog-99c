@@ -1,3 +1,24 @@
+Thu Jan 21 10:57:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* EC_ConsumerAdmin.cpp: 
+	* EC_ConsumerAdmin.h: 
+	* EC_ConsumerAdmin.i: 
+	* EC_Event_Channel.cpp: 
+	* EC_Event_Channel.h: 
+	* EC_Event_Channel.i: 
+	* EC_Factory.h: 
+	* EC_Factory.i: 
+	* EC_Filter.h: 
+	* EC_Filter.i: 
+	* EC_ProxyConsumer.h: 
+	* EC_ProxySupplier.cpp: 
+	* EC_ProxySupplier.h: 
+	* EC_ProxySupplier.i: 
+	* EC_SupplierAdmin.cpp: 
+	* EC_SupplierAdmin.h: 
+	* EC_SupplierAdmin.i: 
+	  Continue the implementation of the new event channel.
+
 Wed Jan 20 23:32:47 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
