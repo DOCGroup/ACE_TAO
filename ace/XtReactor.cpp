@@ -19,9 +19,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
 
 // Must be called with lock held
 ACE_XtReactor::ACE_XtReactor (XtAppContext context,
-		      size_t size, 
-		      int restart, 
-		      ACE_Sig_Handler *h)
+			      size_t size, 
+			      int restart, 
+			      ACE_Sig_Handler *h)
   : ACE_Reactor (size, restart, h),
     context_ (context),
     id_len_ (0),
@@ -29,17 +29,18 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
     timeout_ (0)
 {
   // When the ACE_Reactor is constructed it creates the notify pipe
-  // and registers it with the attach() method. The XtReactor
-  // overloads this method BUT because the attach occurs when
-  // constructing the base class ACE_Reactor, the ACE_Reactor attach()
-  // is called not the XtReactor attach().  This means that the notify
+  // and registers it with the register_handler_i() method. The
+  // XtReactor overloads this method BUT because the
+  // register_handler_i occurs when constructing the base class
+  // ACE_Reactor, the ACE_Reactor register_handler_i() is called not
+  // the XtReactor register_handler_i().  This means that the notify
   // pipe is registered with the ACE_Reactor event handling code not
   // the XtReactor and so notfications don't work.  To get around this
   // we simply close and re-opened the notification handler in the
   // constructor of the XtReactor.
 
-  this->notification_handler_.close ();
-  this->notification_handler_.open (this);
+  this->notify_handler_.close ();
+  this->notify_handler_.open (this);
 }
 
 ACE_XtReactor::~ACE_XtReactor (void)
@@ -49,51 +50,34 @@ ACE_XtReactor::~ACE_XtReactor (void)
 
 // This is just the wait_for_multiple_events from ace/Reactor.cpp but
 // we use the Xt functions to wait for an event, not select ()
-//
-// FIXME - someday re-write this to use poll as well.
 
 int 
-ACE_XtReactor::wait_for_multiple_events (ACE_Handle_Set &rmask, 
-				     ACE_Handle_Set &wmask, 
-				     ACE_Handle_Set &emask, 
-				     ACE_Time_Value *max_wait_time)
+ACE_XtReactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &handle_set,
+					 ACE_Time_Value *max_wait_time)
 {
     ACE_TRACE ("ACE_Reactor::wait_for_multiple_events");
-#if defined (ACE_USE_POLL)
-    u_long width = 0;
-#endif /* ACE_USE_POLL */
     int nfound;
 
     do 
       {
 	max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
       
-#if defined (ACE_USE_POLL)
-	pollfd *phandles = this->handle_sets_to_poll_fds (width);
-	nfound = ACE_OS::poll (phandles, width, max_wait_time);
-#else /* USE SELECT */
 	size_t width = this->handler_rep_.max_handlep1 ();
-	rmask = this->rd_handle_mask_;
-	wmask = this->wr_handle_mask_;
-	emask = this->ex_handle_mask_;
-#if 0
-	nfound = ACE_OS::select (int (width), rmask, wmask, emask, max_wait_time);
-#else
-	nfound = XtWaitForMultipleEvents (width, rmask, wmask, emask, max_wait_time);
-#endif
-#endif /* ACE_USE_POLL */
-      } while (nfound == -1 && this->handle_error () > 0);
+	handle_set.rd_mask_ = this->wait_set_.rd_mask_;
+	handle_set.wr_mask_ = this->wait_set_.wr_mask_;
+	handle_set.ex_mask_ = this->wait_set_.ex_mask_;
+	nfound = XtWaitForMultipleEvents (width, 
+					  handle_set,
+					  max_wait_time);
 
-#if defined (ACE_USE_POLL)
-      this->poll_fds_to_handle_sets (width, rmask, wmask, emask, nfound);
-#endif /* ACE_USE_POLL */
+      } while (nfound == -1 && this->handle_error () > 0);
 
     if (nfound > 0)
       {
 #if !defined (ACE_WIN32)
-	rmask.sync (this->handler_rep_.max_handlep1 ());
-	wmask.sync (this->handler_rep_.max_handlep1 ());
-	emask.sync (this->handler_rep_.max_handlep1 ());
+	handle_set.rd_mask_.sync (this->handler_rep_.max_handlep1 ());
+	handle_set.wr_mask_.sync (this->handler_rep_.max_handlep1 ());
+	handle_set.ex_mask_.sync (this->handler_rep_.max_handlep1 ());
 #endif /* ACE_REACTOR_ALTERANTIVE_IMPL */
       }
     return nfound; // Timed out or input available
@@ -110,8 +94,8 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
   ACE_Time_Value zero = ACE_Time_Value::zero; // my copy isn't const
 
   // Deal with any timer events
-  ACE_Handle_Set r, w, e;
-  self->dispatch (0, r, w, e);
+  ACE_Reactor_Handle_Set handle_set;
+  self->dispatch (0, handle_set);
   self->reset_timeout ();
 }
 
@@ -129,49 +113,53 @@ void ACE_XtReactor::InputCallbackProc (XtPointer closure,
 
   ACE_Time_Value zero = ACE_Time_Value::zero; // my copy isn't const
 
-  ACE_Handle_Set r, w, e;
-  ACE_Handle_Set r2, w2, e2;
+  ACE_Reactor_Handle_Set wait_set;
 
   // Deal with one file event
     
   // - read which kind of event
-  if (self->rd_handle_mask_.is_set (*source))
-    r.set_bit (*source);
-  if (self->wr_handle_mask_.is_set (*source))
-    w.set_bit (*source);
-  if (self->ex_handle_mask_.is_set (*source))
-    e.set_bit (*source);
+  if (self->wait_set_.rd_mask_.is_set (*source))
+    wait_set.rd_mask_.set_bit (*source);
+  if (self->wait_set_.wr_mask_.is_set (*source))
+    wait_set.rd_mask_.set_bit (*source);
+  if (self->wait_set_.ex_mask_.is_set (*source))
+    wait_set.ex_mask_.set_bit (*source);
 
-  int result = ACE_OS::select (*source+1, r, w, e, &zero);
+  int result = ACE_OS::select (*source + 1, 
+			       wait_set.rd_mask_,
+			       wait_set.wr_mask_,
+			       wait_set.ex_mask_, &zero);
+
+  ACE_Reactor_Handle_Set dispatch_set;
 
   // - Use only that one file event (removes events for other files)
   if (result > 0)
     {
-      if (r.is_set (*source))
-	r2.set_bit (*source);
-      if (w.is_set (*source))
-	w2.set_bit (*source);
-      if (e.is_set (*source))
-	e2.set_bit (*source);
+      if (wait_set.rd_mask_.is_set (*source))
+	dispatch_set.rd_mask_.set_bit (*source);
+      if (wait_set.wr_mask_.is_set (*source))
+	dispatch_set.wr_mask_.set_bit (*source);
+      if (wait_set.ex_mask_.is_set (*source))
+	dispatch_set.ex_mask_.set_bit (*source);
 
-      self->dispatch (1, r2, w2, e2);
+      self->dispatch (1, dispatch_set);
     }
 }
 
 int ACE_XtReactor::XtWaitForMultipleEvents (int width, 
-					    ACE_Handle_Set &rmask, 
-					    ACE_Handle_Set &wmask, 
-					    ACE_Handle_Set &emask, 
+					    ACE_Reactor_Handle_Set &wait_set,
 					    ACE_Time_Value *max_wait_time)
 {
-  // Check to make sure our fd's are all usable
+  // Check to make sure our handle's are all usable.
 
-  ACE_Handle_Set r (rmask), w (wmask), e (emask);
-  ACE_Time_Value zero = ACE_Time_Value::zero; // my copy isn't const
-  int result = ACE_OS::select (width, r, w, e, &zero);
+  ACE_Reactor_Handle_Set temp_set = wait_set;
 
-  if (result < 0)		// Bad file arguments...
-    return result;
+  if (ACE_OS::select (width, 
+		      temp_set.rd_mask_, 
+		      temp_set.wr_mask_, 
+		      temp_set.ex_mask_, 
+		      (ACE_Time_Value *) &ACE_TimeValue::zero) == -1)
+    return -1; // Bad file arguments...
 
   // Instead of waiting using select, just use the Xt mechanism to wait
   // for a single event.
@@ -180,8 +168,11 @@ int ACE_XtReactor::XtWaitForMultipleEvents (int width,
   XtAppProcessEvent (context_, XtIMAll);
 
   // Now actually read the result needed by the Reactor using select.
-  result = ACE_OS::select (int (width), rmask, wmask, emask,  &zero);
-  return result;
+  return ACE_OS::select (width,
+			 wait_set.rd_mask_,  
+			 wait_set.wr_mask_,  
+			 wait_set.ex_mask_,  
+			 (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
 XtAppContext ACE_XtReactor::context (void) 
@@ -190,15 +181,15 @@ XtAppContext ACE_XtReactor::context (void)
 }
 
 int
-ACE_XtReactor::attach (ACE_HANDLE handle, 
-		       ACE_Event_Handler *handler,
-		       ACE_Reactor_Mask mask)
+ACE_XtReactor::register_handler_i (ACE_HANDLE handle, 
+				   ACE_Event_Handler *handler,
+				   ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_XtReactor::attach");
+  ACE_TRACE ("ACE_XtReactor::register_handler_i");
 
   ACE_DEBUG ((LM_DEBUG, "+++%d\n", handle));
 
-  int result = ACE_Reactor::attach (handle, handler, mask);
+  int result = ACE_Reactor::register_handler_i (handle, handler, mask);
 
   if (result < 0)
     return -1;
@@ -238,9 +229,9 @@ ACE_XtReactor::attach (ACE_HANDLE handle,
 
       ids_[handle].id = XtAppAddInput (context_, 
 				       handle, 
-				       (XtPointer)condition, 
+				       (XtPointer) condition, 
 				       InputCallbackProc, 
-				       (XtPointer)this);
+				       (XtPointer) this);
       ids_[handle].good_id = 1;
     }
   return 0;
@@ -248,13 +239,13 @@ ACE_XtReactor::attach (ACE_HANDLE handle,
 
 
 int
-ACE_XtReactor::detach (ACE_HANDLE handle, 
-		     ACE_Reactor_Mask mask)
+ACE_XtReactor::remove_handler_i (ACE_HANDLE handle, 
+				 ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_XtReactor::detach");
+  ACE_TRACE ("ACE_XtReactor::remove_handler_i");
   ACE_DEBUG ((LM_DEBUG, "---%d\n", handle));
 
-  int result = ACE_Reactor::detach (handle, mask);
+  int result = ACE_Reactor::remove_handler_i (handle, mask);
 
   if (handle <= id_len_)
     { 
@@ -302,7 +293,7 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
 			       const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_XtReactor::schedule_timer");
-  ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
   int result = 
     ACE_Reactor::schedule_timer (handler, arg, delta_time, interval);

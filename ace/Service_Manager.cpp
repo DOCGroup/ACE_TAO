@@ -1,7 +1,6 @@
 // Service_Manager.cpp
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/Get_Opt.h"
 #include "ace/Service_Repository.h"
@@ -118,8 +117,11 @@ int
 ACE_Service_Manager::fini (void)
 {
   ACE_TRACE ("ACE_Service_Manager::fini");
-  return ACE_Service_Config::reactor ()->remove_handler 
-    (this, ACE_Event_Handler::ACCEPT_MASK);
+
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    return ACE_Service_Config::reactor ()->remove_handler 
+      (this, ACE_Event_Handler::ACCEPT_MASK);
+  return 0;
 }
   
 ACE_HANDLE

@@ -36,7 +36,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
   // General notification messages to the Reactor.
 
-  virtual int notify (void);
+  virtual int notify (ACE_Time_Value *tv = 0);
   // Perform notifications.
 
   virtual int svc (void);
@@ -48,6 +48,9 @@ private:
 
   size_t id_;
   // ID passed in by Thread_Handler constructor.
+
+  sig_atomic_t shutdown_;
+  // Shutting down.
 
   // = Timing variables.
   // Delay factor for timer-driven I/O.
@@ -66,6 +69,7 @@ ACE_Time_Value Thread_Handler::interval_;
 Thread_Handler::Thread_Handler (int delay, 
 				int interval,
 				int n_threads)
+  : shutdown_ (0)
 {
   delay_.set (delay);
   interval_.set (interval);
@@ -124,17 +128,17 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
 }
 
 int
-Thread_Handler::notify (void)
+Thread_Handler::notify (ACE_Time_Value *timeout)
 {
   // Just do something to test the ACE_Reactor's multi-thread
   // capabilities...
 
   if (ACE_Service_Config::reactor ()->notify 
-      (this, ACE_Event_Handler::EXCEPT_MASK) == -1)
+      (this, ACE_Event_Handler::EXCEPT_MASK, timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
 
   else if (ACE_Service_Config::reactor ()->notify 
-	   (this, ACE_Event_Handler::WRITE_MASK) == -1)
+	   (this, ACE_Event_Handler::WRITE_MASK, timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
 
   return 0;
@@ -146,7 +150,7 @@ Thread_Handler::notify (void)
 int
 Thread_Handler::svc (void)
 {
-  for (;;)
+  while (this->shutdown_ == 0)
     {
       if (Thread_Handler::delay_.sec () > 0)
 	// Block for delay_.secs () / 2, then notify the Reactor.
@@ -155,7 +159,7 @@ Thread_Handler::svc (void)
       // Only wait up to 10 milliseconds to notify the Reactor.
       ACE_Time_Value timeout (0, 10 * 1000);
 
-      if (this->notify (0, ACE_Event_Handler::EXCEPT_MASK, &timeout) == -1)
+      if (notify (&timeout) == -1)
 	ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "notify()"));
     }
   return 0;
@@ -175,6 +179,7 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       ACE_ERROR ((LM_ERROR, 
 		  "(%t) ******************** shutting down %n on signal %S\n", 
 		  signum));
+      this->shutdown_ = 1;
       ACE_Service_Config::end_reactor_event_loop ();
     }
   return 0;

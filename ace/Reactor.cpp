@@ -151,19 +151,26 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Reactor_Handler_Repository::find");
 
   ACE_Event_Handler *eh = 0;
-#if defined (ACE_WIN32)
-  ssize_t i = 0;
 
-  for (; i < this->max_handlep1_; i++)
-    if (ACE_REACTOR_HANDLE (i) == handle)
-      eh = ACE_REACTOR_EVENT_HANDLER (this, i);
-#else
-  ssize_t i = handle;
-
+  // Only bother to search for the <handle> if it's in range.
   if (this->handle_in_range (handle))
-    eh = ACE_REACTOR_EVENT_HANDLER (this, handle);
-#endif /* ACE_WIN32 */
+    {
+#if defined (ACE_WIN32)
+      ssize_t i = 0;
 
+      for (; i < this->max_handlep1_; i++)
+	if (ACE_REACTOR_HANDLE (i) == handle)
+	  {
+	    eh = ACE_REACTOR_EVENT_HANDLER (this, i);
+	    break;
+	  }
+#else
+      ssize_t i = handle;
+
+      eh = ACE_REACTOR_EVENT_HANDLER (this, handle);
+#endif /* ACE_WIN32 */
+    }
+  
   if (eh && index_p != 0)
     *index_p = i;
   else
@@ -190,7 +197,7 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 #if defined (ACE_WIN32)
   int assigned_slot = -1;
 
-  for (ssize_t i = 0; i < this->cur_size_; i++)
+  for (ssize_t i = 0; i < this->max_handlep1_; i++)
     {
       // Found it, so let's just reuse this location.
       if (ACE_REACTOR_HANDLE (i) == handle)
@@ -210,12 +217,12 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
       ACE_REACTOR_HANDLE (assigned_slot) = handle;
       ACE_REACTOR_EVENT_HANDLER (this, assigned_slot) = event_handler;
     }
-  else if (this->cur_size_ < this->max_size_)
+  else if (this->max_handlep1_ < this->max_size_)
     {
       // Insert at the end of the active portion. 
-      ACE_REACTOR_HANDLE (this->cur_size_) = handle;
-      ACE_REACTOR_EVENT_HANDLER (this, this->cur_size_) = event_handler;
-      this->cur_size_++;
+      ACE_REACTOR_HANDLE (this->max_handlep1_) = handle;
+      ACE_REACTOR_EVENT_HANDLER (this, this->max_handlep1_) = event_handler;
+      this->max_handlep1_++;
     }
   else
     {
@@ -273,8 +280,6 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
       && this->reactor_.wait_set_.ex_mask_.is_set (handle) == 0)
 #if defined (ACE_WIN32)
     {
-      ACE_ASSERT (ACE_REACTOR_HANDLE (index) == handle);
-
       ACE_REACTOR_HANDLE (index) = ACE_INVALID_HANDLE;
       ACE_REACTOR_EVENT_HANDLER (this, index) = 0;
 
@@ -316,6 +321,7 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 	}
   }
 #endif /* ACE_WIN32 */
+
   return 0;
 }
 

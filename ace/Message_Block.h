@@ -174,7 +174,7 @@ public:
 
   // = Deep copy and shallow copy methods.
 
-  ACE_Message_Block *clone (Message_Flags mask = 0) const;
+  virtual ACE_Message_Block *clone (Message_Flags mask = 0) const;
   // Return an exact "deep copy" of the message, i.e., create fresh
   // new copies of all the Data_Blocks and continuations.
 
@@ -253,7 +253,9 @@ public:
 
   // = <ACE_Data_Block> methods.
   ACE_Data_Block *data_block (void) const;
-  // Get the data block;
+  // Get the data block.
+  void data_block (ACE_Data_Block *);
+  // Set the data block (releasing the original one).
 
   // = The continuation field chains together composite messages.
   ACE_Message_Block *cont (void) const;
@@ -286,10 +288,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  // = Keep this private for now...
-  void data_block (ACE_Data_Block *);
-  // Set the data block;
-
   // = Internal initialization methods.
   ACE_Message_Block (size_t size, 
 		     ACE_Message_Type type,

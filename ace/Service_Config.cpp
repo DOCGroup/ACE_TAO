@@ -109,6 +109,7 @@ ACE_STATIC_SVC_DEFINE (ACE_Service_Manager,
 		       "ACE_Service_Manager", ACE_SVC_OBJ_T, &ACE_SVC_NAME (ACE_Service_Manager),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ, 0)
 
+// Add this to the list of statically configured services.
 ACE_STATIC_SVC_REQUIRE (ACE_Service_Manager)
 
 // List of statically configured services.
@@ -117,8 +118,6 @@ ACE_STATIC_SVCS *
 ACE_Service_Config::static_svcs (void)
 {
   static ACE_STATIC_SVCS *instance_ = 0;
-
-  // Add other default services here if you'd like.
 
   if (instance_ == 0)
     ACE_NEW_RETURN (instance_, ACE_STATIC_SVCS, 0);

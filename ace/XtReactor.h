@@ -66,16 +66,12 @@ public:
 
 protected:
 
-  virtual int wait_for_multiple_events (ACE_Handle_Set &, 
-					ACE_Handle_Set &,
-					ACE_Handle_Set &, 
+  virtual int wait_for_multiple_events (ACE_Reactor_Handle_Set &,
 					ACE_Time_Value *); 
 
   virtual int XtWaitForMultipleEvents (int, 
-				      ACE_Handle_Set &, 
-				      ACE_Handle_Set &,
-				      ACE_Handle_Set &, 
-				      ACE_Time_Value *); 
+				       ACE_Reactor_Handle_Set &,
+				       ACE_Time_Value *); 
 
   ACE_XtReactor (const ACE_Reactor &);
   ACE_XtReactor &operator = (const ACE_Reactor &);

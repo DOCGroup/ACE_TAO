@@ -51,7 +51,7 @@ public:
   ACE_Service_Type (const void *object, 
 		    const char *s_name, 
 		    u_int flags = 0);
-  ~ACE_Service_Type (void);
+  virtual ~ACE_Service_Type (void);
 
   // = Pure virtual interface (must be defined by the subclass).
   virtual int suspend (void) const = 0;

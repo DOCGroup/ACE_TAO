@@ -1,3 +1,75 @@
+Tue Jan  7 13:03:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (exit): Added a flag called "do_thr_exit"
+ 	  to the ACE_Thread_Control::exit() method.  This controls whether
+ 	  we call ACE_OS::thr_exit() after removing the thread from the
+ 	  Thread Manager's internal table.  This is necessary to work
+ 	  around pthread bugs on certain platforms (e.g., AIX and Linux).
+
+	* ace/Synch.h: Removed the
+ 	  ACE_Recursive_Thread_Mutex::set_nesting() method since this
+ 	  isn't being used and is potentially dangerous.  Thanks to Per
+ 	  Andersson <Per.Andersson@hfera.ericsson.se> for suggesting this.
+
+	* ace/XtReactor: Updated the XtReactor so that it uses the next
+ 	  internal Reactor implementation.  Thanks to Mark Rabotnikov
+ 	  <mark@usp.elscintcorp.co.il> for reporting this.
+
+	* ace/Task.i: Updated the grp_id(int) method to cache the group id
+ 	  in the task and then set it in the Thread_Manager, if there is
+ 	  one.  Thanks to Hamutal Yanay <Hamutal_Yanay@mail.icomverse.com>
+ 	  for suggesting this.
+
+	* ace/Log_Record.h: Updated the ACE_Log_Record class to use the
+ 	  new ACE_MAXLOGMSGLEN macro.
+
+	* ace/OS.h: Added a new #define called ACE_MAXLOGMSGLEN.  By
+ 	  default this is 4k.  However, you can reset it in the config.h
+ 	  file if you'd like to increase or decrease the size.  Thanks to
+ 	  Anthony McConnell for suggesting this.
+	  
+	* examples/Threads/tss[12].cpp: Tidied up the tss1.cpp and
+ 	  tss2.cpp examples and improved the comments.  Thanks to Luca for
+ 	  suggesting this.
+
+	* ace/Service_Object.cpp (fini): Added the "virtual" keyword to
+ 	  the new destructor of ACE_Service_Type.  Thanks to David for
+ 	  reporting this.
+
+	* ace/Message_Block.i: Rearranged the order of the ACE_Data_Block
+ 	  and ACE_Message_Block locking_strategy() methods so that they'd
+ 	  be defined as inline before being used.  Thanks to David for
+ 	  reporting this.
+
+Mon Jan  6 16:46:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Manager.cpp (fini): Only try to remove the
+ 	  ACE_Service_Manager from the Reactor if it's actually been
+ 	  registered in the first place (i.e., if it's get_handle() method
+ 	  does not return ACE_INVALID_HANDLE).
+
+	* netsvcs/servers/svc.conf: Changed the name of the net services
+ 	  .so file from libnet_svcs to netsvcs so that it will work
+ 	  correctly with our new "cross-platform" svc.conf ACE::ldfind()
+ 	  strategy.  Thanks to Marius Kjeldahl <marius@funcom.com> for
+ 	  reporting this.
+
+	* ace/Reactor.cpp (find): Added a strategic break and a check for
+ 	  handle_in_range().  Thanks to Tim for this help!
+
+	* netsvcs/clients/Naming/Client/svc.conf: Removed the "lib" part
+ 	  from the executable shared object file names in the svc.conf
+ 	  file so that it will work with the new "cross-platform" svc.conf
+ 	  ACE::ldfind() strategy.  Thanks to Marius Kjeldahl
+ 	  <marius@funcom.com> for reporting this.
+
+	* ace/Service_Record.cpp (fini): Added an extra assignment to a
+ 	  temporary const void *obj to avoid problems with MSVC++ and it's
+ 	  cast mechanism.
+
+	* ace/ReactorEx.h: Added a default parameter to
+ 	  ACE_ReactorEx::notify().  Thanks to Tim for noticing this.
+
 Sun Jan  5 10:48:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests: Added a new test for ACE_Message_Block, which is called
