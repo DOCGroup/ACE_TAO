@@ -23,8 +23,8 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 			      ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h),
     context_ (context),
-    id_len_ (0),
     ids_ (0),
+    id_len_ (0),
     timeout_ (0)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
@@ -87,12 +87,10 @@ ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 void 
 ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
 {
-  ACE_XtReactor *self = (ACE_XtReactor*)closure;
+  ACE_XtReactor *self = (ACE_XtReactor *) closure;
   self->timeout_ = 0;
 
   ACE_DEBUG ((LM_DEBUG, "ACE_XtReactor::Timer on id %d\n", (int) *id));
-
-  ACE_Time_Value zero = ACE_Time_Value::zero; // my copy isn't const
 
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -123,7 +121,7 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   if (self->wait_set_.rd_mask_.is_set (*source))
     wait_set.rd_mask_.set_bit (*source);
   if (self->wait_set_.wr_mask_.is_set (*source))
-    wait_set.rd_mask_.set_bit (*source);
+    wait_set.wr>_mask_.set_bit (*source);
   if (self->wait_set_.ex_mask_.is_set (*source))
     wait_set.ex_mask_.set_bit (*source);
 
@@ -227,6 +225,11 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
     ACE_SET_BITS (condition, XtInputExceptMask);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
     ACE_SET_BITS (condition, XtInputReadMask);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
+    {
+      ACE_SET_BITS (condition, XtInputWriteMask); // connected, you may write
+      ACE_SET_BITS (condition, XtInputReadMask);  // connected, you have data/err
+    }
 
   if (condition != 0)
     {
