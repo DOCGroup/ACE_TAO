@@ -9,7 +9,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"

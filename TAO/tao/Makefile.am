@@ -165,10 +165,7 @@ ORB_CORE_FILES = \
   Tagged_Components.cpp \
   Services.cpp \
   NVList.cpp \
-  Messaging.cpp \
-  MessagingC.cpp \
   Policy_Manager.cpp \
-  Messaging_Policy_i.cpp \
   TAOC.cpp \
   Buffering_Constraint_Policy.cpp \
   GIOPC.cpp \
@@ -238,7 +235,6 @@ TEMPLATE_FILES = \
   DomainS_T.cpp \
   DynUnion_i_T.cpp \
   IOPS_T.cpp \
-  MessagingS_T.cpp \
   PollableS_T.cpp \
   Sequence_T.cpp \
   TAOS_T.cpp \
@@ -311,10 +307,6 @@ HEADER_FILES = \
   MProfile.h \
   Managed_Types.h \
   Marshal.h \
-  MessagingC.h \
-  MessagingS.h \
-  MessagingS_T.h \
-  Messaging_Policy_i.h \
   NVList.h \
   ORB.h \
   operation_details.h \
@@ -453,10 +445,6 @@ INLINE_FILES = \
   MProfile.i \
   Managed_Types.i \
   Marshal.i \
-  MessagingC.i \
-  MessagingS.i \
-  MessagingS_T.i \
-  Messaging_Policy_i.i \
   NVList.i \
   ORB.i \
   operation_details.i \

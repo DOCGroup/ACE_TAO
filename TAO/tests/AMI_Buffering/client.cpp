@@ -2,7 +2,7 @@
 
 #include "Reply_Handler.h"
 #include "Client_Task.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/TAOC.h"
 #include "ace/Get_Opt.h"
 

@@ -29,10 +29,6 @@ ACE_RCSID (tao,
 
 #include "TypeCodeFactory_Adapter.h"
 
-#if TAO_HAS_CORBA_MESSAGING == 1
-# include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
-
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -1303,28 +1299,6 @@ CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   // @@ These ORB initializer instantiations should go away.  They
   //    should be registered via the service configurator, for
   //    example.
-
-#if TAO_HAS_CORBA_MESSAGING == 1
-  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-    PortableInterceptor::ORBInitializer::_nil ();
-  PortableInterceptor::ORBInitializer_var orb_initializer;
-
-  /// Register the Messaging ORBInitializer.
-  ACE_NEW_THROW_EX (temp_orb_initializer,
-                    TAO_Messaging_ORBInitializer,
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  orb_initializer = temp_orb_initializer;
-
-  PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if TAO_HAS_INTERCEPTORS == 1
   PortableInterceptor::ORBInitializer_ptr temp_pi_initializer =

@@ -5,7 +5,7 @@
 #include "CEC_ConsumerAdmin.h"
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 

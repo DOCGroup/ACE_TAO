@@ -2,9 +2,549 @@ Mon Feb 25 19:25:27 2002 UTC  Don Hinton <dhinton@ieee.org>
 
 	* tao/default_resource.cpp (allocate_reactor_impl):
 	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl):
+	  Modified the ctors for the multi-threaded Select_Reactor 
+	  and TP_Reactor to use the new ACE_Token::LIFO queueing strategy.	
 
-	  Modified the ctors for the multi-threaded Select_Reactor and
-	  TP_Reactor to use the new ACE_Token::LIFO queueing strategy.	 
+Mon Feb 25 12:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
+
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Asynch_Invocation.cpp:
+	  Moved the TAO_GIOP_Twoway_Asynch_Invocation to its own file in
+	  the Messaging directory.
+
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.h:
+	* tao/Asynch_Reply_Dispatcher.i:
+	  Moved the TAO_Asynch_Reply_Dispatcher class to this file in the
+	  Messaging directory.
+	
+	* tao/Asynch_Reply_Dispatcher_Base.cpp:
+	* tao/Asynch_Reply_Dispatcher_Base.h:
+	* tao/Asynch_Reply_Dispatcher_Base.i:
+	  Moved the TAO_Asynch_Reply_Dispatcher class to its own file in the 
+	  Messaging directory and the class TAO_Asynch_Reply_Dispatcher_Base
+	  remained in this file.
+	
+	* tao/Asynch_Timeout_Handler.cpp:
+	* tao/Asynch_Timeout_Handler.h:
+	  Moved the class TAO_Asynch_Timeout_Handler to its own file in the
+	  Messaging directory.
+	
+	* tao/Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Invocation.cpp:
+	* tao/Policy_Manager.cpp:
+	* tao/Stub.cpp:
+	  There is no need to #include tao/Messaging_Policy_i.h, the classes
+	  in that file are not used at all, probably old code left
+	  around.
+	  
+	* tao/Makefile:
+	* tao/Makefile.am:
+	  Removed all links to the Messaging files in the Makefile.
+	  Links are made to the new Messading directory.
+	
+	* tao/Messaging.cpp:
+	* tao/Messaging.h:
+	* tao/Messaging.pidl:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/MessagingC.i:
+	* tao/Messaging_ORBInitializer.cpp:
+	* tao/Messaging_ORBInitializer.h:
+	* tao/Messaging_PolicyFactory.cpp:
+	* tao/Messaging_PolicyFactory.h:
+	* tao/Messaging_PolicyValue.pidl:
+	* tao/Messaging_PolicyValueC.cpp:
+	* tao/Messaging_PolicyValueC.h:
+	* tao/Messaging_PolicyValueC.i:
+	* tao/Messaging_Policy_i.cpp:
+	* tao/Messaging_Policy_i.h:
+	* tao/Messaging_Policy_i.i:
+	  Moved all the Messaging classes in the Messaging NAMESPACE except
+	  the variables SyncScope and SynScope_out to the new Messaging
+	  directory. The variables SyncScope and SyncScope_out are needed
+	  by the ORB. So they are moved to a new file 
+	  Messaging_SyncScopeC.h in the TAO/tao directory.
+	
+	* tao/Messaging_SyncScope.pidl:
+	* tao/Messaging_SyncScopeC.cpp:
+	* tao/Messaging_SyncScopeC.h:
+	* tao/Messaging_SyncScopeC.i:
+	  The variables SyncScope and SyncScope_out in the Messaging
+	  NAMESPACE are needed by the ORB. So they are not moved to the new
+	  Messaging directory and are moved to these new files in the 
+	  TAO/tao directory.
+	
+	* tao/ORB.cpp:
+	  Moved the ORB_Initializer for the Messaging class to the
+	  Messaging directory.
+	 
+	* tao/PortableInterceptor.pidl:
+	  Removed the #include "Messaging.pidl and added the
+	  #include "Messaging_SyncScope.idl". THe new idl file is used 
+	  to create the idl stubs for just the SyncScope and the SyncScope_out
+	  variables in the Messaging class. 
+	
+	* tao/PortableInterceptorC.h:
+	* tao/Profile.cpp:
+	  Added #include Messaging_SyncScopeC.h and removed 
+	  #include MessagingC.h to include only those variables in the
+	  Messaging namespace that are not in the new Messaging directory.
+	
+	* tao/DynamicInterface/Makefile:
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	  Make changes in the Makefile to link the new TAO_Messaging library.
+	
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+	* tao/DynamicInterface/Request.h:
+	  Change all #includes to point to the new Messaging directory.
+	  For example, change #include MessagingC.h to
+	  #include tao/Messaging/MessagingC.h.
+	
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.h:
+	* tao/Messaging/Asynch_Reply_Dispatcher.i:
+	  Moved the TAO_Asynch_Reply_Dispatcher class to its own file
+	  in the Messaging directory.
+	
+	* tao/Messaging/Asynch_Timeout_Handler.cpp:
+	* tao/Messaging/Asynch_Timeout_Handler.h:
+	  Moved the TAO_Asynch_Timeout_Handler to its own file in the
+	  Messaging directory.
+	  
+	* tao/Messaging/Makefile:
+	  Added a new Makefile in the Messaging directory to create the
+	  new library TAO_messaging.
+	
+	* tao/Messaging/Messaging.cpp:
+	* tao/Messaging/Messaging.h:
+	* tao/Messaging/Messaging.pidl:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/MessagingC.i:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/Messaging/MessagingS.h:
+	* tao/Messaging/MessagingS.i:
+	* tao/Messaging/MessagingS_T.cpp:
+	* tao/Messaging/MessagingS_T.h:
+	* tao/Messaging/MessagingS_T.i:
+	* tao/Messaging/Messaging_ORBInitializer.cpp:
+	* tao/Messaging/Messaging_ORBInitializer.h:
+	* tao/Messaging/Messaging_PolicyFactory.cpp:
+	* tao/Messaging/Messaging_PolicyFactory.h:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.h:
+	* tao/Messaging/Messaging_Policy_i.i:
+	  Moved all the Messaging classes in the Messaging NAMESPACE except
+	  the variables SyncScope and SynScope_out to the new Messaging
+	  directory. The variables SyncScope and SyncScope_out are needed
+	  by the ORB. So they are moved to a new file 
+	  Messaging_SyncScopeC.h in the TAO/tao directory.
+	
+	* tao/Messaging/Twoway_Asynch_Invocation.cpp:
+	* tao/Messaging/Twoway_Asynch_Invocation.h:
+	* tao/Messaging/Twoway_Asynch_Invocation.i:
+	  Moved the TAO_GIOP_Twoway_Asynch_Invocation to its own file in
+	  the Messaging directory.
+	
+	* tao/Messaging/messaging_export.h:
+	  Created a new TAO_Messaging_Export type in the new Messaging
+	  library.
+	
+	* tao/Messaging/diffs/Messaging.diff:
+	  Added a new diffs directory for the new Messaging directory and 
+	  generated new diff files for future use.
+	
+	* tao/PortableServer/Makefile:
+	* tao/PortableServer/Makefile.bor:
+	  Changed the Makefile to remove links to the Messaging files.
+	  All the Messaging files in this directory are moved to their
+	  own files in the Messaging directory.
+	
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/MessagingS.h:
+	* tao/PortableServer/MessagingS.i:
+	* tao/PortableServer/MessagingS_T.cpp:
+	* tao/PortableServer/MessagingS_T.h:
+	* tao/PortableServer/MessagingS_T.i:
+	  Moved all the Messaging files in the PortableServer directory
+	  to their own files in the Messaging directory.
+	
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	  Made changes to link to the messaging SyncScope files in the
+	  tao directory.
+	
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* TAO/TAO_IDL/Makefile.BE:
+	* TAO/TAO_IDL/Makefile.EXE:
+	* TAO/TAO_IDL/Makefile.FE:
+	* TAO/TAO_IDL/be/be_codegen.cpp:
+	* TAO/docs/tutorials/Quoter/AMI/Makefile:
+	* TAO/docs/tutorials/Quoter/Event_Service/Makefile:
+	* TAO/docs/tutorials/Quoter/Naming_Service/Makefile:
+	* TAO/docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+	* TAO/docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* TAO/docs/tutorials/Quoter/Simple/Client/Makefile:
+	* TAO/docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
+	* TAO/docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
+	* TAO/docs/tutorials/Quoter/Simple/Persistent/Makefile:
+	* TAO/docs/tutorials/Quoter/Simple/Server/Makefile:
+	* TAO/docs/tutorials/Quoter/idl/Makefile:
+	* TAO/examples/AMI/FL_Callback/Makefile:
+	* TAO/examples/Buffered_AMI/Makefile:
+	* TAO/examples/Buffered_AMI/client.cpp:
+	* TAO/examples/Buffered_Oneways/Makefile:
+	* TAO/examples/Buffered_Oneways/client.cpp:
+	* TAO/examples/Callback_Quoter/Makefile:
+	* TAO/examples/Content_Server/AMI_Iterator/Makefile:
+	* TAO/examples/Content_Server/AMI_Observer/Makefile:
+	* TAO/examples/Content_Server/SMI_Iterator/Makefile:
+	* TAO/examples/Event_Comm/Makefile:
+	* TAO/examples/Load_Balancing/Makefile:
+	* TAO/examples/Load_Balancing_persistent/Makefile:
+	* TAO/examples/Logging/Makefile:
+	* TAO/examples/OBV/Typed_Events/Makefile:
+	* TAO/examples/POA/Adapter_Activator/Makefile:
+	* TAO/examples/POA/DSI/Makefile:
+	* TAO/examples/POA/Default_Servant/Makefile:
+	* TAO/examples/POA/Explicit_Activation/Makefile:
+	* TAO/examples/POA/FindPOA/Makefile:
+	* TAO/examples/POA/Forwarding/Makefile:
+	* TAO/examples/POA/Generic_Servant/Makefile:
+	* TAO/examples/POA/Loader/Makefile:
+	* TAO/examples/POA/NewPOA/Makefile:
+	* TAO/examples/POA/On_Demand_Activation/Makefile:
+	* TAO/examples/POA/On_Demand_Loading/Makefile:
+	* TAO/examples/POA/Reference_Counted_Servant/Makefile:
+	* TAO/examples/POA/RootPOA/Makefile:
+	* TAO/examples/POA/TIE/Makefile:
+	* TAO/examples/Persistent_Grid/Makefile:
+	* TAO/examples/PluggableUDP/tests/Basic/Makefile:
+	* TAO/examples/PluggableUDP/tests/Performance/Makefile:
+	* TAO/examples/PluggableUDP/tests/SimplePerformance/Makefile:
+	* TAO/examples/Quoter/Makefile:
+	* TAO/examples/RTCORBA/Activity/Makefile:
+	* TAO/examples/Simple/bank/Makefile:
+	* TAO/examples/Simple/chat/Makefile:
+	* TAO/examples/Simple/echo/Makefile:
+	* TAO/examples/Simple/grid/Makefile:
+	* TAO/examples/Simple/time/Makefile:
+	* TAO/examples/Simple/time-date/Makefile:
+	* TAO/examples/Simulator/Event_Supplier/Makefile:
+	* TAO/examples/TypeCode_Creation/Makefile:
+	* TAO/orbsvcs/Concurrency_Service/Makefile:
+	* TAO/orbsvcs/CosEvent_Service/Makefile:
+	* TAO/orbsvcs/Dump_Schedule/Makefile:
+	* TAO/orbsvcs/Event_Service/Makefile:
+	* TAO/orbsvcs/IFR_Service/Makefile.BE:
+	* TAO/orbsvcs/IFR_Service/Makefile.EX:
+	* TAO/orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* TAO/orbsvcs/ImplRepo_Service/Makefile:
+	* TAO/orbsvcs/LifeCycle_Service/Makefile:
+	* TAO/orbsvcs/LoadBalancer/Makefile:
+	* TAO/orbsvcs/Logging_Service/Makefile:
+	* TAO/orbsvcs/Naming_Service/Makefile:
+	* TAO/orbsvcs/Notify_Service/Makefile:
+	* TAO/orbsvcs/Scheduling_Service/Makefile:
+	* TAO/orbsvcs/TAO_Service/Makefile:
+	* TAO/orbsvcs/Time_Service/Makefile:
+	* TAO/orbsvcs/Trading_Service/Makefile:
+	* TAO/orbsvcs/examples/CosEC/Factory/Makefile:
+	* TAO/orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
+	* TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+	* TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+	* TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+	* TAO/orbsvcs/examples/CosEC/Simple/Makefile:
+	* TAO/orbsvcs/examples/Log/Client/Makefile:
+	* TAO/orbsvcs/examples/Log/test/Makefile:
+	* TAO/orbsvcs/examples/Notify/Filter/Makefile:
+	* TAO/orbsvcs/examples/Notify/Subscribe/Makefile:
+	* TAO/orbsvcs/examples/RtEC/MCast/Makefile:
+	* TAO/orbsvcs/examples/RtEC/Schedule/Makefile:
+	* TAO/orbsvcs/examples/RtEC/Simple/Makefile:
+	* TAO/orbsvcs/examples/Security/Send_File/Makefile:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosConcurrency:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosEvent:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosNaming:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosNotification:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosProperty:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosTime:
+	* TAO/orbsvcs/orbsvcs/Makefile.CosTrading:
+	* TAO/orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+	* TAO/orbsvcs/orbsvcs/Makefile.ETCL:
+	* TAO/orbsvcs/orbsvcs/Makefile.FTORB:
+	* TAO/orbsvcs/orbsvcs/Makefile.FaultTolerance:
+	* TAO/orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	* TAO/orbsvcs/orbsvcs/Makefile.PortableGroup:
+	* TAO/orbsvcs/orbsvcs/Makefile.RTEvent:
+	* TAO/orbsvcs/orbsvcs/Makefile.RTOLDEvent:
+	* TAO/orbsvcs/orbsvcs/Makefile.RTSched:
+	* TAO/orbsvcs/orbsvcs/Makefile.RTSchedEvent:
+	* TAO/orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* TAO/orbsvcs/orbsvcs/Makefile.Svc_Utils:
+	* TAO/orbsvcs/orbsvcs/Makefile.av:
+	* TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+	* TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+	* TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
+	* TAO/orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+	* TAO/orbsvcs/performance-tests/EC_Federated_Scalability/client.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Federated_Scalability/server.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Latency/Makefile:
+	* TAO/orbsvcs/performance-tests/EC_Latency/client.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Latency/server.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Scalability/Makefile:
+	* TAO/orbsvcs/performance-tests/EC_Scalability/client.cpp:
+	* TAO/orbsvcs/performance-tests/EC_Scalability/server.cpp:
+	* TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Latency/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+	* TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* TAO/orbsvcs/tests/Concurrency/Makefile:
+	* TAO/orbsvcs/tests/CosEvent/Basic/Makefile:
+	* TAO/orbsvcs/tests/CosEvent/lib/Makefile:
+	* TAO/orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* TAO/orbsvcs/tests/EC_Mcast/Makefile:
+	* TAO/orbsvcs/tests/EC_Multiple/Makefile:
+	* TAO/orbsvcs/tests/EC_Throughput/Makefile:
+	* TAO/orbsvcs/tests/Event/Basic/Makefile:
+	* TAO/orbsvcs/tests/Event/Performance/Latency.cpp:
+	* TAO/orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+	* TAO/orbsvcs/tests/Event/Performance/Makefile:
+	* TAO/orbsvcs/tests/Event/lib/Makefile:
+	* TAO/orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+	* TAO/orbsvcs/tests/ImplRepo/Makefile:
+	* TAO/orbsvcs/tests/ImplRepo/NameService/Makefile:
+	* TAO/orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+	* TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+	* TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile:
+	* TAO/orbsvcs/tests/Interoperable_Naming/Makefile:
+	* TAO/orbsvcs/tests/LoadBalancing/Makefile:
+	* TAO/orbsvcs/tests/Miop/McastHello/Makefile:
+	* TAO/orbsvcs/tests/Notify/Basic/Makefile:
+	* TAO/orbsvcs/tests/Notify/Blocking/Makefile:
+	* TAO/orbsvcs/tests/Notify/Discarding/Makefile:
+	* TAO/orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+	* TAO/orbsvcs/tests/Notify/Ordering/Makefile:
+	* TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+	* TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+	* TAO/orbsvcs/tests/Notify/Structured_Filter/Makefile:
+	* TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+	* TAO/orbsvcs/tests/Notify/lib/Makefile:
+	* TAO/orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+	* TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+	* TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+	* TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* TAO/orbsvcs/tests/Property/Makefile:
+	* TAO/orbsvcs/tests/Sched/Makefile:
+	* TAO/orbsvcs/tests/Sched_Conf/Makefile:
+	* TAO/orbsvcs/tests/Security/Big_Request/Makefile:
+	* TAO/orbsvcs/tests/Security/Callback/Makefile:
+	* TAO/orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* TAO/orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* TAO/orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	* TAO/orbsvcs/tests/Simple_Naming/Makefile:
+	* TAO/orbsvcs/tests/Time/Makefile:
+	* TAO/orbsvcs/tests/Trading/Makefile:
+	* TAO/orbsvcs/tests/ior_corbaname/Makefile::
+	* TAO/orbsvcs/tests/tests_svc_loader/Makefile:
+	* TAO/performance-tests/Callback/Makefile:
+	* TAO/performance-tests/Callback/client.cpp:
+	* TAO/performance-tests/Callback/server.cpp:
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+	* TAO/performance-tests/Latency/AMH/Single_Threaded/Makefile:
+	* TAO/performance-tests/Latency/AMI/Makefile:
+	* TAO/performance-tests/Latency/DII/Makefile:
+	* TAO/performance-tests/Latency/DSI/Makefile:
+	* TAO/performance-tests/Latency/Deferred/Makefile:
+	* TAO/performance-tests/Latency/Single_Threaded/Makefile:
+	* TAO/performance-tests/Latency/Thread_Per_Connection/Makefile:
+	* TAO/performance-tests/Latency/Thread_Pool/Makefile:
+	* TAO/performance-tests/POA/Create_Reference/Makefile:
+	* TAO/performance-tests/POA/Demux/Makefile:
+	* TAO/performance-tests/POA/Implicit_Activation/Makefile:
+	* TAO/performance-tests/POA/Object_Creation_And_Registration/Makefile:
+	* TAO/performance-tests/Pluggable/Makefile:
+	* TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+	* TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* TAO/performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* TAO/performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* TAO/performance-tests/Throughput/Makefile:
+	* TAO/tests/AMI/Makefile:
+	* TAO/tests/AMI_Buffering/Makefile:
+	* TAO/tests/AMI_Buffering/client.cpp:
+	* TAO/tests/AMI_Timeouts/Makefile:
+	* TAO/tests/AMI_Timeouts/timeout_client.cpp:
+	* TAO/tests/BiDirectional/Makefile:
+	* TAO/tests/BiDirectional_NestedUpcall/Makefile:
+	* TAO/tests/Big_Oneways/Makefile:
+	* TAO/tests/Big_Reply/Makefile:
+	* TAO/tests/Big_Request_Muxing/Client_Task.h:
+	* TAO/tests/Big_Request_Muxing/Makefile:
+	* TAO/tests/Big_Request_Muxing/client.cpp:
+	* TAO/tests/Big_Twoways/Makefile:
+	* TAO/tests/Blocking_Sync_None/Makefile:
+	* TAO/tests/Blocking_Sync_None/client.cpp:
+	* TAO/tests/CDR/Makefile:
+	* TAO/tests/Cache_Growth_Test/Makefile:
+	* TAO/tests/Client_Leaks/Makefile:
+	* TAO/tests/Codec/Makefile:
+	* TAO/tests/Collocation/Makefile.impl:
+	* TAO/tests/Collocation/Makefile.stub:
+	* TAO/tests/Collocation/Makefile.test:
+	* TAO/tests/Connection_Purging/Makefile:
+	* TAO/tests/Crash_On_Write/Makefile:
+	* TAO/tests/Crashed_Callback/Makefile:
+	* TAO/tests/Crashed_Callback/client.cpp:
+	* TAO/tests/Crashed_Callback/server.cpp:
+	* TAO/tests/DLL_ORB/Makefile.Test_Client_Module:
+	* TAO/tests/DLL_ORB/Makefile.Test_Server_Module:
+	* TAO/tests/DSI_Gateway/Makefile:
+	* TAO/tests/DynAny_Test/Makefile:
+	* TAO/tests/Explicit_Event_Loop/Makefile:
+	* TAO/tests/Exposed_Policies/Makefile:
+	* TAO/tests/FL_Cube/Makefile:
+	* TAO/tests/Faults/Makefile:
+	* TAO/tests/File_IO/Makefile:
+	* TAO/tests/Forwarding/Makefile:
+	* TAO/tests/Hello/Makefile:
+	* TAO/tests/IDL_Test/Makefile:
+	* TAO/tests/IORManipulation/Makefile:
+	* TAO/tests/InterOp-Naming/Makefile:
+	* TAO/tests/Leader_Followers/Makefile:
+	* TAO/tests/LongUpcalls/Makefile:
+	* TAO/tests/MProfile/Makefile:
+	* TAO/tests/MProfile_Forwarding/Makefile:
+	* TAO/tests/MT_Client/Makefile:
+	* TAO/tests/MT_Server/Makefile:
+	* TAO/tests/MT_Timeout/Client_Task.cpp:
+	* TAO/tests/MT_Timeout/Makefile:
+	* TAO/tests/Multiple/Makefile:
+	* TAO/tests/Multiple_Inheritance/Makefile:
+	* TAO/tests/Muxing/Makefile:
+	* TAO/tests/Native_Exceptions/Makefile:
+	* TAO/tests/NestedUpcall/MT_Client_Test/Makefile:
+	* TAO/tests/NestedUpcall/Simple/Makefile:
+	* TAO/tests/NestedUpcall/Triangle_Test/Makefile:
+	* TAO/tests/Nested_Event_Loop/Makefile:
+	* TAO/tests/OBV/Any/Makefile:
+	* TAO/tests/OBV/Factory/Makefile:
+	* TAO/tests/OBV/Forward/Makefile:
+	* TAO/tests/ORB_destroy/Makefile:
+	* TAO/tests/ORB_init/Makefile:
+	* TAO/tests/Object_Loader/Makefile:
+	* TAO/tests/Objref_Sequence_Test/Makefile:
+	* TAO/tests/OctetSeq/Makefile:
+	* TAO/tests/Oneway_Buffering/Makefile:
+	* TAO/tests/Oneway_Buffering/client.cpp:
+	* TAO/tests/Oneways_Invoking_Twoways/Makefile:
+	* TAO/tests/POA/Etherealization/Makefile:
+	* TAO/tests/POA/Excessive_Object_Deactivations/Makefile:
+	* TAO/tests/POA/Identity/Makefile:
+	* TAO/tests/POA/Non_Servant_Upcalls/Makefile:
+	* TAO/tests/POA/Object_Reactivation/Makefile:
+	* TAO/tests/POA/POA_Destruction/Makefile:
+	* TAO/tests/POA/Single_Threaded_POA/Makefile:
+	* TAO/tests/POA/wait_for_completion/Makefile:
+	* TAO/tests/Param_Test/Makefile:
+	* TAO/tests/Policies/Makefile:
+	* TAO/tests/Policies/Manipulation.cpp:
+	* TAO/tests/Portable_Interceptors/Benchmark/Makefile:
+	* TAO/tests/Portable_Interceptors/Dynamic/Makefile:
+	* TAO/tests/Portable_Interceptors/ForwardRequest/Makefile:
+	* TAO/tests/Portable_Interceptors/IORInterceptor/Makefile:
+	* TAO/tests/Portable_Interceptors/PICurrent/Makefile:
+	* TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
+	* TAO/tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+	* TAO/tests/QtTests/Makefile:
+	* TAO/tests/Queued_Message_Test/Makefile:
+	* TAO/tests/RTCORBA/Banded_Connections/Makefile:
+	* TAO/tests/RTCORBA/Client_Propagated/Makefile:
+	* TAO/tests/RTCORBA/Client_Protocol/Makefile:
+	* TAO/tests/RTCORBA/Collocation/Makefile:
+	* TAO/tests/RTCORBA/Destroy_Thread_Pool/Makefile:
+	* TAO/tests/RTCORBA/Explicit_Binding/Makefile:
+	* TAO/tests/RTCORBA/Linear_Priority/Makefile:
+	* TAO/tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
+	* TAO/tests/RTCORBA/ORB_init/Makefile:
+	* TAO/tests/RTCORBA/Persistent_IOR/Makefile:
+	* TAO/tests/RTCORBA/Policy_Combinations/Makefile:
+	* TAO/tests/RTCORBA/Private_Connection/Makefile:
+	* TAO/tests/RTCORBA/RTMutex/Makefile:
+	* TAO/tests/RTCORBA/Server_Declared/Makefile:
+	* TAO/tests/RTCORBA/Server_Protocol/Makefile:
+	* TAO/tests/RTCORBA/Thread_Pool/Makefile:
+	* TAO/tests/Reliable_Oneways/Makefile:
+	* TAO/tests/Reliable_Oneways/client.cpp:
+	* TAO/tests/Server_Leaks/Makefile:
+	* TAO/tests/Single_Read/Makefile:
+	* TAO/tests/Smart_Proxies/Makefile:
+	* TAO/tests/Smart_Proxies/On_Demand/Makefile:
+	* TAO/tests/Strategies/Makefile:
+	* TAO/tests/Timed_Buffered_Oneways/Makefile:
+	* TAO/tests/Timed_Buffered_Oneways/client.cpp:
+	* TAO/tests/Timeout/Makefile:
+	* TAO/tests/Timeout/client.cpp:
+	* TAO/tests/Xt_Stopwatch/Makefile:
+	* TAO/utils/IOR-parser/Makefile:
+	* TAO/utils/catior/Makefile:
+	* TAO/utils/nslist/Makefile:
+	  Change all #includes to point to the new Messaging directory.
+	  For example, change #include MessagingC.h to
+	  #include tao/Messaging/MessagingC.h.
+
+	* tao/diffs/MessagingC.cpp.diff:
+	* tao/diffs/MessagingC.h.diff:
+	* tao/diffs/MessagingC.i.diff:
+	* tao/diffs/MessagingS.cpp.diff:
+	* tao/diffs/MessagingS.h.diff:
+	* tao/diffs/MessagingS.i.diff:
+	* tao/diffs/MessagingS_T.cpp.diff:
+	* tao/diffs/MessagingS_T.h.diff:
+	* tao/diffs/MessagingS_T.i.diff:
+	* tao/diffs/Messaging_PolicyValue.diff:
+	* tao/diffs/Messaging_SyncScope.diff:
+	  Added a new diffs directory for the new Messaging directory and 
+	  generated new diff files for future use.
+	
+	* TAO_IDL/be/be_codegen.cpp:
+	  Modified the file to point to the new Messaging directory.
+
+Mon Feb 25 19:25:27 2002 UTC  Don Hinton <dhinton@ieee.org>
+
+	* tao/default_resource.cpp (allocate_reactor_impl):
+	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl):
+	  Modified the ctors for the multi-threaded Select_Reactor 
+	  and TP_Reactor to use the new ACE_Token::LIFO queueing strategy.	
 
 Fri Feb 22 19:07:36 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 

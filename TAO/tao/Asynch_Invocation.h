@@ -25,11 +25,7 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Asynch_Reply_Dispatcher.h"
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-#include "tao/MessagingC.h"
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
 
 /**
  * @class TAO_GIOP_Asynch_Invocation
@@ -72,43 +68,6 @@ protected:
   /// Reply dispatcher for the current asynchronous invocation.
   TAO_Asynch_Reply_Dispatcher_Base *rd_;
 };
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
-/**
- * @class TAO_GIOP_Twoway_Asynch_Invocation
- *
- * @brief Sends a two-way request does not expect the reply.  This
- *        class connects (or lookups a connection from the cache) to
- *        the remote server, builds the CDR stream for the Request,
- *        send the CDR stream and returns.
- */
-class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation
-  : public TAO_GIOP_Asynch_Invocation
-{
-
-public:
-
-  /// Constructor.
-  TAO_GIOP_Twoway_Asynch_Invocation (
-      TAO_Stub *stub,
-      const char *operation,
-      CORBA::ULong opname_len_,
-      CORBA::Boolean argument_flag,
-      TAO_ORB_Core* orb_core,
-      const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-      Messaging::ReplyHandler_ptr reply_handler_ptr
-    );
-
-protected:
-
-  /// Implementation of the invoke() methods, handles the basic
-  /// send/reply code and the system exceptions.
-  virtual int invoke_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-};
-
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
 
 #if defined (__ACE_INLINE__)
 #  include "tao/Asynch_Invocation.i"

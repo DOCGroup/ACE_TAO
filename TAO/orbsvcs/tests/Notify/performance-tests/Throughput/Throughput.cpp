@@ -12,6 +12,7 @@
 #include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "tao/Messaging/Messaging.h"
 
 ACE_RCSID (Notify_Tests, Throughput, "$Id$")
 

@@ -7,7 +7,7 @@
 #include "ace/pre.h"
 
 #include "TestC.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

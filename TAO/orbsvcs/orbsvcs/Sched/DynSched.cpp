@@ -1321,14 +1321,21 @@ ACE_DynScheduler::setup_task_entries (void)
   reset ();
 
   // allocate new table of task entries (wrappers for rt_infos)
-  ACE_NEW_RETURN (task_entries_, Task_Entry [tasks ()],
+  size_t task_count = tasks ();
+  ACE_NEW_RETURN (task_entries_, Task_Entry [task_count],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
 
   // allocate new table of pointers to task entries (for sorting)
-  ACE_NEW_RETURN (ordered_task_entries_, Task_Entry *[tasks ()],
+  ACE_NEW_RETURN (ordered_task_entries_, Task_Entry *[task_count],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
-  ACE_OS::memset (ordered_task_entries_, 0,
-                  sizeof (Task_Entry *) * tasks ());
+  // @@ TODO: this is completely bogus code, the bit-wise
+  //    representation of a null pointer is not always a string of
+  //    zeroes.  The correct way to intialize this array is with a for
+  //    loop.
+  // ACE_OS::memset (ordered_task_entries_, 0, 
+  //                 sizeof (Task_Entry *) * task_count);
+  for (size_t j = 0; j != task_count; ++j)
+    ordered_task_entries_[j] = 0;
 
   // allocate new unbounded set for pointers to
   // task entries that delineate threads
