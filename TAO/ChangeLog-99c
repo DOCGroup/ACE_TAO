@@ -1,3 +1,11 @@
+Sat Jul  3 18:00:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Added a check in printing char literal for '. Like \,
+	  isprint() sees this as a printable character, and it is
+	  not stored in AST_Expression with its escape backslash.
+	  Thanks to Bala for pointing out this case.
+
 Sat Jul  3 17:44:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
