@@ -1379,7 +1379,7 @@ be_interface::gen_perfect_hash_methods (void)
                                 " "
                                 "-m -M -J -c -C"
                                 " "
-                                "-D -E -T -S1 -f 0"
+                                "-D -E -T -f 0"
                                 " "
                                 "-a -o -t -p -K"
                                 " "
