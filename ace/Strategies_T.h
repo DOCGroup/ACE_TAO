@@ -476,6 +476,81 @@ protected:
 };
 
 template <class SVC_HANDLER>
+class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
+// = TITLE
+// 
+//     Implements a no-op creation strategy in order to defer
+//     decisions regarding creation to some later point in time, such
+//     as in connect or accept strategy.
+//
+// = NOTES
+//
+//     An example of the use of this is in the
+//     <ACE_Cached_Connect_Strategy\<\>>, which only returns a
+//     single connection for a given endpoint.
+{
+public:
+  virtual int make_svc_handler(SVC_HANDLER*&) { return 0; }
+				// This is a no-op.
+};
+
+template <class ADDR_T, class SVC_HANDLER>
+class Hash_Addr : public ADDR_T
+// = TITLE
+//     Internal class to compute hash values on addresses in <ACE_Cached_Connect_Strategy>.
+//
+// = DESCRIPTION
+//     Intended to be used as a key to an <ACE_Hash_Map>.
+//
+// = NOTES
+//     The SVC_HANDLER class is expected to implement the following methods:
+//         int  in_use() const;
+//         void in_use(int is_used);
+//
+{
+public:
+  Hash_Addr();
+  Hash_Addr(const ADDR_T& a, SVC_HANDLER* sh = 0);
+				// Pre-compute hash value
+
+  size_t hash() const;		// Computes & return hash value
+  virtual int operator==(const Hash_Addr<ADDR_T,SVC_HANDLER>& rhs) const;
+				// Compares two hash values
+
+  //private:
+  size_t hash_value_;		// Pre-computed hash-value.
+  SVC_HANDLER* svc_handler_;
+				// Pointer to associated <SVC_HANDLER> which is used
+				// to detect "in-use" SVC_HANDLERs so we can skip
+				// over them.  See NOTES for details on methods required
+				// on SVC_HANDLER.
+};
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
+class ACE_Cached_Connect_Strategy :
+  public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+{
+public:
+  virtual int connect_svc_handler(SVC_HANDLER*& sh,
+				  const ACE_PEER_CONNECTOR_ADDR& remote_addr,
+				  ACE_Time_Value* timeout,
+				  const ACE_PEER_CONNECTOR_ADDR& local_addr,
+				  int reuse_addr,
+				  int flags,
+				  int perms);
+				// Checks to see if there is already a
+				// <SVC_HANDLER> in the cache
+				// connected to the <remote_addr>.  If
+				// so, we return this pointer.
+				// Otherwise we establish the
+				// connection, put it into the cache,
+				// and return the <SVC_HANDLER>
+				// pointer.
+  //private:
+  ACE_Hash_Map_Manager< Hash_Addr<ACE_PEER_CONNECTOR_ADDR,SVC_HANDLER>, SVC_HANDLER*, MUTEX> connection_cache_;
+};
+
+template <class SVC_HANDLER>
 class ACE_Schedule_All_Reactive_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
   // = TITLE
   //     Defines the interface for specifying how to suspend and

@@ -1,7 +1,7 @@
 // $Id$
 
 // ============================================================================
-//
+ //
 // = LIBRARY
 //    tests
 // 
@@ -17,20 +17,37 @@
 //     showing how you can cache connections on the client.
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt, Chris Cleeland
 // 
 // ============================================================================
+
+// THE FOLLOWING ARE ONLY FOR DEBUGGING PURPOSES AND SHOULD BE USED
+// WITH EXTREME CAUTION!!!!
 
 #include "ace/OS.h"
 #include "ace/Thread.h"
 #include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Connector.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
+#define private public
+#define protected public
+#include "ace/Connector.h"
+#include "ace/Strategies.h"
+#include "ace/Strategies_T.h"
 #include "ace/Hash_Map_Manager.h"
+#undef private
+#undef protected
 #include "test_config.h"
+#define private public
+#define protected public
+
+#if defined (ACE_MT_SAFE)
+typedef ACE_RW_Mutex RW_MUTEX;
+#else
+typedef ACE_Null_Mutex RW_MUTEX;
+#endif /* ACE_MT_SAFE */
 
 // ****************************************
 
@@ -192,161 +209,21 @@ Svc_Handler::close (u_long side)
 
 // ****************************************
 
-class Hash_Addr : public ACE_INET_Addr
-  // = TITLE
-  //     This class adapts an <ACE_INET_Addr> to the signature expected
-  //     by the <ACE_Hash_Map_Manager>.
-  //
-  // = DESCRIPTION
-  //     The current hash function is very simple -- it just maps the
-  //     6 byte IP addr and port # into a 4 byte quantity.  There must
-  //     be a better algorithm for doing this.
+
+// THESE SHOULD GO IN THE INET_Addr.h!!!
+size_t
+hash(const ACE_INET_Addr& addr)
 {
-public:
-  Hash_Addr (const ACE_INET_Addr & = (const ACE_INET_Addr &) ACE_Addr::sap_any,
-	     Svc_Handler *sh = 0);
-  // Constructor precomputes the hash value.
-
-  size_t hash (void) const;
-  // Returns the hash value.
-
-  virtual int operator == (const Hash_Addr &) const;
-  // Overload the equality operator...
-
-private:
-  size_t hash_value_;
-  // Stores the precomputed hash value.
-
-  Svc_Handler *svc_handler_;
-  // Pointer to our associated <Svc_Handler>, which is used to 
-  // detect "busy" <Svc_Handler>s, so we can skip over them.
-};
-
-// ****************************************
+  size_t v = addr.get_ip_address() + addr.get_port_number();
+  return v;
+}
 
 int
-Hash_Addr::operator == (const Hash_Addr &rhs) const
+compare(const ACE_INET_Addr& a1, const ACE_INET_Addr& a2)
 {
-  if (this->svc_handler_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "host = %s and port = %d is not in use\n",
-		  this->get_host_name (), 
-		  this->get_port_number ()));
-      // We need this test here in order to satisfy the
-      // <ACE_Hash_Map_Manager>'s use of a sentinel node.  Note that
-      // this will never be a real match since <svc_handler_> == 0,
-      // which signifies that we've never allocated a <Svc_Handler>
-      // for this address.  Note that we can't use *this == rhs since
-      // that would trigger a recursive call!
-      return !(*this != rhs);
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, "host = %s and port = %d is %sin use (%d)\n",
-		  this->get_host_name (), 
-		  this->get_port_number (),
-		  this->svc_handler_->in_use () ? "" : "not ",
-		  this->svc_handler_));
-      // This function returns "true" (i.e., the addresses match) if
-      // either the associated <Svc_Handler> is not in use or the two
-      // addresses are equal.  Note that we can't use *this == rhs
-      // since that would trigger a recursive call!
-      return this->svc_handler_->in_use () == 0 && !(*this != rhs);
-    }
-}
-
-Hash_Addr::Hash_Addr (const ACE_INET_Addr &addr,
-		      Svc_Handler *sh)
-  : ACE_INET_Addr (addr),
-    svc_handler_ (sh)
-{
-  // This is a simple hash function for now -- it converts 6 bytes
-  // into 4 bytes via ``wrap-around arithmetic.''  I'm sure there's a
-  // better one.
-
-  this->hash_value_ = this->get_ip_address () + this->get_port_number ();
-}
-
-size_t 
-Hash_Addr::hash (void) const
-{
-  return this->hash_value_;
-}
-
-// ****************************************
-
-class Creation_Strategy : public ACE_Creation_Strategy<Svc_Handler>
-  // = TITLE
-  //     Implements a no-op creation strategy in order to defer the
-  //     decision until the <Caching_Connect_Strategy>.
-{
-public:
-  virtual int make_svc_handler (Svc_Handler *&) { return 0; }
-  // This is a no-op.
-};
-
-class Caching_Connect_Strategy : public ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
-  // = TITLE
-  //     Implements a connection strategy that maintains a cache of connections.
-  //
-  // = DESCRIPTION
-  //     All the interesting stuff in this test goes in here...
-{
-private:
-  // = Factory method.
-  virtual int connect_svc_handler (Svc_Handler *&sh,
-				   const ACE_INET_Addr &remote_addr,
-				   ACE_Time_Value *timeout,
-				   const ACE_INET_Addr &local_addr,
-				   int reuse_addr,
-				   int flags,
-				   int perms);
-  // Checks to see if there is already a <Svc_Handler> in the cache
-  // corresponding to the <remote_addr>.  If so, we return this
-  // pointer.  Otherwise, we establish the connection, put it into the
-  // cache, and return the <Svc_Handler> pointer.
-
-  ACE_Hash_Map_Manager<Hash_Addr, Svc_Handler *, ACE_Null_Mutex> connection_cache_;
-  // This cache maps <Hash_Addr>s to <Svc_Handler *>s that are already
-  // connected.
-};
-
-int 
-Caching_Connect_Strategy::connect_svc_handler (Svc_Handler *&sh,
-					       const ACE_INET_Addr &remote_addr,
-					       ACE_Time_Value *timeout,
-					       const ACE_INET_Addr &local_addr,
-					       int reuse_addr,
-					       int flags,
-					       int perms)
-{
-  Hash_Addr search_addr (remote_addr);
-
-  // Try to find the address in the cache.  Only if we don't find it
-  // do we create a new <Svc_Handler> and connect it with the server.
-
-  if (connection_cache_.find (search_addr, sh) == -1)
-    {
-      ACE_NEW_RETURN (sh, Svc_Handler, -1);
-
-      // Actively establish the connection.
-      if (ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>::connect_svc_handler
-	  (sh, remote_addr, timeout, local_addr, reuse_addr, flags, perms) == -1)
-	return -1;
-
-      // Insert the new Svc_Handler into the cache.      
-      else
-	{
-	  Hash_Addr server_addr (remote_addr, sh);
-
-	  if (this->connection_cache_.bind (server_addr, sh) == -1)
-	    return -1;
-	}
-    }
-
-  // Mark this as being "in use" so that we can't match it in <find>.
-  sh->in_use (1);
-  return 0;
+  int equal = (a1 == a2);
+  int ret = equal ? 0 : 1;
+  return ret;
 }
 
 // ****************************************
@@ -354,6 +231,8 @@ Caching_Connect_Strategy::connect_svc_handler (Svc_Handler *&sh,
 typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> STRAT_CONNECTOR;
+typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
+typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mutex> CACHED_CONNECT_STRATEGY;
 
 // ****************************************
 
@@ -417,6 +296,46 @@ blocking_connect (CONNECTOR &con, const ACE_INET_Addr &server_addr)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
+typedef Hash_Addr<ACE_INET_Addr,Svc_Handler> EXT_ID;
+typedef Svc_Handler* INT_ID;
+typedef ACE_Hash_Map_Entry<EXT_ID,INT_ID> MAP_ENTRY;
+
+
+void
+dump_map(ACE_Hash_Map_Manager<EXT_ID,INT_ID,ACE_Null_Mutex>& hashmap)
+{
+  FILE* fp = stderr;
+  fprintf(fp, "Dumping hash map at 0x%08X (cur_size_=%d,total_size_=%d,table_=0x%08x)\n",
+	 &hashmap, hashmap.cur_size_, hashmap.total_size_, hashmap.table_);
+  for (int slot = 0; slot < hashmap.total_size_; slot++)
+    {
+      if (hashmap.table_[slot] == hashmap.sentinel_)
+	continue;
+      
+      fprintf(fp,"slot %-4d: ", slot);
+      MAP_ENTRY* temp;
+      for (temp = hashmap.table_[slot];
+	   temp != hashmap.sentinel_;
+	   temp = temp->next_)
+	{
+	  EXT_ID& key = temp->ext_id_;
+	  INT_ID& val = temp->int_id_;
+
+	  fprintf(fp,"(%s,%d,%sin use,0x%08X), ",
+		 key.get_host_name(), key.get_port_number(), val->in_use() ? "" : "not ", val);
+	}
+      fprintf(fp,"SENTINEL(0x%08x)\n", hashmap.sentinel_);
+    }
+  fprintf(fp,"End of dump\n");
+}
+
+void
+dump(STRAT_CONNECTOR& con)
+{
+  CACHED_CONNECT_STRATEGY* csp = (CACHED_CONNECT_STRATEGY*)con.connect_strategy_;
+  dump_map(csp->connection_cache_);
+}
+
 // This function runs the more sophisticated tests involving the
 // Caching_Connect_Strategy.
 
@@ -428,14 +347,16 @@ cached_connect (STRAT_CONNECTOR &con, const ACE_INET_Addr &server_addr)
   svc_handler[1] = 0;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting cached blocking connect\n"));
+
   // Initiate timed, non-blocking connection with server.
   
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.  Since we are
   // connecting to the same <server_addr> these calls will return the
   // same dynamically allocated <Svc_Handler> for each <connect>.
-  if (con.connect (svc_handler[0], server_addr) == -1
-      || con.connect (svc_handler[1], server_addr) == -1)
+  if (con.connect (svc_handler[0], server_addr) == -1)
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+  if (con.connect (svc_handler[1], server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
 
   // These two handles must be different since we can only have open
@@ -472,6 +393,7 @@ cached_connect (STRAT_CONNECTOR &con, const ACE_INET_Addr &server_addr)
 
 // Execute the client tests.
 
+
 static void *
 client (void *arg)
 {
@@ -485,10 +407,10 @@ client (void *arg)
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
   CONNECTOR connector;
 
-  Creation_Strategy creation_strategy;
+  NULL_CREATION_STRATEGY creation_strategy;
   // Configure the Strategy Connector with a strategy that caches
   // connection.
-  Caching_Connect_Strategy caching_connect_strategy;
+  CACHED_CONNECT_STRATEGY caching_connect_strategy;
 
   STRAT_CONNECTOR strat_connector (0, 
 				   &creation_strategy,
@@ -616,12 +538,15 @@ main (int, char *[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mutex>;
+template class Hash_Addr<ACE_INET_Addr, Svc_Handler>;
+template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<Hash_Addr, Svc_Handler *>;
-template class ACE_Hash_Map_Manager<Hash_Addr, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *>;
+template class ACE_Hash_Map_Manager<Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
@@ -629,11 +554,11 @@ template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
 
-#if defined (ACE_HAS_THREADS)
-  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#else
+#  if defined (ACE_HAS_THREADS)
+template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#  else
   // These are specialized in libACE if ACE doesn't have threads.
-#endif /* ACE_HAS_THREADS */
+#  endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
