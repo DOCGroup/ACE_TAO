@@ -6,8 +6,8 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 PropertyManagerTest::PropertyManagerTest (
-  TAO_LoadBalancer::PropertyManager_ptr property_manager)
-  : property_manager_ (TAO_LoadBalancer::PropertyManager::duplicate (
+  LoadBalancing::PropertyManager_ptr property_manager)
+  : property_manager_ (LoadBalancing::PropertyManager::duplicate (
                          property_manager)),
     hasher_factory_ ()
 {
@@ -117,27 +117,32 @@ PropertyManagerTest::set_default_properties (void)
       //   Factories
       const CORBA::ULong DEFAULT_PROPERTY_COUNT = 3;
 
-      TAO_LoadBalancer::Properties properties;
+      LoadBalancing::Properties properties;
       properties.length (DEFAULT_PROPERTY_COUNT);
 
       // Default initial number of replicas
-      TAO_LoadBalancer::Property initial_number_replicas;
+      LoadBalancing::Property &initial_number_replicas =
+        properties[0];
+
       initial_number_replicas.nam.length (1);
       initial_number_replicas.nam[0].id =
         CORBA::string_dup ("InitialNumberReplicas");
-      initial_number_replicas.val = INIT_NUM_REPLICAS;
-      properties[0] = initial_number_replicas;
+      initial_number_replicas.val <<= INIT_NUM_REPLICAS;
 
       // Default minimum number of replicas
-      TAO_LoadBalancer::Property minimum_number_replicas;
+      LoadBalancing::Property &minimum_number_replicas =
+        properties[1] = minimum_number_replicas;
+
       minimum_number_replicas.nam.length (1);
       minimum_number_replicas.nam[0].id =
         CORBA::string_dup ("MinimumNumberReplicas");
-      minimum_number_replicas.val = MIN_NUM_REPLICAS;
-      properties[1] = minimum_number_replicas;
+      minimum_number_replicas.val <<= MIN_NUM_REPLICAS;
+      
 
       // Default factories (simulated locations)
-      TAO_LoadBalancer::Property factories;
+      LoadBalancing::Property &factories =
+        properties[2];
+
       factories.nam.length (1);
       factories.nam[0].id = CORBA::string_dup ("Factories");
 
@@ -146,16 +151,16 @@ PropertyManagerTest::set_default_properties (void)
         this->hasher_factory_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO_LoadBalancer::GenericFactory_var factory =
-        TAO_LoadBalancer::GenericFactory::_narrow (obj.in (),
+      LoadBalancing::GenericFactory_var factory =
+        LoadBalancing::GenericFactory::_narrow (obj.in (),
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO_LoadBalancer::FactoryInfos factory_infos;
+      LoadBalancing::FactoryInfos factory_infos;
       factory_infos.length (INIT_NUM_REPLICAS);
       for (CORBA::ULong i = 0; i < factory_infos.length (); ++i)
         {
-          TAO_LoadBalancer::FactoryInfo &factory_info =
+          LoadBalancing::FactoryInfo &factory_info =
             factory_infos[i];
 
           // For this test, the same GenericFactory is used to create
@@ -165,7 +170,7 @@ PropertyManagerTest::set_default_properties (void)
           // capable of creating replicas at multiple physical
           // locations.
           factory_info.the_factory =
-            TAO_LoadBalancer::GenericFactory::duplicate (factory.in ());
+            LoadBalancing::GenericFactory::duplicate (factory.in ());
 
           // Create a logical location for each factory.
           char location[BUFSIZ] = { 0 };
@@ -179,8 +184,7 @@ PropertyManagerTest::set_default_properties (void)
           // factory_info.the_criteria ...
         }
 
-      factories.val = factory_infos;
-      properties[2] = factories;
+      factories.val <<= factory_infos;
 
       // @@ TODO: Add the following properties to the sequence of
       //    default properties:
@@ -215,11 +219,11 @@ PropertyManagerTest::test_invalid_property (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Property property;
+      LoadBalancing::Property property;
       property.nam.length (1);
       property.nam[0].id = CORBA::string_dup ("FOO_BAR_BAZ");
 
-      TAO_LoadBalancer::Properties properties;
+      LoadBalancing::Properties properties;
       properties.length (1);
       properties[0] = property;
 
@@ -227,7 +231,7 @@ PropertyManagerTest::test_invalid_property (void)
                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (TAO_LoadBalancer::InvalidProperty, ex)
+  ACE_CATCH (LoadBalancing::InvalidProperty, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Successfully caught %s exception\n"),
@@ -261,11 +265,11 @@ PropertyManagerTest::test_unsupported_property (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Property property;
+      LoadBalancing::Property property;
       property.nam.length (1);
       property.nam[0].id = CORBA::string_dup ("FOO_BAR_BAZ");
 
-      TAO_LoadBalancer::Properties properties;
+      LoadBalancing::Properties properties;
       properties.length (1);
       properties[0] = property;
 
@@ -273,7 +277,7 @@ PropertyManagerTest::test_unsupported_property (void)
                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (TAO_LoadBalancer::UnsupportedProperty, ex)
+  ACE_CATCH (LoadBalancing::UnsupportedProperty, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Successfully caught %s exception\n"),
@@ -297,7 +301,7 @@ PropertyManagerTest::get_default_properties (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Properties_var properties =
+      LoadBalancing::Properties_var properties =
         this->property_manager_->get_default_properties (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -306,7 +310,7 @@ PropertyManagerTest::get_default_properties (void)
           // Property values are not displayed since they are stored
           // as Anys.
 
-          TAO_LoadBalancer::Property &property = properties[i];
+          LoadBalancing::Property &property = properties[i];
 
           for (CORBA::ULong j = 0; j < property.length (); ++j)
             ACE_DEBUG ((LM_DEBUG,
@@ -335,7 +339,7 @@ PropertyManagerTest::remove_default_properties (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Properties current_properties =
+      LoadBalancing::Properties current_properties =
         this->property_manager_->get_default_properties (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -346,10 +350,10 @@ PropertyManagerTest::remove_default_properties (void)
                           -1);
 
       // Remove the first default property.
-      TAO_LoadBalancer::Property &removed_property =
+      LoadBalancing::Property &removed_property =
         current_properties[0];
 
-      TAO_LoadBalancer::Properties removed_properties;
+      LoadBalancing::Properties removed_properties;
       removed_properties.length (1);
       removed_properties[0] = removed_property;
 
@@ -396,7 +400,7 @@ PropertyManagerTest::set_type_properties (void)
       const char *type_id =
         HasherFactory::repository_type_id ();
 
-      TAO_LoadBalancer::Properties overrides;
+      LoadBalancing::Properties overrides;
 
       this->property_manager_->set_type_properties (type_id,
                                                     overrides,
@@ -423,7 +427,7 @@ PropertyManagerTest::get_type_properties (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Properties_var properties =
+      LoadBalancing::Properties_var properties =
         this->get_type_properties (type_id, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -447,7 +451,7 @@ PropertyManagerTest::remove_type_properties (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Properties properties;
+      LoadBalancing::Properties properties;
 
       this->property_manager_->remove_type_properties (type_id,
                                                        properties,
@@ -503,7 +507,7 @@ PropertyManagerTest::test_object_group_not_found (void)
     {
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (TAO_LoadBalancer::ObjectGroupNotFound, ex)
+  ACE_CATCH (LoadBalancing::ObjectGroupNotFound, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Successfully caught %s exception\n"),
@@ -529,7 +533,7 @@ PropertyManagerTest::get_properties (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_LoadBalancer::Properties_var properties =
+      LoadBalancing::Properties_var properties =
         this->property_manager_->get_properties (object_group,
                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
