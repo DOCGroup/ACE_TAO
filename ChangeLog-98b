@@ -1,5 +1,9 @@
 Fri Nov  6 23:08:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process.cpp (spawn): Set result correctly when execvp() is
+ 	  called.  Also, make sure to check for putenv() failing.  Thanks
+ 	  to David Levine for pointing this out.
+
 	* tests/Env_Value_Test.cpp: Reformatted the test a bit.
 
 Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
