@@ -100,7 +100,7 @@ public:
   // If <timeout> != 0, the call will wait until the relative time
   // specified in *<timeout> elapses.
   //
-  // The "_n" I/O methods keep looping until all the data has been
+  // The "_n()" I/O methods keep looping until all the data has been
   // transferred.  These methods also work for sockets in non-blocking
   // mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
   // to make sure we keep making progress, i.e., the same timeout
@@ -108,7 +108,7 @@ public:
   // is not counted down.
   //
   // The return values for the "*_n()" methods match the return values
-  // from the non "_n" methods and are specified as follows:
+  // from the non "_n()" methods and are specified as follows:
   //
   // - On complete transfer, the number of bytes transferred is returned.
   // - On timeout, -1 is returned, errno == ETIME.
