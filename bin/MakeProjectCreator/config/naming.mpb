@@ -1,4 +1,4 @@
-project : iortable, svc_utils {
+project : iortable, messaging, svc_utils {
   after     += CosNaming
   libs      += TAO_CosNaming
   comps     += Naming

@@ -1,3 +1,9 @@
+Tue Nov 18 22:31:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/naming.mpb:
+
+	  Naming service now depends on messaging.
+
 Tue Nov 18 22:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Log_Msg.cpp:
