@@ -38,7 +38,7 @@
 #include "tao/Request.h"
 #include "tao/MProfile.h"
 
-#ifdef (TAO_HAS_INTERFACE_REPOSITORY)
+#if defined (TAO_HAS_INTERFACE_REPOSITORY)
 #  include "tao/InterfaceC.h"
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
@@ -1000,7 +1000,7 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
 }
 
-#ifdef (TAO_HAS_INTERFACE_REPOSITORY)
+#if defined (TAO_HAS_INTERFACE_REPOSITORY)
 
 void string2long (const char *str,
                   ACE_CDR::ULong *&arr,
