@@ -2094,7 +2094,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "void _is_owner (CORBA::Boolean b);" << be_nl
       << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (void);\n";
+      << "PortableServer::POA_ptr _default_POA (CORBA::Environment &env);\n";
 
   // generate code for the operations in the scope
   if (this->visit_scope (node) ==  -1)
@@ -2250,7 +2250,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   *os << "template <class T> ACE_INLINE "
       << "PortableServer::POA_ptr" << be_nl
-      << fulltiename << "<T>::_default_POA (void)" << be_nl
+      << fulltiename << "<T>::_default_POA (CORBA::Environment &env)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (this->poa_))" << be_idt_nl
       << "return this->poa_;" << be_uidt_nl
