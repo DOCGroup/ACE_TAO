@@ -1,6 +1,7 @@
 // $Id$
 
 #include "test_i.h"
+#include "tao/debug.h"
 #include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
@@ -9,11 +10,14 @@
 
 ACE_RCSID(Latency, test_i, "$Id$")
 
-CORBA::ULongLong
-Test_i::test_method (CORBA::ULongLong stamp,
+void
+Test_i::test_method (CORBA::Long id,
                      CORBA::Environment&) ACE_THROW_SPEC (())
 {
-  return stamp;
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "Receiving request from thread <%d> in <%t>\n",
+                id));
 }
 
 void

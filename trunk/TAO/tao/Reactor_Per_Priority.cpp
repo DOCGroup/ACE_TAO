@@ -5,6 +5,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Leader_Follower.h"
 #include "tao/Pluggable.h"
+#include "tao/debug.h"
 #include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
@@ -39,9 +40,10 @@ TAO_Reactor_Per_Priority::reactor (void)
   CORBA::Short priority = 0;
   if (this->orb_core ()->get_thread_priority (priority) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Reactor_Per_Priority::reactor: "
-                  " cannot get priority for this thread\n"));
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Reactor_Per_Priority::reactor: "
+                    " cannot get priority for this thread\n"));
       return 0;
     }
 
@@ -104,9 +106,10 @@ TAO_Reactor_Per_Priority::leader_follower_i (CORBA::Short priority)
   TAO_Leader_Follower *leader_follower = 0;
   if (this->map_.find (priority, leader_follower) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - new priority %d\n",
-                  priority));
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - new priority %d\n",
+                    priority));
       // The priority is new, create an entry in the table.
       ACE_NEW_RETURN (leader_follower,
                       TAO_Leader_Follower (this->orb_core ()),
@@ -135,7 +138,7 @@ TAO_Reactor_Per_Priority::shutdown_all (void)
       // Wakeup all the threads waiting blocked in the event loop,
       // this does not guarantee that they will all go away, but
       // reduces the load on the POA....
-      ACE_Reactor *reactor = 
+      ACE_Reactor *reactor =
         leader_follower.reactor ();
 
       reactor->wakeup_all_threads ();

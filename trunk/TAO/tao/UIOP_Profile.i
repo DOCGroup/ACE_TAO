@@ -52,16 +52,4 @@ TAO_UIOP_Profile::hint (void)
   return this->hint_;
 }
 
-ACE_INLINE const TAO_Tagged_Components&
-TAO_UIOP_Profile::tagged_components (void) const
-{
-  return this->tagged_components_;
-}
-
-ACE_INLINE TAO_Tagged_Components&
-TAO_UIOP_Profile::tagged_components (void)
-{
-  return this->tagged_components_;
-}
-
 #endif  /* TAO_HAS_UIOP */

@@ -6,7 +6,6 @@
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
-#include "tao/Object_KeyC.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -23,109 +22,20 @@ ACE_RCSID(tao, Pluggable, "$Id$")
 
 // ****************************************************************
 
-TAO_Profile::~TAO_Profile (void)
-{
-}
-// ****************************************************************
-
-TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
-  : TAO_Profile (tag)
-{
-}
-
-int
-TAO_Unknown_Profile::parse_string (const char *,
-                                   CORBA::Environment &)
-{
-  // @@ THROW something????
-  return -1;
-}
-
-CORBA::String
-TAO_Unknown_Profile::to_string (CORBA::Environment &)
-{
-  // @@ THROW something?
-  return 0;
-}
-
-int
-TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
-{
-  if ((cdr >> this->body_) == 0)
-    return -1;
-  return 0;
-}
-
-int
-TAO_Unknown_Profile::encode (TAO_OutputCDR &stream) const
-{
-  stream.write_ulong (this->tag ());
-  return (stream << this->body_);
-}
-
-const TAO_ObjectKey &
-TAO_Unknown_Profile::object_key (void) const
-{
-  // @@ TODO this is wrong, but the function is deprecated anyway....
-  static TAO_ObjectKey empty_key;
-  return empty_key;
-}
-
-TAO_ObjectKey *
-TAO_Unknown_Profile::_key (void) const
-{
-  return 0;
-}
-
-CORBA::Boolean
-TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
-{
-  if (other_profile->tag () != this->tag ())
-    return 0;
-
-  const TAO_Unknown_Profile *op =
-    ACE_dynamic_cast (const TAO_Unknown_Profile*, other_profile);
-
-  return (CORBA::Boolean) (this->body_ == op->body_);
-}
-
-CORBA::ULong
-TAO_Unknown_Profile::hash (CORBA::ULong max,
-                           CORBA::Environment &)
-{
-  return (ACE::hash_pjw (ACE_reinterpret_cast (const char*,
-                                               this->body_.get_buffer ()),
-                         this->body_.length ()) % max);
-}
-
-int
-TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
-                                     size_t /* length */)
-{
-  return -1;
-}
-
-void
-TAO_Unknown_Profile::reset_hint (void)
-{
-  // do nothing
-}
-
-// ****************************************************************
-
 // Constructor.
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
   : tag_ (tag),
-    orb_core_ (orb_core),
-    tms_ (0),
-    ws_ (0)
+    orb_core_ (orb_core)
 {
+  TAO_Client_Strategy_Factory *cf =
+    this->orb_core_->client_factory ();
+
   // Create WS now.
-  this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
+  this->ws_ = cf->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (this);
+  this->tms_ = cf->create_transport_mux_strategy (this);
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -133,7 +43,7 @@ TAO_Transport::~TAO_Transport (void)
   delete this->ws_;
   this->ws_ = 0;
   delete this->tms_;
-  this->tms_ =0;
+  this->tms_ = 0;
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on

@@ -170,10 +170,46 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_Countdown_Time countdown (this->max_wait_time_);
   // Loop until a connection is established or there aren't any more
   // profiles to try.
+#if defined(TAO_USE_PRIORITY_POLICY)
+  CORBA::Short priority;
+  if (this->orb_core_->get_thread_priority (priority) == -1)
+    ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+  if (TAO_debug_level > 3)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - matching priority %d\n", priority));
+#endif /* TAO_USE_PRIORITY_POLICY */
+
   for (;;)
     {
       // Get the current profile.
+#if !defined(TAO_USE_PRIORITY_POLICY)
       this->profile_ = this->stub_->profile_in_use ();
+#else
+      this->profile_ = 0;
+      const TAO_MProfile& mprofile = this->stub_->base_profiles ();
+      for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+        {
+          const TAO_Profile *profile = mprofile.get_profile (i);
+          const TAO_Tagged_Components &tc = profile->tagged_components ();
+          CORBA::Short profile_priority;
+          if (tc.get_tao_priority (profile_priority) == 0)
+            continue;
+
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - trying priorities %d - %d\n",
+                        priority, profile_priority));
+
+          if (profile_priority == priority)
+            {
+              this->profile_ =
+                ACE_const_cast(TAO_Profile*,profile);
+              break;
+            }
+        }
+      if (this->profile_ == 0)
+        ACE_THROW (CORBA::INV_POLICY ());
+#endif /* TAO_USE_PRIORITY_POLICY */
 
       // Get the transport object.
 
