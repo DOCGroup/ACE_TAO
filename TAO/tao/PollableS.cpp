@@ -327,7 +327,7 @@ POA_CORBA::Pollable::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_NEW_RETURN (retval,
                   POA_CORBA::_tao_collocated_Pollable (this, 
-                                                       stub),'
+                                                       stub),
                   CORBA::Pollable::_nil ());
 
   return retval;
@@ -561,7 +561,7 @@ POA_CORBA::DIIPollable::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_NEW_RETURN (retval,
                   POA_CORBA::_tao_collocated_DIIPollable (this, 
-                                                          stub),'
+                                                          stub),
                   CORBA::DIIPollable::_nil ());
 
   return retval;
@@ -966,7 +966,7 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
 
   ACE_NEW_RETURN (retval,
                   POA_CORBA::_tao_collocated_PollableSet (this, 
-                                                          stub),'
+                                                          stub),
                   CORBA::PollableSet::_nil ());
 
   return retval;
