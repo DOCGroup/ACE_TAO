@@ -9,6 +9,7 @@
 #define ACE_CC_YY_FLEX_MINOR_VERSION 5
 
 #include "ace/OS.h"
+#include "ace/OS.h"
 
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
@@ -22,7 +23,6 @@
 #ifdef __cplusplus
 
 #include /**/ <stdlib.h>
-#include "ace/OS.h"
 
 /* Use prototypes in function declarations. */
 #define ACE_CC_YY_USE_PROTOS
@@ -616,7 +616,7 @@ ACE_CC_YY_MALLOC_DECL
 ACE_CC_YY_DECL
 	{
 	register ace_cc_yy_state_type ace_cc_yy_current_state;
-	register char *ace_cc_yy_cp, *ace_cc_yy_bp;
+	register char *ace_cc_yy_cp = NULL, *ace_cc_yy_bp = NULL;
 	register int ace_cc_yy_act;
 
 
@@ -1383,11 +1383,6 @@ ACE_CC_YY_BUFFER_STATE b;
 	}
 
 
-#ifndef ACE_CC_YY_ALWAYS_INTERACTIVE
-#ifndef ACE_CC_YY_NEVER_INTERACTIVE
-extern int isatty ACE_CC_YY_PROTO(( int ));
-#endif
-#endif
 
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yy_init_buffer( ACE_CC_YY_BUFFER_STATE b, FILE *file )

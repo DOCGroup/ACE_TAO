@@ -1,14 +1,27 @@
+Tue Nov 13 19:23:24 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.h:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+
+          Regenerated the files by removing the #pragma.
+
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff:
+
+          Removed the file as it is no longer needed.
+
 Tue Nov 13 18:01:57 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV.dsp: Added md5c.c 
-	* orbsvcs/orbsvcs/AV_Static.dsp: Added md5c.c 
+	* orbsvcs/orbsvcs/AV.dsp: Added md5c.c
+	* orbsvcs/orbsvcs/AV_Static.dsp: Added md5c.c
 	* orbsvcs/orbsvcs/AV/md5c.c: Add a CVS Id tag.
 	* orbsvcs/orbsvcs/AV/RTCP.cpp:
 	  Fix comments in TAO_AV_RTCP_Flow_Factory::make_protocol_object().
 	  Do not return void in TAO_AV_RTCP_Object::ts_offset().
 
 	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: Fixed comment.
-	     
+
 
 Tue Nov 13 14:31:44 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -17,7 +30,7 @@ Tue Nov 13 14:31:44 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Tue Nov 13 14:14:24 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-	Fixes provided by Rob Ruff <rruff@scires.com>:  
+	Fixes provided by Rob Ruff <rruff@scires.com>:
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
