@@ -54,8 +54,8 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *,
 
 struct String_Table
 {
-  ASYS_TCHAR *key_;
-  ASYS_TCHAR *value_;
+  LPCTSTR key_;
+  LPCTSTR value_;
 };
 
 static String_Table string_table[] =

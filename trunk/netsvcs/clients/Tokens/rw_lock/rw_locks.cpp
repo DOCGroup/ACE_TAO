@@ -33,7 +33,7 @@ typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 static ACE_Token_Proxy *global_rlock;
 static ACE_Token_Proxy *global_wlock;
 
-static char *server_host = ACE_DEFAULT_SERVER_HOST;
+static const char *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
 static int ignore_deadlock = 0;
 static int threads = 2;

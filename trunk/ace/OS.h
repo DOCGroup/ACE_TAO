@@ -3666,7 +3666,7 @@ extern "C"
   int t_close(int fildes);
   int t_connect(int fildes, struct t_call *sndcall,
                 struct t_call *rcvcall);
-  void t_error(char *errmsg);
+  void t_error(const char *errmsg);
   int t_free(char *ptr, int struct_type);
   int t_getinfo(int fildes, struct t_info *info);
   int t_getname (int fildes, struct netbuf *namep, int type);

@@ -6544,7 +6544,7 @@ ACE_OS::t_connect(int fildes,
 }
 
 ACE_INLINE void
-ACE_OS::t_error (char *errmsg)
+ACE_OS::t_error (const char *errmsg)
 {
   ACE_TRACE ("ACE_OS::t_error");
 #if defined (ACE_HAS_TLI)

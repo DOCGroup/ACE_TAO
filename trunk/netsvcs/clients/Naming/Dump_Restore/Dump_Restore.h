@@ -42,7 +42,8 @@ private:
   int set_node_local (void);
   // Set options to use NODE_LOCAL naming context.
 
-  int set_host (char* hostname, int port);
+  int set_host (const char *hostname,
+                int port);
   // Set options to use NET_LOCAL naming context specifying host name
   // and port number.
 
@@ -52,12 +53,16 @@ private:
   int populate (Dump_Restore::Operation_Type op);
 
   int doit (Dump_Restore::Operation_Type op,
-            char *name,
-            char *value,
-            char *type = "");
-  int bind (char* key, char* value, char* type = "");
-  int unbind (char* key);
-  int rebind (char* key, char* value, char* type = "");
+            const char *name,
+            const char *value,
+            const char *type = "");
+  int bind (const char *key,
+            const char *value,
+            const char *type = "");
+  int unbind (const char *key);
+  int rebind (const char *key,
+              const char *value,
+              const char *type = "");
 
   char filename_[MAXPATHLEN + 1];
   char dump_filename_[MAXPATHLEN + 1];

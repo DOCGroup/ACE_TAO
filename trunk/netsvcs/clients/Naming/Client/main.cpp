@@ -23,8 +23,9 @@ main (int argc, char *argv[])
       else // Use static binding.
 	{
 	  char *l_argv[3];
+          char port[] = "-p 10011";
 	  l_argv[0] = argv[0];
-	  l_argv[1] = "-p 10011";
+	  l_argv[1] = port;
 	  l_argv[2] = 0;
 	  ACE_Service_Object *so = ACE_SVC_INVOKE (ACE_Naming_Context);
 

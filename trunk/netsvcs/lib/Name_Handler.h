@@ -125,7 +125,7 @@ private:
     // A member function pointer that serves as a factory to create a
     // request that is passed back to the client.
 
-    char *description_;
+    const char *description_;
     // Name of the operation we're dispatching (used for debugging).
   };
 

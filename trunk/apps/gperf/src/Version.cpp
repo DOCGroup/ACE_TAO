@@ -27,4 +27,4 @@
 
 ACE_RCSID(src, Version, "$Id$")
 
-char *version_string = "2.8 (ACE version)";
+const char *version_string = "2.8 (ACE version)";

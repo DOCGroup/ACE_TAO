@@ -1,5 +1,13 @@
 Sun Jun  6 22:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* Fixed gazillions of incorrect usages of char * (which should
+ 	  have been const char *) throughout ACE.
+
+	* netsvcs/clients/Tokens: Fixed some const char * inconsistencies.
+
+	* netsvcs/lib/Name_Handler.h: Fixed another inconsistent use of
+ 	  char * that should have been const char *.
+
 	* ace/Service_Config.h: Fixed a const incorrectness in the
  	  ACE_Static_Svc_Descriptor.
 

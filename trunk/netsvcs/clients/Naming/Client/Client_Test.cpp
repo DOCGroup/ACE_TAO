@@ -34,34 +34,38 @@ public:
   void list_options (void);
   // Print name options
 
-  int bind (char *key, char *value, char *type = "");
+  int bind (const char *key, 
+            const char *value,
+            const char *type = "");
   // Bind a key to a value
 
-  int unbind (char *key);
+  int unbind (const char *key);
   // Unbind a name binding
 
-  int rebind (char *key, char *value, char *type = "");
+  int rebind (const char *key,
+              const char *value,
+              const char *type = "");
   // Rebind a name binding
 
-  int find (char *key);
+  int find (const char *key);
   // Find the value associated with a key
 
-  int list_names (char *pattern);
+  int list_names (const char *pattern);
   // Find all names that match pattern
 
-  int list_values (char *pattern);
+  int list_values (const char *pattern);
   // Find all values that match pattern
 
-  int list_types (char *pattern);
+  int list_types (const char *pattern);
   // Find all types that match pattern
 
-  int list_name_entries (char *pattern);
+  int list_name_entries (const char *pattern);
   // Find all names that match pattern
 
-  int list_value_entries (char *pattern);
+  int list_value_entries (const char *pattern);
   // Find all values that match pattern
 
-  int list_type_entries (char *pattern);
+  int list_type_entries (const char *pattern);
   // Find all types that match pattern
 
 private:
@@ -77,9 +81,9 @@ private:
   int set_node_local (void);
   // Set options to use NODE_LOCAL naming context
 
-  int set_host (char *hostname, int port);
-  // Set options to use NET_LOCAL naming context
-  // specifying host name and port number
+  int set_host (const char *hostname, int port);
+  // Set options to use NET_LOCAL naming context specifying host name
+  // and port number
 
   int quit (void);
   // Gracefully exit
@@ -386,7 +390,7 @@ Client_Test::set_node_local (void)
 }
 
 int
-Client_Test::set_host (char* hostname, int port)
+Client_Test::set_host (const char *hostname, int port)
 {
   // Close down original name space
   NAMING_CONTEXT ()->close ();
@@ -407,7 +411,9 @@ Client_Test::quit (void)
 }
 
 int
-Client_Test::bind (char* key, char* value, char* type)
+Client_Test::bind (const char *key,
+                   const char *value,
+                   const char *type)
 {
   if (NAMING_CONTEXT ()->bind (key, value, type) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -419,7 +425,7 @@ Client_Test::bind (char* key, char* value, char* type)
 }
 
 int
-Client_Test::unbind (char* key)
+Client_Test::unbind (const char *key)
 {
   if (NAMING_CONTEXT ()->unbind (key) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -431,14 +437,16 @@ Client_Test::unbind (char* key)
 }
 
 int
-Client_Test::rebind (char* key, char* value, char* type)
+Client_Test::rebind (const char *key, 
+                     const char *value,
+                     const char *type)
 {
   int result = NAMING_CONTEXT ()->rebind (key, value, type );
   return result == 1 ? 0 : result;
 }
 
 int
-Client_Test::list_names (char *pattern)
+Client_Test::list_names (const char *pattern)
 {
   ACE_PWSTRING_SET set;
 
@@ -462,7 +470,7 @@ Client_Test::list_names (char *pattern)
 }
 
 int
-Client_Test::list_values (char *pattern)
+Client_Test::list_values (const char *pattern)
 {
   ACE_PWSTRING_SET set;
 
@@ -486,7 +494,7 @@ Client_Test::list_values (char *pattern)
 }
 
 int
-Client_Test::list_types (char *pattern)
+Client_Test::list_types (const char *pattern)
 {
   ACE_PWSTRING_SET set;
 
@@ -510,7 +518,7 @@ Client_Test::list_types (char *pattern)
 }
 
 int
-Client_Test::list_name_entries (char *pattern)
+Client_Test::list_name_entries (const char *pattern)
 {
   ACE_BINDING_SET set;
 
@@ -543,7 +551,7 @@ Client_Test::list_name_entries (char *pattern)
 }
 
 int
-Client_Test::list_value_entries (char *pattern)
+Client_Test::list_value_entries (const char *pattern)
 {
   ACE_BINDING_SET set;
 
@@ -575,7 +583,7 @@ Client_Test::list_value_entries (char *pattern)
 }
 
 int
-Client_Test::list_type_entries (char *pattern)
+Client_Test::list_type_entries (const char *pattern)
 {
   ACE_BINDING_SET set;
 
@@ -607,7 +615,7 @@ Client_Test::list_type_entries (char *pattern)
 }
 
 int
-Client_Test::find (char *key)
+Client_Test::find (const char *key)
 {
   char *value = 0;
   char *type = 0;

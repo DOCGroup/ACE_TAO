@@ -27,8 +27,8 @@ ACE_RCSID(invariant, invariant, "$Id$")
 
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
-static char * rwname = "reader/writer";
-static char * mutexname = "mutex";
+static const char *rwname = "reader/writer";
+static const char *mutexname = "mutex";
 
 static void *
 run_reader_writer (void *)

@@ -106,7 +106,7 @@ ACE_RCSID(Misc, test_signals_2, "$Id$")
 class Sig_Handler_1 : public ACE_Event_Handler
 {
 public:
-  Sig_Handler_1 (ACE_Reactor &reactor, char *msg)
+  Sig_Handler_1 (ACE_Reactor &reactor, const char *msg)
     : msg_ (msg),
       count_ (0),
       reactor_ (reactor)
@@ -174,7 +174,7 @@ public:
   }
 
 protected:
-  char *msg_;
+  const char *msg_;
   int count_;
   int int_sigkey_;
   int quit_sigkey_;
@@ -184,7 +184,7 @@ protected:
 class Sig_Handler_2 : public Sig_Handler_1
 {
 public:
-  Sig_Handler_2 (ACE_Reactor &reactor, char *msg)
+  Sig_Handler_2 (ACE_Reactor &reactor, const char *msg)
     : Sig_Handler_1 (reactor, msg)
   {
   }
