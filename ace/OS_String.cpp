@@ -787,16 +787,16 @@ ACE_OS_String::wcspbrk_emulation (const wchar_t *string,
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSPBRK */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCAT)
-wchar_t *
-ACE_OS_String::wcsncat_emulation (wchar_t *destination,
-                                  const wchar_t *source,
+#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
+ACE_WCHAR_T *
+ACE_OS_String::wcsncat_emulation (ACE_WCHAR_T *destination,
+                                  const ACE_WCHAR_T *source,
                                   size_t count)
 {
   if (count != 0)
     {
-      wchar_t *d = destination;
-      const wchar_t *s = source;
+      ACE_WCHAR_T *d = destination;
+      const ACE_WCHAR_T *s = source;
 
       while (*d != 0)
         d++;
@@ -814,7 +814,7 @@ ACE_OS_String::wcsncat_emulation (wchar_t *destination,
 
   return destination;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCAT */
+#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCAT */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCHR)
 wchar_t *
