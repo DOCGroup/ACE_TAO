@@ -1,6 +1,8 @@
+// @file wxNamingTree.cpp
+//
+// @author Charlie Frasch  <cfrasch@atdesk.com>
+//
 // $Id$
-// wxNamingTree.cpp
-
 
 #include "pch.h"
 #include "wxNamingTree.h"
@@ -157,7 +159,7 @@ void WxNamingTree::listBindingList(
       bool isContext =(bl[i].binding_type == CosNaming::ncontext);
       WxNamingObject* newObject = new WxNamingObject(
           bl[i].binding_name,
-          object,
+          object.in(),
           isContext);
       wxString name = static_cast<const char*>( (bl[i].binding_name[0]).id);
       const wxString kind = static_cast<const char*>( (bl[i].binding_name[0]).kind);
@@ -213,7 +215,7 @@ void WxNamingTree::listContext( wxTreeItemId& item)
     CosNaming::BindingList_var bl;
     CosNaming::BindingIterator_var bi;
     context->list( listQuantum, bl, bi);
-    listBindingList( item, context, bl);
+    listBindingList( item, context.in(), bl);
     if (!CORBA::is_nil( bi.in ())) {
 
       while( bl->length()) {
@@ -227,7 +229,7 @@ void WxNamingTree::listContext( wxTreeItemId& item)
             wxYES_NO | wxICON_QUESTION) == wxYES) {
 
           bi->next_n( listQuantum, bl);
-          listBindingList( item, context, bl);
+          listBindingList( item, context.in(), bl);
 
         }
 

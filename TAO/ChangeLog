@@ -1,3 +1,23 @@
+Thu Nov 20 17:55:15 2003 Charlie Frasch  <cfrasch@atdesk.com>
+  
+	* Makefile:
+	* README:
+	* mondrian.xpm:
+	* wxAddNameServerDlg.cpp:
+	* wxBindDialog.cpp:
+	* wxBindDialog.h:
+	* wxBindNewContext.cpp:
+	* wxNamingObject.cpp:
+	* wxNamingTree.cpp:
+	* wxNamingViewer.cpp:
+	* wxNamingViewerFrame.cpp:
+	* wxSelectNSDialog.cpp:
+	* wxViewIORDialog.cpp:
+	  Updated for linux, gcc, latest ACE/TAO and wxWindows 2.4.2. For 
+	  linux, the wxNamingViewer.wxr file is no longer used, and the 
+	  dialog components are created  inline. A future change should 
+	  incorporate wxWindow's new XML-based resource system.
+  
 Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * rules.tao.GNU:
