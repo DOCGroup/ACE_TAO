@@ -1,3 +1,8 @@
+Wed Oct 29 21:35:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed compilation
+	  errors in Win32 core builds. Strange that g++ missed this. 
+
 Wed Oct 29 21:10:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/Multi_Priority_Mapping.cpp:

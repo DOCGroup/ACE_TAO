@@ -315,7 +315,7 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           TAO_DEFAULT_MINOR_CODE,
                           EPERM),
                         CORBA::COMPLETED_NO),
-                      -1);
+                      0);
 
   TAO_IIOP_Endpoint *iiop_endpoint = ssl_endpoint->iiop_endpoint ();
 
@@ -359,7 +359,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           TAO_DEFAULT_MINOR_CODE,
                           EPERM),
                         CORBA::COMPLETED_NO),
-                      -1);
+                      0);
 
   // If the invocation wants integrity without confidentiality but the
   // server does not support "no protection," then it won't be
@@ -371,7 +371,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         Security::NoProtection)
       && qop == Security::SecQOPIntegrity)
-    ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
+    ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
 
   const ACE_INET_Addr &remote_address =
     ssl_endpoint->object_addr ();
@@ -491,7 +491,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                         ACE_TEXT ("(%P|%t) Unable to set eNULL ")
                         ACE_TEXT ("SSL cipher.\n")));
 
-          ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
+          ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
         }
 
       TAO_SSLIOP_Credentials_var credentials =
