@@ -1,5 +1,11 @@
 Mon May  5 08:19:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Strategies_T: Added a number of fixes and enhancements to
+ 	  the new Hash_Addr and ACE_Cached_Connect_Strategy classes.
+
+	* ace/Strategies_T.h: Added #include for "Hash_Map_Manager.h".
+  	  Thanks to Amos Shapira <amos@dsi.co.il> for reporting this.
+
 	* ace/config-hpux-10.*.h: Applied a number of patches courtesy of
  	  Carlos O'Ryan.
 
