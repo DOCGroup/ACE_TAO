@@ -38,6 +38,11 @@ namespace MyImpl
     /// Default destructor.
     ~Satellite_exec_i (void);
 
+    // Operations from supported interface(s)
+
+    virtual void alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Operations from Components::SessionComponent
 
     virtual void

@@ -17,6 +17,21 @@ MyImpl::Satellite_exec_i::~Satellite_exec_i ()
 {
 }
 
+// Operations from supported interface(s)
+
+void
+MyImpl::Satellite_exec_i::alert (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Satellite, pushing TargetLocated!\n")));
+
+  BBN_UAV::TargetLocated_var ev = new OBV_BBN_UAV::TargetLocated ();
+
+  this->context_->push_target_located (ev.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+}
+
 // Operations from Components::SessionComponent
 void
 MyImpl::Satellite_exec_i::set_session_context (Components::SessionContext_ptr ctx
