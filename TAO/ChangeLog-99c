@@ -22,6 +22,10 @@ Sat Jun 12 19:51:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Event/lib/Supplier.h:
 	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
 	* orbsvcs/tests/Event_Latency/Event_Latency.h:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.h:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.h:
 	  More throw spec fixes
 
 Sat Jun 12 18:42:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
