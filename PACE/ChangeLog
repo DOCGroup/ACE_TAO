@@ -1,3 +1,9 @@
+Sun Apr 22 18:53:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * pace/win32/ctype.h:
+          ctype.inl is already #included in pace/ctype.h, no need to
+          #include it again.
+
 Sun Apr 22 15:03:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/ctype.h:
