@@ -11,7 +11,7 @@
 #include "Object_Adapter.h"
 #include "Operation_Table.h"
 
-#include "tao/PolicyC.h"
+#include "tao/PolicyS.h"
 #include "tao/Server_Request.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
