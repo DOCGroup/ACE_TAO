@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "tao/debug.h"
 #include "ConnectDisconnect.h"
 
 ACE_RCSID (Notify_Tests, ConnectDisconnect, "$Id$")
@@ -21,7 +22,11 @@ CD_Entity::CD_Entity (ConnectDisconnect* cd, int id)
 
 CD_Entity::~CD_Entity ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Entity #%d destroyed\n", this->id_));
+  if (TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Entity #%d destroyed\n", this->id_));
+    }
+
   cd_->on_entity_destroyed ();
 }
 
@@ -64,9 +69,10 @@ ConnectDisconnect::on_entity_destroyed (void)
 {
   this->result_count_++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "result_count = %d\n",
-              this->result_count_.value ()));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "result_count = %d\n",
+                this->result_count_.value ()));
 }
 
 int

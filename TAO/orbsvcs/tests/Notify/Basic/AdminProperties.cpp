@@ -1,12 +1,12 @@
 // $Id$
 
-#include "AdminProperties_Test.h"
+#include "AdminProperties.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
 
-AdminProperties_Test::AdminProperties_Test (void)
+AdminProperties::AdminProperties (void)
   : max_queue_length_ (10),
     max_consumers_ (5),
     max_suppliers_ (5),
@@ -17,12 +17,12 @@ AdminProperties_Test::AdminProperties_Test (void)
 {
 }
 
-AdminProperties_Test::~AdminProperties_Test (void)
+AdminProperties::~AdminProperties (void)
 {
 }
 
 int
-AdminProperties_Test::parse_args(int argc, char *argv[])
+AdminProperties::parse_args(int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -93,7 +93,7 @@ AdminProperties_Test::parse_args(int argc, char *argv[])
 }
 
 int
-AdminProperties_Test::init (int argc,
+AdminProperties::init (int argc,
                             char *argv []
                             ACE_ENV_ARG_DECL)
 {
@@ -157,7 +157,7 @@ AdminProperties_Test::init (int argc,
 }
 
 void
-AdminProperties_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->create_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -170,7 +170,7 @@ AdminProperties_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties_Test::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -205,7 +205,7 @@ AdminProperties_Test::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties_Test::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -240,7 +240,7 @@ AdminProperties_Test::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
+AdminProperties::send_events (ACE_ENV_SINGLE_ARG_DECL)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -314,7 +314,7 @@ AdminProperties_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char* argv[])
 {
-  AdminProperties_Test test;
+  AdminProperties test;
 
   if (test.parse_args (argc, argv) == -1)
     {
