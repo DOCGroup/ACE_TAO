@@ -1,3 +1,20 @@
+Thu Apr 24 23:20:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Dispatcher_Impl.cpp:
+	* Kokyu/DSRT_Dispatcher_Impl.h:
+	* Kokyu/DSRT_Dispatcher_Impl.i:
+	* Kokyu/DSRT_Schedulers.cpp:
+	* Kokyu/DSRT_Schedulers.h:
+	* Kokyu/Kokyu.cpp:
+	* Kokyu/Kokyu.h:
+	* Kokyu/tests/DSRT_MIF/MIF.cpp:
+	* Kokyu/tests/DSRT_MIF/svc.conf:
+	* Kokyu/tests/DSRT_MIF/svc.conf.xml:
+
+	  Made the importance value continuous instead of discrete to make
+	  it more compatible with DSRT MIF scheduler. Made the MIF
+	  scheduler accept max and min importance thru the svc.conf file.
+	
 Thu Apr 24 20:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/DSRT_Dispatcher_Impl.cpp:
