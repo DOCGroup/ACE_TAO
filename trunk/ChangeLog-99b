@@ -1,3 +1,16 @@
+Wed Nov 24 14:41:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.i (wait): Changed to use the process handle to wait
+	  for process termination.
+
+	* ace/OS.h:
+	* ace/OS.i (wait,waitpid): Added an extra argument that takes the
+	  process handle of the waited process.  On Win32, <pid> is
+	  ignored if the <handle> is not equal to 0.  Passing the process
+	  <handle> is prefer on Win32 because using <pid> to wait on the
+	  project doesn't always work correctly if the waited process has
+	  already terminated.
+
 Tue Nov 23 12:47:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc.h: Modified the definition and use of
@@ -10,21 +23,21 @@ Tue Nov 23 12:47:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  Alexander Belopolsky <belopolsky@my-deja.com> for reporting
  	  this.
 
-	* ace/OS.h: Modified ACE_MIN macro so that it uses the > operator to 
+	* ace/OS.h: Modified ACE_MIN macro so that it uses the > operator to
 	  be consistent with the ACE_MAX macro.  Thanks to Derek Dominish
  	  <Derek.Dominish@Australia.Boeing.com> for reporting this.
 
 	* tests/Malloc_Test: Updated the Malloc_Test so that it'll
 	  allocate and test doubles to make sure they work correctly.
 
-	* ace/Malloc.h: Modified the alignment logic to make things 
+	* ace/Malloc.h: Modified the alignment logic to make things
 	  work properly for datatypes like doubles.  Thanks to Alexander
  	  Belopolsky <belopolsky@my-deja.com> for working this out.
 
 Tue Nov 23 12:02:53 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.i: Moved the inline methods for sec()/usec()/msec() so
-	  that are defined *before* they are used...  
+	  that are defined *before* they are used...
 
 Tue Nov 23 11:34:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
