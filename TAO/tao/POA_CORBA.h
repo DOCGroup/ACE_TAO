@@ -35,6 +35,10 @@
 #include "tao/DynAnyC.h"
 #include "tao/Servant_Base.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Export  POA_CORBA
 {
 public:
