@@ -1,3 +1,9 @@
+Wed Nov 26 10:38:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+          Fix build errors/warnings on linux.
+
 Tue Nov 25 17:40:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:

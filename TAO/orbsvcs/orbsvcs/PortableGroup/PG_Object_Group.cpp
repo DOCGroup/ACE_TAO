@@ -261,7 +261,7 @@ void TAO::PG_Object_Group::add_member (
   // This can be avoided when we get support for TAG_MULTIPLE_COMPONENTS
   // For now, we already have a copy of the tagGroupTagged component and we're going to use
   // it below wen we increment the group version so we can clean out the dummy entry.
-  PortableGroup::ObjectGroup_var cleaned = PortableGroup::ObjectGroup::_duplicate (this->reference_);
+  PortableGroup::ObjectGroup_var cleaned = PortableGroup::ObjectGroup::_duplicate (this->reference_.in ());
   if (this->empty_)
   {
     // remove the original profile.  It's a dummy entry supplied by create_object.
