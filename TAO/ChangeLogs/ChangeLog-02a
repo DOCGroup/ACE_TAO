@@ -1,3 +1,13 @@
+Wed Oct 11 19:13:23 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (fini):
+
+	  Deallocate reactor registry prior to deallocating the resource
+	  factory.  The resource factory must still exist when
+	  deallocating the reactor registry since the resource factory
+	  reclaims some resources during reactory registry destruction.
+	  This fixes a memory access violation.
+
 Wed Oct 11 22:00:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Profile.cpp:
