@@ -5,7 +5,8 @@ Tue Jan 21 15:31:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  Modified code handling #pragma version directive to handle
 	  the case where one or more of the spaces between the words
 	  in the directive contains a tab. Thanks to Dima Scub 
-	  <dima_scub@sniip.ru> for reporting the bug.
+	  <dima_scub@sniip.ru> for reporting the bug. This closes
+	  [BUGID:1425].
 
 	* TAO_IDL/fe/idl.ll:
 
