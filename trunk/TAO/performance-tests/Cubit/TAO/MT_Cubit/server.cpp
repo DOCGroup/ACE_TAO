@@ -452,6 +452,11 @@ int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
                         Task_State *ts)
 {
+  ACE_ARGV tmp_args (this->argv_);
+  char *low_thread_args;
+  const char *arg_buf = tmp_args.buf ();
+  int arg_len = ACE_OS::strlen (arg_buf);
+
   ACE_NEW_RETURN (low_thread_args,
                   char[arg_len + 1],
                   -1);
