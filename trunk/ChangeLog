@@ -1,3 +1,17 @@
+Mon Nov  3 17:02:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-openbsd.h:
+        * ace/config-macosx.h:
+          Added ACE_LACKS_WCHAR_H.
+
+        * ace/OS_NS_dlfcn.inl:
+          Added #includes needed when ACE_USES_ASM_SYMBOL_IN_DLSYM is
+          defined.
+
+        * ace/OS_NS_sys_msg.inl:
+        * ace/OS_NS_sys_shm.inl:
+          Added #include of OS_NS_errno.h:
+
 Mon Nov  3 16:43:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_dlfcn.inl:
