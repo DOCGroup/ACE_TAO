@@ -7,6 +7,9 @@ Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
+	* ace/OS.cpp (socket_fini): Remove the ACE error message as the IO
+ 	  Stream objects are already gone by this point in the program.
+
 	* examples/Registry/Registry.mak: Replaced the old makefiles with
  	  this one. Also added _AFXDLL as a preprocessor define, forcing
  	  the correct inclusion of header files that give a consistent
