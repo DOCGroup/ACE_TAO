@@ -1,0 +1,23 @@
+project(Assembly_Manager): ciao_server, acexml {
+
+  libs += TAO_IORTable CIAO_XML_Helpers
+  libpaths += $(TAO_ROOT)/tao/IORTable ../XML_Helpers
+  depends += XML_Helpers
+
+  Source_Files {
+    Assembly_ServiceC.cpp
+    Assembly_ServiceS.cpp
+    Assembly_Impl.cpp
+    Assembly_Visitors.cpp
+    Deployment_Configuration.cpp
+    Assembly_Manager.cpp                // Main
+    Assembly_Service_Impl.cpp
+  }
+}
+
+project(Assembly_Deployer) : ciao_server {
+  Source_Files {
+    Assembly_ServiceC.cpp
+    Assembly_Deployer.cpp
+  }
+}
