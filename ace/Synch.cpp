@@ -121,34 +121,36 @@ ACE_Process_Mutex::dump (void) const
 {
 // ACE_TRACE ("ACE_Process_Mutex::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_->dump ();
+  this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM)
+LPCTSTR
+ACE_Process_Mutex::unique_name (void)
 {
-#if !defined (ACE_WIN32)
   // For all platforms other than Win32, we are going to create a
   // machine wide unquie name if one is not provided by the user.  On
   // Win32, unnamed synchronization objects are acceptable.
-  TCHAR ace_name[ACE_UNIQUE_NAME_LEN];
-  if (name == 0)
-    {
-      ACE::unique_name (this, ace_name, ACE_UNIQUE_NAME_LEN);
-      name = ace_name;
-    }
-#endif
+  ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
+  return this->name_;
+}
+#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM */
+
+ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  ACE_NEW (this->lock_, ACE_Mutex (USYNC_PROCESS, name, arg));
+  : lock_ (USYNC_PROCESS, name, arg)
 #else
-  ACE_UNUSED_ARG (arg);
-  ACE_NEW (this->lock_, ACE_SV_Semaphore_Complex (name));
+  : lock_ (name?name:ACE_Process_Mutex::unique_name ())
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
+{
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM)
+  ACE_UNUSED_ARG (arg);
+#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM */
 }
 
 ACE_Process_Mutex::~ACE_Process_Mutex (void)
 {
-  delete this->lock_;
 }
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
