@@ -5,6 +5,10 @@ Sun Dec 27 14:33:33 1998  David L. Levine  <levine@cs.wustl.edu>
           complain about it.  Thanks to Barry Hoggard <hoggardb@panix.com>
           for reporting this.
 
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile: added
+          -ptr options for Sun CC, so that it uses the IDL_Cubit
+          template repository.
+
 Sun Dec 27 12:34:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp:
