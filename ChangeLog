@@ -1,3 +1,10 @@
+Mon May 17 17:35:24 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Timer_Queue_T.cpp (schedule): Don't narrow the scheduled timer ID
+	  from long to int; this smashes the ID on 64-bit systems where the
+	  timer ID is larger than 32 bits holds; for example, in ACE_Timer_Hash
+	  where it's a pointer.
+
 Mon May 17 22:38:48 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * ace/Time_Value.cpp (operator *):
@@ -10,7 +17,6 @@ Mon May 17 22:38:48 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
         * tests/Time_Value_Test.cpp:
           Added several tests for the result of multiplication by
           double.
-
 
 Mon May 17 16:48:41 2004  Steve Huston  <shuston@riverace.com>
 
