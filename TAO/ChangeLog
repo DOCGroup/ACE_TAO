@@ -1,3 +1,20 @@
+Thu Apr 29 14:25:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Sequence.cpp (check_bounds):
+
+	  Removed ACE_OS::abort() call that was never reached.  Fixes an
+	  "unreachable code" warning exhibited by Compaq C++.
+
+	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp (list):
+
+	  Commented out code that is never reached due to an exception
+	  being thrown.  Fixes an "unreachable code" warning.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (init):
+	* performance-tests/Anyop/anyop.cpp (main):
+
+	  Fixed "set but never used" variable Compaq C++ warning.
+
 Thu Apr 29 13:32:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Simple.cpp:

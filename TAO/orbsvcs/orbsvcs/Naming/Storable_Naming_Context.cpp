@@ -1269,8 +1269,10 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   else
     {
       //  ***  This is a problem.  Is there an exception we can throw? ***
-      ACE_THROW (CORBA::NO_IMPLEMENT());
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      ACE_UNUSED_ARG (bind_iter);
 
+#if 0
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
                         ITER_SERVANT (this, hash_iter,
@@ -1304,6 +1306,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
       bi = bind_iter->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+#endif  /* 0 */
     }
 }
 
