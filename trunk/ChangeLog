@@ -1,3 +1,9 @@
+Mon Mar 29 00:20:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ace/Makefile.bor:
+
+	  Added Functor_String.h to the faily builds on Borland.
+
 Sun Mar 28 23:44:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Functor.h:
