@@ -1,4 +1,4 @@
-Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Fri Oct 22 04:34:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
@@ -6,7 +6,12 @@ Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
@@ -29,6 +34,12 @@ Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Removed all remaining interceptor related visitors.  They are no
 	  longer needed.  Sweet!
+
+	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+
+	  Enabled and fixed support for generation of "SArg_Traits"
+	  template specializations in generated skeleton sources
 
 	* TAO_IDL/be/be_visitor_interface/upcall_command_ss.cpp:
 	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
@@ -77,9 +88,16 @@ Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Generate include directives for "TAO::SArgument" related
 	  headers.
 
-	  Include "tao/PortableServer/Upcall_{Command,Wrapper}.h" headers
-	  to pull in the corresponding class declarations.  The generated
-	  skeleton creates instances of these classes.
+	  Generate include directives for
+	  "tao/PortableServer/Upcall_{Command,Wrapper}.h" headers to pull
+	  in the corresponding class declarations.  The generated skeleton
+	  creates instances of these classes.
+
+	  (gen_skel_arg_file_includes)
+
+	  Generate include directive for new "TypeCode_SArg_Traits.h"
+	  header.  It is needed for the server side TypeCode argument
+	  traits in skeletons.
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 
@@ -108,6 +126,13 @@ Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  New visitor that generates user exception TypeCode array for use
 	  by skeleton.  The generated array is lighter weight than the one
 	  generated for the stubs.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Declare generated TypeCode_ptr variables as "const".  Prevents
+	  users from inadvertently changing generated TypeCode constants.
+	  The new skeletons also expect const TypeCode_ptrs.
 
 	* tao/Argument.h:
 
@@ -235,6 +260,11 @@ Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  (ServerRequestInterceptor_Adapter):
 
 	  No longer any need to export this class from a DLL.
+
+	* tao/PortableServer/TypeCode_SArg_Traits.h:
+
+	  New header containing server side TypeCode argument traits
+	  template specialization.
 
 	* tao/PortableServer/Upcall_Command.h:
 
