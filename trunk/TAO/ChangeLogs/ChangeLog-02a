@@ -1,3 +1,11 @@
+Tue Oct  3 10:52:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_structure.cpp:
+
+	  Fixed a cut-and-paste mistake from a previous checking,
+	  where add_to_scope() was incorrectly pasted where
+	  add_to_local_types() should have been.
+
 Tue Oct  3 10:33:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.h:
