@@ -226,7 +226,7 @@ randomize (int array[], size_t size)
   size_t i;
 
   for (i = 0; i < size; i++)
-    array [i] = ACE_static_cast (int, i);
+    array [i] = static_cast <int> (i);
 
   // See with a fixed number so that we can produce "repeatable"
   // random numbers.
