@@ -1,3 +1,9 @@
+Sat Jan 31 20:06:57 2004  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * parser/parser/Parser.cpp (parse_PE_reference): Added ACE_TEXT
+          to satisfy WCHAR windows builds. Thanks to Johnny for reporting
+          these errors.
+
 Fri Jan 30 16:04:43 2004  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * parser/parser/Parser.cpp: Rewrote a simple string manipulation
