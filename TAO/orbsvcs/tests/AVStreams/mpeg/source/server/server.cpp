@@ -8,18 +8,18 @@
 // called by the acceptor to create a new svc_handler to 
 // handle the new connection.
 int
-Mpeg_Acceptor::make_svc_handler (Mpeg_Svc_Handler *&sh)
+AV_Acceptor::make_svc_handler (AV_Svc_Handler *&sh)
 {
   ACE_NEW_RETURN (sh,
-                  Mpeg_Svc_Handler (ACE_Reactor::instance (),
+                  AV_Svc_Handler (ACE_Reactor::instance (),
                                     this),
                   -1);
   return 0;
 }
 
 // initialize the svc_handler, and the acceptor. 
-Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *reactor,
-                                    Mpeg_Acceptor *acceptor)
+AV_Svc_Handler::AV_Svc_Handler (ACE_Reactor *reactor,
+                                    AV_Acceptor *acceptor)
   : ACE_Svc_Handler <ACE_SOCK_STREAM, 
                      ACE_NULL_SYNCH> (0, 0, reactor),
     acceptor_ (acceptor)
@@ -30,7 +30,7 @@ Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *reactor,
 // Client connected to our control port
 // called by the reactor (acceptor)
 int
-Mpeg_Svc_Handler::open (void *)
+AV_Svc_Handler::open (void *)
 {
 
   // Lets use threads at a later point. The current scheme works fine
@@ -55,7 +55,7 @@ Mpeg_Svc_Handler::open (void *)
       this->svc ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Child returning from Mpeg_Svc_handler::open\n"));
+                  "(%P|%t) Child returning from AV_Svc_handler::open\n"));
       return 0;
       
     default:
@@ -63,7 +63,7 @@ Mpeg_Svc_Handler::open (void *)
       // connections
 
       // (1) "this" will commit suicide, because this svc_handler is not required
-      // in the parent. otherwise, a new mpeg_svc_handler will be created
+      // in the parent. otherwise, a new AV_Svc_handler will be created
       // for each connection, and will never go away, i.e. a memory leak
       // will result. 
       // (2) also, this closes down the "connected socket" in the
@@ -73,7 +73,7 @@ Mpeg_Svc_Handler::open (void *)
       // has a connected socket.
       this->destroy ();
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Parent Returning from Mpeg_Svc_Handler::open\n"));
+                  "(%P|%t) Parent Returning from AV_Svc_Handler::open\n"));
       return 0;
     }
   return 0;
@@ -82,7 +82,7 @@ Mpeg_Svc_Handler::open (void *)
 
 // this will handle the connection
 int
-Mpeg_Svc_Handler::svc (void)
+AV_Svc_Handler::svc (void)
 {
   int result;
   result = this->handle_connection ();
@@ -90,14 +90,14 @@ Mpeg_Svc_Handler::svc (void)
   if (result != 0)
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Mpeg_Svc_Handler::svc exiting\n"));
+              "(%P|%t) AV_Svc_Handler::svc exiting\n"));
 
   return result;
 }
 
 // handles the connection
 int
-Mpeg_Svc_Handler::handle_connection (ACE_HANDLE)
+AV_Svc_Handler::handle_connection (ACE_HANDLE)
 {
   int junk;
   int result;
@@ -189,8 +189,8 @@ Mpeg_Svc_Handler::handle_connection (ACE_HANDLE)
                                       -INET_SOCKET_BUFFER_SIZE),
                         -1);
 
-        // enters the Video_Server run method
-        result = this->vs_->run ();
+        // registers the video server handlers.
+        result = this->vs_->register_handlers ();
 
         if (result != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -219,26 +219,22 @@ Mpeg_Svc_Handler::handle_connection (ACE_HANDLE)
 }
 
 int
-Mpeg_Svc_Handler::close (u_long)
+AV_Svc_Handler::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::close called \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)AV_Svc_Handler::close called \n"));
   return 0;
 }
 
 int
-Mpeg_Svc_Handler::handle_timeout (const ACE_Time_Value &,
+AV_Svc_Handler::handle_timeout (const ACE_Time_Value &,
                                   const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::handle_timeout called \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)AV_Svc_Handler::handle_timeout called \n"));
   return 0;
 }
 
 // AV_Server_Sig_Handler routines
-// Video_Sig_Handler methods
-// handles the timeout SIGALRM signal
-// %% this should *not* register itself,but it should
-// be registered by the Video_Server::run, alongwith
-// the remaining  handlers.
+
 AV_Server_Sig_Handler::AV_Server_Sig_Handler (void)
 {
 }
@@ -266,8 +262,7 @@ AV_Server_Sig_Handler::register_handler (void)
   // Create a sigset_t corresponding to the signals we want to catch.
   ACE_Sig_Set sig_set;
 
-  //  sig_set.sig_add (SIGINT);
-  // sig_set.sig_add (SIGQUIT);
+  // handles these signals.
   sig_set.sig_add (SIGCHLD);  
   sig_set.sig_add (SIGBUS);
   sig_set.sig_add (SIGINT);
@@ -283,8 +278,8 @@ AV_Server_Sig_Handler::register_handler (void)
 
   return 0;
 }
-// Called by the ACE_Reactor to extract the fd.
 
+// Called by the ACE_Reactor to extract the fd.
 ACE_HANDLE
 AV_Server_Sig_Handler::get_handle (void) const
 {
@@ -323,13 +318,18 @@ AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   switch (signum)
     {
     case SIGCHLD:
-      // Handle the timeout
-      AV_Server::clear_child (SIGCHLD);
+      // Handle the death of child signal.
+      this->clear_child (SIGCHLD);
       break;
     case SIGBUS:
+      // Handle the Bus error signal
     case SIGINT:
+      // Handle the interrupt signal
     case SIGTERM:
-      AV_Server::int_handler (signum);
+      // Handle the process termination signal.
+      this->int_handler (signum);
+      break;
+    default:
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) %S: not handled, returning to program\n", 
                   signum));
@@ -338,47 +338,9 @@ AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-
-// AV_Server routines
-
-// Default Constructor
-AV_Server::AV_Server ()
-{
-  this->sh_ = new AV_Server_Sig_Handler ;
-}
-
-//  Cluttering the code with various signal handlers here.
-
-//  ctrl-c handler,Bus error handler,interrupt sig handler
-void
-AV_Server::int_handler (int sig)
-{
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) killed by signal %d",
-              sig));
-  exit (0);
-}
-
-void
-AV_Server::on_exit_routine (void)
-{
-  // %% what does the following do
-  if (Mpeg_Global::parentpid != ACE_OS::getpid ()) 
-    {
-      ACE_DEBUG ((LM_DEBUG, 
-                  "(%P|%t) Process is exiting\n"));
-      return;
-    }
-  
-  // %% what does the following do
-  if (Mpeg_Global::live_audio > 1) ExitLiveAudio ();
-  if (Mpeg_Global::live_video > 1) ExitLiveVideo ();
-  //  ComCloseServer();
-}
-
 // SIGCHLD handler
 void
-AV_Server::clear_child (int sig)
+AV_Server_Sig_Handler::clear_child (int sig)
 {
   int pid;
   int status;
@@ -426,6 +388,43 @@ AV_Server::clear_child (int sig)
   }
 }
 
+//  ctrl-c, Bus error, interrupt sig handler
+void
+AV_Server_Sig_Handler::int_handler (int sig)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) killed by signal %d",
+              sig));
+  exit (0);
+}
+
+// AV_Server routines
+
+// Default Constructor
+AV_Server::AV_Server ()
+{
+  this->signal_handler_ = new AV_Server_Sig_Handler ;
+}
+
+// %% move to the destructor or sig handler
+void
+AV_Server::on_exit_routine (void)
+{
+  // %% what does the following do
+  if (Mpeg_Global::parentpid != ACE_OS::getpid ()) 
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%P|%t) Process is exiting\n"));
+      return;
+    }
+  
+  // %% what does the following do
+  if (Mpeg_Global::live_audio > 1) ExitLiveAudio ();
+  if (Mpeg_Global::live_video > 1) ExitLiveVideo ();
+  //  ComCloseServer();
+}
+
+
 // Parses the command line arguments
 int
 AV_Server::parse_args (int argc,
@@ -468,19 +467,6 @@ AV_Server::parse_args (int argc,
   return 0;
 }
 
-// sets the handlers for the various signals
-int
-AV_Server::set_signals ()
-{
-  setsignal (SIGCHLD, clear_child);
-  setsignal (SIGPIPE, SIG_IGN);    
-  setsignal (SIGBUS, int_handler); 
-  setsignal (SIGINT, int_handler); 
-  setsignal (SIGTERM, int_handler);
-  //  setsignal(SIGALRM, SIG_IGN);
-  return 0;
-}
-
         
 // Initializes the mpeg server
 int
@@ -493,10 +479,8 @@ AV_Server::init (int argc,
   if (result < 0)
     return result;
 
-  // This code has become obsolete with the new AV_Server_Sig_Handler class..
-  //  this->set_signals ();
   // Register the various signal handlers with the reactor.
-  result = this->sh_->register_handler ();
+  result = this->signal_handler_->register_handler ();
 
   if (result < 0)
     return result;
@@ -504,7 +488,8 @@ AV_Server::init (int argc,
   Mpeg_Global::parentpid = ACE_OS::getpid ();
   
   ::atexit (on_exit_routine);
-  
+
+  // %%
   if (Mpeg_Global::live_audio) 
     {
       if (InitLiveAudio (argc, argv) == -1)
@@ -564,8 +549,8 @@ AV_Server::run ()
 
 AV_Server::~AV_Server (void)
 {
-  if (this->sh_ != 0)
-    delete this->sh_;
+  if (this->signal_handler_ != 0)
+    delete this->signal_handler_;
 }
 
 int

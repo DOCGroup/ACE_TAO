@@ -36,6 +36,14 @@ class Video_Control_Handler;
 
 class Video_Control_State
 {
+  // =TITLE
+  //   Defines an abstract class that is used to implement the state
+  //   pattern for the video control.
+  //
+  // =DESCRIPTION
+  //   The various states of the video control are defined by the
+  //   Video_States enum. They can be implemented by subclassing from
+  //   this class and overriding the handle_input method.
 public:
   Video_Control_State ();
   // constructor
@@ -72,45 +80,64 @@ protected:
 class Video_Control_Waiting_State
   : public virtual Video_Control_State
 {
+  // =TITLE
+  //   Defines a class that implements the waiting state of the video
+  // control state pattern.
+
 public:
   Video_Control_Waiting_State (void);
   // Default constructor, sets the state to WAITING
 
   virtual int handle_input (ACE_HANDLE h = 0);
-  // Called by the Video_Control_handler when in the waiting state 
+  // Called by the Video_Control_handler when control events occur in
+  // the waiting state  
 };
 
 class Video_Control_Play_State
   : public virtual Video_Control_State
 {
+  // =TITLE
+  //   Defines a class that implements the playing state of the video
+  // control state pattern.
 public:
   Video_Control_Play_State (void);
   // Default constructor, sets the state to VIDEO_PLAY
 
   virtual int handle_input (ACE_HANDLE h = 0);
+  // Called by the Video_Control_handler when control events occur in
+  // the playing state  
 
 };
 
 class Video_Control_Fast_Forward_State
   : public virtual Video_Control_State
 {
+  // =TITLE
+  //   Defines a class that implements the fast_forward state of the video
+  // control state pattern.
 public:
   Video_Control_Fast_Forward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_FORWARD
 
   virtual int handle_input (ACE_HANDLE h = 0);
+  // Called by the Video_Control_handler when control events occur in
+  // the fast_forward state  
 
 };
 
 class Video_Control_Fast_Backward_State
   : public virtual Video_Control_State
 {
+  // =TITLE
+  //   Defines a class that implements the fast_backward state of the video
+  // control state pattern.
 public:
   Video_Control_Fast_Backward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_BACKWARD
 
   virtual int handle_input (ACE_HANDLE h = 0);
-
+  // Called by the Video_Control_handler when control events occur in
+  // the fast_backward state  
 };
 
 typedef ACE_TSS_Singleton <Video_Control_Waiting_State,       ACE_SYNCH_MUTEX> VIDEO_CONTROL_WAITING_STATE;     

@@ -1,5 +1,7 @@
 /* -*- C++ -*- */
 
+
+
 /* $Id$  */
 
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
@@ -41,30 +43,20 @@
 #include "proto.h"
 #include "Video_Control_State.h"
 
-// Function Prototypes
-// %% put them in some class maybe ?
-
-int FBread (char *buf, int size);
-int INITvideo (void);
-int PLAYliveVideo(PLAYpara * para);
-void ComputeFirstSendPattern(float limit);
-int FrameToGroup (int * frame);
-int SendReferences(int group, int frame);
-int send_to_network(int timeToUse);
-void StartPlayLiveVideo (void);
-void GetFeedBack (void);
-int SendPicture (int *frame);
-int play_send (int debug=0);
-int fast_play_send (void);
-
 class Video_Control_Handler 
   : public virtual ACE_Event_Handler
 {
-
+  // =TITLE
+  //   Defines the event handler class for the Video Control.
+  //
+  // =DESCRIPTION
+  //   This class makes use of a TCP socket.It contains a pointer to
+  //   the current state which is implemented using the state pattern.
 public:
 
   Video_Control_Handler (int video_control_fd);
-  // Construct this handler with a data fd
+  // Construct this handler with a control (TCP) fd
+  // %% use sock stream instead of fd
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when input events occur (e.g., connection or data).
@@ -88,6 +80,14 @@ private:
 
 class Video_Control_Handler_Instance
 {
+  // =TITLE
+  //   Defines a Video_Control_Handler_Instance class which is to be
+  //   used as a singleton to give access to a Video_Control_Handler
+  //   instance to the state pattern classes.
+  //
+  // =DESCRIPTION
+  //   The Video_Control_Handler has to be set using the
+  //   set_video_control_handler method.
 public:
   Video_Control_Handler_Instance (void);
   
@@ -98,11 +98,23 @@ private:
   Video_Control_Handler *video_control_handler_;
 };
 
-typedef ACE_TSS_Singleton <Video_Control_Handler_Instance, ACE_SYNCH_MUTEX> VIDEO_CONTROL_HANDLER_INSTANCE; 
+typedef ACE_TSS_Singleton <Video_Control_Handler_Instance,
+  ACE_SYNCH_MUTEX> VIDEO_CONTROL_HANDLER_INSTANCE; 
+// Video_Control_Handler instance singleton.
 
 class Video_Sig_Handler 
   : public virtual ACE_Event_Handler
 {
+  // =TITLE
+  //   Defines a video signal handler class which registers itself with the
+  //   default ACE_Reactor::instance () . Handles the
+  //   SIGALRM signal.
+  //
+  // =DESCRIPTION
+  //   This class contains a pointer to a Video_Control_Handler
+  //   instance and decides the signal action depending on its state.
+  //   An object of this class is used to periodically send the video
+  //   frames to the client using the Video_Timer_Global class.
 public:
   Video_Sig_Handler (Video_Control_Handler *vch);
 
@@ -133,7 +145,14 @@ private:
 class Video_Data_Handler 
   : public virtual ACE_Event_Handler
 {
-
+  // =TITLE
+  //   Defines a event handler for video data using a datagram i.e UDP
+  // socket.
+  //
+  // =DESCRIPTION
+  //   This takes a pointer to a Video_Control_Handler instance and
+  //   reacts differently to the events based on the
+  //   video_control_handler's state.
 public:
   Video_Data_Handler (int video_data_fd,
                       Video_Control_Handler *vch);
@@ -156,15 +175,19 @@ private:
 
 };
 
-
-
-// %% this class needs a dtor which deletes the
-// 3 handlers - data, control, and sig
 class Video_Server
 {
+  // =TITLE
+  //   Defines a class that abstracts the functionality of a
+  // video_server.
+  //
+  // =DESCRIPTION
+  //   This registers 3 event handlers with the ACE_Reactor::instance
+  //   () ,namely a control,data and signal handlers.
 public:
   Video_Server (void);
   // Default constructor
+
   Video_Server (int control_fd,
                 int data_fd,
                 int rttag,
@@ -180,30 +203,16 @@ public:
             int max_pkt_size);
   // initialize the Video Server.
 
-  int run (void);
+  int register_handlers (void);
   // register the handlers with the reactor
   // and set the control_handler to the WAITING state
 
-  static int SendPacket (int shtag,int gop,int frame,int timeToUse);
-  static int CmdRead(char *buf, int psize);
-  static void CmdWrite(char *buf, int size);
   static void on_exit_routine(void);
-  static PLAYpara para;
-
-  static  int position (void);
-  static  int step_video (void);
-  static  int fast_forward (void);
-  static  int fast_backward (void);
-  static  int init_play (void);
-  //static   int close (void);
-  static  int stat_stream (void);
-  static  int stat_sent (void);
-  static  int init_fast_play (void);
 
 private:
 
   ACE_Reactor* reactor_;
-  // Reactor ,points to ACE_Reactor::instance ()
+  // alias Reactor ,points to ACE_Reactor::instance ()
 
   Video_Data_Handler* data_handler_;
   // Data Socket Event Handler
