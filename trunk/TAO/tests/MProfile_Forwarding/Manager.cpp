@@ -1,7 +1,7 @@
 //$Id$
 #include "ace/Get_Opt.h"
 #include "Manager.h"
-#include "tao/IORManipulation/IORC.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 
 const char *first_ior = 0;
 const char *second_ior = 0;
