@@ -120,7 +120,7 @@ public:
   // called by the <ACE_Task_Exit> class destructor.
 
   // Routine that runs the service routine as a daemon thread.
-  void *svc_run (void *);
+  static void *svc_run (void *);
 
   // = Internal data (should be private...).
 // private:
