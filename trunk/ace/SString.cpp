@@ -217,10 +217,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_CString)
 char ACE_CString::NULL_CString_ = '\0';
 const int ACE_CString::npos = -1;
 const int ACE_SString::npos = -1;
-
-#if defined (ACE_HAS_WCHAR)
 const int ACE_WString::npos = -1;
-#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ostream &
@@ -231,7 +228,6 @@ operator<< (ostream &os, const ACE_CString &cs)
   return os;
 }
 
-#if defined (ACE_HAS_WCHAR)
 ostream &
 operator<< (ostream &os, const ACE_WString &ws)
 {
@@ -242,7 +238,6 @@ operator<< (ostream &os, const ACE_WString &ws)
     }
   return os;
 }
-#endif /* ACE_HAS_WCHAR */
 
 ostream &
 operator<< (ostream &os, const ACE_SString &ss)
@@ -256,8 +251,7 @@ operator<< (ostream &os, const ACE_SString &ss)
 // Constructor that copies <s> into dynamically allocated memory.
 // Probable loss of data. Please use with care.
 
-#if defined (ACE_HAS_WCHAR)
-ACE_CString::ACE_CString (const wchar_t *s,
+ACE_CString::ACE_CString (const ACE_WSTRING_TYPE *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
@@ -267,7 +261,7 @@ ACE_CString::ACE_CString (const wchar_t *s,
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
-  if (s == 0 || s[0] == (wchar_t) '\0')
+  if (s == 0 || s[0] == (ACE_WSTRING_TYPE) '\0')
     {
       this->release_ = 0;
       this->len_ = 0;
@@ -283,7 +277,7 @@ ACE_CString::ACE_CString (const wchar_t *s,
       this->len_ = len;
       this->buf_len_ = len + 1;
 
-      // Copy the wchar_t * string byte-by-byte into the char *
+      // Copy the ACE_WSTRING_TYPE * string byte-by-byte into the char *
       // string.
       for (size_t i = 0; i < this->len_; i++)
         this->rep_[i] = char (s[i]);
@@ -291,7 +285,6 @@ ACE_CString::ACE_CString (const wchar_t *s,
       this->rep_[this->len_] = '\0';
     }
 }
-#endif /* ACE_HAS_WCHAR */
 
 // this method might benefit from a little restructuring.
 void
@@ -605,7 +598,6 @@ ACE_SString::substring (size_t offset,
   return ACE_SString (&rep_[offset], count, this->allocator_);
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_ALLOC_HOOK_DEFINE(ACE_WString)
 
 void
@@ -627,18 +619,27 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 0;
-  this->rep_ = (wchar_t *) this->allocator_->malloc
-    ((this->len_ + 1) * sizeof (wchar_t));
+  this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+    ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
   this->rep_[this->len_] = 0;
 }
 
 /* static */
 size_t
-ACE_WString::strlen (const wchar_t *s)
+ACE_WString::strlen (const ACE_WSTRING_TYPE *s)
 {
   ACE_TRACE ("ACE_WString::strlen");
 
+#if defined (ACE_HAS_WCHAR)
   return ACE_OS::strlen (s);
+#else /* ACE_HAS_WCHAR */
+  size_t len = 0;
+
+  while (*s++ != 0)
+    ++len;
+
+  return len;
+#endif /* ACE_HAS_WCHAR */
 }
 
 // Get the underlying pointer as an ASCII char.
@@ -681,17 +682,17 @@ ACE_WString::ACE_WString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = (wchar_t *)  this->allocator_->malloc
-        ((this->len_ + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *)  this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
       this->rep_[this->len_] = 0;
     }
   else
     {
       this->len_ = ACE_OS::strlen (s);
-      this->rep_ = (wchar_t *) this->allocator_->malloc
-        ((this->len_ + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
 
-      // Copy the char * string byte-by-byte into the wchar_t *
+      // Copy the char * string byte-by-byte into the ACE_WSTRING_TYPE *
       // string.
       for (size_t i = 0; i < this->len_; i++)
         this->rep_[i] = s[i];
@@ -703,7 +704,7 @@ ACE_WString::ACE_WString (const char *s,
 
 // Constructor that actually copies memory.
 
-ACE_WString::ACE_WString (const wchar_t *s,
+ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
@@ -715,26 +716,26 @@ ACE_WString::ACE_WString (const wchar_t *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = (wchar_t *)  this->allocator_->malloc
-        ((this->len_ + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *)  this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
       this->rep_[this->len_] = 0;
     }
   else
     {
       this->len_ = ACE_WString::strlen (s);
-      this->rep_ = (wchar_t *) this->allocator_->malloc
-        ((this->len_ + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
 
       ACE_OS::memcpy (this->rep_,
                       s,
-                      this->len_ * sizeof (wchar_t));
+                      this->len_ * sizeof (ACE_WSTRING_TYPE));
 
       // null terminate
       this->rep_[this->len_] = 0;
     }
 }
 
-ACE_WString::ACE_WString (wchar_t c,
+ACE_WString::ACE_WString (ACE_WSTRING_TYPE c,
                           ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
@@ -744,15 +745,15 @@ ACE_WString::ACE_WString (wchar_t c,
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 1;
-  this->rep_ = (wchar_t *) this->allocator_->malloc
-    ((this->len_ + 1) * sizeof (wchar_t));
+  this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+    ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
   this->rep_[0] = c;
   this->rep_[this->len_] = 0;
 }
 
 // Constructor that actually copies memory.
 
-ACE_WString::ACE_WString (const wchar_t *s,
+ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
                           size_t len,
                           ACE_Allocator *alloc)
   : allocator_ (alloc)
@@ -765,19 +766,19 @@ ACE_WString::ACE_WString (const wchar_t *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = (wchar_t *) this->allocator_->malloc
-        ((this->len_ + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
       this->rep_[this->len_] = 0;
     }
   else
     {
       this->len_ = len;
-      this->rep_ = (wchar_t *) this->allocator_->malloc
-        ((this->len_ + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
 
       ACE_OS::memcpy (this->rep_,
                       s,
-                      len * sizeof (wchar_t));
+                      len * sizeof (ACE_WSTRING_TYPE));
 
       // null terminate
       this->rep_[this->len_] = 0;
@@ -796,12 +797,12 @@ ACE_WString::ACE_WString (size_t len,
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = len;
-  this->rep_ = (wchar_t *) this->allocator_->malloc
-    ((this->len_ + 1) * sizeof (wchar_t));
+  this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+    ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
 
   ACE_OS::memset (this->rep_,
                   0,
-                  len * sizeof (wchar_t));
+                  len * sizeof (ACE_WSTRING_TYPE));
   // NUL terminate.
   this->rep_[this->len_] = 0;
 }
@@ -817,11 +818,11 @@ ACE_WString::ACE_WString (const ACE_WString &s)
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  this->rep_ = (wchar_t *) this->allocator_->malloc
-    ((s.len_ + 1) * sizeof (wchar_t));
+  this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+    ((s.len_ + 1) * sizeof (ACE_WSTRING_TYPE));
   ACE_OS::memcpy ((void *) this->rep_,
                   (const void *) s.rep_,
-                  this->len_ * sizeof (wchar_t));
+                  this->len_ * sizeof (ACE_WSTRING_TYPE));
   this->rep_[this->len_] = 0;
 }
 
@@ -840,26 +841,26 @@ ACE_WString::operator= (const ACE_WString &s)
 }
 
 void
-ACE_WString::set (const wchar_t *s)
+ACE_WString::set (const ACE_WSTRING_TYPE *s)
 {
   this->set (s, ACE_WString::strlen (s));
 }
 
 void
-ACE_WString::set (const wchar_t *s, size_t len)
+ACE_WString::set (const ACE_WSTRING_TYPE *s, size_t len)
 {
   // Only reallocate if we don't have enough space...
   if (this->len_ < len)
     {
       this->allocator_->free (this->rep_);
-      this->rep_ = (wchar_t *) this->allocator_->malloc
-        ((len + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((len + 1) * sizeof (ACE_WSTRING_TYPE));
     }
 
   this->len_ = len;
   ACE_OS::memcpy (this->rep_,
                   s,
-                  len * sizeof (wchar_t));
+                  len * sizeof (ACE_WSTRING_TYPE));
   // NUL terminate.
   this->rep_[len] = 0;
 }
@@ -898,14 +899,14 @@ ACE_WString::resize (size_t len)
   if (this->len_ < len)
     {
       this->allocator_->free (this->rep_);
-      this->rep_ = (wchar_t *) this->allocator_->malloc
-        ((len + 1) * sizeof (wchar_t));
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((len + 1) * sizeof (ACE_WSTRING_TYPE));
     }
 
   this->len_ = len;
   ACE_OS::memset (this->rep_,
                   0,
-                  this->len_ * sizeof (wchar_t));
+                  this->len_ * sizeof (ACE_WSTRING_TYPE));
   this->rep_[this->len_] = 0;
 }
 
@@ -915,15 +916,15 @@ ACE_WString &
 ACE_WString::operator+= (const ACE_WString &s)
 {
   ACE_TRACE ("ACE_WString::operator+=");
-  wchar_t *t = (wchar_t *) this->allocator_->malloc
-    ((this->len_ + s.len_ + 1) * sizeof (wchar_t));
+  ACE_WSTRING_TYPE *t = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+    ((this->len_ + s.len_ + 1) * sizeof (ACE_WSTRING_TYPE));
 
   ACE_OS::memcpy ((void *) t,
                   (const void *) this->rep_,
-                  this->len_ * sizeof (wchar_t));
+                  this->len_ * sizeof (ACE_WSTRING_TYPE));
   ACE_OS::memcpy ((void *) (t + this->len_),
                   (const void *) s.rep_,
-                  s.len_ * sizeof (wchar_t));
+                  s.len_ * sizeof (ACE_WSTRING_TYPE));
   this->len_ += s.len_;
 
   // NUL terminate.
@@ -942,9 +943,9 @@ ACE_WString::~ACE_WString (void)
 }
 
 /* static */
-const wchar_t *
-ACE_WString::strstr (const wchar_t *s1,
-                     const wchar_t *s2)
+const ACE_WSTRING_TYPE *
+ACE_WString::strstr (const ACE_WSTRING_TYPE *s1,
+                     const ACE_WSTRING_TYPE *s2)
 {
   ACE_TRACE ("ACE_WString::strstr");
 
@@ -962,7 +963,7 @@ ACE_WString::strstr (const wchar_t *s1,
 
   for (size_t i = 0; i <= len; i++)
     {
-      if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (wchar_t)) == 0)
+      if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (ACE_WSTRING_TYPE)) == 0)
         // Found a match!  Return the index.
         return s1 + i;
     }
@@ -970,4 +971,3 @@ ACE_WString::strstr (const wchar_t *s1,
   return 0;
 }
 
-#endif /* ACE_HAS_WCHAR */

@@ -3,8 +3,6 @@
 
 #include "ace/Name_Space.h"
 
-#if defined (ACE_HAS_WCHAR)
-
 ACE_RCSID(ace, Name_Space, "$Id$")
 
 ACE_Name_Binding::ACE_Name_Binding (void)
@@ -62,4 +60,3 @@ ACE_Name_Space::~ACE_Name_Space (void)
   ACE_TRACE ("ACE_Name_Space::~ACE_Name_Space");
 }
 
-#endif /* ACE_HAS_WCHAR */

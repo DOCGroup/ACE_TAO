@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WCHAR)
-
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
@@ -148,8 +146,6 @@ public:
   virtual void dump (void) const = 0;
   // Dump the state of the object
 };
-
-#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_NAME_SPACE_H */
