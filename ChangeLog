@@ -1,3 +1,9 @@
+Mon Apr 09 08:08:11 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.h
+          Declared private copy constructor and assignment operator
+          for class ACE_Event_Handler_Handle_Timeout_Upcall
+
 Sun Apr 08 18:55:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/DLL_Test.cpp:
