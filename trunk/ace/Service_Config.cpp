@@ -177,7 +177,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
             (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
-                             "enqueue_tail"),
+                             ACE_LIB_TEXT ("enqueue_tail")),
                             -1);
         break;
       case 'k':
@@ -215,7 +215,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
             (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
-                             "enqueue_tail"),
+                             ACE_LIB_TEXT ("enqueue_tail")),
                             -1);
         break;
       default:
@@ -644,7 +644,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
            (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%p\n"),
-                       "enqueue_tail"),
+                       ACE_LIB_TEXT ("enqueue_tail")),
                       -1);
 
   if (ignore_debug_flag == 0)

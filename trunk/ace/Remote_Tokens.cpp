@@ -368,7 +368,7 @@ void
 ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::token_acquired");
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) shadow token %s acquired\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) %s shadow token %s acquired\n"),
 	      this->client_id (),
 	      this->name ()));
   // ACE_Token_Proxy::token_acquired (vp);
