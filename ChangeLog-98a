@@ -1,3 +1,9 @@
+Thu Feb 19 17:59:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* apps/JAWS/clients/Caching/*: Reworked and cleaned up these files a
+	  bit.  Added a test_URL.cpp file.  Notice that these file will
+	  finally be moved to other directory.
+
 Thu Feb 19 15:52:50 1998  Stanley D Leeson <STANLEY.D.LEESON@cdev.com>
 
         * ace/Task.{h,cpp} (activate): added optional thread_names array
