@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #
@@ -12,6 +13,10 @@
 MAKEFILE        = Makefile.RTCosScheduling
 LIB_UNCHECKED   = libTAO_RTCosScheduling.a
 SHLIB_UNCHECKED = libTAO_RTCosScheduling.$(SOEXT)
+
+# go ahead and set these here, it's less typing than fixing the mess below.
+LIB = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -63,10 +68,6 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
-
-# go ahead and set these here, it's less typing than fixing the mess below.
-LIB = $(LIB_UNCHECKED)
-SHLIB = $(SHLIB_UNCHECKED)
 
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq ($(interceptors),1)

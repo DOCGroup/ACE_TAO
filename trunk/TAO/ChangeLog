@@ -1,3 +1,9 @@
+Wed Nov 12 17:09:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+          Moved the LIB and SHLIB assignments up before wrapper_macros.GNU
+          so that it can do it's magic and decide which gets built.
+
 Wed Nov 12 16:44:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>"
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (init):
