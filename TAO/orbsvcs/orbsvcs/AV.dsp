@@ -7,21 +7,21 @@
 CFG=AV - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "AV.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "AV.mak" CFG="AV - Win32 MFC Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "AV - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "AV - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "AV - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "AV - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -143,7 +143,7 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 acemfc.lib ACE_QoSmfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_CosTradingmfc.lib TAO_CosPropertymfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AVmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\QoS"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -196,7 +196,7 @@ SOURCE=.\AV\md5c.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\AV\media-timer.cpp"
+SOURCE=".\AV\media_timer.cpp"
 # End Source File
 # Begin Source File
 
@@ -328,7 +328,7 @@ SOURCE=.\AV\md5.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\AV\media-timer.h"
+SOURCE=".\AV\media_timer.h"
 # End Source File
 # Begin Source File
 
@@ -405,7 +405,7 @@ SOURCE=.\AVStreams.idl
 !IF  "$(CFG)" == "AV - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -444,7 +444,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\tao_idl.exe"	
+USERDEP__AVSTR="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -558,7 +558,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -568,7 +568,7 @@ SOURCE=.\Null_MediaCtrl.idl
 !IF  "$(CFG)" == "AV - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__NULL_="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
@@ -607,7 +607,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\tao_idl.exe"	
+USERDEP__NULL_="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
@@ -721,7 +721,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -731,7 +731,7 @@ SOURCE=.\sfp.idl
 !IF  "$(CFG)" == "AV - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__SFP_I="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\sfp.idl
 InputName=sfp
@@ -770,7 +770,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\tao_idl.exe"	
+USERDEP__SFP_I="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\sfp.idl
 InputName=sfp
@@ -884,7 +884,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -985,7 +985,7 @@ SOURCE=.\AVStreamsS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1010,7 +1010,7 @@ SOURCE=.\AV\Endpoint_Strategy_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1035,7 +1035,7 @@ SOURCE=.\AV\Flows_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1060,7 +1060,7 @@ SOURCE=.\Null_MediaCtrlS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

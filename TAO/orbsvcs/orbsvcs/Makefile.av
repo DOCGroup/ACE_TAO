@@ -54,7 +54,7 @@ CPP_SRCS = \
 	AV/Policy\
 	AV/Protocol_Factory\
 	AV/MCast\
-	AV/media-timer\
+        AV/media_timer\
 	AV/RTCP\
 	AV/RTCP_Channel\
 	AV/RTCP_Packet\
@@ -67,8 +67,8 @@ C_SRCS = \
 
 ifeq ($(rapi),1)
   CPP_SRCS += AV/Fill_ACE_QoS\
-	      AV/QoS_UDP	
-endif # rapi   
+	      AV/QoS_UDP
+endif # rapi
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
@@ -6318,7 +6318,7 @@ AVSVC_COMPONENTS:
  AV/FlowSpec_Entry.h \
  AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp
 
-.obj/media-timer.o .obj/media-timer.so .shobj/media-timer.o .shobj/media-timer.so: AV/media-timer.cpp AV/media-timer.h \
+.obj/media_timer.o .obj/media_timer.so .shobj/media_timer.o .shobj/media_timer.so: AV/media_timer.cpp AV/media_timer.h \
  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6713,7 +6713,7 @@ AVSVC_COMPONENTS:
  AV/RTP.h \
  AV/MCast.h \
  AV/MCast.i \
- AV/RTCP_Channel.h AV/RTP.h AV/RTCP_Packet.h AV/media-timer.h \
+ AV/RTCP_Channel.h AV/RTP.h AV/RTCP_Packet.h AV/media_timer.h \
  AV/global.h AV/md5.h
 
 .obj/RTCP_Channel.o .obj/RTCP_Channel.so .shobj/RTCP_Channel.o .shobj/RTCP_Channel.so: AV/RTCP_Channel.cpp $(ACE_ROOT)/ace/OS.h \
