@@ -1,21 +1,26 @@
+Thu Nov 12 07:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
+          removed code that shouldn't have been put in.
+
 Thu Nov 12 00:42:06 1998  Seth Widoff  <swidoff@sophocles.cimds.ri.cmu.edu>
 
-	* docs/releasenotes/trader.html:
-	Fixed a typo in the docs: CosTrading::Preferences should read
-	CosTrading::Lookup::Preferences. Thanks to Ivan Leong
-	<ivanl@pacific.net.sg> for detecting this.
+        * docs/releasenotes/trader.html:
+        Fixed a typo in the docs: CosTrading::Preferences should read
+        CosTrading::Lookup::Preferences. Thanks to Ivan Leong
+        <ivanl@pacific.net.sg> for detecting this.
 
 Wed Nov 11 22:11:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Consumer_Input_Handler.cpp (register_consumer): 
-	added check for carriage return while getting string input.
-	* examples/Callback_Quoter/Consumer.dsp
-	* examples/Callback_Quoter/Notifier.dsp
-	* examples/Callback_Quoter/Supplier.dsp
-	* examples/Callback_Quoter/Callback_Quoter.dsw
-	The Callback_Quoter example project workspace created for Win32
-	platform users and added to the repository.
-	
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp (register_consumer):
+        added check for carriage return while getting string input.
+        * examples/Callback_Quoter/Consumer.dsp
+        * examples/Callback_Quoter/Notifier.dsp
+        * examples/Callback_Quoter/Supplier.dsp
+        * examples/Callback_Quoter/Callback_Quoter.dsw
+        The Callback_Quoter example project workspace created for Win32
+        platform users and added to the repository.
+
 Wed Nov 11 17:44:10 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/NestedUpcall/MT_Client_Test/run_test.pl:
@@ -44,16 +49,16 @@ Wed Nov 11 17:44:10 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/tests/Property/run_test.pl:
         * orbsvcs/tests/Simple_Naming/run_test.pl:
 
-          General updates, including switching to the ACE class 
+          General updates, including switching to the ACE class
           and using .\ or ./ before executable names.
 
 Wed Nov 11 14:47:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
           orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h}
-          orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h: 
-	  Added reporting of specific RT_Info entry points with unresolved 
-	  local or remote dependencies in the generated schedule header file.
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h:
+          Added reporting of specific RT_Info entry points with unresolved
+          local or remote dependencies in the generated schedule header file.
 
 Wed Nov 11 14:47:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
