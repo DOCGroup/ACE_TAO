@@ -1,3 +1,8 @@
+Tue Jan  1 15:36:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Added support
+          for the buildbits=64 make option.
+
 Tue Jan  1 20:05:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Name_Request_Reply.{h,cpp}:
