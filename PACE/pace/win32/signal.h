@@ -32,9 +32,10 @@ extern "C" {
 
 #ifndef PACE_SIGSET_T
 #define PACE_SIGSET_T
+  enum { PACE_SIG_BITS = 4 };
   typedef struct /* sigset_t */ {
     /* signal set type */
-    unsigned int sigbits_[4];
+    unsigned int sigbits_[PACE_SIG_BITS];
   } pace_sigset_t;
 #endif /* PACE_SIGSET_T */
 
