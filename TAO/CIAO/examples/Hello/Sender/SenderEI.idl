@@ -1,0 +1,24 @@
+$Id$:
+/**
+ * @file SenderEI.idl
+ *
+ * @author Tao Lu <lu@dre.vanderbilt.edu>
+ */
+
+#ifndef SENDEREI_IDL
+#define SENDERET_IDL
+
+
+#include "SenderE.idl"
+
+module Hello
+{
+  local interface Sender_Exec :
+    CCM_Sender,
+    CCM_message,
+    Components::SessionComponent
+    {
+    };
+
+};
+#endif /*SENDEREI_IDL*/
