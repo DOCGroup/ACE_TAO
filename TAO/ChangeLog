@@ -1,4 +1,4 @@
-Fri Oct  4 18:07:35 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 18:07:35 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw: 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsp: 
@@ -16,14 +16,14 @@ Fri Oct  4 18:07:35 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	  Files added.
 
-Fri Oct  4 18:03:17 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 18:03:17 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsw: 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsp:
 
 	  Files added.
 
-Fri Oct  4 17:56:04 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 17:56:04 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log/Basic/Client.dsw: 
 	* orbsvcs/examples/Log/Basic/Client.dsp:
@@ -42,7 +42,7 @@ Fri Oct  4 17:56:04 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	  Files added.	
 
-Fri Oct  4 17:52:17 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 17:52:17 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/RTEventLog.dsp: 
 	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
@@ -55,7 +55,7 @@ Fri Oct  4 17:52:17 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 	  Amended to include LogNotification and
 	  DsLogNotification.idl.
 
-Fri Oct  4 17:50:06 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 17:50:06 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* TAOACE.dsw: 
 
@@ -75,15 +75,15 @@ Fri Oct  4 17:50:06 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	  New project added - Basic_Log_Test.dsp
 
-Fri Oct  4 14:01:05 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 14:01:05 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp: 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h: 
 	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp: 
 
-	  Native exceptions fixed.
+	  Emulated exceptions fixed.
 
-Fri Oct  4 13:56:19 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 13:56:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp: 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
@@ -98,9 +98,9 @@ Fri Oct  4 13:56:19 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp: 
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
 
-	  Native exceptions fixed.
+	  Emulated exceptions fixed.
 
-Fri Oct  4 13:51:22 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 13:51:22 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log/Basic/main.cpp: 
 	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
@@ -121,9 +121,9 @@ Fri Oct  4 13:51:22 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
 	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
 
-	  Native exceptions fixed.	
+	  Emulated exceptions fixed.	
 
-Fri Oct  4 13:41:44 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Fri Oct  4 13:41:44 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp: 
 	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
@@ -167,7 +167,7 @@ Fri Oct  4 13:41:44 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
 	* orbsvcs/orbsvcs/Log/PersistStore.h:
 
-	  Native exception fixes.
+	  Emulated exception fixes.
 
 Thu Oct  3 18:26:48 2002  Ossama Othman  <ossama@uci.edu>
 
