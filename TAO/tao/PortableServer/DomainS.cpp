@@ -551,31 +551,34 @@ POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_p
 {
    // Generate the arg list on demand
   CORBA::ULong length = 0;
-        length = this->parameter_list_.length ();
-      this->parameter_list_.length (length + 1);
-      this->parameter_list_[length].argument <<=  this->policy_type_;
+  length = this->parameter_list_.length ();
+  this->parameter_list_.length (length + 1);
+  this->parameter_list_[length].argument <<=  this->policy_type_;
 
-    this->parameter_list_[length].mode = Dynamic::PARAM_IN;
+  this->parameter_list_[length].mode = Dynamic::PARAM_IN;
 
-    return &this->parameter_list_;
+  return &this->parameter_list_;
 }
 
-  Dynamic::ExceptionList *
-  POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy::exceptions (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
- // Generate the exception list on demand
+Dynamic::ExceptionList *
+POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy::exceptions (
+    CORBA::Environment &
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand
   return 0;
 }
 
 
-  CORBA::Any *
-POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy::result (CORBA::Environment &)
+CORBA::Any *
+POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy::result (
+    CORBA::Environment &
+  )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
- // Generate the result on demand
-
-return &this->result_val_;
+  // Generate the result on demand.
+  return &this->result_val_;
 }
 
 void
@@ -773,16 +776,20 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
     ACE_THROW (CORBA::MARSHAL());
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV)
+    );
   ACE_CHECK;
-  // @@ CORBA::Object_var _tao_objref;
-    POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager  ri ("make_domain_manager",
-_tao_server_request.service_info ()    ,  object_type.in ()    ,  constr_policy    ,
-    ACE_TRY_ENV);
-if (_tao_vfr.valid ())
+  POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager ri (
+      "make_domain_manager",
+      _tao_server_request.service_info (),  
+      object_type.in (),
+      constr_policy,
+      ACE_TRY_ENV
+    );
+
+  if (_tao_vfr.valid ())
     {
-      // @@ _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
       ACE_CHECK;
     }
 
@@ -790,41 +797,40 @@ if (_tao_vfr.valid ())
     {
       ri.request_id (_tao_server_request.request_id ());
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
-    TAO_INTERCEPTOR_CHECK;
+      TAO_INTERCEPTOR_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-    _tao_impl->make_domain_manager (
-      object_type.in (),
-      constr_policy,
-      ACE_TRY_ENV
-    );
+      _tao_impl->make_domain_manager (
+          object_type.in (),
+          constr_policy,
+          ACE_TRY_ENV
+        );
 
-    TAO_INTERCEPTOR_CHECK;
+      TAO_INTERCEPTOR_CHECK;
 
+#if (TAO_HAS_INTERCEPTORS == 1)
 
-    #if (TAO_HAS_INTERCEPTORS == 1)
-
-   _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
-  TAO_INTERCEPTOR_CHECK;
-}
-ACE_CATCHANY
-  {
-    ri.exception (&ACE_ANY_EXCEPTION);
-    _tao_vfr.send_exception (&ri,
-        ACE_TRY_ENV
-      );
-    ACE_RE_THROW;
-  }
-ACE_ENDTRY;
-ACE_CHECK;
+      _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
+      TAO_INTERCEPTOR_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (&ri,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-_tao_server_request.init_reply (ACE_TRY_ENV);
-ACE_CHECK;
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
 #else
- ACE_UNUSED_ARG (_tao_server_request);
- ACE_UNUSED_ARG (_tao_object_reference);
- ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_UNUSED_ARG (_tao_server_request);
+  ACE_UNUSED_ARG (_tao_object_reference);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 #endif /* TAO_HAS_INTERFACE_REPOSITORY */
 }
 
@@ -1030,7 +1036,7 @@ void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager 
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
     const char *_tao_operation,
     IOP::ServiceContextList &_tao_service_context_list,
-    IR_InterfaceDef_ptr object_type,
+    IR_InterfaceDef *object_type,
     CORBA::Boolean &constr_policy,
     CORBA::Environment &
   )
