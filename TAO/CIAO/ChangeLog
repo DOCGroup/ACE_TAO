@@ -9,6 +9,8 @@ Fri Mar 18 18:34:20 2005  Boris Kolpackov  <boris@kolpackov.net>
 	* CCF/CCF/IDL2/SemanticAction/ValueTypeMember.hpp:
 	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
 	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeMember.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeMember.hpp:
 	* CCF/CCF/IDL2/SemanticGraph/ValueTypeMember.cpp:
 	* CCF/CCF/IDL2/SemanticGraph/ValueTypeMember.hpp:
 	* CCF/CCF/IDL2/Traversal/ValueTypeMember.hpp:
