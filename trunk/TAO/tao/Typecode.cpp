@@ -88,7 +88,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     kind_ (kind),
     parent_ (0),
     refcount_ (1),
-    orb_owns_ (CORBA::B_TRUE),
+    orb_owns_ (1),
     private_state_ (new TC_Private_State (kind)),
     non_aligned_buffer_ (0)
 {
@@ -390,32 +390,32 @@ CORBA_TypeCode::skip_typecode (TAO_InputCDR &stream)
         case CORBA::tk_array:
         case CORBA::tk_alias:
         case CORBA::tk_except:
-          return (stream.read_ulong (temp) != CORBA::B_FALSE
-                  && stream.skip_bytes (temp) != CORBA::B_FALSE);
+          return (stream.read_ulong (temp) != 0
+                  && stream.skip_bytes (temp) != 0);
         }
 
-      return CORBA::B_TRUE;
+      return 1;
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 // constructor for the private state
 TC_Private_State::TC_Private_State (CORBA::TCKind kind)
   : tc_kind_ (kind),
-    tc_id_known_ (CORBA::B_FALSE),
-    tc_name_known_ (CORBA::B_FALSE),
-    tc_member_count_known_ (CORBA::B_FALSE),
-    tc_member_type_list_known_ (CORBA::B_FALSE),
-    tc_member_name_list_known_ (CORBA::B_FALSE),
-    tc_member_label_list_known_ (CORBA::B_FALSE),
-    tc_discriminator_type_known_ (CORBA::B_FALSE),
-    tc_default_index_used_known_ (CORBA::B_FALSE),
-    tc_length_known_ (CORBA::B_FALSE),
-    tc_content_type_known_ (CORBA::B_FALSE),
-    tc_size_known_ (CORBA::B_FALSE),
-    tc_alignment_known_ (CORBA::B_FALSE),
-    tc_discrim_pad_size_known_ (CORBA::B_FALSE),
+    tc_id_known_ (0),
+    tc_name_known_ (0),
+    tc_member_count_known_ (0),
+    tc_member_type_list_known_ (0),
+    tc_member_name_list_known_ (0),
+    tc_member_label_list_known_ (0),
+    tc_discriminator_type_known_ (0),
+    tc_default_index_used_known_ (0),
+    tc_length_known_ (0),
+    tc_content_type_known_ (0),
+    tc_size_known_ (0),
+    tc_alignment_known_ (0),
+    tc_discrim_pad_size_known_ (0),
     tc_id_ (0),
     tc_name_ (0),
     tc_member_count_ (0),
@@ -620,7 +620,7 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
     case CORBA::tk_any:
       // all these are simple typecodes and the comparison is based solely on
       // the kind_ field
-      return CORBA::B_TRUE;
+      return 1;
     case CORBA::tk_objref:
       return this->private_equal_objref (tc, env);
     case CORBA::tk_struct:
@@ -644,11 +644,11 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
     case ~0u: // indirection
       {
         // indirection offset must be same
-        return CORBA::B_TRUE;
+        return 1;
       }
       ACE_NOTREACHED (break);
     default:
-      return CORBA::B_FALSE;
+      return 0;
     }
 }
 
@@ -1145,7 +1145,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &env) const
     case CORBA::tk_alias:
     case CORBA::tk_except:
       {
-        this->private_state_->tc_id_known_ = CORBA::B_TRUE;
+        this->private_state_->tc_id_known_ = 1;
         this->private_state_->tc_id_ = (CORBA::String) (buffer_
                                                  + 4    // skip byte order flag
                                                         // and padding
@@ -1188,7 +1188,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
         // skip the typecode ID
         if (stream.skip_string ())  // ID
           {
-            this->private_state_->tc_name_known_ = CORBA::B_TRUE;
+            this->private_state_->tc_name_known_ = 1;
 
             // "Read" the string without copying.
             stream.read_string (this->private_state_->tc_name_);
@@ -1242,7 +1242,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
             return 0;
           }
 
-        this->private_state_->tc_member_count_known_ = CORBA::B_TRUE;
+        this->private_state_->tc_member_count_known_ = 1;
         this->private_state_->tc_member_count_ = members;
         return this->private_state_->tc_member_count_;
       }
@@ -1267,7 +1267,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
             return 0;
           }
 
-        this->private_state_->tc_member_count_known_ = CORBA::B_TRUE;
+        this->private_state_->tc_member_count_known_ = 1;
         this->private_state_->tc_member_count_ = members;
         return this->private_state_->tc_member_count_;
       }
@@ -1348,7 +1348,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
                         return 0;
                       }
 
-                  this->private_state_->tc_member_type_list_known_ = CORBA::B_TRUE;
+                  this->private_state_->tc_member_type_list_known_ = 1;
 
                   if (index < mcount)
                     return this->private_state_->tc_member_type_list_[index];
@@ -1419,7 +1419,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
                                        (CORBA::COMPLETED_NO));
                         return 0;
                       }
-                  this->private_state_->tc_member_type_list_known_ = CORBA::B_TRUE;
+                  this->private_state_->tc_member_type_list_known_ = 1;
 
                   if (index < mcount)
                     return this->private_state_->tc_member_type_list_[index];
@@ -1500,7 +1500,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                         }
                     }
 
-                  this->private_state_->tc_member_name_list_known_ = CORBA::B_TRUE;
+                  this->private_state_->tc_member_name_list_known_ = 1;
 
                   if (index < mcount)
                     return this->private_state_->tc_member_name_list_[index];
@@ -1554,7 +1554,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                         return 0;
                       }
 
-                  this->private_state_->tc_member_name_list_known_ = CORBA::B_TRUE;
+                  this->private_state_->tc_member_name_list_known_ = 1;
 
                   if (index < mcount)
                     return this->private_state_->tc_member_name_list_[index];
@@ -1631,7 +1631,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                           return 0;
                         }
                     }
-                  this->private_state_->tc_member_name_list_known_ = CORBA::B_TRUE;
+                  this->private_state_->tc_member_name_list_known_ = 1;
 
                   if (index < mcount)
                     return this->private_state_->tc_member_name_list_[index];
@@ -1722,7 +1722,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
               else
                 {
                   this->private_state_->tc_member_label_list_[i] = new
-                    CORBA::Any (tc, buf, CORBA::B_TRUE);
+                    CORBA::Any (tc, buf, 1);
                 }
             }
         }
@@ -1732,7 +1732,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
           return 0;
         }
 
-      this->private_state_->tc_member_label_list_known_ = CORBA::B_TRUE;
+      this->private_state_->tc_member_label_list_known_ = 1;
 
       // If caller asked for the label for a nonexistent member, they get
       // an error report!
@@ -1770,7 +1770,7 @@ CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
     }
   else
     {
-      this->private_state_->tc_discriminator_type_known_ = CORBA::B_TRUE;
+      this->private_state_->tc_discriminator_type_known_ = 1;
       return this->private_state_->tc_discriminator_type_;
     }
 }
@@ -1793,7 +1793,7 @@ CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
     }
   else
     {
-      this->private_state_->tc_default_index_used_known_ = CORBA::B_TRUE;
+      this->private_state_->tc_default_index_used_known_ = 1;
       return this->private_state_->tc_default_index_used_;
     }
 }
@@ -1817,7 +1817,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
           }
         else
           {
-            this->private_state_->tc_length_known_ = CORBA::B_TRUE;
+            this->private_state_->tc_length_known_ = 1;
             return this->private_state_->tc_length_;
           }
       case CORBA::tk_string:
@@ -1825,7 +1825,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
         {
           if (stream.read_ulong (this->private_state_->tc_length_))
             {
-              this->private_state_->tc_length_known_ = CORBA::B_TRUE;
+              this->private_state_->tc_length_known_ = 1;
               return this->private_state_->tc_length_;
             }
           else
@@ -1863,7 +1863,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
           }
         else
           {
-            this->private_state_->tc_content_type_known_ = CORBA::B_TRUE;
+            this->private_state_->tc_content_type_known_ = 1;
             return this->private_state_->tc_content_type_;
           }
       case CORBA::tk_alias:
@@ -1879,7 +1879,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
             }
           else
             {
-              this->private_state_->tc_content_type_known_ = CORBA::B_TRUE;
+              this->private_state_->tc_content_type_known_ = 1;
               return this->private_state_->tc_content_type_;
             }
         }
@@ -1905,7 +1905,7 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
                                                          env);
   if (env. exception () == 0)
     {
-      this->private_state_->tc_discrim_pad_size_known_ = CORBA::B_TRUE;
+      this->private_state_->tc_discrim_pad_size_known_ = 1;
       this->private_state_->tc_discrim_pad_size_ = discrim_size;
       return discrim_size;
     }
@@ -2258,7 +2258,7 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
 
   if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
     {
-      private_state_->tc_size_known_ = CORBA::B_TRUE;
+      private_state_->tc_size_known_ = 1;
       private_state_->tc_size_ =
         TAO_IIOP_Interpreter::table_[kind_].size_;
       return private_state_->tc_size_;
@@ -2268,7 +2268,7 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
 
-  private_state_->tc_size_known_ = CORBA::B_TRUE;
+  private_state_->tc_size_known_ = 1;
   private_state_->tc_size_ =
     TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream, alignment, env);
   return private_state_->tc_size_;
@@ -2290,7 +2290,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
 
   if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
     {
-      private_state_->tc_alignment_known_ = CORBA::B_TRUE;
+      private_state_->tc_alignment_known_ = 1;
       private_state_->tc_alignment_ =
         TAO_IIOP_Interpreter::table_[kind_].alignment_;
       return private_state_->tc_alignment_;
@@ -2303,7 +2303,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
   (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream,
                                                     alignment,
                                                     env);
-  private_state_->tc_alignment_known_ = CORBA::B_TRUE;
+  private_state_->tc_alignment_known_ = 1;
   private_state_->tc_alignment_ = alignment;
   return alignment;
 }

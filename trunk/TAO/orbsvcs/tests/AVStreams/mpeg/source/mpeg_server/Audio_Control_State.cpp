@@ -27,20 +27,20 @@ CORBA::Boolean
 Audio_Control_State::play (const Audio_Control::PLAYPara & para,
                                CORBA::Long_out ats) 
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
   
 CORBA::Boolean 
 Audio_Control_State::speed (const Audio_Control::SPEEDPara & para) 
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA::Boolean
 Audio_Control_State::stop (CORBA::Long cmdsn) 
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Control_State::stop ()\n"));
-  return CORBA::B_TRUE; 
+  return 1; 
 }
 
 void
@@ -97,7 +97,7 @@ Audio_Control_Waiting_State::play (const Audio_Control::PLAYPara & para,
 
   this->audio_global_->state = Audio_Global::AUDIO_PLAY;
   this->audio_control_i_->change_state (AUDIO_CONTROL_PLAY_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void
@@ -130,7 +130,7 @@ Audio_Control_Play_State::speed (const Audio_Control::SPEEDPara & para)
 	  SFprintf(stderr, "AS got CmdSPEED: sps %d\n", sps);
 	  */
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Control_Play_State::speed ()\n"));
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean
@@ -142,7 +142,7 @@ Audio_Control_Play_State::stop (CORBA::Long cmdsn)
   }
   this->audio_global_->state = Audio_Global::AUDIO_WAITING;
   this->audio_control_i_->change_state (AUDIO_CONTROL_WAITING_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void

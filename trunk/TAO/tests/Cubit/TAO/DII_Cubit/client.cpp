@@ -286,7 +286,7 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       CORBA::Any string_arg (CORBA::_tc_string,
                              &dummy,
-                             CORBA::B_FALSE);
+                             0);
    
       // @@ Jeff, is it possible to use the operator<< for this in
       // order to simplify the code?
@@ -299,7 +299,7 @@ DII_Cubit_Client::init (int argc, char **argv)
       // Insert the result-holding variable into the request.
       mc_req->result ()->value ()->replace (CORBA::_tc_Object, 
                                             &this->obj_var_,
-                                            CORBA::B_FALSE, 
+                                            0, 
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -362,7 +362,7 @@ DII_Cubit_Client::init_naming_service (void)
 
       CORBA::Any name_arg (CosNaming::_tc_Name,
                            &cubit_factory_name,
-                           CORBA::B_FALSE);
+                           0);
   
       req->arguments ()->add_value (0,
 				    name_arg,
@@ -372,7 +372,7 @@ DII_Cubit_Client::init_naming_service (void)
 
       req->result ()->value ()->replace (CORBA::_tc_Object, 
                                          &this->factory_var_,
-                                         CORBA::B_FALSE, 
+                                         0, 
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -541,7 +541,7 @@ DII_Cubit_Client::cube_short_dii (void)
   // Make an Any out of the short and add it to the request arg list.
   CORBA::Any arg_holder (CORBA::_tc_short,
                          &arg_short, 
-			 CORBA::B_FALSE);
+			 0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -554,7 +554,7 @@ DII_Cubit_Client::cube_short_dii (void)
   // Initialize the result variable.
   req->result ()->value ()->replace (CORBA::_tc_short, 
                                      &ret_short, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -596,7 +596,7 @@ DII_Cubit_Client::cube_long_dii (void)
   // Make an Any out of the long and add it to the request arg list.
   CORBA::Any arg_holder (CORBA::_tc_long,
                          &arg_long,
-                         CORBA::B_FALSE);
+                         0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -609,7 +609,7 @@ DII_Cubit_Client::cube_long_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (CORBA::_tc_long, 
                                      &ret_long, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -651,7 +651,7 @@ DII_Cubit_Client::cube_octet_dii (void)
   // Make an Any out of the octet and add it to the request arg list.
   CORBA::Any arg_holder (CORBA::_tc_octet,
                          &arg_octet,
-                         CORBA::B_FALSE);
+                         0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -664,7 +664,7 @@ DII_Cubit_Client::cube_octet_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (CORBA::_tc_octet, 
                                      &ret_octet, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -713,7 +713,7 @@ DII_Cubit_Client::cube_union_dii (void)
   // Make an Any out of the union and add it to the request arg list.
   CORBA::Any arg_holder (Cubit::_tc_oneof,
                          &arg_union,
-                         CORBA::B_FALSE);
+                         0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -726,7 +726,7 @@ DII_Cubit_Client::cube_union_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_oneof, 
                                      &ret_union, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -776,7 +776,7 @@ DII_Cubit_Client::cube_struct_dii (void)
   // Make an Any out of the struct and add it to the request arg list.
   CORBA::Any arg_holder (Cubit::_tc_Many,
                          &arg_struct,
-                         CORBA::B_FALSE);
+                         0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -789,7 +789,7 @@ DII_Cubit_Client::cube_struct_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_Many, 
                                      &ret_struct, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -836,7 +836,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   // Make an Any out of the octet_seq and add it to the request arg list
   CORBA::Any arg_holder (Cubit::_tc_octet_seq,
                          &arg_octet_seq,
-                         CORBA::B_FALSE);
+                         0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -849,7 +849,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_octet_seq, 
                                      &ret_octet_seq, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -907,7 +907,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   // list.
   CORBA::Any arg_holder (Cubit::_tc_long_seq,
                          &arg_long_seq,
-                         CORBA::B_FALSE);
+                         0);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
@@ -920,7 +920,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_long_seq, 
                                      &ret_long_seq, 
-                                     CORBA::B_FALSE, 
+                                     0, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,

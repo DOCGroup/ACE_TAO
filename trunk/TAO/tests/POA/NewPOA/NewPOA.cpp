@@ -180,8 +180,8 @@ main (int argc, char **argv)
               fifth_poa_name.in ()));
   
   // This should destroy all its children
-  root_poa->destroy (CORBA::B_TRUE,
-                     CORBA::B_TRUE,
+  root_poa->destroy (1,
+                     1,
                      env);
   if (env.exception () != 0)
     {

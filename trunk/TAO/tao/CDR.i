@@ -384,7 +384,7 @@ TAO_InputCDR::read_boolean (CORBA::Boolean& x)
 {
   CORBA::Octet tmp;
   this->read_octet (tmp);
-  x =  tmp ? CORBA::B_TRUE : CORBA::B_FALSE;
+  x =  tmp ? 1 : 0;
   return this->good_bit_;
 }
 

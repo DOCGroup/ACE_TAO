@@ -28,7 +28,7 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
 
   TAO_Policy_Manager policies;
-  policies.exact_type_match (CORBA::B_FALSE);
+  policies.exact_type_match (0);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
   policies.return_card (16*NUM_OFFERS);
@@ -55,7 +55,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Directed Query.\n"));
 
   TAO_Policy_Manager policies;
-  policies.exact_type_match (CORBA::B_FALSE);
+  policies.exact_type_match (0);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
   policies.return_card (16*NUM_OFFERS);
@@ -125,7 +125,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
               trader_name[0] = CORBA::string_dup (link_name_seq[0]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
               policies.starting_trader (new CosTrading::TraderName
-                                        (2, 2, trader_name, CORBA::B_TRUE));
+                                        (2, 2, trader_name, 1));
 
               this->perform_queries_with_policies (policies, _env);
               TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -173,9 +173,9 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
         (char*) TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME]
       };
 
-      CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, CORBA::B_FALSE);
+      CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, 0);
       //desired_props.prop_names (prop_name_seq);
-      desired_props.all_ (CORBA::B_TRUE);
+      desired_props.all_ (1);
 
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {
@@ -267,7 +267,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
       if (! CORBA::is_nil (offer_iterator))
         {
           length = offer_seq.length ();
-          CORBA::Boolean any_left = CORBA::B_FALSE;
+          CORBA::Boolean any_left = 0;
 
           do
             {

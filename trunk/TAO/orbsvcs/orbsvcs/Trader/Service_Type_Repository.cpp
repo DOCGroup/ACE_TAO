@@ -220,7 +220,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes&
     }
   
   return new CosTradingRepos::ServiceTypeRepository::
-    ServiceTypeNameSeq (length, i, types, CORBA::B_TRUE);
+    ServiceTypeNameSeq (length, i, types, 1);
 }
 
 
@@ -264,8 +264,8 @@ describe_type (const char * name,
 
   CORBA::ULong length = s.props.length ();
   CosTradingRepos::ServiceTypeRepository::PropStruct* pstructs =
-    s.props.get_buffer (CORBA::B_FALSE);
-  descr->props.replace (length, length, pstructs, CORBA::B_FALSE);
+    s.props.get_buffer (0);
+  descr->props.replace (length, length, pstructs, 0);
   
   return descr;
 }
@@ -333,10 +333,10 @@ mask_type (const char * name,
   // make sure the type is unmasked.
   CORBA::Boolean& mask = type_entry->int_id_->type_struct_.masked;
   
-  if (mask == CORBA::B_TRUE)
+  if (mask == 1)
     TAO_THROW (CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name));
   else
-    mask = CORBA::B_TRUE;
+    mask = 1;
 }
        
 
@@ -362,10 +362,10 @@ unmask_type (const char * name,
   
   // make sure the type is masked.
   CORBA::Boolean& mask = type_entry->int_id_->type_struct_.masked;  
-  if (mask == CORBA::B_FALSE)
+  if (mask == 0)
     TAO_THROW (CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name));
   else
-    mask = CORBA::B_FALSE;
+    mask = 0;
 }
 
 void
@@ -582,15 +582,15 @@ update_type_map (const char* name,
        super_map_iterator++)
     {
       Type_Info* super_type_info = (*super_map_iterator).int_id_;
-      super_type_info->has_subtypes_ = CORBA::B_FALSE;
+      super_type_info->has_subtypes_ = 0;
     }
 
   // all parameters are valid, create an entry for this service type
   // in the this->type_map_. 
   type->type_struct_.if_name = if_name;
-  type->type_struct_.masked = CORBA::B_FALSE;
+  type->type_struct_.masked = 0;
   type->type_struct_.incarnation = this->incarnation_;
-  type->has_subtypes_ = CORBA::B_FALSE;
+  type->has_subtypes_ = 0;
   type->type_struct_.super_types = super_types;
   
   // Move the prop struct sequences and super type names from the in
@@ -600,11 +600,11 @@ update_type_map (const char* name,
     ACE_const_cast (CosTradingRepos::ServiceTypeRepository::PropStructSeq*,
                     &props);
   CosTradingRepos::ServiceTypeRepository::PropStruct* psbuf =
-    pstructs->get_buffer (CORBA::B_TRUE);
+    pstructs->get_buffer (1);
   type->type_struct_.props.replace (pslength,
                                     pslength,
                                     psbuf,
-                                    CORBA::B_TRUE);
+                                    1);
   
   this->type_map_.bind (type_name, type);
 }

@@ -92,7 +92,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "  CORBA_Object (stub, servant, CORBA::B_TRUE)," << be_nl
+  *os << "  CORBA_Object (stub, servant, 1)," << be_nl
       << "  servant_ (servant)";
 
   *os << "\n";

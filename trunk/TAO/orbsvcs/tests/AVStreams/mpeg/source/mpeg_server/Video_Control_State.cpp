@@ -31,7 +31,7 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
   VIDEO_SINGLETON::instance ()->videoFile [init_para.videofile.length ()] = 0;
 
   if (Mpeg_Global::session_num > Mpeg_Global::session_limit || init_para.version != VERSION) {
-    return CORBA::B_FALSE;
+    return 0;
     // ~~ We should be throwing exceptions here.
   }
   VIDEO_SINGLETON::instance ()->cmdsn = init_para.sn;
@@ -43,11 +43,11 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
                        &VIDEO_SINGLETON::instance ()->verticalSize, &VIDEO_SINGLETON::instance ()->averageFrameSize,
                        &VIDEO_SINGLETON::instance ()->fps, &VIDEO_SINGLETON::instance ()->pelAspectRatio) == -1) {
       failureType = 100;
-      return CORBA::B_FALSE;
+      return 0;
     }
     if (VIDEO_SINGLETON::instance ()->video_format == VIDEO_MPEG2) {
       failureType = 101;
-      return CORBA::B_FALSE;
+      return 0;
     }
     VIDEO_SINGLETON::instance ()->live_source = 1;
 
@@ -77,14 +77,14 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
     VIDEO_SINGLETON::instance ()->video_format = VIDEO_MPEG1;
     failureType = VIDEO_SINGLETON::instance ()->init_MPEG1_video_file ();
     if (failureType) 
-      return CORBA::B_FALSE;
+      return 0;
     VIDEO_SINGLETON::instance ()->fps = pictureRateTable[VIDEO_SINGLETON::instance ()->pictureRate - 1];
   }
 
   // Set the Reply parameter values
   ACE_NEW_RETURN (reply,
                   Video_Control::INITvideoReply,
-                  CORBA::B_FALSE);
+                  0);
  
   reply->totalHeaders = VIDEO_SINGLETON::instance ()->numS;
   reply->totalGroups = VIDEO_SINGLETON::instance ()->numG;
@@ -134,7 +134,7 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
     }
     if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo ();
   }
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -143,7 +143,7 @@ Video_Control_State::stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size)
                               
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -157,7 +157,7 @@ Video_Control_State::close (void)
 CORBA::Boolean 
 Video_Control_State::stat_sent (void)
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -165,7 +165,7 @@ CORBA::Boolean
 Video_Control_State::fast_forward (const Video_Control::FFpara &para)
                                
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -173,7 +173,7 @@ CORBA::Boolean
 Video_Control_State::fast_backward (const Video_Control::FFpara &para)
                                 
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -181,7 +181,7 @@ CORBA::Boolean
 Video_Control_State::step (const Video_Control::STEPpara &para)
                        
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -190,7 +190,7 @@ Video_Control_State::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts)
                        
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -198,7 +198,7 @@ CORBA::Boolean
 Video_Control_State::position (const Video_Control::POSITIONpara &para)
                            
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -206,7 +206,7 @@ CORBA::Boolean
 Video_Control_State::speed (const Video_Control::SPEEDpara &para)
                         
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 
@@ -214,7 +214,7 @@ CORBA::Boolean
 Video_Control_State::stop (CORBA::Long cmdsn)
                        
 {
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 // ----------------------------------------------------------------------
@@ -264,7 +264,7 @@ Video_Control_Waiting_State::fast_forward (const Video_Control::FFpara &para)
               "(%P|%t) Video_Control_Waiting_State::fast_forward () called\n"));
   VIDEO_SINGLETON::instance ()->init_fast_play (para);
   this->vci_->change_state (VIDEO_CONTROL_FAST_FORWARD_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -280,7 +280,7 @@ Video_Control_Waiting_State::fast_backward (const Video_Control::FFpara &para)
   VIDEO_SINGLETON::instance ()-> cmd = CmdFB;
   VIDEO_SINGLETON::instance ()->init_fast_play (para);
   this->vci_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -312,7 +312,7 @@ Video_Control_Waiting_State::step (const Video_Control::STEPpara &para)
     if (VIDEO_SINGLETON::instance ()-> precmd != CmdSTEP && !tag ) {
       result = VIDEO_SINGLETON::instance ()->SendReferences (group, step_para.nextFrame);
       if (result < 0 )
-        return CORBA::B_FALSE;
+        return 0;
     }
   }
   if (VIDEO_SINGLETON::instance ()->live_source) 
@@ -329,7 +329,7 @@ Video_Control_Waiting_State::step (const Video_Control::STEPpara &para)
   }
  
   if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo ();
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -346,7 +346,7 @@ Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
                                            vts);
   //  cerr << "vts is " << vts << endl;
   this->vci_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -358,7 +358,7 @@ Video_Control_Waiting_State::position (const Video_Control::POSITIONpara &pos_pa
               "(%P|%t) Video_Control_Waiting_State::position () called \n"));
 
   if (VIDEO_SINGLETON::instance ()->live_source) 
-    return CORBA::B_TRUE;
+    return 1;
 
   CheckGroupRange (pos_para.nextGroup);
   VIDEO_SINGLETON::instance ()-> cmd = CmdPOSITION;
@@ -369,7 +369,7 @@ Video_Control_Waiting_State::position (const Video_Control::POSITIONpara &pos_pa
      || pos_para.nextGroup == 0, 
      pos_para.nextGroup, 0, 0);
   
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -391,7 +391,7 @@ Video_Control_Waiting_State::stop (CORBA::Long cmdsn)
   VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
   Video_Timer_Global::StopTimer();
   this->vci_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // Video_Control_Play_State methods
@@ -410,7 +410,7 @@ Video_Control_Play_State::stop (CORBA::Long cmdsn)
   VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
   Video_Timer_Global::StopTimer();
   this->vci_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -430,7 +430,7 @@ Video_Control_Play_State::speed (const Video_Control::SPEEDpara &para)
 
   Video_Timer_Global::TimerSpeed ();
   VIDEO_SINGLETON::instance ()->play_send ();
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 
@@ -448,7 +448,7 @@ Video_Control_Fast_Forward_State::stop (CORBA::Long cmdsn)
   VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
   Video_Timer_Global::StopTimer();
   this->vci_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void
@@ -473,7 +473,7 @@ Video_Control_Fast_Backward_State::stop (CORBA::Long cmdsn)
   VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
   Video_Timer_Global::StopTimer();
   this->vci_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void

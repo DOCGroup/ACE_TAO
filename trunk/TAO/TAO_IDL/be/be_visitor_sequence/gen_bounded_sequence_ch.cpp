@@ -76,7 +76,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   *os << class_name << " (void)" << be_nl
       << "// Default constructor." << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
-      << ", 0, allocbuf (" << node->max_size () << "), CORBA::B_FALSE)" << be_nl
+      << ", 0, allocbuf (" << node->max_size () << "), 0)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -200,10 +200,10 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << be_nl;
 
   // get_buffer
-  pt->accept(visitor); *os <<" *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE)" << be_nl
+  pt->accept(visitor); *os <<" *get_buffer (CORBA::Boolean orphan = 0)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); *os <<" *result = 0;" << be_nl
-      << "if (orphan == CORBA::B_FALSE)" << be_nl
+      << "if (orphan == 0)" << be_nl
       << "{" << be_idt_nl
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
@@ -218,9 +218,9 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   *os << "*, this->buffer_);" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
-      << "else // if (orphan == CORBA::B_TRUE)" << be_nl
+      << "else // if (orphan == 1)" << be_nl
       << "{" << be_idt_nl
-      << "if (this->release_ != CORBA::B_FALSE)" << be_nl
+      << "if (this->release_ != 0)" << be_nl
       << "{" << be_idt_nl
       << "// We set the state back to default and relinquish" << be_nl
       << "// ownership." << be_nl
@@ -228,7 +228,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "this->maximum_ = 0;" << be_nl
       << "this->length_ = 0;" << be_nl
       << "this->buffer_ = 0;" << be_nl
-      << "this->release_ = CORBA::B_FALSE;" << be_uidt_nl
+      << "this->release_ = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "return result;" << be_uidt_nl
@@ -248,11 +248,11 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   *os << "void replace (CORBA::ULong max," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
   pt->accept(visitor); *os <<" *data," << be_nl
-      << "CORBA::Boolean release = CORBA::B_FALSE)" << be_uidt_nl
+      << "CORBA::Boolean release = 0)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->maximum_ = max;" << be_nl
       << "this->length_ = length;" << be_nl
-      << "if (this->buffer_ && this->release_ == CORBA::B_TRUE)" << be_nl
+      << "if (this->buffer_ && this->release_ == 1)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); *os <<"* tmp = ACE_reinterpret_cast(";
   pt->accept (visitor); *os << "* ACE_CAST_CONST, this->buffer_);" << be_nl

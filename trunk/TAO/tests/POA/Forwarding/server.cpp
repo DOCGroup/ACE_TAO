@@ -543,8 +543,8 @@ main (int argc, char **argv)
 
   
   // Destroy RootPOA. (Also destroys childPOA)
-  root_poa_var->destroy (CORBA::B_TRUE,
-                         CORBA::B_TRUE,
+  root_poa_var->destroy (1,
+                         1,
                          env);
   delete myFirstFooServant_ptr;
   delete myFooServantLocator_ptr;

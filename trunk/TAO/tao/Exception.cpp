@@ -259,14 +259,14 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   const char* name = "UnknownUserException";
   const char* field_name = "exception";
 
-  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != CORBA::B_TRUE
+  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != 1
       || stream.encode (CORBA::_tc_string,
 			&interface_id, 0,
 			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
 			&name, 0,
 			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.write_ulong (1L) != CORBA::B_TRUE
+      || stream.write_ulong (1L) != 1
       || stream.encode (CORBA::_tc_string,
 			&field_name, 0,
 			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
@@ -281,7 +281,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
                              stream.buffer (),
-                             CORBA::B_TRUE);
+                             1);
 }
 
 void
@@ -319,14 +319,14 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // exceptions?
   assert (ACE_OS::strlen (full_id) <= sizeof full_id);
 
-  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != CORBA::B_TRUE
+  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != 1
       || stream.encode (CORBA::_tc_string,
                        &strptr, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
                        &name, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.write_ulong (2L) != CORBA::B_TRUE
+      || stream.write_ulong (2L) != 1
       || stream.encode (CORBA::_tc_string,
                        &minor, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
@@ -351,7 +351,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
                              stream.buffer (),
-                             CORBA::B_TRUE);
+                             1);
   
   TAO_Exceptions::system_exceptions->add (tcp);
   assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);

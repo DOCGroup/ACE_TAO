@@ -96,15 +96,15 @@ Test_Fixed_Struct::add_args (CORBA::NVList_ptr param_list,
   // the Any does not own any of these
   CORBA::Any in_arg (Param_Test::_tc_Fixed_Struct,
                      &this->in_,
-                     CORBA::B_FALSE);
+                     0);
 
   CORBA::Any inout_arg (Param_Test::_tc_Fixed_Struct,
                         &this->inout_,
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (Param_Test::_tc_Fixed_Struct,
                       &this->out_,
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -125,7 +125,7 @@ Test_Fixed_Struct::add_args (CORBA::NVList_ptr param_list,
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Struct,
                                             &this->ret_,
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }

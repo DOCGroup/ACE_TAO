@@ -170,7 +170,7 @@ Command_Handler::resolve_audio_reference (void)
         {
           CORBA::Object_var mmdevice_obj = this->orb_manager_.orb ()->string_to_object (this->audio_mmdevice_ior_,
                                                                                         TAO_TRY_ENV);
-          if (CORBA::is_nil (mmdevice_obj) == CORBA::B_FALSE)
+          if (CORBA::is_nil (mmdevice_obj) == 0)
             {
               this->audio_server_mmdevice_ = AVStreams::MMDevice::_narrow (mmdevice_obj.in (),
                                                                            TAO_TRY_ENV);
@@ -744,7 +744,7 @@ Command_Handler::init_audio_channel (char *phostname, char *audiofile)
                                                    reply.out (),
                                                    TAO_TRY_ENV);
         TAO_CHECK_ENV;
-        if (result == (CORBA::B_FALSE))
+        if (result == (0))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%) init_audio failed\n"),
                             -1);
@@ -891,7 +891,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
                                                    reply,
                                                    TAO_TRY_ENV);
         TAO_CHECK_ENV;
-        if (result == (CORBA::B_FALSE))
+        if (result == (0))
           return -1;
         else
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_video success \n"));
@@ -1113,7 +1113,7 @@ Command_Handler::close (void)
 {
       TAO_TRY
         {
-          if (CORBA::is_nil (this->audio_control_) == CORBA::B_FALSE)
+          if (CORBA::is_nil (this->audio_control_) == 0)
             {
               // one way function call.
               this->audio_control_->close (TAO_TRY_ENV);
@@ -1127,7 +1127,7 @@ Command_Handler::close (void)
               ACE_DEBUG ((LM_DEBUG,"(%P|%t) audio close done \n"));
             }
           
-          if (CORBA::is_nil (this->video_control_) == CORBA::B_FALSE)
+          if (CORBA::is_nil (this->video_control_) == 0)
             {
               // one way function call.
               this->video_control_->close (TAO_TRY_ENV);
@@ -1199,7 +1199,7 @@ Command_Handler::fast_forward (void)
             result = this->video_control_->fast_forward (para.in (),
                                                          TAO_TRY_ENV);
             TAO_CHECK_ENV;
-            if (result == (CORBA::B_FALSE))
+            if (result == (0))
               return -1;
             ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_forward done \n"));
           }
@@ -1260,7 +1260,7 @@ Command_Handler::fast_backward (void)
             result = this->video_control_->fast_backward (para.in (),
                                                           TAO_TRY_ENV);
             TAO_CHECK_ENV;
-            if (result == (CORBA::B_FALSE))
+            if (result == (0))
               return -1;
             ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_backward done \n"));
           }
@@ -1301,7 +1301,7 @@ Command_Handler::step (void)
                                                TAO_TRY_ENV);
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) step done \n"));          
           TAO_CHECK_ENV;
-          if (result == (CORBA::B_FALSE))
+          if (result == (0))
             return -1;
           }
         TAO_CATCHANY
@@ -1402,7 +1402,7 @@ Command_Handler::play (int auto_exp,
                                           ats,
                                           env);
 
-      if (result == CORBA::B_FALSE)
+      if (result == 0)
         return -1;
       TAO_CHECK_ENV_RETURN (env,-1);
     }
@@ -1471,7 +1471,7 @@ Command_Handler::play (int auto_exp,
       result =this->video_control_->play (para,
                                           vts,
                                           env);
-      if (result == CORBA::B_FALSE)
+      if (result == 0)
         return -1;
       TAO_CHECK_ENV_RETURN (env,-1);
       //      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
@@ -1565,7 +1565,7 @@ Command_Handler::position_action (int operation_tag)
             result = this->video_control_->position (para.in (),
                                                      TAO_TRY_ENV);
             TAO_CHECK_ENV;
-            if (result == (CORBA::B_FALSE))
+            if (result == (0))
               return -1;
             //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) position done \n"));
           }
@@ -1674,7 +1674,7 @@ Command_Handler::speed (void)
               result = this->video_control_->speed (para.in (),
                                                     TAO_TRY_ENV);
               TAO_CHECK_ENV;
-              if (result == (CORBA::B_FALSE))
+              if (result == (0))
                 return -1;
               if (fbstate) {
                 maxrate = (double)minupf / (double)max(shared->usecPerFrame, minupf);
@@ -1695,7 +1695,7 @@ Command_Handler::speed (void)
                 this->audio_control_->speed (para.in (),
                                              TAO_TRY_ENV);
               TAO_CHECK_ENV;
-              if (result == (CORBA::B_FALSE))
+              if (result == (0))
                 return -1;
             }
         }
@@ -1752,7 +1752,7 @@ Command_Handler::stop_playing (void)
           NewCmd(CmdSTOP);
     
           /* notify AS and/or VS */
-          if ((CORBA::is_nil (this->audio_control_) == CORBA::B_FALSE) 
+          if ((CORBA::is_nil (this->audio_control_) == 0) 
               && precmd == CmdPLAY
               && rtplay)
             {
@@ -1762,18 +1762,18 @@ Command_Handler::stop_playing (void)
                 this->audio_control_->stop (shared->cmdsn,
                                             TAO_TRY_ENV);
               //              cerr << "audio_control_->stop result is " << result << endl;
-              if (result == (CORBA::B_FALSE))
+              if (result == (0))
                   return -1;
               TAO_CHECK_ENV;
             }
-          if (CORBA::is_nil (this->video_control_) == CORBA::B_FALSE)
+          if (CORBA::is_nil (this->video_control_) == 0)
             {
               //              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
               // CORBA call
               CORBA::Boolean result =
                 this->video_control_->stop (shared->cmdsn,
                                             TAO_TRY_ENV);
-              if (result == (CORBA::B_FALSE))
+              if (result == (0))
                 return -1;
               TAO_CHECK_ENV;
             }
@@ -2714,7 +2714,7 @@ Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
               client_address_string));
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // called by the A/V framework after calling connect. Passes the
@@ -2836,7 +2836,7 @@ Video_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
               client_address_string));
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean
@@ -2911,11 +2911,11 @@ Video_Client_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
   this->video_control_ = Video_Control::_narrow (media_ctrl,
                                                  env);
 
-  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
+  TAO_CHECK_ENV_RETURN (env,0);
 
   this->command_handler_->set_video_control (this->video_control_);
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // -----------------------------------------------------------
@@ -2942,11 +2942,11 @@ Audio_Client_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
   this->audio_control_ = Audio_Control::_narrow (media_ctrl,
                                                  env);
 
-  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
+  TAO_CHECK_ENV_RETURN (env,0);
 
   this->command_handler_->set_audio_control (this->audio_control_);
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // -----------------------------------------------------------

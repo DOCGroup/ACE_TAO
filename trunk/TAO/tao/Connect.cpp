@@ -270,7 +270,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
   // Copy the request ID to be able to respond in case of an exception
   request_id = locateRequestHeader.request_id;
-  response_required = CORBA::B_TRUE;
+  response_required = 1;
 
   TAO_POA *the_poa = this->orb_core_->root_poa ();
 

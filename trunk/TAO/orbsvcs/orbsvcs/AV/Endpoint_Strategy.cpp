@@ -30,13 +30,13 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
 // Destructor.
 TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
 {
-  if (CORBA::is_nil (this->stream_endpoint_a_) == CORBA::B_FALSE)
+  if (CORBA::is_nil (this->stream_endpoint_a_) == 0)
     CORBA::release (this->stream_endpoint_a_);
 
-  if (CORBA::is_nil (this->stream_endpoint_b_) == CORBA::B_FALSE)
+  if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
     CORBA::release (this->stream_endpoint_b_);
 
-  if (CORBA::is_nil (this->stream_endpoint_b_) == CORBA::B_FALSE)
+  if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
     CORBA::release (this->vdev_);
 
 }
@@ -179,7 +179,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 int
 TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (CORBA::Environment &env)
 {
-  if (CORBA::is_nil (this->naming_context_.in ()) == CORBA::B_FALSE)
+  if (CORBA::is_nil (this->naming_context_.in ()) == 0)
     return 0;
 
   CORBA::Object_var naming_obj =

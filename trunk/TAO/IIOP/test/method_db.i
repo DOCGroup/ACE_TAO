@@ -31,11 +31,11 @@ is_a_skel (CORBA_ServerRequest &req,
 
     if (ACE_OS::strcmp ((char*)value, "IDL:Cubit:1.0") == 0
     || ACE_OS::strcmp ((char *)value, _tc_CORBA_Object->id (env)) == 0)
-	   retval = new CORBA_Boolean (CORBA_B_TRUE);
+	   retval = new CORBA_Boolean (1);
     else
-	   retval = new CORBA_Boolean (CORBA_B_FALSE);
+	   retval = new CORBA_Boolean (0);
 
-    CORBA_Any *any = new CORBA_Any (_tc_CORBA_Boolean, retval, CORBA_B_TRUE);
+    CORBA_Any *any = new CORBA_Any (_tc_CORBA_Boolean, retval, 1);
 
     req.result (any, env);
     dexc (env, "_is_a, result");

@@ -83,12 +83,12 @@ Trader_Client::query_trader (void)
 
       // Set the query-specific policies.
       TAO_Policy_Manager policies;
-      policies.exact_type_match (CORBA::B_FALSE);
+      policies.exact_type_match (0);
       policies.search_card (16);
       policies.match_card (16);
       policies.return_card (16);
       policies.link_follow_rule (CosTrading::always);
-      desired_props.all_ (CORBA::B_TRUE);
+      desired_props.all_ (1);
       
       CosTrading::OfferSeq_out offer_seq_out (offer_seq_ptr);
       CosTrading::OfferIterator_out offer_iterator_out (offer_iterator_ptr);
@@ -122,7 +122,7 @@ Trader_Client::query_trader (void)
       if (! CORBA::is_nil (offer_iterator_ptr))
         {
           // Hash those offers obtained from the Offer_Iterator. 
-          CORBA::Boolean any_left = CORBA::B_FALSE;
+          CORBA::Boolean any_left = 0;
           
           do
             {
@@ -201,7 +201,7 @@ Trader_Client::get_movie_info (const char* server_name)
           // Make a fake sequence out of the property for use in the
           // TAO_Property_Evaluator utility class. 
           CosTrading::Property& property = prop_entry->int_id_;
-          CosTrading::PropertySeq property_seq (1, 1, &property, CORBA::B_FALSE);
+          CosTrading::PropertySeq property_seq (1, 1, &property, 0);
           TAO_Property_Evaluator prop_eval (property_seq);
 
           TAO_TRY
@@ -212,7 +212,7 @@ Trader_Client::get_movie_info (const char* server_name)
               TAO_CHECK_ENV;
 
               // Create the movie iterator.
-              if (((*movie_prop) >>= movie_info) == CORBA::B_TRUE)
+              if (((*movie_prop) >>= movie_info) == 1)
                 movie_iter = new Movie_Iterator (*movie_info);
             }
           TAO_CATCHANY {}
@@ -241,7 +241,7 @@ Trader_Client::evaluate_performance_property (const char* server_name,
       if (prop_map->find (prop_name_key, prop_entry) == 0)
         {
           CosTrading::Property& property = prop_entry->int_id_;
-          CosTrading::PropertySeq property_seq (1, 1, &property, CORBA::B_FALSE);
+          CosTrading::PropertySeq property_seq (1, 1, &property, 0);
           TAO_Property_Evaluator prop_eval (property_seq);
           
           TAO_TRY

@@ -60,7 +60,7 @@ TAO_Video_Repository::evalDP (const char* name,
 		      TAO_VR::Movie_Info (this->num_movies_,
 					  this->num_movies_,
 					  this->movie_info_,
-					  CORBA::B_FALSE),
+					  0),
 		      0);
       
       (*return_value) <<= movie_info;

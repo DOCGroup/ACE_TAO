@@ -81,15 +81,15 @@ Test_ULongLong::add_args (CORBA::NVList_ptr param_list,
   // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_ulonglong,
                      &this->in_,
-                     CORBA::B_FALSE);
+                     0);
 
   CORBA::Any inout_arg (CORBA::_tc_ulonglong,
                         &this->inout_,
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (CORBA::_tc_ulonglong,
                       &this->out_,
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -111,7 +111,7 @@ Test_ULongLong::add_args (CORBA::NVList_ptr param_list,
   // what type we are expecting.
   retval->item (0, env)->value ()->replace (CORBA::_tc_ulonglong,
                                             &this->ret_,
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }

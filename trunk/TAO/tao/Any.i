@@ -10,7 +10,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr type,
 {
   // invoke the first form of the replace method and pass the default value
   // (FALSE) for the "any_owns_data" parameter
-  this->replace (type, value, CORBA::B_FALSE, env);
+  this->replace (type, value, 0, env);
 }
 
 // insertion operators
@@ -19,63 +19,63 @@ ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Short s)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_short, new CORBA::Short (s), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_short, new CORBA::Short (s), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::UShort s)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_ushort, new CORBA::UShort (s), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_ushort, new CORBA::UShort (s), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Long l)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_long, new CORBA::Long (l), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_long, new CORBA::Long (l), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::ULong l)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_ulong, new CORBA::ULong (l), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_ulong, new CORBA::ULong (l), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::LongLong l)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_longlong, new CORBA::LongLong (l), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_longlong, new CORBA::LongLong (l), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::ULongLong l)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_ulonglong, new CORBA::ULongLong (l), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_ulonglong, new CORBA::ULongLong (l), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Float f)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_float, new CORBA::Float (f), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_float, new CORBA::Float (f), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Double d)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_double, new CORBA::Double (d), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_double, new CORBA::Double (d), 1, env);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (const CORBA_Any& a)
 {
   CORBA::Environment env;
-  this->replace (CORBA::_tc_any, new CORBA_Any (a), CORBA::B_TRUE, env);
+  this->replace (CORBA::_tc_any, new CORBA_Any (a), 1, env);
 }
 
 // this is a copying version for unbounded strings
@@ -84,7 +84,7 @@ CORBA_Any::operator<<= (const char* s)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_string, new char* (CORBA::string_dup (s)),
-                 CORBA::B_TRUE, env);
+                 1, env);
 }
 
 // implementing the special types
@@ -165,7 +165,7 @@ CORBA_Any::operator<<= (from_boolean b)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_boolean, new CORBA::Boolean (b.val_),
-                 CORBA::B_TRUE, env);
+                 1, env);
 }
 
 ACE_INLINE void
@@ -173,7 +173,7 @@ CORBA_Any::operator<<= (from_octet o)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_octet, new CORBA::Octet (o.val_),
-                 CORBA::B_TRUE, env);
+                 1, env);
 }
 
 ACE_INLINE void
@@ -181,7 +181,7 @@ CORBA_Any::operator<<= (from_char c)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_char, new CORBA::Char (c.val_),
-                 CORBA::B_TRUE, env);
+                 1, env);
 }
 
 ACE_INLINE void
@@ -189,7 +189,7 @@ CORBA_Any::operator<<= (from_wchar wc)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_wchar, new CORBA::WChar (wc.val_),
-                 CORBA::B_TRUE, env);
+                 1, env);
 }
 
 // ----------------------------------------------------------------------

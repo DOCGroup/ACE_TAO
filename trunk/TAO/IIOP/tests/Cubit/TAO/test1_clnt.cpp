@@ -111,7 +111,7 @@ compare_objrefs (CORBA_Object_ptr v1,
   CORBA_Environment   env;
 
   if (v1 == v2)
-    return CORBA_B_TRUE;
+    return 1;
 
   if (CORBA_is_nil (v1))
     return CORBA_is_nil (v2);
@@ -121,7 +121,7 @@ compare_objrefs (CORBA_Object_ptr v1,
   if (env.exception () != 0) 
     {
       print_exception (env.exception (), "compare objref");
-      return CORBA_B_FALSE;
+      return 0;
     }
   return temp;
 }
@@ -254,7 +254,7 @@ do_tests (test1_ptr   target,
       //
 #define EXPVAL(type,original_value) ((type)(original_value))
 #define COMPARE(type,retval,original_value) \
-      (compare_objrefs (retval, original_value) == CORBA_B_TRUE)
+      (compare_objrefs (retval, original_value) == 1)
 #undef  RELEASE
 #define RELEASE(obj) \
 	{ CORBA_release (obj); }
@@ -523,7 +523,7 @@ do_tests (test1_ptr   target,
 		      print_exception (env.exception (),
 				       "test_throw/3 call to is_equivalent");
 		    } 
-		  else if (status != CORBA_B_TRUE) 
+		  else if (status != 1) 
 		    {
 		      error_count++;
 		      ACE_OS::fprintf (stderr, "test_throw case 3, "
@@ -629,7 +629,7 @@ main (int    argc, char   *argv[])
 	return 1;
       }
     
-  if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
+  if (CORBA_is_nil (objref) == 1) {
     ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
 		     argv [0]);
     return 1;

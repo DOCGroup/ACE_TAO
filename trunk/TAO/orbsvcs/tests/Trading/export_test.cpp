@@ -18,14 +18,14 @@ parse_args (int argc, char *argv[],
   int opt;
   ACE_Get_Opt get_opt (argc, argv, "fq");
 
-  verbose = CORBA::B_TRUE;
-  federated = CORBA::B_FALSE;
+  verbose = 1;
+  federated = 0;
   while ((opt = get_opt ()) != EOF)
     {
       if (opt == 'f')
-        federated = CORBA::B_TRUE;
+        federated = 1;
       else if (opt == 'q')
-        verbose = CORBA::B_FALSE;
+        verbose = 0;
     }
 }
 
@@ -39,8 +39,8 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Command line argument interpretation.
-      CORBA::Boolean federated = CORBA::B_FALSE,
-        verbose = CORBA::B_FALSE;
+      CORBA::Boolean federated = 0,
+        verbose = 0;
       ::parse_args (argc, argv, federated, verbose);
 
       // Init the orb and bootstrap to the trading service.

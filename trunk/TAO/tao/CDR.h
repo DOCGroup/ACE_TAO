@@ -223,7 +223,7 @@ public:
   // to minimize copies.
 
   // = We have one method per basic IDL type....
-  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  // They return 0 on failure and 1 on success.
   CORBA_Boolean append_boolean (TAO_InputCDR &);
   CORBA_Boolean append_char (TAO_InputCDR &);
   CORBA_Boolean append_wchar (TAO_InputCDR &);
@@ -427,7 +427,7 @@ public:
   // destructor
 
   // = We have one method per basic IDL type....
-  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  // They return 0 on failure and 1 on success.
   CORBA_Boolean read_boolean (CORBA::Boolean& x);
   CORBA_Boolean read_char (CORBA::Char& x);
   CORBA_Boolean read_wchar (CORBA::WChar& x);
@@ -447,7 +447,7 @@ public:
   // = One method for each basic IDL type...
   // The buffer <x> must be large enough to contain <length>
   // elements.
-  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  // They return 0 on failure and 1 on success.
   CORBA_Boolean read_boolean_array (CORBA::Boolean* x,
 				    CORBA::ULong length);
   CORBA_Boolean read_char_array (CORBA::Char* x,
@@ -485,7 +485,7 @@ public:
   // described by <tc>; returning any errors in <env>.
 
   // = We have one method per basic IDL type....
-  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  // They return 0 on failure and 1 on success.
   CORBA_Boolean skip_boolean (void);
   CORBA_Boolean skip_char (void);
   CORBA_Boolean skip_wchar (void);
@@ -503,11 +503,11 @@ public:
   CORBA_Boolean skip_string (void);
   // The next field must be a string, this method skips it. It is
   // useful in parsing a TypeCode.
-  // Return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  // Return 0 on failure and 1 on success.
 
   CORBA_Boolean skip_bytes (size_t n);
   // Skip <n> bytes in the CDR stream.
-  // Return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  // Return 0 on failure and 1 on success.
 
   CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                          CORBA_Environment &_env = CORBA_Environment::default_environment ());

@@ -89,7 +89,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_sendShortSeq_skel(CORBA_ServerRequest &
   impl->sendShortSeq(*value, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -118,7 +118,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_sendLongSeq_skel(CORBA_ServerRequest &r
   impl->sendLongSeq(*value, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -147,7 +147,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_sendDoubleSeq_skel(CORBA_ServerRequest 
   impl->sendDoubleSeq(*value, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -176,7 +176,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_sendOctetSeq_skel(CORBA_ServerRequest &
   impl->sendOctetSeq(*value, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -205,7 +205,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_sendCharSeq_skel(CORBA_ServerRequest &r
   impl->sendCharSeq(*value, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -234,7 +234,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_sendStructSeq_skel(CORBA_ServerRequest 
   impl->sendStructSeq(*value, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -258,7 +258,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_start_timer_skel(CORBA_ServerRequest &r
   impl->start_timer(env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -282,7 +282,7 @@ void _skel_ttcp_sequence::_ttcp_sequence_stop_timer_skel(CORBA_ServerRequest &re
   impl->stop_timer(env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -312,12 +312,12 @@ void _skel_ttcp_sequence::_ttcp_sequence_is_a_skel (
   cout << "object id = " << ((char *)value) << endl;
   if (strcmp ((char *)value, (char *)type_id) == 0
       || strcmp ((char *)value, _tc_CORBA_Object->id(env)) == 0)
-    retval = new CORBA_Boolean (CORBA_B_TRUE);
+    retval = new CORBA_Boolean (1);
   else
-    retval = new CORBA_Boolean (CORBA_B_FALSE);
+    retval = new CORBA_Boolean (0);
 
   CORBA_Any  		*any =
-    new CORBA_Any (_tc_CORBA_Boolean, retval, CORBA_B_TRUE);
+    new CORBA_Any (_tc_CORBA_Boolean, retval, 1);
 
   req.result (any, env);
   dexc (env, "_is_a, result");

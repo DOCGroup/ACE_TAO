@@ -533,11 +533,11 @@ TAO_PropertySet::define_property (const char *property_name,
     TAO_THROW (CosPropertyService::InvalidPropertyName());
 
   // Is this type allowed?
-  if (is_type_allowed (property_value.type ()) != CORBA::B_TRUE)
+  if (is_type_allowed (property_value.type ()) != 1)
     TAO_THROW (CosPropertyService::UnsupportedTypeCode());
 
   // Is this property allowed?
-  if (is_property_allowed (property_name) != CORBA::B_TRUE)
+  if (is_property_allowed (property_name) != 1)
     TAO_THROW (CosPropertyService::UnsupportedProperty());
 
   // Try to bind the property. (*normal* mode is used).
@@ -602,10 +602,10 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
 
   // If the sequence is empty, no constraints.
   if (this->allowed_property_types_.length () == 0)
-    return CORBA::B_TRUE;
+    return 1;
 
   // Check in the allowed_property_types sequence.
-  CORBA::Boolean ret_val = CORBA::B_FALSE;
+  CORBA::Boolean ret_val = 0;
   for (size_t ti = 0;
        ti < this->allowed_property_types_.length ();
        ti++)
@@ -616,8 +616,8 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
 											 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  
-	  if (ret_val == CORBA::B_TRUE)
-	    return CORBA::B_TRUE;
+	  if (ret_val == 1)
+	    return 1;
 	}
       TAO_CATCHANY
 	{
@@ -639,17 +639,17 @@ TAO_PropertySet::is_property_allowed (const char* property_name)
 
   // If  the sequence is empty, no constraints.
   if (this->allowed_property_names_.length() == 0)
-    return CORBA::B_TRUE;
+    return 1;
 
   // Check in the allowed_property_names.
   for (size_t ni = 0;
        ni < this->allowed_property_names_.length ();
        ni++)
     if ((const char *) this->allowed_property_names_[ni] == property_name)
-      return CORBA::B_TRUE;
+      return 1;
 
   // Name not found.
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 // Defining a sequence of properties
@@ -872,17 +872,17 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
   size_t n = property_names.length ();
 
   if (n == 0)
-    return CORBA::B_FALSE;
+    return 0;
 
   CORBA::Any_ptr any_ptr = 0;
 
   ACE_NEW_RETURN (nproperties,
                   CosPropertyService::Properties (n),
-                  CORBA::B_FALSE);
+                  0);
 
   nproperties->length (n);
 
-  CORBA::Boolean ret_val = CORBA::B_TRUE;
+  CORBA::Boolean ret_val = 1;
 
   for (size_t i = 0; i < n; i++)
     {
@@ -900,7 +900,7 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
       else
         {
           // Invalid name. Ret value is False.
-          ret_val = CORBA::B_FALSE;
+          ret_val = 0;
 
           // Assign void type to this name in the out parameter.
           nproperties [i].property_name =
@@ -910,9 +910,9 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
           // method, <<= operator doesnot exist yet for this.
           nproperties [i].property_value.replace (CORBA::_tc_void,
                                                   0,
-                                                  CORBA::B_FALSE,
+                                                  0,
                                                   _env);
-          TAO_CHECK_ENV_RETURN (_env, CORBA::B_FALSE);
+          TAO_CHECK_ENV_RETURN (_env, 0);
         }
     }
 
@@ -1169,12 +1169,12 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &_env)
       // All properties didnt get deleted.
       TAO_TRY_ENV.print_exception ("delete_all_properties");
 
-      return CORBA::B_FALSE;
+      return 0;
     }
   TAO_ENDTRY;
 
   // All properties deleted.
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // Returns TRUE if the property is defined in the PropertySet.
@@ -1190,13 +1190,13 @@ TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environ
     {
       ACE_DEBUG ((LM_DEBUG,
                 "find successfull\n"));
-      return CORBA::B_TRUE;
+      return 1;
     }
   else
     {
       ACE_DEBUG ((LM_ERROR,
                   "find failed\n"));
-      return CORBA::B_FALSE;
+      return 0;
     }
 }
 
@@ -1326,11 +1326,11 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
     TAO_THROW (CosPropertyService::InvalidPropertyName());
 
   // Is this type allowed?
-  if (is_type_allowed (property_value.type ()) != CORBA::B_TRUE)
+  if (is_type_allowed (property_value.type ()) != 1)
     TAO_THROW (CosPropertyService::UnsupportedTypeCode());
 
   // Is this property allowed?
-  if (is_property_allowed (property_name) != CORBA::B_TRUE)
+  if (is_property_allowed (property_name) != 1)
     TAO_THROW (CosPropertyService::UnsupportedProperty());
 
   // Is this a valid mode.
@@ -1543,16 +1543,16 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
   size_t sequence_length = property_names.length ();
 
   if (sequence_length == 0)
-    return CORBA::B_TRUE;
+    return 1;
 
   // Allocate memory for the out parameter.
   ACE_NEW_RETURN (property_modes,
                   CosPropertyService::PropertyModes (sequence_length),
-                  CORBA::B_TRUE);
+                  1);
   property_modes->length (sequence_length);
 
   // Intialize thre return value.
-  CORBA::Boolean ret = CORBA::B_TRUE;
+  CORBA::Boolean ret = 1;
 
   // Invoking get_property_mode for each name.
   CosPropertyService::PropertyModeType mode;
@@ -1575,7 +1575,7 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
           TAO_TRY_ENV.print_exception ("Some exception");
 
           // Return value becomes false.
-          ret = CORBA::B_TRUE;
+          ret = 1;
 
           // Assign this property to the out parameter with undefined
           // mode.
@@ -1817,10 +1817,10 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
       property_name =
         CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
       this->iterator_.advance ();
-      return CORBA::B_TRUE;
+      return 1;
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -1831,11 +1831,11 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
-    return CORBA::B_FALSE;
+    return 0;
 
   ACE_NEW_RETURN (property_names,
                   CosPropertyService::PropertyNames,
-                  CORBA::B_FALSE);
+                  0);
 
   size_t size = this->iterator_.map ().current_size ();
 
@@ -1848,7 +1848,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
       property_names [ni] =
         CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void
@@ -1883,12 +1883,12 @@ TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
       aproperty->property_name = entry_ptr->ext_id_.pname_;
       aproperty->property_value = entry_ptr->int_id_.pvalue_.in ();
       this->iterator_.advance ();
-      return CORBA::B_TRUE;
+      return 1;
     }
   else
     {
       aproperty = new CosPropertyService::Property;
-      return CORBA::B_FALSE;
+      return 0;
     }
 }
 
@@ -1900,11 +1900,11 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
-    return CORBA::B_FALSE;
+    return 0;
 
   ACE_NEW_RETURN (nproperties,
                   CosPropertyService::Properties,
-                  CORBA::B_FALSE);
+                  0);
 
   size_t size = this->iterator_.map ().current_size ();
 
@@ -1922,7 +1922,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
       }
     else
       break;
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void

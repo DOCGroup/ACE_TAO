@@ -260,8 +260,8 @@ main (int argc, char **argv)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
 
   // Destroy RootPOA. ( Also destroys firstPOA)
-  root_poa->destroy (CORBA::B_TRUE,
-                     CORBA::B_TRUE,
+  root_poa->destroy (1,
+                     1,
                      env);
   if (env.exception () != 0)
     {

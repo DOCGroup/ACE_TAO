@@ -114,9 +114,9 @@ CORBA::Boolean POA_PortableServer::ThreadPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ThreadPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::ThreadPolicy::_downcast (
@@ -155,9 +155,9 @@ POA_PortableServer::_tao_collocated_ThreadPolicy::_tao_collocated_ThreadPolicy (
                                                                                 POA_PortableServer::ThreadPolicy_ptr  servant,
                                                                                 STUB_Object *stub
                                                                                 )
-  : ACE_NESTED_CLASS (PortableServer, ThreadPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, ThreadPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -320,9 +320,9 @@ CORBA::Boolean POA_PortableServer::LifespanPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/LifespanPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::LifespanPolicy::_downcast (
@@ -361,9 +361,9 @@ POA_PortableServer::_tao_collocated_LifespanPolicy::_tao_collocated_LifespanPoli
                                                                                     POA_PortableServer::LifespanPolicy_ptr  servant,
                                                                                     STUB_Object *stub
                                                                                     )
-  : ACE_NESTED_CLASS (PortableServer, LifespanPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, LifespanPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -525,9 +525,9 @@ CORBA::Boolean POA_PortableServer::IdUniquenessPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/IdUniquenessPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::IdUniquenessPolicy::_downcast (
@@ -566,9 +566,9 @@ POA_PortableServer::_tao_collocated_IdUniquenessPolicy::_tao_collocated_IdUnique
                                                                                             POA_PortableServer::IdUniquenessPolicy_ptr  servant,
                                                                                             STUB_Object *stub
                                                                                             )
-  : ACE_NESTED_CLASS (PortableServer, IdUniquenessPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, IdUniquenessPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -730,9 +730,9 @@ CORBA::Boolean POA_PortableServer::IdAssignmentPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/IdAssignmentPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::IdAssignmentPolicy::_downcast (
@@ -771,9 +771,9 @@ POA_PortableServer::_tao_collocated_IdAssignmentPolicy::_tao_collocated_IdAssign
                                                                                             POA_PortableServer::IdAssignmentPolicy_ptr  servant,
                                                                                             STUB_Object *stub
                                                                                             )
-  : ACE_NESTED_CLASS (PortableServer, IdAssignmentPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, IdAssignmentPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -935,9 +935,9 @@ CORBA::Boolean POA_PortableServer::ImplicitActivationPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ImplicitActivationPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::ImplicitActivationPolicy::_downcast (
@@ -976,9 +976,9 @@ POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::_tao_collocated_Im
                                                                                                         POA_PortableServer::ImplicitActivationPolicy_ptr  servant,
                                                                                                         STUB_Object *stub
                                                                                                         )
-  : ACE_NESTED_CLASS (PortableServer, ImplicitActivationPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, ImplicitActivationPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -1140,9 +1140,9 @@ CORBA::Boolean POA_PortableServer::ServantRetentionPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantRetentionPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::ServantRetentionPolicy::_downcast (
@@ -1181,9 +1181,9 @@ POA_PortableServer::_tao_collocated_ServantRetentionPolicy::_tao_collocated_Serv
                                                                                                     POA_PortableServer::ServantRetentionPolicy_ptr  servant,
                                                                                                     STUB_Object *stub
                                                                                                     )
-  : ACE_NESTED_CLASS (PortableServer, ServantRetentionPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, ServantRetentionPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -1345,9 +1345,9 @@ CORBA::Boolean POA_PortableServer::RequestProcessingPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/RequestProcessingPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::RequestProcessingPolicy::_downcast (
@@ -1386,9 +1386,9 @@ POA_PortableServer::_tao_collocated_RequestProcessingPolicy::_tao_collocated_Req
                                                                                                       POA_PortableServer::RequestProcessingPolicy_ptr  servant,
                                                                                                       STUB_Object *stub
                                                                                                       )
-  : ACE_NESTED_CLASS (PortableServer, RequestProcessingPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, RequestProcessingPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -1556,9 +1556,9 @@ CORBA::Boolean POA_PortableServer::SynchronizationPolicy::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/SynchronizationPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::SynchronizationPolicy::_downcast (
@@ -1597,9 +1597,9 @@ POA_PortableServer::_tao_collocated_SynchronizationPolicy::_tao_collocated_Synch
                                                                                                   POA_PortableServer::SynchronizationPolicy_ptr  servant,
                                                                                                   STUB_Object *stub
                                                                                                   )
-  : ACE_NESTED_CLASS (PortableServer, SynchronizationPolicy) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, SynchronizationPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -1721,9 +1721,9 @@ CORBA::Boolean POA_PortableServer::POAManager::_is_a (
   if (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/POAManager:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::POAManager::_downcast (
@@ -1760,8 +1760,8 @@ POA_PortableServer::_tao_collocated_POAManager::_tao_collocated_POAManager (
                                                                             POA_PortableServer::POAManager_ptr  servant,
                                                                             STUB_Object *stub
                                                                             )
-  : ACE_NESTED_CLASS (PortableServer, POAManager) (stub, servant, CORBA::B_TRUE),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, POAManager) (stub, servant, 1),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -1895,9 +1895,9 @@ CORBA::Boolean POA_PortableServer::AdapterActivator::_is_a (
   if (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/AdapterActivator:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::AdapterActivator::_downcast (
@@ -1934,8 +1934,8 @@ POA_PortableServer::_tao_collocated_AdapterActivator::_tao_collocated_AdapterAct
                                                                                         POA_PortableServer::AdapterActivator_ptr  servant,
                                                                                         STUB_Object *stub
                                                                                         )
-  : ACE_NESTED_CLASS (PortableServer, AdapterActivator) (stub, servant, CORBA::B_TRUE),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, AdapterActivator) (stub, servant, 1),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -2038,9 +2038,9 @@ CORBA::Boolean POA_PortableServer::ServantManager::_is_a (
   if (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::ServantManager::_downcast (
@@ -2077,8 +2077,8 @@ POA_PortableServer::_tao_collocated_ServantManager::_tao_collocated_ServantManag
                                                                                     POA_PortableServer::ServantManager_ptr  servant,
                                                                                     STUB_Object *stub
                                                                                     )
-  : ACE_NESTED_CLASS (PortableServer, ServantManager) (stub, servant, CORBA::B_TRUE),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, ServantManager) (stub, servant, 1),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -2169,9 +2169,9 @@ CORBA::Boolean POA_PortableServer::ServantActivator::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantActivator:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::ServantActivator::_downcast (
@@ -2210,9 +2210,9 @@ POA_PortableServer::_tao_collocated_ServantActivator::_tao_collocated_ServantAct
                                                                                         POA_PortableServer::ServantActivator_ptr  servant,
                                                                                         STUB_Object *stub
                                                                                         )
-  : ACE_NESTED_CLASS (PortableServer, ServantActivator) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, ServantActivator) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_ServantManager) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -2335,9 +2335,9 @@ CORBA::Boolean POA_PortableServer::ServantLocator::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantLocator:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::ServantLocator::_downcast (
@@ -2376,9 +2376,9 @@ POA_PortableServer::_tao_collocated_ServantLocator::_tao_collocated_ServantLocat
                                                                                     POA_PortableServer::ServantLocator_ptr  servant,
                                                                                     STUB_Object *stub
                                                                                     )
-  : ACE_NESTED_CLASS (PortableServer, ServantLocator) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, ServantLocator) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_ServantManager) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -2504,9 +2504,9 @@ CORBA::Boolean POA_PortableServer::POA::_is_a (
   if (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/POA:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::POA::_downcast (
@@ -2543,8 +2543,8 @@ POA_PortableServer::_tao_collocated_POA::_tao_collocated_POA (
                                                               POA_PortableServer::POA_ptr  servant,
                                                               STUB_Object *stub
                                                               )
-  : ACE_NESTED_CLASS (PortableServer, POA) (stub, servant, CORBA::B_TRUE),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, POA) (stub, servant, 1),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }
@@ -3047,9 +3047,9 @@ CORBA::Boolean POA_PortableServer::Current::_is_a (
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Current:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 void* POA_PortableServer::Current::_downcast (
@@ -3088,9 +3088,9 @@ POA_PortableServer::_tao_collocated_Current::_tao_collocated_Current (
                                                                       POA_PortableServer::Current_ptr  servant,
                                                                       STUB_Object *stub
                                                                       )
-  : ACE_NESTED_CLASS (PortableServer, Current) (stub, servant, CORBA::B_TRUE),
+  : ACE_NESTED_CLASS (PortableServer, Current) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Current) (servant, stub),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }

@@ -83,7 +83,7 @@ CORBA_Request::invoke (void)
   STUB_Object *stub = this->target_->_stubobj ();
 
   stub->do_dynamic_call ((char *) opname_,
-                         CORBA::B_TRUE,
+                         1,
                          args_,
                          result_,
                          flags_,
@@ -97,7 +97,7 @@ CORBA_Request::send_oneway (void)
   STUB_Object *stub = this->target_->_stubobj ();
 
   stub->do_dynamic_call ((char *) opname_,
-                         CORBA::B_FALSE,
+                         0,
                          args_,
                          result_,
                          flags_,

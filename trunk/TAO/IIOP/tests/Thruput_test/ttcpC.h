@@ -58,7 +58,7 @@ public:
     ShortSeq(CORBA_ULong max,
 	     CORBA_ULong length,
 	     CORBA_Short *value,
-	     CORBA_Boolean release = CORBA_B_FALSE
+	     CORBA_Boolean release = 0
 	     );
     //    ShortSeq(const ShortSeq&);
     ~ShortSeq();
@@ -83,7 +83,7 @@ public:
     LongSeq(CORBA_ULong max,
 	    CORBA_ULong length,
 	    CORBA_Long *value,
-	    CORBA_Boolean release = CORBA_B_FALSE
+	    CORBA_Boolean release = 0
 	    );
     //    LongSeq(const LongSeq&);
     ~LongSeq();
@@ -108,7 +108,7 @@ public:
     DoubleSeq(CORBA_ULong max,
 	      CORBA_ULong length,
 	      CORBA_Double *value,
-	      CORBA_Boolean release = CORBA_B_FALSE
+	      CORBA_Boolean release = 0
 	      );
     //    DoubleSeq(const DoubleSeq&);
     ~DoubleSeq();
@@ -133,7 +133,7 @@ public:
     CharSeq(CORBA_ULong max,
 	    CORBA_ULong length,
 	    CORBA_Char *value,
-	    CORBA_Boolean release = CORBA_B_FALSE
+	    CORBA_Boolean release = 0
 	    );
     //    CharSeq(const CharSeq&);
     ~CharSeq();
@@ -158,7 +158,7 @@ public:
     OctetSeq(CORBA_ULong max,
 	     CORBA_ULong length,
 	     CORBA_Octet *value,
-	     CORBA_Boolean release = CORBA_B_FALSE
+	     CORBA_Boolean release = 0
 	     );
     //    OctetSeq(const OctetSeq&);
     ~OctetSeq();
@@ -183,7 +183,7 @@ public:
     StructSeq(CORBA_ULong max,
 	      CORBA_ULong length,
 	      PerfStruct *value,
-	      CORBA_Boolean release = CORBA_B_FALSE
+	      CORBA_Boolean release = 0
 	      );
     //    StructSeq(const StructSeq&);
     ~StructSeq();

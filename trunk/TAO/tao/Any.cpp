@@ -66,7 +66,7 @@ CORBA_Any::CORBA_Any (void)
   : type_ (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
     value_ (0),
     cdr_ (0),
-    any_owns_data_ (CORBA::B_FALSE)
+    any_owns_data_ (0)
 {
 }
 
@@ -103,7 +103,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
   : type_ (CORBA::TypeCode::_duplicate (type)),
     value_ (ACE_Message_Block::duplicate (mb)),
     cdr_ (ACE_Message_Block::duplicate (mb)),
-    any_owns_data_ (CORBA::B_TRUE)
+    any_owns_data_ (1)
 {
 }
 
@@ -111,7 +111,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : value_ (0),
     cdr_ (0),
-    any_owns_data_ (CORBA::B_TRUE)
+    any_owns_data_ (1)
 {
   if (src.type_ != 0)
     this->type_ = CORBA::TypeCode::_duplicate (src.type_);
@@ -173,7 +173,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   else
     this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
   this->value_ = 0;
-  this->any_owns_data_ = CORBA::B_TRUE;
+  this->any_owns_data_ = 1;
 
   // does the source own its data? If not, then it is not in the message block
   // form and must be encoded. Else we must simply duplicate the message block
@@ -273,7 +273,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
   *_tao_tc = CORBA::TypeCode::_duplicate (tc);
   this->replace (CORBA::_tc_TypeCode,
                  _tao_tc,
-                 CORBA::B_TRUE,
+                 1,
                  env);
 }
 
@@ -287,7 +287,7 @@ CORBA::Any::operator<<= (CORBA::Object_ptr obj)
   *_tao_object_ptr = CORBA::Object::_duplicate (obj);
   this->replace (CORBA::_tc_Object,
                  _tao_object_ptr,
-                 CORBA::B_TRUE,
+                 1,
                  env);
 }
 
@@ -311,18 +311,18 @@ CORBA_Any::operator<<= (from_string s)
       ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
                                     sizeof _oc_string,
                                     (char *) &_oc_string,
-                                    CORBA::B_TRUE));
+                                    1));
     }
   else
     tc = CORBA::_tc_string; // unbounded.
 
   CORBA::Environment env;
   if (s.nocopy_)
-    this->replace (tc, new char* (s.val_), CORBA::B_TRUE, env);
+    this->replace (tc, new char* (s.val_), 1, env);
   else
     // copying
     this->replace (tc, new char* (CORBA::string_dup (s.val_)),
-                   CORBA::B_TRUE, env);
+                   1, env);
 }
 
 // Extraction: these are safe and hence we have to check that the
@@ -344,11 +344,11 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
       else
         {
           s = *(CORBA::Short *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -366,11 +366,11 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
       else
         {
           s = *(CORBA::UShort *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -388,11 +388,11 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
       else
         {
           l = *(CORBA::Long *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -410,11 +410,11 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
       else
         {
           l = *(CORBA::ULong *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -432,11 +432,11 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
       else
         {
           l = *(CORBA::LongLong *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -454,11 +454,11 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
       else
         {
           l = *(CORBA::ULongLong *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -476,11 +476,11 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
       else
         {
           f = *(CORBA::Float *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -498,11 +498,11 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
       else
         {
           d = *(CORBA::Double *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -522,11 +522,11 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
       else
         {
           a = *(CORBA::Any *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -544,11 +544,11 @@ CORBA_Any::operator>>= (char *&s) const
       else
         {
           s = *(char **) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -566,17 +566,17 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                             &tc,
                             0,
                             env)
-              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? CORBA::B_TRUE : CORBA::B_FALSE;
+              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
           return flag;
         }
       else
         {
           tc = *(CORBA::TypeCode_ptr *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 // = extraction into the special types
 
@@ -595,11 +595,11 @@ CORBA_Any::operator>>= (to_boolean b) const
       else
         {
           b.ref_ = *(CORBA::Boolean *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -617,11 +617,11 @@ CORBA_Any::operator>>= (to_octet o) const
       else
         {
           o.ref_ = *(CORBA::Octet *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -639,11 +639,11 @@ CORBA_Any::operator>>= (to_char c) const
       else
         {
           c.ref_ = *(CORBA::Char *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -661,11 +661,11 @@ CORBA_Any::operator>>= (to_wchar wc) const
       else
         {
           wc.ref_ = *(CORBA::WChar *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CORBA::Boolean
@@ -690,13 +690,13 @@ CORBA_Any::operator>>= (to_string s) const
           else
             {
               s.val_ = *(char **) this->value_;
-              return CORBA::B_TRUE;
+              return 1;
             }
         }
     }
 
   // Otherwise.
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA::Boolean
@@ -719,11 +719,11 @@ CORBA_Any::operator>>= (to_object obj) const
       else
         {
           obj.ref_ = *(CORBA::Object_ptr *) this->value_;
-          return CORBA::B_TRUE;
+          return 1;
         }
     }
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 // ----------------------------------------------------------------------
@@ -812,10 +812,10 @@ CORBA_Any::dump (const CORBA::Any any_value)
     {
       CORBA::Boolean b;
       any_value >>= (to_boolean)b;
-      if (b == CORBA::B_TRUE)
-        ACE_DEBUG ((LM_DEBUG, "Boolean B_TRUE\n"));
+      if (b == 1)
+        ACE_DEBUG ((LM_DEBUG, "Boolean TRUE\n"));
       else
-        ACE_DEBUG ((LM_DEBUG, "Boolean B_FALSE\n"));
+        ACE_DEBUG ((LM_DEBUG, "Boolean FALSE\n"));
     }
   else if (type->equal (CORBA::_tc_char, env))
     {

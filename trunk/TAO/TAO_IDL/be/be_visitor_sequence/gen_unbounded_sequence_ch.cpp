@@ -244,10 +244,10 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl
       << be_nl;
-  pt->accept(visitor); *os <<" *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE)" << be_nl
+  pt->accept(visitor); *os <<" *get_buffer (CORBA::Boolean orphan = 0)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); *os <<" *result = 0;" << be_nl
-      << "if (orphan == CORBA::B_FALSE)" << be_nl
+      << "if (orphan == 0)" << be_nl
       << "{" << be_idt_nl
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
@@ -260,9 +260,9 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 	    << "result = ACE_reinterpret_cast ("; pt->accept (visitor); *os << "*, this->buffer_);" << be_uidt_nl
 	    << "}" << be_uidt_nl
       << "}" << be_nl
-      << "else // if (orphan == CORBA::B_TRUE)" << be_nl
+      << "else // if (orphan == 1)" << be_nl
       << "{" << be_idt_nl
-      << "if (this->release_ != CORBA::B_FALSE)" << be_nl
+      << "if (this->release_ != 0)" << be_nl
       << "{" << be_idt_nl
       << "// We set the state back to default and relinquish" << be_nl
       << "// ownership." << be_nl
@@ -270,7 +270,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "this->maximum_ = 0;" << be_nl
       << "this->length_ = 0;" << be_nl
       << "this->buffer_ = 0;" << be_nl
-      << "this->release_ = CORBA::B_FALSE;" << be_uidt_nl
+      << "this->release_ = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "return result;" << be_uidt_nl
@@ -294,7 +294,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "this->maximum_ = max;" << be_nl
       << "this->length_ = length;" << be_nl
-      << "if (this->buffer_ && this->release_ == CORBA::B_TRUE)" << be_nl
+      << "if (this->buffer_ && this->release_ == 1)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast("; pt->accept (visitor); *os << "*,this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_uidt_nl

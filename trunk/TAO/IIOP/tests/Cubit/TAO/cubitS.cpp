@@ -93,7 +93,7 @@ _skel_Cubit::_cube_octet_skel(CORBA_ServerRequest &req,
 
    *value = the_cubit->Cubit_cube_octet(*(CORBA_Octet *)nv->value()->value(), env);
 
-   CORBA_Any *any = new CORBA_Any (_tc_CORBA_Octet, value, CORBA_B_TRUE);
+   CORBA_Any *any = new CORBA_Any (_tc_CORBA_Octet, value, 1);
    
    req.result (any, env);
    dexc (env, "cube_octet, result");
@@ -120,7 +120,7 @@ _skel_Cubit::_cube_short_skel (CORBA_ServerRequest &req,
    Cubit *the_cubit = (Cubit*)obj->get_subclass();
    *value = the_cubit->Cubit_cube_short(*(CORBA_Short *)nv->value ()->value (), env);
    
-   CORBA_Any *any = new CORBA_Any (_tc_CORBA_Short, value, CORBA_B_TRUE);
+   CORBA_Any *any = new CORBA_Any (_tc_CORBA_Short, value, 1);
    
    req.result (any, env);
    dexc (env, "cube_short, result");
@@ -148,7 +148,7 @@ _skel_Cubit::_cube_long_skel (CORBA_ServerRequest &req,
    *value = the_cubit->Cubit_cube_long(*(CORBA_Long *)nv->value ()->value (), env);
    
    CORBA_Any  		*any =
-      new CORBA_Any (_tc_CORBA_Long, value, CORBA_B_TRUE);
+      new CORBA_Any (_tc_CORBA_Long, value, 1);
    
    req.result (any, env);
    dexc (env, "cube_long, result");
@@ -184,7 +184,7 @@ _skel_Cubit::_cube_struct_skel (CORBA_ServerRequest &req,
    // dmsg2 ("cube struct.s, %d -> %d", value->s, retval->s);
    // dmsg2 ("cube struct.l, %d -> %d", value->l, retval->l);
    
-   CORBA_Any *any = new CORBA_Any (TC_Cubit_Many, retval, CORBA_B_TRUE);
+   CORBA_Any *any = new CORBA_Any (TC_Cubit_Many, retval, 1);
    
    req.result (any, env);
    dexc (env, "cube_struct, result");
@@ -220,7 +220,7 @@ _skel_Cubit::_cube_union_skel (CORBA_ServerRequest	&req,
    r->cm.s = (CORBA_Short) (v->cm.s);
    r->cm.l =  v->cm.l;
    
-   CORBA_Any *any = new CORBA_Any (TC_Cubit_oneof, r, CORBA_B_TRUE);
+   CORBA_Any *any = new CORBA_Any (TC_Cubit_oneof, r, 1);
    
    req.result (any, env);
    dexc (env, "cube_struct, result");

@@ -302,7 +302,7 @@ public:
   protected:
     ThreadPolicy (STUB_Object *objref = 0,
                   TAO_ServantBase *servant = 0,
-                  CORBA::Boolean collocated = CORBA::B_FALSE);
+                  CORBA::Boolean collocated = 0);
   public:
     virtual ~ThreadPolicy (void);
   private:
@@ -400,7 +400,7 @@ public:
     LifespanPolicy (
                     STUB_Object *objref = 0,
                     TAO_ServantBase *servant = 0,
-                    CORBA::Boolean collocated = CORBA::B_FALSE
+                    CORBA::Boolean collocated = 0
                     );
   public:
     virtual ~LifespanPolicy (void);
@@ -499,7 +499,7 @@ public:
     IdUniquenessPolicy (
                         STUB_Object *objref = 0,
                         TAO_ServantBase *servant = 0,
-                        CORBA::Boolean collocated = CORBA::B_FALSE
+                        CORBA::Boolean collocated = 0
                         );
   public:
     virtual ~IdUniquenessPolicy (void);
@@ -598,7 +598,7 @@ public:
     IdAssignmentPolicy (
                         STUB_Object *objref = 0,
                         TAO_ServantBase *servant = 0,
-                        CORBA::Boolean collocated = CORBA::B_FALSE
+                        CORBA::Boolean collocated = 0
                         );
   public:
     virtual ~IdAssignmentPolicy (void);
@@ -697,7 +697,7 @@ public:
     ImplicitActivationPolicy (
                               STUB_Object *objref = 0,
                               TAO_ServantBase *servant = 0,
-                              CORBA::Boolean collocated = CORBA::B_FALSE
+                              CORBA::Boolean collocated = 0
                               );
   public:
     virtual ~ImplicitActivationPolicy (void);
@@ -796,7 +796,7 @@ public:
     ServantRetentionPolicy (
                             STUB_Object *objref = 0,
                             TAO_ServantBase *servant = 0,
-                            CORBA::Boolean collocated = CORBA::B_FALSE
+                            CORBA::Boolean collocated = 0
                             );
   public:
     virtual ~ServantRetentionPolicy (void);
@@ -896,7 +896,7 @@ public:
     RequestProcessingPolicy (
                              STUB_Object *objref = 0,
                              TAO_ServantBase *servant = 0,
-                             CORBA::Boolean collocated = CORBA::B_FALSE
+                             CORBA::Boolean collocated = 0
                              );
   public:
     virtual ~RequestProcessingPolicy (void);
@@ -1002,7 +1002,7 @@ public:
     SynchronizationPolicy (
                            STUB_Object *objref = 0,
                            TAO_ServantBase *servant = 0,
-                           CORBA::Boolean collocated = CORBA::B_FALSE
+                           CORBA::Boolean collocated = 0
                            );
   public:
     virtual ~SynchronizationPolicy (void);
@@ -1129,7 +1129,7 @@ public:
     POAManager (
                 STUB_Object *objref = 0,
                 TAO_ServantBase *servant = 0,
-                CORBA::Boolean collocated = CORBA::B_FALSE
+                CORBA::Boolean collocated = 0
                 );
   public:
     virtual ~POAManager (void);
@@ -1220,7 +1220,7 @@ public:
     AdapterActivator (
                       STUB_Object *objref = 0,
                       TAO_ServantBase *servant = 0,
-                      CORBA::Boolean collocated = CORBA::B_FALSE
+                      CORBA::Boolean collocated = 0
                       );
   public:
     virtual ~AdapterActivator (void);
@@ -1311,7 +1311,7 @@ public:
     ServantManager (
                     STUB_Object *objref = 0,
                     TAO_ServantBase *servant = 0,
-                    CORBA::Boolean collocated = CORBA::B_FALSE
+                    CORBA::Boolean collocated = 0
                     );
   public:
     virtual ~ServantManager (void);
@@ -1403,7 +1403,7 @@ public:
     ServantActivator (
                       STUB_Object *objref = 0,
                       TAO_ServantBase *servant = 0,
-                      CORBA::Boolean collocated = CORBA::B_FALSE
+                      CORBA::Boolean collocated = 0
                       );
   public:
     virtual ~ServantActivator (void);
@@ -1498,7 +1498,7 @@ public:
     ServantLocator (
                     STUB_Object *objref = 0,
                     TAO_ServantBase *servant = 0,
-                    CORBA::Boolean collocated = CORBA::B_FALSE
+                    CORBA::Boolean collocated = 0
                     );
   public:
     virtual ~ServantLocator (void);
@@ -1986,7 +1986,7 @@ public:
     POA (
          STUB_Object *objref = 0,
          TAO_ServantBase *servant = 0,
-         CORBA::Boolean collocated = CORBA::B_FALSE
+         CORBA::Boolean collocated = 0
          );
   public:
     virtual ~POA (void);
@@ -2111,7 +2111,7 @@ public:
     Current (
              STUB_Object *objref = 0,
              TAO_ServantBase *servant = 0,
-             CORBA::Boolean collocated = CORBA::B_FALSE
+             CORBA::Boolean collocated = 0
              );
   public:
     virtual ~Current (void);

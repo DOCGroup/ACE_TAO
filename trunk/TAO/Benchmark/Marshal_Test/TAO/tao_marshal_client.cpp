@@ -694,13 +694,13 @@ Tao_Marshal_Client_Proxy::dii_test_short (CORBA_Marshal_Proxy::OPTIONS &options,
 
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add (CORBA_ARG_IN)->value ()) <<= s1;
-  arglist->add_value ("s1", CORBA_Any (_tc_CORBA_Short, &s1, CORBA_B_FALSE),
+  arglist->add_value ("s1", CORBA_Any (_tc_CORBA_Short, &s1, 0),
 		      CORBA_ARG_IN, env);
   // this usage is also correct. All we care is to supply a storage area for
   // the OUT parameter
   //  arglist->add (CORBA_ARG_OUT)->value ()->replace (CORBA__tc_short, &s2);
   //  *(arglist->add (CORBA_ARG_OUT)->value ()) <<= s2;
-  arglist->add_value ("s2", CORBA_Any (_tc_CORBA_Short, &s2, CORBA_B_FALSE),
+  arglist->add_value ("s2", CORBA_Any (_tc_CORBA_Short, &s2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item (0);
@@ -749,10 +749,10 @@ Tao_Marshal_Client_Proxy::dii_test_long (CORBA_Marshal_Proxy::OPTIONS &options,
 
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= l1;
-  arglist->add_value ("l1", CORBA_Any (_tc_CORBA_Long, &l1, CORBA_B_FALSE),
+  arglist->add_value ("l1", CORBA_Any (_tc_CORBA_Long, &l1, 0),
 		      CORBA_ARG_IN, env);
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (CORBA__tc_long, &l2);
-  arglist->add_value ("l2", CORBA_Any (_tc_CORBA_Long, &l2, CORBA_B_FALSE),
+  arglist->add_value ("l2", CORBA_Any (_tc_CORBA_Long, &l2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -803,9 +803,9 @@ Tao_Marshal_Client_Proxy::dii_test_octet (CORBA_Marshal_Proxy::OPTIONS &options,
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= CORBA_Any::from_octet (o1);
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (CORBA__tc_octet, &o2);
-  arglist->add_value ("o1", CORBA_Any (_tc_CORBA_Octet, &o1, CORBA_B_FALSE),
+  arglist->add_value ("o1", CORBA_Any (_tc_CORBA_Octet, &o1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("o2", CORBA_Any (_tc_CORBA_Octet, &o2, CORBA_B_FALSE),
+  arglist->add_value ("o2", CORBA_Any (_tc_CORBA_Octet, &o2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -856,9 +856,9 @@ Tao_Marshal_Client_Proxy::dii_test_char (CORBA_Marshal_Proxy::OPTIONS &options,
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= CORBA_Any::from_char (c1);
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (CORBA__tc_char, &c2);
-  arglist->add_value ("c1", CORBA_Any (_tc_CORBA_Char, &c1, CORBA_B_FALSE),
+  arglist->add_value ("c1", CORBA_Any (_tc_CORBA_Char, &c1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("c2", CORBA_Any (_tc_CORBA_Char, &c2, CORBA_B_FALSE),
+  arglist->add_value ("c2", CORBA_Any (_tc_CORBA_Char, &c2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -909,9 +909,9 @@ Tao_Marshal_Client_Proxy::dii_test_double (CORBA_Marshal_Proxy::OPTIONS &options
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= d1;
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (CORBA__tc_double, &d2);
-  arglist->add_value ("d1", CORBA_Any (_tc_CORBA_Double, &d1, CORBA_B_FALSE),
+  arglist->add_value ("d1", CORBA_Any (_tc_CORBA_Double, &d1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("d2", CORBA_Any (_tc_CORBA_Double, &d2, CORBA_B_FALSE),
+  arglist->add_value ("d2", CORBA_Any (_tc_CORBA_Double, &d2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -966,9 +966,9 @@ Tao_Marshal_Client_Proxy::dii_test_struct (CORBA_Marshal_Proxy::OPTIONS &options
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= ms1;
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (Marshal::_tc_Marshal_Struct, &ms2);
-  arglist->add_value ("ms1", CORBA_Any (Marshal::_tc_Marshal_Struct, &ms1, CORBA_B_FALSE),
+  arglist->add_value ("ms1", CORBA_Any (Marshal::_tc_Marshal_Struct, &ms1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("ms2", CORBA_Any (Marshal::_tc_Marshal_Struct, &ms2, CORBA_B_FALSE),
+  arglist->add_value ("ms2", CORBA_Any (Marshal::_tc_Marshal_Struct, &ms2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -1024,9 +1024,9 @@ Tao_Marshal_Client_Proxy::dii_test_union (CORBA_Marshal_Proxy::OPTIONS &options,
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= u1;
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (Marshal::_tc_Marshal_Union, &u2);
-  arglist->add_value ("u1", CORBA_Any (Marshal::_tc_Marshal_Union, &u1, CORBA_B_FALSE),
+  arglist->add_value ("u1", CORBA_Any (Marshal::_tc_Marshal_Union, &u1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("u2", CORBA_Any (Marshal::_tc_Marshal_Union, &u2, CORBA_B_FALSE),
+  arglist->add_value ("u2", CORBA_Any (Marshal::_tc_Marshal_Union, &u2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -1069,9 +1069,9 @@ Tao_Marshal_Client_Proxy::dii_test_union (CORBA_Marshal_Proxy::OPTIONS &options,
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= u1;
   //arglist->add(CORBA_ARG_OUT)->value()->replace (Marshal::_tc_Marshal_Union, &u2);
-  arglist->add_value ("u1", CORBA_Any (Marshal::_tc_Marshal_Union, &u1, CORBA_B_FALSE),
+  arglist->add_value ("u1", CORBA_Any (Marshal::_tc_Marshal_Union, &u1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("u2", CORBA_Any (Marshal::_tc_Marshal_Union, &u2, CORBA_B_FALSE),
+  arglist->add_value ("u2", CORBA_Any (Marshal::_tc_Marshal_Union, &u2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -1127,7 +1127,7 @@ Tao_Marshal_Client_Proxy::dii_test_any (CORBA_Marshal_Proxy::OPTIONS &options,
 
   // populate the any with a MarshalStruct
   //  a1 <<= ms1;
-  a1.replace (Marshal::_tc_Marshal_Struct, &ms1, CORBA_B_FALSE, env);
+  a1.replace (Marshal::_tc_Marshal_Struct, &ms1, 0, env);
 
   a2 = new CORBA_Any;
 
@@ -1135,9 +1135,9 @@ Tao_Marshal_Client_Proxy::dii_test_any (CORBA_Marshal_Proxy::OPTIONS &options,
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= a1;
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (CORBA__tc_any, a2);
-  arglist->add_value ("a1", CORBA_Any (_tc_CORBA_Any, &a1, CORBA_B_FALSE),
+  arglist->add_value ("a1", CORBA_Any (_tc_CORBA_Any, &a1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("a2", CORBA_Any (_tc_CORBA_Any, a2, CORBA_B_FALSE),
+  arglist->add_value ("a2", CORBA_Any (_tc_CORBA_Any, a2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);
@@ -1239,9 +1239,9 @@ Tao_Marshal_Client_Proxy::dii_test_sequence (CORBA_Marshal_Proxy::OPTIONS &optio
   orb_->create_list(0, arglist); // 2 arguments to be added
   //  *(arglist->add(CORBA_ARG_IN)->value()) <<= as1;
   //  arglist->add(CORBA_ARG_OUT)->value()->replace (Marshal::_tc_AnySeq, as2);
-  arglist->add_value ("as1", CORBA_Any (Marshal::_tc_AnySeq, &as1, CORBA_B_FALSE),
+  arglist->add_value ("as1", CORBA_Any (Marshal::_tc_AnySeq, &as1, 0),
 		      CORBA_ARG_IN, env);
-  arglist->add_value ("o2", CORBA_Any (Marshal::_tc_AnySeq, as2, CORBA_B_FALSE),
+  arglist->add_value ("o2", CORBA_Any (Marshal::_tc_AnySeq, as2, 0),
 		      CORBA_ARG_OUT, env);
   orb_->create_list(1, result_list); // 1 result
   result = result_list->item(0);

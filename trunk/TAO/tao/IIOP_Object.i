@@ -47,8 +47,8 @@ IIOP_Object::IIOP_Object (char *repository_id)
   : STUB_Object (repository_id),
     fwd_profile_ (0),
     refcount_ (1),
-    use_locate_request_ (CORBA::B_FALSE),
-    first_locate_request_ (CORBA::B_FALSE),
+    use_locate_request_ (0),
+    first_locate_request_ (0),
     handler_ (0)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
@@ -63,8 +63,8 @@ IIOP_Object::IIOP_Object (char *repository_id,
     profile (a_profile),
     fwd_profile_ (0),
     refcount_ (1),
-    use_locate_request_ (CORBA::B_FALSE),
-    first_locate_request_ (CORBA::B_FALSE),
+    use_locate_request_ (0),
+    first_locate_request_ (0),
     handler_ (0)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
@@ -124,7 +124,7 @@ ACE_INLINE
 void 
 IIOP_Object::reset_first_locate_request (void)
 {
-  first_locate_request_ = CORBA::B_TRUE;
+  first_locate_request_ = 1;
 }
 
 ACE_INLINE
@@ -133,14 +133,14 @@ IIOP_Object::use_locate_requests (CORBA::Boolean use_it)
 {
   if (use_it)
     {
-      this->first_locate_request_ = CORBA::B_TRUE;
-      this->use_locate_request_ = CORBA::B_TRUE;
+      this->first_locate_request_ = 1;
+      this->use_locate_request_ = 1;
     }
   else 
     // don't use it
     {
-      this->first_locate_request_ = CORBA::B_TRUE;
-      this->use_locate_request_ = CORBA::B_TRUE;
+      this->first_locate_request_ = 1;
+      this->use_locate_request_ = 1;
     }   
 } 
 

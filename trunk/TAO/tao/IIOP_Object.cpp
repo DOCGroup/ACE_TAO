@@ -286,13 +286,13 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 {
   env.clear ();
 
-  if (CORBA::is_nil (other_obj) == CORBA::B_TRUE)
-    return CORBA::B_FALSE;
+  if (CORBA::is_nil (other_obj) == 1)
+    return 0;
 
   IIOP_Object *other_iiop_obj =
     ACE_dynamic_cast (IIOP_Object*, other_obj->_stubobj ());
   if (other_iiop_obj == 0)
-    return CORBA::B_FALSE;
+    return 0;
 
   // Compare all the bytes of the object address -- must be the same.
 
@@ -453,7 +453,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
          
     TAO_GIOP_ReplyStatusType  status = call.invoke (env);
 
-    this->first_locate_request_ = CORBA::B_FALSE;
+    this->first_locate_request_ = 0;
 
     if (status == TAO_GIOP_SYSTEM_EXCEPTION)
       return;
@@ -710,7 +710,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                           void *ptr = new CORBA::Octet [size];
 
                           result->value ()->replace (tcp.in (), ptr,
-                                                     CORBA::B_TRUE, env);
+                                                     1, env);
                           dexc (env, "do_dynamic_call, set result mem");
                         }
                     }
@@ -778,7 +778,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                               CORBA::Octet *ptr = new CORBA::Octet [size];
 
                               value->value ()->replace (tcp.in (), ptr,
-                                                        CORBA::B_TRUE, env);
+                                                        1, env);
                               dexc (env, "do_dynamic_call, set result mem");
                             }
                         }

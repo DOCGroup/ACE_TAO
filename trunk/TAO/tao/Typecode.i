@@ -42,7 +42,7 @@ CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
 {
   if (this->kind_ != tc->kind (env))
     // simple case
-    return CORBA::B_FALSE;
+    return 0;
   else
     // typecode kinds are same
     return this->private_equal (tc, env);

@@ -63,8 +63,8 @@ main (int argc, char **argv)
               poa_name.in ()));
 
   // Destroy the POA object,also destroys the child POAs if any.
-  root_poa->destroy (CORBA::B_TRUE,
-                     CORBA::B_TRUE,
+  root_poa->destroy (1,
+                     1,
                      env);
 
   TAO_CHECK_ENV_PRINT_RETURN (env,

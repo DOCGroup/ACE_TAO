@@ -227,7 +227,7 @@ ACE_INLINE CORBA::Boolean
 CORBA_ORB::work_pending (void)
 {
   // There's ALWAYS work to do ;-)
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean

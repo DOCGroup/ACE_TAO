@@ -182,7 +182,7 @@ ECM_Driver::run (int argc, char* argv[])
 
       // Create the EventService implementation, but don't start its
       // internal threads.
-      ACE_EventChannel ec_impl (CORBA::B_FALSE);
+      ACE_EventChannel ec_impl (0);
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
@@ -505,7 +505,7 @@ ECM_Driver::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       this->mcast_eh_.open (this->recv_mcast_group_);
 
       RtecEventChannelAdmin::ConsumerQOS sender_qos;
-      sender_qos.is_gateway = CORBA::B_TRUE;
+      sender_qos.is_gateway = 1;
       sender_qos.dependencies.length (3);
       sender_qos.dependencies[0].event.type_ = ACE_ES_DISJUNCTION_DESIGNATOR;
       sender_qos.dependencies[0].event.source_ = 0;
@@ -524,7 +524,7 @@ ECM_Driver::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       TAO_CHECK_ENV;
 
       RtecEventChannelAdmin::SupplierQOS receiver_qos;
-      receiver_qos.is_gateway = CORBA::B_TRUE;
+      receiver_qos.is_gateway = 1;
       receiver_qos.publications.length (2);
       receiver_qos.publications[0].event.type_ = this->r_event_a_;
       receiver_qos.publications[0].event.source_ = 0;

@@ -315,7 +315,7 @@ Client::test_get_all_property_names (CORBA::Environment &env)
       // Get the values back on a _var variable.
       CosPropertyService::PropertyName_var name_var = name_out.ptr ();
       
-      while (next_one_result == CORBA::B_TRUE)
+      while (next_one_result == 1)
         {
           TAO_CHECK_ENV_RETURN (env, -1);
           ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
@@ -591,7 +591,7 @@ Client::test_get_all_properties (CORBA::Environment &env)
       // Get the value to the _var variable.
       CosPropertyService::Property_var property = property_out.ptr ();
 
-      while (next_one_result != CORBA::B_FALSE)
+      while (next_one_result != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Iteration over PropertyIterartor"));
           TAO_CHECK_ENV_RETURN (env, -1);

@@ -500,7 +500,7 @@ retrieve_links (TAO_Policies& policies,
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Lookup::PolicyTypeMismatch))
 {
-  CORBA::Boolean should_follow = CORBA::B_FALSE;
+  CORBA::Boolean should_follow = 0;
   CosTrading::FollowOption follow_rule = policies.link_follow_rule (_env);
   TAO_CHECK_ENV_RETURN (_env, should_follow);
 
@@ -510,7 +510,7 @@ retrieve_links (TAO_Policies& policies,
   if ((follow_rule == CosTrading::always ||
        (follow_rule == CosTrading::if_no_local && offers_returned == 0))
       && policies.hop_count (_env) > 0)
-    should_follow = CORBA::B_TRUE;
+    should_follow = 1;
 
   if (should_follow)
     {
@@ -520,7 +520,7 @@ retrieve_links (TAO_Policies& policies,
         this->trader_.trading_components ().link_if ();
 
       links = link_if->list_links (_env);
-      TAO_CHECK_ENV_RETURN (_env, CORBA::B_FALSE);
+      TAO_CHECK_ENV_RETURN (_env, 0);
 
       // Determine which of the links registered with the Link
       // interface are suitable to follow.
@@ -697,7 +697,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   CORBA::ULong length = offers.length ();
 
   // Grab ownership of the offers already in the target sequence.
-  CosTrading::Offer* target_buf = offers.get_buffer (CORBA::B_TRUE);
+  CosTrading::Offer* target_buf = offers.get_buffer (1);
 
   // Order the sequence.
   for (j = 0; j < length; j++)
@@ -813,17 +813,17 @@ seen_request_id (TAO_Policies& policies,
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Lookup::PolicyTypeMismatch))
 {
-  CORBA::Boolean return_value = CORBA::B_FALSE;
+  CORBA::Boolean return_value = 0;
 
   seq = policies.request_id (_env);
-  TAO_CHECK_ENV_RETURN (_env, CORBA::B_TRUE);
+  TAO_CHECK_ENV_RETURN (_env, 1);
 
   if (seq == 0)
     {
       CosTrading::Admin_ptr admin_if =
         this->trader_.trading_components ().admin_if ();
       seq = admin_if->request_id_stem (_env);
-      TAO_CHECK_ENV_RETURN (_env, CORBA::B_TRUE);
+      TAO_CHECK_ENV_RETURN (_env, 1);
     }
   else
     {
@@ -831,13 +831,13 @@ seen_request_id (TAO_Policies& policies,
       // cases.
       ACE_NEW_RETURN (seq,
                       CosTrading::Admin::OctetSeq (*seq),
-                      CORBA::B_FALSE);
+                      0);
     }
 
   if (seq == 0)
-    TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), CORBA::B_TRUE);
+    TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 1);
 
-  ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, CORBA::B_TRUE);
+  ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
   for (Request_Ids::ITERATOR riter (this->request_ids_);
        ! riter.done ();
        riter.advance ())
@@ -847,12 +847,12 @@ seen_request_id (TAO_Policies& policies,
 
       if (**old_seq == *seq)
         {
-          return_value = CORBA::B_TRUE;
+          return_value = 1;
           break;
         }
     }
 
-  if (return_value == CORBA::B_FALSE)
+  if (return_value == 0)
     {
       if (this->request_ids_.size () == IDS_SAVED)
         {
@@ -943,8 +943,8 @@ export (CORBA::Object_ptr reference,
   // No copying, no memory leaks.
   CosTrading::PropertySeq* hack_seq =
     ACE_const_cast (CosTrading::PropertySeq*, &properties);
-  CosTrading::Property* pbuf = hack_seq->get_buffer (CORBA::B_TRUE);
-  offer->properties.replace (plength, plength, pbuf, CORBA::B_TRUE);
+  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
+  offer->properties.replace (plength, plength, pbuf, 1);
   offer->reference = reference->_duplicate (reference);
 
   // Insert the offer into the underlying type map.
@@ -995,7 +995,7 @@ describe (const char *id,
   // Let the offer_info prop_seq "borrow" the sequence of properties.
   CORBA::ULong length = offer->properties.length ();
   CosTrading::Property* prop_buf = offer->properties.get_buffer ();
-  offer_info->properties.replace (length, length, prop_buf, CORBA::B_FALSE);
+  offer_info->properties.replace (length, length, prop_buf, 0);
 
   return offer_info;
 }
@@ -1562,7 +1562,7 @@ list_offers (CORBA::ULong how_many,
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
     {
-      if (offer_id_iter->next_n (how_many, ids, _env) == CORBA::B_TRUE)
+      if (offer_id_iter->next_n (how_many, ids, _env) == 1)
         {
           id_itr = offer_id_iter->_this (_env);
           TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -1737,7 +1737,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
     link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
 
   // Return a sequence of the buf names.
-  return new CosTrading::LinkNameSeq (i, i, link_seq, CORBA::B_TRUE);
+  return new CosTrading::LinkNameSeq (i, i, link_seq, 1);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

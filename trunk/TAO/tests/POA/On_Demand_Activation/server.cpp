@@ -270,8 +270,8 @@ main (int argc, char **argv)
 
   // Destroy the root_poa and also first_poa and second_poa
 
-  root_poa->destroy (CORBA::B_TRUE,
-                     CORBA::B_TRUE,
+  root_poa->destroy (1,
+                     1,
                      env);
   if (env.exception () != 0)
     {

@@ -119,7 +119,7 @@ long GenClientStubs(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
     stub << "static const TAO_Call_Data tao_demux_" << str->rep() << 
       "_calldata = {" << endl;
     stub << "\t\"" << str->rep() << "\"," << endl;
-    stub << "\tCORBA_B_TRUE, //twoway" << endl;
+    stub << "\t1, //twoway" << endl;
     stub << "\t1, &tao_demux_" << str->rep() << "_params[0]," << endl;
     stub << "\t0, 0" << endl;
     stub << "};" << endl;
@@ -128,7 +128,7 @@ long GenClientStubs(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
     stub << "static const TAO_Call_Data tao_demux_" << str->rep() << 
       "_active_calldata = {" << endl;
     stub << "\t\"" << i << "\"," << endl;
-    stub << "\tCORBA_B_TRUE, //twoway" << endl;
+    stub << "\t1, //twoway" << endl;
     stub << "\t1, &tao_demux_" << str->rep() << "_params[0]," << endl;
     stub << "\t0, 0" << endl;
     stub << "};" << endl;

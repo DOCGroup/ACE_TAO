@@ -1,3 +1,13 @@
+Sat Aug 29 23:23:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/GIOP.cpp (close_connection): We realized that use of
+ 	  CORBA::B_TRUE and CORBA::B_FALSE is not standard.  Therefore, we
+ 	  have deprecated CORBA::B_TRUE and CORBA::B_FALSE.  The
+ 	  replacements are 1 and 0 respectively.  This script will help in
+ 	  the conversion:
+
+	  http://www.cs.wustl.edu/~schmidt/ACE_wrappers/bin/corba-boolean.perl
+
 Sat Aug 29 20:58:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.h: 

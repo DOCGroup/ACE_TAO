@@ -53,7 +53,7 @@ static const TAO_Param_Data Cubit_cube_octet_params [] =
 
 static const TAO_Call_Data Cubit_cube_octet_calldata = 
 {
-   "cube_octet", CORBA_B_TRUE,
+   "cube_octet", 1,
       2, &Cubit_cube_octet_params [0],
       0, 0
 };
@@ -92,7 +92,7 @@ static const TAO_Param_Data Cubit_cube_short_params [] =
 
 static const TAO_Call_Data Cubit_cube_short_calldata = 
 {
-   "cube_short", CORBA_B_TRUE,
+   "cube_short", 1,
       2, &Cubit_cube_short_params [0],
       0, 0
 };
@@ -131,7 +131,7 @@ static const TAO_Param_Data Cubit_cube_long_params [] =
 
 static const TAO_Call_Data Cubit_cube_long_calldata = 
 {
-   "cube_long", CORBA_B_TRUE,
+   "cube_long", 1,
       2, &Cubit_cube_long_params [0],
       0, 0
 };
@@ -189,7 +189,7 @@ static const CORBA_Long _oc_Cubit_Many [] =
 
 static CORBA_TypeCode _tc_Cubit_Many (tk_struct,
                                       sizeof _oc_Cubit_Many, (unsigned char *) &_oc_Cubit_Many,
-                                      CORBA_B_FALSE);
+                                      0);
 CORBA_TypeCode_ptr TC_Cubit_Many = &_tc_Cubit_Many;
 
 
@@ -205,7 +205,7 @@ static const TAO_Param_Data Cubit_cube_struct_params [] =
 
 static const TAO_Call_Data Cubit_cube_struct_calldata = 
 {
-   "cube_struct", CORBA_B_TRUE,
+   "cube_struct", 1,
       2, &Cubit_cube_struct_params [0],
       0, 0
 };
@@ -321,7 +321,7 @@ static const CORBA_Long _oc_Cubit_oneof [] =
 
 static CORBA_TypeCode _tc_Cubit_oneof (tk_union,
                                        (sizeof _oc_Cubit_oneof), (unsigned char *) &_oc_Cubit_oneof,
-                                       CORBA_B_FALSE);
+                                       0);
 CORBA_TypeCode_ptr TC_Cubit_oneof = &_tc_Cubit_oneof;
 
 static const TAO_Param_Data Cubit_cube_union_params [] = 
@@ -332,7 +332,7 @@ static const TAO_Param_Data Cubit_cube_union_params [] =
 
 static const TAO_Call_Data Cubit_cube_union_calldata = 
 {
-   "cube_union", CORBA_B_TRUE,
+   "cube_union", 1,
       2, &Cubit_cube_union_params [0],
       0, 0
 };
@@ -365,7 +365,7 @@ Cubit::Cubit_cube_union (Cubit_oneof		&values,
 
 static const TAO_Call_Data Cubit_please_exit_calldata = 
 {
-   "please_exit", CORBA_B_FALSE,
+   "please_exit", 0,
       0, 0,
       0, 0
 };

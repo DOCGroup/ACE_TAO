@@ -197,7 +197,7 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].event.ec_send_time_ = ORBSVCS_Time::zero;
     qos.publications[0].event.data_.any_value.replace (CORBA::_tc_short,
                                                        &x,
-                                                       CORBA::B_FALSE,
+                                                       0,
                                                        TAO_TRY_ENV);
     qos.publications[0].dependency_info.number_of_calls = 1;
     qos.publications[0].dependency_info.rt_info = rt_info;

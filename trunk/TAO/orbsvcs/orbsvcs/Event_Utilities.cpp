@@ -11,7 +11,7 @@ ACE_RCSID(orbsvcs, Event_Utilities, "$Id$")
 ACE_ConsumerQOS_Factory::ACE_ConsumerQOS_Factory (void)
   : designator_set_ (0)
 {
-  qos_.is_gateway = CORBA::B_FALSE;
+  qos_.is_gateway = 0;
 }
 
 ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
@@ -96,7 +96,7 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 
 ACE_SupplierQOS_Factory::ACE_SupplierQOS_Factory (void)
 {
-  qos_.is_gateway = CORBA::B_FALSE;
+  qos_.is_gateway = 0;
 }
 
 int

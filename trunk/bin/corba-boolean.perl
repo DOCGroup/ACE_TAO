@@ -8,5 +8,7 @@
 # please make the change accordingly
 #
 
-s/CORBA::B_FALSE/CORBA::FALSE/g;
-s/CORBA::B_TRUE/CORBA::TRUE/g;
+s/CORBA::B_FALSE/0/g;
+s/CORBA::B_TRUE/1/g;
+s/CORBA_B_FALSE/0/g;
+s/CORBA_B_TRUE/1/g;

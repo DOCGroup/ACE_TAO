@@ -41,7 +41,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
   : operation_ (0),
     incoming_ (&input),
     outgoing_ (&output),
-    response_expected_ (CORBA::B_FALSE),
+    response_expected_ (0),
     params_ (0),
     retval_ (0),
     exception_ (0),
@@ -89,7 +89,7 @@ IIOP_ServerRequest::parse_header_std (CORBA::Environment &env)
     {
       this->object_key_.replace (key_length, key_length,
                                  (CORBA::Octet*)input.rd_ptr (),
-                                 CORBA::B_FALSE);
+                                 0);
       input.skip_bytes (key_length);
     }
 
@@ -237,7 +237,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
           if (env.exception () != 0)
             return;
 
-          any->replace (tc.in (), value, CORBA::B_TRUE, env);
+          any->replace (tc.in (), value, 1, env);
           if (env.exception () != 0)
             return;
 

@@ -147,13 +147,13 @@ main (int argc, char *argv[])
       if (orb_ptr->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
-      good_poa->destroy (CORBA::B_TRUE,
-                         CORBA::B_TRUE,
+      good_poa->destroy (1,
+                         1,
                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      oa_ptr->destroy (CORBA::B_TRUE,
-                       CORBA::B_TRUE,
+      oa_ptr->destroy (1,
+                       1,
                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }

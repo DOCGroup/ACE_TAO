@@ -170,7 +170,7 @@ catior (CORBA::String str,
   if (tmp [0] && !isspace (tmp [0]))
     {
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-      return  CORBA::B_FALSE;
+      return  0;
     }
 
   // Create deencapsulation stream ... then unmarshal objref from that
@@ -187,7 +187,7 @@ catior (CORBA::String str,
   mb.wr_ptr (2*len-1);
   TAO_InputCDR stream (&mb, byteOrder);
 
-  if (byteOrder == CORBA::B_TRUE)
+  if (byteOrder == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "The Byte Order:\tLittle Endian\n"));
   else
@@ -199,7 +199,7 @@ catior (CORBA::String str,
   CORBA::String type_hint;
 
   if ((continue_decoding = stream.decode (CORBA::_tc_string, &type_hint, 0, env))
-      == CORBA::B_FALSE)
+      == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));
@@ -228,7 +228,7 @@ catior (CORBA::String str,
   continue_decoding = stream.read_ulong (profiles);
 
   // Get the count of profiles that follow.
-  if (continue_decoding == CORBA::B_FALSE)
+  if (continue_decoding == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read the profile count\n"));
@@ -253,7 +253,7 @@ catior (CORBA::String str,
         continue_decoding = stream.read_ulong (tag);
 
         // Get the profile ID tag.
-        if (continue_decoding == CORBA::B_FALSE)
+        if (continue_decoding == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "cannot read profile tag\n"));
@@ -278,7 +278,7 @@ catior (CORBA::String str,
 
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
-        if (continue_decoding == CORBA::B_FALSE)
+        if (continue_decoding == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "cannot read encap length\n"));
@@ -387,7 +387,7 @@ catior (CORBA::String str,
                     objKey));
         CORBA::string_free (objKey);
       }
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 int
@@ -479,7 +479,7 @@ main (int argc, char *argv[])
 
             CORBA::Boolean  b = catior (str, env);
 
-            if (b == CORBA::B_TRUE)
+            if (b == 1)
               ACE_DEBUG ((LM_DEBUG,
                           "catior returned true\n"));
             else

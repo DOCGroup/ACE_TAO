@@ -73,7 +73,7 @@ main (int argc, char ** argv)
       CORBA::Object_ptr ior_ptr = ior.in ();
       any_val.replace (CORBA::_tc_Object,
                        &ior_ptr,
-                       CORBA::B_TRUE,
+                       1,
                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
 #endif

@@ -75,7 +75,7 @@ protected:
   TAO_Base_Sequence (CORBA::ULong maximum,
                      CORBA::ULong length,
                      void *buffer,
-                     CORBA::Boolean release = CORBA::B_FALSE);
+                     CORBA::Boolean release = 0);
   // Constructor with control of ownership.
 
   TAO_Base_Sequence (CORBA::ULong maximum,
@@ -443,14 +443,14 @@ public:
   // TAO_Base_Sequence.
 
   // = orbos/98-01-11 proposed extensions.
-  CORBA::Octet *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);
+  CORBA::Octet *get_buffer (CORBA::Boolean orphan = 0);
   const CORBA::Octet *get_buffer (void) const;
   // NOTE: This last two methods can be rendered useless in certain
   // cases, see below.
   void replace (CORBA::ULong max,
                 CORBA::ULong length,
                 CORBA::Octet *data,
-                CORBA::Boolean release = CORBA::B_FALSE);
+                CORBA::Boolean release = 0);
   // See the general description of this methods in "Sequence_T.h".
 
   // = TAO extensions

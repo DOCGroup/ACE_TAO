@@ -228,9 +228,6 @@ public:
   typedef Boolean &Boolean_out;
   // Out type for boolean.
 
-  static Boolean B_FALSE;
-  static Boolean B_TRUE;
-
   typedef u_char Octet;
   typedef Octet  &Octet_out;
   // Out type for octet.
@@ -877,7 +874,7 @@ public:
   // calling run() in the main thread is useful to ensure that the
   // process does not exit until the ORB has been shut down.
 
-  void shutdown (CORBA::Boolean wait_for_completion = CORBA::B_FALSE);
+  void shutdown (CORBA::Boolean wait_for_completion = 0);
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks

@@ -273,7 +273,7 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking is_property_defined ()\n"));
   if (property_set_.is_property_defined ("short_property",
-                                         env) == CORBA::B_FALSE)
+                                         env) == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "short_property not defined\n"));
   else 
@@ -281,7 +281,7 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
                 "short_property defined\n"));
   TAO_CHECK_ENV_RETURN (env, 1);
   if (property_set_.is_property_defined ("string_property",
-                                         env) == CORBA::B_FALSE)
+                                         env) == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "string_property not defined\n"));
   else
@@ -289,7 +289,7 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
                 "string_property defined\n"));
   TAO_CHECK_ENV_RETURN (env, 1);
   if (property_set_.is_property_defined ("char_property",
-                                         env) == CORBA::B_FALSE)
+                                         env) == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "char_property not defined\n"));
   else
@@ -389,7 +389,7 @@ TAO_PropertySet_Tester::test_delete_all_properties (CORBA::Environment &env)
   // Deleting all the properties 
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_all_properties\n"));
-  if (property_set_.delete_all_properties (env) == CORBA::B_TRUE)
+  if (property_set_.delete_all_properties (env) == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "All properties deleted, I guess\n"));
   else
@@ -418,7 +418,7 @@ TAO_PropertyNamesIterator_Tester::test_next_one (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting next_one of NamesIterator, Iterating thru names.\n"));
   // Let us iterate, now.
-  while (iterator_.next_one (strvar.out (), env) != CORBA::B_FALSE)
+  while (iterator_.next_one (strvar.out (), env) != 0)
     { 
       TAO_CHECK_ENV_RETURN (env, 1);
       ACE_DEBUG ((LM_DEBUG, "Str : %s\n", strvar.in ()));
@@ -446,7 +446,7 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n,
   ACE_DEBUG ((LM_DEBUG,
               "Checking next_n (), next %d\n", 
               n));
-  if (iterator_.next_n (n, pnames_var.out (), env) == CORBA::B_FALSE)
+  if (iterator_.next_n (n, pnames_var.out (), env) == 0)
     {
       // Return if no more items in the iterator.
       TAO_CHECK_ENV_RETURN (env, 1);

@@ -118,7 +118,7 @@ public:
     AnySeq (CORBA_ULong max,
 	    CORBA_ULong length,
 	    CORBA_Any *value,
-	    CORBA_Boolean release = CORBA_B_FALSE
+	    CORBA_Boolean release = 0
 	    );
     //    AnySeq (const AnySeq&);
     ~AnySeq ();

@@ -66,6 +66,6 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant delete it.
 
-  if (remaining_activations == CORBA::B_FALSE)
+  if (remaining_activations == 0)
     delete servant;
 }

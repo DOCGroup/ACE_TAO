@@ -219,7 +219,7 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& _env)
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "listing all types in the Repository.\n"));
       
-      sst.all_ (CORBA::B_TRUE);
+      sst.all_ (1);
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var type_names =
 	this->repos_->list_types (sst, TAO_TRY_ENV);
       TAO_CHECK_ENV;
