@@ -1,3 +1,76 @@
+Thu May 24 16:34:37 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/corbafwd.h:
+
+	  Removed the TAO_INVOCATION_CONNECT_MINOR_CODE location minor
+	  code.  There is already an OMG assigned minor code used for the
+	  same type of problem.
+
+	* tao/orb.idl:
+
+	  Added the CORBA::ParameterMode enumeration to this IDL file.
+	  For some reason it was never defined.
+
+	* tao/Exception.cpp:
+
+	  Updated CORBA::SystemException minor code descriptions.
+
+	* tao/ClientRequestInfo.cpp:
+	* tao/IORInfo.cpp (add_ior_component_to_profile):
+	* tao/Object_Ref_Table.cpp (register_initial_reference):
+	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
+
+	  Updated all exception minor codes.  They were changed in the
+	  latest Portable Interceptor draft spec.
+
+	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):
+	* tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
+
+	  Removed all uses of the TAO_INVOCATION_CONNECT_MINOR_CODE
+	  location minor code.  Use the OMG assigned minor code (2)
+	  instead.
+
+	* tao/Invocation.cpp (invoke):
+
+	  Added the OMG assigned minor code to the thrown CORBA::UNKNOWN
+	  system exception.  This exception is thrown when an unknown user
+	  exception occurs during an invocation.
+
+	* tao/LocalObject.cpp (_create_request, _request):
+
+	  Added OMG assigned minor codes to the thrown CORBA::NO_IMPLEMENT
+	  exceptions.
+
+	  (_get_interface):
+
+	  According to the CCM spec, this method should throw a
+	  CORBA::NO_IMPLEMENT exception when invoked on a local object.
+
+	* tao/LocalObject.h:
+
+	  Doxygenated this header.
+
+	  (_key):
+
+	  Removed unnecessary default CORBA::Environment argument.
+
+	* tao/LocalObject.i:
+
+	  Cosmetic updates.
+
+	* tao/ORB.cpp (object_to_string):
+
+	  Throw a CORBA::MARSHAL exception if the given object to
+	  stringify is a locality constrained object.
+
+	  When creating a URL IOR, do not use the profile currently in
+	  use.  Use the very first one in the profile list associated with
+	  the given object.
+
+	* tao/Object.h (_key):
+
+	  Removed unneccessary default CORBA::Environment argument.
+
 Thu May 24 18:31:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * performance-tests/POA/Implicit_Activation/Test.idl:

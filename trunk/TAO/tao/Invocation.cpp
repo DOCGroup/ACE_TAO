@@ -942,7 +942,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       // If we couldn't find the right exception, report it as
       // CORBA::UNKNOWN.
 
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_OMG_VMCID | 1,
                                         CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
@@ -1023,7 +1023,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
       // This kind of exception shouldn't happen with oneways,
       // but if it does, we turn it into a CORBA::UNKNOWN exception.
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_OMG_VMCID | 1,
                                         CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
@@ -1088,7 +1088,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
         // This kind of exception shouldn't happen with oneways,
         // but if it does, we turn it into a CORBA::UNKNOWN exception.
-        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_OMG_VMCID | 1,
                                           CORBA::COMPLETED_YES),
                           TAO_INVOKE_EXCEPTION);
       }

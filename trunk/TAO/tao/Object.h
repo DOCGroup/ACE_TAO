@@ -191,8 +191,7 @@ public:
 
   /// Return the object key as an out parameter.  Caller should release
   /// return value when finished with it.
-  virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
+  virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV);
 
   /**
    * Return a reference to the object key of profile in-use.

@@ -408,9 +408,6 @@ CORBA_SystemException::_info (void) const
       const char *location;
       switch (this->minor () & 0x00000F80u)
         {
-        case TAO_INVOCATION_CONNECT_MINOR_CODE:
-          location = "invocation connect failed";
-          break;
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
           location = "location forward failed";
           break;
@@ -644,20 +641,25 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Supplied discriminator type illegitimate in create_union_tc.", // 20
         "Any passed to ServerRequest::set_exception does not contain an exception.", // 21
         "Unlisted user exception passed to ServerRequest::set_exception", // 22
-        "Invalid service context ID in portable interceptor.",       // 23
-        "Attempt to call register_initial_reference with a null Object.", // 24
-        "Invalid component ID in portable interceptor.",             // 25
-        "Invalid profile ID in portable interceptor."                // 26
+        "wchar transmission code set not in service context.",       // 23
+        "Service context is not in OMG-defined range.",              // 24
+        "Enum value out of range.",                                  // 25
+        "Invalid service context Id in portable interceptor.",       // 26
+        "Attempt to call register_initial_reference with a null Object.", // 27
+        "Invalid component Id in portable interceptor.",             // 28
+        "Invalid profile Id in portable interceptor.",               // 29
+        "Two or more Policy objects with the same PolicyType value supplied to Object::set_policy_overrides or PolicyManager::set_policy_overrides." // 30
     };
 
   static const char *IMP_LIMIT_TABLE[] =
-  {
+    {
         "Unable to use any profile in IOR." // 1
     };
 
   static const char *INV_OBJREF_TABLE[] =
     {
-        "wchar Code Set support not specified." // 1
+        "wchar Code Set support not specified.", // 1
+        "Codeset component required for type using wchar or wstring data." // 2
     };
 
   static const char *MARSHAL_TABLE[] =
@@ -665,7 +667,9 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Unable to locate value factory.",  // 1
         "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
         "NVList passed to ServerRequest::arguments does not describe all parameters passed by client.", // 3
-        "Attempt to marshal Local object." // 4
+        "Attempt to marshal Local object.", // 4
+        "wchar or wstring data erroneously sent by client over GIOP 1.0 connection.", // 5
+        "wchar or wstring data erroneously returned by server over GIOP 1.0 connection." //6
     };
 
   static const char *BAD_TYPECODE_TABLE[] =
@@ -698,15 +702,22 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "ServerRequest::arguments called more than once or after a call to ServerRequest::set_exception.", // 7
         "ServerRequest::ctx called more than once or before ServerRequest::arguments or after ServerRequest::ctx, ServerRequest::set_result or ServerRequest::set_exception.", // 8
         "ServerRequest::result called more than once or before ServerRequest::arguments or after ServerRequest::set_result or ServerRequest::set_exception.", // 9
-        "Invalid portable interceptor call",                 // 10
-        "Service context add failed in portable interceptor because a service context with the given id already exists.", // 11
-        "Registration of PolicyFactory failed because a factory already exists for the given type." // 12
+        "Attempt to send a DII request after it was sent previously.", // 10
+        "Attempt to poll a DII request or to retrieve its result before the request was sent.", // 11
+        "Attempt to poll a DII request or to retrieve its result after the result was retrieved previously.", // 12
+        "Attempt to poll a synchronous DII request or to retrieve results from a synchronous DII request.", // 13
+        "Invalid portable interceptor call",                 // 14
+        "Service context add failed in portable interceptor because a service context with the given id already exists.", // 15
+        "Registration of PolicyFactory failed because a factory already exists for the given type.", // 16
+        "POA cannot create POAs while undergoing destruction." // 17
     };
 
   static const char *TRANSIENT_TABLE[] =
     {
-        "Request discarded due to resource exhaustion in POA.", // 1
-        "Request cancelled."                                    // 2
+        "Request discarded due to resource exhaustion in POA, or because POA is in discarding state.", // 1
+        "No usable profile in IOR.",                            // 2
+        "Request cancelled.",                                   // 3
+        "POA destroyed."                                        // 4
     };
 
   static const char *OBJ_ADAPTER_TABLE[] =
@@ -731,8 +742,9 @@ CORBA_SystemException::_tao_get_omg_exception_description (
 
   static const char *INV_POLICY_TABLE[] =
     {
-        "Invalid PolicyType.", // 1
-        "No PolicyFactory has been registered for the given PolicyType." // 2
+        "Unable to reconcile IOR specified policy with the effective policy override." // 1
+        "Invalid PolicyType.", // 2
+        "No PolicyFactory has been registered for the given PolicyType." // 3
     };
 
   if (minor_code == 0)

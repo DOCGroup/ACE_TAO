@@ -1,16 +1,14 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 #include "LocalObject.h"
-#include "Stub.h"
-#include "IFR_Client_Adapter.h"
-
-#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
+
+#include "PolicyC.h"
 
 ACE_RCSID (tao,
            LocalObject,
@@ -65,6 +63,7 @@ CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj,
 
 // TAO's extensions
 
+
 TAO_ObjectKey *
 CORBA_LocalObject::_key (CORBA_Environment &ACE_TRY_ENV)
 {
@@ -104,7 +103,8 @@ CORBA_LocalObject::_tao_QueryInterface (ptr_arith_t type)
 CORBA::Boolean
 CORBA_LocalObject::_non_existent (CORBA_Environment &)
 {
-  return 0;                     // Always returns false.
+  // Always return false.
+  return 0;
 }
 
 void
@@ -116,7 +116,10 @@ CORBA_LocalObject::_create_request (CORBA::Context_ptr,
                                     CORBA::Flags,
                                     CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  // @@ Correct minor code?  CCM spec says one thing CORBA spec says
+  //    another!
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_OMG_VMCID | 4,
+                                  CORBA::COMPLETED_NO));
 }
 
 void
@@ -130,29 +133,27 @@ CORBA_LocalObject::_create_request (CORBA::Context_ptr,
                                     CORBA::Flags,
                                     CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  // @@ Correct minor code?  CCM spec says one thing CORBA spec says
+  //    another!
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_OMG_VMCID | 4,
+                                  CORBA::COMPLETED_NO));
 }
 
 CORBA::Request_ptr
 CORBA_LocalObject::_request (const CORBA::Char *,
                              CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // @@ Correct minor code?  CCM spec says one thing CORBA spec says
+  //    another!
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_OMG_VMCID | 4,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA_InterfaceDef_ptr
 CORBA_LocalObject::_get_interface (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
-
-  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
-
-  return adapter->get_interface (orb.in (),
-                                 this->_interface_repository_id (),
-                                 ACE_TRY_ENV);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::ImplementationDef_ptr
@@ -164,6 +165,7 @@ CORBA_LocalObject::_get_implementation (CORBA_Environment &ACE_TRY_ENV)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
+
 void
 TAO_Local_RefCounted_Object::_add_ref (void)
 {
@@ -180,40 +182,39 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
 
 CORBA::Policy_ptr
 CORBA_LocalObject::_get_policy (CORBA::PolicyType,
-                                 CORBA_Environment &ACE_TRY_ENV)
+                                CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
 CORBA_LocalObject::_get_client_policy (CORBA::PolicyType,
-                                        CORBA_Environment &ACE_TRY_ENV)
+                                       CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Object_ptr
 CORBA_LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
-                                           CORBA::SetOverrideType,
-                                           CORBA_Environment &ACE_TRY_ENV)
+                                          CORBA::SetOverrideType,
+                                          CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::PolicyList *
 CORBA_LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &,
-                                           CORBA_Environment &ACE_TRY_ENV)
+                                          CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::Boolean
 CORBA_LocalObject::_validate_connection (CORBA::PolicyList_out,
-                                          CORBA_Environment &ACE_TRY_ENV)
+                                         CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
-
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

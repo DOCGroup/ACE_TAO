@@ -1803,6 +1803,13 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
+  if (obj->_is_local ())
+    // @@ The CCM spec says one minor code, and the CORBA spec says
+    //    another.  Which is the correct one?
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_OMG_VMCID | 4,
+                                      CORBA::COMPLETED_NO),
+                      0);
+
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
 
@@ -1814,9 +1821,13 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-      char buf [ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
-      (void) ACE_OS::memset (buf, '\0', sizeof(buf));
+      char buf [ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
+#else
+      // Avoid the initialization overhead if not compiling with
+      // support for Purify.  There is no need to actually perform
+      // initialization otherwise.
+      char buf [ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */
 
       TAO_OutputCDR cdr (buf,  sizeof buf,
@@ -1888,19 +1899,15 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                             0);
         }
 
-      // @@ According to Carlos, we shouldn't be using
-      //    profile_in_use(). Instead we should use the first profile
-      //    in the MProfile instead, for example.
-      //
-      //    For now, I'll just throw an exception since I was getting
-      //    segmentation faults.
-      //             -Ossama
-      if (obj->_stubobj ()->profile_in_use () == 0)
+      TAO_MProfile &mp = obj->_stubobj ()->base_profiles ();
+
+      if (mp.profile_count () == 0)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO_Profile pointer in ")
-                        ACE_TEXT ("CORBA::ORB::object_to_string() is zero.\n")));
+                        ACE_TEXT ("(%P|%t) Cannot stringify given ")
+                        ACE_TEXT ("object.  No profiles.\n")));
+
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
@@ -1910,7 +1917,10 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                             0);
         }
 
-      return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+      // For now we just use the first profile.
+      TAO_Profile *profile = mp.get_profile (0);
+
+      return profile->to_string (ACE_TRY_ENV);
     }
 }
 
