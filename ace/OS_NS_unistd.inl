@@ -118,9 +118,8 @@ ACE_OS::chdir (const char *path)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), result),
                      int, -1);
 
-// This #elif seems weird... is Visual Age on NT not setting ACE_WIN32?
-#elif !defined (ACE_WIN32) && !defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-  ACE_OSCALL_RETURN (::_chdir (path), int, -1);
+#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  ACE_OSCALL_RETURN (::_chdir (const_cast<char *> (path)), int, -1);
 
 #elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (path);
