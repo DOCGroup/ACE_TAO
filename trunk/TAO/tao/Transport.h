@@ -78,9 +78,11 @@ protected:
  * out the message using a single system call and return control to
  * the application.  However, for oneways and AMI requests it may be
  * more efficient (or required if the SYNC_NONE policy is in effect)
- * to queue the messages until a large enough data set can be put out.
- * Also, large messages may not be sent out without blocking, and in
- * some applications blocking for I/O is unacceptable.
+ * to queue the messages until a large enough data set is available.
+ * Another reason to queue is that some applications cannot block for
+ * I/O, yet they want to send messages so large that a single write()
+ * operation would not be able to cope with them.  In such cases we
+ * need to queue the data and use the Reactor to drain the queue.
  *
  * Therefore, the Transport class may need to use a queue to
  * temporarily hold the messages, and, in some configurations, it may
@@ -105,10 +107,11 @@ protected:
  * amount of ancillary information, to keep on each message that the
  * Message_Block class does not provide room for.
  *
- * Also some applications may choose, for performance reasons or to
- * avoid complex concurrency scenarios due to nested upcalls, to
- * using blocking I/O
- * block the
+ * Blocking I/O is still attractive for some applications.  First, my
+ * eliminating the Reactor overhead performance is improved when
+ * sending large blocks of data.  Second, using the Reactor to send
+ * out data opens the door for nested upcalls, yet some applications
+ * cannot deal with the reentrancy issues in this case.
  *
  * <H4>Timeouts:</H4> Some or all messages could have a timeout period
  * attached to them.  The timeout source could either be some
