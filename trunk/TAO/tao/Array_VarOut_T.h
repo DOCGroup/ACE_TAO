@@ -163,7 +163,7 @@ class TAO_Array_Forany_T
 public:
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (T_slice *,
-                      bool nocopy = false);
+                      CORBA::Boolean nocopy = 0);
   TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
   ~TAO_Array_Forany_T (void);
 
@@ -186,12 +186,12 @@ public:
   T_slice * &out (void);
   T_slice * _retn (void);
   T_slice * ptr (void) const;
-  bool nocopy (void) const;
+  CORBA::Boolean nocopy (void) const;
 
   static T_slice * tao_alloc (void);
 private:
   T_slice * ptr_;
-  const bool nocopy_;
+  const CORBA::Boolean nocopy_;
 };
 
 #if defined (__ACE_INLINE__)
