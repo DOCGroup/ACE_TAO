@@ -584,10 +584,12 @@ void TAO::PG_Object_Group::create_member (
       const PortableGroup::FactoryInfo & factory_info = (*factories)[factory_pos];
       if (factory_info.the_location == the_location)
       {
+        // @@ should we merge the_criteria with factory_info.the_criteria?
+
         PortableGroup::GenericFactory::FactoryCreationId_var fcid;
         CORBA::Object_var member = factory_info.the_factory->create_object (
           type_id,
-          factory_info.the_criteria,
+          the_criteria,
           fcid. out()
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;

@@ -162,7 +162,7 @@ $RM->Spawn ();
 
 print "TEST: waiting for registry's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$rm_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$rm_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
 }
@@ -174,7 +174,7 @@ $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$notifier_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
     exit 1;
@@ -187,7 +187,7 @@ $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($detector_ior, 20) == -1) {
-    print STDERR "ERROR: cannot find file <$detector_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$detector_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
     $DET->Kill (); $DET2->TimedWait(1);
@@ -201,7 +201,7 @@ $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica1_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$replica1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
     $DET->Kill (); $DET->TimedWait(1);
@@ -216,7 +216,7 @@ $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica2_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$replica2_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
     $DET->Kill (); $DET->TimedWait(1);
@@ -232,7 +232,7 @@ $ANA->Spawn ();
 
 print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$ready_file>\n";
+    print STDERR "TEST ERROR: cannot find file <$ready_file>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
     $DET->Kill (); $DET->TimedWait(1);
@@ -250,42 +250,42 @@ print "\nTEST: starting client " . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "TEST ERROR: client returned $client\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 1.\n" if ($verbose);
 $replica1 = $REP1->WaitKill (5);
 if ($replica1 != 0) {
-    print STDERR "ERROR: replica returned $replica1\n";
+    print STDERR "TEST ERROR: replica returned $replica1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 2.\n" if ($verbose);
 $replica2 = $REP2->WaitKill (5);
 if ($replica2 != 0) {
-    print STDERR "ERROR: replica returned $replica2\n";
+    print STDERR "TEST ERROR: replica returned $replica2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
 $detector = $DET->WaitKill (20);
 if ($detector != 0) {
-    print STDERR "ERROR: detector returned $detector\n";
+    print STDERR "TEST ERROR: detector returned $detector\n";
     $status = 1;
 }
 
 print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
 $analyzer = $ANA->WaitKill (20);
 if ($analyzer != 0) {
-    print STDERR "ERROR: analyzer returned $analyzer\n";
+    print STDERR "TEST ERROR: analyzer returned $analyzer\n";
     $status = 1;
 }
 
 print "\nTEST: shutting down the replication manager.\n" if ($verbose);
 $controller = $RMC->SpawnWaitKill (300);
 if ($controller != 0) {
-    print STDERR "ERROR: replication manager controller returned $controller\n";
+    print STDERR "TEST ERROR: replication manager controller returned $controller\n";
     $status = 1;
 }
 
@@ -293,14 +293,14 @@ print "\nTEST: wait for ReplicationManager.\n" if ($verbose);
 #$RM->Kill ();
 $repmgr = $RM->WaitKill (30);
 if ($repmgr != 0) {
-    print STDERR "ERROR: ReplicationManager returned $repmgr\n";
+    print STDERR "TEST ERROR: ReplicationManager returned $repmgr\n";
     $status = 1;
 }
 
 print "\nTEST: wait for notifier to leave.\n" if ($verbose);
 $notifier = $NOT->WaitKill (20);
 if ($notifier != 0) {
-    print STDERR "ERROR: notifier returned $notifier\n";
+    print STDERR "TEST ERROR: notifier returned $notifier\n";
     $status = 1;
 }
 

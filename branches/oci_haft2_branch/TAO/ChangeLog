@@ -1,3 +1,23 @@
+Tue Dec  2 14:34:51 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp:
+          Disable duplicate registration of HEARTBEAT_ENABLED policy factory.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          create_member uses the supplied criteria.
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Build warnings.
+
+        * orbsvcs/tests/FT_App/run_test_basic.pl:
+        * orbsvcs/tests/FT_App/run_test_demo.pl:
+        * orbsvcs/tests/FT_App/run_test_detector.pl:
+        * orbsvcs/tests/FT_App/run_test_fault_consumer.pl:
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+        * orbsvcs/tests/FT_App/run_test_rmregistry.pl:
+          Identify error messages as coming from the test script.
+
 Tue Dec  2 09:59:17 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:

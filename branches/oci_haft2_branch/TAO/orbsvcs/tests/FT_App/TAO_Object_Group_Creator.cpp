@@ -21,12 +21,12 @@
 
 #include <ace/Get_Opt.h>
 
-
 TAO::Object_Group_Creator::Object_Group_Creator ()
-  : registry_ (0)
-  , replication_manager_ (0)
-  , have_replication_manager_ (0)
+  : orb_(CORBA::ORB::_nil ())
+  , registry_ (PortableGroup::FactoryRegistry::_nil ())
+  , replication_manager_ (FT::ReplicationManager::_nil ())
   , detector_infos_ (0)
+  , have_replication_manager_ (0)
 {
 }
 
@@ -46,7 +46,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
-  if (CORBA::is_nil (this->registry_))
+  if (CORBA::is_nil (this->registry_.in ()))
   {
     ///////////////////////////////
     // Find the ReplicationManager
@@ -57,14 +57,14 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
       this->replication_manager_ = ::FT::ReplicationManager::_narrow (rm_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (!CORBA::is_nil (this->replication_manager_))
+      if (!CORBA::is_nil (this->replication_manager_.in ()))
       {
         this->have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
         this->registry_ = this->replication_manager_->get_factory_registry (criteria  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        if (!CORBA::is_nil (this->registry_))
+        if (!CORBA::is_nil (this->registry_.in ()))
         {
           this->detector_infos_ = this->registry_->list_factories_by_role (FT::FAULT_DETECTOR_ROLE_NAME, this->detector_type_id_.out ()
               ACE_ENV_ARG_PARAMETER)
@@ -258,7 +258,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
         factory_creation_id.out ()
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
-      if ( !CORBA::is_nil (created_obj) )
+      if ( !CORBA::is_nil (created_obj.in ()) )
       {
 // that which was first shall now be last        if (nFact == 0)
         {
@@ -267,7 +267,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
         // try to create a detector, but don't worry if it doesn't happen
         (void) create_detector_for_replica (
-          created_obj,
+          created_obj.in (),
           role,
           type_id.in (),
           group_id,
@@ -275,7 +275,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-        const char * replica_ior = orb_->object_to_string (created_obj ACE_ENV_ARG_PARAMETER );
+        const char * replica_ior = orb_->object_to_string (created_obj.in () ACE_ENV_ARG_PARAMETER );
         ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
 
@@ -329,7 +329,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
         {
           group = this->replication_manager_->add_member (group,
                             info.the_location,
-                            created_obj
+                            created_obj.in ()
                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
@@ -352,7 +352,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       role
       ));
 
-    const char * group_iogr = orb_->object_to_string (group ACE_ENV_ARG_PARAMETER );
+    const char * group_iogr = orb_->object_to_string (group.in () ACE_ENV_ARG_PARAMETER );
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
   }
 

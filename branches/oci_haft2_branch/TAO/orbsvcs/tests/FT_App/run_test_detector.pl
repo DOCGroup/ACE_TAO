@@ -140,7 +140,7 @@ $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica1_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$replica1_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     exit 1;
 }
@@ -150,7 +150,7 @@ $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica2_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$replica2_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
     exit 1;
@@ -161,7 +161,7 @@ $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$detector_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$detector_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET2->TimedWait(1);
@@ -173,7 +173,7 @@ $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$notifier_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET2->TimedWait(1);
@@ -185,35 +185,35 @@ print "\nTEST: starting client." . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "TEST ERROR: client returned $client\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 1.\n" if ($verbose);
 $replica1 = $REP1->WaitKill (60);
 if ($replica1 != 0) {
-    print STDERR "ERROR: replica returned $replica1\n";
+    print STDERR "TEST ERROR: replica returned $replica1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 2.\n" if ($verbose);
 $replica2 = $REP2->WaitKill (60);
 if ($replica2 != 0) {
-    print STDERR "ERROR: replica returned $replica2\n";
+    print STDERR "TEST ERROR: replica returned $replica2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
 $detector = $DET->WaitKill (60);
 if ($detector != 0) {
-    print STDERR "ERROR: detector returned $detector\n";
+    print STDERR "TEST ERROR: detector returned $detector\n";
     $status = 1;
 }
 
 print "\nTEST: wait for notifier to leave.\n" if ($verbose);
 $notifier = $NOT->WaitKill (60);
 if ($notifier != 0) {
-    print STDERR "ERROR: notifier returned $notifier\n";
+    print STDERR "TEST ERROR: notifier returned $notifier\n";
     $status = 1;
 }
 

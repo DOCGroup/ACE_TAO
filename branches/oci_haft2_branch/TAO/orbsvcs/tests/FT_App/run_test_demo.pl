@@ -210,7 +210,7 @@ $RM->Spawn ();
 
 print "TEST: waiting for registry's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$rm_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$rm_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
 }
@@ -222,7 +222,7 @@ $NOT->Spawn ();
 
 print "TEST: waiting for FaultNotifier's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$notifier_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     exit 1;
@@ -236,7 +236,7 @@ $DET1->Spawn ();
 
 print "TEST: waiting for FaultDetector's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($detector1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$detector1_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$detector1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     $DET1->Kill (); $DET1->TimedWait (1);
@@ -250,7 +250,7 @@ $DET2->Spawn ();
 
 print "TEST: waiting for FaultDetector's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($detector2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$detector2_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$detector2_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     $DET1->Kill (); $DET1->TimedWait (1);
@@ -267,7 +267,7 @@ $FAC1->Spawn ();
 
 print "TEST: waiting for factory 1's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($factory1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$factory1_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$factory1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     $DET1->Kill (); $DET1->TimedWait (1);
@@ -281,7 +281,7 @@ $FAC2->Spawn ();
 
 print "TEST: waiting for factory 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($factory2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$factory2_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$factory2_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     $DET1->Kill (); $DET1->TimedWait (1);
@@ -296,7 +296,7 @@ $FAC3->Spawn ();
 
 print "TEST: waiting for factory 3's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($factory3_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$factory3_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$factory3_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     $DET1->Kill (); $DET1->TimedWait (1);
@@ -316,7 +316,7 @@ $OGC->Spawn ();
 print "\nTEST: wait for object group creator.\n" if ($verbose);
 $config = $OGC->WaitKill (30);
 if ($config != 0) {
-    print STDERR "ERROR: Object Group Creator returned $config\n";
+    print STDERR "TEST ERROR: Object Group Creator returned $config\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
     $DET1->Kill (); $DET1->TimedWait (1);
@@ -334,7 +334,7 @@ print "\nTEST: Starting client using first group of hobbits " . $CL1->CommandLin
 $client = $CL1->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "TEST ERROR: client returned $client\n";
     $status = 1;
 }
 
@@ -342,7 +342,7 @@ print "\nTEST: Starting client using group of elves " . $CL2->CommandLine . "\n"
 $client2 = $CL2->SpawnWaitKill (60);
 
 if ($client2 != 0) {
-    print STDERR "ERROR: client returned $client2\n";
+    print STDERR "TEST ERROR: client returned $client2\n";
     $status = 1;
 }
 
@@ -350,7 +350,7 @@ print "\nTEST: Starting client using second group of hobbits " . $CL3->CommandLi
 $client3 = $CL3->SpawnWaitKill (60);
 
 if ($client3 != 0) {
-    print STDERR "ERROR: client returned $client3\n";
+    print STDERR "TEST ERROR: client returned $client3\n";
     $status = 1;
 }
 
@@ -360,42 +360,42 @@ if ($client3 != 0) {
 print "\nTEST: wait for factory 1.\n" if ($verbose);
 $factory1 = $FAC1->WaitKill (30);
 if ($factory1 != 0) {
-    print STDERR "ERROR: replica returned $factory 1\n";
+    print STDERR "TEST ERROR: replica returned $factory 1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for factory 2.\n" if ($verbose);
 $factory2 = $FAC2->WaitKill (30);
 if ($factory2 != 0) {
-    print STDERR "ERROR: factory 2 returned $factory2\n";
+    print STDERR "TEST ERROR: factory 2 returned $factory2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for factory 3.\n" if ($verbose);
 $factory3 = $FAC3->WaitKill (30);
 if ($factory3 != 0) {
-    print STDERR "ERROR: factory 3 returned $factory3\n";
+    print STDERR "TEST ERROR: factory 3 returned $factory3\n";
     $status = 1;
 }
 
 print "\nTEST: wait for FaultDetectorFactory 1.\n" if ($verbose);
 $detector1 = $DET1->WaitKill (30);
 if ($detector1 != 0) {
-    print STDERR "ERROR: FaultDetectorFactory returned $detector1\n";
+    print STDERR "TEST ERROR: FaultDetectorFactory returned $detector1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for FaultDetectorFactory 2.\n" if ($verbose);
 $detector2 = $DET2->WaitKill (30);
 if ($detector2 != 0) {
-    print STDERR "ERROR: FaultDetectorFactory returned $detector2\n";
+    print STDERR "TEST ERROR: FaultDetectorFactory returned $detector2\n";
     $status = 1;
 }
 
 print "\nTEST: shutting down the replication manager.\n" if ($verbose);
 $controller = $RMC->SpawnWaitKill (300);
 if ($controller != 0) {
-    print STDERR "ERROR: replication manager controller returned $controller\n";
+    print STDERR "TEST ERROR: replication manager controller returned $controller\n";
     $status = 1;
 }
 
@@ -403,14 +403,14 @@ print "\nTEST: wait for ReplicationManager.\n" if ($verbose);
 #$RM->Kill ();
 $repmgr = $RM->WaitKill (30);
 if ($repmgr != 0) {
-    print STDERR "ERROR: ReplicationManager returned $repmgr\n";
+    print STDERR "TEST ERROR: ReplicationManager returned $repmgr\n";
     $status = 1;
 }
 
 print "\nTEST: wait for FaultNotifier.\n" if ($verbose);
 $notifier = $NOT->WaitKill (30);
 if ($notifier != 0) {
-    print STDERR "ERROR: FaultNotifier returned $notifier\n";
+    print STDERR "TEST ERROR: FaultNotifier returned $notifier\n";
     $status = 1;
 }
 
