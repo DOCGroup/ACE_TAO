@@ -30,9 +30,9 @@
 /**
  * @class ACE_Env_Value
  *
- * @brief Enviroment Variable Value
+ * @brief Environment Variable Value
  *
- * Reads a variable from the user enviroment, providing a default
+ * Reads a variable from the user environment, providing a default
  * value.
  */
 template <class T>
@@ -56,8 +56,8 @@ public:
   /// Returns the value as type T.
   operator T (void);
 
-  /// The constructor, read <varname> from the environment, using
-  /// <vardefault> as its value if it is not defined.
+  /// The constructor, read @a varname from the environment, using
+  /// @a defval as its value if it is not defined.
   void open (const ACE_TCHAR *varname, const T &defval);
 
   /// Returns the name of the variable being tracked.
@@ -74,8 +74,8 @@ private:
   T value_;
 };
 
+/// Function to convert a string @a s into type @c T.
 template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
-// Function to convert a string <s> into type <T>.
 
 #if defined (__ACE_INLINE__)
 #include "ace/Env_Value_T.inl"
