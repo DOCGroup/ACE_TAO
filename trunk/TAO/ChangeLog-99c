@@ -1,3 +1,9 @@
+Mon Dec 13 13:50:13 1999  Krishnakumar Elakkara Pathayapura  <krish@danzon.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	  fixed template instantiation
+
 Mon Dec 13 11:36:11 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
