@@ -47,8 +47,15 @@ main(int argc, char * const *argv)
 
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+      auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
+	TAO_Trader_Factory::create_linked_trader (orb.ptr ());      
+#else
       auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
 	TAO_Trader_Factory::create_linked_trader ();
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
+      
       TAO_Support_Attributes_Impl& sup_attr = trader->support_attributes ();
       TAO_Trading_Components_Impl& trd_comp = trader->trading_components ();
 
@@ -69,7 +76,7 @@ main(int argc, char * const *argv)
       if (port == 0)
 	{
 	  const char *port_number =
-            ACE_OS::getenv ("NameServicePort");
+            ACE_OS::getenv ("TradingServicePort");
 
 	  if (port_number != 0)
 	    port = ACE_OS::atoi (port_number);

@@ -70,8 +70,8 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter (tr.ptr ());
 
-      type_exporter.remove_all_types (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      //      type_exporter.remove_all_types (TAO_TRY_ENV);
+      //      TAO_CHECK_ENV;
       
       type_exporter.add_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -89,6 +89,7 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter (root_poa.ptr (),
 					 register_if,
+					 orb.ptr (),
 					 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 	    
@@ -126,8 +127,8 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Begin trading! 
-      //if (orb->run () == -1)
-      //ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+      if (orb->run () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
     }
   TAO_CATCHANY
     {

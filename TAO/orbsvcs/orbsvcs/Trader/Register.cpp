@@ -90,8 +90,8 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   this->validate_properties (type, type_struct,
 			     (CosTrading::PropertySeq&) properties, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
-  
-  offer.reference = (reference->_duplicate (reference));
+
+  offer.reference = reference->_duplicate (reference);
   offer.properties = properties;
   
   // Insert the offer into the underlying type map.
@@ -253,8 +253,14 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
 	{
 	  CosTrading::Offer* offer = offer_iter->get_offer ();
 	  // Add offer if it matches the constraints
-	  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+	  TAO_Constraint_Evaluator evaluator (offer,
+					      this->trader_.orb (),
+					      dp_support);
+#else
 	  TAO_Constraint_Evaluator evaluator (offer, dp_support);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 	  if (constr_inter.evaluate (evaluator))
 	    ids.push_back (offer_iter->get_id ());
 	  

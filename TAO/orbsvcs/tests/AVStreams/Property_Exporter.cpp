@@ -72,6 +72,23 @@ DP_Adapter::evalDP (const CORBA::Any& extra_info,
 // TAO_Property_Exporter
 // *************************************************************
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+TAO_Property_Exporter::
+TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
+		       CosPropertyService::PropertySet_ptr prop_set,
+		       CORBA::ORB_ptr orb,
+		       CORBA::ULong initial_size)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    increment_ (initial_size),
+    lookup_ (lookup_if),
+    prop_set_ (prop_set),
+    tprops_ (initial_size),
+    pprops_ (initial_size),
+    pcount_ (0),
+    tcount_ (0)
+{
+}
+#else
 TAO_Property_Exporter::
 TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
 		       CosPropertyService::PropertySet_ptr prop_set,
@@ -85,6 +102,7 @@ TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
     tcount_ (0)
 {
 }
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
 TAO_Property_Exporter::~TAO_Property_Exporter (void)
 {
@@ -135,9 +153,18 @@ add_dynamic_property (const char* name,
     this->pprops_.length (plength + this->increment_);
 
   CORBA::Any extra_info;
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+  CosTradingDynamic::DynamicProp* dp_struct =
+    dynamic_prop.construct_dynamic_prop (name,
+					 value.type (),
+					 extra_info,
+					 this->orb_.ptr ());
+#else  
   CosTradingDynamic::DynamicProp* dp_struct =
     dynamic_prop.construct_dynamic_prop (name, value.type (), extra_info);
-
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
+  
   dynamic_prop.register_handler (name, dp_adapter, CORBA::B_TRUE);
   
   this->tprops_[this->tcount_].name = name;
@@ -227,17 +254,34 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
       this->pprops_.length (this->pcount_);
       this->prop_set_->define_properties (this->pprops_, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
+      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (_env);
+      ACE_DEBUG ((LM_DEBUG, "Attempting add_type.\n"));
+      CosTradingRepos::ServiceTypeRepository_var str =
+	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
+      TAO_CHECK_ENV_RETURN (_env, 0);
+
+      str->add_type (type,
+		     object_ref->_interface_repository_id (),
+		     props,
+		     stypes,
+		     _env);
+      TAO_CHECK_ENV_RETURN (_env, 0);      
+      /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
       
-      // Attempt to export the offer. 
-      this->pprops_.length (this->pcount_);
+      // Attempt to export the offer.
+      ACE_DEBUG ((LM_DEBUG, "Attempting export.\n"));
+      this->tprops_.length (this->tcount_);
       offer_id = reg->export (object_ref, type, this->tprops_, TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CosTrading::UnknownServiceType, excp)    
-    {
+    {      
       CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (_env);
       TAO_CHECK_ENV_RETURN (_env, 0);
 
+      ACE_DEBUG ((LM_DEBUG, "Export failed. Attempting add_type.\n"));
       CosTradingRepos::ServiceTypeRepository_var str =
 	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
       TAO_CHECK_ENV_RETURN (_env, 0);
@@ -252,6 +296,7 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
       TAO_CHECK_ENV_RETURN (_env, 0);
 
       // Now we'll try again to register the offer.
+      ACE_DEBUG ((LM_DEBUG, "Attempting export again.\n"));
       offer_id = reg->export (object_ref, type, this->tprops_, _env);
       TAO_CHECK_ENV_RETURN (_env, 0);
     }

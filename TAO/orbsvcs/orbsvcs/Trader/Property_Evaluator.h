@@ -51,9 +51,17 @@ public:
   int is_dynamic_property(int index);
   // Returns 1 if the property at index <index> is dynamic. Returns a
   // 0 when the index is out of bounds.
-  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+  CORBA::Any* property_value(int index,
+			     CORBA::ORB_ptr orb,
+			     CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+#else
   CORBA::Any* property_value(int index, CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+#endif /*TAO_HAS_DYNAMIC_PROPERTY_BUG */
+
   // Returns value of the property whose index is <index>. If the
   // property at that index is dynamic and the trader supports dynamic 
   // properties, then the property_value method will obtain the value
@@ -112,10 +120,19 @@ public:
   // Returns 1 if the property whose name is <property_name> is
   // defined and dynamic. If the property is undefined, this method
   // will throw a Property_Undefined exception with impunity.
-  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+  CORBA::Any* property_value(const char* property_name,
+			     CORBA::ORB_ptr orb,
+			     CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTradingDynamic::DPEvalFailure));
+#else
   CORBA::Any* property_value(const char* property_name,
 			     CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+#endif /*TAO_HAS_DYNAMIC_PROPERTY_BUG */
+
   // This method is identical to its counterpart in
   // TAO_Property_Evaluator, except property_value first discovers the 
   // index through a string matching lookup.
