@@ -1,3 +1,7 @@
+Mon Sep 14 20:44:56 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/compiler.html: Added a section about Operation Lookup Strategy.
+
 Mon Sep 14 20:33:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp : 
