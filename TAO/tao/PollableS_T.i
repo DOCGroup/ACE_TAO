@@ -83,15 +83,8 @@ POA_CORBA::Pollable_tie<T>::_default_POA (CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
+
+  return this->Pollabe::_default_POA (env);
 }
 
 template <class T> ACE_INLINE
@@ -192,15 +185,8 @@ POA_CORBA::DIIPollable_tie<T>::_default_POA (CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
+
+  return this->DIIPollabe::_default_POA (env);
 }
 
 template <class T> ACE_INLINE
@@ -301,15 +287,8 @@ POA_CORBA::PollableSet_tie<T>::_default_POA (CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
+
+  return this->PollabeSet::_default_POA (env);
 }
 
 template <class T> ACE_INLINE
