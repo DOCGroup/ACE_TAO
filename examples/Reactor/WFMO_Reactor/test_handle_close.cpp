@@ -153,22 +153,28 @@ public:
     int result = ACE_Reactor::instance ()->mask_ops (this,
                                                      ACE_Event_Handler::READ_MASK,
                                                      ACE_Reactor::ADD_MASK);
+    ACE_ASSERT (result != -1);
+
     ACE_Reactor_Mask old_masks =
       ACE_Event_Handler::WRITE_MASK |
       ACE_Event_Handler::EXCEPT_MASK;
 
-    ACE_ASSERT (result == old_masks);
+    ACE_ASSERT (old_masks ==
+                ACE_static_cast (ACE_Reactor_Mask, result));
 
     // Get new masks
     result = ACE_Reactor::instance ()->mask_ops (this,
                                                  ACE_Event_Handler::NULL_MASK,
                                                  ACE_Reactor::GET_MASK);
+    ACE_ASSERT (result != -1);
+
     ACE_Reactor_Mask current_masks =
       ACE_Event_Handler::READ_MASK |
       ACE_Event_Handler::WRITE_MASK |
       ACE_Event_Handler::EXCEPT_MASK;
 
-    ACE_ASSERT (result == current_masks);
+    ACE_ASSERT (current_masks ==
+                ACE_static_cast (ACE_Reactor_Mask, result));
 
     // Remove for writing
     ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL;
