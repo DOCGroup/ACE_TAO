@@ -1,3 +1,9 @@
+Thu Aug 01 14:52:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Improved the check for the @file doxygen command. Incomplete file
+          names where not detected as error.
+
 Thu Aug  1 07:03:05 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:

@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   easy to spot (by a perl script, at least) problems.
 
 use File::Find;
+use File::Basename;
 use Getopt::Std;
 
 ###### TODO
@@ -467,8 +468,15 @@ sub check_for_mismatched_filename ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (m/\@file\s*([^\s]*)/ && $file !~ m/$1$/) {
-                    print_error ("\@file mismatch in $file");
+                if (m/\@file\s*([^\s]*)/){
+					# $file includes complete path, $1 is the name after
+					# @file. We must strip the complete path from $file.
+					# we do that using the basename function from
+					# File::BaseName
+					$filename = basename($file,"");
+					if (!($filename eq $1)){
+                       print_error ("\@file mismatch in $file, found $1");
+					}
                 }
             }
             close (FILE);
