@@ -75,6 +75,7 @@ run Basic_Types_Test
 test $chorus || run Env_Value_Test	# uses Env_Value_T and Process
 run Atomic_Op_Test                      # uses Atomic_Op
 run TSS_Test                            # uses Task, Mutex, Guard
+run Timeprobe_Test
 run Time_Value_Test
 run SString_Test
 test $chorus || test $LynxOS || run Naming_Test # uses Naming_Context, WString
