@@ -689,17 +689,20 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
     return 0;
 
   // compare repoIDs if they exist
-  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
-    if (ACE_OS::strcmp (my_id, tc_id)) // not same
-      return 0;
+  if (ACE_OS::strlen (my_id) > 1 
+      && ACE_OS::strlen (tc_id) > 1
+      && ACE_OS::strcmp (my_id, tc_id)) // not same
+    return 0;
 
   // Compare names if they exist.
-  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
-    if (ACE_OS::strcmp (my_name, tc_name)) // not same
-      return 0;
+  if (ACE_OS::strlen (my_name) > 1 
+      && ACE_OS::strlen (tc_name) > 1
+      && ACE_OS::strcmp (my_name, tc_name)) // not same
+    return 0;
 
-  // check if the member count is same
+  // Check if the member count is same.
   CORBA::ULong my_count = this->member_count (env);
+
   if (env.exception ())
     return 0;
   CORBA::ULong tc_count = tc->member_count (env);
@@ -711,19 +714,20 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
 
   for (CORBA::ULong i=0; i < my_count; i++)
     {
-      const char *my_member_name = this->member_name (i, env);
+      const char *my_member_name =
+        this->member_name (i, env);
       if (env.exception ())
         return 0;
 
-      const char *tc_member_name = tc->member_name (i, env);
+      const char *tc_member_name =
+        tc->member_name (i, env);
       if (env.exception ())
         return 0;
 
-      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
-          (tc_member_name) > 1)
-        // both specify member names
-        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
-          return 0;
+      if (ACE_OS::strlen (my_member_name) > 1 
+          && ACE_OS::strlen (tc_member_name) > 1
+          && ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
+        return 0;
 
       // now compare the typecodes of the members
       CORBA::TypeCode_ptr my_member_tc = this->member_type (i, env);
@@ -734,7 +738,9 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
       if (env.exception ())
         return 0;
 
-      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, env);
+      CORBA::Boolean flag =
+        my_member_tc->equal (tc_member_tc, env);
+
       if (!flag || env.exception ())
         return 0;
     }
