@@ -157,7 +157,7 @@ foreach $i (@BUILD_LIST) {
 	|| mydie "cannot start make for $i";
     $make_errors = 0;
     while (<MAKE>) {
-	if (m/^make: \*\*\*/ || m/^make\[[0-9]+\]: \*\*\*) {
+	if (m/^make: \*\*\*/ || m/^make\[[0-9]+\]: \*\*\*/) {
 	    $make_errors = 1;
 	}
 	print LOG $_;
