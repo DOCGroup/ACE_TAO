@@ -45,12 +45,10 @@ parse_args (int argc, char *argv[])
 
 static void test_synchronous (Test::Echo_ptr echo
                               ACE_ENV_ARG_DECL);
-static void test_ami (Test::Echo_ptr echo
-                      ACE_ENV_ARG_DECL);
-static void test_ami_errors (CORBA::ORB_ptr orb,
-                             Test::Echo_ptr echo
-                             ACE_ENV_ARG_DECL);
 
+static void test_ami (CORBA::ORB_ptr orb,
+                      Test::Echo_ptr echo
+                      ACE_ENV_ARG_DECL);
 int
 main (int argc, char *argv[])
 {
@@ -71,12 +69,34 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA"
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (root_poa.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Panic: nil RootPOA\n"),
+                          1);
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Object_var tmp =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Echo_var echo =
         Test::Echo::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (echo.in ()))
@@ -90,16 +110,13 @@ main (int argc, char *argv[])
       test_synchronous (echo.in ()
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      test_ami (echo.in ()
+
+      test_ami (orb.in (),
+                echo.in ()
                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       echo->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      test_ami_errors (orb.in (),
-                       echo.in ()
-                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -165,18 +182,18 @@ test_synchronous (Test::Echo_ptr echo
 }
 
 static void
-test_ami (Test::Echo_ptr echo
+test_ami (CORBA::ORB_ptr orb,
+          Test::Echo_ptr echo
           ACE_ENV_ARG_DECL)
 {
   Test::AMI_EchoHandler_var echo_handler;
-  {
-    Echo_Handler * echo_handler_impl = new Echo_Handler;
-    PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
+  Echo_Handler * echo_handler_impl = new Echo_Handler;
 
-    echo_handler =
-      echo_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-  }
+  PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
+
+  echo_handler =
+    echo_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   unsigned long initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
@@ -186,7 +203,9 @@ test_ami (Test::Echo_ptr echo
   for (unsigned long i = 0; i != ITERATIONS; ++i)
     {
       echo->sendc_echo_operation (
-        echo_handler.in (), "dummy message" ACE_ENV_ARG_PARAMETER);
+        echo_handler.in (),
+        "dummy message"
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -204,8 +223,43 @@ test_ami (Test::Echo_ptr echo
                  total_request_count, total_other_count));
       exit_status = 1;
     }
+
+  initial_request_count =
+    Echo_Client_Request_Interceptor::request_count;
+  unsigned long initial_reply_count =
+    Echo_Client_Request_Interceptor::reply_count;
+
+  while (echo_handler_impl->replies () != ITERATIONS)
+    {
+      CORBA::Boolean pending =
+        orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (pending)
+        {
+          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+    }
+
+  total_request_count =
+    Echo_Client_Request_Interceptor::request_count - initial_request_count;
+  unsigned long total_reply_count =
+    Echo_Client_Request_Interceptor::reply_count - initial_reply_count;
+
+  if (total_request_count != ITERATIONS
+      || total_reply_count != ITERATIONS)
+    {
+      ACE_ERROR((LM_ERROR,
+                 "ERROR: In test_ami () unexpected request/reply "
+                 "count (request = %d, reply = %d)\n",
+                 total_request_count, total_reply_count));
+      exit_status = 1;
+    }
 }
 
+#if 0
 static void
 wait_for_exception (CORBA::ORB_ptr orb,
                     Test::Echo_ptr echo
@@ -238,64 +292,4 @@ wait_for_exception (CORBA::ORB_ptr orb,
   ACE_CHECK;
 }
 
-static void
-test_ami_errors (CORBA::ORB_ptr orb,
-                 Test::Echo_ptr echo
-                 ACE_ENV_ARG_DECL)
-{
-
-  wait_for_exception (orb, echo ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-#if 0
-  // Definitely need a better way to test exceptions here. This used
-  // to work with older versions of the generated code but not
-  // anymore. The reason is that the starting interception point is
-  // shifted into the ORB. Unless or otherwise a profile is ready we
-  // don't invoke this.
-  Test::AMI_EchoHandler_var echo_handler;
-  {
-    Echo_Handler * echo_handler_impl = new Echo_Handler;
-    PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
-
-    echo_handler = echo_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-  }
-
-  unsigned long initial_request_count =
-    Echo_Client_Request_Interceptor::request_count;
-  unsigned long initial_exception_count =
-    Echo_Client_Request_Interceptor::exception_count;
-
-  for (unsigned long i = 0; i != ITERATIONS; ++i)
-    {
-      ACE_TRY
-        {
-          echo->sendc_echo_operation (
-            echo_handler.in (), "dummy message" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-        }
-      ACE_ENDTRY;
-    }
-
-  unsigned long total_request_count =
-    Echo_Client_Request_Interceptor::request_count - initial_request_count;
-  unsigned long total_exception_count =
-    Echo_Client_Request_Interceptor::exception_count - initial_exception_count;
-
-  if (total_request_count != ITERATIONS
-      || total_exception_count != ITERATIONS)
-    {
-      ACE_ERROR((LM_ERROR,
-                 "ERROR: In test_ami_errors() unexpected request/exception "
-                 "count (request = %d, exception = %d)\n",
-                 total_request_count, total_exception_count));
-
-      exit_status = 1;
-    }
 #endif /*if 0*/
-
-}
