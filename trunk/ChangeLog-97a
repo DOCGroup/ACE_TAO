@@ -1,3 +1,39 @@
+Tue May  6 12:43:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* apps/JAWS/server/Parse_Headers.{h,cpp} (class Headers_Map):
+          Changed signature of casting operator to return a pointer
+          rather than a reference to a constant pointer, to fix
+          anachronism warning Doug found.
+
+        * apps/JAWS/server/HTTP_Config.{h,cpp}: Added class
+          HTTP_Config to be a container for HTTP server options
+          such as locations of directories, port, etc.
+
+        * apps/JAWS/server/HTTP_Helpers.{h,cpp}: Added code to enhance
+          support for CGI scripts: 
+          - Added HTTP_decode_string to HTTP_Helper class, to deal
+            with percent codes.
+
+        * apps/JAWS/server/HTTP_Request.{h,cpp}: Added code to enhance
+          support for CGI scripts: 
+          - Added cgi_, cgi_env_, and cgi_args_ data members to
+            and corresponding accessors.
+          - Added nice accessors to the important data members to
+            simplify other parts of the code.
+          - Added method to parse URI to determine the name of the CGI
+            executable if present.
+
+        * apps/JAWS/server/HTTP_Response.{h,cpp}: Added code to
+          enhance support for CGI scripts:
+          - Hooks are now present to make the appropriate calls
+            to activate a CGI program.
+
+        * apps/JAWS/server/*.{h,cpp}
+          Various changes from the ACE mailing list incorporated.
+          Cosmetic changes for ACE coding style.
+
+          SGI fixes.
+
 Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
