@@ -1,3 +1,14 @@
+Mon Nov 22 07:50:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (parse_args): Reverted the behavior
+	  of parse_args() so that it doesn't return an error when it runs
+ 	  across an option that it doesn't recognize.  This is necessary
+ 	  to support certain use-cases where the Service Configurator is
+ 	  part of an application-specific configuration process.  We do,
+ 	  however, print a warning message if ACE::debug() > 0.  Thanks to
+ 	  Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
+ 	  suggesting a fix.
+
 Sat Nov 20 10:16:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Configuration.cpp: Moved DEFBUFSIZE into the Win32-specific
