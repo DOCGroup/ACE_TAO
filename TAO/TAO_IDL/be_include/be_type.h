@@ -57,6 +57,12 @@ public:
   const char *fwd_helper_name (void) const;
   // Accessor to the member.
 
+  void gen_common_varout (TAO_OutStream *os);
+  // Generate _var and _out typedefs for structs and unions.
+
+  void gen_common_tmplinst (TAO_OutStream *os);
+  // Generate explicit template instantiations for the above.
+
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Typedefs are tricky to handle, in many points their mapping
   // depend on base type they are aliasing.  Since typedefs can be
@@ -81,7 +87,10 @@ protected:
   // Typecode name.
 
   ACE_CString fwd_helper_name_;
-  // Calculate this in one place.
+  // Used by interfaces, valuetypes and arrays to name helper structs.
+
+  idl_bool common_varout_gen_;
+  // Have we generated our _var and _out class typedefs yet?
 };
 
 #endif // end of if !defined

@@ -230,43 +230,45 @@ int be_visitor_array_ch::visit_array (be_array *node)
       if (node->size_type () == AST_Type::VARIABLE)
         {
           *os << be_nl << be_nl 
-              << "typedef TAO_VarArray_Var_T<" << be_idt << be_idt_nl
+              << "typedef" << be_idt_nl
+              << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "_slice," << be_nl
               << "tao_" << node->local_name () << "_life" << be_uidt_nl
-              << ">" << be_nl 
+              << ">" << be_uidt_nl 
               << node->local_name () << "_var;" << be_uidt_nl;
 
-          *os << "typedef TAO_Array_Out_T<" << be_idt << be_idt_nl
+          *os << "typedef" << be_idt_nl
+              << "TAO_Array_Out_T<" << be_idt << be_idt_nl
               << node->local_name () << "_var," << be_nl
               << node->local_name () << "_slice," << be_nl
               << "tao_" << node->local_name () << "_life" << be_uidt_nl
-              << ">" << be_nl 
+              << ">" << be_uidt_nl 
               << node->local_name () << "_out;" << be_uidt;
         }
       else
         {
           *os << be_nl << be_nl
-              << "typedef TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
+              << "typedef" << be_idt_nl
+              << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "_slice," << be_nl
               << "tao_" << node->local_name () << "_life" << be_uidt_nl
-              << ">" << be_nl
-              << node->local_name () << "_var;" << be_uidt_nl;
+              << ">" << be_uidt_nl
+              << node->local_name () << "_var;" << be_uidt;
 
-          *os << "typedef " << node->local_name () << " "
+          *os << be_nl << be_nl
+              << "typedef" << be_idt_nl << node->local_name () << be_nl
               << node->local_name () << "_out;" << be_uidt;
         }
     }
 
   // Generate _forany decl.
   *os << be_nl << be_nl
-      << "typedef TAO_Array_Forany_T<" << be_idt << be_idt_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
       << anon_p << node->local_name () << "_slice," << be_nl
       << "tao_" << node->local_name () << "_life" << be_uidt_nl
-      << ">" << be_nl
+      << ">" << be_uidt_nl
       << anon_p << node->local_name () << "_forany;" << be_uidt;
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
 
   *os << be_nl << be_nl;
 

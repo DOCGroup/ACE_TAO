@@ -144,10 +144,6 @@ public:
   // Helper method to generate *_skel operations for the concrete
   // interface that we support (if any) and those of its base classes.
 
-  int var_out_seq_decls_gen (void) const;
-  void var_out_seq_decls_gen (int val);
-  // Accessors for the members.
-
   const char *fwd_helper_name (void) const;
   // Accessor to the member.
 

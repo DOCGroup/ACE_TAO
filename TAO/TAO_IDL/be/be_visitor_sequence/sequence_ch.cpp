@@ -72,7 +72,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the appropriate sequence type.
   switch (node->managed_type ())
@@ -83,7 +83,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
         if (node->unbounded ())
           {
-            *os << "typedef" << be_idt_nl
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
                 << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
                 << bt->name () << "," << be_nl
                 << bt->name () << "_var," << be_nl
@@ -93,7 +94,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           }
         else
           {
-            *os << "typedef" << be_idt_nl
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
                 << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
                 << bt->name () << "," << be_nl
                 << bt->name () << "_var," << be_nl
@@ -138,7 +140,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
         if (node->unbounded ())
           {
-            *os << "typedef" << be_idt_nl
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
                 << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
                 << bt->name () << "," << be_nl
                 << bt->name () << "_var," << be_nl
@@ -147,7 +150,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           }
         else
           {
-            *os << "typedef" << be_idt_nl
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
                 << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
                 << bt->name () << "," << be_nl
                 << bt->name () << "_var," << be_nl
@@ -195,12 +199,60 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       break;
     case be_sequence::MNG_VALUE:
-      if (node->unbounded ())
-        {
-        }
-      else
-        {
-        }
+      {
+        be_interface *elem = be_interface::narrow_from_decl (bt);
+
+        if (node->unbounded ())
+          {
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_Unbounded_Valuetype_Sequence<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt_nl
+                << node->local_name () << ";" << be_uidt;
+          }
+        else
+          {
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_Bounded_Valuetype_Sequence<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life," << be_nl
+                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+                << ">" << be_uidt_nl
+                << node->local_name () << ";" << be_uidt;
+          }
+
+        // Generate the _var and _out types only if we are not anonymous.
+        if (this->ctx_->tdef () != 0)
+          {
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+                << node->local_name () << "," << be_nl
+                << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl
+                << "> " << node->local_name () << "_var;" << be_uidt << be_uidt;
+
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+                << node->local_name () << "," << be_nl
+                << node->local_name () << "_var," << be_nl
+                << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl
+                << "> " << node->local_name () << "_out;" << be_uidt << be_uidt;
+          }
+      }
 
       break;
     case be_sequence::MNG_STRING:
@@ -227,31 +279,73 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           if (node->unbounded ())
             {
               *os << be_nl << be_nl
-                  << "typedef TAO_Unbounded_Array_Sequence<"
+                  << "typedef" << be_idt_nl
+                  << "TAO_Unbounded_Array_Sequence<"
                   << be_idt << be_idt_nl
                   << bt->name () << "," << be_nl
                   << bt->fwd_helper_name () << "_life" << be_uidt_nl
-                  << "> " << node->local_name () << ";" << be_uidt;
+                  << ">" << be_uidt_nl
+                  << node->local_name () << ";" << be_uidt;
             }
           else
             {
               *os << be_nl << be_nl
-                  << "typedef TAO_Bounded_Array_Sequence<"
+                  << "typedef" << be_idt_nl
+                  << "TAO_Bounded_Array_Sequence<"
                   << be_idt << be_idt_nl
                   << bt->name () << "," << be_nl
                   << bt->fwd_helper_name () << "_life," << be_nl
                   << node->max_size ()->ev ()->u.ulval << be_uidt_nl
-                  << "> " << node->local_name () << ";" << be_uidt;
+                  << ">" << be_uidt_nl
+                  << node->local_name () << ";" << be_uidt;
             }
         }
       else
         {
           if (node->unbounded ())
             {
+              *os << be_nl << be_nl
+                  << "typedef" << be_idt_nl
+                  << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
+                  << bt->name () << be_uidt_nl
+                  << ">" << be_uidt_nl
+                  << node->local_name () << ";" << be_uidt;
             }
           else
             {
+              *os << be_nl << be_nl
+                  << "typedef" << be_idt_nl
+                  << "TAO_Bounded_Sequence<" << be_idt << be_idt_nl
+                  << bt->name () << "," << be_nl
+                  << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+                  << ">" << be_uidt_nl
+                  << node->local_name () << ";" << be_uidt;
             }
+        }
+
+      // Generate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          AST_Type::SIZE_TYPE st = bt->size_type ();
+
+          *os << be_nl << be_nl
+              << "typedef" << be_idt_nl
+              << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<" 
+                                        : "TAO_VarSeq_Var_T<")
+              << be_idt << be_idt_nl
+              << node->local_name () << "," << be_nl
+              << bt->name () << be_uidt_nl
+              << ">" << be_uidt_nl
+              << node->local_name () << "_var;" << be_uidt;
+
+          *os << be_nl << be_nl
+              << "typedef" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->local_name () << "," << be_nl
+              << node->local_name () << "_var," << be_nl
+              << bt->name () << be_uidt_nl
+              << ">" << be_uidt_nl
+              << node->local_name () << "_out;" << be_uidt;
         }
 
       break;

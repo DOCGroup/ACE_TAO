@@ -152,7 +152,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "template class TAO::Any_Dual_Impl_T<" << node->name () << ">;" 
       << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate TAO::Any_Dual_Impl_T<" << node->name () 
+      << "# pragma instantiate TAO::Any_Dual_Impl_T<" 
+      << node->name () << " \\"
       << ">" << be_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 

@@ -49,16 +49,14 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  // Generate _var and _out class typedefs.
+  node->gen_common_varout (os);
 
   // Generate the ifdefined macro for the union type.
   os->gen_ifdef_macro (node->flat_name ());
 
   *os << be_nl << be_nl
-      << "class " << node->local_name () << "_var;" << be_nl << be_nl;
-
-  *os << "class " << be_global->stub_export_macro () << " "
+      << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
@@ -200,45 +198,6 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   os->gen_endif ();
 
-  // Generate the ifdefined macro for the _var type.
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-
-  // Generate var definition.
-  if (node->gen_var_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "codegen for _var\n"), -1);
-    }
-
-  os->gen_endif ();
-
-  // Generate the ifdefined macro for the array type.
-  os->gen_ifdef_macro (node->flat_name (), "_out");
-
-  // A class is generated for an out defn only for a variable
-  // length struct.
-  if (node->size_type () == AST_Type::VARIABLE)
-    {
-      if (node->gen_out_defn () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_ch::"
-                             "visit_union - "
-                             "codegen for _out\n"), -1);
-        }
-    }
-  else
-    {
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
-
-      *os << be_nl << be_nl << "typedef " << node->local_name () << " &"
-          << node->local_name () << "_out;";
-    }
-
-  os->gen_endif ();
   node->cli_hdr_gen (I_TRUE);
   return 0;
 }

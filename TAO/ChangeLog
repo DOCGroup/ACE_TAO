@@ -1,3 +1,49 @@
+Wed Mar 26 18:23:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd.cpp:
+        * TAO_IDL/be/be_visitor_union_fwd.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd/structure_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_fwd/union_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_structure.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+          More changes toward code generation for _var, _out and sequence
+          template typedef, and conditional explicit template instantiation.
+
 Wed Mar 26 01:06:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:

@@ -44,10 +44,11 @@ public:
   operator T & ();
   operator T & () const;
   
-  // in, inout, out, _retn 
+  // Common mapping for fixed and variable size types.
   const T & in (void) const;
   T & inout (void);
 
+  // TAO extension.
   T * ptr (void) const;
 
 protected:
@@ -76,13 +77,9 @@ public:
   TAO_Fixed_Var_T & operator= (const TAO_Fixed_Var_T<T> &);
   
   // Fixed-size types only.
-
   TAO_Fixed_Var_T & operator= (const T &);
 
-  operator const T & () const;
-  operator T & ();
-  operator T & () const;
-  
+  // Mapping for fixed size types.
   T & out (void);
   T _retn (void);
 };
@@ -105,14 +102,10 @@ public:
   TAO_Var_Var_T & operator= (T *);
   TAO_Var_Var_T & operator= (const TAO_Var_Var_T<T> &);
 
-  operator const T & () const;
-  operator T & ();
-  operator T & () const;
-  
   // Variable size types only.
-
   operator T *& ();
 
+  // Mapping for variable size types.
   T *& out (void);
   T * _retn (void);
 };

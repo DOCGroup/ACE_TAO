@@ -140,9 +140,9 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << node->name () << "_forany" << be_uidt_nl
       << ">;" << be_uidt << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
-      << node->name () << "_slice," << be_nl
-      << node->name () << "_forany" << be_uidt_nl
+      << "# pragma instantiate TAO::Any_Array_Impl_T< \\" << be_idt << be_idt_nl
+      << node->name () << "_slice, \\" << be_nl
+      << node->name () << "_forany \\" << be_uidt_nl
       << ">" << be_uidt_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
