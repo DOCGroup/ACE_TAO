@@ -1,3 +1,9 @@
+Thu May 10 16:12:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ACE.cpp (timestamp): The abbreviation of thursday should be
+	  "Thu" not "Thr".  Thanks to Munagala Ramanath
+ 	  <amberarrow@yahoo.com> for pointing this out.
+
 Thu May 10 10:06:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/tests.dsw:
