@@ -1023,12 +1023,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_handlers
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch 
-  (int number_of_active_handles,
+  (int active_handle_count,
    ACE_Select_Reactor_Handle_Set &dispatch_set)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::dispatch");
 
-  int number_of_handlers_dispatched = 0;
+  int io_handlers_dispatched = 0;
+  int other_handlers_dispatched = 0;
 
   // The following do/while loop keeps dispatching as long as there
   // are still active handles.  Note that the only way we should ever
@@ -1056,10 +1057,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // Handle timers first since they may have higher latency
       // constraints.
 
-      if (this->dispatch_timer_handlers (number_of_handlers_dispatched) == -1)
+      if (this->dispatch_timer_handlers (other_handlers_dispatched) == -1)
         // State has changed or timer queue has failed, exit loop.
         break;
-      else if (number_of_active_handles <= 0)
+      else if (active_handle_count <= 0)
         {
           // Bail out since we got here since <select> was
           // interrupted.
@@ -1070,10 +1071,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
               // If any HANDLES in the <ready_set_> are activated as a
               // result of signals they should be dispatched since
               // they may be time critical...
-              number_of_active_handles = this->any_ready (dispatch_set);
+              active_handle_count = this->any_ready (dispatch_set);
             }
           else
-            return number_of_handlers_dispatched;
+            return io_handlers_dispatched + other_handlers_dispatched;
         }
 
       // Next dispatch the notification handlers (if there are any to
@@ -1082,21 +1083,21 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
       else if (this->dispatch_notification_handlers 
                (dispatch_set,
-                number_of_active_handles,
-                number_of_handlers_dispatched) == -1)
+                active_handle_count,
+                other_handlers_dispatched) == -1)
         break; // State has changed, exit loop.
 
       // Finally, dispatch the I/O handlers.
       else if (this->dispatch_io_handlers 
                (dispatch_set,
-                number_of_active_handles,
-                number_of_handlers_dispatched) == -1)
+                active_handle_count,
+                io_handlers_dispatched) == -1)
         // State has changed, so exit loop.
         break;
     }
-  while (number_of_active_handles > 0);
+  while (active_handle_count > 0);
 
-  return number_of_handlers_dispatched;
+  return io_handlers_dispatched + other_handlers_dispatched;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
