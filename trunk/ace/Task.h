@@ -60,7 +60,7 @@ public:
   virtual ~ACE_Task_Base (void);
   // Destructor.
 
-  // = Initialization and termination hooks 
+  // = Initialization and termination hooks
 
   // Note that these methods *must* be defined by subclasses.
 
@@ -95,14 +95,15 @@ public:
 
   // = Active object activation method.
   virtual int activate (long flags = THR_NEW_LWP,
-			int n_threads = 1,
-			int force_active = 0,
-			long priority = ACE_DEFAULT_THREAD_PRIORITY,
-			int grp_id = -1,
-			ACE_Task_Base *task = 0,
-			ACE_hthread_t thread_handles[] = 0,
+                        int n_threads = 1,
+                        int force_active = 0,
+                        long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                        int grp_id = -1,
+                        ACE_Task_Base *task = 0,
+                        ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
-                        size_t stack_size[] = 0);
+                        size_t stack_size[] = 0,
+                        ACE_thread_t  thread_names[] = 0);
   // Turn the task into an active object, i.e., having <n_threads> of
   // control, all running at the <priority> level (see below) with the same
   // <grp_id>, all of which invoke <Task::svc>.  Returns -1 if failure
