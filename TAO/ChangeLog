@@ -1,3 +1,16 @@
+Wed Mar 09 21:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Buffering/AMI_Buffering.h:
+        * tests/AMI_Buffering/AMI_Buffering_Admin.h:
+        * tests/AMI_Buffering/Reply_Handler.h:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session_Control.h:
+        * tests/Big_Reply/Big_Reply_i.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+          Removed check for deprecated msvc version
+
 Wed Mar 09 19:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp:
