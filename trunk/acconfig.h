@@ -114,28 +114,28 @@
 
 /* Cray specific configuration parameters */
 /*
-    The following predefined macros are used within ACE ifdefs.  
-    These are defined when using the Cray compilers.  _CRAYMPP
-    is defined, for example, if you are running on a Cray T3E
-    massively parallel machine.  Moreover, in the case of the T3E,
-    _CRAYT3E will be defined.  This is used to determine the
-    ACE_SIZEOF defines for primitive types.  
-
-    _UNICOS is defined as either the major version of UNICOS being run,
-    e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
-    or the major+minor+level UNICOS/mk version, e.g. 2.0.3 => 203,
-    being run on an MPP machine.
-
-    Summary:
-
-    _CRAYMPP  (defined only if running on MPP machine, e.g. T3E, UNICOS/mk)
-    _CRAYT3E  (defined specifically if compiling on a Cray T3E)
-    _UNICOS   (defined if running UNICOS or UNICOS/mk)
-
-    Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
-
-    Contributed by Doug Anderson <doug@clark.net>
-*/
+ *  The following predefined macros are used within ACE ifdefs.  
+ *  These are defined when using the Cray compilers.  _CRAYMPP
+ *  is defined, for example, if you are running on a Cray T3E
+ *  massively parallel machine.  Moreover, in the case of the T3E,
+ *  _CRAYT3E will be defined.  This is used to determine the
+ *  ACE_SIZEOF defines for primitive types.  
+ *
+ *  _UNICOS is defined as either the major version of UNICOS being run,
+ *  e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
+ *  or the major+minor+level UNICOS/mk version, e.g. 2.0.3 => 203,
+ *  being run on an MPP machine.
+ *
+ *  Summary:
+ *
+ *  _CRAYMPP  (defined only if running on MPP machine, e.g. T3E, UNICOS/mk)
+ *  _CRAYT3E  (defined specifically if compiling on a Cray T3E)
+ *  _UNICOS   (defined if running UNICOS or UNICOS/mk)
+ *
+ *  Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
+ *
+ *  Contributed by Doug Anderson <doug "at" clark.net>
+ */
 #undef _CRAYMPP
 #undef _CRAYT3E
 #undef _UNICOS
@@ -427,9 +427,6 @@
 
 /* Platform has <bytesex.h>. */
 #undef ACE_HAS_BYTESEX_H
-
-/* Platform has <features.h> */
-#undef ACE_HAS_FEATURES_H
 
 /* Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond). */
 #undef ACE_HAS_CANCEL_IO
