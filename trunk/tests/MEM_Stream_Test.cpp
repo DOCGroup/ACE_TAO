@@ -35,13 +35,13 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 #include "MEM_Stream_Test.h"         // Defines Echo_Handler
 
 #define NO_OF_REACTIVE_CONNECTION 3
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
 # define NO_OF_MT_CONNECTION 3
 #else
   // We will use SysV Semaphore in this case which is not very scalable
   // and can only handle one connection.
 # define NO_OF_MT_CONNECTION 1
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
 #define NO_OF_ITERATION 100
 
@@ -347,10 +347,10 @@ main (int, ACE_TCHAR *[])
   ACE_Reactor::instance ()->reset_event_loop ();
 
 
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#if !defined (ACE_WIN32) && defined (_ACE_USE_SV_SEM)
   ACE_ERROR ((LM_WARNING,
               ACE_TEXT ("\n *** Platform only support non-scalable SysV semaphores ***\n\n")));
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
 
   reset_handler (NO_OF_MT_CONNECTION);
 
