@@ -37,6 +37,8 @@ class TAO_Resource_Factory;
 
 typedef ACE_Unbounded_Set<TAO_Acceptor*>
         TAO_AcceptorSet;
+typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
+        TAO_AcceptorSetItor;
 
 class TAO_Export TAO_Acceptor_Registry
 {
@@ -70,9 +72,6 @@ public:
   // "rtiiop:macarena:0,15" - real-time IIOP, host, port, prio.
   //
 
-  TAO_Acceptor *get_acceptor (CORBA::ULong tag);
-  // Return the acceptor bridge corresponding to tag (IOP).
-
   int open (TAO_ORB_Core *orb_core);
   // Initialize all registered acceptors.  Return -1 on error.
   // @@ Fred&Ossama: What is the relationship between the ORB_Core and
@@ -91,10 +90,18 @@ public:
   // Check if there is at least one profile in <mprofile> that
   // corresponds to a collocated object.
 
+  TAO_AcceptorSetItor begin (void);
+  TAO_AcceptorSetItor end (void);
+  // Iteration
+
 private:
 
   TAO_AcceptorSet acceptors_;
   // list of acceptors currently open.
 };
+
+#if defined(__ACE_INLINE__)
+#include "tao/Acceptor_Registry.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_ACCEPTOR_REGISTRY_H */

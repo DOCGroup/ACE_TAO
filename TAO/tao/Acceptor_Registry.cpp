@@ -14,8 +14,11 @@
 
 #include "ace/Auto_Ptr.h"
 
-typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
-        TAO_AcceptorSetItor;
+#if !defined(__ACE_INLINE__)
+#include "tao/Acceptor_Registry.i"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(tao, Acceptor_Registry, "$Id$")
 
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
 {
@@ -29,14 +32,12 @@ size_t
 TAO_Acceptor_Registry::endpoint_count (void)
 {
   int count = 0;
-  TAO_AcceptorSetItor end =
-                this->acceptors_.end ();
-  TAO_AcceptorSetItor acceptor =
-                this->acceptors_.begin ();
+  TAO_AcceptorSetItor end = this->end ();
+  
 
-  for (; acceptor != end; acceptor++)
+  for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
     {
-      count += (*acceptor)->endpoint_count ();
+      count += (*i)->endpoint_count ();
     }
 
   return count;
@@ -46,37 +47,14 @@ int
 TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile &mprofile)
 {
-  TAO_AcceptorSetItor end =
-                this->acceptors_.end ();
-  TAO_AcceptorSetItor acceptor =
-                this->acceptors_.begin ();
+  TAO_AcceptorSetItor end = this->end ();
 
-  for (; acceptor != end; ++acceptor)
+  for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
     {
-      if ((*acceptor)->create_mprofile (object_key, mprofile) == -1)
+      if ((*i)->create_mprofile (object_key, mprofile) == -1)
         return -1;
     }
 
-  return 0;
-}
-
-TAO_Acceptor  *
-TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
-{
-  // @@ Fred&Ossama: Since this is going to be a common operation you
-  //    may want to consider using a Hash_Map_Manager, or even a
-  //    simple Map_Manager.
-
-  TAO_AcceptorSetItor end =
-                this->acceptors_.end ();
-  TAO_AcceptorSetItor acceptor =
-                this->acceptors_.begin ();
-
-  for (; acceptor != end; ++acceptor)
-    {
-      if ((*acceptor)->tag () == tag)
-        return (*acceptor);
-    }
   return 0;
 }
 
@@ -89,9 +67,9 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
   //    What happens if the address matches but the object key does
   //    not? Should we keep on searching in the ORB loop?
 
-  TAO_AcceptorSetItor end = this->acceptors_.end ();
+  TAO_AcceptorSetItor end = this->end ();
 
-  for (TAO_AcceptorSetItor i = this->acceptors_.begin (); i != end; ++i)
+  for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
     {
       for (TAO_PHandle j = 0;
            j != mprofile.profile_count ();
