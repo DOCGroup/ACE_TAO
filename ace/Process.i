@@ -282,15 +282,6 @@ ACE_Process_Options::command_line_buf (void)
   return command_line_buf_;
 }
 
-ACE_INLINE LPCTSTR
-ACE_Process_Options::process_name (void)
-{
-  if (process_name_[0] == '\0')
-    this->process_name (this->command_line_argv ()[0]);
-  
-  return this->process_name_;
-}
-
 ACE_INLINE LPTSTR
 ACE_Process_Options::working_directory (void)
 {
@@ -318,6 +309,15 @@ ACE_INLINE void
 ACE_Process_Options::process_name (LPCTSTR p)
 {
   ACE_OS::strcpy (this->process_name_, p);
+}
+
+ACE_INLINE LPCTSTR
+ACE_Process_Options::process_name (void)
+{
+  if (process_name_[0] == '\0')
+    this->process_name (this->command_line_argv ()[0]);
+  
+  return this->process_name_;
 }
 
 #if defined (ACE_HAS_WINCE)
