@@ -102,7 +102,7 @@ TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
-  // The equality operator==() below is guaranteed to be defined for
+  // The equality operator == below is guaranteed to be defined for
   // the discriminator type since an IDL union discriminator type must
   // be any of the following: (1) an integer, (2) a character, (3) a
   // boolean, or (4) an enumeration.
