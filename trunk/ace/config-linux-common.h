@@ -63,8 +63,7 @@
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #elif defined (__KCC)
-// Add KCC support here!
-# error KCC support is not yet available from ace/config-linux-common.h
+# include "ace/config-kcc-common.h"
 #else  /* ! __GNUG__ && ! __KCC */
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
