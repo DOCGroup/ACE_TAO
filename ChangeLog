@@ -1,7 +1,13 @@
+Wed Apr 23 06:30:04 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Corrected location build scoreboard, added Cygwin to the list of
+          user community supported compilers and updated MinGW formattng
+
 Tue Apr 22 19:37:14 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ChangeLog:
-	  
+
 	  Removed some entries in this Changelog, which should have been
 	  added to the TAO ChangeLog. Thanks to Steve Huston for pointing
 	  this out.

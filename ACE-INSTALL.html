@@ -89,11 +89,11 @@ For information on TAO's platform coverage and support, please also see
 <tbody>
   <tr>
     <th>DOC Group</th>
-    <td><A HREF="http://ringil.ece.uci.edu/scoreboard/">Tested</A> and used
-        daily by the DOC group:
-        Solaris 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)<BR>
+    <td><A HREF="http://www.dre.vanderbilt.edu/scoreboard/">Tested</A> 
+        and used daily by the DOC group:
+        Solaris 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)
         Windows NT 4.0, 2000, XP (MSVC++ 6.x, and 7.x, and
-        Borland C++ Builder 5.0)<BR>
+        Borland C++ Builder 5.0)
         Linux/Intel (many compilers), Linux/IA64 (GCC).
     </td>
     <td>DOC sites at <A HREF="http://doc.ece.uci.edu/">UCI</A> and
@@ -121,7 +121,7 @@ For information on TAO's platform coverage and support, please also see
         to which ACE has been ported, but aren't supported by the
         above groups. These include
         Windows 95/98 using Borland C++ Builder 4.0 and later,
-        and GNU g++ on MinGW;
+        and GNU g++ on MinGW and Cygwin;
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
         IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
         Linux on Alpha and PPC; OpenMVS;
@@ -171,7 +171,7 @@ supported by the DOC group, Riverace, or OCI. <P>
       ACE_Object_Manager</A> discussion below.<p>
 
       We've also added some support for
-      <A HREF="#mingw">GNU g++ with Mingw</A>,
+      <A HREF="#mingw">GNU g++ with MinGW</A>,
       Borland C++ Builder 4.0 and later, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
@@ -1172,7 +1172,7 @@ need to do:<P>
 
 Below are instructions for building ACE with <A
 HREF="#borland">Borland C++Builder</A>, <A HREF="#msvc">Microsoft
-Visual C++</A> and <A HREF="#mingw">Mingw</A>. <P>
+Visual C++</A> and <A HREF="#mingw">MinGw</A>. <P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt
@@ -1504,21 +1504,21 @@ slashes.  If this occurs, the easiest way to fix it is to recreate it.</P>
 
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="mingw">Building and Installing ACE on Win32 with Mingw</A></H4>
+<H4><A NAME="mingw">Building and Installing ACE on Win32 with MinGW</A></H4>
 
 <p>
 If you are building for a machine without a network card, you may want
 to check <A HREF="#win32nonic">here</A> first.
 
 <p>
-Building and installing ACE on <A HREF="http://www.mingw.org">Mingw</A>
+Building and installing ACE on <A HREF="http://www.mingw.org">MinGW</A>
 uses a mix of a <A HREF="#unix">UNIX</A> building process and
 <A HREF="#win32">Win32</A> configuration files.
-Also, as Mingw uses GNU g++, you may want to take
+Also, as MinGW uses GNU g++, you may want to take
 a look at the <A HREF="#g++">Compiling ACE with GNU g++</A> section.
 
 <p>
-You will need the Mingw build tools and libraries, downloable from
+You will need the MinGW build tools and libraries, downloable from
 <A HREF="http://www.mingw.org"><TT>http://www.mingw.org</TT></A>.
 For our build we required the following packages:
 <A NAME="mingwpacks">
@@ -1537,7 +1537,7 @@ distribution from
 
 <p>
 Be careful, because cygwin includes it's own version of the compiler
-and build tools, you will need to have the Mingw build tools before
+and build tools, you will need to have the MinGW build tools before
 the cygwin set on you PATH environment variable (more on this later).
 The steps we followed in the build are:
 
@@ -1548,7 +1548,7 @@ The steps we followed in the build are:
        from the cygwin site).
        <BR><BR>
 
-  <LI> Install the Mingw tools. Download all the needed packages (see
+  <LI> Install the MinGW tools. Download all the needed packages (see
        <A HREF="#mingwpacks">above</A>) and
        unpack them on the same base directory, say c:/mingw32.
        If some of the packages are distributed on
@@ -1557,7 +1557,7 @@ The steps we followed in the build are:
        <BR><BR>
 
   <LI> Open a cygwin shell. Set your <TT>PATH</TT> environment variable so
-       your Mingw's <TT>bin</TT> directory is first:
+       your MinGW's <TT>bin</TT> directory is first:
 
        <blockquote><code><pre>
        % export PATH=//c/mingw32/bin:$PATH
@@ -1580,7 +1580,7 @@ The steps we followed in the build are:
 
        <p>
        Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' cygwin
-       notation as this is seen by Mingw's compiler and it doesn't
+       notation as this is seen by MinGW's compiler and it doesn't
        support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
        separator however).
 
@@ -1654,7 +1654,7 @@ The steps we followed in the build are:
        <p>
        This should create <TT>libACE.dll</TT> (the Win32 shared library) and
        <TT>libACE.dll.a</TT> (the Win32 import library for the DLL).
-       Note the name for the ACE DLL on Mingw follows the Mingw
+       Note the name for the ACE DLL on MinGW follows the MinGW
        convention, that resembles UNIX.
        <BR><BR>
 
@@ -1667,7 +1667,7 @@ The steps we followed in the build are:
 
 
   <LI> <A NAME="mingwrunpath">
-       The same rules for Win32 search of DLLs apply for Mingw. If you
+       The same rules for Win32 search of DLLs apply for MinGW. If you
        want to run some ACE programs from the cygwin shell, you may
        need to add the directory for <TT>libACE.dll</TT> to your PATH:
 
@@ -1704,7 +1704,7 @@ variable as explained <A HREF="#mingwrunpath">above</A>.
 
 <p>
 You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
-of the various tests on Mingw and the different Windows flavors.
+of the various tests on MinGW and the different Windows flavors.
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
