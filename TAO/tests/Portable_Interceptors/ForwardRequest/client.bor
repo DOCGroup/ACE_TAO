@@ -6,7 +6,7 @@
 
 NAME = client
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gv
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
