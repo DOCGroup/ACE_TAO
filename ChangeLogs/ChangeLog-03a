@@ -1,3 +1,11 @@
+Tue Feb 22 21:11:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in (ACE_HAS_XPG4_MULTIBYTE_CHAR):
+
+	  Added test for wcslen().  Only define this macro if both the
+	  wchar_t type and the wcslen() function exist.  This fixes a link
+	  problem on a ACE+autoconf QNX build.
+
 Tue Feb 22 20:56:51 2000  Ossama Othman  <ossama@uci.edu>
 
 	* config.guess:
