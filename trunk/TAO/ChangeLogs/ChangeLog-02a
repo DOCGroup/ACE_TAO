@@ -27,7 +27,7 @@ Fri Jul 21 17:54:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  response). This was observed by William Rucklidge
 	  <wjr@imarkets.com> in his site. I was not able to reproduce the
 	  problem here. He also tested the fix and reported that it worked
-	  fine. 
+	  fine. Many thanks to William for helping us out.
 
 Fri Jul 21 11:55:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
