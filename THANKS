@@ -852,6 +852,7 @@ Soren Ilsoe <soren.ilsoe@tellabs.com>
 Eric Hopper <ehopper@globalmt.com>
 Martin Johnson <mjhn@ozemail.com.au>
 Pierre Oberson <oberson@nagra-kudelski.ch>
+Chris Uzdavinis <chris@atdesk.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
