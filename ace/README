@@ -180,10 +180,6 @@ ACE_HAS_4_4BSD_SENDMSG_RECVMSG          Platform has BSD 4.4
                                         sendmsg()/recvmsg() APIs.
 ACE_HAS_P_READ_WRITE                    Platform has pread() and
                                         pwrite() support
-ACE_HAS_64BIT_LONGS                     Platform has 64bit longs and
-                                        32bit ints.  NOTE: this macro
-                                        is deprecated.  Instead, use
-                                        ACE_SIZEOF_LONG == 8.
 ACE_HAS_AIX_BROKEN_SOCKET_HEADER        Platform, such as AIX4, needs
                                         to wrap #include of
                                         sys/socket.h with
@@ -335,12 +331,6 @@ ACE_HAS_GETRUSAGE_PROTO                 Platform has a getrusage ()
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.
-ACE_HAS_BROKEN_EXTENDED_TEMPLATES       GNU CC < 2.8 is broken for
-                                        template classes. This label
-                                        shortens the template parameter
-                                        list by removing the iterator
-                                        functionality in the
-                                        Cache_Map_Manager class.
 ACE_HAS_GNU_CSTRING_H                   Denotes that GNU has cstring.h
                                         as standard which redefines
                                         memchr()

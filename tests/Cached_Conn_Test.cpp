@@ -32,10 +32,6 @@
 
 #include "Cached_Conn_Test.h"
 
-#if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
-#define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
-#endif /* __GNUC__ */
-
 #include "ace/OS_NS_string.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
@@ -78,13 +74,6 @@ typedef ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MA
 typedef ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
         LRU_CACHING_STRATEGY;
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-typedef LRU_CACHING_STRATEGY
-        CACHING_STRATEGY;
-
-#else
-
 typedef ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
         LFU_CACHING_STRATEGY;
 typedef ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
@@ -101,8 +90,6 @@ typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_S
         NULL_CACHING_STRATEGY_ADAPTER;
 typedef ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
         CACHING_STRATEGY;
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
         ACCEPTOR;
@@ -180,8 +167,6 @@ template class ACE_Hash_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS
 
 template class ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
 template class ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
 template class ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
 template class ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
@@ -195,12 +180,6 @@ template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CA
 template class ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
 template class ACE_Cache_Map_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
 template class ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-
-#else
-
-template class ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 template class ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
@@ -263,8 +242,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
 #pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 #pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 #pragma instantiate ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
@@ -278,12 +255,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
 #pragma instantiate ACE_Cache_Map_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
 #pragma instantiate ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-
-#else
-
-#pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 #pragma instantiate ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
@@ -504,19 +475,6 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
     }
 }
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-void
-test_caching_strategy_type (void)
-{
-  ACE_DEBUG ((LM_DEBUG, "\nLRU_Caching_Strategy\n\n"));
-  CACHING_STRATEGY caching_strategy;
-  caching_strategy.purge_percent (purge_percentage);
-  test_connection_management (caching_strategy);
-}
-
-#else
-
 void
 test_caching_strategy_type (void)
 {
@@ -556,8 +514,6 @@ test_caching_strategy_type (void)
   test_connection_management (*caching_strategy);
   delete caching_strategy;
 }
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -647,10 +603,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Handle_Gobbler handle_gobbler;
   result = handle_gobbler.consume_handles (keep_handles_available);
   ACE_ASSERT (result == 0);
-
-#if defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES
-  caching_strategy_type = ACE_LRU;
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.

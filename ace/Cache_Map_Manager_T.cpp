@@ -20,21 +20,12 @@ ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Manager)
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Reverse_Iterator)
 
 #define ACE_T1 class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
 #define ACE_T2 KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
-
-#else
-
-#define ACE_T1 class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 template <ACE_T1>
 ACE_Cache_Map_Manager<ACE_T2>::ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_s,

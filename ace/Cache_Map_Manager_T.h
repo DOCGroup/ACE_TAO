@@ -28,8 +28,6 @@
 // Forward declaration.
 class ACE_Allocator;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
 #define ACE_Cache_Map_Iterator ACMI
 #define ACE_Cache_Map_Reverse_Iterator ACMRI
 
@@ -38,16 +36,6 @@ class ACE_Cache_Map_Iterator;
 
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator;
-
-#define ACE_T1 class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
-
-#else
-
-#define ACE_T1 class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 // For linkers that cant grok long names.
 #define ACE_Cache_Map_Manager ACMM
@@ -67,7 +55,7 @@ class ACE_Cache_Map_Reverse_Iterator;
  * isn't efficient.  Locking has to be provided by the
  * application.
  */
-template <ACE_T1>
+template <class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Manager
 {
 public:
@@ -77,8 +65,6 @@ public:
   typedef VALUE mapped_type;
   typedef MAP map_type;
   typedef CACHING_STRATEGY caching_strategy_type;
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
   typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
   typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
@@ -97,8 +83,6 @@ public:
           iterator;
   typedef REVERSE_ITERATOR
           reverse_iterator;
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   /**
    * The actual value mapped to the key in the map. The <attributes>
@@ -217,8 +201,6 @@ public:
   /// Dumps the state of the object.
   void dump (void) const;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
@@ -228,8 +210,6 @@ public:
   /// Return reverse iterator.
   REVERSE_ITERATOR rbegin (void);
   REVERSE_ITERATOR rend (void);
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   /// The map managed by the Cache_Map_Manager.
   MAP &map (void);
@@ -248,12 +228,10 @@ protected:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<ACE_T2> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<ACE_T2> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
 
 };
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
 /**
  * @class ACE_Cache_Map_Iterator
@@ -405,11 +383,6 @@ protected:
   /// belonging to the Cache_Map_Manager.
   REVERSE_IMPLEMENTATION reverse_iterator_implementation_;
 };
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-#undef ACE_T1
-#undef ACE_T2
 
 #if defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.i"
