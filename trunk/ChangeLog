@@ -1,3 +1,10 @@
+Sat Dec 27 10:32:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          Re-added setting of GCCLIB_DIR for SIMNT which I removed by accident.
+          Thanks to Thomas Lockhart <Thomas.Lockhart@jpl.nasa.gov> for
+          pointing this out.
+
 Sat Dec 27 10:22:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
