@@ -1,3 +1,20 @@
+Wed Apr 17 14:25:47 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Messaging_SyncScope.pidl:
+
+	  Changed DLL export include in comment from `TAO_Export.h' to
+	  `tao/corbafwd.h'.  The latter must regardless be included.  It
+	  also happens to pulls in the TAO_Export macro.  Reduces the size
+	  of the diff for the stub header.
+
+	* tao/Messaging_SyncScopeC.cpp:
+	* tao/Messaging_SyncScopeC.h:
+	* tao/Messaging_SyncScopeC.i:
+	* tao/diffs/Messaging_SyncScope.diff:
+
+	  Regenerated these files.  Removed extraneous includes in the
+	  process of doing so.
+
 Wed Apr 17 13:23:20 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Makefile (ORB_CORE_FILES):
