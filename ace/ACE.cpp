@@ -1830,20 +1830,17 @@ ACE::max_handles (void)
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
-#if defined (RLIM_INFINITY)
-  if (rl.rlim_cur == RLIM_INFINITY)
-#elif defined (_SC_OPEN_MAX)
-    return ACE_OS::sysconf (_SC_OPEN_MAX);
-#elif defined (FD_SETSIZE)
-    return FD_SETSIZE;
-#else
-    ACE_NOTSUP_RETURN (-1);
-#endif /* RLIM_INFINITY */
-  return rl.rlim_cur;
-#elif defined (_SC_OPEN_MAX)
+# if defined (RLIM_INFINITY)
+  if (rl.rlim_cur != RLIM_INFINITY)
+    return rl.rlim_cur;
+# endif /* RLIM_INFINITY */
+# if defined (_SC_OPEN_MAX)
   return ACE_OS::sysconf (_SC_OPEN_MAX);
-#elif defined (FD_SETSIZE)
+# elif defined (FD_SETSIZE)
   return FD_SETSIZE;
+# else
+  ACE_NOTSUP_RETURN (-1);
+# endif /* _SC_OPEN_MAX */
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT) */

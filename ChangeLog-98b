@@ -7,6 +7,8 @@ Thu Oct 01 01:05:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Oct 01 00:09:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+        * ace/ACE.cpp: Fixed max_handles().
+
 	* tests/Conn_Test: Removed template specialization for
  	  INET_Addr.hash().
 
