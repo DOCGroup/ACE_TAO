@@ -1,25 +1,37 @@
+Wed Oct 22 13:28:43 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo_i.cpp (setup_picurrent):
+
+	  Perform a deep copy of the thread-scope current's slot table
+	  instead of shallow one to work around a problem where the
+	  pointer to logically copied slot table ends up pointing to freed
+	  memory in some cases.  A predictable means of reproducing the
+	  problem hasn't been found yet so we go with this safer
+	  approach.  Thanks to Onopin V. Mikhail <kool@garant.ru> for
+	  reporting the problem and suggesting a fix.
+
 Wed Oct 22 11:02:30 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
-	  Fixed bug 1619 (memory leak with discard policy) by 
-	  adding a call to <release> the message block in the discard method.   
+	  Fixed bug 1619 (memory leak with discard policy) by
+	  adding a call to <release> the message block in the discard method.
 	  Thanks to <sro@zurich.ibm.com> for reporting this bug and
 	  suggesting a fix.
-	
+
 Wed Oct 22 05:59:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server: 
-	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client: 
-	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc: 
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server:
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client:
+	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
 	  Made the IDL_Files section empty for client and server
 	  projects. If we did not do this, the stub and skeleton files
 	  were getting compiled once with building the commonlib file and
-	  again while buidling the server and client. 
+	  again while buidling the server and client.
 
 Tue Oct 21 12:13:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB.h: Removed virtual qualifiers that went in as part of
-	  the last checin.  
+	  the last checin.
 
 Tue Oct 21 10:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -35,11 +47,11 @@ Tue Oct 21 10:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
         * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
 
-          Propagated support for typecodes of valuetypes, 
+          Propagated support for typecodes of valuetypes,
           components, homes, eventtypes and recursive types (already
           added to TypeCodeFactory and used in the IFR) to the ORB.
           Also updated TypeCodeFactory's README file and ORB
-          release notes. Thanks to Harvinder Sawhney 
+          release notes. Thanks to Harvinder Sawhney
           <harvinder_sawhney@agilent.com> for pointing out the
           oversight.
 
