@@ -472,13 +472,6 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   
   long n_parents = 0;
   AST_Interface_ptr *p_intf = this->create_inheritance_list (node, n_parents);
-//  AST_Interface_ptr *p_intf = 0;
-//  ACE_NEW_RETURN (p_intf,
-//                  AST_Interface_ptr[1],
-//                  0);
-
-//  p_intf[0] = ACE_static_cast (AST_Interface *,
-//                               inherit_intf);
 
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
@@ -1279,21 +1272,24 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
   AST_Interface_ptr *retval = 0;
 
   long n_parents = node->n_inherits ();
-  long n_concrete_parents = 0;
   AST_Interface **parents = node->inherits ();
+  AST_Interface *parent = 0;
+  UTL_ScopedName *sn = 0;
+  Identifier *id = 0;
 
   for (long i = 0; i < n_parents; ++i)
     {
-      if (! parents[i]->is_abstract ())
+      parent = parents[i];
+
+      if (parent->is_abstract () || parent->imported ())
         {
-          ++n_concrete_parents;
+          continue;
         }
+
+      ++n_rh_parents;
     }
 
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
-
-  if (n_concrete_parents == 0)
+  if (n_rh_parents == 0)
     {
       // Create a virtual module named "Messaging" and an interface "ReplyHandler"
       // from which we inherit.
@@ -1359,10 +1355,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
   else
     {
       ACE_NEW_RETURN (retval,
-                      AST_Interface_ptr[n_concrete_parents],
+                      AST_Interface_ptr[n_rh_parents],
                       0);
 
-      AST_Interface *parent = 0;
       ACE_CString prefix ("AMI_");
       ACE_CString suffix ("Handler");
       long index = 0;
@@ -1371,7 +1366,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
         {
           parent = parents[j];
 
-          if (parent->is_abstract ())
+          if (parent->is_abstract () || parent->imported ())
             {
               continue;
             }
@@ -1399,7 +1394,10 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
             node->defined_in ()->lookup_by_name (rh_parent_name,
                                                  1);
 
-          retval[index++] = AST_Interface::narrow_from_decl (d);
+          if (d != 0)
+            {
+              retval[index++] = AST_Interface::narrow_from_decl (d);
+            }
 
           rh_parent_name->destroy ();
         }
