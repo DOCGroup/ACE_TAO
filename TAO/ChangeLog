@@ -1,3 +1,17 @@
+Mon Jul 14 14:35:00 2003  Justin Michel <michel_j@ociweb.com>
+
+        * examples/RTCORBA/Activity/Makefile:
+        * examples/RTCORBA/Activity/Makefile.Activity.bor:
+        * examples/RTCORBA/Activity/Makefile.Activity_Lib.bor:
+        * examples/RTCORBA/Activity/Makefile.bor:
+
+          Reverted Makefiles back to the way they were a few weeks ago. Hopefully
+        this will fix any lingering problems with this example.
+
+        * TAO/orbsvcs/tests/Notify/Basic/Basic.mpc:
+
+          Added missing projects to the mpc file.
+
 Mon Jul 14 18:53:02 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
