@@ -935,7 +935,7 @@ ACE_INLINE EXT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key");
-  return node_ ? (&(node_->key ())) : 0;
+  return this->node_ ? (&(this->node_->key ())) : 0;
 }
 
 
@@ -946,7 +946,7 @@ ACE_INLINE INT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item");
-  return node_ ? (&(node_->item ())) : 0;
+  return this->node_ ? (&(this->node_->item ())) : 0;
 }
 
 
@@ -957,8 +957,8 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::first ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::first");
-  node_ = tree_->RB_tree_minimum (tree_->root_);
-  return node_ ? 1 : 0;
+  this->node_ = this->tree_->RB_tree_minimum (this->tree_->root_);
+  return this->node_ ? 1 : 0;
 }
 
 
@@ -969,8 +969,8 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::last ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::last");
-  node_ = tree_->RB_tree_maximum (tree_->root_);
-  return node_ ? 1 : 0;
+  this->node_ = this->tree_->RB_tree_maximum (this->tree_->root_);
+  return this->node_ ? 1 : 0;
 }
 
 
@@ -982,8 +982,8 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next");
-  node_ = tree_->RB_tree_successor (node_);
-  return node_ ? 1 : 0;
+  this->node_ = this->tree_->RB_tree_successor (this->node_);
+  return this->node_ ? 1 : 0;
 }
 
 
@@ -995,8 +995,8 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::previous ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::previous");
-  node_ = tree_->RB_tree_predecessor (node_);
-  return node_ ? 1 : 0;
+  this->node_ = this->tree_->RB_tree_predecessor (this->node_);
+  return this->node_ ? 1 : 0;
 }
 
 
@@ -1008,7 +1008,7 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::is_done ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::is_done");
-  return node_ ? 0 : 1;
+  return this->node_ ? 0 : 1;
 }
 
 
