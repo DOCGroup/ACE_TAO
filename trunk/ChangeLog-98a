@@ -1,3 +1,9 @@
+Mon Mar 09 16:11:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Map_Manager/test_hash_map_manager.cpp: added #include
+          of ace/SString.h and template instantiations.  Replaced gets
+          with ACE_OS::fgets.
+
 Mon Mar  9 14:59:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
