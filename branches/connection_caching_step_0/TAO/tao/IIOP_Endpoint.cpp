@@ -67,6 +67,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 {
+
 }
 
 int

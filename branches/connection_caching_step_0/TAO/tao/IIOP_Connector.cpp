@@ -186,6 +186,10 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
   // Check the Cache first for connections
   if (this->find_handler (prop, conn_handler) == 0)
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                    ACE_TEXT ("got an existing connection \n")));
       // We have found a connection and a handler
       svc_handler =
         ACE_dynamic_cast (TAO_IIOP_Client_Connection_Handler *,
@@ -223,16 +227,31 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                                                   remote_address);
         }
 
-      cout << "Did we get here 1" <<endl;
-      // Add the handler to Cache
-      int retval = this->add_handler (prop,
-                                      svc_handler);
-
-      cout << "Did we get here " <<endl;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                    ACE_TEXT ("added the new  connection to Cache \n")));
+                    ACE_TEXT ("The result is <%d> \n"), result));
+
+      if (result == -1)
+        {
+          // Give users a clue to the problem.
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                          ACE_TEXT ("%s:%d failed (%p)\n"),
+                          __FILE__,
+                          __LINE__,
+                          iiop_endpoint->host (),
+                          iiop_endpoint->port (),
+                      "errno"));
+            }
+          return -1;
+        }
+
+      // Add the handler to Cache
+      int retval = this->add_handler (prop,
+                                      svc_handler);
 
       if (retval != 0 && TAO_debug_level > 0)
         {
@@ -242,22 +261,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
         }
     }
 
-  if (result == -1)
-    {
-      // Give users a clue to the problem.
-      if (TAO_orbdebug)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ACE_TEXT ("%s:%d failed (%p)\n"),
-                      __FILE__,
-                      __LINE__,
-                      iiop_endpoint->host (),
-                      iiop_endpoint->port (),
-                      "errno"));
-        }
-      return -1;
-    }
+
   // Make the handler ready for use
   svc_handler->make_idle ();
 

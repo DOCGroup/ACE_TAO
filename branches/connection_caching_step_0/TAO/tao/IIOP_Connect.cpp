@@ -239,8 +239,6 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                       this->transport_.message_state_,
                                                       max_wait_time);
 
-  cout << "The result is amba " << result << endl;
-
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -440,9 +438,6 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                  ACE_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
                  ACE_TEXT ("handle_close (%d, %d)\n"), handle, rm));
 
-  // Mark the handle as closed in the Cache
-  this->mark_closed ();
-
   // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();
 }
@@ -462,9 +457,6 @@ TAO_IIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
     ACE_DEBUG  ((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
                  ACE_TEXT ("handle_close_i (%d, %d)\n"), handle, rm));
-
-  // Mark the handle as closed in the Cache
-  this->mark_closed ();
 
   // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();

@@ -27,6 +27,10 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS (void)
 CORBA::ULong
 TAO_Exclusive_TMS::request_id (void)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::request_id - <%d>\n"),
+                this->request_id_generator_));
   return this->request_id_generator_++;
 }
 
@@ -69,7 +73,7 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
                     this->request_id_, request_id));
       return 0;
     }
