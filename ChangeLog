@@ -1,3 +1,11 @@
+Fri Sep  8 16:50:52 2000  Carlos O'Ryan  <coryan@ace.cs.wustl.edu>
+
+        * ace/OS.h:
+        * ace/config-all.h:
+          Had to #include <vxWorks.h> in config-all.h to get the
+          definition for FUNCPTR.  With this change things are happy
+          (again) on VxWorks.
+
 Fri Sep  8 13:56:50 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Thread_Exit.cpp:
