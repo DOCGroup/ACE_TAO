@@ -1,3 +1,10 @@
+Sat Jan 10 14:57:01 1998    <coryan@MILONGA>
+
+	* ace/Env_Value_T.h: 
+	  The return value for the assignment operator had no template
+	  parameter, ditto for the arguments of the copy constructor and
+	  the already mentioned operator.
+
 Sat Jan 10 13:20:08 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: Moved template instantiation codes around
