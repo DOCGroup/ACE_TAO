@@ -141,6 +141,11 @@ template class
         >
     >;
 
+template class TAO_Unbounded_Object_Sequence<PortableServer::POA,
+                                             TAO_Objref_Var_T<PortableServer::POA, PortableServer::tao_POA_life>,
+                                             PortableServer::tao_POA_life,
+                                             PortableServer::tao_POA_cast>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
@@ -152,6 +157,10 @@ template class
             PortableServer::tao_POA_life \
           > \
       >
+
+# pragma instantiate TAO_Unbounded_Object_Sequence<PortableServer::POA,
+      TAO_Objref_Var_T<PortableServer::POA, PortableServer::tao_POA_life>,
+      PortableServer::tao_POA_life, PortableServer::tao_POA_cast>
 
 # pragma instantiate \
     TAO_Seq_Out_T< \
@@ -682,6 +691,9 @@ template class
       PortableServer::ObjectId
     >;
 
+template class TAO_Seq_Var_Base_T<PortableServer::IDs,
+                                  PortableServer::ObjectId>;
+
 template class
   TAO_Seq_Out_T<
       PortableServer::IDs,
@@ -696,7 +708,8 @@ template class
       PortableServer::IDs, \
       PortableServer::ObjectId \
     >
-
+# pragma instantiate TAO_Seq_Var_Base_T<PortableServer::IDs,
+      PortableServer::ObjectId>
 # pragma instantiate \
   TAO_Seq_Out_T< \
       PortableServer::IDs, \
@@ -2968,7 +2981,13 @@ PortableServer::tao_POAManager_cast::tao_upcast (
         PortableServer::POAManager,
         PortableServer::tao_POAManager_life
       >;
-  template class
+
+template class TAO_Seq_Var_Base_T<PortableServer::POAList,
+    TAO_Object_Manager<PortableServer::POA,
+                       TAO_Objref_Var_T<PortableServer::POA,
+                                        PortableServer::tao_POA_life>,
+                       PortableServer::tao_POA_life> >;
+template class
     TAO_Objref_Out_T<
         PortableServer::POAManager,
         PortableServer::tao_POAManager_life
@@ -2979,6 +2998,13 @@ PortableServer::tao_POAManager_cast::tao_upcast (
         PortableServer::POAManager, \
         PortableServer::tao_POAManager_life \
       >
+
+# pragma instantiate TAO_Seq_Var_Base_T<PortableServer::POAList,
+      TAO_Object_Manager<PortableServer::POA,
+                         TAO_Objref_Var_T<PortableServer::POA,
+                                          PortableServer::tao_POA_life>,
+                         PortableServer::tao_POA_life> >
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableServer::POAManager, \

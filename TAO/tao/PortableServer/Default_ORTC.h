@@ -15,33 +15,42 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_DEFAULT_ORTC_H_
 #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
-
 #include "ace/pre.h"
-#include "tao/ObjectReferenceTemplateC.h"
+#include "portableserver_export.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
+#include "tao/ObjectReferenceTemplateC.h"
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO 
+#  define TAO_EXPORT_NESTED_MACRO TAO_PortableServer_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -56,32 +65,51 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
 TAO_NAMESPACE  TAO_Default_ORT
 {
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:307
-  
+  // be/be_valuetype.cpp:282
+
+
+
+#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__ODDS_N_ENDS_CH_)
+#define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__ODDS_N_ENDS_CH_
+
   class ObjectReferenceTemplate;
   struct tao_ObjectReferenceTemplate_life;
-  typedef TAO_Value_Var_T<ObjectReferenceTemplate, tao_ObjectReferenceTemplate_life> ObjectReferenceTemplate_var;
-  typedef TAO_Value_Out_T<ObjectReferenceTemplate, tao_ObjectReferenceTemplate_life> ObjectReferenceTemplate_out;
-  
-  struct tao_ObjectReferenceTemplate_life
+
+  typedef
+    TAO_Value_Var_T<
+        ObjectReferenceTemplate,
+        tao_ObjectReferenceTemplate_life
+      >
+    ObjectReferenceTemplate_var;
+
+  typedef
+    TAO_Value_Out_T<
+        ObjectReferenceTemplate,
+        tao_ObjectReferenceTemplate_life
+      >
+    ObjectReferenceTemplate_out;
+
+  struct TAO_PortableServer_Export tao_ObjectReferenceTemplate_life
   {
     static void tao_add_ref (ObjectReferenceTemplate *);
     static void tao_remove_ref (ObjectReferenceTemplate *);
   };
-  
+
+#endif /* end #if !defined */
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:56
+  // be/be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_
-  
-  class  ObjectReferenceTemplate
+
+  class TAO_PortableServer_Export ObjectReferenceTemplate
     : public virtual PortableInterceptor::ObjectReferenceTemplate
   {
   public:
@@ -96,94 +124,94 @@ TAO_NAMESPACE  TAO_Default_ORT
       );
     virtual const char* _tao_obv_repository_id (void) const;
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:272
-  
+    // be/be_visitor_valuetype/valuetype_ch.cpp:272
+
   protected:
     ObjectReferenceTemplate (void);
     virtual ~ObjectReferenceTemplate (void);
-    
+
     virtual void *_tao_obv_narrow (ptr_arith_t);
 #if defined (_MSC_VER)
     virtual void *TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (ptr_arith_t);
 #endif /* _MSC_VER */
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+
   private:
     ObjectReferenceTemplate (const ObjectReferenceTemplate &);
     void operator= (const ObjectReferenceTemplate &);
-    
+
   protected:
     virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) = 0;
     virtual CORBA::Boolean _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &) = 0;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// be/be_visitor_module/module_ch.cpp:67
 
 }
 TAO_NAMESPACE_CLOSE // module TAO_Default_ORT
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/obv_module.cpp:55
+// be/be_visitor_valuetype/obv_module.cpp:55
 
 TAO_NAMESPACE  OBV_TAO_Default_ORT
 {
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_obv_ch.cpp:58
+  // be/be_visitor_valuetype/valuetype_obv_ch.cpp:58
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_
-  
+
   // OBV_ class
-  class  ObjectReferenceTemplate
+  class TAO_PortableServer_Export ObjectReferenceTemplate
     : public virtual TAO_Default_ORT::ObjectReferenceTemplate
   {
   public:
     virtual ~ObjectReferenceTemplate (void);
-    
+
   protected:
     virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &);
     CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-  
+
   private:
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/obv_module.cpp:85
+  // be/be_visitor_valuetype/obv_module.cpp:85
 
 }TAO_NAMESPACE_CLOSE
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/any_op_ch.cpp:54
+// be/be_visitor_valuetype/any_op_ch.cpp:54
 
- void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *); // copying
- void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate **); // non-copying
- CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *); // copying
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate **); // non-copying
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:212
+// be/be_valuetype.cpp:187
 
 TAO_NAMESPACE CORBA
 {
@@ -193,18 +221,18 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ch.cpp:61
+// be/be_visitor_valuetype/cdr_op_ch.cpp:61
 
- CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
- CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// be/be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "Default_ORTC.i"
@@ -220,4 +248,3 @@ TAO_NAMESPACE_CLOSE
 
 #include "ace/post.h"
 #endif /* ifndef */
-
