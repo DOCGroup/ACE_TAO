@@ -281,7 +281,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, "Tk_Reactor_Test: %s\n", tcl_interp->result),1);
     }
 
-  char tcl_cmd[] = "source TkReactor_Test.tcl"
+  char tcl_cmd[] = "source TkReactor_Test.tcl";
   if (Tcl_Eval (tcl_interp, tcl_cmd) != TCL_OK) {
     cerr << "error: " << tcl_interp->result << "\n";
     exit (1);
