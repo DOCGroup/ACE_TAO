@@ -41,7 +41,8 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
   os << "static TAO::TypeCode::Struct_Field<char const *> "
      << fields_name.c_str ();
 
-  if (count == 0)
+
+  if (node->nfields () == 0)
     {
       os << " * const = 0;" << be_nl;
     }

@@ -6,7 +6,7 @@ template <class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::Sequence<RefCountPolicy>::Sequence (
   CORBA::TCKind kind,
-  CORBA::TypeCode_ptr * content_type,
+  CORBA::TypeCode_ptr const * content_type,
   CORBA::ULong length)
   : kind_ (kind)
   , content_type_ (content_type)

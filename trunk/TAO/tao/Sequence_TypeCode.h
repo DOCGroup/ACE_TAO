@@ -46,7 +46,7 @@ namespace TAO
 
       /// Constructor.
       Sequence (CORBA::TCKind kind,
-                CORBA::TypeCode_ptr * content_type,
+                CORBA::TypeCode_ptr const * content_type,
                 CORBA::ULong length);
 
       /// Destructor.
@@ -107,7 +107,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c TypeCode::Sequence.
        */
-      CORBA::TypeCode_ptr * content_type_;
+      CORBA::TypeCode_ptr const * content_type_;
 
       /// Length of the @c sequence or array.  A length of zero
       /// indicates an unbounded @c sequence.
