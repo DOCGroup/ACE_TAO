@@ -1,3 +1,14 @@
+Fri Sep  3 13:42:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Acceptor_Registry.h (open):
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Removed the exception specification from this method.  It really
+	  isn't needed.  Removing it also allows us to avoid including
+	  "tao/SystemException.h" to pull in the CORBA::SystemException
+	  class declaration.  Fixes a compile-time error regarding
+	  undefined CORBA::SystemException type in header.
+
 Fri Sep  3 14:18:35 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * interop-tests/wchar/interop_wchar_i.cpp:
