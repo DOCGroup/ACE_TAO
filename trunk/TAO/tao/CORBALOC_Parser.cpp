@@ -4,7 +4,7 @@
 #include "MProfile.h"
 #include "Connector_Registry.h"
 #include "tao/debug.h"
- 
+
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
@@ -167,7 +167,7 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
 
   // Check for an IIOP corbaloc IOR.  If the port number is not
   // specified, append the default corbaloc port number (i.e. "2809")
-  if (ACE_OS::strncmp (cloc_name_ptr,
+  if (ACE_OS::strncmp (end_point.in (),
                        iiop_prefix,
                        sizeof (iiop_prefix) - 1) == 0
       && addr.find (':') == ACE_CString::npos)

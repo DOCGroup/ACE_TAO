@@ -1,3 +1,10 @@
+Sun Dec 15 22:26:29 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CORBALOC_Parser.cpp: 
+	  Fixed a problem with the ior_corbaloc test. A wrong string was
+	  being used for strcmp. Thanks to Bala for finding and reporting 
+	  the problem.
+	
 Sun Dec 15 20:18:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/ior_corbaloc/status_i.h: 
