@@ -123,6 +123,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Codeset_Translator_Factory.cpp
       ORB_Core.cpp
       ORB_Core_Auto_Ptr.cpp
+      TSS_Resources.cpp
       Collocation_Resolver.cpp
       Default_Collocation_Resolver.cpp
       Stub_Factory.cpp

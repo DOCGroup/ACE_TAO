@@ -127,6 +127,8 @@ ORB_CORE_FILES = \
   OctetSeqC.cpp \
   StringSeqC.cpp \
   ORB_Core.cpp \
+  ORB_Core_Auto_Ptr.cpp \
+  TSS_Resources.cpp \
   ORB_Table.cpp \
   LF_Event.cpp \
   LF_Event_Binder.cpp \
@@ -319,6 +321,7 @@ HEADER_FILES = \
   OctetSeqC.h \
   StringSeqC.h \
   ORB_Core.h \
+  ORB_Core_Auto_Ptr.h \
   ORB_Table.h \
   Object.h \
   ObjectIdListC.h \
@@ -354,6 +357,7 @@ HEADER_FILES = \
   TAOS_T.h \
   TAO_Internal.h \
   TAO_Singleton.h \
+  TSS_Resources.h \
   Tagged_Components.h \
   TimeBaseC.h \
   TimeBaseS.h \
