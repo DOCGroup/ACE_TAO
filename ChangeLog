@@ -1,3 +1,148 @@
+Thu May 25 19:39:59 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Re-enabled test for ACE_HAS_SIGNAL_SAFE_OS_CALLS.  The fixes to
+	  the ACE_OSCALL* macros below make it possible to enable this
+	  feature.
+
+	* ace/config-all.h (ACE_OSCALL, ACE_OSCALL_RETURN):
+
+	  Removed call to "ACE_LOG_MSG->restart()" from these macros in
+	  the "ACE_HAS_SIGNAL_SAFE_OS_CALLS" case.
+
+	* ace/OS.h:
+
+	  Remove inclusion of "ace/Log_Msg.h" when the
+	  ACE_ONLY_LATEST_AND_GREATEST preprocessor macro is defined.
+	  This reduces the number of extraneous header interdependencies
+	  in much of the ACE source files.
+
+	  Added a forward declaration for ACE_Log_Msg to compensate for
+	  the declaration that was initially pulled in by "ace/Log_Msg.h"
+	  It was only needed for "friend" declaration inside the
+	  ACE_OS_Object_Manager class.
+
+	* ace/Addr.cpp:
+	* ace/Addr.h:
+	* ace/Auto_Ptr.h:
+	* ace/DEV_Addr.cpp:
+	* ace/DEV_Connector.h:
+	* ace/DEV_Connector.i:
+	* ace/DEV_IO.cpp:
+	* ace/DLL.cpp:
+	* ace/FIFO.cpp:
+	* ace/FIFO_Recv.cpp:
+	* ace/FIFO_Recv_Msg.cpp:
+	* ace/FIFO_Send.cpp:
+	* ace/FIFO_Send_Msg.cpp:
+	* ace/FILE_Addr.cpp:
+	* ace/FILE_Connector.h:
+	* ace/FILE_IO.cpp:
+	* ace/Get_Opt.cpp:
+	* ace/Handle_Set.cpp:
+	* ace/INET_Addr.cpp:
+	* ace/IO_SAP.cpp:
+	* ace/IPC_SAP.cpp:
+	* ace/LSOCK.cpp:
+	* ace/LSOCK_Acceptor.cpp:
+	* ace/LSOCK_CODgram.cpp:
+	* ace/LSOCK_Connector.cpp:
+	* ace/LSOCK_Dgram.cpp:
+	* ace/LSOCK_Stream.cpp:
+	* ace/Log_Record.cpp:
+	* ace/MEM_Addr.cpp:
+	* ace/Makefile:
+	* ace/Mem_Map.cpp:
+	* ace/Name_Request_Reply.cpp:
+	* ace/OS.cpp:
+	* ace/Pipe.cpp:
+	* ace/SOCK.cpp:
+	* ace/SOCK_CODgram.cpp:
+	* ace/SOCK_Connector.cpp:
+	* ace/SOCK_Dgram_Bcast.cpp:
+	* ace/SOCK_Dgram_Mcast_QoS.cpp:
+	* ace/SPIPE_Acceptor.cpp:
+	* ace/SPIPE_Connector.cpp:
+	* ace/SV_Message_Queue.cpp:
+	* ace/SV_Semaphore_Complex.cpp:
+	* ace/SV_Semaphore_Simple.cpp:
+	* ace/SV_Shared_Memory.cpp:
+	* ace/Time_Request_Reply.cpp:
+	* ace/Trace.cpp:
+	* ace/Typed_SV_Message_Queue.cpp:
+	* ace/UNIX_Addr.h:
+	* apps/Gateway/Peer/Options.cpp:
+	* apps/JAWS/server/Parse_Headers.cpp:
+	* apps/drwho/Binary_Search.cpp:
+	* apps/drwho/CM_Client.cpp:
+	* apps/drwho/CM_Server.cpp:
+	* apps/drwho/Hash_Table.cpp:
+	* apps/drwho/Multicast_Manager.cpp:
+	* apps/drwho/Options.cpp:
+	* apps/drwho/PMC_All.cpp:
+	* apps/drwho/PMC_Flo.cpp:
+	* apps/drwho/PMC_Ruser.cpp:
+	* apps/drwho/PMC_Usr.cpp:
+	* apps/drwho/PMS_All.cpp:
+	* apps/drwho/PMS_Flo.cpp:
+	* apps/drwho/PMS_Ruser.cpp:
+	* apps/drwho/PMS_Usr.cpp:
+	* apps/drwho/PM_Client.cpp:
+	* apps/drwho/Protocol_Manager.cpp:
+	* apps/drwho/Protocol_Record.cpp:
+	* apps/drwho/SMR_Client.cpp:
+	* apps/drwho/SMR_Server.cpp:
+	* apps/drwho/SM_Client.cpp:
+	* apps/drwho/SM_Server.cpp:
+	* apps/drwho/Search_Struct.cpp:
+	* apps/drwho/Single_Lookup.cpp:
+	* apps/drwho/client.cpp:
+	* apps/drwho/server.cpp:
+	* examples/IOStream/client/iostream_client.cpp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp:
+	* examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+	* examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
+	* examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+	* examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
+	* examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+	* examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+	* examples/IPC_SAP/TLI_SAP/db-client.cpp:
+	* examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+	* examples/Log_Msg/test_callback.cpp:
+	* examples/Log_Msg/test_log_msg.cpp:
+	* examples/Log_Msg/test_ostream.cpp:
+	* examples/Logger/client/logging_app.cpp:
+	* examples/Mem_Map/IO-tests/IO_Test.cpp:
+	* examples/Mem_Map/file-reverse/file-reverse.cpp:
+	* examples/Misc/test_get_opt.cpp:
+	* examples/Misc/test_profile_timer.cpp:
+	* examples/Misc/test_sstring.cpp:
+	* examples/Reactor/FIFO/client.cpp:
+	* examples/Reactor/Misc/test_early_timeouts.cpp:
+	* examples/Reactor/Misc/test_time_value.cpp:
+	* examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+	* examples/Shared_Malloc/Options.cpp:
+	* examples/Shared_Memory/test_MM.cpp:
+	* examples/Shared_Memory/test_SV.cpp:
+	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+	* netsvcs/clients/Logger/indirect_logging.cpp:
+	* netsvcs/lib/Logging_Strategy.cpp:
+	* performance-tests/Misc/basic_perf.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
+	  the ACE logging macros.
+
 Fri May 26 09:16:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_Dirent.cpp:
