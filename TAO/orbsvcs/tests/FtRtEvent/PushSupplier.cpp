@@ -165,15 +165,17 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
       consumer_->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_CString ior("file://");
-      ior += proxy_consumer_file_;
-      CORBA::Object_var obj = orb_->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK
-      RtecEventComm::PushConsumer_var consumer = 
-        RtecEventComm::PushConsumer::_narrow(obj.in());
-      ACE_OS::sleep(1);
-      consumer->push(event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (proxy_consumer_file_.length()) {
+        ACE_CString ior("file://");
+        ior += proxy_consumer_file_;
+        CORBA::Object_var obj = orb_->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        RtecEventComm::PushConsumer_var consumer = 
+          RtecEventComm::PushConsumer::_narrow(obj.in());
+        ACE_OS::sleep(1);
+        consumer->push(event ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
     }
   }
   ACE_CATCHANY
