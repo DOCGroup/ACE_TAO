@@ -53,7 +53,7 @@ are ignored.
 client:
 -------
 
-% client [-d] [-x] <-f ior_file> <-k ior>  -n <iterations> 
+% client [-d] [-x] <-k ior | file://<ior_file>>  -n <iterations> 
 
 Options:
 -------
@@ -74,7 +74,7 @@ Options:
 mt_client:
 -------
 
-% mt_client [-d] [-x] <-k ior> [-n <iterations>] [-t threads]
+% mt_client [-d] [-x] <-k ior | file://<ior_file>> [-n <iterations>] [-t threads] 
 
 Options:
 -------
