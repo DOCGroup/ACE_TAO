@@ -2,23 +2,23 @@ Fri Apr  1 10:33:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
 
-	  Fixed conditional so that a TypeCode related include directives
+	  Fixed conditional so that TypeCode related include directives
 	  are always generated when TypeCode support is enabled and
 	  separate Any stub files are disabled.
 
 Fri Apr  1 10:43:10 2005  Rich Seibel  <seibel_r@ociweb.com>
-        
+
         Moving updates for Mac made by Paul and Chad  to get it to work.
 
         * TAO/orbsvcs/orbsvcs/FtRtEvent.mpc:
-          Remove PortableGroup_Simple_DSC from this library as it already 
-          picks it up from the FTORB_Utils library.  This was causing 
-          link problems on MacOS.  Removed an extraneous comment and 
+          Remove PortableGroup_Simple_DSC from this library as it already
+          picks it up from the FTORB_Utils library.  This was causing
+          link problems on MacOS.  Removed an extraneous comment and
           macros setting.
 
         * TAO/orbsvcs/orbsvcs/PortableGroup.mpc:
           Added the PortableGroup_Simple_DS.idl and remove an old
-          dynamicflags setting.  Also Remove an unnecessary dependency 
+          dynamicflags setting.  Also Remove an unnecessary dependency
           from FTORB.
 
         * TAO/orbsvcs/orbsvcs/PortableGroup_Simple_export.h:
@@ -5404,7 +5404,7 @@ Fri Feb 18 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           strategy just call now the POA instead directly using the
           id_uniqueness strategy. Added an optimization by adding the
 	  servant created to the AOM thanks to Bala and Carlos for coming
-	  with this approach. 
+	  with this approach.
 
         Mon Nov 15 10:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
