@@ -74,7 +74,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                                        AST_Operation::OP_noflags,
                                        node->name (), 
                                        0);
-  op->set_name (node->name ());
+  op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->set_defined_in (node->defined_in ());
 
   // Get the strategy from the attribute and hand it over
@@ -197,11 +197,13 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                                       node->field_type (),
                                       node->name (),
                                       0);
-  arg->set_name (node->name ());
+  arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // create the operation
-  op = new be_operation (rt, AST_Operation::OP_noflags,
-                         node->name (), 0);
-  op->set_name (node->name ());
+  op = new be_operation (rt, 
+                         AST_Operation::OP_noflags,
+                         node->name (), 
+                         0);
+  op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->set_defined_in (node->defined_in ());
   op->add_argument_to_scope (arg);
 

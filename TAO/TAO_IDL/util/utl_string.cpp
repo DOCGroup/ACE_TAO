@@ -143,10 +143,17 @@ UTL_String::UTL_String (UTL_String *s)
 
 UTL_String::~UTL_String (void)
 {
-  if (p_str)
-    delete [] p_str;
-  if (c_str)
-    delete [] c_str;
+  if (this->p_str)
+    {
+      delete [] this->p_str;
+      this->p_str = 0;
+    }
+
+  if (this->c_str)
+    {
+      delete [] this->c_str;
+      this->c_str = 0;
+    }
 }
 
 /*
