@@ -144,18 +144,13 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              const ACE_Addr &local_sap,
                              int reuse_addr,
                              int /* flags */,
-                             int /* perms */,
-                             int protocol_family,
-                             int protocol)
+                             int /* perms */)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
 
-  // @@ Should remove this arg when IPv6 is merged...
-  ACE_UNUSED_ARG (protocol_family);
-  protocol_family = remote_sap.get_type ();
   if (this->shared_open (new_stream,
-                         protocol_family,
-                         protocol,
+                         remote_sap.get_type (),
+                         0,
                          reuse_addr) == -1)
     return -1;
   else if (this->shared_connect_start (new_stream,
@@ -183,19 +178,13 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              ACE_SOCK_GROUP g,
                              u_long flags,
                              int reuse_addr,
-                             int /* perms */,
-                             int protocol_family,
-                             int protocol)
+                             int /* perms */)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
 
-  // @@ Should remove this arg when IPv6 is merged...
-  ACE_UNUSED_ARG (protocol_family);
-  protocol_family = remote_sap.get_type ();
-
   if (this->shared_open (new_stream,
                          remote_sap.get_type (),
-                         protocol,
+                         0,
                          protocolinfo,
                          g,
                          flags,
@@ -278,9 +267,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         const ACE_Addr &local_sap,
                                         int reuse_addr,
                                         int flags,
-                                        int perms,
-                                        int protocol_family,
-                                        int protocol)
+                                        int perms)
 {
   ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
 
@@ -290,9 +277,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      local_sap,
                      reuse_addr,
                      flags,
-                     perms,
-                     protocol_family,
-                     protocol) == -1
+                     perms) == -1
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
@@ -309,9 +294,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         ACE_SOCK_GROUP g,
                                         u_long flags,
                                         int reuse_addr,
-                                        int perms,
-                                        int protocol_family,
-                                        int protocol)
+                                        int perms)
 {
   ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
 
@@ -324,9 +307,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      g,
                      flags,
                      reuse_addr,
-                     perms,
-                     protocol_family,
-                     protocol) == -1
+                     perms) == -1
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,

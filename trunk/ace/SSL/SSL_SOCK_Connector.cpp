@@ -167,9 +167,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                  const ACE_Addr &local_sap,
                                  int reuse_addr,
                                  int flags,
-                                 int perms,
-                                 int protocol_family,
-                                 int protocol)
+                                 int perms)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
@@ -189,9 +187,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                 local_sap,
                                 reuse_addr,
                                 flags,
-                                perms,
-                                protocol_family,
-                                protocol) == -1)
+                                perms) == -1)
     return -1;
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
@@ -218,9 +214,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                  ACE_SOCK_GROUP g,
                                  u_long flags,
                                  int reuse_addr,
-                                 int perms,
-                                 int protocol_family,
-                                 int protocol)
+                                 int perms)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
@@ -243,9 +237,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                 g,
                                 flags,
                                 reuse_addr,
-                                perms,
-                                protocol_family,
-                                protocol) == -1)
+                                perms) == -1)
     return -1;
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
@@ -308,26 +300,17 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
   const ACE_Addr &local_sap,
   int reuse_addr,
   int flags,
-  int perms,
-  int protocol_family,
-  int protocol)
+  int perms)
   : connector_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
-  if (this->connect (new_stream,
-                     remote_sap,
-                     timeout,
-                     local_sap,
-                     reuse_addr,
-                     flags,
-                     perms,
-                     protocol_family,
-                     protocol) == -1
-      && timeout != 0
-      && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
+  this->connect (new_stream,
+                 remote_sap,
+                 timeout,
+                 local_sap,
+                 reuse_addr,
+                 flags,
+                 perms);
 }
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
@@ -340,28 +323,19 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
   ACE_SOCK_GROUP g,
   u_long flags,
   int reuse_addr,
-  int perms,
-  int protocol_family,
-  int protocol)
+  int perms)
   : connector_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 
-  if (this->connect (new_stream,
-                     remote_sap,
-                     qos_params,
-                     timeout,
-                     local_sap,
-                     protocolinfo,
-                     g,
-                     flags,
-                     reuse_addr,
-                     perms,
-                     protocol_family,
-                     protocol) == -1
-      && timeout != 0
-      && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
+  this->connect (new_stream,
+                 remote_sap,
+                 qos_params,
+                 timeout,
+                 local_sap,
+                 protocolinfo,
+                 g,
+                 flags,
+                 reuse_addr,
+                 perms);
 }

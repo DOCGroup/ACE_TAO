@@ -36,18 +36,14 @@ ACE_LSOCK_Connector::ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
 					  const ACE_Addr &local_sap,
 					  int reuse_addr,
 					  int flags,
-					  int perms,
-					  int protocol_family, 
-					  int protocol)
+					  int perms)
   : ACE_SOCK_Connector (new_stream,
                         remote_sap,
                         timeout,
 			local_sap,
                         reuse_addr,
                         flags,
-                        perms,
-                        protocol_family,
-                        protocol)
+                        perms)
 {
   ACE_TRACE ("ACE_LSOCK_Connector::ACE_LSOCK_Connector");
   // This is necessary due to the weird inheritance relationships of

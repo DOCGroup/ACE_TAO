@@ -28,8 +28,8 @@
 /**
  * @class ACE_MEM_Connector
  *
- * @brief Defines the format and interface for the connector side of
- * the <ACE_MEM_Stream>.
+ * @brief Defines the format and interface for connecting to a peer
+ * on a @c ACE_MEM_Stream object.
  */
 class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
@@ -39,19 +39,41 @@ public:
   ACE_MEM_Connector (void);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
-   * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-   * the connection is done using non-blocking mode.  In this case, if
-   * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
-   * <local_sap> is the value of local address to bind to.  If it's
-   * the default value of <0> then the user is letting the OS do the
-   * binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
-   * even if it hasn't been cleanedup yet.
+   * Actively connect to a peer, producing a connected @c ACE_MEM_Stream
+   * object if the connection succeeds.
+   *
+   * @param new_stream  The @c ACE_MEM_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   *                    @note remote_sap must be an address on the local
+   *                    host.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The local address to bind to.  If it's
+   *                    the default value of @c ACE_Addr::sap_any then the
+   *                    OS will choose an unused port.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
    */
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
                      const ACE_INET_Addr &remote_sap,
@@ -59,23 +81,48 @@ public:
                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = 0,
-                     int perms = 0,
-                     int protocol = 0);
+                     int perms = 0);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
-   * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-   * the connection is done using non-blocking mode.  In this case, if
-   * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
-   * <local_sap> is the value of local address to bind to.  If it's
-   * the default value of <0> then the user is letting the OS do the
-   * binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
-   * even if it hasn't been cleanedup yet.
+   * Actively connect to a peer, producing a connected @c ACE_MEM_Stream
+   * object if the connection succeeds.
+   *
+   * @param new_stream  The @c ACE_MEM_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   *                    @note remote_sap must be an address on the local
+   *                    host.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The local address to bind to.  If it's
+   *                    the default value of @c ACE_Addr::sap_any then the
+   *                    OS will choose an unused port.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
    */
   int connect (ACE_MEM_Stream &new_stream,
                const ACE_INET_Addr &remote_sap,
@@ -83,8 +130,7 @@ public:
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
-               int perms = 0,
-               int protocol = 0);
+               int perms = 0);
 
   // Set/get the preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
