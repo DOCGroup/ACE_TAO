@@ -356,10 +356,13 @@ module  : IDL_MODULE
              */
             UTL_Scope* s = idl_global->scopes()->top();
             AST_Module* m = AST_Module::narrow_from_scope (s);
-            UTL_StrList *p = m->pragmas ();
-            if (p != 0)
-                p = (UTL_StrList*)p->copy ();
-            idl_global->set_pragmas (p);
+            if (m != 0)
+              {
+                UTL_StrList *p = m->pragmas ();
+                if (p != 0)
+                  p = (UTL_StrList*)p->copy ();
+                idl_global->set_pragmas (p);
+              }
             idl_global->scopes()->pop();
           }
           ;
