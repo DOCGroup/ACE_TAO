@@ -1,0 +1,306 @@
+// $Id$
+
+// IDL for Control and Management of Audio/Video Streams
+// Revised Submission
+
+#include "PropertyService.idl"
+
+module AVStreams{
+
+  struct QoS{
+    string QoSType;
+    PropertyService::Properties QoSParams;
+  };
+
+  typedef sequence<QoS> streamQoS;
+
+  typedef sequence<string> flowSpec;
+
+  typedef sequence<string> protocolSpec;
+
+  typedef sequence<octet> key;
+
+  // protocol names registered by OMG.
+  // e.g., TCP, UDP, AAL5, IPX, RTP
+
+  // This structure is defined for SFP1.0
+  // Subsequent versions of the protocol may
+  // specify new structures
+  struct SFPStatus{
+    boolean isFormatted;
+    boolean isSpecialFormat;
+    boolean seqNums;
+    boolean timestamps;
+    boolean sourceIndicators;
+  };
+
+  enum flowState {stopped, started, dead};
+
+  enum dirType {dir_in, dir_out};
+
+  struct flowStatus{
+    string flowName;
+    dirType directionality;
+    flowState status;
+    SFPStatus theFormat;
+    QoS theQoS;
+  };
+
+  typedef PropertyService::Property streamEvent;
+
+  exception notSupported {};
+  exception PropertyException {};
+  // An flow protocol related error
+  exception FPError { string flow_name; };
+
+  exception streamOpFailed{
+    string reason;};
+  exception streamOpDenied{
+    string reason;};
+  exception noSuchFlow{};
+  exception QoSRequestFailed{
+    string reason;};
+
+  interface Basic_StreamCtrl : PropertyService::PropertySet {
+
+    // Empty flowSpec => apply operation to all flows
+    void stop(in flowSpec the_spec) raises (noSuchFlow);
+    void start(in flowSpec the_spec) raises (noSuchFlow);
+    void destroy(in flowSpec the_spec) raises (noSuchFlow);
+
+    boolean modify_QoS(inout streamQoS new_qos,
+                       in flowSpec the_spec)
+      raises (noSuchFlow, QoSRequestFailed);
+
+    // Called by StreamEndPoint when something goes wrong
+    // with a flow
+    oneway void push_event(
+                           in streamEvent the_event);
+
+    void set_FPStatus(in flowSpec the_spec,
+                      in string fp_name,		// Only SFP1.0 currently 
+                      // specified
+                      in any fp_settings)		// Currently SFP accepts 
+      // SFPStatus structure
+      raises (noSuchFlow, FPError);
+
+    Object get_flow_connection(in string flow_name) 
+      raises (noSuchFlow, notSupported);
+
+    void set_flow_connection(in string flow_name,
+                             in Object flow_connection)
+      raises (noSuchFlow, notSupported);
+  };
+
+  interface Negotiator{
+    boolean negotiate(in Negotiator remote_negotiator,
+                      in streamQoS qos_spec);
+  };
+
+  interface VDev;
+  interface MMDevice;
+  interface StreamEndPoint;
+  interface StreamEndPoint_A;
+  interface StreamEndPoint_B;
+
+  interface StreamCtrl : Basic_StreamCtrl {
+
+    boolean bind_devs(in MMDevice a_party, in MMDevice b_party,
+                      inout streamQoS the_qos,
+                      in flowSpec the_flows)
+      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
+
+    boolean bind(in StreamEndPoint_A a_party,
+                 in StreamEndPoint_B b_party,
+                 inout streamQoS the_qos,
+                 in flowSpec the_flows)
+      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
+
+    void unbind_party(in StreamEndPoint the_ep,
+                      in flowSpec the_spec)
+      raises (streamOpFailed, noSuchFlow);
+
+    void unbind()
+      raises (streamOpFailed);
+  };
+
+  interface MCastConfigIf : PropertyService::PropertySet{
+
+    boolean set_peer(
+                     in Object peer,
+                     inout streamQoS the_qos,
+                     in flowSpec the_spec)
+      raises (QoSRequestFailed, streamOpFailed);
+
+    void configure(in PropertyService::Property a_configuration);
+
+    void set_initial_configuration(
+                                   in PropertyService::Properties initial);
+
+    // Uses <format_name> standardised by OMG and IETF
+    void set_format(in string flowName, in string format_name)
+      raises (notSupported);
+
+    // Note, some of these device params are standardised by OMG
+    void set_dev_params(in string flowName,
+                        in PropertyService::Properties new_params)
+      raises(PropertyService::PropertyException,
+             streamOpFailed);
+
+  };
+
+  interface StreamEndPoint : PropertyService::PropertySet{
+
+    void stop(in flowSpec the_spec) raises (noSuchFlow);
+    void start(in flowSpec the_spec) raises (noSuchFlow);
+    void destroy(in flowSpec the_spec) raises (noSuchFlow);
+
+    boolean connect(in StreamEndPoint responder,
+                    inout streamQoS qos_spec,
+                    in flowSpec the_spec)
+      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+
+    boolean request_connection(
+                               in StreamEndPoint initiator,
+                               in boolean is_mcast,
+                               inout streamQoS qos,
+                               inout flowSpec the_spec)
+      raises (streamOpDenied, noSuchFlow,
+              QoSRequestFailed, FPError);
+
+    boolean modify_QoS(inout streamQoS new_qos,
+                       in flowSpec the_flows)
+      raises (noSuchFlow, QoSRequestFailed);
+
+    boolean set_protocol_restriction(in protocolSpec the_pspec);
+
+    void disconnect(in flowSpec the_spec)
+      raises (noSuchFlow, streamOpFailed);
+
+    void set_FPStatus(in flowSpec the_spec,
+                      in string fp_name,
+                      in any fp_settings)
+      raises (noSuchFlow, FPError);
+
+    Object get_fep(in string flow_name)
+      raises (notSupported, noSuchFlow);
+
+    string add_fep(in Object the_fep)
+      // Can fail for reasons {duplicateFepName, duplicateRef}
+      raises (notSupported, streamOpFailed);
+
+    void remove_fep(in string fep_name)
+      raises (notSupported, streamOpFailed);
+
+    void set_negotiator(in Negotiator new_negotiator);
+    void set_key(in string flow_name, in key the_key);
+    void set_source_id(in long source_id);
+  };
+
+  interface StreamEndPoint_A : StreamEndPoint{
+
+    boolean multiconnect(inout streamQoS the_qos,
+                         inout flowSpec the_spec)
+      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+
+    boolean connect_leaf(in StreamEndPoint_B the_ep,
+                         inout streamQoS the_qos,
+                         in flowSpec the_flows)
+      raises (streamOpFailed, noSuchFlow,
+              QoSRequestFailed, notSupported);
+
+    void disconnect_leaf(in StreamEndPoint_B the_ep,
+                         in flowSpec theSpec)
+      raises(streamOpFailed, noSuchFlow);
+  };
+
+  interface StreamEndPoint_B : StreamEndPoint {
+
+    boolean multiconnect(inout streamQoS the_qos,
+                         inout flowSpec the_spec)
+      raises (streamOpFailed, noSuchFlow,
+              QoSRequestFailed, FPError);
+  };
+
+  interface VDev : PropertyService::PropertySet{
+
+    boolean set_peer(
+                     in StreamCtrl the_ctrl,
+                     in VDev the_peer_dev,
+                     inout streamQoS the_qos,
+                     in flowSpec the_spec)
+      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+
+    boolean set_Mcast_peer(in StreamCtrl the_ctrl,
+                           in MCastConfigIf a_mcastconfigif,
+                           inout streamQoS the_qos,
+                           in flowSpec the_spec)
+      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+
+    void configure(in PropertyService::Property the_config_mesg)
+      raises(PropertyException, streamOpFailed);
+
+    // Uses <formatName> standardised by OMG and IETF
+    void set_format(in string flowName, in string format_name)
+      raises (notSupported);
+
+    // Note, some of these device params are standardised by OMG
+    void set_dev_params(in string flowName,
+                        in PropertyService::Properties new_params)
+      raises(PropertyException, streamOpFailed);
+
+    boolean modify_QoS(inout streamQoS the_qos,
+                       in flowSpec the_spec)
+      raises (noSuchFlow, QoSRequestFailed);
+
+  };
+
+  interface MMDevice : PropertyService::PropertySet {
+    StreamEndPoint_A create_A(
+                              in StreamCtrl the_requester,
+                              out VDev the_vdev,
+                              inout streamQoS the_qos,
+                              out boolean met_qos,
+                              inout string named_vdev,
+                              in flowSpec the_spec)
+      raises(streamOpFailed, streamOpDenied, notSupported,
+             QoSRequestFailed, noSuchFlow);
+
+    StreamEndPoint_B create_B(
+                              in StreamCtrl the_requester,
+                              out VDev the_vdev,
+                              inout streamQoS the_qos,
+                              out boolean met_qos,
+                              inout string named_vdev,
+                              in flowSpec the_spec)
+      raises(streamOpFailed, streamOpDenied, notSupported,
+             QoSRequestFailed, noSuchFlow);
+
+    StreamCtrl bind(in MMDevice peer_device,
+                    inout streamQoS the_qos,
+                    out boolean is_met,
+                    in flowSpec the_spec)
+      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
+
+    StreamCtrl bind_mcast(in MMDevice first_peer,
+                          inout streamQoS the_qos,
+                          out boolean is_met,
+                          in flowSpec the_spec)
+      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
+
+    void destroy(in StreamEndPoint the_ep, in string vdev_name)
+      // ie VDev not found
+      raises (notSupported);
+
+    string add_fdev(in Object the_fdev)
+      raises(notSupported, streamOpFailed);
+
+    Object get_fdev(in string flow_name)
+      raises(notSupported, noSuchFlow);
+
+    void remove_fdev(in string flow_name)
+      raises (notSupported, noSuchFlow);
+
+  };
+
+};
