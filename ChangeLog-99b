@@ -1,13 +1,23 @@
+Fri Feb 05 10:11:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Priority.h: changed ENSURE_32_BITS to LM_ENSURE_32_BITS,
+          and its value from 0xffffffff to 0x7fffffff.  Green Hills 1.8.9
+          properly complained that 0xffffffff doesn't fit into an int.
+
+        * ace/config-sco-5.0.0-CC-fsu-pthread.h,config-sunos5.5.h,
+          config-vxworks5.x.h: removed ACE_HAS_BROKEN_ENUMS, because
+          it's not necessary with 0x7fffffff.
+
 Thu Feb  4 23:11:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/lib/URL_Addr.h: 
-	* websvcs/lib/URL_Addr.i: 
-	  Added operator= to the ACE_URL_Addr classes.
+        * websvcs/lib/URL_Addr.h:
+        * websvcs/lib/URL_Addr.i:
+          Added operator= to the ACE_URL_Addr classes.
 
-	* websvcs/lib/URL_Addr.cpp: 
-	  Fixed minor memory allocation problem for invalid HTTP
-	  addresses.
-	  It removes './' when creating relative addresses.
+        * websvcs/lib/URL_Addr.cpp:
+          Fixed minor memory allocation problem for invalid HTTP
+          addresses.
+          It removes './' when creating relative addresses.
 
 Wed Feb 03 21:50:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
