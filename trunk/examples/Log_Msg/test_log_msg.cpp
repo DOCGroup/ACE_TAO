@@ -169,7 +169,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "This LM_DEBUG message should not print!\n"));
 
-      const char badname[] = "badname";
+      char badname[] = "badname";
 
       char *l_argv[2];
       l_argv[0] = badname;
