@@ -1,0 +1,3 @@
+project: orbsvcsexe, rtkokyuevent {
+  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs/Sched
+}
