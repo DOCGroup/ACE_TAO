@@ -1161,7 +1161,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
 // Add a node to set of nodes referenced in this scope
 void
-UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
+UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive, AST_Decl *ex)
 {
   UTL_Scope     *s;
   AST_Decl      **tmp;
@@ -1199,7 +1199,23 @@ UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
   }
 
   // Insert new reference
-  pd_referenced[pd_referenced_used++] = e;
+  if (ex == 0)
+    pd_referenced[pd_referenced_used++] = e;
+  else if (referenced (ex))
+    {
+      for (i = ++pd_referenced_used; i > 1; i--)
+      {
+        pd_referenced[i] = pd_referenced[i-1];
+        if (pd_referenced[i-1] == ex)
+          {
+            pd_referenced[i-1] = e;
+            break;
+          }
+      }
+    }
+
+
+
 
   // Now, if recursive is specified and "this" is not a common ancestor
   // of the referencing scope and the scope of definition of "e" then
@@ -1213,7 +1229,7 @@ UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
 
 // Add a node to set of nodes declared in this scope
 void
-UTL_Scope::add_to_scope(AST_Decl *e)
+UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
 {
   if (e == NULL) return;
 
@@ -1282,8 +1298,22 @@ UTL_Scope::add_to_scope(AST_Decl *e)
       this->pd_decls = tmp;
     }
 
+
   // Insert new decl
-  pd_decls[pd_decls_used++] = e;
+  if (ex == 0)
+    pd_decls[pd_decls_used++] = e;
+  else
+    {
+      for (i = ++pd_decls_used; i > 1; i--)
+        {
+          pd_decls[i] = pd_decls[i-1];
+          if (pd_decls[i-1] == ex)
+            {
+              pd_decls[i-1] = e;
+              break;
+            }
+        }
+    }
 }
 
 // Add a node to set of nodes representing manifest types defined in this scope

@@ -66,7 +66,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     {
       excep_holder->set_defined_in (node->defined_in ());
       (be_module::narrow_from_scope (node->defined_in ()))
-        ->be_add_interface (excep_holder);
+        ->be_add_interface (excep_holder, node);
     }
   else
     {
@@ -78,12 +78,13 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
 
-  be_interface *reply_handler = this->create_reply_handler (node);
+  be_interface *reply_handler = this->create_reply_handler (node,
+                                                            excep_holder);
   if (reply_handler)
     {
       reply_handler->set_defined_in (node->defined_in ());
       (be_module::narrow_from_scope (node->defined_in ()))
-        ->be_add_interface (reply_handler);
+        ->be_add_interface (reply_handler, node);
     }
   else
     {
@@ -140,7 +141,15 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 
       // After having generated the operation we insert it into the
       // exceptionholder valuetype.
-      (be_interface::narrow_from_scope (node->defined_in ()))->be_add_operation (sendc_operation);
+      // @@ Michael: We use the hidden_operation () method
+      // (be_interface::narrow_from_scope (node->defined_in ()))->be_add_operation (sendc_operation);
+
+        // Set the proper strategy
+      be_operation_strategy *old_strategy = 
+        node->set_strategy (new be_operation_ami_sendc_strategy (node, 
+                                                                 sendc_operation));
+      if (old_strategy)
+        delete old_strategy;
     }
 
   return 0;
@@ -226,12 +235,12 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
   AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
   p_intf[0] = (AST_Interface *)inherit_vt;
 
-  be_valuetype *excep_holder_vt = new be_valuetype (excep_holder_name,  // name
+  be_valuetype *excep_holder = new be_valuetype (excep_holder_name,  // name
                                                     p_intf,             // list of inherited
                                                     1,                  // number of inherited
                                                     0,                  // pragmas
                                                     0);                 // set abstract
-  excep_holder_vt->set_name (excep_holder_name);
+  excep_holder->set_name (excep_holder_name);
 
   // Now our customized valuetype is created, we have to 
   // add now the operations and attributes to the scope.
@@ -284,33 +293,40 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
               new_name->nconc (new UTL_ScopedName (new Identifier (new_local_name.rep (), 0,0,0),
                                                    0));
 
-              be_operation *op_vt = new be_operation (rt,
-                                                      AST_Operation::OP_noflags,
-                                                      new_name,
-                                                      0);
+              be_operation *operation = new be_operation (rt,
+                                                          AST_Operation::OP_noflags,
+                                                          new_name,
+                                                          0);
 
               // Copy the exceptions.
               if (((AST_Operation *)op)->exceptions ())
                 {
                   UTL_ExceptList *exceptions = (UTL_ExceptList *)((AST_Operation *)op)->exceptions ()->copy ();
-                  op_vt->be_add_exceptions (exceptions);
+                  operation->be_add_exceptions (exceptions);
                 }
+
+              // Set the proper strategy
+              be_operation_strategy *old_strategy = 
+                operation->set_strategy (new be_operation_ami_exception_holder_raise_strategy (operation));
+              if (old_strategy)
+                delete old_strategy;
 
               // After having generated the operation we insert it into the
               // exceptionholder valuetype.
-              excep_holder_vt->be_add_operation (op_vt);
+              excep_holder->be_add_operation (operation);
             }
           si->next ();
         } // end of while loop
       delete si;
     } // end of if
 
-  return excep_holder_vt;
+  return excep_holder;
 }
 
 
 be_interface *
-be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
+be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
+                                               be_valuetype *excep_holder)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_reply_handler\n"));
 
@@ -351,10 +367,11 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
   AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
   p_intf[0] = (AST_Interface *)inherit_intf;
 
-  be_interface *reply_handler_intf = new be_interface (reply_handler_name,  // name
+  be_interface *reply_handler = new be_interface (reply_handler_name,  // name
                                                        p_intf,             // list of inherited
                                                        1,                  // number of inherited
                                                        0);                 // pragmas
+  reply_handler->set_name (reply_handler_name);
 
   // Now our customized valuetype is created, we have to 
   // add now the operations and attributes to the scope.
@@ -395,33 +412,36 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
 
           be_operation *operation =
-            this->create_reply_handler_operation (be_operation::narrow_from_decl (d));
+            this->create_reply_handler_operation (be_operation::narrow_from_decl (d),
+                                                  reply_handler);
 
           if (operation)
             {
-              operation->set_defined_in (reply_handler_intf);
+              operation->set_defined_in (reply_handler);
 
               // We do not copy the exceptions because the exceptions
               // are delivered by the excep methods.
 
               // After having generated the operation we insert it into the
               // reply handler interface.
-              reply_handler_intf->be_add_operation (operation);
+              reply_handler->be_add_operation (operation);
             }
 
           be_operation *excep_operation = 
-            this->create_excep_operation (be_operation::narrow_from_decl (d));
+            this->create_excep_operation (be_operation::narrow_from_decl (d),
+                                          reply_handler,
+                                          excep_holder);
 
           if (excep_operation)
             {
-              excep_operation->set_defined_in (reply_handler_intf);
+              excep_operation->set_defined_in (reply_handler);
 
               // We do not copy the exceptions because the exceptions
               // are delivered by the excep methods.
 
               // After having generated the operation we insert it into the
               // reply handler interface
-              reply_handler_intf->be_add_operation (operation);
+              reply_handler->be_add_operation (excep_operation);
             }
     
           si->next ();
@@ -429,7 +449,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
       delete si;
     } // end of if
 
-  return reply_handler_intf;
+  return reply_handler;
 }
 
 
@@ -488,7 +508,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
                                       field_type, // is also a valuetype
                                       new UTL_ScopedName 
                                       (new Identifier
-                                          ("reply_handler", 1, 0, I_FALSE),
+                                          ("ami_handler", 1, 0, I_FALSE),
                                         0),
                                       0);
 
@@ -537,14 +557,14 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
         } // end of while loop
       delete si;
     } // end of if
-
-
+  
   return op;
 }
 
 
 be_operation * 
-be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node)
+be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
+                                                         be_interface *reply_handler)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_reply_handler_operation\n"));
   // Create the return type, which is "void"
@@ -554,11 +574,23 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node)
                                                       0),
                                                    0);
 
+  ACE_CString original_op_name (node
+                                  ->name ()
+                                    ->last_component ()
+                                      ->get_string ());
+
+  UTL_ScopedName *op_name = (UTL_ScopedName *)reply_handler->name ()-> copy ();
+  op_name->nconc (new UTL_ScopedName (
+                    new Identifier (
+                      original_op_name.rep (), 1, 0, I_FALSE),
+                    0));
+
   // Create the operation
   be_operation * op = new be_operation (rt, 
                                         AST_Operation::OP_noflags,
-                                        (UTL_IdList *)node->name ()->copy (), 
+                                        op_name, 
                                         0);
+  op->set_name (op_name);
 
   // If return type is non-void add it as first argument
 
@@ -566,7 +598,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node)
     {
 
       // Create the argument
-      be_argument *arg = new be_argument (AST_Argument::dir_OUT,
+      be_argument *arg = new be_argument (AST_Argument::dir_IN,
                                           node->return_type (), 
                                           new UTL_ScopedName 
                                           (new Identifier
@@ -609,7 +641,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node)
               original_arg->direction () == AST_Argument::dir_OUT)
             {
               // Create the argument
-              be_argument *arg = new be_argument (AST_Argument::dir_OUT,
+              be_argument *arg = new be_argument (AST_Argument::dir_IN,
                                                   original_arg->field_type (), 
                                                   original_arg->name (),
                                                   0);
@@ -621,11 +653,19 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node)
       delete si;
     } // end of if
 
-  return 0;
+  // Set the proper strategy
+  be_operation_strategy *old_strategy = 
+    op->set_strategy (new be_operation_ami_handler_reply_stub_strategy (op));
+  if (old_strategy)
+    delete old_strategy;
+
+  return op;
 }
 
 be_operation *
-be_visitor_ami_pre_proc::create_excep_operation (be_operation *node)
+be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
+                                                 be_interface *reply_handler,
+                                                 be_valuetype *excep_holder)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_excep_operation\n"));
   // Create the return type, which is "void"
@@ -636,35 +676,36 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node)
                                                    0);
 
   // Create the argument
-
+#if 0
   // Create the field type
   // Get the name of the interface
   // Get the scope name.
   be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-  ACE_CString interface_name (parent
-                                ->name ()
-                                  ->last_component ()
-                                    ->get_string ());
-
+  
   // Add the pre- and suffix
-  ACE_CString excep_holder_name ("AMI_");
-  excep_holder_name += interface_name;
-  excep_holder_name += "ExceptionHolder";
-  UTL_ScopedName *field_name = (UTL_ScopedName *)parent->name ()->copy ();
-  field_name->last_component ()->replace_string (excep_holder_name.rep ());
+  ACE_CString excep_holder_local_name;
+  this->generate_name (excep_holder_name,
+                       "AMI_",
+                       parent
+                         ->name ()
+                           ->last_component ()
+                             ->get_string (),
+                       "ExceptionHolder");
+  UTL_ScopedName *field_name = (UTL_ScopedName *)reply_handler->name ()->copy ();
+  field_name->last_component ()->replace_string (excep_holder_local_name.rep ());
   be_interface *field_type= new be_interface (field_name,
                                              0,
                                              0,
                                              0);
   field_type->set_name (field_name);
   field_type->set_defined_in (node->defined_in ());
-
+#endif /* 0 */
   // Create the argument
   be_argument *arg = new be_argument (AST_Argument::dir_OUT,
-                                      field_type, // is also a valuetype
-                                      new UTL_ScopedName 
-                                      (new Identifier
-                                          ("excep_holder", 1, 0, I_FALSE),
+                                      excep_holder, // is also a valuetype
+                                      new UTL_ScopedName (
+                                        new Identifier (
+                                          "excep_holder", 1, 0, I_FALSE),
                                         0),
                                       0);
 
@@ -676,14 +717,18 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node)
                                       ->get_string ());
   ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
 
-  UTL_ScopedName *op_name = (UTL_ScopedName *)node->name ()-> copy ();
-  op_name->last_component ()->replace_string (new_op_name.rep ());
+  UTL_ScopedName *op_name = (UTL_ScopedName *)reply_handler->name ()-> copy ();
+  op_name->nconc (new UTL_ScopedName (
+                    new Identifier (
+                      new_op_name.rep (), 1, 0, I_FALSE),
+                    0));
 
   // create the operation
   be_operation * op = new be_operation (rt, 
                                         AST_Operation::OP_noflags,
                                         op_name, 
                                         0);
+  op->set_name (op_name);
   op->add_argument_to_scope (arg);
 
   return op;

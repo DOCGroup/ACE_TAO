@@ -212,7 +212,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (idl_global->ami_call_back () == I_TRUE)
     {
       // Generate the exception holder
-      be_interface_type_strategy *old_strategy =
+      be_interface_strategy *old_strategy =
         node->set_strategy (new be_interface_ami_exception_holder_strategy (node));
 
       // Set the context.

@@ -76,7 +76,8 @@ public:
   // visit a root
 
 private:
-  be_interface *create_reply_handler (be_interface *node);
+  be_interface *create_reply_handler (be_interface *node,
+                                      be_valuetype *excep_holder);
   // create the reply handler interface
 
   be_valuetype *create_exception_holder (be_interface *node);
@@ -85,10 +86,13 @@ private:
   be_operation *create_sendc_operation (be_operation *node);
   // create a method with "sendc_" prepended
 
-  be_operation *create_excep_operation (be_operation *node);
+  be_operation *create_excep_operation (be_operation *node,
+                                        be_interface *reply_handler,
+                                        be_valuetype *excep_holder);
   // create a method with "_excep" appended
 
-  be_operation *create_reply_handler_operation (be_operation *node);
+  be_operation *create_reply_handler_operation (be_operation *node,
+                                                be_interface *reply_handler);
   // create an operation with only the OUT and INOUT arguments
 
   int visit_scope (be_scope *node);

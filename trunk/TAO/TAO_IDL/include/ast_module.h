@@ -102,7 +102,7 @@ public:
   idl_bool has_nested_valuetype ();
 
   // Allows adding an interface to a later point
-  int be_add_interface (AST_Interface *i);
+  int be_add_interface (AST_Interface *i, AST_Interface *ix = 0);
 
 private:
   friend void fe_populate(AST_Module *m);
@@ -112,6 +112,7 @@ private:
 
   virtual AST_PredefinedType    *fe_add_predefined_type(AST_PredefinedType *t);
   virtual AST_Module            *fe_add_module(AST_Module               *m);
+  // Add the current interface i before interface ix
   virtual AST_Interface         *fe_add_interface(AST_Interface         *i);
   virtual AST_InterfaceFwd      *fe_add_interface_fwd(AST_InterfaceFwd  *i);
   virtual AST_Constant          *fe_add_constant(AST_Constant           *c);

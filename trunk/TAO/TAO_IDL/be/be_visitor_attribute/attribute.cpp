@@ -117,6 +117,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
+#if 0
     // AMI Reply Handler code generation
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
@@ -151,6 +152,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CS:
       ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CS);
       break;
+#endif /* 0 */
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -400,6 +402,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
+
+#if 0
     // AMI Reply Handler code generation
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
@@ -434,6 +438,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CS:
       ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CS);
       break;
+#endif /* 0 */
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,

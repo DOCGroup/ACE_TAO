@@ -100,6 +100,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
+#if 0
   // If AMI is enabled, generate all the inline stuff for the
   // AMI_<interface_name>_Handler interface.
 
@@ -138,7 +139,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       visitor = 0;
 
 
-      be_interface_type_strategy *old_strategy =  
+      be_interface_strategy *old_strategy =  
          node->set_strategy (new be_interface_ami_handler_strategy (node));
 
       // Set the context.
@@ -172,6 +173,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
       delete node->set_strategy (old_strategy);
     }
+#endif /* 0 */
 
   return 0;
 }

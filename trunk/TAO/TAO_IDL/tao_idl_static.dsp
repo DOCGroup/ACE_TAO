@@ -294,6 +294,10 @@ SOURCE=.\be\be_operation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_operation_strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_predefined_type.cpp
 # End Source File
 # Begin Source File
@@ -787,6 +791,10 @@ SOURCE=.\be_include\be_native.h
 # Begin Source File
 
 SOURCE=.\be_include\be_operation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_operation_strategy.h
 # End Source File
 # Begin Source File
 
