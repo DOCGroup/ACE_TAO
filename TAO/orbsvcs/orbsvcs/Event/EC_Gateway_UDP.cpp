@@ -1042,10 +1042,17 @@ TAO_ECG_UDP_EH::get_handle (void) const
 
 // ****************************************************************
 
-TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv)
-  :  receiver_ (recv),
+TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
+                                    const ASYS_TCHAR *net_if)
+  :  net_if_ (net_if?ACE_OS::strdup (net_if):0),
+     receiver_ (recv),
      observer_ (this)
 {
+}
+
+TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
+{
+  ACE_OS::free (this->net_if_);
 }
 
 int
@@ -1110,13 +1117,13 @@ TAO_ECG_Mcast_EH::get_handle (void) const
 int
 TAO_ECG_Mcast_EH::subscribe (const ACE_INET_Addr &mcast_addr)
 {
-  return this->dgram_.subscribe (mcast_addr);
+  return this->dgram_.subscribe (mcast_addr, 1, this->net_if_);
 }
 
 int
 TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
 {
-  return this->dgram_.unsubscribe (mcast_addr);
+  return this->dgram_.unsubscribe (mcast_addr, this->net_if_);
 }
 
 void
