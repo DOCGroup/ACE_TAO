@@ -325,7 +325,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
 void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
                                                    RtecScheduler::OS_Priority& priority,
-				                   enum RtecScheduler::Dispatching_Type & d_type,
+				                   RtecScheduler::Dispatching_Type & d_type,
                                                    CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,

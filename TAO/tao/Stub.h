@@ -199,12 +199,12 @@ class TAO_Export STUB_Object
 public:
   virtual void do_static_call (CORBA::Environment &env,
                                const TAO_Call_Data *info,
-                               ...) = 0;
+                               void** args) = 0;
   // The "stub interpreter" method parameters are:
   //
   //    - env ... used for exception reporting
   //    - info ... describes the call
-  //    - varargs parameters follow
+  //    - args parameters follow
   //
   // The varargs parameters are pointers to data instances as
   // described by info->params.  (If the value_size is nonzero, the

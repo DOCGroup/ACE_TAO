@@ -318,7 +318,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                             -1);
         }
 
-
       // do any pre do_static_call stuff with arguments
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_DOCALL_CS);
@@ -330,6 +329,41 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
                              "codegen for argument pre do_static_call failed\n"),
+                            -1);
+        }
+
+      os->indent ();
+      *os << "void* _tao_arguments["
+	  << node->argument_count () + 1 << "];" << be_nl
+	  << "const void** _tao_arg = ACE_const_cast(const void**,_tao_arguments);" << be_nl
+	  << "*_tao_arg = ";
+      
+      // pass the appropriate return value to docall
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DOCALL_CS);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for return var in do_static_call failed\n"),
+                            -1);
+        }
+      *os << "; _tao_arg++;\n";
+
+      // pass each argument to do_static_call
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DOCALL_CS);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for return var in do_static_call failed\n"),
                             -1);
         }
 
@@ -347,44 +381,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           else
             *os << "_get_";
         }
-      *os << node->flatname () << "_calldata,\n";
-
-      // pass the appropriate return value to docall
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DOCALL_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for return var in do_static_call failed\n"),
-                            -1);
-        }
-      // insert a comma after the return val if there are arguments
-      if (node->argument_count () > 0)
-        {
-          *os << ",\n";
-        }
-
-      // pass each argument to do_static_call
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DOCALL_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for return var in do_static_call failed\n"),
-                            -1);
-        }
-
-      // end the do_static_call
-      *os << be_uidt_nl;
-      *os << ");\n";
+      *os << node->flatname () << "_calldata," << be_nl
+	  << "_tao_arguments" << be_uidt_nl
+	  << ");\n";
 
       // if there is an exception, return
       os->indent ();

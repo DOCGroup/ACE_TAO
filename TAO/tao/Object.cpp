@@ -70,9 +70,12 @@ CORBA_Object::_get_interface (CORBA::Environment &env)
   // information though, since there's no guarantee that any local
   // interface repository will really have records of this particular
   // interface.
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
   this->_stubobj ()->do_static_call (env,
-					&Object_get_interface_calldata,
-					&retval);
+				     &Object_get_interface_calldata,
+				     _tao_arguments);
   return retval;
 }
 
@@ -128,9 +131,13 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   CORBA::Boolean retval = CORBA::B_FALSE;
 
+  void* _tao_arguments[2];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  *_tao_current_arg = &type_id; _tao_current_arg++;
   this->_stubobj ()->do_static_call (env,
-					&Object_is_a_calldata,
-					&retval, &type_id);
+				     &Object_is_a_calldata,
+				     _tao_arguments);
   return retval;
 }
 
@@ -179,9 +186,12 @@ CORBA_Object::_non_existent (CORBA::Environment &env)
 
   CORBA::Boolean retval = CORBA::B_FALSE;
 
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
   this->_stubobj ()->do_static_call (env,
 				     &Object_non_existent_calldata,
-				     &retval);
+				     _tao_arguments);
 
   CORBA::Exception *x = env.exception ();
 

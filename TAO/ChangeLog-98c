@@ -1,3 +1,32 @@
+Wed Aug 12 14:39:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.h: 
+	* tao/IIOP_Object.h: 
+	* tao/IIOP_Object.cpp: 
+	  The do_static_call() method uses argc/argv style to receive all
+	  the arguments (actually an array of void*) instead of the
+	  varargs style used before. This is simpler, more efficient and
+	  easier to debug.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
+	* TAO_IDL/be/be_visitor_operation/argument.cpp: 
+	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp: 
+	  The generate code to use the new do_static_call() interface.
+
+	* tao/Object.cpp: 
+	* tao/POAC.cpp: 
+	* tao/PolicyC.cpp: 
+	  Change the calls to do_static_call()
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Sched/Scheduler.h: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
+	  Removed some extra "enum" keywords accompanying
+	  RtecScheduler::Dispatching_Type declarations that were choking
+	  Sun/CC.
+
 Wed Aug 12 12:05:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/POA.cpp: 
