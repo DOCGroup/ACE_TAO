@@ -27,7 +27,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
-class EC_Supplier : public POA_RtecEventComm::PushSupplier
+class EC_Test_Export EC_Supplier : public POA_RtecEventComm::PushSupplier
 {
   //
   // = TITLE

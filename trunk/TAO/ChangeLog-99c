@@ -1,3 +1,18 @@
+Tue May 11 17:19:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Event.dsw:
+	* orbsvcs/tests/Event/Basic/Basic.dsw:
+	* orbsvcs/tests/Event/Basic/Reconnect.dsp:
+	* orbsvcs/tests/Event/Basic/Shutdown.dsp:
+	* orbsvcs/tests/Event/lib/Consumer.h:
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/Event/lib/ECTest.dsp:
+	* orbsvcs/tests/Event/lib/ECTest.dsw:
+	* orbsvcs/tests/Event/lib/Supplier.h:
+	* orbsvcs/tests/Event/lib/ectest_export.h:
+	  Added project files, workspaces and export macros to compile
+	  this tests on NT.
+
 Tue May 11 16:46:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Object.{h,cpp}:
