@@ -56,6 +56,9 @@ sub write_comps {
   my($crlf)     = $self->crlf();
 
   ## Print out the projet Makefile
+  print $fh "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf" .
+            "TARGETS_NESTED := \$(TARGETS_NESTED:.nested=)$crlf";
+
   ## Only use the list if there is more than one project
   if ($#list > 0) {
     print $fh "MFILES = \\$crlf";
@@ -69,7 +72,7 @@ sub write_comps {
   }
 
   print $fh $crlf .
-            ".DEFAULT:$crlf" .
+            "\$(TARGETS_NESTED):$crlf" .
             "ifneq (Windows,\$(findstring Windows,\$(OS)))$crlf";
 
   ## If there is more than one project, use a for loop
