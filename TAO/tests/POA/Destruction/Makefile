@@ -19,7 +19,7 @@ PROG_SRCS =	$(IDL_SRC) Destruction.cpp
 
 LSRC = $(PROG_SRCS)
 
-SVR_OBJS = testC.o testS.o server.o
+SVR_OBJS = testC.o testS.o Destruction.o
 
 BIN = Destruction
 BUILD = $(BIN)
@@ -43,10 +43,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: testC.h testC.i testC.cpp testS.h testS.i testS.cpp testS_T.h testS_T.i testS_T.cpp
 
-server:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
+Destruction:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
