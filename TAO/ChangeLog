@@ -1,3 +1,9 @@
+Tue Dec 30 19:09:46 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Build errors when Exceptions=0
+
 Tue Dec 30 17:46:45 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
