@@ -106,7 +106,7 @@ int
 TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
                           ACE_Reactor *reactor)
 {
-  // @ Fred: why not just
+  // @@ Fred: why not just
   //
   // return this->base_connector_.open (....); ????
   //

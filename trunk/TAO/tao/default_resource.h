@@ -43,33 +43,28 @@ public:
 
 // ****************************************************************
 
-class TAO_Export TAO_Pre_Allocated_Resources
+class TAO_Export TAO_Allocated_Resources
 {
-  //
   // = TITLE
-  //   Container for pre-allocated resources.
+  //   Container for the resources allocated by the factory.
   //
   // = DESCRIPTION
-  //   Structure containing resources which can be pre-allocated by
-  //   the default Resource Factory without intervention from the
-  //   application.
   //
 public:
-  TAO_Pre_Allocated_Resources (void);
-  // Constructor
+  TAO_Allocated_Resources (void);
+  // Constructor necessary because we have pointers.  It's inlined
+  // here rather than in the .i file because it's easier than trying
+  // to re-order header files in corba.h to eliminate the "used
+  // before declared inline" warnings/errors on certain compilers.
 
-  ~TAO_Pre_Allocated_Resources (void);
-  // Destructor
+  ~TAO_Allocated_Resources (void);
+  // Destructor is also necessary because we now allocate some of
+  // the objects held here.
+
+  // = Resources
 
   ACE_Thread_Manager tm_;
   // The Thread Manager
-
-  TAO_Connector_Registry cr_;
-  // The Connector Registry!
-
-  TAO_IIOP_Connector c_;
-  // The Connector, HACK to create the first connector which happens
-  // to be IIOP.
 
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
   // This no-op creation strategy is necessary for using the
@@ -82,34 +77,12 @@ public:
   TAO_IIOP_Acceptor a_;
   // The Acceptor
 
-  TAO_ORB_Parameters orbparams_;
-  // ORB Parameters
-};
+  TAO_IIOP_Connector c_;
+  // The Connector, HACK to create the first connector which happens
+  // to be IIOP.
 
-// ****************************************************************
-
-class TAO_Export TAO_App_Allocated_Resources
-{
-  // = TITLE
-  //   Container for application allocated resources.
-  //
-  // = DESCRIPTION
-  //   Structure containing resources which can only be allocated
-  //   after obtaining information from the application such as
-  //   arguments, etc.
-  //
-public:
-  TAO_App_Allocated_Resources (void);
-  // Constructor necessary because we have pointers.  It's inlined
-  // here rather than in the .i file because it's easier than trying
-  // to re-order header files in corba.h to eliminate the "used
-  // before declared inline" warnings/errors on certain compilers.
-
-  ~TAO_App_Allocated_Resources (void);
-  // Destructor is also necessary because we now allocate some of
-  // the objects held here.
-
-  // = Resources
+  TAO_Connector_Registry cr_;
+  // The Connector Registry!
 
   TAO_Default_Reactor *r_;
   // The Reactor.
@@ -235,15 +208,11 @@ protected:
 
   // = Typedefs for the singleton types used to store our orb core
   // information.
-  typedef ACE_Singleton<TAO_Pre_Allocated_Resources, ACE_SYNCH_MUTEX>
-          GLOBAL_PRE_ALLOCATED;
-  typedef ACE_TSS_Singleton<TAO_Pre_Allocated_Resources, ACE_SYNCH_MUTEX>
-          TSS_PRE_ALLOCATED;
+  typedef ACE_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
+          GLOBAL_ALLOCATED;
+  typedef ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
+          TSS_ALLOCATED;
 
-  typedef ACE_Singleton<TAO_App_Allocated_Resources, ACE_SYNCH_MUTEX>
-          GLOBAL_APP_ALLOCATED;
-  typedef ACE_TSS_Singleton<TAO_App_Allocated_Resources, ACE_SYNCH_MUTEX>
-          TSS_APP_ALLOCATED;
   typedef ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
           GLOBAL_Collocation_Table;
 };

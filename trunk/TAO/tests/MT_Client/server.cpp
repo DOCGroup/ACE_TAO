@@ -93,7 +93,8 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Catched exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Catched exception:");
       return 1;
     }
   ACE_ENDTRY;

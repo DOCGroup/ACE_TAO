@@ -29,4 +29,3 @@ TAO_Default_Resource_Factory::reactor_lock (void)
 {
   return reactor_lock_;
 }
-

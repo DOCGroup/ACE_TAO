@@ -1550,7 +1550,7 @@ CORBA_ORB::file_string_to_object (const char* filename,
   if (handle == ACE_INVALID_HANDLE)
     return CORBA::Object::_nil ();
 
-  ACE_Read_Buffer reader (handle);
+  ACE_Read_Buffer reader (handle, 1);
 
   char* string = reader.read ();
   ACE_OS::close (handle);
