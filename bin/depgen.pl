@@ -129,6 +129,18 @@ sub usageAndExit {
 }
 
 
+sub setReplace {
+  my($replace) = shift;
+  my($name)    = shift;
+  my($value)   = shift;
+
+  ## The key will be used in a regular expression.
+  ## So, we need to escape some special characters.
+  $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
+  $$replace{$name} = $value;
+}
+
+
 # ************************************************************
 # Main Section
 # ************************************************************
@@ -155,8 +167,8 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
     push(@ipaths, $1);
   }
   elsif ($arg eq '-A') {
-    $replace{$ENV{ACE_ROOT}} = '$(ACE_ROOT)';
-    $replace{$ENV{TAO_ROOT}} = '$(TAO_ROOT)';
+    setReplace(\%replace, $ENV{ACE_ROOT}, '$(ACE_ROOT)');
+    setReplace(\%replace, $ENV{TAO_ROOT}, '$(TAO_ROOT)');
   }
   elsif ($arg eq '-R') {
     ++$i;
@@ -164,7 +176,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
     if (defined $arg) {
       my($val) = $ENV{$arg};
       if (defined $val) {
-        $replace{$val} = "\$($arg)";
+        setReplace(\%replace, $val, "\$($arg)");
       }
     }
     else {
