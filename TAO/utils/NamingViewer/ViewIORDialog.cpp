@@ -110,12 +110,14 @@ void ViewIORDialog::DecodeIOR()
     case 0://IOP::TAG_INTERNET_IOP: 
       {
         TAO_IIOP_Profile* pIIOPProfile = (TAO_IIOP_Profile*)pProfile;
+        TAO_IIOP_Endpoint* pIIOPEndpoint =
+          (TAO_IIOP_Endpoint*)pProfile->endpoint ();
         CString ProfileString;
         ProfileString.Format("IOP %d.%d@%s:%d", 
           pIIOPProfile->version().major, 
           pIIOPProfile->version().minor,
-          pIIOPProfile->host(), 
-          pIIOPProfile->port());
+          pIIOPEndpoint->host(), 
+          pIIOPEndpoint->port());
         hProfile = m_Profiles.InsertItem(ProfileString);
       }
       break;
