@@ -15,6 +15,8 @@ Wed Mar 18 09:22:13 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Priority_Buffer_Test.cpp (consumer): added no-op statement
           to suppress GHS warning about unused local variable "cur_priority".
 
+        * ace/README: removed ACE_HAS_BOOL.  It was unused.
+
 Tue Mar 17 23:53:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/task_five.cpp (main): Reformatted Detlef's new
