@@ -1,3 +1,9 @@
+Mon Oct 02 17:16:38 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile.CosEvent: inserted
+          -lTAO_CosNaming ACE_SHLIBS to suppress Compaq cxx warning
+          about unresolved CosNaming symbols when creating libTAO_CosEvent.so.
+
 Mon Oct  2 14:19:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
