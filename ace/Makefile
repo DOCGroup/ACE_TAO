@@ -592,10 +592,6 @@ ifneq ($(GHS),)
 	$(MAKE) $@ ghs=0
   endif # 86
 endif # GHS
-
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
