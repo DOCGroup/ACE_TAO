@@ -1,3 +1,9 @@
+Tue Jan 20 15:37:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/msvc_mpc_auto_compile.pl: 
+
+	  Fixed some typos in the comments.
+
 Mon Jan 19 18:49:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/msvc_mpc_auto_compile.pl: 
