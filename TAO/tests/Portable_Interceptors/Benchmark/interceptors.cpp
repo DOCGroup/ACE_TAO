@@ -77,7 +77,7 @@ Vault_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReque
 
 void
 Vault_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                CORBA::Environment &ACE_TRY_ENV)
+                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (ri->operation (), "update_records") == 0)
@@ -271,8 +271,8 @@ Vault_Client_Request_Context_Interceptor::send_request (PortableInterceptor::Cli
 }
 
 void
-Vault_Client_Request_Context_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                CORBA::Environment &ACE_TRY_ENV)
+Vault_Client_Request_Context_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr,
+                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -354,8 +354,8 @@ Vault_Server_Request_Context_Interceptor::receive_request (PortableInterceptor::
 }
 
 void
-Vault_Server_Request_Context_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                             CORBA::Environment &)
+Vault_Server_Request_Context_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr,
+                                                      CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -442,7 +442,7 @@ Vault_Client_Request_Dynamic_Interceptor::send_request (PortableInterceptor::Cli
 
 void
 Vault_Client_Request_Dynamic_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                CORBA::Environment &ACE_TRY_ENV)
+                                                         CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -464,7 +464,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (PortableInterceptor::Cl
 
 void
 Vault_Client_Request_Dynamic_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
-                                                    CORBA::Environment &ACE_TRY_ENV)
+                                                             CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -521,7 +521,7 @@ Vault_Server_Request_Dynamic_Interceptor::name (CORBA::Environment &)
 
 void
 Vault_Server_Request_Dynamic_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+                                                           CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -619,7 +619,7 @@ Vault_Client_Request_NOOP_Interceptor::name (CORBA::Environment &)
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
+Vault_Client_Request_NOOP_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr,
                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
@@ -628,8 +628,8 @@ Vault_Client_Request_NOOP_Interceptor::send_request (PortableInterceptor::Client
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                CORBA::Environment &ACE_TRY_ENV)
+Vault_Client_Request_NOOP_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr,
+                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -693,8 +693,8 @@ Vault_Server_Request_NOOP_Interceptor::name (CORBA::Environment &)
 }
 
 void
-Vault_Server_Request_NOOP_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+Vault_Server_Request_NOOP_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
+                                                        CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -702,7 +702,7 @@ Vault_Server_Request_NOOP_Interceptor::receive_request (PortableInterceptor::Ser
 }
 
 void
-Vault_Server_Request_NOOP_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
+Vault_Server_Request_NOOP_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr,
                                              CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))

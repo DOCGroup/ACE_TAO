@@ -158,10 +158,9 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       // Record current time.
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-      CORBA::Long result = server->update_records (id,
-                                                   record,
-                                                   ACE_TRY_ENV);
-
+      server->update_records (id,
+                              record,
+                              ACE_TRY_ENV);
 
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -176,8 +175,8 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
 
     }
-      marker.dump_stats ("update records  method  ", gsf, 3);
-      ACE_CHECK;
+  marker.dump_stats ("update records  method  ", gsf, 3);
+  ACE_CHECK;
 
 }
 
