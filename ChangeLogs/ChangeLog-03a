@@ -1,3 +1,10 @@
+Thu Aug 01 07:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_Acceptor.h:
+        * ace/XtReactor.cpp:
+        * ace/XtReactor.h:
+          Corrected argument names to fix doxygen warnings.
+
 Thu Aug 01 07:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
