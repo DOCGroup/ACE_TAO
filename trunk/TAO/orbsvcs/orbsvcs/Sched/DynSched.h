@@ -227,7 +227,6 @@ protected:
 
   ACE_DynScheduler ();
 
-
   status_t schedule_threads (void);
   // thread scheduling method: sets up array of pointers to task
   // entries that are threads, calls internal thread scheduling method
@@ -235,6 +234,9 @@ protected:
   status_t schedule_dispatches (void);
   // dispatch scheduling method: sets up an array of dispatch entries,
   // calls internal dispatch scheduling method.
+
+  virtual status_t store_assigned_info (void);
+  // = store assigned information back into the RT_Infos
 
   // = Set the minimum priority value.
   void minimum_priority_queue (const Preemption_Priority minimum_priority_queue_number);

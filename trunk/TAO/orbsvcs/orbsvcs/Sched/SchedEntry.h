@@ -223,9 +223,6 @@ private:
   // set of arrivals in the effective period
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> dispatches_;
 
-  // count of the arrivals in the effective period
-  u_long arrival_count_;
-
   DFS_Status dfs_status_;
   long discovered_;
   long finished_;
@@ -317,6 +314,7 @@ public:
   Dispatch_Entry (Time arrival,
                   Time deadline,
                   Preemption_Priority priority,
+                  OS_Priority os_priority,
                   Task_Entry &task_entry,
                   Dispatch_Entry *original_dispatch = 0);
 
@@ -467,6 +465,9 @@ public:
 
   Preemption_Priority priority () const;
     // returns the scheduler priority of the virtual entry
+
+  OS_Priority OS_priority () const;
+    // returns the OS priority of the virtual entry
 
 
 private:

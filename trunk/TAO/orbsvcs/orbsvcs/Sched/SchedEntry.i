@@ -136,7 +136,7 @@ Task_Entry::effective_execution_time () const
     ACE_static_cast (ACE_UINT32, rt_info_->worst_case_execution_time.low);
 
   return (rt_info_->info_type == RtecScheduler::OPERATION)
-         ? worst_case_execution_time * arrival_count_
+         ? worst_case_execution_time * dispatches_.size ()
          : 0;
 }
 

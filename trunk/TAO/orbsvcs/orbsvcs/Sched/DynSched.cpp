@@ -363,7 +363,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
         return -1;
       }
 
-      d.rt_info = temp_info->handle;
+      d.rt_info = rt_info->handle;
       break;
 
     default:
@@ -373,8 +373,10 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
       return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "adding dependecy to: %s\n",
-              (const char*)temp_info->entry_point));
+  ACE_DEBUG ((LM_DEBUG, "adding %s dependency to caller: %s\n",
+              (const char *) ((d.dependency_type == RtecScheduler::TWO_WAY_CALL) 
+                              ? "TWO_WAY" : "ONE_WAY"),
+              (const char*)temp_info->entry_point.in ()));
 
   RtecScheduler::Dependency_Set& set = temp_info->dependencies;
   int l = set.length();
@@ -600,6 +602,12 @@ ACE_DynScheduler::schedule (void)
   if (status_ == SUCCEEDED)
   {
     status_ = calculate_utilization_params ();
+  }
+
+  // calculate utilization, total frame size, critical set
+  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED))
+  {
+    status_ = store_assigned_info ();
   }
 
   // generate the scheduling timeline over the total frame size
@@ -967,7 +975,8 @@ ACE_DynScheduler::identify_threads (void)
           ACE_NEW_RETURN(dispatch_ptr,
                          Dispatch_Entry (zero,
                                          effective_period,
-                                         task_entries_ [i].rt_info ()->preemption_priority,
+                                         task_entries_ [i].rt_info ()->preemption_priority, 
+                                         task_entries_ [i].rt_info ()->priority, 
                                          task_entries_ [i]),
                          ST_VIRTUAL_MEMORY_EXHAUSTED);
 
@@ -1164,6 +1173,38 @@ ACE_DynScheduler::schedule_dispatches (void)
   // calls internal dispatch scheduling method.
 
 ACE_DynScheduler::status_t
+ACE_DynScheduler::store_assigned_info (void)
+{
+
+  for  (u_int i = 0; i < dispatch_entry_count_; ++i)
+  {
+  if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
+      (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_DynScheduler::store_assigned_info () could not store "
+                       "priority information (error in internal representation)"),
+                     ST_UNKNOWN_TASK);
+  }
+
+  // set OS priority and Scheduler preemption priority and static 
+  // preemption subpriority in underlying RT_Info
+  // TBD - assign values into a map of priorities and RT_Infos:
+  // an RT_Info can be dispatched at multiple priorities
+  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->priority = 
+    ordered_dispatch_entries_ [i]->OS_priority ();
+  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_priority = 
+    ordered_dispatch_entries_ [i]->priority ();
+  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_subpriority = 
+    ordered_dispatch_entries_ [i]->static_subpriority ();
+  }
+
+  return SUCCEEDED;
+}
+  // = store assigned information back into the RT_Infos
+
+
+ACE_DynScheduler::status_t
 ACE_DynScheduler::create_timeline ()
 {
   // queue of previously scheduled entries that need to be rescheduled
@@ -1257,6 +1298,7 @@ ACE_DynScheduler::create_timeline ()
         Dispatch_Entry (arrival,
                         deadline,
                         ordered_dispatch_entries_[i]->priority (),
+                        ordered_dispatch_entries_[i]->OS_priority (),
                         ordered_dispatch_entries_[i]->task_entry (),
                         ordered_dispatch_entries_[i]),
         ST_VIRTUAL_MEMORY_EXHAUSTED);

@@ -1,5 +1,8 @@
 // $Id$
 
+// This program simulates a scheduler configuration run, 
+// and dumps the results of one scheduling in a C++ file.
+
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
@@ -7,20 +10,55 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
+const char* service_name = "ScheduleService";
 
+const char* format_string = "{\"%s\", %d, {%d,%d}, {%d,%d}, "
+                            "{%d,%d}, %7d, "
+                            "(RtecScheduler::Criticality) %d, "
+                            "(RtecScheduler::Importance) %d, "
+                            "{%d,%d}, %d, %2d, %d, %d, "
+                            "(RtecScheduler::Info_Type) %d }";
 
-// This program simulates a scheduler configuration run, 
-// and dumps the results of one scheduling in a C++ file.
+int
+parse_args (int argc, char *argv [])
+{
+  ACE_Get_Opt get_opt (argc, argv, "n:");
+  int opt;
+
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+	{
+	case 'n':
+	  service_name = get_opt.optarg;
+	  break;
+	case '?':
+	default:
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Usage: %s "
+		      "-n service_name "
+		      "\n",
+		      argv[0]));
+	  return -1;
+	}
+    }
+
+  return 0;
+}
 
 int
 main (int argc, char *argv[])
 {
-  const int operation_count = 8;
+  if (parse_args (argc, argv) != 0)
+  {
+    return 1;
+  }
 
   // create initial data for supplier and consumer operations
+  const int operation_count = 8;
   ACE_Scheduler_Factory::POD_RT_Info config_infos[operation_count] = {
 		  // 20 Hz high criticality supplier
-		  { "high_20_S",        // entry point
+		  { "hi_20_S",        // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
@@ -36,7 +74,7 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 20 Hz low criticality supplier
-		  { "low_20_S",         // entry point
+		  { "lo_20_S",         // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
@@ -52,7 +90,7 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 10 Hz high criticality supplier
-		  { "high_10_S",        // entry point
+		  { "hi_10_S",        // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
@@ -68,7 +106,7 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 10 Hz low criticality supplier
-		  { "low_10_S",         // entry point
+		  { "lo_10_S",         // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
@@ -84,12 +122,12 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 20 Hz high criticality consumer
-		  { "high_20_C",        // entry point
+		  { "hi_20_C",        // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
 			{0, 0},             // cached execution time
-			500000,             // period (100 ns)
+			0,                  // period (zero)
 			RtecScheduler::HIGH_CRITICALITY,   // criticality
 			RtecScheduler::LOW_IMPORTANCE,     // importance
 			{0, 0},             // quantum (unused)
@@ -100,12 +138,12 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 20 Hz low criticality consumer
-		  { "low_20_C",         // entry point
+		  { "lo_20_C",        // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
 			{0, 0},             // cached execution time
-			500000,             // period (100 ns)
+			0,                  // period (zero)
 			RtecScheduler::LOW_CRITICALITY,    // criticality
 			RtecScheduler::HIGH_IMPORTANCE,    // importance
 			{0, 0},             // quantum (unused)
@@ -116,12 +154,12 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 10 Hz high criticality consumer
-		  { "high_10_C",        // entry point
+		  { "hi_10_C",        // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
 			{0, 0},             // cached execution time
-			1000000,             // period (100 ns)
+			0,                  // period (zero)
 			RtecScheduler::HIGH_CRITICALITY,   // criticality
 			RtecScheduler::LOW_IMPORTANCE,     // importance
 			{0, 0},             // quantum (unused)
@@ -132,12 +170,12 @@ main (int argc, char *argv[])
 			RtecScheduler::OPERATION           // info type
 		  },
 		  // 10 Hz low criticality consumer
-		  { "low_10_C",         // entry point
+		  { "lo_10_C",        // entry point
 			0,                  // handle
 			{0, 0},             // worst case execution time
 			{0, 0},             // typical execution time (unused)
 			{0, 0},             // cached execution time
-			1000000,            // period (100 ns)
+			0,                  // period (zero)
 			RtecScheduler::LOW_CRITICALITY,    // criticality
 			RtecScheduler::HIGH_IMPORTANCE,    // importance
 			{0, 0},             // quantum (unused)
@@ -183,9 +221,12 @@ main (int argc, char *argv[])
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_Scheduler_Factory::use_config (naming_context.in ());
-
-
+      if (ACE_Scheduler_Factory::use_config (naming_context.in (), service_name) < 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Unable to bind to the scheduling service.\n"),
+                          1);
+	  }
 	  // create and initialize RT_Infos in the scheduler,
 	  // make second half of array depend on first half.
 	  for (int i = 0; i < operation_count; ++i)
@@ -206,7 +247,7 @@ main (int argc, char *argv[])
                (RtecScheduler::Importance) config_infos[i].importance, 
                config_infos[i].quantum, 
                config_infos[i].threads, 
-               config_infos[i].info_type, 
+               (RtecScheduler::Info_Type) config_infos[i].info_type, 
 			   TAO_TRY_ENV);
 
         // make operations in second half dependant on
@@ -255,7 +296,8 @@ main (int argc, char *argv[])
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
-                                            "Sched_Conf_Runtime.h");
+                                            "Sched_Conf_Runtime.h",
+                                            format_string);
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -265,4 +307,30 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
