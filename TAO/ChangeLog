@@ -1,3 +1,25 @@
+Fri Feb 25 07:00:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+
+	  Added new project just for IDL generation using the new MPC
+	  "custom_only" feature.  This avoids problems in MPC's automake
+	  support when aggregating multiple project Makefile.am's that
+	  each contain rules to compile the IDL files.
+
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Added new project just for IDL generation using the new MPC
+	  "custom_only" feature.  This avoids a MPC bug where only source
+	  files which are actually used in a project that compiles an IDL
+	  file are added to the list of output files.
+
 Fri Feb 25 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/wait_for_completion/wait_for_completion.mpc:
