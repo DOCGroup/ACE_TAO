@@ -656,7 +656,7 @@ Address_Iter::Address_Iter(const char *hostname): valid_(0), count_(0),
 {
    ACE_OS::memset(&buffer_, 0, sizeof(ACE_HOSTENT_DATA));
    ACE_OS::memset(&lookupResult_, 0, sizeof(struct hostent));
-   if (ACE_OS::inet_addr(hostname) == (in_addr_t) -1)
+   if (ACE_OS::inet_addr(hostname) == (unsigned long) -1)
      valid_ = query_dns(hostname);
    else {
      ACE_ASSERT(0);             // don't support dot-quad lookup yet
