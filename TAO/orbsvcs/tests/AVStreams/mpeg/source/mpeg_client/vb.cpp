@@ -297,7 +297,7 @@ void VBprocess(int initSocket, int normalSocket)
   int pfid, pgop;    /* frame-id of gopid of previous frame */
   int cmdsn = -1;    /* cmdsn of previous command */
   int state = 0;     /* state of the control law/regulator */
-  int startposnnn;      /* gopid or frameid when the regulator is in 'start' state 1 */
+  int startpos;      /* gopid or frameid when the regulator is in 'start' state 1 */
   int delay;	     /* #frames to delay after 'start' */
   int qosRecomputes = 0; /* indicate if qos has been recomputed recently */
   int action_delay;	/* microseconds to delay after feedback action */
