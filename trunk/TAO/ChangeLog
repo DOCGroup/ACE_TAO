@@ -1,3 +1,10 @@
+Tue Dec  9 14:07:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp (gen_stub_operation_body);
+
+          Fixed calculation of operation name string length when the name has
+          a '_cxx_' prefix due to a name class with a C++ keyword.
+
 Tue Dec  9 13:42:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (gen_nested_namespace_end):

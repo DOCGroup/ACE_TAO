@@ -485,9 +485,9 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
-
+  // Use the name without the possible '_cxx_' here.
   long tmp_len =
-    ACE_OS::strlen (node->local_name ()->get_string ());
+    ACE_OS::strlen (node->original_local_name ()->get_string ());
 
   *os << be_nl << be_nl
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
