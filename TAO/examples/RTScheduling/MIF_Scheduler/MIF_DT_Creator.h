@@ -17,10 +17,15 @@ public:
   //virtual Task* task (void);
   virtual Thread_Task* create_thr_task (int importance,
 					int start_time,
-					int load);
+					int load,
+					int iter,
+					int dist,
+					char *job_name);
   
   virtual void yield (int suspend_time,
 		      Thread_Task* task);
+
+  virtual int total_load (void);
 };
 
 
@@ -28,3 +33,4 @@ ACE_STATIC_SVC_DECLARE_EXPORT (MIF_DT_Creator, MIF_DT_Creator)
 ACE_FACTORY_DECLARE (MIF_DT_Creator, MIF_DT_Creator)
 
 #endif /*MIF_DT_CREATOR_H*/
+

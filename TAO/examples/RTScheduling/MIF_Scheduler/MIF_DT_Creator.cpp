@@ -9,16 +9,22 @@ MIF_DT_Creator::MIF_DT_Creator (void)
   DT_TEST::instance ()->dt_creator (this);
 }
 
-Thread_Task* 
+Thread_Task*
 MIF_DT_Creator::create_thr_task (int importance,
 				 int start_time,
-				 int load)
+				 int load,
+				 int iter,
+				 int dist,
+				 char *job_name)
 {
   MIF_Task* task;
-  ACE_NEW_RETURN (task, 
+  ACE_NEW_RETURN (task,
 		  MIF_Task (importance,
 			    start_time,
 			    load,
+			    iter,
+			    dist,
+			    job_name,
 			    this),
 		  0);
   return task;
@@ -34,23 +40,41 @@ void
 MIF_DT_Creator::yield (int suspend_time,
 		       Thread_Task*)
 {
- 
+  //ACE_Time_Value suspend (suspend_time);
   ACE_Time_Value now (ACE_OS::gettimeofday ());
-  while ((now - *base_time_) < suspend_time || suspend_time == 1)
+  while (((now - *base_time_) < suspend_time) || (suspend_time == 1))
     {
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Before perform Work\n"));
+
+      ACE_Time_Value wait (1);
+      orb_->perform_work (wait);
+
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "After perform Work\n"));
+
       CORBA::Policy_var sched_param;
       sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
       const char * name = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
       current_->update_scheduling_segment (name,
 					   sched_param.in (),
-					   implicit_sched_param
+					   sched_param.in ()
 					   ACE_ENV_ARG_DECL);
       ACE_CHECK;
       now = ACE_OS::gettimeofday ();
       if (suspend_time == 1)
-	break;
+	  break;
+
     }
+}
+
+int
+MIF_DT_Creator::total_load (void)
+{
+  return 1000;
 }
 
 ACE_STATIC_SVC_DEFINE(MIF_DT_Creator,
@@ -61,6 +85,3 @@ ACE_STATIC_SVC_DEFINE(MIF_DT_Creator,
                       0)
 
 ACE_FACTORY_DEFINE (MIF_DT_Creator, MIF_DT_Creator)
-
-
-
