@@ -8,11 +8,10 @@ ACE_RCSID (Utils,
            RIR_Narror,
            "$Id$")
 
-template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
+template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb,
                                    char const * id
                                    ACE_ENV_ARG_DECL)
-
 {
   CORBA::Object_var object =
     orb->resolve_initial_references (id
@@ -23,7 +22,7 @@ TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb,
                                        ACE_ENV_ARG_PARAMETER);
 }
 
-template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
+template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (PortableInterceptor::ORBInitInfo_ptr info,
                                    char const * id
                                    ACE_ENV_ARG_DECL)
@@ -37,7 +36,7 @@ TAO::Utils::RIR_Narrow<T>::narrow (PortableInterceptor::ORBInitInfo_ptr info,
                                        ACE_ENV_ARG_PARAMETER);
 }
 
-template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
+template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object
                                           ACE_ENV_ARG_DECL)
 {
