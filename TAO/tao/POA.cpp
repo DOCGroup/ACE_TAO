@@ -37,6 +37,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+// @@ Darrell: could you move this to some other file?  It is kind of
+// ugly around here.  Also: we probably want this "optional",
+// i.e. some kind of hook that creates this object only when IMR is
+// enabled, we should talk about it.
 class ServerObject_i
   : public POA_ImplementationRepository::ServerObject,
     public PortableServer::RefCountServantBase
@@ -56,10 +60,10 @@ public:
     {
     }
 
-  virtual void shutdown (CORBA::Environment &)
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC (())
     {
-      this->orb_->shutdown ();
+      this->orb_->shutdown (0, ACE_TRY_ENV);
     }
 private:
   CORBA::ORB_ptr orb_;
@@ -531,7 +535,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       if (this->server_object_)
         {
           TAO_POA *root_poa = this->orb_core ().root_poa ();
-  
+
           PortableServer::ObjectId_var id =
             root_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
           ACE_CHECK;
@@ -3956,7 +3960,7 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
-  
+
   client_exposed_policies->length (client_exposed_fixed_policies.length ());
 
   for (CORBA::ULong i = 0;
@@ -4031,7 +4035,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   // Activate the servant in the root poa.
   TAO_POA *root_poa = this->orb_core ().root_poa ();
-  PortableServer::ObjectId_var id = 
+  PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
                                  TAO_INVALID_PRIORITY,
                                  ACE_TRY_ENV);

@@ -21,6 +21,8 @@
 
 #include "CounterS.h"
 
+// @@ Angelo: you are missing all the throw specs, please fix.
+
 class Counter_Servant : public POA_Counter
 {
 public:

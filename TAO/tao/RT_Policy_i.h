@@ -42,6 +42,8 @@
 
 class Policy_Factory;
 
+// @@ Angelo: ACE's automatic documentation tools need to have all the
+// base classes in the same line, I hate it too, so just fix it.
 class TAO_Export TAO_PriorityModelPolicy :
   public RTCORBA::PriorityModelPolicy,
   public TAO_Local_RefCounted_Object
@@ -113,6 +115,9 @@ private:
   // Attributes.
 };
 
+// @@ Angelo: the traditional separator in ACE+TAO is // ****
+//    furthermore, it is better if you *don't* mix many classes in the
+//    same file, consider splitting this stuff.
 ////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_ThreadpoolPolicy :
@@ -603,6 +608,14 @@ protected:
 };
 
 //////////////////////////////////////////////////////////////////////////
+
+// @@ Angelo: I suspect that this stuff should be moved into the
+// pluggable protocol framework, to be precise:
+//   + Each TAO_Protocol_Factory class should be able to create a
+//   ProtocolProperties object.
+//   + The ORB should use the list of available protocols to create
+//   any requested protocol property.
+//
 
 class TAO_Export TAO_Protocol_Properties_Factory
 {
