@@ -100,6 +100,9 @@ public:
 
   virtual int visit_array (be_array *node);
   // visit array type
+
+  virtual int visit_typedef (be_typedef *node);
+  // visit typedef type
 };
 
 #endif /*  _BE_VISITOR_FIELD_CDR_OP_CS_H_ */

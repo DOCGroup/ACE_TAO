@@ -621,7 +621,7 @@ be_visitor_field_cdr_op_cs::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_public_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_cs::"
                          "visit_typedef - "
                          "Bad primitive type\n"
                          ), -1);
@@ -820,3 +820,26 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
     }
   ACE_NOTREACHED (return 0);
 }
+
+// visit typedef type
+int
+be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)
+{
+  this->ctx_->alias (node); // save the typedef node for use in code generation
+                           // as we visit the base type
+
+  // the node to be visited in the base primitve type that gets typedefed
+  be_type *bt = node->primitive_base_type ();
+  if (!bt || (bt->accept (this) == -1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
+                         "visit_typedef - "
+                         "Bad primitive type\n"
+                         ), -1);
+    }
+
+  this->ctx_->alias (0);
+  return 0;
+}
+
