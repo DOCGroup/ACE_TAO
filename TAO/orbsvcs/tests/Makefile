@@ -10,6 +10,7 @@
 
 DIRS  =	Simple_Naming \
 	Logger \
+	Event_Latency \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -21,7 +21,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 class CosNaming_Client 
   // = TITLE

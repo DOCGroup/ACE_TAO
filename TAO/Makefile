@@ -13,12 +13,14 @@ INFO	= README \
 
 DIRS	= tao \
 	  TAO_IDL \
+	  orbsvcs \
 	  tests
 
 
 CLONE	= Makefile \
 	  tao \
 	  TAO_IDL \
+	  orbsvcs \
 	  tests \
 
 #----------------------------------------------------------------------------
@@ -51,6 +53,7 @@ RELEASE_FILES = TAO/ChangeLog \
 		TAO/README.sun \
 		TAO/tao \
 		TAO/TAO_IDL \
+		TAO/orbsvcs \
 		TAO/tests \
 		TAO/VERSION
 
