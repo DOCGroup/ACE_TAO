@@ -10,7 +10,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 TAO_POA_Manager::TAO_POA_Manager (void)
-  : state_ (PortableServer::POAManager::State::HOLDING),
+  : state_ (PortableServer::POAManager::HOLDING),
     closing_down_ (0),
     lock_ (0),
     poa_collection_ ()
@@ -31,10 +31,10 @@ TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
   // AdapterInactive exception is raised.  Entering the active state
   // enables the associated POAs to process requests.
 
-  if (this->state_ == PortableServer::POAManager::State::INACTIVE)
+  if (this->state_ == PortableServer::POAManager::INACTIVE)
     ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
-    this->state_ = PortableServer::POAManager::State::ACTIVE;
+    this->state_ = PortableServer::POAManager::ACTIVE;
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -51,10 +51,10 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
   // started executing will continue to be queued while in the holding
   // state.
 
-  if (this->state_ == PortableServer::POAManager::State::INACTIVE)
+  if (this->state_ == PortableServer::POAManager::INACTIVE)
     ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
-    this->state_ = PortableServer::POAManager::State::HOLDING;
+    this->state_ = PortableServer::POAManager::HOLDING;
 
   // If the wait_for_completion parameter is FALSE, this operation
   // returns immediately after changing the state. If the parameter is
@@ -80,10 +80,10 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
   // discarded, a TRANSIENT system exception is returned to the
   // client.
 
-  if (this->state_ == PortableServer::POAManager::State::INACTIVE)
+  if (this->state_ == PortableServer::POAManager::INACTIVE)
     ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
-    this->state_ = PortableServer::POAManager::State::DISCARDING;
+    this->state_ = PortableServer::POAManager::DISCARDING;
 
   // If the wait_for_completion parameter is FALSE, this operation
   // returns immediately after changing the state. If the parameter is
@@ -109,10 +109,10 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // inactive state causes the associated POAs to reject requests that
   // have not begun to be executed as well as any new requests.
 
-  if (this->state_ == PortableServer::POAManager::State::INACTIVE)
+  if (this->state_ == PortableServer::POAManager::INACTIVE)
     ACE_THROW (PortableServer::POAManager::AdapterInactive ());
   else
-    this->state_ = PortableServer::POAManager::State::INACTIVE;
+    this->state_ = PortableServer::POAManager::INACTIVE;
 
   // After changing the state, if the etherealize_objects parameter is:
   //
