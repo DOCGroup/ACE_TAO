@@ -37,6 +37,7 @@
 #ifndef _PORTABLE_INTERCEPTOR_IDL_
 #define _PORTABLE_INTERCEPTOR_IDL_
 
+#include <PI_Forward.pidl>
 #include <Current.pidl>
 #include <Dynamic.pidl>
 #include <Messaging_SyncScope.pidl>
@@ -106,11 +107,6 @@ module PortableInterceptor {
       in IOP::ServiceContext service_context,
       in boolean replace);
   };
-
-  typedef string ServerId;
-  typedef string ORBId;
-  typedef CORBA::StringSeq AdapterName;
-  typedef CORBA::OctetSeq ObjectId;
 
   local interface ServerRequestInfo : RequestInfo {
     readonly attribute any sending_exception;

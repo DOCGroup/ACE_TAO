@@ -547,6 +547,10 @@ SOURCE=.\IOR_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
@@ -717,6 +721,10 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Parser_Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_ForwardC.cpp
 # End Source File
 # Begin Source File
 
@@ -1409,6 +1417,10 @@ SOURCE=.\IOR_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_Adapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -1586,6 +1598,10 @@ SOURCE=.\params.h
 # Begin Source File
 
 SOURCE=.\Parser_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_ForwardC.h
 # End Source File
 # Begin Source File
 
@@ -2282,6 +2298,10 @@ SOURCE=.\params.i
 # Begin Source File
 
 SOURCE=.\Parser_Registry.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_ForwardC.i
 # End Source File
 # Begin Source File
 

@@ -33,9 +33,7 @@
 #define _OBJECT_REFERENCE_TEMPLATE_IDL_
 
 #include <orb.idl>
-
-#include <OctetSeq.pidl>
-#include <StringSeq.pidl>
+#include <PI_Forward.pidl>
 
 module PortableInterceptor
 {
