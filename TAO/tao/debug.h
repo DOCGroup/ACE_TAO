@@ -55,20 +55,20 @@ extern char * TAO_Export TAO_debug_filter;
 
 // dump socket error indication, if any, with ID tag
 #if defined (_WINSOCKAPI_)
-#define	dsockerr(s)	{ if (TAO_debug_level) dmsg_v ("%s:  winsock error %d", \
-				s, WSAGetLastError()); }
+#define	dsockerr(s) { if (TAO_debug_level) dmsg_v ("%s:  winsock error %d", \
+                                                   s, WSAGetLastError()); }
 #else
 #define	dsockerr(s)	dperror(s)
 #endif /* _WINSOCKAPI_ */
 
 #else	/* !DEBUG */
-#define dmsg(s)		{ }
-#define dmsg1(s,a1)	{ }
-#define dmsg2(s,a1,a2)	{ }
+#define dmsg(s) { }
+#define dmsg1(s,a1) { }
+#define dmsg2(s,a1,a2) { }
 
-#define dexc(env, s)	{ }
-#define	dperror(s)	{ }
-#define	dsockerr(s)	{ }
+#define dexc(env, s) { }
+#define	dperror(s) { }
+#define	dsockerr(s) { }
 #endif	/* DEBUG */
 
 // These don't compile out; you must #ifdef them.  This is done
@@ -83,25 +83,28 @@ extern char * TAO_Export TAO_debug_filter;
 // message is then printed.  Assign thosee characters as needed.
 
 extern void TAO_Export dmsg_filter (const char *_FAR filter,
-                                        const char *_FAR fmt, ...);
+                                    const char *_FAR fmt,
+                                    ...);
 
 // Filter according to TAO_debug_level instead of category.  (For
 // speed, test against TAO_debug_level directly.)
 
 extern void TAO_Export dmsg_filter (u_int level, 
-                                        const char *_FAR fmt, ...);
+                                    const char *_FAR fmt,
+                                    ...);
 
 // General varargs debug message printer, no filtering
 
-extern void TAO_Export dmsg_v (const char *_FAR fmt, ...);
+extern void TAO_Export dmsg_v (const char *_FAR fmt,
+                               ...);
 extern void TAO_Export _dmsg_x (CORBA_Environment _FAR &env,
-                                    const char *_FAR info);
+                                const char *_FAR info);
 extern void TAO_Export dmsg_opaque (char *_FAR label,
-                                        u_char *_FAR buffer,
-                                        u_long len);
+                                    u_char *_FAR buffer,
+                                    u_long len);
 extern void TAO_Export dmsg_opaque_full (char *_FAR label,
-                                             const u_char *_FAR buffer,
-                                             u_long len);
+                                         const u_char *_FAR buffer,
+                                         u_long len);
 #endif /* DEBUG */
 
 #endif /* TAO_DEBUG_H */

@@ -18,7 +18,7 @@ CORBA_Any::operator delete (void *p)
   ::operator delete (p);
 }
 
-// insertion from special types
+// Insertion from special types.
 
 // @@ Andy, please take a look at this method and make sure it's what
 // you intended.  I couldn't find it defined anywhere.  --cjc
@@ -121,7 +121,9 @@ CORBA_Any::to_char::to_char (CORBA::Char &c)
 }
 
 ACE_INLINE
-CORBA_Any::from_string::from_string (char *s, CORBA::ULong b, CORBA::Boolean nocopy)
+CORBA_Any::from_string::from_string (char *s,
+                                     CORBA::ULong b,
+                                     CORBA::Boolean nocopy)
   : val_ (s),
     bound_ (b),
     nocopy_ (nocopy)
@@ -129,7 +131,8 @@ CORBA_Any::from_string::from_string (char *s, CORBA::ULong b, CORBA::Boolean noc
 }
 
 ACE_INLINE
-CORBA_Any::to_string::to_string (char *&s, CORBA::ULong b)
+CORBA_Any::to_string::to_string (char *&s,
+                                 CORBA::ULong b)
   : val_ (s),
     bound_ (b)
 {
