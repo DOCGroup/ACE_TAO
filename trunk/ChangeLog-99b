@@ -1,21 +1,28 @@
+Wed Feb 24 22:08:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Fixed all the sem_* calls so that they no longer use
+ 	  the ACE_ADAPT_RETVAL() macro, which was broken since these calls
+ 	  all return -1 on failure.  Thanks to John E. Bossom
+ 	  <John.Bossom@cognos.com> for reporting this.
+
 Wed Feb 24 17:40:49 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/combine: 
 	* docs/tutorials/colorize: 
-	A few enhancements to make the colorization better.  Also, when
-	#include "ace/something.h" is seen by the colorizer, it will
-	create a link to ../../../ace/something.h.  That should give
-	direct links from the tutorial pages to the ACE headers.
+	  A few enhancements to make the colorization better.  Also, when
+ 	  #include "ace/something.h" is seen by the colorizer, it will
+ 	  create a link to ../../../ace/something.h.  That should give
+ 	  direct links from the tutorial pages to the ACE headers.
 
 Wed Feb 24 16:56:51 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/017/barrier2.cpp: Added this to show how you can
-	change the thread count while threads are still active.
+	  change the thread count while threads are still active.
 
 	* docs/tutorials/017/*.html: Regenerated due to the new file.
 	
 	* docs/tutorials/018/*.html: Added Kirthika's abstract &
-	regenerated.
+	  regenerated.
 	
 	* docs/tutorials/018/token.cpp:  Typo in the comments...
 	

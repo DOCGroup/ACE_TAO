@@ -2640,7 +2640,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
     {
       // Only destroy the semaphore if we're the ones who
       // initialized it.
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
+      ACE_OSCALL (::sem_destroy (s->sema_));
       ACE_OS::shm_unlink (s->name_);
       delete s->name_;
       return result;
@@ -2648,14 +2648,14 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #else
   if (s->name_)
     {
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), result), int, -1, result);
+      ACE_OSCALL (::sem_unlink (s->name_));
       ACE_OS::free ((void *) s->name_);
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), ace_result_), int, -1);
+      ACE_OSCALL_RETURN (::sem_close (s->sema_));
     }
 #   endif /*  ACE_LACKS_NAMED_POSIX_SEM */
   else
     {
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
+      ACE_OSCALL (::sem_destroy (s->sema_));
       delete s->sema_;
       s->sema_ = 0;
       return result;
@@ -2774,11 +2774,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_NEW_RETURN (s->sema_,
                       sem_t,
                       -1);
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_init (s->sema_,
-                                                       type != USYNC_THREAD,
-                                                       count),
-                                           ace_result_),
-                         int, -1);
+      ACE_OSCALL_RETURN (::sem_init (s->sema_,
+                                     type != USYNC_THREAD,
+                                     count);
     }
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
@@ -2893,7 +2891,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 {
   // ACE_TRACE ("ACE_OS::sema_post");
 # if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_post (s->sema_), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::sem_post (s->sema_));
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
@@ -2978,8 +2976,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   // ACE_TRACE ("ACE_OS::sema_trywait");
 # if defined (ACE_HAS_POSIX_SEM)
   // POSIX semaphores set errno to EAGAIN if trywait fails
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_trywait (s->sema_), ace_result_),
-                     int, -1);
+  ACE_OSCALL_RETURN (::sem_trywait (s->sema_));
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   // STHREADS semaphores set errno to EBUSY if trywait fails.
@@ -3084,7 +3081,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 {
   // ACE_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_wait (s->sema_), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::sem_wait (s->sema_));
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_wait (s), ace_result_), int, -1);
