@@ -15,7 +15,7 @@ Sun Nov 28 02:41:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  the <perform_notifications> task finishes before the event loop
 	  has a chance to finish its iterations.  Another way to solve
 	  this is to add a thr_yield after every notification but that
-	  seems to defeat the intension of the test.  Thanks to Ivan
+	  seems to defeat the intention of the test.  Thanks to Ivan
 	  Murphy for reporting the false error output.
 
 Sat Nov 27 22:06:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
