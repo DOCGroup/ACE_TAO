@@ -26,7 +26,7 @@
 
 ACE_Thread_Manager *tm;
 
-static const int MAX_TASKS = 3;
+static const int MAX_TASKS = 2;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
@@ -104,6 +104,10 @@ Test_Task::close (u_long)
 
   if (Test_Task::task_count_ < 0)
     abort ();
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) dump in close for %x\n", this));
+  ACE_Thread_Manager::instance ()->dump ();
+
   return 0;
 }
 
@@ -217,9 +221,12 @@ main (int, char *[])
       tt2[i].open (reactor);
     }
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) first dump in main\n"));
+  ACE_Thread_Manager::instance ()->dump ();
+
   // Spawn two threads each running a different reactor.
 
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (worker),
        (void *) ACE_Reactor::instance (),
        THR_BOUND | THR_DETACHED) == -1)
@@ -230,10 +237,15 @@ main (int, char *[])
        THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) second dump in main\n"));
+  ACE_Thread_Manager::instance ()->dump ();
+
   ACE_DEBUG ((LM_DEBUG, "(%t) starting to wait \n"));
 
   if (ACE_Thread_Manager::instance ()->wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "wait"), -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) third dump in main\n"));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) all threads are finished \n"));
 

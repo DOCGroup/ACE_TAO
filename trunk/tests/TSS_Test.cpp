@@ -42,7 +42,7 @@ int Errno::flags_;
 
 // This is our thread-specific error handler...
 // See comment below about why it's dynamically allocated.
-static ACE_TSS<Errno> *TSS_Error;
+static ACE_TSS<Errno> *tss_error;
 
 #if defined (ACE_HAS_THREADS)
 // Serializes output via cout.
@@ -122,17 +122,17 @@ worker (void *c)
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
 
       // The following two lines set the thread-specific state.
-      (*TSS_Error)->error (errno);
-      (*TSS_Error)->line (__LINE__);
+      (*tss_error)->error (errno);
+      (*tss_error)->line (__LINE__);
 
       // This sets the static state (note how C++ makes it easy to do
       // both).
-      (*TSS_Error)->flags (count);
+      (*tss_error)->flags (count);
 
       {
 	// Use the guard to serialize access
 	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
-	ACE_ASSERT ((*TSS_Error)->flags () == ITERATIONS);
+	ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
       key = ACE_OS::NULL_key;
@@ -187,17 +187,17 @@ main (int, char *[])
 {
   ACE_START_TEST ("TSS_Test");
 
+#if defined (ACE_HAS_THREADS)
+
   const u_int threads = ACE_MAX_THREADS;
 
-  // Dynamically allocate TSS_Error so that we can control when
-  // it gets deleted.  Specifically, we need to delete it before
-  // the ACE_Object_Manager destroys the ACE_Allocator.  That's
-  // because deletion of TSS_Error causes the internal structures
-  // of ACE_TSS_Cleanup to be modified, and which in turn uses
+  // Dynamically allocate TSS_Error so that we can control when it
+  // gets deleted.  Specifically, we need to delete it before the
+  // ACE_Object_Manager destroys the ACE_Allocator.  That's because
+  // deletion of TSS_Error causes the internal structures of
+  // ACE_TSS_Cleanup to be modified, and which in turn uses
   // ACE_Allocator.
-  ACE_NEW_RETURN (TSS_Error, ACE_TSS<Errno>, 1);
-
-#if defined (ACE_HAS_THREADS)
+  ACE_NEW_RETURN (tss_error, ACE_TSS<Errno>, 1);
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
@@ -235,12 +235,11 @@ main (int, char *[])
 
   delete [] thread_handles;
 
+  delete tss_error;
 #else
   ACE_ERROR ((LM_ERROR,
 	      "threads are not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
-
-  delete TSS_Error;
 
   ACE_END_TEST;
   return 0;
