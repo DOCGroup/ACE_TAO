@@ -59,7 +59,7 @@ private:
 #include "tao/xt_resource.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_XT_Resource_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_XT_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_XT_Resource_Factory)
 
 #endif /* ACE_HAS_XT */

@@ -53,7 +53,7 @@ public:
 # include "DLL_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_DLL_Parser)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)
 
 #include "ace/post.h"

@@ -55,8 +55,8 @@ private:
 #include "tao/qt_resource.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE( TAO_QtResource_Factory )
-ACE_FACTORY_DECLARE   ( TAO, TAO_QtResource_Factory )
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_QtResource_Factory)
+ACE_FACTORY_DECLARE (TAO, TAO_QtResource_Factory)
 
 #endif /*ACE_HAS_QT */
 #include "ace/post.h"

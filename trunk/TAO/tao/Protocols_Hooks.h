@@ -108,7 +108,7 @@ public:
   virtual void set_priority_mapping (TAO_ORB_Core *,
                                      TAO_Resource_Factory *,
                                      CORBA::Environment &);
-  
+
   /// Sets the default_policies for ORB.
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
   /// default RTCORBA policies: ServerProtocolPolicy and
