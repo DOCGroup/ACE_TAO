@@ -19,13 +19,11 @@ CORBA::Long
 Simple_Server_i::test_raise (CORBA::Long x)
   ACE_THROW_SPEC ((Simple_Server::Failure))
 {
+  ACE_UNUSED_ARG (x);
   throw Simple_Server::Failure ();
 
 # if defined (WIN32) || defined (__HP_aCC)
-  // Make HP-UX's aCC happy
   return x;
-#else /*WIN32 & HP */
-  ACE_UNUSED_ARG (x);
 #endif /*WIN32 & HP */
 }
 
