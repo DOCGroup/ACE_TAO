@@ -1,0 +1,32 @@
+// $Id$
+
+/**
+ * @file NavDisplayEI.idl
+ *
+ * Definition of the NavDisplay (navigation display) component implementation.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#ifndef NAVDISPLAYEI_IDL
+#define NAVDISPLAYEI_IDL
+
+#include "NavDisplayE.idl"
+
+module HUDisplay
+{
+  /**
+   * @interface NavDisplay_Exec
+   *
+   * The actually GPS executor inherits from both CCM_GPS and
+   * CCM_position interfaces as a monolithic implementation.
+   */
+  local interface NavDisplay_Exec :
+    CCM_NavDisplay,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* NAVDISPLAYEI_IDL */
