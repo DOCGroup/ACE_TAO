@@ -1639,7 +1639,7 @@ TAO_TypeCodeFactory_i::update_map (
                   ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
                                                          &recursion_offset),
                                    ACE_const_cast (char *,
-					           slot);
+                                                   slot);
                 }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
             }
