@@ -55,7 +55,7 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 #else
-  ACE_UNUSED_ARG (orb_Core);
+  ACE_UNUSED_ARG (orb_core);
   ACE_UNUSED_ARG (flag);
 #endif
 }
