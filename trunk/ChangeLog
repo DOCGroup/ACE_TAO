@@ -1,3 +1,9 @@
+Sat Apr 27 15:28:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+          Fixed MSVC6 compile errors
+
 Fri Apr 26 17:00:23 2002  Dante J. Cannarozzi  <djc2@cs.wustl.edu>
 
 	* ace/Containers_T.h

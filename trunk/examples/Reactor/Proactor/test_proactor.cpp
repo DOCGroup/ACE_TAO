@@ -397,7 +397,7 @@ Sender::handle (void) const
 void
 Sender::handle (ACE_HANDLE handle)
 {
-  return this->stream_.set_handle (handle);
+  this->stream_.set_handle (handle);
 }
 
 int
