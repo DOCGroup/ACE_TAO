@@ -57,8 +57,7 @@ public:
   /**
    * Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str,
-                    size_t len) = 0;
+  virtual int read (ACEXML_Char *str, size_t len) = 0;
 
   /**
    * Peek the next ACEXML_Char in the CharStream.  Return the
@@ -70,6 +69,11 @@ public:
    * Get the character encoding for a byte stream or URI.
    */
   virtual const ACEXML_Char *getEncoding (void)  = 0;
+
+  /*
+   * Get the systemId for the underlying CharStream
+   */
+  virtual const ACEXML_Char* getSystemId (void) = 0;
 
 };
 

@@ -62,8 +62,7 @@ public:
   /**
    *  Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str,
-                    size_t len);
+  virtual int read (ACEXML_Char *str, size_t len);
 
   /**
    *  Peek the next ACEXML_Char in the CharStream.  Return the
@@ -77,11 +76,38 @@ public:
   virtual void rewind (void);
 
   /**
+   *  Determine the encoding of the file.
+   */
+  virtual int determine_encoding (void);
+
+  /**
    * Get the encoding of the file
    */
   virtual const ACEXML_Char* getEncoding (void);
 
+  /*
+   * Get the systemId for the underlying CharStream
+   */
+  virtual const ACEXML_Char* getSystemId (void);
+
+
 private:
+
+#if defined (ACE_USES_WCHAR)
+  /**
+   *  Read the next character from the stream taking into account the
+   *  encoding of the file.
+   */
+  int get_i (ACEXML_Char& ch);
+
+  /**
+   *  Read the next character from the stream taking into account the
+   *  encoding of the file. Subsequent call to get() returns this
+   *  character.
+   */
+  int peek_i (void);
+
+#endif /* ACE_USES_WCHAR */
 
   /**
    *  Send a HTTP/1.1 request to fetch the contents of the URL.

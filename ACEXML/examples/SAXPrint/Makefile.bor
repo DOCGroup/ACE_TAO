@@ -1,25 +1,20 @@
-#
-# $Id$
-# Makefile for building the SAXPrint example
-#
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
 
-NAME = SAXPrint
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
 
-OBJFILES = \
-	$(OBJDIR)\Print_Handler.obj \
-	$(OBJDIR)\SAXPrint_Handler.obj \
-	$(OBJDIR)\main.obj
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor all
 
-CFLAGS = \
-	$(ACE_CFLAGS) \
-	$(ACE_XML_CFLAGS) \
-	$(ACE_XML_PARSER_CFLAGS)
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor clean
 
-CPPDIR = .
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor realclean
 
-LIBFILES = \
-	$(ACE_LIB) \
-	$(ACE_XML_LIB) \
-	$(ACE_XML_PARSER_LIB)
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor install
 
-!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+regenerate:
+	D:\Perl\bin\perl.exe D:\ACE_wrappers\bin\mwc.pl -type borland -recurse

@@ -34,14 +34,11 @@ public:
   /// Default constructor.
   ACEXML_StrCharStream (void);
 
-  /// Initializing Constructor.
-  ACEXML_StrCharStream (const ACEXML_Char *str);
-
   /// Destructor
   virtual ~ACEXML_StrCharStream (void);
 
-  /// Initializing and reset the StrCharStream with @a str.
-  int open (const ACEXML_Char *str);
+  /// Initializing StrCharStream with @a str and @a name
+  int open (const ACEXML_Char *str, const ACEXML_Char* name);
 
   /**
    * Returns the available ACEXML_Char in the buffer.  -1
@@ -68,8 +65,7 @@ public:
   /**
    * Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str,
-                    size_t len);
+  virtual int read (ACEXML_Char *str, size_t len);
 
   /**
    * Peek the next ACEXML_Char in the CharStream.  Return the
@@ -82,6 +78,11 @@ public:
    */
   virtual const ACEXML_Char *getEncoding (void);
 
+  /*
+   * Get the systemId for the underlying CharStream
+   */
+  virtual const ACEXML_Char* getSystemId (void);
+
   /**
    *  Resets the pointer to the beginning of the stream.
    */
@@ -92,6 +93,7 @@ private:
   ACEXML_Char *ptr_;
   ACEXML_Char *end_;
   ACEXML_Char* encoding_;
+  ACEXML_Char* name_;
 
 };
 

@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -45,6 +46,12 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
                                          ACE_Equal_To<ACEXML_String>,
                                          ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_REVERSE_ITER;
 
+typedef ACE_Hash_Map_Bucket_Iterator<ACEXML_String,
+                                     ACEXML_String,
+                                     ACE_Hash<ACEXML_String>,
+                                     ACE_Equal_To<ACEXML_String>,
+                                     ACE_Null_Mutex> ACEXML_ENTITY_ENTRY_ITERATOR;
+
 /**
  * @class ACEXML_Entity_Manager Entity_Manager.h "ACEXML/parser/parser/Entity_Manager.h"
  *
@@ -62,11 +69,21 @@ public:
   ~ACEXML_Entity_Manager (void);
 
   /// Add a new entity declaration.
-  int add_entity (const ACEXML_Char *ref,
-                  const ACEXML_Char *value);
+  int add_entity (const ACEXML_Char *ref, const ACEXML_Char *value);
 
   /// Resolve an entity reference.
-  const ACEXML_String *resolve_entity (const ACEXML_Char *ref);
+  const ACEXML_Char* resolve_entity (const ACEXML_Char *ref);
+
+  /// Resolve an entity reference and return the tuple of @c systemId and
+  /// @c publicId
+  int resolve_entity (const ACEXML_Char* ref, ACEXML_Char*& systemId,
+                      ACEXML_Char*& publicId);
+
+  /// Number of items in the Entity Manager
+  const size_t size(void) const;
+
+  /// Reset the state
+  int reset (void);
 
 private:
   ACEXML_ENTITIES_MANAGER entities_;

@@ -1,25 +1,26 @@
-# Microsoft Developer Studio Project File - Name="HttpCharStream_Test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="HttpCharStream_Test EXE" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=HttpCharStream_Test - Win32 Debug
+CFG=HttpCharStream_Test EXE - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE run the tool that generated this project file and specify the
+!MESSAGE nmake output type.  You can then use the following command:
+!MESSAGE
 !MESSAGE NMAKE /f "HttpCharStream_Test.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "HttpCharStream_Test.mak" CFG="HttpCharStream_Test - Win32 Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "HttpCharStream_Test.mak" CFG="HttpCharStream_Test EXE - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
-!MESSAGE "HttpCharStream_Test - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "HttpCharStream_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
+!MESSAGE "HttpCharStream_Test EXE - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "HttpCharStream_Test EXE - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -28,77 +29,49 @@ CFG=HttpCharStream_Test - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "HttpCharStream_Test - Win32 Release"
+!IF  "$(CFG)" == "HttpCharStream_Test EXE - Win32 Release"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
+# PROP Intermediate_Dir "Release\HttpCharStream_Test"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /MD /GR /I "..\.." /D NDEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d NDEBUG=1 /i "..\.."
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib ACEXML.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace" /libpath:"..\Common"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO ACEXML_Parser.lib ACEXML.lib ACE.lib /libpath:"..\..\ACEXML\common" /libpath:"..\..\ACEXML\parser\parser" /libpath:"..\..\ace" /nologo /version:5.3.1 /subsystem:console /pdb:"Release\HttpCharStream_Test.pdb"  /machine:I386 /out:"Release\HttpCharStream_Test.exe"
 
-!ELSEIF  "$(CFG)" == "HttpCharStream_Test - Win32 Debug"
+!ELSEIF  "$(CFG)" == "HttpCharStream_Test EXE - Win32 Debug"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug\HttpCharStream_Test"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /MDd /GR /Gy /I "..\.." /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d _DEBUG=1 /i "..\.."
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib ACEXMLd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\ace" /libpath:"..\Common"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO ACEXML_Parserd.lib ACEXMLd.lib ACEd.lib /libpath:"..\..\ACEXML\common" /libpath:"..\..\ACEXML\parser\parser" /libpath:"..\..\ace" /nologo /version:5.3.1 /subsystem:console /pdb:".\HttpCharStream_Test.pdb" /debug /machine:I386 /out:".\HttpCharStream_Test.exe"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
-# Name "HttpCharStream_Test - Win32 Release"
-# Name "HttpCharStream_Test - Win32 Debug"
+# Name "HttpCharStream_Test EXE - Win32 Release"
+# Name "HttpCharStream_Test EXE - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter "cpp;cxx;c"
 # Begin Source File
 
 SOURCE=.\HttpCharStream_Test.cpp
 # End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project
