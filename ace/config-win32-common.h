@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+
 #ifndef ACE_CONFIG_WIN32_COMMON_H
 #define ACE_CONFIG_WIN32_COMMON_H
 #include /**/ "ace/pre.h"
@@ -574,6 +575,14 @@ typedef unsigned long long ACE_UINT64;
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
 #  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 #endif /* !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+
+// Needed for obtaining the MAC address
+// I dont believe this will work under CE, notice the
+// check for UNDER_CE.
+# if defined (_MSC_VER) && !defined (UNDER_CE)
+# include <nb30.h>
+# pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
+# endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

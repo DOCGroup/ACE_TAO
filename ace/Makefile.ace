@@ -250,6 +250,8 @@ TOKEN_FILES = \
   Token_Request_Reply
 CODECS_FILES = \
   Codecs
+UUID_FILES = \
+  UUID
 OTHER_FILES = \
   Local_Name_Space \
   Name_Proxy \
@@ -370,6 +372,7 @@ ifndef ACE_COMPONENTS
     Timer \
     Token \
     Codecs \
+    UUID \
     Other
 endif # ACE_COMPONENTS
 
@@ -388,6 +391,7 @@ ifeq (FOR_TAO,$(ACE_COMPONENTS))
     Streams \
     Memory \
     Timer \
+    UUID \
     Codecs
 else  # ! FOR_TAO
   #### TAO doesn't need Filecache.  It costs 14 Kb.
@@ -462,6 +466,12 @@ ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
 else  # ! Other
   FILES += $(OTHER_FILES)
 endif # ! Other
+
+ifeq (,$(findstring UUID,$(ACE_COMPONENTS)))
+  CCFLAGS += -DACE_LACKS_ACE_UUID
+else  # ! UUID
+  FILES += $(UUID_FILES)
+endif # ! UUID
 
 ifeq ($(AIX_TEMPLATE_HACK),1)
   FILES = 0_ACE_All_Src
