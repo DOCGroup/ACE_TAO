@@ -1,3 +1,9 @@
+Wed Feb 13 12:47:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/ConstantDef_i.cpp: Changed the usage of
+	  Auto_Basic_Ptr to Auto_Basic_Array_Ptr. Thanks to Johnny for
+	  reporting this problem.
+
 Tue Feb 12 17:53:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/POA.cpp (destroy_i): 

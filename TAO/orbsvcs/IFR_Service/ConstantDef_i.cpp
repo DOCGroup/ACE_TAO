@@ -218,7 +218,7 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
 
   char *data = ACE_static_cast (char *, ref);
 
-  ACE_Auto_Basic_Ptr<char> safety (data);
+  ACE_Auto_Basic_Array_Ptr<char> safety (data);
 
   ACE_Message_Block mb (data,
                         length);
@@ -288,4 +288,3 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
                                             mb->base (),
                                             mb->length ());
 }
-
