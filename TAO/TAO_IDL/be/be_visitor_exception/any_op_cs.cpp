@@ -47,11 +47,38 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   *os << be_nl << be_nl
       << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "CORBA::Boolean" << be_nl
+      << "TAO::Any_Dual_Impl_T<" << node->name () 
+      << ">::demarshal_value (" << be_idt << be_idt_nl
+      << "TAO_InputCDR & cdr" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::String_var id;" << be_nl << be_nl
+      << "if ((cdr >> id.out ()) == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "ACE_TRY_NEW_ENV" << be_idt_nl
+      << "{" << be_idt_nl
+      << "this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);" << be_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCHANY" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_ENDTRY;" << be_nl << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}";
 
   // Copying insertion operator.
 
-  *os << "// Copying insertion." << be_nl
+  *os << be_nl << be_nl
+      << "// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl

@@ -1,3 +1,28 @@
+Mon Jul 28 10:48:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+
+          Added generation of specialization for the
+          TAO::Any_Dual_Impl_T<...>::demarshal_value method, for
+          user exceptions. Bala will soon check in a specialization
+          of the entire class for system exceptions.
+
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+
+          Removed the '_NOT_USED' part of environment variable for
+          _tao_decode and _tao_encode methods. The implementation of
+          both these methods may throw CORBA::MARSHAL.
+
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.inl:
+
+          Reverted my changes to the demarshal_value method in
+
+          Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since we now have an alternate approach in the changes
+          described above.
+
 Mon Jul 28 10:13:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
