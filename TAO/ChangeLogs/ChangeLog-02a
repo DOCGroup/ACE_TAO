@@ -1,3 +1,9 @@
+Sat Jun 10 19:56:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/except.cpp:
+          The test was trying to extract the return value as a long, but
+          it is a ulong.
+
 Sat Jun 10 18:14:04 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS):

@@ -54,7 +54,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req,
       req->add_inout_arg ("s2") <<= this->inout_;
       req->add_out_arg ("s3") <<= this->out_;
 
-      req->set_return_type (CORBA::_tc_long);
+      req->set_return_type (CORBA::_tc_ulong);
 
       req->exceptions ()->add (CORBA::TypeCode::_duplicate (Param_Test::_tc_Ooops));
 
