@@ -1,3 +1,8 @@
+Sun Jan 11 08:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
+	  The extra file added was not required for GNU Makefiles.
+
 Sat Jan 10 23:17:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/MT_Client/client.global.conf.xml:
