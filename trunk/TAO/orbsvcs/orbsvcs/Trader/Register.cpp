@@ -53,6 +53,10 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
 		  CosTrading::MissingMandatoryProperty, 
 		  CosTrading::DuplicatePropertyName))
 {
+  // For robustness purposes --
+  if (CORBA::is_nil (reference))
+    TAO_THROW_RETURN (CosTrading::Register::InvalidObjectRef (), 0);
+  
   // Get service type map
   Service_Type_Map &service_type_map = this->trader_.service_type_map ();
 
@@ -67,7 +71,8 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   
   // Yank our friend, the type struct, and confirm that the given
   // properties match the type definition.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct = rep->fully_describe_type (type, _env);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct =
+    rep->fully_describe_type (type, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
   
   // Oops the type is masked, we shouldn't let exporters know the type 

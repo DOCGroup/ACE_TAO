@@ -152,7 +152,7 @@ query (const char *type,
 			  env);
   TAO_CHECK_ENV_RETURN_VOID (env);
   
-  if (should_follow)
+  if (should_follow && links != 0)
     {
       // Perform the sequence of fedrated queries.
       CosTrading::LinkNameSeq_var links_to_follow (links);  
@@ -555,14 +555,25 @@ TAO_Lookup<TRADER>::retrieve_links (TAO_Policies& policies,
 
       // Collect those valid links into a sequence suitable for
       // passing into the federated_query method.
-      CosTrading::LinkName link_name;
-      links = new CosTrading::LinkNameSeq (valid_links.size ());
-      for (i = valid_links.size () - 1; i >= 0; i--)
-	{	  
-	  valid_links.dequeue_head (link_name);
-	  links[i] = (const char *) link_name;
+      CosTrading::LinkName link_name = 0,
+	*link_buf = CosTrading::LinkNameSeq::allocbuf (valid_links.size ());
+
+      if (link_buf != 0)
+	{
+	  for (i = valid_links.size () - 1; i >= 0; i--)
+	    {	  
+	      valid_links.dequeue_head (link_name);
+	      link_buf[i] = CORBA::string_dup (link_name);
+	    }
+	  
+	  ACE_NEW_RETURN (links,
+			  CosTrading::LinkNameSeq (valid_links.size (),
+						   valid_links.size (),
+						   link_buf,
+						   CORBA::B_TRUE),
+			  0);
 	}
-    }
+    }      
 
   return should_follow;
 }

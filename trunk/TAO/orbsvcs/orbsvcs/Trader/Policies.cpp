@@ -199,7 +199,8 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       else
 	value >>= to_boolean (return_value);
 
-      if (def_value == CORBA::B_FALSE)
+      if (def_value == CORBA::B_FALSE &&
+	  pol != EXACT_TYPE_MATCH)
 	return_value = CORBA::B_FALSE;
     }
   else
