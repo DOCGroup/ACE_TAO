@@ -1,3 +1,12 @@
+Tue May 28 21:32:42 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/DLL.cpp:
+	* ace/DLL_Manager.cpp:
+	* ace/Framework_Component.cpp:
+	* ace/Framework_Component_T.cpp:
+
+	  Fixed Fuzz errors.
+
 Tue May 28 18:35:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	[Bug 1208]
@@ -97,7 +106,7 @@ Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
 	  Changed create_service_type() to take an ACE_DLL& instead of
 	  an ACE_SHLIB_HANDLE.  Removed unneeded call to ACE::ldname().	
 
-	* ace/DLL_Manager.{h,cpp}:
+	* ace/DLL_Manager.{h,cpp}: Added.
 	* ace/DLL.{h,cpp}:
 
 	  Added new classes, ACE_DLL_Manager_Ex and ACE_DLL_Handle, and

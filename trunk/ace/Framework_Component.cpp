@@ -169,7 +169,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
 int
 ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
 {
-  ACE_TRACE ("ACE_Framework_Repository::remove_dll_component");
+  ACE_TRACE ("ACE_Framework_Repository::remove_dll_components");
 
   if (this->shutting_down_)
     return this->remove_dll_components_i (dll_name);
