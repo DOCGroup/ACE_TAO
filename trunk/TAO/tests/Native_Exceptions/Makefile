@@ -23,7 +23,7 @@ SRC = $(addsuffix .cpp, $(BIN) test_i) $(IDL_SRC)
 CLIENT_OBJS = client.o testC.o
 SERVER_OBJS = server.o test_i.o $(IDL_SRC:.cpp=.o)
 BUILD=$(BIN)
-BIN = client server
+#BIN = client server
 TAO_IDLFLAGS += -Ge 0
 
 #----------------------------------------------------------------------------
