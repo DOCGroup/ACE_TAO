@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:683
 
-#ifndef _TAO_IDL_SERVER_IFR_BASICS_T_CPP_
-#define _TAO_IDL_SERVER_IFR_BASICS_T_CPP_
+#ifndef _TAO_IDL_ORIG_IFR_BASICS_T_CPP_
+#define _TAO_IDL_ORIG_IFR_BASICS_T_CPP_
 
 #include "IFR_BasicS_T.h"
 

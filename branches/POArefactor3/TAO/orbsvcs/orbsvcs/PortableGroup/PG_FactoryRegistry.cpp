@@ -9,7 +9,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/POAManagerC.h"
 #include "PG_Operators.h" // operator == on CosNaming::Name
 
 // Use this macro at the beginning of CORBA methods

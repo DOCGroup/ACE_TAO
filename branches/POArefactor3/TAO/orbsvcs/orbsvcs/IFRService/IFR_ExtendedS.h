@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:390
 
-#ifndef _TAO_IDL_SERVER_IFR_EXTENDEDS_H_
-#define _TAO_IDL_SERVER_IFR_EXTENDEDS_H_
+#ifndef _TAO_IDL_ORIG_IFR_EXTENDEDS_H_
+#define _TAO_IDL_ORIG_IFR_EXTENDEDS_H_
 
 #include /**/ "ace/pre.h"
 
@@ -58,101 +58,101 @@
 
 namespace POA_CORBA
 {
-  
-  
+
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
-  
+
   class FixedDef;
   typedef FixedDef *FixedDef_ptr;
-  
+
   class _TAO_FixedDef_ThruPOA_Proxy_Impl;
   class _TAO_FixedDef_Strategized_Proxy_Broker;
-  
+
   class  FixedDef
     : public virtual POA_CORBA::IDLType
   {
   protected:
     FixedDef (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::FixedDef _stub_type;
     typedef ::CORBA::FixedDef_ptr _stub_ptr_type;
     typedef ::CORBA::FixedDef_var _stub_var_type;
-    
+
     FixedDef (const FixedDef& rhs);
     virtual ~FixedDef (void);
-    
+
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual void* _downcast (
         const char* logical_type_id
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::FixedDef *_this (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual CORBA::UShort digits (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _get_digits_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void digits (
         ::CORBA::UShort digits
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -160,34 +160,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _set_digits_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual CORBA::Short scale (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _get_scale_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void scale (
         ::CORBA::Short scale
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -195,7 +195,7 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _set_scale_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
