@@ -1,6 +1,6 @@
 // $Id$
 #define ACE_BUILD_DLL
-#include "ACE/Configuration.h"
+#include "ace/Configuration.h"
 #if defined(ACE_WIN32)
 #include <windows.h>
 #endif // ACE_WIN32 
@@ -122,7 +122,7 @@ int ACE_Configuration::expand_path(
   ACE_Configuration_Section_Key current_section = key;
 
   // recurse through the path
-  while(true)
+  while(1)
   {
     // Detmine the begin/ending of the key name
     end = ACE_OS::strchr(begin, '\\');
@@ -829,7 +829,7 @@ HKEY ACE_Configuration_Win32Registry::resolve_key(
     return 0;
   }
   // recurse through the path
-  while(true)
+  while(1)
   {
     // Detmine the begin/ending of the key name
     end = ACE_OS::strchr(begin, '\\');

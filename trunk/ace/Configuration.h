@@ -33,6 +33,7 @@
 #include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
+#include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -88,7 +89,7 @@ public:
   ACE_Configuration_Section_Key();
   // Default ctor
   
-  explicit ACE_Configuration_Section_Key(ACE_Section_Key_Internal* key);
+  ACE_EXPLICIT ACE_Configuration_Section_Key(ACE_Section_Key_Internal* key);
   // ctor based on a pointer to a concrete internal key, does an add_ref on 
   // <key>
   
@@ -291,7 +292,7 @@ class ACE_Export ACE_Configuration_Win32Registry : public ACE_Configuration
   //     work must be done
 public:
 
-  explicit ACE_Configuration_Win32Registry(HKEY hKey);
+  ACE_EXPLICIT ACE_Configuration_Win32Registry(HKEY hKey);
   // constructor for registry configuration database.  hKey is the 
   // base registry key to attach to.  This class takes ownership of 
   // hKey, it will invoke ::RegCloseKey() on it upon destruction.
@@ -400,7 +401,7 @@ public:
   ACE_Configuration_ExtId(void);
   // defeault ctor
 
-  explicit ACE_Configuration_ExtId(const ASYS_TCHAR* name);
+  ACE_EXPLICIT ACE_Configuration_ExtId(const ASYS_TCHAR* name);
   // named constructor
 
   ACE_Configuration_ExtId(const ACE_Configuration_ExtId& rhs);
@@ -449,10 +450,10 @@ public:
   ACE_Configuration_Value_IntId(void);
   // default constructor
 
-  explicit ACE_Configuration_Value_IntId(ASYS_TCHAR* string);
+  ACE_EXPLICIT ACE_Configuration_Value_IntId(ASYS_TCHAR* string);
   // string constructor, takes ownership of string
   
-  explicit ACE_Configuration_Value_IntId(unsigned int integer);
+  ACE_EXPLICIT ACE_Configuration_Value_IntId(unsigned int integer);
   // integer constructor
   
   ACE_Configuration_Value_IntId(void* data, unsigned int length);
@@ -495,7 +496,7 @@ public:
   ACE_Configuration_Section_IntId(void);
   // default ctor
 
-  explicit ACE_Configuration_Section_IntId(
+  ACE_EXPLICIT ACE_Configuration_Section_IntId(
     VALUE_MAP* value_hash_map, 
     SUBSECTION_MAP* section_hash_map);
   // named ctor
