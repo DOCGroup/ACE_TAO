@@ -27,6 +27,7 @@
 #include "Exception.h"
 #include "Services.h"
 #include "CORBA_String.h"
+#include "objectid.h"
 
 // IRIX needs this for the throw specs
 #include "PolicyC.h"

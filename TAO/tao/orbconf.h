@@ -16,7 +16,6 @@
 
 #ifndef TAO_ORBCONF_H
 #define TAO_ORBCONF_H
-
 #include "ace/pre.h"
 
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
@@ -106,55 +105,6 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #if !defined (TAO_DEFAULT_SERVER_POA_MAP_SIZE)
 #  define TAO_DEFAULT_SERVER_POA_MAP_SIZE 24
 #endif /* ! TAO_DEFAULT_SERVER_POA_MAP_SIZE */
-
-// The default UDP multicast port number for locating the TAO Naming
-// Service.
-#if !defined (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT)
-#define TAO_DEFAULT_NAME_SERVER_REQUEST_PORT 10013
-#endif /* TAO_DEFAULT_NAME_SERVER_REQUEST_PORT */
-
-// The default UDP port number for replying to a location request to
-// the TAO Naming Service.
-#if !defined (TAO_DEFAULT_NAME_SERVER_REPLY_PORT)
-#define TAO_DEFAULT_NAME_SERVER_REPLY_PORT 10014
-#endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
-
-// The default UDP multicast port number for locating the TAO Trading
-// Service.
-#if !defined (TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT)
-#define TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT 10016
-#endif /* TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT */
-
-// The default UDP port number for replying to a location request to
-// the TAO Trading Service.
-#if !defined (TAO_DEFAULT_TRADING_SERVER_REPLY_PORT)
-#define TAO_DEFAULT_TRADING_SERVER_REPLY_PORT 10017
-#endif /* TAO_DEFAULT_TRADING_SERVER_REPLY_PORT */
-
-// The default UDP multicast port number for locating the TAO
-// Implementation Repository Service.
-#if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT)
-#define TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT 10018
-#endif /* TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT */
-
-// The default UDP port number for replying to a location request to
-// the TAO Implementation Repository Service.
-#if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT)
-#define TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT 10019
-#endif /* TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT */
-
-// The default UDP multicast port number for locating the TAO
-// Interface Repository Service.
-#if !defined (TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT)
-#define TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT 10020
-#endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT */
-
-// The default UDP port number for replying to a location request to
-// the TAO Interface Repository Service.
-#if !defined (TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT)
-#define TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT 10021
-#endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT */
-
 
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.
@@ -346,88 +296,6 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
       (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS))))
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
-// of course, no guarantees are made that the call will return
-// something useful.
-#define TAO_OBJID_NAMESERVICE         "NameService"
-#define TAO_OBJID_TRADINGSERVICE      "TradingService"
-#define TAO_OBJID_IMPLREPOSERVICE     "ImplRepoService"
-#define TAO_OBJID_ROOTPOA             "RootPOA"
-#define TAO_OBJID_POACURRENT          "POACurrent"
-#define TAO_OBJID_INTERFACEREP        "InterfaceRepository"
-#define TAO_OBJID_POLICYMANAGER       "ORBPolicyManager"
-#define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
-#define TAO_OBJID_IORMANIPULATION     "IORManipulation"
-#define TAO_OBJID_IORTABLE            "IORTable"
-#define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
-#define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
-#define TAO_OBJID_RTORB               "RTORB"
-#define TAO_OBJID_RTCURRENT               "RTCurrent"
-#define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
-#define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
-#define TAO_OBJID_SECURITYMANAGER     "SecurityManager"
-#define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
-#define TAO_OBJID_NOTIFICATIONSERVICE "NotificationService"
-#define TAO_OBJID_TYPEDNOTIFICATIONSERVICE "TypedNotificationService"
-#define TAO_OBJID_COMPONENTHOMEFINDER "ComponentHomeFinder"
-#define TAO_OBJID_PSS "PSS"
-#define TAO_OBJID_CODECFACTORY "CodecFactory"
-#define TAO_OBJID_PICurrent "PICurrent"
-
-// Comma separated list of the above ObjectIDs.
-// DO NOT include unimplemented services!
-// The CORBA_ORB::list_initial_services () method iterates through
-// this list to determine which initial services are available.
-#define TAO_LIST_OF_INITIAL_SERVICES \
-        TAO_OBJID_NAMESERVICE, \
-        TAO_OBJID_TRADINGSERVICE, \
-        TAO_OBJID_IMPLREPOSERVICE, \
-        TAO_OBJID_ROOTPOA, \
-        TAO_OBJID_POACURRENT, \
-        TAO_OBJID_INTERFACEREP, \
-        TAO_OBJID_POLICYMANAGER, \
-        TAO_OBJID_POLICYCURRENT, \
-        TAO_OBJID_IORMANIPULATION, \
-        TAO_OBJID_IORTABLE, \
-        TAO_OBJID_DYNANYFACTORY, \
-        TAO_OBJID_TYPECODEFACTORY
-// @@ Some initial references are added via other means, such as
-//    ORBInitInfo::register_initial_references().  Those should not be
-//    placed in the above list.  Ideally, we should no longer need the
-//    above list once the above services register their references
-//    dynamically.
-
-// Service IDs for the services that are located through Multicast.
-enum TAO_MCAST_SERVICEID
-{
-  NAMESERVICE,
-  TRADINGSERVICE,
-  IMPLREPOSERVICE,
-  INTERFACEREPOSERVICE
-};
-
-// No. of services locatable through multicast.
-#define TAO_NO_OF_MCAST_SERVICES 4
-
-// TAO Naming Service.
-
-// Memory mapping address used by TAO's Naming Service when run in
-// persistent mode.
-#if !defined (TAO_NAMING_BASE_ADDR)
-#  define TAO_NAMING_BASE_ADDR ACE_DEFAULT_BASE_ADDR
-#endif /* ! TAO_NAMING_BASE_ADDR */
-
-// Poa id of the root Naming Context in a Naming server.
-#if !defined (TAO_ROOT_NAMING_CONTEXT)
-#  define TAO_ROOT_NAMING_CONTEXT "NameService"
-#endif /* ! TAO_ROOT_NAMING_CONTEXT */
-
-// The name under which the index of naming contexts is stored in
-// persistent naming service.
-#if !defined (TAO_NAMING_CONTEXT_INDEX)
-#  define TAO_NAMING_CONTEXT_INDEX "Naming_Context_Index"
-#endif /* ! TAO_NAMING_CONTEXT_INDEX */
 
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
@@ -914,6 +782,8 @@ enum TAO_Policy_Scope
 #define TAO_DEF_GIOP_MINOR 2
 #endif /* TAO_DEF_GIOP_MINOR */
 
+
+// @@todo: this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
 #if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
 #   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
 #endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
@@ -937,38 +807,10 @@ enum TAO_Policy_Scope
 #define TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT "5000"
 #endif /* TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT */
 
-// This is the version of the FT_CORBA spec that TAO supports. The
-// exact use of this version has not been emphasised. But TAO would
-// get TaggedComponents for a group with version number. So, for the
-// present we will have this here and do a sanity check for our
-// supported version and the one we receive -- raise an error if
-// necessary.
-
-#if !defined (TAO_DEF_FT_CORBA_MAJOR)
-#define TAO_DEF_FT_CORBA_MAJOR 1
-#endif /* TAO_DEF_FT_CORBA_MAJOR */
-#if !defined (TAO_DEF_FT_CORBA_MINOR)
-#define TAO_DEF_FT_CORBA_MINOR 0
-#endif /* TAO_DEF_FT_CORBA_MINOR */
-
-// This is the version of the MIOP spec that TAO supports. The
-// exact usage of the version has not been emphasized. But TAO should
-// get a TaggedComponents for a group with this version number. So, for
-// the present, we do a sanity check for our version and raise an error on
-// a mismatch.
-
-#if !defined (TAO_DEF_MIOP_MAJOR)
-#define TAO_DEF_MIOP_MAJOR 1
-#endif /* TAO_DEF_MIOP_MAJOR */
-#if !defined (TAO_DEF_MIOP_MINOR)
-#define TAO_DEF_MIOP_MINOR 0
-#endif /* TAO_DEF_MIOP_MINOR */
-
 /// By default we use Muxed Transports
 #if !defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
 #  define TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY 1
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
 #include "ace/post.h"
-
 #endif  /* TAO_ORBCONF_H */

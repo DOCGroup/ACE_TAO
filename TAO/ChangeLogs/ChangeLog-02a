@@ -1,12 +1,55 @@
+Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin is to reduce the size of orbconf.h. I see all
+	similarities between this and ace/OS.h. Looks like it is an OS.h
+	in the making. Trying to learn and avert the crisis before.
+	
+	* tao/orbconf.h: Removed a few definitions and moved it other
+	  files. Please see below for the names of the new files and the
+	  details of the contents removed from this file. The idea is to
+	  keep the contents of this file very very ORB specific. No
+	  service level details should be included. All the policies need
+	  to be moved out, but that is the next round.
+
+	* tao/objectid.h: ObjectIds redefined by TAO for internal use have
+	  been moved here. Symbols recognized by resolveinitial_references
+	  () and list_initial_services () have been placed here.
+
+	* tao/reserved_ports.h: All the reserved ports for TAO's services
+	  are defind here.
+
+	* tao/Transport.cpp: Used TAO_MAXBUFSIZE instead of
+	  TAO_CONNECTION_HANDLER_STACK_BUF_SIZE which needs to be
+	  deprecated. 
+
+	* tao/MCAST_Parser.cpp:
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/params.h: Additional includes because of the above changes. 
+
+	* orbsvcs/orbsvcs/FaultTolerance/ftconf.h:
+	* orbsvcs/orbsvcs/Naming/nsconf.h:
+	* orbsvcs/orbsvcs/PortableGroup/miopconf.h: New service specific
+	  configuration files. IMHO, they dont have any business to be in
+	  the ORB core.
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
+	  because of the above changes.
+	
 Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/Big_Oneways/Coordinator.h:
 	* tests/Big_Oneways/Session.cpp:
 	* tests/Big_Oneways/server.cpp:
-	* tests/Big_Twoways/Coordinator.h:
 	* tests/Big_Twoways/Session.h:
-	* tests/Big_Twoways/server.cpp:
-	  Fix use of _remove_ref() to avoid "pure virtual method called" errors.
+	  Fix use of _remove_ref() to avoid "pure virtual method called"
+	  errors.  
 
 Tue Apr 30 23:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 

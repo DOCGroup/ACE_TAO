@@ -12,8 +12,9 @@
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
-#include "ace/Auto_Ptr.h"
 #include "Hash_Naming_Context.h"
+#include "nsconf.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Naming, Hash_Naming_Context, "$Id$")
 

@@ -801,7 +801,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
 
   // The buffer on the stack which will be used to hold the input
   // messages
-  char buf [TAO_CONNECTION_HANDLER_STACK_BUF_SIZE];
+  char buf [TAO_MAXBUFSIZE];
 
 #if defined (ACE_HAS_PURIFY)
   (void) ACE_OS::memset (buf,
