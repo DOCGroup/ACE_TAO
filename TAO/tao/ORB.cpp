@@ -152,9 +152,9 @@ int
 CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-			  "IDL:omg.orb/CORBA/ORB/InvalidName:1.0") ==
-	   0)
-	  || CORBA_UserException::_is_a (interface_id));
+                          "IDL:omg.orb/CORBA/ORB/InvalidName:1.0") ==
+           0)
+          || CORBA_UserException::_is_a (interface_id));
 }
 
 CORBA_ORB::CORBA_ORB (void)
@@ -306,7 +306,8 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
   // the Reactor's CTOR (which sets the owner) was called.
   r->owner (ACE_Thread::self ());
 
-  return r->handle_events (tv);
+  ACE_Time_Value tmp_tv (tv);
+  return r->handle_events (tmp_tv);
 }
 
 int
@@ -354,17 +355,17 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 #if 0
       counter++;
       if (counter == max_iterations)
-	{
+        {
           ACE_TIMEPROBE_PRINT;
           ACE_TIMEPROBE_RESET;
           counter = 0;
-	}
+        }
 
       ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
 #endif /* 0 */
 
       switch (r->handle_events (tv))
-	{
+        {
         case 0: // Timed out, so we return to caller.
           result = 0;
           break;
@@ -375,10 +376,10 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           /* NOTREACHED */
         default:
           // Some handlers were dispatched, so keep on processing
-	  // requests until we're told to shutdown .
+          // requests until we're told to shutdown .
           break;
           /* NOTREACHED */
-	}
+        }
       if (result == 0 || result == -1)
         break;
     }
@@ -775,7 +776,7 @@ CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
 ACE_INLINE
 CORBA_DynAny_ptr
 CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-		                 CORBA::Environment& env)
+                                 CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_any (tc, env);
 }
