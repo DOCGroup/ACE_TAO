@@ -1,56 +1,68 @@
+Tue Feb  9 22:26:52 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added the class IOR_LookupTable which is an abstraction over the Hash_Map_Manager
+	to store the object_name -> IOR mappings that will be used by the
+	resolve_initial_references ().
+
+	Updated the Makefile to include this class.
+
+	* orbsvcs/orbsvcs/IOR_LookupTable.cpp:
+	* orbsvcs/orbsvcs/IOR_LookupTable.h:
+	* orbsvcs/orbsvcs/Makefile:
+
 Tue Feb  9 22:11:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
-	  The generated code contained a variable that was not used in all 
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  The generated code contained a variable that was not used in all
 	  cases. Now we only generate the variable if we actually use it.
 
 Tue Feb  9 22:06:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.h: Added Title and description
-	  comments to the class declaration.  
+	  comments to the class declaration.
 
 Tue Feb  9 21:40:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* $TAO_ROOT/examples/Event_Comm/*.cpp
-	Changed all the TAO_* macros for exceptions to 
+	Changed all the TAO_* macros for exceptions to
 	ACE_* macros. This went clean on SunOSC++.
-	
+
 
 Tue Feb  9 20:38:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
 	  Silenced pesky warning about unreached statement.
 
-	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h: 
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp: 
+	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
 	  Added new visitor to generate the variable declarations required
 	  for marshaling certain kind of fields.
 
-	* TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
 	  Use the new visitor to generate field declarations.
 
 Tue Feb  9 20:43:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* $TAO_ROOT/examples/Callback_Quoter/*.cpp
-	Changed all the TAO_* macros for exceptions to 
-	ACE_* macros. This went clean on SunOSC++ and 
+	Changed all the TAO_* macros for exceptions to
+	ACE_* macros. This went clean on SunOSC++ and
 	SunOSg++
 
 Tue Feb  9 17:55:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corbafwd.h: 
-	* tao/Active_Object_Map.h: 
-	* tao/Any.cpp: 
-	* tao/CDR.h: 
-	* tao/Client_Strategy_Factory.h: 
-	* tao/IIOP_ORB.h: 
-	* tao/Marshal.h: 
-	* tao/ORB.cpp: 
-	* tao/Object.cpp: 
-	* tao/Object.i: 
-	* tao/POA.h: 
-	  Fixed several g++ errors and warnings, the main problem was that 
+	* tao/corbafwd.h:
+	* tao/Active_Object_Map.h:
+	* tao/Any.cpp:
+	* tao/CDR.h:
+	* tao/Client_Strategy_Factory.h:
+	* tao/IIOP_ORB.h:
+	* tao/Marshal.h:
+	* tao/ORB.cpp:
+	* tao/Object.cpp:
+	* tao/Object.i:
+	* tao/POA.h:
+	  Fixed several g++ errors and warnings, the main problem was that
 	  g++ could not cope with this code:
 
 	  class CORBA {
@@ -82,70 +94,70 @@ Tue Feb  9 16:52:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 Tue Feb  9 16:39:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_decl.h: 
-	* TAO_IDL/be/be_decl.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_enum_val.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_field.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
-	* TAO_IDL/be/be_union_branch.cpp: 
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_enum_val.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_field.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
 	  The name2long() function was using a <long> but it needed a
 	  32-bit type; the right type to use is a ACE_UINT32.  This fixes
 	  some strange problems in 64-bit machines, like Alphas.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
 	  Fixed the ACE_DEBUG calls, they should be protected by the
 	  TAO_debug_level.
 
 Tue Feb  9 13:47:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/try_macros.h: 
+	* tao/try_macros.h:
 	Changed the definition of TAO_IN_ENV to ACE_TRY_ENV
-	
+
 
 Mon Feb  8 17:09:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/debug.h: 
-	* tao/debug.cpp: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
-	* tao/ORB_Core.cpp: 
-	* tao/Stub.cpp: 
-	* tao/deep_free.cpp: 
-	* tests/NestedUpcall/Reactor/client.cpp: 
+	* tao/debug.h:
+	* tao/debug.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/Stub.cpp:
+	* tao/deep_free.cpp:
+	* tests/NestedUpcall/Reactor/client.cpp:
 	  Removed all the references to dmsg(), dmsg1(), dexc() and
 	  similar debugging macros, that's what we have ACE_DEBUG() for!!
 
-	* performance-tests/Thruput/TAO/client.cpp: 
-	* tests/Multiple_Inheritance/server.cpp: 
+	* performance-tests/Thruput/TAO/client.cpp:
+	* tests/Multiple_Inheritance/server.cpp:
 	  Another couple of files that relied on "tao/corba.h" to include
 	  "ace/Get_Opt.h"
 
 Mon Feb 08 15:20:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corba.h: 
-	* tao/corbafwd.h: 
+	* tao/corba.h:
+	* tao/corbafwd.h:
 	  On NT we need to define DEBUG when _DEBUG is defined, but this
 	  definition was left on corba.h by mistake, now it is in
 	  corbafwd.h
 
-	* tao/Invocation.h: 
+	* tao/Invocation.h:
 	  MSVC++ doesn't know that a class and a struct are the same
 	  thing, and it complains when a structure is forward declared as
 	  a class; silly
 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
 	  MSVC++ gets confused by typedefs inside classes again.
 
-	* tao/ORB_Strategies_T.cpp: 
+	* tao/ORB_Strategies_T.cpp:
 	  Added missing #include.
 
-	* tao/debug.cpp: 
-	* tao/debug.h: 
+	* tao/debug.cpp:
+	* tao/debug.h:
 	  Fixed some #include problems.
 
 Mon Feb  8 15:25:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -161,146 +173,146 @@ Mon Feb  8 15:25:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Feb  8 14:26:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/DynAnyC.cpp: 
-	* tao/Object.cpp: 
+	* tao/DynAnyC.cpp:
+	* tao/Object.cpp:
 	  Added missing #include for template instantiations.
 
-	* tao/ORB.cpp: 
-	* tao/ORB_Core.cpp: 
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
 	  Re-ordered includes, otherwise "ace/Dynamic_Service.h" does not
 	  have the proper context.
 
 Mon Feb  8 13:43:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corbafwd.h: 
-	* tao/corba.h: 
-	* tao/Active_Object_Map.cpp: 
-	* tao/Active_Object_Map.h: 
-	* tao/Any.cpp: 
-	* tao/Any.h: 
-	* tao/CDR.cpp: 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
-	* tao/Client_Strategy_Factory.cpp: 
-	* tao/Client_Strategy_Factory.h: 
-	* tao/Connect.cpp: 
-	* tao/Connect.h: 
-	* tao/CurrentC.cpp: 
-	* tao/CurrentC.h: 
-	* tao/CurrentS.cpp: 
-	* tao/DynAnyC.cpp: 
-	* tao/DynAnyC.h: 
-	* tao/DynAnyS.cpp: 
-	* tao/DynAny_i.cpp: 
-	* tao/DynAny_i.h: 
-	* tao/DynArray_i.cpp: 
-	* tao/DynEnum_i.cpp: 
-	* tao/DynSequence_i.cpp: 
-	* tao/DynStruct_i.cpp: 
-	* tao/DynUnion_i.cpp: 
-	* tao/DynUnion_i_T.h: 
-	* tao/Environment.cpp: 
-	* tao/Environment.h: 
-	* tao/Exception.cpp: 
-	* tao/Exception.h: 
-	* tao/Forwarding_Servant.cpp: 
-	* tao/Forwarding_Servant.h: 
-	* tao/GIOP.cpp: 
-	* tao/GIOP.h: 
-	* tao/IIOP_Acceptor.cpp: 
-	* tao/IIOP_Acceptor.h: 
-	* tao/IIOP_Connector.cpp: 
-	* tao/IIOP_Connector.h: 
-	* tao/IIOP_Interpreter.cpp: 
-	* tao/IIOP_Interpreter.h: 
-	* tao/IIOP_ORB.cpp: 
-	* tao/IIOP_ORB.h: 
-	* tao/IIOP_Profile.cpp: 
-	* tao/IIOP_Profile.h: 
-	* tao/IIOP_Transport.cpp: 
-	* tao/IIOP_Transport.h: 
-	* tao/InconsistentTypeCodeC.cpp: 
-	* tao/InconsistentTypeCodeC.h: 
-	* tao/Invocation.cpp: 
-	* tao/Invocation.h: 
-	* tao/MProfile.cpp: 
-	* tao/MProfile.h: 
-	* tao/Makefile: 
-	* tao/Managed_Types.cpp: 
-	* tao/Managed_Types.h: 
-	* tao/Managed_Types.i: 
-	* tao/Marshal.cpp: 
-	* tao/Marshal.h: 
-	* tao/Marshal.i: 
-	* tao/NVList.cpp: 
-	* tao/NVList.h: 
-	* tao/ORB.cpp: 
-	* tao/ORB.h: 
-	* tao/ORB.i: 
-	* tao/ORB_Core.cpp: 
-	* tao/ORB_Core.h: 
-	* tao/Object.cpp: 
-	* tao/Object.h: 
-	* tao/Object.i: 
-	* tao/Object_KeyC.cpp: 
-	* tao/Object_KeyC.h: 
-	* tao/Object_KeyC.i: 
-	* tao/Operation_Table.cpp: 
-	* tao/Operation_Table.h: 
-	* tao/POA.cpp: 
-	* tao/POA.h: 
-	* tao/POAC.cpp: 
-	* tao/POAC.h: 
-	* tao/POAS.cpp: 
-	* tao/POAS.h: 
-	* tao/POA_CORBA.h: 
-	* tao/Pluggable.cpp: 
-	* tao/Pluggable.h: 
-	* tao/PolicyC.cpp: 
-	* tao/PolicyC.h: 
-	* tao/PolicyS.cpp: 
-	* tao/Principal.cpp: 
-	* tao/Principal.h: 
-	* tao/Principal.i: 
-	* tao/Request.cpp: 
-	* tao/Request.h: 
-	* tao/Sequence.cpp: 
-	* tao/Sequence.h: 
-	* tao/Sequence_T.h: 
-	* tao/Servant_Base.cpp: 
-	* tao/Servant_Base.h: 
-	* tao/Server_Request.cpp: 
-	* tao/Server_Request.h: 
-	* tao/Server_Request.i: 
-	* tao/Server_Strategy_Factory.cpp: 
-	* tao/Server_Strategy_Factory.h: 
-	* tao/Stub.cpp: 
-	* tao/Stub.h: 
-	* tao/Stub.i: 
-	* tao/TAO.cpp: 
-	* tao/TAO.h: 
-	* tao/TAO_Internal.h: 
-	* tao/Typecode.cpp: 
-	* tao/Typecode.h: 
-	* tao/Typecode.i: 
-	* tao/Typecode_Constants.cpp: 
-	* tao/Union.cpp: 
-	* tao/Union.h: 
-	* tao/append.cpp: 
-	* tao/debug.cpp: 
-	* tao/decode.cpp: 
-	* tao/deep_free.cpp: 
-	* tao/default_client.h: 
-	* tao/default_server.h: 
-	* tao/encode.cpp: 
-	* tao/orbconf.h: 
-	* tao/params.cpp: 
-	* tao/params.h: 
-	* tao/poa_T.h: 
-	* tao/singletons.h: 
-	* tao/skip.cpp: 
-	* tao/t-sizes.cpp: 
-	* tao/varout.h: 
+	* tao/corbafwd.h:
+	* tao/corba.h:
+	* tao/Active_Object_Map.cpp:
+	* tao/Active_Object_Map.h:
+	* tao/Any.cpp:
+	* tao/Any.h:
+	* tao/CDR.cpp:
+	* tao/CDR.h:
+	* tao/CDR.i:
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h:
+	* tao/Connect.cpp:
+	* tao/Connect.h:
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/CurrentS.cpp:
+	* tao/DynAnyC.cpp:
+	* tao/DynAnyC.h:
+	* tao/DynAnyS.cpp:
+	* tao/DynAny_i.cpp:
+	* tao/DynAny_i.h:
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	* tao/DynUnion_i_T.h:
+	* tao/Environment.cpp:
+	* tao/Environment.h:
+	* tao/Exception.cpp:
+	* tao/Exception.h:
+	* tao/Forwarding_Servant.cpp:
+	* tao/Forwarding_Servant.h:
+	* tao/GIOP.cpp:
+	* tao/GIOP.h:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Interpreter.cpp:
+	* tao/IIOP_Interpreter.h:
+	* tao/IIOP_ORB.cpp:
+	* tao/IIOP_ORB.h:
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/InconsistentTypeCodeC.cpp:
+	* tao/InconsistentTypeCodeC.h:
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+	* tao/MProfile.cpp:
+	* tao/MProfile.h:
+	* tao/Makefile:
+	* tao/Managed_Types.cpp:
+	* tao/Managed_Types.h:
+	* tao/Managed_Types.i:
+	* tao/Marshal.cpp:
+	* tao/Marshal.h:
+	* tao/Marshal.i:
+	* tao/NVList.cpp:
+	* tao/NVList.h:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/Object.i:
+	* tao/Object_KeyC.cpp:
+	* tao/Object_KeyC.h:
+	* tao/Object_KeyC.i:
+	* tao/Operation_Table.cpp:
+	* tao/Operation_Table.h:
+	* tao/POA.cpp:
+	* tao/POA.h:
+	* tao/POAC.cpp:
+	* tao/POAC.h:
+	* tao/POAS.cpp:
+	* tao/POAS.h:
+	* tao/POA_CORBA.h:
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.h:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyS.cpp:
+	* tao/Principal.cpp:
+	* tao/Principal.h:
+	* tao/Principal.i:
+	* tao/Request.cpp:
+	* tao/Request.h:
+	* tao/Sequence.cpp:
+	* tao/Sequence.h:
+	* tao/Sequence_T.h:
+	* tao/Servant_Base.cpp:
+	* tao/Servant_Base.h:
+	* tao/Server_Request.cpp:
+	* tao/Server_Request.h:
+	* tao/Server_Request.i:
+	* tao/Server_Strategy_Factory.cpp:
+	* tao/Server_Strategy_Factory.h:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/Stub.i:
+	* tao/TAO.cpp:
+	* tao/TAO.h:
+	* tao/TAO_Internal.h:
+	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+	* tao/Typecode.i:
+	* tao/Typecode_Constants.cpp:
+	* tao/Union.cpp:
+	* tao/Union.h:
+	* tao/append.cpp:
+	* tao/debug.cpp:
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/default_client.h:
+	* tao/default_server.h:
+	* tao/encode.cpp:
+	* tao/orbconf.h:
+	* tao/params.cpp:
+	* tao/params.h:
+	* tao/poa_T.h:
+	* tao/singletons.h:
+	* tao/skip.cpp:
+	* tao/t-sizes.cpp:
+	* tao/varout.h:
 	  Cleaned up the include madness, now all the files inside TAO
 	  include "tao/corbafwd.h" to obtain the CORBA namespace. This
 	  files includes very little (only "ace/CDR.h" and
@@ -308,24 +320,24 @@ Mon Feb  8 13:43:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  External applications only need to include "tao/corba.h", as
 	  before, but this file has been trimmed down somewhat.
 	  There are still some dependencies between several header files
-	  in TAO (specially "tao/ORB_Core.h"), but this are minor compared 
+	  in TAO (specially "tao/ORB_Core.h"), but this are minor compared
 	  to the previous situation.
 
-	* utils/catior/catior.cpp: 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: 
-	* orbsvcs/Time_Service/IR_Helper.cpp: 
+	* utils/catior/catior.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/Time_Service/IR_Helper.cpp:
 	  This files make changes to the IIOP_Profile so they need to
 	  include "tao/IIOP_Profile.h" explicitly, notice that all the
 	  other files in TAO do not need to.
 
-	* examples/POA/Default_Servant/server.cpp: 
-	* examples/POA/Explicit_Activation/server.cpp: 
-	* examples/POA/Forwarding/server.cpp: 
-	* examples/POA/On_Demand_Activation/server.cpp: 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
-	* orbsvcs/tests/Trading/colocated_test.cpp: 
-	* tests/CDR/basic_types.cpp: 
-	* tests/Param_Test/options.cpp: 
+	* examples/POA/Default_Servant/server.cpp:
+	* examples/POA/Explicit_Activation/server.cpp:
+	* examples/POA/Forwarding/server.cpp:
+	* examples/POA/On_Demand_Activation/server.cpp:
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	* orbsvcs/tests/Trading/colocated_test.cpp:
+	* tests/CDR/basic_types.cpp:
+	* tests/Param_Test/options.cpp:
 	  This files used the "fact" that "tao/corba.h" included
 	  "ace/Get_Opt.h".
 

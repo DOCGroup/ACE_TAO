@@ -47,6 +47,7 @@ ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
   IDL_SRCS += CosNaming
   TAO_ORBSVCS_SRCS += \
         IOR_Multicast \
+	IOR_LookupTable \
         Naming/CosNaming_i \
         Naming/Entries \
         Naming/Naming_Utils
