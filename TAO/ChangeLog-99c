@@ -1,3 +1,16 @@
+Mon Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/ast/ast_operation.cpp,
+	  TAO_IDL/include/ast_operation.h:
+	  Renamed the add_exceptions method to not clash
+	  with the UTL_Scope add_exceptions method.
+	
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp:
+	  Added the ACE_RCSID.
+
 Tue Sep 21 23:29:30 1999  Mike Moran  <mm4@cs.wustl.edu>
 
 	* tests/Explicit_Event_Loop/: 
