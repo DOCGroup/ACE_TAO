@@ -68,11 +68,20 @@ TAO_UIOP_Connector::TAO_UIOP_Connector (void)
 int
 TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+  TAO_Cached_Connector_Lock *connector_lock = 0;
+  ACE_NEW_RETURN (connector_lock,
+                  TAO_Cached_Connector_Lock (orb_core),
+                  -1);
+
   TAO_CACHED_CONNECT_STRATEGY* cached_connect_strategy =
     new TAO_CACHED_CONNECT_STRATEGY (
         new TAO_UIOP_Connect_Creation_Strategy (
             orb_core->thr_mgr (),
-            orb_core));
+            orb_core),
+        0,
+        0,
+        connector_lock,
+        1);
 
   return this->base_connector_.open (orb_core->reactor (),
                                      &this->null_creation_strategy_,
