@@ -43,6 +43,8 @@ CosConcurrencyControl::LockSet_var
 CC_Command::GetLockSet (const char *lock_set_name,
                         CORBA::Environment &ACE_TRY_ENV)
 {
+  CosConcurrencyControl::LockSet_var ccls_ret;
+
   ACE_TRY
     {
       if(ACE_OS::strcmp(lock_set_name, "")!=0)
@@ -53,12 +55,10 @@ CC_Command::GetLockSet (const char *lock_set_name,
                                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          CosConcurrencyControl::LockSet_var ccls =
+          ccls_ret =
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
                                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          return ccls;
         }
       else
         {
@@ -68,7 +68,7 @@ CC_Command::GetLockSet (const char *lock_set_name,
               ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
             }
           else
-            return cc_lockset_;
+            ccls_ret = cc_lockset_.in ();
         }
     }
   ACE_CATCHANY
@@ -76,7 +76,8 @@ CC_Command::GetLockSet (const char *lock_set_name,
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  return 0;
+
+  return ccls_ret;
 }
 
 CORBA::Exception *CC_Command::excep_ = 0;
