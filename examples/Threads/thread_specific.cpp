@@ -61,7 +61,7 @@ worker (void *c)
                   0);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
                 "ACE_Thread::setspecific"));
 
@@ -120,8 +120,8 @@ worker (void *c)
         // Use the guard to serialize access to printf...
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
-        ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
-                        handle,
+        ACE_OS::printf ("(%lu) errno = %d, lineno = %d, flags = %d\n",
+                        ACE_static_cast(unsigned long,handle),
                         tss_error->error (),
                         tss_error->line (),
                         tss_error->flags ());
