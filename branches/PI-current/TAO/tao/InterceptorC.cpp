@@ -8,8 +8,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "InterceptorC.h"
-
 #include "InterceptorS.h"
+#include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "InterceptorC.i"

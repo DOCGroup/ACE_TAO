@@ -10,7 +10,7 @@
 #ifndef _TAO_IDL_INTERCEPTORC_H_
 #define _TAO_IDL_INTERCEPTORC_H_
 
-#include "tao/corba.h"
+#include "tao/IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

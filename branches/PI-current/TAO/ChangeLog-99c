@@ -1,9 +1,28 @@
-Wed Aug 25 16:49:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Aug 26 01:49:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i:
+	* tao/Interceptor.pidl:
+	* tao/InterceptorC.cpp:
+	* tao/InterceptorC.h:
+	* tao/InterceptorS.h:
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/POA.h:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
+	* tao/Server_Request.h:
+
+Wed Aug 25 23:38:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POA.h: Removed duplicated inclusion of Object_Adapter.h.
 
 	* TAO_IDL/be/be_codegen.cpp: Let *C.cpp include *S.h when
 	  generating LC objref.
 
-	* TAO_IDL/be/be_helper.cpp: Added the RCS $Id$ keyword in the
+	* TAO_IDL/be/be_helper.cpp: Added the RCS $_Id_$ tag in the
 	  first line of copyright info so it's easier to check in
 	  generated files.
 

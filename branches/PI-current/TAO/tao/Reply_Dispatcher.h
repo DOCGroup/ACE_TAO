@@ -56,7 +56,7 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void);
   // Get the Message State into which the reply has been read.
 
-  const IOP::ServiceContextList& reply_service_info () const;
+  IOP::ServiceContextList& reply_service_info ();
   // Accessing the reply service context list.
 
   virtual int leader_follower_condition_variable (TAO_Transport *);
@@ -141,7 +141,7 @@ private:
 
 // *********************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING) 
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
