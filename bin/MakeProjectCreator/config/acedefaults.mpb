@@ -2,4 +2,9 @@ project: qt, zzip, openssl {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
+
+  // The following is a temporary workaround so that mpc-generated projects
+  // can work with an ACE/TAO that was built without mpc. This should be
+  // removed as soon as MPC is used for all project generation.
+  libpaths += $(ACE_ROOT)/ace $(ACE_ROOT)/ace/QoS $(ACE_ROOT)/ace/SSL $(ACE_ROOT)/ACEXML/common $(ACE_ROOT)/ACEXML/parser/parser $(TAO_ROOT)/orbsvcs/IFR_Service $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/tao $(TAO_ROOT)/tao/BiDir_GIOP $(TAO_ROOT)/tao/Domain $(TAO_ROOT)/tao/DynamicAny $(TAO_ROOT)/tao/DynamicInterface $(TAO_ROOT)/tao/IFR_Client $(TAO_ROOT)/tao/IORManipulation $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao/Messaging $(TAO_ROOT)/tao/Messaging $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/RTCORBA $(TAO_ROOT)/tao/RTPortableServer $(TAO_ROOT)/tao/SmartProxies $(TAO_ROOT)/tao/Strategies $(TAO_ROOT)/tao/TypeCodeFactory $(TAO_ROOT)/TAO_IDL $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
 }
