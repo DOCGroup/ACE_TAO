@@ -846,12 +846,17 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception (codesetting has various minors)
-      *os << be_nl << be_nl
-          << "TAO_InputCDR::throw_stub_exception (errno "
+      *os << "TAO_InputCDR::throw_stub_exception (errno "
           << "ACE_ENV_ARG_PARAMETER); "
-          << be_nl << be_nl
-          << "TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);"
-          << be_nl << be_nl;
+          << be_nl;
+      if (this->gen_check_interceptor_exception (bt) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+        }
 
       *os << be_uidt_nl;
       *os << "}" << be_uidt_nl << be_nl;
@@ -1048,12 +1053,19 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception (codesetting has various minors)
-      *os << be_nl << be_nl
-          << "TAO_InputCDR::throw_stub_exception (errno "
+      *os << "TAO_InputCDR::throw_stub_exception (errno "
           << "ACE_ENV_ARG_PARAMETER); "
-          << be_nl << be_nl
-          << "TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);"
-          << be_nl << be_nl;
+          << be_nl;
+      if (this->gen_check_interceptor_exception (bt) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+        }
+
+      *os << be_nl;
 
       if (status == -1)
         {
