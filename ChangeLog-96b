@@ -1,5 +1,7 @@
 Wed Dec  4 00:27:07 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* ace/config-win32-msvc*.0.h: Added NOMINMAX.
+
 	* ace/Registry: Removed NOMINMAX and
  	  VC_PLUS_PLUS_NESTED_CLASS_PROBLEM flags from the header file.
   	  The VC_PLUS_PLUS_NESTED_CLASS_PROBLEM flag is no longer needed
