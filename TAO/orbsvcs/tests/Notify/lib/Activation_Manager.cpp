@@ -178,9 +178,12 @@ TAO_NS_Activation_Manager::activate_suppliers (void)
 void
 TAO_NS_Activation_Manager::dump_stats (void)
 {
+  char hostname[MAXHOSTNAMELEN];
+  ACE_OS::hostname (hostname, MAXHOSTNAMELEN);
+
   /// dump suppliers:
   char msg[BUFSIZ];
-  ACE_OS::sprintf (msg, "# Stats generated on --\n");
+  ACE_OS::sprintf (msg, "# Stats generated on %s\n", hostname);
 
   TAO_NS_PeriodicSupplier_Iterator sup_iter(this->supplier_map_);
 

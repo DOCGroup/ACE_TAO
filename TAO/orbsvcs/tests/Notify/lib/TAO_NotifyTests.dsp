@@ -6,27 +6,27 @@
 
 CFG=TAO_NotifyTests DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE run the tool that generated this project file and specify the
-!MESSAGE nmake output type.  You can then use the following command:
-!MESSAGE
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_NotifyTests.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_NotifyTests.mak" CFG="TAO_NotifyTests DLL - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "TAO_NotifyTests DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO_NotifyTests DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
+MTL=midl.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Release"
@@ -37,13 +37,15 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /W3 /GX /O2 /MD /Zi /Ob2 /GR /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_NOTIFY_TEST_BUILD_DLL=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /Ob2 /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_NOTIFY_TEST_BUILD_DLL=1 /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d NDEBUG=1 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.."
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.." /d NDEBUG=1
 BSC32=bscmake.exe
-# ADD BSC32 /nologo /o".\TAO_NotifyTests.bsc"
+# ADD BSC32 /nologo
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosEvent.lib TAO_CosNotification.lib TAO_ETCL.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_DynamicAny.lib TAO_PortableServer.lib TAO.lib ACE.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:windows /dll  /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTests.dll"
+# ADD BASE LINK32 /machine:IX86
+# ADD LINK32 advapi32.lib user32.lib TAO_CosEvent.lib TAO_CosNotification.lib TAO_ETCL.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_DynamicAny.lib TAO_PortableServer.lib TAO.lib ACE.lib /nologo /version:1.3 /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTests.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Debug"
 
@@ -53,15 +55,18 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /MDd /GR /Gy /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_NOTIFY_TEST_BUILD_DLL=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_NOTIFY_TEST_BUILD_DLL=1 /FD /c
 # SUBTRACT CPP /Fr /YX
-# ADD RSC /l 0x409 /d _DEBUG=1 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.."
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.." /d _DEBUG=1
 BSC32=bscmake.exe
-# ADD BSC32 /nologo /o".\TAO_NotifyTests.bsc"
+# ADD BSC32 /nologo
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosEventd.lib TAO_CosNotificationd.lib TAO_ETCLd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_DynamicAnyd.lib TAO_PortableServerd.lib TAOd.lib ACEd.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:windows /dll /debug /pdb:TAO_NotifyTestsd.pdb /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTestsd.dll"
+# ADD BASE LINK32 /machine:IX86
+# ADD LINK32 advapi32.lib user32.lib TAO_CosEventd.lib TAO_CosNotificationd.lib TAO_ETCLd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_DynamicAnyd.lib TAO_PortableServerd.lib TAOd.lib ACEd.lib /nologo /version:1.3 /subsystem:windows /dll /incremental:no /pdb:"TAO_NotifyTestsd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTestsd.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\tao\IORTable" /libpath:"..\..\..\..\orbsvcs\orbsvcs\ETCL" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# SUBTRACT LINK32 /pdb:none
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -367,13 +372,12 @@ SOURCE=.\Activation_Manager.idl
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.\.
 InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
-InputDir=.
-OutDir=.
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\Release\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\orbsvcs -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -392,20 +396,18 @@ BuildCmds= \
 
 "$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
-
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.\.
 InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
-InputDir=.
-OutDir=.
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\orbsvcs -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -424,10 +426,9 @@ BuildCmds= \
 
 "$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
-
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

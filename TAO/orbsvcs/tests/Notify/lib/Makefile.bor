@@ -4,14 +4,68 @@
 
 NAME = TAO_NotifyTests
 
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
+
 OBJFILES = \
-        $(OBJDIR)\Notify_PushConsumer.obj \
-        $(OBJDIR)\Notify_PushSupplier.obj \
-        $(OBJDIR)\Notify_SequencePushConsumer.obj \
-        $(OBJDIR)\Notify_SequencePushSupplier.obj \
-        $(OBJDIR)\Notify_StructuredPushConsumer.obj \
-        $(OBJDIR)\Notify_StructuredPushSupplier.obj \
-        $(OBJDIR)\Notify_Test_Client.obj
+	$(OBJDIR)\Activation_ManagerC.obj \
+	$(OBJDIR)\Activation_ManagerS.obj \
+	$(OBJDIR)\Activation_Manager.obj \
+	$(OBJDIR)\Application_Command.obj \
+	$(OBJDIR)\Command.obj \
+	$(OBJDIR)\Command_Builder.obj \
+	$(OBJDIR)\Command_Factory.obj \
+	$(OBJDIR)\ConsumerAdmin_Command.obj \
+	$(OBJDIR)\Driver.obj \
+	$(OBJDIR)\EventChannel_Command.obj \
+	$(OBJDIR)\Factories_Define.obj \
+	$(OBJDIR)\Filter_Command.obj \
+	$(OBJDIR)\LookupManager.obj \
+	$(OBJDIR)\Name.obj \
+	$(OBJDIR)\Notify_PushConsumer.obj \
+	$(OBJDIR)\Notify_PushSupplier.obj \
+	$(OBJDIR)\Notify_SequencePushConsumer.obj \
+	$(OBJDIR)\Notify_SequencePushSupplier.obj \
+	$(OBJDIR)\Notify_StructuredPushConsumer.obj \
+	$(OBJDIR)\Notify_StructuredPushSupplier.obj \
+	$(OBJDIR)\Notify_Test_Client.obj \
+	$(OBJDIR)\Options_Parser.obj \
+	$(OBJDIR)\Periodic_Consumer.obj \
+	$(OBJDIR)\Periodic_Consumer_Command.obj \
+	$(OBJDIR)\Periodic_Supplier.obj \
+	$(OBJDIR)\Periodic_Supplier_Command.obj \
+	$(OBJDIR)\Priority_Mapping.obj \
+	$(OBJDIR)\StructuredEvent.obj \
+	$(OBJDIR)\SupplierAdmin_Command.obj \
+	$(OBJDIR)\Task_Stats.obj
+
+EXTERNAL_LIBS = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_EVENT_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+        $(TAO_IORTABLE_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_ETCL_LIB) \
+        $(TAO_NOTIFY_LIB)
+
+LFLAGS = \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	$(EXTERNAL_LIBS)
+
+IDLFILES = \
+	$(IDLDIR)\Activation_Manager.idl
+
+!ifdef STATIC
+LIB_FLAGS =
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
 
 CFLAGS = \
         $(ACE_CFLAGS) \
@@ -28,15 +82,59 @@ CFLAGS = \
 
 CPPDIR = .
 
-LIBFILES = \
-        $(ACE_LIB) \
-        $(TAO_LIB) \
-        $(TAO_EVENT_LIB) \
-        $(TAO_NAMING_LIB) \
-        $(TAO_SVC_UTILS_LIB) \
-        $(TAO_IORTABLE_LIB) \
-        $(TAO_PORTABLESERVER_LIB) \
-        $(TAO_ETCL_LIB) \
-        $(TAO_NOTIFY_LIB)
+IDLDIR = .
+
+INCLUDES = \
+	Activation_Manager.h \
+	Activation_ManagerC.h \
+	Activation_ManagerS.h \
+	Application_Command.h \
+	Command.h \
+	Command_Builder.h \
+	Command_Factory.h \
+	Command_Factory_T.h \
+	ConsumerAdmin_Command.h \
+	Driver.h \
+	Driver_Base.h \
+	EventChannel_Command.h \
+	Factories_Define.h \
+	Filter_Command.h \
+	LookupManager.h \
+	Name.h \
+	Notify_PushConsumer.h \
+	Notify_PushSupplier.h \
+	Notify_SequencePushConsumer.h \
+	Notify_SequencePushSupplier.h \
+	Notify_StructuredPushConsumer.h \
+	Notify_StructuredPushSupplier.h \
+	Notify_Test_Client.h \
+	Options_Parser.h \
+	Periodic_Consumer.h \
+	Periodic_Consumer_Command.h \
+	Periodic_Supplier.h \
+	Periodic_Supplier_Command.h \
+	Priority_Mapping.h \
+	StructuredEvent.h \
+	SupplierAdmin_Command.h \
+	Task_Callback.h \
+	Task_Stats.h \
+	notify_test_export.h \
+	Command_Factory_T.cpp \
+	Activation_ManagerC.i \
+	Activation_ManagerS.i \
+	Task_Stats.inl \
+	Activation_Manager.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+all: idl_src_files
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+# IDL File Directory: .
+$(IDLDIR)\Activation_ManagerS.cpp $(IDLDIR)\Activation_ManagerC.cpp: $(IDLDIR)\Activation_Manager.idl
+	$(TAO_IDL) -Sc $**
