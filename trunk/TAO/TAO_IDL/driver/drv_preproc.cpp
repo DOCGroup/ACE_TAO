@@ -78,6 +78,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(driver, drv_preproc, "$Id$")
 
+#if defined(ACE_GCC_HONORS_STD_NAMESPACE) && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
+using std::cout;
+#endif
+
 static long argcount = 0;
 static long max_argcount = 128;
 static const char *arglist[128];
@@ -608,15 +612,15 @@ DRV_pre_proc (const char *myfile)
       out->clr_flags (ACE_Log_Msg::STDERR);
       out->set_flags (ACE_Log_Msg::OSTREAM);
 
-      while ((bytes = ACE_OS::fread (buffer, 
-                                     sizeof (char), 
-                                     ACE_Log_Record::MAXLOGMSGLEN - 1, 
-                                     preproc)) 
+      while ((bytes = ACE_OS::fread (buffer,
+                                     sizeof (char),
+                                     ACE_Log_Record::MAXLOGMSGLEN - 1,
+                                     preproc))
           != 0)
         {
           buffer[bytes] = 0;
 
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       buffer));
         }
 
