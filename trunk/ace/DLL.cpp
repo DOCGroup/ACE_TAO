@@ -35,32 +35,35 @@ ACE_DLL::open (ACE_DL_TYPE dll_name,
 {
   // The ACE_SHLIB_HANDLE object is obtained.
   this->handle_ = ACE_OS::dlopen (dll_name, mode);
+
   if (this->handle_ == 0)
-    {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "%s\n", this->error ()),
-                       -1);
-    }
-  
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%s\n", this->error ()),
+                      -1);
   return 0;
 }
 
 // The symbol refernce of teh name specified is obtained. 
+
 void *
 ACE_DLL::symbol (ACE_DL_TYPE sym_name)
 {
   return ACE_OS::dlsym (this->handle_, sym_name);
 }
 
-// The library is closed using the ACE_SHLIB_HANDLE obejct.
-// i.e. The shared object is now disassociated form the current process.
-int ACE_DLL::close (void)
+// The library is closed using the ACE_SHLIB_HANDLE obejct.  i.e. The
+// shared object is now disassociated form the current process.
+
+int 
+ACE_DLL::close (void)
 {
   return ACE_OS::dlclose (this->handle_);
 }
 
 // This method is used on error in an library operation.
-char *ACE_DLL :: error ()
+
+char *
+ACE_DLL::error (void)
 {
   return ACE_OS::dlerror();
 }
