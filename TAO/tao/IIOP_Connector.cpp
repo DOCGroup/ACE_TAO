@@ -68,7 +68,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 //                    iiop_profile->addr_to_string (),
 //                    "errno"));
 //
-//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
+//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env);
 //        }
 //    }
 //  else
@@ -106,7 +106,7 @@ int
 TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
                           ACE_Reactor *reactor)
 {
-  // @@ Fred: why not just
+  // @ Fred: why not just
   //
   // return this->base_connector_.open (....); ????
   //
@@ -252,17 +252,3 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
 #endif /* 0 */
   return successes;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

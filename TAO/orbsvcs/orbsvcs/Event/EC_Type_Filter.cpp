@@ -22,7 +22,7 @@ TAO_EC_Type_Filter::filter (const RtecEventComm::EventSet& event,
   if (event.length () != 1)
     return 0;
 
-  if (this->can_match (event[0].header)) // TAO_EC_Filter::matches (this->header
+  if (TAO_EC_Filter::matches (this->header_, event[0].header))
     {
       this->push (event, qos_info, ACE_TRY_ENV);
       return 1;
@@ -39,7 +39,7 @@ TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   if (event.length () != 1)
     return 0;
 
-  if (this->can_match (event[0].header)) // TAO_EC_Filter::matches (this->header
+  if (TAO_EC_Filter::matches (this->header_, event[0].header))
     {
       this->push_nocopy (event, qos_info, ACE_TRY_ENV);
       return 1;
@@ -80,24 +80,5 @@ int
 TAO_EC_Type_Filter::can_match (
       const RtecEventComm::EventHeader& header) const
 {
-  if (this->header_.source == 0)
-    if (this->header_.type == 0)
-      return 1;
-    else
-      return this->header_.type == header.type;
-  else if (this->header_.type == 0)
-    return this->header_.source == header.source;
-
-  return (this->header_.type == header.type
-          && this->header_.source == header.source);
+  return TAO_EC_Filter::matches (this->header_, header);
 }
-
-int
-TAO_EC_Type_Filter::add_dependencies (
-      const RtecEventComm::EventHeader& header,
-      const TAO_EC_QOS_Info &,
-      CORBA::Environment &)
-{
-  return this->can_match (header);
-}
-

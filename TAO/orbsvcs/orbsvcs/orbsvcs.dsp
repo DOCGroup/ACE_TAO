@@ -18,18 +18,16 @@ CFG=orbsvcs - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "orbsvcs - Win32 Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "orbsvcs - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "orbsvcs - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "orbsvcs - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "orbsvcs - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "orbsvcs - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "orbsvcs - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
-# PROP Scc_LocalPath "Desktop"
+# PROP Scc_LocalPath ""
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
@@ -105,12 +103,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\\ /I" /I "..\..\..\\ /D" /D "WIN32" /D "..\..\\ NDEBUG"
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\\ /I" /I "..\..\..\\ /D" /D "WIN32" /D "_WINDOWS" ..\..\\ NDEBUG"
+# SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-CPP=cl.exe
-# ADD BASE CPP /Gt0 Gt0 nologo MT Gt0 W3 GX O2 I "..\\ /I" I "..\..\..\\ /D" D "WIN32" D "..\..\\ NDEBUG"
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\\" /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -135,12 +135,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /I" /I "..\..\..\\ /D" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /D "WIN32" /FD /MTd ..\..\\ _DEBUG" /c
+# SUBTRACT BASE CPP /WX /YX
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /I" /I "..\..\..\\ /D" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /D "WIN32" /FD /MDd ..\..\\ _DEBUG" /c
+# SUBTRACT CPP /WX /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-CPP=cl.exe
-# ADD BASE CPP /Gt0 Gt0 nologo Gt0 W3 GX Zi Od I "..\\ /I" I "..\..\..\\ /D" D "_WINDOWS" D TAO_ORBSVCS_HAS_DLL=1 D "TAO_ORBSVCS_BUILD_DLL" D "WIN32" FD MTd ..\..\\ _DEBUG" c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /D "WIN32" /D "_DEBUG" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -171,152 +173,6 @@ SOURCE=.\AV\AVStreams_i.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_AVSTR=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Process.h"\
-	"..\..\..\ace\Process.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\TAO.h"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	".\AV\AVStreams_i.h"\
-	".\AV\Endpoint_Strategy.h"\
-	".\AV\Endpoint_Strategy_T.cpp"\
-	".\AV\Endpoint_Strategy_T.h"\
-	".\orbsvcs_export.h"\
-	".\Trader\Trader.h"\
-	
-NODEP_CPP_AVSTR=\
-	"..\..\..\..\..\Property\CosPropertyService_i.h"\
-	"..\..\..\..\..\Property\CosPropertyService_i_T.cpp"\
-	"..\..\..\..\..\Property\CosPropertyService_i_T.h"\
-	".\AV\AVStreams_i_T.cpp"\
-	".\AV\AVStreams_i_T.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -403,6 +259,42 @@ NODEP_CPP_BCU_C=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_BCU_C=\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\ws2tcpip.h"\
+	".\Event\BCU.h"\
+	".\orbsvcs_export.h"\
+	
 
 !ENDIF 
 
@@ -668,6 +560,270 @@ NODEP_CPP_CC_LO=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_CC_LO=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Concurrency\CC_LockSet.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CC_LO=\
+	".\CosConcurrencyControlC.h"\
+	".\CosConcurrencyControlC.i"\
+	".\CosConcurrencyControlS.h"\
+	".\CosConcurrencyControlS.i"\
+	".\CosConcurrencyControlS_T.cpp"\
+	".\CosConcurrencyControlS_T.h"\
+	".\CosConcurrencyControlS_T.i"\
+	
 
 !ENDIF 
 
@@ -935,6 +1091,271 @@ NODEP_CPP_CC_LOC=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_CC_LOC=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Concurrency\CC_LockSet.h"\
+	".\Concurrency\CC_LockSetFactory.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CC_LOC=\
+	".\CosConcurrencyControlC.h"\
+	".\CosConcurrencyControlC.i"\
+	".\CosConcurrencyControlS.h"\
+	".\CosConcurrencyControlS.i"\
+	".\CosConcurrencyControlS_T.cpp"\
+	".\CosConcurrencyControlS_T.h"\
+	".\CosConcurrencyControlS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -1198,6 +1619,269 @@ NODEP_CPP_CONCU=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_CONCU=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Concurrency\CC_LockSetFactory.h"\
+	".\Concurrency\Concurrency_Utils.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CONCU=\
+	".\CosConcurrencyControlC.h"\
+	".\CosConcurrencyControlC.i"\
+	".\CosConcurrencyControlS.h"\
+	".\CosConcurrencyControlS.i"\
+	".\CosConcurrencyControlS_T.cpp"\
+	".\CosConcurrencyControlS_T.h"\
+	".\CosConcurrencyControlS_T.i"\
+	
 
 !ENDIF 
 
@@ -1487,6 +2171,293 @@ NODEP_CPP_CONFI=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_CONFI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Sched\Config_Scheduler.h"\
+	".\Sched\Config_Scheduler.i"\
+	".\Sched\DynSched.h"\
+	".\Sched\DynSched.i"\
+	".\Sched\SchedEntry.h"\
+	".\Sched\SchedEntry.i"\
+	".\Sched\Scheduler.h"\
+	".\Sched\Scheduler.i"\
+	".\Sched\Scheduler_Generic.h"\
+	".\Sched\Scheduler_Generic.i"\
+	".\Sched\Strategy_Scheduler.h"\
+	".\Sched\Strategy_Scheduler.i"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_CONFI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -1754,6 +2725,274 @@ NODEP_CPP_CONST=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_CONST=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\DynSequence_i.h"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Constraint_Interpreter.h"\
+	".\Trader\Constraint_Nodes.h"\
+	".\Trader\Constraint_Tokens.h"\
+	".\Trader\Constraint_Visitors.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONST=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
 
 !ENDIF 
 
@@ -2023,6 +3262,274 @@ NODEP_CPP_CONSTR=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_CONSTR=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\DynSequence_i.h"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Constraint_Interpreter.h"\
+	".\Trader\Constraint_Nodes.h"\
+	".\Trader\Constraint_Tokens.h"\
+	".\Trader\Constraint_Visitors.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTR=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -2289,6 +3796,273 @@ NODEP_CPP_CONSTRA=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_CONSTRA=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\DynSequence_i.h"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Constraint_Nodes.h"\
+	".\Trader\Constraint_Tokens.h"\
+	".\Trader\Constraint_Visitors.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTRA=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
 
 !ENDIF 
 
@@ -2567,6 +4341,283 @@ NODEP_CPP_CONSTRAI=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_CONSTRAI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\DynSequence_i.h"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Constraint_Interpreter.h"\
+	".\Trader\Constraint_Nodes.h"\
+	".\Trader\Constraint_Tokens.h"\
+	".\Trader\Constraint_Visitors.h"\
+	".\Trader\Offer_Database.cpp"\
+	".\Trader\Offer_Database.h"\
+	".\Trader\Offer_Iterators.h"\
+	".\Trader\Offer_Iterators_T.cpp"\
+	".\Trader\Offer_Iterators_T.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Interfaces.cpp"\
+	".\Trader\Trader_Interfaces.h"\
+	".\Trader\Trader_T.cpp"\
+	".\Trader\Trader_T.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTRAI=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -2835,6 +4886,274 @@ NODEP_CPP_CONSTRAIN=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_CONSTRAIN=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\DynSequence_i.h"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Constraint_Interpreter.h"\
+	".\Trader\Constraint_Nodes.h"\
+	".\Trader\Constraint_Tokens.h"\
+	".\Trader\Constraint_Visitors.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_CONSTRAIN=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -2848,40 +5167,285 @@ SOURCE=.\CosEvent\ConsumerAdmin_i.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_CONSU=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
 	"..\..\..\ace\Auto_Ptr.cpp"\
 	"..\..\..\ace\Auto_Ptr.h"\
 	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
 	"..\..\..\ace\config-win32-borland.h"\
 	"..\..\..\ace\config-win32-common.h"\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
 	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
 	".\CosEvent\ConsumerAdmin_i.h"\
 	".\CosEvent\ProxyPushSupplier_i.h"\
+	".\orbsvcs_export.h"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_CONSU=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
 
 !ENDIF 
 
@@ -3145,6 +5709,267 @@ NODEP_CPP_COSCO=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSCO=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCO=\
+	".\CosConcurrencyControlC.h"\
+	".\CosConcurrencyControlC.i"\
+	".\CosConcurrencyControlS.h"\
+	".\CosConcurrencyControlS.i"\
+	".\CosConcurrencyControlS_T.cpp"\
+	".\CosConcurrencyControlS_T.h"\
+	".\CosConcurrencyControlS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -3407,20 +6232,266 @@ NODEP_CPP_COSCON=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent_Utilities.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+DEP_CPP_COSCON=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCON=\
+	".\CosConcurrencyControlC.h"\
+	".\CosConcurrencyControlC.i"\
+	".\CosConcurrencyControlS.h"\
+	".\CosConcurrencyControlS.i"\
+	".\CosConcurrencyControlS_T.cpp"\
+	".\CosConcurrencyControlS_T.h"\
+	".\CosConcurrencyControlS_T.i"\
+	
 
 !ENDIF 
 
@@ -3437,6 +6508,274 @@ SOURCE=.\CosEventChannelAdminC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSEV=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSEV=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -3451,6 +6790,274 @@ SOURCE=.\CosEventChannelAdminS.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_COSEVE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSEVE=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	
 
 !ENDIF 
 
@@ -3467,6 +7074,267 @@ SOURCE=.\CosEventCommC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSEVEN=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSEVEN=\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -3481,6 +7349,267 @@ SOURCE=.\CosEventCommS.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_COSEVENT=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSEVENT=\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	
 
 !ENDIF 
 
@@ -3751,6 +7880,274 @@ NODEP_CPP_COSLI=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSLI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLI=\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -4020,6 +8417,274 @@ NODEP_CPP_COSLIF=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSLIF=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -4281,6 +8946,267 @@ NODEP_CPP_COSNA=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_COSNA=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNA=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	
 
 !ENDIF 
 
@@ -4544,6 +9470,267 @@ NODEP_CPP_COSNAM=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSNAM=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAM=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -4557,41 +9744,269 @@ SOURCE=.\Property\CosPropertyService_i.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_COSPR=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
 	"..\..\..\ace\config-win32-borland.h"\
 	"..\..\..\ace\config-win32-common.h"\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
 	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
 	".\orbsvcs_export.h"\
+	".\Property\CosPropertyService_i.h"\
 	
 NODEP_CPP_COSPR=\
-	"..\..\..\..\..\Property\CosPropertyService_i.h"\
-	"..\..\..\..\..\Property\CosPropertyService_i_T.cpp"\
-	"..\..\..\..\..\Property\CosPropertyService_i_T.h"\
+	".\CosPropertyServiceC.h"\
+	".\CosPropertyServiceC.i"\
+	".\CosPropertyServiceS.h"\
+	".\CosPropertyServiceS.i"\
+	".\CosPropertyServiceS_T.cpp"\
+	".\CosPropertyServiceS_T.h"\
+	".\CosPropertyServiceS_T.i"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -4608,6 +10023,267 @@ SOURCE=.\CosPropertyServiceC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_COSPRO=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSPRO=\
+	".\CosPropertyServiceC.h"\
+	".\CosPropertyServiceC.i"\
+	".\CosPropertyServiceS.h"\
+	".\CosPropertyServiceS.i"\
+	".\CosPropertyServiceS_T.cpp"\
+	".\CosPropertyServiceS_T.h"\
+	".\CosPropertyServiceS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -4622,6 +10298,267 @@ SOURCE=.\CosPropertyServiceS.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_COSPROP=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSPROP=\
+	".\CosPropertyServiceC.h"\
+	".\CosPropertyServiceC.i"\
+	".\CosPropertyServiceS.h"\
+	".\CosPropertyServiceS.i"\
+	".\CosPropertyServiceS_T.cpp"\
+	".\CosPropertyServiceS_T.h"\
+	".\CosPropertyServiceS_T.i"\
+	
 
 !ENDIF 
 
@@ -4885,65 +10822,266 @@ NODEP_CPP_COSTR=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicC.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicS.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposC.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposS.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+DEP_CPP_COSTR=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTR=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
 
 !ENDIF 
 
@@ -5206,6 +11344,267 @@ NODEP_CPP_COSTRA=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_COSTRA=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTRA=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
 
 !ENDIF 
 
@@ -5538,6 +11937,339 @@ NODEP_CPP_DISPA=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_DISPA=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\High_Res_Timer.h"\
+	"..\..\..\ace\High_Res_Timer.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Local_Tokens.h"\
+	"..\..\..\ace\Local_Tokens.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Pipe.h"\
+	"..\..\..\ace\Pipe.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Sched_Params.h"\
+	"..\..\..\ace\Sched_Params.i"\
+	"..\..\..\ace\Select_Reactor.h"\
+	"..\..\..\ace\Select_Reactor.i"\
+	"..\..\..\ace\Select_Reactor_Base.h"\
+	"..\..\..\ace\Select_Reactor_Base.i"\
+	"..\..\..\ace\Select_Reactor_T.cpp"\
+	"..\..\..\ace\Select_Reactor_T.h"\
+	"..\..\..\ace\Select_Reactor_T.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timeprobe.h"\
+	"..\..\..\ace\Timeprobe.i"\
+	"..\..\..\ace\Timeprobe_T.cpp"\
+	"..\..\..\ace\Timeprobe_T.h"\
+	"..\..\..\ace\Timer_Heap.h"\
+	"..\..\..\ace\Timer_Heap_T.cpp"\
+	"..\..\..\ace\Timer_Heap_T.h"\
+	"..\..\..\ace\Timer_List.h"\
+	"..\..\..\ace\Timer_List_T.cpp"\
+	"..\..\..\ace\Timer_List_T.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\Timeprobe.h"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\Dispatching_Modules.h"\
+	".\Event\Dispatching_Modules.i"\
+	".\Event\Event_Channel.h"\
+	".\Event\Event_Channel.i"\
+	".\Event\Event_Manip.h"\
+	".\Event\Event_Manip.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\Memory_Pools.h"\
+	".\Event\Memory_Pools.i"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event\Timer_Module.h"\
+	".\Event\Timer_Module.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_DISPA=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -5806,33 +12538,18 @@ NODEP_CPP_DYNSC=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Basic_Factory.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_BA=\
+DEP_CPP_DYNSC=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -5892,14 +12609,9 @@ DEP_CPP_EC_BA=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -5921,17 +12633,11 @@ DEP_CPP_EC_BA=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\RB_Tree.cpp"\
-	"..\..\..\ace\RB_Tree.h"\
-	"..\..\..\ace\RB_Tree.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Sched_Params.h"\
+	"..\..\..\ace\Sched_Params.i"\
 	"..\..\..\ace\Service_Config.h"\
 	"..\..\..\ace\Service_Config.i"\
 	"..\..\..\ace\Service_Object.h"\
@@ -6010,16 +12716,11 @@ DEP_CPP_EC_BA=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -6029,29 +12730,22 @@ DEP_CPP_EC_BA=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -6061,28 +12755,20 @@ DEP_CPP_EC_BA=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -6093,8 +12779,6 @@ DEP_CPP_EC_BA=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -6102,67 +12786,37 @@ DEP_CPP_EC_BA=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Basic_Factory.h"\
-	".\Event\EC_Basic_Factory.i"\
-	".\Event\EC_Basic_Filter_Builder.h"\
-	".\Event\EC_Basic_Filter_Builder.i"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	".\Event\EC_Null_Scheduling.h"\
-	".\Event\EC_Null_Scheduling.i"\
-	".\Event\EC_ObserverStrategy.h"\
-	".\Event\EC_ObserverStrategy.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxyPushSupplier_Set_T.cpp"\
-	".\Event\EC_ProxyPushSupplier_Set_T.h"\
-	".\Event\EC_ProxyPushSupplier_Set_T.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Reactive_Timeout_Generator.h"\
-	".\Event\EC_Reactive_Timeout_Generator.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	".\Event\EC_SupplierAdmin.h"\
-	".\Event\EC_SupplierAdmin.i"\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\Event\EC_Trivial_Supplier_Filter.h"\
-	".\Event\EC_Trivial_Supplier_Filter.i"\
+	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
+	".\Sched\DynSched.h"\
+	".\Sched\DynSched.i"\
+	".\Sched\SchedEntry.h"\
+	".\Sched\SchedEntry.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
 	
+NODEP_CPP_DYNSC=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Basic_Factory.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -6179,93 +12833,6 @@ SOURCE=.\Event\EC_Basic_Filter_Builder.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_BAS=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\Event\EC_Basic_Filter_Builder.h"\
-	".\Event\EC_Basic_Filter_Builder.i"\
-	".\Event\EC_Conjunction_Filter.h"\
-	".\Event\EC_Conjunction_Filter.i"\
-	".\Event\EC_Disjunction_Filter.h"\
-	".\Event\EC_Disjunction_Filter.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Type_Filter.h"\
-	".\Event\EC_Type_Filter.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -6280,36 +12847,6 @@ SOURCE=.\Event\EC_Busy_Lock.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_BU=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -6326,13 +12863,6 @@ SOURCE=.\Event\EC_Conjunction_Filter.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_CO=\
-	".\Event\EC_Conjunction_Filter.h"\
-	".\Event\EC_Conjunction_Filter.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -6347,688 +12877,6 @@ SOURCE=.\Event\EC_ConsumerAdmin.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_CON=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\orbsvcs_export.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_Factory.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_DE=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Arg_Shifter.h"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\RB_Tree.cpp"\
-	"..\..\..\ace\RB_Tree.h"\
-	"..\..\..\ace\RB_Tree.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Basic_Filter_Builder.h"\
-	".\Event\EC_Basic_Filter_Builder.i"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Default_Factory.h"\
-	".\Event\EC_Default_Factory.i"\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	".\Event\EC_Null_Scheduling.h"\
-	".\Event\EC_Null_Scheduling.i"\
-	".\Event\EC_ObserverStrategy.h"\
-	".\Event\EC_ObserverStrategy.i"\
-	".\Event\EC_Per_Supplier_Filter.h"\
-	".\Event\EC_Per_Supplier_Filter.i"\
-	".\Event\EC_Priority_Dispatching.h"\
-	".\Event\EC_Priority_Dispatching.i"\
-	".\Event\EC_Priority_Scheduling.h"\
-	".\Event\EC_Priority_Scheduling.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxyPushSupplier_Set_T.cpp"\
-	".\Event\EC_ProxyPushSupplier_Set_T.h"\
-	".\Event\EC_ProxyPushSupplier_Set_T.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Reactive_Timeout_Generator.h"\
-	".\Event\EC_Reactive_Timeout_Generator.i"\
-	".\Event\EC_Sched_Filter_Builder.h"\
-	".\Event\EC_Sched_Filter_Builder.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	".\Event\EC_SupplierAdmin.h"\
-	".\Event\EC_SupplierAdmin.i"\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\Event\EC_Trivial_Supplier_Filter.h"\
-	".\Event\EC_Trivial_Supplier_Filter.i"\
-	".\orbsvcs_export.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -7045,13 +12893,6 @@ SOURCE=.\Event\EC_Disjunction_Filter.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_DI=\
-	".\Event\EC_Disjunction_Filter.h"\
-	".\Event\EC_Disjunction_Filter.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -7066,163 +12907,6 @@ SOURCE=.\Event\EC_Dispatching.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_DIS=\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Dispatching_Task.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_DISP=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\Event\EC_Dispatching_Task.h"\
-	".\Event\EC_Dispatching_Task.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -7239,330 +12923,6 @@ SOURCE=.\Event\EC_Event_Channel.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_EV=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\RB_Tree.cpp"\
-	"..\..\..\ace\RB_Tree.h"\
-	"..\..\..\ace\RB_Tree.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Default_Factory.h"\
-	".\Event\EC_Default_Factory.i"\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ObserverStrategy.h"\
-	".\Event\EC_ObserverStrategy.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_SupplierAdmin.h"\
-	".\Event\EC_SupplierAdmin.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\orbsvcs_export.h"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -7577,299 +12937,6 @@ SOURCE=.\Event\EC_Factory.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_FA=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\orbsvcs_export.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -7886,11 +12953,6 @@ SOURCE=.\Event\EC_Filter.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_FI=\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -7905,13 +12967,6 @@ SOURCE=.\Event\EC_Filter_Builder.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_FIL=\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -8196,6 +13251,297 @@ NODEP_CPP_EC_GA=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_EC_GA=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Channel_Clients_T.cpp"\
+	".\Channel_Clients_T.h"\
+	".\Channel_Clients_T.i"\
+	".\Event\EC_Gateway.h"\
+	".\Event_Service_Constants.h"\
+	".\Event_Utilities.h"\
+	".\Event_Utilities.i"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_EC_GA=\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -8492,412 +13838,12 @@ NODEP_CPP_EC_GAT=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Null_Factory.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_NU=\
+DEP_CPP_EC_GAT=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\RB_Tree.cpp"\
-	"..\..\..\ace\RB_Tree.h"\
-	"..\..\..\ace\RB_Tree.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	".\Event\EC_Null_Factory.h"\
-	".\Event\EC_Null_Factory.i"\
-	".\Event\EC_Null_Scheduling.h"\
-	".\Event\EC_Null_Scheduling.i"\
-	".\Event\EC_ObserverStrategy.h"\
-	".\Event\EC_ObserverStrategy.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxyPushSupplier_Set_T.cpp"\
-	".\Event\EC_ProxyPushSupplier_Set_T.h"\
-	".\Event\EC_ProxyPushSupplier_Set_T.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Reactive_Timeout_Generator.h"\
-	".\Event\EC_Reactive_Timeout_Generator.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	".\Event\EC_SupplierAdmin.h"\
-	".\Event\EC_SupplierAdmin.i"\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\Event\EC_Trivial_Supplier_Filter.h"\
-	".\Event\EC_Trivial_Supplier_Filter.i"\
-	".\orbsvcs_export.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Null_Scheduling.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_NUL=\
-	".\Event\EC_Null_Scheduling.h"\
-	".\Event\EC_Null_Scheduling.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_ObserverStrategy.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_OB=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
@@ -8963,14 +13909,9 @@ DEP_CPP_EC_OB=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -8992,14 +13933,6 @@ DEP_CPP_EC_OB=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\RB_Tree.cpp"\
-	"..\..\..\ace\RB_Tree.h"\
-	"..\..\..\ace\RB_Tree.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
@@ -9022,8 +13955,14 @@ DEP_CPP_EC_OB=\
 	"..\..\..\ace\SOCK.i"\
 	"..\..\..\ace\SOCK_Acceptor.h"\
 	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_CODgram.h"\
+	"..\..\..\ace\SOCK_CODgram.i"\
 	"..\..\..\ace\SOCK_Connector.h"\
 	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_Dgram.h"\
+	"..\..\..\ace\SOCK_Dgram.i"\
+	"..\..\..\ace\SOCK_Dgram_Mcast.h"\
+	"..\..\..\ace\SOCK_Dgram_Mcast.i"\
 	"..\..\..\ace\SOCK_IO.h"\
 	"..\..\..\ace\SOCK_IO.i"\
 	"..\..\..\ace\SOCK_Stream.h"\
@@ -9081,16 +14020,11 @@ DEP_CPP_EC_OB=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -9100,29 +14034,22 @@ DEP_CPP_EC_OB=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -9132,28 +14059,20 @@ DEP_CPP_EC_OB=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -9164,8 +14083,6 @@ DEP_CPP_EC_OB=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -9173,43 +14090,83 @@ DEP_CPP_EC_OB=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ObserverStrategy.h"\
-	".\Event\EC_ObserverStrategy.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_SupplierAdmin.h"\
-	".\Event\EC_SupplierAdmin.i"\
+	".\Event\EC_Gateway_UDP.h"\
+	".\Event\EC_Gateway_UDP.i"\
 	".\Event_Service_Constants.h"\
+	".\Event_Utilities.h"\
+	".\Event_Utilities.i"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
+NODEP_CPP_EC_GAT=\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\RtecUDPAdminC.h"\
+	".\RtecUDPAdminC.i"\
+	".\RtecUDPAdminS.h"\
+	".\RtecUDPAdminS.i"\
+	".\RtecUDPAdminS_T.cpp"\
+	".\RtecUDPAdminS_T.h"\
+	".\RtecUDPAdminS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Null_Factory.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_ObserverStrategy.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -9226,681 +14183,6 @@ SOURCE=.\Event\EC_Per_Supplier_Filter.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_PE=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Per_Supplier_Filter.h"\
-	".\Event\EC_Per_Supplier_Filter.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Dispatching.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_PR=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Sched_Params.h"\
-	"..\..\..\ace\Sched_Params.i"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Dispatching_Task.h"\
-	".\Event\EC_Dispatching_Task.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Priority_Dispatching.h"\
-	".\Event\EC_Priority_Dispatching.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Scheduling.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_PRI=\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Priority_Scheduling.h"\
-	".\Event\EC_Priority_Scheduling.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -9915,309 +14197,6 @@ SOURCE=.\Event\EC_ProxyConsumer.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_PRO=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	".\orbsvcs_export.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -10234,309 +14213,6 @@ SOURCE=.\Event\EC_ProxyPushSupplier_Set.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_PROX=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\orbsvcs_export.h"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -10551,311 +14227,6 @@ SOURCE=.\Event\EC_ProxySupplier.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_PROXY=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Dispatching.h"\
-	".\Event\EC_Dispatching.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\orbsvcs_export.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -10872,11 +14243,6 @@ SOURCE=.\Event\EC_QOS_Info.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_QO=\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -10891,704 +14257,6 @@ SOURCE=.\Event\EC_Reactive_Timeout_Generator.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_RE=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Reactive_Timeout_Generator.h"\
-	".\Event\EC_Reactive_Timeout_Generator.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\orbsvcs_export.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_SC=\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Sched_Filter.h"\
-	".\Event\EC_Sched_Filter.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter_Builder.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_SCH=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Conjunction_Filter.h"\
-	".\Event\EC_Conjunction_Filter.i"\
-	".\Event\EC_Disjunction_Filter.h"\
-	".\Event\EC_Disjunction_Filter.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Filter_Builder.h"\
-	".\Event\EC_Filter_Builder.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Sched_Filter.h"\
-	".\Event\EC_Sched_Filter.i"\
-	".\Event\EC_Sched_Filter_Builder.h"\
-	".\Event\EC_Sched_Filter_Builder.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Type_Filter.h"\
-	".\Event\EC_Type_Filter.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Scheduling_Strategy.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_SCHE=\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Scheduling_Strategy.h"\
-	".\Event\EC_Scheduling_Strategy.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Supplier_Filter_Builder.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_SU=\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -11605,309 +14273,6 @@ SOURCE=.\Event\EC_SupplierAdmin.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_SUP=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxyConsumer.h"\
-	".\Event\EC_ProxyConsumer.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_SupplierAdmin.h"\
-	".\Event\EC_SupplierAdmin.i"\
-	".\orbsvcs_export.h"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -11922,11 +14287,6 @@ SOURCE=.\Event\EC_SupplierFiltering.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_SUPP=\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -11943,314 +14303,6 @@ SOURCE=.\Event\EC_Timeout_Filter.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_TI=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -12265,417 +14317,6 @@ SOURCE=.\Event\EC_Timeout_Generator.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_TIM=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Timeout_Filter.h"\
-	".\Event\EC_Timeout_Filter.i"\
-	".\Event\EC_Timeout_Generator.h"\
-	".\Event\EC_Timeout_Generator.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Trivial_Supplier_Filter.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EC_TR=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Event\EC_Busy_Lock.cpp"\
-	".\Event\EC_Busy_Lock.h"\
-	".\Event\EC_Busy_Lock.i"\
-	".\Event\EC_Command.cpp"\
-	".\Event\EC_Command.h"\
-	".\Event\EC_Command.i"\
-	".\Event\EC_ConsumerAdmin.h"\
-	".\Event\EC_ConsumerAdmin.i"\
-	".\Event\EC_Event_Channel.h"\
-	".\Event\EC_Event_Channel.i"\
-	".\Event\EC_Factory.h"\
-	".\Event\EC_Factory.i"\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_ProxyPushSupplier_Set.h"\
-	".\Event\EC_ProxyPushSupplier_Set.i"\
-	".\Event\EC_ProxySupplier.h"\
-	".\Event\EC_ProxySupplier.i"\
-	".\Event\EC_QOS_Info.h"\
-	".\Event\EC_QOS_Info.i"\
-	".\Event\EC_Supplier_Filter_Builder.h"\
-	".\Event\EC_Supplier_Filter_Builder.i"\
-	".\Event\EC_SupplierFiltering.h"\
-	".\Event\EC_SupplierFiltering.i"\
-	".\Event\EC_Trivial_Supplier_Filter.h"\
-	".\Event\EC_Trivial_Supplier_Filter.i"\
-	".\orbsvcs_export.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -12692,13 +14333,6 @@ SOURCE=.\Event\EC_Type_Filter.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_TY=\
-	".\Event\EC_Filter.h"\
-	".\Event\EC_Filter.i"\
-	".\Event\EC_Type_Filter.h"\
-	".\Event\EC_Type_Filter.i"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
@@ -12714,55 +14348,20 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_EC_UD=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\Event\EC_UDP_Admin.h"\
-	".\orbsvcs_export.h"\
-	
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Endpoint_Strategy.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_ENDPO=\
+DEP_CPP_EC_UD=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -12772,12 +14371,19 @@ DEP_CPP_ENDPO=\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
 	"..\..\..\ace\Containers.h"\
 	"..\..\..\ace\Containers.i"\
 	"..\..\..\ace\Containers_T.cpp"\
 	"..\..\..\ace\Containers_T.h"\
 	"..\..\..\ace\Containers_T.i"\
 	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
 	"..\..\..\ace\Event_Handler.h"\
 	"..\..\..\ace\Event_Handler.i"\
 	"..\..\..\ace\Free_List.cpp"\
@@ -12796,7 +14402,12 @@ DEP_CPP_ENDPO=\
 	"..\..\..\ace\Hash_Map_Manager_T.h"\
 	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
@@ -12810,6 +14421,9 @@ DEP_CPP_ENDPO=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -12819,12 +14433,18 @@ DEP_CPP_ENDPO=\
 	"..\..\..\ace\Message_Block_T.cpp"\
 	"..\..\..\ace\Message_Block_T.h"\
 	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Process.h"\
-	"..\..\..\ace\Process.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
@@ -12832,78 +14452,192 @@ DEP_CPP_ENDPO=\
 	"..\..\..\ace\Service_Config.i"\
 	"..\..\..\ace\Service_Object.h"\
 	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
 	"..\..\..\ace\Shared_Object.h"\
 	"..\..\..\ace\Shared_Object.i"\
 	"..\..\..\ace\Signal.h"\
 	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.i"\
 	"..\..\..\ace\SV_Semaphore_Simple.h"\
 	"..\..\..\ace\SV_Semaphore_Simple.i"\
 	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\ace\Synch.h"\
 	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
 	"..\..\..\ace\Timer_Queue.h"\
 	"..\..\..\ace\Timer_Queue_T.cpp"\
 	"..\..\..\ace\Timer_Queue_T.h"\
 	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
 	"..\..\tao\cdr.h"\
 	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
 	"..\..\tao\Environment.h"\
 	"..\..\tao\Environment.i"\
 	"..\..\tao\Exception.h"\
 	"..\..\tao\Exception.i"\
-	"..\..\tao\IOR_LookupTable.h"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
 	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
 	"..\..\tao\Sequence_T.h"\
 	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\TAO.h"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
 	"..\..\tao\try_macros.h"\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
-	".\AV\AVStreams_i.h"\
-	".\AV\Endpoint_Strategy.h"\
-	".\AV\Endpoint_Strategy_T.cpp"\
-	".\AV\Endpoint_Strategy_T.h"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\EC_UDP_Admin.h"\
 	".\orbsvcs_export.h"\
-	".\Trader\Trader.h"\
 	
-NODEP_CPP_ENDPO=\
-	"..\..\..\..\..\Property\CosPropertyService_i.h"\
-	"..\..\..\..\..\Property\CosPropertyService_i_T.cpp"\
-	"..\..\..\..\..\Property\CosPropertyService_i_T.h"\
-	".\AV\AVStreams_i_T.cpp"\
-	".\AV\AVStreams_i_T.h"\
+NODEP_CPP_EC_UD=\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecUDPAdminC.h"\
+	".\RtecUDPAdminC.i"\
+	".\RtecUDPAdminS.h"\
+	".\RtecUDPAdminS.i"\
+	".\RtecUDPAdminS_T.cpp"\
+	".\RtecUDPAdminS_T.h"\
+	".\RtecUDPAdminS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Endpoint_Strategy.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -13164,6 +14898,263 @@ NODEP_CPP_ENTRI=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_ENTRI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Naming\Entries.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_ENTRI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	
 
 !ENDIF 
 
@@ -13501,6 +15492,344 @@ NODEP_CPP_EVENT=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_EVENT=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\High_Res_Timer.h"\
+	"..\..\..\ace\High_Res_Timer.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Local_Tokens.h"\
+	"..\..\..\ace\Local_Tokens.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Pipe.h"\
+	"..\..\..\ace\Pipe.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Select_Reactor.h"\
+	"..\..\..\ace\Select_Reactor.i"\
+	"..\..\..\ace\Select_Reactor_Base.h"\
+	"..\..\..\ace\Select_Reactor_Base.i"\
+	"..\..\..\ace\Select_Reactor_T.cpp"\
+	"..\..\..\ace\Select_Reactor_T.h"\
+	"..\..\..\ace\Select_Reactor_T.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timeprobe.h"\
+	"..\..\..\ace\Timeprobe.i"\
+	"..\..\..\ace\Timeprobe_T.cpp"\
+	"..\..\..\ace\Timeprobe_T.h"\
+	"..\..\..\ace\Timer_Heap.h"\
+	"..\..\..\ace\Timer_Heap_T.cpp"\
+	"..\..\..\ace\Timer_Heap_T.h"\
+	"..\..\..\ace\Timer_List.h"\
+	"..\..\..\ace\Timer_List_T.cpp"\
+	"..\..\..\ace\Timer_List_T.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\Timeprobe.h"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Channel_Clients_T.cpp"\
+	".\Channel_Clients_T.h"\
+	".\Channel_Clients_T.i"\
+	".\Event\Dispatching_Modules.h"\
+	".\Event\Dispatching_Modules.i"\
+	".\Event\EC_Gateway.h"\
+	".\Event\Event_Channel.h"\
+	".\Event\Event_Channel.i"\
+	".\Event\Event_Manip.h"\
+	".\Event\Event_Manip.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\Memory_Pools.h"\
+	".\Event\Memory_Pools.i"\
+	".\Event\Module_Factory.h"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event\Timer_Module.h"\
+	".\Event\Timer_Module.i"\
+	".\Event_Service_Constants.h"\
+	".\Event_Utilities.h"\
+	".\Event_Utilities.i"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_EVENT=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -13514,12 +15843,267 @@ SOURCE=.\Event\Event_Manip.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_EVENT_=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
 	".\Event\Event_Manip.h"\
 	".\Event\Event_Manip.i"\
+	".\orbsvcs_export.h"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_EVENT_=\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
 
 !ENDIF 
 
@@ -13789,81 +16373,12 @@ NODEP_CPP_EVENT_U=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\EventChannel_i.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_EVENTC=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Auto_Ptr.cpp"\
-	"..\..\..\ace\Auto_Ptr.h"\
-	"..\..\..\ace\Auto_Ptr.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\CosEvent\ConsumerAdmin_i.h"\
-	".\CosEvent\EventChannel_i.h"\
-	".\CosEvent\ProxyPushConsumer_i.h"\
-	".\CosEvent\ProxyPushSupplier_i.h"\
-	".\CosEvent\SupplierAdmin_i.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Naming\Hash_Naming_Context.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_HASH_=\
+DEP_CPP_EVENT_U=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
@@ -13929,14 +16444,9 @@ DEP_CPP_HASH_=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -13958,11 +16468,6 @@ DEP_CPP_HASH_=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
@@ -14044,16 +16549,11 @@ DEP_CPP_HASH_=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -14063,29 +16563,22 @@ DEP_CPP_HASH_=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -14095,28 +16588,20 @@ DEP_CPP_HASH_=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -14127,8 +16612,6 @@ DEP_CPP_HASH_=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -14136,20 +16619,355 @@ DEP_CPP_HASH_=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Naming\Entries.h"\
-	".\Naming\Hash_Naming_Context.h"\
+	".\Event_Service_Constants.h"\
+	".\Event_Utilities.h"\
+	".\Event_Utilities.i"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
 	
-NODEP_CPP_HASH_=\
-	"..\..\..\..\..\Naming\Naming_Context.h"\
+NODEP_CPP_EVENT_U=\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosEvent\EventChannel_i.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_EVENTC=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\CosEvent\ConsumerAdmin_i.h"\
+	".\CosEvent\EventChannel_i.h"\
+	".\CosEvent\ProxyPushConsumer_i.h"\
+	".\CosEvent\ProxyPushSupplier_i.h"\
+	".\CosEvent\SupplierAdmin_i.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_EVENTC=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Hash_Naming_Context.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -14168,6 +16986,274 @@ SOURCE=.\ImplRepoC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_IMPLR=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_IMPLR=\
+	".\ImplRepoC.h"\
+	".\ImplRepoC.i"\
+	".\ImplRepoS.h"\
+	".\ImplRepoS.i"\
+	".\ImplRepoS_T.cpp"\
+	".\ImplRepoS_T.h"\
+	".\ImplRepoS_T.i"\
+	".\PingC.h"\
+	".\PingC.i"\
+	".\PingS.h"\
+	".\PingS.i"\
+	".\PingS_T.cpp"\
+	".\PingS_T.h"\
+	".\PingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -14182,6 +17268,274 @@ SOURCE=.\ImplRepoS.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_IMPLRE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_IMPLRE=\
+	".\ImplRepoC.h"\
+	".\ImplRepoC.i"\
+	".\ImplRepoS.h"\
+	".\ImplRepoS.i"\
+	".\ImplRepoS_T.cpp"\
+	".\ImplRepoS_T.h"\
+	".\ImplRepoS_T.i"\
+	".\PingC.h"\
+	".\PingC.i"\
+	".\PingS.h"\
+	".\PingS.i"\
+	".\PingS_T.cpp"\
+	".\PingS_T.h"\
+	".\PingS_T.i"\
+	
 
 !ENDIF 
 
@@ -14442,6 +17796,263 @@ NODEP_CPP_IOR_M=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_IOR_M=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_Dgram.h"\
+	"..\..\..\ace\SOCK_Dgram.i"\
+	"..\..\..\ace\SOCK_Dgram_Mcast.h"\
+	"..\..\..\ace\SOCK_Dgram_Mcast.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\IOR_Multicast.h"\
+	".\orbsvcs_export.h"\
+	
 
 !ENDIF 
 
@@ -14719,6 +18330,281 @@ NODEP_CPP_LIFEC=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_LIFEC=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -14994,6 +18880,281 @@ NODEP_CPP_LIFECY=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_LIFECY=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	
 
 !ENDIF 
 
@@ -15285,6 +19446,295 @@ NODEP_CPP_LOCAL=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_LOCAL=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_LOCAL=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -15548,6 +19998,268 @@ NODEP_CPP_LOGGE=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_LOGGE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Log\Logger_i.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGE=\
+	".\LoggerC.h"\
+	".\LoggerC.i"\
+	".\LoggerS.h"\
+	".\LoggerS.i"\
+	".\LoggerS_T.cpp"\
+	".\LoggerS_T.h"\
+	".\LoggerS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -15810,6 +20522,267 @@ NODEP_CPP_LOGGER=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_LOGGER=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGER=\
+	".\LoggerC.h"\
+	".\LoggerC.i"\
+	".\LoggerS.h"\
+	".\LoggerS.i"\
+	".\LoggerS_T.cpp"\
+	".\LoggerS_T.h"\
+	".\LoggerS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -16071,6 +21044,267 @@ NODEP_CPP_LOGGERS=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_LOGGERS=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGERS=\
+	".\LoggerC.h"\
+	".\LoggerC.i"\
+	".\LoggerS.h"\
+	".\LoggerS.i"\
+	".\LoggerS_T.cpp"\
+	".\LoggerS_T.h"\
+	".\LoggerS_T.i"\
+	
 
 !ENDIF 
 
@@ -16399,6 +21633,337 @@ NODEP_CPP_MEMOR=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_MEMOR=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\High_Res_Timer.h"\
+	"..\..\..\ace\High_Res_Timer.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Local_Tokens.h"\
+	"..\..\..\ace\Local_Tokens.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Pipe.h"\
+	"..\..\..\ace\Pipe.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Select_Reactor.h"\
+	"..\..\..\ace\Select_Reactor.i"\
+	"..\..\..\ace\Select_Reactor_Base.h"\
+	"..\..\..\ace\Select_Reactor_Base.i"\
+	"..\..\..\ace\Select_Reactor_T.cpp"\
+	"..\..\..\ace\Select_Reactor_T.h"\
+	"..\..\..\ace\Select_Reactor_T.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timeprobe.h"\
+	"..\..\..\ace\Timeprobe.i"\
+	"..\..\..\ace\Timeprobe_T.cpp"\
+	"..\..\..\ace\Timeprobe_T.h"\
+	"..\..\..\ace\Timer_Heap.h"\
+	"..\..\..\ace\Timer_Heap_T.cpp"\
+	"..\..\..\ace\Timer_Heap_T.h"\
+	"..\..\..\ace\Timer_List.h"\
+	"..\..\..\ace\Timer_List_T.cpp"\
+	"..\..\..\ace\Timer_List_T.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\Timeprobe.h"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\Dispatching_Modules.h"\
+	".\Event\Dispatching_Modules.i"\
+	".\Event\Event_Channel.h"\
+	".\Event\Event_Channel.i"\
+	".\Event\Event_Manip.h"\
+	".\Event\Event_Manip.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\Memory_Pools.h"\
+	".\Event\Memory_Pools.i"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event\Timer_Module.h"\
+	".\Event\Timer_Module.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_MEMOR=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -16725,6 +22290,336 @@ NODEP_CPP_MODUL=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_MODUL=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\High_Res_Timer.h"\
+	"..\..\..\ace\High_Res_Timer.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Local_Tokens.h"\
+	"..\..\..\ace\Local_Tokens.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Pipe.h"\
+	"..\..\..\ace\Pipe.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Select_Reactor.h"\
+	"..\..\..\ace\Select_Reactor.i"\
+	"..\..\..\ace\Select_Reactor_Base.h"\
+	"..\..\..\ace\Select_Reactor_Base.i"\
+	"..\..\..\ace\Select_Reactor_T.cpp"\
+	"..\..\..\ace\Select_Reactor_T.h"\
+	"..\..\..\ace\Select_Reactor_T.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timeprobe.h"\
+	"..\..\..\ace\Timeprobe.i"\
+	"..\..\..\ace\Timeprobe_T.cpp"\
+	"..\..\..\ace\Timeprobe_T.h"\
+	"..\..\..\ace\Timer_Heap.h"\
+	"..\..\..\ace\Timer_Heap_T.cpp"\
+	"..\..\..\ace\Timer_Heap_T.h"\
+	"..\..\..\ace\Timer_List.h"\
+	"..\..\..\ace\Timer_List_T.cpp"\
+	"..\..\..\ace\Timer_List_T.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\Timeprobe.h"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\Dispatching_Modules.h"\
+	".\Event\Dispatching_Modules.i"\
+	".\Event\Event_Channel.h"\
+	".\Event\Event_Channel.i"\
+	".\Event\Event_Manip.h"\
+	".\Event\Event_Manip.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\Module_Factory.h"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event\Timer_Module.h"\
+	".\Event\Timer_Module.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_MODUL=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -16737,10 +22632,6 @@ SOURCE=.\Naming\Naming_Context.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_NAMIN=\
-	".\Naming\Naming_Context.h"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -16757,7 +22648,7 @@ SOURCE=.\Naming\Naming_Utils.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_NAMING=\
+DEP_CPP_NAMIN=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
@@ -16995,7 +22886,7 @@ DEP_CPP_NAMING=\
 	".\Naming\Naming_Utils.h"\
 	".\orbsvcs_export.h"\
 	
-NODEP_CPP_NAMING=\
+NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
 	"..\..\tao\align.h"\
 	"..\..\tao\IIOP_Object.h"\
@@ -17014,6 +22905,276 @@ NODEP_CPP_NAMING=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_NAMIN=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Arg_Shifter.h"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_Dgram.h"\
+	"..\..\..\ace\SOCK_Dgram.i"\
+	"..\..\..\ace\SOCK_Dgram_Mcast.h"\
+	"..\..\..\ace\SOCK_Dgram_Mcast.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\IOR_Multicast.h"\
+	".\Naming\Entries.h"\
+	".\Naming\Naming_Utils.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_NAMIN=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\Naming\CosNaming_i.h"\
+	
 
 !ENDIF 
 
@@ -17310,956 +23471,12 @@ NODEP_CPP_OFFER=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Naming\Persistent_Bindings_Map.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_PERSI=\
+DEP_CPP_OFFER=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Naming\Persistent_Bindings_Map.h"\
-	".\Naming\Persistent_Entries.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Naming\Persistent_Context_Index.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_PERSIS=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Naming\Persistent_Context_Index.h"\
-	".\Naming\Persistent_Entries.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Naming\Persistent_Entries.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_PERSIST=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\CDR_Stream.h"\
-	"..\..\..\ace\CDR_Stream.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Containers_T.cpp"\
-	"..\..\..\ace\Containers_T.h"\
-	"..\..\..\ace\Containers_T.i"\
-	"..\..\..\ace\CORBA_macros.h"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Functor.h"\
-	"..\..\..\ace\Functor.i"\
-	"..\..\..\ace\Functor_T.cpp"\
-	"..\..\..\ace\Functor_T.h"\
-	"..\..\..\ace\Functor_T.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\Hash_Map_Manager.i"\
-	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Block_T.cpp"\
-	"..\..\..\ace\Message_Block_T.h"\
-	"..\..\..\ace\Message_Block_T.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\Active_Object_Map.h"\
-	"..\..\tao\Active_Object_Map.i"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
-	"..\..\tao\DynAny_i.h"\
-	"..\..\tao\DynAnyC.h"\
-	"..\..\tao\DynAnyC.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Connector.h"\
-	"..\..\tao\InconsistentTypeCodeC.h"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
-	"..\..\tao\Managed_Types.h"\
-	"..\..\tao\Managed_Types.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Servant_Base.i"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\try_macros.h"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Naming\Persistent_Entries.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Naming\Persistent_Naming_Context.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_PERSISTE=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
@@ -18325,14 +23542,9 @@ DEP_CPP_PERSISTE=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -18354,11 +23566,6 @@ DEP_CPP_PERSISTE=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
@@ -18440,16 +23647,11 @@ DEP_CPP_PERSISTE=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -18459,29 +23661,22 @@ DEP_CPP_PERSISTE=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -18491,28 +23686,20 @@ DEP_CPP_PERSISTE=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -18523,8 +23710,6 @@ DEP_CPP_PERSISTE=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -18532,24 +23717,81 @@ DEP_CPP_PERSISTE=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
-	".\Naming\Persistent_Bindings_Map.h"\
-	".\Naming\Persistent_Context_Index.h"\
-	".\Naming\Persistent_Entries.h"\
-	".\Naming\Persistent_Naming_Context.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
+	".\orbsvcs_export.h"\
+	".\Trader\Offer_Iterators.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
 	
-NODEP_CPP_PERSISTE=\
-	"..\..\..\..\..\Naming\Naming_Context.h"\
+NODEP_CPP_OFFER=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Bindings_Map.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Entries.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Naming_Context.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -18568,6 +23810,267 @@ SOURCE=.\PingC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_PINGC=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_PINGC=\
+	".\PingC.h"\
+	".\PingC.i"\
+	".\PingS.h"\
+	".\PingS.i"\
+	".\PingS_T.cpp"\
+	".\PingS_T.h"\
+	".\PingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -18583,45 +24086,64 @@ SOURCE=.\PingS.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\ProxyPushConsumer_i.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_PROXY=\
+DEP_CPP_PINGS=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
 	"..\..\..\ace\Auto_Ptr.cpp"\
 	"..\..\..\ace\Auto_Ptr.h"\
 	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
 	"..\..\..\ace\config-win32-borland.h"\
 	"..\..\..\ace\config-win32-common.h"\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
 	"..\..\..\ace\Containers.h"\
 	"..\..\..\ace\Containers.i"\
 	"..\..\..\ace\Containers_T.cpp"\
 	"..\..\..\ace\Containers_T.h"\
 	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
 	"..\..\..\ace\Event_Handler.h"\
 	"..\..\..\ace\Event_Handler.i"\
 	"..\..\..\ace\Free_List.cpp"\
 	"..\..\..\ace\Free_List.h"\
 	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
@@ -18635,6 +24157,9 @@ DEP_CPP_PROXY=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -18644,26 +24169,448 @@ DEP_CPP_PROXY=\
 	"..\..\..\ace\Message_Block_T.cpp"\
 	"..\..\..\ace\Message_Block_T.h"\
 	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
 	"..\..\..\ace\Signal.h"\
 	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.i"\
 	"..\..\..\ace\SV_Semaphore_Simple.h"\
 	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\ace\Synch.h"\
 	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_PINGS=\
+	".\PingC.h"\
+	".\PingC.i"\
+	".\PingS.h"\
+	".\PingS.i"\
+	".\PingS_T.cpp"\
+	".\PingS_T.h"\
+	".\PingS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosEvent\ProxyPushConsumer_i.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_PROXY=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
 	".\CosEvent\ProxyPushConsumer_i.h"\
 	".\Event_Service_Constants.h"\
 	".\Event_Utilities.h"\
@@ -18672,8 +24619,50 @@ DEP_CPP_PROXY=\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_PROXY=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -18688,39 +24677,294 @@ SOURCE=.\CosEvent\ProxyPushSupplier_i.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_PROXYP=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
 	"..\..\..\ace\Auto_Ptr.cpp"\
 	"..\..\..\ace\Auto_Ptr.h"\
 	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
 	"..\..\..\ace\config-win32-borland.h"\
 	"..\..\..\ace\config-win32-common.h"\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
 	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
 	".\CosEvent\ProxyPushSupplier_i.h"\
+	".\orbsvcs_export.h"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_PROXYP=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -19039,6 +25283,327 @@ NODEP_CPP_REACT=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_REACT=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\High_Res_Timer.h"\
+	"..\..\..\ace\High_Res_Timer.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Local_Tokens.h"\
+	"..\..\..\ace\Local_Tokens.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Pipe.h"\
+	"..\..\..\ace\Pipe.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Select_Reactor.h"\
+	"..\..\..\ace\Select_Reactor.i"\
+	"..\..\..\ace\Select_Reactor_Base.h"\
+	"..\..\..\ace\Select_Reactor_Base.i"\
+	"..\..\..\ace\Select_Reactor_T.cpp"\
+	"..\..\..\ace\Select_Reactor_T.h"\
+	"..\..\..\ace\Select_Reactor_T.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timeprobe.h"\
+	"..\..\..\ace\Timeprobe.i"\
+	"..\..\..\ace\Timeprobe_T.cpp"\
+	"..\..\..\ace\Timeprobe_T.h"\
+	"..\..\..\ace\Timer_Heap.h"\
+	"..\..\..\ace\Timer_Heap_T.cpp"\
+	"..\..\..\ace\Timer_Heap_T.h"\
+	"..\..\..\ace\Timer_List.h"\
+	"..\..\..\ace\Timer_List_T.cpp"\
+	"..\..\..\ace\Timer_List_T.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\Timeprobe.h"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_REACT=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -19372,6 +25937,340 @@ NODEP_CPP_RT_TA=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_RT_TA=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\High_Res_Timer.h"\
+	"..\..\..\ace\High_Res_Timer.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Local_Tokens.h"\
+	"..\..\..\ace\Local_Tokens.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Pipe.h"\
+	"..\..\..\ace\Pipe.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Sched_Params.h"\
+	"..\..\..\ace\Sched_Params.i"\
+	"..\..\..\ace\Select_Reactor.h"\
+	"..\..\..\ace\Select_Reactor.i"\
+	"..\..\..\ace\Select_Reactor_Base.h"\
+	"..\..\..\ace\Select_Reactor_Base.i"\
+	"..\..\..\ace\Select_Reactor_T.cpp"\
+	"..\..\..\ace\Select_Reactor_T.h"\
+	"..\..\..\ace\Select_Reactor_T.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timeprobe.h"\
+	"..\..\..\ace\Timeprobe.i"\
+	"..\..\..\ace\Timeprobe_T.cpp"\
+	"..\..\..\ace\Timeprobe_T.h"\
+	"..\..\..\ace\Timer_Heap.h"\
+	"..\..\..\ace\Timer_Heap_T.cpp"\
+	"..\..\..\ace\Timer_Heap_T.h"\
+	"..\..\..\ace\Timer_List.h"\
+	"..\..\..\ace\Timer_List_T.cpp"\
+	"..\..\..\ace\Timer_List_T.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Token.h"\
+	"..\..\..\ace\Token.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\Timeprobe.h"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event\Debug_Macros.h"\
+	".\Event\Dispatching_Modules.h"\
+	".\Event\Dispatching_Modules.i"\
+	".\Event\Event_Channel.h"\
+	".\Event\Event_Channel.i"\
+	".\Event\Event_Manip.h"\
+	".\Event\Event_Manip.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\Memory_Pools.h"\
+	".\Event\Memory_Pools.i"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event\Timer_Module.h"\
+	".\Event\Timer_Module.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_RT_TA=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -19654,6 +26553,288 @@ NODEP_CPP_RTECE=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_RTECE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECE=\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -19938,6 +27119,288 @@ NODEP_CPP_RTECEV=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_RTECEV=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEV=\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -20206,6 +27669,274 @@ NODEP_CPP_RTECEVE=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_RTECEVE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEVE=\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -20476,6 +28207,274 @@ NODEP_CPP_RTECEVEN=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_RTECEVEN=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEVEN=\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -20744,6 +28743,274 @@ NODEP_CPP_RTECS=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_RTECS=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECS=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -21014,6 +29281,274 @@ NODEP_CPP_RTECSC=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_RTECSC=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECSC=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -21029,6 +29564,281 @@ SOURCE=.\RtecUDPAdminC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_RTECU=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECU=\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecUDPAdminC.h"\
+	".\RtecUDPAdminC.i"\
+	".\RtecUDPAdminS.h"\
+	".\RtecUDPAdminS.i"\
+	".\RtecUDPAdminS_T.cpp"\
+	".\RtecUDPAdminS_T.h"\
+	".\RtecUDPAdminS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -21043,6 +29853,281 @@ SOURCE=.\RtecUDPAdminS.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_RTECUD=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECUD=\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecUDPAdminC.h"\
+	".\RtecUDPAdminC.i"\
+	".\RtecUDPAdminS.h"\
+	".\RtecUDPAdminS.i"\
+	".\RtecUDPAdminS_T.cpp"\
+	".\RtecUDPAdminS_T.h"\
+	".\RtecUDPAdminS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
 
 !ENDIF 
 
@@ -21321,6 +30406,282 @@ NODEP_CPP_RUNTI=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_RUNTI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Runtime_Scheduler.h"\
+	".\Runtime_Scheduler.i"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_RUNTI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -21584,6 +30945,269 @@ NODEP_CPP_SCHED=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_SCHED=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Sched\SchedEntry.h"\
+	".\Sched\SchedEntry.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_SCHED=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
 
 !ENDIF 
 
@@ -21850,6 +31474,271 @@ NODEP_CPP_SCHEDU=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_SCHEDU=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Sched_Params.h"\
+	"..\..\..\ace\Sched_Params.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Sched\Scheduler.h"\
+	".\Sched\Scheduler.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_SCHEDU=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
 
 !ENDIF 
 
@@ -22126,6 +32015,280 @@ NODEP_CPP_SCHEDUL=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_SCHEDUL=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Runtime_Scheduler.h"\
+	".\Runtime_Scheduler.i"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	
+NODEP_CPP_SCHEDUL=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -22394,6 +32557,273 @@ NODEP_CPP_SCHEDULE=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_SCHEDULE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Sched_Params.h"\
+	"..\..\..\ace\Sched_Params.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Sched\Scheduler.h"\
+	".\Sched\Scheduler.i"\
+	".\Sched\Scheduler_Generic.h"\
+	".\Sched\Scheduler_Generic.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_SCHEDULE=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -22654,6 +33084,266 @@ NODEP_CPP_SCHEDULER=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_SCHEDULER=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Utilities.h"\
+	".\Scheduler_Utilities.i"\
+	
+NODEP_CPP_SCHEDULER=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
 
 !ENDIF 
 
@@ -22919,45 +33609,61 @@ NODEP_CPP_SERVI=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\sfp.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_SFP_C=\
+DEP_CPP_SERVI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\ARGV.h"\
-	"..\..\..\ace\ARGV.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
 	"..\..\..\ace\config-win32-borland.h"\
 	"..\..\..\ace\config-win32-common.h"\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
 	"..\..\..\ace\Containers.h"\
 	"..\..\..\ace\Containers.i"\
 	"..\..\..\ace\Containers_T.cpp"\
 	"..\..\..\ace\Containers_T.h"\
 	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
 	"..\..\..\ace\Event_Handler.h"\
 	"..\..\..\ace\Event_Handler.i"\
 	"..\..\..\ace\Free_List.cpp"\
 	"..\..\..\ace\Free_List.h"\
 	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
 	"..\..\..\ace\IPC_SAP.h"\
 	"..\..\..\ace\IPC_SAP.i"\
@@ -22974,37 +33680,210 @@ DEP_CPP_SFP_C=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
 	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
 	"..\..\..\ace\Signal.h"\
 	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
 	"..\..\..\ace\SOCK.h"\
 	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Dgram.h"\
-	"..\..\..\ace\SOCK_Dgram.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.i"\
 	"..\..\..\ace\SV_Semaphore_Simple.h"\
 	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\ace\Synch.h"\
 	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
-	".\AV\sfp.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
 	".\orbsvcs_export.h"\
+	".\Trader\Service_Type_Repository.h"\
+	".\Trader\Trader.h"\
 	
+NODEP_CPP_SERVI=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\sfp.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -23308,81 +34187,18 @@ NODEP_CPP_STRAT=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\SupplierAdmin_i.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_SUPPL=\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Auto_Ptr.cpp"\
-	"..\..\..\ace\Auto_Ptr.h"\
-	"..\..\..\ace\Auto_Ptr.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\ws2tcpip.h"\
-	".\CosEvent\ProxyPushConsumer_i.h"\
-	".\CosEvent\SupplierAdmin_i.h"\
-	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Time\TAO_Time_Service_Clerk.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_TAO_T=\
+DEP_CPP_STRAT=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -23442,14 +34258,9 @@ DEP_CPP_TAO_T=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -23471,11 +34282,603 @@ DEP_CPP_TAO_T=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Sched_Params.h"\
+	"..\..\..\ace\Sched_Params.i"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Sched\DynSched.h"\
+	".\Sched\DynSched.i"\
+	".\Sched\SchedEntry.h"\
+	".\Sched\SchedEntry.i"\
+	".\Sched\Strategy_Scheduler.h"\
+	".\Sched\Strategy_Scheduler.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_STRAT=\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosEvent\SupplierAdmin_i.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_SUPPL=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\CosEvent\ProxyPushConsumer_i.h"\
+	".\CosEvent\SupplierAdmin_i.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_SUPPL=\
+	".\CosEventChannelAdminC.h"\
+	".\CosEventChannelAdminC.i"\
+	".\CosEventChannelAdminS.h"\
+	".\CosEventChannelAdminS.i"\
+	".\CosEventChannelAdminS_T.cpp"\
+	".\CosEventChannelAdminS_T.h"\
+	".\CosEventChannelAdminS_T.i"\
+	".\CosEventCommC.h"\
+	".\CosEventCommC.i"\
+	".\CosEventCommS.h"\
+	".\CosEventCommS.i"\
+	".\CosEventCommS_T.cpp"\
+	".\CosEventCommS_T.h"\
+	".\CosEventCommS_T.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_Time_Service_Clerk.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_TAO_T=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
@@ -23561,16 +34964,11 @@ DEP_CPP_TAO_T=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -23580,29 +34978,22 @@ DEP_CPP_TAO_T=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -23612,28 +35003,20 @@ DEP_CPP_TAO_T=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -23644,8 +35027,6 @@ DEP_CPP_TAO_T=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -23654,15 +35035,11 @@ DEP_CPP_TAO_T=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
 	".\IOR_Multicast.h"\
+	".\Naming\Entries.h"\
 	".\Naming\Naming_Utils.h"\
 	".\orbsvcs_export.h"\
 	".\Time\TAO_Time_Service_Clerk.h"\
@@ -23671,10 +35048,29 @@ DEP_CPP_TAO_T=\
 	".\Time\Timer_Helper.h"\
 	
 NODEP_CPP_TAO_T=\
-	"..\..\..\..\..\Naming\Naming_Context.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\Naming\CosNaming_i.h"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -23689,10 +35085,20 @@ SOURCE=.\Time\TAO_Time_Service_Server.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_TAO_TI=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -23702,12 +35108,19 @@ DEP_CPP_TAO_TI=\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
 	"..\..\..\ace\Containers.h"\
 	"..\..\..\ace\Containers.i"\
 	"..\..\..\ace\Containers_T.cpp"\
 	"..\..\..\ace\Containers_T.h"\
 	"..\..\..\ace\Containers_T.i"\
 	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
 	"..\..\..\ace\Event_Handler.h"\
 	"..\..\..\ace\Event_Handler.i"\
 	"..\..\..\ace\Free_List.cpp"\
@@ -23726,7 +35139,12 @@ DEP_CPP_TAO_TI=\
 	"..\..\..\ace\Hash_Map_Manager_T.h"\
 	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
@@ -23740,6 +35158,9 @@ DEP_CPP_TAO_TI=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -23749,6 +35170,14 @@ DEP_CPP_TAO_TI=\
 	"..\..\..\ace\Message_Block_T.cpp"\
 	"..\..\..\ace\Message_Block_T.h"\
 	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
@@ -23760,70 +35189,175 @@ DEP_CPP_TAO_TI=\
 	"..\..\..\ace\Service_Config.i"\
 	"..\..\..\ace\Service_Object.h"\
 	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
 	"..\..\..\ace\Shared_Object.h"\
 	"..\..\..\ace\Shared_Object.i"\
 	"..\..\..\ace\Signal.h"\
 	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.i"\
 	"..\..\..\ace\SV_Semaphore_Simple.h"\
 	"..\..\..\ace\SV_Semaphore_Simple.i"\
 	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\ace\Synch.h"\
 	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
 	"..\..\..\ace\Timer_Queue.h"\
 	"..\..\..\ace\Timer_Queue_T.cpp"\
 	"..\..\..\ace\Timer_Queue_T.h"\
 	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
 	"..\..\tao\cdr.h"\
 	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
 	"..\..\tao\Environment.h"\
 	"..\..\tao\Environment.i"\
 	"..\..\tao\Exception.h"\
 	"..\..\tao\Exception.i"\
-	"..\..\tao\IOR_LookupTable.h"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
 	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
 	"..\..\tao\Sequence_T.h"\
 	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
 	"..\..\tao\TAO.h"\
 	"..\..\tao\try_macros.h"\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
 	".\Time\TAO_Time_Service_Server.h"\
 	".\Time\TAO_TIO.h"\
 	".\Time\TAO_UTO.h"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_TAO_TI=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
+	
 
 !ENDIF 
 
@@ -23838,10 +35372,20 @@ SOURCE=.\Time\TAO_TIO.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_TAO_TIO=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -23851,12 +35395,19 @@ DEP_CPP_TAO_TIO=\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
 	"..\..\..\ace\Containers.h"\
 	"..\..\..\ace\Containers.i"\
 	"..\..\..\ace\Containers_T.cpp"\
 	"..\..\..\ace\Containers_T.h"\
 	"..\..\..\ace\Containers_T.i"\
 	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
 	"..\..\..\ace\Event_Handler.h"\
 	"..\..\..\ace\Event_Handler.i"\
 	"..\..\..\ace\Free_List.cpp"\
@@ -23875,7 +35426,12 @@ DEP_CPP_TAO_TIO=\
 	"..\..\..\ace\Hash_Map_Manager_T.h"\
 	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
@@ -23889,6 +35445,9 @@ DEP_CPP_TAO_TIO=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -23898,6 +35457,14 @@ DEP_CPP_TAO_TIO=\
 	"..\..\..\ace\Message_Block_T.cpp"\
 	"..\..\..\ace\Message_Block_T.h"\
 	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
@@ -23909,69 +35476,174 @@ DEP_CPP_TAO_TIO=\
 	"..\..\..\ace\Service_Config.i"\
 	"..\..\..\ace\Service_Object.h"\
 	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
 	"..\..\..\ace\Shared_Object.h"\
 	"..\..\..\ace\Shared_Object.i"\
 	"..\..\..\ace\Signal.h"\
 	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.i"\
 	"..\..\..\ace\SV_Semaphore_Simple.h"\
 	"..\..\..\ace\SV_Semaphore_Simple.i"\
 	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\ace\Synch.h"\
 	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
 	"..\..\..\ace\Timer_Queue.h"\
 	"..\..\..\ace\Timer_Queue_T.cpp"\
 	"..\..\..\ace\Timer_Queue_T.h"\
 	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
 	"..\..\tao\cdr.h"\
 	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
 	"..\..\tao\Environment.h"\
 	"..\..\tao\Environment.i"\
 	"..\..\tao\Exception.h"\
 	"..\..\tao\Exception.i"\
-	"..\..\tao\IOR_LookupTable.h"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
 	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
 	"..\..\tao\Sequence_T.h"\
 	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
 	"..\..\tao\TAO.h"\
 	"..\..\tao\try_macros.h"\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
 	".\Time\TAO_TIO.h"\
 	".\Time\TAO_UTO.h"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_TAO_TIO=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
+	
 
 !ENDIF 
 
@@ -23986,10 +35658,20 @@ SOURCE=.\Time\TAO_UTO.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_TAO_U=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -23999,12 +35681,19 @@ DEP_CPP_TAO_U=\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
 	"..\..\..\ace\Containers.h"\
 	"..\..\..\ace\Containers.i"\
 	"..\..\..\ace\Containers_T.cpp"\
 	"..\..\..\ace\Containers_T.h"\
 	"..\..\..\ace\Containers_T.i"\
 	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
 	"..\..\..\ace\Event_Handler.h"\
 	"..\..\..\ace\Event_Handler.i"\
 	"..\..\..\ace\Free_List.cpp"\
@@ -24023,7 +35712,12 @@ DEP_CPP_TAO_U=\
 	"..\..\..\ace\Hash_Map_Manager_T.h"\
 	"..\..\..\ace\Hash_Map_Manager_T.i"\
 	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
 	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
 	"..\..\..\ace\Log_Record.h"\
@@ -24037,6 +35731,9 @@ DEP_CPP_TAO_U=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -24046,6 +35743,14 @@ DEP_CPP_TAO_U=\
 	"..\..\..\ace\Message_Block_T.cpp"\
 	"..\..\..\ace\Message_Block_T.h"\
 	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
 	"..\..\..\ace\Object_Manager.h"\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
@@ -24057,69 +35762,174 @@ DEP_CPP_TAO_U=\
 	"..\..\..\ace\Service_Config.i"\
 	"..\..\..\ace\Service_Object.h"\
 	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
 	"..\..\..\ace\Shared_Object.h"\
 	"..\..\..\ace\Shared_Object.i"\
 	"..\..\..\ace\Signal.h"\
 	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
 	"..\..\..\ace\SString.h"\
 	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
 	"..\..\..\ace\streams.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.h"\
 	"..\..\..\ace\SV_Semaphore_Complex.i"\
 	"..\..\..\ace\SV_Semaphore_Simple.h"\
 	"..\..\..\ace\SV_Semaphore_Simple.i"\
 	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
 	"..\..\..\ace\Synch.h"\
 	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
 	"..\..\..\ace\Thread.h"\
 	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
 	"..\..\..\ace\Timer_Queue.h"\
 	"..\..\..\ace\Timer_Queue_T.cpp"\
 	"..\..\..\ace\Timer_Queue_T.h"\
 	"..\..\..\ace\Timer_Queue_T.i"\
 	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
 	"..\..\tao\cdr.h"\
 	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
 	"..\..\tao\Environment.h"\
 	"..\..\tao\Environment.i"\
 	"..\..\tao\Exception.h"\
 	"..\..\tao\Exception.i"\
-	"..\..\tao\IOR_LookupTable.h"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
 	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
 	"..\..\tao\Sequence_T.h"\
 	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
 	"..\..\tao\TAO.h"\
 	"..\..\tao\try_macros.h"\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
 	".\Time\TAO_TIO.h"\
 	".\Time\TAO_UTO.h"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+NODEP_CPP_TAO_U=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
+	
 
 !ENDIF 
 
@@ -24379,6 +36189,264 @@ NODEP_CPP_TIME_=\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_TIME_=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_TIME_=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	
 
 !ENDIF 
 
@@ -24642,6 +36710,267 @@ NODEP_CPP_TIMEB=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_TIMEB=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_TIMEB=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -24904,33 +37233,18 @@ NODEP_CPP_TIMEBA=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Time\Timer_Helper.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_TIMER=\
+DEP_CPP_TIMEBA=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -24990,14 +37304,9 @@ DEP_CPP_TIMER=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -25019,11 +37328,282 @@ DEP_CPP_TIMER=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_TIMEBA=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\Timer_Helper.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_TIMER=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
 	"..\..\..\ace\Reactor.h"\
 	"..\..\..\ace\Reactor.i"\
 	"..\..\..\ace\Reactor_Impl.h"\
@@ -25109,16 +37689,11 @@ DEP_CPP_TIMER=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -25128,29 +37703,22 @@ DEP_CPP_TIMER=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -25160,28 +37728,20 @@ DEP_CPP_TIMER=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -25192,8 +37752,6 @@ DEP_CPP_TIMER=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -25201,25 +37759,40 @@ DEP_CPP_TIMER=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
 	".\IOR_Multicast.h"\
+	".\Naming\Entries.h"\
 	".\Naming\Naming_Utils.h"\
 	".\orbsvcs_export.h"\
 	".\Time\TAO_Time_Service_Clerk.h"\
 	".\Time\Timer_Helper.h"\
 	
 NODEP_CPP_TIMER=\
-	"..\..\..\..\..\Naming\Naming_Context.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\Naming\CosNaming_i.h"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -25234,20 +37807,20 @@ SOURCE=.\Event\Timer_Module.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
 DEP_CPP_TIMER_=\
 	"..\..\..\ace\Acceptor.cpp"\
 	"..\..\..\ace\Acceptor.h"\
 	"..\..\..\ace\Acceptor.i"\
 	"..\..\..\ace\ACE.h"\
 	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Active_Map_Manager.h"\
-	"..\..\..\ace\Active_Map_Manager.i"\
-	"..\..\..\ace\Active_Map_Manager_T.cpp"\
-	"..\..\..\ace\Active_Map_Manager_T.h"\
-	"..\..\..\ace\Active_Map_Manager_T.i"\
 	"..\..\..\ace\Addr.h"\
 	"..\..\..\ace\Addr.i"\
 	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
 	"..\..\..\ace\Basic_Types.h"\
 	"..\..\..\ace\Basic_Types.i"\
 	"..\..\..\ace\CDR_Stream.h"\
@@ -25311,14 +37884,9 @@ DEP_CPP_TIMER_=\
 	"..\..\..\ace\Managed_Object.cpp"\
 	"..\..\..\ace\Managed_Object.h"\
 	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map.h"\
-	"..\..\..\ace\Map.i"\
 	"..\..\..\ace\Map_Manager.cpp"\
 	"..\..\..\ace\Map_Manager.h"\
 	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Map_T.cpp"\
-	"..\..\..\ace\Map_T.h"\
-	"..\..\..\ace\Map_T.i"\
 	"..\..\..\ace\Mem_Map.h"\
 	"..\..\..\ace\Mem_Map.i"\
 	"..\..\..\ace\Memory_Pool.h"\
@@ -25340,11 +37908,6 @@ DEP_CPP_TIMER_=\
 	"..\..\..\ace\Object_Manager.i"\
 	"..\..\..\ace\OS.h"\
 	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Pair.h"\
-	"..\..\..\ace\Pair.i"\
-	"..\..\..\ace\Pair_T.cpp"\
-	"..\..\..\ace\Pair_T.h"\
-	"..\..\..\ace\Pair_T.i"\
 	"..\..\..\ace\Pipe.h"\
 	"..\..\..\ace\Pipe.i"\
 	"..\..\..\ace\Reactor.h"\
@@ -25447,16 +38010,11 @@ DEP_CPP_TIMER_=\
 	"..\..\tao\Client_Strategy_Factory.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
-	"..\..\tao\Context.h"\
-	"..\..\tao\Context.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\corbafwd.h"\
-	"..\..\tao\corbafwd.i"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
 	"..\..\tao\debug.h"\
-	"..\..\tao\DomainC.h"\
-	"..\..\tao\DomainC.i"\
 	"..\..\tao\DynAny_i.h"\
 	"..\..\tao\DynAnyC.h"\
 	"..\..\tao\DynAnyC.i"\
@@ -25466,29 +38024,22 @@ DEP_CPP_TIMER_=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
 	"..\..\tao\IIOP_Connector.h"\
 	"..\..\tao\InconsistentTypeCodeC.h"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
-	"..\..\tao\IOR_LookupTable.h"\
-	"..\..\tao\Key_Adapters.h"\
-	"..\..\tao\Key_Adapters.i"\
 	"..\..\tao\Managed_Types.h"\
 	"..\..\tao\Managed_Types.i"\
 	"..\..\tao\marshal.h"\
 	"..\..\tao\marshal.i"\
 	"..\..\tao\MProfile.h"\
-	"..\..\tao\MProfile.i"\
 	"..\..\tao\nvlist.h"\
 	"..\..\tao\NVList.i"\
 	"..\..\tao\object.h"\
 	"..\..\tao\object.i"\
-	"..\..\tao\Object_Adapter.h"\
-	"..\..\tao\Object_Adapter.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\ObjectIDList.h"\
-	"..\..\tao\ObjectIDList.i"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -25498,28 +38049,20 @@ DEP_CPP_TIMER_=\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
 	"..\..\tao\Pluggable.h"\
-	"..\..\tao\Pluggable.i"\
 	"..\..\tao\poa.h"\
 	"..\..\tao\POA.i"\
 	"..\..\tao\POA_CORBA.h"\
 	"..\..\tao\poa_macros.h"\
 	"..\..\tao\poaC.h"\
 	"..\..\tao\poaC.i"\
-	"..\..\tao\POAManager.h"\
-	"..\..\tao\POAManager.i"\
 	"..\..\tao\poaS.h"\
 	"..\..\tao\poaS.i"\
-	"..\..\tao\Policy_Manager.h"\
-	"..\..\tao\Policy_Manager.i"\
 	"..\..\tao\PolicyC.h"\
 	"..\..\tao\PolicyC.i"\
-	"..\..\tao\PollableC.h"\
-	"..\..\tao\PollableC.i"\
 	"..\..\tao\Principal.h"\
 	"..\..\tao\Principal.i"\
 	"..\..\tao\request.h"\
 	"..\..\tao\Request.i"\
-	"..\..\tao\Resource_Factory.h"\
 	"..\..\tao\sequence.h"\
 	"..\..\tao\sequence.i"\
 	"..\..\tao\Sequence_T.cpp"\
@@ -25530,8 +38073,6 @@ DEP_CPP_TIMER_=\
 	"..\..\tao\Server_Request.h"\
 	"..\..\tao\Server_Request.i"\
 	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\Services.h"\
-	"..\..\tao\Services.i"\
 	"..\..\tao\singletons.h"\
 	"..\..\tao\stub.h"\
 	"..\..\tao\stub.i"\
@@ -25540,14 +38081,9 @@ DEP_CPP_TIMER_=\
 	"..\..\tao\typecode.h"\
 	"..\..\tao\typecode.i"\
 	"..\..\tao\Union.h"\
-	"..\..\tao\ValueBase.h"\
-	"..\..\tao\ValueBase.i"\
-	"..\..\tao\ValueFactory.h"\
-	"..\..\tao\ValueFactory.i"\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	"..\..\tao\WrongTransactionC.h"\
 	".\Event\Fast_Reactor.h"\
 	".\Event\Local_ESTypes.h"\
 	".\Event\Local_ESTypes.i"\
@@ -25564,10 +38100,37 @@ DEP_CPP_TIMER_=\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_TIMER_=\
-	".\Event\ace\ReactorEx.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\RtecEventChannelAdminC.h"\
+	".\RtecEventChannelAdminC.i"\
+	".\RtecEventChannelAdminS.h"\
+	".\RtecEventChannelAdminS.i"\
+	".\RtecEventChannelAdminS_T.cpp"\
+	".\RtecEventChannelAdminS_T.h"\
+	".\RtecEventChannelAdminS_T.i"\
+	".\RtecEventCommC.h"\
+	".\RtecEventCommC.i"\
+	".\RtecEventCommS.h"\
+	".\RtecEventCommS.i"\
+	".\RtecEventCommS_T.cpp"\
+	".\RtecEventCommS_T.h"\
+	".\RtecEventCommS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
 	
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -25584,6 +38147,274 @@ SOURCE=.\TimeServiceC.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_TIMES=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_TIMES=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -25598,6 +38429,274 @@ SOURCE=.\TimeServiceS.cpp
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+DEP_CPP_TIMESE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_TIMESE=\
+	".\TimeBaseC.h"\
+	".\TimeBaseC.i"\
+	".\TimeBaseS.h"\
+	".\TimeBaseS.i"\
+	".\TimeBaseS_T.cpp"\
+	".\TimeBaseS_T.h"\
+	".\TimeBaseS_T.i"\
+	".\TimeServiceC.h"\
+	".\TimeServiceC.i"\
+	".\TimeServiceS.h"\
+	".\TimeServiceS.i"\
+	".\TimeServiceS_T.cpp"\
+	".\TimeServiceS_T.h"\
+	".\TimeServiceS_T.i"\
+	
 
 !ENDIF 
 
@@ -25877,6 +38976,284 @@ NODEP_CPP_TRADE=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_TRADE=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Arg_Shifter.h"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\DynSequence_i.h"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Constraint_Interpreter.h"\
+	".\Trader\Constraint_Nodes.h"\
+	".\Trader\Constraint_Tokens.h"\
+	".\Trader\Constraint_Visitors.h"\
+	".\Trader\Offer_Database.cpp"\
+	".\Trader\Offer_Database.h"\
+	".\Trader\Offer_Iterators.h"\
+	".\Trader\Offer_Iterators_T.cpp"\
+	".\Trader\Offer_Iterators_T.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Interfaces.cpp"\
+	".\Trader\Trader_Interfaces.h"\
+	".\Trader\Trader_T.cpp"\
+	".\Trader\Trader_T.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADE=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -26141,6 +39518,269 @@ NODEP_CPP_TRADER=\
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+DEP_CPP_TRADER=\
+	"..\..\..\ace\Acceptor.cpp"\
+	"..\..\..\ace\Acceptor.h"\
+	"..\..\..\ace\Acceptor.i"\
+	"..\..\..\ace\ACE.h"\
+	"..\..\..\ace\ACE.i"\
+	"..\..\..\ace\Addr.h"\
+	"..\..\..\ace\Addr.i"\
+	"..\..\..\ace\Atomic_Op.i"\
+	"..\..\..\ace\Auto_Ptr.cpp"\
+	"..\..\..\ace\Auto_Ptr.h"\
+	"..\..\..\ace\Auto_Ptr.i"\
+	"..\..\..\ace\Basic_Types.h"\
+	"..\..\..\ace\Basic_Types.i"\
+	"..\..\..\ace\CDR_Stream.h"\
+	"..\..\..\ace\CDR_Stream.i"\
+	"..\..\..\ace\config-win32-borland.h"\
+	"..\..\..\ace\config-win32-common.h"\
+	"..\..\..\ace\config-win32.h"\
+	"..\..\..\ace\config-WinCE.h"\
+	"..\..\..\ace\config.h"\
+	"..\..\..\ace\Connector.cpp"\
+	"..\..\..\ace\Connector.h"\
+	"..\..\..\ace\Connector.i"\
+	"..\..\..\ace\Containers.h"\
+	"..\..\..\ace\Containers.i"\
+	"..\..\..\ace\Containers_T.cpp"\
+	"..\..\..\ace\Containers_T.h"\
+	"..\..\..\ace\Containers_T.i"\
+	"..\..\..\ace\CORBA_macros.h"\
+	"..\..\..\ace\Dynamic.h"\
+	"..\..\..\ace\Dynamic.i"\
+	"..\..\..\ace\Dynamic_Service.cpp"\
+	"..\..\..\ace\Dynamic_Service.h"\
+	"..\..\..\ace\Event_Handler.h"\
+	"..\..\..\ace\Event_Handler.i"\
+	"..\..\..\ace\Free_List.cpp"\
+	"..\..\..\ace\Free_List.h"\
+	"..\..\..\ace\Free_List.i"\
+	"..\..\..\ace\Functor.h"\
+	"..\..\..\ace\Functor.i"\
+	"..\..\..\ace\Functor_T.cpp"\
+	"..\..\..\ace\Functor_T.h"\
+	"..\..\..\ace\Functor_T.i"\
+	"..\..\..\ace\Handle_Set.h"\
+	"..\..\..\ace\Handle_Set.i"\
+	"..\..\..\ace\Hash_Map_Manager.h"\
+	"..\..\..\ace\Hash_Map_Manager.i"\
+	"..\..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\..\ace\inc_user_config.h"\
+	"..\..\..\ace\INET_Addr.h"\
+	"..\..\..\ace\INET_Addr.i"\
+	"..\..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\..\ace\iosfwd.h"\
+	"..\..\..\ace\IPC_SAP.h"\
+	"..\..\..\ace\IPC_SAP.i"\
+	"..\..\..\ace\Log_Msg.h"\
+	"..\..\..\ace\Log_Priority.h"\
+	"..\..\..\ace\Log_Record.h"\
+	"..\..\..\ace\Log_Record.i"\
+	"..\..\..\ace\Malloc.h"\
+	"..\..\..\ace\Malloc.i"\
+	"..\..\..\ace\Malloc_Base.h"\
+	"..\..\..\ace\Malloc_T.cpp"\
+	"..\..\..\ace\Malloc_T.h"\
+	"..\..\..\ace\Malloc_T.i"\
+	"..\..\..\ace\Managed_Object.cpp"\
+	"..\..\..\ace\Managed_Object.h"\
+	"..\..\..\ace\Managed_Object.i"\
+	"..\..\..\ace\Map_Manager.cpp"\
+	"..\..\..\ace\Map_Manager.h"\
+	"..\..\..\ace\Map_Manager.i"\
+	"..\..\..\ace\Mem_Map.h"\
+	"..\..\..\ace\Mem_Map.i"\
+	"..\..\..\ace\Memory_Pool.h"\
+	"..\..\..\ace\Memory_Pool.i"\
+	"..\..\..\ace\Message_Block.h"\
+	"..\..\..\ace\Message_Block.i"\
+	"..\..\..\ace\Message_Block_T.cpp"\
+	"..\..\..\ace\Message_Block_T.h"\
+	"..\..\..\ace\Message_Block_T.i"\
+	"..\..\..\ace\Message_Queue.h"\
+	"..\..\..\ace\Message_Queue.i"\
+	"..\..\..\ace\Message_Queue_T.cpp"\
+	"..\..\..\ace\Message_Queue_T.h"\
+	"..\..\..\ace\Message_Queue_T.i"\
+	"..\..\..\ace\Module.cpp"\
+	"..\..\..\ace\Module.h"\
+	"..\..\..\ace\Module.i"\
+	"..\..\..\ace\Object_Manager.h"\
+	"..\..\..\ace\Object_Manager.i"\
+	"..\..\..\ace\OS.h"\
+	"..\..\..\ace\OS.i"\
+	"..\..\..\ace\Reactor.h"\
+	"..\..\..\ace\Reactor.i"\
+	"..\..\..\ace\Reactor_Impl.h"\
+	"..\..\..\ace\Service_Config.h"\
+	"..\..\..\ace\Service_Config.i"\
+	"..\..\..\ace\Service_Object.h"\
+	"..\..\..\ace\Service_Object.i"\
+	"..\..\..\ace\Service_Repository.h"\
+	"..\..\..\ace\Service_Repository.i"\
+	"..\..\..\ace\Service_Types.h"\
+	"..\..\..\ace\Service_Types.i"\
+	"..\..\..\ace\Shared_Object.h"\
+	"..\..\..\ace\Shared_Object.i"\
+	"..\..\..\ace\Signal.h"\
+	"..\..\..\ace\Signal.i"\
+	"..\..\..\ace\Singleton.cpp"\
+	"..\..\..\ace\Singleton.h"\
+	"..\..\..\ace\Singleton.i"\
+	"..\..\..\ace\SOCK.h"\
+	"..\..\..\ace\SOCK.i"\
+	"..\..\..\ace\SOCK_Acceptor.h"\
+	"..\..\..\ace\SOCK_Acceptor.i"\
+	"..\..\..\ace\SOCK_Connector.h"\
+	"..\..\..\ace\SOCK_Connector.i"\
+	"..\..\..\ace\SOCK_IO.h"\
+	"..\..\..\ace\SOCK_IO.i"\
+	"..\..\..\ace\SOCK_Stream.h"\
+	"..\..\..\ace\SOCK_Stream.i"\
+	"..\..\..\ace\SString.h"\
+	"..\..\..\ace\SString.i"\
+	"..\..\..\ace\Strategies.h"\
+	"..\..\..\ace\Strategies.i"\
+	"..\..\..\ace\Strategies_T.cpp"\
+	"..\..\..\ace\Strategies_T.h"\
+	"..\..\..\ace\Strategies_T.i"\
+	"..\..\..\ace\Stream_Modules.cpp"\
+	"..\..\..\ace\Stream_Modules.h"\
+	"..\..\..\ace\Stream_Modules.i"\
+	"..\..\..\ace\streams.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\..\ace\Svc_Handler.cpp"\
+	"..\..\..\ace\Svc_Handler.h"\
+	"..\..\..\ace\Svc_Handler.i"\
+	"..\..\..\ace\Synch.h"\
+	"..\..\..\ace\Synch.i"\
+	"..\..\..\ace\Synch_Options.h"\
+	"..\..\..\ace\Synch_Options.i"\
+	"..\..\..\ace\Synch_T.cpp"\
+	"..\..\..\ace\Synch_T.h"\
+	"..\..\..\ace\Synch_T.i"\
+	"..\..\..\ace\Task.h"\
+	"..\..\..\ace\Task.i"\
+	"..\..\..\ace\Task_T.cpp"\
+	"..\..\..\ace\Task_T.h"\
+	"..\..\..\ace\Task_T.i"\
+	"..\..\..\ace\Thread.h"\
+	"..\..\..\ace\Thread.i"\
+	"..\..\..\ace\Thread_Manager.h"\
+	"..\..\..\ace\Thread_Manager.i"\
+	"..\..\..\ace\Time_Value.h"\
+	"..\..\..\ace\Timer_Queue.h"\
+	"..\..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\..\ace\Timer_Queue_T.h"\
+	"..\..\..\ace\Timer_Queue_T.i"\
+	"..\..\..\ace\Trace.h"\
+	"..\..\..\ace\WFMO_Reactor.h"\
+	"..\..\..\ace\WFMO_Reactor.i"\
+	"..\..\..\ace\ws2tcpip.h"\
+	"..\..\tao\Active_Object_Map.h"\
+	"..\..\tao\Active_Object_Map.i"\
+	"..\..\tao\any.h"\
+	"..\..\tao\any.i"\
+	"..\..\tao\cdr.h"\
+	"..\..\tao\cdr.i"\
+	"..\..\tao\Client_Strategy_Factory.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\corba.h"\
+	"..\..\tao\corbafwd.h"\
+	"..\..\tao\CurrentC.h"\
+	"..\..\tao\CurrentC.i"\
+	"..\..\tao\debug.h"\
+	"..\..\tao\DynAny_i.h"\
+	"..\..\tao\DynAnyC.h"\
+	"..\..\tao\DynAnyC.i"\
+	"..\..\tao\Environment.h"\
+	"..\..\tao\Environment.i"\
+	"..\..\tao\Exception.h"\
+	"..\..\tao\Exception.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
+	"..\..\tao\IIOP_Acceptor.h"\
+	"..\..\tao\IIOP_Connector.h"\
+	"..\..\tao\InconsistentTypeCodeC.h"\
+	"..\..\tao\Invocation.h"\
+	"..\..\tao\Invocation.i"\
+	"..\..\tao\Managed_Types.h"\
+	"..\..\tao\Managed_Types.i"\
+	"..\..\tao\marshal.h"\
+	"..\..\tao\marshal.i"\
+	"..\..\tao\MProfile.h"\
+	"..\..\tao\nvlist.h"\
+	"..\..\tao\NVList.i"\
+	"..\..\tao\object.h"\
+	"..\..\tao\object.i"\
+	"..\..\tao\Object_KeyC.h"\
+	"..\..\tao\Object_KeyC.i"\
+	"..\..\tao\Operation_Table.h"\
+	"..\..\tao\orb.h"\
+	"..\..\tao\ORB.i"\
+	"..\..\tao\orb_core.h"\
+	"..\..\tao\orb_core.i"\
+	"..\..\tao\orbconf.h"\
+	"..\..\tao\params.h"\
+	"..\..\tao\params.i"\
+	"..\..\tao\Pluggable.h"\
+	"..\..\tao\poa.h"\
+	"..\..\tao\POA.i"\
+	"..\..\tao\POA_CORBA.h"\
+	"..\..\tao\poa_macros.h"\
+	"..\..\tao\poaC.h"\
+	"..\..\tao\poaC.i"\
+	"..\..\tao\poaS.h"\
+	"..\..\tao\poaS.i"\
+	"..\..\tao\PolicyC.h"\
+	"..\..\tao\PolicyC.i"\
+	"..\..\tao\Principal.h"\
+	"..\..\tao\Principal.i"\
+	"..\..\tao\request.h"\
+	"..\..\tao\Request.i"\
+	"..\..\tao\sequence.h"\
+	"..\..\tao\sequence.i"\
+	"..\..\tao\Sequence_T.cpp"\
+	"..\..\tao\Sequence_T.h"\
+	"..\..\tao\Sequence_T.i"\
+	"..\..\tao\servant_base.h"\
+	"..\..\tao\Servant_Base.i"\
+	"..\..\tao\Server_Request.h"\
+	"..\..\tao\Server_Request.i"\
+	"..\..\tao\Server_Strategy_Factory.h"\
+	"..\..\tao\singletons.h"\
+	"..\..\tao\stub.h"\
+	"..\..\tao\stub.i"\
+	"..\..\tao\try_macros.h"\
+	"..\..\tao\typecode.h"\
+	"..\..\tao\typecode.i"\
+	"..\..\tao\Union.h"\
+	"..\..\tao\varout.cpp"\
+	"..\..\tao\varout.h"\
+	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADER=\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
+	
+
 !ENDIF 
 
 # End Source File
@@ -26151,10 +39791,6 @@ NODEP_CPP_TRADER=\
 # Begin Source File
 
 SOURCE=.\AV\AVStreams_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\AVStreams_i_T.h
 # End Source File
 # Begin Source File
 
@@ -26214,10 +39850,6 @@ SOURCE=.\CosConcurrencyControlS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CosEvent_Utilities.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosLifeCycleC.h
 # End Source File
 # Begin Source File
@@ -26238,10 +39870,6 @@ SOURCE=.\Property\CosPropertyService_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Property\CosPropertyService_i_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosPropertyServiceC.h
 # End Source File
 # Begin Source File
@@ -26251,30 +39879,6 @@ SOURCE=.\CosPropertyServiceS.h
 # Begin Source File
 
 SOURCE=.\CosTradingC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicS_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposS_T.h
 # End Source File
 # Begin Source File
 
@@ -26314,19 +39918,11 @@ SOURCE=.\Event\EC_ConsumerAdmin.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_Factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Disjunction_Filter.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Dispatching_Task.h
 # End Source File
 # Begin Source File
 
@@ -26358,23 +39954,11 @@ SOURCE=.\Event\EC_Null_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Null_Scheduling.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ObserverStrategy.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Per_Supplier_Filter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Dispatching.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Scheduling.h
 # End Source File
 # Begin Source File
 
@@ -26398,22 +39982,6 @@ SOURCE=.\Event\EC_Reactive_Timeout_Generator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Sched_Filter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter_Builder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Scheduling_Strategy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Supplier_Filter_Builder.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_SupplierAdmin.h
 # End Source File
 # Begin Source File
@@ -26427,10 +39995,6 @@ SOURCE=.\Event\EC_Timeout_Filter.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Timeout_Generator.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Trivial_Supplier_Filter.h
 # End Source File
 # Begin Source File
 
@@ -26754,30 +40318,6 @@ SOURCE=.\CosTradingC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\CosTradingDynamicC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicS_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosTradingS.i
 # End Source File
 # Begin Source File
@@ -26814,19 +40354,11 @@ SOURCE=.\Event\EC_ConsumerAdmin.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_Factory.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Disjunction_Filter.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Dispatching_Task.i
 # End Source File
 # Begin Source File
 
@@ -26850,23 +40382,11 @@ SOURCE=.\Event\EC_Null_Factory.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Null_Scheduling.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ObserverStrategy.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Per_Supplier_Filter.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Dispatching.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Priority_Scheduling.i
 # End Source File
 # Begin Source File
 
@@ -26890,22 +40410,6 @@ SOURCE=.\Event\EC_Reactive_Timeout_Generator.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Sched_Filter.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Sched_Filter_Builder.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Scheduling_Strategy.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Supplier_Filter_Builder.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_SupplierAdmin.i
 # End Source File
 # Begin Source File
@@ -26919,10 +40423,6 @@ SOURCE=.\Event\EC_Timeout_Filter.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Timeout_Generator.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Trivial_Supplier_Filter.i
 # End Source File
 # Begin Source File
 
@@ -27015,14 +40515,12 @@ SOURCE=.\AVStreams.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\AVStreams.idl
 InputName=AVStreams
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27055,14 +40553,12 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\AVStreams.idl
 InputName=AVStreams
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27094,83 +40590,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\AVStreams.idl
-InputName=AVStreams
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__AVSTRE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\AVStreams.idl
-InputName=AVStreams
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
 
 !ENDIF 
 
@@ -27188,8 +40608,7 @@ InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27228,8 +40647,7 @@ InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27268,8 +40686,7 @@ InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27308,8 +40725,7 @@ InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27349,14 +40765,13 @@ SOURCE=.\CosEventChannelAdmin.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSEVENTC="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27389,14 +40804,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSEVENTC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27429,14 +40843,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSEVENTC="..\..\..\bin\Release\tao_idl.exe"	"CosEventCommC.h"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27469,14 +40882,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSEVENTC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27516,14 +40928,13 @@ SOURCE=.\CosEventComm.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSEVENTCO="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27556,14 +40967,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVE="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSEVENTCO="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27596,14 +41006,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSEVENTCO="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27636,14 +41045,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVE="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSEVENTCO="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27689,8 +41097,7 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27729,8 +41136,7 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27769,8 +41175,7 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27809,8 +41214,7 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27856,8 +41260,7 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27896,8 +41299,7 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27936,8 +41338,7 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27976,8 +41377,7 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28017,14 +41417,13 @@ SOURCE=.\CosPropertyService.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSPROPE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28057,14 +41456,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSPROPE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28097,14 +41495,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__COSPROPE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28137,14 +41534,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPRO="..\..\..\bin\tao_idl.exe"	
+USERDEP__COSPROPE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28190,8 +41586,7 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28230,8 +41625,7 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28270,8 +41664,7 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28310,338 +41703,7 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamic.idl
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosTradingDynamic.idl
-InputName=CosTradingDynamic
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\CosTradingDynamic.idl
-InputName=CosTradingDynamic
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSTRADI="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosTradingDynamic.idl
-InputName=CosTradingDynamic
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSTRADI="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosTradingDynamic.idl
-InputName=CosTradingDynamic
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingRepos.idl
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosTradingRepos.idl
-InputName=CosTradingRepos
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\CosTradingRepos.idl
-InputName=CosTradingRepos
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSTRADIN="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosTradingRepos.idl
-InputName=CosTradingRepos
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSTRADIN="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\CosTradingRepos.idl
-InputName=CosTradingRepos
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28681,14 +41743,13 @@ SOURCE=.\ImplRepo.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__IMPLREP="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\ImplRepo.idl
 InputName=ImplRepo
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28721,14 +41782,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\tao_idl.exe"	
+USERDEP__IMPLREP="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\ImplRepo.idl
 InputName=ImplRepo
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28761,14 +41821,12 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\ImplRepo.idl
 InputName=ImplRepo
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	Invoking TAO_IDL Compiler
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28799,44 +41857,6 @@ BuildCmds= \
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
 
 !ENDIF 
 
@@ -28854,8 +41874,7 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28894,8 +41913,7 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28934,8 +41952,7 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28974,8 +41991,7 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29021,8 +42037,7 @@ InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29061,8 +42076,7 @@ InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29101,8 +42115,7 @@ InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29141,8 +42154,7 @@ InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29182,14 +42194,12 @@ SOURCE=.\Null_MediaCtrl.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29222,14 +42232,12 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29261,83 +42269,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Null_MediaCtrl.idl
-InputName=Null_MediaCtrl
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Null_MediaCtrl.idl
-InputName=Null_MediaCtrl
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
 
 !ENDIF 
 
@@ -29355,8 +42287,7 @@ InputPath=.\Ping.idl
 InputName=Ping
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29395,8 +42326,7 @@ InputPath=.\Ping.idl
 InputName=Ping
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29429,40 +42359,38 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PING_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Running the TAO IDL Compiler on $(InputPath)...
 InputPath=.\Ping.idl
 InputName=Ping
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
+	%ACE_ROOT%\bin\tao_idl.exe -ci C.inl -si S.inl -st S_T.inl     D:\brunsch\ACE_wrappers\TAO\orbsvcs\orbsvcs\Ping.idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -29475,8 +42403,7 @@ InputPath=.\Ping.idl
 InputName=Ping
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29522,8 +42449,7 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29562,8 +42488,7 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29602,8 +42527,7 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29642,8 +42566,7 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29689,8 +42612,7 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29729,8 +42651,7 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29769,8 +42690,7 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29809,8 +42729,7 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29856,8 +42775,7 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29896,8 +42814,7 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29936,8 +42853,7 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -29976,8 +42892,7 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30017,14 +42932,13 @@ SOURCE=.\RtecUDPAdmin.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECUDP="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30057,14 +42971,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECUDP="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30097,14 +43010,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECUDP="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30137,14 +43049,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECUDP="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30184,14 +43095,12 @@ SOURCE=.\sfp.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\sfp.idl
 InputName=sfp
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30224,14 +43133,12 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\sfp.idl
 InputName=sfp
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30263,83 +43170,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\sfp.idl
-InputName=sfp
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\sfp.idl
-InputName=sfp
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
 
 !ENDIF 
 
@@ -30357,8 +43188,7 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30392,15 +43222,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TIMEBAS="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on TimeBase.idl
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\tao_idl              -I../../ \
-               -Wb,export_macro=TAO_ORBSVCS_Export \
-                                                          -Wb,export_include=orbsvcs_export.h              $(InputName).idl \
-             -I..\..\ 
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30439,8 +43266,7 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30479,8 +43305,7 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30520,14 +43345,13 @@ SOURCE=.\TimeService.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMES="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TIMESER="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-       -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30560,14 +43384,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMES="..\..\..\bin\tao_idl.exe"	
+USERDEP__TIMESER="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30600,14 +43423,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMES="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TIMESER="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -i../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30640,14 +43462,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMES="..\..\..\bin\tao_idl.exe"	
+USERDEP__TIMESER="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
-                                              -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                        -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -30686,48 +43507,8 @@ BuildCmds= \
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\AV\AVStreams_i_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Property\CosPropertyService_i_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosPropertyServiceS_T.cpp
 # PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingDynamicS_T.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTradingReposS_T.cpp
-
-!IF  "$(CFG)" == "orbsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -30756,7 +43537,21 @@ SOURCE=.\CosTradingS_T.cpp
 # Begin Source File
 
 SOURCE=.\AV\Endpoint_Strategy_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -30814,12 +43609,40 @@ SOURCE=.\Trader\Offer_Iterators_T.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Context_Index_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Shared_Hash_Map_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

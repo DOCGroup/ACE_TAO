@@ -23,7 +23,6 @@ DIRS  = Generic_Servant \
 	On_Demand_Activation \
 	On_Demand_Loading \
 	RootPOA \
-	Reference_Counted_Servant \
 	TIE
 
 # The following test hasn't been updated yet

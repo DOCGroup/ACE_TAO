@@ -30,7 +30,7 @@
 #include "include/common.h"
 #ifdef LINUX
 #else
-int usleep(unsigned int usec);
+void usleep(unsigned int usec);
 #endif
 void beep(void);
 int get_hostname(char *name, int len);

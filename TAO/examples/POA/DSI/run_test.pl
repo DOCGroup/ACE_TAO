@@ -1,9 +1,8 @@
+#$Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 unshift @INC, '../../../../bin';
 require ACEutils;
@@ -16,9 +15,9 @@ $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", " -f $iorfile");
 
 ACE::waitforfile ($iorfile);
 
-$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile -x");
+$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile");
 
-$SV->Wait ();
+$SV->Kill (); $SV->Wait ();
 
 unlink $iorfile;
 
