@@ -30,7 +30,9 @@ CXX		= /opt/aCC/bin/aCC
 CPP_LOCATION    = /usr/ccs/lbin/cpp
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
-# If the user has requested building without threads, then don't set any.
+# If the user has requested building without threads, then don't set any
+# for 10.20, but for 11.00, the default is to use threads, so explicitly
+# turn them off if the user requested build without threads.
 #
 ifeq ($(threads),1)
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
@@ -38,7 +40,12 @@ THR_DEFS	= -DACE_HAS_THREADS -D_POSIX_C_SOURCE=199506L
 else
 THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
 endif
+else
+ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+THR_DEFS	= -DACE_HAS_THREADS=0
 endif
+endif
+
 #
 # Suppress warning 829 (string literal to char * is deprecated)
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
