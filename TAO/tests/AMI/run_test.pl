@@ -28,6 +28,8 @@ foreach $i (@ARGV) {
 }
 
 $iorfile = "server.ior";
+
+unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
 			  " -ORBdebuglevel $debug_level"
 			  . "-d -o $iorfile");
