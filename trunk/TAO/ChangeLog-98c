@@ -1,34 +1,61 @@
+Fri Dec 18 13:33:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* be/be_visitor_interface/any_op_cs.cpp (>>=):
+	  Fixed a memory management problem.
+
+	* be/be_visitor_array/any_op_cs.cpp (>>=):
+	* be/be_visitor_enum/any_op_cs.cpp (>>=):
+	* be/be_visitor_exception/any_op_cs.cpp (>>=):
+	* be/be_visitor_sequence/any_op_cs.cpp (>>=):
+	* be/be_visitor_structure/any_op_cs.cpp (>>=):
+	* be/be_visitor_union/any_op_cs.cpp (>>=): Adopted the changes
+	  made in Any.  Some of them may still have memory management
+	  problem.
+
+	* tao/Any.{h,i,cpp}: The usage of <any_owns_data_> was not very
+	  consistant.  Sometime it meant any owns the cdr string,
+	  sometimes it meant any owns the internal data stored in
+	  <value_>.  It is now changed to indicate whether any owns the
+	  internal data.
+	  (value):  Now return the internal data if there's own,
+	  otherwise, it return a pointer to the cdr string.
+	  (free_value):  A small helper function to free up the internal
+	  data held by any.
+	  (any_owns_data): Now return true when any owns a valid data.
+
+	* tao/Connect.cpp: Fixed typo in error messages.
+
 Fri Dec 18 12:14:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	  I'm starting to support a run-time scheduler for this test.
 	  But it is still experimental and must be enabled at compile
 	  time.
 
 Fri Dec 18 09:34:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.i: 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
 	  The test can easily measure latency as well as throughput, so I
 	  added the necessary methods in the ECT_Driver class.
 
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
 	  Added missing template instantiations.
 	  Fixed warnings reported by g++ 2.7.2.3
 
 Thu Dec 17 16:11:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
 	  Added support for fragmentation and reassembly to the UDP
 	  gateway. This is still experimental, but seems to work OK.
 	  Though I have payed attention to the first order optimizations:
@@ -37,12 +64,12 @@ Thu Dec 17 16:11:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  performance bottlenecks or problems.
 	  I still have to Purify/Quantify this code.
 
-	* tao/ORB_Core.cpp: 
+	* tao/ORB_Core.cpp:
 	  By default the CDR allocators where TSS, but this was not safe
 	  for certain applications. Thanks to Ron Barack
 	  <r.barack@inobis.de> for pointing this out.
 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
 	  Updated the script.
 
 Thu Dec 17 14:09:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
@@ -56,10 +83,10 @@ Thu Dec 17 14:09:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
 Thu Dec 17 04:45:39 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/IIOP_Object.cpp (constructor):
-	 
+
 	  We were missing the initialization of the forward profile and
 	  forward profile success in the constructor with the following
-	  signature. 
+	  signature.
 
 	  IIOP_Object::IIOP_Object (const char *host,
                                     const CORBA::UShort port,
