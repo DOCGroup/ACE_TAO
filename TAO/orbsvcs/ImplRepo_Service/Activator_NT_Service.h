@@ -7,8 +7,8 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
- *  @author John Tucker <jtucker@infoglide.com> 
- *  @author Mike Vitalo <mvitalo@infoglide.com>   
+ *  @author John Tucker <jtucker@infoglide.com>
+ *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
 //=============================================================================
 
@@ -21,7 +21,12 @@
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
+#include "ace/Synch.h"
 #include "tao/orbconf.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 static const char * IMR_ACTIVATOR_SERVICE_NAME = "TAOIMRActivator";
 static const char * IMR_ACTIVATOR_DISPLAY_NAME = "TAO Implementation Repository Activator";
@@ -51,8 +56,10 @@ private:
   friend class ACE_Singleton<Activator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Activator_NT_Service, Activator_NT_Service::MUTEX> SERVICE;
+typedef ACE_Singleton<Activator_NT_Service, ACE_Mutex> SERVICE;
 
 #endif /* ACE_WIN32 */
 
 #endif /* Activator_NT_Service_H */
+
+

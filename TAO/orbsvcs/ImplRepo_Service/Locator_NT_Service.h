@@ -7,8 +7,8 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
- *  @author John Tucker <jtucker@infoglide.com> 
- *  @author Mike Vitalo <mvitalo@infoglide.com>   
+ *  @author John Tucker <jtucker@infoglide.com>
+ *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
 //=============================================================================
 
@@ -19,10 +19,10 @@
 
 #if defined (ACE_WIN32)
 
-#include "tao/orbconf.h"
-
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
+#include "ace/Synch.h"
+#include "tao/orbconf.h"
 
 static const char * IMR_LOCATOR_SERVICE_NAME = "TAOIMRLocator";
 static const char * IMR_LOCATOR_DISPLAY_NAME = "TAO Implementation Repository Locator";
@@ -53,8 +53,10 @@ private:
   friend class ACE_Singleton<Locator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Locator_NT_Service, Locator_NT_Service::MUTEX> SERVICE;
+typedef ACE_Singleton<Locator_NT_Service, ACE_Mutex> SERVICE;
 
 #endif /* ACE_WIN32 */
 
 #endif /* Locator_NT_Service_H */
+
+

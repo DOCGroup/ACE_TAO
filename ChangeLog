@@ -1,3 +1,8 @@
+Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added new ImplRepo tests.
+
 Fri Sep 24 11:07:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/ACE.h:

@@ -184,8 +184,14 @@ Commandline Arguments that can be passed to ImplRepo_Service
 -d  debug information
 -m  support multicast discovery.
 -o  generate the ior.
+-x  support persistence to the ImplRepo_Service. We use XML to support
+    persistence. Names of the activators registered with the locator,
+	their IORs, and the servers registered with each of the activators are 
+	saved to the xml file. Use this option to pass the name of the file 
+	where the data has to be saved. 
 
 	And, ofcourse, the ORB Options.
+
 
 @subsection activator ImR_Activator
 
@@ -500,6 +506,11 @@ Admin Tool or via the "net" program on the command line:
 <CODE>net start "TAO Implementation Repository Activator"</CODE>
 
 The Implementation Repository supports start and stop but not pause.
+
+When the Activator is installed using ImR_Activator -c install, it is added
+with a dependency on a locator service. If you don't wish to also install
+the locator on the same machine, then you must use the -c install_no_locator
+option instead. 
 
 @subsection serviceopts Service Options
 

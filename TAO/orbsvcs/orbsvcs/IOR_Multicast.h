@@ -20,11 +20,10 @@
 
 #ifndef TAO_IOR_MULTICAST_H
 #define TAO_IOR_MULTICAST_H
-
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/svc_utils_export.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,6 +32,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
+#include "ace/SString.h"
 
 class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
@@ -66,7 +66,7 @@ public:
   // Initialization method. Takes in "address:port" string as a
   // parameter.
 
-  ~TAO_IOR_Multicast (void);
+  virtual ~TAO_IOR_Multicast (void);
   // Destructor.
 
   virtual int handle_input (ACE_HANDLE n);
@@ -84,9 +84,6 @@ private:
                    TAO_Service_ID service_id);
   // Factor common functionality from the two init functions.
 
-  char buf_[BUFSIZ];
-  // temporary buffer.
-
   TAO_Service_ID service_id_;
   // Service id that we're waiting for.
 
@@ -96,7 +93,7 @@ private:
   ACE_INET_Addr mcast_addr_;
   // multicast address
 
-  const char *ior_;
+  ACE_CString ior_;
   // object reference to send in response to the multicast
 
   ACE_INET_Addr response_addr_;
@@ -105,9 +102,8 @@ private:
   ACE_SOCK_Dgram response_;
   // socket for response to the multicast
 
-  const char *mcast_nic_;
+  ACE_CString mcast_nic_;
 };
 
-#include /**/ "ace/post.h"
-
+#include "ace/post.h"
 #endif /* TAO_IOR_MULTICAST_H */

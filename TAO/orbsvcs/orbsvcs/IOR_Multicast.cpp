@@ -1,9 +1,10 @@
+// $Id$
+
 #include "IOR_Multicast.h"
 
 #include "tao/debug.h"
 
 #include "ace/SOCK_Connector.h"
-#include "ace/SString.h"
 
 ACE_RCSID (orbsvcs,
            IOR_Multicast,
@@ -16,9 +17,7 @@ TAO_IOR_Multicast::get_handle (void) const
 }
 
 TAO_IOR_Multicast::TAO_IOR_Multicast (void)
-  : service_id_ ((TAO_Service_ID) 0),
-    ior_ (0),
-    mcast_nic_ (0)
+  : service_id_ ((TAO_Service_ID) 0)
 {
 }
 
@@ -26,7 +25,6 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                                       u_short port,
                                       const char *mcast_addr,
                                       TAO_Service_ID service_id)
-  : mcast_nic_ (0)
 {
   if (this->init (ior,
                   port,
@@ -36,8 +34,6 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("TAO_IOR_Multicast")));
 }
-
-// destructor
 
 TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
 {
@@ -53,13 +49,8 @@ TAO_IOR_Multicast::init (const char *ior,
                          const char *mcast_addr,
                          TAO_Service_ID service_id)
 {
-  if (this->mcast_addr_.set (port,
-                             mcast_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "set"),
-                      -1);
-
+  if (this->mcast_addr_.set (port, mcast_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set"), -1);
   return common_init (ior, service_id);
 }
 
@@ -69,15 +60,15 @@ TAO_IOR_Multicast::init (const char *ior,
                          TAO_Service_ID service_id)
 {
   // Look for a '@' incase a nic is specified.
-  this->mcast_nic_ = ACE_OS::strchr (mcast_addr, '@');
+  const char* tmpnic = ACE_OS::strchr (mcast_addr, '@');
 
   CORBA::String_var actual_mcast_addr;
   CORBA::ULong length_addr;
 
-  if (this->mcast_nic_ != 0)
+  if (tmpnic != 0)
     {
       // i.e. a nic name has been specified
-      length_addr = this->mcast_nic_ - mcast_addr + 1;
+      length_addr = tmpnic - mcast_addr + 1;
       actual_mcast_addr = CORBA::string_alloc (length_addr);
 
       ACE_OS::strncpy (actual_mcast_addr.inout (),
@@ -87,13 +78,13 @@ TAO_IOR_Multicast::init (const char *ior,
       actual_mcast_addr[length_addr - 1] = '\0';
 
       /// Save for use later.
-      this->mcast_nic_ = this->mcast_nic_ + 1;
+      this->mcast_nic_ = tmpnic + 1;
     }
   else
     {
       actual_mcast_addr =
-        CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
-                                              ACE_OS::strlen (mcast_addr)));
+        CORBA::string_alloc (ACE_static_cast(CORBA::ULong,
+                                             ACE_OS::strlen (mcast_addr)));
 
       actual_mcast_addr = mcast_addr;
     }
@@ -128,15 +119,12 @@ TAO_IOR_Multicast::common_init (const char *ior,
     }
 
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
-  if (this->mcast_nic_ != 0)
+  if (this->mcast_nic_.length() != 0)
     {
       if (this->mcast_dgram_.subscribe (this->mcast_addr_,
                                         1,
-                                        ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "subscribe"),
-                          -1);
+                                        ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "subscribe"),-1);
     }
   else
     {
@@ -216,9 +204,6 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 service_name,
                 ACE_NTOHS (remote_port)));
 
-  // Our reply data.
-  ACE_CString ior (this->ior_);
-
   if (ACE_OS::strcmp (service_name,
                       "NameService") != 0
       && ACE_OS::strcmp (service_name,
@@ -230,9 +215,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       && ACE_OS::strcmp (service_name,
                          "MCASTServer") != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unknown service requested.\n"),
-                        0);
+      ACE_ERROR_RETURN ((LM_ERROR, 
+        "IOR_Multicast::connect() Unknown service requested.\n"),0);
     }
 
   // Reply to the multicast message.
@@ -242,17 +226,14 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   ACE_SOCK_Stream stream;
 
   // Connect.
-  if (connector.connect (stream,
-                         peer_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "IOR_Multicast::connect failed\n"),
-                      0);
+  if (connector.connect (stream, peer_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "IOR_Multicast::connect failed\n"), 0);
   // Send the IOR back to the client.  (Send iovec, which contains ior
   // length as the first element, and ior itself as the second.)
 
   // Length of ior to be sent.
   CORBA::Short data_len =
-    ACE_static_cast (CORBA::Short, ACE_HTONS (ior.length () + 1));
+    ACE_static_cast(CORBA::Short, ACE_HTONS (this->ior_.length () + 1));
 
   // Vector to be sent.
   const int cnt = 2;
@@ -263,11 +244,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iovp[0].iov_len  = sizeof (CORBA::Short);
 
   // The ior.
-  iovp[1].iov_base = ACE_const_cast (char*, ior.c_str ());
-  iovp[1].iov_len  = ACE_static_cast (u_long, ior.length () + 1);
+  iovp[1].iov_base = ACE_const_cast (char*, this->ior_.c_str ());
+  iovp[1].iov_len  = ACE_static_cast(u_long, this->ior_.length () + 1);
 
-  ssize_t result = stream.sendv_n (iovp,
-                                   cnt);
+  ssize_t result = stream.sendv_n (iovp, cnt);
   // Close the stream.
   stream.close ();
 
@@ -280,9 +260,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 "(%P|%t) ior_: <%s>\n"
                 "sent to %s:%u.\n"
                 "result from send = %d\n",
-                ior.c_str (),
+                this->ior_.c_str (),
                 peer_addr.get_host_name (),
                 peer_addr.get_port_number (),
                 result));
   return 0;
 }
+
+

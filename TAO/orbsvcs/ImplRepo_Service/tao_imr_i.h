@@ -15,9 +15,10 @@
 #ifndef TAO_IMR_I_H
 #define TAO_IMR_I_H
 
-#include "tao/PortableServer/ImR_LocatorC.h"
+#include "tao/PortableServer/ImplRepoC.h"
 #include "tao/corba.h"
 #include "ace/SString.h"
+#include "ace/Auto_Ptr.h"
 
 // Forward Declaration
 class TAO_IMR_Op;
@@ -61,10 +62,10 @@ private:
 
   /// Reference to our Locator interface of
   /// implementation repository.
-  ImplementationRepository::Locator_var imr_locator_;
+  ImplementationRepository::Administration_var imr_;
 
   /// What we need to do.
-  TAO_IMR_Op *op_;
+  ACE_Auto_Ptr<TAO_IMR_Op> op_;
 };
 
 
@@ -100,11 +101,11 @@ public:
   virtual int run (void) = 0;
 
   /// Sets the implrepo locator pointer
-  void set_imr_locator (ImplementationRepository::Locator_ptr imr);
+  void set_imr (ImplementationRepository::Administration_ptr imr);
 
 protected:
   /// Reference to our implementation repository.
-  ImplementationRepository::Locator_ptr imr_locator_;
+  ImplementationRepository::Administration_ptr imr_;
 
   // = Helper methods
 
@@ -132,9 +133,6 @@ protected:
 
   /// POA server name.
   ACE_CString server_name_;
-
-  /// The name of the activator 
-  ACE_CString activator_;
 };
 
 
@@ -155,7 +153,7 @@ public:
 
 protected:
   /// Sets one of the environment variables
-  void setenv (ACE_TCHAR *opt);
+  void addenv (ACE_TCHAR *opt);
 
   /// Prints a message about the usage.
   void print_usage (void);
@@ -177,6 +175,9 @@ protected:
 
   /// Hostname where the activator is running.
   ACE_CString activator_;
+
+  /// startup/ping Retry Count
+  int retry_count_;
 };
 
 
@@ -275,11 +276,7 @@ protected:
   /// Prints a message about the usage
   void print_usage (void);
 
-  /// POA server name.
   ACE_CString server_name_;
-
-  /// Hostname where the activator is running.
-  ACE_CString activator_;
 };
 
 
@@ -300,29 +297,9 @@ protected:
   /// Prints a message about the usage
   void print_usage (void);
 
-  /// POA server name.
   ACE_CString server_name_;
-
-  ACE_CString activator_;
 };
 
-/**
- * @class TAO_IMR_Op_Shutdown_Repo
- *
- * @brief Shutdown the repository
- *
- * Shutdown_repo is used to shutdown the repository via an IDL operation.
- */
-class TAO_IMR_Op_Shutdown_Repo : public TAO_IMR_Op
-{
-public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
-
-protected:
-  /// Prints a message about the usage
-  void print_usage (void);
-};
 
 /**
  * @class TAO_IMR_Op_Update
@@ -342,7 +319,7 @@ public:
 
 protected:
   /// Sets one environment variable.
-  void setenv (ACE_TCHAR *opt);
+  void addenv (ACE_TCHAR *opt);
 
   /// Prints a message about the usage.
   void print_usage (void);
@@ -350,34 +327,22 @@ protected:
   /// POA server name.
   ACE_CString server_name_;
 
-  /// True if the command_line_ needs to be updated.
-  int set_command_line_;
-
-  /// Startup command.
+  bool set_command_line_;
   ACE_CString command_line_;
 
-  /// True if the environment_vars_ needs to be updated.
-  int set_environment_vars_;
-
-  /// True if the working_dir_ needs to be updated.
-  int set_working_dir_;
-
-  /// Environment Variables.
+  bool set_environment_vars_;
   ImplementationRepository::EnvironmentList environment_vars_;
 
-  /// Working directory.
+  bool set_working_dir_;
   ACE_CString working_dir_;
 
-  /// True if the activation mode needs to be updated.
-  int set_activation_;
-
-  /// Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
+  bool set_activation_;
   ImplementationRepository::ActivationMode activation_;
 
-  /// True if the location mode needs to be updated.
-  int set_location_;
+  bool set_retry_count_;
+  int retry_count_;
 
-  /// Hostname where the activator is running.
+  bool set_activator_;
   ACE_CString activator_;
 };
 

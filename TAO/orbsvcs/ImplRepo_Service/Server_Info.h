@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    Server_Info.h
@@ -12,102 +10,66 @@
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
-
 #ifndef SERVER_INFO_H
 #define SERVER_INFO_H
 
-#include "XML_ContentHandler.h"
+#include "ace/Bound_Ptr.h"
 
 #include "tao/PortableServer/ImplRepoC.h"
 
+#include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /**
- * @class Server_Info
- *
- * @brief Information about IMR registered servers.
- *
- * Contains all the necessary information about the server including
- * Information on how to start it up and where it is running.
- */
-class Server_Info
+* @brief Information about IMR registered servers.
+*/
+struct Server_Info
 {
-public:
-  // = Constructors
+  Server_Info (const ACE_CString& server_name,
+    const ACE_CString& aname,
+    const ACE_CString& cmdline,
+    const ImplementationRepository::EnvironmentList& env,
+    const ACE_CString& working_dir,
+    ImplementationRepository::ActivationMode amode,
+    int start_limit,
+    const ACE_CString& partial_ior = ACE_CString(""),
+    const ACE_CString& server_ior = ACE_CString(""),
+    ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil()
+    );
 
-  /// Initialize the command_line and working_dir.
-  Server_Info (const ACE_CString POA_name,
-               const ACE_CString logical_server_name,
-               const ACE_CString startup_command,
-               const ImplementationRepository::EnvironmentList
-                     environment_vars,
-               const ACE_CString working_dir,
-               const ImplementationRepository::ActivationMode activation);
+  /// Convert to the corba type
+  ImplementationRepository::ServerInformation* createImRServerInfo(ACE_ENV_SINGLE_ARG_DECL);
 
-  // = Destructors
+  void reset();
 
-  /// The only destructor there is.
-  ~Server_Info (void);
-
-  /// Updates information that is relevant only when an instance
-  /// of the server is running.
-  void update_running_info (const ACE_CString location,
-                            const ACE_CString server_object_ior);
-
-  /// Returns startup information.
-  void get_startup_info (ACE_CString &logical_server_name,
-                         ACE_CString &startup_command,
-                         ImplementationRepository::EnvironmentList
-                            &environment_vars,
-                         ACE_CString &working_dir,
-                         ImplementationRepository::ActivationMode
-                         &activation);
-
-  /// Returns information about a running instance.
-  void get_running_info (ACE_CString &location,
-                         ACE_CString &server_object_ior);
-
-  // ActivationMode get_activation (void);
-  // Get the activation mode.
-
-  // @@ Does this belong here?
-  //  int startup ();
-  // Starts up the server based on the information.
-  // Returns:  0  if successful
-  //           -1 if there is no registration command (it has to be manually
-  //              restarted)
-
-  /// This is a flag to determine if the process has already been spawned
-  /// and we are just waiting for it to start up.
-  bool starting_up_;
-
-private:
-  /// Which server process this poa is grouped in.
-  ACE_CString logical_server_name_;
-
-  /// The name of the POA.
-  ACE_CString POA_name_;
-
+  /// The name of the server.
+  ACE_CString name;
+  /// The name of the activator in which this server runs
+  ACE_CString activator;
   /// The command line startup command (program and arguments).
-  ACE_CString startup_command_;
-
+  ACE_CString cmdline;
   /// Environment Variables.
-  ImplementationRepository::EnvironmentList environment_vars_;
-
+  ImplementationRepository::EnvironmentList env_vars;
   /// The working directory.
-  ACE_CString working_dir_;
-
-  /// Current endpoint used by the server.
-  ACE_CString location_;
-
-  /// IOR of the server object in the server.
-  ACE_CString server_object_ior_;
-
+  ACE_CString dir;
   /// The type of activation this supports.
-  ImplementationRepository::ActivationMode activation_;
-
-  // No copying allowed.
-  void operator= (Server_Info &);
-  Server_Info (Server_Info &);
+  ImplementationRepository::ActivationMode activation_mode;
+  /// Limit of retries to start the server
+  int start_limit;
+  /// Current endpoint used by the server.
+  ACE_CString partial_ior;
+  /// IOR of the server object in the server.
+  ACE_CString ior;
+  /// The timestamp of the last time we verified the server is alive
+  ACE_Time_Value last_ping;
+  /// The cached server object
+  ImplementationRepository::ServerObject_var server;
+  int start_count;
 };
+
+typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;
 
 #endif /* SERVER_INFO_H */
