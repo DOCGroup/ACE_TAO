@@ -108,7 +108,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
 ostream&
 operator<< (ostream& os, const ACE_U_LongLong& ll)
 {
-  ios::fmtflags flags = os.setf(0);
+  unsigned long flags = os.setf(0);
   char buffer[32];
 
   if ((flags & ios::oct) != 0)
