@@ -1,6 +1,6 @@
 Thu Oct 08 15:22:22 1998  Arturo Montes <mitosys@colomsat.com.co>
 
-	* ace/OS.{i,cpp}: Reverted FSU thread changes for now.
+        * ace/OS.{i,cpp}: Reverted FSU thread changes for now.
 
 Thu Oct 08 15:11:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -32,6 +32,10 @@ Thu Oct 08 08:23:09 1998  David L. Levine  <levine@cs.wustl.edu>
           using whatever flex is first on the users path.
 
         * etc/README: fixed typo.
+
+        * ace/Svc_Conf_l.cpp,etc/Svc_Conf_l.cpp.diff (ACE_YY_DECL):
+          initialize ace_yy_cp and ace_yy_bp to 0 to avoid egcs 1.1
+          warning about possible use before initialization.
 
 Wed Oct  7 23:47:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * ace/Asynch_IO.cpp:
