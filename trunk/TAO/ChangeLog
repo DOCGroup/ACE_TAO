@@ -1,3 +1,17 @@
+Wed Nov 10 11:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added generation of #includes of Any.h and CDR.h in the
+          *A.cpp file (if generated). This is for compilers (such
+          as the Diablo VxWorks compiler) that do not include
+          template source files in the corresponding template header
+          files. In such a case, the files in question are not pulled
+          in by Any_*_Impl_T.cpp via Any_*_Impl_T.h, as they are
+          in all other cases. Thanks to 
+          Johnny Willemsen <jwillemsen@remedy.nl> and Martin Corino
+          <mcorino@remedy.nl> for reporting these problems.
+
 Wed Nov 10 09:46:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_union.cpp:
