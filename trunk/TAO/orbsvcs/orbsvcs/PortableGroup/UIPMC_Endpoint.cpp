@@ -16,7 +16,6 @@ ACE_RCSID(tao, UIPMC_Endpoint, "$Id$")
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
   : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
     object_addr_ (),
-    /*    hint_ (0), */
     next_ (0)
 {
 }
@@ -25,7 +24,6 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
   : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
     object_addr_ (addr),
-    /*    hint_ (0), */
     next_ (0)
 {
   this->object_addr (addr);
@@ -35,7 +33,6 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
                                         CORBA::UShort port)
   : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
     port_ (port),
-    /*    hint_ (0), */
     next_ (0)
 {
   for (int i = 0; i<4; i++)
@@ -86,14 +83,6 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
                    this->port_);
 
   return 0;
-}
-
-void
-TAO_UIPMC_Endpoint::reset_hint (void)
-{
-  // Commented out for the time being....
-  /*  if (this->hint_)
-      this->hint_->cleanup_hint ((void **) &this->hint_); */
 }
 
 TAO_Endpoint *
