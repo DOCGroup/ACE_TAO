@@ -2,11 +2,17 @@
 
 #include "Scheduler.h"
 #include "ace/Atomic_Op.h"
+#include "tao/RTScheduling/Request_Interceptor.h"
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
-TAO_Scheduler::TAO_Scheduler (void)
+TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb)
 {
+  CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+  
+  current_ = RTScheduling::Current::_narrow (current_obj
+					     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 TAO_Scheduler::~TAO_Scheduler (void)
@@ -111,15 +117,24 @@ TAO_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
   
 
 void 
-TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr
+TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info
 			     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
+  IOP::ServiceContext* srv_con = new IOP::ServiceContext;
+  srv_con->context_id = Client_Interceptor::SchedulingInfo;
+  srv_con->context_data.length (sizeof (long));
+  ACE_OS::memcpy (srv_con->context_data.get_buffer (),
+		  current_->id (ACE_ENV_ARG_PARAMETER)->get_buffer (),
+		  sizeof (long));
+  ACE_CHECK;
+  request_info->add_request_service_context (*srv_con,
+					     0);
 }
 
 void 
-TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
+TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr request_info,
 				RTScheduling::Current::IdType_out guid_out,
 				CORBA::String_out name,
 				CORBA::Policy_out sched_param,
@@ -128,34 +143,17 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
-  //***************************************
-  RTScheduling::Current::IdType* guid;
-  ACE_NEW (guid,
-	   RTScheduling::Current::IdType);
-	   
-		
-  // Generate GUID.
-  guid->length (sizeof(long));
+  IOP::ServiceContext* serv_cxt = 
+    request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
   
-  long temp = ++server_guid_counter;
-  ACE_OS::memcpy (guid->get_buffer (),
-		  &temp,
-		  sizeof(long));
-      
-  int id;
-  ACE_OS::memcpy (&id,
-		  guid->get_buffer (),
-		  guid->length ());
+  int guid;
+  ACE_OS::memcpy (&guid,
+		  serv_cxt->context_data.get_buffer (),
+		  serv_cxt->context_data.length ());
   
   ACE_DEBUG ((LM_DEBUG,
-	      "The Guid is %d %d\n",
-	      id,
-	      server_guid_counter.value_i ()));
-
-  guid_out.ptr () = guid;
-  //***************************************
-  
-  
+	      "The Guid is %d\n",
+	      guid));
 }
 
 void 

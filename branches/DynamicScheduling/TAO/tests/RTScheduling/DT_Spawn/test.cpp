@@ -16,15 +16,13 @@ main (int argc, char* argv [])
 
   Test_Thread_Action thread_action;
 
-  TAO_Scheduler scheduler;
-      
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       orb = CORBA::ORB_init (argc,
 			     argv,
 			     ""
 			     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
       CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
@@ -32,42 +30,48 @@ main (int argc, char* argv [])
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
 									      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
-
-      manager->rtscheduler (&scheduler);
+      TAO_Scheduler* scheduler;
+      ACE_NEW_RETURN (scheduler,
+		      TAO_Scheduler (orb),
+		      -1);
+  
+      manager->rtscheduler (scheduler);
 
       CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
       
       current = RTScheduling::Current::_narrow (current_obj
 						ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    
-      
-
-      current->spawn (&thread_action,
-		      "Harry Potter",
-		      name,
-		      sched_param,
-		      implicit_sched_param,
-		      0,
-		      0
-		      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
+      
+      ACE_TRY
+	{
+	  current->spawn (&thread_action,
+			  "Harry Potter",
+			  name,
+			  sched_param,
+			  implicit_sched_param,
+			  0,
+			  0
+			  ACE_ENV_ARG_PARAMETER);
+	  ACE_TRY_CHECK;
+	}
+      ACE_CATCHANY
+	{
 
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Spawn should be in the context of a Scheduling Segment\n");
-
+	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			       "Spawn should be in the context of a Scheduling Segment\n");
+	}
+      ACE_ENDTRY;
+      
       //Start - Nested Scheduling Segment
       current->begin_scheduling_segment ("Potter",
 					 sched_param,
 					 implicit_sched_param
 					 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+      
       Data spawn_data;
       spawn_data.data = CORBA::string_dup ("Harry Potter");
       spawn_data.current = RTScheduling::Current::_duplicate (current);
@@ -81,20 +85,22 @@ main (int argc, char* argv [])
 		      0
 		      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+      
       current->end_scheduling_segment (name
 				       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       //  End - Nested Scheduling Segment
-      
-      
+     
+    } 
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			   "Caught Exception\n");
     }
   ACE_ENDTRY; 
-
-  //  orb->run ();
-
+  
   ACE_Thread_Manager::instance ()->wait ();
-
+  
   return 0;
 }
 

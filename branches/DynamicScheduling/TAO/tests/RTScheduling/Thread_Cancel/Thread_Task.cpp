@@ -14,6 +14,8 @@ Thread_Task::guids (void)
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb)
 {
+  shutdown_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
+   
   this->orb_ = CORBA::ORB::_duplicate (orb);
   
   CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
@@ -31,6 +33,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
 			  -1);
     }
+  active_thread_count_ = 4;
   return 0;
 }
 
@@ -96,11 +99,21 @@ Thread_Task::svc (void)
       this->current_->end_scheduling_segment (name
 					      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
+      {
+	ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1); 
+	--active_thread_count_;
+	if (active_thread_count_ == 0)
+	  orb_->shutdown ();
+	return 0;
+      }
+
       return 1;
     }
   ACE_ENDTRY;

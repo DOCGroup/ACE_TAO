@@ -15,7 +15,7 @@ main (int argc, char* argv [])
 					    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-	  CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
@@ -23,7 +23,7 @@ main (int argc, char* argv [])
 									      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      TAO_Scheduler scheduler;
+      TAO_Scheduler scheduler (orb.in ());
 
       manager->rtscheduler (&scheduler);
       
@@ -46,33 +46,33 @@ main (int argc, char* argv [])
 			    1);
 	}
   
-	  CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
-  
-	  RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
-						   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+	  
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
+									  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
-  const char * name = 0;
-  CORBA::Policy_ptr sched_param = 0;
-  CORBA::Policy_ptr implicit_sched_param = 0;
+      const char * name = 0;
+      CORBA::Policy_ptr sched_param = 0;
+      CORBA::Policy_ptr implicit_sched_param = 0;
   
-  current->begin_scheduling_segment (name,
-				     sched_param,
-				     implicit_sched_param
-				     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      current->begin_scheduling_segment (name,
+					 sched_param,
+					 implicit_sched_param
+					 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
   
-  server->one_way (ior);
+      server->one_way (ior);
   
-  ACE_DEBUG ((LM_DEBUG,
-	      "IOR = %s\n",
-	      server->two_way (ior)));
+      ACE_DEBUG ((LM_DEBUG,
+		  "IOR = %s\n",
+		  server->two_way (ior)));
 
-  current->end_scheduling_segment (name
-				   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      current->end_scheduling_segment (name
+				       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
   
-  orb->run ();
+      orb->run ();
 
     }
   ACE_CATCHANY

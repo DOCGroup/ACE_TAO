@@ -5,12 +5,12 @@
 #include "Distributable_Thread.h"
 #include "tao/ORB_Core.h"
 
-// Client_Interceptor::Client_Interceptor (RTScheduling::Current_ptr current)
-//   : current_ (RTScheduling::Current::_duplicate (current))
-// {
-// } 
+IOP::ServiceId
+Client_Interceptor::SchedulingInfo = 30;
 
-
+Client_Interceptor::Client_Interceptor (void)
+{
+} 
 
 void 
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
@@ -226,10 +226,12 @@ Client_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
 }
 
+IOP::ServiceId
+Server_Interceptor::SchedulingInfo = 30;
+
 Server_Interceptor::Server_Interceptor (TAO_RTScheduler_Current_ptr current)
 {
-	this->current_ = TAO_RTScheduler_Current::_duplicate (current);
-
+  this->current_ = TAO_RTScheduler_Current::_duplicate (current);
 } 
 
 void 

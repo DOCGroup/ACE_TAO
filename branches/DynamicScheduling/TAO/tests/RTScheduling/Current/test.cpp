@@ -24,7 +24,7 @@ main (int argc, char* argv [])
 									      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       
-      TAO_Scheduler scheduler;
+      TAO_Scheduler scheduler (orb);
       
       manager->rtscheduler (&scheduler);
 	  

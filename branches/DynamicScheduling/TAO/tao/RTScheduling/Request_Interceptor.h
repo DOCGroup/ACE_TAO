@@ -15,6 +15,9 @@ class TAO_RTScheduler_Export Client_Interceptor:
 public  PortableInterceptor::ClientRequestInterceptor
 {
 public:
+
+  Client_Interceptor (void);
+
   //  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -44,6 +47,8 @@ public:
   
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  static IOP::ServiceId SchedulingInfo;
   
 };
 
@@ -84,6 +89,8 @@ public:
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  static IOP::ServiceId SchedulingInfo;
+  
  private:
   TAO_RTScheduler_Current_var current_;
   

@@ -54,24 +54,25 @@ main (int argc, char* argv[])
       CORBA::Object_var object =
 	orb->resolve_initial_references ("RootPOA"
 					 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
 	PortableServer::POA::_narrow (object.in ()
 				      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
   
       PortableServer::POAManager_var poa_manager =
 	root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
   
 	  CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
     
     RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
 									  ACE_ENV_ARG_PARAMETER);
+	ACE_TRY_CHECK;
 
       test_impl* test_i;
       ACE_NEW_RETURN (test_i,
@@ -82,17 +83,17 @@ main (int argc, char* argv[])
   
       id = root_poa->activate_object (test_i
 				      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
   
       CORBA::Object_var server =
 	root_poa->id_to_reference (id.in ()
 				   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
   
       CORBA::String_var ior =
 	 orb->object_to_string (server.in ()
 				ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
   
   
@@ -102,13 +103,13 @@ main (int argc, char* argv[])
 
 	  CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
 									      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
-      TAO_Scheduler scheduler;
+      TAO_Scheduler scheduler (orb);
 
       manager->rtscheduler (&scheduler);
 
