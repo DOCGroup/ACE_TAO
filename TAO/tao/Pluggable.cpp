@@ -11,6 +11,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Request_Mux_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
+#include "tao/debug.h"
 
 #include "ace/ACE.h"
 
