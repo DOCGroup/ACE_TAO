@@ -1,3 +1,9 @@
+Wed Apr 29 07:08:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
+          fixed loop indices to follow ANSI scoping rules and avoid 
+          signed/unsigned comparisons.
+
 Tue Apr 28 13:02:25 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation.cpp: The tables for Param_Data
