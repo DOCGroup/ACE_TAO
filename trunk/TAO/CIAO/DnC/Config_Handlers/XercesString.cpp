@@ -122,7 +122,7 @@ namespace Config_Handler
 
   bool operator== (const XStr& lhs, const XStr& rhs)
   {
-    return XMLString::equals (lhs,rhs);
+    return XMLString::compareIString (lhs,rhs);
   }
 
   bool operator!= (const XStr& lhs, const XStr& rhs)
@@ -135,11 +135,11 @@ namespace Config_Handler
   operator<< (std::ostream& o, XStr const& str)
   {
     char* s (XMLString::transcode (str));
-    
+
     o << s;
-    
+
     XMLString::release (&s); // idiots?
     return o;
   }
-  
+
 }
