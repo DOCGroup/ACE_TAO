@@ -49,6 +49,7 @@
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_TLI
 #define ACE_HAS_TLI_PROTOTYPES
+#define ACE_TLI_TCP_DEVICE  "/dev/xti/tcp"
 #define ACE_HAS_TIUSER_H
 #define ACE_HAS_CHARPTR_DL
 #define ACE_HAS_POSIX_TIME
