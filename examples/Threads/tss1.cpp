@@ -76,15 +76,9 @@ int Errno::flags_;
 ACE_TSS<Errno> TSS_Error;
 
 #if defined (ACE_HAS_THREADS)
-// Serializes output via cout.
-static ACE_Thread_Mutex lock;
-
-typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
+  typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
 #else
-// Serializes output via cout.
-static ACE_Null_Mutex lock;
-
-typedef ACE_Guard<ACE_Null_Mutex> GUARD;
+  typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
 // Keeps track of whether Tester::close () has started.
@@ -182,7 +176,7 @@ int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "ACE doesn't support support threads on this platform (yet)\n"),
-		    -1);
+                     "ACE doesn't support support threads on this platform (yet)\n"),
+                    -1);
 }
 #endif /* ACE_HAS_THREADS */
