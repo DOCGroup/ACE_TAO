@@ -57,7 +57,7 @@ an enhancement, then use our
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, 2.6, and 7, Windows NT 4.0 (MSVC++ 5.0, and 6.0),
+    <td>Solaris 2.5, 2.6, and 7, Windows NT 4.0, Windows 2000 (MSVC++ 5.0, and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0 and 5.0,
         HP/UX 10.x and 11.x, AIX 4.x, IRIX 6.x, and UnixWare 7.1.0
     </td>
@@ -69,7 +69,7 @@ an enhancement, then use our
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> Windows NT (Borland C++ Builder 4.0 and IBM VisualAge C++),
+    <td> Windows NT and Windows 2000 (Borland C++ Builder 4.0 and IBM VisualAge C++),
          Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC,
          QNX Neutrino 2.0 and QNX RTP.
     </td>
@@ -93,13 +93,13 @@ try to help you fix the problems.
 <H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
 
 <UL>
-  <LI><B>Win32 (Windows NT/i386 and Windows '95) </B><P>
+  <LI><B>Win32 (Windows NT, Windows 2000 and Windows '9x/ME) </B><P>
 
       All of ACE has been ported to the Win32 API (which includes
-      Windows NT, Windows 2000, and Windows '95/98).  The entire
-      release now compiles using the Microsoft Visual C++ 5.0, and 
-      6.0 compilers.  ACE can be built as both a static (LIB) and 
-      dynamic (DLL) library, using the Win32 installation process 
+      Windows NT, Windows 2000, and Windows '95/98/ME).  The entire
+      release now compiles using the Microsoft Visual C++ 5.0, and
+      6.0 compilers.  ACE can be built as both a static (LIB) and
+      dynamic (DLL) library, using the Win32 installation process
       described below.<P>
 
       Please see the <A HREF="#Non-static Object Manager">Non-static
@@ -113,7 +113,7 @@ try to help you fix the problems.
 
   <li><b>Windows CE</b><p>
 
-      Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for 
+      Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
       up-to-date information about ACE on CE.  <P>
 
   <LI><B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x, Solaris 7) using Sun
@@ -652,22 +652,22 @@ make: *** [libACE.so] Error 8
       fail.  As the porting effort progresses, we hope to eliminate
       these failures.  If you know of fixes, please send them to
       us.<p>
-      
+
 <li><strong>QNX RTP</strong><p>
 
       ACE has been ported to <a
       href="http://get.qnx.com/">QNX RTP
-      </a>. We compile for QNX RTP using the GCC compiler shipped with the 
+      </a>. We compile for QNX RTP using the GCC compiler shipped with the
       distribution, using the <a
       href="ace/config-qnx-rtp.h">ace/config-qnx-neutrino.h</a>
       and <a
       href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
-      configuration files.  
+      configuration files.
       Many of the ACE tests succeed, though some
       fail.  As the porting effort progresses, we hope to eliminate
       these failures.  If you know of fixes, please send them to
       us.<p>
-      
+
       <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
       Under the current version of QNX RTP ACE fails if compiled with
       debug=1 (i.e. "-g" option in GCC). <p>
@@ -1141,7 +1141,7 @@ existence.  The earlier ones have the bug, while later ones have it
 fixed.  The service pack downloadable from Microsoft's web site as of
 June 16, 1998 works fine.  The CD containing SP3, if it has part
 number X03-50158 on the disc (the part number on the jacket is
-probably different), also works fine.  
+probably different), also works fine.
 
 Note, however, that regardless of the version of SP3, there are some
 STL bugs in SP3 which you should get corrected.  Please see <A
@@ -1149,10 +1149,10 @@ HREF="http://www.dinkumware.com/vc_fixes.html">http://www.dinkumware.com/vc_fixe
 for details.  Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A>
 for the pointer to the STL fixes.<P>
 
-Right now there is a SP4 (and hopefully only one of them) which fixes a 
+Right now there is a SP4 (and hopefully only one of them) which fixes a
 deadlock problem in the STL. <P>
 
-We no longer actively support MSVC 4.x or earlier.  ACE might work with 
+We no longer actively support MSVC 4.x or earlier.  ACE might work with
 these compilers but probably not without a bit of effort. <P>
 
 
@@ -1171,9 +1171,9 @@ these compilers but probably not without a bit of effort. <P>
   <LI>Now load up the project file for ACE (ACE_ROOT\ace\ace.dsw). <BR>
       <BR>
   <LI>Each project will contain several different configurations.  These
-      are a mixture of Debug/Release, MFC/Non-MFC, and Static/Dynamic 
+      are a mixture of Debug/Release, MFC/Non-MFC, and Static/Dynamic
       library versions.
-      Make sure you are building the one you'll use (for example, the 
+      Make sure you are building the one you'll use (for example, the
       debug tests need the debug version of ACE, and so on).  All these
       different configurations are provided for your convenience.  You
       can either adopt the scheme to build your applications with
@@ -1185,7 +1185,7 @@ these compilers but probably not without a bit of effort. <P>
       you may experience problems finding ace.dll or aced.dll.<BR>
       <BR>
   <LI>If you are building for Windows NT then you can start building
-      without anymore changes.  If you are building on Windows 9x/Me, 
+      without anymore changes.  If you are building on Windows 9x/Me,
       then you should add the line <BR>
       <BR>
       <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
@@ -1208,19 +1208,19 @@ these compilers but probably not without a bit of effort. <P>
       <br>
       <code>#define ACE_HAS_MFC 1</code><br>
       <br>
-      By default, all of the ACE projects use the DLL versions of the 
+      By default, all of the ACE projects use the DLL versions of the
       MSVC run-time libraries.  You can still choose use the static (LIB)
-      versions of ACE libraries regardless of run-time libraries.  The 
+      versions of ACE libraries regardless of run-time libraries.  The
       reason we chose to link only the dynamic run-time library is that
-      almost every NT box has these library installed and to save disk 
-      space.  If you prefer to link MFC as a static library into ACE, you 
+      almost every NT box has these library installed and to save disk
+      space.  If you prefer to link MFC as a static library into ACE, you
       can do this by defining <code>ACE_USES_STATIC_MFC</code> in your
-      <code>config.h</code> file.  However, if you would like to link 
-      everything (including the MSVC run-time libraries) statically, 
+      <code>config.h</code> file.  However, if you would like to link
+      everything (including the MSVC run-time libraries) statically,
       you'll need to modify the project files in ACE yourself.<p>
-  <li>Static version of ACE libraries are build with 
-      <code>ACE_AS_STATIC_LIBS</code><br> defined.  This macro should 
-      also be used in application projects that link to static ACE 
+  <li>Static version of ACE libraries are build with
+      <code>ACE_AS_STATIC_LIBS</code><br> defined.  This macro should
+      also be used in application projects that link to static ACE
       libraries<BR>
       <BR>
       Optionally you can also add the line <BR>
@@ -1236,8 +1236,8 @@ these compilers but probably not without a bit of effort. <P>
       We use the following rules to name the DLL and LIB files in ACE
       when using MSVC.<br>
       <br>
-      &quot;Library/DLL name&quot; + (Is static library ? &quot;s&quot; : 
-      &quot;&quot;) + (Is Debugging enable ? &quot;d&quot; : &quot;&quot;) 
+      &quot;Library/DLL name&quot; + (Is static library ? &quot;s&quot; :
+      &quot;&quot;) + (Is Debugging enable ? &quot;d&quot; : &quot;&quot;)
       + {&quot;.dll&quot;|&quot;.lib&quot;}<br>
       <br>
 
@@ -1249,13 +1249,13 @@ these compilers but probably not without a bit of effort. <P>
       only use ACE.<br><br>
 </Ol>
 
-<P>More information for ACE/TAO on MSVC can be found 
+<P>More information for ACE/TAO on MSVC can be found
 <A HREF="docs/msvc_notes.txt">here</A>.  The doxygen version of this
 document is available under Related Topics in the ACE Library.</P>
 
 <B>ACE TESTS</B><P>
 
-The tests are located in ACE_ROOT\tests.  There is also a workspace in 
+The tests are located in ACE_ROOT\tests.  There is also a workspace in
 that directory to build all the tests (tests.dsw)<P>
 
 Once you build all the tests (Batch Build works well for this), you
@@ -1300,7 +1300,7 @@ card.  This is one method:<P>
 
 <B>WIN32 ALPHA CONFIGURATIONS</B>
 
-<P>The project files for Visual C++ no longer contain any configurations 
+<P>The project files for Visual C++ no longer contain any configurations
 targetted to Windows NT on the DEC Alpha.  Below are the steps needed to
 recreate the Alpha configurations:</P>
 

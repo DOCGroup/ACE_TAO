@@ -1,3 +1,9 @@
+Mon Mar 12 12:12:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Also mentioned Windows 2000 explicitly in the
+	  document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
+	  raising the question.
+
 Mon Mar 12 00:49:24 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
