@@ -1,3 +1,17 @@
+Fri Jan 26 16:58:03 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-linux.h:
+
+	  glibc 2.1.x doesn't have the (very useful) __GLIBC_PREREQ
+	  macro.  Use a preprocessor test that doesn't rely on it.
+
+Fri Jan 26 16:48:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-qnx-neutrino.h (ACE_HAS_MUTEX_TIMEOUTS):
+	* ace/config-qnx-rtp.h (ACE_HAS_MUTEX_TIMEOUTS):
+
+	  QNX apparently supports pthread_mutex_timedlock().
+
 Fri Jan 26 17:50:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-win32-common.h:
