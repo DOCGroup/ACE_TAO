@@ -452,10 +452,6 @@ SOURCE=.\be_include\be_sequence.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_state.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\be_include\be_stream_factory.h
 # End Source File
 # Begin Source File

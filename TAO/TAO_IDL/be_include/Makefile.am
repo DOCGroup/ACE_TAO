@@ -38,7 +38,6 @@ noinst_HEADERS = \
   be_root.h \
   be_scope.h \
   be_sequence.h \
-  be_state.h \
   be_stream_factory.h \
   be_string.h \
   be_structure.h \
