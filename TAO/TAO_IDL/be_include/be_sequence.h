@@ -51,6 +51,7 @@ public:
     MNG_UNKNOWN ,
     MNG_NONE,
     MNG_STRING,
+    MNG_WSTRING,
     MNG_OBJREF,
     MNG_PSEUDO
   };

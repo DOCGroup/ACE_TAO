@@ -251,11 +251,19 @@ int be_visitor_exception_ctor::visit_sequence (be_sequence *node)
   return 0;
 }
 
-int be_visitor_exception_ctor::visit_string (be_string *)
+int be_visitor_exception_ctor::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+ 
+  if (node->width () == sizeof (char))
+    {
+      *os << "const char *";
+    }
+  else
+    {
+      *os << "const CORBA::WChar *";
+    }
 
-  *os << "const char *";
   return 0;
 }
 

@@ -106,11 +106,19 @@ be_visitor_array::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_array::visit_string (be_string *)
+be_visitor_array::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  //  *os << "CORBA::String_var";
-  *os << "TAO_String_Manager";
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "TAO_String_Manager";
+    }
+  else
+    {
+      *os << "TAO_WString_Manager";
+    }
+
   return 0;
 }
 

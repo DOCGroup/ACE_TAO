@@ -373,24 +373,23 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_field_ch::visit_string (be_string *)
+be_visitor_field_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os; // output stream
 
   os = this->ctx_->stream ();
   os->indent (); // start from current indentation level
-  // set the right type;
 
-#if 0
-  if (this->ctx_->alias ())
+  // set the right type;
+  if (node->width () == sizeof (char))
     {
-      *os << this->ctx_->alias ()->nested_type_name (this->ctx_->scope ())
-          << "_var";
+      *os << "TAO_String_Manager";
     }
   else
-    *os << "CORBA::String_var";
-#endif
-  *os << "TAO_String_Manager";
+    {
+      *os << "TAO_WString_Manager";
+    }
+
   return 0;
 }
 

@@ -319,7 +319,7 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_string (be_string *)
+be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
@@ -336,8 +336,17 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "CORBA::string_free (this->u_."
-      << ub->local_name () << "_);" << be_nl
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::string_free (this->u_.";
+    }
+  else
+    {
+      *os << "CORBA::wstring_free (this->u_.";
+    }
+
+  *os << ub->local_name () << "_);" << be_nl
       << "this->u_."
       << ub->local_name ()
       << "_ = 0;" << be_nl

@@ -370,7 +370,7 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_union_branch_public_assign_cs::visit_string (be_string *)
+be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os; // output stream
   be_union_branch *ub =
@@ -389,10 +389,20 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *)
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
+
   // set the discriminant to the appropriate label
-  *os << "this->u_." << ub->local_name () << "_ = "
-      << "CORBA::string_dup (u.u_."
-      << ub->local_name () << "_);" << be_uidt_nl;
+  *os << "this->u_." << ub->local_name () << "_ = ";
+
+  if (node->width () == sizeof (char))
+    {
+      *os << "CORBA::string_dup (u.u_.";
+    }
+  else
+    {
+      *os << "CORBA::wstring_dup (u.u_.";
+    }
+
+  *os << ub->local_name () << "_);" << be_uidt_nl;
 
   return 0;
 }
