@@ -1,3 +1,25 @@
+Tue Nov 30 00:28:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tutorials/Quoter/index.html:
+	* tutorials/Quoter/Event_Service/Consumer_i.h:
+	* tutorials/Quoter/Event_Service/Makefile:
+	* tutorials/Quoter/Event_Service/Quoter.idl:
+	* tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+	* tutorials/Quoter/Event_Service/Stock_Consumer.h:
+	* tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
+	* tutorials/Quoter/Event_Service/Stock_Factory_i.h:
+	* tutorials/Quoter/Event_Service/Stock_i.cpp:
+	* tutorials/Quoter/Event_Service/Stock_i.h:
+	* tutorials/Quoter/Event_Service/client.cpp:
+	* tutorials/Quoter/Event_Service/ec.conf:
+	* tutorials/Quoter/Event_Service/index.html:
+	* tutorials/Quoter/Event_Service/server.cpp:
+	* tutorials/Quoter/Event_Service/stock_list.txt:
+	* tutorials/Quoter/Event_Service/stock_list1.txt:
+	* tutorials/Quoter/Event_Service/stock_list2.txt:
+	  New tutorial that shows how to use TAO's implementation of the
+	  COS Events Service.
+
 Mon Nov 29 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
@@ -100,6 +122,8 @@ Sun Nov 28 19:00:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
 	* docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
 	* docs/tutorials/Quoter/Simple/ImprovedServer/stock_list.txt:
+	  Another tutorial, this one about how to use POA policies to use
+	  user assigned IDs, and how to do memory managment of servants.
 
 	* docs/tutorials/Quoter/index.html:
 	* docs/tutorials/Quoter/AMI/index.html:
