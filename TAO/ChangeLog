@@ -1,3 +1,8 @@
+Tue Oct 21 12:13:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB.h: Removed virtual qualifiers that went in as part of
+	  the last checin.  
+
 Tue Oct 21 10:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/interfacerepo/index.html:
