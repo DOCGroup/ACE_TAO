@@ -344,7 +344,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                               overlapped,
                               func);
   if (result != 0) {
-    ACE_OS::set_errno_to_last_error ();
+    ACE_OS::set_errno_to_wsa_last_error ();
   }
   flags = the_flags;
   number_of_bytes_recvd = static_cast<size_t> (bytes_recvd);
@@ -383,7 +383,7 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 
   if (result != 0)
     {
-      ACE_OS::set_errno_to_last_error ();
+      ACE_OS::set_errno_to_wsa_last_error ();
       return -1;
     }
   else
@@ -525,7 +525,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 
   if (result != 0)
     {
-      ACE_OS::set_errno_to_last_error ();
+      ACE_OS::set_errno_to_wsa_last_error ();
       return -1;
     }
   else
@@ -615,7 +615,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                             overlapped,
                             func);
   if (result != 0) {
-    ACE_OS::set_errno_to_last_error ();
+    ACE_OS::set_errno_to_wsa_last_error ();
   }
   number_of_bytes_sent = static_cast<size_t> (bytes_sent);
   return result;
@@ -664,6 +664,10 @@ ACE_OS::sendv (ACE_HANDLE handle,
                       0,
                       0,
                       0);
+  if (result == SOCKET_ERROR)
+    {
+      ACE_OS::set_errno_to_wsa_last_error ();
+    }
 # else
   for (int i = 0; i < n; ++i)
     {
