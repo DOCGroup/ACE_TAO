@@ -8,12 +8,12 @@ Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Connector.h: use ACE_SYNCH_RW_MUTEX in Map typedefs instead
           of old ACE_RW_Mutex (which should have been ACE_Thread_RW_Mutex)
-	  and ACE_Null_Mutex, depending on whether the platform has threads.
-	  This way, individual programs don't have to specialize these.
+	  and ACE_Null_Mutex (depending on whether the platform has threads).
 
 	* ace/Service_Record.cpp: added ACE_NULL_SYNCH template
 	  specializations with threads, because they're still needed even
-	  with threads.
+	  with threads.	  This way, individual programs don't have to
+	  specialize these.
 
 	* ace/Task.cpp: added ACE_TSS<ACE_Task_Exit> and
 	  ACE_TSS<ACE_Dynamic> template specializations, if the platform
