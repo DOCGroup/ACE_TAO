@@ -6,8 +6,7 @@
  * @brief Controling interface for managing and controling CIAO daemon.
  */
 
-#include "../Deployment.idl"
-
+#include "Deployment.idl"
 
 module CIAO
 {

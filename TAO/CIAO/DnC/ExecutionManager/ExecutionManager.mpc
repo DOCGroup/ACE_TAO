@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Execution_Manager): ciao_deployment_svnt, ciao_server, iortable, naming {
+project(Execution_Manager): ciao_deployment_svnt, iortable, naming {
   requires += dnc
   exename = Execution_Manager
   after += DomainApplicationManager

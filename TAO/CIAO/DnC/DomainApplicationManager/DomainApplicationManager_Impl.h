@@ -151,12 +151,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
 
-    virtual ::Deployment::Applications *
-      getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-                       )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-
     /**
      * Terminates a running application. Raises the StopError
      * exception if an error occurs during termination. Raises the
