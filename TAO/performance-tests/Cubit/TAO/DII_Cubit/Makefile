@@ -48,9 +48,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs \
-           -L$(TAO_ROOT)/tao \
-           -L$(TAO_ROOT)/orbsvcs/Naming_Service
+LDFLAGS += -L$(TAO_ROOT)/tao
 
 ifeq ($(CXX),cxx)
   ifeq ($(findstring ptrepository,$(CCFLAGS)),ptrepository)
@@ -64,8 +62,6 @@ ifeq (-xildoff,$(findstring -xildoff,$(LDFLAGS)))
 endif # Sun CC
 endif # cxx
 
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
-
 .PRECIOUS: cubitC.cpp cubitS.cpp cubitC.h cubitS.h
 
 client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
@@ -75,7 +71,7 @@ client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	cd ../IDL_Cubit; $(MAKE) BUILD=server
 
 realclean: clean
-	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
+	-$(RM) cubitC.* cubitS.* cubitS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
