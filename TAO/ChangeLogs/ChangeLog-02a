@@ -1,3 +1,23 @@
+Sun Feb 25 10:13:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/default_resource.cpp: Changed the option
+	  "-ORBConnectionLock" to "-ORBConnectionCacheLock". This change
+	  should fix bug #799 in bugzilla which talks about two locks on
+	  the connection cache for every call.
+
+	* orbsvcs/tests/AVStreams/Latency/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.st_client.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	* performance-tests/Latency/st_client.conf:
+	* tests/Collocation/svc.conf:
+	* tests/Smart_Proxies/Collocation/svc.conf: Changed the option
+	  -ORBConnectorLock to the new option
+	  -ORBConnectionCacheLock. 
+
+
 Sun Feb 25 10:01:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Collocation/Coll_Tester.cpp (parse_args): 
