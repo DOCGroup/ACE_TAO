@@ -15,6 +15,8 @@
 #define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif /* ! ACE_HAS_WINCE */
 
+#define ACE_HAS_MSG
+#define ACE_HAS_SOCKADDR_MSG_NAME
 #define ACE_LACKS_GETPGID
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 #define ACE_HAS_EXCEPTIONS
@@ -59,9 +61,6 @@ typedef unsigned __int64 ACE_UINT64;
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
-#define ACE_LACKS_RECVMSG
-#define ACE_LACKS_SENDMSG
 
 // Platform supports POSIX O_NONBLOCK semantics.
 //define ACE_HAS_POSIX_NONBLOCK
