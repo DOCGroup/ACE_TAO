@@ -1,3 +1,7 @@
+Thu Aug 07 00:20:42 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.8, released Thu Aug 07 00:20:42 1997.
+
 Wed Aug  6 18:28:41 1997  Chris Cleeland  <cleeland@swarm.cs.wustl.edu>
 
 	* tests/Cubit/TAO/clnt.cpp (main): Corrected the format
