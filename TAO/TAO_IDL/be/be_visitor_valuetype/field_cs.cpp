@@ -633,7 +633,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name () 
           << bu->field_pd_postfix ()
-          << ";" << be_uidt_nl
+          << ".in ();" << be_uidt_nl
           << "}";
 
       break;
