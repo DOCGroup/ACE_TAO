@@ -1,3 +1,15 @@
+Thu Mar 18 22:47:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Task.cpp:
+	* ace/Task.h:
+	* ace/Thread_Manager.cpp:
+	* ace/Thread_Manager.h:
+
+	  The following change has been reverted "Fri Mar  5 23:09:14 2004
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" . A better
+	  fix would be available soon. These fixes actually borke backward
+	  compatibility in a bad way.
+
 Thu Mar 18 13:50:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_IO.{h cpp}: The change in

@@ -170,10 +170,6 @@ public:
    * <n> values indicating how big each of the corresponding <stack>s
    * are.
    *
-   * The argument <inherit_priority> is used to assign the priority of
-   * the calling thread on the spawned thread. The spawned thread will
-   * inherit the priority and scheduling policy of the invoking thread,
-   * if the value of the <inherit_priority> is set to true.
    *
    */
   virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
@@ -185,8 +181,7 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0,
-                        bool inherit_priority = true);
+                        ACE_thread_t thread_ids[] = 0);
 
   /**
    * Block until there are no more threads running in this task.
