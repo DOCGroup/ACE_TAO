@@ -119,13 +119,13 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Queue_Iterator &iterator = this->iterator ();
+  ACE_Timer_Queue_Iterator &iter = this->iter ();
 
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.
 
   for (ACE_Timer_Node *expired;
-       iterator.next (expired, cur_time) != 0;
+       iter.next (expired, cur_time) != 0;
        )
     {
       ACE_Event_Handler *handler = 

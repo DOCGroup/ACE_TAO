@@ -1450,14 +1450,6 @@ extern "C" int sigwait (sigset_t *set);
 #include /**/ <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_ */
 
-#if !defined (_SC_TIMER_MAX)
-#define _SC_TIMER_MAX 44
-#endif /* _SC_TIMER_MAX */
-
-// Default number of <ACE_Event_Handler>s supported by
-// <ACE_Timer_Heap>.
-#define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
-
 // There must be a better way to do this...
 #if !defined (RLIMIT_NOFILE)
 #if defined (linux) || defined (AIX) || defined (SCO)
@@ -1743,6 +1735,14 @@ typedef long ACE_INT32;
 #if !defined (ETIME) && defined (ETIMEDOUT)
 #define ETIME ETIMEDOUT
 #endif /* ETIMED */
+
+#if !defined (_SC_TIMER_MAX)
+#define _SC_TIMER_MAX 44
+#endif /* _SC_TIMER_MAX */
+
+// Default number of <ACE_Event_Handler>s supported by
+// <ACE_Timer_Heap>.
+#define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
 
 // Note that this assumes shorts are 16 bits.
 typedef u_short ACE_USHORT16;
