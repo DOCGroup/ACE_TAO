@@ -37,18 +37,6 @@ ACE_Mem_Map::close (void)
   return this->close_handle ();
 }
 
-int
-ACE_Mem_Map::close_handle (void)
-{
-  if (this->close_handle_)
-    {
-      this->close_handle_ = 0;
-      return ACE_OS::close (this->handle_);
-    }
-  else
-    return 0;
-}
-
 ACE_Mem_Map::~ACE_Mem_Map (void) 
 {
   ACE_TRACE ("ACE_Mem_Map::~ACE_Mem_Map");
@@ -83,9 +71,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       // the file then we force a complete new remapping by setting
       // the descriptor to ACE_INVALID_HANDLE (closing down the
       // descriptor if necessary).
-      if (this->file_mapping_ != this->handle_)
-	ACE_OS::close (this->file_mapping_);
-      this->file_mapping_ = ACE_INVALID_HANDLE;
+      this->close_filemapping_handle ();
     }
 
   // At this point we know <file_len> is not negative...
