@@ -107,7 +107,7 @@
 #define ACE_HAS_GETRUSAGE
 
 // EYE assume it does for now.
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+#define ACE_HAS_SIGTHREADMASK
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_RWLOCK_T
 #define ACE_PTHREADS_MAP

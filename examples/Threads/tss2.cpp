@@ -9,8 +9,8 @@
 //    TSS_Test.cpp
 //
 // = DESCRIPTION
-//     This program tests various features of ACE_Thread and thread
-//     specific storage of data. 
+//     This program tests various features of ACE_Thread and the
+//     thread-specific storage variant of <ACE_SingletonEx>.
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
@@ -19,11 +19,28 @@
 
 #include "ace/Task.h"
 #include "ace/Token.h"
+#include "ace/Singleton.h"
 
 #if defined (ACE_HAS_THREADS)
 
 const int MAX_TASKS = 4;
 const int MAX_ITERATIONS = 10;
+
+class TSS_Data
+  // = TITLE
+  //   Data that is stored in thread-specific storage.
+{
+public:
+  void *data (void) { return this->data_; }
+  void data (void *v) { this->data_ = v; }
+  
+private:
+  // = data_ will be thread-specific data so it doesn't need a lock.
+  void *data_;
+};
+
+typedef ACE_SingletonEx<TSS_Data, ACE_SYNCH_MUTEX, ACE_SINGLETON_TSS>
+	TSS_DATA;
 
 class TSS_Obj
   // = TITLE
@@ -100,20 +117,27 @@ Test_Task::svc (void *arg)
   // automatically.
   ACE_TSS<TSS_Obj> tss (new TSS_Obj);
 
+  TSS_DATA::instance ()->data (arg);
+
   Test_Task::wait_count_++;
   Test_Task::max_count_++;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %u)\n", 
+	      arg));
 
-  while (1)
-    {   
-      if (Test_Task::max_count_ >= num_tasks)
-	break;
-      else
-	ACE_Thread::yield ();
+  // Do a bunch of set operations on the TSS data just to make sure
+  // that it's truly in TSS (it it weren't, the assertion would fail).
+
+  while (Test_Task::max_count_ < num_tasks)
+    {
+      TSS_DATA::instance ()->data (arg);
+      ACE_Thread::yield ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %u)\n", 
+	      arg));
+
+  ACE_ASSERT (TSS_DATA::instance ()->data () == arg;
 
   delete (Test_Task *) arg;
 
