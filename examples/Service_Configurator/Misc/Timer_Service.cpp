@@ -100,6 +100,9 @@ Timer_Service_1::handle_close (ACE_HANDLE,
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("closing down the timer test\n")));
 
+  // Remove ourselves from the timer queue.
+  ACE_Reactor::instance ()->cancel_timer (this);
+
   ACE_Reactor::end_event_loop();
   return 0;
 }
