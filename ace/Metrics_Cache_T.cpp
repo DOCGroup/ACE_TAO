@@ -5,12 +5,6 @@
 
 #define ACE_BUILD_DLL
 
-#if defined (ACE_ENABLE_TIMEPROBES)
-  #if !defined (ACE_COMPILE_TIMEPROBES)
-    #define ACE_COMPILE_TIMEPROBES
-  #endif /* ACE_COMPILE_TIMEPROBES */
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 #include "ace/Metrics_Cache.h"
