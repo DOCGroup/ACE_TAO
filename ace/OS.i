@@ -1454,7 +1454,11 @@ ACE_OS::abort (void)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
+# if defined (ACE_HAS_PACE)
+  return ACE_SPRINTF_ADAPTER (::pace_vsprintf (buffer, format, argptr));
+# else
   return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
+# endif /* ACE_HAS_PACE */
 }
 #endif /* ACE_HAS_WINCE */
 
@@ -7105,34 +7109,34 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 
 #if defined (ACE_HAS_TSS_EMULATION)
 
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 ACE_INLINE int
 ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 {
   ACE_OS_TRACE ("ACE_OS::thr_getspecific");
-#if defined (ACE_HAS_PACE)
+#  if defined (ACE_HAS_PACE)
   *data = ::pace_pthread_getspecific (key);
   return 0;
-#elif defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
+#  elif defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
-# elif defined (ACE_HAS_PTHREADS)
-#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#   elif defined (ACE_HAS_PTHREADS)
+#    if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     return pthread_getspecific (key, data);
-#   else /* this is ACE_HAS_PTHREADS_DRAFT7 or STD */
-#if (pthread_getspecific)
+#    else /* this is ACE_HAS_PTHREADS_DRAFT7 or STD */
+#     if (pthread_getspecific)
     // This is a macro on some platforms, e.g., CHORUS!
     *data = pthread_getspecific (key);
-#else
+#     else
     *data = pthread_getspecific (key);
-#endif /* pthread_getspecific */
-#   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
+#     endif /* pthread_getspecific */
+#    endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
     return 0;
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
     return (::tsd_getval (key, tid, data) == 0) ? 0 : -1;
-# elif defined (ACE_HAS_WTHREADS)
+#   elif defined (ACE_HAS_WTHREADS)
 
   // The following handling of errno is designed like this due to
   // ACE_Log_Msg::instance calling ACE_OS::thr_getspecific.
@@ -7151,38 +7155,38 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 
   ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
-#   if !defined (ACE_HAS_WINCE)
+#    if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
     return -1;
   else
-#   endif /* ACE_HAS_WINCE */
+#    endif /* ACE_HAS_WINCE */
     return 0;
-# endif /* ACE_HAS_STHREADS */
-#else
+#   endif /* ACE_HAS_STHREADS */
+#  else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_PACE */
+#  endif /* ACE_HAS_PACE */
 }
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-#if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+# if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 ACE_INLINE
 void **&
 ACE_TSS_Emulation::tss_base ()
 {
-# if defined (VXWORKS)
+#  if defined (VXWORKS)
   return (void **&) taskIdCurrent->ACE_VXWORKS_SPARE;
-# elif defined (ACE_PSOS)
+#  elif defined (ACE_PSOS)
   // not supported
   long x=0;   //JINLU
   return (void **&) x;
-# else
+#  else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
-# endif /* VXWORKS */
+#  endif /* VXWORKS */
 }
-#endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
