@@ -20,6 +20,14 @@ public class ImageApp extends Applet
     //    this.loadFilters ();
     this.setupButtonPanel ();
     this.add ("Center", this.imageCanvas_);
+    // Check if we are running in test mode
+    String testInFile = getParameter ("testInFile");
+    if (testInFile != null)
+      {
+	String testOutFile = getParameter ("testOutFile");
+	this.tester_ = new Tester (testInFile, testOutFile, this);
+	System.out.println ("Initializing tester...");
+      }    
   }
 
   private void setupButtonPanel ()
@@ -73,6 +81,11 @@ public class ImageApp extends Applet
     this.filterPanel_.loadFilters ();
     repaint ();
   }
+  
+  public Hashtable filterTable ()
+  {
+    return this.filterTable_;
+  }
 
   public ImageFilter getFilter (String s)
   {
@@ -82,6 +95,11 @@ public class ImageApp extends Applet
   public void apply ()
   {
     ImageFilter filter = this.getFilter (this.filterPanel_.choice ().getSelectedItem ());
+    this.apply (filter);
+  }
+
+  public void apply (ImageFilter filter)
+  {
     if (filter != null)
       {
 	Util.getFrame (this).setCursor (Frame.WAIT_CURSOR);
@@ -265,5 +283,6 @@ public class ImageApp extends Applet
   private StatusDisplay statusDisplay_;
   private Hashtable filterTable_ = new Hashtable ();
   private ImageFilterFactory iff_ = new ImageFilterFactory ();
-  //  private FilterRepository filterRepository_ = new FilterRepository ();
+  private Tester tester_;
+  
 }

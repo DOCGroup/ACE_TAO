@@ -35,6 +35,8 @@ files =	ImageFilterFactory.java \
 	IntHashtable.java \
 	ImageEncoder.java \
 	GifEncoder.java \
-	GIFOutputStream.java \
+	ImageByteCounter.java \
+	StatusIndicator.java \
 	GIFHandler.java \
-	ImageSender.java
+	ImageSender.java \
+	Tester.java
