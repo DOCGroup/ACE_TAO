@@ -1,3 +1,13 @@
+Mon Jul 27 12:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp (open): Changed a erroneous comparison
+	  to 
+
+	  if (size > (size_t) ACE::max_handles ())
+	    return ACE::set_handle_limit (size);
+
+	  Thanks to Avi Nash <anash@RedBrick.COM> for reporting this.
+
 Sat Jul 25 20:26:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/SPIPE_Acceptor.(h cpp): Modified Win32 part to start the

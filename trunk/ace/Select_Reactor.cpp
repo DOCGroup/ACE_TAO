@@ -115,7 +115,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
     }
   // Increase the number of handles if <size> is greater than the
   // current limit.
-  if (size < (size_t) ACE::max_handles ())
+  if (size > (size_t) ACE::max_handles ())
     return ACE::set_handle_limit (size);
   else
     return 0;
