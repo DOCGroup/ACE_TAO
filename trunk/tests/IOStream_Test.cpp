@@ -21,11 +21,12 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
-#include "ace/INET_Addr.h"
 #include "ace/IOStream.h"
 #include "test_config.h"
 
-typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
+
+typedef ACE_IOStream_T<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
 /* The biggest drawback to an iostream is that it generally
    eats up whitespace when performing a get (>>) operation.
@@ -374,19 +375,26 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */	
   return 0;
 }
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
 
 int
 main (int, char *[])
 {
   ACE_START_TEST ("IOStream_Test");
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
   spawn ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
   ACE_END_TEST;
   return 0;
 }
 
+
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_IOStream<ACE_SOCK_Stream>;
-template class ACE_Streambuf<ACE_SOCK_Stream>;
+template class ACE_IOStream_T<ACE_SOCK_Stream>;
+template class ACE_Streambuf_T<ACE_SOCK_Stream>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#endif /* !ACE_LACKS_ACE_IOSTREAM */

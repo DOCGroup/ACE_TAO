@@ -3,10 +3,11 @@
 
 int main (int argc, char *argv[])
 {
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
   char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
-  ACE_IOStream<ACE_SOCK_Stream> server;
+  ACE_IOStream_T<ACE_SOCK_Stream> server;
   ACE_SOCK_Connector connector;
   ACE_INET_Addr addr (server_port, server_host);
 
@@ -39,11 +40,16 @@ int main (int argc, char *argv[])
   if (server.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
 
+#else
+  ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
   return 0;
 }
 
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_IOStream <ACE_SOCK_Stream>;
-template class ACE_Streambuf <ACE_SOCK_Stream>;
+template class ACE_IOStream_T <ACE_SOCK_Stream>;
+template class ACE_Streambuf_T <ACE_SOCK_Stream>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
