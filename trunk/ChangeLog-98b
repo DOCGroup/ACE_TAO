@@ -1,3 +1,18 @@
+Mon Nov 24 03:30:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/DLL_Wrapper_Test.cpp: Added a test example for the DLL
+	  wrapper class.
+
+	* tests/Makefile: Added an entry for DLL_Wrapper_Test example.
+
+Mon Nov 23 23:49:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/DLL.h: Made the default value of the close_on_destruction
+	  equal to 1.
+
+	* ace/DLL.cpp (~ACE_DLL): Checked whether the member variable,
+	  close_on_destruction_ is non-zero instead of comparing it to 1.
+	
 Mon Nov 23 21:14:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/DLL.h (ACE_DLL): Set the default of close_on_destruction to
