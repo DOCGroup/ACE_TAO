@@ -1,3 +1,9 @@
+Sat Jul 10 10:23:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO-INSTALL.html:
+
+  	  Added information for users who build from anon cvs repository.
+
 Fri Jul  9 20:32:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Invocation_Adapter.cpp:
