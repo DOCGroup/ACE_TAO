@@ -6,7 +6,6 @@
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-#include "tao/TAO_Server_Request.h"
 #include "tao/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Marshal.h"

@@ -30,6 +30,7 @@
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+#include "tao/TAO_Server_Request.h"
 #include "tao/Context.h"
 
 class TAO_Export CORBA_ServerRequest
