@@ -70,6 +70,10 @@ int main(int argc, char **argv){
   ACE_INET_Addr serverAddr(Options_Manager::server_port,
                            Options_Manager::server_host);
 
+  // Create the address that we want the client to connect FROM
+  ACE_INET_Addr clientAddr(Options_Manager::client_port,
+                           Options_Manager::client_connect_addr);
+
   // object that manages the connection to the server
   ACE_SOCK_Connector connector;
 
@@ -79,7 +83,7 @@ int main(int argc, char **argv){
   // connect to the server
   if (connector.connect (dataStream,
                          serverAddr,
-                         0,ACE_Addr::sap_any, 0, 0, 0, // ALL DEFAULT ARGUMENTS
+                         0,clientAddr, 0, 0, 0, // ALL DEFAULT ARGUMENTS
                          Options_Manager::test_transport_protocol) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
@@ -110,7 +114,7 @@ HIST createHistogram(ACE_CDR::ULong messageSize){
   // memory leak.
   char * histName = (char *) malloc(200);
 
-  sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %ul, Message Type octet)",
+  sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
           "ACE", messageSize);
 
   // actually create the histogram
