@@ -137,6 +137,13 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   // Generate the skeleton class name.
 
+  if (!node->is_nested ())
+    {
+      // If the line below is not true, we don't want to
+      // see 'TAO_NAMESPACE' or anything in it.
+      *os << "#if defined (ACE_HAS_USING_KEYWORD)\n";
+    }
+
   os->indent ();
 
   // Now generate the class definition. The prefix POA_ is prepended to our
@@ -167,7 +174,12 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   os->decr_indent ();
   *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module " 
-      << node->name () << "\n\n";
+      << node->name () << "\n";
+
+  if (!node->is_nested ())
+    {
+      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
+    }
 
   return 0;
 }
