@@ -890,9 +890,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // deferred until after the service config entries had been
   // determined.
 
-  // @@ Set the endpoint string to iiop://host:port/
+  // @@ Set the endpoint string to iiop://host:port
   //    Add a string to hold the endpoint designation for this ORB
-  //    for now it will be IIOP://host:port/  fredk
+  //    for now it will be iiop://host:port
+  //              -fredk
   if (old_style_endpoint)
     {
       ACE_CString iiop_endpoint;
@@ -1004,7 +1005,7 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
                         -1);
     }
 
-  // endpoint == iiop://host:port/
+  // endpoint == iiop://host:port
   endpoint.set ("iiop://", 1);
   endpoint += buffer;
 
