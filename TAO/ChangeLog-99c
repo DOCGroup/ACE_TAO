@@ -1,3 +1,10 @@
+Mon Nov  1 16:19:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/releasenotes/TODO.html:
+	  Moved item about IDL compiler adding extra value to
+	  force enums to be 32 bits wide to the 'Tasks
+	  Completed' list.
+
 Mon Nov 01 14:30:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/POA.cpp: removed ACE_Hash<ACE_CString> and
