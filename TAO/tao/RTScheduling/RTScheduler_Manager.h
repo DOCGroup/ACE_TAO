@@ -21,7 +21,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "RTSchedulerC.h"
+#include "RTScheduler.h"
 //#include "tao/LocalObject.h"
 
 class TAO_RTScheduler_Manager;
