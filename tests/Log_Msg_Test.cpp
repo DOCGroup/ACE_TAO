@@ -258,6 +258,16 @@ test_log_msg_features (const char *program)
               "world",
               10000 * counter++));
 
+  const char *badname = "badname";
+
+  if (ACE_OS::open (badname,
+                    O_RDONLY) == ACE_INVALID_HANDLE)
+    ACE_ERROR ((LM_ERROR,
+                "%n: (%x), %p%r\n",
+                10000,
+                badname,
+                cleanup));
+
   static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 
   // Print out the binary bytes of the array in hex form.
@@ -294,16 +304,6 @@ test_log_msg_features (const char *program)
               ASYS_TEXT ("This LM_INFO message should not print!\n")));
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("This LM_DEBUG message should not print!\n")));
-
-  const char *badname = "badname";
-
-  if (ACE_OS::open (badname, O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,
-                "%n: (%x), %p%r\n",
-                10000,
-                badname,
-                cleanup));
-
 }
 
 static int
