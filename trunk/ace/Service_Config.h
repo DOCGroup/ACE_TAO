@@ -198,8 +198,7 @@ public:
 
   static int close (void);
   // Tidy up and perform last rites when ACE_Service_Config is shut
-  // down.  This method calls <close_svcs> and <close_singletons>.
-  // Returns 0.
+  // down.  This method calls <close_svcs>.  Returns 0.
 
   static int fini_svcs (void);
   // Perform user-specified close hooks and possibly delete all of the
