@@ -58,10 +58,10 @@ public:
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
   // Visit interface_fwd.
 
-  virtual int visit_valuetype (AST_Interface *node);
+  virtual int visit_valuetype (AST_ValueType *node);
   // Visit valuetype.
 
-  virtual int visit_valuetype_fwd (AST_InterfaceFwd *node);
+  virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
   // Visit valuetype_fwd.
 
   virtual int visit_structure (AST_Structure *node);
