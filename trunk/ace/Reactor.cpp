@@ -1813,7 +1813,9 @@ ACE_Reactor::check_handles (void)
 	}
       rd_mask.clr_bit (handle);
 #else /* !ACE_WIN32 */
-      if (ACE_OS::fstat (handle, 0) == -1)
+      struct stat &temp;
+
+      if (ACE_OS::fstat (handle, &temp) == -1)
         {
 	  result = 1;
 	  this->remove_handler_i (handle,
