@@ -49,7 +49,7 @@ public:
   ~be_visitor_typecode_defn (void);
   // destructor
 
-  virtual int visit_members (AST_Structure *node);
+  //virtual int visit_members (AST_Structure *node);
   // for use with structs, exceptions, and unions.
 
   virtual int visit_members (be_valuetype *node);
@@ -69,7 +69,7 @@ public:
   virtual int visit_exception (be_exception *node);
   // visit an enum
 
-  virtual int visit_interface (be_interface *node);
+//   virtual int visit_interface (be_interface *node);
   // visit interface
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
@@ -127,7 +127,7 @@ public:
 
   int gen_typecode (be_exception *node);
 
-  int gen_typecode (be_interface *node);
+//   int gen_typecode (be_interface *node);
 
   int gen_typecode (be_interface_fwd *node);
 
@@ -139,7 +139,7 @@ public:
 
   int gen_typecode (be_structure *node);
 
-  int gen_typecode (be_typedef *node);
+//   int gen_typecode (be_typedef *node);
 
   int gen_typecode (be_union *node);
 
@@ -157,7 +157,7 @@ public:
 
   int gen_encapsulation (be_field *node);
 
-  int gen_encapsulation (be_interface *node);
+//   int gen_encapsulation (be_interface *node);
 
   int gen_encapsulation (be_interface_fwd *node);
 
