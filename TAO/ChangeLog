@@ -1,3 +1,9 @@
+Fri Oct  1 19:26:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp:
+
+	  Cleanup from my last set of fixes.
+
 Fri Oct  1 18:41:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Policy_Manager.h:

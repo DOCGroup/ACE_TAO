@@ -254,8 +254,25 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 CORBA::Policy_ptr
 TAO_ORB_Core::default_buffering_constraint (void) const
 {
-  return this->default_policies_->
-              get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+  CORBA::Policy_ptr tmp =
+    CORBA::Policy::_nil ();
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      tmp =
+        this->default_policies_->
+        get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT
+                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK (CORBA::Policy::_nil ());
+
+  return tmp;
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
@@ -2597,7 +2614,11 @@ TAO_ORB_Core::get_policy (CORBA::PolicyType type
   TAO_Policy_Manager *policy_manager =
     this->policy_manager ();
   if (policy_manager != 0)
-    result = policy_manager->get_policy (type);
+    {
+      result = policy_manager->get_policy (type
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -2639,13 +2660,18 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type
   TAO_Policy_Manager *policy_manager =
     this->policy_manager ();
   if (policy_manager != 0)
-    result = policy_manager->get_cached_policy (type);
+    {
+      result =
+        policy_manager->get_cached_policy (type
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   if (CORBA::is_nil (result.in ()))
     {
       result =
         this->get_default_policies ()->get_cached_policy (type
-                                                          ACE_ENV_ARG_DECL);
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -2661,7 +2687,9 @@ TAO_ORB_Core::get_cached_policy_including_current (
     this->policy_current ();
 
   CORBA::Policy_var result =
-    policy_current.get_cached_policy (type);
+    policy_current.get_cached_policy (type
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK (CORBA::Policy::_nil ());
 
   if (CORBA::is_nil (result.in ()))
     {
