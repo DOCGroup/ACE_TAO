@@ -365,7 +365,7 @@ Thu Apr 17 16:15:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	Fri Jan 17 20:21:41 2003  Steve Huston  <shuston@riverace.com>
 
-	        * ace/Makefile.am: Fix syntax errors for libACE_Sockets_la_SOURCES.
+	  * ace/Makefile.am: Fix syntax errors for libACE_Sockets_la_SOURCES.
 
 	Tue Jan  7 22:59:05 2003  Ossama Othman  <ossama@uci.edu>
 
