@@ -1,6 +1,11 @@
+Mon Apr 19 14:50:11 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * DnC/Config_Handlers: Created new directory for adding the
+          handlers for the Deployment & Configuration Specification.
+
 Thu Apr 15 18:13:29 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* CIAO-INSTALL.html (HREF): 
+	* CIAO-INSTALL.html (HREF):
 
 	  Fixed link to binary files.
 
