@@ -1,3 +1,16 @@
+Tue Jun  8 09:07:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        
+          Added code generation for the implementation of the static
+          _downcast() method for the value factory. Thanks to Jiang
+          Wei <jiangwei_1976@yahoo.com.cn> for reporting the missing
+          implementation. This closes [BUGID:1834].
+          
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        
+          Cosmetic changes to code generation.
+
 Tue Jun 08 12:07:55 2004  Simon McQueen  <sm@prismtechnologies.com>
 
    * tao/ORB_Core.cpp:
