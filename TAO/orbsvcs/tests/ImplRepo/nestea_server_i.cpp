@@ -6,7 +6,9 @@
 
 ACE_RCSID(ImplRepo, nestea_server_i, "$Id$")
 
-Nestea_Server_i::Nestea_Server_i (void)
+const char *NESTEA_DATA_FILENAME = "nestea.dat";
+
+Nestea_Server_i::Nestea_Server_i (const char *filename)
   : server_impl_ (0),
     ior_output_file_ (0),
     ir_helper_ (0),
@@ -14,6 +16,12 @@ Nestea_Server_i::Nestea_Server_i (void)
     use_ir_ (0)
 {
   // Nothing
+}
+
+Nestea_Server_i::~Nestea_Server_i (void)
+{
+  delete this->ir_helper_;
+  delete this->server_impl_;
 }
 
 int
@@ -59,7 +67,7 @@ Nestea_Server_i::parse_args (void)
 }
 
 int
-Nestea_Server_i::init (int argc, char** argv, CORBA::Environment& TAO_IN_ENV)
+Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &TAO_IN_ENV)
 {
   char poa_name[] = "nestea_server";
 
@@ -80,7 +88,7 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment& TAO_IN_ENV)
       if (retval != 0)
         return retval;
 
-      ACE_NEW_RETURN (this->server_impl_, Nestea_i (this->use_ir_), -1);
+      ACE_NEW_RETURN (this->server_impl_, Nestea_i (NESTEA_DATA_FILENAME, this->use_ir_), -1);
 
       CORBA::String_var server_str  =
         this->orb_manager_.activate_under_child_poa ("server",
@@ -166,10 +174,4 @@ Nestea_Server_i::run (CORBA::Environment& env)
   TAO_ENDTRY;
 
   return 0;
-}
-
-Nestea_Server_i::~Nestea_Server_i (void)
-{
-  delete this->ir_helper_;
-  delete this->server_impl_;
 }

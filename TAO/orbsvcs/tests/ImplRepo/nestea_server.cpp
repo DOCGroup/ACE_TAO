@@ -1,6 +1,7 @@
 // $Id$
 
 #include "nestea_server_i.h"
+#include "ace/file_connector.h"
 
 ACE_RCSID(ImplRepo, nestea_server, "$Id$")
 
@@ -9,7 +10,7 @@ main (int argc, char *argv[])
 {
   Nestea_Server_i server;
 
-  ACE_DEBUG ((LM_DEBUG, "\n\tPaper Nestea Server\n\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n\tNestea Bookshelf Server\n\n"));
   TAO_TRY
     {
       if (server.init (argc, argv, TAO_TRY_ENV) == -1)
