@@ -76,7 +76,7 @@ private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
 
-  int bind_to_receiver (ACE_ENV_ARG_DECL);
+  int bind_to_receiver (ACE_ENV_SINGLE_ARG_DECL);
   // Method that binds the sender to the receiver.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
