@@ -1,3 +1,10 @@
+Sun Aug  9 09:17:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (connect_svc_handler): Changed the call to
+ 	  this->CONNECT_STRATEGIES::connect_svc_handler() to avoid compile
+ 	  problems with GCC on LynxOS.  Thanks to Sergio for reporting
+ 	  this.
+
 Sat Aug  8 09:37:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/INET_Addr.cpp: 
