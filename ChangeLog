@@ -1,3 +1,15 @@
+Tue Jun 04 16:34:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.cpp:
+
+	  Removed duplicate "ace/Auto_Ptr.h" include.
+
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+
+	  Moved Svc_Conf.h include within the ACE_USES_CLASSIC_SVC_CONF
+	  preprocessor block.  It isn't needed for the XML-based Service
+	  Configurator.
+
 Tue Jun 04 16:02:11 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/HttpCharStream.h:
