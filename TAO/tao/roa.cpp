@@ -68,7 +68,7 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
 
   // Initialize the endpoint ... or try!
   if (client_acceptor_.open (p->addr (),
-			     ACE_Service_Config::reactor (),
+			     ACE_Reactor::instance (),
 			     f.creation_strategy (),
 			     f.accept_strategy (),
 			     f.concurrency_strategy (),

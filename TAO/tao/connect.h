@@ -34,7 +34,7 @@ class TAO_OA_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NU
 {
 public:
   // @@ Please add comments.
-  TAO_OA_Connection_Handler (ACE_Thread_Manager *t = ACE_Service_Config::thr_mgr ());
+  TAO_OA_Connection_Handler (ACE_Thread_Manager *t = ACE_Thread_Manager::instance ());
   virtual int open (void *);
   virtual int svc (void);
 

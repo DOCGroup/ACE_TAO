@@ -196,7 +196,7 @@ main (int argc, char *const *argv)
   quantify_start_recording_data();
 #endif
 
-  ACE_Service_Config::run_reactor_event_loop();
+  ACE_Reactor::run_event_loop();
 
 #if 0
   while (1)

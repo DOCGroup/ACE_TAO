@@ -28,7 +28,7 @@ ttcp_sequence_i::stop_timer (CORBA_Environment &IT_env)
 	numCalls = 0;
 #if defined (USE_QUANTIFY)
     quantify_stop_recording_data();
-    ACE_Service_Config::end_reactor_event_loop();
+    ACE_Reactor::end_event_loop();
     cerr << "*********** just before exiting " << endl;
 #endif
 }
