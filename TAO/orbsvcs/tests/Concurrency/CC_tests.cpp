@@ -30,19 +30,19 @@ CC_Test::~CC_Test (void)
 {
 }
 
-CosConcurrencyControl::LockSet_ptr 
+CosConcurrencyControl::LockSet_ptr
 CC_Test::create_lock_set (void)
 {
   // Create the lock set and return an obj ref corresponding to the
   // key.
-  CosConcurrencyControl::LockSet_ptr lock_set;
-  
+  CosConcurrencyControl::LockSet_ptr lock_set(0);
+
   TAO_TRY
     {
-      lock_set = 
+      lock_set =
         this->naming_service_->get_lock_set_factory ()->create (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       if (CORBA::is_nil (lock_set))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null lock set objref returned by factory\n"),
@@ -95,7 +95,7 @@ int
 Test_Single_Lock_With_Mode::run (int times_to_run)
 {
   CORBA::Boolean lock_not_held;
-  
+
   CosConcurrencyControl::LockSet_ptr cc_lock_set_ = create_lock_set ();
 
   TAO_TRY
@@ -122,7 +122,7 @@ Test_Single_Lock_With_Mode::run (int times_to_run)
 
       cc_lock_set_->unlock (mode_,
                             TAO_TRY_ENV);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "%s lock released\n",
                   get_lock_mode_name (mode_)));
 
@@ -150,7 +150,7 @@ Test_Single_Lock_With_Mode::run (int times_to_run)
   TAO_ENDTRY;
 
   CORBA::release (cc_lock_set_);
-  
+
   return CC_SUCCESS;
 }
 
@@ -160,12 +160,12 @@ Test_Setup_LockSet::Test_Setup_LockSet (CC_naming_service *naming_service,
     my_name_ (name)
 {
 }
-  
+
 Test_Setup_LockSet::~Test_Setup_LockSet (void)
 {
 }
 
-int 
+int
 Test_Setup_LockSet::run (int times_to_run)
 {
   TAO_TRY
@@ -176,7 +176,7 @@ Test_Setup_LockSet::run (int times_to_run)
                                         TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Name bound\n"));
-      
+
       cc_lock_set_->lock (CosConcurrencyControl::read,
                           TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
@@ -188,7 +188,7 @@ Test_Setup_LockSet::run (int times_to_run)
       return CC_FAIL;
     }
   TAO_ENDTRY;
-  
+
   return CC_SUCCESS;
 }
 
@@ -199,24 +199,24 @@ Test_Use_Already_Created_LockSet (CC_naming_service *naming_service,
     my_name_ (name)
 {
 }
-  
+
 Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet (void)
 {
 }
-  
-int 
+
+int
 Test_Use_Already_Created_LockSet::run (int times_to_run)
 {
   TAO_TRY
     {
-      CORBA::Object_var ccls_obj = 
+      CORBA::Object_var ccls_obj =
         this->naming_service_->get_obj_from_name ("",
-                                                  my_name_, 
+                                                  my_name_,
                                                   TAO_TRY_ENV);
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
                                                  TAO_TRY_ENV);
-      
+
       ccls->lock (CosConcurrencyControl::read,
                   TAO_TRY_ENV);
     }
@@ -226,7 +226,7 @@ Test_Use_Already_Created_LockSet::run (int times_to_run)
       return CC_FAIL;
     }
   TAO_ENDTRY;
-  
+
   return CC_SUCCESS;
 }
 
@@ -237,24 +237,24 @@ Test_Unlock_Already_Created_LockSet (CC_naming_service *naming_service,
     my_name_ (name)
 {
 }
-  
+
 Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet (void)
 {
 }
-  
-int 
+
+int
 Test_Unlock_Already_Created_LockSet::run (int times_to_run)
 {
   TAO_TRY
     {
-      CORBA::Object_var ccls_obj = 
-        this->naming_service_->get_obj_from_name ("", my_name_, 
+      CORBA::Object_var ccls_obj =
+        this->naming_service_->get_obj_from_name ("", my_name_,
                                                  TAO_TRY_ENV);
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
                                                  TAO_TRY_ENV);
-      
-      ccls->unlock (CosConcurrencyControl::read, 
+
+      ccls->unlock (CosConcurrencyControl::read,
                     TAO_TRY_ENV);
     }
   TAO_CATCHANY
@@ -263,7 +263,6 @@ Test_Unlock_Already_Created_LockSet::run (int times_to_run)
       return CC_FAIL;
     }
   TAO_ENDTRY;
-  
+
   return CC_SUCCESS;
 }
-

@@ -32,7 +32,9 @@ class Concurrency_Service : public TAO_ORB_Manager
   //   Defines a class that encapsulates the implementation of the
   //   concurrency service.
   // = DESCRIPTION
-  //   @@ Please add a brief description here.
+  //   This class uses the TAO_ORB_Manager, the TAO_Naming_Server, and
+  //   the TAO_Concurrency_Server classes to implement a server for
+  //   the concurrency service.
 public:
   // = Initialization and termination methods.
   Concurrency_Service (void);
