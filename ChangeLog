@@ -1,3 +1,9 @@
+Tue Mar  6 11:25:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Ignore SIGABRT too, because it is used by abort() and we call
+          that function to test the ORB under fault conditions.
+
 Tue Mar  6 12:25:34 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * configure.in:
@@ -16,20 +22,20 @@ Tue Mar  6 10:16:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Mar  6 10:13:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/RMCast/RMCast_Fragment_Test.cpp:
-	* tests/RMCast/RMCast_Membership_Test.cpp:
-	* tests/RMCast/RMCast_Reassembly_Test.cpp:
-	* tests/RMCast/RMCast_Reordering_Test.cpp:
-	* tests/RMCast/RMCast_Retransmission_Test.cpp:
-	  Use ACE_OS::time(0) to initialize the pseudo-random numbers
-	  seed.  It is good enough for our purposes, and it works on
-	  platforms without 64-bit integer support.
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+          Use ACE_OS::time(0) to initialize the pseudo-random numbers
+          seed.  It is good enough for our purposes, and it works on
+          platforms without 64-bit integer support.
 
 Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch_T.{h,i}: Further simplified the new ACE_Guard constructor.
-	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
- 	  this.
+        * ace/Synch_T.{h,i}: Further simplified the new ACE_Guard constructor.
+          Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
+          this.
 
 Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 
@@ -56,24 +62,24 @@ Mon Mar  5 18:54:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch_T.{h,i}: Added a new ACE_Guard constructor that
-	  allows the caller to select whether the guard owns/acquires the
- 	  lock or not.  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for
- 	  contributing this.
+        * ace/Synch_T.{h,i}: Added a new ACE_Guard constructor that
+          allows the caller to select whether the guard owns/acquires the
+          lock or not.  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for
+          contributing this.
 
-	* ace/Synch_T.{h,i}: Added a disown() method that relinquishes
- 	  ownership of the lock so that it is not released implicitly in
- 	  the destructor.  Thanks to Chris Kohlhoff <chris@kohlhoff.com>
- 	  for contributing this.
+        * ace/Synch_T.{h,i}: Added a disown() method that relinquishes
+          ownership of the lock so that it is not released implicitly in
+          the destructor.  Thanks to Chris Kohlhoff <chris@kohlhoff.com>
+          for contributing this.
 
-	* ace/Event_Handler.h: Updated the comment on handle_close() so that
-	  it more accurately reflects what is going on.  Thanks to Defang
- 	  Zhou <dzhou@inktomi.com> for suggesting this.
+        * ace/Event_Handler.h: Updated the comment on handle_close() so that
+          it more accurately reflects what is going on.  Thanks to Defang
+          Zhou <dzhou@inktomi.com> for suggesting this.
 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.{h,cpp}: Added
-	  handle_close() operations to solve problems with certain
- 	  concurrency models.  Thanks to Defang Zhou <dzhou@inktomi.com>
- 	  for reporting this.
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.{h,cpp}: Added
+          handle_close() operations to solve problems with certain
+          concurrency models.  Thanks to Defang Zhou <dzhou@inktomi.com>
+          for reporting this.
 
 Mon Mar  5 11:29:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -92,16 +98,16 @@ Mon Mar  5 08:20:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Mar  5 07:52:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Record.cpp (priority): Clarified the behavior of the
-	  priority() set/get methods.  Thanks to Christian Schuhegger
- 	  <Christian.Schuhegger@cern.ch> for reporting this.
+        * ace/Log_Record.cpp (priority): Clarified the behavior of the
+          priority() set/get methods.  Thanks to Christian Schuhegger
+          <Christian.Schuhegger@cern.ch> for reporting this.
 
-	* tests/RMCast/RMCast_Fragment_Test.cpp,
-	* tests/RMCast/RMCast_Reassembly_Test.cpp,
-	* tests/Dynamic_Priority_Test.cpp,
-	* tests/Thread_Pool_Test.cpp: Make sure to write into the
-	  wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
- 	  <Gonzalo.Diethelm@sonda.com> for reporting this.
+        * tests/RMCast/RMCast_Fragment_Test.cpp,
+        * tests/RMCast/RMCast_Reassembly_Test.cpp,
+        * tests/Dynamic_Priority_Test.cpp,
+        * tests/Thread_Pool_Test.cpp: Make sure to write into the
+          wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
+          <Gonzalo.Diethelm@sonda.com> for reporting this.
 
 Mon Mar  5 08:00:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -283,8 +283,8 @@ sub check_return_value ($)
         $dump = 1;
     }
 
-    # check for KILL or TERM
-    if ($rc == 9 || $rc == 15) {
+    # check for ABRT, KILL or TERM
+    if ($rc == 6 || $rc == 9 || $rc == 15) {
         return 0;
     }
 
