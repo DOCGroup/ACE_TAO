@@ -4053,7 +4053,7 @@ void
 TAO_POA::imr_notify_shutdown (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifying IMR of Shutdown\n"));
 
   char host_name[MAXHOSTNAMELEN + 1];
   ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
