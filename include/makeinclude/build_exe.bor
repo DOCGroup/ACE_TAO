@@ -44,6 +44,10 @@ INSTALL_TYPES = exe
 .path.cpp = $(CPPDIR)
 !endif
 
+!ifdef CDIR
+.path.c = $(CDIR)
+!endif
+
 !ifdef RESDIR
 .path.rc = $(RESDIR)
 !else
@@ -53,6 +57,10 @@ INSTALL_TYPES = exe
 .path.obj = $(OBJDIR)
 
 .cpp.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.c.obj:
 	@$(MAKE_OBJDIR)
 	$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 
